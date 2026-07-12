@@ -5,9 +5,11 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import AskModal from "./AskModal";
 import PomodoroTimer from "./PomodoroTimer";
+import ChecklistMenu from "./ChecklistMenu";
 
 const LINKS = [
   { href: "/today", label: "Today's Targets", icon: "📅" },
+  { href: "/checklist", label: "Checklist", icon: "✅" },
   { href: "/subjects", label: "Subjects", icon: "📚" },
   { href: "/vocab", label: "Vocab · OWS", icon: "🔤" },
   { href: "/pyq", label: "PYQ Bank", icon: "🎯" },
@@ -57,7 +59,10 @@ export default function Navbar() {
             </Link>
           </div>
 
-          <PomodoroTimer />
+          <div className="navbar__center">
+            <PomodoroTimer />
+            <ChecklistMenu />
+          </div>
 
           <div className="navbar__actions">
             <button className="btn btn--ghost btn--ask" onClick={() => setAskOpen(true)}>
