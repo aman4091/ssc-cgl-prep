@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import AskModal from "./AskModal";
+import PomodoroTimer from "./PomodoroTimer";
 
 const LINKS = [
   { href: "/today", label: "Today's Targets", icon: "📅" },
@@ -57,6 +58,7 @@ export default function Navbar() {
           </div>
 
           <div className="navbar__actions">
+            <PomodoroTimer />
             <button className="btn btn--ghost btn--ask" onClick={() => setAskOpen(true)}>
               <span className="ask-ico">🤖</span>
               <span className="ask-label">Ask</span>
