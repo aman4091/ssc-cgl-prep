@@ -198,28 +198,30 @@ main.container {
 .nav__link:hover { color: var(--text-1); background: rgba(255, 255, 255, 0.06); }
 .nav__link.is-active { color: var(--text-1); background: rgba(124, 108, 255, 0.18); }
 
-.navbar__actions { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.navbar__left { flex: 1; min-width: 0; }
+.navbar__actions { flex: 1; display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
 
-/* ===== Pomodoro timer (navbar) ===== */
-.pomo { position: relative; display: flex; align-items: center; gap: 4px; }
+/* ===== Pomodoro timer (navbar) — centered & prominent ===== */
+.pomo { position: relative; display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
 .pomo__pill {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 6px 11px; border-radius: 999px;
-  background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
-  color: var(--text-1); font-weight: 700; font-size: 0.86rem;
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 9px 20px; border-radius: 999px;
+  background: rgba(52,211,153,0.08); border: 1.5px solid rgba(52,211,153,0.35);
+  color: var(--text-1); font-weight: 800; font-size: 1.5rem;
   font-variant-numeric: tabular-nums; cursor: pointer; line-height: 1;
+  letter-spacing: 0.5px;
 }
-.pomo__pill:hover { background: var(--glass-bg-strong); }
-.pomo__pill.is-break { border-color: rgba(251,191,36,0.5); }
-.pomo__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-3); flex-shrink: 0; }
-.pomo__dot.is-run { background: var(--success); box-shadow: 0 0 0 3px rgba(52,211,153,0.18); animation: pomo-pulse 1.4s ease-in-out infinite; }
+.pomo__pill:hover { background: rgba(52,211,153,0.14); }
+.pomo__pill.is-break { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.4); }
+.pomo__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-3); flex-shrink: 0; }
+.pomo__dot.is-run { background: var(--success); box-shadow: 0 0 0 4px rgba(52,211,153,0.2); animation: pomo-pulse 1.4s ease-in-out infinite; }
 @keyframes pomo-pulse { 50% { opacity: 0.35; } }
 .pomo__play {
-  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
-  display: grid; place-items: center; cursor: pointer; font-size: 0.9rem;
-  background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-1);
+  width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
+  display: grid; place-items: center; cursor: pointer; font-size: 1.1rem;
+  background: var(--success); border: none; color: #06231a; font-weight: 700;
 }
-.pomo__play:hover { background: var(--glass-bg-strong); }
+.pomo__play:hover { filter: brightness(1.08); }
 .pomo__scrim { position: fixed; inset: 0; z-index: 70; }
 .pomo__panel {
   position: absolute; top: calc(100% + 12px); right: 0; width: 280px; z-index: 80;
@@ -1138,6 +1140,12 @@ main.container {
   .navbar__actions { gap: 8px; }
   .ask-label { display: none; }
   .brand__text small { display: none; }
+  /* Keep the centered timer prominent; free up space on phones */
+  .pomo { gap: 6px; }
+  .pomo__pill { font-size: 1.25rem; padding: 7px 13px; gap: 7px; }
+  .pomo__play { width: 40px; height: 40px; }
+  .btn--today { display: none; }
+  .pomo__panel { right: auto; left: 50%; transform: translateX(-50%); width: 264px; }
   .hero { padding: 26px 0 16px; }
   .glass-card { padding: 16px; }
   .modal { width: 94vw; padding: 18px; }

@@ -44,7 +44,7 @@ export default function Navbar() {
     <header className="navbar">
       <div className="container">
         <div className="navbar__inner">
-          <div className="row" style={{ gap: 10, alignItems: "center" }}>
+          <div className="navbar__left row" style={{ gap: 10, alignItems: "center" }}>
             <button className="hamburger" aria-label="Menu" onClick={() => setOpen(true)}>
               <span /><span /><span />
             </button>
@@ -57,8 +57,9 @@ export default function Navbar() {
             </Link>
           </div>
 
+          <PomodoroTimer />
+
           <div className="navbar__actions">
-            <PomodoroTimer />
             <button className="btn btn--ghost btn--ask" onClick={() => setAskOpen(true)}>
               <span className="ask-ico">🤖</span>
               <span className="ask-label">Ask</span>
