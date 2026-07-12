@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { getSettings, saveSettings, DEFAULT_SETTINGS } from "@/lib/storage";
-import { exportAll, importAll, downloadBlob } from "@/lib/backup";
+import { exportAll, exportDataOnly, importAll, downloadBlob } from "@/lib/backup";
 import { getDaysOverview } from "@/lib/vocab";
 
 function mask(key) {
@@ -68,6 +68,17 @@ export default function SettingsPage() {
       const date = new Date().toISOString().slice(0, 10);
       downloadBlob(blob, `ssc-cgl-backup-${date}.json`);
       setBackupMsg(`Backup downloaded (${(blob.size / 1024 / 1024).toFixed(1)} MB). Save it to Google Drive.`);
+    } catch (e) { setBackupMsg("Export failed: " + e.message); }
+    finally { setBackupBusy(false); }
+  };
+
+  const doExportData = async () => {
+    setBackupBusy(true); setBackupMsg("Preparing data-only backup…");
+    try {
+      const blob = exportDataOnly();
+      const date = new Date().toISOString().slice(0, 10);
+      downloadBlob(blob, `ssc-cgl-data-${date}.json`);
+      setBackupMsg(`Data backup downloaded (${(blob.size / 1024 / 1024).toFixed(2)} MB). Questions, quizzes, mistakes & progress included — original PDFs/images not.`);
     } catch (e) { setBackupMsg("Export failed: " + e.message); }
     finally { setBackupBusy(false); }
   };
@@ -298,14 +309,17 @@ export default function SettingsPage() {
             Export a full backup file, save it to Google Drive, and import it on your phone/tablet to move everything over.
           </p>
           <div className="row mt-16" style={{ gap: 10, flexWrap: "wrap" }}>
-            <button className="btn btn--primary" onClick={doExport} disabled={backupBusy}>⬇️ Export backup</button>
+            <button className="btn btn--primary" onClick={doExport} disabled={backupBusy}>⬇️ Full backup (with PDFs)</button>
+            <button className="btn btn--ghost" onClick={doExportData} disabled={backupBusy}>📄 Data only (light)</button>
             <label className="btn btn--ghost" style={{ opacity: backupBusy ? 0.6 : 1, pointerEvents: backupBusy ? "none" : "auto" }}>
               ⬆️ Import backup
               <input ref={importRef} type="file" accept="application/json" hidden onChange={doImport} />
             </label>
           </div>
           {backupMsg && <p className="mt-16" style={{ color: "var(--accent-2)", fontSize: "0.88rem" }}>{backupMsg}</p>}
-          <p className="hint" style={{ marginTop: 10 }}>💡 The backup includes big PDFs/images, so the file can be large — that's normal.</p>
+          <p className="hint" style={{ marginTop: 10 }}>
+            💡 <strong>Full backup</strong> includes PDFs/images (large file). If it fails with “out of memory” — common on phones with many PDFs — use <strong>📄 Data only</strong>: it saves all your questions, quizzes, mistakes &amp; progress (just not the original PDF/image files) and never runs out of memory.
+          </p>
         </div>
       </section>
     </>
