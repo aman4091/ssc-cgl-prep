@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import VocabRush from "@/components/VocabRush";
 import CalcRush from "@/components/CalcRush";
+import CurrentAffairsRush from "@/components/CurrentAffairsRush";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
         <Footer />
         <VocabRush />
         <CalcRush />
+        <CurrentAffairsRush />
       </body>
     </html>
   );

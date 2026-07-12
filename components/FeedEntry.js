@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   updateEntry, deleteEntry, addEntryQuestions, clearEntryQuestions,
-  addEntryPdfMeta, removeEntryPdf,
+  addEntryNotes, clearEntryNotes, addEntryPdfMeta, removeEntryPdf,
 } from "@/lib/feed";
-import { extractPdfTextSmart, generateQuizText, ocrImage } from "@/lib/client-ai";
+import { extractPdfTextSmart, generateQuizText, extractNotesChunked, ocrImage } from "@/lib/client-ai";
 import { saveQuiz, makeId, getSettings } from "@/lib/storage";
 import { saveFile, openFile } from "@/lib/filestore";
 import YouTubePlayer from "@/components/YouTubePlayer";
@@ -19,6 +20,11 @@ export default function FeedEntry({ entry, onChanged }) {
   const [editVideo, setEditVideo] = useState(false);
   const [vUrl, setVUrl] = useState(entry.videoUrl || "");
   const [showVideo, setShowVideo] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
+
+  // Important-notes extraction (the facts behind the questions) is Current Affairs only.
+  const isCA = entry.feed === "current";
+  const noteCount = (entry.notes || []).reduce((a, g) => a + (g.points?.length || 0), 0);
 
   const requireKey = () => {
     if (!getSettings().apiKey) { setError("Add your DeepSeek API key in Settings first."); return false; }
@@ -42,7 +48,17 @@ export default function FeedEntry({ entry, onChanged }) {
       setStatus("Generating questions…");
       const { questions: qs } = await generateQuizText(text);
       const n = addEntryQuestions(entry.id, qs);
-      setStatus(`Done! Added ${n} questions. PDF saved too.`);
+      let nn = 0;
+      if (isCA) {
+        setStatus("📌 Extracting important notes/facts…");
+        try {
+          const { notes } = await extractNotesChunked(text, (i, t, so) =>
+            setStatus(`📌 Extracting important notes — part ${i}/${t} (so far ${so})…`)
+          );
+          nn = addEntryNotes(entry.id, notes);
+        } catch (err) { console.warn("notes failed", err); }
+      }
+      setStatus(`Done! Added ${n} questions${isCA ? ` · ${nn} notes` : ""}. PDF saved too.`);
       onChanged && onChanged();
     } catch (err) { setError(err.message); setStatus(""); }
     finally { setBusy(false); }
@@ -55,16 +71,21 @@ export default function FeedEntry({ entry, onChanged }) {
     setBusy(true); setError(""); setStatus("");
     try {
       let added = 0;
+      let notesAdded = 0;
       for (let i = 0; i < files.length; i++) {
         setStatus(`📷 Running OCR on image ${i + 1}/${files.length}…`);
         let text = ""; try { text = await ocrImage(files[i]); } catch { /* skip */ }
         if (text && text.trim().length > 15) {
           setStatus(`Image ${i + 1}/${files.length}: generating questions…`);
           try { const { questions: qs } = await generateQuizText(text); added += addEntryQuestions(entry.id, qs); } catch (err) { console.warn(err); }
+          if (isCA) {
+            setStatus(`📌 Image ${i + 1}/${files.length}: extracting important notes…`);
+            try { const { notes } = await extractNotesChunked(text); notesAdded += addEntryNotes(entry.id, notes); } catch (err) { console.warn(err); }
+          }
         }
       }
-      if (added === 0) throw new Error("No questions could be created from these images.");
-      setStatus(`Done! Added ${added} questions.`);
+      if (added === 0 && notesAdded === 0) throw new Error("Nothing could be extracted from these images.");
+      setStatus(`Done! Added ${added} questions${isCA ? ` · ${notesAdded} notes` : ""}.`);
       onChanged && onChanged();
     } catch (err) { setError(err.message); setStatus(""); }
     finally { setBusy(false); }
@@ -100,6 +121,7 @@ export default function FeedEntry({ entry, onChanged }) {
   const saveVideo = () => { updateEntry(entry.id, { videoUrl: vUrl.trim() }); setEditVideo(false); onChanged && onChanged(); };
   const remove = async () => { if (confirm("Delete this entry?")) { await deleteEntry(entry.id); onChanged && onChanged(); } };
   const clearQ = () => { if (confirm("Remove all questions from this entry?")) { clearEntryQuestions(entry.id); onChanged && onChanged(); } };
+  const clearNotes = () => { if (confirm("Remove all notes from this entry?")) { clearEntryNotes(entry.id); onChanged && onChanged(); } };
   const delPdf = async (pid) => { if (confirm("Delete this PDF?")) { await removeEntryPdf(entry.id, pid); onChanged && onChanged(); } };
   const openPdf = async (pid) => { try { await openFile(pid); } catch (err) { setError(err.message); } };
 
@@ -109,10 +131,18 @@ export default function FeedEntry({ entry, onChanged }) {
     <article className="glass-card feed-entry">
       <div className="row between" style={{ alignItems: "flex-start", flexWrap: "wrap", gap: 10 }}>
         <div>
-          <h3 style={{ fontSize: "1.1rem" }}>📅 {heading}</h3>
+          {isCA ? (
+            <Link href={`/current-affairs/${entry.id}`} className="feed-entry__open" style={{ textDecoration: "none", color: "inherit" }}>
+              <h3 style={{ fontSize: "1.1rem" }}>📅 {heading} <span className="grad" style={{ fontSize: "0.8rem" }}>· Open to study →</span></h3>
+            </Link>
+          ) : (
+            <h3 style={{ fontSize: "1.1rem" }}>📅 {heading}</h3>
+          )}
           {entry.title && entry.date && <p className="muted" style={{ fontSize: "0.85rem" }}>{entry.title}</p>}
           <p className="muted mt-8" style={{ fontSize: "0.8rem" }}>
-            {entry.questions?.length || 0} questions{entry.videoUrl ? " · ▶ video" : ""}
+            {entry.questions?.length || 0} questions
+            {isCA && noteCount > 0 ? ` · 📌 ${noteCount} notes` : ""}
+            {entry.videoUrl ? " · ▶ video" : ""}
           </p>
         </div>
         <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
@@ -145,7 +175,7 @@ export default function FeedEntry({ entry, onChanged }) {
       {/* Add questions */}
       <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
         <label className="btn btn--ghost btn--sm" style={{ opacity: busy ? 0.6 : 1, pointerEvents: busy ? "none" : "auto" }}>
-          📄 PDF → questions
+          {isCA ? "📄 PDF → questions + notes" : "📄 PDF → questions"}
           <input type="file" accept="application/pdf" hidden onChange={handlePdf} />
         </label>
         <label className="btn btn--ghost btn--sm" style={{ opacity: busy ? 0.6 : 1, pointerEvents: busy ? "none" : "auto" }}>
@@ -154,7 +184,31 @@ export default function FeedEntry({ entry, onChanged }) {
         </label>
         <button className="btn btn--ghost btn--sm" onClick={pasteImage} disabled={busy}>📋 Paste image</button>
         {entry.questions?.length > 0 && <button className="btn btn--ghost btn--sm" onClick={clearQ}>Clear questions</button>}
+        {isCA && noteCount > 0 && <button className="btn btn--ghost btn--sm" onClick={clearNotes}>Clear notes</button>}
       </div>
+
+      {/* Important notes (Current Affairs only) — the facts behind the questions */}
+      {isCA && noteCount > 0 && (
+        <div className="mt-12">
+          <button className="btn btn--ghost btn--sm" onClick={() => setShowNotes((v) => !v)}>
+            {showNotes ? "▲ Hide notes" : `📌 Important notes (${noteCount})`}
+          </button>
+          {showNotes && (
+            <div className="mt-12" style={{ display: "grid", gap: 14 }}>
+              {(entry.notes || []).map((g, gi) => (
+                <div key={gi}>
+                  <h4 style={{ fontSize: "0.95rem", color: "var(--accent-2)", marginBottom: 6 }}>{g.heading}</h4>
+                  <ul style={{ margin: 0, paddingLeft: 18, display: "grid", gap: 5 }}>
+                    {g.points.map((p, pi) => (
+                      <li key={pi} style={{ fontSize: "0.9rem", lineHeight: 1.5 }}>{p}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {status && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem" }}>{status}</p>}
       {error && <p className="mt-12" style={{ color: "var(--danger)", fontSize: "0.85rem" }}>{error}</p>}

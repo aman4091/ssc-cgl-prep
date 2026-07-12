@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getSettings, saveSettings, DEFAULT_SETTINGS } from "@/lib/storage";
 import { exportAll, importAll, downloadBlob } from "@/lib/backup";
+import { getDaysOverview } from "@/lib/vocab";
 
 function mask(key) {
   if (!key) return "";
@@ -18,10 +19,21 @@ export default function SettingsPage() {
   const [testing, setTesting] = useState(false);
   const [testResult, setTestResult] = useState(null);
 
+  const [vDays, setVDays] = useState([]);
+
   useEffect(() => {
     setSettings(getSettings());
+    setVDays(getDaysOverview());
     setLoaded(true);
   }, []);
+
+  // Vocab Rush day filter: [] = all days.
+  const rushDays = settings.vocabRushDays || [];
+  const toggleRushDay = (day) => {
+    const set = new Set(rushDays);
+    if (set.has(day)) set.delete(day); else set.add(day);
+    update("vocabRushDays", [...set].sort((a, b) => a - b));
+  };
 
   // Auto-save: har change turant localStorage mein chala jaata hai.
   const update = (field, value) => {
@@ -232,6 +244,48 @@ export default function SettingsPage() {
             </div>
           ))}
           <p className="hint">Auto-saved. Used when you press ⚡ Shortcut trick on a question of that subject.</p>
+        </div>
+      </section>
+
+      {/* Vocab Rush — which days */}
+      <section className="section" style={{ maxWidth: 640 }}>
+        <div className="glass-card">
+          <h3>⚡ Vocab Rush — days</h3>
+          <p className="muted mt-8" style={{ fontSize: "0.88rem" }}>
+            Choose which vocab days the ⚡ Vocab Rush pop-up should test you on. Tick specific days,
+            or keep <strong>All days</strong> to mix everything.
+          </p>
+          {vDays.length === 0 ? (
+            <p className="hint" style={{ marginTop: 12 }}>No vocab yet — add words on the Vocab page first.</p>
+          ) : (
+            <>
+              <label className="row" style={{ gap: 8, alignItems: "center", cursor: "pointer", marginTop: 14 }}>
+                <input type="checkbox" checked={rushDays.length === 0} onChange={() => update("vocabRushDays", [])} />
+                <span style={{ fontWeight: 600 }}>All days ({vDays.length})</span>
+              </label>
+              <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
+                {vDays.map((d) => {
+                  const on = rushDays.includes(d.day);
+                  return (
+                    <button
+                      key={d.day}
+                      type="button"
+                      className={`chip chip--btn ${on ? "is-active" : ""}`}
+                      onClick={() => toggleRushDay(d.day)}
+                      title={`${d.count} words`}
+                    >
+                      {on ? "✓ " : ""}Day {d.day}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="hint" style={{ marginTop: 12 }}>
+                {rushDays.length === 0
+                  ? "Currently mixing words from all days."
+                  : `Rush will only use Day ${rushDays.join(", ")}.`}
+              </p>
+            </>
+          )}
         </div>
       </section>
 

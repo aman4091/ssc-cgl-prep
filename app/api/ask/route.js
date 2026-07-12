@@ -81,6 +81,19 @@ Rules:
 - Reply in Hinglish (Hindi + English mix), friendly aur detailed.
 - MATH: write mathematics in LaTeX ($...$). Use x^{2}, \\frac{a}{b}, \\sqrt{x}. NEVER a bare ^ caret.`;
 
+const CA_EXPLAIN_PROMPT = `You are an SSC CGL Current Affairs expert. The student gives a current-affairs MCQ WITH its correct answer marked. Give a short but complete explanation so the fact sticks in memory.
+
+The provided correct answer is AUTHORITATIVE — explain around it, never contradict it.
+
+Answer in THIS format (markdown, simple Hinglish):
+- **✅ Answer:** <correct option>.
+- **📖 Detail:** 3-5 lines — ye kya hai, kisne / kab / kahan, aur important kyun hai. Related facts bhi add karo (jaise award/scheme ka field, kis ministry/state se juda hai, kisne diya/launch kiya) taaki exam ke doosre questions bhi cover ho jaayein.
+- **🔑 Yaad rakho:** ek chhota memory hook / key point.
+
+Rules:
+- Reply in Hinglish (Hindi + English mix, roman script) — crisp aur factual.
+- Sirf wahi facts do jinke baare mein tum sure ho. Agar kisi cheez pe pakka nahi ho to general context do — galat fact mat gadho.`;
+
 const SUBJECT_NAMES = {
   math: "Quant (maths)",
   reasoning: "Reasoning",
@@ -98,6 +111,7 @@ export async function POST(req) {
     let system =
       mode === "shortcut" ? (customPrompt && customPrompt.trim() ? customPrompt.trim() : SHORTCUT_ONLY_PROMPT) :
       mode === "explain" ? EXPLAIN_PROMPT :
+      mode === "ca" ? CA_EXPLAIN_PROMPT :
       TUTOR_PROMPT;
 
     // User-chosen subject overrides auto-detection
@@ -110,8 +124,9 @@ export async function POST(req) {
     // Always Hinglish
     system += `\n\nALWAYS reply in Hinglish (Hindi + English mix, roman script) — simple, friendly, detailed where the format asks for detail.`;
 
-    // Shortcut trick uses Gemini when a Gemini key is provided; everything else stays on DeepSeek.
-    if (mode === "shortcut" && geminiApiKey && geminiApiKey.trim()) {
+    // Shortcut trick + Current Affairs explanation use Gemini when a Gemini key
+    // is provided (better on recent facts); everything else stays on DeepSeek.
+    if ((mode === "shortcut" || mode === "ca") && geminiApiKey && geminiApiKey.trim()) {
       const g = await geminiChat({ apiKey: geminiApiKey.trim(), model: geminiModel, system, user: q, temperature: 0.2 });
       if (!g.ok) return Response.json({ error: g.error }, { status: g.status || 502 });
       if (!g.content) return Response.json({ error: "Gemini gave an empty reply. Check the model id in Settings." }, { status: 502 });
@@ -127,7 +142,7 @@ export async function POST(req) {
       model,
       baseUrl,
       temperature: 0.15,
-      maxTokens: isReasoner ? 8000 : 2000,
+      maxTokens: isReasoner ? 8000 : 4000,
       messages: [
         { role: "system", content: system },
         { role: "user", content: q },

@@ -1,12 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { randomCalcQuestion, calcTypeLabel } from "@/lib/calc";
+import { randomCurrentAffairsQuestion, getCurrentAffairsQuestions } from "@/lib/feed";
 import { addReview } from "@/lib/qreview";
 
-const CFG_KEY = "cgl.calcrush";
-const DEFAULT_CFG = { enabled: false, intervalMin: 30 };
+const CFG_KEY = "cgl.carush";
+const DEFAULT_CFG = { enabled: false, intervalMin: 60 };
 
 function getCfg() {
   if (typeof window === "undefined") return DEFAULT_CFG;
@@ -15,8 +14,9 @@ function getCfg() {
 }
 function setCfg(cfg) { localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); }
 
-export default function CalcRush() {
+export default function CurrentAffairsRush() {
   const [cfg, setCfgState] = useState(DEFAULT_CFG);
+  const [hasQ, setHasQ] = useState(false);
   const [panel, setPanel] = useState(false);
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState(null);
@@ -25,7 +25,10 @@ export default function CalcRush() {
   const advanceRef = useRef(null);
   const fabRef = useRef(null);
 
-  useEffect(() => { setCfgState(getCfg()); }, []);
+  useEffect(() => {
+    setCfgState(getCfg());
+    setHasQ(getCurrentAffairsQuestions().length >= 1);
+  }, []);
 
   // close the config panel when clicking outside it
   useEffect(() => {
@@ -36,45 +39,49 @@ export default function CalcRush() {
   }, [panel]);
 
   const trigger = () => {
+    const next = randomCurrentAffairsQuestion();
+    if (!next) return;
     if (advanceRef.current) { clearTimeout(advanceRef.current); advanceRef.current = null; }
-    setQ(randomCalcQuestion()); setPicked(null); setOpen(true);
+    setQ(next); setPicked(null); setOpen(true);
   };
 
-  // Pick an answer -> brief feedback -> auto-advance to the next question.
+  // Pick an answer -> record to the Mistake Notebook -> brief feedback -> next.
   const choose = (oi) => {
     if (picked !== null) return;
     setPicked(oi);
-    addReview(q, { source: "calc-rush", category: `Calc · ${calcTypeLabel(q.type)}`, correct: oi === q.answer });
+    addReview(q, { source: "ca-rush", category: "Current Affairs", correct: oi === q.answer });
     if (advanceRef.current) clearTimeout(advanceRef.current);
-    const delay = oi === q.answer ? 900 : 1500;
+    const delay = oi === q.answer ? 1000 : 1800;
     advanceRef.current = setTimeout(() => trigger(), delay);
   };
+
+  useEffect(() => {
+    if (timer.current) clearInterval(timer.current);
+    if (!cfg.enabled || !hasQ) return;
+    timer.current = setInterval(trigger, Math.max(1, cfg.intervalMin) * 60 * 1000);
+    return () => timer.current && clearInterval(timer.current);
+  }, [cfg.enabled, cfg.intervalMin, hasQ]);
 
   useEffect(() => {
     if (!open && advanceRef.current) { clearTimeout(advanceRef.current); advanceRef.current = null; }
   }, [open]);
   useEffect(() => () => { if (advanceRef.current) clearTimeout(advanceRef.current); }, []);
 
-  useEffect(() => {
-    if (timer.current) clearInterval(timer.current);
-    if (!cfg.enabled) return;
-    timer.current = setInterval(trigger, Math.max(1, cfg.intervalMin) * 60 * 1000);
-    return () => timer.current && clearInterval(timer.current);
-  }, [cfg.enabled, cfg.intervalMin]);
-
   const update = (patch) => { const next = { ...cfg, ...patch }; setCfgState(next); setCfg(next); };
+
+  if (!hasQ) return null;
 
   return (
     <>
-      <div className="rush-fab rush-fab--left" ref={fabRef}>
+      <div className="rush-fab rush-fab--stack" ref={fabRef}>
         {panel && (
           <div className="rush-panel">
             <div className="row between">
-              <strong style={{ fontSize: "0.9rem" }}>🧮 Calc Booster</strong>
+              <strong style={{ fontSize: "0.9rem" }}>📰 Current Affairs Rush</strong>
               <button className="btn btn--ghost btn--sm" onClick={() => setPanel(false)}>✕</button>
             </div>
             <p className="muted" style={{ fontSize: "0.78rem", margin: "6px 0 10px" }}>
-              Quick speed-maths quizzes — get faster at calculation!
+              Random current-affairs question every so often — keeps facts fresh!
             </p>
             <label className="rush-row">
               <span>Auto pop-up</span>
@@ -87,23 +94,23 @@ export default function CalcRush() {
                 <option value={15}>15 min</option>
                 <option value={30}>30 min</option>
                 <option value={60}>1 hour</option>
+                <option value={120}>2 hours</option>
               </select>
             </label>
-            <button className="btn btn--primary btn--block mt-8" onClick={trigger}>Quick question</button>
-            <Link href="/calculation" className="btn btn--ghost btn--block mt-8" onClick={() => setPanel(false)}>Full drill →</Link>
+            <button className="btn btn--primary btn--block mt-8" onClick={trigger}>Quiz now</button>
           </div>
         )}
-        <button className="rush-btn rush-btn--calc" onClick={() => setPanel((v) => !v)} title="Calculation Booster">🧮</button>
+        <button className="rush-btn rush-btn--ca" onClick={() => setPanel((v) => !v)} title="Current Affairs Rush">📰</button>
       </div>
 
       {open && q && (
         <div className="modal-overlay" onClick={() => setOpen(false)}>
-          <div className="modal glass" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 480 }}>
+          <div className="modal glass" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 540 }}>
             <div className="row between">
-              <span className="badge badge--ok">🧮 {calcTypeLabel(q.type)}</span>
+              <span className="badge badge--ok">📰 Current Affairs</span>
               <button className="btn btn--ghost btn--sm" onClick={() => setOpen(false)}>✕</button>
             </div>
-            <h3 style={{ marginTop: 14, fontSize: "1.3rem" }}>{q.question}</h3>
+            <h3 style={{ marginTop: 14, fontSize: "1.05rem" }}>{q.question}</h3>
             <div className="grid" style={{ gap: 10, marginTop: 16 }}>
               {q.options.map((opt, oi) => {
                 const s = {
@@ -127,6 +134,7 @@ export default function CalcRush() {
                 <span style={{ color: picked === q.answer ? "var(--success)" : "var(--danger)", fontWeight: 600 }}>
                   {picked === q.answer ? "Correct! ✅" : `Wrong ❌ — ${q.options[q.answer]}`}
                 </span>
+                {q.explanation && <p className="muted mt-8" style={{ fontSize: "0.82rem" }}>{q.explanation}</p>}
               </div>
             )}
           </div>

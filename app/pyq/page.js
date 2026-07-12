@@ -21,6 +21,10 @@ export default function PyqPage() {
           Create chapters inside each subject, then upload question images from books — AI turns them into quizzes.
           Practice chapter by chapter.
         </p>
+        <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
+          <Link href="/mistakes" className="btn btn--ghost btn--sm">🔴 Mistake Notebook</Link>
+          <Link href="/bookmarks" className="btn btn--ghost btn--sm">⭐ Bookmarked</Link>
+        </div>
       </section>
 
       <section className="section" style={{ marginTop: 20 }}>

@@ -18,6 +18,7 @@ const LINKS = [
   { href: "/bookmarks", label: "Bookmarked Qs", icon: "⭐" },
   { href: "/external-tests", label: "External Tests", icon: "🌐" },
   { href: "/quizzes", label: "Quizzes", icon: "🗂️" },
+  { href: "/mistakes", label: "Mistake Notebook", icon: "🔴" },
   { href: "/settings", label: "Settings", icon: "⚙️" },
 ];
 

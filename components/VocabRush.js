@@ -1,7 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { randomMcq, getOws } from "@/lib/vocab";
+import { randomMcqFromDays, getOws } from "@/lib/vocab";
+import { getSettings } from "@/lib/storage";
+import { addReview } from "@/lib/qreview";
 
 const CFG_KEY = "cgl.rush";
 const DEFAULT_CFG = { enabled: true, intervalMin: 60 };
@@ -23,6 +25,7 @@ export default function VocabRush() {
   const [mcq, setMcq] = useState(null);
   const [picked, setPicked] = useState(null);
   const timer = useRef(null);
+  const advanceRef = useRef(null);
   const fabRef = useRef(null);
 
   // close the config panel when clicking anywhere outside it
@@ -39,12 +42,29 @@ export default function VocabRush() {
   }, []);
 
   const trigger = () => {
-    const q = randomMcq();
+    const q = randomMcqFromDays(getSettings().vocabRushDays);
     if (!q) return;
+    if (advanceRef.current) { clearTimeout(advanceRef.current); advanceRef.current = null; }
     setMcq(q);
     setPicked(null);
     setOpen(true);
   };
+
+  // Pick an answer -> show feedback briefly -> auto-advance to the next question.
+  const choose = (oi) => {
+    if (picked !== null) return;
+    setPicked(oi);
+    addReview(mcq, { source: "vocab-rush", category: "Vocab", correct: oi === mcq.answer });
+    if (advanceRef.current) clearTimeout(advanceRef.current);
+    const delay = oi === mcq.answer ? 900 : 1500; // linger longer when wrong
+    advanceRef.current = setTimeout(() => trigger(), delay);
+  };
+
+  // cancel any pending auto-advance when the overlay closes / unmounts
+  useEffect(() => {
+    if (!open && advanceRef.current) { clearTimeout(advanceRef.current); advanceRef.current = null; }
+  }, [open]);
+  useEffect(() => () => { if (advanceRef.current) clearTimeout(advanceRef.current); }, []);
 
   // schedule recurring rush
   useEffect(() => {
@@ -116,18 +136,17 @@ export default function VocabRush() {
                   else if (oi === picked) { s.borderColor = "rgba(251,113,133,0.7)"; s.background = "rgba(251,113,133,0.14)"; }
                 }
                 return (
-                  <button key={oi} style={s} onClick={() => picked === null && setPicked(oi)}>
+                  <button key={oi} style={s} onClick={() => choose(oi)}>
                     <strong style={{ opacity: 0.7, marginRight: 8 }}>{String.fromCharCode(65 + oi)}</strong>{opt}
                   </button>
                 );
               })}
             </div>
             {picked !== null && (
-              <div className="row between mt-16">
+              <div className="center mt-16">
                 <span style={{ color: picked === mcq.answer ? "var(--success)" : "var(--danger)", fontWeight: 600 }}>
                   {picked === mcq.answer ? "Correct! ✅" : `Wrong ❌ — correct: ${mcq.options[mcq.answer]}`}
                 </span>
-                <button className="btn btn--primary btn--sm" onClick={trigger}>Next →</button>
               </div>
             )}
           </div>

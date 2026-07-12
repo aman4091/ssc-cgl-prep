@@ -1,18 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { askAI, generateSimilar } from "@/lib/client-ai";
 import { saveQuiz, makeId } from "@/lib/storage";
 import { recordAttempts, getStat } from "@/lib/qstats";
-import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
+import { isQBookmarked, toggleQBookmark, bookmarkQuestion } from "@/lib/qbookmarks";
+import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
 import Diagram from "./Diagram";
 import QuestionFollowup from "./QuestionFollowup";
+import QuestionEditor from "./QuestionEditor";
 
 // One PYQ / chapter question shown as an interactive quiz card:
 // pick an option -> reveal correct/wrong + solution, plus shortcut / 20-similar / doubt.
-export default function PyqQuestionCard({ q, index, subject, chapterName, onDelete }) {
+export default function PyqQuestionCard({ q, index, subject, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer }) {
   const router = useRouter();
   const [picked, setPicked] = useState(null);
   const [revealed, setRevealed] = useState(false);
@@ -23,20 +25,34 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, onDele
   const [err, setErr] = useState("");
   const [recorded, setRecorded] = useState(false);
   const [bm, setBm] = useState(false);
+  const [flash, setFlash] = useState("");
+  const [editing, setEditing] = useState(false);
+  const archiveTimer = useRef(null);
   useEffect(() => { setBm(isQBookmarked(q)); }, [q]);
+  useEffect(() => () => { if (archiveTimer.current) clearTimeout(archiveTimer.current); }, []);
 
   const paper = q.paper || q.source;
 
   const choose = (oi) => {
     if (picked !== null) return;
+    const correct = oi === q.answer;
     setPicked(oi);
     setRevealed(true);
-    if (!recorded) { recordAttempts([{ q, correct: oi === q.answer }]); setRecorded(true); }
+    if (!recorded) { recordAttempts([{ q, correct }]); setRecorded(true); }
+    // In a chapter list: archive to Attempted (+Correct/Wrong), bookmark, then
+    // remove from the list so the next question moves up.
+    if (archiveOnAnswer) {
+      addReview(q, { subject, source: "chapter", category: chapterName || subject, chapterId, correct });
+      if (!bm) { bookmarkQuestion(q, subject); setBm(true); }
+      // Never remove from the PYQ list — the question stays put after answering.
+      // Wrong ones are still tracked in the Mistake Notebook (Wrong bucket).
+      setFlash(correct
+        ? "✓ Correct · saved. Question PYQ mein hi rahega."
+        : "❌ Saved to Wrong (Mistakes). Question PYQ mein hi rahega — solution padho.");
+    }
   };
 
-  const toggleShortcut = async () => {
-    if (scShown) { setScShown(false); return; }        // hide
-    if (shortcut) { setScShown(true); return; }         // show cached
+  const fetchShortcut = async () => {
     setScLoading(true); setErr("");
     try {
       const opts = q.options.map((o, i) => `${String.fromCharCode(65 + i)}) ${o}`).join("   ");
@@ -48,6 +64,12 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, onDele
       setShortcut(answer); setScShown(true);
     } catch (e) { setErr(e.message); } finally { setScLoading(false); }
   };
+  const toggleShortcut = () => {
+    if (scShown) { setScShown(false); return; }        // hide
+    if (shortcut) { setScShown(true); return; }         // show cached
+    fetchShortcut();
+  };
+  const regenShortcut = () => { setShortcut(""); fetchShortcut(); }; // fresh shortcut
 
   const toggleBm = () => { const on = toggleQBookmark(q, subject); setBm(on); };
 
@@ -72,11 +94,20 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, onDele
         </h3>
         <div className="row" style={{ gap: 6, flexShrink: 0 }}>
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
+          {onEdit && !editing && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
           {onDelete && <button className="btn btn--ghost btn--sm" onClick={onDelete}>✕</button>}
         </div>
       </div>
 
+      {editing ? (
+        <QuestionEditor
+          question={q}
+          onSave={(nq) => { onEdit(nq); setEditing(false); setPicked(null); setRevealed(false); setFlash(""); }}
+          onCancel={() => setEditing(false)}
+        />
+      ) : (
+      <>
       <Diagram svg={q.diagram} />
 
       <div className="grid" style={{ gap: 8, marginTop: 12 }}>
@@ -100,6 +131,8 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, onDele
         })}
       </div>
 
+      {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
+
       {!revealed && <button className="btn btn--ghost btn--sm mt-12" onClick={() => setRevealed(true)}>👁️ Show answer</button>}
 
       {revealed && (q.solution || q.explanation) && (
@@ -117,9 +150,18 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, onDele
       )}
 
       {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}
-      {scShown && shortcut && <div className="answer-box mt-12"><Markdown>{shortcut}</Markdown></div>}
+      {scShown && shortcut && (
+        <div className="answer-box mt-12">
+          <Markdown>{shortcut}</Markdown>
+          <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
+            {scLoading ? "Thinking…" : "🔄 New shortcut"}
+          </button>
+        </div>
+      )}
 
       {revealed && <QuestionFollowup question={q} subject={subject} />}
+      </>
+      )}
     </article>
   );
 }

@@ -8,8 +8,9 @@ import { askAI, generateSimilar } from "@/lib/client-ai";
 import Markdown from "@/components/Markdown";
 import Diagram from "@/components/Diagram";
 import QuestionFollowup from "@/components/QuestionFollowup";
-import { recordAttempts, getStat } from "@/lib/qstats";
+import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
+import { recordQuizAttempts, quizCategory, setReviewErrorType, ERROR_TYPES } from "@/lib/qreview";
 
 function fmt(sec) {
   const s = Math.round(sec || 0);
@@ -43,6 +44,12 @@ export default function QuizPlayer() {
   const [simLoading, setSimLoading] = useState({});
   const [actionErr, setActionErr] = useState({});
   const [, bumpBm] = useState(0); // re-render on bookmark toggle
+  const [errorTags, setErrorTags] = useState({}); // qi -> errorType (Mistake Notebook)
+
+  const tagError = (qi, q, type) => {
+    setReviewErrorType(keyFor(q), type);
+    setErrorTags((m) => ({ ...m, [qi]: m[qi] === type ? "" : type }));
+  };
 
   useEffect(() => {
     const qz = getQuiz(id);
@@ -97,13 +104,19 @@ export default function QuizPlayer() {
   const submit = () => {
     if (submitted) return;
     commitTime();
-    // track per-question attempts (only the ones actually answered)
+    // track per-question attempts + archive into the Mistake Notebook (site-wide)
     if (quiz) {
       const items = [];
+      const reviewItems = [];
       quiz.questions.forEach((q, i) => {
-        if (answers[i] !== undefined) items.push({ q, correct: answers[i] === q.answer });
+        if (answers[i] !== undefined) {
+          const correct = answers[i] === q.answer;
+          items.push({ q, correct });
+          reviewItems.push({ q, correct, source: quiz.source || "", category: quizCategory(quiz, q) });
+        }
       });
       recordAttempts(items);
+      recordQuizAttempts(reviewItems);
     }
     setSubmitted(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -150,6 +163,7 @@ export default function QuizPlayer() {
     if (shortcuts[i]) { setScShown((s) => ({ ...s, [i]: true })); return; }
     getShortcut(i);
   };
+  const regenShortcut = (i) => { setShortcuts((s) => ({ ...s, [i]: "" })); getShortcut(i); };
   const toggleBm = (q) => { toggleQBookmark(q); bumpBm((v) => v + 1); };
 
   const getExplain = async (i) => {
@@ -249,7 +263,7 @@ export default function QuizPlayer() {
                             style={chosen !== undefined && !isRight ? { background: "rgba(251,113,133,0.15)", color: "var(--danger)", border: "1px solid rgba(251,113,133,0.3)" } : {}}>
                         {qi + 1}
                       </span>
-                      <h3 style={{ fontSize: "1.02rem", fontWeight: 600 }}>
+                      <h3 style={{ fontSize: "1.14rem", fontWeight: 600, lineHeight: 1.5 }}>
                         <Markdown inline>{q.question}</Markdown>
                         {(q.paper || q.source) && <span className="paper-tag">📄 {q.paper || q.source}</span>}
                       </h3>
@@ -287,8 +301,25 @@ export default function QuizPlayer() {
                     })}
                   </div>
 
+                  {chosen !== undefined && !isRight && (
+                    <div className="row mt-12" style={{ gap: 6, flexWrap: "wrap", alignItems: "center" }}>
+                      <span className="muted" style={{ fontSize: "0.8rem" }}>Galti kyun?</span>
+                      {ERROR_TYPES.map((e) => {
+                        const on = errorTags[qi] === e.key;
+                        const suggest = e.key === "time" && !errorTags[qi] && (times[qi] || 0) > Math.max(90, (totalTime / total) * 2);
+                        return (
+                          <button key={e.key} className={`chip chip--btn chip--sm ${on ? "is-active" : ""}`}
+                            style={suggest ? { borderColor: "rgba(251,191,36,0.65)", color: "var(--warning)" } : {}}
+                            onClick={() => tagError(qi, q, e.key)}>
+                            {e.label}{suggest ? " ?" : ""}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+
                   {q.explanation && (
-                    <div className="muted mt-16" style={{ fontSize: "0.86rem" }}>
+                    <div className="muted mt-16" style={{ fontSize: "0.96rem", lineHeight: 1.6 }}>
                       <strong style={{ color: "var(--text-2)" }}>Reason: </strong>
                       <Markdown inline>{q.explanation}</Markdown>
                     </div>
@@ -316,6 +347,9 @@ export default function QuizPlayer() {
                   {scShown[qi] && shortcuts[qi] && (
                     <div className="answer-box mt-16">
                       <Markdown>{shortcuts[qi]}</Markdown>
+                      <button className="btn btn--ghost btn--sm mt-12" onClick={() => regenShortcut(qi)} disabled={scLoading[qi]}>
+                        {scLoading[qi] ? "Thinking…" : "🔄 New shortcut"}
+                      </button>
                     </div>
                   )}
 
@@ -369,7 +403,7 @@ export default function QuizPlayer() {
           {(() => { const st = getStat(q); return st && st.attempts ? (
             <p className="muted" style={{ fontSize: "0.76rem", marginBottom: 6 }}>🔁 You've attempted this question {st.attempts} times ({st.correct} correct)</p>
           ) : null; })()}
-          <h3 style={{ fontSize: "1.1rem", fontWeight: 600 }}>
+          <h3 style={{ fontSize: "1.22rem", fontWeight: 600, lineHeight: 1.5 }}>
             <Markdown inline>{q.question}</Markdown>
             {(q.paper || q.source) && <span className="paper-tag">📄 {q.paper || q.source}</span>}
           </h3>
