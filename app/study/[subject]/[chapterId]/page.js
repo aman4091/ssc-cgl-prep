@@ -20,6 +20,7 @@ import { saveFile, getFile, openFile } from "@/lib/filestore";
 import RuleCard from "@/components/RuleCard";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import YouTubePlayer from "@/components/YouTubePlayer";
+import ZoomableImage from "@/components/ZoomableImage";
 
 export default function ChapterPage() {
   const { subject, chapterId } = useParams();
@@ -707,7 +708,7 @@ export default function ChapterPage() {
             <button className="lightbox__nav lightbox__nav--prev" disabled={lbIndex <= 0}
               onClick={(e) => { e.stopPropagation(); setLbIndex((i) => Math.max(0, i - 1)); }}>‹</button>
             <div className="lightbox__body" onClick={(e) => e.stopPropagation()}>
-              {noteUrls[cur.id] ? <img src={noteUrls[cur.id]} alt={cur.caption || cur.name} /> : <div className="note-thumb__loading">loading…</div>}
+              {noteUrls[cur.id] ? <ZoomableImage key={cur.id} src={noteUrls[cur.id]} alt={cur.caption || cur.name} /> : <div className="note-thumb__loading">loading…</div>}
               <div className="lightbox__bar">
                 <input className="input" style={{ flex: 1 }} placeholder="📝 Write this page's topic (e.g. 'Mughal Empire') — makes it easy to find"
                   defaultValue={cur.caption || ""} key={cur.id}

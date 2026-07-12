@@ -1,15 +1,26 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getTests, addTest, deleteTest } from "@/lib/exttests";
+import { useRouter } from "next/navigation";
+import { getTests, addTest, addMock, deleteTest } from "@/lib/exttests";
 import { parseTimeToSeconds, formatTime } from "@/lib/youtube";
 
 const EMPTY = { name: "", website: "", url: "", section: "", correct: "", wrong: "", skipped: "", total: "", time: "", date: "", notes: "" };
 
 export default function ExternalTestsPage() {
+  const router = useRouter();
   const [tests, setTests] = useState([]);
   const [f, setF] = useState(EMPTY);
   const [showForm, setShowForm] = useState(false);
+  const [mockName, setMockName] = useState("");
+  const [showMock, setShowMock] = useState(false);
+
+  const createMock = () => {
+    const rec = addMock(mockName || "My Mock");
+    setMockName(""); setShowMock(false);
+    router.push(`/external-tests/${rec.id}`);
+  };
 
   const refresh = () => setTests(getTests());
   useEffect(() => {
@@ -45,9 +56,12 @@ export default function ExternalTestsPage() {
   return (
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
-        <div className="row between">
+        <div className="row between" style={{ flexWrap: "wrap", gap: 8 }}>
           <span className="hero__eyebrow">🌐 External Tests</span>
-          <button className="btn btn--primary btn--sm" onClick={() => setShowForm((v) => !v)}>{showForm ? "✕ Close" : "➕ Add test"}</button>
+          <div className="row" style={{ gap: 8 }}>
+            <button className="btn btn--ghost btn--sm" onClick={() => setShowMock((v) => !v)}>{showMock ? "✕ Close" : "🧩 Build a mock"}</button>
+            <button className="btn btn--primary btn--sm" onClick={() => setShowForm((v) => !v)}>{showForm ? "✕ Close" : "➕ Log a score"}</button>
+          </div>
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.7rem, 4vw, 2.6rem)" }}>
           External <span className="grad">Tests</span>
@@ -56,6 +70,25 @@ export default function ExternalTestsPage() {
           A record of tests taken on other websites — score, time, section, link. All in one place, so you can see progress and reopen a test directly.
         </p>
       </section>
+
+      {/* Create a mock */}
+      {showMock && (
+        <section className="section" style={{ marginTop: 12 }}>
+          <div className="glass-card">
+            <h3>🧩 New mock test</h3>
+            <p className="muted mt-8" style={{ fontSize: "0.85rem" }}>
+              Name do → phir builder mein sections (Maths, Reasoning…) banao, question screenshots paste karo,
+              aur har section ka time set karke timed test do.
+            </p>
+            <div className="row mt-12" style={{ gap: 10, flexWrap: "wrap" }}>
+              <input className="input" style={{ flex: 1, minWidth: 200 }} placeholder="Mock name (e.g. CGL Mock 12)"
+                value={mockName} onChange={(e) => setMockName(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") createMock(); }} />
+              <button className="btn btn--primary" onClick={createMock}>Create & build →</button>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Summary */}
       {tests.length > 0 && (
@@ -104,6 +137,28 @@ export default function ExternalTestsPage() {
           <div className="grid grid--2">
             {tests.map((t) => {
               const acc = t.total ? Math.round((t.correct / t.total) * 100) : 0;
+              const isMock = Array.isArray(t.sections);
+              if (isMock) {
+                const qn = t.sections.reduce((a, s) => a + (s.questions?.length || 0), 0);
+                const mins = t.sections.reduce((a, s) => a + (Number(s.timeMin) || 0), 0);
+                return (
+                  <article key={t.id} className="glass-card">
+                    <div className="row between" style={{ alignItems: "flex-start", gap: 10 }}>
+                      <div>
+                        <h3 style={{ fontSize: "1.05rem" }}>🧩 {t.name}</h3>
+                        <p className="muted mt-8" style={{ fontSize: "0.8rem" }}>
+                          <span className="type-tag">Mock</span>{" "}
+                          {t.sections.length} section{t.sections.length !== 1 ? "s" : ""} · {qn} Q · {mins} min
+                        </p>
+                      </div>
+                      <button className="btn btn--ghost btn--sm" onClick={() => del(t.id)}>✕</button>
+                    </div>
+                    <Link href={`/external-tests/${t.id}`} className="btn btn--primary btn--block mt-16">
+                      🧩 Open / Take mock
+                    </Link>
+                  </article>
+                );
+              }
               return (
                 <article key={t.id} className="glass-card">
                   <div className="row between" style={{ alignItems: "flex-start", gap: 10 }}>
