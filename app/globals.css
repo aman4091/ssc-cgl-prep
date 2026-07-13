@@ -1243,3 +1243,30 @@ main.container {
   .brand__text { display: none; }
   .btn--today { padding: 8px 12px; }
 }
+
+/* On/off switch (e.g. Gemini master toggle in Settings) */
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 4px 4px;
+  border-radius: 999px;
+  border: 1px solid var(--border, rgba(255,255,255,0.14));
+  background: rgba(255,255,255,0.06);
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.toggle__knob {
+  width: 14px;
+  height: 14px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: #8b93a7;
+  box-shadow: 0 0 0 4px rgba(139,147,167,0.18);
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+}
+.toggle__txt { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; color: var(--text-2, #9aa2b4); }
+.toggle.is-on { background: rgba(52,199,120,0.16); border-color: rgba(52,199,120,0.5); }
+.toggle.is-on .toggle__knob { background: var(--success, #34c778); box-shadow: 0 0 0 4px rgba(52,199,120,0.22); }
+.toggle.is-on .toggle__txt { color: var(--success, #34c778); }

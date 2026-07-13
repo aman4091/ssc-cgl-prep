@@ -217,19 +217,36 @@ export default function SettingsPage() {
       {/* Gemini — shortcut trick only */}
       <section className="section" style={{ maxWidth: 640 }}>
         <div className="glass-card">
-          <h3>⚡ Gemini — for Shortcut Trick only</h3>
+          <div className="row between" style={{ alignItems: "flex-start", gap: 12 }}>
+            <h3>⚡ Gemini — for Shortcut Trick only</h3>
+            <button
+              type="button"
+              className={`toggle ${settings.geminiEnabled !== false ? "is-on" : ""}`}
+              role="switch"
+              aria-checked={settings.geminiEnabled !== false}
+              onClick={() => update("geminiEnabled", settings.geminiEnabled === false)}
+              title="Gemini on/off"
+            >
+              <span className="toggle__knob" />
+              <span className="toggle__txt">{settings.geminiEnabled !== false ? "ON" : "OFF"}</span>
+            </button>
+          </div>
           <p className="muted mt-8" style={{ fontSize: "0.88rem" }}>
-            If you set a Gemini key, the <strong>Shortcut trick</strong> button uses Gemini. Everything else keeps using DeepSeek.
+            {settings.geminiEnabled !== false ? (
+              <>If you set a Gemini key, the <strong>Shortcut trick</strong> (and one-liner image reading) use Gemini. Everything else keeps using DeepSeek.</>
+            ) : (
+              <><strong>Gemini OFF</strong> — har query DeepSeek pe jaayegi. Shortcut trick aur image one-liner tab tak DeepSeek-only rahenge jab tak wapas ON na karo. Key delete karne ki zaroorat nahi.</>
+            )}
           </p>
-          <div className="field mt-16">
+          <div className="field mt-16" style={{ opacity: settings.geminiEnabled === false ? 0.5 : 1 }}>
             <label>Gemini API Key</label>
             <input className="input" type={showKey ? "text" : "password"} placeholder="AIza..." value={settings.geminiApiKey || ""}
-              onChange={(e) => update("geminiApiKey", e.target.value)} autoComplete="off" spellCheck={false} />
+              onChange={(e) => update("geminiApiKey", e.target.value)} autoComplete="off" spellCheck={false} disabled={settings.geminiEnabled === false} />
             <p className="hint">Get a free key at aistudio.google.com/apikey.</p>
           </div>
-          <div className="field">
+          <div className="field" style={{ opacity: settings.geminiEnabled === false ? 0.5 : 1 }}>
             <label>Gemini Model</label>
-            <input className="input" type="text" value={settings.geminiModel || ""} onChange={(e) => update("geminiModel", e.target.value)} placeholder="gemini-3-pro" />
+            <input className="input" type="text" value={settings.geminiModel || ""} onChange={(e) => update("geminiModel", e.target.value)} placeholder="gemini-3-pro" disabled={settings.geminiEnabled === false} />
             <p className="hint">Default: gemini-3-pro. If it errors, try the exact model id from Google AI Studio.</p>
           </div>
         </div>

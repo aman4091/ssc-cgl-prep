@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { getQuizzes, saveQuiz, deleteQuiz, makeId, getSettings } from "@/lib/storage";
+import { getQuizzes, saveQuiz, deleteQuiz, makeId, getSettings, geminiActive } from "@/lib/storage";
 import { extractPdfTextSmart, generateMcqChunked, renderPdfToImages, generateMcqFromImages } from "@/lib/client-ai";
 
 async function extractPdfText(file) {
@@ -104,7 +104,7 @@ export default function QuizzesPage() {
     setBusy(true);
     try {
       let data;
-      if (settings.geminiApiKey && settings.geminiApiKey.trim()) {
+      if (geminiActive(settings)) {
         // Best path: render each page to an image, Gemini vision reads the
         // two-column table directly (OCR jumbles the columns).
         setStatus("📄 Pages ko image bana raha hoon…");

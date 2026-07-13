@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { askAI, generateSimilar, ocrImage } from "@/lib/client-ai";
 import { saveQuiz, makeId } from "@/lib/storage";
+import { saveAnswer, SUBJECTS } from "@/lib/savedanswers";
 import Markdown from "./Markdown";
 
 export default function AskModal({ open, onClose }) {
@@ -18,6 +20,7 @@ export default function AskModal({ open, onClose }) {
   const [loading, setLoading] = useState(false);
   const [simLoading, setSimLoading] = useState(false);
   const [error, setError] = useState("");
+  const [savedMsg, setSavedMsg] = useState("");
   const fileRef = useRef(null);
   const previewRef = useRef("");
 
@@ -25,9 +28,16 @@ export default function AskModal({ open, onClose }) {
     if (previewRef.current) URL.revokeObjectURL(previewRef.current);
     previewRef.current = "";
     setQuestion(""); setImageText(""); setImageName(""); setImagePreview("");
-    setOcrProgress(null); setAnswer(""); setError("");
+    setOcrProgress(null); setAnswer(""); setError(""); setSavedMsg("");
     setLoading(false); setSimLoading(false);
     if (fileRef.current) fileRef.current.value = "";
+  };
+
+  const handleSave = (subj) => {
+    if (!answer) return;
+    saveAnswer({ subject: subj, question, imageText, answer });
+    const label = SUBJECTS.find((s) => s.k === subj)?.label || subj;
+    setSavedMsg(`✓ Saved to ${label} notebook`);
   };
 
   // Fresh state har baar modal khulne par
@@ -98,7 +108,7 @@ export default function AskModal({ open, onClose }) {
   };
 
   const handleAsk = async () => {
-    setError(""); setAnswer(""); setLoading(true);
+    setError(""); setAnswer(""); setSavedMsg(""); setLoading(true);
     try {
       const { answer } = await askAI({ question, imageText, subject });
       setAnswer(answer);
@@ -218,6 +228,29 @@ export default function AskModal({ open, onClose }) {
         {answer && (
           <div className="answer-box mt-16">
             <Markdown>{answer}</Markdown>
+          </div>
+        )}
+
+        {answer && (
+          <div className="save-row mt-16">
+            <span className="muted" style={{ fontSize: "0.82rem" }}>💾 Save to notebook:</span>
+            <div className="subj-row" style={{ marginTop: 8 }}>
+              {SUBJECTS.map((s) => (
+                <button
+                  key={s.k}
+                  type="button"
+                  className="subj-chip"
+                  onClick={() => handleSave(s.k)}
+                >
+                  {s.label}
+                </button>
+              ))}
+            </div>
+            {savedMsg && (
+              <p className="mt-8" style={{ fontSize: "0.85rem", color: "var(--success)" }}>
+                {savedMsg} · <Link href="/saved-answers" className="link" onClick={onClose}>View saved →</Link>
+              </p>
+            )}
           </div>
         )}
       </div>

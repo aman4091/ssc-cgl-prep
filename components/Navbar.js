@@ -19,6 +19,7 @@ const LINKS = [
   { href: "/calculation", label: "Calculation", icon: "🧮" },
   { href: "/revision", label: "Smart Revision", icon: "🔁" },
   { href: "/bookmarks", label: "Bookmarked Qs", icon: "⭐" },
+  { href: "/saved-answers", label: "Saved Answers", icon: "💾" },
   { href: "/external-tests", label: "External Tests", icon: "🌐" },
   { href: "/quizzes", label: "Quizzes", icon: "🗂️" },
   { href: "/mistakes", label: "Mistake Notebook", icon: "🔴" },
