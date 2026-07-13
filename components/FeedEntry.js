@@ -7,7 +7,7 @@ import {
   updateEntry, deleteEntry, addEntryQuestions, clearEntryQuestions,
   addEntryNotes, clearEntryNotes, addEntryPdfMeta, removeEntryPdf,
 } from "@/lib/feed";
-import { extractPdfTextSmart, generateQuizText, extractNotesChunked, ocrImage } from "@/lib/client-ai";
+import { extractPdfTextSmart, generateQuizText, extractNotesChunked, readImageText } from "@/lib/client-ai";
 import { saveQuiz, makeId, getSettings } from "@/lib/storage";
 import { saveFile, openFile } from "@/lib/filestore";
 import YouTubePlayer from "@/components/YouTubePlayer";
@@ -73,8 +73,8 @@ export default function FeedEntry({ entry, onChanged }) {
       let added = 0;
       let notesAdded = 0;
       for (let i = 0; i < files.length; i++) {
-        setStatus(`📷 Running OCR on image ${i + 1}/${files.length}…`);
-        let text = ""; try { text = await ocrImage(files[i]); } catch { /* skip */ }
+        setStatus(`📷 Reading image ${i + 1}/${files.length}…`);
+        let text = ""; try { const r = await readImageText(files[i]); text = r.text; } catch { /* skip */ }
         if (text && text.trim().length > 15) {
           setStatus(`Image ${i + 1}/${files.length}: generating questions…`);
           try { const { questions: qs } = await generateQuizText(text); added += addEntryQuestions(entry.id, qs); } catch (err) { console.warn(err); }
@@ -179,7 +179,7 @@ export default function FeedEntry({ entry, onChanged }) {
           <input type="file" accept="application/pdf" hidden onChange={handlePdf} />
         </label>
         <label className="btn btn--ghost btn--sm" style={{ opacity: busy ? 0.6 : 1, pointerEvents: busy ? "none" : "auto" }}>
-          📷 Question image(s)
+          📷 {isCA ? "Image → questions + notes" : "Question image(s)"}
           <input type="file" accept="image/*" multiple hidden onChange={handleQuestionImages} />
         </label>
         <button className="btn btn--ghost btn--sm" onClick={pasteImage} disabled={busy}>📋 Paste image</button>

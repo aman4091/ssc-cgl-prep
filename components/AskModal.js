@@ -105,6 +105,19 @@ export default function AskModal({ open, onClose }) {
     processImageFile(file);
   };
 
+  const pasteImg = async () => {
+    setError("");
+    try {
+      if (!navigator.clipboard?.read) { setError("Paste button not supported — use Ctrl+V instead."); return; }
+      const items = await navigator.clipboard.read();
+      for (const it of items) {
+        const type = it.types.find((t) => t.startsWith("image/"));
+        if (type) { const blob = await it.getType(type); processImageFile(new File([blob], "pasted.png", { type })); return; }
+      }
+      setError("Clipboard mein koi image nahi mili.");
+    } catch (e) { setError("Paste failed: " + e.message); }
+  };
+
   const removeImage = () => {
     if (previewRef.current) URL.revokeObjectURL(previewRef.current);
     previewRef.current = "";
@@ -205,7 +218,8 @@ export default function AskModal({ open, onClose }) {
             📷 {imagePreview ? "Change image" : "Upload image"}
             <input ref={fileRef} type="file" accept="image/*" hidden onChange={handleFileInput} />
           </label>
-          <span className="muted" style={{ fontSize: "0.78rem" }}>or paste with <strong>Ctrl+V</strong></span>
+          <button className="btn btn--ghost btn--sm" onClick={pasteImg} type="button">📋 Paste</button>
+          <span className="muted" style={{ fontSize: "0.78rem" }}>or <strong>Ctrl+V</strong></span>
         </div>
 
         {/* Image preview + status */}

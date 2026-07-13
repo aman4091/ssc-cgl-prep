@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CALC_TYPES, buildCalcQuiz, getCalcPool, addCalcPoolQuestions, clearCalcPool } from "@/lib/calc";
-import { extractPdfTextSmart, generateQuizText, ocrImage } from "@/lib/client-ai";
+import { extractPdfTextSmart, generateQuizText, readImageText } from "@/lib/client-ai";
 import { saveQuiz, getSettings } from "@/lib/storage";
 
 const ALL = CALC_TYPES.map((t) => t.key);
@@ -53,8 +53,8 @@ export default function CalculationPage() {
     try {
       let added = 0;
       for (let i = 0; i < files.length; i++) {
-        setStatus(`📷 Running OCR on image ${i + 1}/${files.length}…`);
-        let text = ""; try { text = await ocrImage(files[i]); } catch { /* skip */ }
+        setStatus(`📷 Reading image ${i + 1}/${files.length}…`);
+        let text = ""; try { const r = await readImageText(files[i]); text = r.text; } catch { /* skip */ }
         if (text && text.trim().length > 15) {
           setStatus(`Image ${i + 1}/${files.length}: generating questions…`);
           try { const { questions: qs } = await generateQuizText(text); added += addCalcPoolQuestions(qs); } catch (err) { console.warn(err); }
@@ -68,6 +68,21 @@ export default function CalculationPage() {
   };
 
   const clearPool = () => { if (confirm("Remove uploaded calculation questions?")) { clearCalcPool(); setPoolCount(0); } };
+
+  const pasteImage = async () => {
+    if (!requireKey()) return;
+    try {
+      if (!navigator.clipboard?.read) { setError("Paste button isn't supported — use Ctrl+V instead."); return; }
+      const items = await navigator.clipboard.read();
+      const files = [];
+      for (const it of items) {
+        const type = it.types.find((t) => t.startsWith("image/"));
+        if (type) { const blob = await it.getType(type); files.push(new File([blob], "pasted.png", { type })); }
+      }
+      if (!files.length) { setError("Clipboard mein koi image nahi mili."); return; }
+      handleImages({ target: { files, value: "" } });
+    } catch (e) { setError("Paste failed: " + e.message); }
+  };
 
   // Ctrl+V paste image(s) -> add to pool
   useEffect(() => {
@@ -131,6 +146,7 @@ export default function CalculationPage() {
                 📷 Image(s)
                 <input type="file" accept="image/*" multiple hidden onChange={handleImages} />
               </label>
+              <button className="btn btn--ghost btn--sm" onClick={pasteImage} disabled={busy}>📋 Paste</button>
               {poolCount > 0 && <button className="btn btn--ghost btn--sm" onClick={clearPool}>Clear</button>}
             </div>
           </div>
