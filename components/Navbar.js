@@ -32,8 +32,24 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [askOpen, setAskOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
   const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+
+  // Hide the bar while scrolling down (reveal on scroll up) — CSS limits this to mobile.
+  useEffect(() => {
+    if (open) { setHidden(false); return; } // never hide with the drawer open
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y < 60) setHidden(false);
+      else if (y > last + 6) setHidden(true);
+      else if (y < last - 6) setHidden(false);
+      last = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [open]);
 
   // lock body scroll while the drawer is open + close on Escape
   useEffect(() => {
@@ -46,7 +62,7 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="navbar">
+    <header className={`navbar ${hidden ? "is-hidden" : ""}`}>
       <div className="container">
         <div className="navbar__inner">
           <div className="navbar__left row" style={{ gap: 10, alignItems: "center" }}>

@@ -145,6 +145,7 @@ main.container {
   padding: 0;
   background: #0e1526;
   border-bottom: 1px solid var(--glass-border);
+  transition: transform 0.25s ease;
 }
 .navbar__inner {
   display: flex;
@@ -858,6 +859,30 @@ main.container {
 .cat-card__go { margin-top: auto; color: var(--accent-2); font-weight: 600; font-size: 0.9rem; }
 .cat-card.is-empty { opacity: 0.4; pointer-events: none; }
 .vocab-detail { position: sticky; top: 100px; }
+.vocab-detail__close { display: none; }
+.vocab-detail__backdrop { display: none; }
+/* On mobile the word detail becomes a pop-up instead of appearing under the list */
+@media (max-width: 780px) {
+  .vocab-detail { display: none; }
+  .vocab-detail.is-open {
+    display: block;
+    position: fixed;
+    top: 64px; left: 12px; right: 12px; bottom: 12px;
+    z-index: 300;
+    margin: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+  .vocab-detail__close { display: inline-flex; }
+  .vocab-detail__backdrop {
+    display: block;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(2px);
+    z-index: 290;
+  }
+}
 .vd-label {
   display: inline-block;
   font-size: 0.72rem;
@@ -1369,7 +1394,14 @@ main.container {
 .nav-home__ico { font-size: 1rem; line-height: 1; }
 @media (max-width: 560px) {
   .nav-home__label { display: none; }
-  .nav-home { padding: 8px 10px; }
+  /* Compact icon-only Home button so it doesn't dominate the mobile bar */
+  .nav-home { padding: 5px 7px; gap: 0; border-radius: 9px; }
+  .nav-home__ico { font-size: 1.02rem; }
+}
+
+/* Auto-hide the bar on scroll — mobile only (desktop stays fixed) */
+@media (max-width: 780px) {
+  .navbar.is-hidden { transform: translateY(-100%); }
 }
 
 /* Home accordion — chapter row with its own Quiz button */

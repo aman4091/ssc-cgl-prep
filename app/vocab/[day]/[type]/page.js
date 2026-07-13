@@ -162,8 +162,8 @@ export default function VocabTypePage() {
             )}
           </div>
 
-          {/* Detail */}
-          <div className="glass-card vocab-detail">
+          {/* Detail (inline on desktop, pop-up modal on mobile) */}
+          <div className={`glass-card vocab-detail ${item !== null ? "is-open" : ""}`}>
             {item === null ? (
               <p className="muted center" style={{ padding: "40px 0" }}>Click any word — meaning, trick and synonyms will show up. 👈</p>
             ) : (
@@ -175,6 +175,7 @@ export default function VocabTypePage() {
                       {bm ? "★ Saved" : "☆ Bookmark"}
                     </button>
                     <span className="muted" style={{ fontSize: "0.8rem" }}>{sel + 1}/{items.length}</span>
+                    <button className="btn btn--ghost btn--sm vocab-detail__close" onClick={() => { setSel(null); setDet(null); }} title="Close" aria-label="Close">✕</button>
                   </div>
                 </div>
                 <p className="muted mt-8" style={{ fontStyle: "italic" }}>{item.def}</p>
@@ -222,6 +223,9 @@ export default function VocabTypePage() {
           </div>
         </div>
       </section>
+
+      {/* Mobile-only backdrop behind the pop-up word detail */}
+      {item !== null && <div className="vocab-detail__backdrop" onClick={() => { setSel(null); setDet(null); }} />}
 
       <WordPopup word={popup} onClose={() => setPopup(null)} />
     </>
