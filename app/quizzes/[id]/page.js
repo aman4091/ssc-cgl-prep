@@ -53,10 +53,26 @@ export default function QuizPlayer() {
   };
 
   useEffect(() => {
-    const qz = getQuiz(id);
-    setQuiz(qz);
-    startRef.current = Date.now();
-    if (qz?.timeLimitSec) setDeadline(Date.now() + qz.timeLimitSec * 1000);
+    let cancelled = false;
+    const apply = (qz) => {
+      if (cancelled) return;
+      setQuiz(qz || null);
+      startRef.current = Date.now();
+      if (qz?.timeLimitSec) setDeadline(Date.now() + qz.timeLimitSec * 1000);
+    };
+    const local = getQuiz(id);
+    if (local) { apply(local); return; }
+    // Imported Quiz Bank / Mock Test — served on demand from /public (keeps localStorage light).
+    if (typeof id === "string" && id.startsWith("bank_")) {
+      setQuiz(undefined); // stay in the loading state while fetching
+      fetch(`/quizbank/${encodeURIComponent(id)}.json`)
+        .then((r) => (r.ok ? r.json() : null))
+        .then(apply)
+        .catch(() => apply(null));
+      return () => { cancelled = true; };
+    }
+    apply(null);
+    return () => { cancelled = true; };
   }, [id]);
 
   // live ticking timer while attempting; auto-submit when the countdown hits 0

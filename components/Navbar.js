@@ -21,7 +21,9 @@ const LINKS = [
   { href: "/bookmarks", label: "Bookmarked Qs", icon: "⭐" },
   { href: "/saved-answers", label: "Saved Answers", icon: "💾" },
   { href: "/external-tests", label: "External Tests", icon: "🌐" },
-  { href: "/quizzes", label: "Quizzes", icon: "🗂️" },
+  { href: "/quiz-bank", label: "Quiz Bank", icon: "🗃️" },
+  { href: "/mock-tests", label: "Mock Tests", icon: "🧪" },
+  { href: "/quizzes", label: "My Quizzes", icon: "🗂️" },
   { href: "/mistakes", label: "Mistake Notebook", icon: "🔴" },
   { href: "/settings", label: "Settings", icon: "⚙️" },
 ];

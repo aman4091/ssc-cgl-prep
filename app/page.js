@@ -40,6 +40,8 @@ const EXTRA = [
   {
     key: "practice", name: "Practice & Tests", icon: "📝",
     topics: [
+      { name: "🗃️ Quiz Bank (topic-wise)", href: "/quiz-bank" },
+      { name: "🧪 Mock Tests (full & sectional)", href: "/mock-tests" },
       { name: "Full Papers (1-hour timer)", href: "/papers" },
       { name: "Calculation (speed maths)", href: "/calculation" },
       { name: "My Quizzes", href: "/quizzes" },
