@@ -46,9 +46,16 @@ export default function TodayPage() {
   const [cSec, setCSec] = useState(12);
   const [customTitle, setCustomTitle] = useState("");
   const [customUrl, setCustomUrl] = useState("");
+  const [durH, setDurH] = useState(0);
+  const [durM, setDurM] = useState(0);
 
   const refresh = () => setTargets(getTargets());
-  useEffect(() => { refresh(); }, []);
+  useEffect(() => {
+    refresh();
+    const onChanged = () => refresh();
+    window.addEventListener("cgl:targets-changed", onChanged);
+    return () => window.removeEventListener("cgl:targets-changed", onChanged);
+  }, []);
 
   const currentEntries = getAllEntries().filter((e) => e.feed === "current");
   const chapters = getChapters(subject);
@@ -71,9 +78,12 @@ export default function TodayPage() {
       if (!customTitle.trim()) return;
       payload = { type: "custom", title: customTitle.trim(), ref: { url: customUrl.trim() } };
     }
+    const durationMin = (parseInt(durH) || 0) * 60 + (parseInt(durM) || 0);
+    if (durationMin > 0) payload.ref = { ...payload.ref, durationMin };
     addTarget(payload);
     setAdding(false);
     setCustomTitle(""); setCustomUrl("");
+    setDurH(0); setDurM(0);
     refresh();
   };
 
@@ -159,6 +169,27 @@ export default function TodayPage() {
               )}
             </div>
 
+            {/* Optional focus timer for this target — runs on the navbar timer */}
+            <div className="mt-16" style={{ borderTop: "1px solid var(--border, rgba(255,255,255,0.1))", paddingTop: 14 }}>
+              <div className="row" style={{ gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+                <span className="muted" style={{ fontSize: "0.85rem" }}>⏱️ Set a timer (optional):</span>
+                <input className="input" type="number" min={0} style={{ width: 64 }} value={durH}
+                  onChange={(e) => setDurH(e.target.value)} placeholder="0" />
+                <span className="muted" style={{ fontSize: "0.85rem" }}>hr</span>
+                <input className="input" type="number" min={0} max={59} style={{ width: 64 }} value={durM}
+                  onChange={(e) => setDurM(e.target.value)} placeholder="0" />
+                <span className="muted" style={{ fontSize: "0.85rem" }}>min</span>
+                <div className="chips" style={{ gap: 6 }}>
+                  {[{ h: 0, m: 30, l: "30m" }, { h: 1, m: 0, l: "1h" }, { h: 1, m: 30, l: "1½h" }, { h: 2, m: 0, l: "2h" }].map((p) => (
+                    <button key={p.l} type="button" className="chip chip--btn chip--sm" onClick={() => { setDurH(p.h); setDurM(p.m); }}>{p.l}</button>
+                  ))}
+                </div>
+              </div>
+              <p className="muted mt-8" style={{ fontSize: "0.78rem" }}>
+                Timer set karo toh card pe <strong>▶ Start timer</strong> button aayega — navbar wala timer isi target ke liye chalega, aur pura hote hi popup aayega.
+              </p>
+            </div>
+
             <div className="row mt-16" style={{ gap: 10 }}>
               <button className="btn btn--primary" onClick={add}>Add target</button>
               <button className="btn btn--ghost" onClick={() => setAdding(false)}>Cancel</button>
@@ -182,8 +213,20 @@ export default function TodayPage() {
   );
 }
 
+function fmtDur(min) {
+  const h = Math.floor(min / 60), m = min % 60;
+  return [h ? `${h}h` : "", m ? `${m}m` : ""].filter(Boolean).join(" ") || "0m";
+}
+
 function TargetCard({ target, router, onChanged }) {
   const t = target;
+  const durationMin = t.ref?.durationMin || 0;
+
+  const startTimer = () => {
+    window.dispatchEvent(new CustomEvent("cgl:start-task-timer", {
+      detail: { minutes: durationMin, label: t.title, targetId: t.id },
+    }));
+  };
 
   const startQuiz = (title, questions, extra = {}) => {
     if (!questions.length) return;
@@ -238,6 +281,11 @@ function TargetCard({ target, router, onChanged }) {
           <span style={{ fontWeight: 600, textDecoration: t.done ? "line-through" : "none", opacity: t.done ? 0.6 : 1 }}>{t.title}</span>
         </label>
         <div className="row" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+          {durationMin > 0 && (
+            <button className="btn btn--primary btn--sm" onClick={startTimer} title="Navbar timer isi target ke liye chalega">
+              ▶ Start timer ({fmtDur(durationMin)})
+            </button>
+          )}
           {actions}
           <button className="btn btn--ghost btn--sm" onClick={() => { deleteTarget(t.id); onChanged(); }}>✕</button>
         </div>

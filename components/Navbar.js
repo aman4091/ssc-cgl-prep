@@ -8,6 +8,7 @@ import PomodoroTimer from "./PomodoroTimer";
 import ChecklistMenu from "./ChecklistMenu";
 
 const LINKS = [
+  { href: "/", label: "Home", icon: "🏠" },
   { href: "/today", label: "Today's Targets", icon: "📅" },
   { href: "/checklist", label: "Checklist", icon: "✅" },
   { href: "/subjects", label: "Subjects", icon: "📚" },
@@ -17,7 +18,6 @@ const LINKS = [
   { href: "/current-affairs", label: "Current Affairs", icon: "📰" },
   { href: "/static-gk", label: "Static GK", icon: "📗" },
   { href: "/calculation", label: "Calculation", icon: "🧮" },
-  { href: "/revision", label: "Smart Revision", icon: "🔁" },
   { href: "/bookmarks", label: "Bookmarked Qs", icon: "⭐" },
   { href: "/saved-answers", label: "Saved Answers", icon: "💾" },
   { href: "/external-tests", label: "External Tests", icon: "🌐" },
@@ -51,12 +51,9 @@ export default function Navbar() {
             <button className="hamburger" aria-label="Menu" onClick={() => setOpen(true)}>
               <span /><span /><span />
             </button>
-            <Link href="/" className="brand" onClick={() => setOpen(false)}>
-              <span className="brand__mark">CGL</span>
-              <span className="brand__text">
-                <strong>SSC CGL Pre</strong>
-                <small>Prep Hub</small>
-              </span>
+            <Link href="/" className="btn btn--ghost btn--sm nav-home" aria-label="Home" onClick={() => setOpen(false)}>
+              <span className="nav-home__ico">🏠</span>
+              <span className="nav-home__label">Home</span>
             </Link>
           </div>
 
@@ -82,8 +79,7 @@ export default function Navbar() {
       <div className={`drawer-overlay ${open ? "is-open" : ""}`} onClick={() => setOpen(false)} />
       <aside className={`drawer ${open ? "is-open" : ""}`}>
         <div className="drawer__head">
-          <span className="brand__mark">CGL</span>
-          <strong style={{ fontSize: "1rem" }}>Prep Hub</strong>
+          <strong style={{ fontSize: "1rem" }}>Menu</strong>
           <button className="drawer__x" aria-label="Close" onClick={() => setOpen(false)}>✕</button>
         </div>
         <nav className="drawer__nav">

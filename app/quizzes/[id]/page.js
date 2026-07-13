@@ -10,6 +10,7 @@ import Diagram from "@/components/Diagram";
 import QuestionFollowup from "@/components/QuestionFollowup";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
+import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { recordQuizAttempts, quizCategory, setReviewErrorType, ERROR_TYPES } from "@/lib/qreview";
 
 function fmt(sec) {
@@ -152,6 +153,7 @@ export default function QuizPlayer() {
       const { answer } = await askAI({ question: text, mode: "shortcut" });
       setShortcuts((s) => ({ ...s, [i]: answer }));
       setScShown((s) => ({ ...s, [i]: true }));
+      saveShortcutFor(q, answer); // persist — comes back on next press
     } catch (err) {
       setActionErr((e) => ({ ...e, [i]: err.message }));
     } finally {
@@ -161,9 +163,11 @@ export default function QuizPlayer() {
   const toggleShortcut = (i) => {
     if (scShown[i]) { setScShown((s) => ({ ...s, [i]: false })); return; }
     if (shortcuts[i]) { setScShown((s) => ({ ...s, [i]: true })); return; }
+    const saved = getSavedShortcut(quiz.questions[i]);   // saved from a previous time
+    if (saved) { setShortcuts((s) => ({ ...s, [i]: saved })); setScShown((s) => ({ ...s, [i]: true })); return; }
     getShortcut(i);
   };
-  const regenShortcut = (i) => { setShortcuts((s) => ({ ...s, [i]: "" })); getShortcut(i); };
+  const regenShortcut = (i) => { clearSavedShortcut(quiz.questions[i]); setShortcuts((s) => ({ ...s, [i]: "" })); getShortcut(i); };
   const toggleBm = (q) => { toggleQBookmark(q); bumpBm((v) => v + 1); };
 
   const getExplain = async (i) => {

@@ -55,7 +55,7 @@ export default function VocabDayPage() {
         {total === 0 ? (
           <div className="placeholder">No words for this day.</div>
         ) : (
-          <div className="grid grid--3">
+          <div className="cat-list">
             {TYPES.map((t) => {
               const c = counts?.[t.key] || 0;
               const disabled = c === 0;
@@ -63,12 +63,16 @@ export default function VocabDayPage() {
                 <Link
                   key={t.key}
                   href={disabled ? "#" : `/vocab/${dayNum}/${t.key}`}
-                  className={`glass-card cat-card ${disabled ? "is-empty" : ""}`}
+                  className={`cat-row glass ${disabled ? "is-empty" : ""}`}
                 >
-                  <div className="cat-card__icon">{t.icon}</div>
-                  <h3>{t.label}</h3>
-                  <p className="muted">{c} words</p>
-                  {!disabled && <span className="cat-card__go">Open →</span>}
+                  <span className="cat-row__main">
+                    <span className="cat-row__ico">{t.icon}</span>
+                    <span>{t.label}</span>
+                  </span>
+                  <span className="cat-row__meta">
+                    <span className="muted">{c} words</span>
+                    {!disabled && <span className="cat-row__go">Open →</span>}
+                  </span>
                 </Link>
               );
             })}

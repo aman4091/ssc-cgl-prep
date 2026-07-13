@@ -57,6 +57,33 @@ export default function VocabTypePage() {
   };
   const toggleBm = () => { const on = toggleBookmark(items[sel].word); setBm(on); };
 
+  // Keyboard ↑/↓ moves the selection up/down the left word list.
+  useEffect(() => {
+    const onKey = (e) => {
+      if (!items.length) return;
+      const tag = (e.target?.tagName || "").toLowerCase();
+      if (tag === "input" || tag === "textarea" || tag === "select") return;
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        const next = Math.min(items.length - 1, (sel === null ? -1 : sel) + 1);
+        if (next !== sel) openWord(next);
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        const next = Math.max(0, (sel === null ? items.length : sel) - 1);
+        if (next !== sel) openWord(next);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sel, items]);
+
+  // Keep the highlighted word visible while navigating with the keyboard.
+  useEffect(() => {
+    if (sel === null) return;
+    document.querySelector(".vocab-list .vocab-item.is-active")?.scrollIntoView({ block: "nearest" });
+  }, [sel]);
+
   // Reclassify the current word to another type. It leaves this filtered view,
   // so refresh the list and keep a sensible selection.
   const moveCurrent = (toType) => {

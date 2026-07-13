@@ -36,9 +36,10 @@ export default function ExternalTestsPage() {
     const wrong = parseInt(f.wrong) || 0;
     const skipped = parseInt(f.skipped) || 0;
     const total = parseInt(f.total) || (correct + wrong + skipped);
+    const marks = correct * 2 - wrong * 0.5; // SSC: +2 correct, -0.5 wrong
     addTest({
       name: f.name.trim(), website: f.website.trim(), url: f.url.trim(), section: f.section.trim(),
-      correct, wrong, skipped, total, timeSec: parseTimeToSeconds(f.time), date: f.date, notes: f.notes.trim(),
+      correct, wrong, skipped, total, marks, timeSec: parseTimeToSeconds(f.time), date: f.date, notes: f.notes.trim(),
     });
     setF({ ...EMPTY, website: f.website, url: f.url, date: f.date }); // keep website/url/date for next
     setShowForm(false);
@@ -47,11 +48,6 @@ export default function ExternalTestsPage() {
 
   const del = (id) => { if (confirm("Delete this record?")) { deleteTest(id); refresh(); } };
 
-  // summary
-  const totQ = tests.reduce((a, t) => a + (t.total || 0), 0);
-  const totC = tests.reduce((a, t) => a + (t.correct || 0), 0);
-  const totT = tests.reduce((a, t) => a + (t.timeSec || 0), 0);
-  const avgAcc = totQ ? Math.round((totC / totQ) * 100) : 0;
 
   return (
     <>
@@ -90,15 +86,13 @@ export default function ExternalTestsPage() {
         </section>
       )}
 
-      {/* Summary */}
+      {/* Accuracy note (top cards removed) */}
       {tests.length > 0 && (
         <section className="section" style={{ marginTop: 8 }}>
-          <div className="stat-row">
-            <div className="stat glass"><span className="stat__num grad">{tests.length}</span><span className="stat__label">Tests</span></div>
-            <div className="stat glass"><span className="stat__num" style={{ color: "var(--success)" }}>{avgAcc}%</span><span className="stat__label">Avg accuracy</span></div>
-            <div className="stat glass"><span className="stat__num">{totC}/{totQ}</span><span className="stat__label">Correct / total</span></div>
-            <div className="stat glass"><span className="stat__num" style={{ color: "var(--accent-2)" }}>{formatTime(totT)}</span><span className="stat__label">Total time</span></div>
-          </div>
+          <p className="muted" style={{ fontSize: "0.8rem" }}>
+            ℹ️ Accuracy = <strong>Correct ÷ Attempted (Correct + Wrong) × 100</strong> — skipped questions count nahi hote.
+            Jaise 48 correct + 17 wrong = 65 attempted → (48 ÷ 65) × 100 = <strong>73.85%</strong>.
+          </p>
         </section>
       )}
 
@@ -120,6 +114,12 @@ export default function ExternalTestsPage() {
               <label className="field"><span>Time (mm:ss)</span><input className="input" value={f.time} onChange={(e) => set("time", e.target.value)} placeholder="e.g. 55:30" /></label>
               <label className="field" style={{ gridColumn: "1 / -1" }}><span>Notes</span><input className="input" value={f.notes} onChange={(e) => set("notes", e.target.value)} placeholder="what went wrong, what to improve…" /></label>
             </div>
+            <div className="glass mt-16" style={{ padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+              <span className="muted" style={{ fontSize: "0.82rem" }}>SSC marks — <strong>+2</strong> per correct, <strong>−0.5</strong> per wrong</span>
+              <span style={{ fontSize: "1.3rem", fontWeight: 800 }} className="grad">
+                {((parseInt(f.correct) || 0) * 2 - (parseInt(f.wrong) || 0) * 0.5).toFixed(1)} marks
+              </span>
+            </div>
             <div className="row mt-16" style={{ gap: 10 }}>
               <button className="btn btn--primary" onClick={save} disabled={!f.name.trim()}>Save record</button>
               <button className="btn btn--ghost" onClick={() => setShowForm(false)}>Cancel</button>
@@ -136,7 +136,8 @@ export default function ExternalTestsPage() {
         ) : (
           <div className="grid grid--2">
             {tests.map((t) => {
-              const acc = t.total ? Math.round((t.correct / t.total) * 100) : 0;
+              const attempted = (t.correct || 0) + (t.wrong || 0);
+              const acc = attempted ? ((t.correct / attempted) * 100).toFixed(2) : "0";
               const isMock = Array.isArray(t.sections);
               if (isMock) {
                 const qn = t.sections.reduce((a, s) => a + (s.questions?.length || 0), 0);
@@ -174,7 +175,8 @@ export default function ExternalTestsPage() {
                   </div>
 
                   <div className="stat-row mt-16" style={{ gap: 8 }}>
-                    <div className="stat glass" style={{ padding: "10px" }}><span className="stat__num grad" style={{ fontSize: "1.3rem" }}>{acc}%</span><span className="stat__label">Accuracy</span></div>
+                    <div className="stat glass" style={{ padding: "10px" }}><span className="stat__num grad" style={{ fontSize: "1.3rem" }}>{(t.marks != null ? t.marks : (t.correct || 0) * 2 - (t.wrong || 0) * 0.5).toFixed(1)}</span><span className="stat__label">Marks</span></div>
+                    <div className="stat glass" style={{ padding: "10px" }}><span className="stat__num" style={{ fontSize: "1.3rem" }}>{acc}%</span><span className="stat__label">Accuracy</span></div>
                     <div className="stat glass" style={{ padding: "10px" }}><span className="stat__num" style={{ fontSize: "1.3rem", color: "var(--success)" }}>{t.correct}</span><span className="stat__label">Correct</span></div>
                     <div className="stat glass" style={{ padding: "10px" }}><span className="stat__num" style={{ fontSize: "1.3rem", color: "var(--danger)" }}>{t.wrong}</span><span className="stat__label">Wrong</span></div>
                     <div className="stat glass" style={{ padding: "10px" }}><span className="stat__num" style={{ fontSize: "1.3rem", color: "var(--accent-2)" }}>{t.timeSec ? formatTime(t.timeSec) : "–"}</span><span className="stat__label">Time</span></div>

@@ -19,10 +19,30 @@ export default function MockBuilderPage() {
   const [busy, setBusy] = useState("");     // section id currently processing
   const [msg, setMsg] = useState("");
   const [err, setErr] = useState("");
+  const [pastePending, setPastePending] = useState(null); // { files } waiting for a section choice
   const fileRefs = useRef({});
 
   const refresh = () => setTest(getTest(id));
   useEffect(() => { refresh(); /* eslint-disable-next-line */ }, [id]);
+
+  const extractRef = useRef(null);
+  // Paste an image anywhere → ask which section it belongs to, then extract it.
+  useEffect(() => {
+    const onPaste = (e) => {
+      const files = [];
+      for (const it of e.clipboardData?.items || []) {
+        if (it.type && it.type.startsWith("image/")) { const f = it.getAsFile(); if (f) files.push(f); }
+      }
+      if (!files.length) return;
+      e.preventDefault();
+      const secs = getTest(id)?.sections || [];
+      if (secs.length === 0) { setErr("Pehle ek section add karo (Maths, Reasoning…), phir image paste karo."); return; }
+      if (secs.length === 1) { extractRef.current && extractRef.current(secs[0].id, files); return; }
+      setErr(""); setPastePending({ files });
+    };
+    window.addEventListener("paste", onPaste);
+    return () => window.removeEventListener("paste", onPaste);
+  }, [id]);
 
   if (!test) {
     return (
@@ -80,6 +100,7 @@ export default function MockBuilderPage() {
     } catch (e) { setErr(e.message); setMsg(""); }
     finally { setBusy(""); }
   };
+  extractRef.current = extractImages; // let the global paste handler reach it
 
   const pasteInto = async (secId) => {
     if (!navigator.clipboard?.read) { setErr("Paste not supported — use the 📷 button or Ctrl+V into the picker."); return; }
@@ -97,6 +118,27 @@ export default function MockBuilderPage() {
 
   return (
     <>
+      {/* Paste → choose which section this question belongs to */}
+      {pastePending && (
+        <div className="modal-overlay" onClick={() => setPastePending(null)}>
+          <div className="modal glass" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 440 }}>
+            <h2 style={{ fontSize: "1.15rem" }}>📋 Ye question kis section ka hai?</h2>
+            <p className="muted mt-8" style={{ fontSize: "0.86rem" }}>
+              Pasted image se question nikaal ke chune gaye section mein add kar denge.
+            </p>
+            <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
+              {sections.map((s) => (
+                <button key={s.id} className="btn btn--primary btn--sm"
+                  onClick={() => { const files = pastePending.files; setPastePending(null); extractImages(s.id, files); }}>
+                  {s.name}
+                </button>
+              ))}
+            </div>
+            <button className="btn btn--ghost btn--sm mt-16" onClick={() => setPastePending(null)}>Cancel</button>
+          </div>
+        </div>
+      )}
+
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">🧩 Mock Builder</span>
@@ -104,8 +146,9 @@ export default function MockBuilderPage() {
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)" }}>{test.name}</h1>
         <p className="hero__sub">
-          Sections banao, har section mein question screenshots paste/upload karo (AI MCQ bana dega), aur
-          har section ka apna time set karo — jaise <strong>Maths 14 min</strong>. Phir timed test do.
+          Sections banao, phir <strong>kahin bhi image paste karo (Ctrl+V)</strong> — puchega kis section ka hai,
+          aur AI us image se question nikaal ke wahin add kar dega. Har section ka apna time bhi set karo (jaise
+          <strong> Maths 14 min</strong>), phir timed test do.
         </p>
         <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
           <button className="btn btn--primary" onClick={startFull} disabled={totalQ === 0}>

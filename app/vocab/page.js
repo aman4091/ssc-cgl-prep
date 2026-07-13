@@ -14,6 +14,7 @@ export default function VocabPage() {
   const [error, setError] = useState("");
   const [category, setCategory] = useState(""); // "" = auto-detect
   const [forceOcr, setForceOcr] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
   const imgRef = useRef(null);
   const pdfRef = useRef(null);
 
@@ -158,7 +159,7 @@ export default function VocabPage() {
           if (f) files.push(f);
         }
       }
-      if (files.length && !busy) { e.preventDefault(); processImages(files); }
+      if (files.length && !busy) { e.preventDefault(); setShowAdd(true); processImages(files); }
     };
     window.addEventListener("paste", onPaste);
     return () => window.removeEventListener("paste", onPaste);
@@ -175,6 +176,7 @@ export default function VocabPage() {
         <div className="row between">
           <span className="hero__eyebrow">📚 English · Vocab</span>
           <div className="row" style={{ gap: 8 }}>
+            <button className="btn btn--primary btn--sm" onClick={() => setShowAdd((v) => !v)}>{showAdd ? "✕ Close" : "➕ Add words"}</button>
             <Link href="/vocab/bookmarks" className="btn btn--ghost btn--sm">⭐ Bookmarks</Link>
             <Link href="/english" className="btn btn--ghost btn--sm">← English</Link>
           </div>
@@ -188,7 +190,8 @@ export default function VocabPage() {
         </p>
       </section>
 
-      {/* Upload — images only */}
+      {/* Upload — hidden until the "➕ Add words" button is pressed */}
+      {showAdd && (
       <section className="section" style={{ marginTop: 12 }}>
         <div className="glass-card">
           <div className="row between">
@@ -229,6 +232,7 @@ export default function VocabPage() {
           {error && <p className="mt-16" style={{ color: "var(--danger)", fontSize: "0.9rem" }}>{error}</p>}
         </div>
       </section>
+      )}
 
       {/* Days grid */}
       <section className="section">

@@ -1270,3 +1270,125 @@ main.container {
 .toggle.is-on { background: rgba(52,199,120,0.16); border-color: rgba(52,199,120,0.5); }
 .toggle.is-on .toggle__knob { background: var(--success, #34c778); box-shadow: 0 0 0 4px rgba(52,199,120,0.22); }
 .toggle.is-on .toggle__txt { color: var(--success, #34c778); }
+
+/* Pomodoro task-timer (a target's own countdown) */
+.pomo__pill.is-task { border-color: rgba(139,92,246,0.55); background: rgba(139,92,246,0.16); }
+.pomo__pill.is-task .pomo__time { color: #c4b5fd; }
+.pomo-done {
+  max-width: 400px;
+  text-align: center;
+  padding: 28px 24px;
+}
+.pomo-done__ico {
+  font-size: 3rem;
+  line-height: 1;
+  margin-bottom: 6px;
+  animation: pomoPop 0.35s ease;
+}
+@keyframes pomoPop {
+  0% { transform: scale(0.3); opacity: 0; }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* PYQ tag variant (purple) + per-question chapter-mark row */
+.paper-tag--pyq { background: rgba(124,108,255,0.18); color: #c4b5fd; border-color: rgba(124,108,255,0.4); }
+.pyq-mark {
+  background: rgba(255,255,255,0.03);
+  border: 1px dashed var(--glass-border);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+/* Quizzes — list view (row per quiz) */
+.quiz-list { display: grid; gap: 10px; }
+.quiz-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+  padding: 12px 16px; border-radius: 14px;
+}
+.quiz-row__main { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.quiz-row__title { font-weight: 600; font-size: 0.98rem; }
+.quiz-row__meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 0.78rem; color: var(--text-3); }
+.quiz-row__actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+@media (max-width: 560px) {
+  .quiz-row { flex-direction: column; align-items: stretch; }
+  .quiz-row__actions { justify-content: flex-end; }
+}
+
+/* ===== Home — subject/topic accordion ===== */
+.home-acc-wrap { max-width: 780px; margin: 0 auto; }
+.home-head { margin-bottom: 22px; }
+.home-head h1 { font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 800; }
+.home-head p { margin-top: 6px; font-size: 0.92rem; }
+
+.home-acc { display: grid; gap: 10px; }
+.home-acc__item {
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  background: var(--glass-bg);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+.home-acc__item.is-open { border-color: var(--glass-border-strong); }
+.home-acc__row {
+  width: 100%;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 16px 18px;
+  background: none; border: none; cursor: pointer; color: var(--text-1);
+  font-size: 1.02rem; font-weight: 600; text-align: left;
+}
+.home-acc__row:hover { background: rgba(255,255,255,0.03); }
+.home-acc__name { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.home-acc__ico { font-size: 1.2rem; }
+.home-acc__meta { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.home-acc__count {
+  font-size: 0.72rem; font-weight: 700; color: var(--text-3);
+  background: rgba(255,255,255,0.06); border-radius: 999px; padding: 2px 9px;
+}
+.home-acc__chev { font-size: 0.7rem; color: var(--text-3); }
+.home-acc__panel {
+  padding: 4px 8px 8px;
+  border-top: 1px solid var(--glass-border-strong);
+  display: grid; gap: 0;
+}
+.home-acc__link {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 13px 14px; border-radius: 8px;
+  color: var(--text-2); text-decoration: none; font-size: 0.92rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.home-acc__link:last-child { border-bottom: none; }
+.home-acc__link:hover { background: rgba(124,108,255,0.12); color: var(--text-1); }
+.home-acc__go { color: var(--text-3); font-size: 0.9rem; }
+.home-acc__link--manage { color: var(--accent-2); font-weight: 600; }
+.home-acc__empty { padding: 10px 14px; font-size: 0.86rem; }
+
+/* Navbar Home button */
+.nav-home { display: inline-flex; align-items: center; gap: 6px; }
+.nav-home__ico { font-size: 1rem; line-height: 1; }
+@media (max-width: 560px) {
+  .nav-home__label { display: none; }
+  .nav-home { padding: 8px 10px; }
+}
+
+/* Home accordion — chapter row with its own Quiz button */
+.home-acc__chrow { justify-content: space-between; }
+.home-acc__chname { flex: 1; min-width: 0; color: var(--text-2); text-decoration: none; }
+.home-acc__chrow:hover .home-acc__chname { color: var(--text-1); }
+.home-acc__quiz { flex-shrink: 0; }
+
+/* Vocab — category list (OWS / Idiom / Phrase / Vocab) as rows */
+.cat-list { display: grid; gap: 10px; }
+.cat-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px; border-radius: 14px;
+  text-decoration: none; color: var(--text-1);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.cat-row:hover { border-color: var(--glass-border-strong); background: rgba(124,108,255,0.08); }
+.cat-row__main { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 1rem; }
+.cat-row__ico { font-size: 1.3rem; }
+.cat-row__meta { display: flex; align-items: center; gap: 14px; flex-shrink: 0; font-size: 0.85rem; }
+.cat-row__go { color: var(--accent-2); font-weight: 600; }
+.cat-row.is-empty { opacity: 0.45; pointer-events: none; }

@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { askAI, generateSimilar } from "@/lib/client-ai";
 import { saveQuiz, makeId } from "@/lib/storage";
 import { recordAttempts, getStat } from "@/lib/qstats";
-import { isQBookmarked, toggleQBookmark, bookmarkQuestion } from "@/lib/qbookmarks";
+import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
+import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
 import Diagram from "./Diagram";
@@ -14,7 +15,7 @@ import QuestionEditor from "./QuestionEditor";
 
 // One PYQ / chapter question shown as an interactive quiz card:
 // pick an option -> reveal correct/wrong + solution, plus shortcut / 20-similar / doubt.
-export default function PyqQuestionCard({ q, index, subject, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer }) {
+export default function PyqQuestionCard({ q, index, subject, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl }) {
   const router = useRouter();
   const [picked, setPicked] = useState(null);
   const [revealed, setRevealed] = useState(false);
@@ -28,7 +29,7 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
   const [flash, setFlash] = useState("");
   const [editing, setEditing] = useState(false);
   const archiveTimer = useRef(null);
-  useEffect(() => { setBm(isQBookmarked(q)); }, [q]);
+  useEffect(() => { setBm(isQBookmarked(q)); setShortcut(getSavedShortcut(q)); }, [q]);
   useEffect(() => () => { if (archiveTimer.current) clearTimeout(archiveTimer.current); }, []);
 
   const paper = q.paper || q.source;
@@ -43,12 +44,11 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
     // remove from the list so the next question moves up.
     if (archiveOnAnswer) {
       addReview(q, { subject, source: "chapter", category: chapterName || subject, chapterId, correct });
-      if (!bm) { bookmarkQuestion(q, subject); setBm(true); }
-      // Never remove from the PYQ list — the question stays put after answering.
-      // Wrong ones are still tracked in the Mistake Notebook (Wrong bucket).
+      // No auto-bookmark — only the ★ button bookmarks. Wrong ones still land in
+      // the Mistake Notebook (Wrong bucket), and the question stays in the list.
       setFlash(correct
-        ? "✓ Correct · saved. Question PYQ mein hi rahega."
-        : "❌ Saved to Wrong (Mistakes). Question PYQ mein hi rahega — solution padho.");
+        ? "✓ Correct · tracked. Question list mein hi rahega."
+        : "❌ Saved to Wrong (Mistakes). Question list mein hi rahega — solution padho.");
     }
   };
 
@@ -61,15 +61,16 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
         (q.answer != null ? `Correct answer (already verified): ${String.fromCharCode(65 + q.answer)}) ${q.options[q.answer]}\n` : "") +
         (q.explanation ? `Reason: ${q.explanation}\n` : "");
       const { answer } = await askAI({ question: text, mode: "shortcut", subject });
-      setShortcut(answer); setScShown(true);
+      setShortcut(answer); setScShown(true); saveShortcutFor(q, answer); // persist
     } catch (e) { setErr(e.message); } finally { setScLoading(false); }
   };
   const toggleShortcut = () => {
     if (scShown) { setScShown(false); return; }        // hide
-    if (shortcut) { setScShown(true); return; }         // show cached
+    if (shortcut) { setScShown(true); return; }         // show saved (never regenerates)
     fetchShortcut();
   };
-  const regenShortcut = () => { setShortcut(""); fetchShortcut(); }; // fresh shortcut
+  // Only "New shortcut" throws away the saved one and makes a fresh trick.
+  const regenShortcut = () => { clearSavedShortcut(q); setShortcut(""); fetchShortcut(); };
 
   const toggleBm = () => { const on = toggleQBookmark(q, subject); setBm(on); };
 
@@ -90,6 +91,7 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
       <div className="row between" style={{ alignItems: "flex-start", gap: 10 }}>
         <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>
           <span className="rule-card__n">{index + 1}.</span> <Markdown inline>{q.question}</Markdown>
+          {q.pyq && <span className="paper-tag paper-tag--pyq">PYQ</span>}
           {paper && <span className="paper-tag">📄 {paper}</span>}
         </h3>
         <div className="row" style={{ gap: 6, flexShrink: 0 }}>
@@ -99,6 +101,8 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
           {onDelete && <button className="btn btn--ghost btn--sm" onClick={onDelete}>✕</button>}
         </div>
       </div>
+
+      {markControl && <div className="pyq-mark mt-8">{markControl}</div>}
 
       {editing ? (
         <QuestionEditor

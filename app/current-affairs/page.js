@@ -5,8 +5,9 @@ import FeedBucket from "@/components/FeedBucket";
 
 const TABS = [
   { key: "daily", label: "🗓️ Daily", dateMode: "date", placeholder: "Date", note: "Today's current affairs PDF + video — saved under today's date." },
-  { key: "weekly", label: "📆 Weekly", dateMode: "text", placeholder: "e.g. Week 28 · Jul 7–13", note: "Weekly compilation PDF + video." },
-  { key: "yearly", label: "📅 Yearly", dateMode: "text", placeholder: "e.g. 2024 Yearly", note: "Yearly current affairs PDF + video." },
+  { key: "weekly", label: "📆 Weekly", dateMode: "week", placeholder: "Week", note: "Weekly compilation PDF + video — pick the week." },
+  { key: "monthly", label: "🗓️ Monthly", dateMode: "month", placeholder: "Month", note: "Monthly compilation PDF + video — pick the month." },
+  { key: "yearly", label: "📅 Yearly", dateMode: "year", placeholder: "Year", note: "Yearly current affairs PDF + video — pick the year." },
 ];
 
 export default function CurrentAffairsPage() {
@@ -21,7 +22,7 @@ export default function CurrentAffairsPage() {
           Current <span className="grad">Affairs</span>
         </h1>
         <p className="hero__sub">
-          Daily / weekly / yearly — each date's PDF quiz and video, all in one place.
+          Daily / weekly / monthly / yearly — each date's PDF quiz and video, all in one place.
         </p>
       </section>
 

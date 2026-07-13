@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import {
-  getChapters, addChapter, deleteChapter, chapterRuleCount,
+  getChapters, addChapter, deleteChapter, chapterRuleCount, getChapterQuestions,
   subjectMeta, suggestedFor, SUBJECTS,
 } from "@/lib/grammar";
 
@@ -13,6 +13,7 @@ export default function SubjectChaptersPage() {
   const meta = subjectMeta(subject);
   const [chapters, setChapters] = useState([]);
   const [name, setName] = useState("");
+  const [showAdd, setShowAdd] = useState(false);
 
   const refresh = () => setChapters(getChapters(subject));
   useEffect(() => { refresh(); }, [subject]);
@@ -41,7 +42,10 @@ export default function SubjectChaptersPage() {
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">{meta.icon} {meta.short} · Chapters</span>
-          <Link href={backHref} className="btn btn--ghost btn--sm">← Back</Link>
+          <div className="row" style={{ gap: 8 }}>
+            <button className="btn btn--primary btn--sm" onClick={() => setShowAdd((v) => !v)}>{showAdd ? "✕ Close" : "➕ New chapter"}</button>
+            <Link href={backHref} className="btn btn--ghost btn--sm">← Back</Link>
+          </div>
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.7rem, 4vw, 2.6rem)" }}>
           {meta.label} <span className="grad">Chapters</span>
@@ -51,7 +55,8 @@ export default function SubjectChaptersPage() {
         </p>
       </section>
 
-      {/* Add chapter */}
+      {/* Add chapter — hidden until the button is pressed */}
+      {showAdd && (
       <section className="section" style={{ marginTop: 12 }}>
         <div className="glass-card">
           <h3>➕ New chapter</h3>
@@ -78,6 +83,7 @@ export default function SubjectChaptersPage() {
           )}
         </div>
       </section>
+      )}
 
       {/* Chapters grid */}
       <section className="section">
@@ -89,10 +95,15 @@ export default function SubjectChaptersPage() {
           <div className="placeholder">No chapters yet. Add a topic to get started. 🚀</div>
         ) : (
           <div className="grid grid--3">
-            {chapters.map((c) => (
+            {chapters.map((c) => {
+              const qCount = getChapterQuestions(c.id).length;
+              return (
               <article key={c.id} className="glass-card">
                 <div className="row between" style={{ alignItems: "flex-start" }}>
-                  <span className="badge badge--ok">{chapterRuleCount(c.id)} rules</span>
+                  <div className="row" style={{ gap: 6, flexWrap: "wrap" }}>
+                    <span className="badge badge--ok">{chapterRuleCount(c.id)} rules</span>
+                    {qCount > 0 && <span className="badge">{qCount} Q</span>}
+                  </div>
                   <button className="btn btn--ghost btn--sm" onClick={() => remove(c.id, c.name)} title="Delete">✕</button>
                 </div>
                 <h3 style={{ marginTop: 14 }}>{c.name}</h3>
@@ -102,8 +113,12 @@ export default function SubjectChaptersPage() {
                 <Link href={`/study/${subject}/${c.id}`} className="btn btn--primary btn--block mt-16">
                   Open
                 </Link>
+                <Link href={`/study/${subject}/${c.id}?view=questions`} className="btn btn--ghost btn--block mt-8">
+                  📝 Questions{qCount > 0 ? ` (${qCount})` : ""}
+                </Link>
               </article>
-            ))}
+              );
+            })}
           </div>
         )}
       </section>

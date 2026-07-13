@@ -20,6 +20,7 @@ const TABS = [
 export default function MistakesPage() {
   const router = useRouter();
   const [tab, setTab] = useState("wrong");
+  const [showWeak, setShowWeak] = useState(false);
   const [items, setItems] = useState([]);
   const [weak, setWeak] = useState([]);
   const [breakdown, setBreakdown] = useState({});
@@ -65,7 +66,12 @@ export default function MistakesPage() {
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">🔴 Mistake Notebook</span>
-          <div className="row" style={{ gap: 8 }}>
+          <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
+            {counts.attempted > 0 && (
+              <button className="btn btn--ghost btn--sm" onClick={() => setShowWeak((v) => !v)}>
+                {showWeak ? "✕ Hide tracker" : "📉 Weak Area Tracker"}
+              </button>
+            )}
             <Link href="/bookmarks" className="btn btn--ghost btn--sm">⭐ Bookmarks</Link>
             <Link href="/quizzes" className="btn btn--ghost btn--sm">← Quizzes</Link>
           </div>
@@ -91,8 +97,8 @@ export default function MistakesPage() {
         </section>
       )}
 
-      {/* Weak Area Tracker + error-type breakdown */}
-      {counts.attempted > 0 && (
+      {/* Weak Area Tracker + error-type breakdown — opens via the header button */}
+      {counts.attempted > 0 && showWeak && (
         <section className="section" style={{ marginTop: 12 }}>
           <div className="glass-card">
             <h3>📉 Weak Area Tracker</h3>
@@ -124,12 +130,12 @@ export default function MistakesPage() {
         </section>
       )}
 
-      {/* Re-attempt buttons */}
+      {/* Re-attempt buttons — one line */}
       {counts.wrong > 0 && (
         <section className="section" style={{ marginTop: 12 }}>
-          <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
-            <button className="btn btn--primary" onClick={reattemptAllWrong}>🎯 Re-attempt all wrong ({counts.wrong})</button>
-            {weekWrong > 0 && <button className="btn btn--ghost" onClick={reattemptWeek}>📅 This week's wrong ({weekWrong})</button>}
+          <div className="row" style={{ gap: 8, flexWrap: "nowrap", overflowX: "auto" }}>
+            <button className="btn btn--primary btn--sm" onClick={reattemptAllWrong} style={{ whiteSpace: "nowrap" }}>🎯 Re-attempt all wrong ({counts.wrong})</button>
+            {weekWrong > 0 && <button className="btn btn--ghost btn--sm" onClick={reattemptWeek} style={{ whiteSpace: "nowrap" }}>📅 This week's wrong ({weekWrong})</button>}
           </div>
         </section>
       )}

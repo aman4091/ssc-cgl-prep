@@ -16,6 +16,7 @@ import {
   generateMcqFromImages,
 } from "@/lib/client-ai";
 import { saveQuiz, makeId, getSettings, geminiActive } from "@/lib/storage";
+import { buildChapterQuiz } from "@/lib/chapterquiz";
 import { saveFile, getFile, openFile } from "@/lib/filestore";
 import RuleCard from "@/components/RuleCard";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
@@ -69,6 +70,25 @@ export default function ChapterPage() {
     if (c?.videos?.length && !play.url) setPlay({ url: c.videos[0].url, start: 0, k: 0 });
   };
   useEffect(() => { refresh(); /* eslint-disable-next-line */ }, [chapterId]);
+
+  // Theory / Questions split — "📝 Questions" opens straight into the questions view.
+  const [view, setView] = useState("theory"); // "theory" | "questions"
+  const [showAdd, setShowAdd] = useState(false); // the "add content" card is hidden until asked
+  const [showLinks, setShowLinks] = useState(false); // the "chapter links" card is hidden until asked
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const p = new URLSearchParams(window.location.search).get("view");
+    setView(p === "questions" ? "questions" : "theory");
+  }, [chapterId]);
+  const switchView = (v) => {
+    setView(v);
+    try {
+      const url = new URL(window.location.href);
+      if (v === "questions") url.searchParams.set("view", "questions");
+      else url.searchParams.delete("view");
+      window.history.replaceState(null, "", url);
+    } catch { /* ignore */ }
+  };
 
   // Load note-image blobs -> object URLs for inline display
   useEffect(() => {
@@ -358,16 +378,12 @@ export default function ChapterPage() {
   };
 
   const practiceQuestions = () => {
-    const list = paperFilter ? questions.filter((q) => (q.paper || q.source) === paperFilter) : questions;
-    if (list.length === 0) { setError("Add some questions first."); return; }
-    const label = paperFilter ? `${chapterName} · ${paperFilter}` : `${chapterName} · Practice`;
-    const quiz = {
-      id: makeId(), title: label, source: `${chapterName} · questions`,
-      createdAt: new Date().toISOString(), questions: list,
-      // PYQ = exam mode: 15 min per 25 questions (36s each)
-      ...(isPyq ? { timeLimitSec: Math.max(60, list.length * 36) } : {}),
-    };
-    saveQuiz(quiz);
+    // Exam mode: random 25 with a 15-min timer, avoiding repeats across quizzes.
+    const pool = paperFilter ? questions.filter((q) => (q.paper || q.source) === paperFilter) : null;
+    if ((pool ? pool.length : questions.length) === 0) { setError("Add some questions first."); return; }
+    const name = paperFilter ? `${chapterName} · ${paperFilter}` : chapterName;
+    const quiz = buildChapterQuiz(chapterId, name, { pool: pool || undefined });
+    if (!quiz) { setError("Add some questions first."); return; }
     router.push(`/quizzes/${quiz.id}`);
   };
   const clearQs = () => { if (confirm("Remove all questions from this chapter?")) { clearChapterQuestions(chapterId); refresh(); } };
@@ -441,6 +457,9 @@ export default function ChapterPage() {
   }
 
   const hasVideo = (chapter.videos?.length || 0) > 0;
+  // english has no Questions tab; non-english splits into theory vs questions.
+  const theoryView = isEnglish || view === "theory";
+  const questionsView = !isEnglish && view === "questions";
 
   return (
     <>
@@ -459,14 +478,34 @@ export default function ChapterPage() {
             </button>
           ) : (
             <button className="btn btn--primary" onClick={practiceQuestions} disabled={questions.length === 0}>
-              🎯 Practice All ({questions.length})
+              🎯 Practice ({Math.min(25, questions.length)} · 15 min)
             </button>
           )}
         </div>
       </section>
 
-      {/* Video player */}
-      {hasVideo && (
+      {/* Theory / Questions tabs + Add toggle */}
+      <section className="section" style={{ marginTop: 4 }}>
+        <div className="row between" style={{ flexWrap: "wrap", gap: 10 }}>
+          {!isEnglish ? (
+            <div className="chips">
+              <button className={`chip chip--btn chip--lg ${view === "theory" ? "is-active" : ""}`} onClick={() => switchView("theory")}>📖 Theory</button>
+              <button className={`chip chip--btn chip--lg ${view === "questions" ? "is-active" : ""}`} onClick={() => switchView("questions")}>📝 Questions{questions.length ? ` (${questions.length})` : ""}</button>
+            </div>
+          ) : <span />}
+          <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
+            <button className="btn btn--ghost btn--sm" onClick={() => setShowLinks((v) => !v)}>
+              {showLinks ? "✕ Close links" : `🔗 Links${chapter.videos?.length ? ` (${chapter.videos.length})` : ""}`}
+            </button>
+            <button className="btn btn--primary btn--sm" onClick={() => setShowAdd((v) => !v)}>
+              {showAdd ? "✕ Close" : isEnglish ? "➕ Add rules" : "➕ Add theory / questions"}
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Embedded player — only for English (rule timestamps need it) */}
+      {isEnglish && hasVideo && (
         <section className="section" style={{ marginTop: 8 }}>
           <div className="glass-card">
             {chapter.videos.length > 1 && (
@@ -484,8 +523,8 @@ export default function ChapterPage() {
         </section>
       )}
 
-      {/* ADD CONTENT */}
-      {isEnglish ? (
+      {/* ADD CONTENT — hidden until the button above is pressed */}
+      {showAdd && (isEnglish ? (
         <section className="section" style={{ marginTop: 12 }}>
           <div className="glass-card">
             <h3>➕ Add rules</h3>
@@ -577,33 +616,38 @@ export default function ChapterPage() {
             <SavedPdfs pdfs={pdfs} openPdf={openPdf} delPdf={delPdf} />
           </div>
         </section>
-      )}
+      ))}
 
-      {/* Videos manager */}
+      {/* Chapter links — hidden until the 🔗 Links button is pressed */}
+      {showLinks && (
       <section className="section">
         <div className="glass-card">
-          <h3>▶ Chapter videos</h3>
-          <p className="muted mt-8" style={{ fontSize: "0.85rem" }}>Add a YouTube link{isEnglish ? " — then set a timestamp on each rule to jump right to that spot." : "."}</p>
+          <h3>🔗 Chapter links</h3>
+          <p className="muted mt-8" style={{ fontSize: "0.85rem" }}>Add any link — YouTube, PDF, article, drive… har link ke aage <strong>Open link</strong> button hoga.{isEnglish ? " (YouTube link daalo to rules par ⏱️ timestamp bhi kaam karega.)" : ""}</p>
           <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
-            <input className="input" style={{ flex: 2, minWidth: 200 }} placeholder="YouTube URL (https://youtu.be/...)" value={vUrl} onChange={(e) => setVUrl(e.target.value)} />
+            <input className="input" style={{ flex: 2, minWidth: 200 }} placeholder="Paste any link (https://…)" value={vUrl} onChange={(e) => setVUrl(e.target.value)} />
             <input className="input" style={{ flex: 1, minWidth: 140 }} placeholder="Title (optional)" value={vTitle} onChange={(e) => setVTitle(e.target.value)} />
-            <button className="btn btn--primary" onClick={onAddVideo} disabled={!vUrl.trim()}>Add video</button>
+            <button className="btn btn--primary" onClick={onAddVideo} disabled={!vUrl.trim()}>Add link</button>
           </div>
           {hasVideo && (
             <div className="mt-16" style={{ display: "grid", gap: 6 }}>
               {chapter.videos.map((v, i) => (
-                <div key={i} className="row between" style={{ background: "rgba(255,255,255,0.04)", padding: "8px 12px", borderRadius: 10 }}>
-                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>▶ {v.title || v.url}</span>
-                  <button className="btn btn--ghost btn--sm" onClick={() => onRemoveVideo(i)}>✕</button>
+                <div key={i} className="row between" style={{ background: "rgba(255,255,255,0.04)", padding: "8px 12px", borderRadius: 10, gap: 8 }}>
+                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>🔗 {v.title || v.url}</span>
+                  <div className="row" style={{ gap: 6, flexShrink: 0 }}>
+                    <a href={v.url} target="_blank" rel="noreferrer" className="btn btn--ghost btn--sm">🔗 Open link</a>
+                    <button className="btn btn--ghost btn--sm" onClick={() => onRemoveVideo(i)}>✕</button>
+                  </div>
                 </div>
               ))}
             </div>
           )}
         </div>
       </section>
+      )}
 
       {/* Theory / Notes gallery (non-english, not PYQ) */}
-      {!isEnglish && !isPyq && notes.length > 0 && (() => {
+      {theoryView && !isEnglish && !isPyq && notes.length > 0 && (() => {
         const shown = filterNotes();
         return (
           <section className="section">
@@ -651,12 +695,12 @@ export default function ChapterPage() {
         </section>
       )}
 
-      {/* Questions (non-english) — interactive quiz cards + paper/shift filter */}
-      {!isEnglish && (() => {
+      {/* Questions (non-english) — only in the Questions view */}
+      {questionsView && (() => {
         const papers = [...new Set(questions.map((q) => q.paper || q.source).filter(Boolean))];
         const shown = paperFilter ? questions.filter((q) => (q.paper || q.source) === paperFilter) : questions;
         return (
-          <section className="section">
+          <section className="section" id="questions">
             <div className="section__head">
               <div className="row between" style={{ alignItems: "flex-end", flexWrap: "wrap", gap: 10 }}>
                 <div><h2>Questions</h2><p>{questions.length ? `${shown.length} question${shown.length !== 1 ? "s" : ""} — pick an option to see the answer, solution & tricks.` : "No questions yet — add from a PDF/image."}</p></div>
@@ -668,7 +712,7 @@ export default function ChapterPage() {
                         {papers.map((p) => <option key={p} value={p}>{p}</option>)}
                       </select>
                     )}
-                    <button className="btn btn--primary btn--sm" onClick={practiceQuestions}>🎯 Practice ({shown.length})</button>
+                    <button className="btn btn--primary btn--sm" onClick={practiceQuestions}>🎯 Practice ({Math.min(25, shown.length)} · 15 min)</button>
                     <button className="btn btn--ghost btn--sm" onClick={clearQs}>🗑️ Delete all</button>
                   </div>
                 )}

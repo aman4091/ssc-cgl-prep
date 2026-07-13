@@ -1,75 +1,148 @@
-import Link from "next/link";
+"use client";
 
-const GROUPS = [
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { getChapters } from "@/lib/grammar";
+import { buildChapterQuiz } from "@/lib/chapterquiz";
+
+const SUBJECTS = [
+  { key: "math", name: "Maths", icon: "🧮" },
+  { key: "reasoning", name: "Reasoning", icon: "🧠" },
+  { key: "english", name: "English", icon: "📚" },
+  { key: "gs", name: "General Studies", icon: "🌍" },
+];
+
+const EXTRA = [
   {
-    head: "📖 Learn",
-    sub: "Study and understand — chapter by chapter.",
-    items: [
-      { icon: "📚", name: "Subjects", desc: "Maths, Reasoning, English, GS — chapters, rules, theory & video.", href: "/subjects" },
-      { icon: "🔤", name: "Vocab · OWS", desc: "50 words a day — meaning, trick, synonyms, daily quiz.", href: "/vocab" },
-      { icon: "📰", name: "Current Affairs", desc: "Daily / weekly / yearly — quiz & video, date-wise.", href: "/current-affairs" },
-      { icon: "📗", name: "Static GK", desc: "Topic-wise static GK — quiz & video from PDFs.", href: "/static-gk" },
+    key: "pyq", name: "PYQ Bank", icon: "🎯",
+    topics: [
+      { name: "Maths PYQs", href: "/pyq/math" },
+      { name: "Reasoning PYQs", href: "/pyq/reasoning" },
+      { name: "English PYQs", href: "/pyq/english" },
+      { name: "General Awareness PYQs", href: "/pyq/gs" },
     ],
   },
   {
-    head: "📝 Practice",
-    sub: "Take tests, build speed.",
-    items: [
-      { icon: "🎯", name: "PYQ Bank", desc: "Previous year questions — subject & chapter-wise.", href: "/pyq" },
-      { icon: "📄", name: "Full Papers", desc: "Year-wise full CGL papers — 1 hour timer.", href: "/papers" },
-      { icon: "🧮", name: "Calculation", desc: "Speed maths — additions, ×, squares, fractions.", href: "/calculation" },
-      { icon: "🗂️", name: "Quizzes", desc: "All the quizzes you built from PDFs.", href: "/quizzes" },
+    key: "vocab", name: "Vocabulary", icon: "🔤",
+    topics: [
+      { name: "One Word Substitution (daily)", href: "/vocab" },
+      { name: "Bookmarked words", href: "/vocab/bookmarks" },
     ],
   },
   {
-    head: "📊 Track & Revise",
-    sub: "Find weak spots, track progress.",
-    items: [
-      { icon: "🔁", name: "Smart Revision", desc: "Wrong / low-practice / new — target your weak spots.", href: "/revision" },
-      { icon: "🌐", name: "External Tests", desc: "Track score, time and links of tests on other sites.", href: "/external-tests" },
-      { icon: "📅", name: "Today's Targets", desc: "Your daily targets, start in one click.", href: "/today" },
-      { icon: "⚙️", name: "Settings", desc: "DeepSeek API key and preferences.", href: "/settings" },
+    key: "ca", name: "Current Affairs & GK", icon: "📰",
+    topics: [
+      { name: "Current Affairs (daily / weekly / monthly / yearly)", href: "/current-affairs" },
+      { name: "Static GK", href: "/static-gk" },
+    ],
+  },
+  {
+    key: "practice", name: "Practice & Tests", icon: "📝",
+    topics: [
+      { name: "Full Papers (1-hour timer)", href: "/papers" },
+      { name: "Calculation (speed maths)", href: "/calculation" },
+      { name: "My Quizzes", href: "/quizzes" },
+      { name: "External / Mock tests", href: "/external-tests" },
+    ],
+  },
+  {
+    key: "track", name: "Track & Revise", icon: "📊",
+    topics: [
+      { name: "Today's Targets", href: "/today" },
+      { name: "Checklist", href: "/checklist" },
+      { name: "Mistake Notebook", href: "/mistakes" },
+      { name: "Bookmarked Questions", href: "/bookmarks" },
+      { name: "Saved Answers", href: "/saved-answers" },
+      { name: "Settings", href: "/settings" },
     ],
   },
 ];
 
 export default function Home() {
-  return (
-    <>
-      <section className="hero home-hero">
-        <span className="hero__eyebrow">✦ Tier 1 · Preliminary Exam</span>
-        <h1 className="hero__title">
-          Crack SSC CGL Prelims,
-          <br />
-          <span className="grad">one focused day at a time.</span>
-        </h1>
-        <p className="hero__sub">
-          Everything in one place — daily targets, chapters, PYQ, full papers, current affairs, speed maths and revision.
-          Upload a PDF/image, auto-generate quizzes with AI. A little every day, with consistency. 🚀
-        </p>
-        <div className="hero__cta">
-          <Link href="/today" className="btn btn--primary">📅 Today's plan</Link>
-          <Link href="/pyq" className="btn btn--ghost">🎯 PYQ practice</Link>
-        </div>
-      </section>
+  const router = useRouter();
+  const [open, setOpen] = useState(null);
+  const [chapters, setChapters] = useState({});
 
-      {GROUPS.map((g) => (
-        <section className="section" key={g.head}>
-          <div className="section__head">
-            <h2>{g.head}</h2>
-            <p>{g.sub}</p>
+  useEffect(() => {
+    const map = {};
+    for (const s of SUBJECTS) map[s.key] = getChapters(s.key);
+    setChapters(map);
+  }, []);
+
+  const startChapterQuiz = (chapterId, name) => {
+    const quiz = buildChapterQuiz(chapterId, name);
+    if (quiz) router.push(`/quizzes/${quiz.id}`);
+  };
+
+  const sections = [
+    ...SUBJECTS.map((s) => ({
+      key: s.key, name: s.name, icon: s.icon,
+      topics: (chapters[s.key] || []).map((c) => ({ name: c.name, href: `/study/${s.key}/${c.id}`, chapterId: c.id })),
+      manage: { name: "＋ Add / manage chapters", href: `/study/${s.key}` },
+    })),
+    ...EXTRA,
+  ];
+
+  return (
+    <section className="section home-acc-wrap">
+      <div className="home-head">
+        <div className="row between" style={{ flexWrap: "wrap", gap: 10, alignItems: "flex-start" }}>
+          <div>
+            <h1>SSC CGL <span className="grad">Prep Hub</span></h1>
+            <p className="muted">Pick a subject, choose a topic — start right away.</p>
           </div>
-          <div className="grid grid--4">
-            {g.items.map((s) => (
-              <Link key={s.name} href={s.href} className="glass-card subject home-card" style={{ textDecoration: "none", color: "inherit" }}>
-                <div className="subject__icon">{s.icon}</div>
-                <h3>{s.name}</h3>
-                <p>{s.desc}</p>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ))}
-    </>
+          <Link href="/mistakes" className="btn btn--primary btn--sm">🔴 Mistake Notebook</Link>
+        </div>
+      </div>
+
+      <div className="home-acc">
+        {sections.map((s) => {
+          const isOpen = open === s.key;
+          return (
+            <div key={s.key} className={`home-acc__item ${isOpen ? "is-open" : ""}`}>
+              <button className="home-acc__row" onClick={() => setOpen(isOpen ? null : s.key)}>
+                <span className="home-acc__name">
+                  <span className="home-acc__ico">{s.icon}</span>{s.name}
+                </span>
+                <span className="home-acc__meta">
+                  {s.topics.length > 0 && <span className="home-acc__count">{s.topics.length}</span>}
+                  <span className="home-acc__chev">{isOpen ? "▲" : "▼"}</span>
+                </span>
+              </button>
+
+              {isOpen && (
+                <div className="home-acc__panel">
+                  {s.topics.length === 0 ? (
+                    <p className="home-acc__empty muted">No topics yet — add one below.</p>
+                  ) : (
+                    s.topics.map((t) => (
+                      t.chapterId ? (
+                        <div key={t.href} className="home-acc__link home-acc__chrow">
+                          <Link href={t.href} className="home-acc__chname">{t.name}</Link>
+                          <button className="btn btn--ghost btn--sm home-acc__quiz" onClick={() => startChapterQuiz(t.chapterId, t.name)}>
+                            🎯 Quiz
+                          </button>
+                        </div>
+                      ) : (
+                        <Link key={t.href} href={t.href} className="home-acc__link">
+                          <span>{t.name}</span>
+                          <span className="home-acc__go">→</span>
+                        </Link>
+                      )
+                    ))
+                  )}
+                  {s.manage && (
+                    <Link href={s.manage.href} className="home-acc__link home-acc__link--manage">
+                      <span>{s.manage.name}</span>
+                    </Link>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }

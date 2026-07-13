@@ -3,10 +3,10 @@ import Link from "next/link";
 export const metadata = { title: "PYQ — SSC CGL Pre" };
 
 const SUBS = [
-  { icon: "🧮", name: "Maths", desc: "Previous year quant questions — chapter-wise.", href: "/study/pyq-math" },
-  { icon: "🧠", name: "Reasoning", desc: "PYQ reasoning — analogy, series, coding, puzzles.", href: "/study/pyq-reasoning" },
-  { icon: "📚", name: "English", desc: "PYQ English — grammar, vocabulary, comprehension.", href: "/study/pyq-english" },
-  { icon: "🌍", name: "General Awareness", desc: "PYQ GS — history, polity, science, current affairs.", href: "/study/pyq-gs" },
+  { icon: "🧮", name: "Maths", desc: "Previous year quant questions — one subject-wise bank.", href: "/pyq/math" },
+  { icon: "🧠", name: "Reasoning", desc: "PYQ reasoning — analogy, series, coding, puzzles.", href: "/pyq/reasoning" },
+  { icon: "📚", name: "English", desc: "PYQ English — grammar, vocabulary, comprehension.", href: "/pyq/english" },
+  { icon: "🌍", name: "General Awareness", desc: "PYQ GS — history, polity, science, current affairs.", href: "/pyq/gs" },
 ];
 
 export default function PyqPage() {
@@ -18,8 +18,8 @@ export default function PyqPage() {
           PYQ <span className="grad">Bank</span>
         </h1>
         <p className="hero__sub">
-          Create chapters inside each subject, then upload question images from books — AI turns them into quizzes.
-          Practice chapter by chapter.
+          Subject-wise question bank — upload question images/PDF, AI turns them into MCQs. Solve them, and
+          mark any question into a subject chapter (it shows there with a PYQ tag).
         </p>
         <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
           <Link href="/mistakes" className="btn btn--ghost btn--sm">🔴 Mistake Notebook</Link>
@@ -34,7 +34,7 @@ export default function PyqPage() {
               <div className="subject__icon">{s.icon}</div>
               <h3>{s.name}</h3>
               <p className="mt-8">{s.desc}</p>
-              <span className="badge badge--ok" style={{ marginTop: 12 }}>Open chapters →</span>
+              <span className="badge badge--ok" style={{ marginTop: 12 }}>Open PYQ bank →</span>
             </Link>
           ))}
         </div>

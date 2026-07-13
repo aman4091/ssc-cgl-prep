@@ -222,27 +222,21 @@ export default function QuizzesPage() {
         {quizzes.length === 0 ? (
           <div className="placeholder">No quizzes found. Upload a PDF to get started. 🚀</div>
         ) : (
-          <div className="grid grid--3">
+          <div className="quiz-list">
             {quizzes.map((q) => (
-              <article key={q.id} className="glass-card">
-                <div className="row between" style={{ alignItems: "flex-start" }}>
-                  <span className="badge badge--ok">{q.questions.length} Q</span>
-                  <button
-                    className="btn btn--ghost btn--sm"
-                    onClick={() => handleDelete(q.id)}
-                    title="Delete"
-                  >
-                    ✕
-                  </button>
+              <div key={q.id} className="quiz-row glass">
+                <div className="quiz-row__main">
+                  <span className="quiz-row__title">{q.title}</span>
+                  <span className="quiz-row__meta">
+                    <span className="badge badge--ok">{q.questions.length} Q</span>
+                    {q.source} · {new Date(q.createdAt).toLocaleDateString("en-IN")}
+                  </span>
                 </div>
-                <h3 style={{ marginTop: 14 }}>{q.title}</h3>
-                <p className="muted mt-8" style={{ fontSize: "0.82rem" }}>
-                  {q.source} · {new Date(q.createdAt).toLocaleDateString("en-IN")}
-                </p>
-                <Link href={`/quizzes/${q.id}`} className="btn btn--primary btn--block mt-16">
-                  Start Quiz
-                </Link>
-              </article>
+                <div className="quiz-row__actions">
+                  <Link href={`/quizzes/${q.id}`} className="btn btn--primary btn--sm">Open →</Link>
+                  <button className="btn btn--ghost btn--sm" onClick={() => handleDelete(q.id)} title="Delete">✕</button>
+                </div>
+              </div>
             ))}
           </div>
         )}

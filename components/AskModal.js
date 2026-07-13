@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { askAI, generateSimilar, ocrImage } from "@/lib/client-ai";
+import { askAI, generateSimilar, readImageText } from "@/lib/client-ai";
 import { saveQuiz, makeId } from "@/lib/storage";
 import { saveAnswer, SUBJECTS } from "@/lib/savedanswers";
 import Markdown from "./Markdown";
@@ -15,9 +15,12 @@ export default function AskModal({ open, onClose }) {
   const [imageText, setImageText] = useState("");
   const [imageName, setImageName] = useState("");
   const [imagePreview, setImagePreview] = useState("");
+  const [imageEngine, setImageEngine] = useState("");
   const [ocrProgress, setOcrProgress] = useState(null);
   const [answer, setAnswer] = useState("");
+  const [answerKind, setAnswerKind] = useState("");     // "" | "solve" | "shortcut"
   const [loading, setLoading] = useState(false);
+  const [scLoading, setScLoading] = useState(false);
   const [simLoading, setSimLoading] = useState(false);
   const [error, setError] = useState("");
   const [savedMsg, setSavedMsg] = useState("");
@@ -27,9 +30,9 @@ export default function AskModal({ open, onClose }) {
   const reset = () => {
     if (previewRef.current) URL.revokeObjectURL(previewRef.current);
     previewRef.current = "";
-    setQuestion(""); setImageText(""); setImageName(""); setImagePreview("");
-    setOcrProgress(null); setAnswer(""); setError(""); setSavedMsg("");
-    setLoading(false); setSimLoading(false);
+    setQuestion(""); setImageText(""); setImageName(""); setImagePreview(""); setImageEngine("");
+    setOcrProgress(null); setAnswer(""); setAnswerKind(""); setError(""); setSavedMsg("");
+    setLoading(false); setScLoading(false); setSimLoading(false);
     if (fileRef.current) fileRef.current.value = "";
   };
 
@@ -59,14 +62,16 @@ export default function AskModal({ open, onClose }) {
     setImagePreview(url);
     setImageName(file.name || "pasted-image.png");
     setImageText("");
+    setImageEngine("");
     setOcrProgress(0);
     try {
-      const text = await ocrImage(file, (p) => setOcrProgress(p));
+      const { text, engine } = await readImageText(file, (p) => setOcrProgress(p));
       setImageText(text);
+      setImageEngine(engine);
       setOcrProgress(1);
       if (!text) setError("No text found in the image (it may be blurry or handwritten).");
     } catch (err) {
-      setError("OCR failed: " + err.message);
+      setError("Image read failed: " + err.message);
       setOcrProgress(null);
     }
   };
@@ -103,19 +108,31 @@ export default function AskModal({ open, onClose }) {
   const removeImage = () => {
     if (previewRef.current) URL.revokeObjectURL(previewRef.current);
     previewRef.current = "";
-    setImagePreview(""); setImageName(""); setImageText(""); setOcrProgress(null);
+    setImagePreview(""); setImageName(""); setImageText(""); setImageEngine(""); setOcrProgress(null);
     if (fileRef.current) fileRef.current.value = "";
   };
 
   const handleAsk = async () => {
-    setError(""); setAnswer(""); setSavedMsg(""); setLoading(true);
+    setError(""); setAnswer(""); setAnswerKind(""); setSavedMsg(""); setLoading(true);
     try {
       const { answer } = await askAI({ question, imageText, subject });
-      setAnswer(answer);
+      setAnswer(answer); setAnswerKind("solve");
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleShortcut = async () => {
+    setError(""); setAnswer(""); setAnswerKind(""); setSavedMsg(""); setScLoading(true);
+    try {
+      const { answer } = await askAI({ question, imageText, mode: "shortcut", subject });
+      setAnswer(answer); setAnswerKind("shortcut");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setScLoading(false);
     }
   };
 
@@ -142,7 +159,8 @@ export default function AskModal({ open, onClose }) {
   };
 
   const busyOcr = ocrProgress !== null && ocrProgress < 1;
-  const canSubmit = (question || imageText) && !busyOcr;
+  const anyBusy = loading || scLoading || simLoading;
+  const canSubmit = (question || imageText) && !busyOcr && !anyBusy;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -199,8 +217,8 @@ export default function AskModal({ open, onClose }) {
             <div className="img-preview__bar">
               <span className="muted" style={{ fontSize: "0.8rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {imageName}
-                {busyOcr && ` · reading ${Math.round(ocrProgress * 100)}%`}
-                {ocrProgress === 1 && imageText && " · ✔ text ready"}
+                {busyOcr && ` · ${imageEngine === "gemini" ? "Gemini reading…" : `reading ${Math.round(ocrProgress * 100)}%`}`}
+                {ocrProgress === 1 && imageText && ` · ✔ text ready${imageEngine === "gemini" ? " (Gemini)" : ""}`}
               </span>
               <button className="btn btn--ghost btn--sm" onClick={removeImage}>Remove</button>
             </div>
@@ -213,11 +231,14 @@ export default function AskModal({ open, onClose }) {
           </p>
         )}
 
-        <div className="row mt-16" style={{ gap: 10 }}>
-          <button className="btn btn--primary" onClick={handleAsk} disabled={loading || !canSubmit}>
+        <div className="row mt-16" style={{ gap: 10, flexWrap: "wrap" }}>
+          <button className="btn btn--primary" onClick={handleAsk} disabled={!canSubmit}>
             {loading ? "Solving…" : "Solve / Answer"}
           </button>
-          <button className="btn btn--ghost" onClick={handleSimilar} disabled={simLoading || !canSubmit}>
+          <button className="btn btn--ghost" onClick={handleShortcut} disabled={!canSubmit}>
+            {scLoading ? "Thinking…" : "⚡ Shortcut trick"}
+          </button>
+          <button className="btn btn--ghost" onClick={handleSimilar} disabled={!canSubmit}>
             {simLoading ? "Generating…" : "20 similar questions"}
           </button>
           <button className="btn btn--ghost btn--sm" onClick={reset}>🔄 New question</button>
@@ -227,6 +248,9 @@ export default function AskModal({ open, onClose }) {
 
         {answer && (
           <div className="answer-box mt-16">
+            {answerKind === "shortcut" && (
+              <p className="muted" style={{ fontSize: "0.78rem", marginBottom: 6 }}>⚡ Shortcut trick</p>
+            )}
             <Markdown>{answer}</Markdown>
           </div>
         )}
