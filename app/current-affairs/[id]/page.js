@@ -12,6 +12,7 @@ import Markdown from "@/components/Markdown";
 import QuestionEditor from "@/components/QuestionEditor";
 import FeedUploader from "@/components/FeedUploader";
 import AskButtons from "@/components/AskButtons";
+import PasteAnswer from "@/components/PasteAnswer";
 
 const letter = (i) => (i != null && i >= 0 ? String.fromCharCode(65 + i) : "?");
 
@@ -262,6 +263,7 @@ export default function CurrentAffairsDetail() {
                       </div>
                     )}
                   </div>
+                  {editIdx !== qi && <PasteAnswer q={q} />}
                   {editIdx === qi ? (
                     <QuestionEditor question={q} onSave={(nq) => saveEdit(qi, nq)} onCancel={() => setEditIdx(null)} />
                   ) : (

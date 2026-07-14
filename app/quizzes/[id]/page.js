@@ -10,6 +10,7 @@ import Diagram from "@/components/Diagram";
 import QuestionFollowup from "@/components/QuestionFollowup";
 import AddToChapter from "@/components/AddToChapter";
 import AskButtons from "@/components/AskButtons";
+import PasteAnswer from "@/components/PasteAnswer";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
@@ -361,6 +362,7 @@ export default function QuizPlayer() {
                     <AskButtons q={q} />
                     <AddToChapter q={q} />
                   </div>
+                  <PasteAnswer q={q} />
 
                   {actionErr[qi] && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 10 }}>{actionErr[qi]}</p>}
                   {exShown[qi] && explains[qi] && (
@@ -453,6 +455,7 @@ export default function QuizPlayer() {
           <div className="row mt-16" style={{ justifyContent: "flex-end", gap: 8, flexWrap: "wrap" }}>
             <AskButtons q={q} />
           </div>
+          <PasteAnswer q={q} />
         </article>
 
         <div className="row between mt-24">

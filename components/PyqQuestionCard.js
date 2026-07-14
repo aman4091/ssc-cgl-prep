@@ -14,6 +14,7 @@ import QuestionFollowup from "./QuestionFollowup";
 import QuestionEditor from "./QuestionEditor";
 import AddToChapter from "./AddToChapter";
 import AskButtons from "./AskButtons";
+import PasteAnswer from "./PasteAnswer";
 
 // One PYQ / chapter question shown as an interactive quiz card:
 // pick an option -> reveal correct/wrong + solution, plus shortcut / 20-similar / doubt.
@@ -104,6 +105,8 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
           {onDelete && <button className="btn btn--ghost btn--sm" onClick={onDelete}>✕</button>}
         </div>
       </div>
+
+      <PasteAnswer q={q} />
 
       {markControl && <div className="pyq-mark mt-8">{markControl}</div>}
 
