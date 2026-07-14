@@ -19,15 +19,26 @@ export default function SyncManager() {
       if (busy.current || !active() || document.hidden) return;
       busy.current = true;
       try {
-        const remoteAt = await remoteInfo();
         const s = getSettings();
-        if (remoteAt && remoteAt > (s.syncRemoteAt || "")) {
-          // a newer version exists (pushed by another device) → pull + reload
+        // 0) Never synced on this device yet → seed FROM the cloud (don't push over
+        //    it). Only if the cloud is empty do we push this device's data up.
+        if (!s.syncPushedHash) {
+          const remoteAt = await remoteInfo();
+          if (remoteAt) { const t = await pullSync(); if (t && !stopped) { window.location.reload(); return; } }
+          else { await pushSync(); }
+          return;
+        }
+        // 1) Local changes ALWAYS win first — push them so a target you just added
+        //    is never overwritten by an older cloud copy.
+        if (localHash() !== s.syncPushedHash) {
+          await pushSync();
+          return;
+        }
+        // 2) Local is clean → if another device pushed newer, pull it + reload.
+        const remoteAt = await remoteInfo();
+        if (remoteAt && remoteAt > (getSettings().syncRemoteAt || "")) {
           const t = await pullSync();
           if (t && !stopped) { window.location.reload(); return; }
-        } else if (localHash() !== (s.syncPushedHash || "")) {
-          // our data changed since the last push → upload it
-          await pushSync();
         }
       } catch { /* offline / transient — try again next cycle */ }
       finally { busy.current = false; }
