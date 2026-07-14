@@ -808,6 +808,23 @@ main.container {
   color: var(--success); font-weight: 800; font-size: 0.9rem;
 }
 
+/* Current Affairs date cards (wider than vocab day cells — dates are longer) */
+.days-grid--ca { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+@media (max-width: 560px) { .days-grid--ca { grid-template-columns: repeat(2, 1fr); } }
+.ca-card { padding: 0; }
+.ca-card__link {
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 16px 12px; text-decoration: none; color: inherit;
+}
+.ca-card .day-cell__n { padding-right: 22px; }
+.ca-card__x {
+  position: absolute; top: 6px; right: 6px;
+  width: 26px; height: 26px; border-radius: 8px; line-height: 1;
+  background: rgba(0,0,0,0.45); color: var(--text-2);
+  border: 1px solid var(--glass-border); cursor: pointer; font-size: 0.8rem;
+}
+.ca-card__x:hover { color: var(--danger); border-color: rgba(251,113,133,0.5); }
+
 /* ===== Vocab: day layout ===== */
 .vocab-layout {
   display: grid;

@@ -40,6 +40,8 @@ export default function CurrentAffairsPage() {
           dateMode={active.dateMode}
           datePlaceholder={active.placeholder}
           note={active.note}
+          cards
+          hrefBase="/current-affairs"
         />
       </section>
     </>

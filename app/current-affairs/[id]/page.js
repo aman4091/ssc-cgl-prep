@@ -10,6 +10,7 @@ import { openFile } from "@/lib/filestore";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import Markdown from "@/components/Markdown";
 import QuestionEditor from "@/components/QuestionEditor";
+import FeedUploader from "@/components/FeedUploader";
 
 const letter = (i) => (i != null && i >= 0 ? String.fromCharCode(65 + i) : "?");
 
@@ -180,6 +181,11 @@ export default function CurrentAffairsDetail() {
       </section>
 
       {error && <p className="section" style={{ color: "var(--danger)", fontSize: "0.9rem" }}>{error}</p>}
+
+      {/* Add questions / notes to this date */}
+      <section className="section" style={{ marginTop: 12 }}>
+        <FeedUploader entry={entry} onChanged={refresh} />
+      </section>
 
       {/* Answer verification report */}
       {reports && (
