@@ -277,7 +277,7 @@ export default function SettingsPage() {
             <label>Gemini API Key</label>
             <input className="input" type={showKey ? "text" : "password"} placeholder="AIza..." value={settings.geminiApiKey || ""}
               onChange={(e) => update("geminiApiKey", e.target.value)} autoComplete="off" spellCheck={false} disabled={settings.geminiEnabled === false} />
-            <p className="hint">Get a free key at aistudio.google.com/apikey.</p>
+            <p className="hint">Get a free key at aistudio.google.com/apikey. Yehi key <strong>🧠 AI Roadmap</strong> coach ko bhi chalati hai.</p>
           </div>
           <div className="field" style={{ opacity: settings.geminiEnabled === false ? 0.5 : 1 }}>
             <label>Gemini Model</label>
