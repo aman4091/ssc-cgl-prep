@@ -128,7 +128,7 @@ export default function VocabTypePage() {
           <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>
             {typeLabel(type)} <span className="grad">· {items.length}</span>
           </h1>
-          <button className="btn btn--primary" onClick={startQuiz}>🎯 Quiz (Day 1–{dayNum})</button>
+          <button className="btn btn--primary" onClick={startQuiz}>🎯 {typeLabel(type)} Quiz (Day 1–{dayNum})</button>
         </div>
         {items.length > 0 && (
           <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>

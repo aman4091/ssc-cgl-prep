@@ -10,6 +10,7 @@ import ChecklistMenu from "./ChecklistMenu";
 const LINKS = [
   { href: "/", label: "Home", icon: "🏠" },
   { href: "/today", label: "Today's Targets", icon: "📅" },
+  { href: "/daily", label: "Daily Quiz", icon: "🗓️" },
   { href: "/checklist", label: "Checklist", icon: "✅" },
   { href: "/subjects", label: "Subjects", icon: "📚" },
   { href: "/vocab", label: "Vocab · OWS", icon: "🔤" },

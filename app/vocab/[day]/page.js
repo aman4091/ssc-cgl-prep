@@ -45,7 +45,7 @@ export default function VocabDayPage() {
         </div>
         <div className="row between mt-8">
           <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>Day {dayNum} · {total} words</h1>
-          <button className="btn btn--primary" onClick={startQuiz}>🎯 Mixed Quiz (Day 1–{dayNum})</button>
+          <button className="btn btn--primary" onClick={startQuiz}>🎯 All-types Quiz (Day 1–{dayNum})</button>
         </div>
         <p className="hero__sub">Choose a category — all words of that type will open.</p>
       </section>
