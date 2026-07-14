@@ -253,10 +253,10 @@ export default function CurrentAffairsDetail() {
             <div className="mt-16" style={{ display: "grid", gap: 16 }}>
               {entry.questions.map((q, qi) => (
                 <div key={qi} className="answer-box">
-                  <div className="row between" style={{ gap: 8, alignItems: "flex-start" }}>
+                  <div className="q-head">
                     <p style={{ fontWeight: 600, flex: 1 }}>{qi + 1}. {q.question}</p>
                     {editIdx !== qi && (
-                      <div className="row" style={{ gap: 6, flexWrap: "wrap", justifyContent: "flex-end", flexShrink: 0 }}>
+                      <div className="q-head__actions">
                         <AskButtons q={q} />
                         <button className="btn btn--ghost btn--sm" onClick={() => setEditIdx(qi)} title="Edit question">✏️ Edit</button>
                       </div>

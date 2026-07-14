@@ -90,13 +90,13 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
 
   return (
     <article className="glass-card">
-      <div className="row between" style={{ alignItems: "flex-start", gap: 10 }}>
+      <div className="q-head">
         <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>
           <span className="rule-card__n">{index + 1}.</span> <Markdown inline>{q.question}</Markdown>
           {q.pyq && <span className="paper-tag paper-tag--pyq">PYQ</span>}
           {paper && <span className="paper-tag">📄 {paper}</span>}
         </h3>
-        <div className="row" style={{ gap: 6, flexWrap: "wrap", justifyContent: "flex-end" }}>
+        <div className="q-head__actions">
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
           <AskButtons q={q} />
           {onEdit && !editing && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
