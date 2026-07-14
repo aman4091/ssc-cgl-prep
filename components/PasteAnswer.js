@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
+import { keyFor } from "@/lib/qstats";
 import Markdown from "./Markdown";
 
 // Paste an answer you got from Gemini (or anywhere) and save it as THIS question's
@@ -14,6 +15,15 @@ export default function PasteAnswer({ q }) {
   const [show, setShow] = useState(false);
 
   useEffect(() => { setSaved(getSavedShortcut(q)); }, [q]);
+
+  // Pressing the ✨ Gemini button for THIS question opens the paste box right away.
+  useEffect(() => {
+    const onAsked = (e) => {
+      if (e.detail?.key && e.detail.key === keyFor(q)) { setText(getSavedShortcut(q) || ""); setOpen(true); }
+    };
+    window.addEventListener("cgl:gemini-asked", onAsked);
+    return () => window.removeEventListener("cgl:gemini-asked", onAsked);
+  }, [q]);
 
   const startEdit = () => { setText(saved || ""); setOpen(true); };
   const save = () => {

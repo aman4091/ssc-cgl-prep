@@ -21,7 +21,7 @@ function questionText(q) {
 // `url` fixes the target site (e.g. Gemini); omit it to use the ask-site from
 // Settings. `label` overrides the button text. `promptKey` names a Settings field
 // whose text is prepended before the question when copying (e.g. "geminiPrompt").
-export default function AskElsewhere({ q, className = "btn btn--ghost btn--sm", url, label, title, promptKey }) {
+export default function AskElsewhere({ q, className = "btn btn--ghost btn--sm", url, label, title, promptKey, onAsked }) {
   const [done, setDone] = useState(false);
   const go = async () => {
     let text = questionText(q);
@@ -36,6 +36,7 @@ export default function AskElsewhere({ q, className = "btn btn--ghost btn--sm", 
       const full = tmpl.includes("%s") ? tmpl.replace("%s", encodeURIComponent(text)) : tmpl;
       try { window.open(full, "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
     }
+    if (onAsked) { try { onAsked(); } catch { /* ignore */ } }
   };
   return (
     <button className={className} onClick={go} title={title || "Copy question & open your ask-site (set in Settings)"}>
