@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { getSettings, saveSettings, DEFAULT_SETTINGS } from "@/lib/storage";
 import { exportAll, exportDataOnly, importAll, downloadBlob } from "@/lib/backup";
 import { getDaysOverview } from "@/lib/vocab";
-import { pushSync, pullSync, syncReady } from "@/lib/sync";
+import { pushSync, pullSync } from "@/lib/sync";
 
 const SYNC_SQL = `create table if not exists syncs (
   code text primary key,
@@ -492,8 +492,8 @@ export default function SettingsPage() {
               onChange={(e) => update("syncCode", e.target.value)} spellCheck={false} />
           </div>
           <div className="row mt-16" style={{ gap: 10, flexWrap: "wrap" }}>
-            <button className="btn btn--primary" onClick={doPush} disabled={syncBusy || !syncReady()}>⬆️ Push now</button>
-            <button className="btn btn--ghost" onClick={doPull} disabled={syncBusy || !syncReady()}>⬇️ Pull now</button>
+            <button className="btn btn--primary" onClick={doPush} disabled={syncBusy || !(settings.supabaseUrl && settings.supabaseAnonKey && settings.syncCode)}>⬆️ Push now</button>
+            <button className="btn btn--ghost" onClick={doPull} disabled={syncBusy || !(settings.supabaseUrl && settings.supabaseAnonKey && settings.syncCode)}>⬇️ Pull now</button>
             {settings.syncLastAt && <span className="muted" style={{ fontSize: "0.8rem", alignSelf: "center" }}>Last sync: {new Date(settings.syncLastAt).toLocaleString("en-IN")}</span>}
           </div>
           {syncMsg && <p className="mt-16" style={{ color: "var(--accent-2)", fontSize: "0.88rem" }}>{syncMsg}</p>}
