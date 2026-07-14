@@ -35,7 +35,7 @@ export default function WordPopup({ word, onClose }) {
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose} style={{ zIndex: 220 }}>
+    <div className="modal-overlay" onClick={onClose} style={{ zIndex: 500 }}>
       <div className="modal glass" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 520 }}>
         <div className="row between">
           <h2 className="grad" style={{ fontSize: "1.5rem" }}>{cur}</h2>

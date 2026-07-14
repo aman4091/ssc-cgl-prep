@@ -168,7 +168,7 @@ export default function VocabTypePage() {
               <p className="muted center" style={{ padding: "40px 0" }}>Click any word — meaning, trick and synonyms will show up. 👈</p>
             ) : (
               <>
-                <div className="row between">
+                <div className="row between vocab-detail__head">
                   <h2 className="grad" style={{ fontSize: "1.6rem" }}>{item.word}</h2>
                   <div className="row" style={{ gap: 8 }}>
                     <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark">
@@ -178,6 +178,7 @@ export default function VocabTypePage() {
                     <button className="btn btn--ghost btn--sm vocab-detail__close" onClick={() => { setSel(null); setDet(null); }} title="Close" aria-label="Close">✕</button>
                   </div>
                 </div>
+                <div className="vocab-detail__body">
                 <p className="muted mt-8" style={{ fontStyle: "italic" }}>{item.def}</p>
 
                 <div className="row mt-8" style={{ gap: 6, flexWrap: "wrap", alignItems: "center" }}>
@@ -213,8 +214,9 @@ export default function VocabTypePage() {
                     )}
                   </div>
                 )}
+                </div>
 
-                <div className="row between mt-24">
+                <div className="row between mt-24 vocab-detail__nav">
                   <button className="btn btn--ghost" onClick={() => go(-1)} disabled={sel === 0}>← Prev</button>
                   <button className="btn btn--ghost" onClick={() => go(1)} disabled={sel === items.length - 1}>Next →</button>
                 </div>

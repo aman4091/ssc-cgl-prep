@@ -907,14 +907,33 @@ main.container {
 @media (max-width: 780px) {
   .vocab-detail { display: none; }
   .vocab-detail.is-open {
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: fixed;
     top: 64px; left: 12px; right: 12px; bottom: 12px;
     z-index: 300;
     margin: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    padding: 0;
+    overflow: hidden;
     box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  }
+  /* word name pinned at top */
+  .vocab-detail.is-open .vocab-detail__head {
+    flex: none; padding: 14px 16px;
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(255,255,255,0.05);
+  }
+  /* only this middle part scrolls */
+  .vocab-detail.is-open .vocab-detail__body {
+    flex: 1 1 auto; min-height: 0;
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: 12px 16px 16px;
+  }
+  /* prev/next pinned at bottom */
+  .vocab-detail.is-open .vocab-detail__nav {
+    flex: none; margin: 0; padding: 12px 16px;
+    border-top: 1px solid var(--glass-border);
+    background: rgba(255,255,255,0.05);
   }
   .vocab-detail__close { display: inline-flex; }
   .vocab-detail__backdrop {
