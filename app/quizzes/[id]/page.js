@@ -8,6 +8,7 @@ import { askAI, generateSimilar } from "@/lib/client-ai";
 import Markdown from "@/components/Markdown";
 import Diagram from "@/components/Diagram";
 import QuestionFollowup from "@/components/QuestionFollowup";
+import AddToChapter from "@/components/AddToChapter";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
@@ -356,6 +357,7 @@ export default function QuizPlayer() {
                     <button className="btn btn--ghost btn--sm" onClick={() => make20(qi)} disabled={simLoading[qi]}>
                       {simLoading[qi] ? "Generating…" : "🎯 20 similar"}
                     </button>
+                    <AddToChapter q={q} />
                   </div>
 
                   {actionErr[qi] && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 10 }}>{actionErr[qi]}</p>}

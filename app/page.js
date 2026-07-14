@@ -95,7 +95,10 @@ export default function Home() {
             <h1>SSC CGL <span className="grad">Prep Hub</span></h1>
             <p className="muted">Pick a subject, choose a topic — start right away.</p>
           </div>
-          <Link href="/mistakes" className="btn btn--primary btn--sm">🔴 Mistake Notebook</Link>
+          <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
+            <Link href="/daily" className="btn btn--primary btn--sm">🗓️ Daily Quiz</Link>
+            <Link href="/mistakes" className="btn btn--ghost btn--sm">🔴 Mistake Notebook</Link>
+          </div>
         </div>
       </div>
 

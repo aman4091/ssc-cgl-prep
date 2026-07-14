@@ -717,6 +717,15 @@ main.container {
 .md table { border-collapse: collapse; margin: 10px 0; width: 100%; }
 .md th, .md td { border: 1px solid var(--glass-border); padding: 6px 10px; text-align: left; }
 .md blockquote { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--text-2); margin: 10px 0; }
+/* Question / option figures (imported quiz images, diagrams). White backing so
+   transparent PNG line-art stays visible on the dark theme; click to zoom. */
+.md img {
+  display: block; margin: 10px 0; max-width: 100%; height: auto;
+  max-height: 460px; object-fit: contain; border-radius: 8px;
+  background: #fff; padding: 6px; border: 1px solid var(--glass-border); cursor: zoom-in;
+}
+/* Inline context (options, question text rendered inline) — sit neatly in flow */
+.md--inline img { display: inline-block; vertical-align: middle; margin: 4px 8px; max-height: 200px; }
 
 /* ===== Result stats ===== */
 .stat-row {

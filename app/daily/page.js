@@ -5,10 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getSettings, saveQuiz } from "@/lib/storage";
 import { ocrImage, extractPdfTextSmart, generateQuizChunked } from "@/lib/client-ai";
-import Markdown from "@/components/Markdown";
+import { keyFor } from "@/lib/qstats";
+import PyqQuestionCard from "@/components/PyqQuestionCard";
 import {
   todayKey, getDayQuestions, getDailyDates, addDailyQuestions,
-  addDailyQuestion, removeDailyQuestion, clearDay, buildDailyQuiz,
+  addDailyQuestion, updateDailyQuestion, removeDailyQuestion, clearDay, buildDailyQuiz,
 } from "@/lib/daily";
 
 const EMPTY_MANUAL = { question: "", options: ["", "", "", ""], answer: 0, explanation: "" };
@@ -281,36 +282,19 @@ export default function DailyQuizPage() {
         {list.length === 0 ? (
           <div className="placeholder">No questions yet. Paste a screenshot or type one above. ✍️</div>
         ) : (
-          <div className="grid" style={{ gap: 12 }}>
+          <div style={{ display: "grid", gap: 12 }}>
             {list.map((q, i) => (
-              <article key={i} className="glass-card">
-                <div className="row between" style={{ alignItems: "flex-start", gap: 10 }}>
-                  <h3 style={{ fontSize: "1.02rem", fontWeight: 600, lineHeight: 1.5 }}>
-                    <span className="badge" style={{ marginRight: 8 }}>{i + 1}</span>
-                    <Markdown inline>{q.question}</Markdown>
-                  </h3>
-                  <button className="btn btn--ghost btn--sm" onClick={() => removeOne(i)} title="Remove" style={{ flexShrink: 0 }}>✕</button>
-                </div>
-                <div className="grid" style={{ gap: 6, marginTop: 12 }}>
-                  {q.options.map((opt, oi) => (
-                    <div key={oi} style={{
-                      textAlign: "left", padding: "8px 12px", borderRadius: 10, fontSize: "0.9rem",
-                      border: "1px solid var(--glass-border)", background: "rgba(0,0,0,0.2)",
-                      ...(oi === q.answer ? { borderColor: "rgba(52,211,153,0.6)", background: "rgba(52,211,153,0.12)" } : {}),
-                    }}>
-                      <strong style={{ opacity: 0.7, marginRight: 8 }}>{String.fromCharCode(65 + oi)}</strong>
-                      <Markdown inline>{opt}</Markdown>
-                      {oi === q.answer && <span style={{ color: "var(--success)", marginLeft: 8 }}>✓</span>}
-                    </div>
-                  ))}
-                </div>
-                {q.explanation && (
-                  <p className="muted mt-12" style={{ fontSize: "0.86rem" }}>
-                    <strong style={{ color: "var(--text-2)" }}>Reason: </strong>
-                    <Markdown inline>{q.explanation}</Markdown>
-                  </p>
-                )}
-              </article>
+              <PyqQuestionCard
+                key={keyFor(q) || i}
+                q={q}
+                index={i}
+                chapterName="Daily Quiz"
+                chapterId={dateKey}
+                archiveOnAnswer
+                fileToChapter
+                onDelete={() => removeOne(i)}
+                onEdit={(nq) => { updateDailyQuestion(dateKey, i, nq); refresh(); }}
+              />
             ))}
           </div>
         )}

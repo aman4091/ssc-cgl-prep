@@ -12,10 +12,11 @@ import Markdown from "./Markdown";
 import Diagram from "./Diagram";
 import QuestionFollowup from "./QuestionFollowup";
 import QuestionEditor from "./QuestionEditor";
+import AddToChapter from "./AddToChapter";
 
 // One PYQ / chapter question shown as an interactive quiz card:
 // pick an option -> reveal correct/wrong + solution, plus shortcut / 20-similar / doubt.
-export default function PyqQuestionCard({ q, index, subject, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl }) {
+export default function PyqQuestionCard({ q, index, subject, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter }) {
   const router = useRouter();
   const [picked, setPicked] = useState(null);
   const [revealed, setRevealed] = useState(false);
@@ -136,6 +137,8 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
       </div>
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
+
+      {fileToChapter && <div className="mt-12"><AddToChapter q={q} /></div>}
 
       {!revealed && <button className="btn btn--ghost btn--sm mt-12" onClick={() => setRevealed(true)}>👁️ Show answer</button>}
 
