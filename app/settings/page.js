@@ -283,6 +283,16 @@ export default function SettingsPage() {
               Gemini prefill support nahi karta — wahan question clipboard se paste karo.
             </p>
           </div>
+          <div className="field mt-16">
+            <label>✨ Gemini prompt (question se pehle copy hoga)</label>
+            <textarea className="textarea" style={{ minHeight: 70 }} value={settings.geminiPrompt || ""}
+              onChange={(e) => update("geminiPrompt", e.target.value)}
+              placeholder="e.g. Is MCQ ka correct answer batao aur short Hinglish explanation do:" />
+            <p className="hint">
+              ✨ Gemini button dabate hi ye prompt <strong>+ question</strong> (dono) copy honge, phir Gemini khulega —
+              wahan paste kar do. Blank chhodo to sirf question copy hoga.
+            </p>
+          </div>
         </div>
       </section>
 

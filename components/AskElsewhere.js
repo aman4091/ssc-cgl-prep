@@ -19,11 +19,16 @@ function questionText(q) {
 // (askExternalUrl). If that URL contains %s, the question is injected into it so
 // the search/chat is pre-filled; otherwise it just opens and you paste.
 // `url` fixes the target site (e.g. Gemini); omit it to use the ask-site from
-// Settings. `label` overrides the button text.
-export default function AskElsewhere({ q, className = "btn btn--ghost btn--sm", url, label, title }) {
+// Settings. `label` overrides the button text. `promptKey` names a Settings field
+// whose text is prepended before the question when copying (e.g. "geminiPrompt").
+export default function AskElsewhere({ q, className = "btn btn--ghost btn--sm", url, label, title, promptKey }) {
   const [done, setDone] = useState(false);
   const go = async () => {
-    const text = questionText(q);
+    let text = questionText(q);
+    if (promptKey) {
+      const pre = String(getSettings()[promptKey] || "").trim();
+      if (pre) text = `${pre}\n\n${text}`;
+    }
     try { await navigator.clipboard.writeText(text); } catch { /* ignore */ }
     setDone(true); setTimeout(() => setDone(false), 1500);
     const tmpl = String(url != null ? url : (getSettings().askExternalUrl || "")).trim();

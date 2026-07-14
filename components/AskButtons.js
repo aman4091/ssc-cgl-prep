@@ -8,8 +8,8 @@ export default function AskButtons({ q }) {
   return (
     <>
       <AskElsewhere q={q} />
-      <AskElsewhere q={q} url="https://gemini.google.com/app" label="✨ Gemini"
-        title="Copy question & open Gemini (paste to ask)" />
+      <AskElsewhere q={q} url="https://gemini.google.com/app" label="✨ Gemini" promptKey="geminiPrompt"
+        title="Copy your prompt + question & open Gemini (paste to ask)" />
     </>
   );
 }
