@@ -11,6 +11,7 @@ import YouTubePlayer from "@/components/YouTubePlayer";
 import Markdown from "@/components/Markdown";
 import QuestionEditor from "@/components/QuestionEditor";
 import FeedUploader from "@/components/FeedUploader";
+import AskButtons from "@/components/AskButtons";
 
 const letter = (i) => (i != null && i >= 0 ? String.fromCharCode(65 + i) : "?");
 
@@ -254,7 +255,12 @@ export default function CurrentAffairsDetail() {
                 <div key={qi} className="answer-box">
                   <div className="row between" style={{ gap: 8, alignItems: "flex-start" }}>
                     <p style={{ fontWeight: 600, flex: 1 }}>{qi + 1}. {q.question}</p>
-                    {editIdx !== qi && <button className="btn btn--ghost btn--sm" onClick={() => setEditIdx(qi)} title="Edit question" style={{ flexShrink: 0 }}>✏️ Edit</button>}
+                    {editIdx !== qi && (
+                      <div className="row" style={{ gap: 6, flexWrap: "wrap", justifyContent: "flex-end", flexShrink: 0 }}>
+                        <AskButtons q={q} />
+                        <button className="btn btn--ghost btn--sm" onClick={() => setEditIdx(qi)} title="Edit question">✏️ Edit</button>
+                      </div>
+                    )}
                   </div>
                   {editIdx === qi ? (
                     <QuestionEditor question={q} onSave={(nq) => saveEdit(qi, nq)} onCancel={() => setEditIdx(null)} />

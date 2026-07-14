@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { randomMcqFromDays, getOws } from "@/lib/vocab";
 import { getSettings } from "@/lib/storage";
 import { addReview } from "@/lib/qreview";
+import AskButtons from "@/components/AskButtons";
 
 const CFG_KEY = "cgl.rush";
 const DEFAULT_CFG = { enabled: true, intervalMin: 60 };
@@ -149,6 +150,9 @@ export default function VocabRush() {
                 </span>
               </div>
             )}
+            <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
+              <AskButtons q={mcq} />
+            </div>
           </div>
         </div>
       )}

@@ -18,21 +18,23 @@ function questionText(q) {
 // Copy this question to the clipboard and open the ask-site set in Settings
 // (askExternalUrl). If that URL contains %s, the question is injected into it so
 // the search/chat is pre-filled; otherwise it just opens and you paste.
-export default function AskElsewhere({ q, className = "btn btn--ghost btn--sm" }) {
+// `url` fixes the target site (e.g. Gemini); omit it to use the ask-site from
+// Settings. `label` overrides the button text.
+export default function AskElsewhere({ q, className = "btn btn--ghost btn--sm", url, label, title }) {
   const [done, setDone] = useState(false);
   const go = async () => {
     const text = questionText(q);
     try { await navigator.clipboard.writeText(text); } catch { /* ignore */ }
     setDone(true); setTimeout(() => setDone(false), 1500);
-    const tmpl = (getSettings().askExternalUrl || "").trim();
+    const tmpl = String(url != null ? url : (getSettings().askExternalUrl || "")).trim();
     if (tmpl) {
-      const url = tmpl.includes("%s") ? tmpl.replace("%s", encodeURIComponent(text)) : tmpl;
-      try { window.open(url, "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
+      const full = tmpl.includes("%s") ? tmpl.replace("%s", encodeURIComponent(text)) : tmpl;
+      try { window.open(full, "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
     }
   };
   return (
-    <button className={className} onClick={go} title="Copy question & open your ask-site (set in Settings)">
-      {done ? "✓ Copied" : "📋 Copy & Ask"}
+    <button className={className} onClick={go} title={title || "Copy question & open your ask-site (set in Settings)"}>
+      {done ? "✓ Copied" : (label || "📋 Copy & Ask")}
     </button>
   );
 }

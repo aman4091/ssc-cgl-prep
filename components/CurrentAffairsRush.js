@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { randomCurrentAffairsQuestion, getCurrentAffairsQuestions } from "@/lib/feed";
 import { addReview } from "@/lib/qreview";
+import AskButtons from "@/components/AskButtons";
 
 const CFG_KEY = "cgl.carush";
 const DEFAULT_CFG = { enabled: false, intervalMin: 60 };
@@ -137,6 +138,9 @@ export default function CurrentAffairsRush() {
                 {q.explanation && <p className="muted mt-8" style={{ fontSize: "0.82rem" }}>{q.explanation}</p>}
               </div>
             )}
+            <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
+              <AskButtons q={q} />
+            </div>
           </div>
         </div>
       )}

@@ -13,7 +13,7 @@ import Diagram from "./Diagram";
 import QuestionFollowup from "./QuestionFollowup";
 import QuestionEditor from "./QuestionEditor";
 import AddToChapter from "./AddToChapter";
-import AskElsewhere from "./AskElsewhere";
+import AskButtons from "./AskButtons";
 
 // One PYQ / chapter question shown as an interactive quiz card:
 // pick an option -> reveal correct/wrong + solution, plus shortcut / 20-similar / doubt.
@@ -96,9 +96,9 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
           {q.pyq && <span className="paper-tag paper-tag--pyq">PYQ</span>}
           {paper && <span className="paper-tag">📄 {paper}</span>}
         </h3>
-        <div className="row" style={{ gap: 6, flexShrink: 0 }}>
+        <div className="row" style={{ gap: 6, flexWrap: "wrap", justifyContent: "flex-end" }}>
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
-          <AskElsewhere q={q} />
+          <AskButtons q={q} />
           {onEdit && !editing && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
           {onDelete && <button className="btn btn--ghost btn--sm" onClick={onDelete}>✕</button>}
