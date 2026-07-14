@@ -9,6 +9,7 @@ import Markdown from "@/components/Markdown";
 import Diagram from "@/components/Diagram";
 import QuestionFollowup from "@/components/QuestionFollowup";
 import AddToChapter from "@/components/AddToChapter";
+import AskElsewhere from "@/components/AskElsewhere";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
@@ -357,6 +358,7 @@ export default function QuizPlayer() {
                     <button className="btn btn--ghost btn--sm" onClick={() => make20(qi)} disabled={simLoading[qi]}>
                       {simLoading[qi] ? "Generating…" : "🎯 20 similar"}
                     </button>
+                    <AskElsewhere q={q} />
                     <AddToChapter q={q} />
                   </div>
 
@@ -447,6 +449,9 @@ export default function QuizPlayer() {
                 </button>
               );
             })}
+          </div>
+          <div className="row mt-16" style={{ justifyContent: "flex-end" }}>
+            <AskElsewhere q={q} />
           </div>
         </article>
 

@@ -252,6 +252,40 @@ export default function SettingsPage() {
         </div>
       </section>
 
+      {/* Copy & Ask — external ask-site */}
+      <section className="section" style={{ maxWidth: 640 }}>
+        <div className="glass-card">
+          <h3>📋 Copy &amp; Ask — external site</h3>
+          <p className="muted mt-8" style={{ fontSize: "0.88rem" }}>
+            Har question pe ek <strong>📋 Copy &amp; Ask</strong> button hai. Dabate hi question (options ke saath)
+            copy ho jaata hai aur ye site khul jaati hai — taaki kisi aur website (ChatGPT/Google/etc.) pe manually pooch sako.
+            URL mein <code>%s</code> likho jahan question inject karna ho; blank chhodo to sirf copy hoga (khud paste karo).
+          </p>
+          <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
+            {[
+              { label: "Google", url: "https://www.google.com/search?q=%s" },
+              { label: "ChatGPT", url: "https://chatgpt.com/?q=%s" },
+              { label: "Perplexity", url: "https://www.perplexity.ai/search?q=%s" },
+              { label: "Gemini", url: "https://gemini.google.com/app" },
+            ].map((p) => (
+              <button key={p.label} type="button"
+                className={`chip chip--btn ${settings.askExternalUrl === p.url ? "is-active" : ""}`}
+                onClick={() => update("askExternalUrl", p.url)}>{p.label}</button>
+            ))}
+          </div>
+          <div className="field mt-16">
+            <label>Ask-site URL (use %s for the question)</label>
+            <input className="input" type="text" value={settings.askExternalUrl || ""}
+              onChange={(e) => update("askExternalUrl", e.target.value)}
+              placeholder="https://www.google.com/search?q=%s" spellCheck={false} />
+            <p className="hint">
+              Auto-saved. ChatGPT/Perplexity/Google URL mein <code>%s</code> question ko pre-fill kar deta hai.
+              Gemini prefill support nahi karta — wahan question clipboard se paste karo.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Custom shortcut prompts per subject */}
       <section className="section" style={{ maxWidth: 720 }}>
         <div className="glass-card">
