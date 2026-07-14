@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   getReviewBucket, getWrongSince, getWeakAreas, getErrorTypeBreakdown,
-  setReviewErrorType, removeReview, clearReview, ERROR_TYPES,
+  setReviewErrorType, removeReview, clearReview, fixReviewAnswer, ERROR_TYPES,
 } from "@/lib/qreview";
+import { findCAEntryForQuestion, fixCAAnswer } from "@/lib/feed";
 import { keyFor } from "@/lib/qstats";
 import { saveQuiz, makeId } from "@/lib/storage";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
+import FixAnswer from "@/components/FixAnswer";
 
 const TABS = [
   { key: "wrong", label: "❌ Wrong", empty: "No pending mistakes — solid! Do a few quizzes and any wrong ones land here." },
@@ -57,6 +59,9 @@ export default function MistakesPage() {
 
   const tagError = (key, type) => { setReviewErrorType(key, type); refresh(); };
   const remove = (key) => { removeReview(key); refresh(); };
+  // Correct a wrong stored answer: fix the notebook record AND the source CA entry.
+  const fixAnswer = (r, oi) => { fixReviewAnswer(r.key, oi); fixCAAnswer(r.q, oi); refresh(); };
+  const isCA = (r) => r.category === "Current Affairs" || /ca|current/i.test(String(r.source || ""));
   const clearTab = () => { if (confirm(`Clear all ${active.label} questions?`)) { clearReview(tab); refresh(); } };
 
   const worst = weak[0]; // weakest area (most wrong)
@@ -161,15 +166,23 @@ export default function MistakesPage() {
           <div className="placeholder">{active.empty}</div>
         ) : (
           <div style={{ display: "grid", gap: 12 }}>
-            {items.map((r) => (
+            {items.map((r) => {
+              const caEntry = isCA(r) ? findCAEntryForQuestion(r.q) : null;
+              return (
               <div key={r.key}>
-                {/* one-tap error-type tagging */}
+                {/* one-tap error-type tagging + source date + fix-answer */}
                 <div className="row" style={{ gap: 6, flexWrap: "wrap", alignItems: "center", marginBottom: 6 }}>
-                  <span className="muted" style={{ fontSize: "0.78rem" }}>{r.category} · Galti kyun?</span>
+                  <span className="muted" style={{ fontSize: "0.78rem" }}>
+                    {r.category}
+                    {caEntry && <> · <Link href={`/current-affairs/${caEntry.id}`} className="link">📅 {caEntry.date}</Link></>}
+                    {isCA(r) && !caEntry && <span title="Ye question ab kisi date entry mein nahi mila"> · 📅 date not found</span>}
+                    {" "}· Galti kyun?
+                  </span>
                   {ERROR_TYPES.map((e) => (
                     <button key={e.key} className={`chip chip--btn chip--sm ${r.errorType === e.key ? "is-active" : ""}`}
                       onClick={() => tagError(r.key, e.key)}>{e.label}</button>
                   ))}
+                  <FixAnswer q={r.q} onFix={(oi) => fixAnswer(r, oi)} />
                 </div>
                 <PyqQuestionCard
                   q={r.q}
@@ -178,7 +191,8 @@ export default function MistakesPage() {
                   onDelete={() => remove(r.key)}
                 />
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </section>
