@@ -31,6 +31,7 @@ export default function RoadmapPage() {
   const [busy, setBusy] = useState("");   // "" | "gen" | "replan"
   const [err, setErr] = useState("");
   const [scoreFor, setScoreFor] = useState(null); // task awaiting a mock score
+  const [flash, setFlash] = useState("");         // transient success note
   const [showTimeline, setShowTimeline] = useState(false);
   const rolled = useRef(false);
   const refresh = () => setRm(getRoadmap());
@@ -99,8 +100,8 @@ export default function RoadmapPage() {
       });
   }
 
-  async function autoReplan(silent) {
-    if (!silent) { setErr(""); setBusy("replan"); }
+  async function autoReplan(note) {
+    setErr(""); setFlash(""); setBusy("replan");
     try {
       const r = getRoadmap();
       const idx = dayIndex(r);
@@ -118,7 +119,9 @@ export default function RoadmapPage() {
       saveRoadmap(r2);
       materializeToday(bankIndex);
       setReady(true); refresh();
-    } catch (e) { if (!silent) setErr(e.message || String(e)); setReady(true); refresh(); }
+      setFlash(note || "✅ Plan update ho gaya.");
+      setTimeout(() => setFlash(""), 4000);
+    } catch (e) { setErr(e.message || String(e)); setReady(true); refresh(); }
     finally { setBusy(""); }
   }
 
@@ -139,8 +142,8 @@ export default function RoadmapPage() {
       sections: { reasoning: num(vals.reasoning), ga: num(vals.ga), quant: num(vals.quant), english: num(vals.english) },
     });
     setScoreFor(null);
-    autoReplan(true); // silent re-plan using the fresh score
     refresh();
+    autoReplan("✅ Score save ho gaya — plan tere naye marks ke hisaab se update kar diya."); // visible re-plan
   }
 
   if (bankIndex === null || (!rm && !ready)) {
@@ -156,11 +159,12 @@ export default function RoadmapPage() {
         </div>
       )}
       {err && <div className="glass-card" style={{ marginBottom: 12, borderColor: "rgba(251,113,133,.5)" }}>❌ {err}</div>}
+      {flash && <div className="glass-card" style={{ marginBottom: 12, borderColor: "rgba(52,211,153,.5)" }}>{flash}</div>}
 
       {!onboarded
         ? <Intake busy={busy} hasGemini={hasGemini} onGenerate={generateFull} />
         : <Dashboard rm={rm} today={today} busy={busy} launch={launch} toggle={toggle}
-            onReplan={() => autoReplan(false)} showTimeline={showTimeline} setShowTimeline={setShowTimeline}
+            onReplan={() => autoReplan("✅ Naya plan ready.")} showTimeline={showTimeline} setShowTimeline={setShowTimeline}
             onEditProfile={() => { const r = getRoadmap(); r.onboarded = false; saveRoadmap(r); refresh(); }} />}
 
       {scoreFor && <ScorePrompt task={scoreFor} onSave={saveScore} onCancel={() => setScoreFor(null)} />}
