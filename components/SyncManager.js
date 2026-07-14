@@ -2,33 +2,57 @@
 
 import { useEffect, useRef } from "react";
 import { getSettings } from "@/lib/storage";
-import { syncReady, pushSync, pullSync } from "@/lib/sync";
+import { syncReady, pushSync, pullSync, remoteInfo, localHash } from "@/lib/sync";
 
-// Headless: when auto-sync is on, pull once per session on load, then push every
-// couple minutes and when the tab is hidden. Last-write-wins by updated_at.
+// Fully automatic cloud sync — no manual buttons needed. While auto-sync is on:
+//  • if another device pushed newer data → pull it and reload (so it shows up)
+//  • if this device's data changed → push it up
+// Runs on an interval + whenever the tab/app is focused or backgrounded (mobile).
 export default function SyncManager() {
-  const pushing = useRef(false);
+  const busy = useRef(false);
 
   useEffect(() => {
-    if (!getSettings().syncAuto || !syncReady()) return;
+    let stopped = false;
+    const active = () => getSettings().syncAuto && syncReady();
 
-    // pull once per browser session (reload so mounted pages pick up new data)
-    try {
-      if (!sessionStorage.getItem("cgl.sync.pulled")) {
-        sessionStorage.setItem("cgl.sync.pulled", "1");
-        pullSync().then((t) => { if (t) window.location.reload(); }).catch(() => {});
-      }
-    } catch { /* ignore */ }
-
-    const doPush = () => {
-      if (pushing.current || !getSettings().syncAuto || !syncReady()) return;
-      pushing.current = true;
-      pushSync().catch(() => {}).finally(() => { pushing.current = false; });
+    const cycle = async () => {
+      if (busy.current || !active() || document.hidden) return;
+      busy.current = true;
+      try {
+        const remoteAt = await remoteInfo();
+        const s = getSettings();
+        if (remoteAt && remoteAt > (s.syncRemoteAt || "")) {
+          // a newer version exists (pushed by another device) → pull + reload
+          const t = await pullSync();
+          if (t && !stopped) { window.location.reload(); return; }
+        } else if (localHash() !== (s.syncPushedHash || "")) {
+          // our data changed since the last push → upload it
+          await pushSync();
+        }
+      } catch { /* offline / transient — try again next cycle */ }
+      finally { busy.current = false; }
     };
-    const iv = setInterval(doPush, 2 * 60 * 1000);
-    const onHide = () => { if (document.visibilityState === "hidden") doPush(); };
-    document.addEventListener("visibilitychange", onHide);
-    return () => { clearInterval(iv); document.removeEventListener("visibilitychange", onHide); };
+
+    // push immediately when leaving (mobile: app switch / lock fires 'hidden')
+    const pushOnLeave = async () => {
+      if (!active() || busy.current) return;
+      if (localHash() !== (getSettings().syncPushedHash || "")) {
+        busy.current = true;
+        try { await pushSync(); } catch { /* ignore */ } finally { busy.current = false; }
+      }
+    };
+    const onVis = () => { if (document.hidden) pushOnLeave(); else cycle(); };
+
+    cycle();
+    const iv = setInterval(cycle, 45000);
+    document.addEventListener("visibilitychange", onVis);
+    window.addEventListener("pagehide", pushOnLeave);
+    return () => {
+      stopped = true;
+      clearInterval(iv);
+      document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("pagehide", pushOnLeave);
+    };
   }, []);
 
   return null;

@@ -76,8 +76,12 @@ export default function SettingsPage() {
   const [showSql, setShowSql] = useState(false);
   const doPush = async () => {
     setSyncBusy(true); setSyncMsg("Cloud pe push ho raha hai…");
-    try { const t = await pushSync(); setSettings(getSettings()); setSyncMsg(`✓ Push ho gaya · ${new Date(t).toLocaleString("en-IN")}`); }
-    catch (e) { setSyncMsg("❌ " + e.message); }
+    try {
+      const t = await pushSync();
+      const s = { ...getSettings(), syncAuto: true }; // first push -> auto ON from now on
+      saveSettings(s); setSettings(s);
+      setSyncMsg(`✓ Push ho gaya · ${new Date(t).toLocaleString("en-IN")} — ab AUTO ON, dobara button dabane ki zaroorat nahi.`);
+    } catch (e) { setSyncMsg("❌ " + e.message); }
     finally { setSyncBusy(false); }
   };
   const doPull = async () => {
@@ -86,6 +90,7 @@ export default function SettingsPage() {
     try {
       const t = await pullSync();
       if (!t) { setSyncMsg("Cloud pe abhi kuch nahi — pehle kisi device se ⬆️ Push karo."); setSyncBusy(false); return; }
+      saveSettings({ ...getSettings(), syncAuto: true }); // auto ON from now on
       setSyncMsg("✓ Pull ho gaya — reload ho raha hai…");
       setTimeout(() => window.location.reload(), 700);
     } catch (e) { setSyncMsg("❌ " + e.message); setSyncBusy(false); }
@@ -466,7 +471,10 @@ export default function SettingsPage() {
             </button>
           </div>
           <p className="muted mt-8" style={{ fontSize: "0.88rem" }}>
-            Targets, checklist, progress, mistakes, vocab, quizzes — sab devices pe sync. (PDF/image files sync nahi hote — unke liye upar wala backup.) Koi login nahi — bas ek secret <strong>sync code</strong>. Same code = same data.
+            Targets, checklist, progress, mistakes, vocab, quizzes — sab devices pe <strong>apne aap sync</strong>. (PDF/image files sync nahi hote — unke liye upar wala backup.) Koi login nahi — bas ek secret <strong>sync code</strong>. Same code = same data.
+          </p>
+          <p className="hint" style={{ marginTop: 6 }}>
+            🔁 Har device pe <strong>pehli baar</strong> URL + key + wahi sync code daal ke ek baar <strong>Push/Pull</strong> karo — uske baad <strong>bina kuch dabaye</strong> apne aap sync hota rahega (change karte hi, aur app kholte hi).
           </p>
           <div className="field mt-16">
             <label>Supabase Project URL</label>
