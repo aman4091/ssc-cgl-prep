@@ -808,6 +808,13 @@ main.container {
   color: var(--success); font-weight: 800; font-size: 0.9rem;
 }
 
+/* Roadmap page */
+.rm-list { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 8px; }
+.rm-list li { font-size: 0.94rem; line-height: 1.6; color: var(--text-1); }
+.rm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 14px; }
+.rm-phase { border: 1px solid var(--glass-border); border-radius: 12px; padding: 14px 16px; background: rgba(255,255,255,0.03); }
+.rm-phase h4 { font-size: 0.98rem; margin-bottom: 6px; color: var(--accent-2); }
+
 /* Current Affairs date cards (wider than vocab day cells — dates are longer) */
 .days-grid--ca { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
 @media (max-width: 560px) { .days-grid--ca { grid-template-columns: repeat(2, 1fr); } }

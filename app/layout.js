@@ -6,6 +6,8 @@ import Footer from "@/components/Footer";
 import VocabRush from "@/components/VocabRush";
 import CalcRush from "@/components/CalcRush";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
+import FocusEnforcer from "@/components/FocusEnforcer";
+import SyncManager from "@/components/SyncManager";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -30,6 +32,8 @@ export default function RootLayout({ children }) {
         <VocabRush />
         <CalcRush />
         <CurrentAffairsRush />
+        <FocusEnforcer />
+        <SyncManager />
       </body>
     </html>
   );

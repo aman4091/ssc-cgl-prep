@@ -4,6 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { getSettings, saveSettings, DEFAULT_SETTINGS } from "@/lib/storage";
 import { exportAll, exportDataOnly, importAll, downloadBlob } from "@/lib/backup";
 import { getDaysOverview } from "@/lib/vocab";
+import { pushSync, pullSync, syncReady } from "@/lib/sync";
+
+const SYNC_SQL = `create table if not exists syncs (
+  code text primary key,
+  data jsonb not null,
+  updated_at timestamptz not null default now()
+);
+alter table syncs enable row level security;
+create policy "anon all" on syncs for all to anon using (true) with check (true);`;
 
 function mask(key) {
   if (!key) return "";
@@ -60,6 +69,27 @@ export default function SettingsPage() {
   const [backupBusy, setBackupBusy] = useState(false);
   const [backupMsg, setBackupMsg] = useState("");
   const importRef = useRef(null);
+
+  // ---- Cloud sync ----
+  const [syncBusy, setSyncBusy] = useState(false);
+  const [syncMsg, setSyncMsg] = useState("");
+  const [showSql, setShowSql] = useState(false);
+  const doPush = async () => {
+    setSyncBusy(true); setSyncMsg("Cloud pe push ho raha hai…");
+    try { const t = await pushSync(); setSettings(getSettings()); setSyncMsg(`✓ Push ho gaya · ${new Date(t).toLocaleString("en-IN")}`); }
+    catch (e) { setSyncMsg("❌ " + e.message); }
+    finally { setSyncBusy(false); }
+  };
+  const doPull = async () => {
+    if (!confirm("Cloud se data laa ke is device ka data overwrite kar du?")) return;
+    setSyncBusy(true); setSyncMsg("Cloud se pull ho raha hai…");
+    try {
+      const t = await pullSync();
+      if (!t) { setSyncMsg("Cloud pe abhi kuch nahi — pehle kisi device se ⬆️ Push karo."); setSyncBusy(false); return; }
+      setSyncMsg("✓ Pull ho gaya — reload ho raha hai…");
+      setTimeout(() => window.location.reload(), 700);
+    } catch (e) { setSyncMsg("❌ " + e.message); setSyncBusy(false); }
+  };
 
   const doExport = async () => {
     setBackupBusy(true); setBackupMsg("Preparing backup (bundling PDFs & images)…");
@@ -319,6 +349,47 @@ export default function SettingsPage() {
         </div>
       </section>
 
+      {/* Strict Focus Mode + day boundary */}
+      <section className="section" style={{ maxWidth: 640 }}>
+        <div className="glass-card">
+          <div className="row between" style={{ alignItems: "flex-start", gap: 12 }}>
+            <h3>🎯 Strict Focus Mode</h3>
+            <button type="button" className={`toggle ${settings.strictMode ? "is-on" : ""}`} role="switch"
+              aria-checked={settings.strictMode} onClick={() => update("strictMode", !settings.strictMode)}>
+              <span className="toggle__knob" /><span className="toggle__txt">{settings.strictMode ? "ON" : "OFF"}</span>
+            </button>
+          </div>
+          <p className="muted mt-8" style={{ fontSize: "0.88rem" }}>
+            ON hone par Today ka <strong>#1 target</strong> har {settings.strictIntervalMin || 2} min baad ek
+            <strong> force popup</strong> banke aayega jab tak use Start na karo — ho jaye to apne aap next #1 pe.
+            Sirf neeche wale active hours mein chalega.
+          </p>
+          <div className="field mt-16">
+            <label>Har kitni der baad force kare</label>
+            <select className="select" style={{ width: "auto" }} value={settings.strictIntervalMin}
+              onChange={(e) => update("strictIntervalMin", parseInt(e.target.value))}>
+              <option value={2}>2 min</option><option value={5}>5 min</option><option value={10}>10 min</option><option value={15}>15 min</option>
+            </select>
+          </div>
+          <div className="row mt-16" style={{ gap: 16, flexWrap: "wrap" }}>
+            <div className="field" style={{ margin: 0 }}>
+              <label>Day start (uthne ka time)</label>
+              <input className="input" type="time" style={{ width: "auto" }} value={settings.dayStartTime || "08:00"}
+                onChange={(e) => update("dayStartTime", e.target.value)} />
+            </div>
+            <div className="field" style={{ margin: 0 }}>
+              <label>Day end (sone ka time)</label>
+              <input className="input" type="time" style={{ width: "auto" }} value={settings.dayEndTime || "02:00"}
+                onChange={(e) => update("dayEndTime", e.target.value)} />
+            </div>
+          </div>
+          <p className="hint" style={{ marginTop: 10 }}>
+            Din <strong>{settings.dayEndTime || "02:00"}</strong> pe khatam maana jaata hai (late sleeper) — daily checklist bhi
+            tabhi reset hoti hai, midnight pe nahi. Force popup sirf {settings.dayStartTime || "08:00"}–{settings.dayEndTime || "02:00"} ke beech.
+          </p>
+        </div>
+      </section>
+
       {/* Vocab Rush — which days */}
       <section className="section" style={{ maxWidth: 640 }}>
         <div className="glass-card">
@@ -381,6 +452,56 @@ export default function SettingsPage() {
           <p className="hint" style={{ marginTop: 10 }}>
             💡 <strong>Full backup</strong> includes PDFs/images (large file). If it fails with “out of memory” — common on phones with many PDFs — use <strong>📄 Data only</strong>: it saves all your questions, quizzes, mistakes &amp; progress (just not the original PDF/image files) and never runs out of memory.
           </p>
+        </div>
+      </section>
+
+      {/* Cloud Sync (Supabase) */}
+      <section className="section" style={{ maxWidth: 640 }}>
+        <div className="glass-card">
+          <div className="row between" style={{ alignItems: "flex-start", gap: 12 }}>
+            <h3>☁️ Cloud Sync (Supabase)</h3>
+            <button type="button" className={`toggle ${settings.syncAuto ? "is-on" : ""}`} role="switch"
+              aria-checked={settings.syncAuto} onClick={() => update("syncAuto", !settings.syncAuto)}>
+              <span className="toggle__knob" /><span className="toggle__txt">{settings.syncAuto ? "AUTO" : "OFF"}</span>
+            </button>
+          </div>
+          <p className="muted mt-8" style={{ fontSize: "0.88rem" }}>
+            Targets, checklist, progress, mistakes, vocab, quizzes — sab devices pe sync. (PDF/image files sync nahi hote — unke liye upar wala backup.) Koi login nahi — bas ek secret <strong>sync code</strong>. Same code = same data.
+          </p>
+          <div className="field mt-16">
+            <label>Supabase Project URL</label>
+            <input className="input" type="text" placeholder="https://xxxx.supabase.co" value={settings.supabaseUrl || ""}
+              onChange={(e) => update("supabaseUrl", e.target.value)} spellCheck={false} />
+          </div>
+          <div className="field">
+            <label>Supabase anon key</label>
+            <input className="input" type={showKey ? "text" : "password"} placeholder="eyJ..." value={settings.supabaseAnonKey || ""}
+              onChange={(e) => update("supabaseAnonKey", e.target.value)} autoComplete="off" spellCheck={false} />
+          </div>
+          <div className="field">
+            <label>Sync code (secret — lamba &amp; random rakho)</label>
+            <input className="input" type="text" placeholder="e.g. aman-9x7k2p-secret-2026" value={settings.syncCode || ""}
+              onChange={(e) => update("syncCode", e.target.value)} spellCheck={false} />
+          </div>
+          <div className="row mt-16" style={{ gap: 10, flexWrap: "wrap" }}>
+            <button className="btn btn--primary" onClick={doPush} disabled={syncBusy || !syncReady()}>⬆️ Push now</button>
+            <button className="btn btn--ghost" onClick={doPull} disabled={syncBusy || !syncReady()}>⬇️ Pull now</button>
+            {settings.syncLastAt && <span className="muted" style={{ fontSize: "0.8rem", alignSelf: "center" }}>Last sync: {new Date(settings.syncLastAt).toLocaleString("en-IN")}</span>}
+          </div>
+          {syncMsg && <p className="mt-16" style={{ color: "var(--accent-2)", fontSize: "0.88rem" }}>{syncMsg}</p>}
+          <button className="btn btn--ghost btn--sm mt-16" onClick={() => setShowSql((v) => !v)}>{showSql ? "✕ Hide setup" : "🛠️ Supabase setup (one-time SQL)"}</button>
+          {showSql && (
+            <>
+              <p className="hint" style={{ marginTop: 10 }}>
+                Supabase pe free project banao → <strong>SQL Editor</strong> mein ye ek baar chalao, phir
+                <strong> Project Settings → API</strong> se Project URL + anon key upar daalo:
+              </p>
+              <pre style={{ whiteSpace: "pre-wrap", fontSize: "0.76rem", background: "rgba(0,0,0,0.32)", padding: 12, borderRadius: 8, overflowX: "auto" }}>{SYNC_SQL}</pre>
+              <p className="hint" style={{ color: "var(--warning)" }}>
+                ⚠️ Sync-code mode mein table anon key se accessible hota hai — <strong>sync code hi tumhari privacy hai</strong>. Isliye lamba, random code rakho aur kisi ko mat batao.
+              </p>
+            </>
+          )}
         </div>
       </section>
     </>

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getTargets, addTarget, toggleDone, deleteTarget } from "@/lib/targets";
+import { getTargets, addTarget, toggleDone, deleteTarget, moveTarget } from "@/lib/targets";
 import { getOws, buildMcq } from "@/lib/vocab";
 import { getStatByParts } from "@/lib/qstats";
 import { getAllEntries, getEntry } from "@/lib/feed";
@@ -203,9 +203,13 @@ export default function TodayPage() {
           <div className="placeholder">No targets for today. Start with <strong>➕ Add target</strong>. 🎯</div>
         ) : (
           <div style={{ display: "grid", gap: 12 }}>
-            {targets.map((t) => (
-              <TargetCard key={t.id} target={t} router={router} onChanged={refresh} />
-            ))}
+            {(() => {
+              const pending = targets.filter((x) => !x.done);
+              return targets.map((t) => (
+                <TargetCard key={t.id} target={t} router={router} onChanged={refresh}
+                  pIdx={pending.findIndex((x) => x.id === t.id)} pCount={pending.length} />
+              ));
+            })()}
           </div>
         )}
       </section>
@@ -218,9 +222,12 @@ function fmtDur(min) {
   return [h ? `${h}h` : "", m ? `${m}m` : ""].filter(Boolean).join(" ") || "0m";
 }
 
-function TargetCard({ target, router, onChanged }) {
+function TargetCard({ target, router, onChanged, pIdx = -1, pCount = 0 }) {
   const t = target;
   const durationMin = t.ref?.durationMin || 0;
+  const isPending = pIdx >= 0;
+  const isTop = pIdx === 0;
+  const move = (dir) => { moveTarget(t.id, dir); onChanged(); window.dispatchEvent(new CustomEvent("cgl:targets-changed")); };
 
   const startTimer = () => {
     window.dispatchEvent(new CustomEvent("cgl:start-task-timer", {
@@ -277,9 +284,17 @@ function TargetCard({ target, router, onChanged }) {
     <article className={`glass-card target-card ${t.done ? "is-done" : ""}`}>
       <div className="row between" style={{ alignItems: "center", gap: 12, flexWrap: "wrap" }}>
         <label className="row" style={{ gap: 10, alignItems: "center", cursor: "pointer" }}>
-          <input type="checkbox" checked={t.done} onChange={() => { toggleDone(t.id); onChanged(); }} />
+          <input type="checkbox" checked={t.done} onChange={() => { toggleDone(t.id); onChanged(); window.dispatchEvent(new CustomEvent("cgl:targets-changed")); }} />
+          {isTop && <span className="badge badge--ok" title="Top priority — Strict mode isi ko force karega">#1</span>}
           <span style={{ fontWeight: 600, textDecoration: t.done ? "line-through" : "none", opacity: t.done ? 0.6 : 1 }}>{t.title}</span>
+          {isPending && t.startedAt && <span className="muted" style={{ fontSize: "0.74rem" }}>▶ started</span>}
         </label>
+        {isPending && pCount > 1 && (
+          <div className="row" style={{ gap: 4 }}>
+            <button className="btn btn--ghost btn--sm" title="Priority upar" disabled={pIdx === 0} onClick={() => move(-1)}>↑</button>
+            <button className="btn btn--ghost btn--sm" title="Priority neeche" disabled={pIdx === pCount - 1} onClick={() => move(1)}>↓</button>
+          </div>
+        )}
         <div className="row" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>
           {durationMin > 0 && (
             <button className="btn btn--primary btn--sm" onClick={startTimer} title="Navbar timer isi target ke liye chalega">

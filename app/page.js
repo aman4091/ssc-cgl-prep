@@ -96,7 +96,8 @@ export default function Home() {
             <p className="muted">Pick a subject, choose a topic — start right away.</p>
           </div>
           <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
-            <Link href="/daily" className="btn btn--primary btn--sm">🗓️ Daily Quiz</Link>
+            <Link href="/roadmap" className="btn btn--primary btn--sm">🗺️ Roadmap</Link>
+            <Link href="/daily" className="btn btn--ghost btn--sm">🗓️ Daily Quiz</Link>
             <Link href="/mistakes" className="btn btn--ghost btn--sm">🔴 Mistake Notebook</Link>
           </div>
         </div>
