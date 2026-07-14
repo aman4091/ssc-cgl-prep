@@ -9,7 +9,7 @@ import { dayKey } from "@/lib/daytime";
 import { generateStudyPlan } from "@/lib/client-ai";
 import {
   getRoadmap, saveRoadmap, isOnboarded, startOnboarding, applyGeneratedDays,
-  buildCatalog, materializeToday, carryForward, setTaskDone, logMockScore,
+  buildCatalog, materializeToday, setTaskDone, logMockScore, dedupeTasks,
   taskHref, daysToExam, totalPlanDays, dayIndex,
 } from "@/lib/roadmap";
 
@@ -47,20 +47,28 @@ export default function RoadmapPage() {
     return () => { live = false; };
   }, []);
 
-  // On first mount (with the index): day-rollover carry-forward + materialize.
+  // On first mount (with the index): if it's a new day OR today has no plan, let
+  // the AI rebuild today (folding in whatever was missed) — one call per day, not
+  // a mechanical dump of yesterday's tasks. Otherwise just materialize.
   useEffect(() => {
     if (bankIndex === null || rolled.current) { if (bankIndex !== null && !rm) refresh(); return; }
     rolled.current = true;
-    if (isOnboarded()) {
-      const today = dayKey();
-      const r = getRoadmap();
-      const prev = Object.keys(r.days || {}).filter((k) => k < today).sort();
-      if (prev.length) carryForward(prev[prev.length - 1], today);
-      materializeToday(bankIndex);
-      const after = getRoadmap();
-      if (!after.days?.[today]?.tasks?.length) { autoReplan(); return; }
-    }
-    setReady(true); refresh();
+    (async () => {
+      if (isOnboarded()) {
+        const today = dayKey();
+        const r = getRoadmap();
+        const hasToday = !!r.days?.[today]?.tasks?.length;
+        const newDay = !!r.lastActiveDay && r.lastActiveDay !== today;
+        if (!hasToday || newDay) {
+          await autoReplan(newDay ? "✅ Naya din — jo reh gaya tha use bhi plan me daal diya." : null);
+        } else {
+          materializeToday(bankIndex);
+        }
+        const r2 = getRoadmap();
+        r2.lastActiveDay = today; saveRoadmap(r2);
+      }
+      setReady(true); refresh();
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bankIndex]);
 
@@ -72,12 +80,13 @@ export default function RoadmapPage() {
       const total = totalPlanDays(seeded);
       const res = await generateStudyPlan({
         mode: "full", examDate, daysLeft: daysToExam(seeded), totalPlanDays: total,
-        fromDayIndex: 1, numDays: Math.min(3, total),
+        fromDayIndex: 1, numDays: Math.min(5, total),
         profile: seeded.profile, catalog: buildCatalog(bankIndex, seeded),
       });
       const r = getRoadmap();
       r.macro = res.macro || [];
       applyGeneratedDays(r, res.days);
+      r.lastActiveDay = dayKey();
       r.metrics = { ...(r.metrics || {}), lastReplanAt: new Date().toISOString(), coachNote: res.coachNote || "" };
       saveRoadmap(r);
       materializeToday(bankIndex);
@@ -106,7 +115,7 @@ export default function RoadmapPage() {
       const r = getRoadmap();
       const idx = dayIndex(r);
       const total = totalPlanDays(r);
-      const numDays = Math.min(4, Math.max(1, total - idx + 1));
+      const numDays = Math.min(5, Math.max(1, total - idx + 1));
       const res = await generateStudyPlan({
         mode: "replan", examDate: r.examDate, daysLeft: daysToExam(r), totalPlanDays: total,
         fromDayIndex: idx, numDays, profile: r.profile, catalog: buildCatalog(bankIndex, r),
@@ -183,7 +192,6 @@ function Intake({ busy, hasGemini, onGenerate }) {
   const [offDays, setOff] = useState([]);
   const [weak, setWeak] = useState([]);
   const [strong, setStrong] = useState([]);
-  const [mocks, setMocks] = useState(73);
   const [vocabDay, setVocabDay] = useState(1);
   const [notes, setNotes] = useState("");
 
@@ -191,7 +199,7 @@ function Intake({ busy, hasGemini, onGenerate }) {
   const submit = () => onGenerate({
     hoursWeekday: Number(hoursWeekday) || 0, hoursWeekend: Number(hoursWeekend) || 0,
     studyWindowsText, offDays, weakSubjects: weak, strongSubjects: strong,
-    mocksTotalAvailable: Number(mocks) || 0, startVocabDay: Number(vocabDay) || 1, notes,
+    startVocabDay: Number(vocabDay) || 1, notes,
   }, examDate);
 
   return (
@@ -201,7 +209,7 @@ function Intake({ busy, hasGemini, onGenerate }) {
         <h1 className="hero__title" style={{ fontSize: "clamp(1.7rem, 4vw, 2.6rem)" }}>
           Tera <span className="grad">45-din ka strict plan</span> banayein?
         </h1>
-        <p className="hero__sub">Do-teen cheezein bata — hours, weak areas, mocks. Gemini tera din-ba-din plan banayega aur roz khud adjust karega. Bilkul ek personal teacher ki tarah.</p>
+        <p className="hero__sub">Do-teen cheezein bata — hours aur weak areas. Gemini tera din-ba-din plan banayega aur roz khud adjust karega. Bilkul ek personal teacher ki tarah.</p>
       </section>
 
       <section className="glass-card">
@@ -212,8 +220,6 @@ function Intake({ busy, hasGemini, onGenerate }) {
             <input type="number" min="1" max="16" className="input" value={hoursWeekday} onChange={(e) => setHwd(e.target.value)} /></div>
           <div className="field"><label>⏱️ Weekend hours</label>
             <input type="number" min="1" max="16" className="input" value={hoursWeekend} onChange={(e) => setHwe(e.target.value)} /></div>
-          <div className="field"><label>📝 Mocks available</label>
-            <input type="number" min="0" className="input" value={mocks} onChange={(e) => setMocks(e.target.value)} /></div>
           <div className="field"><label>🔤 Vocab shuru Day</label>
             <input type="number" min="1" className="input" value={vocabDay} onChange={(e) => setVocabDay(e.target.value)} /></div>
         </div>
@@ -250,7 +256,7 @@ function Dashboard({ rm, today, busy, launch, toggle, onReplan, onEditProfile, s
   const total = totalPlanDays(rm);
   const left = daysToExam(rm);
   const day = rm.days?.[today];
-  const tasks = (day?.tasks || []);
+  const tasks = dedupeTasks(day?.tasks || []);
   const pending = tasks.filter((t) => !t.done);
   const doneToday = tasks.length - pending.length;
 
@@ -281,7 +287,7 @@ function Dashboard({ rm, today, busy, launch, toggle, onReplan, onEditProfile, s
       <section className="glass-card" style={{ marginBottom: 12 }}>
         <div className="rm-grid" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(130px,1fr))", gap: 12 }}>
           <Stat label="🔥 Streak" value={`${metrics.streak} din`} />
-          <Stat label="📝 Mocks done" value={`${metrics.mocksDone}/${rm.profile?.mocksTotalAvailable || 0}`} />
+          <Stat label="📝 Mocks diye" value={`${metrics.mocksDone}`} />
           <Stat label="📊 Avg mock" value={metrics.avgMock != null ? `${metrics.avgMock}%` : "—"} />
           <Stat label="🔤 Vocab day" value={metrics.vocabDay} />
           <Stat label="⏳ Missed" value={`${metrics.missed}`} />
@@ -343,7 +349,6 @@ function TaskRow({ task, isTop, onLaunch, onToggle }) {
         <div>
           <div className="row" style={{ gap: 8, alignItems: "center", flexWrap: "wrap" }}>
             {isTop && <span className="chip chip--sm" style={{ background: "var(--accent)", color: "#fff" }}>#1 abhi</span>}
-            {task.carriedFrom && <span className="chip chip--sm chip--ant">kal se ⏭</span>}
             <strong style={{ textDecoration: task.done ? "line-through" : "none" }}>{KIND_EMOJI[task.kind] || "•"} {task.title}</strong>
             {task.durationMin ? <span className="hint">· {task.durationMin}m</span> : null}
           </div>

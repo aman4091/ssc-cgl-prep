@@ -36,11 +36,13 @@ REF by kind (use ONLY categories/values that appear in the catalog):
 - calc: { "count": <int>, "sec": <int seconds per q> }
 - revision / custom: { "url": "<optional internal path>" }
 
-RULES:
-- Respect the student's daily study hours: total task durationMin per day must fit hoursWeekday/hoursWeekend (roughly). Don't overload.
-- Sequence sensibly: theory before its practice; build vocab day-by-day; daily CA; regular mocks with a heavier mock-blitz in the last ~10 days; insert 'revision' (Mistake Notebook / previous vocab) every few days.
-- Only schedule mocks/sectionals from categories with remaining > 0 in the catalog.
-- Every day needs at least 2-3 non-negotiable tasks even on low-hour days.
+RULES (make it FULL-PROOF — the student wants a packed, complete day, not a thin one):
+- FILL the day to the student's available hours (hoursWeekday/hoursWeekend). A normal study day should have 5-8 tasks, roughly summing to the day's hours (durationMin). Never return a near-empty 2-task day unless the student's hours are tiny.
+- Cover ALL FOUR sections across the day where possible: Quant, Reasoning, English, GA — PLUS vocab (daily), current affairs (daily), and a mock or sectional on a sensible cadence (early days: sectionals + topic drills; last ~10 days: a full mock almost daily + analysis). Add a 'revision' task (Mistake Notebook / previous vocab) most days.
+- NO DUPLICATES within a day: never repeat the same kind+target twice in one day. Vary tasks day to day; advance vocab day by day (don't repeat the same vocab day).
+- RESCHEDULE MISSED WORK: any important task in history[].missed must reappear in the upcoming days (skip only if clearly outdated, e.g. a specific past day's CA). The student may have skipped a day — rebalance the remaining days so nothing critical is lost, without dumping everything on one day.
+- Only schedule mocks/sectionals from categories with remaining > 0 in the catalog. Prefer 'Full Mock Tests' / 'SSC CGL PRE Mocks' for full mocks; use the 'RBE Sectional — ...' and 'SSC CGL Sectional Tests' categories for section practice.
+- Sequence sensibly: theory before its practice.
 - Number days with ABSOLUTE plan-day numbers as requested (fromDayIndex..fromDayIndex+numDays-1).`;
 
 export async function POST(req) {
@@ -76,7 +78,7 @@ export async function POST(req) {
       system: SYSTEM,
       user,
       temperature: 0.3,
-      maxOutputTokens: 8192,
+      maxOutputTokens: 16384,
       responseMimeType: "application/json",
     });
     if (!g.ok) return Response.json({ error: g.error }, { status: g.status || 502 });
