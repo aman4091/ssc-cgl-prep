@@ -156,7 +156,7 @@ export default function PyqSubjectPage() {
     } catch (e) { setError("Paste failed: " + e.message); }
   };
 
-  // The user's own uploads first — a 600-question ready-made bank would otherwise
+  // The user's own uploads first — the ready-made banks would otherwise
   // bury them. The tag chips below switch between the two.
   const all = [...questions, ...gkQs];
   const filtered = topicFilter === "" ? all

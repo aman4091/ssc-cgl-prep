@@ -47,7 +47,7 @@ export default function ChapterPage() {
   const [gkTopic, setGkTopic] = useState(null);
   const [gkQs, setGkQs] = useState([]);
   const [gkReady, setGkReady] = useState(false); // lookup done — tells "no bank" apart from "not looked yet"
-  const [gkShown, setGkShown] = useState(GK_PAGE); // render in slices — 600 cards at once janks
+  const [gkShown, setGkShown] = useState(GK_PAGE); // render in slices — 1,000+ cards at once janks
 
   const [manual, setManual] = useState("");
   const [paperInput, setPaperInput] = useState(""); // PYQ: which paper these questions are from
