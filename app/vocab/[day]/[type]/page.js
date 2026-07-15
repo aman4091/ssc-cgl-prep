@@ -113,8 +113,8 @@ export default function VocabTypePage() {
     setItems(next); setSel(null); setDet(null);
   };
 
-  const startQuiz = () => {
-    const quiz = buildTypeQuiz(dayNum, type);
+  const startQuiz = (scope) => {
+    const quiz = buildTypeQuiz(dayNum, type, scope);
     if (quiz.questions.length < 1) { setError("No words of this type."); return; }
     saveQuiz(quiz);
     router.push(`/quizzes/${quiz.id}`);
@@ -133,7 +133,12 @@ export default function VocabTypePage() {
           <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>
             {typeLabel(type)} <span className="grad">· {items.length}</span>
           </h1>
-          <button className="btn btn--primary" onClick={startQuiz}>🎯 {typeLabel(type)} Quiz (Day 1–{dayNum})</button>
+          <div className="row" style={{ gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
+            <button className="btn btn--primary" onClick={() => startQuiz("day")}>🎯 Quiz · Day {dayNum} only</button>
+            {dayNum > 1 && (
+              <button className="btn btn--ghost" onClick={() => startQuiz("cum")}>🎯 Quiz · Day 1–{dayNum}</button>
+            )}
+          </div>
         </div>
         {items.length > 0 && (
           <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>

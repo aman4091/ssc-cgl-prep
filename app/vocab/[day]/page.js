@@ -15,8 +15,8 @@ export default function VocabDayPage() {
 
   useEffect(() => { setCounts(getDayTypeCounts(dayNum)); }, [dayNum]);
 
-  const startQuiz = () => {
-    const quiz = buildDayQuiz(dayNum);
+  const startQuiz = (scope) => {
+    const quiz = buildDayQuiz(dayNum, scope);
     if (quiz.questions.length < 1) { setError("No words for this day."); return; }
     saveQuiz(quiz);
     markDayDone(dayNum);
@@ -45,7 +45,12 @@ export default function VocabDayPage() {
         </div>
         <div className="row between mt-8">
           <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>Day {dayNum} · {total} words</h1>
-          <button className="btn btn--primary" onClick={startQuiz}>🎯 All-types Quiz (Day 1–{dayNum})</button>
+          <div className="row" style={{ gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
+            <button className="btn btn--primary" onClick={() => startQuiz("day")}>🎯 All-types · Day {dayNum} only</button>
+            {dayNum > 1 && (
+              <button className="btn btn--ghost" onClick={() => startQuiz("cum")}>🎯 All-types · Day 1–{dayNum}</button>
+            )}
+          </div>
         </div>
         <p className="hero__sub">Choose a category — all words of that type will open.</p>
       </section>
