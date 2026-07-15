@@ -94,11 +94,11 @@ export default function FeedBucket({ feed, bucket, dateMode = "text", datePlaceh
               const nc = noteCountOf(e);
               const qn = e.questions?.length || 0;
               return (
-                <div key={e.id} className={`day-cell glass ca-card ${qn > 0 ? "is-done" : ""}`}>
+                <div key={e.id} className="day-cell glass ca-card">
                   <Link href={`${hrefBase}/${e.id}`} className="ca-card__link">
-                    <span className="day-cell__n">📅 {e.date || e.title || "Untitled"}</span>
+                    <span className="day-cell__n">{e.date || e.title || "Untitled"}</span>
                     <span className="day-cell__c">
-                      {qn} Q{qn === 1 ? "" : "s"}{nc > 0 ? ` · 📌 ${nc}` : ""}{e.videoUrl ? " · ▶" : ""}
+                      {qn} question{qn === 1 ? "" : "s"}{nc > 0 ? ` · 📌 ${nc}` : ""}{e.videoUrl ? " · ▶" : ""}
                     </span>
                   </Link>
                   <button className="ca-card__x" title="Delete" onClick={() => del(e.id)}>✕</button>
