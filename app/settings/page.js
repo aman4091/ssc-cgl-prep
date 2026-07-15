@@ -201,14 +201,23 @@ export default function SettingsPage() {
 
           <div className="field">
             <label>Model</label>
-            <select
-              className="select"
+            <input
+              className="input"
+              type="text"
+              list="deepseek-models"
               value={settings.model}
               onChange={(e) => update("model", e.target.value)}
-            >
-              <option value="deepseek-chat">deepseek-chat (V3) — recommended</option>
-              <option value="deepseek-reasoner">deepseek-reasoner (R1)</option>
-            </select>
+              placeholder="deepseek-chat"
+            />
+            <datalist id="deepseek-models">
+              <option value="deepseek-chat" />
+              <option value="deepseek-reasoner" />
+            </datalist>
+            <p className="hint">
+              Koi bhi model id likh sakte ho — list sirf suggestion hai. <code>deepseek-chat</code> khud-ba-khud
+              DeepSeek ke latest non-thinking model pe point karta hai, <code>deepseek-reasoner</code> thinking model pe.
+              Naya/alag id platform.deepseek.com ke docs se copy karke yahin paste kar do.
+            </p>
           </div>
 
           <div className="field">
