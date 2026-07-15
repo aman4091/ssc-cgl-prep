@@ -1,0 +1,84 @@
+{
+ "source": "Calculation ka Best Compilation — Insp. Mohit Goyal Sir",
+ "total": 3355,
+ "topics": [
+  {
+   "key": "book-decimal",
+   "label": "Decimal",
+   "icon": "•",
+   "count": 557
+  },
+  {
+   "key": "book-multiplication",
+   "label": "Multiplication",
+   "icon": "✖️",
+   "count": 436
+  },
+  {
+   "key": "book-subtraction",
+   "label": "Subtraction",
+   "icon": "➖",
+   "count": 427
+  },
+  {
+   "key": "book-percentage",
+   "label": "Percentage",
+   "icon": "％",
+   "count": 413
+  },
+  {
+   "key": "book-division",
+   "label": "Division",
+   "icon": "➗",
+   "count": 351
+  },
+  {
+   "key": "book-addition",
+   "label": "Addition",
+   "icon": "➕",
+   "count": 327
+  },
+  {
+   "key": "book-fraction",
+   "label": "Fraction",
+   "icon": "½",
+   "count": 256
+  },
+  {
+   "key": "book-surds",
+   "label": "Surds",
+   "icon": "√",
+   "count": 233
+  },
+  {
+   "key": "book-fraction-division",
+   "label": "Fraction Division",
+   "icon": "⁄",
+   "count": 147
+  },
+  {
+   "key": "book-si-ci",
+   "label": "SI & CI",
+   "icon": "🏦",
+   "count": 83
+  },
+  {
+   "key": "book-hcf-lcm",
+   "label": "HCF & LCM",
+   "icon": "🔗",
+   "count": 70
+  },
+  {
+   "key": "book-time-work",
+   "label": "Time & Work",
+   "icon": "⏱️",
+   "count": 31
+  },
+  {
+   "key": "book-profit-loss",
+   "label": "Profit & Loss",
+   "icon": "💰",
+   "count": 24
+  }
+ ]
+}

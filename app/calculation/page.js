@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CALC_TYPES, buildCalcQuiz, getCalcPool, addCalcPoolQuestions, clearCalcPool } from "@/lib/calc";
+import { CALC_TYPES, buildCalcQuiz, getCalcPool, addCalcPoolQuestions, clearCalcPool, loadCalcBankIndex } from "@/lib/calc";
 import { extractPdfTextSmart, generateQuizText, readImageText } from "@/lib/client-ai";
 import { saveQuiz, getSettings } from "@/lib/storage";
 
@@ -14,11 +14,14 @@ export default function CalculationPage() {
   const [count, setCount] = useState(20);
   const [sec, setSec] = useState(12);
   const [poolCount, setPoolCount] = useState(0);
+  const [bookTopics, setBookTopics] = useState([]);
   const [busy, setBusy] = useState(false);
+  const [starting, setStarting] = useState(false);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => { setPoolCount(getCalcPool().length); }, []);
+  useEffect(() => { loadCalcBankIndex().then(setBookTopics); }, []);
 
   const requireKey = () => {
     if (!getSettings().apiKey) { setError("Add your DeepSeek API key in Settings first."); return false; }
@@ -103,14 +106,20 @@ export default function CalculationPage() {
     next.has(k) ? next.delete(k) : next.add(k);
     setSel(next);
   };
-  const allOn = () => setSel(new Set(ALL));
+  const allOn = () => setSel(new Set([...ALL, ...bookTopics.map((t) => t.key)]));
   const clear = () => setSel(new Set());
+  const onlyBook = () => setSel(new Set(bookTopics.map((t) => t.key)));
 
-  const start = () => {
+  const start = async () => {
     const keys = sel.size ? [...sel] : ALL;
-    const quiz = buildCalcQuiz(keys, count, sec);
-    saveQuiz(quiz);
-    router.push(`/quizzes/${quiz.id}`);
+    setStarting(true); setError("");
+    try {
+      const quiz = await buildCalcQuiz(keys, count, sec);
+      if (!quiz.questions.length) { setError("Koi question nahi bana — dusra type chuno."); return; }
+      saveQuiz(quiz);
+      router.push(`/quizzes/${quiz.id}`);
+    } catch (err) { setError(err.message); }
+    finally { setStarting(false); }
   };
 
   return (
@@ -121,7 +130,7 @@ export default function CalculationPage() {
           Calculation <span className="grad">Booster</span>
         </h1>
         <p className="hero__sub">
-          A few minutes daily — additions, multiplications, squares, divisibility, %→fraction, approximation, digit-sum, fractions.
+          A few minutes daily — endless auto-generated drills <strong>plus 3,355 real book questions</strong> (Decimal, Surds, %, SI&nbsp;&amp;&nbsp;CI, Time&nbsp;&amp;&nbsp;Work…).
           Every question in seconds — your calculation speed will take off. 🚀
         </p>
       </section>
@@ -161,16 +170,34 @@ export default function CalculationPage() {
             <h3>Choose types</h3>
             <div className="row" style={{ gap: 8 }}>
               <button className="btn btn--ghost btn--sm" onClick={allOn}>Select all</button>
+              {bookTopics.length > 0 && <button className="btn btn--ghost btn--sm" onClick={onlyBook}>📚 Book only</button>}
               <button className="btn btn--ghost btn--sm" onClick={clear}>Clear</button>
             </div>
           </div>
-          <div className="chips mt-16">
+
+          <p className="muted mt-16" style={{ fontSize: "0.8rem" }}>⚡ Auto-generated (endless, never repeat)</p>
+          <div className="chips mt-8">
             {CALC_TYPES.map((t) => (
               <button key={t.key} className={`chip chip--btn chip--lg ${sel.has(t.key) ? "is-active" : ""}`} onClick={() => toggle(t.key)}>
                 {t.icon} {t.label}
               </button>
             ))}
           </div>
+
+          {bookTopics.length > 0 && (
+            <>
+              <p className="muted mt-24" style={{ fontSize: "0.8rem" }}>
+                📚 Book questions — <strong>{bookTopics.reduce((a, t) => a + t.count, 0).toLocaleString()}</strong> real questions from <em>Calculation ka Best Compilation</em> (Mohit Goyal Sir)
+              </p>
+              <div className="chips mt-8">
+                {bookTopics.map((t) => (
+                  <button key={t.key} className={`chip chip--btn chip--lg ${sel.has(t.key) ? "is-active" : ""}`} onClick={() => toggle(t.key)}>
+                    {t.icon} {t.label} <span className="muted" style={{ fontSize: "0.75rem" }}>({t.count})</span>
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
 
           <div className="row mt-24" style={{ gap: 16, flexWrap: "wrap", alignItems: "center" }}>
             <label className="row" style={{ gap: 8, alignItems: "center" }}>
@@ -188,7 +215,9 @@ export default function CalculationPage() {
                 <option value={0}>No timer</option>
               </select>
             </label>
-            <button className="btn btn--primary" onClick={start} disabled={sel.size === 0}>🚀 Start drill</button>
+            <button className="btn btn--primary" onClick={start} disabled={sel.size === 0 || starting}>
+              {starting ? "Loading…" : "🚀 Start drill"}
+            </button>
           </div>
           <p className="hint" style={{ marginTop: 12 }}>💡 Total {count} questions · {sec ? `${Math.round((count * sec) / 60 * 10) / 10} min timer` : "no timer"}. You'll see right/wrong instantly in the result.</p>
         </div>

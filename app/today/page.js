@@ -272,8 +272,8 @@ function TargetCard({ target, router, onChanged, pIdx = -1, pCount = 0 }) {
       if (qs.length) actions.push(<button key="p" className="btn btn--ghost btn--sm" onClick={() => startQuiz(`${c.name} · Practice`, qs)}>🎯 Practice ({Math.min(25, qs.length)})</button>);
     }
   } else if (t.type === "calc") {
-    actions.push(<button key="d" className="btn btn--primary btn--sm" onClick={() => {
-      const quiz = buildCalcQuiz(undefined, t.ref.count || 20, t.ref.sec ?? 12);
+    actions.push(<button key="d" className="btn btn--primary btn--sm" onClick={async () => {
+      const quiz = await buildCalcQuiz(undefined, t.ref.count || 20, t.ref.sec ?? 12);
       saveQuiz(quiz); router.push(`/quizzes/${quiz.id}`);
     }}>🚀 Start drill</button>);
   } else if (t.type === "custom") {
