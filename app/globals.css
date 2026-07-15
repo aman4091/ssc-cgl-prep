@@ -650,6 +650,10 @@ main.container {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   padding: 18px 20px;
+  /* As a grid/flex item this would default to min-width:auto and refuse to be
+     narrower than its widest content — a wide markdown table then stretches the
+     box past the viewport, and in a single-column grid every sibling with it. */
+  min-width: 0;
 }
 /* Detailed explanation + shortcut trick: a touch larger for comfortable reading */
 .answer-box .md { font-size: 1.08rem; line-height: 1.75; }
