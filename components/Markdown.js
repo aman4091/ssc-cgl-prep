@@ -14,11 +14,17 @@ const ImgLink = ({ node, ...props }) => (
   </a>
 );
 
+// A wide table (CA explanations run to 5 columns) must scroll inside its own box,
+// otherwise it drags the whole page sideways on a phone.
+const TableWrap = ({ node, ...props }) => (
+  <div className="md-tablewrap"><table {...props} /></div>
+);
+
 const INLINE_COMPONENTS = {
   p: ({ node, ...props }) => <span {...props} />,
   img: ImgLink,
 };
-const BLOCK_COMPONENTS = { img: ImgLink };
+const BLOCK_COMPONENTS = { img: ImgLink, table: TableWrap };
 
 // KaTeX can't render the rupee sign (₹) in math mode and throws "Unknown symbol",
 // which breaks the whole expression. Map it (and \rupee) to text mode where the

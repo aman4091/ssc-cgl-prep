@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import FeedBucket from "@/components/FeedBucket";
+import { loadCaBankIndex, caBankId } from "@/lib/cabank";
 
 const TABS = [
   { key: "daily", label: "🗓️ Daily", dateMode: "date", placeholder: "Date", note: "Today's current affairs PDF + video — saved under today's date." },
@@ -12,7 +14,10 @@ const TABS = [
 
 export default function CurrentAffairsPage() {
   const [tab, setTab] = useState("daily");
+  const [bank, setBank] = useState(null);
   const active = TABS.find((t) => t.key === tab);
+
+  useEffect(() => { loadCaBankIndex().then(setBank); }, []);
 
   return (
     <>
@@ -34,6 +39,31 @@ export default function CurrentAffairsPage() {
             </button>
           ))}
         </div>
+        {/* Built-in monthly compilations — read-only, shipped with the app */}
+        {tab === "monthly" && bank?.months?.length > 0 && (
+          <div className="glass-card" style={{ marginBottom: 20 }}>
+            <div className="row between" style={{ flexWrap: "wrap", gap: 8, alignItems: "flex-end" }}>
+              <div>
+                <h3>📚 Ready-made monthly CA</h3>
+                <p className="muted mt-8" style={{ fontSize: "0.85rem" }}>
+                  <strong>{bank.total}</strong> questions with full explanations — already loaded, nothing to upload.
+                  {bank.source ? <> Source: {bank.source}.</> : null}
+                </p>
+              </div>
+            </div>
+            <div className="days-grid days-grid--ca mt-16">
+              {bank.months.map((m) => (
+                <div key={m.period} className="day-cell ca-card glass">
+                  <Link href={`/current-affairs/${caBankId(m.period)}`} className="ca-card__link">
+                    <span className="day-cell__n">{m.label}</span>
+                    <span className="day-cell__c">{m.count} questions</span>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <FeedBucket
           feed="current"
           bucket={active.key}

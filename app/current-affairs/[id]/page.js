@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getEntry, updateEntry } from "@/lib/feed";
+import { isCaBankId, loadCaBankEntry } from "@/lib/cabank";
 import { saveQuiz, makeId, getSettings } from "@/lib/storage";
 import { verifyQuiz, askAI } from "@/lib/client-ai";
 import { openFile } from "@/lib/filestore";
@@ -43,8 +44,18 @@ export default function CurrentAffairsDetail() {
     genRef.current = false; // let the auto-effect regenerate the cleared explanation
   };
 
-  const refresh = () => setEntry(getEntry(id));
-  useEffect(() => { refresh(); setReady(true); /* eslint-disable-next-line */ }, [id]);
+  // Built-in months (cabank_2026-01) are static files, not localStorage entries.
+  const builtin = isCaBankId(id);
+  const refresh = () => { if (!builtin) setEntry(getEntry(id)); };
+  useEffect(() => {
+    if (builtin) {
+      let alive = true;
+      loadCaBankEntry(id).then((e) => { if (alive) { setEntry(e); setReady(true); } });
+      return () => { alive = false; };
+    }
+    refresh(); setReady(true);
+    /* eslint-disable-next-line */
+  }, [id]);
 
   const caPromptFor = (q) => {
     const opts = (q.options || []).map((o, i) => `${letter(i)}) ${o}`).join("\n");
@@ -76,7 +87,7 @@ export default function CurrentAffairsDetail() {
 
   // auto-run once when the page opens, if any question lacks an explanation.
   useEffect(() => {
-    if (!entry || genRef.current || genBusy) return;
+    if (!entry || genRef.current || genBusy || builtin) return;   // builtin ships its own explanations
     const qs = entry.questions || [];
     if (qs.length === 0 || qs.every((q) => q.detail)) return;
     if (!hasKey()) return; // needs a DeepSeek or Gemini key
@@ -168,9 +179,11 @@ export default function CurrentAffairsDetail() {
           <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>📅 {heading}</h1>
           {entry.questions?.length > 0 && (
             <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
-              <button className="btn btn--ghost" onClick={verifyAnswers} disabled={verifying}>
-                {verifying ? (vStatus || "Verifying…") : "🔍 Verify answers"}
-              </button>
+              {!builtin && (
+                <button className="btn btn--ghost" onClick={verifyAnswers} disabled={verifying}>
+                  {verifying ? (vStatus || "Verifying…") : "🔍 Verify answers"}
+                </button>
+              )}
               <button className="btn btn--primary" onClick={startQuiz}>🎯 Start Quiz ({entry.questions.length})</button>
             </div>
           )}
@@ -184,10 +197,12 @@ export default function CurrentAffairsDetail() {
 
       {error && <p className="section" style={{ color: "var(--danger)", fontSize: "0.9rem" }}>{error}</p>}
 
-      {/* Add questions / notes to this date */}
-      <section className="section" style={{ marginTop: 12 }}>
-        <FeedUploader entry={entry} onChanged={refresh} />
-      </section>
+      {/* Add questions / notes to this date — built-in months are read-only */}
+      {!builtin && (
+        <section className="section" style={{ marginTop: 12 }}>
+          <FeedUploader entry={entry} onChanged={refresh} />
+        </section>
+      )}
 
       {/* Answer verification report */}
       {reports && (
@@ -242,13 +257,17 @@ export default function CurrentAffairsDetail() {
           <div className="glass-card">
             <div className="row between" style={{ flexWrap: "wrap", gap: 10 }}>
               <h3>📝 Questions &amp; Explanations</h3>
-              {genBusy ? (
+              {builtin ? (
+                <span className="muted" style={{ fontSize: "0.8rem" }}>
+                  📚 Ready-made{entry.source ? ` · ${entry.source}` : ""}
+                </span>
+              ) : genBusy ? (
                 <span className="muted" style={{ fontSize: "0.85rem", color: "var(--accent-2)" }}>{genStatus || "Generating…"}</span>
               ) : (
                 <button className="btn btn--ghost btn--sm" onClick={regenerate}>🔄 Regenerate</button>
               )}
             </div>
-            {!hasKey() && (
+            {!builtin && !hasKey() && (
               <p className="hint" style={{ marginTop: 8 }}>💡 Explanations ke liye Settings mein DeepSeek ya Gemini API key daalo (Gemini recent facts pe behtar hai).</p>
             )}
             <div className="mt-16" style={{ display: "grid", gap: 16 }}>
@@ -259,7 +278,9 @@ export default function CurrentAffairsDetail() {
                     {editIdx !== qi && (
                       <div className="q-head__actions">
                         <AskButtons q={q} />
-                        <button className="btn btn--ghost btn--sm" onClick={() => setEditIdx(qi)} title="Edit question">✏️ Edit</button>
+                        {!builtin && (
+                          <button className="btn btn--ghost btn--sm" onClick={() => setEditIdx(qi)} title="Edit question">✏️ Edit</button>
+                        )}
                       </div>
                     )}
                   </div>

@@ -716,6 +716,9 @@ main.container {
 .md pre code { background: none; padding: 0; }
 .md table { border-collapse: collapse; margin: 10px 0; width: 100%; }
 .md th, .md td { border: 1px solid var(--glass-border); padding: 6px 10px; text-align: left; }
+/* Wide tables scroll inside themselves so the page body never scrolls sideways. */
+.md-tablewrap { overflow-x: auto; margin: 10px 0; max-width: 100%; }
+.md-tablewrap table { margin: 0; min-width: max-content; }
 .md blockquote { border-left: 3px solid var(--accent); padding-left: 12px; color: var(--text-2); margin: 10px 0; }
 /* Question / option figures (imported quiz images, diagrams). White backing so
    transparent PNG line-art stays visible on the dark theme; click to zoom. */
