@@ -802,11 +802,14 @@ main.container {
 .day-cell__n { font-weight: 700; font-size: 0.92rem; }
 .day-cell__c { font-size: 0.72rem; color: var(--text-3); }
 .day-cell.is-done { border-color: rgba(52,211,153,0.5); background: rgba(52,211,153,0.08); }
+/* Some but not all of the day's types quizzed — amber "2/3" instead of a tick. */
+.day-cell.is-part { border-color: rgba(251,191,36,0.45); background: rgba(251,191,36,0.07); }
 .day-cell.is-empty { opacity: 0.4; pointer-events: none; }
 .day-cell__tick {
   position: absolute; top: 8px; right: 10px;
   color: var(--success); font-weight: 800; font-size: 0.9rem;
 }
+.day-cell__tick--part { color: var(--warning); font-size: 0.72rem; font-weight: 700; }
 
 /* Question header: actions beside the question on desktop, stacked ABOVE it on
    mobile so the question text keeps full width (buttons no longer squeeze it). */

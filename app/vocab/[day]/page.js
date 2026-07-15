@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { getDayTypeCounts, buildDayQuiz, markDayDone, TYPES } from "@/lib/vocab";
+import { getDayTypeCounts, getDayProgress, buildDayQuiz, TYPES } from "@/lib/vocab";
 import { saveQuiz } from "@/lib/storage";
 
 export default function VocabDayPage() {
@@ -11,16 +11,19 @@ export default function VocabDayPage() {
   const router = useRouter();
   const dayNum = parseInt(day);
   const [counts, setCounts] = useState(null);
+  const [prog, setProg] = useState(null);
   const [error, setError] = useState("");
 
-  useEffect(() => { setCounts(getDayTypeCounts(dayNum)); }, [dayNum]);
+  useEffect(() => {
+    setCounts(getDayTypeCounts(dayNum));
+    setProg(getDayProgress(dayNum));
+  }, [dayNum]);
 
   const startQuiz = (scope) => {
     const quiz = buildDayQuiz(dayNum, scope);
     if (quiz.questions.length < 1) { setError("No words for this day."); return; }
     saveQuiz(quiz);
-    markDayDone(dayNum);
-    router.push(`/quizzes/${quiz.id}`);
+    router.push(`/quizzes/${quiz.id}`);   // the tick is set when the quiz is submitted
   };
 
   if (!dayNum || dayNum < 1) {
@@ -75,6 +78,9 @@ export default function VocabDayPage() {
                     <span>{t.label}</span>
                   </span>
                   <span className="cat-row__meta">
+                    {prog?.doneTypes.includes(t.key) && (
+                      <span style={{ color: "var(--success)", fontWeight: 700 }} title="Quiz done">✓</span>
+                    )}
                     <span className="muted">{c} words</span>
                     {!disabled && <span className="cat-row__go">Open →</span>}
                   </span>

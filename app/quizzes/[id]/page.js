@@ -16,6 +16,7 @@ import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { recordQuizAttempts, quizCategory, setReviewErrorType, ERROR_TYPES } from "@/lib/qreview";
+import { markDayDone, markDayTypeDone } from "@/lib/vocab";
 
 function fmt(sec) {
   const s = Math.round(sec || 0);
@@ -141,6 +142,13 @@ export default function QuizPlayer() {
       });
       recordAttempts(items);
       recordQuizAttempts(reviewItems);
+
+      // Vocab quizzes tick their day here — on submit, not on launch, so a quiz
+      // you opened and abandoned doesn't count as done.
+      if (quiz.vocabDay) {
+        if (quiz.vocabType) markDayTypeDone(quiz.vocabDay, quiz.vocabType);
+        else markDayDone(quiz.vocabDay);
+      }
     }
     setSubmitted(true);
     window.scrollTo({ top: 0, behavior: "smooth" });

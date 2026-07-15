@@ -248,11 +248,15 @@ export default function VocabPage() {
               <Link
                 key={d.day}
                 href={`/vocab/${d.day}`}
-                className={`day-cell glass ${d.done ? "is-done" : ""}`}
+                className={`day-cell glass ${d.done ? "is-done" : d.doneCount > 0 ? "is-part" : ""}`}
               >
                 <span className="day-cell__n">Day {d.day}</span>
                 <span className="day-cell__c">{d.count} words</span>
-                {d.done && <span className="day-cell__tick">✓</span>}
+                {d.done ? (
+                  <span className="day-cell__tick">✓</span>
+                ) : d.doneCount > 0 ? (
+                  <span className="day-cell__tick day-cell__tick--part">{d.doneCount}/{d.totalCount}</span>
+                ) : null}
               </Link>
             ))}
           </div>
