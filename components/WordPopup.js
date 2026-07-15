@@ -39,9 +39,6 @@ export default function WordPopup({ word, onClose }) {
 
   useEffect(() => { load(cur, false); }, [cur, load]);
 
-  // A new word starts fresh: cache first, no leftover force-reload from the last one.
-  useEffect(() => { setReloads(0); }, [cur]);
-
   if (!word) return null;
 
   const add = (type) => {
