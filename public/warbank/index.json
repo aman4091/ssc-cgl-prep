@@ -1,0 +1,564 @@
+{
+ "book": "WAR",
+ "source": "aa.pdf — 708-page SSC PYQ bank",
+ "total": 3152,
+ "note": "Everything is the book's own — question, options, answer, explanation and the exam it came from. Nothing was generated. 3152 of 3162 questions: 10 that printed the same option twice are held back. Answers are not blind-checked.",
+ "subjects": [
+  {
+   "slug": "current-affairs",
+   "label": "Current Affairs",
+   "icon": "📰",
+   "count": 562,
+   "chapters": [
+    {
+     "name": "GOVT SCHEMES",
+     "count": 155
+    },
+    {
+     "name": "SCIENCE & TECHNOLOGY",
+     "count": 89
+    },
+    {
+     "name": "REPORT & RANKING",
+     "count": 72
+    },
+    {
+     "name": "APPOINTMENTS",
+     "count": 69
+    },
+    {
+     "name": "SPORTS",
+     "count": 68
+    },
+    {
+     "name": "NATIONAL & STATE NEWS",
+     "count": 35
+    },
+    {
+     "name": "AWARDS & HONOURS",
+     "count": 27
+    },
+    {
+     "name": "INTERNATIONAL NEWS",
+     "count": 21
+    },
+    {
+     "name": "DEFENCE",
+     "count": 15
+    },
+    {
+     "name": "IMPORTANT BILLS & MISCL",
+     "count": 11
+    }
+   ]
+  },
+  {
+   "slug": "static-gk",
+   "label": "Static GK",
+   "icon": "🗿",
+   "count": 532,
+   "chapters": [
+    {
+     "name": "SPORTS",
+     "count": 175
+    },
+    {
+     "name": "DANCES",
+     "count": 67
+    },
+    {
+     "name": "SCIENCE & TECH",
+     "count": 62
+    },
+    {
+     "name": "INT & NATIONAL ORG",
+     "count": 44
+    },
+    {
+     "name": "MISLINEOUS",
+     "count": 42
+    },
+    {
+     "name": "MUSICAL INSTRUMENTS & GHARANAS",
+     "count": 30
+    },
+    {
+     "name": "FESTIVALS AND FAIRS",
+     "count": 30
+    },
+    {
+     "name": "TEMPLES & MONUMENTS",
+     "count": 29
+    },
+    {
+     "name": "BOOKS AND AUTHORS",
+     "count": 29
+    },
+    {
+     "name": "AWARDS & HONOURS",
+     "count": 15
+    },
+    {
+     "name": "IMPORTANT DAYS AND GOVT SCHEMES",
+     "count": 9
+    }
+   ]
+  },
+  {
+   "slug": "economics",
+   "label": "Economics",
+   "icon": "💰",
+   "count": 485,
+   "chapters": [
+    {
+     "name": "Five Year Plan & Indust Policy",
+     "count": 151
+    },
+    {
+     "name": "BOP, Poverty & Int Trade",
+     "count": 108
+    },
+    {
+     "name": "Budget & Taxation",
+     "count": 77
+    },
+    {
+     "name": "Basics of Economy",
+     "count": 56
+    },
+    {
+     "name": "Money & Banking",
+     "count": 36
+    },
+    {
+     "name": "National Income",
+     "count": 18
+    },
+    {
+     "name": "Demand & Supply",
+     "count": 16
+    },
+    {
+     "name": "Inflation & Unemployment",
+     "count": 10
+    },
+    {
+     "name": "Monetary Policies",
+     "count": 10
+    },
+    {
+     "name": "MISCELLANEOUS",
+     "count": 3
+    }
+   ]
+  },
+  {
+   "slug": "polity",
+   "label": "Polity",
+   "icon": "⚖️",
+   "count": 391,
+   "chapters": [
+    {
+     "name": "Important Acts & New Laws",
+     "count": 85
+    },
+    {
+     "name": "Salient Features",
+     "count": 55
+    },
+    {
+     "name": "Parliament",
+     "count": 42
+    },
+    {
+     "name": "Const & non Const Bodies",
+     "count": 34
+    },
+    {
+     "name": "State Legislature",
+     "count": 29
+    },
+    {
+     "name": "Fundamental Rights",
+     "count": 25
+    },
+    {
+     "name": "Emergency & Amendments",
+     "count": 24
+    },
+    {
+     "name": "President & VP",
+     "count": 21
+    },
+    {
+     "name": "DPSP & Fundamental Duties",
+     "count": 19
+    },
+    {
+     "name": "Supreme & High Court",
+     "count": 19
+    },
+    {
+     "name": "Making Of Constitution",
+     "count": 11
+    },
+    {
+     "name": "Sources of Constitution & Misl",
+     "count": 9
+    },
+    {
+     "name": "Union territory & Citizenship",
+     "count": 8
+    },
+    {
+     "name": "PM & Council of Ministers",
+     "count": 5
+    },
+    {
+     "name": "Local government",
+     "count": 3
+    },
+    {
+     "name": "Preamble",
+     "count": 2
+    }
+   ]
+  },
+  {
+   "slug": "geography",
+   "label": "Geography",
+   "icon": "🌍",
+   "count": 337,
+   "chapters": [
+    {
+     "name": "Demographics",
+     "count": 92
+    },
+    {
+     "name": "Minerals",
+     "count": 36
+    },
+    {
+     "name": "Transport",
+     "count": 33
+    },
+    {
+     "name": "Soil & Agriculture",
+     "count": 21
+    },
+    {
+     "name": "GEOMORPHOLOGY & LANDFROMS",
+     "count": 20
+    },
+    {
+     "name": "ATMOSPHERE",
+     "count": 19
+    },
+    {
+     "name": "National Parks",
+     "count": 19
+    },
+    {
+     "name": "Peninsular Rivers",
+     "count": 14
+    },
+    {
+     "name": "Solar system",
+     "count": 12
+    },
+    {
+     "name": "PENINSULAR PLATEAUS",
+     "count": 11
+    },
+    {
+     "name": "India & its Location",
+     "count": 9
+    },
+    {
+     "name": "Northern Plains & Islands",
+     "count": 7
+    },
+    {
+     "name": "Dams, Lakes & Waterfalls",
+     "count": 7
+    },
+    {
+     "name": "SOLAR SYSTEM",
+     "count": 6
+    },
+    {
+     "name": "MONSOON",
+     "count": 6
+    },
+    {
+     "name": "Forest & Grasslands",
+     "count": 6
+    },
+    {
+     "name": "Earth's Interior And Plate Tectonic",
+     "count": 5
+    },
+    {
+     "name": "World Map",
+     "count": 5
+    },
+    {
+     "name": "Himalayas",
+     "count": 3
+    },
+    {
+     "name": "ROCKS, CONTINENTS & OCEANS",
+     "count": 2
+    },
+    {
+     "name": "Wind oceanic current & Cyclones",
+     "count": 2
+    },
+    {
+     "name": "Miscellaneous",
+     "count": 2
+    }
+   ]
+  },
+  {
+   "slug": "mediaeval-history",
+   "label": "Mediaeval History",
+   "icon": "🏰",
+   "count": 169,
+   "chapters": [
+    {
+     "name": "Mughal Empire & Sur Dynasty",
+     "count": 61
+    },
+    {
+     "name": "Delhi Sultanate",
+     "count": 31
+    },
+    {
+     "name": "Early mediaeval and regional kingdom",
+     "count": 30
+    },
+    {
+     "name": "Maratha Empire",
+     "count": 12
+    },
+    {
+     "name": "Miscellaneous",
+     "count": 11
+    },
+    {
+     "name": "Vijay Nagar & Bahamani",
+     "count": 9
+    },
+    {
+     "name": "Bhakti & Sufi Movements",
+     "count": 9
+    },
+    {
+     "name": "Sikhism",
+     "count": 6
+    }
+   ]
+  },
+  {
+   "slug": "ancient-history",
+   "label": "Ancient History",
+   "icon": "🏛️",
+   "count": 153,
+   "chapters": [
+    {
+     "name": "Buddhism & Jainism",
+     "count": 37
+    },
+    {
+     "name": "Mahajanapadas",
+     "count": 30
+    },
+    {
+     "name": "Prehistoric & IVC",
+     "count": 25
+    },
+    {
+     "name": "Gupta Empire",
+     "count": 24
+    },
+    {
+     "name": "Vedic Culture",
+     "count": 23
+    },
+    {
+     "name": "Sangam Age",
+     "count": 9
+    },
+    {
+     "name": "Miscellaneous",
+     "count": 5
+    }
+   ]
+  },
+  {
+   "slug": "environment",
+   "label": "Environment",
+   "icon": "🌱",
+   "count": 145,
+   "chapters": [
+    {
+     "name": "Basics",
+     "count": 62
+    },
+    {
+     "name": "Biodiversity & Conservation",
+     "count": 48
+    },
+    {
+     "name": "Govt. SCHEMES & Initiatives",
+     "count": 35
+    }
+   ]
+  },
+  {
+   "slug": "modern-history",
+   "label": "Modern History",
+   "icon": "🎖️",
+   "count": 122,
+   "chapters": [
+    {
+     "name": "Freedom struggle",
+     "count": 29
+    },
+    {
+     "name": "British Administration",
+     "count": 21
+    },
+    {
+     "name": "Advent of Europeans",
+     "count": 20
+    },
+    {
+     "name": "Tribal and Peasant movement",
+     "count": 13
+    },
+    {
+     "name": "Post Independence Era",
+     "count": 9
+    },
+    {
+     "name": "Social & Religious Reforms",
+     "count": 8
+    },
+    {
+     "name": "Miscellaneous",
+     "count": 8
+    },
+    {
+     "name": "Revolt Of 1857",
+     "count": 6
+    },
+    {
+     "name": "British Adminstration",
+     "count": 5
+    },
+    {
+     "name": "DECL OF MUGHALS & RISE OF AUTOMUN",
+     "count": 3
+    }
+   ]
+  },
+  {
+   "slug": "biology",
+   "label": "Biology",
+   "icon": "🧬",
+   "count": 114,
+   "chapters": [
+    {
+     "name": "Circulatory & Excretory System",
+     "count": 22
+    },
+    {
+     "name": "Cell",
+     "count": 20
+    },
+    {
+     "name": "Plant & Animal Kingdom",
+     "count": 14
+    },
+    {
+     "name": "Diseases Nutrients & Vitamins",
+     "count": 14
+    },
+    {
+     "name": "Plant Growth Hormones",
+     "count": 13
+    },
+    {
+     "name": "Tissues",
+     "count": 9
+    },
+    {
+     "name": "Nutrition & Digestion",
+     "count": 9
+    },
+    {
+     "name": "Nervous System & Sense Organs",
+     "count": 8
+    },
+    {
+     "name": "Heredity Evolution & Miscellaneous",
+     "count": 5
+    }
+   ]
+  },
+  {
+   "slug": "physics",
+   "label": "Physics",
+   "icon": "🔬",
+   "count": 113,
+   "chapters": [
+    {
+     "name": "Force & Laws of Motion",
+     "count": 23
+    },
+    {
+     "name": "Gravitation Work Energy Power",
+     "count": 23
+    },
+    {
+     "name": "Miscellaneous",
+     "count": 21
+    },
+    {
+     "name": "Human Eye Vision & Electricity",
+     "count": 18
+    },
+    {
+     "name": "Sound",
+     "count": 10
+    },
+    {
+     "name": "Motion",
+     "count": 9
+    },
+    {
+     "name": "Reflection and Refrection",
+     "count": 9
+    }
+   ]
+  },
+  {
+   "slug": "chemistry",
+   "label": "Chemistry",
+   "icon": "⚗️",
+   "count": 29,
+   "chapters": [
+    {
+     "name": "Miscellaneous",
+     "count": 15
+    },
+    {
+     "name": "Matter & State Of Matter",
+     "count": 14
+    }
+   ]
+  }
+ ]
+}

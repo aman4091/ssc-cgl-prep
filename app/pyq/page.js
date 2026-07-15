@@ -3,6 +3,10 @@ import Link from "next/link";
 export const metadata = { title: "PYQ — SSC CGL Pre" };
 
 const SUBS = [
+  // The WAR book ships with the app (lib/warbank) — 3,152 real SSC PYQs the
+  // user never has to upload. First, because it is the only card with questions
+  // already in it.
+  { icon: "🎯", name: "WAR", desc: "3,152 ready-made SSC PYQs — 12 subjects, exam ke saath. Kuch upload karne ki zaroorat nahi.", href: "/pyq/war" },
   { icon: "🧮", name: "Maths", desc: "Previous year quant questions — one subject-wise bank.", href: "/pyq/math" },
   { icon: "🧠", name: "Reasoning", desc: "PYQ reasoning — analogy, series, coding, puzzles.", href: "/pyq/reasoning" },
   { icon: "📚", name: "English", desc: "PYQ English — grammar, vocabulary, comprehension.", href: "/pyq/english" },

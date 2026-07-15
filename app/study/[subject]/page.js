@@ -8,6 +8,7 @@ import {
   subjectMeta, suggestedFor, SUBJECTS,
 } from "@/lib/grammar";
 import { gkTopicsForSubject, findGkTopic } from "@/lib/gkbank";
+import { loadWarIndex } from "@/lib/warbank";
 
 export default function SubjectChaptersPage() {
   const { subject } = useParams();
@@ -16,12 +17,20 @@ export default function SubjectChaptersPage() {
   const [name, setName] = useState("");
   const [showAdd, setShowAdd] = useState(false);
   const [gkTopics, setGkTopics] = useState([]);
+  const [war, setWar] = useState(null); // the WAR book — GS only
 
   const refresh = () => setChapters(getChapters(subject));
   useEffect(() => { refresh(); }, [subject]);
   useEffect(() => {
     let alive = true;
     gkTopicsForSubject(subject).then((t) => { if (alive) setGkTopics(t); });
+    return () => { alive = false; };
+  }, [subject]);
+  useEffect(() => {
+    let alive = true;
+    setWar(null);
+    if (subject !== "gs") return undefined;
+    loadWarIndex().then((b) => { if (alive && b.subjects.length) setWar(b); });
     return () => { alive = false; };
   }, [subject]);
 
@@ -98,10 +107,28 @@ export default function SubjectChaptersPage() {
           <h2>Your Chapters</h2>
           <p>{chapters.length ? `${chapters.length} chapters` : "No chapters yet — create one above."}</p>
         </div>
-        {chapters.length === 0 ? (
+        {chapters.length === 0 && !war ? (
           <div className="placeholder">No chapters yet. Add a topic to get started. 🚀</div>
         ) : (
           <div className="grid grid--3">
+            {/* The WAR book is not a chapter — it ships with the app and is
+                browsed as a book (lib/warbank). It sits here because GS is where
+                someone looks for GS questions. */}
+            {war && (
+              <article className="glass-card">
+                <div className="row" style={{ gap: 6, flexWrap: "wrap" }}>
+                  <span className="badge badge--ok">📖 Ready-made book</span>
+                  <span className="badge">{war.subjects.length} subjects</span>
+                </div>
+                <h3 style={{ marginTop: 14 }}>🎯 WAR</h3>
+                <p className="muted mt-8" style={{ fontSize: "0.8rem" }}>
+                  {war.total} real SSC PYQs — har question ke saath uska exam.
+                </p>
+                <Link href="/pyq/war" className="btn btn--primary btn--block mt-16">
+                  Open the book →
+                </Link>
+              </article>
+            )}
             {chapters.map((c) => {
               const qCount = getChapterQuestions(c.id).length;
               const gk = findGkTopic(gkTopics, subject, c.name);
