@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
+import { getSavedShortcut, saveShortcutFor, clearSavedShortcut, tidyAnswer } from "@/lib/shortcuts";
 import { keyFor } from "@/lib/qstats";
 import Markdown from "./Markdown";
 
@@ -27,7 +27,8 @@ export default function PasteAnswer({ q }) {
 
   const startEdit = () => { setText(saved || ""); setOpen(true); };
   const save = () => {
-    const t = text.trim();
+    // Same tidy the store applies, so what shows now matches what comes back.
+    const t = tidyAnswer(text.trim());
     if (!t) return;
     saveShortcutFor(q, t);
     setSaved(t); setOpen(false); setShow(true);
