@@ -16,12 +16,15 @@ import {
   generateMcqFromImages,
 } from "@/lib/client-ai";
 import { saveQuiz, makeId, getSettings, geminiActive } from "@/lib/storage";
+import { gkTopicFor, loadGkTopic } from "@/lib/gkbank";
 import { buildChapterQuiz } from "@/lib/chapterquiz";
 import { saveFile, getFile, openFile } from "@/lib/filestore";
 import RuleCard from "@/components/RuleCard";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import ZoomableImage from "@/components/ZoomableImage";
+
+const GK_PAGE = 50; // how many ready-made questions to add per "show more"
 
 export default function ChapterPage() {
   const { subject, chapterId } = useParams();
@@ -39,6 +42,12 @@ export default function ChapterPage() {
   const [noteFilter, setNoteFilter] = useState("");
   const [lbIndex, setLbIndex] = useState(null); // lightbox index into filteredNotes
   const [paperFilter, setPaperFilter] = useState(""); // filter questions by paper/shift
+
+  // Ready-made bank for this chapter, if one ships with the app (see lib/gkbank).
+  const [gkTopic, setGkTopic] = useState(null);
+  const [gkQs, setGkQs] = useState([]);
+  const [gkReady, setGkReady] = useState(false); // lookup done — tells "no bank" apart from "not looked yet"
+  const [gkShown, setGkShown] = useState(GK_PAGE); // render in slices — 600 cards at once janks
 
   const [manual, setManual] = useState("");
   const [paperInput, setPaperInput] = useState(""); // PYQ: which paper these questions are from
@@ -71,24 +80,44 @@ export default function ChapterPage() {
   };
   useEffect(() => { refresh(); /* eslint-disable-next-line */ }, [chapterId]);
 
-  // Theory / Questions split — "📝 Questions" opens straight into the questions view.
-  const [view, setView] = useState("theory"); // "theory" | "questions"
+  // Theory / Questions / GK Tricks split — "📝 Questions" opens straight into the questions view.
+  const [view, setView] = useState("theory"); // "theory" | "questions" | "gk"
   const [showAdd, setShowAdd] = useState(false); // the "add content" card is hidden until asked
   const [showLinks, setShowLinks] = useState(false); // the "chapter links" card is hidden until asked
   useEffect(() => {
     if (typeof window === "undefined") return;
     const p = new URLSearchParams(window.location.search).get("view");
-    setView(p === "questions" ? "questions" : "theory");
+    setView(p === "questions" || p === "gk" ? p : "theory");
   }, [chapterId]);
   const switchView = (v) => {
     setView(v);
+    setGkShown(GK_PAGE);
     try {
       const url = new URL(window.location.href);
-      if (v === "questions") url.searchParams.set("view", "questions");
+      if (v === "questions" || v === "gk") url.searchParams.set("view", v);
       else url.searchParams.delete("view");
       window.history.replaceState(null, "", url);
     } catch { /* ignore */ }
   };
+
+  // Pull in the ready-made bank matching this chapter's name, if there is one.
+  useEffect(() => {
+    let alive = true;
+    setGkTopic(null); setGkQs([]); setGkReady(false);
+    if (!chapter?.name) return undefined;
+    (async () => {
+      const t = await gkTopicFor(subject, chapter.name);
+      if (!alive) return;
+      setGkTopic(t);
+      if (t) {
+        const qs = await loadGkTopic(t.slug);
+        if (!alive) return;
+        setGkQs(qs);
+      }
+      setGkReady(true);
+    })();
+    return () => { alive = false; };
+  }, [subject, chapter?.name]);
 
   // Load note-image blobs -> object URLs for inline display
   useEffect(() => {
@@ -386,6 +415,13 @@ export default function ChapterPage() {
     if (!quiz) { setError("Add some questions first."); return; }
     router.push(`/quizzes/${quiz.id}`);
   };
+  const gkPractice = () => {
+    if (!gkQs.length) return;
+    // Its own served-cycle key, so the ready-made bank and the chapter's own
+    // questions don't consume each other's "not yet asked" pool.
+    const quiz = buildChapterQuiz(`${chapterId}:gk`, `${gkTopic.label} · GK Tricks`, { pool: gkQs });
+    if (quiz) router.push(`/quizzes/${quiz.id}`);
+  };
   const clearQs = () => { if (confirm("Remove all questions from this chapter?")) { clearChapterQuestions(chapterId); refresh(); } };
   const delNote = async (id) => { if (!confirm("Remove this page/image?")) return; await removeNote(chapterId, id); refresh(); };
 
@@ -458,10 +494,17 @@ export default function ChapterPage() {
 
   const hasVideo = (chapter.videos?.length || 0) > 0;
   // Every subject has a Questions tab (PYQs get marked into english chapters too).
-  // The other tab is Rules for english, Theory/Notes for the rest.
+  // The other tab is Rules for english, Theory/Notes for the rest. A chapter that
+  // matches a ready-made bank gets a third.
+  // `wantsGk` (not gkView) hides the others while the bank loads, so the theory
+  // section doesn't flash up before the GK questions arrive. Once the lookup has
+  // finished with nothing, it drops back to theory — a ?view=gk link to a chapter
+  // with no bank would otherwise sit on "Loading…" forever.
+  const wantsGk = view === "gk" && (!gkReady || !!gkTopic);
+  const gkView = wantsGk && !!gkTopic;
   const questionsView = view === "questions";
-  const rulesView = isEnglish && !questionsView;
-  const theoryView = !isEnglish && !questionsView;
+  const rulesView = isEnglish && !questionsView && !wantsGk;
+  const theoryView = !isEnglish && !questionsView && !wantsGk;
 
   return (
     <>
@@ -472,9 +515,16 @@ export default function ChapterPage() {
         </div>
         <div className="row between mt-8" style={{ flexWrap: "wrap", gap: 10 }}>
           <h1 className="hero__title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)" }}>
-            {chapter.name} <span className="grad">· {rulesView ? `${rules.length} rules` : `${questions.length} questions`}</span>
+            {chapter.name}{" "}
+            <span className="grad">
+              · {wantsGk ? `${gkTopic?.count ?? gkQs.length} ready-made` : rulesView ? `${rules.length} rules` : `${questions.length} questions`}
+            </span>
           </h1>
-          {rulesView ? (
+          {wantsGk ? (
+            <button className="btn btn--primary" onClick={gkPractice} disabled={gkQs.length === 0}>
+              🎯 Practice ({Math.min(25, gkQs.length)} · 15 min)
+            </button>
+          ) : rulesView ? (
             <button className="btn btn--primary" onClick={startChapterQuiz} disabled={chapterQuizBusy}>
               {chapterQuizBusy ? "Generating…" : "🎯 Chapter Quiz"}
             </button>
@@ -490,12 +540,17 @@ export default function ChapterPage() {
       <section className="section" style={{ marginTop: 4 }}>
         <div className="row between" style={{ flexWrap: "wrap", gap: 10 }}>
           <div className="chips">
-            <button className={`chip chip--btn chip--lg ${!questionsView ? "is-active" : ""}`} onClick={() => switchView("theory")}>
+            <button className={`chip chip--btn chip--lg ${!questionsView && !wantsGk ? "is-active" : ""}`} onClick={() => switchView("theory")}>
               {isEnglish ? `📖 Rules${rules.length ? ` (${rules.length})` : ""}` : "📖 Theory"}
             </button>
             <button className={`chip chip--btn chip--lg ${questionsView ? "is-active" : ""}`} onClick={() => switchView("questions")}>
               📝 Questions{questions.length ? ` (${questions.length})` : ""}
             </button>
+            {gkTopic && (
+              <button className={`chip chip--btn chip--lg ${wantsGk ? "is-active" : ""}`} onClick={() => switchView("gk")}>
+                🧠 GK Tricks ({gkTopic.count})
+              </button>
+            )}
           </div>
           <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
             <button className="btn btn--ghost btn--sm" onClick={() => setShowLinks((v) => !v)}>
@@ -750,6 +805,65 @@ export default function ChapterPage() {
           </section>
         );
       })()}
+
+      {/* GK Tricks — the ready-made bank that ships with the app. Read-only: it
+          lives in a static file, so there is nothing to edit or delete. */}
+      {wantsGk && (
+        <section className="section" id="gk">
+          <div className="section__head">
+            <div className="row between" style={{ alignItems: "flex-end", flexWrap: "wrap", gap: 10 }}>
+              <div>
+                <h2>🧠 GK Tricks</h2>
+                <p>
+                  {gkQs.length
+                    ? `${gkQs.length} ready-made questions — pick an option to see the answer & explanation.`
+                    : "Loading…"}
+                </p>
+              </div>
+              {gkQs.length > 0 && (
+                <button className="btn btn--primary btn--sm" onClick={gkPractice}>
+                  🎯 Practice ({Math.min(25, gkQs.length)} · 15 min)
+                </button>
+              )}
+            </div>
+          </div>
+
+          {gkTopic && (
+            <p className="hint" style={{ marginBottom: 12 }}>
+              📚 {gkTopic.source} · {gkTopic.note}
+              {gkTopic.optionsGenerated && (
+                <> Book mein sirf question, answer aur explanation hai — <strong>teen galat options AI ne likhe hain</strong>, book ke nahi.</>
+              )}
+            </p>
+          )}
+
+          {gkQs.length === 0 ? (
+            <div className="placeholder">Loading ready-made questions… 📚</div>
+          ) : (
+            <>
+              <div style={{ display: "grid", gap: 12 }}>
+                {gkQs.slice(0, gkShown).map((q, i) => (
+                  <PyqQuestionCard
+                    key={q.id}
+                    q={q}
+                    index={i}
+                    subject={subject}
+                    chapterName={chapterName}
+                    chapterId={chapterId}
+                    archiveOnAnswer
+                    fileToChapter
+                  />
+                ))}
+              </div>
+              {gkShown < gkQs.length && (
+                <button className="btn btn--ghost btn--block mt-16" onClick={() => setGkShown((n) => n + GK_PAGE)}>
+                  ▼ Show {Math.min(GK_PAGE, gkQs.length - gkShown)} more ({gkShown} / {gkQs.length})
+                </button>
+              )}
+            </>
+          )}
+        </section>
+      )}
 
       {/* Notes lightbox — in-place viewer with prev/next + topic label */}
       {lbIndex !== null && (() => {

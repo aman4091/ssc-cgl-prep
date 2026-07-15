@@ -8,9 +8,12 @@ import {
   clearPyqQuestions, markPyqToChapter, pyqKey, pyqSubjectMeta, PYQ_SUBJECTS,
 } from "@/lib/pyqbank";
 import { getChapters, addChapter } from "@/lib/grammar";
+import { loadGkQuestions, gkTopicsForSubject } from "@/lib/gkbank";
 import { readImageText, generateQuizText, extractPdfTextSmart, generateQuizChunked } from "@/lib/client-ai";
 import { saveQuiz, makeId, getSettings } from "@/lib/storage";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
+
+const PAGE = 50; // ready-made banks run to hundreds — render them in slices
 
 function shuffle(a) {
   const arr = [...a];
@@ -65,8 +68,28 @@ export default function PyqSubjectPage() {
   const imgRef = useRef(null);
   const pdfRef = useRef(null);
 
+  // Ready-made banks that ship with the app (lib/gkbank) sit alongside the user's
+  // own uploads, tagged by topic so either side can be viewed on its own.
+  const [gkQs, setGkQs] = useState([]);
+  const [gkTopics, setGkTopics] = useState([]);
+  const [topicFilter, setTopicFilter] = useState(""); // "" = all | "mine" | topic label
+  const [shown, setShown] = useState(PAGE);
+
   const refresh = () => { setQuestions(getPyqQuestions(subject)); setChapters(getChapters(subject)); };
   useEffect(() => { refresh(); /* eslint-disable-next-line */ }, [subject]);
+
+  useEffect(() => {
+    let alive = true;
+    setGkQs([]); setGkTopics([]); setTopicFilter("");
+    (async () => {
+      const [ts, qs] = await Promise.all([gkTopicsForSubject(subject), loadGkQuestions(subject)]);
+      if (!alive) return;
+      setGkTopics(ts); setGkQs(qs);
+    })();
+    return () => { alive = false; };
+  }, [subject]);
+
+  useEffect(() => { setShown(PAGE); }, [topicFilter, subject]);
 
   const processImages = async (files) => {
     const list = Array.from(files || []);
@@ -133,11 +156,19 @@ export default function PyqSubjectPage() {
     } catch (e) { setError("Paste failed: " + e.message); }
   };
 
+  // The user's own uploads first — a 600-question ready-made bank would otherwise
+  // bury them. The tag chips below switch between the two.
+  const all = [...questions, ...gkQs];
+  const filtered = topicFilter === "" ? all
+    : topicFilter === "mine" ? questions
+    : gkQs.filter((q) => q.topic === topicFilter);
+
   const practice = () => {
-    if (questions.length === 0) { setError("Pehle questions add karo."); return; }
-    const picked = shuffle(questions).slice(0, 25);
+    if (filtered.length === 0) { setError("Pehle questions add karo."); return; }
+    const picked = shuffle(filtered).slice(0, 25);
+    const label = topicFilter && topicFilter !== "mine" ? topicFilter : meta.label;
     const quiz = {
-      id: makeId(), title: `${meta.label} · PYQ Practice`, source: "PYQ",
+      id: makeId(), title: `${label} · PYQ Practice`, source: "PYQ",
       createdAt: new Date().toISOString(), questions: picked,
       timeLimitSec: 15 * 60, // 15-minute exam mode
     };
@@ -168,8 +199,8 @@ export default function PyqSubjectPage() {
           apne subject ke kisi <strong>chapter mein mark</strong> kar sakte ho — wahan PYQ tag ke saath dikhega.
         </p>
         <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
-          <button className="btn btn--primary" onClick={practice} disabled={questions.length === 0}>
-            🎯 Practice (25 Q · 15 min)
+          <button className="btn btn--primary" onClick={practice} disabled={filtered.length === 0}>
+            🎯 Practice ({Math.min(25, filtered.length)} Q · 15 min)
           </button>
           <button className="btn btn--ghost btn--sm" onClick={() => setShowAdd((v) => !v)}>
             {showAdd ? "✕ Close" : "➕ Add questions"}
@@ -210,34 +241,81 @@ export default function PyqSubjectPage() {
       {/* Questions */}
       <section className="section">
         <div className="section__head">
-          <div><h2>Questions</h2><p>{questions.length ? `${questions.length} PYQ${questions.length !== 1 ? "s" : ""} — solve karo & chapter mark karo.` : "No questions yet — add from images/PDF above."}</p></div>
+          <div>
+            <h2>Questions</h2>
+            <p>{all.length ? `${filtered.length} question${filtered.length !== 1 ? "s" : ""} — solve karo & chapter mark karo.` : "No questions yet — add from images/PDF above."}</p>
+          </div>
           {questions.length > 0 && (
-            <button className="btn btn--ghost btn--sm" onClick={() => { if (confirm("Clear ALL questions in this PYQ subject?")) { clearPyqQuestions(subject); refresh(); } }}>🗑️ Clear all</button>
+            <button className="btn btn--ghost btn--sm" onClick={() => { if (confirm("Clear all the questions YOU added to this PYQ bank? (Ready-made ones stay.)")) { clearPyqQuestions(subject); refresh(); } }}>🗑️ Clear mine</button>
           )}
         </div>
-        {questions.length === 0 ? (
-          <div className="placeholder">Add question images/PDF above to build this PYQ bank. 🎯</div>
-        ) : (
-          <div style={{ display: "grid", gap: 12 }}>
-            {questions.map((q, i) => {
-              const qk = pyqKey(q);
-              return (
-                <PyqQuestionCard
-                  key={qk || i}
-                  q={q}
-                  index={i}
-                  subject={subject}
-                  chapterName={meta.label}
-                  archiveOnAnswer
-                  onDelete={() => { removePyqQuestion(subject, qk); refresh(); }}
-                  onEdit={(nq) => { updatePyqQuestion(subject, qk, nq); refresh(); }}
-                  markControl={
-                    <ChapterMark subject={subject} qk={qk} marked={q.marked} chapters={chapters} onMarked={refresh} />
-                  }
-                />
-              );
-            })}
+
+        {/* Topic tags — only worth showing once a ready-made bank is in the mix */}
+        {gkTopics.length > 0 && all.length > 0 && (
+          <div className="chips" style={{ marginBottom: 14 }}>
+            <button className={`chip chip--btn chip--lg ${topicFilter === "" ? "is-active" : ""}`} onClick={() => setTopicFilter("")}>
+              All ({all.length})
+            </button>
+            {questions.length > 0 && (
+              <button className={`chip chip--btn chip--lg ${topicFilter === "mine" ? "is-active" : ""}`} onClick={() => setTopicFilter("mine")}>
+                📥 Mine ({questions.length})
+              </button>
+            )}
+            {gkTopics.map((t) => (
+              <button key={t.slug} className={`chip chip--btn chip--lg ${topicFilter === t.label ? "is-active" : ""}`} onClick={() => setTopicFilter(t.label)}>
+                {t.icon} {t.label} ({gkQs.filter((q) => q.topic === t.label).length})
+              </button>
+            ))}
           </div>
+        )}
+
+        {filtered.length === 0 ? (
+          <div className="placeholder">
+            {all.length ? "Is tag mein koi question nahi." : "Add question images/PDF above to build this PYQ bank. 🎯"}
+          </div>
+        ) : (
+          <>
+            <div style={{ display: "grid", gap: 12 }}>
+              {filtered.slice(0, shown).map((q, i) => {
+                const qk = pyqKey(q);
+                // Ready-made questions live in a static file — there is nothing to
+                // edit, delete or mark back into, so they only get "save to chapter".
+                if (q.gk) {
+                  return (
+                    <PyqQuestionCard
+                      key={q.id}
+                      q={q}
+                      index={i}
+                      subject={subject}
+                      chapterName={q.topic || meta.label}
+                      archiveOnAnswer
+                      fileToChapter
+                    />
+                  );
+                }
+                return (
+                  <PyqQuestionCard
+                    key={qk || i}
+                    q={q}
+                    index={i}
+                    subject={subject}
+                    chapterName={meta.label}
+                    archiveOnAnswer
+                    onDelete={() => { removePyqQuestion(subject, qk); refresh(); }}
+                    onEdit={(nq) => { updatePyqQuestion(subject, qk, nq); refresh(); }}
+                    markControl={
+                      <ChapterMark subject={subject} qk={qk} marked={q.marked} chapters={chapters} onMarked={refresh} />
+                    }
+                  />
+                );
+              })}
+            </div>
+            {shown < filtered.length && (
+              <button className="btn btn--ghost btn--block mt-16" onClick={() => setShown((n) => n + PAGE)}>
+                ▼ Show {Math.min(PAGE, filtered.length - shown)} more ({shown} / {filtered.length})
+              </button>
+            )}
+          </>
         )}
       </section>
     </>

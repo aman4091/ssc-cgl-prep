@@ -7,6 +7,7 @@ import {
   getChapters, addChapter, deleteChapter, chapterRuleCount, getChapterQuestions,
   subjectMeta, suggestedFor, SUBJECTS,
 } from "@/lib/grammar";
+import { gkTopicsForSubject, findGkTopic } from "@/lib/gkbank";
 
 export default function SubjectChaptersPage() {
   const { subject } = useParams();
@@ -14,9 +15,15 @@ export default function SubjectChaptersPage() {
   const [chapters, setChapters] = useState([]);
   const [name, setName] = useState("");
   const [showAdd, setShowAdd] = useState(false);
+  const [gkTopics, setGkTopics] = useState([]);
 
   const refresh = () => setChapters(getChapters(subject));
   useEffect(() => { refresh(); }, [subject]);
+  useEffect(() => {
+    let alive = true;
+    gkTopicsForSubject(subject).then((t) => { if (alive) setGkTopics(t); });
+    return () => { alive = false; };
+  }, [subject]);
 
   const add = (nm) => {
     const c = addChapter(subject, nm);
@@ -97,12 +104,14 @@ export default function SubjectChaptersPage() {
           <div className="grid grid--3">
             {chapters.map((c) => {
               const qCount = getChapterQuestions(c.id).length;
+              const gk = findGkTopic(gkTopics, subject, c.name);
               return (
               <article key={c.id} className="glass-card">
                 <div className="row between" style={{ alignItems: "flex-start" }}>
                   <div className="row" style={{ gap: 6, flexWrap: "wrap" }}>
                     <span className="badge badge--ok">{chapterRuleCount(c.id)} rules</span>
                     {qCount > 0 && <span className="badge">{qCount} Q</span>}
+                    {gk && <span className="badge">🧠 {gk.count} GK Tricks</span>}
                   </div>
                   <button className="btn btn--ghost btn--sm" onClick={() => remove(c.id, c.name)} title="Delete">✕</button>
                 </div>
@@ -116,6 +125,11 @@ export default function SubjectChaptersPage() {
                 <Link href={`/study/${subject}/${c.id}?view=questions`} className="btn btn--ghost btn--block mt-8">
                   📝 Questions{qCount > 0 ? ` (${qCount})` : ""}
                 </Link>
+                {gk && (
+                  <Link href={`/study/${subject}/${c.id}?view=gk`} className="btn btn--ghost btn--block mt-8">
+                    🧠 GK Tricks ({gk.count})
+                  </Link>
+                )}
               </article>
               );
             })}
