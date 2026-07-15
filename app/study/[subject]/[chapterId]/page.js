@@ -457,9 +457,11 @@ export default function ChapterPage() {
   }
 
   const hasVideo = (chapter.videos?.length || 0) > 0;
-  // english has no Questions tab; non-english splits into theory vs questions.
-  const theoryView = isEnglish || view === "theory";
-  const questionsView = !isEnglish && view === "questions";
+  // Every subject has a Questions tab (PYQs get marked into english chapters too).
+  // The other tab is Rules for english, Theory/Notes for the rest.
+  const questionsView = view === "questions";
+  const rulesView = isEnglish && !questionsView;
+  const theoryView = !isEnglish && !questionsView;
 
   return (
     <>
@@ -470,9 +472,9 @@ export default function ChapterPage() {
         </div>
         <div className="row between mt-8" style={{ flexWrap: "wrap", gap: 10 }}>
           <h1 className="hero__title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)" }}>
-            {chapter.name} <span className="grad">· {isEnglish ? `${rules.length} rules` : `${questions.length} questions`}</span>
+            {chapter.name} <span className="grad">· {rulesView ? `${rules.length} rules` : `${questions.length} questions`}</span>
           </h1>
-          {isEnglish ? (
+          {rulesView ? (
             <button className="btn btn--primary" onClick={startChapterQuiz} disabled={chapterQuizBusy}>
               {chapterQuizBusy ? "Generating…" : "🎯 Chapter Quiz"}
             </button>
@@ -487,12 +489,14 @@ export default function ChapterPage() {
       {/* Theory / Questions tabs + Add toggle */}
       <section className="section" style={{ marginTop: 4 }}>
         <div className="row between" style={{ flexWrap: "wrap", gap: 10 }}>
-          {!isEnglish ? (
-            <div className="chips">
-              <button className={`chip chip--btn chip--lg ${view === "theory" ? "is-active" : ""}`} onClick={() => switchView("theory")}>📖 Theory</button>
-              <button className={`chip chip--btn chip--lg ${view === "questions" ? "is-active" : ""}`} onClick={() => switchView("questions")}>📝 Questions{questions.length ? ` (${questions.length})` : ""}</button>
-            </div>
-          ) : <span />}
+          <div className="chips">
+            <button className={`chip chip--btn chip--lg ${!questionsView ? "is-active" : ""}`} onClick={() => switchView("theory")}>
+              {isEnglish ? `📖 Rules${rules.length ? ` (${rules.length})` : ""}` : "📖 Theory"}
+            </button>
+            <button className={`chip chip--btn chip--lg ${questionsView ? "is-active" : ""}`} onClick={() => switchView("questions")}>
+              📝 Questions{questions.length ? ` (${questions.length})` : ""}
+            </button>
+          </div>
           <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
             <button className="btn btn--ghost btn--sm" onClick={() => setShowLinks((v) => !v)}>
               {showLinks ? "✕ Close links" : `🔗 Links${chapter.videos?.length ? ` (${chapter.videos.length})` : ""}`}
@@ -504,8 +508,8 @@ export default function ChapterPage() {
         </div>
       </section>
 
-      {/* Embedded player — only for English (rule timestamps need it) */}
-      {isEnglish && hasVideo && (
+      {/* Embedded player — only alongside the rules (rule timestamps need it) */}
+      {rulesView && hasVideo && (
         <section className="section" style={{ marginTop: 8 }}>
           <div className="glass-card">
             {chapter.videos.length > 1 && (
@@ -647,7 +651,7 @@ export default function ChapterPage() {
       )}
 
       {/* Theory / Notes gallery (non-english, not PYQ) */}
-      {theoryView && !isEnglish && !isPyq && notes.length > 0 && (() => {
+      {theoryView && !isPyq && notes.length > 0 && (() => {
         const shown = filterNotes();
         return (
           <section className="section">
@@ -677,7 +681,7 @@ export default function ChapterPage() {
       })()}
 
       {/* Rules (english) */}
-      {isEnglish && (
+      {rulesView && (
         <section className="section">
           <div className="section__head">
             <h2>Rules</h2>
@@ -719,7 +723,13 @@ export default function ChapterPage() {
               </div>
             </div>
             {shown.length === 0 ? (
-              <div className="placeholder">{questions.length ? "No questions for this paper/shift." : "No questions yet. Add from a PDF or question image. 📥"}</div>
+              <div className="placeholder">
+                {questions.length
+                  ? "No questions for this paper/shift."
+                  : isEnglish
+                    ? "No questions yet — PYQ page pe jaake koi question is chapter mein mark karo. 📥"
+                    : "No questions yet. Add from a PDF or question image. 📥"}
+              </div>
             ) : (
               <div style={{ display: "grid", gap: 12 }}>
                 {shown.map((q) => (
