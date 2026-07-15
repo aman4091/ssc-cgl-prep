@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
-  getDayTypeItems, getDetail, setDetail, buildTypeQuiz,
+  getDayTypeItems, getDetail, setDetail, clearDetail, buildTypeQuiz,
   typeIcon, typeLabel, isBookmarked, toggleBookmark,
   setEntryType, moveAllType, TYPES,
 } from "@/lib/vocab";
@@ -34,19 +34,24 @@ export default function VocabTypePage() {
 
   useEffect(() => { setItems(getDayTypeItems(dayNum, type)); }, [dayNum, type]);
 
-  const openWord = async (idx) => {
+  // force = ignore the cache and ask the AI again (the 🔄 button), for when a
+  // word came back with a blank//wrong meaning.
+  const openWord = async (idx, force = false) => {
     setSel(idx); setError(""); setDet(null);
     const list = getDayTypeItems(dayNum, type);
     const w = list[idx];
     if (!w) return;
     setBm(isBookmarked(w.word));
-    const cached = getDetail(w.word);
-    if (cached) { setDet(cached); return; }
+    if (force) clearDetail(w.word);
+    else {
+      const cached = getDetail(w.word);
+      if (cached) { setDet(cached); return; }
+    }
     setLoading(true);
     try {
       const d = await vocabDetail(w.word, w.def);
-      setDetail(w.word, d);
-      setDet(d);
+      if (String(d?.meaning || "").trim()) { setDetail(w.word, d); setDet(d); }
+      else setError("Meaning nahi aaya — 🔄 dabaa ke dobara try karo.");
     } catch (err) { setError(err.message); }
     finally { setLoading(false); }
   };
@@ -171,6 +176,15 @@ export default function VocabTypePage() {
                 <div className="row between vocab-detail__head">
                   <h2 className="grad" style={{ fontSize: "1.6rem" }}>{item.word}</h2>
                   <div className="row" style={{ gap: 8 }}>
+                    <button
+                      className="btn btn--ghost btn--sm"
+                      onClick={() => openWord(sel, true)}
+                      disabled={loading}
+                      title="Meaning dobara laao (AI se fresh)"
+                      aria-label="Reload meaning"
+                    >
+                      {loading ? "⏳" : "🔄"}
+                    </button>
                     <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark">
                       {bm ? "★ Saved" : "☆ Bookmark"}
                     </button>
