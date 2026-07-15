@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { vocabDetail } from "@/lib/client-ai";
-import { getDetail, setDetail, addEntry, TYPES } from "@/lib/vocab";
+import { getDetail, setDetail, clearDetail, addEntry, TYPES } from "@/lib/vocab";
 
 export default function WordPopup({ word, onClose }) {
   const [cur, setCur] = useState(word);
@@ -10,22 +10,37 @@ export default function WordPopup({ word, onClose }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [added, setAdded] = useState("");
+  const reqRef = useRef(0);   // only the newest request may write state
 
   useEffect(() => { setCur(word); }, [word]);
 
-  useEffect(() => {
-    if (!cur) return;
+  // force = skip the cache and re-ask the AI (the 🔄 button).
+  const load = useCallback(async (w, force) => {
+    if (!w) return;
+    const token = ++reqRef.current;
     setError(""); setAdded(""); setDet(null);
-    const cached = getDetail(cur);
-    if (cached) { setDet(cached); return; }
-    let alive = true;
+    if (force) clearDetail(w);
+    else {
+      const cached = getDetail(w);
+      if (cached) { setDet(cached); return; }
+    }
     setLoading(true);
-    vocabDetail(cur, "")
-      .then((d) => { if (alive) { setDetail(cur, d); setDet(d); } })
-      .catch((e) => alive && setError(e.message))
-      .finally(() => alive && setLoading(false));
-    return () => { alive = false; };
-  }, [cur]);
+    try {
+      const d = await vocabDetail(w, "");
+      if (token !== reqRef.current) return;
+      if (String(d?.meaning || "").trim()) { setDetail(w, d); setDet(d); }
+      else setError("Meaning nahi aaya — 🔄 dabaa ke dobara try karo.");
+    } catch (e) {
+      if (token === reqRef.current) setError(e.message);
+    } finally {
+      if (token === reqRef.current) setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => { load(cur, false); }, [cur, load]);
+
+  // A new word starts fresh: cache first, no leftover force-reload from the last one.
+  useEffect(() => { setReloads(0); }, [cur]);
 
   if (!word) return null;
 
@@ -39,7 +54,12 @@ export default function WordPopup({ word, onClose }) {
       <div className="modal glass" onClick={(e) => e.stopPropagation()} style={{ maxWidth: 520 }}>
         <div className="row between">
           <h2 className="grad" style={{ fontSize: "1.5rem" }}>{cur}</h2>
-          <button className="btn btn--ghost btn--sm" onClick={onClose}>✕</button>
+          <div className="row" style={{ gap: 8 }}>
+            <button className="btn btn--ghost btn--sm" onClick={() => load(cur, true)} disabled={loading} title="Meaning dobara laao">
+              {loading ? "⏳" : "🔄"}
+            </button>
+            <button className="btn btn--ghost btn--sm" onClick={onClose}>✕</button>
+          </div>
         </div>
 
         {loading && <p className="mt-16" style={{ color: "var(--accent-2)" }}>Loading…</p>}

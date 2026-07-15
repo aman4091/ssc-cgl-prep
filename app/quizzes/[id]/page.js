@@ -11,6 +11,7 @@ import QuestionFollowup from "@/components/QuestionFollowup";
 import AddToChapter from "@/components/AddToChapter";
 import AskButtons from "@/components/AskButtons";
 import PasteAnswer from "@/components/PasteAnswer";
+import WordPopup from "@/components/WordPopup";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
@@ -37,6 +38,9 @@ export default function QuizPlayer() {
   const [timedOut, setTimedOut] = useState(false);
   const startRef = useRef(0);
   const submitRef = useRef(null); // latest submit fn for the timer to call
+
+  // word whose meaning is shown in the result-screen pop-up (vocab quizzes)
+  const [wordPopup, setWordPopup] = useState(null);
 
   // per-question result actions
   const [shortcuts, setShortcuts] = useState({});
@@ -245,6 +249,9 @@ export default function QuizPlayer() {
     const unanswered = total - correct - wrong;
     const totalTime = Object.values(times).reduce((a, b) => a + b, 0);
     const pct = Math.round((correct / total) * 100);
+    // Vocab quiz options are single words, so each one can be looked up. For a
+    // maths/GK quiz the options are numbers or phrases — no meaning to show.
+    const isVocab = (quiz.source || "").startsWith("vocab");
 
     return (
       <>
@@ -314,11 +321,25 @@ export default function QuizPlayer() {
                       };
                       if (oi === q.answer) { s.borderColor = "rgba(52,211,153,0.7)"; s.background = "rgba(52,211,153,0.14)"; }
                       if (oi === chosen && oi !== q.answer) { s.borderColor = "rgba(251,113,133,0.7)"; s.background = "rgba(251,113,133,0.14)"; }
+                      if (isVocab) { s.display = "flex"; s.alignItems = "center"; s.gap = 8; }
                       return (
                         <div key={oi} style={s}>
-                          <strong style={{ opacity: 0.7, marginRight: 8 }}>{String.fromCharCode(65 + oi)}</strong>
-                          <Markdown inline>{opt}</Markdown>
-                          {oi === q.answer && <span style={{ color: "var(--success)", marginLeft: 8 }}>✓</span>}
+                          <span style={{ flex: 1, minWidth: 0 }}>
+                            <strong style={{ opacity: 0.7, marginRight: 8 }}>{String.fromCharCode(65 + oi)}</strong>
+                            <Markdown inline>{opt}</Markdown>
+                            {oi === q.answer && <span style={{ color: "var(--success)", marginLeft: 8 }}>✓</span>}
+                          </span>
+                          {isVocab && (
+                            <button
+                              className="btn btn--ghost btn--sm"
+                              style={{ flexShrink: 0 }}
+                              onClick={() => setWordPopup(String(opt))}
+                              title={`"${opt}" ka meaning dekho`}
+                              aria-label={`Meaning of ${opt}`}
+                            >
+                              📖
+                            </button>
+                          )}
                         </div>
                       );
                     })}
@@ -390,6 +411,8 @@ export default function QuizPlayer() {
             <button className="btn btn--ghost" onClick={retry}>🔁 Retry Quiz</button>
           </div>
         </section>
+
+        {wordPopup && <WordPopup word={wordPopup} onClose={() => setWordPopup(null)} />}
       </>
     );
   }
