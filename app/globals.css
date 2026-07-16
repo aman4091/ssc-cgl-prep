@@ -659,6 +659,32 @@ main.container {
 .answer-box .md { font-size: 1.08rem; line-height: 1.75; }
 .answer-box .md li { margin: 6px 0; }
 
+/* One rule in the Pocket Rocket list. A button, because the whole row opens the
+   rule — but it has to look like the cards around it, not like a control. The
+   book prints no titles, so the row shows the rule's own opening sentence, which
+   runs long: clamp it to three lines and let the popup show the rest. */
+.pocket-rule {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  padding: 14px 16px;
+}
+.pocket-rule:hover { border-color: var(--accent-2); }
+.pocket-rule__text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  min-width: 0;
+}
+
 /* Cloze Test / Comprehension passage. Up to ~3,000 characters and shared by
    about five questions, so it is capped and scrolls on its own — at full height
    the options would sit below the fold on every card. */

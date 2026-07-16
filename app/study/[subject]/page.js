@@ -10,21 +10,32 @@ import {
 import { gkTopicsForSubject, findGkTopic } from "@/lib/gkbank";
 import { loadWarIndex } from "@/lib/warbank";
 import { loadEngIndex } from "@/lib/engbank";
+import { loadPocket } from "@/lib/pocketbank";
 
-// Ready-made books that ship with the app. They are not chapters — they are
-// browsed as books under /pyq — but this is where someone looks for a subject's
-// questions, so each subject that has one gets a card at the top of its grid.
+// Ready-made books that ship with the app. They are not chapters — each is
+// browsed as a book on its own route — but this is where someone looks for a
+// subject's material, so a subject's books sit at the top of its grid. `load`
+// returns null when the book is missing, and that card simply doesn't render.
 const BOOKS = {
-  gs: {
-    icon: "🎯", name: "WAR", href: "/pyq/war",
-    load: async () => { const b = await loadWarIndex(); return b.subjects.length ? { ...b, parts: b.subjects.length, unit: "subjects" } : null; },
-    blurb: (b) => `${b.total} real SSC PYQs — har question ke saath uska exam.`,
-  },
-  english: {
-    icon: "📚", name: "Pinnacle English", href: "/pyq/pinnacle",
-    load: async () => { const b = await loadEngIndex(); return b.chapters.length ? { ...b, parts: b.chapters.length, unit: "chapters" } : null; },
-    blurb: (b) => `${b.total} SSC English questions — solutions ke saath.`,
-  },
+  gs: [
+    {
+      key: "war", icon: "🎯", name: "WAR", href: "/pyq/war",
+      load: async () => { const b = await loadWarIndex(); return b.subjects.length ? { ...b, parts: b.subjects.length, unit: "subjects" } : null; },
+      blurb: (b) => `${b.total} real SSC PYQs — har question ke saath uska exam.`,
+    },
+  ],
+  english: [
+    {
+      key: "pocket", icon: "📕", name: "Pocket Rocket", href: "/english/pocket",
+      load: async () => { const b = await loadPocket(); return b.rules.length ? { ...b, parts: b.total, unit: "rules" } : null; },
+      blurb: () => "Poora English grammar — rules, explanation aur examples, Hinglish mein.",
+    },
+    {
+      key: "pinnacle", icon: "📚", name: "Pinnacle English", href: "/pyq/pinnacle",
+      load: async () => { const b = await loadEngIndex(); return b.chapters.length ? { ...b, parts: b.chapters.length, unit: "chapters" } : null; },
+      blurb: (b) => `${b.total} SSC English questions — solutions ke saath.`,
+    },
+  ],
 };
 
 export default function SubjectChaptersPage() {
@@ -34,8 +45,7 @@ export default function SubjectChaptersPage() {
   const [name, setName] = useState("");
   const [showAdd, setShowAdd] = useState(false);
   const [gkTopics, setGkTopics] = useState([]);
-  const [book, setBook] = useState(null); // the ready-made book for this subject, if any
-  const bookMeta = BOOKS[subject];
+  const [books, setBooks] = useState([]); // ready-made books for this subject
 
   const refresh = () => setChapters(getChapters(subject));
   useEffect(() => { refresh(); }, [subject]);
@@ -46,11 +56,13 @@ export default function SubjectChaptersPage() {
   }, [subject]);
   useEffect(() => {
     let alive = true;
-    setBook(null);
-    if (!bookMeta) return undefined;
-    bookMeta.load().then((b) => { if (alive) setBook(b); });
+    setBooks([]);
+    const defs = BOOKS[subject];
+    if (!defs) return undefined;
+    Promise.all(defs.map(async (d) => ({ ...d, data: await d.load() })))
+      .then((rs) => { if (alive) setBooks(rs.filter((r) => r.data)); });
     return () => { alive = false; };
-  }, [subject, bookMeta]);
+  }, [subject]);
 
   const add = (nm) => {
     const c = addChapter(subject, nm);
@@ -125,23 +137,23 @@ export default function SubjectChaptersPage() {
           <h2>Your Chapters</h2>
           <p>{chapters.length ? `${chapters.length} chapters` : "No chapters yet — create one above."}</p>
         </div>
-        {chapters.length === 0 && !book ? (
+        {chapters.length === 0 && books.length === 0 ? (
           <div className="placeholder">No chapters yet. Add a topic to get started. 🚀</div>
         ) : (
           <div className="grid grid--3">
-            {book && (
-              <article className="glass-card">
+            {books.map((b) => (
+              <article key={b.key} className="glass-card">
                 <div className="row" style={{ gap: 6, flexWrap: "wrap" }}>
                   <span className="badge badge--ok">📖 Ready-made book</span>
-                  <span className="badge">{book.parts} {book.unit}</span>
+                  <span className="badge">{b.data.parts} {b.data.unit}</span>
                 </div>
-                <h3 style={{ marginTop: 14 }}>{bookMeta.icon} {bookMeta.name}</h3>
-                <p className="muted mt-8" style={{ fontSize: "0.8rem" }}>{bookMeta.blurb(book)}</p>
-                <Link href={bookMeta.href} className="btn btn--primary btn--block mt-16">
+                <h3 style={{ marginTop: 14 }}>{b.icon} {b.name}</h3>
+                <p className="muted mt-8" style={{ fontSize: "0.8rem" }}>{b.blurb(b.data)}</p>
+                <Link href={b.href} className="btn btn--primary btn--block mt-16">
                   Open the book →
                 </Link>
               </article>
-            )}
+            ))}
             {chapters.map((c) => {
               const qCount = getChapterQuestions(c.id).length;
               const gk = findGkTopic(gkTopics, subject, c.name);
