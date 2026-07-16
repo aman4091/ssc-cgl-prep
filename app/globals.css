@@ -693,6 +693,35 @@ main.container {
   .pocket-modal__body { padding: 14px 16px 18px; }
 }
 
+/* Pinnacle Maths crops. Black-on-white PNG→WebP from the book, served from R2.
+   The stem and solution can be wider than the phone, so they scroll inside their
+   own box instead of dragging the page. A white plate under each keeps the black
+   maths readable on the dark card. */
+.math-img-wrap {
+  display: block;
+  overflow-x: auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 6px 8px;
+  max-width: 100%;
+  min-width: 0; /* a wide crop scrolls inside, never widens the card */
+}
+.math-img { display: block; height: auto; max-width: none; }
+/* Option button: a grid item defaults to min-width:auto = its content's width,
+   so a wide fraction crop would push the whole grid past the phone. min-width:0
+   + its own overflow-x lets a wide option scroll inside its button instead. */
+.math-opt { min-width: 0; overflow-x: auto; }
+/* Option crops are small; a white plate and a height cap so a two-storey
+   fraction and a one-line number line up without either looking broken. */
+.math-opt-img {
+  background: #fff;
+  border-radius: 6px;
+  padding: 3px 6px;
+  max-height: 64px;
+  width: auto;
+  max-width: none;
+}
+
 /* An "e.g." inside a rule. The book interleaves its examples with its cases, so
    they stay in that order rather than being collected into a box — this is what
    keeps them readable as examples anyway. */

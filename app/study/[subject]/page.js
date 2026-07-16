@@ -11,6 +11,7 @@ import { gkTopicsForSubject, findGkTopic } from "@/lib/gkbank";
 import { loadWarIndex } from "@/lib/warbank";
 import { loadEngIndex } from "@/lib/engbank";
 import { loadPocket } from "@/lib/pocketbank";
+import { loadMathIndex } from "@/lib/mathbank";
 
 // Ready-made books that ship with the app. They are not chapters — each is
 // browsed as a book on its own route — but this is where someone looks for a
@@ -34,6 +35,13 @@ const BOOKS = {
       key: "pinnacle", icon: "📚", name: "Pinnacle English", href: "/pyq/pinnacle",
       load: async () => { const b = await loadEngIndex(); return b.chapters.length ? { ...b, parts: b.chapters.length, unit: "chapters" } : null; },
       blurb: (b) => `${b.total} SSC English questions — solutions ke saath.`,
+    },
+  ],
+  math: [
+    {
+      key: "pinnacle-maths", icon: "🧮", name: "Pinnacle Maths", href: "/pyq/mathbank",
+      load: async () => { const b = await loadMathIndex(); return b.chapters.length ? { ...b, parts: b.chapters.length, unit: "chapters" } : null; },
+      blurb: (b) => `${b.total} SSC maths PYQs — image mein, poore solution ke saath.`,
     },
   ],
 };

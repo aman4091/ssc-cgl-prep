@@ -1,0 +1,171 @@
+{
+ "book": "Pinnacle Maths",
+ "source": "maths.pdf — 643-page Pinnacle SSC maths bank",
+ "total": 6420,
+ "base": "https://pub-c85669238e024a9d94f302cf7a7868e2.r2.dev/maths",
+ "note": "Sab book ke apne — question, options, answer aur solution, sab image mein (maths text mein toot jaata hai). Kuch generate nahi kiya. Answers blind-checked nahi hain.",
+ "chapters": [
+  {
+   "slug": "mensuration",
+   "label": "Mensuration",
+   "icon": "📐",
+   "count": 709
+  },
+  {
+   "slug": "geometry",
+   "label": "Geometry",
+   "icon": "📏",
+   "count": 633
+  },
+  {
+   "slug": "algebra",
+   "label": "Algebra",
+   "icon": "🔢",
+   "count": 593
+  },
+  {
+   "slug": "trigonometry",
+   "label": "Trigonometry",
+   "icon": "📐",
+   "count": 540
+  },
+  {
+   "slug": "percentage",
+   "label": "Percentage",
+   "icon": "％",
+   "count": 387
+  },
+  {
+   "slug": "profit-and-loss",
+   "label": "Profit and Loss",
+   "icon": "💰",
+   "count": 386
+  },
+  {
+   "slug": "time-speed-and-distance",
+   "label": "Time, Speed and Distance",
+   "icon": "🚗",
+   "count": 359
+  },
+  {
+   "slug": "average",
+   "label": "Average",
+   "icon": "⚖️",
+   "count": 328
+  },
+  {
+   "slug": "work-and-time",
+   "label": "Work and Time",
+   "icon": "⏱️",
+   "count": 299
+  },
+  {
+   "slug": "number-system",
+   "label": "Number System",
+   "icon": "🔟",
+   "count": 283
+  },
+  {
+   "slug": "ratio-proportion",
+   "label": "Ratio & Proportion",
+   "icon": "➗",
+   "count": 280
+  },
+  {
+   "slug": "discount",
+   "label": "Discount",
+   "icon": "🏷️",
+   "count": 259
+  },
+  {
+   "slug": "simple-interest",
+   "label": "Simple Interest",
+   "icon": "💵",
+   "count": 188
+  },
+  {
+   "slug": "simplification",
+   "label": "Simplification",
+   "icon": "🧮",
+   "count": 185
+  },
+  {
+   "slug": "compound-interest",
+   "label": "Compound Interest",
+   "icon": "📈",
+   "count": 162
+  },
+  {
+   "slug": "hcf-and-lcm",
+   "label": "HCF and LCM",
+   "icon": "🔗",
+   "count": 104
+  },
+  {
+   "slug": "coordinate-geometry",
+   "label": "Coordinate Geometry",
+   "icon": "📍",
+   "count": 90
+  },
+  {
+   "slug": "mixture-and-alligation",
+   "label": "Mixture and Alligation",
+   "icon": "🧪",
+   "count": 87
+  },
+  {
+   "slug": "partnership",
+   "label": "Partnership",
+   "icon": "🤝",
+   "count": 80
+  },
+  {
+   "slug": "boat-and-stream",
+   "label": "Boat and Stream",
+   "icon": "⛵",
+   "count": 76
+  },
+  {
+   "slug": "pipe-and-cistern",
+   "label": "Pipe and Cistern",
+   "icon": "🚰",
+   "count": 69
+  },
+  {
+   "slug": "linear-circular-race",
+   "label": "Linear/Circular Race",
+   "icon": "🏁",
+   "count": 66
+  },
+  {
+   "slug": "height-and-distance",
+   "label": "Height and Distance",
+   "icon": "🗼",
+   "count": 60
+  },
+  {
+   "slug": "probability",
+   "label": "Probability",
+   "icon": "🎲",
+   "count": 60
+  },
+  {
+   "slug": "mean-median-mode",
+   "label": "Mean, Median & Mode",
+   "icon": "📊",
+   "count": 54
+  },
+  {
+   "slug": "data-interpretation",
+   "label": "Data Interpretation",
+   "icon": "📉",
+   "count": 43
+  },
+  {
+   "slug": "installment",
+   "label": "Installment",
+   "icon": "🧾",
+   "count": 40
+  }
+ ]
+}
