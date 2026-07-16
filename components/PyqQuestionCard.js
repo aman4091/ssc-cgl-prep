@@ -15,6 +15,7 @@ import QuestionEditor from "./QuestionEditor";
 import AddToChapter from "./AddToChapter";
 import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
+import QTimer from "./QTimer";
 
 // One PYQ / chapter question shown as an interactive quiz card:
 // pick an option -> reveal correct/wrong + solution, plus shortcut / 20-similar / doubt.
@@ -98,6 +99,7 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
           {paper && <span className="paper-tag">📄 {paper}</span>}
         </h3>
         <div className="q-head__actions">
+          <QTimer answered={picked !== null} />
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
           <AskButtons q={q} />
           {onEdit && !editing && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
@@ -135,11 +137,11 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
           const s = {
             textAlign: "left", padding: "10px 14px", borderRadius: 10,
             borderWidth: "1px", borderStyle: "solid", borderColor: "var(--glass-border)",
-            background: "rgba(0,0,0,0.2)", color: "var(--text-1)", cursor: picked === null ? "pointer" : "default", fontSize: "0.92rem",
+            background: "var(--bg)", color: "var(--text-1)", cursor: picked === null ? "pointer" : "default", fontSize: "0.92rem",
           };
           if (revealed) {
-            if (oi === q.answer) { s.borderColor = "rgba(52,211,153,0.7)"; s.background = "rgba(52,211,153,0.14)"; }
-            else if (oi === picked) { s.borderColor = "rgba(251,113,133,0.7)"; s.background = "rgba(251,113,133,0.14)"; }
+            if (oi === q.answer) { s.borderColor = "rgba(107,211,154,0.7)"; s.background = "rgba(107,211,154,0.14)"; }
+            else if (oi === picked) { s.borderColor = "rgba(255,138,122,0.7)"; s.background = "rgba(255,138,122,0.14)"; }
           }
           return (
             <button key={oi} style={s} onClick={() => choose(oi)}>

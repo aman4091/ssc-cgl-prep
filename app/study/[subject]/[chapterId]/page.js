@@ -691,7 +691,7 @@ export default function ChapterPage() {
           {hasVideo && (
             <div className="mt-16" style={{ display: "grid", gap: 6 }}>
               {chapter.videos.map((v, i) => (
-                <div key={i} className="row between" style={{ background: "rgba(255,255,255,0.04)", padding: "8px 12px", borderRadius: 10, gap: 8 }}>
+                <div key={i} className="row between" style={{ background: "var(--bg)", padding: "8px 12px", borderRadius: 10, gap: 8 }}>
                   <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>🔗 {v.title || v.url}</span>
                   <div className="row" style={{ gap: 6, flexShrink: 0 }}>
                     <a href={v.url} target="_blank" rel="noreferrer" className="btn btn--ghost btn--sm">🔗 Open link</a>
@@ -900,7 +900,7 @@ function SavedPdfs({ pdfs, openPdf, delPdf }) {
       <span className="vd-label">📄 Saved PDFs</span>
       <div className="mt-8" style={{ display: "grid", gap: 6 }}>
         {pdfs.map((p) => (
-          <div key={p.id} className="row between" style={{ background: "rgba(255,255,255,0.04)", padding: "8px 12px", borderRadius: 10 }}>
+          <div key={p.id} className="row between" style={{ background: "var(--bg)", padding: "8px 12px", borderRadius: 10 }}>
             <button className="link" onClick={() => openPdf(p.id)} style={{ textAlign: "left", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>📄 {p.name}</button>
             <button className="btn btn--ghost btn--sm" onClick={() => delPdf(p.id)}>✕</button>
           </div>

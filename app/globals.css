@@ -1,47 +1,83 @@
 /* ===================================================================
    SSC CGL Pre — Prep Hub
-   Design system: glassmorphism + dark theme
+   Design system: the english_notes theme (D:\p\english_notes/theme.css),
+   dark half only — the owner wants dark, so the theme's light palette and
+   its prefers-color-scheme switch are deliberately NOT carried over.
+
+   WHERE THE COLOURS COME FROM (do not "improve" this): they are the pens in
+   the source notes. Manisha Bansal Ma'am writes headings in red and examples
+   in blue, so --accent is the red pen and --accent2 the blue one. On dark
+   they are lightened, not inverted — #c0392b on a dark card fails contrast.
+
+   Restyle by editing this block only. If you are changing a colour inside a
+   component rule, add or re-point a token instead.
    =================================================================== */
 
 :root {
-  /* Base surface */
-  --bg-0: #070b18;
-  --bg-1: #0b1120;
-  --bg-2: #0e1526;
+  /* ---- the theme's own tokens, verbatim from theme.css's dark block ---- */
+  --bg: #16181c;      /* page */
+  --card: #1e2126;    /* raised surface */
+  --line: #31353c;    /* borders, dividers, table rules */
+  --ink: #e8e6e3;     /* body text */
+  --dim: #9aa0a6;     /* secondary text */
+  --accent2: #8ab4f8; /* the blue pen — examples, links, underlines */
+  --ok: #6bd39a;
+  --bad: #ff8a7a;
+  --mark: #5c4b00;    /* highlight / uncertain-word marker */
 
-  /* Solid surfaces (was glass/transparent) */
-  --glass-bg: #121a2e;
-  --glass-bg-strong: #18213a;
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-border-strong: rgba(255, 255, 255, 0.2);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  /* ---- the site's existing token names, pointed at the theme ----
+     Every component rule already reads these, so re-pointing them re-skins
+     the site without touching a single component. */
+
+  /* Base surface */
+  --bg-0: var(--bg);
+  --bg-1: var(--card);
+  --bg-2: var(--bg-2);
+
+  /* Raised surfaces. "glass" is now a plain card — the theme has no blur and
+     no translucency; that is what makes it read as simple. */
+  --glass-bg: var(--card);
+  --glass-bg-strong: #262a31;
+  --glass-border: var(--line);
+  --glass-border-strong: #434852;
+  --glass-shadow: none;
 
   /* Text */
-  --text-1: #f1f5fb;
-  --text-2: #b3bdd0;
-  --text-3: #7c8aa5;
+  --text-1: var(--ink);
+  --text-2: var(--dim);
+  --text-3: #767c83;
 
-  /* Accent */
-  --accent: #7c6cff;
-  --accent-2: #22d3ee;
-  --accent-3: #f472b6;
-  --accent-grad: linear-gradient(135deg, #7c6cff 0%, #22d3ee 100%);
-  --accent-glow: 0 0 0 1px rgba(124, 108, 255, 0.35), 0 8px 30px rgba(124, 108, 255, 0.35);
+  /* Accent — the two pens */
+  --accent: #ff8a7a;
+  --accent-2: var(--accent2);
+  --accent-3: var(--accent2);
+  /* Flat, not a gradient: two stops of the same pen. The token stays a
+     <gradient> because .grad and friends background-clip it to text. */
+  --accent-grad: linear-gradient(var(--accent), var(--accent));
+  --accent-glow: none;
 
-  --success: #34d399;
-  --danger: #fb7185;
+  --success: var(--ok);
+  --danger: var(--bad);
   --warning: #fbbf24;
 
-  /* Geometry */
-  --radius-sm: 10px;
-  --radius: 16px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
+  /* Geometry — the theme is squarer than the old 16/24/32 */
+  --radius-sm: 7px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
 
   --container: 1120px;
-  --blur: 18px;
+  --blur: 0px;
 
-  --font: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* System stack on purpose: no network cost, no font-swap flash, and it
+     resolves to a Devanagari-capable face (Nirmala UI on Windows, Noto
+     elsewhere). This content is bilingual — Hindi glosses sit inline inside
+     English sentences. A webfont without a Devanagari fallback turns every
+     one of them into tofu boxes, and it looks fine on your machine while
+     being broken for the reader. Keep the fallback. */
+  --font: "Segoe UI", system-ui, -apple-system, "Nirmala UI", "Noto Sans",
+          "Noto Sans Devanagari", Roboto, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", Consolas, monospace;
 }
 
 * {
@@ -59,12 +95,20 @@ body {
   color: var(--text-1);
   background: var(--bg-0);
   min-height: 100vh;
-  line-height: 1.6;
+  /* 16px/1.65 — generous on purpose. This is study material read for an hour
+     at a time, not marketing copy. Don't tighten it. */
+  font-size: 16px;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   position: relative;
   color-scheme: dark;
 }
+
+/* The theme's ink rules: <b> is red-pen emphasis, <u> a word underlined in an
+   example. Body links take the blue pen. */
+a { color: var(--accent2); }
+u { text-decoration-color: var(--accent2); text-underline-offset: 2px; }
 
 /* ===== Animated ambient background orbs ===== */
 .bg-orbs {
@@ -79,18 +123,18 @@ body {
 }
 .orb--1 {
   width: 420px; height: 420px;
-  background: #7c6cff;
+  background: #ff8a7a;
   top: -80px; left: -60px;
 }
 .orb--2 {
   width: 380px; height: 380px;
-  background: #22d3ee;
+  background: #8ab4f8;
   bottom: -120px; right: -60px;
   animation-delay: -7s;
 }
 .orb--3 {
   width: 300px; height: 300px;
-  background: #f472b6;
+  background: #8ab4f8;
   top: 40%; left: 55%;
   animation-delay: -14s;
   opacity: 0.35;
@@ -111,31 +155,57 @@ body {
 
 main.container {
   min-height: calc(100vh - 160px);
-  padding-top: 108px;
-  padding-bottom: 64px;
+  /* Was 108px to clear the fixed top bar. There is no bar now — the menu is a
+     block in the flow — so the page starts where the page starts. */
+  padding-top: 18px;
+  padding-bottom: 48px;
 }
 
-/* ===== Glass primitives ===== */
+/* ===== Shell: sidebar + main =====
+   The theme's layout. On a wide screen the menu is simply always there on the
+   left — no hamburger, no overlay. The SAME <aside class="drawer"> is the
+   off-canvas drawer on a phone and the static sidebar here; it is one element
+   in one place in the DOM, re-laid-out by the media query at the bottom of this
+   file, so the two never drift apart.
+
+   Deviation from theme.css, on purpose: the theme collapses its sidebar into a
+   block stacked above the content. This menu is 20 links — stacking it would
+   push every page a screen and a half down on a phone. So below the breakpoint
+   it stays the drawer it already was. */
+.shell { display: block; }
+
+/* ===== Card =====
+   The theme's surface: flat fill, a real border, a small radius, no shadow and
+   no hover lift. The old card floated — tinted glass, a 24px radius, a 48px
+   drop shadow, rising 4px under the cursor. All of that is what made the site
+   feel busy; a notes page is paper with a rule around it. */
 .glass {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+  background: var(--card);
+  border: 1px solid var(--line);
   border-radius: var(--radius);
 }
 
 .glass-card {
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--pad, 18px);
+  transition: border-color 0.15s ease;
 }
-.glass-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--glass-border-strong);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+.glass-card:hover { border-color: var(--glass-border-strong); }
+
+/* A card's header: the topic label in the red pen, its meta (page/count) dim on
+   the right, a rule under both. */
+.card-hd {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px; margin-bottom: 12px;
 }
+.card-hd b {
+  font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600;
+}
+.card-hd .meta { font-size: 12px; color: var(--dim); }
 
 /* ===== Navbar ===== */
 .navbar {
@@ -143,7 +213,7 @@ main.container {
   top: 0; left: 0; right: 0;
   z-index: 100;
   padding: 0;
-  background: #0e1526;
+  background: var(--card);
   border-bottom: 1px solid var(--glass-border);
   transition: transform 0.25s ease;
 }
@@ -174,8 +244,8 @@ main.container {
   font-weight: 800;
   font-size: 14px;
   letter-spacing: 0.5px;
-  color: #0a0e1a;
-  box-shadow: 0 6px 20px rgba(124, 108, 255, 0.45);
+  color: #16181c;
+  box-shadow: none;
 }
 .brand__text { display: flex; flex-direction: column; line-height: 1.1; }
 .brand__text strong { font-size: 15px; font-weight: 700; }
@@ -196,8 +266,8 @@ main.container {
   font-weight: 500;
   transition: background 0.2s, color 0.2s;
 }
-.nav__link:hover { color: var(--text-1); background: rgba(255, 255, 255, 0.06); }
-.nav__link.is-active { color: var(--text-1); background: rgba(124, 108, 255, 0.18); }
+.nav__link:hover { color: var(--text-1); background: var(--glass-bg-strong); }
+.nav__link.is-active { color: var(--text-1); background: rgba(255,138,122, 0.18); }
 
 .navbar__left { flex: 1; min-width: 0; }
 .navbar__center { flex: 0 0 auto; display: flex; align-items: center; gap: 12px; }
@@ -208,20 +278,20 @@ main.container {
 .pomo__pill {
   display: inline-flex; align-items: center; gap: 10px;
   padding: 9px 20px; border-radius: 999px;
-  background: rgba(52,211,153,0.08); border: 1.5px solid rgba(52,211,153,0.35);
+  background: rgba(107,211,154,0.08); border: 1.5px solid rgba(107,211,154,0.35);
   color: var(--text-1); font-weight: 800; font-size: 1.5rem;
   font-variant-numeric: tabular-nums; cursor: pointer; line-height: 1;
   letter-spacing: 0.5px;
 }
-.pomo__pill:hover { background: rgba(52,211,153,0.14); }
+.pomo__pill:hover { background: rgba(107,211,154,0.14); }
 .pomo__pill.is-break { background: rgba(251,191,36,0.08); border-color: rgba(251,191,36,0.4); }
 .pomo__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--text-3); flex-shrink: 0; }
-.pomo__dot.is-run { background: var(--success); box-shadow: 0 0 0 4px rgba(52,211,153,0.2); animation: pomo-pulse 1.4s ease-in-out infinite; }
+.pomo__dot.is-run { background: var(--success); box-shadow: 0 0 0 4px rgba(107,211,154,0.2); animation: pomo-pulse 1.4s ease-in-out infinite; }
 @keyframes pomo-pulse { 50% { opacity: 0.35; } }
 .pomo__play {
   width: 46px; height: 46px; border-radius: 12px; flex-shrink: 0;
   display: grid; place-items: center; cursor: pointer; font-size: 1.1rem;
-  background: var(--success); border: none; color: #06231a; font-weight: 700;
+  background: var(--success); border: none; color: #16181c; font-weight: 700;
 }
 .pomo__play:hover { filter: brightness(1.08); }
 .pomo__scrim { position: fixed; inset: 0; z-index: 70; }
@@ -232,7 +302,7 @@ main.container {
 }
 .pomo__panel-head { display: flex; align-items: center; justify-content: space-between; }
 .pomo__badge { font-size: 0.82rem; font-weight: 700; padding: 4px 10px; border-radius: 999px; }
-.pomo__badge.is-focus { background: rgba(52,211,153,0.15); color: var(--success); }
+.pomo__badge.is-focus { background: rgba(107,211,154,0.15); color: var(--success); }
 .pomo__badge.is-break { background: rgba(251,191,36,0.15); color: var(--warning); }
 .pomo__x { background: none; border: none; color: var(--text-3); cursor: pointer; font-size: 0.9rem; }
 .pomo__big {
@@ -243,7 +313,7 @@ main.container {
 .pomo__controls .btn { flex: 1; }
 .pomo__lens { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 14px; }
 .pomo__stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px; }
-.pomo__stat { text-align: center; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 8px 4px; }
+.pomo__stat { text-align: center; background: var(--bg); border-radius: 10px; padding: 8px 4px; }
 .pomo__stat strong { display: block; font-size: 0.9rem; }
 .pomo__stat span { font-size: 0.66rem; color: var(--text-3); }
 
@@ -252,7 +322,7 @@ main.container {
 .chk__pill {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 9px 14px; border-radius: 999px; cursor: pointer; line-height: 1;
-  background: rgba(255,255,255,0.05); border: 1.5px solid var(--glass-border);
+  background: var(--glass-bg-strong); border: 1.5px solid var(--glass-border);
   color: var(--text-1); font-weight: 700; font-size: 0.95rem;
 }
 .chk__pill:hover { background: var(--glass-bg-strong); }
@@ -268,32 +338,32 @@ main.container {
 .chk__head strong { font-size: 1rem; }
 .chk__prog-label { margin-left: auto; font-size: 0.78rem; color: var(--text-3); }
 .chk__x { background: none; border: none; color: var(--text-3); cursor: pointer; font-size: 0.9rem; }
-.chk__bar { height: 6px; border-radius: 999px; background: rgba(255,255,255,0.08); margin-top: 12px; overflow: hidden; }
+.chk__bar { height: 6px; border-radius: 999px; background: var(--glass-bg-strong); margin-top: 12px; overflow: hidden; }
 .chk__bar span { display: block; height: 100%; background: var(--success); border-radius: 999px; transition: width 0.3s; }
 .chk__list { margin-top: 12px; max-height: 46vh; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
-.chk__row { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 10px; background: rgba(255,255,255,0.03); }
+.chk__row { display: flex; align-items: center; gap: 8px; padding: 6px; border-radius: 10px; background: var(--bg); }
 .chk__row.is-done .chk__text { text-decoration: line-through; color: var(--text-3); }
 .chk__box {
   width: 24px; height: 24px; flex-shrink: 0; border-radius: 7px; cursor: pointer;
-  border: 1.5px solid var(--glass-border); background: transparent; color: #06231a;
+  border: 1.5px solid var(--glass-border); background: transparent; color: #16181c;
   display: grid; place-items: center; font-size: 0.85rem; font-weight: 800;
 }
 .chk__box.is-on { background: var(--success); border-color: var(--success); }
 .chk__text { flex: 1; font-size: 0.88rem; word-break: break-word; }
 .chk__mode {
   flex-shrink: 0; cursor: pointer; border-radius: 999px; padding: 3px 8px;
-  font-size: 0.72rem; font-weight: 700; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.04); color: var(--text-2);
+  font-size: 0.72rem; font-weight: 700; border: 1px solid var(--glass-border); background: var(--bg); color: var(--text-2);
 }
-.chk__mode.is-daily { color: var(--accent-2, #7dd3fc); }
+.chk__mode.is-daily { color: var(--accent-2, #8ab4f8); }
 .chk__mode.is-once { color: var(--warning); }
 .chk__del { flex-shrink: 0; background: none; border: none; color: var(--text-3); cursor: pointer; font-size: 0.8rem; }
 .chk__add { display: flex; align-items: center; gap: 6px; margin-top: 12px; }
 .chk__add .input { flex: 1; min-width: 0; padding: 8px 10px; }
 .chk__modepick {
   flex-shrink: 0; cursor: pointer; border-radius: 8px; padding: 7px 9px;
-  font-size: 0.72rem; font-weight: 700; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.04); white-space: nowrap;
+  font-size: 0.72rem; font-weight: 700; border: 1px solid var(--glass-border); background: var(--bg); white-space: nowrap;
 }
-.chk__modepick.is-daily { color: var(--accent-2, #7dd3fc); }
+.chk__modepick.is-daily { color: var(--accent-2, #8ab4f8); }
 .chk__modepick.is-once { color: var(--warning); }
 .chk__clear { margin-top: 12px; width: 100%; background: none; border: 1px dashed var(--glass-border); color: var(--text-3); border-radius: 10px; padding: 8px; cursor: pointer; font-size: 0.8rem; }
 .chk__clear:hover { color: var(--text-1); }
@@ -301,12 +371,12 @@ main.container {
 /* Checklist PAGE rows (larger than the navbar panel) */
 .chk-add { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .chk-add .input { flex: 1; min-width: 160px; }
-.chk-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); }
+.chk-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: var(--bg); border: 1px solid var(--glass-border); }
 .chk-row.is-done .chk-row__text { text-decoration: line-through; color: var(--text-3); }
 .chk-row__text { flex: 1; font-size: 0.96rem; word-break: break-word; }
 .chk-box {
   width: 28px; height: 28px; flex-shrink: 0; border-radius: 8px; cursor: pointer;
-  border: 1.5px solid var(--glass-border); background: transparent; color: #06231a;
+  border: 1.5px solid var(--glass-border); background: transparent; color: #16181c;
   display: grid; place-items: center; font-size: 0.95rem; font-weight: 800;
 }
 .chk-box.is-on { background: var(--success); border-color: var(--success); }
@@ -320,43 +390,39 @@ main.container {
 }
 .hamburger span { display: block; width: 18px; height: 2px; background: var(--text-1); border-radius: 2px; }
 
-.drawer-overlay {
-  position: fixed; inset: 0; z-index: 190;
-  background: rgba(3, 6, 15, 0.6);
-  opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
-}
-.drawer-overlay.is-open { opacity: 1; pointer-events: auto; }
-
+/* ===== Menu =====
+   No longer off-canvas and no longer floating: on a phone this is simply the
+   first block on the page — app name + a ☰ that expands the list in place. It
+   scrolls away with the content like everything else, which is the point; the
+   old bar was pinned over the page and ate the top of every screen. */
 .drawer {
-  position: fixed; top: 0; left: 0; bottom: 0; z-index: 200;
-  width: 278px; max-width: 84vw;
-  background: #10152a;
-  border-right: 1px solid var(--glass-border);
-  box-shadow: 8px 0 40px rgba(0,0,0,0.5);
-  transform: translateX(-100%);
-  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
   display: flex; flex-direction: column;
-  overflow-y: auto;
 }
-.drawer.is-open { transform: translateX(0); }
 .drawer__head {
   display: flex; align-items: center; gap: 12px;
-  padding: 18px 18px 14px;
-  border-bottom: 1px solid var(--glass-border);
+  padding: 12px 14px;
 }
-.drawer__x {
-  margin-left: auto; width: 34px; height: 34px; border-radius: 9px;
-  background: var(--glass-bg); border: 1px solid var(--glass-border); color: var(--text-1); cursor: pointer;
+.drawer__brand { color: var(--ink); text-decoration: none; }
+.drawer__toggle {
+  margin-left: auto; width: 38px; height: 38px; border-radius: var(--radius-sm);
+  background: var(--bg); border: 1px solid var(--line); color: var(--ink);
+  cursor: pointer; font-size: 1.05rem; line-height: 1;
 }
-.drawer__nav { display: flex; flex-direction: column; padding: 10px; gap: 2px; }
+/* Collapsed until the ☰ asks for it. The wide layout re-shows it permanently. */
+.drawer__nav { display: none; flex-direction: column; padding: 10px; gap: 1px; }
+.drawer.is-open .drawer__nav { display: flex; border-top: 1px solid var(--line); }
+/* The theme's nav row: quiet by default, and the current page is a solid fill of
+   the red pen with white on it — not a faint tint you have to hunt for. */
 .drawer__link {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 14px; border-radius: 11px;
-  color: var(--text-2); text-decoration: none; font-size: 0.95rem; font-weight: 500;
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 9px; border-radius: 6px;
+  color: var(--ink); text-decoration: none; font-size: 13px; font-weight: 400;
 }
-.drawer__link:hover { background: rgba(255,255,255,0.06); color: var(--text-1); }
-.drawer__link.is-active { background: rgba(124,108,255,0.2); color: var(--text-1); }
-.drawer__ico { width: 22px; text-align: center; font-size: 1.05rem; }
+.drawer__link:hover { background: var(--bg); color: var(--ink); }
+.drawer__link.is-active { background: var(--accent); color: #16181c; font-weight: 600; }
+.drawer__ico { width: 18px; text-align: center; font-size: 0.95rem; }
 
 /* ===== Buttons ===== */
 .btn {
@@ -377,12 +443,15 @@ main.container {
 }
 .btn:active { transform: translateY(1px); }
 
+/* The theme's primary button is a flat fill of the red pen with dark ink on it
+   — no coloured glow. The glow is what made the old design feel "designed";
+   its absence is most of what makes this one feel simple. */
 .btn--primary {
   background: var(--accent-grad);
-  color: #0a0e1a;
-  box-shadow: 0 8px 24px rgba(124, 108, 255, 0.4);
+  color: #16181c;
+  box-shadow: none;
 }
-.btn--primary:hover { box-shadow: 0 12px 32px rgba(124, 108, 255, 0.55); transform: translateY(-2px); }
+.btn--primary:hover { filter: brightness(1.06); }
 
 .btn--ghost {
   background: var(--glass-bg);
@@ -392,12 +461,12 @@ main.container {
 .btn--ghost:hover { border-color: var(--glass-border-strong); background: var(--glass-bg-strong); }
 
 .btn--today {
-  background: rgba(124, 108, 255, 0.14);
-  border: 1px solid rgba(124, 108, 255, 0.4);
+  background: rgba(255,138,122, 0.14);
+  border: 1px solid rgba(255,138,122, 0.4);
   color: var(--text-1);
   box-shadow: var(--accent-glow);
 }
-.btn--today:hover { background: rgba(124, 108, 255, 0.24); transform: translateY(-2px); }
+.btn--today:hover { background: rgba(255,138,122, 0.24); transform: translateY(-2px); }
 .btn--today .dot {
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--accent-2);
@@ -413,27 +482,29 @@ main.container {
 .btn--sm { padding: 7px 12px; font-size: 13px; }
 
 /* ===== Hero ===== */
-.hero { padding: 48px 0 24px; }
+/* ===== Hero =====
+   Was a 3.6rem gradient headline over a 48px gutter — a landing page. This is a
+   study tool you open twenty times a day, so the title is a title: the page
+   name in the red pen, one line of context, and then the content. */
+.hero { padding: 4px 0 8px; }
 .hero__eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  color: var(--text-2);
-  font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 22px;
+  display: inline-block;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
 }
 .hero__title {
-  font-size: clamp(2.1rem, 5vw, 3.6rem);
-  font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  margin-bottom: 18px;
+  font-size: clamp(1.35rem, 3vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0;
+  margin-bottom: 6px;
 }
+/* Flat red pen, not a gradient. --accent-grad is two stops of one colour, so
+   clipping it to the text just paints the pen. */
 .hero__title .grad {
   background: var(--accent-grad);
   -webkit-background-clip: text;
@@ -441,15 +512,15 @@ main.container {
   -webkit-text-fill-color: transparent;
 }
 .hero__sub {
-  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-size: 0.95rem;
   color: var(--text-2);
-  max-width: 620px;
-  margin-bottom: 32px;
+  max-width: 700px;
+  margin-bottom: 14px;
 }
-.hero__cta { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero__cta { display: flex; gap: 10px; flex-wrap: wrap; }
 
 /* ===== Section ===== */
-.section { margin-top: 64px; }
+.section { margin-top: 24px; }
 .section__head { margin-bottom: 26px; }
 .section__head h2 {
   font-size: 1.6rem;
@@ -512,7 +583,7 @@ main.container {
 .input, .select, .textarea {
   width: 100%;
   padding: 12px 14px;
-  background: rgba(0, 0, 0, 0.25);
+  background: var(--bg);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
   color: var(--text-1);
@@ -524,8 +595,8 @@ main.container {
 }
 .input:focus, .select:focus, .textarea:focus {
   outline: none;
-  border-color: rgba(124, 108, 255, 0.6);
-  box-shadow: 0 0 0 3px rgba(124, 108, 255, 0.18);
+  border-color: rgba(255,138,122, 0.6);
+  box-shadow: 0 0 0 3px rgba(255,138,122, 0.18);
 }
 .textarea { resize: vertical; min-height: 110px; }
 
@@ -542,10 +613,10 @@ main.container {
 }
 .select option,
 .input option {
-  background-color: #161d33;
+  background-color: var(--bg-2);
   color: var(--text-1);
 }
-.select optgroup { background-color: #10152a; color: var(--text-2); }
+.select optgroup { background-color: var(--card); color: var(--text-2); }
 
 /* ===== Misc ===== */
 .placeholder {
@@ -554,7 +625,7 @@ main.container {
   color: var(--text-3);
   border: 1px dashed var(--glass-border);
   border-radius: var(--radius-lg);
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg);
 }
 
 .badge {
@@ -567,7 +638,7 @@ main.container {
   font-weight: 600;
 }
 .badge--soon { background: rgba(251, 191, 36, 0.15); color: var(--warning); border: 1px solid rgba(251, 191, 36, 0.3); }
-.badge--ok { background: rgba(52, 211, 153, 0.15); color: var(--success); border: 1px solid rgba(52, 211, 153, 0.3); }
+.badge--ok { background: rgba(107,211,154, 0.15); color: var(--success); border: 1px solid rgba(107,211,154, 0.3); }
 
 .row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .between { justify-content: space-between; }
@@ -596,11 +667,11 @@ main.container {
 /* ===== Ask button ===== */
 .btn--ask {
   gap: 6px;
-  background: rgba(34, 211, 238, 0.12);
-  border: 1px solid rgba(34, 211, 238, 0.35);
+  background: rgba(138,180,248, 0.12);
+  border: 1px solid rgba(138,180,248, 0.35);
   color: var(--text-1);
 }
-.btn--ask:hover { background: rgba(34, 211, 238, 0.22); transform: translateY(-2px); }
+.btn--ask:hover { background: rgba(138,180,248, 0.22); transform: translateY(-2px); }
 
 /* ===== Modal ===== */
 .modal-overlay {
@@ -630,7 +701,7 @@ main.container {
   padding: 7px 13px;
   border-radius: 999px;
   border: 1px solid var(--glass-border);
-  background: rgba(0,0,0,0.2);
+  background: var(--bg);
   color: var(--text-2);
   font-size: 0.85rem;
   font-weight: 600;
@@ -640,13 +711,13 @@ main.container {
 }
 .subj-chip:hover { color: var(--text-1); border-color: var(--glass-border-strong); }
 .subj-chip.is-active {
-  background: rgba(124,108,255,0.18);
-  border-color: rgba(124,108,255,0.6);
+  background: rgba(255,138,122,0.18);
+  border-color: rgba(255,138,122,0.6);
   color: var(--text-1);
 }
 
 .answer-box {
-  background: rgba(0, 0, 0, 0.28);
+  background: var(--bg);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   padding: 18px 20px;
@@ -734,7 +805,7 @@ main.container {
   color: var(--text-2);
   border-left: 3px solid var(--accent-2);
   padding: 6px 0 6px 10px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg);
   border-radius: 0 8px 8px 0;
 }
 
@@ -777,7 +848,7 @@ main.container {
    about five questions, so it is capped and scrolls on its own — at full height
    the options would sit below the fold on every card. */
 .passage-box {
-  background: rgba(0, 0, 0, 0.24);
+  background: var(--bg);
   border: 1px solid var(--glass-border);
   border-left: 3px solid var(--accent-2);
   border-radius: var(--radius);
@@ -805,7 +876,7 @@ main.container {
 
 .img-preview {
   border-radius: 12px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--bg);
   border: 1px solid var(--glass-border);
   overflow: hidden;
 }
@@ -814,7 +885,7 @@ main.container {
   width: 100%;
   max-height: 360px;
   object-fit: contain;
-  background: #0b0f1c;
+  background: var(--bg);
   cursor: zoom-in;
 }
 .img-preview__bar {
@@ -827,22 +898,31 @@ main.container {
 
 /* ===== Markdown ===== */
 .md { font-size: 1.02rem; color: var(--text-1); line-height: 1.7; }
-.md h1, .md h2, .md h3 { margin: 14px 0 8px; line-height: 1.3; }
+/* The pens live in prose, where the notes' markup contract applies: a heading
+   and **bold** are the red pen, an underline is the blue one. Scoped to .md on
+   purpose — the site's chrome uses <strong> for option letters and labels, and
+   painting those red would read as broken, not as the notes. */
+.md h1, .md h2, .md h3 { margin: 14px 0 8px; line-height: 1.3; color: var(--accent); }
 .md h1 { font-size: 1.3rem; } .md h2 { font-size: 1.15rem; } .md h3 { font-size: 1.02rem; }
 .md p { margin: 8px 0; }
 .md ul, .md ol { margin: 8px 0 8px 22px; }
 .md li { margin: 4px 0; }
-.md strong { color: #fff; }
+.md strong, .md b { color: var(--accent); font-weight: 600; }
+.md a { color: var(--accent2); }
+.md u { text-decoration-color: var(--accent2); text-underline-offset: 2px; }
 .md code {
-  background: rgba(124, 108, 255, 0.18);
+  background: var(--bg);
+  border: 1px solid var(--line);
   padding: 2px 6px;
   border-radius: 6px;
+  font-family: var(--font-mono);
   font-size: 0.88em;
 }
 .md pre {
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--bg);
+  border: 1px solid var(--line);
   padding: 12px 14px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   overflow-x: auto;
   margin: 10px 0;
 }
@@ -898,13 +978,13 @@ main.container {
   color: var(--text-2);
   white-space: nowrap;
 }
-.time-pill.live { color: var(--accent-2); border-color: rgba(34, 211, 238, 0.35); }
+.time-pill.live { color: var(--accent-2); border-color: rgba(138,180,248, 0.35); }
 
 /* ===== Progress bar ===== */
 .progress {
   height: 6px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--glass-bg-strong);
   overflow: hidden;
   margin-top: 14px;
 }
@@ -937,7 +1017,7 @@ main.container {
 .day-cell:hover { transform: translateY(-3px); border-color: var(--glass-border-strong); }
 .day-cell__n { font-weight: 700; font-size: 0.92rem; }
 .day-cell__c { font-size: 0.72rem; color: var(--text-3); }
-.day-cell.is-done { border-color: rgba(52,211,153,0.5); background: rgba(52,211,153,0.08); }
+.day-cell.is-done { border-color: rgba(107,211,154,0.5); background: rgba(107,211,154,0.08); }
 /* Some but not all of the day's types quizzed — amber "2/3" instead of a tick. */
 .day-cell.is-part { border-color: rgba(251,191,36,0.45); background: rgba(251,191,36,0.07); }
 .day-cell.is-empty { opacity: 0.4; pointer-events: none; }
@@ -958,7 +1038,7 @@ main.container {
 .rm-list { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 8px; }
 .rm-list li { font-size: 0.94rem; line-height: 1.6; color: var(--text-1); }
 .rm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 14px; }
-.rm-phase { border: 1px solid var(--glass-border); border-radius: 12px; padding: 14px 16px; background: rgba(255,255,255,0.03); }
+.rm-phase { border: 1px solid var(--glass-border); border-radius: 12px; padding: 14px 16px; background: var(--bg); }
 .rm-phase h4 { font-size: 0.98rem; margin-bottom: 6px; color: var(--accent-2); }
 
 /* Current Affairs date cards (wider than vocab day cells — dates are longer) */
@@ -973,10 +1053,10 @@ main.container {
 .ca-card__x {
   position: absolute; top: 6px; right: 6px;
   width: 26px; height: 26px; border-radius: 8px; line-height: 1;
-  background: rgba(0,0,0,0.45); color: var(--text-2);
+  background: var(--bg); color: var(--text-2);
   border: 1px solid var(--glass-border); cursor: pointer; font-size: 0.8rem;
 }
-.ca-card__x:hover { color: var(--danger); border-color: rgba(251,113,133,0.5); }
+.ca-card__x:hover { color: var(--danger); border-color: rgba(255,138,122,0.5); }
 
 /* ===== Vocab: day layout ===== */
 .vocab-layout {
@@ -994,26 +1074,32 @@ main.container {
   gap: 6px;
   padding: 14px;
 }
+/* A word in the list is a ROW, not a box. It already sits inside a card — giving
+   each one its own fill stacked a panel on a panel, which is exactly the look
+   the theme drops. Flat by default, the current word filled in the red pen. */
 .vocab-item {
   width: 100%;
   text-align: left;
-  padding: 10px 12px;
-  border-radius: 10px;
+  padding: 7px 9px;
+  border-radius: 6px;
   border: 1px solid transparent;
-  background: rgba(0,0,0,0.18);
+  background: transparent;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  transition: background 0.15s, border-color 0.15s;
+  gap: 1px;
+  transition: background 0.15s;
 }
-.vocab-item:hover { background: rgba(255,255,255,0.05); }
-.vocab-item.is-active { border-color: rgba(124,108,255,0.6); background: rgba(124,108,255,0.14); }
+.vocab-item:hover { background: var(--bg); }
+.vocab-item.is-active { background: var(--accent); border-color: transparent; }
 .vocab-item__word {
   font-weight: 600; font-size: 0.95rem; color: var(--text-1);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .vocab-item__def { font-size: 0.76rem; color: var(--text-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* On the filled row both lines have to flip to dark ink to stay readable. */
+.vocab-item.is-active .vocab-item__word,
+.vocab-item.is-active .vocab-item__def { color: #16181c; }
 
 /* Vocab category cards */
 .cat-card {
@@ -1058,7 +1144,7 @@ main.container {
   .vocab-detail.is-open .vocab-detail__head {
     flex: none; padding: 14px 16px;
     border-bottom: 1px solid var(--glass-border);
-    background: rgba(255,255,255,0.05);
+    background: var(--glass-bg-strong);
   }
   /* only this middle part scrolls */
   .vocab-detail.is-open .vocab-detail__body {
@@ -1070,7 +1156,7 @@ main.container {
   .vocab-detail.is-open .vocab-detail__nav {
     flex: none; margin: 0; padding: 12px 16px;
     border-top: 1px solid var(--glass-border);
-    background: rgba(255,255,255,0.05);
+    background: var(--glass-bg-strong);
   }
   .vocab-detail__close { display: inline-flex; }
   .vocab-detail__backdrop {
@@ -1097,8 +1183,8 @@ main.container {
   font-size: 0.82rem;
   border: 1px solid var(--glass-border);
 }
-.chip--syn { background: rgba(52,211,153,0.12); color: var(--success); border-color: rgba(52,211,153,0.3); }
-.chip--ant { background: rgba(251,113,133,0.12); color: var(--danger); border-color: rgba(251,113,133,0.3); }
+.chip--syn { background: rgba(107,211,154,0.12); color: var(--success); border-color: rgba(107,211,154,0.3); }
+.chip--ant { background: rgba(255,138,122,0.12); color: var(--danger); border-color: rgba(255,138,122,0.3); }
 .chip--lg { font-size: 0.98rem; padding: 7px 14px; font-weight: 600; }
 .chip--sm { font-size: 0.76rem; padding: 3px 9px; }
 .chip--btn { cursor: pointer; font-family: inherit; transition: transform 0.12s ease, filter 0.15s ease; }
@@ -1138,12 +1224,12 @@ main.container {
 .rush-btn {
   width: 52px; height: 52px;
   border-radius: 50%;
-  border: 1px solid rgba(124,108,255,0.4);
+  border: 1px solid rgba(255,138,122,0.4);
   background: var(--accent-grad);
-  color: #0a0e1a;
+  color: #16181c;
   font-size: 1.3rem;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(124,108,255,0.45);
+  box-shadow: 0 8px 24px rgba(255,138,122,0.45);
   transition: transform 0.15s ease;
 }
 .rush-btn:hover { transform: scale(1.08); }
@@ -1152,24 +1238,26 @@ main.container {
   left: 22px;
   align-items: flex-start;
 }
+/* Flat fills, not gradients — the two floating buttons stay told apart by the
+   two pens (blue = calculation, red = current affairs) rather than by a glow. */
 .rush-btn--calc {
-  background: linear-gradient(135deg, #34d399, #22d3ee);
-  border-color: rgba(52,211,153,0.5);
-  box-shadow: 0 8px 24px rgba(52,211,153,0.4);
+  background: var(--accent2);
+  border-color: var(--accent2);
+  box-shadow: none;
 }
 /* Current Affairs rush — stacked above the Vocab FAB on the right */
 .rush-fab--stack { bottom: 92px; }
 .rush-btn--ca {
-  background: linear-gradient(135deg, #fb7185, #fbbf24);
-  border-color: rgba(251,113,133,0.5);
-  box-shadow: 0 8px 24px rgba(251,113,133,0.4);
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: none;
 }
 .rush-panel {
   width: 250px;
   padding: 16px;
   border-radius: 16px;
-  background: #161d33;
-  border: 1px solid rgba(124,108,255,0.35);
+  background: var(--bg-2);
+  border: 1px solid rgba(255,138,122,0.35);
   box-shadow: 0 14px 44px rgba(0,0,0,0.6);
 }
 .rush-row {
@@ -1189,8 +1277,8 @@ main.container {
 }
 .link:hover { filter: brightness(1.2); }
 .chip.is-active {
-  background: rgba(124,108,255,0.2);
-  border-color: rgba(124,108,255,0.6);
+  background: rgba(255,138,122,0.2);
+  border-color: rgba(255,138,122,0.6);
   color: var(--text-1);
 }
 
@@ -1217,7 +1305,7 @@ main.container {
   padding-top: 12px;
 }
 .rule-card__meta {
-  background: rgba(255,255,255,0.03);
+  background: var(--bg);
   border: 1px solid var(--glass-border);
   border-radius: 12px;
   padding: 12px;
@@ -1231,9 +1319,9 @@ main.container {
   font-weight: 700;
   padding: 2px 8px;
   border-radius: 6px;
-  background: rgba(52,211,153,0.14);
+  background: rgba(107,211,154,0.14);
   color: var(--success);
-  border: 1px solid rgba(52,211,153,0.3);
+  border: 1px solid rgba(107,211,154,0.3);
   white-space: nowrap;
   vertical-align: middle;
 }
@@ -1246,9 +1334,9 @@ main.container {
   font-weight: 700;
   padding: 2px 8px;
   border-radius: 999px;
-  background: rgba(124,108,255,0.18);
+  background: rgba(255,138,122,0.18);
   color: var(--accent-2);
-  border: 1px solid rgba(124,108,255,0.3);
+  border: 1px solid rgba(255,138,122,0.3);
   white-space: nowrap;
   vertical-align: middle;
 }
@@ -1298,7 +1386,7 @@ main.container {
 }
 .lightbox__bar {
   display: flex; align-items: center; gap: 10px;
-  background: #161d33; border: 1px solid var(--glass-border);
+  background: var(--bg-2); border: 1px solid var(--glass-border);
   padding: 8px 10px; border-radius: 10px;
 }
 .lightbox__x {
@@ -1345,19 +1433,19 @@ main.container {
 .followup__q {
   font-size: 0.9rem;
   color: var(--text-2);
-  background: rgba(124,108,255,0.1);
-  border: 1px solid rgba(124,108,255,0.25);
+  background: rgba(255,138,122,0.1);
+  border: 1px solid rgba(255,138,122,0.25);
   padding: 8px 12px;
   border-radius: 10px;
 }
 
 /* ===== Daily target cards ===== */
 .target-card { padding: 14px 18px; }
-.target-card.is-done { border-color: rgba(52,211,153,0.4); }
+.target-card.is-done { border-color: rgba(107,211,154,0.4); }
 
 /* ===== Home feature cards ===== */
 .home-card { transition: transform 0.15s ease, border-color 0.15s ease; }
-.home-card:hover { transform: translateY(-4px); border-color: rgba(124,108,255,0.5); }
+.home-card:hover { transform: translateY(-4px); border-color: rgba(255,138,122,0.5); }
 
 /* ===== Nav "More" dropdown ===== */
 .nav-more { position: relative; }
@@ -1372,8 +1460,8 @@ main.container {
   top: calc(100% + 10px);
   right: 0;
   min-width: 210px;
-  background: #161d33;
-  border: 1px solid rgba(124,108,255,0.3);
+  background: var(--bg-2);
+  border: 1px solid rgba(255,138,122,0.3);
   border-radius: 14px;
   padding: 6px;
   display: grid;
@@ -1390,8 +1478,8 @@ main.container {
   text-decoration: none;
   white-space: nowrap;
 }
-.nav-more__item:hover { background: rgba(124,108,255,0.14); color: var(--text-1); }
-.nav-more__item.is-active { background: rgba(124,108,255,0.2); color: var(--text-1); }
+.nav-more__item:hover { background: rgba(255,138,122,0.14); color: var(--text-1); }
+.nav-more__item.is-active { background: rgba(255,138,122,0.2); color: var(--text-1); }
 .nav-mobile-extra { display: none; }
 
 /* ===== Mobile nav toggle ===== */
@@ -1405,7 +1493,7 @@ main.container {
     flex-direction: column;
     align-items: stretch;
     padding: 12px;
-    background: #0e1526;
+    background: var(--card);
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     margin: 0;
@@ -1436,13 +1524,11 @@ main.container {
 /* ===== Global responsive polish (mobile + tablet) ===== */
 @media (max-width: 768px) {
   .container { padding: 0 16px; }
-  main.container { padding-top: 96px; }
-  .hero { padding: 32px 0 20px; }
+  .hero { padding: 4px 0 8px; }
   .section { margin-top: 20px; }
 }
 @media (max-width: 560px) {
   .container { padding: 0 12px; }
-  main.container { padding-top: 88px; padding-bottom: 48px; }
   .navbar { padding: 0; }
   .navbar__inner { padding: 8px 0; gap: 10px; }
   .navbar__actions { gap: 8px; }
@@ -1475,8 +1561,8 @@ main.container {
   gap: 8px;
   padding: 4px 10px 4px 4px;
   border-radius: 999px;
-  border: 1px solid var(--border, rgba(255,255,255,0.14));
-  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--line);
+  background: var(--glass-bg-strong);
   cursor: pointer;
   flex: 0 0 auto;
   transition: background 0.15s ease, border-color 0.15s ease;
@@ -1486,18 +1572,18 @@ main.container {
   height: 14px;
   margin-left: 6px;
   border-radius: 50%;
-  background: #8b93a7;
-  box-shadow: 0 0 0 4px rgba(139,147,167,0.18);
+  background: var(--dim);
+  box-shadow: 0 0 0 4px rgba(154,160,166,0.18);
   transition: background 0.15s ease, box-shadow 0.15s ease;
 }
-.toggle__txt { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; color: var(--text-2, #9aa2b4); }
+.toggle__txt { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; color: var(--text-2, var(--dim)); }
 .toggle.is-on { background: rgba(52,199,120,0.16); border-color: rgba(52,199,120,0.5); }
-.toggle.is-on .toggle__knob { background: var(--success, #34c778); box-shadow: 0 0 0 4px rgba(52,199,120,0.22); }
-.toggle.is-on .toggle__txt { color: var(--success, #34c778); }
+.toggle.is-on .toggle__knob { background: var(--success, var(--ok)); box-shadow: 0 0 0 4px rgba(107,211,154,0.22); }
+.toggle.is-on .toggle__txt { color: var(--success, var(--ok)); }
 
 /* Pomodoro task-timer (a target's own countdown) */
 .pomo__pill.is-task { border-color: rgba(139,92,246,0.55); background: rgba(139,92,246,0.16); }
-.pomo__pill.is-task .pomo__time { color: #c4b5fd; }
+.pomo__pill.is-task .pomo__time { color: var(--accent); }
 .pomo-done {
   max-width: 400px;
   text-align: center;
@@ -1516,9 +1602,9 @@ main.container {
 }
 
 /* PYQ tag variant (purple) + per-question chapter-mark row */
-.paper-tag--pyq { background: rgba(124,108,255,0.18); color: #c4b5fd; border-color: rgba(124,108,255,0.4); }
+.paper-tag--pyq { background: rgba(255,138,122,0.18); color: var(--accent); border-color: rgba(255,138,122,0.4); }
 .pyq-mark {
-  background: rgba(255,255,255,0.03);
+  background: var(--bg);
   border: 1px dashed var(--glass-border);
   border-radius: 10px;
   padding: 8px 10px;
@@ -1561,13 +1647,13 @@ main.container {
   background: none; border: none; cursor: pointer; color: var(--text-1);
   font-size: 1.02rem; font-weight: 600; text-align: left;
 }
-.home-acc__row:hover { background: rgba(255,255,255,0.03); }
+.home-acc__row:hover { background: var(--bg); }
 .home-acc__name { display: flex; align-items: center; gap: 12px; min-width: 0; }
 .home-acc__ico { font-size: 1.2rem; }
 .home-acc__meta { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
 .home-acc__count {
   font-size: 0.72rem; font-weight: 700; color: var(--text-3);
-  background: rgba(255,255,255,0.06); border-radius: 999px; padding: 2px 9px;
+  background: var(--glass-bg-strong); border-radius: 999px; padding: 2px 9px;
 }
 .home-acc__chev { font-size: 0.7rem; color: var(--text-3); }
 .home-acc__panel {
@@ -1579,11 +1665,11 @@ main.container {
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
   padding: 13px 14px; border-radius: 8px;
   color: var(--text-2); text-decoration: none; font-size: 0.92rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid var(--line);
   transition: background 0.15s ease, color 0.15s ease;
 }
 .home-acc__link:last-child { border-bottom: none; }
-.home-acc__link:hover { background: rgba(124,108,255,0.12); color: var(--text-1); }
+.home-acc__link:hover { background: rgba(255,138,122,0.12); color: var(--text-1); }
 .home-acc__go { color: var(--text-3); font-size: 0.9rem; }
 .home-acc__link--manage { color: var(--accent-2); font-weight: 600; }
 .home-acc__empty { padding: 10px 14px; font-size: 0.86rem; }
@@ -1617,7 +1703,7 @@ main.container {
   text-decoration: none; color: var(--text-1);
   transition: border-color 0.2s ease, background 0.2s ease;
 }
-.cat-row:hover { border-color: var(--glass-border-strong); background: rgba(124,108,255,0.08); }
+.cat-row:hover { border-color: var(--glass-border-strong); background: rgba(255,138,122,0.08); }
 .cat-row__main { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 1rem; }
 .cat-row__ico { font-size: 1.3rem; }
 .cat-row__meta { display: flex; align-items: center; gap: 14px; flex-shrink: 0; font-size: 0.85rem; }
@@ -1630,9 +1716,59 @@ main.container {
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--accent-2);
-  background: rgba(124, 108, 255, 0.14);
-  border: 1px solid rgba(124, 108, 255, 0.28);
+  background: rgba(255,138,122, 0.14);
+  border: 1px solid rgba(255,138,122, 0.28);
   padding: 2px 9px;
   border-radius: 999px;
   white-space: nowrap;
 }
+
+/* ===================================================================
+   SHELL — the sidebar layout, wide screens only.
+
+   Above 980px the menu stops being a drawer and simply sits on the left, the
+   way it does in the notes theme: the page title, a line of context, then the
+   links, with the current one filled in the red pen. The hamburger and the
+   overlay have nothing to do here, so they go.
+
+   It is the same <aside class="drawer"> the phone opens off-canvas — only the
+   layout changes. Nothing is duplicated, so the two cannot drift apart.
+   =================================================================== */
+@media (min-width: 981px) {
+  .shell {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    align-items: start;
+  }
+  /* The full-height left column, always open. */
+  .drawer {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
+  }
+  .drawer__head { padding: 16px 14px 12px; border-bottom: 1px solid var(--line); }
+  .drawer__toggle { display: none; }              /* nothing to expand */
+  .drawer__nav { display: flex; border-top: 0; }  /* always shown */
+  /* main is the second column now, so it must not also be centred in the page */
+  main.container { max-width: 900px; margin: 0; padding-left: 22px; padding-right: 22px; }
+}
+/* The menu's subtitle, under the app name in the drawer head. */
+.drawer__sub { font-size: 11px; color: var(--dim); }
+
+/* ===== Per-question stopwatch (components/QTimer.js) =====
+   Sits in a question's header row next to the ask/bookmark buttons. Reads as a
+   tag once it is running, not as a button — there is nothing left to press. */
+.qtimer { flex-shrink: 0; }
+.qtimer--live {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 9px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--bg);
+  font-size: 0.76rem; font-weight: 700;
+  font-variant-numeric: tabular-nums;   /* digits must not jiggle every tick */
+  white-space: nowrap;
+}
+.qtimer--live.is-running { color: var(--accent2); border-color: var(--accent2); }
+.qtimer--live.is-stopped { color: var(--ok); border-color: var(--ok); }

@@ -169,7 +169,7 @@ export default function PocketRulePopup({ rule, onClose, onPrev, onNext, hasPrev
               <span className="vd-label" style={{ display: "block", marginTop: 18 }}>📘 Detail (AI)</span>
               <div className="answer-box mt-8"><Markdown>{detail.detail}</Markdown></div>
               {detail.trap && (
-                <div className="answer-box mt-8" style={{ borderColor: "rgba(251,113,133,0.5)" }}>
+                <div className="answer-box mt-8" style={{ borderColor: "rgba(255,138,122,0.5)" }}>
                   <strong style={{ color: "var(--danger)" }}>⚠️ Trap: </strong>
                   <Markdown inline>{detail.trap}</Markdown>
                 </div>

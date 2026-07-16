@@ -26,8 +26,14 @@ export default function RootLayout({ children }) {
           <span className="orb orb--2" />
           <span className="orb orb--3" />
         </div>
-        <Navbar />
-        <main className="container">{children}</main>
+        {/* Navbar contributes exactly one in-flow element — the menu <aside> —
+            so on a wide screen .shell places it as the left column and main as
+            the right. On a phone .shell is a plain block and the menu is the
+            off-canvas drawer it has always been. */}
+        <div className="shell">
+          <Navbar />
+          <main className="container">{children}</main>
+        </div>
         <Footer />
         <VocabRush />
         <CalcRush />

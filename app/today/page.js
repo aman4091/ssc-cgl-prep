@@ -170,7 +170,7 @@ export default function TodayPage() {
             </div>
 
             {/* Optional focus timer for this target — runs on the navbar timer */}
-            <div className="mt-16" style={{ borderTop: "1px solid var(--border, rgba(255,255,255,0.1))", paddingTop: 14 }}>
+            <div className="mt-16" style={{ borderTop: "1px solid var(--line)", paddingTop: 14 }}>
               <div className="row" style={{ gap: 10, alignItems: "center", flexWrap: "wrap" }}>
                 <span className="muted" style={{ fontSize: "0.85rem" }}>⏱️ Set a timer (optional):</span>
                 <input className="input" type="number" min={0} style={{ width: 64 }} value={durH}

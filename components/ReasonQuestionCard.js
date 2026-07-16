@@ -11,6 +11,7 @@ import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
 import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
+import QTimer from "./QTimer";
 
 // A reasoning question is IMAGES — MathQuestionCard's twin (same answer/reveal/
 // archive/bookmark machinery, same shortcut / 20-similar / ask buttons), with
@@ -115,6 +116,7 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
           {q.source && <span className="paper-tag">📄 {q.source}</span>}
         </h3>
         <div className="q-head__actions">
+          <QTimer answered={picked !== null} />
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
           {aiUseful && <AskButtons q={tq} />}
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
@@ -137,11 +139,11 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
             display: "flex", alignItems: "center", gap: 10, textAlign: "left",
             padding: "8px 12px", borderRadius: 10, minHeight: 46,
             borderWidth: "1px", borderStyle: "solid", borderColor: "var(--glass-border)",
-            background: "rgba(0,0,0,0.2)", cursor: picked === null ? "pointer" : "default",
+            background: "var(--bg)", cursor: picked === null ? "pointer" : "default",
           };
           if (revealed) {
-            if (oi === q.answer) { s.borderColor = "rgba(52,211,153,0.7)"; s.background = "rgba(52,211,153,0.14)"; }
-            else if (oi === picked) { s.borderColor = "rgba(251,113,133,0.7)"; s.background = "rgba(251,113,133,0.14)"; }
+            if (oi === q.answer) { s.borderColor = "rgba(107,211,154,0.7)"; s.background = "rgba(107,211,154,0.14)"; }
+            else if (oi === picked) { s.borderColor = "rgba(255,138,122,0.7)"; s.background = "rgba(255,138,122,0.14)"; }
           }
           return (
             <button key={oi} className="math-opt" style={s} onClick={() => choose(oi)}>

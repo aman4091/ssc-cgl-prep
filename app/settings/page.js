@@ -513,7 +513,7 @@ export default function SettingsPage() {
                 Supabase pe free project banao → <strong>SQL Editor</strong> mein ye ek baar chalao, phir
                 <strong> Project Settings → API</strong> se Project URL + anon key upar daalo:
               </p>
-              <pre style={{ whiteSpace: "pre-wrap", fontSize: "0.76rem", background: "rgba(0,0,0,0.32)", padding: 12, borderRadius: 8, overflowX: "auto" }}>{SYNC_SQL}</pre>
+              <pre style={{ whiteSpace: "pre-wrap", fontSize: "0.76rem", background: "var(--bg)", padding: 12, borderRadius: 8, overflowX: "auto" }}>{SYNC_SQL}</pre>
               <p className="hint" style={{ color: "var(--warning)" }}>
                 ⚠️ Sync-code mode mein table anon key se accessible hota hai — <strong>sync code hi tumhari privacy hai</strong>. Isliye lamba, random code rakho aur kisi ko mat batao.
               </p>

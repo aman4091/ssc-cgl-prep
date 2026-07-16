@@ -130,11 +130,11 @@ export default function VocabRush() {
                 const s = {
                   textAlign: "left", padding: "12px 14px", borderRadius: 10,
                   borderWidth: "1px", borderStyle: "solid", borderColor: "var(--glass-border)",
-                  background: "rgba(0,0,0,0.2)", color: "var(--text-1)", cursor: picked === null ? "pointer" : "default",
+                  background: "var(--bg)", color: "var(--text-1)", cursor: picked === null ? "pointer" : "default",
                 };
                 if (picked !== null) {
-                  if (oi === mcq.answer) { s.borderColor = "rgba(52,211,153,0.7)"; s.background = "rgba(52,211,153,0.14)"; }
-                  else if (oi === picked) { s.borderColor = "rgba(251,113,133,0.7)"; s.background = "rgba(251,113,133,0.14)"; }
+                  if (oi === mcq.answer) { s.borderColor = "rgba(107,211,154,0.7)"; s.background = "rgba(107,211,154,0.14)"; }
+                  else if (oi === picked) { s.borderColor = "rgba(255,138,122,0.7)"; s.background = "rgba(255,138,122,0.14)"; }
                 }
                 return (
                   <button key={oi} style={s} onClick={() => choose(oi)}>

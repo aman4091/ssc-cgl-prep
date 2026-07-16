@@ -8,6 +8,7 @@ import { askAI, generateSimilar } from "@/lib/client-ai";
 import Markdown from "@/components/Markdown";
 import Diagram from "@/components/Diagram";
 import QuestionFollowup from "@/components/QuestionFollowup";
+import QTimer from "@/components/QTimer";
 import AddToChapter from "@/components/AddToChapter";
 import AskButtons from "@/components/AskButtons";
 import PasteAnswer from "@/components/PasteAnswer";
@@ -298,7 +299,7 @@ export default function QuizPlayer() {
                   <div className="row between" style={{ alignItems: "flex-start" }}>
                     <div className="row" style={{ gap: 10, alignItems: "flex-start" }}>
                       <span className={`badge ${chosen === undefined ? "" : isRight ? "badge--ok" : ""}`}
-                            style={chosen !== undefined && !isRight ? { background: "rgba(251,113,133,0.15)", color: "var(--danger)", border: "1px solid rgba(251,113,133,0.3)" } : {}}>
+                            style={chosen !== undefined && !isRight ? { background: "rgba(255,138,122,0.15)", color: "var(--danger)", border: "1px solid rgba(255,138,122,0.3)" } : {}}>
                         {qi + 1}
                       </span>
                       <h3 style={{ fontSize: "1.14rem", fontWeight: 600, lineHeight: 1.5 }}>
@@ -307,8 +308,9 @@ export default function QuizPlayer() {
                       </h3>
                     </div>
                     <div className="row" style={{ gap: 8, flexShrink: 0, alignItems: "center" }}>
+                      <QTimer answered={chosen !== undefined} />
                       {(() => { const st = getStat(q); return st ? (
-                        <span className="time-pill" title={`${st.correct} correct / ${st.attempts} attempts`} style={{ background: "rgba(124,108,255,0.16)", color: "var(--accent-2)" }}>
+                        <span className="time-pill" title={`${st.correct} correct / ${st.attempts} attempts`} style={{ background: "rgba(255,138,122,0.16)", color: "var(--accent-2)" }}>
                           🔁 {st.attempts}x{st.attempts ? ` · ${Math.round((st.correct / st.attempts) * 100)}%` : ""}
                         </span>
                       ) : null; })()}
@@ -324,11 +326,11 @@ export default function QuizPlayer() {
                       const s = {
                         textAlign: "left", padding: "10px 14px", borderRadius: 10,
                         borderWidth: "1px", borderStyle: "solid", borderColor: "var(--glass-border)",
-                        background: "rgba(0,0,0,0.2)",
+                        background: "var(--bg)",
                         color: "var(--text-1)", fontSize: "0.92rem",
                       };
-                      if (oi === q.answer) { s.borderColor = "rgba(52,211,153,0.7)"; s.background = "rgba(52,211,153,0.14)"; }
-                      if (oi === chosen && oi !== q.answer) { s.borderColor = "rgba(251,113,133,0.7)"; s.background = "rgba(251,113,133,0.14)"; }
+                      if (oi === q.answer) { s.borderColor = "rgba(107,211,154,0.7)"; s.background = "rgba(107,211,154,0.14)"; }
+                      if (oi === chosen && oi !== q.answer) { s.borderColor = "rgba(255,138,122,0.7)"; s.background = "rgba(255,138,122,0.14)"; }
                       if (isVocab) { s.display = "flex"; s.alignItems = "center"; s.gap = 8; }
                       return (
                         <div key={oi} style={s}>
@@ -439,8 +441,8 @@ export default function QuizPlayer() {
           <div className="row" style={{ gap: 8 }}>
             {remainingSec !== null && (
               <span className="time-pill" style={lowTime
-                ? { background: "rgba(251,113,133,0.2)", color: "var(--danger)", borderColor: "rgba(251,113,133,0.5)" }
-                : { background: "rgba(124,108,255,0.18)", color: "var(--accent-2)" }}>
+                ? { background: "rgba(255,138,122,0.2)", color: "var(--danger)", borderColor: "rgba(255,138,122,0.5)" }
+                : { background: "rgba(255,138,122,0.18)", color: "var(--accent-2)" }}>
                 ⏳ {fmtClock(remainingSec)}
               </span>
             )}
@@ -471,10 +473,10 @@ export default function QuizPlayer() {
               const style = {
                 textAlign: "left", padding: "13px 16px", borderRadius: 12,
                 borderWidth: "1px", borderStyle: "solid", borderColor: "var(--glass-border)",
-                background: "rgba(0,0,0,0.2)",
+                background: "var(--bg)",
                 color: "var(--text-1)", cursor: "pointer", transition: "all .15s ease",
               };
-              if (isChosen) { style.borderColor = "rgba(124,108,255,0.7)"; style.background = "rgba(124,108,255,0.16)"; }
+              if (isChosen) { style.borderColor = "rgba(255,138,122,0.7)"; style.background = "rgba(255,138,122,0.16)"; }
               return (
                 <button key={oi} style={style} onClick={() => select(oi)}>
                   <span style={{ fontWeight: 700, marginRight: 10, opacity: 0.7 }}>{String.fromCharCode(65 + oi)}</span>

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getChapters } from "@/lib/grammar";
 import { buildChapterQuiz } from "@/lib/chapterquiz";
+import AskModal from "@/components/AskModal";
 
 const SUBJECTS = [
   { key: "math", name: "Maths", icon: "🧮" },
@@ -65,6 +66,7 @@ const EXTRA = [
 export default function Home() {
   const router = useRouter();
   const [open, setOpen] = useState(null);
+  const [askOpen, setAskOpen] = useState(false);
   const [chapters, setChapters] = useState({});
 
   useEffect(() => {
@@ -96,7 +98,11 @@ export default function Home() {
             <p className="muted">Pick a subject, choose a topic — start right away.</p>
           </div>
           <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
-            <Link href="/roadmap" className="btn btn--primary btn--sm">🧠 AI Roadmap</Link>
+            {/* Ask lived in the old top bar, which is gone. It is a "whenever
+                something occurs to you" button, so it belongs on the page you
+                land on rather than pinned over every screen. */}
+            <button className="btn btn--primary btn--sm" onClick={() => setAskOpen(true)}>🤖 Ask AI</button>
+            <Link href="/roadmap" className="btn btn--ghost btn--sm">🧠 AI Roadmap</Link>
             <Link href="/daily" className="btn btn--ghost btn--sm">🗓️ Daily Quiz</Link>
             <Link href="/mistakes" className="btn btn--ghost btn--sm">🔴 Mistake Notebook</Link>
           </div>
@@ -150,6 +156,8 @@ export default function Home() {
           );
         })}
       </div>
+
+      <AskModal open={askOpen} onClose={() => setAskOpen(false)} />
     </section>
   );
 }

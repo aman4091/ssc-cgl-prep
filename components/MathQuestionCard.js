@@ -11,6 +11,7 @@ import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
 import AskElsewhere from "./AskElsewhere";
 import PasteAnswer from "./PasteAnswer";
+import QTimer from "./QTimer";
 
 // A maths question is IMAGES — the stem, four options and the solution are PNG→
 // WebP crops on the R2 CDN, because maths does not survive being flattened to
@@ -122,6 +123,7 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
           {q.source && <span className="paper-tag">📄 {q.source}</span>}
         </h3>
         <div className="q-head__actions">
+          <QTimer answered={picked !== null} />
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
           <AskElsewhere q={tq} />
           <AskElsewhere
@@ -148,11 +150,11 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
             display: "flex", alignItems: "center", gap: 10, textAlign: "left",
             padding: "8px 12px", borderRadius: 10, minHeight: 46,
             borderWidth: "1px", borderStyle: "solid", borderColor: "var(--glass-border)",
-            background: "rgba(0,0,0,0.2)", cursor: picked === null ? "pointer" : "default",
+            background: "var(--bg)", cursor: picked === null ? "pointer" : "default",
           };
           if (revealed) {
-            if (oi === q.answer) { s.borderColor = "rgba(52,211,153,0.7)"; s.background = "rgba(52,211,153,0.14)"; }
-            else if (oi === picked) { s.borderColor = "rgba(251,113,133,0.7)"; s.background = "rgba(251,113,133,0.14)"; }
+            if (oi === q.answer) { s.borderColor = "rgba(107,211,154,0.7)"; s.background = "rgba(107,211,154,0.14)"; }
+            else if (oi === picked) { s.borderColor = "rgba(255,138,122,0.7)"; s.background = "rgba(255,138,122,0.14)"; }
           }
           return (
             <button key={oi} className="math-opt" style={s} onClick={() => choose(oi)}>

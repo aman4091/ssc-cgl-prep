@@ -20,7 +20,7 @@ export default function FixAnswer({ q, onFix }) {
       <div className="grid" style={{ gap: 6 }}>
         {q.options.map((opt, oi) => (
           <button key={oi} className="btn btn--ghost btn--sm"
-            style={{ textAlign: "left", ...(oi === q.answer ? { borderColor: "rgba(52,211,153,0.5)" } : {}) }}
+            style={{ textAlign: "left", ...(oi === q.answer ? { borderColor: "rgba(107,211,154,0.5)" } : {}) }}
             onClick={() => pick(oi)}>
             <strong style={{ opacity: 0.7, marginRight: 6 }}>{String.fromCharCode(65 + oi)}</strong>
             <Markdown inline>{opt}</Markdown>

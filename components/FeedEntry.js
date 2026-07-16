@@ -216,7 +216,7 @@ export default function FeedEntry({ entry, onChanged }) {
       {entry.pdfs?.length > 0 && (
         <div className="mt-12" style={{ display: "grid", gap: 6 }}>
           {entry.pdfs.map((p) => (
-            <div key={p.id} className="row between" style={{ background: "rgba(255,255,255,0.04)", padding: "6px 12px", borderRadius: 10 }}>
+            <div key={p.id} className="row between" style={{ background: "var(--bg)", padding: "6px 12px", borderRadius: 10 }}>
               <button className="link" onClick={() => openPdf(p.id)} style={{ textAlign: "left", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>📄 {p.name}</button>
               <button className="btn btn--ghost btn--sm" onClick={() => delPdf(p.id)}>✕</button>
             </div>
