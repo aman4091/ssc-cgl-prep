@@ -694,23 +694,22 @@ main.container {
 }
 
 /* Pinnacle Maths crops. Black-on-white PNG→WebP from the book, served from R2.
-   The stem and solution can be wider than the phone, so they scroll inside their
-   own box instead of dragging the page. A white plate under each keeps the black
+   The crops are ~506px wide — wider than a phone — so they scale DOWN to fit the
+   card rather than scrolling sideways inside it. Tapping one opens the full-size
+   image in a new tab, which is the zoom. A white plate under each keeps the black
    maths readable on the dark card. */
 .math-img-wrap {
   display: block;
-  overflow-x: auto;
   background: #fff;
   border-radius: 8px;
   padding: 6px 8px;
   max-width: 100%;
-  min-width: 0; /* a wide crop scrolls inside, never widens the card */
+  min-width: 0; /* never widens the card */
 }
-.math-img { display: block; height: auto; max-width: none; }
+.math-img { display: block; height: auto; max-width: 100%; }
 /* Option button: a grid item defaults to min-width:auto = its content's width,
-   so a wide fraction crop would push the whole grid past the phone. min-width:0
-   + its own overflow-x lets a wide option scroll inside its button instead. */
-.math-opt { min-width: 0; overflow-x: auto; }
+   so a wide fraction crop would push the whole grid past the phone. */
+.math-opt { min-width: 0; }
 /* Option crops are small; a white plate and a height cap so a two-storey
    fraction and a one-line number line up without either looking broken. */
 .math-opt-img {
@@ -719,7 +718,10 @@ main.container {
   padding: 3px 6px;
   max-height: 64px;
   width: auto;
-  max-width: none;
+  max-width: 100%;
+  min-width: 0;
+  object-fit: contain;
+  object-position: left center;
 }
 
 /* An "e.g." inside a rule. The book interleaves its examples with its cases, so
