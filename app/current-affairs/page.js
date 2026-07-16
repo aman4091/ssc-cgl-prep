@@ -39,6 +39,30 @@ export default function CurrentAffairsPage() {
             </button>
           ))}
         </div>
+        {/* Built-in daily compilations — read-only, shipped with the app */}
+        {tab === "daily" && bank?.days?.length > 0 && (
+          <div className="glass-card" style={{ marginBottom: 20 }}>
+            <div className="row between" style={{ flexWrap: "wrap", gap: 8, alignItems: "flex-end" }}>
+              <div>
+                <h3>📚 Ready-made daily CA</h3>
+                <p className="muted mt-8" style={{ fontSize: "0.85rem" }}>
+                  Din-bhar ke current affairs, full explanations ke saath — already loaded, kuch upload nahi karna.
+                </p>
+              </div>
+            </div>
+            <div className="days-grid days-grid--ca mt-16">
+              {bank.days.map((d) => (
+                <div key={d.period} className="day-cell ca-card glass">
+                  <Link href={`/current-affairs/${caBankId(d.period)}`} className="ca-card__link">
+                    <span className="day-cell__n">{d.label}</span>
+                    <span className="day-cell__c">{d.count} questions</span>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Built-in monthly compilations — read-only, shipped with the app */}
         {tab === "monthly" && bank?.months?.length > 0 && (
           <div className="glass-card" style={{ marginBottom: 20 }}>
