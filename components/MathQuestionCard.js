@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { askAI, generateSimilar } from "@/lib/client-ai";
 import { saveQuiz, makeId } from "@/lib/storage";
-import { recordAttempts, getStat } from "@/lib/qstats";
+import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
-import AskButtons from "./AskButtons";
+import AskElsewhere from "./AskElsewhere";
 import PasteAnswer from "./PasteAnswer";
 
 // A maths question is IMAGES — the stem, four options and the solution are PNG→
@@ -45,6 +45,25 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
     ...q,
     question: `[${q.id}] ${q.qText || ""}`.trim(),
     options: q.optText && q.optText.length === 4 ? q.optText : ["a", "b", "c", "d"],
+  };
+
+  // Maths-only Gemini prompt: this bank is about speed, so it asks for the
+  // fastest way to crack the question rather than the shared "answer + short
+  // explanation" prompt. Baked into the question text (no promptKey) so the
+  // global geminiPrompt setting — used by every other bank — is untouched. The
+  // text is the lossy qText (the question is an image); good for word problems,
+  // imperfect for fraction-heavy ones.
+  const geminiQ = {
+    question:
+      "Is question ko seconds mein kaise solve karein — sabse fast trick/shortcut " +
+      "batao, lamba method nahi. Hinglish mein.\n\n" + (q.qText || ""),
+    options: tq.options,
+  };
+  // Pressing Gemini also opens the paste box for THIS question (PasteAnswer
+  // listens on cgl:gemini-asked), same as the shared AskButtons does.
+  const openPaste = () => {
+    try { window.dispatchEvent(new CustomEvent("cgl:gemini-asked", { detail: { key: keyFor(tq) } })); }
+    catch { /* ignore */ }
   };
 
   useEffect(() => { setBm(isQBookmarked(tq)); setShortcut(getSavedShortcut(tq)); }, [q.id]);
@@ -104,7 +123,14 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
         </h3>
         <div className="q-head__actions">
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
-          <AskButtons q={tq} />
+          <AskElsewhere q={tq} />
+          <AskElsewhere
+            q={geminiQ}
+            url="https://gemini.google.com/app"
+            label="✨ Gemini"
+            title="Question copy karke Gemini kholo — seconds mein solve karne ki trick pucho"
+            onAsked={openPaste}
+          />
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
         </div>
       </div>
