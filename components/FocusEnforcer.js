@@ -83,10 +83,10 @@ export default function FocusEnforcer() {
   return (
     // Non-dismissible: NO backdrop onClick, NO ✕, NO Escape. Only the buttons act.
     <div className="modal-overlay" style={{ zIndex: 400, background: "rgba(20,4,8,0.92)" }}>
-      <div className="modal glass" style={{ maxWidth: 460, borderColor: "rgba(255,138,122,0.5)" }}>
+      <div className="modal glass" style={{ maxWidth: 460, borderColor: "var(--accent)" }}>
         <div className="center">
           <div style={{ fontSize: "2.2rem" }}>⏰</div>
-          <span className="badge" style={{ background: "rgba(255,138,122,0.18)", color: "var(--danger)", border: "1px solid rgba(255,138,122,0.4)" }}>
+          <span className="badge" style={{ background: "var(--accent-wash)", color: "var(--danger)", border: "1px solid var(--accent-wash)" }}>
             STRICT FOCUS · #1 kaam
           </span>
         </div>

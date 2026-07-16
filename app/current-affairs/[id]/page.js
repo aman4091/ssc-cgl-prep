@@ -222,7 +222,7 @@ export default function CurrentAffairsDetail() {
             ) : (
               <div className="mt-16" style={{ display: "grid", gap: 14 }}>
                 {mism.map((r) => (
-                  <div key={r.i} className="answer-box" style={{ borderColor: r.confidence === "high" ? "rgba(107,211,154,0.4)" : "rgba(251,191,36,0.4)" }}>
+                  <div key={r.i} className="answer-box" style={{ borderColor: r.confidence === "high" ? "var(--ok-wash)" : "rgba(251,191,36,0.4)" }}>
                     <div className="row between" style={{ gap: 8, alignItems: "flex-start", flexWrap: "wrap" }}>
                       <p style={{ fontWeight: 600, flex: 1, minWidth: 200 }}>{r.q.question}</p>
                       <span className="chip" style={{ fontSize: "0.75rem", color: r.confidence === "high" ? "var(--success)" : "var(--warning)" }}>
@@ -295,8 +295,8 @@ export default function CurrentAffairsDetail() {
                           return (
                             <div key={oi} style={{
                               padding: "8px 12px", borderRadius: 8, fontSize: "0.9rem",
-                              border: "1px solid " + (isAns ? "rgba(107,211,154,0.6)" : "var(--glass-border)"),
-                              background: isAns ? "rgba(107,211,154,0.12)" : "var(--bg)",
+                              border: "1px solid " + (isAns ? "var(--ok)" : "var(--glass-border)"),
+                              background: isAns ? "var(--ok-wash)" : "var(--bg)",
                             }}>
                               <strong style={{ opacity: 0.7, marginRight: 6 }}>{letter(oi)}</strong>{opt}
                               {isAns && <span style={{ color: "var(--success)", marginLeft: 6 }}>✓</span>}

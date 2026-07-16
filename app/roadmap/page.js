@@ -167,8 +167,8 @@ export default function RoadmapPage() {
           ⚠️ AI Roadmap ke liye <strong>Gemini API key</strong> chahiye. <Link href="/settings" className="link">Settings</Link> mein add karo (free: aistudio.google.com/apikey).
         </div>
       )}
-      {err && <div className="glass-card" style={{ marginBottom: 12, borderColor: "rgba(255,138,122,.5)" }}>❌ {err}</div>}
-      {flash && <div className="glass-card" style={{ marginBottom: 12, borderColor: "rgba(107,211,154,.5)" }}>{flash}</div>}
+      {err && <div className="glass-card" style={{ marginBottom: 12, borderColor: "var(--accent)" }}>❌ {err}</div>}
+      {flash && <div className="glass-card" style={{ marginBottom: 12, borderColor: "var(--ok)" }}>{flash}</div>}
 
       {!onboarded
         ? <Intake busy={busy} hasGemini={hasGemini} onGenerate={generateFull} />

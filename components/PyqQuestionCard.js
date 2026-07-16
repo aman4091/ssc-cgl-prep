@@ -140,8 +140,8 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
             background: "var(--bg)", color: "var(--text-1)", cursor: picked === null ? "pointer" : "default", fontSize: "0.92rem",
           };
           if (revealed) {
-            if (oi === q.answer) { s.borderColor = "rgba(107,211,154,0.7)"; s.background = "rgba(107,211,154,0.14)"; }
-            else if (oi === picked) { s.borderColor = "rgba(255,138,122,0.7)"; s.background = "rgba(255,138,122,0.14)"; }
+            if (oi === q.answer) { s.borderColor = "var(--ok)"; s.background = "var(--ok-wash)"; }
+            else if (oi === picked) { s.borderColor = "var(--accent)"; s.background = "var(--accent-wash)"; }
           }
           return (
             <button key={oi} style={s} onClick={() => choose(oi)}>
