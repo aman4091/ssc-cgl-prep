@@ -26,7 +26,8 @@ export default function PocketPage() {
   // usually a word from the middle of it ("collective", "apostrophe").
   const shown = needle
     ? rules.filter((r) =>
-        [r.title, ...r.explanation, ...r.examples].join(" ").toLowerCase().includes(needle))
+        [r.title, ...r.blocks.map((b) => (b.table ? b.table.flat().join(" ") : b.p))]
+          .join(" ").toLowerCase().includes(needle))
     : rules;
 
   return (

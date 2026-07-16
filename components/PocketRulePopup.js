@@ -10,10 +10,14 @@ import AskElsewhere from "./AskElsewhere";
 
 const QUIZ_COUNT = 20;
 
-// A rule is paragraphs and tables. The book draws its tables with alignment
-// rather than ruled lines, so they are rebuilt at build time into real rows
-// (see the converter) — rendering them as markdown pipes would mean not
-// escaping the pipes the grammar text itself uses.
+// A rule is paragraphs, examples and tables, in the book's own order — it
+// interleaves them (Rule 5 runs Case 1, e.g., Case 2, e.g., Case 3, e.g.), so
+// they are one flow rather than an explanation followed by an examples box.
+// Examples are marked so they still read as examples.
+//
+// Its tables are drawn with alignment rather than ruled lines, so they are
+// rebuilt at build time into real rows (see the converter) — emitting markdown
+// pipes instead would mean not escaping the pipes the grammar text itself uses.
 function Blocks({ blocks }) {
   return blocks.map((b, i) =>
     b.table ? (
@@ -33,7 +37,7 @@ function Blocks({ blocks }) {
         </table>
       </div>
     ) : (
-      <div key={i} className="md" style={{ marginTop: i ? 8 : 0 }}>
+      <div key={i} className={`md${b.eg ? " pocket-eg" : ""}`} style={{ marginTop: i ? 8 : 0 }}>
         <Markdown inline>{b.p}</Markdown>
       </div>
     ),
@@ -157,15 +161,8 @@ export default function PocketRulePopup({ rule, onClose, onPrev, onNext, hasPrev
         </div>
 
         <div className="pocket-modal__body">
-          {/* The book itself */}
-          <div className="answer-box"><Blocks blocks={rule.explanation} /></div>
-
-          {rule.examples.length > 0 && (
-            <>
-              <span className="vd-label" style={{ display: "block", marginTop: 18 }}>📝 Book ke examples</span>
-              <div className="answer-box mt-8"><Blocks blocks={rule.examples} /></div>
-            </>
-          )}
+          {/* The book itself, in its own order */}
+          <div className="answer-box"><Blocks blocks={rule.blocks} /></div>
 
           {detail && (
             <>
