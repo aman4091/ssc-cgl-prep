@@ -723,6 +723,20 @@ main.container {
   object-fit: contain;
   object-position: left center;
 }
+/* Pinnacle Reasoning reuses the maths crop rules. Two additions of its own:
+   a figure option is a picture, not a line of text, so it needs real height. */
+.math-opt-img--fig { max-height: 120px; }
+/* The chapter Direction. On a non-verbal question the stem is generic and this
+   line is the actual task, so it reads as instruction, not as decoration. */
+.reason-direction {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-2);
+  border-left: 3px solid var(--accent-2);
+  padding: 6px 0 6px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0 8px 8px 0;
+}
 
 /* An "e.g." inside a rule. The book interleaves its examples with its cases, so
    they stay in that order rather than being collected into a box — this is what

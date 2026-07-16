@@ -1,0 +1,201 @@
+{
+ "book": "Pinnacle Reasoning",
+ "source": "reasoning.pdf — 369-page Pinnacle SSC reasoning question bank",
+ "total": 3543,
+ "base": "https://pub-c85669238e024a9d94f302cf7a7868e2.r2.dev/reasoning",
+ "note": "Sab book ke apne — question, options, answer aur solution, sab image mein (non-verbal questions mein padhne ko kuch hota hi nahi). Kuch generate nahi kiya. Answers blind-checked nahi hain.",
+ "chapters": [
+  {
+   "slug": "mathematical-operation",
+   "label": "Mathematical Operation",
+   "icon": "➗",
+   "count": 455
+  },
+  {
+   "slug": "sitting-arrangement",
+   "label": "Sitting Arrangement",
+   "icon": "💺",
+   "count": 350
+  },
+  {
+   "slug": "puzzle",
+   "label": "Puzzle",
+   "icon": "🧩",
+   "count": 254
+  },
+  {
+   "slug": "embedded-figure",
+   "label": "Embedded Figure",
+   "icon": "🔍",
+   "count": 247
+  },
+  {
+   "slug": "order-and-ranking",
+   "label": "Order and Ranking",
+   "icon": "🏅",
+   "count": 238
+  },
+  {
+   "slug": "series",
+   "label": "Series",
+   "icon": "🔢",
+   "count": 236
+  },
+  {
+   "slug": "venn-diagram",
+   "label": "Venn Diagram",
+   "icon": "⭕",
+   "count": 210
+  },
+  {
+   "slug": "analogy",
+   "label": "Analogy",
+   "icon": "🔗",
+   "count": 149
+  },
+  {
+   "slug": "counting-of-figure",
+   "label": "Counting of Figure",
+   "icon": "🔺",
+   "count": 126
+  },
+  {
+   "slug": "word-arrangement",
+   "label": "Word Arrangement",
+   "icon": "🔤",
+   "count": 118
+  },
+  {
+   "slug": "coding-decoding",
+   "label": "Coding Decoding",
+   "icon": "🔐",
+   "count": 108
+  },
+  {
+   "slug": "inequality",
+   "label": "Inequality",
+   "icon": "⚖️",
+   "count": 105
+  },
+  {
+   "slug": "odd-one-out",
+   "label": "Odd One Out",
+   "icon": "🎭",
+   "count": 101
+  },
+  {
+   "slug": "arithmetic-reasoning",
+   "label": "Arithmetic Reasoning",
+   "icon": "🧮",
+   "count": 100
+  },
+  {
+   "slug": "blood-relation",
+   "label": "Blood Relation",
+   "icon": "👨‍👩‍👧",
+   "count": 88
+  },
+  {
+   "slug": "direction",
+   "label": "Direction",
+   "icon": "🧭",
+   "count": 88
+  },
+  {
+   "slug": "completion-of-figure",
+   "label": "Completion of Figure",
+   "icon": "🧷",
+   "count": 86
+  },
+  {
+   "slug": "statement-and-conclusion",
+   "label": "Statement and Conclusion",
+   "icon": "📝",
+   "count": 64
+  },
+  {
+   "slug": "calendar",
+   "label": "Calendar",
+   "icon": "📅",
+   "count": 63
+  },
+  {
+   "slug": "mirror-water-image",
+   "label": "Mirror / Water Image",
+   "icon": "🪞",
+   "count": 56
+  },
+  {
+   "slug": "syllogism",
+   "label": "Syllogism",
+   "icon": "🔮",
+   "count": 46
+  },
+  {
+   "slug": "age",
+   "label": "Age",
+   "icon": "🎂",
+   "count": 44
+  },
+  {
+   "slug": "odd-one-out-non-verbal",
+   "label": "Odd One Out Non-Verbal",
+   "icon": "🖼️",
+   "count": 39
+  },
+  {
+   "slug": "series-non-verbal",
+   "label": "Series Non-Verbal",
+   "icon": "📶",
+   "count": 37
+  },
+  {
+   "slug": "analogy-non-verbal",
+   "label": "Analogy Non-Verbal",
+   "icon": "🧠",
+   "count": 32
+  },
+  {
+   "slug": "word-formation",
+   "label": "Word Formation",
+   "icon": "✏️",
+   "count": 25
+  },
+  {
+   "slug": "cube-and-dice",
+   "label": "Cube and Dice",
+   "icon": "🎲",
+   "count": 24
+  },
+  {
+   "slug": "input-output",
+   "label": "Input Output",
+   "icon": "⚙️",
+   "count": 22
+  },
+  {
+   "slug": "decision-making",
+   "label": "Decision Making",
+   "icon": "🤔",
+   "count": 15
+  },
+  {
+   "slug": "data-sufficiency",
+   "label": "Data Sufficiency",
+   "icon": "📊",
+   "count": 9
+  },
+  {
+   "slug": "paper-cut-and-fold",
+   "label": "Paper Cut and Fold",
+   "icon": "📄",
+   "count": 7
+  },
+  {
+   "slug": "missing-number",
+   "label": "Missing Number",
+   "icon": "❓",
+   "count": 1
+  }
+ ]
+}
