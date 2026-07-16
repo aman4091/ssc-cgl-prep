@@ -1,0 +1,113 @@
+{
+ "book": "Pinnacle English",
+ "source": "English.pdf — 693-page Pinnacle SSC English question bank",
+ "total": 7585,
+ "note": "Everything is the book's own — question, options, answer and the solution note. Nothing was generated. 7585 of 7592 questions: 7 that printed the same option twice are held back. Solutions are bilingual, as printed.",
+ "chapters": [
+  {
+   "slug": "synonyms",
+   "label": "Synonyms",
+   "icon": "🔤",
+   "count": 764,
+   "passages": 0
+  },
+  {
+   "slug": "idioms",
+   "label": "Idioms",
+   "icon": "💬",
+   "count": 761,
+   "passages": 0
+  },
+  {
+   "slug": "antonyms",
+   "label": "Antonyms",
+   "icon": "↔️",
+   "count": 739,
+   "passages": 0
+  },
+  {
+   "slug": "sentence-improvement",
+   "label": "Sentence Improvement",
+   "icon": "✏️",
+   "count": 738,
+   "passages": 0
+  },
+  {
+   "slug": "spot-the-error",
+   "label": "Spot the Error",
+   "icon": "🔍",
+   "count": 691,
+   "passages": 0
+  },
+  {
+   "slug": "one-word-substitution",
+   "label": "One Word Substitution",
+   "icon": "1️⃣",
+   "count": 675,
+   "passages": 0
+  },
+  {
+   "slug": "cloze-test",
+   "label": "Cloze Test",
+   "icon": "📄",
+   "count": 668,
+   "passages": 132
+  },
+  {
+   "slug": "fill-in-the-blanks",
+   "label": "Fill in the blanks",
+   "icon": "␣",
+   "count": 656,
+   "passages": 0
+  },
+  {
+   "slug": "spelling-check",
+   "label": "Spelling Check",
+   "icon": "🔠",
+   "count": 650,
+   "passages": 0
+  },
+  {
+   "slug": "parajumble",
+   "label": "Parajumble",
+   "icon": "🔀",
+   "count": 328,
+   "passages": 0
+  },
+  {
+   "slug": "comprehension",
+   "label": "Comprehension",
+   "icon": "📖",
+   "count": 297,
+   "passages": 60
+  },
+  {
+   "slug": "active-passive",
+   "label": "Active Passive",
+   "icon": "🔄",
+   "count": 250,
+   "passages": 0
+  },
+  {
+   "slug": "narration",
+   "label": "Narration",
+   "icon": "🗣️",
+   "count": 238,
+   "passages": 0
+  },
+  {
+   "slug": "homonyms",
+   "label": "Homonyms",
+   "icon": "👯",
+   "count": 118,
+   "passages": 0
+  },
+  {
+   "slug": "miscellaneous",
+   "label": "Miscellaneous",
+   "icon": "📌",
+   "count": 12,
+   "passages": 0
+  }
+ ]
+}

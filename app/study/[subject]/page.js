@@ -9,6 +9,23 @@ import {
 } from "@/lib/grammar";
 import { gkTopicsForSubject, findGkTopic } from "@/lib/gkbank";
 import { loadWarIndex } from "@/lib/warbank";
+import { loadEngIndex } from "@/lib/engbank";
+
+// Ready-made books that ship with the app. They are not chapters — they are
+// browsed as books under /pyq — but this is where someone looks for a subject's
+// questions, so each subject that has one gets a card at the top of its grid.
+const BOOKS = {
+  gs: {
+    icon: "🎯", name: "WAR", href: "/pyq/war",
+    load: async () => { const b = await loadWarIndex(); return b.subjects.length ? { ...b, parts: b.subjects.length, unit: "subjects" } : null; },
+    blurb: (b) => `${b.total} real SSC PYQs — har question ke saath uska exam.`,
+  },
+  english: {
+    icon: "📚", name: "Pinnacle English", href: "/pyq/pinnacle",
+    load: async () => { const b = await loadEngIndex(); return b.chapters.length ? { ...b, parts: b.chapters.length, unit: "chapters" } : null; },
+    blurb: (b) => `${b.total} SSC English questions — solutions ke saath.`,
+  },
+};
 
 export default function SubjectChaptersPage() {
   const { subject } = useParams();
@@ -17,7 +34,8 @@ export default function SubjectChaptersPage() {
   const [name, setName] = useState("");
   const [showAdd, setShowAdd] = useState(false);
   const [gkTopics, setGkTopics] = useState([]);
-  const [war, setWar] = useState(null); // the WAR book — GS only
+  const [book, setBook] = useState(null); // the ready-made book for this subject, if any
+  const bookMeta = BOOKS[subject];
 
   const refresh = () => setChapters(getChapters(subject));
   useEffect(() => { refresh(); }, [subject]);
@@ -28,11 +46,11 @@ export default function SubjectChaptersPage() {
   }, [subject]);
   useEffect(() => {
     let alive = true;
-    setWar(null);
-    if (subject !== "gs") return undefined;
-    loadWarIndex().then((b) => { if (alive && b.subjects.length) setWar(b); });
+    setBook(null);
+    if (!bookMeta) return undefined;
+    bookMeta.load().then((b) => { if (alive) setBook(b); });
     return () => { alive = false; };
-  }, [subject]);
+  }, [subject, bookMeta]);
 
   const add = (nm) => {
     const c = addChapter(subject, nm);
@@ -107,24 +125,19 @@ export default function SubjectChaptersPage() {
           <h2>Your Chapters</h2>
           <p>{chapters.length ? `${chapters.length} chapters` : "No chapters yet — create one above."}</p>
         </div>
-        {chapters.length === 0 && !war ? (
+        {chapters.length === 0 && !book ? (
           <div className="placeholder">No chapters yet. Add a topic to get started. 🚀</div>
         ) : (
           <div className="grid grid--3">
-            {/* The WAR book is not a chapter — it ships with the app and is
-                browsed as a book (lib/warbank). It sits here because GS is where
-                someone looks for GS questions. */}
-            {war && (
+            {book && (
               <article className="glass-card">
                 <div className="row" style={{ gap: 6, flexWrap: "wrap" }}>
                   <span className="badge badge--ok">📖 Ready-made book</span>
-                  <span className="badge">{war.subjects.length} subjects</span>
+                  <span className="badge">{book.parts} {book.unit}</span>
                 </div>
-                <h3 style={{ marginTop: 14 }}>🎯 WAR</h3>
-                <p className="muted mt-8" style={{ fontSize: "0.8rem" }}>
-                  {war.total} real SSC PYQs — har question ke saath uska exam.
-                </p>
-                <Link href="/pyq/war" className="btn btn--primary btn--block mt-16">
+                <h3 style={{ marginTop: 14 }}>{bookMeta.icon} {bookMeta.name}</h3>
+                <p className="muted mt-8" style={{ fontSize: "0.8rem" }}>{bookMeta.blurb(book)}</p>
+                <Link href={bookMeta.href} className="btn btn--primary btn--block mt-16">
                   Open the book →
                 </Link>
               </article>

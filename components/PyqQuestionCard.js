@@ -118,6 +118,16 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
         />
       ) : (
       <>
+      {/* Cloze Test / Comprehension: the passage IS the question — a Cloze stem
+          is just a numbered blank like (17)____ that means nothing without it.
+          Shared by ~5 questions each and up to 3,000 characters, so it scrolls
+          in its own box rather than pushing the options off the screen. */}
+      {q.passage && (
+        <div className="passage-box mt-12">
+          <Markdown>{q.passage}</Markdown>
+        </div>
+      )}
+
       <Diagram svg={q.diagram} />
 
       <div className="grid" style={{ gap: 8, marginTop: 12 }}>
