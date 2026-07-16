@@ -659,6 +659,40 @@ main.container {
 .answer-box .md { font-size: 1.08rem; line-height: 1.75; }
 .answer-box .md li { margin: 6px 0; }
 
+/* The Pocket Rocket rule popup. Scoped, not a change to .modal — the other six
+   modals grow with their content and let .modal-overlay do the scrolling. This
+   one caps itself instead and scrolls its own body, so the header, the four
+   buttons and the way to the next rule stay put on a long rule.
+   The 130px is .modal-overlay's 90px top + 40px bottom padding.
+   Written as .modal.pocket-modal so it outranks the mobile `.modal { padding }`
+   further down the file, which would otherwise put the padding back and undo
+   the bar/body split on a phone. */
+.modal.pocket-modal {
+  max-width: 680px;
+  max-height: calc(100vh - 130px);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden; /* keeps the bar's square corners inside the rounded modal */
+}
+.pocket-modal__bar {
+  flex: none;
+  padding: 20px 22px 14px;
+  border-bottom: 1px solid var(--glass-border);
+  background: rgba(4, 7, 16, 0.5);
+}
+.pocket-modal__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 22px 22px;
+  min-width: 0;
+}
+@media (max-width: 640px) {
+  .modal.pocket-modal { max-height: calc(100vh - 90px); }
+  .pocket-modal__bar { padding: 16px 16px 12px; }
+  .pocket-modal__body { padding: 14px 16px 18px; }
+}
+
 /* One rule in the Pocket Rocket list. A button, because the whole row opens the
    rule — but it has to look like the cards around it, not like a control. The
    book prints no titles, so the row shows the rule's own opening sentence, which

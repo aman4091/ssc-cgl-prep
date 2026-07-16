@@ -8,7 +8,10 @@ import Markdown from "@/components/Markdown";
 
 export default function PocketPage() {
   const [book, setBook] = useState(null);
-  const [open, setOpen] = useState(null); // the rule being read
+  // An index, not the rule itself — the popup steps through the list from
+  // inside, and it steps through what you are actually looking at (the search
+  // results), not all 162.
+  const [openIdx, setOpenIdx] = useState(null);
   const [q, setQ] = useState("");
 
   useEffect(() => {
@@ -59,8 +62,8 @@ export default function PocketPage() {
           <>
             {needle && <p className="muted mb-8" style={{ fontSize: "0.85rem" }}>{shown.length} rules</p>}
             <div style={{ display: "grid", gap: 10 }}>
-              {shown.map((r) => (
-                <button key={r.n} className="glass-card pocket-rule" onClick={() => setOpen(r)}>
+              {shown.map((r, i) => (
+                <button key={r.n} className="glass-card pocket-rule" onClick={() => setOpenIdx(i)}>
                   <span className="rule-card__n">Rule {r.n}</span>
                   <span className="pocket-rule__text"><Markdown inline>{r.title}</Markdown></span>
                 </button>
@@ -76,7 +79,20 @@ export default function PocketPage() {
         </section>
       )}
 
-      {open && <PocketRulePopup rule={open} onClose={() => setOpen(null)} />}
+      {openIdx != null && shown[openIdx] && (
+        <PocketRulePopup
+          // Remount per rule, so stepping to the next one clears the AI panels
+          // and starts its body at the top.
+          key={shown[openIdx].n}
+          rule={shown[openIdx]}
+          position={`${openIdx + 1} / ${shown.length}`}
+          hasPrev={openIdx > 0}
+          hasNext={openIdx < shown.length - 1}
+          onPrev={() => setOpenIdx((i) => i - 1)}
+          onNext={() => setOpenIdx((i) => i + 1)}
+          onClose={() => setOpenIdx(null)}
+        />
+      )}
     </>
   );
 }
