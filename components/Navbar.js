@@ -23,6 +23,7 @@ const LINKS = [
   { href: "/daily", label: "Daily Quiz", icon: "🗓️" },
   { href: "/checklist", label: "Checklist", icon: "✅" },
   { href: "/subjects", label: "Subjects", icon: "📚" },
+  { href: "/notes/polity", label: "Polity Notes", icon: "📔" },
   { href: "/vocab", label: "Vocab · OWS", icon: "🔤" },
   { href: "/pyq", label: "PYQ Bank", icon: "🎯" },
   { href: "/papers", label: "Full Papers", icon: "📄" },

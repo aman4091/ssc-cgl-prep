@@ -1784,3 +1784,107 @@ main.container {
 }
 .qtimer--live.is-running { color: var(--accent2); border-color: var(--accent2); }
 .qtimer--live.is-stopped { color: var(--ok); border-color: var(--ok); }
+
+/* ==========================================================================
+   NOTES READER  (/notes/*) — a prose "book" reader for transcribed study notes.
+   Ported from polity_notes/preview.html. All selectors are scoped under
+   .notesdoc / prefixed nt- so they never touch the site's own .card/.note/.rule.
+   The .nt-qm and .nt-scan rules carry meaning, not decoration (THEME §6): .nt-qm
+   flags a word the transcriber could not read; .nt-scan is the source-of-truth
+   scan. Do not tone either down.
+   ========================================================================== */
+
+.notesdoc { display: block; }
+
+/* topic nav — a sticky chip bar, not a nested sidebar (the site already has a
+   left drawer; a second 250px column would starve the content of width). */
+.notesdoc__nav {
+  position: sticky; top: 0; z-index: 5;
+  background: var(--bg);
+  padding: 10px 0 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.notesdoc__search {
+  width: 100%; padding: 9px 12px; margin-bottom: 10px;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--card); color: var(--ink); font: 14px var(--font);
+}
+.notesdoc__search:focus { outline: 2px solid var(--accent2); outline-offset: 1px; }
+
+.nt-nav { display: flex; flex-wrap: wrap; gap: 6px; }
+.nt-nav a {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 5px 11px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--card);
+  color: var(--ink); text-decoration: none; font-size: 13px; line-height: 1.2;
+}
+.nt-nav a:hover { border-color: var(--accent2); }
+.nt-nav a.on { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.nt-nav a span { color: var(--dim); font-size: 11px; }
+.nt-nav a.on span { color: var(--bg); opacity: .7; }
+
+/* ---- a page card ---- */
+.nt-card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 18px; margin-bottom: 16px;
+}
+.nt-hd {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-bottom: 12px;
+}
+.nt-hd b {
+  font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--accent);
+}
+.nt-meta { font-size: 12px; color: var(--dim); }
+.nt-cont { font-size: 12.5px; color: var(--dim); font-style: italic; margin: 6px 0; }
+
+/* ---- headings / emphasis (the markup contract) ---- */
+.nt-card h3 { font-size: 16px; color: var(--accent); margin: 16px 0 6px; line-height: 1.3; }
+.nt-card h4 { font-size: 14.5px; color: var(--ink); font-weight: 700; margin: 12px 0 4px; line-height: 1.3; }
+.nt-card b, .nt-card strong { color: var(--accent); font-weight: 600; }
+.nt-card u { text-decoration-color: var(--accent2); text-underline-offset: 2px; }
+
+/* ---- rule (a plain transcribed line) ---- */
+.nt-rule { margin: 6px 0; }
+
+/* ---- list: two columns, collapses on mobile ---- */
+ul.nt-list { margin: 6px 0; padding-left: 20px; columns: 2; column-gap: 26px; }
+ul.nt-list li { margin: 2px 0; break-inside: avoid; }
+
+/* ---- example (blue pen, left rule) ---- */
+.nt-ex { margin: 8px 0 8px 4px; padding-left: 11px; border-left: 3px solid var(--accent2); }
+.nt-ex .nt-n { color: var(--dim); font-size: 12px; margin-right: 5px; }
+.nt-ex .nt-nt { display: block; color: var(--dim); font-size: 12.5px; margin-left: 16px; }
+
+/* ---- boxed note ---- */
+.nt-note {
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); padding: 8px 11px; margin: 9px 0; font-size: 14.5px;
+}
+.nt-note.box { border-left: 3px solid var(--accent); }
+
+/* ---- tables (wide ones scroll themselves, never the page) ---- */
+.nt-scrollx { overflow-x: auto; }
+.nt-card table { border-collapse: collapse; margin: 10px 0; font-size: 14px; width: 100%; }
+.nt-card th, .nt-card td {
+  border: 1px solid var(--line); padding: 5px 9px; text-align: left; vertical-align: top;
+}
+.nt-card th { background: var(--bg); font-weight: 600; }
+
+/* ---- uncertain word — deliberately loud (open the scan, don't trust it) ---- */
+.nt-qm { background: var(--mark); border-radius: 3px; padding: 0 2px; font-weight: 600; }
+
+/* ---- the original-scan disclosure — the source of truth, on every page ---- */
+.nt-scan { margin-top: 14px; }
+.nt-scan summary {
+  cursor: pointer; font-size: 13px; color: var(--accent2); padding: 6px 0; user-select: none;
+}
+.nt-scan img {
+  width: 100%; max-width: 816px; margin-top: 8px; display: block;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+}
+
+@media (max-width: 640px) {
+  ul.nt-list { columns: 1; }
+}
