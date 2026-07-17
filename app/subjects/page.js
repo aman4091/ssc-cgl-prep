@@ -3,10 +3,11 @@ import Link from "next/link";
 export const metadata = { title: "Subjects — SSC CGL Pre" };
 
 const SUBJECTS = [
-  { icon: "🧮", name: "Quantitative Aptitude", topics: "Number System, Algebra, Geometry, Trigonometry, DI", href: "/study/math" },
-  { icon: "🧠", name: "General Intelligence & Reasoning", topics: "Analogy, Classification, Series, Coding-Decoding, Puzzles", href: "/study/reasoning" },
-  { icon: "📚", name: "English Comprehension", topics: "Grammar, Vocabulary, Synonyms, Comprehension, Cloze", href: "/english" },
-  { icon: "🌍", name: "General Awareness", topics: "History, Polity, Geography, Economics, Science, Current Affairs", href: "/study/gs" },
+  { icon: "🧮", name: "Quantitative Aptitude", topics: "Number System, Algebra, Geometry, Trigonometry, DI", href: "/study/math", cta: "Open chapters →" },
+  { icon: "🧠", name: "General Intelligence & Reasoning", topics: "Analogy, Classification, Series, Coding-Decoding, Puzzles", href: "/study/reasoning", cta: "Open chapters →" },
+  { icon: "📚", name: "English Comprehension", topics: "Grammar, Vocabulary, Synonyms, Comprehension, Cloze", href: "/english", cta: "Open chapters →" },
+  { icon: "🌍", name: "General Awareness", topics: "History, Polity, Geography, Economics, Science, Current Affairs", href: "/study/gs", cta: "Open chapters →" },
+  { icon: "📔", name: "Polity · SIMPLICRACK", topics: "Indian Polity notes — 216 pages, 12 chapters, Making of the Constitution se Judiciary tak", href: "/notes/polity", cta: "Read notes →" },
 ];
 
 export default function SubjectsPage() {
@@ -27,7 +28,7 @@ export default function SubjectsPage() {
               <div className="subject__icon">{s.icon}</div>
               <h3>{s.name}</h3>
               <p className="mt-8">{s.topics}</p>
-              <span className="badge badge--ok" style={{ marginTop: 12 }}>Open chapters →</span>
+              <span className="badge badge--ok" style={{ marginTop: 12 }}>{s.cta || "Open chapters →"}</span>
             </Link>
           ))}
         </div>
