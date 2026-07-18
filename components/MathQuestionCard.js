@@ -179,12 +179,13 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
         </div>
       )}
 
-      {revealed && (
-        <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
-          <button className="btn btn--ghost btn--sm" onClick={toggleShortcut} disabled={scLoading}>{scLoading ? "Thinking…" : scShown ? "⚡ Hide shortcut" : "⚡ Shortcut trick"}</button>
-          <button className="btn btn--ghost btn--sm" onClick={make20} disabled={simLoading}>{simLoading ? "Generating…" : "🎯 20 similar"}</button>
-        </div>
-      )}
+      {/* 20-similar is always available — you can spin up a same-type practice
+          set without answering first. Shortcut stays behind reveal because it
+          explains the (now shown) solution. */}
+      <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
+        {revealed && <button className="btn btn--ghost btn--sm" onClick={toggleShortcut} disabled={scLoading}>{scLoading ? "Thinking…" : scShown ? "⚡ Hide shortcut" : "⚡ Shortcut trick"}</button>}
+        <button className="btn btn--ghost btn--sm" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo (practice quiz)">{simLoading ? "Generating…" : "🎯 20 similar"}</button>
+      </div>
 
       {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}
       {scShown && shortcut && (
