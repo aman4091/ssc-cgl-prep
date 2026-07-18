@@ -102,10 +102,28 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
 
   const toggleBm = () => { setBm(toggleQBookmark(tq, subject)); };
 
+  // The lossy text extraction leaves junk in qText/optText — lone surrogates
+  // where a math glyph was dropped, zero-width spaces, and the printed "(a) "
+  // option letters. That derails the similar-question generator, so scrub it to
+  // the cleanest plain text we can before sending.
+  const cleanText = (s) =>
+    String(s || "")
+      .replace(/[\uD800-\uDFFF]/g, "")
+      .replace(/[\u200B-\u200F\u2060-\u2064\uFEFF]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  const cleanOpt = (s) => cleanText(s).replace(/^\(?[a-dA-D]\)\s*/, "");
+
   const make20 = async () => {
     setSimLoading(true); setErr("");
     try {
-      const data = await generateSimilar({ question: q.qText || "", options: tq.options }, 20, subject);
+      const sampleQ = cleanText(q.qText);
+      if (!sampleQ) {
+        setErr("Is question ka text bahut lossy hai (image-only) — similar generate nahi ho payega. Kisi text-wale question pe try karo.");
+        setSimLoading(false); return;
+      }
+      const opts = (q.optText && q.optText.length === 4 ? q.optText : tq.options).map(cleanOpt);
+      const data = await generateSimilar({ question: sampleQ, options: opts }, 20, subject);
       const quiz = { id: makeId(), title: data.title || "Similar (20)", source: "similar", createdAt: new Date().toISOString(), questions: data.questions };
       saveQuiz(quiz);
       router.push(`/quizzes/${quiz.id}`);

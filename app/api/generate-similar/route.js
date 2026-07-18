@@ -1,5 +1,37 @@
 import { deepseekChat, parseJsonLoose } from "@/lib/deepseek";
 
+// Pull complete {...} objects out of a (possibly TRUNCATED) "questions" array.
+// A maths set is heavy — full LaTeX solution + an SVG diagram per question — so
+// 20 of them can overrun the token limit and the JSON ends mid-array. Plain
+// JSON.parse then fails and we'd throw away every question that DID come back.
+// This brace-matches each object so a cut-off tail costs only its last item.
+function salvageQuestions(content) {
+  const at = content.indexOf('"questions"');
+  const arr = at === -1 ? -1 : content.indexOf("[", at);
+  if (arr === -1) return [];
+  const out = [];
+  let depth = 0, objStart = -1, inStr = false, esc = false;
+  for (let i = arr + 1; i < content.length; i++) {
+    const c = content[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (c === "\\") esc = true;
+      else if (c === '"') inStr = false;
+      continue;
+    }
+    if (c === '"') inStr = true;
+    else if (c === "{") { if (depth === 0) objStart = i; depth++; }
+    else if (c === "}") {
+      depth--;
+      if (depth === 0 && objStart !== -1) {
+        try { out.push(JSON.parse(content.slice(objStart, i + 1))); } catch { /* skip partial */ }
+        objStart = -1;
+      }
+    } else if (c === "]" && depth === 0) break;
+  }
+  return out;
+}
+
 const SIMILAR_PROMPT = `You are an SSC CGL question setter AND an accurate solver. Given ONE sample question, generate a fresh practice set of NEW questions of the SAME type, topic and difficulty.
 
 Output STRICT JSON only (no markdown, no commentary):
@@ -65,16 +97,20 @@ export async function POST(req) {
     if (!result.ok) return Response.json({ error: result.error }, { status: result.status });
 
     const parsed = parseJsonLoose(result.content);
-    const questions = Array.isArray(parsed?.questions)
-      ? parsed.questions.filter(
-          (x) => x && x.question && Array.isArray(x.options) && x.options.length >= 2
-        )
-      : [];
+    const valid = (x) => x && x.question && Array.isArray(x.options) && x.options.length >= 2;
+    // Prefer the clean parse; if it yielded nothing (truncated / malformed),
+    // salvage whatever complete questions did come back rather than 0.
+    let questions = Array.isArray(parsed?.questions) ? parsed.questions.filter(valid) : [];
+    if (questions.length === 0) questions = salvageQuestions(result.content).filter(valid);
 
     if (questions.length === 0)
       return Response.json({ error: "Similar questions generate nahi ho paye, dobara try karo." }, { status: 422 });
 
-    return Response.json({ title: parsed.title || "Similar Practice", questions });
+    const title =
+      parsed?.title ||
+      (result.content.match(/"title"\s*:\s*"([^"]+)"/) || [])[1] ||
+      "Similar Practice";
+    return Response.json({ title, questions });
   } catch (e) {
     return Response.json({ error: e.message }, { status: 500 });
   }
