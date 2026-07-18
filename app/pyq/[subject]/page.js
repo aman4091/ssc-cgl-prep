@@ -12,6 +12,7 @@ import { loadGkQuestions, gkTopicsForSubject } from "@/lib/gkbank";
 import { readImageText, generateQuizText, extractPdfTextSmart, generateQuizChunked } from "@/lib/client-ai";
 import { saveQuiz, makeId, getSettings } from "@/lib/storage";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
+import FullscreenTestButton from "@/components/FullscreenTestButton";
 
 const PAGE = 50; // ready-made banks run to hundreds — render them in slices
 
@@ -202,6 +203,7 @@ export default function PyqSubjectPage() {
           <button className="btn btn--primary" onClick={practice} disabled={filtered.length === 0}>
             🎯 Practice ({Math.min(25, filtered.length)} Q · 15 min)
           </button>
+          <FullscreenTestButton questions={filtered} title={`${meta.label} · PYQ`} subject={subject} />
           <button className="btn btn--ghost btn--sm" onClick={() => setShowAdd((v) => !v)}>
             {showAdd ? "✕ Close" : "➕ Add questions"}
           </button>

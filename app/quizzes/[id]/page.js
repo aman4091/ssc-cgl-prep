@@ -12,6 +12,7 @@ import AddToChapter from "@/components/AddToChapter";
 import AskButtons from "@/components/AskButtons";
 import PasteAnswer from "@/components/PasteAnswer";
 import WordPopup from "@/components/WordPopup";
+import FullscreenTestButton from "@/components/FullscreenTestButton";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
@@ -446,7 +447,10 @@ export default function QuizPlayer() {
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">📝 {quiz.title}</span>
-          <Link href="/quizzes" className="btn btn--ghost btn--sm">Exit</Link>
+          <div className="row" style={{ gap: 8 }}>
+            <FullscreenTestButton questions={quiz.questions} title={quiz.title} subject={quiz.subject || ""} timeLimitSec={quiz.timeLimitSec || 0} />
+            <Link href="/quizzes" className="btn btn--ghost btn--sm">Exit</Link>
+          </div>
         </div>
         {quiz.streaming && (
           <p className="mt-8" style={{ fontSize: "0.82rem", color: "var(--accent-2)", fontWeight: 600 }}>

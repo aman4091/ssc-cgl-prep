@@ -1921,3 +1921,45 @@ ul.nt-list li { margin: 2px 0; break-inside: avoid; }
 @media (max-width: 640px) {
   ul.nt-list { columns: 1; }
 }
+
+/* ============================================================================
+   Full-screen test runner — one question at a time, distraction-free.
+   A fixed overlay (works even where the Fullscreen API is blocked) with a
+   top bar (title + timer + exit), a scrollable body, and a fixed action bar.
+   ========================================================================== */
+.fsr {
+  position: fixed; inset: 0; z-index: 2000;
+  display: flex; flex-direction: column;
+  background: var(--bg); color: var(--text-1);
+  overflow: hidden;
+}
+.fsr__top {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 12px 16px; border-bottom: 1px solid var(--glass-border);
+  background: var(--bg-2, var(--bg));
+}
+.fsr__title {
+  font-weight: 700; font-size: 0.95rem;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+}
+.fsr__body { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 20px 16px 28px; }
+.fsr__inner { max-width: 720px; margin: 0 auto; width: 100%; min-width: 0; }
+.fsr__count { color: var(--text-2); font-size: 0.85rem; margin-bottom: 12px; }
+.fsr__stem { margin-bottom: 20px; }
+.fsr__q { font-size: 1.3rem; font-weight: 600; line-height: 1.5; }
+.fsr__opts { display: grid; gap: 12px; }
+.fsr__opt { min-width: 0; }
+.fsr__sol {
+  margin-top: 20px; padding: 14px 16px; border-radius: 12px;
+  background: var(--ok-wash); font-size: 0.95rem; line-height: 1.6;
+}
+.fsr__bottom {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--glass-border); background: var(--bg-2, var(--bg));
+}
+.fsr__bottom .btn { flex: 0 1 auto; }
+@media (max-width: 480px) {
+  .fsr__q { font-size: 1.12rem; }
+  .fsr__bottom .btn { padding-left: 12px; padding-right: 12px; }
+}

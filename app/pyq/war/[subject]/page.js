@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadWarSubject, warSubjectMeta } from "@/lib/warbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
+import FullscreenTestButton from "@/components/FullscreenTestButton";
 
 const PAGE = 50; // render in slices — 562 cards at once janks a phone
 
@@ -52,6 +53,15 @@ export default function WarSubjectPage() {
           {meta?.icon} {meta?.label}{" "}
           <span className="grad">· {filtered.length} PYQs</span>
         </h1>
+        {filtered.length > 0 && (
+          <div className="row mt-16">
+            <FullscreenTestButton
+              questions={filtered}
+              title={`WAR · ${meta?.label || ""}${chapter ? ` · ${chapter}` : ""}`}
+              subject="gs"
+            />
+          </div>
+        )}
       </section>
 
       {/* Chapter filter — the book's own chapters, from its page footers */}
