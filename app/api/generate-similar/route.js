@@ -54,7 +54,7 @@ CORRECTNESS (most important — do NOT get this wrong):
 - Make ONE of the 4 options EQUAL to that computed value; the other 3 are plausible wrong results (distractors).
 - Set "answer" to the 0-based index of the option that equals your computed value. Re-check the index before finalizing.
 - "explanation" must reach the SAME value as options[answer]. The value in solution, explanation, and options[answer] must all be IDENTICAL.
-- If you are not confident you solved it correctly, skip that question.
+- You MUST return the full requested number of questions — do NOT omit or skip any. If you are unsure of a value, simplify that question until you can solve it confidently, then include it. Returning fewer than requested (or an empty list) is a failure.
 
 OTHER RULES:
 - SAME CONCEPT (most important): First identify the EXACT rule/concept/topic the sample tests. For English grammar this is the specific rule (articles, tenses, subject-verb agreement, prepositions, etc.). EVERY generated question must test the SAME rule/concept — only different wording/words/numbers. Do NOT drift to other rules or topics.
@@ -97,14 +97,46 @@ export async function POST(req) {
     if (!result.ok) return Response.json({ error: result.error }, { status: result.status });
 
     const parsed = parseJsonLoose(result.content);
-    const valid = (x) => x && x.question && Array.isArray(x.options) && x.options.length >= 2;
-    // Prefer the clean parse; if it yielded nothing (truncated / malformed),
-    // salvage whatever complete questions did come back rather than 0.
-    let questions = Array.isArray(parsed?.questions) ? parsed.questions.filter(valid) : [];
-    if (questions.length === 0) questions = salvageQuestions(result.content).filter(valid);
 
-    if (questions.length === 0)
-      return Response.json({ error: "Similar questions generate nahi ho paye, dobara try karo." }, { status: 422 });
+    // Options sometimes come back as objects ({text}/{value}) or numbers — coerce
+    // to plain strings so a shape quirk doesn't make a whole set look invalid.
+    const normOpts = (o) =>
+      Array.isArray(o)
+        ? o.map((x) => (typeof x === "string" ? x : x?.text ?? x?.value ?? x?.option ?? x?.label ?? String(x)))
+        : [];
+    const norm = (x) => (x && x.question ? { ...x, options: normOpts(x.options) } : null);
+    const keep = (x) => x && x.options.length >= 2;
+
+    // The questions array can sit under "questions", be the top-level array, or
+    // (rarely) under another key — take the first array of question-shaped items.
+    const pickArray = (p) => {
+      if (Array.isArray(p?.questions)) return p.questions;
+      if (Array.isArray(p)) return p;
+      if (p && typeof p === "object")
+        for (const v of Object.values(p)) if (Array.isArray(v) && v.some((x) => x && x.question)) return v;
+      return [];
+    };
+
+    let questions = pickArray(parsed).map(norm).filter(keep);
+    // If the clean parse yielded nothing (truncated / malformed JSON), salvage
+    // whatever complete question objects did come back rather than returning 0.
+    if (questions.length === 0) questions = salvageQuestions(result.content).map(norm).filter(keep);
+
+    if (questions.length === 0) {
+      // Bake the actual reason into the message so a repeat failure is diagnosable
+      // rather than opaque: empty reply vs. token-truncation vs. shape mismatch.
+      const len = (result.content || "").length;
+      const why =
+        len === 0
+          ? "model ne khaali jawab diya (model/balance check karo)"
+          : result.finishReason === "length"
+          ? "jawab token-limit pe kat gaya"
+          : `jawab parse nahi hua (${len} chars, finish: ${result.finishReason || "?"})`;
+      return Response.json(
+        { error: `Similar generate nahi ho paye — ${why}. Dobara try karo.` },
+        { status: 422 }
+      );
+    }
 
     const title =
       parsed?.title ||
