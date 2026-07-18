@@ -17,6 +17,7 @@ import {
 } from "@/lib/client-ai";
 import { saveQuiz, makeId, getSettings, geminiActive } from "@/lib/storage";
 import { gkTopicFor, loadGkTopic } from "@/lib/gkbank";
+import { applyGkOverrides, saveGkOverride } from "@/lib/gkoverrides";
 import { buildChapterQuiz } from "@/lib/chapterquiz";
 import { saveFile, getFile, openFile } from "@/lib/filestore";
 import RuleCard from "@/components/RuleCard";
@@ -49,6 +50,7 @@ export default function ChapterPage() {
   const [gkQs, setGkQs] = useState([]);
   const [gkReady, setGkReady] = useState(false); // lookup done — tells "no bank" apart from "not looked yet"
   const [gkShown, setGkShown] = useState(GK_PAGE); // render in slices — 1,000+ cards at once janks
+  const [gkEdits, setGkEdits] = useState(0); // bump to re-apply local answer corrections after an edit
 
   const [manual, setManual] = useState("");
   const [paperInput, setPaperInput] = useState(""); // PYQ: which paper these questions are from
@@ -420,7 +422,7 @@ export default function ChapterPage() {
     if (!gkQs.length) return;
     // Its own served-cycle key, so the ready-made bank and the chapter's own
     // questions don't consume each other's "not yet asked" pool.
-    const quiz = buildChapterQuiz(`${chapterId}:gk`, `${gkTopic.label} · GK Tricks`, { pool: gkQs });
+    const quiz = buildChapterQuiz(`${chapterId}:gk`, gkTopic.label, { pool: applyGkOverrides(gkQs) });
     if (quiz) router.push(`/quizzes/${quiz.id}`);
   };
   const clearQs = () => { if (confirm("Remove all questions from this chapter?")) { clearChapterQuestions(chapterId); refresh(); } };
@@ -549,7 +551,7 @@ export default function ChapterPage() {
             </button>
             {gkTopic && (
               <button className={`chip chip--btn chip--lg ${wantsGk ? "is-active" : ""}`} onClick={() => switchView("gk")}>
-                🧠 GK Tricks ({gkTopic.count})
+                {gkTopic.tabLabel || "🧠 GK Tricks"} ({gkTopic.count})
               </button>
             )}
           </div>
@@ -809,26 +811,33 @@ export default function ChapterPage() {
         );
       })()}
 
-      {/* GK Tricks — the ready-made bank that ships with the app. Read-only: it
-          lives in a static file, so there is nothing to edit or delete. */}
-      {wantsGk && (
+      {/* Ready-made bank that ships with the app (public/gkbank). It lives in a
+          static file, so a wrong answer can't be fixed in place — the ✏️ edit
+          button saves a LOCAL correction (lib/gkoverrides) that is merged on top
+          here. `gkEdits` bumps to re-apply after an edit. The tab/heading name
+          comes from the topic (tabLabel), so a grammar set isn't called "GK
+          Tricks". */}
+      {wantsGk && (() => {
+        const heading = gkTopic?.tabLabel || "🧠 GK Tricks";
+        const gkList = applyGkOverrides(gkQs); void gkEdits; // gkEdits in deps → re-merge
+        return (
         <section className="section" id="gk">
           <div className="section__head">
             <div className="row between" style={{ alignItems: "flex-end", flexWrap: "wrap", gap: 10 }}>
               <div>
-                <h2>🧠 GK Tricks</h2>
+                <h2>{heading}</h2>
                 <p>
-                  {gkQs.length
-                    ? `${gkQs.length} ready-made questions — pick an option to see the answer & explanation.`
+                  {gkList.length
+                    ? `${gkList.length} ready-made questions — pick an option to see the answer. Galat answer ✏️ se theek kar sakte ho.`
                     : "Loading…"}
                 </p>
               </div>
-              {gkQs.length > 0 && (
+              {gkList.length > 0 && (
                 <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
                   <button className="btn btn--primary btn--sm" onClick={gkPractice}>
-                    🎯 Practice ({Math.min(25, gkQs.length)} · 15 min)
+                    🎯 Practice ({Math.min(25, gkList.length)} · 15 min)
                   </button>
-                  <FullscreenTestButton questions={gkQs} title={`${chapterName} · GK Tricks`} subject={subject} label="⛶ Full screen" className="btn btn--primary btn--sm" />
+                  <FullscreenTestButton questions={gkList} title={`${chapterName} · ${gkTopic?.label || heading}`} subject={subject} label="⛶ Full screen" className="btn btn--primary btn--sm" />
                 </div>
               )}
             </div>
@@ -843,12 +852,12 @@ export default function ChapterPage() {
             </p>
           )}
 
-          {gkQs.length === 0 ? (
+          {gkList.length === 0 ? (
             <div className="placeholder">Loading ready-made questions… 📚</div>
           ) : (
             <>
               <div style={{ display: "grid", gap: 12 }}>
-                {gkQs.slice(0, gkShown).map((q, i) => (
+                {gkList.slice(0, gkShown).map((q, i) => (
                   <PyqQuestionCard
                     key={q.id}
                     q={q}
@@ -858,19 +867,21 @@ export default function ChapterPage() {
                     chapterId={chapterId}
                     archiveOnAnswer
                     fileToChapter
-                    allQuestions={gkQs}
+                    allQuestions={gkList}
+                    onEdit={(nq) => { saveGkOverride(q.id, nq); setGkEdits((e) => e + 1); }}
                   />
                 ))}
               </div>
-              {gkShown < gkQs.length && (
+              {gkShown < gkList.length && (
                 <button className="btn btn--ghost btn--block mt-16" onClick={() => setGkShown((n) => n + GK_PAGE)}>
-                  ▼ Show {Math.min(GK_PAGE, gkQs.length - gkShown)} more ({gkShown} / {gkQs.length})
+                  ▼ Show {Math.min(GK_PAGE, gkList.length - gkShown)} more ({gkShown} / {gkList.length})
                 </button>
               )}
             </>
           )}
         </section>
-      )}
+        );
+      })()}
 
       {/* Notes lightbox — in-place viewer with prev/next + topic label */}
       {lbIndex !== null && (() => {
