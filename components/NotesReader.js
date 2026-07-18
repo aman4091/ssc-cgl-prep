@@ -35,17 +35,42 @@ function md(s) {
   return t;
 }
 
-function blockHtml(b) {
+function blockHtml(b, hashHierarchy) {
   if (b.type === "heading") {
-    // The source marks a main section heading with a leading "# " (368 of 593);
-    // subheadings have none. Strip the marker (it is transcriber markup, not book
-    // text) and use it for real hierarchy: "# …" → h3 (red-pen main heading),
-    // plain → h4 (quieter subheading).
+    // Some books mark a main section heading with a leading "# " (polity: 368 of
+    // 593); subheadings have none. Strip the marker (transcriber markup, not book
+    // text). Only split hierarchy when the book actually USES "#": then "# …" is
+    // an h3 main heading and a plain one is a quieter h4. When no heading in the
+    // book carries a marker (static GK: 0 of 1017), every heading is an h3.
     const m = /^(#+)\s+/.exec(b.text);
     const text = m ? b.text.slice(m[0].length) : b.text;
-    return m ? "<h3>" + md(text) + "</h3>" : "<h4>" + md(text) + "</h4>";
+    return m || !hashHierarchy
+      ? "<h3>" + md(text) + "</h3>"
+      : "<h4>" + md(text) + "</h4>";
   }
   if (b.type === "rule") return '<div class="nt-rule">' + md(b.text) + "</div>";
+  // ⚡ Quick Revise — the highest-yield facts of a subsection, one glance (static GK).
+  if (b.type === "qr") {
+    const cells = (b.cells || [])
+      .map(
+        (c) =>
+          '<div class="nt-qr-cell"><span class="k">' +
+          md(c.k) +
+          '</span><span class="v">' +
+          md(c.v) +
+          "</span></div>"
+      )
+      .join("");
+    return (
+      '<div class="nt-qr"><div class="nt-qr-hd">⚡ ' +
+      esc(b.title || "Quick Revise") +
+      '</div><div class="nt-qr-grid">' +
+      cells +
+      "</div></div>"
+    );
+  }
+  // 📌 memory hook — a superlative / striking one-liner, pinned (static GK).
+  if (b.type === "hook") return '<div class="nt-hook">' + md(b.text) + "</div>";
   if (b.type === "list")
     return (
       '<ul class="nt-list">' +
@@ -85,7 +110,8 @@ function blockHtml(b) {
 }
 
 // meta.topics lists RUNS; merge by name so a chapter that appears twice cannot
-// produce two nav entries that filter to the same pages.
+// produce two nav entries that filter to the same pages. Sorted by topic_no so
+// the nav follows the book's own chapter order (falls back to first page).
 function navTopics(topics) {
   const seen = new Map();
   for (const t of topics || []) {
@@ -94,11 +120,19 @@ function navTopics(topics) {
       e.lo = Math.min(e.lo, t.first_page);
       e.hi = Math.max(e.hi, t.last_page);
     } else {
-      seen.set(t.topic, { topic: t.topic, lo: t.first_page, hi: t.last_page });
+      seen.set(t.topic, {
+        topic: t.topic,
+        no: t.topic_no != null ? t.topic_no : t.first_page,
+        lo: t.first_page,
+        hi: t.last_page,
+      });
     }
   }
-  return [...seen.values()];
+  return [...seen.values()].sort((a, b) => a.no - b.no);
 }
+
+// Chips read well up to a point; past this many chapters a dropdown is compact.
+const CHIP_LIMIT = 18;
 
 export default function NotesReader({ book }) {
   const [topic, setTopic] = useState(null);
@@ -106,6 +140,15 @@ export default function NotesReader({ book }) {
 
   const meta = book?.meta || { topics: [], total_pages: 0 };
   const nav = useMemo(() => navTopics(meta.topics), [meta.topics]);
+
+  // Does this book use "# " heading markers for hierarchy? (polity yes, static no)
+  const hashHierarchy = useMemo(
+    () =>
+      (book?.pages || []).some((p) =>
+        (p.blocks || []).some((b) => b.type === "heading" && /^#+\s/.test(b.text))
+      ),
+    [book]
+  );
 
   const pages = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -116,6 +159,8 @@ export default function NotesReader({ book }) {
     return ps;
   }, [book, topic, query]);
 
+  const useDropdown = nav.length > CHIP_LIMIT;
+
   return (
     <div className="notesdoc">
       <aside className="notesdoc__nav">
@@ -125,36 +170,56 @@ export default function NotesReader({ book }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <nav className="nt-nav">
-          <a
-            href="#"
-            className={topic === null ? "on" : ""}
-            onClick={(e) => {
-              e.preventDefault();
-              setTopic(null);
+        {useDropdown ? (
+          // 84 chapters is too many chips — a select stays compact.
+          <select
+            className="notesdoc__select"
+            value={topic || ""}
+            onChange={(e) => {
+              setTopic(e.target.value || null);
               window.scrollTo(0, 0);
             }}
           >
-            All chapters<span>{meta.total_pages}</span>
-          </a>
-          {nav.map((t) => (
+            <option value="">All chapters ({meta.total_pages} pages)</option>
+            {nav.map((t) => (
+              <option key={t.topic} value={t.topic}>
+                {t.no ? `${t.no}. ` : ""}
+                {t.topic} ({t.lo}-{t.hi})
+              </option>
+            ))}
+          </select>
+        ) : (
+          <nav className="nt-nav">
             <a
-              key={t.topic}
               href="#"
-              className={topic === t.topic ? "on" : ""}
+              className={topic === null ? "on" : ""}
               onClick={(e) => {
                 e.preventDefault();
-                setTopic(t.topic);
+                setTopic(null);
                 window.scrollTo(0, 0);
               }}
             >
-              {t.topic}
-              <span>
-                {t.lo}-{t.hi}
-              </span>
+              All chapters<span>{meta.total_pages}</span>
             </a>
-          ))}
-        </nav>
+            {nav.map((t) => (
+              <a
+                key={t.topic}
+                href="#"
+                className={topic === t.topic ? "on" : ""}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setTopic(t.topic);
+                  window.scrollTo(0, 0);
+                }}
+              >
+                {t.topic}
+                <span>
+                  {t.lo}-{t.hi}
+                </span>
+              </a>
+            ))}
+          </nav>
+        )}
       </aside>
 
       <div className="notesdoc__main">
@@ -173,7 +238,7 @@ export default function NotesReader({ book }) {
               {p.blocks.map((b, i) => (
                 <div
                   key={i}
-                  dangerouslySetInnerHTML={{ __html: blockHtml(b) }}
+                  dangerouslySetInnerHTML={{ __html: blockHtml(b, hashHierarchy) }}
                 />
               ))}
               {p.continues_to_next && (

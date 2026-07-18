@@ -1812,6 +1812,38 @@ main.container {
 }
 .notesdoc__search:focus { outline: 2px solid var(--accent2); outline-offset: 1px; }
 
+/* topic dropdown — used instead of chips when a book has many chapters (static GK: 84) */
+.notesdoc__select {
+  width: 100%; padding: 9px 12px;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--card); color: var(--ink); font: 14px var(--font); cursor: pointer;
+}
+.notesdoc__select:focus { outline: 2px solid var(--accent2); outline-offset: 1px; }
+
+/* ---- memorisation layer (static GK): ⚡ Quick Revise box + 📌 memory hooks ---- */
+.nt-qr {
+  background: color-mix(in srgb, var(--accent) 7%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+  border-radius: var(--radius); padding: 12px 14px; margin: 4px 0 14px;
+}
+.nt-qr-hd {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 9px;
+}
+.nt-qr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 7px 16px; }
+.nt-qr-cell { font-size: 13.5px; line-height: 1.4; }
+.nt-qr-cell .k {
+  color: var(--dim); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; display: block;
+}
+.nt-qr-cell .v { color: var(--ink); font-weight: 600; }
+.nt-qr-cell .v b { color: var(--accent); }
+/* 📌 sits in a left gutter rather than as a flex item — a long hook must wrap,
+   and a flex item's default min-width:auto refuses to, overflowing narrow screens. */
+.nt-hook { position: relative; font-size: 14px; margin: 5px 0; padding-left: 24px; overflow-wrap: anywhere; }
+.nt-hook::before { content: "📌"; position: absolute; left: 0; top: 0; }
+.nt-hook b { color: var(--accent); }
+
 .nt-nav { display: flex; flex-wrap: wrap; gap: 6px; }
 .nt-nav a {
   display: inline-flex; align-items: center; gap: 7px;
@@ -1828,6 +1860,7 @@ main.container {
 .nt-card {
   background: var(--card); border: 1px solid var(--line);
   border-radius: var(--radius); padding: 18px; margin-bottom: 16px;
+  min-width: 0; overflow-wrap: anywhere;
 }
 .nt-hd {
   display: flex; justify-content: space-between; align-items: center;

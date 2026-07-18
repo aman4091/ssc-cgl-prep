@@ -8,6 +8,7 @@ const SUBJECTS = [
   { icon: "📚", name: "English Comprehension", topics: "Grammar, Vocabulary, Synonyms, Comprehension, Cloze", href: "/english", cta: "Open chapters →" },
   { icon: "🌍", name: "General Awareness", topics: "History, Polity, Geography, Economics, Science, Current Affairs", href: "/study/gs", cta: "Open chapters →" },
   { icon: "📔", name: "Polity · SIMPLICRACK", topics: "Indian Polity notes — 216 pages, 12 chapters, Making of the Constitution se Judiciary tak", href: "/notes/polity", cta: "Read notes →" },
+  { icon: "📗", name: "Static GK · Rojgar", topics: "272 pages, 84 chapters — culture, states, geography, history, economy, science, with ⚡ Quick Revise + 📌 memory hooks", href: "/notes/static-gk", cta: "Read notes →" },
 ];
 
 export default function SubjectsPage() {
