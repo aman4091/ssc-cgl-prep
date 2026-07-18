@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { askAI, generateSimilar } from "@/lib/client-ai";
-import { saveQuiz, makeId } from "@/lib/storage";
+import { saveQuiz, getQuiz, makeId } from "@/lib/storage";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
@@ -24,6 +24,44 @@ import QTimer from "./QTimer";
 // fields. That is good for word problems and imperfect for fraction-heavy ones —
 // the honest ceiling without vision. The images are what the student actually
 // sees; the text only feeds search, alt and the AI buttons.
+const SIMILAR_TARGET = 20;   // how many similar questions to end up with
+const SIMILAR_BATCH = 5;     // first batch (shown immediately) and each top-up
+
+function dispatchAppend(id, count, done) {
+  try { window.dispatchEvent(new CustomEvent("cgl:quiz-appended", { detail: { id, count, done } })); }
+  catch { /* SSR / no window */ }
+}
+
+// Background top-up: keep generating small batches and appending them to the
+// saved quiz until it reaches SIMILAR_TARGET (or a batch fails / returns none).
+// Deliberately NOT tied to component state — it runs on after the card unmounts.
+async function streamSimilar(sample, subject, quizId) {
+  for (;;) {
+    const before = getQuiz(quizId);
+    if (!before) return; // user deleted the quiz — stop
+    const have = before.questions.length;
+    if (have >= SIMILAR_TARGET) break;
+
+    let qs = [];
+    try {
+      const b = await generateSimilar(sample, Math.min(SIMILAR_BATCH, SIMILAR_TARGET - have), subject);
+      qs = (b && b.questions) || [];
+    } catch { qs = []; }
+
+    const quiz = getQuiz(quizId);
+    if (!quiz) return;
+    if (qs.length) quiz.questions = [...quiz.questions, ...qs];
+    const finished = !qs.length || quiz.questions.length >= SIMILAR_TARGET;
+    quiz.streaming = !finished;
+    saveQuiz(quiz);
+    dispatchAppend(quizId, quiz.questions.length, finished);
+    if (finished) return;
+  }
+  // Loop exited because we were already at target — make sure the flag is clear.
+  const quiz = getQuiz(quizId);
+  if (quiz && quiz.streaming) { quiz.streaming = false; saveQuiz(quiz); dispatchAppend(quizId, quiz.questions.length, true); }
+}
+
 export default function MathQuestionCard({ q, index, subject = "math", chapterName }) {
   const router = useRouter();
   const [picked, setPicked] = useState(null);
@@ -114,6 +152,10 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
       .trim();
   const cleanOpt = (s) => cleanText(s).replace(/^\(?[a-dA-D]\)\s*/, "");
 
+  // Generating 20 in one shot is slow and the model sometimes returns an empty
+  // reply under the load. So generate a first small batch, open the quiz right
+  // away, then keep topping it up to the target in the background — the quiz
+  // player listens for cgl:quiz-appended and shows new questions as they land.
   const make20 = async () => {
     setSimLoading(true); setErr("");
     try {
@@ -123,10 +165,16 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
         setSimLoading(false); return;
       }
       const opts = (q.optText && q.optText.length === 4 ? q.optText : tq.options).map(cleanOpt);
-      const data = await generateSimilar({ question: sampleQ, options: opts }, 20, subject);
-      const quiz = { id: makeId(), title: data.title || "Similar (20)", source: "similar", createdAt: new Date().toISOString(), questions: data.questions };
-      saveQuiz(quiz);
-      router.push(`/quizzes/${quiz.id}`);
+      const sample = { question: sampleQ, options: opts };
+      const first = await generateSimilar(sample, SIMILAR_BATCH, subject);
+      const quizId = makeId();
+      const done = first.questions.length >= SIMILAR_TARGET;
+      saveQuiz({
+        id: quizId, title: first.title || "Similar practice", source: "similar",
+        createdAt: new Date().toISOString(), questions: first.questions, streaming: !done,
+      });
+      router.push(`/quizzes/${quizId}`);
+      if (!done) streamSimilar(sample, subject, quizId); // fire-and-forget top-up
     } catch (e) { setErr(e.message); setSimLoading(false); }
   };
 

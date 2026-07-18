@@ -83,6 +83,20 @@ export default function QuizPlayer() {
     return () => { cancelled = true; };
   }, [id]);
 
+  // A "similar practice" set streams in: the generator saves the first few and
+  // navigates here immediately, then keeps appending more in the background. Pick
+  // those up live (new questions land at the end, so answers/position by index
+  // are untouched). quiz.streaming flips false when the top-up finishes.
+  useEffect(() => {
+    const onAppend = (e) => {
+      if (!e?.detail || e.detail.id !== id) return;
+      const fresh = getQuiz(id);
+      if (fresh) setQuiz((prev) => (prev ? fresh : prev));
+    };
+    window.addEventListener("cgl:quiz-appended", onAppend);
+    return () => window.removeEventListener("cgl:quiz-appended", onAppend);
+  }, [id]);
+
   // live ticking timer while attempting; auto-submit when the countdown hits 0
   useEffect(() => {
     if (submitted) return;
@@ -434,6 +448,11 @@ export default function QuizPlayer() {
           <span className="hero__eyebrow">📝 {quiz.title}</span>
           <Link href="/quizzes" className="btn btn--ghost btn--sm">Exit</Link>
         </div>
+        {quiz.streaming && (
+          <p className="mt-8" style={{ fontSize: "0.82rem", color: "var(--accent-2)", fontWeight: 600 }}>
+            ⏳ Aur similar questions background mein ban rahe hain… ({total} tak aa gaye)
+          </p>
+        )}
         <div className="row between mt-8">
           <p className="muted" style={{ fontSize: "0.9rem" }}>Question {cur + 1} of {total} · {answeredCount} answered</p>
           <div className="row" style={{ gap: 8 }}>
