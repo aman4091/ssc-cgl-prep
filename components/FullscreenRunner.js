@@ -37,9 +37,10 @@ export default function FullscreenRunner({
   title = "Test",
   subject = "",
   timeLimitSec = 0,
+  startIndex = 0,
   onExit,
 }) {
-  const [cur, setCur] = useState(0);
+  const [cur, setCur] = useState(() => Math.min(Math.max(0, startIndex), Math.max(0, questions.length - 1)));
   const [answers, setAnswers] = useState({});     // index -> chosen option index
   const [revealed, setRevealed] = useState({});   // index -> true (Show answer pressed)
   const [submitted, setSubmitted] = useState(false);
@@ -101,6 +102,10 @@ export default function FullscreenRunner({
   useEffect(() => {
     const onKey = (e) => {
       if (submitted) return;
+      // Don't hijack keys while typing in the jump box (a "2" there means page 2,
+      // not option B).
+      const tag = e.target?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || e.target?.isContentEditable) return;
       if (e.key === "ArrowLeft") setCur((c) => Math.max(0, c - 1));
       else if (e.key === "ArrowRight") setCur((c) => Math.min(total - 1, c + 1));
       else if (e.key === "Enter") setRevealed((r) => ({ ...r, [cur]: true }));
@@ -201,7 +206,19 @@ export default function FullscreenRunner({
         <>
           <div className="fsr__body">
             <div className="fsr__inner">
-              <p className="fsr__count">Question {cur + 1} of {total}{answeredCount ? ` · ${answeredCount} answered` : ""}</p>
+              <p className="fsr__count">
+                Question{" "}
+                <input
+                  className="fsr__jump"
+                  type="number"
+                  min={1}
+                  max={total}
+                  defaultValue={cur + 1}
+                  key={cur}
+                  onChange={(e) => { const n = parseInt(e.target.value, 10); if (n >= 1 && n <= total) setCur(n - 1); }}
+                  title="Question number type karo — seedhe wahin chale jaoge"
+                /> of {total}{answeredCount ? ` · ${answeredCount} answered` : ""}
+              </p>
 
               {img ? (
                 <a href={q.qImg} target="_blank" rel="noreferrer" className="math-img-wrap fsr__stem">

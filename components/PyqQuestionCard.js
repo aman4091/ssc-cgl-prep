@@ -16,10 +16,11 @@ import AddToChapter from "./AddToChapter";
 import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
 import QTimer from "./QTimer";
+import FullscreenTestButton from "./FullscreenTestButton";
 
 // One PYQ / chapter question shown as an interactive quiz card:
 // pick an option -> reveal correct/wrong + solution, plus shortcut / 20-similar / doubt.
-export default function PyqQuestionCard({ q, index, subject, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter }) {
+export default function PyqQuestionCard({ q, index, subject, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, allQuestions }) {
   const router = useRouter();
   const [picked, setPicked] = useState(null);
   const [revealed, setRevealed] = useState(false);
@@ -101,6 +102,16 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
         <div className="q-head__actions">
           <QTimer answered={picked !== null} />
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
+          {Array.isArray(allQuestions) && allQuestions.length > 1 && (
+            <FullscreenTestButton
+              questions={allQuestions}
+              startIndex={allQuestions.indexOf(q)}
+              title={chapterName || "Test"}
+              subject={subject || ""}
+              label="⛶"
+              titleAttr="Isi question se full-screen test shuru karo"
+            />
+          )}
           <AskButtons q={q} />
           {onEdit && !editing && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>

@@ -49,7 +49,7 @@ export default function PinnacleChapterPage() {
         </h1>
         {qs.length > 0 && (
           <div className="row mt-16">
-            <FullscreenTestButton questions={qs} title={`Pinnacle · ${meta?.label || "English"}`} subject="english" />
+            <FullscreenTestButton questions={qs} title={`Pinnacle · ${meta?.label || "English"}`} subject="english" label={`⛶ Full-screen test (${qs.length})`} className="btn btn--primary" />
           </div>
         )}
       </section>
@@ -73,6 +73,7 @@ export default function PinnacleChapterPage() {
                   chapterName={`Pinnacle · ${meta.label}`}
                   archiveOnAnswer
                   fileToChapter
+                  allQuestions={qs}
                 />
               ))}
             </div>

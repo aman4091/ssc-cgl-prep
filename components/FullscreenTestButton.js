@@ -11,8 +11,10 @@ export default function FullscreenTestButton({
   title = "Test",
   subject = "",
   timeLimitSec = 0,
+  startIndex = 0,
   label = "⛶ Full screen",
   className = "btn btn--ghost btn--sm",
+  titleAttr,
 }) {
   const [open, setOpen] = useState(false);
   const n = questions.length;
@@ -22,7 +24,7 @@ export default function FullscreenTestButton({
         className={className}
         onClick={() => setOpen(true)}
         disabled={!n}
-        title={n ? `Distraction-free test mode — ${n} question${n > 1 ? "s" : ""}, ek-ek karke full screen` : "No questions"}
+        title={titleAttr || (n ? `Distraction-free test mode — ${n} question${n > 1 ? "s" : ""}, ek-ek karke full screen` : "No questions")}
       >
         {label}
       </button>
@@ -32,6 +34,7 @@ export default function FullscreenTestButton({
           title={title}
           subject={subject}
           timeLimitSec={timeLimitSec}
+          startIndex={startIndex}
           onExit={() => setOpen(false)}
         />
       )}

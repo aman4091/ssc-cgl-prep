@@ -21,6 +21,7 @@ import { buildChapterQuiz } from "@/lib/chapterquiz";
 import { saveFile, getFile, openFile } from "@/lib/filestore";
 import RuleCard from "@/components/RuleCard";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
+import FullscreenTestButton from "@/components/FullscreenTestButton";
 import YouTubePlayer from "@/components/YouTubePlayer";
 import ZoomableImage from "@/components/ZoomableImage";
 
@@ -772,6 +773,7 @@ export default function ChapterPage() {
                       </select>
                     )}
                     <button className="btn btn--primary btn--sm" onClick={practiceQuestions}>🎯 Practice ({Math.min(25, shown.length)} · 15 min)</button>
+                    <FullscreenTestButton questions={shown} title={chapterName} subject={subject} label="⛶ Full screen" className="btn btn--primary btn--sm" />
                     <button className="btn btn--ghost btn--sm" onClick={clearQs}>🗑️ Delete all</button>
                   </div>
                 )}
@@ -796,6 +798,7 @@ export default function ChapterPage() {
                     chapterName={chapterName}
                     chapterId={chapterId}
                     archiveOnAnswer
+                    allQuestions={shown}
                     onDelete={() => { removeChapterQuestionByKey(chapterId, chapterQuestionKey(q)); refresh(); }}
                     onEdit={(nq) => { updateChapterQuestion(chapterId, chapterQuestionKey(q), nq); refresh(); }}
                   />
@@ -821,9 +824,12 @@ export default function ChapterPage() {
                 </p>
               </div>
               {gkQs.length > 0 && (
-                <button className="btn btn--primary btn--sm" onClick={gkPractice}>
-                  🎯 Practice ({Math.min(25, gkQs.length)} · 15 min)
-                </button>
+                <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
+                  <button className="btn btn--primary btn--sm" onClick={gkPractice}>
+                    🎯 Practice ({Math.min(25, gkQs.length)} · 15 min)
+                  </button>
+                  <FullscreenTestButton questions={gkQs} title={`${chapterName} · GK Tricks`} subject={subject} label="⛶ Full screen" className="btn btn--primary btn--sm" />
+                </div>
               )}
             </div>
           </div>
@@ -852,6 +858,7 @@ export default function ChapterPage() {
                     chapterId={chapterId}
                     archiveOnAnswer
                     fileToChapter
+                    allQuestions={gkQs}
                   />
                 ))}
               </div>

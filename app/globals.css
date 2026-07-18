@@ -1945,6 +1945,11 @@ ul.nt-list li { margin: 2px 0; break-inside: avoid; }
 .fsr__body { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 20px 16px 28px; }
 .fsr__inner { max-width: 720px; margin: 0 auto; width: 100%; min-width: 0; }
 .fsr__count { color: var(--text-2); font-size: 0.85rem; margin-bottom: 12px; }
+.fsr__jump {
+  width: 4.2em; text-align: center; padding: 3px 6px; margin: 0 2px;
+  border: 1px solid var(--glass-border); border-radius: 8px;
+  background: var(--bg); color: var(--text-1); font-size: 0.85rem; font-weight: 700;
+}
 .fsr__stem { margin-bottom: 20px; }
 .fsr__q { font-size: 1.3rem; font-weight: 600; line-height: 1.5; }
 .fsr__opts { display: grid; gap: 12px; }

@@ -203,7 +203,7 @@ export default function PyqSubjectPage() {
           <button className="btn btn--primary" onClick={practice} disabled={filtered.length === 0}>
             🎯 Practice ({Math.min(25, filtered.length)} Q · 15 min)
           </button>
-          <FullscreenTestButton questions={filtered} title={`${meta.label} · PYQ`} subject={subject} />
+          <FullscreenTestButton questions={filtered} title={`${meta.label} · PYQ`} subject={subject} label="⛶ Full-screen test" className="btn btn--primary" />
           <button className="btn btn--ghost btn--sm" onClick={() => setShowAdd((v) => !v)}>
             {showAdd ? "✕ Close" : "➕ Add questions"}
           </button>
@@ -292,6 +292,7 @@ export default function PyqSubjectPage() {
                       chapterName={q.topic || meta.label}
                       archiveOnAnswer
                       fileToChapter
+                      allQuestions={filtered}
                     />
                   );
                 }
@@ -303,6 +304,7 @@ export default function PyqSubjectPage() {
                     subject={subject}
                     chapterName={meta.label}
                     archiveOnAnswer
+                    allQuestions={filtered}
                     onDelete={() => { removePyqQuestion(subject, qk); refresh(); }}
                     onEdit={(nq) => { updatePyqQuestion(subject, qk, nq); refresh(); }}
                     markControl={

@@ -49,7 +49,7 @@ export default function MathbankChapterPage() {
         </h1>
         {qs.length > 0 && (
           <div className="row mt-16">
-            <FullscreenTestButton questions={qs} title={`Pinnacle Maths · ${meta?.label || ""}`} subject="math" />
+            <FullscreenTestButton questions={qs} title={`Pinnacle Maths · ${meta?.label || ""}`} subject="math" label={`⛶ Full-screen test (${qs.length})`} className="btn btn--primary" />
           </div>
         )}
       </section>
@@ -67,7 +67,7 @@ export default function MathbankChapterPage() {
                 crops scroll inside their own boxes instead. */}
             <div className="grid" style={{ gap: 14, gridTemplateColumns: "minmax(0, 1fr)" }}>
               {qs.slice(0, shown).map((q, i) => (
-                <MathQuestionCard key={q.id} q={q} index={i} chapterName={`Pinnacle Maths · ${meta.label}`} />
+                <MathQuestionCard key={q.id} q={q} index={i} chapterName={`Pinnacle Maths · ${meta.label}`} allQuestions={qs} />
               ))}
             </div>
             {shown < qs.length && (

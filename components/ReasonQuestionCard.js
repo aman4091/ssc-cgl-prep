@@ -12,6 +12,7 @@ import Markdown from "./Markdown";
 import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
 import QTimer from "./QTimer";
+import FullscreenTestButton from "./FullscreenTestButton";
 
 // A reasoning question is IMAGES — MathQuestionCard's twin (same answer/reveal/
 // archive/bookmark machinery, same shortcut / 20-similar / ask buttons), with
@@ -32,7 +33,7 @@ import QTimer from "./QTimer";
 // copy would go out as "A) a  B) b  C) c  D) d" and any answer that came back
 // would be invented. So the AI helpers are hidden on those 640 questions rather
 // than shipped as a button that reliably lies.
-export default function ReasonQuestionCard({ q, index, subject = "reasoning", chapterName }) {
+export default function ReasonQuestionCard({ q, index, subject = "reasoning", chapterName, allQuestions }) {
   const router = useRouter();
   const [picked, setPicked] = useState(null);
   const [revealed, setRevealed] = useState(false);
@@ -118,6 +119,16 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
         <div className="q-head__actions">
           <QTimer answered={picked !== null} />
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
+          {Array.isArray(allQuestions) && allQuestions.length > 1 && (
+            <FullscreenTestButton
+              questions={allQuestions}
+              startIndex={allQuestions.indexOf(q)}
+              title={chapterName || "Pinnacle Reasoning"}
+              subject={subject}
+              label="⛶"
+              titleAttr="Isi question se full-screen test shuru karo"
+            />
+          )}
           {aiUseful && <AskButtons q={tq} />}
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
         </div>

@@ -49,7 +49,7 @@ export default function ReasonbankChapterPage() {
         </h1>
         {qs.length > 0 && (
           <div className="row mt-16">
-            <FullscreenTestButton questions={qs} title={`Pinnacle Reasoning · ${meta?.label || ""}`} subject="reasoning" />
+            <FullscreenTestButton questions={qs} title={`Pinnacle Reasoning · ${meta?.label || ""}`} subject="reasoning" label={`⛶ Full-screen test (${qs.length})`} className="btn btn--primary" />
           </div>
         )}
       </section>
@@ -66,7 +66,7 @@ export default function ReasonbankChapterPage() {
                 sideways. This bounds the column to the container. */}
             <div className="grid" style={{ gap: 14, gridTemplateColumns: "minmax(0, 1fr)" }}>
               {qs.slice(0, shown).map((q, i) => (
-                <ReasonQuestionCard key={q.id} q={q} index={i} chapterName={`Pinnacle Reasoning · ${meta.label}`} />
+                <ReasonQuestionCard key={q.id} q={q} index={i} chapterName={`Pinnacle Reasoning · ${meta.label}`} allQuestions={qs} />
               ))}
             </div>
             {shown < qs.length && (

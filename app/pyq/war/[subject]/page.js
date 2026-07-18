@@ -59,6 +59,8 @@ export default function WarSubjectPage() {
               questions={filtered}
               title={`WAR · ${meta?.label || ""}${chapter ? ` · ${chapter}` : ""}`}
               subject="gs"
+              label={`⛶ Full-screen test (${filtered.length})`}
+              className="btn btn--primary"
             />
           </div>
         )}
@@ -107,6 +109,7 @@ export default function WarSubjectPage() {
                   chapterName={`WAR · ${meta.label}`}
                   archiveOnAnswer
                   fileToChapter
+                  allQuestions={filtered}
                 />
               ))}
             </div>

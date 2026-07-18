@@ -12,6 +12,7 @@ import Markdown from "./Markdown";
 import AskElsewhere from "./AskElsewhere";
 import PasteAnswer from "./PasteAnswer";
 import QTimer from "./QTimer";
+import FullscreenTestButton from "./FullscreenTestButton";
 
 // A maths question is IMAGES — the stem, four options and the solution are PNG→
 // WebP crops on the R2 CDN, because maths does not survive being flattened to
@@ -62,7 +63,7 @@ async function streamSimilar(sample, subject, quizId) {
   if (quiz && quiz.streaming) { quiz.streaming = false; saveQuiz(quiz); dispatchAppend(quizId, quiz.questions.length, true); }
 }
 
-export default function MathQuestionCard({ q, index, subject = "math", chapterName }) {
+export default function MathQuestionCard({ q, index, subject = "math", chapterName, allQuestions }) {
   const router = useRouter();
   const [picked, setPicked] = useState(null);
   const [revealed, setRevealed] = useState(false);
@@ -191,6 +192,16 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
         <div className="q-head__actions">
           <QTimer answered={picked !== null} />
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
+          {Array.isArray(allQuestions) && allQuestions.length > 1 && (
+            <FullscreenTestButton
+              questions={allQuestions}
+              startIndex={allQuestions.indexOf(q)}
+              title={chapterName || "Pinnacle Maths"}
+              subject={subject}
+              label="⛶"
+              titleAttr="Isi question se full-screen test shuru karo"
+            />
+          )}
           <AskElsewhere q={tq} />
           <AskElsewhere
             q={geminiQ}
