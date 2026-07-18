@@ -17,7 +17,7 @@ import {
 } from "@/lib/client-ai";
 import { saveQuiz, makeId, getSettings, geminiActive } from "@/lib/storage";
 import { gkTopicFor, loadGkTopic } from "@/lib/gkbank";
-import { applyGkOverrides, saveGkOverride } from "@/lib/gkoverrides";
+import { applyGkOverrides, saveGkOverride, gkOverridesForIds } from "@/lib/gkoverrides";
 import { buildChapterQuiz } from "@/lib/chapterquiz";
 import { saveFile, getFile, openFile } from "@/lib/filestore";
 import RuleCard from "@/components/RuleCard";
@@ -51,6 +51,7 @@ export default function ChapterPage() {
   const [gkReady, setGkReady] = useState(false); // lookup done — tells "no bank" apart from "not looked yet"
   const [gkShown, setGkShown] = useState(GK_PAGE); // render in slices — 1,000+ cards at once janks
   const [gkEdits, setGkEdits] = useState(0); // bump to re-apply local answer corrections after an edit
+  const [gkFixMsg, setGkFixMsg] = useState(""); // inline confirmation after exporting corrections
 
   const [manual, setManual] = useState("");
   const [paperInput, setPaperInput] = useState(""); // PYQ: which paper these questions are from
@@ -820,6 +821,22 @@ export default function ChapterPage() {
       {wantsGk && (() => {
         const heading = gkTopic?.tabLabel || "🧠 GK Tricks";
         const gkList = applyGkOverrides(gkQs); void gkEdits; // gkEdits in deps → re-merge
+        const fixes = gkOverridesForIds(gkQs.map((q) => q.id));
+        const fixCount = Object.keys(fixes).length;
+        const exportFixes = async () => {
+          const payload = JSON.stringify({ slug: gkTopic?.slug, fixes }, null, 2);
+          try { await navigator.clipboard.writeText(payload); } catch { /* ignore */ }
+          try {
+            const blob = new Blob([payload], { type: "application/json" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = `${gkTopic?.slug || "gk"}-fixes.json`;
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+          } catch { /* ignore */ }
+          setGkFixMsg(`✓ ${fixCount} correction(s) copy + download ho gaye — ye file/JSON Claude ko do, wo committed file mein daal dega (sabke liye permanent).`);
+          setTimeout(() => setGkFixMsg(""), 8000);
+        };
         return (
         <section className="section" id="gk">
           <div className="section__head">
@@ -838,10 +855,19 @@ export default function ChapterPage() {
                     🎯 Practice ({Math.min(25, gkList.length)} · 15 min)
                   </button>
                   <FullscreenTestButton questions={gkList} title={`${chapterName} · ${gkTopic?.label || heading}`} subject={subject} label="⛶ Full screen" className="btn btn--primary btn--sm" />
+                  {fixCount > 0 && (
+                    <button className="btn btn--ghost btn--sm" onClick={exportFixes} title="Apne sudhare hue answers export karo — Claude inhe committed file mein daal dega (sabke liye permanent)">
+                      ⬇️ Export fixes ({fixCount})
+                    </button>
+                  )}
                 </div>
               )}
             </div>
           </div>
+
+          {gkFixMsg && (
+            <p className="mt-8" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600, marginBottom: 8 }}>{gkFixMsg}</p>
+          )}
 
           {gkTopic && (
             <p className="hint" style={{ marginBottom: 12 }}>
