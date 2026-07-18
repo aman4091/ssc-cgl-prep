@@ -34,26 +34,26 @@ function salvageQuestions(content) {
 
 const SIMILAR_PROMPT = `You are an SSC CGL question setter AND an accurate solver. Given ONE sample question, generate a fresh practice set of NEW questions of the SAME type, topic and difficulty.
 
-Output STRICT JSON only (no markdown, no commentary):
+Output STRICT JSON only (no markdown, no commentary). Keep it COMPACT — every
+question object must be small so the whole set fits in the response:
 {
   "title": "short title describing the type",
   "questions": [
     {
       "question": "the question text",
-      "diagram": "<svg ...>...</svg>  (only if a figure helps; else \\"\\")",
-      "solution": "your full step-by-step working ending at the exact final value",
       "options": ["opt1","opt2","opt3","opt4"],
       "answer": 0,
-      "explanation": "1-2 line reason / fastest trick"
+      "explanation": "ONE short line: the fastest trick and the final value",
+      "diagram": ""
     }
   ]
 }
 
 CORRECTNESS (most important — do NOT get this wrong):
-- For EACH question, FIRST actually SOLVE it in "solution" and get the EXACT final value.
+- For EACH question, solve it INTERNALLY (in your head / scratch) to get the EXACT final value. Do NOT output your step-by-step working — there is no "solution" field. Emit only the fields above.
 - Make ONE of the 4 options EQUAL to that computed value; the other 3 are plausible wrong results (distractors).
 - Set "answer" to the 0-based index of the option that equals your computed value. Re-check the index before finalizing.
-- "explanation" must reach the SAME value as options[answer]. The value in solution, explanation, and options[answer] must all be IDENTICAL.
+- "explanation" must be ONE short line and reach the SAME value as options[answer]. The value in explanation and options[answer] must be IDENTICAL. Do not write a long derivation.
 - You MUST return the full requested number of questions — do NOT omit or skip any. If you are unsure of a value, simplify that question until you can solve it confidently, then include it. Returning fewer than requested (or an empty list) is a failure.
 
 OTHER RULES:
@@ -64,7 +64,7 @@ OTHER RULES:
   WRONG question: "Who is the third heaviest? Jiya Priya Disha Shreya"
   RIGHT question:  "Who is the third heaviest person in the group?"   with options: ["Jiya","Priya","Disha","Shreya"]
 - MATH: write all mathematics in LaTeX ($...$). Use x^{2}, \\frac{a}{b}, \\sqrt{x}, \\times, \\div. NEVER use a bare ^ caret. Applies to question, options, explanation.
-- DIAGRAM: if the question needs a figure (height & distance, triangles, geometry, mensuration, angles), put a clean self-contained SVG in "diagram": use viewBox, thin strokes with stroke="#0f172a", small <text> labels for angles/lengths, NO <script>, NO external images. Keep it simple and geometrically correct. If no figure is needed, set "diagram" to "".`;
+- DIAGRAM: almost always set "diagram" to "". ONLY for a question that genuinely cannot be understood without a figure (a labelled triangle / height-and-distance / geometry figure) may you put a SMALL self-contained SVG (viewBox, thin stroke="#0f172a", tiny <text> labels, NO <script>, NO external images). Never add a decorative diagram — it wastes space and truncates the set.`;
 
 export async function POST(req) {
   try {
