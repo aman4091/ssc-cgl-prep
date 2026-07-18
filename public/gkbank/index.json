@@ -1,27 +1,38 @@
 {
- "source": "crazygktrick.com",
- "topics": [
-  {
-   "slug": "ancient-history",
-   "label": "Ancient History",
-   "icon": "🏛️",
-   "subject": "gs",
-   "chapter": "Ancient History",
-   "count": 600,
-   "source": "Ancient History practice PDFs, Part 1-15 (crazygktrick.com)",
-   "optionsGenerated": true,
-   "note": "600 of 630 questions — 30 whose answer a blind re-check could not confirm are held back."
-  },
-  {
-   "slug": "polity",
-   "label": "Polity",
-   "icon": "⚖️",
-   "subject": "gs",
-   "chapter": "Polity",
-   "count": 1077,
-   "source": "Polity practice PDFs, Part 1-25 (crazygktrick.com)",
-   "optionsGenerated": true,
-   "note": "1077 of 1143 questions — 66 whose answer a blind re-check could not confirm are held back."
-  }
- ]
+  "source": "crazygktrick.com",
+  "topics": [
+    {
+      "slug": "ancient-history",
+      "label": "Ancient History",
+      "icon": "🏛️",
+      "subject": "gs",
+      "chapter": "Ancient History",
+      "count": 600,
+      "source": "Ancient History practice PDFs, Part 1-15 (crazygktrick.com)",
+      "optionsGenerated": true,
+      "note": "600 of 630 questions — 30 whose answer a blind re-check could not confirm are held back."
+    },
+    {
+      "slug": "polity",
+      "label": "Polity",
+      "icon": "⚖️",
+      "subject": "gs",
+      "chapter": "Polity",
+      "count": 1077,
+      "source": "Polity practice PDFs, Part 1-25 (crazygktrick.com)",
+      "optionsGenerated": true,
+      "note": "1077 of 1143 questions — 66 whose answer a blind re-check could not confirm are held back."
+    },
+    {
+      "slug": "english-noun",
+      "label": "Noun · Error Spotting",
+      "icon": "📝",
+      "subject": "english",
+      "chapter": "Noun",
+      "count": 51,
+      "source": "A Mirror of Common Errors — Problems Based on Nouns & Cases",
+      "optionsGenerated": false,
+      "note": "51 noun/case error-spotting questions, book ke pages se transcribe kiye. Answers AI-ne-nikale hain (book ki answer-key di nahi thi) — fully trust karne se pehle cross-check kar lena."
+    }
+  ]
 }

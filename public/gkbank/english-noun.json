@@ -1,0 +1,818 @@
+[
+  {
+    "id": "noun-01",
+    "question": "You know it well (1)/ that your success in life (2)/ depends not on my advice (3)/ but on somebody else. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 3,
+    "solution": "Part (4) galat: 'somebody else' ke baad 's lagega — 'somebody else's' (advice). Rule: 'else' ke saath 's ka prayog hota hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-02",
+    "question": "He informed me (1)/ that he had gone to (2)/ one of the Minister's residences (3)/ and stayed there all night. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'one of the Minister's residences' sahi possessive hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-03",
+    "question": "The building's roof (1)/ needs repairing otherwise (2)/ it may fall down and (3)/ result into many persons' death. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 3,
+    "solution": "Part (4) galat: 'result into' idiom galat hai — 'result in' hona chahiye.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-04",
+    "question": "I visited (1)/ John's and Mary's house (2)/ twice but (3)/ found the couple absent. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 1,
+    "solution": "Part (2) galat: couple ka ek shared ghar hai — joint possession, sirf last noun par 's: 'John and Mary's house'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-05",
+    "question": "A ton's weight (1)/ is too heavy for (2)/ anyone to (3)/ carry on his head. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'A ton's weight' (measure + 's, jaise 'a day's work') sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-06",
+    "question": "I stopped (1)/ his going out late at night (2)/ because the situation (3)/ in the town was very tense. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. Gerund 'going' se pehle possessive 'his' sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-07",
+    "question": "He did not approve of (1)/ his son raising stupid (2)/ questions and thereby (3)/ vexing the teacher. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 1,
+    "solution": "Part (2) galat: gerund 'raising' se pehle possessive chahiye — 'his son's raising'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-08",
+    "question": "America's problems (1)/ are, however, (2)/ not so serious (3)/ and awful as India. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 3,
+    "solution": "Part (4) galat: tulna India ke problems se ho rahi hai — 'as India's' (India's problems).",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-09",
+    "question": "Your tone of speaking (1)/ as well as your friends (2)/ is really extremely sarcastic (3)/ yet we never take it seriously. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 1,
+    "solution": "Part (2) galat: 'your tone' ki tulna 'your friend's (tone)' se hai — possessive 'your friend's'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-10",
+    "question": "The Finance Minister (1)/ boasts of improving (2)/ the economic condition of (3)/ the country's. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 3,
+    "solution": "Part (4) galat: 'condition of the country' — 'the country's' ki jagah 'the country'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-11",
+    "question": "The life of the rich (1)/ is not in many (2)/ ways as peaceful (3)/ as that of the poor's. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 3,
+    "solution": "Part (4) galat: 'that of the poor' pehle se possessive hai — 'poor's' redundant.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-12",
+    "question": "For your sake (1)/ as well as for your wife (2)/ we all wish (3)/ that you may get that job. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 1,
+    "solution": "Part (2) galat: 'for your sake' ke parallel 'for your wife's (sake)' chahiye.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-13",
+    "question": "The expert mason reported to (1)/ the owner of the hotel (2)/ that there was no question (3)/ of the wall's falling down. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. Gerund 'falling' se pehle 'wall's' sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-14",
+    "question": "The officer said (1)/ that he appreciated his staffs (2)/ coming on time (3)/ and co-operating him. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 1,
+    "solution": "Part (2) galat: 'staff' collective noun hai, iska plural 'staffs' nahi hota — 'his staff'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-15",
+    "question": "As we are told, (1)/ this idea of Mrs. Gandhi's (2)/ was totally valid in the (3)/ present condition of India. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'this idea of Mrs. Gandhi's' double possessive sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-16",
+    "question": "It is true (1)/ that I met (2)/ the Chief Minister (3)/ at one of my friend's houses. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 3,
+    "solution": "Part (4) galat: 'one of my friends' houses' — plural possessive 'friends'' chahiye.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-17",
+    "question": "The teacher said (1)/ to us that one ought (2)/ to work hard (3)/ in order to attain one goal. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 3,
+    "solution": "Part (4) galat: 'one' ke saath 'one's' — 'to attain one's goal'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-18",
+    "question": "Being sure of his (1)/ success, he told his friends that (2)/ he would never forget (3)/ even his enemies names. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 3,
+    "solution": "Part (4) galat: plural possessive — 'his enemies' names'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-19",
+    "question": "The survey gives (1)/ us much knowledge of the (2)/ public's opinion (3)/ on the matter of terrorism. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'the public's opinion' possessive sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-20",
+    "question": "Very few soldiers (1)/ dared to turn (2)/ a deaf ear to their (3)/ Commander's-in-Chief orders. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 3,
+    "solution": "Part (4) galat: compound noun mein 's ant mein lagta hai — 'Commander-in-Chief's orders'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-21",
+    "question": "Your son's-in-law's friend (1)/ is seriously ill (2)/ and he wants you (3)/ to see him as soon as possible. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: compound noun mein 's sirf ant mein — 'son-in-law's friend'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-22",
+    "question": "I appreciate you (1)/ helping the poor who are really the (2)/ most ignored and completely deprived (3)/ section of our society. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: gerund 'helping' se pehle possessive — 'I appreciate your helping'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-23",
+    "question": "I have read (1)/ many plays of Shaw's (2)/ who is called the (3)/ Shakespeare of our age. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'many plays of Shaw's' double possessive sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-24",
+    "question": "I do not want (1)/ to bring her to my home (2)/ because her rashness (3)/ is quite intolerable. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-25",
+    "question": "He is chiefly concerned (1)/ with his own problems (2)/ but you say (3)/ that his is not. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. Possessive pronoun 'his' akela use sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-26",
+    "question": "A friend of my wife (1)/ came to me (2)/ yesterday and asked me for (3)/ some money. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: double possessive chahiye — 'A friend of my wife's'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-27",
+    "question": "Unfortunately for me (1)/ the root cause of my frustration (2)/ lies in the Governments (3)/ dubious policy. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 2,
+    "solution": "Part (3) galat: possessive apostrophe missing — 'the Government's dubious policy'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-28",
+    "question": "He suggested to me (1)/ that I should go to the nursery (2)/ to bring some beautiful (3)/ summer's flowers. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 3,
+    "solution": "Part (4) galat: 'summer' yahan attributive noun hai — 'summer flowers' (no 's).",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-29",
+    "question": "He came to his wits end (1)/ when he found (2)/ that his younger brother (3)/ had slapped his wife. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: idiom mein apostrophe chahiye — 'at his wit's end'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-30",
+    "question": "When Jaya and Shyama (1)/ came across Jyoti, they (2)/ caught one another hands (3)/ and talked for a while. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 2,
+    "solution": "Part (3) galat: possessive chahiye — 'caught one another's hands'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-31",
+    "question": "The former P. M. of India's (1)/ Mr. P. V. Narsimha Rao's (2)/ visit to Japan strengthened the relationship between (3)/ India and Japan. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: appositive mein 's sirf last noun par — 'of India Mr. P. V. Narsimha Rao's visit'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-32",
+    "question": "It was (1)/ India's past (2)/ glory that attracted (3)/ a number of invaders in the remote past. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'India's past glory' sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-33",
+    "question": "Everybody should be careful (1)/ to fulfil the society's (2)/ demands and thereby show his (3)/ attachment to it. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'the society's demands' possessive sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-34",
+    "question": "'Everybody's business (1)/ is nobody's business', (2)/ said the teacher (3)/ to the students. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'Everybody's' aur 'nobody's' dono possessive sahi hain.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-35",
+    "question": "I postponed him (1)/ going to Delhi tonight as (2)/ I wanted him to deal with (3)/ one of my major problems. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: gerund 'going' se pehle possessive — 'I postponed his going'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-36",
+    "question": "He told her (1)/ that he had ever seen (2)/ her with his (3)/ mind's eye. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 1,
+    "solution": "Part (2) galat: affirmative sentence mein 'ever' ki jagah 'never' — 'had never seen'. ('mind's eye' sahi hai.)",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-37",
+    "question": "When I arrived (1)/ at the gate of his house, (2)/ I found his (3)/ locking up the door. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 2,
+    "solution": "Part (3) galat: perception verb 'found' ke baad objective case — 'I found him locking up the door'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-38",
+    "question": "India and China's present (1)/ condition clearly indicate (2)/ that both the countries (3)/ will face a lot of problems in the coming time. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 1,
+    "solution": "Part (2) galat: subject 'condition' singular hai — 'indicates'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-39",
+    "question": "Keeping in view (1)/ the public's demands, (2)/ the company has declared to improve the quality and lower (3)/ the prices of its products. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 2,
+    "solution": "Part (3) galat: 'declared to improve' unidiomatic hai — 'decided to improve'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-40",
+    "question": "His maid servant (1)/ behaviour is undoubtedly indecent (2)/ but I don't (3)/ understand how he tolerates it. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: possessive apostrophe missing — 'maid servant's behaviour'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-41",
+    "question": "These buildings decoration (1)/ is not as much (2)/ impressive as it (3)/ ought to be. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: plural possessive — 'These buildings' decoration'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-42",
+    "question": "Delhi's water supply (1)/ system is certainly as good (2)/ as is expected (3)/ in a capital town. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'Delhi's water supply system' sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-43",
+    "question": "Yeats's poetry is characterised (1)/ by his unique style (2)/ which he developed (3)/ during the long span of his life. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'Yeats's' (singular proper noun + 's) sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-44",
+    "question": "Brutus role in 'Julius Ceasure' (1)/ is very attractive as (2)/ well as important as far as (3)/ the action of the play is concerned. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: possessive chahiye — 'Brutus's role' (ya 'Brutus' role').",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-45",
+    "question": "The blind's life (1)/ is really very miserable (2)/ because they (3)/ can't see what happens around them. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: 'the blind' plural class hai — 'The life of the blind' hona chahiye.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-46",
+    "question": "He did not know even (1)/ the name of the scientist who (2)/ discovered (3)/ the laws of the earth gravitational force. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 3,
+    "solution": "Part (4) galat: possessive chahiye — 'the earth's gravitational force'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-47",
+    "question": "This blade's edge (1)/ is sharper than any (2)/ other blade's, (3)/ said the sales representative of the company. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'other blade's' (= other blade's edge) elliptical possessive sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-48",
+    "question": "Many of the questions' (1)/ given in this question paper (2)/ are so difficult that (3)/ many of the students may fail. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: yahan plural chahiye, possessive nahi — 'Many of the questions'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-49",
+    "question": "The President of India (1)/ constitutional power is limitless (2)/ but it is the P.M. who is, (3)/ indeed, powerful. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 0,
+    "solution": "Part (1) galat: possessive missing — 'The President of India's constitutional power'.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-50",
+    "question": "Many a man's life is in danger (1)/ if the Government (2)/ does not take (3)/ any serious action to safeguard us. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'Many a man' singular hota hai — 'man's life' aur singular verb sahi hain.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  },
+  {
+    "id": "noun-51",
+    "question": "Nobody's claim (1)/ to be a permanent member (2)/ of the club is valid (3)/ in the eyes of the committee. (4)",
+    "options": [
+      "(1)",
+      "(2)",
+      "(3)",
+      "(4)",
+      "(5) No error"
+    ],
+    "answer": 4,
+    "solution": "No error. 'Nobody's claim' possessive sahi hai.",
+    "diagram": "",
+    "chapter": "Noun",
+    "source": "A Mirror of Common Errors · Nouns & Cases"
+  }
+]
