@@ -1856,6 +1856,22 @@ main.container {
 .nt-nav a span { color: var(--dim); font-size: 11px; }
 .nt-nav a.on span { color: var(--bg); opacity: .7; }
 
+/* Mobile: 13 chapter chips wrapping into a tall STICKY cloud swallowed half the
+   screen and clipped chips. Make the nav scroll away with the page (not sticky)
+   and turn the chips into a one-row sideways-scroll strip so it stays short. */
+@media (max-width: 640px) {
+  .notesdoc__nav { position: static; z-index: auto; }
+  .nt-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: 4px;
+    scroll-snap-type: x proximity;
+  }
+  .nt-nav a { flex: 0 0 auto; white-space: nowrap; scroll-snap-align: start; }
+}
+
 /* ---- a page card ---- */
 .nt-card {
   background: var(--card); border: 1px solid var(--line);
