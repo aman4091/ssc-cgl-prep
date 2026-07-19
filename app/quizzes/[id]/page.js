@@ -56,6 +56,7 @@ export default function QuizPlayer() {
   const [actionErr, setActionErr] = useState({});
   const [, bumpBm] = useState(0); // re-render on bookmark toggle
   const [errorTags, setErrorTags] = useState({}); // qi -> errorType (Mistake Notebook)
+  const [reviewFilter, setReviewFilter] = useState("all"); // result screen: all|wrong|skipped|slow|correct
 
   const tagError = (qi, q, type) => {
     setReviewErrorType(keyFor(q), type);
@@ -301,6 +302,29 @@ export default function QuizPlayer() {
     // maths/GK quiz the options are numbers or phrases — no meaning to show.
     const isVocab = (quiz.source || "").startsWith("vocab");
 
+    // Result-screen filters — jump straight to the wrong / skipped / slow ones.
+    const SLOW = 60; // seconds; "1 minute se uppar"
+    const slowCount = quiz.questions.reduce((a, _q, i) => ((times[i] || 0) > SLOW ? a + 1 : a), 0);
+    const filterDefs = [
+      { key: "all", label: "Sab", n: total },
+      { key: "wrong", label: "❌ Galat", n: wrong },
+      { key: "skipped", label: "⭕ Chhode", n: unanswered },
+      { key: "slow", label: "⏱ 1 min+", n: slowCount },
+      { key: "correct", label: "✅ Sahi", n: correct },
+    ];
+    const passesFilter = (qi, q) => {
+      const chosen = answers[qi];
+      const isRight = chosen === q.answer;
+      if (reviewFilter === "wrong") return chosen !== undefined && !isRight;
+      if (reviewFilter === "skipped") return chosen === undefined;
+      if (reviewFilter === "correct") return chosen !== undefined && isRight;
+      if (reviewFilter === "slow") return (times[qi] || 0) > SLOW;
+      return true;
+    };
+    const shownQs = quiz.questions
+      .map((q, qi) => ({ q, qi }))
+      .filter(({ q, qi }) => passesFilter(qi, q));
+
     return (
       <>
         <section className="hero" style={{ paddingBottom: 8 }}>
@@ -332,8 +356,24 @@ export default function QuizPlayer() {
 
         {/* Per-question review */}
         <section className="section" style={{ marginTop: 12 }}>
+          <div className="row" style={{ gap: 8, flexWrap: "wrap", marginBottom: 14, alignItems: "center" }}>
+            {filterDefs.map((f) => (
+              <button
+                key={f.key}
+                className={`chip chip--btn ${reviewFilter === f.key ? "is-active" : ""}`}
+                onClick={() => { setReviewFilter(f.key); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                disabled={f.n === 0 && f.key !== "all"}
+                style={f.n === 0 && f.key !== "all" ? { opacity: 0.4 } : {}}
+              >
+                {f.label} ({f.n})
+              </button>
+            ))}
+          </div>
+          {shownQs.length === 0 ? (
+            <div className="glass-card center"><p className="muted">Is filter mein koi question nahi. 🎉</p></div>
+          ) : (
           <div className="grid" style={{ gap: 16 }}>
-            {quiz.questions.map((q, qi) => {
+            {shownQs.map(({ q, qi }) => {
               const chosen = answers[qi];
               const isRight = chosen === q.answer;
               return (
@@ -457,6 +497,7 @@ export default function QuizPlayer() {
               );
             })}
           </div>
+          )}
 
           <div className="row center mt-24" style={{ justifyContent: "center" }}>
             <button className="btn btn--ghost" onClick={retry}>🔁 Retry Quiz</button>
