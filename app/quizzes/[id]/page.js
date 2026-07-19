@@ -40,6 +40,7 @@ export default function QuizPlayer() {
   const [timedOut, setTimedOut] = useState(false);
   const startRef = useRef(0);
   const submitRef = useRef(null); // latest submit fn for the timer to call
+  const advanceTimer = useRef(null); // pending auto-advance after picking an option
 
   // word whose meaning is shown in the result-screen pop-up (vocab quizzes)
   const [wordPopup, setWordPopup] = useState(null);
@@ -98,6 +99,9 @@ export default function QuizPlayer() {
     return () => window.removeEventListener("cgl:quiz-appended", onAppend);
   }, [id]);
 
+  // cancel any pending auto-advance if the player unmounts
+  useEffect(() => () => { if (advanceTimer.current) clearTimeout(advanceTimer.current); }, []);
+
   // live ticking timer while attempting; auto-submit when the countdown hits 0
   useEffect(() => {
     if (submitted) return;
@@ -134,15 +138,35 @@ export default function QuizPlayer() {
     startRef.current = Date.now();
   };
 
+  const clearAdvance = () => {
+    if (advanceTimer.current) { clearTimeout(advanceTimer.current); advanceTimer.current = null; }
+  };
+
   const goTo = (idx) => {
+    clearAdvance();
     commitTime();
     setCur(idx);
   };
 
-  const select = (oi) => setAnswers((a) => ({ ...a, [cur]: oi }));
+  // Picking an option auto-advances to the next question — no Next button. A
+  // short beat lets the chosen option flash first. The last question stays put
+  // (nowhere to go) so you can hit Submit.
+  const select = (oi) => {
+    setAnswers((a) => ({ ...a, [cur]: oi }));
+    clearAdvance();
+    if (cur < total - 1) {
+      const from = cur;
+      advanceTimer.current = setTimeout(() => {
+        advanceTimer.current = null;
+        commitTime();
+        setCur((c) => (c === from ? from + 1 : c));
+      }, 220);
+    }
+  };
 
   const submit = () => {
     if (submitted) return;
+    clearAdvance();
     commitTime();
     // track per-question attempts + archive into the Mistake Notebook (site-wide)
     if (quiz) {
@@ -171,6 +195,7 @@ export default function QuizPlayer() {
   submitRef.current = submit;
 
   const retry = () => {
+    clearAdvance();
     setAnswers({}); setTimes({}); setShortcuts({}); setActionErr({});
     setExplains({}); setCur(0); setSubmitted(false); setTimedOut(false);
     startRef.current = Date.now();
@@ -281,7 +306,10 @@ export default function QuizPlayer() {
         <section className="hero" style={{ paddingBottom: 8 }}>
           <div className="row between">
             <span className="hero__eyebrow">✅ Result</span>
-            <Link href="/quizzes" className="btn btn--ghost btn--sm">← All quizzes</Link>
+            <div className="row" style={{ gap: 8 }}>
+              <button className="btn btn--primary btn--sm" onClick={() => router.back()}>← Back</button>
+              <Link href="/quizzes" className="btn btn--ghost btn--sm">All quizzes</Link>
+            </div>
           </div>
           <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>{quiz.title}</h1>
           {timedOut && (
@@ -514,17 +542,11 @@ export default function QuizPlayer() {
 
         <div className="row between mt-24">
           <button className="btn btn--ghost" onClick={() => goTo(Math.max(0, cur - 1))} disabled={cur === 0}>← Prev</button>
-          {cur < total - 1 ? (
-            <button className="btn btn--primary" onClick={() => goTo(cur + 1)}>Next →</button>
-          ) : (
-            <button className="btn btn--primary" onClick={submit}>Submit ({answeredCount}/{total})</button>
-          )}
+          <button className="btn btn--primary" onClick={submit}>✅ Submit ({answeredCount}/{total})</button>
         </div>
-        {cur < total - 1 && (
-          <div className="row center mt-16" style={{ justifyContent: "center" }}>
-            <button className="btn btn--ghost btn--sm" onClick={submit}>Submit now</button>
-          </div>
-        )}
+        <p className="muted mt-8" style={{ fontSize: "0.76rem", textAlign: "center" }}>
+          Option choose karte hi agle question pr chala jayega · Submit kabhi bhi daba sakte ho
+        </p>
       </section>
     </>
   );
