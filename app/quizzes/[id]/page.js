@@ -42,6 +42,15 @@ export default function QuizPlayer() {
   const submitRef = useRef(null); // latest submit fn for the timer to call
   const advanceTimer = useRef(null); // pending auto-advance after picking an option
 
+  // Per-question timer ("30/60/90/120 sec/Q"): pick a limit + Start, and from the
+  // current question onward every question gets that much time. Run out → auto next
+  // (marked "time-up"), never wait. Works for every quiz since this is the one player.
+  const [perQSec, setPerQSec] = useState(0);        // per-question limit in seconds; 0 = off
+  const [perQOn, setPerQOn] = useState(false);      // timed practice actually running
+  const [qDeadline, setQDeadline] = useState(0);    // epoch ms deadline for the CURRENT question
+  const [timedOutQs, setTimedOutQs] = useState({}); // qi -> true: timer expired before an answer
+  const qTimeoutRef = useRef(null);                 // latest per-question-timeout handler
+
   // word whose meaning is shown in the result-screen pop-up (vocab quizzes)
   const [wordPopup, setWordPopup] = useState(null);
 
@@ -103,18 +112,31 @@ export default function QuizPlayer() {
   // cancel any pending auto-advance if the player unmounts
   useEffect(() => () => { if (advanceTimer.current) clearTimeout(advanceTimer.current); }, []);
 
-  // live ticking timer while attempting; auto-submit when the countdown hits 0
+  // Every time we land on a new question while the per-question timer is running,
+  // give it a fresh full clock. Covers every way `cur` can change — auto-advance,
+  // Prev, or a time-up jump — from one place.
+  useEffect(() => {
+    if (perQOn && !submitted) setQDeadline(Date.now() + perQSec * 1000);
+  }, [cur, perQOn, perQSec, submitted]);
+
+  // live ticking timer while attempting; auto-submit when the whole-quiz countdown
+  // hits 0, or auto-advance when the per-question countdown does.
   useEffect(() => {
     if (submitted) return;
     const t = setInterval(() => {
-      setNow(Date.now());
-      if (deadline && Date.now() >= deadline) {
+      const nowMs = Date.now();
+      setNow(nowMs);
+      if (deadline && nowMs >= deadline) {
         setTimedOut(true);
         submitRef.current && submitRef.current();
+        return;
       }
-    }, 500);
+      if (perQOn && qDeadline && nowMs >= qDeadline) {
+        qTimeoutRef.current && qTimeoutRef.current();
+      }
+    }, 250);
     return () => clearInterval(t);
-  }, [submitted, deadline]);
+  }, [submitted, deadline, perQOn, qDeadline]);
 
   if (quiz === undefined)
     return <section className="section"><p className="muted">Loading…</p></section>;
@@ -195,10 +217,34 @@ export default function QuizPlayer() {
   };
   submitRef.current = submit;
 
+  // Kick off the per-question timer from wherever you are right now.
+  const startPerQ = () => {
+    if (!perQSec) return;
+    setTimedOutQs({});
+    setPerQOn(true);
+    commitTime();
+    setQDeadline(Date.now() + perQSec * 1000);
+  };
+
+  // Per-question clock ran out: if unanswered, note it as "time-up", then move on
+  // (or finish, if this was the last one).
+  qTimeoutRef.current = () => {
+    if (answers[cur] === undefined) setTimedOutQs((m) => ({ ...m, [cur]: true }));
+    if (cur < total - 1) {
+      clearAdvance();
+      commitTime();
+      setCur(cur + 1);
+      setQDeadline(Date.now() + perQSec * 1000);
+    } else {
+      submit();
+    }
+  };
+
   const retry = () => {
     clearAdvance();
     setAnswers({}); setTimes({}); setShortcuts({}); setActionErr({});
     setExplains({}); setCur(0); setSubmitted(false); setTimedOut(false);
+    setPerQOn(false); setTimedOutQs({}); setQDeadline(0);
     startRef.current = Date.now();
     if (quiz?.timeLimitSec) setDeadline(Date.now() + quiz.timeLimitSec * 1000);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -211,6 +257,10 @@ export default function QuizPlayer() {
   const remainingSec = deadline ? Math.max(0, Math.ceil((deadline - (now || Date.now())) / 1000)) : null;
   const lowTime = remainingSec !== null && remainingSec <= 60;
   const fmtClock = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+
+  // per-question countdown (only while the per-question timer is running)
+  const perQRemain = perQOn && qDeadline ? Math.max(0, Math.ceil((qDeadline - (now || Date.now())) / 1000)) : null;
+  const perQLow = perQRemain !== null && perQRemain <= 10;
 
   const getShortcut = async (i) => {
     const q = quiz.questions[i];
@@ -305,10 +355,14 @@ export default function QuizPlayer() {
     // Result-screen filters — jump straight to the wrong / skipped / slow ones.
     const SLOW = 60; // seconds; "1 minute se uppar"
     const slowCount = quiz.questions.reduce((a, _q, i) => ((times[i] || 0) > SLOW ? a + 1 : a), 0);
+    // Per-question timer report: how many ran out of time before an answer.
+    const timedOutCount = Object.values(timedOutQs).filter(Boolean).length;
+    const inTimeCount = perQOn ? total - timedOutCount : 0; // done within the set time
     const filterDefs = [
       { key: "all", label: "Sab", n: total },
       { key: "wrong", label: "❌ Galat", n: wrong },
       { key: "skipped", label: "⭕ Chhode", n: unanswered },
+      ...(perQOn ? [{ key: "timeup", label: "⏳ Time-up", n: timedOutCount }] : []),
       { key: "slow", label: "⏱ 1 min+", n: slowCount },
       { key: "correct", label: "✅ Sahi", n: correct },
     ];
@@ -319,6 +373,7 @@ export default function QuizPlayer() {
       if (reviewFilter === "skipped") return chosen === undefined;
       if (reviewFilter === "correct") return chosen !== undefined && isRight;
       if (reviewFilter === "slow") return (times[qi] || 0) > SLOW;
+      if (reviewFilter === "timeup") return !!timedOutQs[qi];
       return true;
     };
     const shownQs = quiz.questions
@@ -350,6 +405,9 @@ export default function QuizPlayer() {
             <div className="stat glass"><span className="stat__num" style={{ color: "var(--success)" }}>{correct}</span><span className="stat__label">Correct ✅</span></div>
             <div className="stat glass"><span className="stat__num" style={{ color: "var(--danger)" }}>{wrong}</span><span className="stat__label">Wrong ❌</span></div>
             <div className="stat glass"><span className="stat__num" style={{ color: "var(--text-2)" }}>{unanswered}</span><span className="stat__label">Skipped ⭕</span></div>
+            {perQOn && (
+              <div className="stat glass"><span className="stat__num" style={{ color: "var(--danger)" }}>{timedOutCount}</span><span className="stat__label">Time-up ⏳ · {inTimeCount} in {perQSec}s</span></div>
+            )}
             <div className="stat glass"><span className="stat__num" style={{ color: "var(--accent-2)" }}>{fmt(totalTime)}</span><span className="stat__label">Total time · avg {fmt(totalTime / total)}</span></div>
           </div>
         </section>
@@ -396,6 +454,7 @@ export default function QuizPlayer() {
                         </span>
                       ) : null; })()}
                       <button className="btn btn--ghost btn--sm" onClick={() => toggleBm(q)} title="Bookmark" style={isQBookmarked(q) ? { color: "var(--warning)" } : {}}>{isQBookmarked(q) ? "★" : "☆"}</button>
+                      {timedOutQs[qi] && <span className="time-pill" style={{ background: "var(--accent-wash)", color: "var(--danger)" }} title="Time ran out before you answered">⏳ Time up</span>}
                       <span className="time-pill">⏱ {fmt(times[qi] || 0)}</span>
                     </div>
                   </div>
@@ -536,9 +595,45 @@ export default function QuizPlayer() {
                 ⏳ {fmtClock(remainingSec)}
               </span>
             )}
+            {perQRemain !== null && (
+              <span className="time-pill" style={perQLow
+                ? { background: "var(--accent-wash)", color: "var(--danger)", borderColor: "var(--accent)", fontWeight: 700, fontSize: "0.98rem" }
+                : { background: "var(--accent-wash)", color: "var(--accent-2)", fontWeight: 700, fontSize: "0.98rem" }}>
+                ⏳ {perQRemain}s
+              </span>
+            )}
             <span className="time-pill live">⏱ {fmt(liveCur)}</span>
           </div>
         </div>
+
+        {/* Per-question timer: pick a limit + Start; every question from here gets it. */}
+        {!perQOn ? (
+          <div className="row mt-8" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+            <span className="muted" style={{ fontSize: "0.82rem" }}>⏱ Per-question timer:</span>
+            <select
+              className="select"
+              value={perQSec}
+              onChange={(e) => setPerQSec(Number(e.target.value))}
+              style={{ width: "auto", padding: "6px 30px 6px 12px", fontSize: "0.85rem" }}
+            >
+              <option value={0}>Off</option>
+              <option value={30}>30 sec / Q</option>
+              <option value={60}>60 sec / Q</option>
+              <option value={90}>90 sec / Q</option>
+              <option value={120}>120 sec / Q</option>
+            </select>
+            <button className="btn btn--primary btn--sm" onClick={startPerQ} disabled={!perQSec}>▶ Start timed</button>
+            <span className="muted" style={{ fontSize: "0.74rem" }}>
+              Is question se aage har question par utna time — khatam hote hi auto next.
+            </span>
+          </div>
+        ) : (
+          <div className="row between mt-8" style={{ alignItems: "center" }}>
+            <span className="muted" style={{ fontSize: "0.8rem" }}>⏱ Timed · {perQSec}s / question</span>
+            <button className="btn btn--ghost btn--sm" onClick={submit}>⏹ Stop &amp; report</button>
+          </div>
+        )}
+
         {remainingSec !== null && (
           <p className="muted mt-8" style={{ fontSize: "0.78rem" }}>
             ⏳ Time limit: {Math.round((quiz.timeLimitSec || 0) / 60)} min · the quiz auto-submits when time runs out.

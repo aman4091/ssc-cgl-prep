@@ -49,6 +49,13 @@ export default function FullscreenRunner({
   const startRef = useRef(Date.now());
   const deadline = timeLimitSec ? startRef.current + timeLimitSec * 1000 : 0;
 
+  // Per-question timer: pick 30/60/90/120 s and every question gets that much
+  // time; run out → auto-advance (marked "time-up"). Works for text & image banks.
+  const [perQSec, setPerQSec] = useState(0);        // per-question limit (s); 0 = off
+  const [qDeadline, setQDeadline] = useState(0);    // epoch ms deadline for the current question
+  const [timedOutQs, setTimedOutQs] = useState({}); // index -> true: ran out before answering
+  const qTimeoutRef = useRef(null);
+
   const total = questions.length;
   const q = questions[cur];
   const answeredCount = Object.keys(answers).length;
@@ -88,15 +95,30 @@ export default function FullscreenRunner({
   const finishRef = useRef(finish);
   finishRef.current = finish;
 
-  // Ticking clock; auto-submit when a countdown hits zero.
+  // Per-question clock ran out: note a time-up if unanswered, then move on / finish.
+  qTimeoutRef.current = () => {
+    if (answers[cur] === undefined) setTimedOutQs((m) => ({ ...m, [cur]: true }));
+    if (cur < total - 1) { setCur(cur + 1); setQDeadline(Date.now() + perQSec * 1000); }
+    else finishRef.current();
+  };
+
+  // Fresh per-question clock on every question while the per-question timer is on.
+  useEffect(() => {
+    if (perQSec && submitted === false) setQDeadline(Date.now() + perQSec * 1000);
+  }, [cur, perQSec, submitted]);
+
+  // Ticking clock; auto-submit when the whole-test countdown hits zero, and
+  // auto-advance when the per-question countdown does.
   useEffect(() => {
     if (submitted) return undefined;
     const t = setInterval(() => {
-      setNow(Date.now());
-      if (deadline && Date.now() >= deadline) finishRef.current();
-    }, 500);
+      const nowMs = Date.now();
+      setNow(nowMs);
+      if (deadline && nowMs >= deadline) { finishRef.current(); return; }
+      if (perQSec && qDeadline && nowMs >= qDeadline) qTimeoutRef.current && qTimeoutRef.current();
+    }, 250);
     return () => clearInterval(t);
-  }, [submitted, deadline]);
+  }, [submitted, deadline, perQSec, qDeadline]);
 
   // Keyboard: ← / → navigate, A–D or 1–4 pick, Enter = Show answer.
   useEffect(() => {
@@ -105,7 +127,7 @@ export default function FullscreenRunner({
       // Don't hijack keys while typing in the jump box (a "2" there means page 2,
       // not option B).
       const tag = e.target?.tagName;
-      if (tag === "INPUT" || tag === "TEXTAREA" || e.target?.isContentEditable) return;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || e.target?.isContentEditable) return;
       if (e.key === "ArrowLeft") setCur((c) => Math.max(0, c - 1));
       else if (e.key === "ArrowRight") setCur((c) => Math.min(total - 1, c + 1));
       else if (e.key === "Enter") setRevealed((r) => ({ ...r, [cur]: true }));
@@ -127,6 +149,9 @@ export default function FullscreenRunner({
   const remainingSec = deadline ? Math.max(0, Math.ceil((deadline - now) / 1000)) : null;
   const elapsedSec = Math.floor((now - startRef.current) / 1000);
   const lowTime = remainingSec !== null && remainingSec <= 60;
+  const perQRemain = (perQSec && qDeadline && submitted === false) ? Math.max(0, Math.ceil((qDeadline - now) / 1000)) : null;
+  const perQLow = perQRemain !== null && perQRemain <= 10;
+  const timedOutCount = Object.values(timedOutQs).filter(Boolean).length;
 
   const pick = (oi) => { if (!submitted) setAnswers((a) => ({ ...a, [cur]: oi })); };
   const showAnswer = () => setRevealed((r) => ({ ...r, [cur]: !r[cur] }));
@@ -134,6 +159,8 @@ export default function FullscreenRunner({
   const retry = () => {
     setAnswers({}); setRevealed({}); setSubmitted(false);
     setCur(0); startRef.current = Date.now(); setNow(Date.now());
+    setTimedOutQs({});
+    if (perQSec) setQDeadline(Date.now() + perQSec * 1000);
   };
 
   const img = isImg(q);
@@ -166,6 +193,28 @@ export default function FullscreenRunner({
       <div className="fsr__top">
         <span className="fsr__title">📝 {title}</span>
         <div className="row" style={{ gap: 8, alignItems: "center" }}>
+          {submitted === false && (
+            <select
+              className="select"
+              value={perQSec}
+              onChange={(e) => setPerQSec(Number(e.target.value))}
+              title="Per-question timer — har question par itna time"
+              style={{ width: "auto", padding: "4px 26px 4px 10px", fontSize: "0.8rem" }}
+            >
+              <option value={0}>⏱ No limit</option>
+              <option value={30}>30s / Q</option>
+              <option value={60}>60s / Q</option>
+              <option value={90}>90s / Q</option>
+              <option value={120}>120s / Q</option>
+            </select>
+          )}
+          {perQRemain !== null && (
+            <span className="time-pill" style={perQLow
+              ? { background: "var(--accent-wash)", color: "var(--danger)", borderColor: "var(--accent)", fontWeight: 700 }
+              : { background: "var(--accent-wash)", color: "var(--accent-2)", fontWeight: 700 }}>
+              ⏳ {perQRemain}s
+            </span>
+          )}
           {remainingSec !== null ? (
             <span className="time-pill" style={lowTime
               ? { background: "var(--accent-wash)", color: "var(--danger)", borderColor: "var(--accent)" }
@@ -190,6 +239,7 @@ export default function FullscreenRunner({
               <span style={{ color: "var(--success)" }}>✅ {correct} correct</span>
               <span style={{ color: "var(--danger)" }}>❌ {wrong} wrong</span>
               <span className="muted">⭕ {total - correct - wrong} skipped</span>
+              {perQSec > 0 && <span style={{ color: "var(--danger)" }}>⏳ {timedOutCount} time-up ({perQSec}s/Q)</span>}
               <span className="muted">⏱ {fmt(elapsedSec)}</span>
             </div>
             <p className="muted mt-8" style={{ fontSize: "0.85rem" }}>
