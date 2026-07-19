@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Markdown from "./Markdown";
 import Diagram from "./Diagram";
 import { recordAttempts, keyFor } from "@/lib/qstats";
-import { addReview } from "@/lib/qreview";
+import { addReview, setReviewErrorType } from "@/lib/qreview";
 
 // Distraction-free, one-question-at-a-time TEST view that fills the whole screen.
 // It works for EVERY bank because a question is either text (q.question/options/
@@ -56,6 +56,10 @@ export default function FullscreenRunner({
   const [timedOutQs, setTimedOutQs] = useState({}); // index -> true: ran out before answering
   const qTimeoutRef = useRef(null);
 
+  // Per-question time spent — so the report can show ⏱ time-per-question.
+  const [times, setTimes] = useState({});    // index -> seconds accumulated
+  const qStartRef = useRef(Date.now());      // when the current question was entered
+
   const total = questions.length;
   const q = questions[cur];
   const answeredCount = Object.keys(answers).length;
@@ -75,14 +79,20 @@ export default function FullscreenRunner({
 
   const finish = () => {
     if (submitted) return;
+    // bank the time spent on the question you're finishing on
+    setTimes((t) => ({ ...t, [cur]: (t[cur] || 0) + (Date.now() - qStartRef.current) / 1000 }));
     if (subject !== undefined) {
       const items = [];
       questions.forEach((qq, i) => {
-        if (answers[i] === undefined) return;
+        const answered = answers[i] !== undefined;
+        const timedOut = !!timedOutQs[i];
+        if (!answered && !timedOut) return; // never reached / untouched — skip
         const p = projection(qq);
-        const correct = answers[i] === qq.answer;
+        const correct = answered ? answers[i] === qq.answer : false; // time-up = wrong
         items.push({ q: p, correct });
         addReview(p, { subject, source: "fullscreen", category: title, correct });
+        // Time limit mein nahi hua → Mistake Notebook mein "Time Laga" tag ke saath.
+        if (!answered && timedOut) setReviewErrorType(keyFor(p), "time");
       });
       if (items.length) recordAttempts(items);
     }
@@ -95,10 +105,24 @@ export default function FullscreenRunner({
   const finishRef = useRef(finish);
   finishRef.current = finish;
 
+  // Bank the seconds spent on the current question and restart its clock. Called
+  // explicitly on every navigation (not via an effect — batching/StrictMode made
+  // effect-based commits misattribute the time to the wrong question).
+  const commitQTime = () => {
+    setTimes((t) => ({ ...t, [cur]: (t[cur] || 0) + (Date.now() - qStartRef.current) / 1000 }));
+    qStartRef.current = Date.now();
+  };
+  // Go to another question, banking the leaving question's time while attempting.
+  const goToQ = (idx) => {
+    if (idx === cur || idx < 0 || idx >= total) return;
+    if (submitted === false) commitQTime();
+    setCur(idx);
+  };
+
   // Per-question clock ran out: note a time-up if unanswered, then move on / finish.
   qTimeoutRef.current = () => {
     if (answers[cur] === undefined) setTimedOutQs((m) => ({ ...m, [cur]: true }));
-    if (cur < total - 1) { setCur(cur + 1); setQDeadline(Date.now() + perQSec * 1000); }
+    if (cur < total - 1) goToQ(cur + 1);
     else finishRef.current();
   };
 
@@ -128,8 +152,8 @@ export default function FullscreenRunner({
       // not option B).
       const tag = e.target?.tagName;
       if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || e.target?.isContentEditable) return;
-      if (e.key === "ArrowLeft") setCur((c) => Math.max(0, c - 1));
-      else if (e.key === "ArrowRight") setCur((c) => Math.min(total - 1, c + 1));
+      if (e.key === "ArrowLeft") goToQ(cur - 1);
+      else if (e.key === "ArrowRight") goToQ(cur + 1);
       else if (e.key === "Enter") setRevealed((r) => ({ ...r, [cur]: true }));
       else {
         const opts = isImg(q) ? q?.optImgs : q?.options;
@@ -159,7 +183,8 @@ export default function FullscreenRunner({
   const retry = () => {
     setAnswers({}); setRevealed({}); setSubmitted(false);
     setCur(0); startRef.current = Date.now(); setNow(Date.now());
-    setTimedOutQs({});
+    setTimedOutQs({}); setTimes({});
+    qStartRef.current = Date.now();
     if (perQSec) setQDeadline(Date.now() + perQSec * 1000);
   };
 
@@ -243,8 +268,35 @@ export default function FullscreenRunner({
               <span className="muted">⏱ {fmt(elapsedSec)}</span>
             </div>
             <p className="muted mt-8" style={{ fontSize: "0.85rem" }}>
-              Answers Mistake Notebook mein save ho gaye. Neeche har question review kar sakte ho.
+              Answers Mistake Notebook mein save ho gaye. Neeche har question ka time + review.
             </p>
+
+            {/* Per-question time breakdown — tap a row to review that question. */}
+            <div style={{ textAlign: "left", maxWidth: 540, margin: "18px auto 0" }}>
+              <p className="muted" style={{ fontSize: "0.8rem", marginBottom: 8 }}>⏱ Per-question time (tap to review):</p>
+              <div className="grid" style={{ gap: 6 }}>
+                {questions.map((qq, i) => {
+                  const answered = answers[i] !== undefined;
+                  const isRight = answered && answers[i] === qq.answer;
+                  const to = !!timedOutQs[i];
+                  const status = to ? "⏳" : !answered ? "⭕" : isRight ? "✅" : "❌";
+                  const col = to || (answered && !isRight) ? "var(--danger)" : !answered ? "var(--text-3)" : "var(--success)";
+                  const slow = (times[i] || 0) > (perQSec || 60);
+                  return (
+                    <button
+                      key={i}
+                      className="row between"
+                      onClick={() => { setSubmitted("review"); setCur(i); }}
+                      style={{ width: "100%", padding: "8px 12px", borderRadius: 8, border: "1px solid var(--glass-border)", background: "var(--bg)", cursor: "pointer" }}
+                    >
+                      <span style={{ color: col, fontWeight: 600, fontSize: "0.9rem" }}>{status} Q{i + 1}{to ? " · time-up" : ""}</span>
+                      <span className="time-pill" style={slow ? { background: "var(--accent-wash)", color: "var(--danger)" } : {}}>⏱ {fmt(times[i] || 0)}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="row mt-24" style={{ gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
               <button className="btn btn--primary" onClick={() => { setSubmitted("review"); setCur(0); }}>👁️ Review answers</button>
               <button className="btn btn--ghost" onClick={retry}>🔁 Retry</button>
@@ -265,9 +317,14 @@ export default function FullscreenRunner({
                   max={total}
                   defaultValue={cur + 1}
                   key={cur}
-                  onChange={(e) => { const n = parseInt(e.target.value, 10); if (n >= 1 && n <= total) setCur(n - 1); }}
+                  onChange={(e) => { const n = parseInt(e.target.value, 10); if (n >= 1 && n <= total) goToQ(n - 1); }}
                   title="Question number type karo — seedhe wahin chale jaoge"
                 /> of {total}{answeredCount ? ` · ${answeredCount} answered` : ""}
+                {submitted === "review" && (
+                  <span className="time-pill" style={{ marginLeft: 8, ...(timedOutQs[cur] ? { background: "var(--accent-wash)", color: "var(--danger)" } : {}) }}>
+                    ⏱ {fmt(times[cur] || 0)}{timedOutQs[cur] ? " · ⏳ time-up" : ""}
+                  </span>
+                )}
               </p>
 
               {img ? (
@@ -307,16 +364,18 @@ export default function FullscreenRunner({
           </div>
 
           <div className="fsr__bottom">
-            <button className="btn btn--ghost" onClick={() => setCur((c) => Math.max(0, c - 1))} disabled={cur === 0}>← Prev</button>
+            <button className="btn btn--ghost" onClick={() => goToQ(cur - 1)} disabled={cur === 0}>← Prev</button>
             <button className="btn btn--ghost" onClick={showAnswer}>{shown ? "🙈 Hide" : "👁️ Show answer"}</button>
             {submitted === "review" ? (
               cur < total - 1
-                ? <button className="btn btn--primary" onClick={() => setCur((c) => Math.min(total - 1, c + 1))}>Next →</button>
+                ? <button className="btn btn--primary" onClick={() => goToQ(cur + 1)}>Next →</button>
                 : <button className="btn btn--primary" onClick={() => setSubmitted(true)}>Done</button>
-            ) : cur < total - 1 ? (
-              <button className="btn btn--primary" onClick={() => setCur((c) => c + 1)}>Next →</button>
             ) : (
-              <button className="btn btn--primary" onClick={finish}>✅ Submit ({answeredCount}/{total})</button>
+              // Submit/report is on EVERY question now — Next just moves along.
+              <div className="row" style={{ gap: 8 }}>
+                {cur < total - 1 && <button className="btn btn--ghost" onClick={() => goToQ(cur + 1)}>Next →</button>}
+                <button className="btn btn--primary" onClick={finish}>{perQSec ? "⏹ Stop & report" : `✅ Submit (${answeredCount}/${total})`}</button>
+              </div>
             )}
           </div>
         </>

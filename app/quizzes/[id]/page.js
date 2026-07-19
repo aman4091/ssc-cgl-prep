@@ -195,15 +195,25 @@ export default function QuizPlayer() {
     if (quiz) {
       const items = [];
       const reviewItems = [];
+      const timedOutHere = []; // questions missed on the per-question clock
       quiz.questions.forEach((q, i) => {
-        if (answers[i] !== undefined) {
+        const answered = answers[i] !== undefined;
+        const timedOut = !!timedOutQs[i];
+        if (answered) {
           const correct = answers[i] === q.answer;
           items.push({ q, correct });
           reviewItems.push({ q, correct, source: quiz.source || "", category: quizCategory(quiz, q) });
+        } else if (timedOut) {
+          // Time limit mein nahi hua → Mistake Notebook mein wrong ke roop mein daalo.
+          items.push({ q, correct: false });
+          reviewItems.push({ q, correct: false, source: quiz.source || "", category: quizCategory(quiz, q) });
+          timedOutHere.push(q);
         }
       });
       recordAttempts(items);
       recordQuizAttempts(reviewItems);
+      // Tag the timed-out ones as "Time Laga" so they surface in the error log.
+      timedOutHere.forEach((q) => setReviewErrorType(keyFor(q), "time"));
 
       // Vocab quizzes tick their day here — on submit, not on launch, so a quiz
       // you opened and abandoned doesn't count as done.
