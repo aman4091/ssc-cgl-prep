@@ -69,23 +69,21 @@ export default function WarSubjectPage() {
       {/* Chapter filter — the book's own chapters, from its page footers */}
       {meta && meta.chapters.length > 1 && (
         <section className="section" style={{ marginTop: 4 }}>
-          <div className="chips">
-            <button
-              className={`chip chip--btn chip--lg ${chapter === "" ? "is-active" : ""}`}
-              onClick={() => setChapter("")}
-            >
-              All ({meta.count})
-            </button>
+          {/* A dropdown, not a wall of chips: current-affairs alone has ten
+              chapters and the row wrapped to three lines above the questions. */}
+          <select
+            className="input"
+            style={{ maxWidth: 420 }}
+            value={chapter}
+            onChange={(e) => setChapter(e.target.value)}
+          >
+            <option value="">All chapters ({meta.count})</option>
             {meta.chapters.map((c) => (
-              <button
-                key={c.name}
-                className={`chip chip--btn chip--lg ${chapter === c.name ? "is-active" : ""}`}
-                onClick={() => setChapter(c.name)}
-              >
+              <option key={c.name} value={c.name}>
                 {c.name} ({c.count})
-              </button>
+              </option>
             ))}
-          </div>
+          </select>
         </section>
       )}
 

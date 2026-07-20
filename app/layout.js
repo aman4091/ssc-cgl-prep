@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
 import FocusEnforcer from "@/components/FocusEnforcer";
+import VocabPrefetch from "@/components/VocabPrefetch";
 import SyncManager from "@/components/SyncManager";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -41,6 +42,7 @@ export default function RootLayout({ children }) {
         <Footer />
         <CurrentAffairsRush />
         <FocusEnforcer />
+        <VocabPrefetch />
         <SyncManager />
       </body>
     </html>
