@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadGkIndex, loadGkTopic } from "@/lib/gkbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
-import FullscreenTestButton from "@/components/FullscreenTestButton";
 
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are
@@ -60,13 +59,7 @@ export default function GkTopicPage() {
         </h1>
         {qs.length > 0 && (
           <div className="row mt-16">
-            <FullscreenTestButton
-              questions={qs}
-              title={topic?.label || "GK"}
-              subject={topic?.subject || "gs"}
-              label={`⛶ Full-screen test (${qs.length})`}
-              className="btn btn--primary"
-            />
+
           </div>
         )}
       </section>

@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadEngChapter, engChapterMeta } from "@/lib/engbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
-import FullscreenTestButton from "@/components/FullscreenTestButton";
 
 const PAGE = 25; // passages are long — fewer per slice than the other banks
 
@@ -49,7 +48,6 @@ export default function PinnacleChapterPage() {
         </h1>
         {qs.length > 0 && (
           <div className="row mt-16">
-            <FullscreenTestButton questions={qs} title={`Pinnacle · ${meta?.label || "English"}`} subject="english" label={`⛶ Full-screen test (${qs.length})`} className="btn btn--primary" />
           </div>
         )}
       </section>

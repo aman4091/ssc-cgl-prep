@@ -113,7 +113,6 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
       <div className="q-head">
         <h3 style={{ fontSize: "1rem", fontWeight: 600, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
           <span className="rule-card__n">{index + 1}.</span>
-          {q.source && <span className="paper-tag">📄 {q.source}</span>}
         </h3>
         <div className="q-head__actions">
           <QTimer answered={picked !== null} />
@@ -174,8 +173,6 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
 
-      {!revealed && <button className="btn btn--ghost btn--sm mt-12" onClick={() => setRevealed(true)}>👁️ Show answer</button>}
-
       {revealed && (
         <div className="mt-12">
           <strong style={{ color: "var(--text-2)", fontSize: "0.86rem" }}>Solution: </strong>
@@ -195,7 +192,6 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
 
       {revealed && aiUseful && (
         <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
-          <button className="btn btn--ghost btn--sm" onClick={toggleShortcut} disabled={scLoading}>{scLoading ? "Thinking…" : scShown ? "⚡ Hide shortcut" : "⚡ Shortcut trick"}</button>
         </div>
       )}
 

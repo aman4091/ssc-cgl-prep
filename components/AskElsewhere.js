@@ -21,6 +21,18 @@ function questionText(q) {
 // `url` fixes the target site (e.g. Gemini); omit it to use the ask-site from
 // Settings. `label` overrides the button text. `promptKey` names a Settings field
 // whose text is prepended before the question when copying (e.g. "geminiPrompt").
+// Splits "✨ Gemini" into an icon and a word so CSS can hide just the word.
+function LabelParts({ label }) {
+  const sp = String(label).indexOf(" ");
+  if (sp < 0) return <>{label}</>;
+  return (
+    <>
+      <span className="ask__ico">{label.slice(0, sp)}</span>
+      <span className="ask__word">{label.slice(sp + 1)}</span>
+    </>
+  );
+}
+
 export default function AskElsewhere({ q, className = "btn btn--ghost btn--sm", url, label, title, promptKey, onAsked }) {
   const [done, setDone] = useState(false);
   const go = async () => {
@@ -40,7 +52,9 @@ export default function AskElsewhere({ q, className = "btn btn--ghost btn--sm", 
   };
   return (
     <button className={className} onClick={go} title={title || "Copy question & open your ask-site (set in Settings)"}>
-      {done ? "✓ Copied" : (label || "📋 Copy & Ask")}
+      {/* On a phone the word is dropped and only the icon shows — the card has
+          room for two buttons there, not two buttons with captions. */}
+      {done ? "✓" : <LabelParts label={label || "📋 Copy & Ask"} />}
     </button>
   );
 }

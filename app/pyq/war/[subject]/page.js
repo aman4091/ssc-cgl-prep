@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadWarSubject, warSubjectMeta } from "@/lib/warbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
-import FullscreenTestButton from "@/components/FullscreenTestButton";
 
 const PAGE = 50; // render in slices — 562 cards at once janks a phone
 
@@ -55,13 +54,7 @@ export default function WarSubjectPage() {
         </h1>
         {filtered.length > 0 && (
           <div className="row mt-16">
-            <FullscreenTestButton
-              questions={filtered}
-              title={`WAR · ${meta?.label || ""}${chapter ? ` · ${chapter}` : ""}`}
-              subject="gs"
-              label={`⛶ Full-screen test (${filtered.length})`}
-              className="btn btn--primary"
-            />
+
           </div>
         )}
       </section>

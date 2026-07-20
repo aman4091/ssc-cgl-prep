@@ -11,9 +11,7 @@ import { addReview } from "@/lib/qreview";
 import { logActivity } from "@/lib/activity";
 import Markdown from "./Markdown";
 import Diagram from "./Diagram";
-import QuestionFollowup from "./QuestionFollowup";
 import QuestionEditor from "./QuestionEditor";
-import AddToChapter from "./AddToChapter";
 import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
 import QTimer from "./QTimer";
@@ -107,7 +105,6 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
       <div className="q-head">
         <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>
           <span className="rule-card__n">{index + 1}.</span> <Markdown inline>{q.question}</Markdown>
-          {paper && <span className="paper-tag">📄 {paper}</span>}
         </h3>
         <div className="q-head__actions">
           <QTimer answered={picked !== null} />
@@ -177,10 +174,6 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
 
-      {fileToChapter && <div className="mt-12"><AddToChapter q={q} /></div>}
-
-      {!revealed && <button className="btn btn--ghost btn--sm mt-12" onClick={() => setRevealed(true)}>👁️ Show answer</button>}
-
       {revealed && solution && (
         <div className="muted mt-12" style={{ fontSize: "0.86rem" }}>
           <strong style={{ color: "var(--text-2)" }}>Solution: </strong>
@@ -190,7 +183,6 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
 
       {revealed && (
         <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
-          <button className="btn btn--ghost btn--sm" onClick={toggleShortcut} disabled={scLoading}>{scLoading ? "Thinking…" : scShown ? "⚡ Hide shortcut" : "⚡ Shortcut trick"}</button>
         </div>
       )}
 
@@ -203,8 +195,6 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
           </button>
         </div>
       )}
-
-      {revealed && <QuestionFollowup question={q} subject={subject} />}
       </>
       )}
     </article>

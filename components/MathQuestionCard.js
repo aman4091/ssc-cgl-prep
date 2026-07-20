@@ -186,8 +186,6 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
       <div className="q-head">
         <h3 style={{ fontSize: "1rem", fontWeight: 600, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
           <span className="rule-card__n">{index + 1}.</span>
-          <span className="paper-tag paper-tag--pyq">PYQ</span>
-          {q.source && <span className="paper-tag">📄 {q.source}</span>}
         </h3>
         <div className="q-head__actions">
           <QTimer answered={picked !== null} />
@@ -249,8 +247,6 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
 
-      {!revealed && <button className="btn btn--ghost btn--sm mt-12" onClick={() => setRevealed(true)}>👁️ Show answer</button>}
-
       {revealed && (
         <div className="mt-12">
           <strong style={{ color: "var(--text-2)", fontSize: "0.86rem" }}>Solution: </strong>
@@ -270,7 +266,6 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
           set without answering first. Shortcut stays behind reveal because it
           explains the (now shown) solution. */}
       <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
-        {revealed && <button className="btn btn--ghost btn--sm" onClick={toggleShortcut} disabled={scLoading}>{scLoading ? "Thinking…" : scShown ? "⚡ Hide shortcut" : "⚡ Shortcut trick"}</button>}
       </div>
 
       {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}

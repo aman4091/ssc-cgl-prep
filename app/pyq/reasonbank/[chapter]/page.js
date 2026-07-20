@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadReasonChapter, reasonChapterMeta } from "@/lib/reasonbank";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
-import FullscreenTestButton from "@/components/FullscreenTestButton";
 
 const PAGE = 20; // each question is several images — page in small slices
 
@@ -49,7 +48,6 @@ export default function ReasonbankChapterPage() {
         </h1>
         {qs.length > 0 && (
           <div className="row mt-16">
-            <FullscreenTestButton questions={qs} title={`Pinnacle Reasoning · ${meta?.label || ""}`} subject="reasoning" label={`⛶ Full-screen test (${qs.length})`} className="btn btn--primary" />
           </div>
         )}
       </section>

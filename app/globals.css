@@ -1155,6 +1155,9 @@ label.glass-card:hover { border-color: var(--accent2); }
    onto two rows above every single question. */
 @media (max-width: 1024px) {
   .q-head__actions > *:not(.q-act--keep) { display: none; }
+  /* ✨ instead of "✨ Gemini" — the icon carries it at this width. */
+  .q-head__actions .ask__word { display: none; }
+  .ask__ico { margin: 0; }
 }
 
 /* Roadmap page */
