@@ -3,45 +3,32 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { nextUp } from "@/lib/vocab";
+import VocabDayType from "@/components/VocabDayType";
 
-// The home page is one thing: what to do next.
+// The home page IS wherever you stopped in Vocab — not a card pointing at it.
 //
-// It used to be a wall of shortcuts, which is a menu — and the menu is already
-// the left column. So instead this asks lib/vocab where you actually stopped and
-// shows only that. Finish its quiz and the card rolls forward on its own:
-// OWS -> Idiom -> Vocab -> the next day's OWS.
+// lib/vocab's nextUp() walks days in order and, within a day, TYPES in order,
+// returning the first type that has words and has not been quizzed yet. Whatever
+// it names is rendered here in full, words and all, by the same component the
+// /vocab/[day]/[type] route uses. Finish that quiz and this page moves on by
+// itself: OWS -> Idiom -> Vocab -> the next day's OWS.
 export default function Home() {
   const [next, setNext] = useState(undefined); // undefined = not read yet
 
   // localStorage, so it can only be read after mount.
   useEffect(() => { setNext(nextUp()); }, []);
 
-  return (
-    <section className="section">
-      <div className="home-head">
-        <h1>Aage kya</h1>
-      </div>
+  if (next === undefined) return <section className="section"><div className="placeholder">…</div></section>;
 
-      {next === undefined ? (
-        <div className="placeholder">…</div>
-      ) : next === null ? (
-        <div className="nextup nextup--empty">
-          <p className="muted">
-            Sab ho gaya — ya abhi koi word add nahi kiya.
-          </p>
-          <Link href="/vocab" className="btn btn--primary mt-16">🔤 Vocab kholo</Link>
-        </div>
-      ) : (
-        <Link href={`/vocab/${next.day}/${next.type}`} className="nextup">
-          <span className="nextup__day">Day {next.day} <span className="muted">/ {next.totalDays}</span></span>
-          <span className="nextup__title">
-            <span className="nextup__ico">{next.icon}</span>
-            {next.label}
-          </span>
-          <span className="nextup__meta">{next.count} words · quiz baaki hai</span>
-          <span className="nextup__go">Shuru karo →</span>
-        </Link>
-      )}
-    </section>
-  );
+  if (next === null) {
+    return (
+      <section className="section">
+        <div className="home-head"><h1>Aage kya</h1></div>
+        <p className="muted">Sab ho gaya — ya abhi koi word add nahi kiya.</p>
+        <Link href="/vocab" className="btn btn--primary mt-16">🔤 Vocab kholo</Link>
+      </section>
+    );
+  }
+
+  return <VocabDayType day={next.day} type={next.type} />;
 }

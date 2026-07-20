@@ -1528,25 +1528,8 @@ label.glass-card:hover { border-color: var(--accent2); }
    lists inside each bank do not. */
 .pyq-row__sub { display: block; font-size: 0.76rem; font-weight: 400; color: var(--dim); margin-top: 2px; }
 
-/* ===== Home: the one card =====
-   The home page is "what to do next" and nothing else — the shortcuts it used to
-   carry were a second copy of the menu. One card, big enough to be the only
-   thing on the page. */
-.nextup {
-  display: flex; flex-direction: column; gap: 6px;
-  max-width: 460px; margin-top: 20px;
-  padding: 22px 24px;
-  border: 1px solid var(--line); border-left: 3px solid var(--accent);
-  border-radius: var(--radius); background: var(--card);
-  color: var(--ink); text-decoration: none;
-}
-.nextup:hover { border-color: var(--accent2); border-left-color: var(--accent); }
-.nextup__day { font-size: 0.78rem; color: var(--dim); text-transform: uppercase; letter-spacing: 0.04em; }
-.nextup__title { display: flex; align-items: center; gap: 10px; font-size: 1.35rem; font-weight: 700; }
-.nextup__ico { font-size: 1.3rem; }
-.nextup__meta { font-size: 0.88rem; color: var(--dim); }
-.nextup__go { margin-top: 12px; font-size: 0.9rem; font-weight: 600; color: var(--accent); }
-.nextup--empty { border-left-color: var(--line); }
+/* The home page renders the vocab day view itself, so it needs no styles of
+   its own — .nextup, the card that used to link there, is gone. */
 
 /* ===== Home feature cards ===== */
 .home-card { transition: transform 0.15s ease, border-color 0.15s ease; }
