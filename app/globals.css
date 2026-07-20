@@ -1566,6 +1566,15 @@ label.glass-card:hover { border-color: var(--accent2); }
 .pyq-row__meta { font-size: 0.78rem; color: var(--dim); flex-shrink: 0; white-space: nowrap; }
 /* The PYQ index rows carry a line of description under the name; the chapter
    lists inside each bank do not. */
+.act-day { margin-bottom: 22px; }
+.act-day__hd {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 10px; margin-bottom: 8px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--line);
+}
+.act-day__name { font-size: 1rem; font-weight: 700; }
+.act-day__meta { font-size: 0.78rem; color: var(--dim); }
+
 .pyq-row__sub { display: block; font-size: 0.76rem; font-weight: 400; color: var(--dim); margin-top: 2px; }
 
 /* The home page renders the vocab day view itself, so it needs no styles of

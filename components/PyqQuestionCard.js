@@ -8,6 +8,7 @@ import { recordAttempts, getStat } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { addReview } from "@/lib/qreview";
+import { logActivity } from "@/lib/activity";
 import Markdown from "./Markdown";
 import Diagram from "./Diagram";
 import QuestionFollowup from "./QuestionFollowup";
@@ -44,7 +45,13 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
     const correct = oi === q.answer;
     setPicked(oi);
     setRevealed(true);
-    if (!recorded) { recordAttempts([{ q, correct }]); setRecorded(true); }
+    if (!recorded) {
+      recordAttempts([{ q, correct }]);
+      // One row per chapter per day — logActivity adds to the existing row, so
+      // 30 questions here is "WAR · Biology · 30", not 30 entries.
+      if (chapterName) logActivity({ label: chapterName, kind: "pyq", count: 1, correct: correct ? 1 : 0 });
+      setRecorded(true);
+    }
     // In a chapter list: archive to Attempted (+Correct/Wrong), bookmark, then
     // remove from the list so the next question moves up.
     if (archiveOnAnswer) {

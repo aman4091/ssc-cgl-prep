@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Markdown from "./Markdown";
 import Diagram from "./Diagram";
 import { recordAttempts, keyFor } from "@/lib/qstats";
+import { logActivity } from "@/lib/activity";
 import { addReview, setReviewErrorType } from "@/lib/qreview";
 
 // Distraction-free, one-question-at-a-time TEST view that fills the whole screen.
@@ -94,7 +95,15 @@ export default function FullscreenRunner({
         // Time limit mein nahi hua → Mistake Notebook mein "Time Laga" tag ke saath.
         if (!answered && timedOut) setReviewErrorType(keyFor(p), "time");
       });
-      if (items.length) recordAttempts(items);
+      if (items.length) {
+        recordAttempts(items);
+        logActivity({
+          label: title,
+          kind: "pyq",
+          count: items.length,
+          correct: items.filter((x) => x.correct).length,
+        });
+      }
     }
     // reveal everything for the review pass
     const all = {};

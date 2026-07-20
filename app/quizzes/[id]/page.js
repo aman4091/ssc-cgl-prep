@@ -18,6 +18,7 @@ import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { recordQuizAttempts, quizCategory, setReviewErrorType, ERROR_TYPES } from "@/lib/qreview";
 import { markDayDone, markDayTypeDone } from "@/lib/vocab";
+import { logActivity, kindForQuiz } from "@/lib/activity";
 
 function fmt(sec) {
   const s = Math.round(sec || 0);
@@ -221,6 +222,15 @@ export default function QuizPlayer() {
         if (quiz.vocabType) markDayTypeDone(quiz.vocabDay, quiz.vocabType);
         else markDayDone(quiz.vocabDay);
       }
+
+      // Log it for the "kya kiya" page — on submit, so a quiz you opened and
+      // walked away from never shows up as work done.
+      logActivity({
+        label: quiz.title || "Quiz",
+        kind: kindForQuiz(quiz),
+        count: items.length,
+        correct: items.filter((x) => x.correct).length,
+      });
     }
     setSubmitted(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
