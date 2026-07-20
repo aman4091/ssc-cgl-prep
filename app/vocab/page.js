@@ -178,7 +178,7 @@ export default function VocabPage() {
           <div className="row" style={{ gap: 8 }}>
             <button className="btn btn--primary btn--sm" onClick={() => setShowAdd((v) => !v)}>{showAdd ? "✕ Close" : "➕ Add words"}</button>
             <Link href="/vocab/bookmarks" className="btn btn--ghost btn--sm">⭐ Bookmarks</Link>
-            <Link href="/english" className="btn btn--ghost btn--sm">← English</Link>
+            <Link href="/" className="btn btn--ghost btn--sm">← Home</Link>
           </div>
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.7rem, 4vw, 2.6rem)" }}>

@@ -436,6 +436,32 @@ main.container {
 .drawer__link.is-active { background: var(--accent); color: #16181c; font-weight: 600; }
 .drawer__ico { width: 18px; text-align: center; font-size: 0.95rem; }
 
+/* ---- one level of grouping: subject name, click, the names inside ----
+   The group header is a row like any other; the children are indented under a
+   hairline so the nesting reads at a glance without boxing every group. */
+.drawer__group { display: flex; flex-direction: column; }
+.drawer__grouphd {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 8px 9px; border: 0; border-radius: 6px;
+  background: transparent; color: var(--ink);
+  font: 600 13px/1.2 var(--font); text-align: left; cursor: pointer;
+}
+.drawer__grouphd:hover { background: var(--bg); }
+.drawer__group.is-open .drawer__grouphd { color: var(--accent2); }
+.drawer__groupname { flex: 1; }
+.drawer__count { font-size: 11px; color: var(--dim); font-weight: 400; }
+.drawer__chev { font-size: 10px; color: var(--dim); width: 10px; }
+.drawer__children {
+  display: flex; flex-direction: column; gap: 1px;
+  margin: 2px 0 6px 18px; padding-left: 9px;
+  border-left: 1px solid var(--line);
+}
+/* Children sit one step quieter than a group header until they are the page you
+   are on. */
+.drawer__children .drawer__link { font-size: 12.5px; color: var(--dim); padding: 6px 8px; }
+.drawer__children .drawer__link:hover { color: var(--ink); }
+.drawer__children .drawer__link.is-active { color: #16181c; }
+
 /* ===== Buttons ===== */
 .btn {
   display: inline-flex;
@@ -1454,6 +1480,21 @@ main.container {
 /* ===== Daily target cards ===== */
 .target-card { padding: 14px 18px; }
 .target-card.is-done { border-color: var(--ok-wash); }
+
+/* ===== Home: the four quick starts =====
+   The home accordion moved into the sidebar, so all this page needs is a short
+   list of things worth opening cold. Plain theme rows — no glass, no gradient. */
+.home-quick { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+.home-quick__item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--card); color: var(--ink); text-decoration: none;
+}
+.home-quick__item:hover { border-color: var(--accent2); }
+.home-quick__ico { font-size: 1.15rem; width: 24px; text-align: center; }
+.home-quick__text { display: flex; flex-direction: column; gap: 1px; flex: 1; }
+.home-quick__text .muted { font-size: 12px; }
+.home-quick__go { color: var(--dim); }
 
 /* ===== Home feature cards ===== */
 .home-card { transition: transform 0.15s ease, border-color 0.15s ease; }

@@ -96,7 +96,9 @@ export default function SubjectChaptersPage() {
   const allSuggested = suggestedFor(subject);
   const suggestions = allSuggested.filter((s) => !existing.has(s.toLowerCase()));
   const isPyq = subject.startsWith("pyq-");
-  const backHref = isPyq ? "/pyq" : subject === "english" ? "/english" : "/subjects";
+  // /subjects and /english were duplicate menus and are gone — the sidebar is
+  // the menu now, so anything that used to go "back" to them goes home.
+  const backHref = isPyq ? "/pyq" : "/";
   const knownSubject = !!SUBJECTS[subject] || isPyq;
 
   return (

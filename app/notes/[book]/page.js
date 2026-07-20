@@ -29,8 +29,8 @@ export default function NotesBookPage() {
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">{book?.eyebrow || "📖 Notes"}</span>
-          <Link href="/subjects" className="btn btn--ghost btn--sm">
-            ← Subjects
+          <Link href="/" className="btn btn--ghost btn--sm">
+            ← Home
           </Link>
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.7rem, 4vw, 2.6rem)" }}>

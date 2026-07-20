@@ -70,7 +70,8 @@
       "Bash(PYTHONIOENCODING=utf-8 python -c ' *)",
       "Bash(python -c \"import json;d=json.load\\(open\\('public/mathbank/index.json'\\)\\);print\\(d.get\\('base'\\)\\);print\\([\\(c['slug'],c['count']\\) for c in d['chapters']][:5]\\)\")",
       "Bash(grep -oE \"#[0-9a-fA-F]{3,8}\")",
-      "Bash(netstat -ano)"
+      "Bash(netstat -ano)",
+      "Bash(curl -s http://localhost:3000/cabank/index.json)"
     ]
   }
 }

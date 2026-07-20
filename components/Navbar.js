@@ -3,50 +3,40 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { NAV_GROUPS, groupForPath } from "@/lib/nav";
+import { getChapters } from "@/lib/grammar";
 
 // The menu, and only the menu.
 //
-// There used to be a fixed bar across the top carrying a hamburger, the
-// Pomodoro timer, the checklist, Ask and Today. The owner asked for it gone:
-// Ask moved to the home page, and the timer/checklist/Today pills were dropped
-// (Checklist and Today already have their own pages, listed below).
+// One level of grouping: the subject name, and clicking it reveals the names
+// inside. Nothing is pinned above the groups — the owner asked for everything to
+// live inside a subject. The list of groups is lib/nav.js; this file only draws
+// it.
 //
-// What is left is the notes theme's layout: on a wide screen this <aside> is
-// simply the left column of .shell and is always open. On a phone it is a block
-// at the top of the page — the app name plus a ☰ that expands the list inline.
-// It is not fixed and it does not float; with 20 links, expanding on demand is
-// what keeps it from pushing every page a screen and a half down.
-const LINKS = [
-  { href: "/", label: "Home", icon: "🏠" },
-  { href: "/today", label: "Today's Targets", icon: "📅" },
-  { href: "/roadmap", label: "AI Roadmap", icon: "🧠" },
-  { href: "/daily", label: "Daily Quiz", icon: "🗓️" },
-  { href: "/checklist", label: "Checklist", icon: "✅" },
-  { href: "/subjects", label: "Subjects", icon: "📚" },
-  { href: "/vocab", label: "Vocab · OWS", icon: "🔤" },
-  { href: "/pyq", label: "PYQ Bank", icon: "🎯" },
-  { href: "/papers", label: "Full Papers", icon: "📄" },
-  { href: "/current-affairs", label: "Current Affairs", icon: "📰" },
-  { href: "/static-gk", label: "Static GK", icon: "📗" },
-  { href: "/calculation", label: "Calculation", icon: "🧮" },
-  { href: "/bookmarks", label: "Bookmarked Qs", icon: "⭐" },
-  { href: "/saved-answers", label: "Saved Answers", icon: "💾" },
-  { href: "/external-tests", label: "External Tests", icon: "🌐" },
-  { href: "/quiz-bank", label: "Quiz Bank", icon: "🗃️" },
-  { href: "/mock-tests", label: "Mock Tests", icon: "🧪" },
-  { href: "/quizzes", label: "My Quizzes", icon: "🗂️" },
-  { href: "/mistakes", label: "Mistake Notebook", icon: "🔴" },
-  { href: "/settings", label: "Settings", icon: "⚙️" },
-];
-
+// On a wide screen this <aside> is the left column of .shell and is always
+// visible. On a phone it is a block at the top with a ☰ that expands it in
+// place — it does not float and does not cover the page.
 export default function Navbar() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false);          // phone: whole menu
+  // Seeded from the URL rather than set in an effect, so the group you are
+  // inside is already open in the first paint instead of flashing shut.
+  const [group, setGroup] = useState(() => groupForPath(pathname));
+  const [chapters, setChapters] = useState({});
 
-  const isActive = (href) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  // The user's own chapters live in localStorage, so they can only be read after
+  // mount — reading during render would not match the server-rendered markup.
+  useEffect(() => {
+    const map = {};
+    for (const g of NAV_GROUPS) if (g.subject) map[g.subject] = getChapters(g.subject);
+    setChapters(map);
+  }, [pathname]);
 
-  // Collapse the list again on navigation — on a phone the menu sits above the
-  // page it just navigated to, so leaving it open buries the content.
+  // Landing deep in the app should show you where you are.
+  useEffect(() => { setGroup(groupForPath(pathname)); }, [pathname]);
+
+  // On a phone the menu sits above the page it just navigated to, so leaving it
+  // open would bury the content.
   useEffect(() => { setOpen(false); }, [pathname]);
 
   useEffect(() => {
@@ -55,6 +45,8 @@ export default function Navbar() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
+
+  const isActive = (href) => pathname === href || pathname.startsWith(href + "/");
 
   return (
     <aside className={`drawer ${open ? "is-open" : ""}`}>
@@ -73,13 +65,50 @@ export default function Navbar() {
           ☰
         </button>
       </div>
+
       <nav className="drawer__nav">
-        {LINKS.map((l) => (
-          <Link key={l.href} href={l.href} className={`drawer__link ${isActive(l.href) ? "is-active" : ""}`}>
-            <span className="drawer__ico">{l.icon}</span>
-            {l.label}
-          </Link>
-        ))}
+        {NAV_GROUPS.map((g) => {
+          const isOpen = group === g.key;
+          const own = (g.subject ? chapters[g.subject] : null) || [];
+          const count = own.length + g.links.length;
+          return (
+            <div key={g.key} className={`drawer__group ${isOpen ? "is-open" : ""}`}>
+              <button
+                className="drawer__grouphd"
+                aria-expanded={isOpen}
+                onClick={() => setGroup(isOpen ? null : g.key)}
+              >
+                <span className="drawer__ico">{g.icon}</span>
+                <span className="drawer__groupname">{g.name}</span>
+                <span className="drawer__count">{count}</span>
+                <span className="drawer__chev">{isOpen ? "▾" : "▸"}</span>
+              </button>
+
+              {isOpen && (
+                <div className="drawer__children">
+                  {own.map((c) => (
+                    <Link
+                      key={c.id}
+                      href={`/study/${g.subject}/${c.id}`}
+                      className={`drawer__link ${isActive(`/study/${g.subject}/${c.id}`) ? "is-active" : ""}`}
+                    >
+                      {c.name}
+                    </Link>
+                  ))}
+                  {g.links.map((l) => (
+                    <Link
+                      key={l.href}
+                      href={l.href}
+                      className={`drawer__link ${isActive(l.href) ? "is-active" : ""}`}
+                    >
+                      {l.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </nav>
     </aside>
   );
