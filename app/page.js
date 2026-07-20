@@ -12,9 +12,9 @@ import AskModal from "@/components/AskModal";
 // What is left is the handful of things worth starting from a standing start.
 const QUICK = [
   { href: "/daily", icon: "🗓️", name: "Daily Quiz", note: "Aaj ke questions" },
-  { href: "/today", icon: "📅", name: "Today's Targets", note: "Aaj ka plan" },
+  { href: "/quiz-bank", icon: "🗂️", name: "Quiz Bank", note: "Topic-wise sets" },
   { href: "/mistakes", icon: "🔴", name: "Mistake Notebook", note: "Galtiyan dobara karo" },
-  { href: "/roadmap", icon: "🧠", name: "AI Roadmap", note: "Aage kya padhna hai" },
+  { href: "/calculation", icon: "🧮", name: "Calculation", note: "Speed maths" },
 ];
 
 export default function Home() {

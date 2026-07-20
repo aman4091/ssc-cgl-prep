@@ -286,7 +286,9 @@ export default function AskModal({ open, onClose }) {
             </div>
             {savedMsg && (
               <p className="mt-8" style={{ fontSize: "0.85rem", color: "var(--success)" }}>
-                {savedMsg} · <Link href="/saved-answers" className="link" onClick={onClose}>View saved →</Link>
+                {/* The Saved Answers page was removed, so there is nowhere to
+                    link to — the answer is still saved, just not browsable. */}
+                {savedMsg}
               </p>
             )}
           </div>
