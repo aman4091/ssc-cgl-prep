@@ -481,13 +481,15 @@ label.glass-card:hover { border-color: var(--accent2); }
 .drawer__rule { height: 1px; background: var(--line); margin: 7px 4px; }
 
 /* ---- phones: the rail slides in from the left ----
-   Wide screens keep the permanent left column. On a phone a 164px rail ate half
-   the width, so below the breakpoint the menu goes off-canvas and a hamburger
-   brings it back — still from the LEFT, never as a bar across the top. */
+   Only real desktops keep the permanent left column. Anything narrower — phone
+   or tablet — gets the rail off-canvas with a hamburger to slide it in, still
+   from the LEFT and never as a bar across the top. The cutoff pairs with the
+   min-width block far below; they must stay adjacent (1024 / 1025) or the two
+   layouts overlap and the drawer head loses its hamburger clearance. */
 .navtoggle { display: none; }
 .drawer__backdrop { display: none; }
 
-@media (max-width: 780px) {
+@media (max-width: 1024px) {
   .shell { display: block; }
 
   .navtoggle {
@@ -1857,7 +1859,7 @@ label.glass-card:hover { border-color: var(--accent2); }
    nav all live in the base rules. All that is left here is width: the rail can
    afford to be roomier once there is a screen to spend.
    =================================================================== */
-@media (min-width: 981px) {
+@media (min-width: 1025px) {
   .shell { grid-template-columns: 250px minmax(0, 1fr); }
   .drawer__head { padding: 16px 14px 12px; }
   /* main is the second column now, so it must not also be centred in the page */

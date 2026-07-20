@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   getDayTypeItems, getDetail, setDetail, clearDetail, buildTypeQuiz,
@@ -65,6 +65,25 @@ export default function VocabDayType({ day, type }) {
     if (next >= 0 && next < items.length) openWord(next);
   };
   const toggleBm = () => { const on = toggleBookmark(items[sel].word); setBm(on); };
+
+  // Swipe the word card: right-to-left for the next word, left-to-right for the
+  // previous. Only a clearly horizontal, clearly long drag counts — otherwise
+  // scrolling a long meaning would flick you off the word you are reading.
+  const touch = useRef(null);
+  const onTouchStart = (e) => {
+    const t = e.touches[0];
+    touch.current = { x: t.clientX, y: t.clientY };
+  };
+  const onTouchEnd = (e) => {
+    const start = touch.current;
+    touch.current = null;
+    if (!start || sel === null) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - start.x;
+    const dy = t.clientY - start.y;
+    if (Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    go(dx < 0 ? 1 : -1);
+  };
 
   // Keyboard ↑/↓ moves the selection up/down the left word list.
   useEffect(() => {
@@ -158,7 +177,11 @@ export default function VocabDayType({ day, type }) {
           </div>
 
           {/* Detail (inline on desktop, pop-up modal on mobile) */}
-          <div className={`glass-card vocab-detail ${item !== null ? "is-open" : ""}`}>
+          <div
+            className={`glass-card vocab-detail ${item !== null ? "is-open" : ""}`}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
             {item === null ? (
               <p className="muted center" style={{ padding: "40px 0" }}>Click any word — meaning, trick and synonyms will show up. 👈</p>
             ) : (
