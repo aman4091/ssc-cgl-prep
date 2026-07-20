@@ -131,8 +131,9 @@ function navTopics(topics) {
   return [...seen.values()].sort((a, b) => a.no - b.no);
 }
 
-// Chips read well up to a point; past this many chapters a dropdown is compact.
-const CHIP_LIMIT = 18;
+// Every book uses the dropdown. Polity (12 chapters) used to get chips instead
+// because it sat under an 18-chapter threshold, so the two notes books behaved
+// differently for no reason the reader could see.
 
 export default function NotesReader({ book }) {
   const [topic, setTopic] = useState(null);
@@ -159,7 +160,6 @@ export default function NotesReader({ book }) {
     return ps;
   }, [book, topic, query]);
 
-  const useDropdown = nav.length > CHIP_LIMIT;
 
   return (
     <div className="notesdoc">
@@ -170,56 +170,22 @@ export default function NotesReader({ book }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        {useDropdown ? (
-          // 84 chapters is too many chips — a select stays compact.
-          <select
-            className="notesdoc__select"
-            value={topic || ""}
-            onChange={(e) => {
-              setTopic(e.target.value || null);
-              window.scrollTo(0, 0);
-            }}
-          >
-            <option value="">All chapters ({meta.total_pages} pages)</option>
-            {nav.map((t) => (
-              <option key={t.topic} value={t.topic}>
-                {t.no ? `${t.no}. ` : ""}
-                {t.topic} ({t.lo}-{t.hi})
-              </option>
-            ))}
-          </select>
-        ) : (
-          <nav className="nt-nav">
-            <a
-              href="#"
-              className={topic === null ? "on" : ""}
-              onClick={(e) => {
-                e.preventDefault();
-                setTopic(null);
-                window.scrollTo(0, 0);
-              }}
-            >
-              All chapters<span>{meta.total_pages}</span>
-            </a>
-            {nav.map((t) => (
-              <a
-                key={t.topic}
-                href="#"
-                className={topic === t.topic ? "on" : ""}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setTopic(t.topic);
-                  window.scrollTo(0, 0);
-                }}
-              >
-                {t.topic}
-                <span>
-                  {t.lo}-{t.hi}
-                </span>
-              </a>
-            ))}
-          </nav>
-        )}
+        <select
+          className="notesdoc__select"
+          value={topic || ""}
+          onChange={(e) => {
+            setTopic(e.target.value || null);
+            window.scrollTo(0, 0);
+          }}
+        >
+          <option value="">All chapters ({meta.total_pages} pages)</option>
+          {nav.map((t) => (
+            <option key={t.topic} value={t.topic}>
+              {t.no ? `${t.no}. ` : ""}
+              {t.topic} ({t.lo}-{t.hi})
+            </option>
+          ))}
+        </select>
       </aside>
 
       <div className="notesdoc__main">

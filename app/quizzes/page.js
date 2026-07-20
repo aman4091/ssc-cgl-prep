@@ -223,8 +223,11 @@ export default function QuizzesPage() {
           <div className="placeholder">No quizzes found. Upload a PDF to get started. 🚀</div>
         ) : (
           <div className="quiz-list">
-            {quizzes.map((q) => (
-              <div key={q.id} className="quiz-row glass">
+            {/* Keyed by id AND index: older saves were made with a makeId that
+                could repeat, so two rows can still share an id. The index keeps
+                React happy without hiding one of the two quizzes. */}
+            {quizzes.map((q, i) => (
+              <div key={`${q.id}-${i}`} className="quiz-row glass">
                 <div className="quiz-row__main">
                   <span className="quiz-row__title">{q.title}</span>
                   <span className="quiz-row__meta">
