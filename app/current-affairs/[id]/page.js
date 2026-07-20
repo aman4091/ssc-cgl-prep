@@ -185,8 +185,8 @@ export default function CurrentAffairsDetail() {
         <div className="row between">
           <span className="hero__eyebrow">📰 Current Affairs</span>
           <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
-            {/* Change date/month right here — the tab now opens the newest entry
-                rather than a grid, so this is how you reach the others. */}
+            {/* The only way between dates now — the grid page is gone, so there
+                is nothing to link "All dates" at. */}
             {siblings.length > 1 && (
               <select
                 className="input"
@@ -201,9 +201,6 @@ export default function CurrentAffairsDetail() {
                 ))}
               </select>
             )}
-            <Link href={`/current-affairs?tab=${tab}&all=1`} className="btn btn--ghost btn--sm">
-              All dates
-            </Link>
           </div>
         </div>
         <div className="row between mt-8" style={{ alignItems: "flex-start", flexWrap: "wrap", gap: 10 }}>
