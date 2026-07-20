@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NAV_GROUPS, NAV_DIRECT, groupForPath, pathOf } from "@/lib/nav";
+import { NAV_GROUPS, NAV_DIRECT, groupForPath } from "@/lib/nav";
 
 // The menu, and only the menu.
 //
@@ -16,15 +16,27 @@ import { NAV_GROUPS, NAV_DIRECT, groupForPath, pathOf } from "@/lib/nav";
 // because a drill-down is short enough not to need one.
 export default function Navbar() {
   const pathname = usePathname();
+  const params = useSearchParams();
   // Seeded from the URL during render so landing deep in the app already shows
   // that group, rather than flashing the top level first.
   const [group, setGroup] = useState(() => groupForPath(pathname));
 
   useEffect(() => { setGroup(groupForPath(pathname)); }, [pathname]);
 
-  const isActive = (href) => {
-    const p = pathOf(href);
-    return pathname === p || pathname.startsWith(p + "/");
+  // Several rows can share a path and differ only by query — the three Current
+  // Affairs tabs do — so matching on the path alone lights all of them up at
+  // once. A row with a query must match that query as well; a row flagged
+  // `isDefault` also matches when the query is absent, because that is the tab
+  // its page opens on.
+  const isActive = ({ href, isDefault }) => {
+    const [p, q] = String(href).split("?");
+    if (!(pathname === p || pathname.startsWith(p + "/"))) return false;
+    if (!q) return true;
+    for (const [k, v] of new URLSearchParams(q)) {
+      const cur = params.get(k);
+      if (cur === null ? !isDefault : cur !== v) return false;
+    }
+    return true;
   };
   const current = NAV_GROUPS.find((g) => g.key === group) || null;
 
@@ -50,7 +62,7 @@ export default function Navbar() {
               <Link
                 key={l.href}
                 href={l.href}
-                className={`drawer__link ${isActive(l.href) ? "is-active" : ""}`}
+                className={`drawer__link ${isActive(l) ? "is-active" : ""}`}
               >
                 {l.label}
               </Link>
@@ -73,7 +85,7 @@ export default function Navbar() {
               <Link
                 key={d.href}
                 href={d.href}
-                className={`drawer__link drawer__link--top ${isActive(d.href) ? "is-active" : ""}`}
+                className={`drawer__link drawer__link--top ${isActive(d) ? "is-active" : ""}`}
               >
                 <span className="drawer__ico">{d.icon}</span>
                 {d.label}

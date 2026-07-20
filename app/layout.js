@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Inter } from "next/font/google";
 import "katex/dist/katex.min.css";
 import "./globals.css";
@@ -31,7 +32,12 @@ export default function RootLayout({ children }) {
             the right. On a phone .shell is a plain block and the menu is the
             off-canvas drawer it has always been. */}
         <div className="shell">
-          <Navbar />
+          {/* Navbar reads the query string to tell rows apart that share a path
+              (the Current Affairs tabs), and useSearchParams needs a Suspense
+              boundary or every page opts out of static rendering. */}
+          <Suspense fallback={<aside className="drawer" />}>
+            <Navbar />
+          </Suspense>
           <main className="container">{children}</main>
         </div>
         <Footer />
