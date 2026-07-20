@@ -38,6 +38,13 @@ export default function VocabDayType({ day, type }) {
 
   useEffect(() => { setItems(getDayTypeItems(dayNum, type)); }, [dayNum, type]);
 
+  useEffect(() => {
+    if (sel !== null || items.length === 0) return;
+    if (!window.matchMedia("(min-width: 781px)").matches) return;
+    openWord(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items]);
+
   // force = ignore the cache and ask the AI again (the 🔄 button), for when a
   // word came back with a blank//wrong meaning.
   const openWord = async (idx, force = false) => {
@@ -105,6 +112,14 @@ export default function VocabDayType({ day, type }) {
     return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sel, items]);
+
+  // On a phone the detail is a pop-up over the page. Without this the page
+  // behind it scrolls under your finger and shows through the backdrop.
+  // Gated in CSS to the phone breakpoint, so the wide inline layout is untouched.
+  useEffect(() => {
+    document.body.classList.toggle("modal-open", sel !== null);
+    return () => document.body.classList.remove("modal-open");
+  }, [sel]);
 
   // Keep the highlighted word visible while navigating with the keyboard.
   useEffect(() => {

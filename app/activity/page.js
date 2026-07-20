@@ -4,7 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getActivityDays, kindLabel, dayKey, clearActivity } from "@/lib/activity";
 
-// "Kya kiya" — one row per topic per day.
+// Activity — one row per topic per day.
+//
+// Topics ONLY. It briefly carried question counts and a per-day accuracy; that
+// was never asked for and turned a list of what you touched into a scorecard,
+// which the Mistake Notebook already is.
 //
 // It only knows about work done from here on: nothing in the app recorded topics
 // before lib/activity existed, and inventing a history from qstats would be a
@@ -34,15 +38,15 @@ export default function ActivityPage() {
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
-          <span className="hero__eyebrow">🗒️ Kya kiya</span>
+          <span className="hero__eyebrow">🗒️ Activity</span>
           {days?.length > 0 && (
             <button className="btn btn--ghost btn--sm" onClick={wipe}>Clear</button>
           )}
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)" }}>
-          Kya <span className="grad">kiya</span>
+          <span className="grad">Activity</span>
         </h1>
-        <p className="hero__sub">Din ke hisaab se — jo bhi quiz ya chapter kiya, uska topic yahan.</p>
+        <p className="hero__sub">Din ke hisaab se — jo bhi kiya, uska topic.</p>
       </section>
 
       <section className="section">
@@ -60,18 +64,12 @@ export default function ActivityPage() {
             <div key={d.day} className="act-day">
               <div className="act-day__hd">
                 <span className="act-day__name">{pretty(d.day)}</span>
-                <span className="act-day__meta">
-                  {d.total} questions{d.total > 0 ? ` · ${Math.round((d.correct / d.total) * 100)}% sahi` : ""}
-                </span>
               </div>
               <div className="pyq-list">
                 {d.items.map((r) => (
                   <div key={r.key} className="pyq-row" style={{ cursor: "default" }}>
                     <span className="pyq-row__ico">{kindLabel(r.kind).split(" ")[0]}</span>
                     <span className="pyq-row__name">{r.label}</span>
-                    <span className="pyq-row__meta">
-                      {r.count} Q{r.count > 0 ? ` · ${r.correct}/${r.count}` : ""}
-                    </span>
                   </div>
                 ))}
               </div>

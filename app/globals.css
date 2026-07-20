@@ -502,7 +502,7 @@ label.glass-card:hover { border-color: var(--accent2); }
 
   .drawer {
     position: fixed; top: 0; left: 0; bottom: 0; z-index: 63;
-    width: min(280px, 82vw);
+    width: min(226px, 68vw);
     transform: translateX(-100%);
     transition: transform 0.2s ease;
     border-right: 1px solid var(--line);
@@ -518,6 +518,9 @@ label.glass-card:hover { border-color: var(--accent2); }
 
   /* The hamburger is pinned over the page, so the page needs room for it. */
   main.container { padding-top: 56px; }
+
+  /* A word's detail is a pop-up here; freeze the page under it. */
+  body.modal-open { overflow: hidden; }
 }
 
 /* ===== Buttons ===== */
