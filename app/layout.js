@@ -4,8 +4,6 @@ import "katex/dist/katex.min.css";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import VocabRush from "@/components/VocabRush";
-import CalcRush from "@/components/CalcRush";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
 import FocusEnforcer from "@/components/FocusEnforcer";
 import SyncManager from "@/components/SyncManager";
@@ -41,8 +39,6 @@ export default function RootLayout({ children }) {
           <main className="container">{children}</main>
         </div>
         <Footer />
-        <VocabRush />
-        <CalcRush />
         <CurrentAffairsRush />
         <FocusEnforcer />
         <SyncManager />

@@ -480,6 +480,44 @@ label.glass-card:hover { border-color: var(--accent2); }
 
 .drawer__rule { height: 1px; background: var(--line); margin: 7px 4px; }
 
+/* ---- phones: the rail slides in from the left ----
+   Wide screens keep the permanent left column. On a phone a 164px rail ate half
+   the width, so below the breakpoint the menu goes off-canvas and a hamburger
+   brings it back — still from the LEFT, never as a bar across the top. */
+.navtoggle { display: none; }
+.drawer__backdrop { display: none; }
+
+@media (max-width: 780px) {
+  .shell { display: block; }
+
+  .navtoggle {
+    display: grid; place-items: center;
+    position: fixed; top: 10px; left: 10px; z-index: 62;
+    width: 40px; height: 40px; border-radius: var(--radius-sm);
+    background: var(--card); border: 1px solid var(--line); color: var(--ink);
+    font-size: 1.1rem; line-height: 1; cursor: pointer;
+  }
+
+  .drawer {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 63;
+    width: min(280px, 82vw);
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    border-right: 1px solid var(--line);
+  }
+  .drawer.is-open { transform: translateX(0); }
+  /* Clear the floating hamburger so it never sits on the app name. */
+  .drawer__head { padding-left: 58px; }
+
+  .drawer__backdrop {
+    display: block; position: fixed; inset: 0; z-index: 62;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  /* The hamburger is pinned over the page, so the page needs room for it. */
+  main.container { padding-top: 56px; }
+}
+
 /* ===== Buttons ===== */
 .btn {
   display: inline-flex;

@@ -5,15 +5,17 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { extractOws, extractOwsChunked, ocrImage, extractPdfTextSmart } from "@/lib/client-ai";
 import { getSettings, saveQuiz } from "@/lib/storage";
-import { appendOws, getDaysOverview, getMeta, clearOws, buildDayQuiz, PER_DAY, TYPES } from "@/lib/vocab";
+import { appendOws, getDaysOverview, getMeta, clearOws, buildDayQuiz, lastCompletedDay, PER_DAY, TYPES } from "@/lib/vocab";
 
 export default function VocabPage() {
   const router = useRouter();
   const [days, setDays] = useState([]);
+  // How far you have actually finished — the cumulative quiz spans Day 1 to
+  // here, not to the last day that merely has words sitting in it.
+  const [doneTo, setDoneTo] = useState(0);
 
-  // Every type, every day up to the last — the whole span in one quiz.
   const startCumQuiz = () => {
-    const quiz = buildDayQuiz(days.length, "cum");
+    const quiz = buildDayQuiz(doneTo, "cum", 100);
     if (!quiz.questions.length) return;
     saveQuiz(quiz);
     router.push(`/quizzes/${quiz.id}`);
@@ -31,6 +33,7 @@ export default function VocabPage() {
   const refresh = () => {
     setDays(getDaysOverview());
     setMeta(getMeta());
+    setDoneTo(lastCompletedDay());
   };
   useEffect(() => { refresh(); }, []);
 
@@ -200,11 +203,14 @@ export default function VocabPage() {
         </p>
         {/* The cumulative quiz belongs here, not inside a single day — this is
             the page where you are looking at a span of days. */}
-        {days.length > 1 && (
-          <div className="row mt-16">
-            <button className="btn btn--primary" onClick={() => startCumQuiz()}>
-              🎯 Quiz · Day 1–{days.length}
+        {doneTo > 0 && (
+          <div className="row mt-16" style={{ gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+            <button className="btn btn--primary" onClick={startCumQuiz}>
+              🎯 Quiz · Day 1–{doneTo}
             </button>
+            <span className="muted" style={{ fontSize: "0.82rem" }}>
+              100 questions · jo aa chuke hain wo dobara nahi aayenge
+            </span>
           </div>
         )}
       </section>

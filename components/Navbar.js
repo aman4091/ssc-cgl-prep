@@ -20,8 +20,19 @@ export default function Navbar() {
   // Seeded from the URL during render so landing deep in the app already shows
   // that group, rather than flashing the top level first.
   const [group, setGroup] = useState(() => groupForPath(pathname));
+  // Phones only: the rail is off-canvas until the hamburger asks for it.
+  const [open, setOpen] = useState(false);
 
   useEffect(() => { setGroup(groupForPath(pathname)); }, [pathname]);
+  // Navigating means you are done with the menu — and on a phone it sits over
+  // the page you just opened.
+  useEffect(() => { setOpen(false); }, [pathname]);
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   // Several rows can share a path and differ only by query — the three Current
   // Affairs tabs do — so matching on the path alone lights all of them up at
@@ -41,7 +52,18 @@ export default function Navbar() {
   const current = NAV_GROUPS.find((g) => g.key === group) || null;
 
   return (
-    <aside className="drawer">
+    <>
+      {/* Phone only — hidden by CSS once the rail is permanent. */}
+      <button
+        className="navtoggle"
+        aria-label="Menu"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        ☰
+      </button>
+      {open && <div className="drawer__backdrop" onClick={() => setOpen(false)} />}
+    <aside className={`drawer ${open ? "is-open" : ""}`}>
       <div className="drawer__head">
         <Link href="/" className="drawer__brand">
           <strong style={{ fontSize: "0.95rem", display: "block" }}>SSC CGL Pre</strong>
@@ -95,5 +117,6 @@ export default function Navbar() {
         )}
       </nav>
     </aside>
+    </>
   );
 }
