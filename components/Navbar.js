@@ -3,24 +3,23 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NAV_GROUPS, groupForPath } from "@/lib/nav";
+import { NAV_GROUPS, NAV_DIRECT, groupForPath } from "@/lib/nav";
 import { getChapters } from "@/lib/grammar";
 
 // The menu, and only the menu.
 //
-// One level of grouping: the subject name, and clicking it reveals the names
-// inside. Nothing is pinned above the groups — the owner asked for everything to
-// live inside a subject. The list of groups is lib/nav.js; this file only draws
-// it.
+// A DRILL-DOWN, not a dropdown: the top level is subject names only. Tapping one
+// replaces the list in place with that subject's items and a "← back" row. The
+// owner asked for exactly this — an accordion that expands inline pushes the
+// rest of the menu down the screen, which is what made the old menu feel long.
 //
-// On a wide screen this <aside> is the left column of .shell and is always
-// visible. On a phone it is a block at the top with a ☰ that expands it in
-// place — it does not float and does not cover the page.
+// It is always the left column, at every width. Below the breakpoint it just
+// gets narrower; it never moves to the top of the page and there is no
+// hamburger, because a drill-down is short enough not to need one.
 export default function Navbar() {
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);          // phone: whole menu
-  // Seeded from the URL rather than set in an effect, so the group you are
-  // inside is already open in the first paint instead of flashing shut.
+  // null = top level. Seeded from the URL during render so landing deep in the
+  // app already shows that group, rather than flashing the top level first.
   const [group, setGroup] = useState(() => groupForPath(pathname));
   const [chapters, setChapters] = useState({});
 
@@ -32,83 +31,74 @@ export default function Navbar() {
     setChapters(map);
   }, [pathname]);
 
-  // Landing deep in the app should show you where you are.
   useEffect(() => { setGroup(groupForPath(pathname)); }, [pathname]);
 
-  // On a phone the menu sits above the page it just navigated to, so leaving it
-  // open would bury the content.
-  useEffect(() => { setOpen(false); }, [pathname]);
-
-  useEffect(() => {
-    if (!open) return undefined;
-    const onKey = (e) => e.key === "Escape" && setOpen(false);
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
   const isActive = (href) => pathname === href || pathname.startsWith(href + "/");
+  const current = NAV_GROUPS.find((g) => g.key === group) || null;
 
   return (
-    <aside className={`drawer ${open ? "is-open" : ""}`}>
+    <aside className="drawer">
       <div className="drawer__head">
         <Link href="/" className="drawer__brand">
           <strong style={{ fontSize: "0.95rem", display: "block" }}>SSC CGL Pre</strong>
           <span className="drawer__sub">Prep Hub · Prelims</span>
         </Link>
-        {/* Phone only — the wide layout has nothing to expand. */}
-        <button
-          className="drawer__toggle"
-          aria-label="Menu"
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-        >
-          ☰
-        </button>
       </div>
 
       <nav className="drawer__nav">
-        {NAV_GROUPS.map((g) => {
-          const isOpen = group === g.key;
-          const own = (g.subject ? chapters[g.subject] : null) || [];
-          const count = own.length + g.links.length;
-          return (
-            <div key={g.key} className={`drawer__group ${isOpen ? "is-open" : ""}`}>
-              <button
-                className="drawer__grouphd"
-                aria-expanded={isOpen}
-                onClick={() => setGroup(isOpen ? null : g.key)}
+        {current ? (
+          /* ---- level 2: one group, in place of the list ---- */
+          <>
+            <button className="drawer__back" onClick={() => setGroup(null)}>
+              <span className="drawer__chev">←</span>
+              <span className="drawer__groupname">{current.name}</span>
+            </button>
+
+            {((current.subject ? chapters[current.subject] : null) || []).map((c) => (
+              <Link
+                key={c.id}
+                href={`/study/${current.subject}/${c.id}`}
+                className={`drawer__link ${isActive(`/study/${current.subject}/${c.id}`) ? "is-active" : ""}`}
               >
+                {c.name}
+              </Link>
+            ))}
+
+            {current.links.map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`drawer__link ${isActive(l.href) ? "is-active" : ""}`}
+              >
+                {l.label}
+              </Link>
+            ))}
+          </>
+        ) : (
+          /* ---- level 1: names only ---- */
+          <>
+            {NAV_GROUPS.map((g) => (
+              <button key={g.key} className="drawer__grouphd" onClick={() => setGroup(g.key)}>
                 <span className="drawer__ico">{g.icon}</span>
                 <span className="drawer__groupname">{g.name}</span>
-                <span className="drawer__count">{count}</span>
-                <span className="drawer__chev">{isOpen ? "▾" : "▸"}</span>
+                <span className="drawer__chev">›</span>
               </button>
+            ))}
 
-              {isOpen && (
-                <div className="drawer__children">
-                  {own.map((c) => (
-                    <Link
-                      key={c.id}
-                      href={`/study/${g.subject}/${c.id}`}
-                      className={`drawer__link ${isActive(`/study/${g.subject}/${c.id}`) ? "is-active" : ""}`}
-                    >
-                      {c.name}
-                    </Link>
-                  ))}
-                  {g.links.map((l) => (
-                    <Link
-                      key={l.href}
-                      href={l.href}
-                      className={`drawer__link ${isActive(l.href) ? "is-active" : ""}`}
-                    >
-                      {l.label}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-          );
-        })}
+            <div className="drawer__rule" />
+
+            {NAV_DIRECT.map((d) => (
+              <Link
+                key={d.href}
+                href={d.href}
+                className={`drawer__link drawer__link--top ${isActive(d.href) ? "is-active" : ""}`}
+              >
+                <span className="drawer__ico">{d.icon}</span>
+                {d.label}
+              </Link>
+            ))}
+          </>
+        )}
       </nav>
     </aside>
   );

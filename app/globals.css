@@ -60,6 +60,14 @@
   --danger: var(--bad);
   --warning: #fbbf24;
 
+  /* ---- the menu ----
+     The selected row is the theme's own pen — no separate menu colour. Hover is
+     a light lift off the card, NOT var(--bg): the page colour here is
+     near-black, and using it made pointing at a subject flash a black bar,
+     which was the actual complaint. */
+  --nav-active: var(--accent);
+  --nav-hover: #2a2f36;
+
   /* ---- washes ----
      A tinted fill — a right answer, a wrong one, a marked row. These are
      OPAQUE blends, not translucent overlays. A 14%-alpha colour laid over a
@@ -180,11 +188,16 @@ main.container {
    in one place in the DOM, re-laid-out by the media query at the bottom of this
    file, so the two never drift apart.
 
-   Deviation from theme.css, on purpose: the theme collapses its sidebar into a
-   block stacked above the content. This menu is 20 links — stacking it would
-   push every page a screen and a half down on a phone. So below the breakpoint
-   it stays the drawer it already was. */
-.shell { display: block; }
+   The menu is the left column at EVERY width, phones included — the owner asked
+   for it never to sit across the top. That is affordable now only because the
+   menu became a drill-down: the top level is eight short names, so a narrow rail
+   holds it without wrapping. On a phone the rail simply gets narrower. */
+.shell {
+  display: grid;
+  grid-template-columns: 164px minmax(0, 1fr);
+  align-items: start;
+}
+@media (min-width: 641px) { .shell { grid-template-columns: 210px minmax(0, 1fr); } }
 
 /* ===== Card =====
    The theme's surface: flat fill, a real border, a small radius, no shadow and
@@ -197,14 +210,23 @@ main.container {
   border-radius: var(--radius);
 }
 
+/* A row in a list, not a tile. The padding and radius came down and the icon
+   moved inline (see .subject below) because the owner asked for the cards to be
+   replaced by lists — a row you scan down, not a box you look at. */
 .glass-card {
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
-  padding: var(--pad, 18px);
+  border-radius: var(--radius-sm);
+  padding: var(--pad, 12px 14px);
   transition: border-color 0.15s ease;
 }
-.glass-card:hover { border-color: var(--glass-border-strong); }
+/* Only rows you can actually click react to the pointer. A plain .glass-card is
+   often just a container — a question in a list, a settings panel — and lighting
+   every one of them up as the mouse crosses the page reads as "selected" when
+   nothing is. */
+a.glass-card:hover,
+button.glass-card:hover,
+label.glass-card:hover { border-color: var(--accent2); }
 
 /* A card's header: the topic label in the red pen, its meta (page/count) dim on
    the right, a rule under both. */
@@ -403,64 +425,60 @@ main.container {
 .hamburger span { display: block; width: 18px; height: 2px; background: var(--text-1); border-radius: 2px; }
 
 /* ===== Menu =====
-   No longer off-canvas and no longer floating: on a phone this is simply the
-   first block on the page — app name + a ☰ that expands the list in place. It
-   scrolls away with the content like everything else, which is the point; the
-   old bar was pinned over the page and ate the top of every screen. */
+   The left column, at every width — it never becomes a bar across the top and
+   there is no hamburger. It can afford to always be open because it is a
+   DRILL-DOWN: the top level is eight names, and opening one replaces the list
+   rather than expanding under it. Nothing here is ever tall enough to need
+   collapsing. */
 .drawer {
   background: var(--card);
-  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
   display: flex; flex-direction: column;
+  position: sticky; top: 0;
+  height: 100vh; overflow-y: auto;
 }
-.drawer__head {
-  display: flex; align-items: center; gap: 12px;
-  padding: 12px 14px;
-}
-.drawer__brand { color: var(--ink); text-decoration: none; }
-.drawer__toggle {
-  margin-left: auto; width: 38px; height: 38px; border-radius: var(--radius-sm);
-  background: var(--bg); border: 1px solid var(--line); color: var(--ink);
-  cursor: pointer; font-size: 1.05rem; line-height: 1;
-}
-/* Collapsed until the ☰ asks for it. The wide layout re-shows it permanently. */
-.drawer__nav { display: none; flex-direction: column; padding: 10px; gap: 1px; }
-.drawer.is-open .drawer__nav { display: flex; border-top: 1px solid var(--line); }
-/* The theme's nav row: quiet by default, and the current page is a solid fill of
-   the red pen with white on it — not a faint tint you have to hunt for. */
+.drawer__head { padding: 14px 12px 10px; border-bottom: 1px solid var(--line); }
+.drawer__brand { color: var(--ink); text-decoration: none; display: block; }
+.drawer__nav { display: flex; flex-direction: column; padding: 8px; gap: 1px; }
+
+/* A row: quiet until it is the page you are on, and then it is a solid fill of
+   the accent — not a faint tint you have to hunt for. */
 .drawer__link {
-  display: flex; align-items: center; gap: 10px;
+  display: flex; align-items: center; gap: 9px;
   padding: 7px 9px; border-radius: 6px;
   color: var(--ink); text-decoration: none; font-size: 13px; font-weight: 400;
 }
-.drawer__link:hover { background: var(--bg); color: var(--ink); }
-.drawer__link.is-active { background: var(--accent); color: #16181c; font-weight: 600; }
-.drawer__ico { width: 18px; text-align: center; font-size: 0.95rem; }
+/* Hover is a LIFT, not a fill. It used to be var(--bg) — the page colour, which
+   on this dark palette is near-black, so pointing at a subject flashed a black
+   bar. */
+.drawer__link:hover { background: var(--nav-hover); color: var(--ink); }
+.drawer__link.is-active { background: var(--nav-active); color: #16181c; font-weight: 600; }
+.drawer__link--top { font-weight: 500; }
+.drawer__ico { width: 18px; text-align: center; font-size: 0.95rem; flex-shrink: 0; }
 
-/* ---- one level of grouping: subject name, click, the names inside ----
-   The group header is a row like any other; the children are indented under a
-   hairline so the nesting reads at a glance without boxing every group. */
-.drawer__group { display: flex; flex-direction: column; }
+/* ---- level 1: the group rows ---- */
 .drawer__grouphd {
-  display: flex; align-items: center; gap: 10px; width: 100%;
+  display: flex; align-items: center; gap: 9px; width: 100%;
   padding: 8px 9px; border: 0; border-radius: 6px;
   background: transparent; color: var(--ink);
-  font: 600 13px/1.2 var(--font); text-align: left; cursor: pointer;
+  font: 500 13px/1.3 var(--font); text-align: left; cursor: pointer;
 }
-.drawer__grouphd:hover { background: var(--bg); }
-.drawer__group.is-open .drawer__grouphd { color: var(--accent2); }
-.drawer__groupname { flex: 1; }
-.drawer__count { font-size: 11px; color: var(--dim); font-weight: 400; }
-.drawer__chev { font-size: 10px; color: var(--dim); width: 10px; }
-.drawer__children {
-  display: flex; flex-direction: column; gap: 1px;
-  margin: 2px 0 6px 18px; padding-left: 9px;
-  border-left: 1px solid var(--line);
+.drawer__grouphd:hover { background: var(--nav-hover); }
+.drawer__groupname { flex: 1; min-width: 0; }
+.drawer__chev { font-size: 12px; color: var(--dim); flex-shrink: 0; }
+
+/* ---- level 2: the back row that stands in for the group's title ---- */
+.drawer__back {
+  display: flex; align-items: center; gap: 9px; width: 100%;
+  padding: 8px 9px; margin-bottom: 4px;
+  border: 0; border-bottom: 1px solid var(--line); border-radius: 6px 6px 0 0;
+  background: transparent; color: var(--accent2);
+  font: 600 13px/1.3 var(--font); text-align: left; cursor: pointer;
 }
-/* Children sit one step quieter than a group header until they are the page you
-   are on. */
-.drawer__children .drawer__link { font-size: 12.5px; color: var(--dim); padding: 6px 8px; }
-.drawer__children .drawer__link:hover { color: var(--ink); }
-.drawer__children .drawer__link.is-active { color: #16181c; }
+.drawer__back:hover { background: var(--nav-hover); }
+.drawer__back .drawer__chev { color: var(--accent2); }
+
+.drawer__rule { height: 1px; background: var(--line); margin: 7px 4px; }
 
 /* ===== Buttons ===== */
 .btn {
@@ -568,32 +586,41 @@ main.container {
 }
 .section__head p { color: var(--text-3); font-size: 0.95rem; }
 
-/* ===== Grid ===== */
-.grid { display: grid; gap: 18px; }
+/* ===== Grid — now a list =====
+   The owner asked for the tiled cards to go and a list to take their place,
+   everywhere. Rather than rewrite 34 pages, the change is made once here: the
+   multi-column grids collapse to a single column, so every "grid of cards"
+   becomes a vertical list of rows, and .glass-card below is what makes each row
+   read as a row instead of a box.
+
+   .grid--4 is left alone — its only users are small stat tiles (a score, a
+   count), which are not cards and read correctly as a strip. */
+.grid { display: grid; gap: 8px; }
 .grid--4 { grid-template-columns: repeat(4, 1fr); }
-.grid--3 { grid-template-columns: repeat(3, 1fr); }
-.grid--2 { grid-template-columns: repeat(2, 1fr); }
+.grid--3, .grid--2 { grid-template-columns: 1fr; }
 
-@media (max-width: 900px) {
-  .grid--4 { grid-template-columns: repeat(2, 1fr); }
-  .grid--3 { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 560px) {
-  .grid--4, .grid--3, .grid--2 { grid-template-columns: 1fr; }
-}
+@media (max-width: 900px) { .grid--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .grid--4 { grid-template-columns: 1fr; } }
 
-/* ===== Subject card ===== */
+/* ===== Subject row =====
+   Was a tile: a 52px boxed icon stacked above a big heading and a paragraph.
+   Now a row — the icon inline at its natural size, the name next to it, the
+   detail under it. Same markup, so the pages using it did not have to change. */
+.subject {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  column-gap: 12px;
+  align-items: baseline;
+}
 .subject__icon {
-  width: 52px; height: 52px;
-  display: grid; place-items: center;
-  border-radius: 14px;
-  font-size: 26px;
-  background: var(--glass-bg-strong);
-  border: 1px solid var(--glass-border);
-  margin-bottom: 16px;
+  width: auto; height: auto;
+  font-size: 18px; line-height: 1.3;
+  background: none; border: 0; border-radius: 0;
+  margin: 0; display: block; text-align: center;
 }
-.subject h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
-.subject p { color: var(--text-3); font-size: 0.9rem; }
+.subject h3 { font-size: 0.95rem; font-weight: 600; margin: 0; }
+.subject p { grid-column: 2; color: var(--text-3); font-size: 0.85rem; margin-top: 3px; }
+.subject .badge { grid-column: 2; justify-self: start; margin-top: 8px !important; }
 
 /* ===== Forms ===== */
 .field { margin-bottom: 20px; }
@@ -1777,34 +1804,16 @@ main.container {
 }
 
 /* ===================================================================
-   SHELL — the sidebar layout, wide screens only.
+   SHELL — the wide-screen end of the sidebar layout.
 
-   Above 980px the menu stops being a drawer and simply sits on the left, the
-   way it does in the notes theme: the page title, a line of context, then the
-   links, with the current one filled in the red pen. The hamburger and the
-   overlay have nothing to do here, so they go.
-
-   It is the same <aside class="drawer"> the phone opens off-canvas — only the
-   layout changes. Nothing is duplicated, so the two cannot drift apart.
+   The menu is the left column at every width now (see .shell near the top of
+   this file), so the sticky full-height rail, the border and the always-open
+   nav all live in the base rules. All that is left here is width: the rail can
+   afford to be roomier once there is a screen to spend.
    =================================================================== */
 @media (min-width: 981px) {
-  .shell {
-    display: grid;
-    grid-template-columns: 250px minmax(0, 1fr);
-    align-items: start;
-  }
-  /* The full-height left column, always open. */
-  .drawer {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
-    border-right: 1px solid var(--line);
-    border-bottom: 0;
-  }
-  .drawer__head { padding: 16px 14px 12px; border-bottom: 1px solid var(--line); }
-  .drawer__toggle { display: none; }              /* nothing to expand */
-  .drawer__nav { display: flex; border-top: 0; }  /* always shown */
+  .shell { grid-template-columns: 250px minmax(0, 1fr); }
+  .drawer__head { padding: 16px 14px 12px; }
   /* main is the second column now, so it must not also be centred in the page */
   main.container { max-width: 900px; margin: 0; padding-left: 22px; padding-right: 22px; }
 }
