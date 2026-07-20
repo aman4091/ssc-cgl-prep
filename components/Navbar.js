@@ -55,7 +55,7 @@ export default function Navbar() {
     <>
       {/* Phone only — hidden by CSS once the rail is permanent. */}
       <button
-        className="navtoggle"
+        className={`navtoggle ${open ? "is-hidden" : ""}`}
         aria-label="Menu"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
@@ -66,8 +66,19 @@ export default function Navbar() {
     <aside className={`drawer ${open ? "is-open" : ""}`}>
       <div className="drawer__head">
         <Link href="/" className="drawer__brand">
-          <strong style={{ fontSize: "0.95rem", display: "block" }}>SSC CGL Pre</strong>
-          <span className="drawer__sub">Prep Hub · Prelims</span>
+          {/* Inline, not a file: a strict-CSP-safe mark that also inherits the
+              theme's two pens instead of being a fixed-colour image. */}
+          <svg className="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="1" y="1" width="30" height="30" rx="8"
+                  fill="none" stroke="var(--accent)" strokeWidth="2" />
+            <circle cx="16" cy="16" r="7.5" fill="none"
+                    stroke="var(--accent2)" strokeWidth="2" />
+            <circle cx="16" cy="16" r="2.5" fill="var(--accent)" />
+          </svg>
+          <span className="brand__text">
+            <strong>SSC CGL Pre</strong>
+            <span className="drawer__sub">Prep Hub · Prelims</span>
+          </span>
         </Link>
       </div>
 

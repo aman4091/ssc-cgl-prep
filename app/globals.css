@@ -438,7 +438,13 @@ label.glass-card:hover { border-color: var(--accent2); }
   height: 100vh; overflow-y: auto;
 }
 .drawer__head { padding: 14px 12px 10px; border-bottom: 1px solid var(--line); }
-.drawer__brand { color: var(--ink); text-decoration: none; display: block; }
+.drawer__brand {
+  color: var(--ink); text-decoration: none;
+  display: flex; align-items: center; gap: 10px;
+}
+.brand__mark { width: 26px; height: 26px; flex-shrink: 0; }
+.brand__text { display: flex; flex-direction: column; min-width: 0; }
+.brand__text strong { font-size: 0.95rem; line-height: 1.2; }
 .drawer__nav { display: flex; flex-direction: column; padding: 8px; gap: 1px; }
 
 /* A row: quiet until it is the page you are on, and then it is a solid fill of
@@ -508,8 +514,9 @@ label.glass-card:hover { border-color: var(--accent2); }
     border-right: 1px solid var(--line);
   }
   .drawer.is-open { transform: translateX(0); }
-  /* Clear the floating hamburger so it never sits on the app name. */
-  .drawer__head { padding-left: 58px; }
+  /* No clearance needed: the hamburger hides itself once the rail is open, so
+     the brand starts at the edge like it does on a wide screen. */
+  .navtoggle.is-hidden { display: none; }
 
   .drawer__backdrop {
     display: block; position: fixed; inset: 0; z-index: 62;
