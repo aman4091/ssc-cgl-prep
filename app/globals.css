@@ -61,12 +61,12 @@
   --warning: #fbbf24;
 
   /* ---- the menu ----
-     The selected row is the theme's own pen — no separate menu colour. Hover is
-     a light lift off the card, NOT var(--bg): the page colour here is
-     near-black, and using it made pointing at a subject flash a black bar,
-     which was the actual complaint. */
+     Both states are the theme's own pen. Selected is the pen at full strength;
+     hover is the same pen washed back into the card, so pointing at a row
+     previews the colour it will take. It used to be var(--bg) — the near-black
+     page colour — which is why hovering flashed a black bar. */
   --nav-active: var(--accent);
-  --nav-hover: #2a2f36;
+  --nav-hover: color-mix(in srgb, var(--accent) 20%, var(--card));
 
   /* ---- washes ----
      A tinted fill — a right answer, a wrong one, a marked row. These are

@@ -35,7 +35,7 @@ export default function PocketPage() {
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">📕 Pocket Rocket</span>
-          <Link href="/study/english" className="btn btn--ghost btn--sm">← English</Link>
+          <Link href="/" className="btn btn--ghost btn--sm">← Home</Link>
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.7rem, 4vw, 2.6rem)" }}>
           Pocket <span className="grad">Rocket{book ? ` · ${book.total} rules` : ""}</span>

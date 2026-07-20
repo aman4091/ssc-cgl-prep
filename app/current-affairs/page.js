@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import FeedBucket from "@/components/FeedBucket";
 import { loadCaBankIndex, caBankId } from "@/lib/cabank";
 
@@ -12,10 +13,26 @@ const TABS = [
   { key: "yearly", label: "📅 Yearly", dateMode: "year", placeholder: "Year", note: "Yearly current affairs PDF + video — pick the year." },
 ];
 
+// The menu links straight to a tab (/current-affairs?tab=monthly), so the tab
+// has to come from the URL rather than being local state only.
 export default function CurrentAffairsPage() {
-  const [tab, setTab] = useState("daily");
+  return (
+    <Suspense fallback={<section className="section"><p className="muted">Loading…</p></section>}>
+      <CurrentAffairs />
+    </Suspense>
+  );
+}
+
+function CurrentAffairs() {
+  const params = useSearchParams();
+  const wanted = params.get("tab");
+  const [tab, setTab] = useState(TABS.some((t) => t.key === wanted) ? wanted : "daily");
   const [bank, setBank] = useState(null);
-  const active = TABS.find((t) => t.key === tab);
+  const active = TABS.find((t) => t.key === tab) || TABS[0];
+
+  useEffect(() => {
+    if (wanted && TABS.some((t) => t.key === wanted)) setTab(wanted);
+  }, [wanted]);
 
   useEffect(() => { loadCaBankIndex().then(setBank); }, []);
 
