@@ -39,20 +39,14 @@ export default function WarPage() {
         ) : subjects.length === 0 ? (
           <div className="placeholder">Book load nahi hui. 😕</div>
         ) : (
-          <div className="grid grid--3">
+          <div className="pyq-list">
             {subjects.map((s) => (
-              <Link
-                key={s.slug}
-                href={`/pyq/war/${s.slug}`}
-                className="glass-card subject"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <div className="subject__icon">{s.icon}</div>
-                <h3>{s.label}</h3>
-                <p className="mt-8">
-                  {s.count} questions · {s.chapters.length} chapter{s.chapters.length > 1 ? "s" : ""}
-                </p>
-                <span className="badge badge--ok" style={{ marginTop: 12 }}>Solve →</span>
+              <Link key={s.slug} href={`/pyq/war/${s.slug}`} className="pyq-row">
+                <span className="pyq-row__ico">{s.icon}</span>
+                <span className="pyq-row__name">{s.label}</span>
+                <span className="pyq-row__meta">
+                  {s.count} Q · {s.chapters.length} ch
+                </span>
               </Link>
             ))}
           </div>

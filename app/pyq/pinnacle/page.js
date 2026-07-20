@@ -38,20 +38,14 @@ export default function PinnaclePage() {
         ) : chapters.length === 0 ? (
           <div className="placeholder">Book load nahi hui. 😕</div>
         ) : (
-          <div className="grid grid--3">
+          <div className="pyq-list">
             {chapters.map((c) => (
-              <Link
-                key={c.slug}
-                href={`/pyq/pinnacle/${c.slug}`}
-                className="glass-card subject"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <div className="subject__icon">{c.icon}</div>
-                <h3>{c.label}</h3>
-                <p className="mt-8">
-                  {c.count} questions{c.passages ? ` · ${c.passages} passages` : ""}
-                </p>
-                <span className="badge badge--ok" style={{ marginTop: 12 }}>Solve →</span>
+              <Link key={c.slug} href={`/pyq/pinnacle/${c.slug}`} className="pyq-row">
+                <span className="pyq-row__ico">{c.icon}</span>
+                <span className="pyq-row__name">{c.label}</span>
+                <span className="pyq-row__meta">
+                  {c.count} Q{c.passages ? ` · ${c.passages} passages` : ""}
+                </span>
               </Link>
             ))}
           </div>

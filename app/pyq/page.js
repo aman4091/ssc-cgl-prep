@@ -2,18 +2,17 @@ import Link from "next/link";
 
 export const metadata = { title: "PYQ — SSC CGL Pre" };
 
+// Every shelf here now has questions already in it. The four subject cards that
+// used to sit at the bottom (Maths / Reasoning / English / General Awareness)
+// were empty upload banks; the only real content inside two of them was the
+// crazygktrick bank, which now has its own two shelves below.
 const SUBS = [
-  // The WAR book ships with the app (lib/warbank) — 3,152 real SSC PYQs the
-  // user never has to upload. First, because it is the only card with questions
-  // already in it.
-  { icon: "🎯", name: "WAR", desc: "3,152 ready-made SSC PYQs — 12 subjects, exam ke saath. Kuch upload karne ki zaroorat nahi.", href: "/pyq/war" },
-  { icon: "📚", name: "Pinnacle English", desc: "7,585 ready-made English questions — 15 chapters, solutions ke saath.", href: "/pyq/pinnacle" },
-  { icon: "🧮", name: "Pinnacle Maths", desc: "6,420 ready-made SSC maths PYQs — 27 chapters, poore solution ke saath.", href: "/pyq/mathbank" },
-  { icon: "🧠", name: "Pinnacle Reasoning", desc: "3,543 ready-made SSC reasoning questions — 32 chapters, verbal aur non-verbal, solution ke saath.", href: "/pyq/reasonbank" },
-  { icon: "🧮", name: "Maths", desc: "Previous year quant questions — one subject-wise bank.", href: "/pyq/math" },
-  { icon: "🧠", name: "Reasoning", desc: "PYQ reasoning — analogy, series, coding, puzzles.", href: "/pyq/reasoning" },
-  { icon: "📚", name: "English", desc: "PYQ English — grammar, vocabulary, comprehension.", href: "/pyq/english" },
-  { icon: "🌍", name: "General Awareness", desc: "PYQ GS — history, polity, science, current affairs.", href: "/pyq/gs" },
+  { icon: "🎯", name: "WAR", count: "3,152", desc: "12 subjects, exam ke saath.", href: "/pyq/war" },
+  { icon: "📚", name: "Pinnacle English", count: "7,585", desc: "15 chapters, solutions ke saath.", href: "/pyq/pinnacle" },
+  { icon: "🧮", name: "Pinnacle Maths", count: "6,420", desc: "27 chapters, poore solution ke saath.", href: "/pyq/mathbank" },
+  { icon: "🧠", name: "Pinnacle Reasoning", count: "3,543", desc: "32 chapters, verbal aur non-verbal.", href: "/pyq/reasonbank" },
+  { icon: "🧠", name: "GKTricks", count: "1,677", desc: "GS — Polity aur Ancient History.", href: "/pyq/gktricks" },
+  { icon: "🪞", name: "Mirror of Common Errors", count: "51", desc: "Error spotting — Noun.", href: "/pyq/mirror" },
 ];
 
 export default function PyqPage() {
@@ -24,9 +23,10 @@ export default function PyqPage() {
         <h1 className="hero__title" style={{ fontSize: "clamp(1.7rem, 4vw, 2.6rem)" }}>
           PYQ <span className="grad">Bank</span>
         </h1>
+        {/* The upload banks are gone, so this no longer describes uploading. */}
         <p className="hero__sub">
-          Subject-wise question bank — upload question images/PDF, AI turns them into MCQs. Solve them, and
-          mark any question into a subject chapter (it shows there with a PYQ tag).
+          <b>22,428</b> ready-made questions — chapter-wise, poore solution ke saath. Kuch upload nahi karna.
+          Galat answer seedha Mistake Notebook mein chala jaata hai.
         </p>
         <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
           <Link href="/mistakes" className="btn btn--ghost btn--sm">🔴 Mistake Notebook</Link>
@@ -35,13 +35,15 @@ export default function PyqPage() {
       </section>
 
       <section className="section" style={{ marginTop: 20 }}>
-        <div className="grid grid--2">
+        <div className="pyq-list">
           {SUBS.map((s) => (
-            <Link key={s.name} href={s.href} className="glass-card subject" style={{ textDecoration: "none", color: "inherit" }}>
-              <div className="subject__icon">{s.icon}</div>
-              <h3>{s.name}</h3>
-              <p className="mt-8">{s.desc}</p>
-              <span className="badge badge--ok" style={{ marginTop: 12 }}>Open PYQ bank →</span>
+            <Link key={s.name} href={s.href} className="pyq-row">
+              <span className="pyq-row__ico">{s.icon}</span>
+              <span className="pyq-row__name">
+                {s.name}
+                <span className="pyq-row__sub">{s.desc}</span>
+              </span>
+              <span className="pyq-row__meta">{s.count} Q</span>
             </Link>
           ))}
         </div>
