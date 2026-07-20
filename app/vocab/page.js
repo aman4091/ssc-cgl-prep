@@ -2,12 +2,22 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { extractOws, extractOwsChunked, ocrImage, extractPdfTextSmart } from "@/lib/client-ai";
-import { getSettings } from "@/lib/storage";
-import { appendOws, getDaysOverview, getMeta, clearOws, PER_DAY, TYPES } from "@/lib/vocab";
+import { getSettings, saveQuiz } from "@/lib/storage";
+import { appendOws, getDaysOverview, getMeta, clearOws, buildDayQuiz, PER_DAY, TYPES } from "@/lib/vocab";
 
 export default function VocabPage() {
+  const router = useRouter();
   const [days, setDays] = useState([]);
+
+  // Every type, every day up to the last — the whole span in one quiz.
+  const startCumQuiz = () => {
+    const quiz = buildDayQuiz(days.length, "cum");
+    if (!quiz.questions.length) return;
+    saveQuiz(quiz);
+    router.push(`/quizzes/${quiz.id}`);
+  };
   const [meta, setMeta] = useState({ count: 0, perDay: PER_DAY, days: 0 });
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState("");
@@ -188,6 +198,15 @@ export default function VocabPage() {
           Upload photos of book pages (OWS / idiom / phrase) — entries are extracted and split into {PER_DAY} per day.
           Day 1 fills up to {PER_DAY} first, then the next day.
         </p>
+        {/* The cumulative quiz belongs here, not inside a single day — this is
+            the page where you are looking at a span of days. */}
+        {days.length > 1 && (
+          <div className="row mt-16">
+            <button className="btn btn--primary" onClick={() => startCumQuiz()}>
+              🎯 Quiz · Day 1–{days.length}
+            </button>
+          </div>
+        )}
       </section>
 
       {/* Upload — hidden until the "➕ Add words" button is pressed */}

@@ -2,9 +2,13 @@
 
 import Link from "next/link";
 import { Suspense, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import FeedBucket from "@/components/FeedBucket";
 import { loadCaBankIndex, caBankId } from "@/lib/cabank";
+
+// Newest first: days are stored newest-first, months oldest-first, so sort
+// rather than trusting either end of the array.
+const latest = (list) => (list || []).slice().sort((a, b) => (a.period < b.period ? 1 : -1))[0];
 
 const TABS = [
   { key: "daily", label: "🗓️ Daily", dateMode: "date", placeholder: "Date", note: "Today's current affairs PDF + video — saved under today's date." },
@@ -24,8 +28,12 @@ export default function CurrentAffairsPage() {
 }
 
 function CurrentAffairs() {
+  const router = useRouter();
   const params = useSearchParams();
   const wanted = params.get("tab");
+  // ?all=1 is the escape hatch: it shows this index instead of jumping to the
+  // newest entry, which is how you reach the upload bucket for a tab.
+  const showAll = params.get("all") === "1";
   const [tab, setTab] = useState(TABS.some((t) => t.key === wanted) ? wanted : "daily");
   const [bank, setBank] = useState(null);
   const active = TABS.find((t) => t.key === tab) || TABS[0];
@@ -35,6 +43,15 @@ function CurrentAffairs() {
   }, [wanted]);
 
   useEffect(() => { loadCaBankIndex().then(setBank); }, []);
+
+  // Opening a tab should land on the newest entry, not a grid of dates you then
+  // have to click. Yearly has no built-in entries, so it stays on the index.
+  useEffect(() => {
+    if (!bank || showAll) return;
+    const list = tab === "daily" ? bank.days : tab === "monthly" ? bank.months : null;
+    const top = latest(list);
+    if (top) router.replace(`/current-affairs/${caBankId(top.period)}`);
+  }, [bank, tab, showAll, router]);
 
   return (
     <>

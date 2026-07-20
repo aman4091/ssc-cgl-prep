@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getEntry, updateEntry } from "@/lib/feed";
-import { isCaBankId, loadCaBankEntry } from "@/lib/cabank";
+import { isCaBankId, loadCaBankEntry, loadCaBankIndex, caBankId } from "@/lib/cabank";
 import { saveQuiz, makeId, getSettings } from "@/lib/storage";
 import { verifyQuiz, askAI } from "@/lib/client-ai";
 import { openFile } from "@/lib/filestore";
@@ -23,6 +23,9 @@ export default function CurrentAffairsDetail() {
   const [entry, setEntry] = useState(null);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
+  // Sibling periods, so you can change date/month without going back to a grid.
+  const [siblings, setSiblings] = useState([]);
+  const [tab, setTab] = useState("daily");
 
   // answer verification
   const [verifying, setVerifying] = useState(false);
@@ -51,6 +54,14 @@ export default function CurrentAffairsDetail() {
     if (builtin) {
       let alive = true;
       loadCaBankEntry(id).then((e) => { if (alive) { setEntry(e); setReady(true); } });
+      loadCaBankIndex().then((b) => {
+        if (!alive || !b) return;
+        // Whichever list this entry belongs to is the one worth offering.
+        const inDays = (b.days || []).some((d) => caBankId(d.period) === id);
+        setTab(inDays ? "daily" : "monthly");
+        const list = inDays ? b.days : b.months;
+        setSiblings((list || []).slice().sort((a, b2) => (a.period < b2.period ? 1 : -1)));
+      });
       return () => { alive = false; };
     }
     refresh(); setReady(true);
@@ -173,7 +184,27 @@ export default function CurrentAffairsDetail() {
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">📰 Current Affairs</span>
-          <Link href="/current-affairs" className="btn btn--ghost btn--sm">← All dates</Link>
+          <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
+            {/* Change date/month right here — the tab now opens the newest entry
+                rather than a grid, so this is how you reach the others. */}
+            {siblings.length > 1 && (
+              <select
+                className="input"
+                style={{ width: "auto", padding: "5px 9px", fontSize: "0.85rem" }}
+                value={id}
+                onChange={(e) => router.push(`/current-affairs/${e.target.value}`)}
+              >
+                {siblings.map((p) => (
+                  <option key={p.period} value={caBankId(p.period)}>
+                    {p.label} ({p.count})
+                  </option>
+                ))}
+              </select>
+            )}
+            <Link href={`/current-affairs?tab=${tab}&all=1`} className="btn btn--ghost btn--sm">
+              All dates
+            </Link>
+          </div>
         </div>
         <div className="row between mt-8" style={{ alignItems: "flex-start", flexWrap: "wrap", gap: 10 }}>
           <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>📅 {heading}</h1>

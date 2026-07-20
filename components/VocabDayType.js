@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import {
   getDayTypeItems, getDetail, setDetail, clearDetail, buildTypeQuiz,
   typeIcon, typeLabel, isBookmarked, toggleBookmark,
-  setEntryType, moveAllType, TYPES,
+  setEntryType, TYPES,
 } from "@/lib/vocab";
 import { saveQuiz } from "@/lib/storage";
 import { vocabDetail } from "@/lib/client-ai";
@@ -108,15 +108,6 @@ export default function VocabDayType({ day, type }) {
     }
   };
 
-  // Bulk: move EVERY word of this type into another type.
-  const moveAll = (toType) => {
-    if (toType === type || items.length === 0) return;
-    if (!confirm(`Move all ${items.length} "${typeLabel(type)}" words to "${typeLabel(toType)}"?\n(Every "${typeLabel(type)}" entry across your data will be moved.)`)) return;
-    moveAllType(type, toType);
-    const next = getDayTypeItems(dayNum, type);
-    setItems(next); setSel(null); setDet(null);
-  };
-
   const startQuiz = (scope) => {
     const quiz = buildTypeQuiz(dayNum, type, scope);
     if (quiz.questions.length < 1) { setError("No words of this type."); return; }
@@ -133,27 +124,17 @@ export default function VocabDayType({ day, type }) {
           <span className="hero__eyebrow">{typeIcon(type)} Day {dayNum} · {typeLabel(type)}</span>
           <Link href={`/vocab/${dayNum}`} className="btn btn--ghost btn--sm">← Day {dayNum}</Link>
         </div>
+        {/* Only this day's quiz lives here — small, and up on the right. The
+            cumulative Day 1-N quiz moved to the Vocab index, which is where you
+            pick a span of days in the first place. */}
         <div className="row between mt-8">
           <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>
             {typeLabel(type)} <span className="grad">· {items.length}</span>
           </h1>
-          <div className="row" style={{ gap: 8, flexWrap: "wrap", justifyContent: "flex-end" }}>
-            <button className="btn btn--primary" onClick={() => startQuiz("day")}>🎯 Quiz · Day {dayNum} only</button>
-            {dayNum > 1 && (
-              <button className="btn btn--ghost" onClick={() => startQuiz("cum")}>🎯 Quiz · Day 1–{dayNum}</button>
-            )}
-          </div>
+          <button className="btn btn--primary btn--sm" onClick={() => startQuiz("day")}>
+            🎯 Quiz · Day {dayNum}
+          </button>
         </div>
-        {items.length > 0 && (
-          <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>
-            <span className="muted" style={{ fontSize: "0.82rem" }}>Wrong category? Move all {typeLabel(type)} words →</span>
-            {TYPES.filter((t) => t.key !== type).map((t) => (
-              <button key={t.key} className="btn btn--ghost btn--sm" onClick={() => moveAll(t.key)}>
-                {t.icon} → {t.label}
-              </button>
-            ))}
-          </div>
-        )}
       </section>
 
       <section className="section" style={{ marginTop: 12 }}>
