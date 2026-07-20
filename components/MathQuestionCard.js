@@ -202,14 +202,16 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
               titleAttr="Isi question se full-screen test shuru karo"
             />
           )}
-          <AskElsewhere q={tq} />
-          <AskElsewhere
-            q={geminiQ}
-            url="https://gemini.google.com/app"
-            label="✨ Gemini"
-            title="Question copy karke Gemini kholo — seconds mein solve karne ki trick pucho"
-            onAsked={openPaste}
-          />
+          <span className="q-act--keep">
+            <AskElsewhere
+              q={geminiQ}
+              url="https://gemini.google.com/app"
+              label="✨ Gemini"
+              title="Question copy karke Gemini kholo — phir answer paste karo"
+              onAsked={openPaste}
+            />
+          </span>
+          <button className="btn btn--ghost btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
         </div>
       </div>
@@ -217,9 +219,11 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
       <PasteAnswer q={tq} />
 
       {/* The stem — figure (if any) is baked into this crop */}
-      <a href={q.qImg} target="_blank" rel="noreferrer" className="math-img-wrap mt-12">
+      {/* Not a link: tapping the question used to open the raw image in a
+          new tab, which is never what you meant on a phone. */}
+      <div className="math-img-wrap mt-12">
         <img src={q.qImg} alt={alt} loading="lazy" className="math-img" />
-      </a>
+      </div>
 
       <div className="grid" style={{ gap: 8, marginTop: 12, gridTemplateColumns: "minmax(0, 1fr)" }}>
         {q.optImgs.map((src, oi) => {
@@ -250,9 +254,15 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
       {revealed && (
         <div className="mt-12">
           <strong style={{ color: "var(--text-2)", fontSize: "0.86rem" }}>Solution: </strong>
-          <a href={q.solImg} target="_blank" rel="noreferrer" className="math-img-wrap mt-8">
-            <img src={q.solImg} alt="solution" loading="lazy" className="math-img" />
-          </a>
+          {/* A pasted Gemini answer replaces the book's solution image outright,
+              rather than being stacked under it. */}
+          {solution ? (
+            <div className="mt-8" style={{ fontSize: "0.86rem" }}><Markdown>{solution}</Markdown></div>
+          ) : (
+            <div className="math-img-wrap mt-8">
+              <img src={q.solImg} alt="solution" loading="lazy" className="math-img" />
+            </div>
+          )}
         </div>
       )}
 
@@ -261,7 +271,6 @@ export default function MathQuestionCard({ q, index, subject = "math", chapterNa
           explains the (now shown) solution. */}
       <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
         {revealed && <button className="btn btn--ghost btn--sm" onClick={toggleShortcut} disabled={scLoading}>{scLoading ? "Thinking…" : scShown ? "⚡ Hide shortcut" : "⚡ Shortcut trick"}</button>}
-        <button className="btn btn--ghost btn--sm" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo (practice quiz)">{simLoading ? "Generating…" : "🎯 20 similar"}</button>
       </div>
 
       {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}

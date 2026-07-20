@@ -96,6 +96,10 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
     } catch (e) { setErr(e.message); setSimLoading(false); }
   };
 
+  // A pasted Gemini answer is the solution from then on — the book's own
+  // explanation is dropped rather than shown underneath it.
+  const solution = shortcut || q.solution || q.explanation || "";
+
   const st = getStat(q);
 
   return (
@@ -103,7 +107,6 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
       <div className="q-head">
         <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>
           <span className="rule-card__n">{index + 1}.</span> <Markdown inline>{q.question}</Markdown>
-          {q.pyq && <span className="paper-tag paper-tag--pyq">PYQ</span>}
           {paper && <span className="paper-tag">📄 {paper}</span>}
         </h3>
         <div className="q-head__actions">
@@ -119,7 +122,8 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
               titleAttr="Isi question se full-screen test shuru karo"
             />
           )}
-          <AskButtons q={q} />
+          <span className="q-act--keep"><AskButtons q={q} /></span>
+          <button className="btn btn--ghost btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
           {onEdit && !editing && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
           {onDelete && <button className="btn btn--ghost btn--sm" onClick={onDelete}>✕</button>}
@@ -177,17 +181,16 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
 
       {!revealed && <button className="btn btn--ghost btn--sm mt-12" onClick={() => setRevealed(true)}>👁️ Show answer</button>}
 
-      {revealed && (q.solution || q.explanation) && (
+      {revealed && solution && (
         <div className="muted mt-12" style={{ fontSize: "0.86rem" }}>
           <strong style={{ color: "var(--text-2)" }}>Solution: </strong>
-          <Markdown inline>{q.solution || q.explanation}</Markdown>
+          <Markdown inline>{solution}</Markdown>
         </div>
       )}
 
       {revealed && (
         <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
           <button className="btn btn--ghost btn--sm" onClick={toggleShortcut} disabled={scLoading}>{scLoading ? "Thinking…" : scShown ? "⚡ Hide shortcut" : "⚡ Shortcut trick"}</button>
-          <button className="btn btn--ghost btn--sm" onClick={make20} disabled={simLoading}>{simLoading ? "Generating…" : "🎯 20 similar"}</button>
         </div>
       )}
 

@@ -113,7 +113,6 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
       <div className="q-head">
         <h3 style={{ fontSize: "1rem", fontWeight: 600, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
           <span className="rule-card__n">{index + 1}.</span>
-          {q.pyq && <span className="paper-tag paper-tag--pyq">PYQ</span>}
           {q.source && <span className="paper-tag">📄 {q.source}</span>}
         </h3>
         <div className="q-head__actions">
@@ -129,7 +128,8 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
               titleAttr="Isi question se full-screen test shuru karo"
             />
           )}
-          {aiUseful && <AskButtons q={tq} />}
+          {aiUseful && <span className="q-act--keep"><AskButtons q={tq} /></span>}
+          <button className="btn btn--ghost btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
         </div>
       </div>
@@ -179,10 +179,12 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
       {revealed && (
         <div className="mt-12">
           <strong style={{ color: "var(--text-2)", fontSize: "0.86rem" }}>Solution: </strong>
-          {q.solImg ? (
-            <a href={q.solImg} target="_blank" rel="noreferrer" className="math-img-wrap mt-8">
+          {solution ? (
+            <div className="mt-8" style={{ fontSize: "0.86rem" }}><Markdown>{solution}</Markdown></div>
+          ) : q.solImg ? (
+            <div className="math-img-wrap mt-8">
               <img src={q.solImg} alt="solution" loading="lazy" className="math-img" />
-            </a>
+            </div>
           ) : (
             <p className="muted mt-8" style={{ fontSize: "0.85rem" }}>
               Is question ka solution book mein nahi chhapa. Correct option upar mark hai.
@@ -194,7 +196,6 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
       {revealed && aiUseful && (
         <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
           <button className="btn btn--ghost btn--sm" onClick={toggleShortcut} disabled={scLoading}>{scLoading ? "Thinking…" : scShown ? "⚡ Hide shortcut" : "⚡ Shortcut trick"}</button>
-          <button className="btn btn--ghost btn--sm" onClick={make20} disabled={simLoading}>{simLoading ? "Generating…" : "🎯 20 similar"}</button>
         </div>
       )}
 

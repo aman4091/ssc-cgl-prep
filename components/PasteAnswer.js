@@ -55,18 +55,9 @@ export default function PasteAnswer({ q }) {
     );
   }
 
-  return (
-    <div className="mt-8">
-      {saved ? (
-        <div className="row" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>
-          <button className="btn btn--ghost btn--sm" onClick={() => setShow((v) => !v)}>{show ? "▲ Hide answer" : "⚡ Saved answer"}</button>
-          <button className="btn btn--ghost btn--sm" onClick={startEdit}>✏️ Edit</button>
-          <button className="btn btn--ghost btn--sm" onClick={clear} title="Remove">🗑️</button>
-        </div>
-      ) : (
-        <button className="btn btn--ghost btn--sm" onClick={startEdit} title="Gemini ka answer paste karke save karo">📥 Paste answer</button>
-      )}
-      {saved && show && <div className="answer-box mt-8"><Markdown>{saved}</Markdown></div>}
-    </div>
-  );
+  // Nothing of its own to show. There is no "Paste answer" button any more —
+  // the box appears when you press ✨ Gemini, and once saved the text IS the
+  // question's solution, rendered by the card under "Show answer" rather than
+  // behind a second toggle here.
+  return null;
 }

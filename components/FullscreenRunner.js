@@ -284,7 +284,14 @@ export default function FullscreenRunner({
             <div style={{ textAlign: "left", maxWidth: 540, margin: "18px auto 0" }}>
               <p className="muted" style={{ fontSize: "0.8rem", marginBottom: 8 }}>⏱ Per-question time (tap to review):</p>
               <div className="grid" style={{ gap: 6 }}>
-                {questions.map((qq, i) => {
+                {/* Only what you actually attempted. Listing all 500 questions of
+                    a chapter when you answered 12 buried the 12 that mattered —
+                    a timed-out question counts as attempted, an untouched one
+                    does not. */}
+                {questions
+                  .map((qq, i) => ({ qq, i }))
+                  .filter(({ i }) => answers[i] !== undefined || timedOutQs[i])
+                  .map(({ qq, i }) => {
                   const answered = answers[i] !== undefined;
                   const isRight = answered && answers[i] === qq.answer;
                   const to = !!timedOutQs[i];

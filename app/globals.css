@@ -1147,7 +1147,15 @@ label.glass-card:hover { border-color: var(--accent2); }
 /* Actions sit ABOVE the question (full-width question) at every screen size, so
    the buttons never squeeze the question text. */
 .q-head { display: flex; flex-direction: column-reverse; align-items: stretch; gap: 8px; }
-.q-head__actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-start; }
+/* Actions sit on the RIGHT of a question, not the left. */
+.q-head__actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+
+/* On a phone or tablet only the two that matter survive — ✨ Gemini and
+   🎯 20 similar. The rest (timer, bookmark, full-screen, edit, delete) wrapped
+   onto two rows above every single question. */
+@media (max-width: 1024px) {
+  .q-head__actions > *:not(.q-act--keep) { display: none; }
+}
 
 /* Roadmap page */
 .rm-list { margin: 12px 0 0; padding-left: 20px; display: grid; gap: 8px; }
