@@ -1587,6 +1587,12 @@ label.glass-card:hover { border-color: var(--accent2); }
 .pyq-row__meta { font-size: 0.78rem; color: var(--dim); flex-shrink: 0; white-space: nowrap; }
 /* The PYQ index rows carry a line of description under the name; the chapter
    lists inside each bank do not. */
+/* SSC Maths 2025 — 29 chapters in the left rail, so it scrolls on its own
+   rather than stretching the page to the length of the list. */
+.ssc-chaps { max-height: 62vh; overflow-y: auto; }
+/* A question that is a page crop: full width, never a link. */
+.q-crop { display: block; max-width: 100%; margin-top: 6px; border-radius: 6px; background: #fff; }
+
 .act-day { margin-bottom: 22px; }
 .act-day__hd {
   display: flex; align-items: baseline; justify-content: space-between;

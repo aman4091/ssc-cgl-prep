@@ -1,0 +1,183 @@
+{
+ "base": "https://pub-c85669238e024a9d94f302cf7a7868e2.r2.dev/sscmaths2025",
+ "source": "SSC Compilations 2025 — chapter-wise Maths PYQ (Mock Matrix Hub)",
+ "note": "Answer key is the book's own; worked solutions are not in it. Questions with a stacked fraction or printed in Hindi carry the page crop, which is the truth for those.",
+ "total": 5600,
+ "withImage": 1041,
+ "chapters": [
+  {
+   "slug": "percentage",
+   "label": "Percentage",
+   "icon": "🧮",
+   "count": 260
+  },
+  {
+   "slug": "ratio-and-proportion",
+   "label": "Ratio and Proportion",
+   "icon": "🧮",
+   "count": 206
+  },
+  {
+   "slug": "profit-and-loss",
+   "label": "Profit and Loss",
+   "icon": "🧮",
+   "count": 241
+  },
+  {
+   "slug": "discount",
+   "label": "Discount",
+   "icon": "🧮",
+   "count": 258
+  },
+  {
+   "slug": "simple-interest-si",
+   "label": "Simple Interest (SI)",
+   "icon": "🧮",
+   "count": 181
+  },
+  {
+   "slug": "compound-interest-ci",
+   "label": "Compound Interest (CI)",
+   "icon": "🧮",
+   "count": 103
+  },
+  {
+   "slug": "mixture-and-alligation",
+   "label": "Mixture and Alligation",
+   "icon": "🧮",
+   "count": 153
+  },
+  {
+   "slug": "average",
+   "label": "Average",
+   "icon": "🧮",
+   "count": 312
+  },
+  {
+   "slug": "time-speed-and-distance",
+   "label": "Time Speed and Distance",
+   "icon": "🧮",
+   "count": 210
+  },
+  {
+   "slug": "problems-on-trains",
+   "label": "Problems on Trains",
+   "icon": "🧮",
+   "count": 86
+  },
+  {
+   "slug": "time-and-work",
+   "label": "Time and Work",
+   "icon": "🧮",
+   "count": 245
+  },
+  {
+   "slug": "pipe-and-cistern",
+   "label": "Pipe and Cistern",
+   "icon": "🧮",
+   "count": 31
+  },
+  {
+   "slug": "boat-and-stream",
+   "label": "Boat and Stream",
+   "icon": "🧮",
+   "count": 16
+  },
+  {
+   "slug": "number-system",
+   "label": "Number System",
+   "icon": "🧮",
+   "count": 218
+  },
+  {
+   "slug": "lcm-and-hcf",
+   "label": "LCM and HCF",
+   "icon": "🧮",
+   "count": 98
+  },
+  {
+   "slug": "simplification-and-approximation",
+   "label": "Simplification and Approximation",
+   "icon": "🧮",
+   "count": 571
+  },
+  {
+   "slug": "algebra",
+   "label": "Algebra",
+   "icon": "🧮",
+   "count": 167
+  },
+  {
+   "slug": "trigonometry",
+   "label": "Trigonometry",
+   "icon": "🧮",
+   "count": 277
+  },
+  {
+   "slug": "height-and-distance",
+   "label": "Height and Distance",
+   "icon": "🧮",
+   "count": 64
+  },
+  {
+   "slug": "geometry",
+   "label": "Geometry",
+   "icon": "🧮",
+   "count": 565
+  },
+  {
+   "slug": "mensuration-2d",
+   "label": "Mensuration (2D)",
+   "icon": "🧮",
+   "count": 421
+  },
+  {
+   "slug": "mensuration-3d",
+   "label": "Mensuration (3D)",
+   "icon": "🧮",
+   "count": 512
+  },
+  {
+   "slug": "coordinate-geometry",
+   "label": "Coordinate Geometry",
+   "icon": "🧮",
+   "count": 120
+  },
+  {
+   "slug": "data-interpretation-di",
+   "label": "Data Interpretation (DI)",
+   "icon": "🧮",
+   "count": 101
+  },
+  {
+   "slug": "partnership",
+   "label": "Partnership",
+   "icon": "🧮",
+   "count": 101
+  },
+  {
+   "slug": "progression",
+   "label": "Progression",
+   "icon": "🧮",
+   "count": 40
+  },
+  {
+   "slug": "elementary-statistics",
+   "label": "Elementary Statistics",
+   "icon": "🧮",
+   "count": 19
+  },
+  {
+   "slug": "permutation-and-combination",
+   "label": "Permutation and Combination",
+   "icon": "🧮",
+   "count": 15
+  },
+  {
+   "slug": "probability",
+   "label": "Probability",
+   "icon": "🧮",
+   "count": 9
+  }
+ ]
+}

@@ -104,7 +104,15 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
     <article className="glass-card">
       <div className="q-head">
         <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>
-          <span className="rule-card__n">{index + 1}.</span> <Markdown inline>{q.question}</Markdown>
+          <span className="rule-card__n">{index + 1}.</span>{" "}
+          {/* Some questions ARE a crop of the printed page — the stacked
+              fractions never made it into the PDF's text layer, so the image
+              carries the stem, the tag and the options. */}
+          {q.img ? (
+            <img src={q.img} alt={`Question ${index + 1}`} loading="lazy" className="q-crop" />
+          ) : (
+            <Markdown inline>{q.question}</Markdown>
+          )}
         </h3>
         <div className="q-head__actions">
           <QTimer answered={picked !== null} />
@@ -165,12 +173,22 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
           return (
             <button key={oi} style={s} onClick={() => choose(oi)}>
               <strong style={{ opacity: 0.7, marginRight: 8 }}>{String.fromCharCode(65 + oi)}</strong>
-              <Markdown inline>{opt}</Markdown>
+              {/* The crop already shows what each option says. */}
+              {!q.img && <Markdown inline>{opt}</Markdown>}
               {revealed && oi === q.answer && <span style={{ color: "var(--success)", marginLeft: 8 }}>✓</span>}
             </button>
           );
         })}
       </div>
+
+      {q.keyDisputed && revealed && (
+        <p className="mt-12" style={{ color: "var(--danger)", fontSize: "0.82rem" }}>
+          ⚠ Book ki key galat lagti hai. {q.keyDisputed}
+        </p>
+      )}
+      {q.sourceDefect && (
+        <p className="mt-8 muted" style={{ fontSize: "0.8rem" }}>⚠ {q.sourceDefect}</p>
+      )}
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
 
