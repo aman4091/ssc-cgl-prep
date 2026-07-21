@@ -22,35 +22,39 @@ import ZoomableImage from "@/components/ZoomableImage";
 // for itself if you want to practise the question later.
 
 // Object URLs for a record's stored blobs, revoked when they change or unmount.
+// `missing` counts ids with no blob on THIS device — the normal case after a
+// cloud sync, which carries localStorage but not IndexedDB.
 function useBlobUrls(ids) {
-  const [urls, setUrls] = useState([]);
+  const [state, setState] = useState({ urls: [], missing: 0, loading: true });
   const key = (ids || []).join(",");
   useEffect(() => {
     let alive = true;
     const made = [];
+    setState((s) => ({ ...s, loading: true }));
     (async () => {
       const out = [];
+      let gone = 0;
       for (const id of ids || []) {
         const blob = await getFile(id).catch(() => null);
-        if (!blob) continue;
+        if (!blob) { gone += 1; continue; }
         const u = URL.createObjectURL(blob);
         made.push(u);
         out.push(u);
       }
-      if (alive) setUrls(out);
+      if (alive) setState({ urls: out, missing: gone, loading: false });
       else made.forEach((u) => URL.revokeObjectURL(u));
     })();
     return () => { alive = false; made.forEach((u) => URL.revokeObjectURL(u)); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
-  return urls;
+  return state;
 }
 
 function WrongCard({ rec, onEdit, onDelete }) {
   const [shown, setShown] = useState(false);
   // Which of this record's images the lightbox is showing (null = closed).
   const [lb, setLb] = useState(null);
-  const urls = useBlobUrls(rec.imgIds);
+  const { urls, missing, loading } = useBlobUrls(rec.imgIds);
   const q = rec.q || {};
   const opts = q.options || [];
   const hasAnswer = Number.isInteger(q.answer) && opts.length > 0;
@@ -75,6 +79,25 @@ function WrongCard({ rec, onEdit, onDelete }) {
           }}
         />
       ))}
+
+      {/* Cloud sync carries the record but not the blob, so on another device a
+          card would otherwise render as an empty strip of buttons. Say so. */}
+      {!loading && missing > 0 && (
+        <div
+          style={{
+            padding: "14px 12px", borderRadius: 10, marginBottom: 10,
+            border: "1px dashed var(--glass-border)", background: "var(--accent-wash)",
+          }}
+        >
+          <p style={{ fontWeight: 600, fontSize: "0.9rem" }}>
+            📷 {missing} image is device par nahi hai
+          </p>
+          <p className="muted" style={{ fontSize: "0.8rem", marginTop: 4 }}>
+            Images sirf usi device par rehti hain jahan paste ki thi — cloud sync sirf text
+            bhejta hai. Doosre device par laane ke liye Settings se backup export/import karo.
+          </p>
+        </div>
+      )}
 
       {lb !== null && urls[lb] && (
         <div className="lightbox" onClick={() => setLb(null)}>
@@ -282,7 +305,7 @@ export default function WrongQuestionsPage() {
     router.push(`/quizzes/${quiz.id}`);
   };
 
-  const formUrls = useBlobUrls(imgIds);
+  const { urls: formUrls } = useBlobUrls(imgIds);
 
   return (
     <>
