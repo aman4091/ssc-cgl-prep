@@ -38,7 +38,13 @@ export default function AskElsewhere({ q, subject, className = "btn btn--ghost b
   const go = async () => {
     let text = questionText(q);
     if (promptKey) {
-      const pre = String(getSettings()[promptKey] || "").trim();
+      // Settings holds a prompt PER SUBJECT (shortcutPrompts) as well as the
+      // generic one. A maths question must carry the maths instructions — those
+      // per-subject boxes used to be read only by the ⚡ Shortcut button, which
+      // no longer exists, so without this every subject got the generic text.
+      const st = getSettings();
+      const perSubject = String((st.shortcutPrompts || {})[subject] || "").trim();
+      const pre = perSubject || String(st[promptKey] || "").trim();
       if (pre) text = `${pre}\n\n${text}`;
     }
     try { await navigator.clipboard.writeText(text); } catch { /* ignore */ }
