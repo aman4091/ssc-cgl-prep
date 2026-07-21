@@ -5,11 +5,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   SUBJECTS, getWrongBook, countsBySubject, isPracticeable, imagesOf, imageKey,
-  storeImages, addWrong, updateWrong, removeWrong, clearWrong,
+  storeImages, addWrong, updateWrong, removeWrong, clearWrong, setOcrText,
 } from "@/lib/wrongbook";
 import { getFile } from "@/lib/filestore";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
-import { saveQuiz, makeId } from "@/lib/storage";
+import { saveQuiz, makeId, getSettings } from "@/lib/storage";
+import { generateSimilar, readImageTextFromUrls } from "@/lib/client-ai";
 import ZoomableImage from "@/components/ZoomableImage";
 
 // Wrong Questions — a hand-kept book, one shelf per subject.
@@ -52,14 +53,126 @@ function useImageUrls(images) {
   return state;
 }
 
-function WrongCard({ rec, onEdit, onDelete }) {
+// The question as plain text — typed stem + lettered options, or whatever OCR
+// read off the screenshot. This is what gets copied to Gemini and what the
+// 20-similar generator is given as its sample.
+function askTextOf(rec) {
+  const q = rec.q || {};
+  if (q.question || (q.options || []).some(Boolean)) {
+    const nl = "\n";
+    const opts = (q.options || [])
+      .filter(Boolean)
+      .map((o, i) => `${String.fromCharCode(65 + i)}) ${o}`)
+      .join(nl);
+    return [q.question, opts, q.solution && `Answer/solution: ${q.solution}`]
+      .filter(Boolean).join(nl).trim();
+  }
+  return String(rec.ocrText || "").trim();
+}
+
+// navigator.clipboard can refuse after an await (the user gesture has expired),
+// which on this page happens whenever OCR ran first. Fall back to execCommand
+// so "copy karke Gemini kholo" doesn't silently paste nothing.
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch { /* fall through */ }
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch {
+    return false;
+  }
+}
+
+// Settings keeps a prompt per subject as well as a generic Gemini one — a maths
+// question must carry the maths instructions. Same precedence AskElsewhere uses.
+function promptFor(subject) {
+  const st = getSettings();
+  const perSubject = String((st.shortcutPrompts || {})[subject] || "").trim();
+  return perSubject || String(st.geminiPrompt || "").trim();
+}
+
+function WrongCard({ rec, onEdit, onDelete, onOcr }) {
+  const router = useRouter();
   const [shown, setShown] = useState(false);
   // Which of this record's images the lightbox is showing (null = closed).
   const [lb, setLb] = useState(null);
+  const [busy, setBusy] = useState("");     // "" | "gemini" | "similar"
+  const [err, setErr] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [manual, setManual] = useState(""); // text to copy by hand if the clipboard refused
   const { urls, missing, loading } = useImageUrls(imagesOf(rec));
   const q = rec.q || {};
   const opts = q.options || [];
   const hasAnswer = Number.isInteger(q.answer) && opts.length > 0;
+
+  // The text to send onward. An image-only question has none until Gemini reads
+  // it, so OCR runs on first use and the result is cached on the record —
+  // it's plain text, so it syncs and no other device pays for the call again.
+  const ensureText = async () => {
+    const have = askTextOf(rec);
+    if (have) return have;
+    const remote = imagesOf(rec).map((im) => im.url).filter(Boolean);
+    if (!remote.length) {
+      throw new Error("Is question ka text nahi hai. Image cloud par nahi hai — Edit karke text daal do.");
+    }
+    const text = await readImageTextFromUrls(remote);
+    if (!text) throw new Error("Image se koi text nahi mila.");
+    setOcrText(rec.id, text);
+    onOcr && onOcr();
+    return text;
+  };
+
+  const askGemini = async () => {
+    setBusy("gemini"); setErr(""); setManual("");
+    try {
+      const text = await ensureText();
+      const pre = promptFor(rec.subject);
+      const full = pre ? `${pre}\n\n${text}` : text;
+      const ok = await copyText(full);
+      if (ok) { setCopied(true); setTimeout(() => setCopied(false), 1800); }
+      else setManual(full); // clipboard blocked — show it so nothing is lost
+      window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer");
+    } catch (e) {
+      setErr(e.message);
+    } finally {
+      setBusy("");
+    }
+  };
+
+  const make20 = async () => {
+    setBusy("similar"); setErr("");
+    try {
+      const text = await ensureText();
+      const data = await generateSimilar(
+        { question: text, options: (q.options || []).filter(Boolean) },
+        20,
+        rec.subject
+      );
+      const quiz = {
+        id: makeId(),
+        title: data.title || "Similar (20)",
+        source: "similar",
+        createdAt: new Date().toISOString(),
+        questions: data.questions,
+      };
+      saveQuiz(quiz);
+      router.push(`/quizzes/${quiz.id}`);
+    } catch (e) {
+      setErr(e.message);
+      setBusy("");
+    }
+  };
 
   return (
     <div className="glass-card">
@@ -154,15 +267,55 @@ function WrongCard({ rec, onEdit, onDelete }) {
         </p>
       )}
 
+      {err && <p style={{ color: "var(--danger)", fontSize: "0.82rem", marginTop: 10 }}>{err}</p>}
+
+      {/* Clipboard refused (it can, once OCR has eaten the user gesture) — put
+          the text on screen instead of pretending the copy worked. */}
+      {manual && (
+        <div className="mt-8">
+          <p className="muted" style={{ fontSize: "0.8rem" }}>
+            Clipboard block ho gaya — ye text khud copy karke Gemini mein paste karo:
+          </p>
+          <textarea className="textarea" rows={4} readOnly value={manual} onFocus={(e) => e.target.select()} />
+        </div>
+      )}
+
       <div className="row mt-8" style={{ gap: 8, flexWrap: "wrap" }}>
         {(hasAnswer || q.solution || rec.note) && (
           <button className="btn btn--ghost btn--sm" onClick={() => setShown((v) => !v)}>
             {shown ? "🙈 Hide answer" : "👁️ Show answer"}
           </button>
         )}
+        <button
+          className="btn btn--ghost btn--sm"
+          onClick={askGemini}
+          disabled={!!busy}
+          title="Prompt + question copy karke Gemini kholo (image se text apne aap padh liya jayega)"
+        >
+          {busy === "gemini" ? "…" : copied ? "✓ Copied" : "✨ Gemini"}
+        </button>
+        <button
+          className="btn btn--ghost btn--sm"
+          onClick={make20}
+          disabled={!!busy}
+          title="Isi type ke 20 naye questions generate karo"
+        >
+          {busy === "similar" ? "…" : "🎯 20"}
+        </button>
         <button className="btn btn--ghost btn--sm" onClick={onEdit}>✏️ Edit</button>
         <button className="btn btn--ghost btn--sm" onClick={onDelete}>🗑️ Delete</button>
       </div>
+
+      {rec.ocrText && (
+        <details className="mt-8">
+          <summary className="muted" style={{ fontSize: "0.78rem", cursor: "pointer" }}>
+            📄 Image se pada hua text
+          </summary>
+          <p className="muted" style={{ fontSize: "0.82rem", whiteSpace: "pre-wrap", marginTop: 6 }}>
+            {rec.ocrText}
+          </p>
+        </details>
+      )}
     </div>
   );
 }
@@ -482,6 +635,7 @@ export default function WrongQuestionsPage() {
                 rec={rec}
                 onEdit={() => startEdit(rec)}
                 onDelete={() => remove(rec.id)}
+                onOcr={() => refresh()}
               />
             ))}
           </div>

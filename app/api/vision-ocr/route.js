@@ -10,12 +10,39 @@ const PROMPT = `You are an OCR engine. Read EVERYTHING written in the image(s) a
 - Do NOT solve, explain, translate, or add anything — output ONLY the text that is visibly present.
 - If the image has no readable text, output an empty string.`;
 
+// Images already on R2 are fetched here rather than in the browser: r2.dev
+// serves no CORS header, so a page-side fetch of its own screenshot would be
+// blocked. Restricted to our bucket so this can't be pointed at an internal
+// address and used to read something else.
+async function fetchAsInlineData(urls) {
+  const base = String(process.env.R2_PUBLIC_BASE || "").replace(/\/+$/, "");
+  const out = [];
+  for (const u of urls) {
+    if (!base || !String(u).startsWith(`${base}/`)) {
+      throw new Error("Sirf apne image store ke URL padhe ja sakte hain.");
+    }
+    const res = await fetch(u);
+    if (!res.ok) throw new Error(`Image fetch failed (${res.status})`);
+    const buf = Buffer.from(await res.arrayBuffer());
+    out.push({
+      mimeType: res.headers.get("content-type") || "image/jpeg",
+      data: buf.toString("base64"),
+    });
+  }
+  return out;
+}
+
 export async function POST(req) {
   try {
-    const { images, geminiApiKey, geminiModel } = await req.json();
+    const { images, imageUrls, geminiApiKey, geminiModel } = await req.json();
     if (!geminiApiKey || !geminiApiKey.trim())
       return Response.json({ error: "Gemini OCR ke liye Settings mein Gemini API key add karo." }, { status: 400 });
-    if (!Array.isArray(images) || images.length === 0)
+
+    let shots = Array.isArray(images) ? images : [];
+    if (!shots.length && Array.isArray(imageUrls) && imageUrls.length) {
+      shots = await fetchAsInlineData(imageUrls);
+    }
+    if (!shots.length)
       return Response.json({ error: "Koi image nahi mili." }, { status: 400 });
 
     const g = await geminiVision({
@@ -23,7 +50,7 @@ export async function POST(req) {
       model: geminiModel,
       system: PROMPT,
       userText: "Is image ka saara text plain text mein padho. Kuch solve mat karo — sirf jo likha hai wahi do.",
-      images,
+      images: shots,
       temperature: 0,
       responseMimeType: "text/plain",
     });
