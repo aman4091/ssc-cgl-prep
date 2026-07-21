@@ -33,7 +33,7 @@ function LabelParts({ label }) {
   );
 }
 
-export default function AskElsewhere({ q, className = "btn btn--ghost btn--sm", url, label, title, promptKey, onAsked }) {
+export default function AskElsewhere({ q, subject, className = "btn btn--ghost btn--sm", url, label, title, promptKey, onAsked }) {
   const [done, setDone] = useState(false);
   const go = async () => {
     let text = questionText(q);

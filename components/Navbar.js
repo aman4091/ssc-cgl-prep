@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NAV_GROUPS, NAV_DIRECT, groupForPath } from "@/lib/nav";
+import { NAV_GROUPS, NAV_DIRECT, trailForPath, nodeAt } from "@/lib/nav";
 
 // The menu, and only the menu.
 //
@@ -19,7 +19,9 @@ export default function Navbar() {
   const params = useSearchParams();
   // Seeded from the URL during render so landing deep in the app already shows
   // that group, rather than flashing the top level first.
-  const [group, setGroup] = useState(() => groupForPath(pathname));
+  // A TRAIL, not one key — the menu is three deep: PYQ Bank -> a bank -> its
+  // chapters. Back pops one level rather than jumping to the top.
+  const [trail, setTrail] = useState(() => trailForPath(pathname));
   // A group can name a BANK instead of listing links — its rows are that bank's
   // chapters, fetched the first time the group is opened and then memoised by
   // the loader itself.
@@ -27,13 +29,13 @@ export default function Navbar() {
   // Phones only: the rail is off-canvas until the hamburger asks for it.
   const [open, setOpen] = useState(false);
 
-  useEffect(() => { setGroup(groupForPath(pathname)); }, [pathname]);
+  useEffect(() => { setTrail(trailForPath(pathname)); }, [pathname]);
 
   // A group can describe a BANK instead of listing links: which index to read,
   // which array in it holds the chapters, and what those rows link to. Fetched
   // the first time the group is opened, then kept.
   useEffect(() => {
-    const g = NAV_GROUPS.find((x) => x.key === group);
+    const g = nodeAt(trail);
     if (!g?.bank || bankLinks[g.key]) return;
     let alive = true;
     fetch(g.bank.url)
@@ -53,7 +55,7 @@ export default function Navbar() {
       })
       .catch(() => {});
     return () => { alive = false; };
-  }, [group, bankLinks]);
+  }, [trail, bankLinks]);
   // Navigating means you are done with the menu — and on a phone it sits over
   // the page you just opened.
   useEffect(() => { setOpen(false); }, [pathname]);
@@ -79,7 +81,11 @@ export default function Navbar() {
     }
     return true;
   };
-  const current = NAV_GROUPS.find((g) => g.key === group) || null;
+  const current = nodeAt(trail);
+  // What this level shows: sub-groups, a bank's fetched chapters, or plain links.
+  const rows = current
+    ? (current.children || (current.bank ? bankLinks[current.key] || [] : current.links) || [])
+    : NAV_GROUPS;
 
   return (
     <>
@@ -116,20 +122,32 @@ export default function Navbar() {
         {current ? (
           /* ---- level 2: one group, in place of the list ---- */
           <>
-            <button className="drawer__back" onClick={() => setGroup(null)}>
+            <button className="drawer__back" onClick={() => setTrail((t) => t.slice(0, -1))}>
               <span className="drawer__chev">←</span>
               <span className="drawer__groupname">{current.name}</span>
             </button>
 
-            {(current.bank ? bankLinks[current.key] || [] : current.links).map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className={`drawer__link ${isActive(l) ? "is-active" : ""}`}
-              >
-                {l.label}
-              </Link>
-            ))}
+            {rows.map((l) =>
+              l.href ? (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  className={`drawer__link ${isActive(l) ? "is-active" : ""}`}
+                >
+                  {l.label}
+                </Link>
+              ) : (
+                <button
+                  key={l.key}
+                  className="drawer__grouphd"
+                  onClick={() => setTrail((t) => [...t, l.key])}
+                >
+                  <span className="drawer__ico">{l.icon}</span>
+                  <span className="drawer__groupname">{l.name}</span>
+                  <span className="drawer__chev">›</span>
+                </button>
+              )
+            )}
             {current.bank && !bankLinks[current.key] && (
               <span className="drawer__link" style={{ color: "var(--dim)" }}>Loading…</span>
             )}
@@ -138,7 +156,7 @@ export default function Navbar() {
           /* ---- level 1: names only ---- */
           <>
             {NAV_GROUPS.map((g) => (
-              <button key={g.key} className="drawer__grouphd" onClick={() => setGroup(g.key)}>
+              <button key={g.key} className="drawer__grouphd" onClick={() => setTrail([g.key])}>
                 <span className="drawer__ico">{g.icon}</span>
                 <span className="drawer__groupname">{g.name}</span>
                 <span className="drawer__chev">›</span>

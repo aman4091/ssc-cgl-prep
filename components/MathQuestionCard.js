@@ -218,6 +218,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
           <span className="q-act--keep">
             <AskElsewhere
               q={geminiQ}
+              subject={subject}
               url="https://gemini.google.com/app"
               label="✨ Gemini"
               title="Question copy karke Gemini kholo — phir answer paste karo"

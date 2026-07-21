@@ -142,7 +142,7 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
               titleAttr="Isi question se full-screen test shuru karo"
             />
           )}
-          {aiUseful && <span className="q-act--keep"><AskButtons q={tq} /></span>}
+          {aiUseful && <span className="q-act--keep"><AskButtons q={tq} subject={subject} /></span>}
           <button className="btn btn--ghost btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
         </div>

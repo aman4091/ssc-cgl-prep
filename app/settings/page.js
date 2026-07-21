@@ -343,9 +343,9 @@ export default function SettingsPage() {
       {/* Custom shortcut prompts per subject */}
       <section className="section" style={{ maxWidth: 720 }}>
         <div className="glass-card">
-          <h3>✍️ Custom Shortcut Prompts</h3>
+          <h3>✍️ Gemini prompt — per subject</h3>
           <p className="muted mt-8" style={{ fontSize: "0.88rem" }}>
-            Write your own instructions for the shortcut trick, per subject. Leave blank to use the built-in default. (Answers stay in Hinglish.)
+            Subject-wise instructions for the ✨ Gemini button. Blank means the generic prompt above is used. (Answers stay in Hinglish.)
           </p>
           {[
             { k: "math", label: "🧮 Math", ph: "e.g. Give the fastest Vedic/approx trick in Hinglish, plain arithmetic (no heavy LaTeX), end with **Answer:**" },
@@ -359,7 +359,7 @@ export default function SettingsPage() {
                 onChange={(e) => updateShortcutPrompt(s.k, e.target.value)} />
             </div>
           ))}
-          <p className="hint">Auto-saved. Used when you press ⚡ Shortcut trick on a question of that subject.</p>
+          <p className="hint">Auto-saved. Used when you press ✨ Gemini on a question of that subject.</p>
         </div>
       </section>
 

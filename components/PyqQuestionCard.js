@@ -138,7 +138,7 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
               titleAttr="Isi question se full-screen test shuru karo"
             />
           )}
-          <span className="q-act--keep"><AskButtons q={q} /></span>
+          <span className="q-act--keep"><AskButtons q={q} subject={subject} /></span>
           <button className="btn btn--ghost btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
           {onEdit && !editing && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>

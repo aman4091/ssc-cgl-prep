@@ -7,7 +7,7 @@ import { keyFor } from "@/lib/qstats";
 // same gesture twice; pressing this one copies the prompt, opens Gemini, and
 // opens the paste box for this question (PasteAnswer listens for
 // cgl:gemini-asked) so the reply has somewhere to land.
-export default function AskButtons({ q }) {
+export default function AskButtons({ q, subject }) {
   const openPaste = () => {
     try { window.dispatchEvent(new CustomEvent("cgl:gemini-asked", { detail: { key: keyFor(q) } })); }
     catch { /* ignore */ }
@@ -15,6 +15,7 @@ export default function AskButtons({ q }) {
   return (
     <AskElsewhere
       q={q}
+      subject={subject}
       url="https://gemini.google.com/app"
       label="✨ Gemini"
       promptKey="geminiPrompt"
