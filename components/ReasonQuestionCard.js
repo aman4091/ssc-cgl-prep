@@ -106,6 +106,10 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
     } catch (e) { setErr(e.message); setSimLoading(false); }
   };
 
+  // A pasted Gemini answer is the solution from then on — the book's own
+  // solution image is dropped rather than shown underneath it.
+  const solution = shortcut || q.solution || q.explanation || "";
+
   const st = getStat(tq);
 
   return (
