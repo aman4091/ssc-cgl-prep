@@ -10,7 +10,7 @@ import {
 import { getFile } from "@/lib/filestore";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { saveQuiz, makeId, getSettings } from "@/lib/storage";
-import { generateSimilar, readImageTextFromUrls } from "@/lib/client-ai";
+import { generateSimilar, readImageText } from "@/lib/client-ai";
 import ZoomableImage from "@/components/ZoomableImage";
 
 // Wrong Questions — a hand-kept book, one shelf per subject.
@@ -110,23 +110,41 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
   const [busy, setBusy] = useState("");     // "" | "gemini" | "similar"
   const [err, setErr] = useState("");
   const [copied, setCopied] = useState(false);
+  const [prog, setProg] = useState(0);       // tesseract OCR progress, 0-100
   const [manual, setManual] = useState(""); // text to copy by hand if the clipboard refused
   const { urls, missing, loading } = useImageUrls(imagesOf(rec));
   const q = rec.q || {};
   const opts = q.options || [];
   const hasAnswer = Number.isInteger(q.answer) && opts.length > 0;
 
-  // The text to send onward. An image-only question has none until Gemini reads
-  // it, so OCR runs on first use and the result is cached on the record —
-  // it's plain text, so it syncs and no other device pays for the call again.
+  // The text to send onward. An image-only question has none until OCR reads it,
+  // so that runs on first use and the result is cached on the record — it's
+  // plain text, so it syncs and no other device has to read the image again.
   const ensureText = async () => {
     const have = askTextOf(rec);
     if (have) return have;
-    const remote = imagesOf(rec).map((im) => im.url).filter(Boolean);
-    if (!remote.length) {
-      throw new Error("Is question ka text nahi hai. Image cloud par nahi hai — Edit karke text daal do.");
+    const imgs = imagesOf(rec);
+    if (!imgs.length) {
+      throw new Error("Is question ka text nahi hai — Edit karke likh do.");
     }
-    const text = await readImageTextFromUrls(remote);
+    // Read whichever engine Settings selects: Gemini vision if it is ON, else
+    // tesseract in the browser. R2 images come through our own proxy because
+    // r2.dev sends no CORS header.
+    const parts = [];
+    for (const im of imgs) {
+      let blob;
+      if (im.url) {
+        const res = await fetch(`/api/r2/image?url=${encodeURIComponent(im.url)}`);
+        if (!res.ok) throw new Error("Image load nahi hui.");
+        blob = await res.blob();
+      } else {
+        blob = await getFile(im.id).catch(() => null);
+        if (!blob) throw new Error("Image is device par nahi hai.");
+      }
+      const { text: part } = await readImageText(blob, (pr) => setProg(Math.round(pr * 100)));
+      if (part) parts.push(part);
+    }
+    const text = parts.join("\n").trim();
     if (!text) throw new Error("Image se koi text nahi mila.");
     setOcrText(rec.id, text);
     onOcr && onOcr();
@@ -134,7 +152,7 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
   };
 
   const askGemini = async () => {
-    setBusy("gemini"); setErr(""); setManual("");
+    setBusy("gemini"); setErr(""); setManual(""); setProg(0);
     try {
       const text = await ensureText();
       const pre = promptFor(rec.subject);
@@ -151,7 +169,7 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
   };
 
   const make20 = async () => {
-    setBusy("similar"); setErr("");
+    setBusy("similar"); setErr(""); setProg(0);
     try {
       const text = await ensureText();
       const data = await generateSimilar(
@@ -188,7 +206,8 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
           onClick={() => setLb(i)}
           title="Tap to enlarge"
           style={{
-            width: "100%", maxHeight: 220, objectFit: "contain", objectPosition: "left top",
+            width: "100%", maxHeight: "min(70vh, 620px)", objectFit: "contain",
+            objectPosition: "left top",
             borderRadius: 10, marginBottom: 10, display: "block",
             background: "#fff", cursor: "zoom-in",
           }}
@@ -292,7 +311,7 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
           disabled={!!busy}
           title="Prompt + question copy karke Gemini kholo (image se text apne aap padh liya jayega)"
         >
-          {busy === "gemini" ? "…" : copied ? "✓ Copied" : "✨ Gemini"}
+          {busy === "gemini" ? (prog ? `${prog}%` : "…") : copied ? "✓ Copied" : "✨ Gemini"}
         </button>
         <button
           className="btn btn--ghost btn--sm"
@@ -300,7 +319,7 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
           disabled={!!busy}
           title="Isi type ke 20 naye questions generate karo"
         >
-          {busy === "similar" ? "…" : "🎯 20"}
+          {busy === "similar" ? (prog ? `${prog}%` : "…") : "🎯 20"}
         </button>
         <button className="btn btn--ghost btn--sm" onClick={onEdit}>✏️ Edit</button>
         <button className="btn btn--ghost btn--sm" onClick={onDelete}>🗑️ Delete</button>
@@ -546,7 +565,8 @@ export default function WrongQuestionsPage() {
                       src={u}
                       alt={`Pasted ${i + 1}`}
                       style={{
-                        width: "100%", maxHeight: 180, objectFit: "contain", objectPosition: "left top",
+                        width: "100%", maxHeight: "min(50vh, 420px)", objectFit: "contain",
+                        objectPosition: "left top",
                         borderRadius: 10, display: "block", background: "#fff",
                       }}
                     />
