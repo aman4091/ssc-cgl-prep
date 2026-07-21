@@ -9,6 +9,7 @@ import {
 } from "@/lib/wrongbook";
 import { getFile } from "@/lib/filestore";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
+import { r2Status } from "@/lib/r2client";
 import { saveQuiz, makeId, getSettings } from "@/lib/storage";
 import { generateSimilar, readImageText } from "@/lib/client-ai";
 import ZoomableImage from "@/components/ZoomableImage";
@@ -360,6 +361,9 @@ export default function WrongQuestionsPage() {
   const [withOpts, setWithOpts] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
+  // Whether the server can upload at all. If not, every paste silently becomes
+  // device-only — worth saying up front rather than after the fact.
+  const [cloud, setCloud] = useState({ configured: true });
   const fileRef = useRef(null);
   const formRef = useRef(null);
 
@@ -368,6 +372,7 @@ export default function WrongQuestionsPage() {
     setCounts(countsBySubject());
   };
   useEffect(() => { refresh(subject); /* eslint-disable-next-line */ }, [subject]);
+  useEffect(() => { r2Status().then(setCloud).catch(() => {}); }, []);
 
   const active = SUBJECTS.find((s) => s.key === subject);
 
@@ -388,7 +393,12 @@ export default function WrongQuestionsPage() {
       setImages((prev) => [...prev, ...added]);
       setOpen(true);
       // Say it rather than leaving an image silently stranded on one device.
-      if (localOnly) setErr(`${localOnly} image cloud par upload nahi hui — sirf is device par rahegi.`);
+      if (localOnly) {
+        setErr(
+          `${localOnly} image cloud par upload nahi hui — sirf is device par rahegi` +
+          (cloud.configured ? " (network ya server ne mana kiya)." : " kyunki server par R2 settings nahi hain.")
+        );
+      }
     } catch {
       setErr("Image save nahi ho payi — dobara try karo.");
     } finally {
@@ -503,6 +513,21 @@ export default function WrongQuestionsPage() {
       </section>
 
       <section className="section" style={{ marginTop: 12 }}>
+        {!cloud.configured && (
+          <div
+            className="glass-card"
+            style={{ marginBottom: 14, borderColor: "rgba(251,191,36,0.45)", background: "rgba(251,191,36,0.07)" }}
+          >
+            <strong style={{ color: "var(--warning)" }}>⚠️ Cloud image upload band hai</strong>
+            <p className="muted mt-8" style={{ fontSize: "0.85rem" }}>
+              Server par R2 ki settings nahi mili, isliye paste ki hui image cloud par nahi ja rahi —
+              wo sirf isi device par reh jayegi aur doosre device par “image is device par nahi hai”
+              likha aayega. Deploy par R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_ENDPOINT,
+              R2_BUCKET aur R2_PUBLIC_BASE set karke redeploy karo.
+            </p>
+          </div>
+        )}
+
         {/* Subject shelves */}
         <div className="chips" style={{ marginBottom: 16 }}>
           {SUBJECTS.map((s) => (
