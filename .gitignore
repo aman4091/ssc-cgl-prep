@@ -29,3 +29,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Source PDFs for Current Affairs — input only, the questions ship as JSON in public/cabank
+ca/
