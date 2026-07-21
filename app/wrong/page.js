@@ -194,6 +194,48 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
 
   return (
     <div className="glass-card">
+      {/* Actions sit ABOVE the question, like the PYQ/bank cards — a pasted
+          screenshot is tall, and buttons underneath meant scrolling past the
+          whole image to reach them. */}
+      <div className="row" style={{ gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+        {(hasAnswer || q.solution || rec.note) && (
+          <button className="btn btn--ghost btn--sm" onClick={() => setShown((v) => !v)}>
+            {shown ? "🙈 Hide answer" : "👁️ Show answer"}
+          </button>
+        )}
+        <button
+          className="btn btn--ghost btn--sm"
+          onClick={askGemini}
+          disabled={!!busy}
+          title="Prompt + question copy karke Gemini kholo (image se text apne aap padh liya jayega)"
+        >
+          {busy === "gemini" ? (prog ? `${prog}%` : "…") : copied ? "✓ Copied" : "✨ Gemini"}
+        </button>
+        <button
+          className="btn btn--ghost btn--sm"
+          onClick={make20}
+          disabled={!!busy}
+          title="Isi type ke 20 naye questions generate karo"
+        >
+          {busy === "similar" ? (prog ? `${prog}%` : "…") : "🎯 20"}
+        </button>
+        <button className="btn btn--ghost btn--sm" onClick={onEdit}>✏️ Edit</button>
+        <button className="btn btn--ghost btn--sm" onClick={onDelete}>🗑️ Delete</button>
+      </div>
+
+      {err && <p style={{ color: "var(--danger)", fontSize: "0.82rem", marginBottom: 10 }}>{err}</p>}
+
+      {/* Clipboard refused (it can, once OCR has eaten the user gesture) — put
+          the text on screen instead of pretending the copy worked. */}
+      {manual && (
+        <div style={{ marginBottom: 10 }}>
+          <p className="muted" style={{ fontSize: "0.8rem" }}>
+            Clipboard block ho gaya — ye text khud copy karke Gemini mein paste karo:
+          </p>
+          <textarea className="textarea" rows={4} readOnly value={manual} onFocus={(e) => e.target.select()} />
+        </div>
+      )}
+
       {/* A pasted screenshot usually carries the options baked in, so it is tall.
           Shown capped here and opened full-size (and zoomable) on tap, rather
           than letting one question eat the whole screen. */}
@@ -285,45 +327,6 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
           {rec.note && <>📝 {rec.note}</>}
         </p>
       )}
-
-      {err && <p style={{ color: "var(--danger)", fontSize: "0.82rem", marginTop: 10 }}>{err}</p>}
-
-      {/* Clipboard refused (it can, once OCR has eaten the user gesture) — put
-          the text on screen instead of pretending the copy worked. */}
-      {manual && (
-        <div className="mt-8">
-          <p className="muted" style={{ fontSize: "0.8rem" }}>
-            Clipboard block ho gaya — ye text khud copy karke Gemini mein paste karo:
-          </p>
-          <textarea className="textarea" rows={4} readOnly value={manual} onFocus={(e) => e.target.select()} />
-        </div>
-      )}
-
-      <div className="row mt-8" style={{ gap: 8, flexWrap: "wrap" }}>
-        {(hasAnswer || q.solution || rec.note) && (
-          <button className="btn btn--ghost btn--sm" onClick={() => setShown((v) => !v)}>
-            {shown ? "🙈 Hide answer" : "👁️ Show answer"}
-          </button>
-        )}
-        <button
-          className="btn btn--ghost btn--sm"
-          onClick={askGemini}
-          disabled={!!busy}
-          title="Prompt + question copy karke Gemini kholo (image se text apne aap padh liya jayega)"
-        >
-          {busy === "gemini" ? (prog ? `${prog}%` : "…") : copied ? "✓ Copied" : "✨ Gemini"}
-        </button>
-        <button
-          className="btn btn--ghost btn--sm"
-          onClick={make20}
-          disabled={!!busy}
-          title="Isi type ke 20 naye questions generate karo"
-        >
-          {busy === "similar" ? (prog ? `${prog}%` : "…") : "🎯 20"}
-        </button>
-        <button className="btn btn--ghost btn--sm" onClick={onEdit}>✏️ Edit</button>
-        <button className="btn btn--ghost btn--sm" onClick={onDelete}>🗑️ Delete</button>
-      </div>
 
       {rec.ocrText && (
         <details className="mt-8">
