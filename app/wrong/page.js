@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  SUBJECTS, subjectLabel, getWrongBook, countsBySubject, isPracticeable,
+  SUBJECTS, getWrongBook, countsBySubject, isPracticeable, imagesOf, imageKey,
   storeImages, addWrong, updateWrong, removeWrong, clearWrong,
 } from "@/lib/wrongbook";
 import { getFile } from "@/lib/filestore";
@@ -21,12 +21,13 @@ import ZoomableImage from "@/components/ZoomableImage";
 // with the image already in it. Typing a proper MCQ is optional, and only pays
 // for itself if you want to practise the question later.
 
-// Object URLs for a record's stored blobs, revoked when they change or unmount.
-// `missing` counts ids with no blob on THIS device — the normal case after a
-// cloud sync, which carries localStorage but not IndexedDB.
-function useBlobUrls(ids) {
+// Display URLs for a record's images. An R2 image is already a URL; a local
+// fallback has to be read out of IndexedDB and object-URL'd (and revoked).
+// `missing` counts local blobs this device doesn't have — what a synced record
+// looks like when its image never made it to R2.
+function useImageUrls(images) {
   const [state, setState] = useState({ urls: [], missing: 0, loading: true });
-  const key = (ids || []).join(",");
+  const key = (images || []).map(imageKey).join(",");
   useEffect(() => {
     let alive = true;
     const made = [];
@@ -34,8 +35,9 @@ function useBlobUrls(ids) {
     (async () => {
       const out = [];
       let gone = 0;
-      for (const id of ids || []) {
-        const blob = await getFile(id).catch(() => null);
+      for (const img of images || []) {
+        if (img.url) { out.push(img.url); continue; }
+        const blob = await getFile(img.id).catch(() => null);
         if (!blob) { gone += 1; continue; }
         const u = URL.createObjectURL(blob);
         made.push(u);
@@ -54,7 +56,7 @@ function WrongCard({ rec, onEdit, onDelete }) {
   const [shown, setShown] = useState(false);
   // Which of this record's images the lightbox is showing (null = closed).
   const [lb, setLb] = useState(null);
-  const { urls, missing, loading } = useBlobUrls(rec.imgIds);
+  const { urls, missing, loading } = useImageUrls(imagesOf(rec));
   const q = rec.q || {};
   const opts = q.options || [];
   const hasAnswer = Number.isInteger(q.answer) && opts.length > 0;
@@ -93,8 +95,8 @@ function WrongCard({ rec, onEdit, onDelete }) {
             📷 {missing} image is device par nahi hai
           </p>
           <p className="muted" style={{ fontSize: "0.8rem", marginTop: 4 }}>
-            Images sirf usi device par rehti hain jahan paste ki thi — cloud sync sirf text
-            bhejta hai. Doosre device par laane ke liye Settings se backup export/import karo.
+            Ye image cloud (R2) par upload nahi ho payi thi, isliye sirf usi device par hai jahan
+            paste ki thi. Wahan se dobara paste kar do — phir har device par dikhegi.
           </p>
         </div>
       )}
@@ -174,7 +176,7 @@ export default function WrongQuestionsPage() {
   const [editing, setEditing] = useState(null); // record id being edited
 
   // form state
-  const [imgIds, setImgIds] = useState([]);
+  const [images, setImages] = useState([]);
   const [text, setText] = useState("");
   const [opts, setOpts] = useState(["", "", "", ""]);
   const [ans, setAns] = useState(0);
@@ -195,7 +197,7 @@ export default function WrongQuestionsPage() {
   const active = SUBJECTS.find((s) => s.key === subject);
 
   const reset = () => {
-    setImgIds([]); setText(""); setOpts(["", "", "", ""]); setAns(0);
+    setImages([]); setText(""); setOpts(["", "", "", ""]); setAns(0);
     setSol(""); setNote(""); setWithOpts(false); setErr("");
   };
   const cancel = () => { setOpen(false); setEditing(null); reset(); };
@@ -207,9 +209,11 @@ export default function WrongQuestionsPage() {
     if (!imgs.length) return;
     setBusy(true); setErr("");
     try {
-      const ids = await storeImages(imgs);
-      setImgIds((prev) => [...prev, ...ids]);
+      const { images: added, localOnly } = await storeImages(imgs);
+      setImages((prev) => [...prev, ...added]);
       setOpen(true);
+      // Say it rather than leaving an image silently stranded on one device.
+      if (localOnly) setErr(`${localOnly} image cloud par upload nahi hui — sirf is device par rahegi.`);
     } catch {
       setErr("Image save nahi ho payi — dobara try karo.");
     } finally {
@@ -240,11 +244,11 @@ export default function WrongQuestionsPage() {
     takeFiles(imgs);
   };
 
-  const dropImage = (id) => setImgIds((prev) => prev.filter((x) => x !== id));
+  const dropImage = (img) => setImages((prev) => prev.filter((x) => imageKey(x) !== imageKey(img)));
 
   const startEdit = (rec) => {
     setEditing(rec.id);
-    setImgIds(rec.imgIds || []);
+    setImages(imagesOf(rec));
     setText(rec.q?.question || "");
     const o = rec.q?.options || [];
     setOpts(o.length ? [...o] : ["", "", "", ""]);
@@ -258,7 +262,7 @@ export default function WrongQuestionsPage() {
 
   const save = async () => {
     const cleanOpts = withOpts ? opts.map((o) => o.trim()).filter(Boolean) : [];
-    if (!imgIds.length && !text.trim()) {
+    if (!images.length && !text.trim()) {
       setErr("Ek image paste karo ya question likho."); return;
     }
     if (withOpts) {
@@ -271,8 +275,8 @@ export default function WrongQuestionsPage() {
 
     setBusy(true);
     try {
-      if (editing) await updateWrong(editing, { q, imgIds, note });
-      else addWrong({ subject, q, imgIds, note });
+      if (editing) await updateWrong(editing, { q, images, note });
+      else addWrong({ subject, q, images, note });
       cancel();
       refresh();
     } finally {
@@ -305,7 +309,7 @@ export default function WrongQuestionsPage() {
     router.push(`/quizzes/${quiz.id}`);
   };
 
-  const { urls: formUrls } = useBlobUrls(imgIds);
+  const { urls: formUrls } = useImageUrls(images);
 
   return (
     <>
@@ -383,7 +387,7 @@ export default function WrongQuestionsPage() {
             {formUrls.length > 0 && (
               <div className="mt-8" style={{ display: "grid", gap: 8 }}>
                 {formUrls.map((u, i) => (
-                  <div key={imgIds[i]} style={{ position: "relative" }}>
+                  <div key={imageKey(images[i])} style={{ position: "relative" }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={u}
@@ -395,7 +399,7 @@ export default function WrongQuestionsPage() {
                     />
                     <button
                       className="btn btn--ghost btn--sm"
-                      onClick={() => dropImage(imgIds[i])}
+                      onClick={() => dropImage(images[i])}
                       style={{ position: "absolute", top: 6, right: 6 }}
                       title="Remove image"
                     >
