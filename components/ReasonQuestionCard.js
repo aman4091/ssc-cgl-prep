@@ -126,7 +126,7 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   return (
     <article className="glass-card" id={`q-${index}`}>
       <div className="q-head">
-        <h3 style={{ fontSize: "1rem", fontWeight: 600, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+        <h3 className="q-head__n">
           <span className="rule-card__n">{index + 1}.</span>
         </h3>
         <div className="q-head__actions">

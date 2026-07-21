@@ -1146,9 +1146,21 @@ label.glass-card:hover { border-color: var(--accent2); }
    mobile so the question text keeps full width (buttons no longer squeeze it). */
 /* Actions sit ABOVE the question (full-width question) at every screen size, so
    the buttons never squeeze the question text. */
-.q-head { display: flex; flex-direction: column-reverse; align-items: stretch; gap: 8px; }
+/* Number left, actions right, ONE row. This used to be column-reverse — actions
+   on their own line above, the number alone on the line below — which left the
+   whole left half of the top row empty and pushed every question a row further
+   down. The number now sits in that gap. */
+.q-head {
+  display: flex; flex-direction: row; flex-wrap: wrap;
+  align-items: flex-start; justify-content: space-between; gap: 8px;
+}
 /* Actions sit on the RIGHT of a question, not the left. */
 .q-head__actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+
+/* The number, now a row of its own above the stem rather than inline with it. */
+.q-head__n { font-size: 1rem; font-weight: 600; flex: 0 0 auto; }
+/* The stem starts on the line below the number. */
+.q-stem { font-size: 1rem; font-weight: 600; margin-top: 8px; }
 
 /* On a phone or tablet only the two that matter survive — ✨ Gemini and
    🎯 20 similar. The rest (timer, bookmark, full-screen, edit, delete) wrapped

@@ -114,16 +114,8 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   return (
     <article className="glass-card" id={`q-${index}`}>
       <div className="q-head">
-        <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>
-          <span className="rule-card__n">{index + 1}.</span>{" "}
-          {/* Some questions ARE a crop of the printed page — the stacked
-              fractions never made it into the PDF's text layer, so the image
-              carries the stem, the tag and the options. */}
-          {q.img ? (
-            <img src={q.img} alt={`Question ${index + 1}`} loading="lazy" className="q-crop" />
-          ) : (
-            <Markdown inline>{q.question}</Markdown>
-          )}
+        <h3 className="q-head__n">
+          <span className="rule-card__n">{index + 1}.</span>
         </h3>
         <div className="q-head__actions">
           <QTimer q={q} answered={picked !== null} onRestart={reattempt} />
@@ -144,6 +136,17 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
           {onDelete && <button className="btn btn--ghost btn--sm" onClick={onDelete}>✕</button>}
         </div>
+      </div>
+
+      {/* The stem, on its own line under the number. Some questions ARE a crop of
+          the printed page — the stacked fractions never made it into the PDF's
+          text layer, so the image carries the stem, the tag and the options. */}
+      <div className="q-stem">
+        {q.img ? (
+          <img src={q.img} alt={`Question ${index + 1}`} loading="lazy" className="q-crop" />
+        ) : (
+          <Markdown inline>{q.question}</Markdown>
+        )}
       </div>
 
       <PasteAnswer q={q} />
