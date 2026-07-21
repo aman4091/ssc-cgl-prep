@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadReasonChapter, reasonChapterMeta } from "@/lib/reasonbank";
+import { getResume } from "@/lib/qprogress";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
 
 const PAGE = 20; // each question is several images — page in small slices
@@ -36,6 +37,21 @@ export default function ReasonbankChapterPage() {
     );
   }
 
+  // Reload lands you back where you stopped: the slice is grown past the last
+  // question you answered, and the page scrolls to it.
+  const resumeKey = `reasonbank:${chapter}`;
+  useEffect(() => {
+    if (!ready && !qs.length) return;
+    const at = getResume(resumeKey);
+    if (at < 0) return;
+    setShown((n) => Math.max(n, at + PAGE));
+    const t = setTimeout(() => {
+      document.getElementById(`q-${at}`)?.scrollIntoView({ block: "start" });
+    }, 120);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumeKey, ready]);
+
   return (
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
@@ -64,7 +80,7 @@ export default function ReasonbankChapterPage() {
                 sideways. This bounds the column to the container. */}
             <div className="grid" style={{ gap: 14, gridTemplateColumns: "minmax(0, 1fr)" }}>
               {qs.slice(0, shown).map((q, i) => (
-                <ReasonQuestionCard key={q.id} q={q} index={i} chapterName={`Pinnacle Reasoning · ${meta.label}`} allQuestions={qs} />
+                <ReasonQuestionCard key={q.id} q={q} index={i} resumeKey={resumeKey} chapterName={`Pinnacle Reasoning · ${meta.label}`} allQuestions={qs} />
               ))}
             </div>
             {shown < qs.length && (

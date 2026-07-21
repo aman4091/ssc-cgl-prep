@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NAV_GROUPS, NAV_DIRECT, groupForPath } from "@/lib/nav";
-import { loadSscMathsIndex } from "@/lib/sscmaths";
 
 // The menu, and only the menu.
 //
@@ -30,18 +29,30 @@ export default function Navbar() {
 
   useEffect(() => { setGroup(groupForPath(pathname)); }, [pathname]);
 
+  // A group can describe a BANK instead of listing links: which index to read,
+  // which array in it holds the chapters, and what those rows link to. Fetched
+  // the first time the group is opened, then kept.
   useEffect(() => {
     const g = NAV_GROUPS.find((x) => x.key === group);
-    if (!g?.bank || bankLinks[g.bank]) return;
-    loadSscMathsIndex().then((i) => {
-      setBankLinks((prev) => ({
-        ...prev,
-        [g.bank]: (i.chapters || []).map((c) => ({
-          href: `/pyq/maths2025/${c.slug}`,
-          label: c.label,
-        })),
-      }));
-    });
+    if (!g?.bank || bankLinks[g.key]) return;
+    let alive = true;
+    fetch(g.bank.url)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((idx) => {
+        if (!alive || !idx) return;
+        let rows = idx[g.bank.list] || [];
+        // gkbank is two shelves in one file, split by subject.
+        if (g.bank.subject) rows = rows.filter((c) => c.subject === g.bank.subject);
+        setBankLinks((prev) => ({
+          ...prev,
+          [g.key]: rows.map((c) => ({
+            href: `${g.bank.href}/${c.slug}`,
+            label: c.chapter || c.label || c.slug,
+          })),
+        }));
+      })
+      .catch(() => {});
+    return () => { alive = false; };
   }, [group, bankLinks]);
   // Navigating means you are done with the menu — and on a phone it sits over
   // the page you just opened.
@@ -110,7 +121,7 @@ export default function Navbar() {
               <span className="drawer__groupname">{current.name}</span>
             </button>
 
-            {(current.bank ? bankLinks[current.bank] || [] : current.links).map((l) => (
+            {(current.bank ? bankLinks[current.key] || [] : current.links).map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
@@ -119,7 +130,7 @@ export default function Navbar() {
                 {l.label}
               </Link>
             ))}
-            {current.bank && !bankLinks[current.bank] && (
+            {current.bank && !bankLinks[current.key] && (
               <span className="drawer__link" style={{ color: "var(--dim)" }}>Loading…</span>
             )}
           </>

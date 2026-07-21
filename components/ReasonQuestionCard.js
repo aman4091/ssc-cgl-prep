@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { askAI, generateSimilar } from "@/lib/client-ai";
 import { saveQuiz, makeId } from "@/lib/storage";
+import { setResume } from "@/lib/qprogress";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
@@ -33,7 +34,7 @@ import FullscreenTestButton from "./FullscreenTestButton";
 // copy would go out as "A) a  B) b  C) c  D) d" and any answer that came back
 // would be invented. So the AI helpers are hidden on those 640 questions rather
 // than shipped as a button that reliably lies.
-export default function ReasonQuestionCard({ q, index, subject = "reasoning", chapterName, allQuestions }) {
+export default function ReasonQuestionCard({ q, index, subject = "reasoning", resumeKey, chapterName, allQuestions }) {
   const router = useRouter();
   const [picked, setPicked] = useState(null);
   const [revealed, setRevealed] = useState(false);
@@ -68,6 +69,7 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
     const correct = oi === q.answer;
     setPicked(oi);
     setRevealed(true);
+    if (resumeKey) setResume(resumeKey, index);
     if (!recorded) { recordAttempts([{ q: tq, correct }]); setRecorded(true); }
     addReview(tq, { subject, source: "chapter", category: chapterName || subject, correct });
     setFlash(correct
@@ -93,6 +95,15 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
   };
   const regenShortcut = () => { clearSavedShortcut(tq); setShortcut(""); fetchShortcut(); };
 
+  // Tapping the stopped clock re-opens the question: the answer is cleared, the
+  // reveal is undone, and QTimer has already restarted from zero.
+  const reattempt = () => {
+    setPicked(null);
+    setRevealed(false);
+    setFlash("");
+    setRecorded(false);
+  };
+
   const toggleBm = () => { setBm(toggleQBookmark(tq, subject)); };
 
   const make20 = async () => {
@@ -113,13 +124,13 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", ch
   const st = getStat(tq);
 
   return (
-    <article className="glass-card">
+    <article className="glass-card" id={`q-${index}`}>
       <div className="q-head">
         <h3 style={{ fontSize: "1rem", fontWeight: 600, display: "flex", gap: 8, flexWrap: "wrap", alignItems: "center" }}>
           <span className="rule-card__n">{index + 1}.</span>
         </h3>
         <div className="q-head__actions">
-          <QTimer answered={picked !== null} />
+          <QTimer q={tq} answered={picked !== null} onRestart={reattempt} />
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
           {Array.isArray(allQuestions) && allQuestions.length > 1 && (
             <FullscreenTestButton

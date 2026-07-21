@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadSscMathsChapter, sscMathsChapterMeta } from "@/lib/sscmaths";
+import { getResume } from "@/lib/qprogress";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 
 // One chapter's questions, full width.
@@ -52,6 +53,21 @@ export default function SscMathsChapterPage() {
     );
   }
 
+  // Reload lands you back where you stopped: the slice is grown past the last
+  // question you answered, and the page scrolls to it.
+  const resumeKey = `maths2025:${chapter}`;
+  useEffect(() => {
+    if (!ready && !qs.length) return;
+    const at = getResume(resumeKey);
+    if (at < 0) return;
+    setShown((n) => Math.max(n, at + PAGE));
+    const t = setTimeout(() => {
+      document.getElementById(`q-${at}`)?.scrollIntoView({ block: "start" });
+    }, 120);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumeKey, ready]);
+
   return (
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
@@ -81,6 +97,7 @@ export default function SscMathsChapterPage() {
             <div className="grid" style={{ gap: 14 }}>
               {filtered.slice(0, shown).map((q, i) => (
                 <PyqQuestionCard
+                  resumeKey={resumeKey}
                   key={q.id}
                   q={q}
                   index={i}

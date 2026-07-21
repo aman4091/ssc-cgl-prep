@@ -1,29 +1,37 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { getQTime, setQTime, clearQTime } from "@/lib/qprogress";
 
 // Per-question stopwatch: how long did THIS question take?
 //
-// Press ⏱ to start, then answer — answering stops it and the time freezes on
-// the button so you can read it. It is opt-in per question (nothing runs until
-// you press it) because most of the time you are browsing, not timing yourself,
-// and a clock that starts itself on every card would just be noise.
+// Press ⏱ to start, then answer — answering stops it and the time freezes so you
+// can read it. It is opt-in per question because most of the time you are
+// browsing, not timing yourself, and a clock that starts itself on every card
+// would just be noise.
 //
-// The card owns "answered" — this component has no idea what a question is, so
-// the same one works on a maths crop, a reasoning figure and a text MCQ. The
-// caller flips `answered` to true when the user picks an option; the stop is
-// driven by that prop rather than by a callback, so a card that re-renders (or
-// reveals the answer some other way) still stops the clock exactly once.
+// Two things it now does that it did not:
 //
-// Deliberately not persisted: this is a "how long am I taking right now" check,
-// not a stat. Per-question accuracy already lives in lib/qstats.
-export default function QTimer({ answered = false, className = "" }) {
-  const [startedAt, setStartedAt] = useState(null); // ms; null = not started
+//   It PERSISTS. The time is written to lib/qprogress under the same key qstats
+//   uses, so refreshing the page shows what the question took you last time
+//   instead of resetting to an untouched ⏱.
+//
+//   A stopped clock is CLICKABLE. It used to render a <span>, so there was
+//   nothing to press — tapping it does the obvious thing now: throws the old
+//   time away, starts again from zero, and tells the card to clear your answer
+//   so the question is genuinely re-attemptable.
+export default function QTimer({ q, answered = false, onRestart, className = "" }) {
+  const [startedAt, setStartedAt] = useState(null); // ms; null = not running
   const [elapsed, setElapsed] = useState(0);        // seconds
   const [stopped, setStopped] = useState(false);
   const tick = useRef(null);
 
-  // Tick while running.
+  // A time from a previous visit shows straight away, already stopped.
+  useEffect(() => {
+    const saved = getQTime(q);
+    if (saved > 0) { setElapsed(saved); setStopped(true); }
+  }, [q]);
+
   useEffect(() => {
     if (startedAt === null || stopped) return undefined;
     tick.current = setInterval(() => {
@@ -32,16 +40,27 @@ export default function QTimer({ answered = false, className = "" }) {
     return () => clearInterval(tick.current);
   }, [startedAt, stopped]);
 
-  // Answering stops it — but only if it was ever started, and only once.
+  // Answering stops it — but only if it was running, and only once.
   useEffect(() => {
     if (!answered || startedAt === null || stopped) return;
-    setElapsed(Math.floor((Date.now() - startedAt) / 1000));
+    const secs = Math.floor((Date.now() - startedAt) / 1000);
+    setElapsed(secs);
     setStopped(true);
-  }, [answered, startedAt, stopped]);
+    setQTime(q, secs);
+  }, [answered, startedAt, stopped, q]);
 
   const fmt = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 
-  if (startedAt === null) {
+  const restart = () => {
+    clearQTime(q);
+    setElapsed(0);
+    setStopped(false);
+    setStartedAt(Date.now());
+    if (onRestart) onRestart();
+  };
+
+  // Never started and nothing saved.
+  if (startedAt === null && !stopped) {
     return (
       <button
         className={`btn btn--ghost btn--sm qtimer ${className}`}
@@ -53,12 +72,25 @@ export default function QTimer({ answered = false, className = "" }) {
     );
   }
 
+  // Running: not a button, because stopping is what answering is for.
+  if (!stopped) {
+    return (
+      <span
+        className={`qtimer qtimer--live is-running ${className}`}
+        title="Chal raha hai — answer lagate hi rukega"
+      >
+        ⏱️ {fmt(elapsed)}
+      </span>
+    );
+  }
+
   return (
-    <span
-      className={`qtimer qtimer--live ${stopped ? "is-stopped" : "is-running"} ${className}`}
-      title={stopped ? `Is question mein ${elapsed}s lage` : "Chal raha hai — answer lagate hi rukega"}
+    <button
+      className={`qtimer qtimer--live is-stopped ${className}`}
+      onClick={restart}
+      title={`Is question mein ${elapsed}s lage — dobara attempt karne ke liye click karo`}
     >
-      ⏱️ {fmt(elapsed)}{stopped ? " ✓" : ""}
-    </span>
+      ⏱️ {fmt(elapsed)} ↻
+    </button>
   );
 }

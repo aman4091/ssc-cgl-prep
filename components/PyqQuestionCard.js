@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { askAI, generateSimilar } from "@/lib/client-ai";
 import { saveQuiz, makeId } from "@/lib/storage";
+import { setResume } from "@/lib/qprogress";
 import { recordAttempts, getStat } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
@@ -19,7 +20,7 @@ import FullscreenTestButton from "./FullscreenTestButton";
 
 // One PYQ / chapter question shown as an interactive quiz card:
 // pick an option -> reveal correct/wrong + solution, plus shortcut / 20-similar / doubt.
-export default function PyqQuestionCard({ q, index, subject, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, allQuestions }) {
+export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, allQuestions }) {
   const router = useRouter();
   const [picked, setPicked] = useState(null);
   const [revealed, setRevealed] = useState(false);
@@ -43,6 +44,7 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
     const correct = oi === q.answer;
     setPicked(oi);
     setRevealed(true);
+    if (resumeKey) setResume(resumeKey, index);
     if (!recorded) {
       recordAttempts([{ q, correct }]);
       // One row per chapter per day — logActivity adds to the existing row, so
@@ -82,6 +84,15 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
   // Only "New shortcut" throws away the saved one and makes a fresh trick.
   const regenShortcut = () => { clearSavedShortcut(q); setShortcut(""); fetchShortcut(); };
 
+  // Tapping the stopped clock re-opens the question: the answer is cleared, the
+  // reveal is undone, and QTimer has already restarted from zero.
+  const reattempt = () => {
+    setPicked(null);
+    setRevealed(false);
+    setFlash("");
+    setRecorded(false);
+  };
+
   const toggleBm = () => { const on = toggleQBookmark(q, subject); setBm(on); };
 
   const make20 = async () => {
@@ -101,7 +112,7 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
   const st = getStat(q);
 
   return (
-    <article className="glass-card">
+    <article className="glass-card" id={`q-${index}`}>
       <div className="q-head">
         <h3 style={{ fontSize: "1rem", fontWeight: 600 }}>
           <span className="rule-card__n">{index + 1}.</span>{" "}
@@ -115,7 +126,7 @@ export default function PyqQuestionCard({ q, index, subject, chapterName, chapte
           )}
         </h3>
         <div className="q-head__actions">
-          <QTimer answered={picked !== null} />
+          <QTimer q={q} answered={picked !== null} onRestart={reattempt} />
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
           {Array.isArray(allQuestions) && allQuestions.length > 1 && (
             <FullscreenTestButton

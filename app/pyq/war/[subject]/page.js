@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadWarSubject, warSubjectMeta } from "@/lib/warbank";
+import { getResume } from "@/lib/qprogress";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 
 const PAGE = 50; // render in slices — 562 cards at once janks a phone
@@ -40,6 +41,21 @@ export default function WarSubjectPage() {
       </section>
     );
   }
+
+  // Reload lands you back where you stopped: the slice is grown past the last
+  // question you answered, and the page scrolls to it.
+  const resumeKey = `war:${subject}`;
+  useEffect(() => {
+    if (!ready && !qs.length) return;
+    const at = getResume(resumeKey);
+    if (at < 0) return;
+    setShown((n) => Math.max(n, at + PAGE));
+    const t = setTimeout(() => {
+      document.getElementById(`q-${at}`)?.scrollIntoView({ block: "start" });
+    }, 120);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumeKey, ready]);
 
   return (
     <>
@@ -93,6 +109,7 @@ export default function WarSubjectPage() {
                 // (both write localStorage). Answering still archives to the
                 // Mistake Notebook, and "save to a chapter" still works.
                 <PyqQuestionCard
+                  resumeKey={resumeKey}
                   key={q.id}
                   q={q}
                   index={i}

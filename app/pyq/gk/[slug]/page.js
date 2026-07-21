@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadGkIndex, loadGkTopic } from "@/lib/gkbank";
+import { getResume } from "@/lib/qprogress";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
@@ -47,6 +48,21 @@ export default function GkTopicPage() {
     );
   }
 
+  // Reload lands you back where you stopped: the slice is grown past the last
+  // question you answered, and the page scrolls to it.
+  const resumeKey = `gk:${slug}`;
+  useEffect(() => {
+    if (!ready && !qs.length) return;
+    const at = getResume(resumeKey);
+    if (at < 0) return;
+    setShown((n) => Math.max(n, at + PAGE));
+    const t = setTimeout(() => {
+      document.getElementById(`q-${at}`)?.scrollIntoView({ block: "start" });
+    }, 120);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumeKey, ready]);
+
   return (
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
@@ -74,6 +90,7 @@ export default function GkTopicPage() {
             <div className="grid" style={{ gap: 14 }}>
               {qs.slice(0, shown).map((q, i) => (
                 <PyqQuestionCard
+                  resumeKey={resumeKey}
                   key={q.id || i}
                   q={q}
                   index={i}

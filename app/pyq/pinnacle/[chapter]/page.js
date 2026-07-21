@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadEngChapter, engChapterMeta } from "@/lib/engbank";
+import { getResume } from "@/lib/qprogress";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 
 const PAGE = 25; // passages are long — fewer per slice than the other banks
@@ -36,6 +37,21 @@ export default function PinnacleChapterPage() {
     );
   }
 
+  // Reload lands you back where you stopped: the slice is grown past the last
+  // question you answered, and the page scrolls to it.
+  const resumeKey = `pinnacle:${chapter}`;
+  useEffect(() => {
+    if (!ready && !qs.length) return;
+    const at = getResume(resumeKey);
+    if (at < 0) return;
+    setShown((n) => Math.max(n, at + PAGE));
+    const t = setTimeout(() => {
+      document.getElementById(`q-${at}`)?.scrollIntoView({ block: "start" });
+    }, 120);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumeKey, ready]);
+
   return (
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
@@ -64,6 +80,7 @@ export default function PinnacleChapterPage() {
                 // Read-only: a static bank has nothing to write back to, so no
                 // edit/delete. Answering still archives to the Mistake Notebook.
                 <PyqQuestionCard
+                  resumeKey={resumeKey}
                   key={q.id}
                   q={q}
                   index={i}

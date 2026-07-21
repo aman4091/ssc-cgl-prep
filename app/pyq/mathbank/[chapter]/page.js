@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadMathChapter, mathChapterMeta } from "@/lib/mathbank";
+import { getResume } from "@/lib/qprogress";
 import MathQuestionCard from "@/components/MathQuestionCard";
 
 const PAGE = 20; // each question is several images — page in small slices
@@ -36,6 +37,21 @@ export default function MathbankChapterPage() {
     );
   }
 
+  // Reload lands you back where you stopped: the slice is grown past the last
+  // question you answered, and the page scrolls to it.
+  const resumeKey = `mathbank:${chapter}`;
+  useEffect(() => {
+    if (!ready && !qs.length) return;
+    const at = getResume(resumeKey);
+    if (at < 0) return;
+    setShown((n) => Math.max(n, at + PAGE));
+    const t = setTimeout(() => {
+      document.getElementById(`q-${at}`)?.scrollIntoView({ block: "start" });
+    }, 120);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumeKey, ready]);
+
   return (
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
@@ -65,7 +81,7 @@ export default function MathbankChapterPage() {
                 crops scroll inside their own boxes instead. */}
             <div className="grid" style={{ gap: 14, gridTemplateColumns: "minmax(0, 1fr)" }}>
               {qs.slice(0, shown).map((q, i) => (
-                <MathQuestionCard key={q.id} q={q} index={i} chapterName={`Pinnacle Maths · ${meta.label}`} allQuestions={qs} />
+                <MathQuestionCard key={q.id} q={q} index={i} resumeKey={resumeKey} chapterName={`Pinnacle Maths · ${meta.label}`} allQuestions={qs} />
               ))}
             </div>
             {shown < qs.length && (
