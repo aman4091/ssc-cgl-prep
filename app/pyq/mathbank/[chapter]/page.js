@@ -81,7 +81,7 @@ export default function MathbankChapterPage() {
                 crops scroll inside their own boxes instead. */}
             <div className="grid" style={{ gap: 14, gridTemplateColumns: "minmax(0, 1fr)" }}>
               {qs.slice(0, shown).map((q, i) => (
-                <MathQuestionCard key={q.id} q={q} index={i} resumeKey={resumeKey} chapterName={`Pinnacle Maths · ${meta.label}`} allQuestions={qs} />
+                <MathQuestionCard key={q.id} q={q} index={i} subject="math" resumeKey={resumeKey} chapterName={`Pinnacle Maths · ${meta.label}`} allQuestions={qs} />
               ))}
             </div>
             {shown < qs.length && (

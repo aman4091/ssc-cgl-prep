@@ -80,7 +80,7 @@ export default function ReasonbankChapterPage() {
                 sideways. This bounds the column to the container. */}
             <div className="grid" style={{ gap: 14, gridTemplateColumns: "minmax(0, 1fr)" }}>
               {qs.slice(0, shown).map((q, i) => (
-                <ReasonQuestionCard key={q.id} q={q} index={i} resumeKey={resumeKey} chapterName={`Pinnacle Reasoning · ${meta.label}`} allQuestions={qs} />
+                <ReasonQuestionCard key={q.id} q={q} index={i} subject="reasoning" resumeKey={resumeKey} chapterName={`Pinnacle Reasoning · ${meta.label}`} allQuestions={qs} />
               ))}
             </div>
             {shown < qs.length && (
