@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NAV_GROUPS, NAV_DIRECT, groupForPath } from "@/lib/nav";
+import { loadSscMathsIndex } from "@/lib/sscmaths";
 
 // The menu, and only the menu.
 //
@@ -20,10 +21,28 @@ export default function Navbar() {
   // Seeded from the URL during render so landing deep in the app already shows
   // that group, rather than flashing the top level first.
   const [group, setGroup] = useState(() => groupForPath(pathname));
+  // A group can name a BANK instead of listing links — its rows are that bank's
+  // chapters, fetched the first time the group is opened and then memoised by
+  // the loader itself.
+  const [bankLinks, setBankLinks] = useState({});
   // Phones only: the rail is off-canvas until the hamburger asks for it.
   const [open, setOpen] = useState(false);
 
   useEffect(() => { setGroup(groupForPath(pathname)); }, [pathname]);
+
+  useEffect(() => {
+    const g = NAV_GROUPS.find((x) => x.key === group);
+    if (!g?.bank || bankLinks[g.bank]) return;
+    loadSscMathsIndex().then((i) => {
+      setBankLinks((prev) => ({
+        ...prev,
+        [g.bank]: (i.chapters || []).map((c) => ({
+          href: `/pyq/maths2025/${c.slug}`,
+          label: c.label,
+        })),
+      }));
+    });
+  }, [group, bankLinks]);
   // Navigating means you are done with the menu — and on a phone it sits over
   // the page you just opened.
   useEffect(() => { setOpen(false); }, [pathname]);
@@ -91,7 +110,7 @@ export default function Navbar() {
               <span className="drawer__groupname">{current.name}</span>
             </button>
 
-            {current.links.map((l) => (
+            {(current.bank ? bankLinks[current.bank] || [] : current.links).map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
@@ -100,6 +119,9 @@ export default function Navbar() {
                 {l.label}
               </Link>
             ))}
+            {current.bank && !bankLinks[current.bank] && (
+              <span className="drawer__link" style={{ color: "var(--dim)" }}>Loading…</span>
+            )}
           </>
         ) : (
           /* ---- level 1: names only ---- */
