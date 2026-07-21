@@ -10,6 +10,7 @@ import {
 import { getFile } from "@/lib/filestore";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { saveQuiz, makeId } from "@/lib/storage";
+import ZoomableImage from "@/components/ZoomableImage";
 
 // Wrong Questions — a hand-kept book, one shelf per subject.
 //
@@ -47,6 +48,8 @@ function useBlobUrls(ids) {
 
 function WrongCard({ rec, onEdit, onDelete }) {
   const [shown, setShown] = useState(false);
+  // Which of this record's images the lightbox is showing (null = closed).
+  const [lb, setLb] = useState(null);
   const urls = useBlobUrls(rec.imgIds);
   const q = rec.q || {};
   const opts = q.options || [];
@@ -54,15 +57,45 @@ function WrongCard({ rec, onEdit, onDelete }) {
 
   return (
     <div className="glass-card">
+      {/* A pasted screenshot usually carries the options baked in, so it is tall.
+          Shown capped here and opened full-size (and zoomable) on tap, rather
+          than letting one question eat the whole screen. */}
       {urls.map((u, i) => (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           key={i}
           src={u}
           alt={`Wrong question ${i + 1}`}
-          style={{ width: "100%", height: "auto", borderRadius: 10, marginBottom: 10, display: "block" }}
+          onClick={() => setLb(i)}
+          title="Tap to enlarge"
+          style={{
+            width: "100%", maxHeight: 220, objectFit: "contain", objectPosition: "left top",
+            borderRadius: 10, marginBottom: 10, display: "block",
+            background: "#fff", cursor: "zoom-in",
+          }}
         />
       ))}
+
+      {lb !== null && urls[lb] && (
+        <div className="lightbox" onClick={() => setLb(null)}>
+          <button className="lightbox__x" onClick={() => setLb(null)}>✕</button>
+          <button
+            className="lightbox__nav lightbox__nav--prev" disabled={lb <= 0}
+            onClick={(e) => { e.stopPropagation(); setLb((i) => Math.max(0, i - 1)); }}
+          >
+            ‹
+          </button>
+          <div className="lightbox__body" onClick={(e) => e.stopPropagation()}>
+            <ZoomableImage key={lb} src={urls[lb]} alt={`Wrong question ${lb + 1}`} />
+          </div>
+          <button
+            className="lightbox__nav lightbox__nav--next" disabled={lb >= urls.length - 1}
+            onClick={(e) => { e.stopPropagation(); setLb((i) => Math.min(urls.length - 1, i + 1)); }}
+          >
+            ›
+          </button>
+        </div>
+      )}
 
       {q.question && <p style={{ fontWeight: 600, whiteSpace: "pre-wrap" }}>{q.question}</p>}
 
@@ -329,7 +362,14 @@ export default function WrongQuestionsPage() {
                 {formUrls.map((u, i) => (
                   <div key={imgIds[i]} style={{ position: "relative" }}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={u} alt={`Pasted ${i + 1}`} style={{ width: "100%", height: "auto", borderRadius: 10, display: "block" }} />
+                    <img
+                      src={u}
+                      alt={`Pasted ${i + 1}`}
+                      style={{
+                        width: "100%", maxHeight: 180, objectFit: "contain", objectPosition: "left top",
+                        borderRadius: 10, display: "block", background: "#fff",
+                      }}
+                    />
                     <button
                       className="btn btn--ghost btn--sm"
                       onClick={() => dropImage(imgIds[i])}
