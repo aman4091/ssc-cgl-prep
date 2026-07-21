@@ -19,9 +19,10 @@ import ZoomableImage from "@/components/ZoomableImage";
 // Separate from the Mistake Notebook on purpose: that one fills itself from the
 // quiz runners, this one holds only what you put in. They share no storage.
 //
-// The fast path is a screenshot: paste anywhere on the page and the form opens
-// with the image already in it. Typing a proper MCQ is optional, and only pays
-// for itself if you want to practise the question later.
+// The fast path is a screenshot: paste anywhere on the page and the question is
+// added on the spot — no form, no Save. Text, a note, options and a solution are
+// all optional extras you can fill in later with Edit; options only matter if
+// you want the question in a practice quiz.
 
 // Display URLs for a record's images. An R2 image is already a URL; a local
 // fallback has to be read out of IndexedDB and object-URL'd (and revoked).
@@ -364,6 +365,7 @@ export default function WrongQuestionsPage() {
   // Whether the server can upload at all. If not, every paste silently becomes
   // device-only — worth saying up front rather than after the fact.
   const [cloud, setCloud] = useState({ configured: true });
+  const [flash, setFlash] = useState("");   // "added" confirmation after a paste
   const fileRef = useRef(null);
   const formRef = useRef(null);
 
@@ -382,16 +384,25 @@ export default function WrongQuestionsPage() {
   };
   const cancel = () => { setOpen(false); setEditing(null); reset(); };
 
-  // Compress + store, then hold the ids. Doing it on paste rather than on save
-  // keeps the thumbnails honest: what you see is what is already on disk.
+  // Paste = the question is added. No form, no Save.
+  //
+  // Pasting with the form already open is the exception: there you are composing
+  // (or editing) one question, so the image joins that one instead of starting
+  // another. Everything else is optional and can be added later with Edit.
   const takeFiles = useCallback(async (files) => {
     const imgs = (files || []).filter(isImageFile);
     if (!imgs.length) return;
     setBusy(true); setErr("");
     try {
       const { images: added, localOnly } = await storeImages(imgs);
-      setImages((prev) => [...prev, ...added]);
-      setOpen(true);
+      if (open) {
+        setImages((prev) => [...prev, ...added]);
+      } else {
+        addWrong({ subject, q: null, images: added, note: "" });
+        refresh();
+        setFlash(`✅ ${active.icon} ${active.label} mein add ho gaya`);
+        setTimeout(() => setFlash(""), 2200);
+      }
       // Say it rather than leaving an image silently stranded on one device.
       if (localOnly) {
         setErr(
@@ -404,7 +415,8 @@ export default function WrongQuestionsPage() {
     } finally {
       setBusy(false);
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, subject, cloud.configured]);
 
   // Paste anywhere on the page. Ignored while typing so Ctrl+V of ordinary text
   // into the question box still behaves normally.
@@ -541,9 +553,18 @@ export default function WrongQuestionsPage() {
           ))}
         </div>
 
+        <p className="muted" style={{ fontSize: "0.84rem", marginBottom: 10 }}>
+          {busy
+            ? "📋 Image save ho rahi hai…"
+            : `📋 Screenshot copy karke yahan Ctrl+V dabao — question seedha ${active.label} mein add ho jayega.`}
+        </p>
+        {flash && (
+          <p style={{ color: "var(--success)", fontSize: "0.86rem", fontWeight: 600, marginBottom: 10 }}>{flash}</p>
+        )}
+
         <div className="row" style={{ gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
           <button className="btn btn--primary btn--sm" onClick={() => (open ? cancel() : setOpen(true))}>
-            {open ? "✕ Cancel" : `➕ Add to ${active.label}`}
+            {open ? "✕ Cancel" : "✍️ Type a question"}
           </button>
           {practiceable.length > 0 && (
             <button className="btn btn--ghost btn--sm" onClick={practice}>
@@ -673,7 +694,7 @@ export default function WrongQuestionsPage() {
         {items.length === 0 ? (
           <div className="placeholder">
             {active.label} mein abhi kuch nahi. Screenshot copy karo aur yahin <strong>Ctrl+V</strong> dabao —
-            question apne aap add ho jayega.
+            question turant add ho jayega (Save dabane ki zaroorat nahi).
           </div>
         ) : (
           <div style={{ display: "grid", gap: 12 }}>
