@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
 
 // Notes reader — a React port of polity_notes/preview.html's renderer.
@@ -136,11 +137,19 @@ function navTopics(topics) {
 // differently for no reason the reader could see.
 
 export default function NotesReader({ book }) {
-  const [topic, setTopic] = useState(null);
+  // The chapter comes from the MENU (?topic=…), not from a control on the page —
+  // notes books pick their chapter the same way the PYQ shelves do. navTopics()
+  // still merges the runs, because the menu builds its rows from the same list
+  // and both must agree on what counts as one chapter.
+  const params = useSearchParams();
+  const topic = params.get("topic");
   const [query, setQuery] = useState("");
 
   const meta = book?.meta || { topics: [], total_pages: 0 };
   const nav = useMemo(() => navTopics(meta.topics), [meta.topics]);
+  // A ?topic= that names no chapter in this book would silently show an empty
+  // reader, so fall back to the whole book instead.
+  const active = nav.some((t) => t.topic === topic) ? topic : null;
 
   // Does this book use "# " heading markers for hierarchy? (polity yes, static no)
   const hashHierarchy = useMemo(
@@ -155,10 +164,10 @@ export default function NotesReader({ book }) {
     const q = query.trim().toLowerCase();
     // Chapter cover pages are decorative collages with no content — skip them.
     let ps = (book?.pages || []).filter((p) => !p.is_cover);
-    if (topic) ps = ps.filter((p) => p.topic === topic);
+    if (active) ps = ps.filter((p) => p.topic === active);
     if (q) ps = ps.filter((p) => JSON.stringify(p.blocks).toLowerCase().includes(q));
     return ps;
-  }, [book, topic, query]);
+  }, [book, active, query]);
 
 
   return (
@@ -170,22 +179,15 @@ export default function NotesReader({ book }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <select
-          className="notesdoc__select"
-          value={topic || ""}
-          onChange={(e) => {
-            setTopic(e.target.value || null);
-            window.scrollTo(0, 0);
-          }}
-        >
-          <option value="">All chapters ({meta.total_pages} pages)</option>
-          {nav.map((t) => (
-            <option key={t.topic} value={t.topic}>
-              {t.no ? `${t.no}. ` : ""}
-              {t.topic} ({t.lo}-{t.hi})
-            </option>
-          ))}
-        </select>
+        <div className="notesdoc__where">
+          {active ? (
+            <>
+              <b>{active}</b> · {pages.length} pages
+            </>
+          ) : (
+            <>Poori book · {meta.total_pages} pages — chapter menu se chuno</>
+          )}
+        </div>
       </aside>
 
       <div className="notesdoc__main">

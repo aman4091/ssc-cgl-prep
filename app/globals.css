@@ -1946,13 +1946,13 @@ label.glass-card:hover { border-color: var(--accent2); }
 }
 .notesdoc__search:focus { outline: 2px solid var(--accent2); outline-offset: 1px; }
 
-/* topic dropdown — used instead of chips when a book has many chapters (static GK: 84) */
-.notesdoc__select {
-  width: 100%; padding: 9px 12px;
-  border: 1px solid var(--line); border-radius: var(--radius-sm);
-  background: var(--card); color: var(--ink); font: 14px var(--font); cursor: pointer;
+/* Which chapter you are in. The chapter is CHOSEN in the drawer menu (like the
+   PYQ shelves), so this is a read-out, not a control — the page no longer
+   carries a topic dropdown. */
+.notesdoc__where {
+  font-size: 13px; color: var(--dim);
 }
-.notesdoc__select:focus { outline: 2px solid var(--accent2); outline-offset: 1px; }
+.notesdoc__where b { color: var(--accent); }
 
 /* ---- memorisation layer (static GK): ⚡ Quick Revise box + 📌 memory hooks ---- */
 .nt-qr {

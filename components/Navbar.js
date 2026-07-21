@@ -42,16 +42,30 @@ export default function Navbar() {
       .then((r) => (r.ok ? r.json() : null))
       .then((idx) => {
         if (!alive || !idx) return;
-        let rows = idx[g.bank.list] || [];
+        // `list` may be a dotted path: a notes book keeps its chapters at
+        // meta.topics, not at the top level.
+        let rows =
+          g.bank.list.split(".").reduce((o, k) => (o == null ? o : o[k]), idx) || [];
         // gkbank is two shelves in one file, split by subject.
         if (g.bank.subject) rows = rows.filter((c) => c.subject === g.bank.subject);
-        setBankLinks((prev) => ({
-          ...prev,
-          [g.key]: rows.map((c) => ({
-            href: `${g.bank.href}/${c.slug}`,
-            label: c.chapter || c.label || c.slug,
-          })),
-        }));
+        // A notes book lists topics as RUNS — a chapter the book returns to later
+        // appears twice — so dedupe by label or the menu shows it twice, both rows
+        // filtering to the same thing.
+        const seen = new Set();
+        const links = [];
+        for (const c of rows) {
+          const label = c.chapter || c.label || c.topic || c.slug;
+          if (!label || seen.has(label)) continue;
+          seen.add(label);
+          links.push({
+            // `param` books are one route filtered by query; the rest are a path.
+            href: g.bank.param
+              ? `${g.bank.href}?${g.bank.param}=${encodeURIComponent(label)}`
+              : `${g.bank.href}/${c.slug}`,
+            label,
+          });
+        }
+        setBankLinks((prev) => ({ ...prev, [g.key]: links }));
       })
       .catch(() => {});
     return () => { alive = false; };
@@ -83,8 +97,13 @@ export default function Navbar() {
   };
   const current = nodeAt(trail);
   // What this level shows: sub-groups, a bank's fetched chapters, or plain links.
+  // A group may have BOTH sub-groups and plain links — Notes has three books to
+  // drill into and two ordinary rows — so these concatenate rather than one
+  // shadowing the other. `rows.map` already renders each shape.
   const rows = current
-    ? (current.children || (current.bank ? bankLinks[current.key] || [] : current.links) || [])
+    ? current.bank
+      ? bankLinks[current.key] || []
+      : [...(current.children || []), ...(current.links || [])]
     : NAV_GROUPS;
 
   return (
