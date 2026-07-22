@@ -9,7 +9,7 @@ import {
 import { getFile } from "@/lib/filestore";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { r2Status } from "@/lib/r2client";
-import { saveQuiz, makeId, getSettings } from "@/lib/storage";
+import { saveQuiz, getQuiz, makeId, getSettings } from "@/lib/storage";
 import { generateSimilar, readImageText } from "@/lib/client-ai";
 import ZoomableImage from "@/components/ZoomableImage";
 import Markdown from "@/components/Markdown";
@@ -94,6 +94,45 @@ async function copyText(text) {
   } catch {
     return false;
   }
+}
+
+// 20-similar is generated in small BATCHES, not one 20-question shot. In one shot
+// the model (DeepSeek) gets overloaded and returns junk options — worst on maths.
+// So make the first 5, open the quiz, then keep topping up in the background to 20;
+// the quiz player listens for cgl:quiz-appended and shows them as they land. Same
+// approach as the maths PYQ card (MathQuestionCard.streamSimilar).
+const SIMILAR_TARGET = 20;
+const SIMILAR_BATCH = 5;
+
+function dispatchAppend(id, count, done) {
+  try { window.dispatchEvent(new CustomEvent("cgl:quiz-appended", { detail: { id, count, done } })); }
+  catch { /* no window */ }
+}
+
+async function streamSimilar(sample, subject, quizId) {
+  for (;;) {
+    const before = getQuiz(quizId);
+    if (!before) return; // quiz deleted — stop
+    const have = before.questions.length;
+    if (have >= SIMILAR_TARGET) break;
+
+    let qs = [];
+    try {
+      const b = await generateSimilar(sample, Math.min(SIMILAR_BATCH, SIMILAR_TARGET - have), subject);
+      qs = (b && b.questions) || [];
+    } catch { qs = []; }
+
+    const quiz = getQuiz(quizId);
+    if (!quiz) return;
+    if (qs.length) quiz.questions = [...quiz.questions, ...qs];
+    const finished = !qs.length || quiz.questions.length >= SIMILAR_TARGET;
+    quiz.streaming = !finished;
+    saveQuiz(quiz);
+    dispatchAppend(quizId, quiz.questions.length, finished);
+    if (finished) return;
+  }
+  const quiz = getQuiz(quizId);
+  if (quiz && quiz.streaming) { quiz.streaming = false; saveQuiz(quiz); dispatchAppend(quizId, quiz.questions.length, true); }
 }
 
 // Settings keeps a prompt per subject as well as a generic Gemini one — a maths
@@ -190,24 +229,28 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
     } catch { /* clipboard blocked — user can Ctrl+V into the box */ }
   };
 
+  // First 5 now, the rest topped up in the background to 20 — see streamSimilar.
   const make20 = async () => {
     setBusy("similar"); setErr(""); setProg(0);
     try {
       const text = await ensureText();
-      const data = await generateSimilar(
-        { question: text, options: (q.options || []).filter(Boolean) },
-        20,
-        rec.subject
-      );
-      const quiz = {
-        id: makeId(),
-        title: data.title || "Similar (20)",
+      const sample = { question: text, options: (q.options || []).filter(Boolean) };
+      const first = await generateSimilar(sample, SIMILAR_BATCH, rec.subject);
+      if (!first || !(first.questions || []).length) {
+        throw new Error("Similar questions generate nahi ho paye — dobara try karo.");
+      }
+      const quizId = makeId();
+      const done = first.questions.length >= SIMILAR_TARGET;
+      saveQuiz({
+        id: quizId,
+        title: first.title || "Similar practice",
         source: "similar",
         createdAt: new Date().toISOString(),
-        questions: data.questions,
-      };
-      saveQuiz(quiz);
-      router.push(`/quizzes/${quiz.id}`);
+        questions: first.questions,
+        streaming: !done,
+      });
+      router.push(`/quizzes/${quizId}`);
+      if (!done) streamSimilar(sample, rec.subject, quizId); // fire-and-forget top-up
     } catch (e) {
       setErr(e.message);
       setBusy("");
