@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
-  SUBJECTS, getWrongBook, countsBySubject, isPracticeable, imagesOf, imageKey,
-  storeImages, addWrong, updateWrong, removeWrong, clearWrong, setOcrText, setDetail,
+  SUBJECTS, getWrongBook, countsBySubject, isPracticeable, imagesOf, imageKey, isSubject,
+  dayKey, dayLabel, storeImages, addWrong, updateWrong, removeWrong, clearWrong, setOcrText, setDetail,
 } from "@/lib/wrongbook";
 import { getFile } from "@/lib/filestore";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
@@ -217,6 +217,17 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
 
   return (
     <div className="glass-card">
+      {/* When it was added — the day this question landed in the book. */}
+      <div className="row" style={{ marginBottom: 8 }}>
+        <span
+          className="time-pill"
+          style={{ background: "var(--accent-wash)", color: "var(--accent-2)", fontSize: "0.76rem" }}
+          title="Is din add hua tha"
+        >
+          📅 {dayLabel(rec.at)}
+        </span>
+      </div>
+
       {/* Actions sit ABOVE the question, like the PYQ/bank cards — a pasted
           screenshot is tall, and buttons underneath meant scrolling past the
           whole image to reach them. */}
@@ -396,11 +407,18 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
   );
 }
 
-export default function WrongQuestionsPage() {
+function WrongInner() {
   const router = useRouter();
-  const [subject, setSubject] = useState("reasoning");
+  const sp = useSearchParams();
+  // The active shelf comes from the URL, so the left-menu subject buttons and
+  // the in-page chips are the same control. Default: Reasoning.
+  const urlSubject = sp.get("subject");
+  const subject = isSubject(urlSubject) ? urlSubject : "reasoning";
+  const goSubject = (k) => router.replace(`/wrong?subject=${k}`, { scroll: false });
+
   const [items, setItems] = useState([]);
   const [counts, setCounts] = useState(() => Object.fromEntries(SUBJECTS.map((s) => [s.key, 0])));
+  const [dateFilter, setDateFilter] = useState("all"); // "all" | a dayKey
   const [open, setOpen] = useState(false);      // add/edit form open
   const [editing, setEditing] = useState(null); // record id being edited
 
@@ -421,11 +439,12 @@ export default function WrongQuestionsPage() {
   const fileRef = useRef(null);
   const formRef = useRef(null);
 
-  const refresh = (subj = subject) => {
-    setItems(getWrongBook(subj));
+  // Reload the shelf's records WITHOUT touching the date filter — used after
+  // every edit/delete/tag so a chosen date doesn't jump around under you.
+  const refresh = () => {
+    setItems(getWrongBook(subject));
     setCounts(countsBySubject());
   };
-  useEffect(() => { refresh(subject); /* eslint-disable-next-line */ }, [subject]);
   useEffect(() => { r2Status().then(setCloud).catch(() => {}); }, []);
 
   const active = SUBJECTS.find((s) => s.key === subject);
@@ -435,6 +454,42 @@ export default function WrongQuestionsPage() {
     setSol(""); setNote(""); setWithOpts(false); setErr("");
   };
   const cancel = () => { setOpen(false); setEditing(null); reset(); };
+
+  // Switching subject (chip or menu button) reloads the shelf and jumps the date
+  // dropdown to that subject's latest day — the whole point of "latest by default".
+  useEffect(() => {
+    const list = getWrongBook(subject);
+    setItems(list);
+    setCounts(countsBySubject());
+    const latest = list.reduce((mx, r) => (r.at > mx ? r.at : mx), "");
+    setDateFilter(latest ? dayKey(latest) : "all");
+    cancel();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subject]);
+
+  // Distinct days present on this shelf, newest first, each with its label+count.
+  const dates = useMemo(() => {
+    const m = new Map();
+    for (const r of items) {
+      const k = dayKey(r.at);
+      if (!k) continue;
+      const cur = m.get(k) || { key: k, label: dayLabel(r.at), n: 0 };
+      cur.n += 1;
+      m.set(k, cur);
+    }
+    return [...m.values()].sort((a, b) => (a.key < b.key ? 1 : -1));
+  }, [items]);
+
+  // A date that no longer exists (e.g. the last card of that day was deleted)
+  // falls back to the newest remaining day.
+  useEffect(() => {
+    if (dateFilter !== "all" && items.length && !dates.some((d) => d.key === dateFilter)) {
+      setDateFilter(dates[0]?.key || "all");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dates]);
+
+  const shown = dateFilter === "all" ? items : items.filter((r) => dayKey(r.at) === dateFilter);
 
   // Paste = the question is added. No form, no Save.
   //
@@ -450,7 +505,8 @@ export default function WrongQuestionsPage() {
       if (open) {
         setImages((prev) => [...prev, ...added]);
       } else {
-        addWrong({ subject, q: null, images: added, note: "" });
+        const rec = addWrong({ subject, q: null, images: added, note: "" });
+        setDateFilter(dayKey(rec.at)); // show the day it just landed on
         refresh();
         setFlash(`✅ ${active.icon} ${active.label} mein add ho gaya`);
         setTimeout(() => setFlash(""), 2200);
@@ -524,8 +580,12 @@ export default function WrongQuestionsPage() {
 
     setBusy(true);
     try {
-      if (editing) await updateWrong(editing, { q, images, note });
-      else addWrong({ subject, q, images, note });
+      if (editing) {
+        await updateWrong(editing, { q, images, note });
+      } else {
+        const rec = addWrong({ subject, q, images, note });
+        setDateFilter(dayKey(rec.at)); // show the day it just landed on
+      }
       cancel();
       refresh();
     } finally {
@@ -544,12 +604,15 @@ export default function WrongQuestionsPage() {
     refresh();
   };
 
-  const practiceable = items.filter(isPracticeable);
+  // Practice what's currently shown — the whole subject when the date is "all",
+  // or just the picked day's questions when a date is selected.
+  const practiceable = shown.filter(isPracticeable);
   const practice = () => {
     if (!practiceable.length) return;
+    const dayBit = dateFilter === "all" ? "" : ` · ${dates.find((d) => d.key === dateFilter)?.label || ""}`;
     const quiz = {
       id: makeId(),
-      title: `${active.icon} ${active.label} · Wrong questions`,
+      title: `${active.icon} ${active.label} · Wrong questions${dayBit}`,
       source: "wrongbook",
       createdAt: new Date().toISOString(),
       questions: practiceable.map((r) => r.q),
@@ -592,17 +655,37 @@ export default function WrongQuestionsPage() {
           </div>
         )}
 
-        {/* Subject shelves */}
-        <div className="chips" style={{ marginBottom: 16 }}>
+        {/* Subject shelves — same set as the left-menu buttons; both drive ?subject. */}
+        <div className="chips" style={{ marginBottom: 12 }}>
           {SUBJECTS.map((s) => (
             <button
               key={s.key}
               className={`chip chip--btn chip--lg ${subject === s.key ? "is-active" : ""}`}
-              onClick={() => { setSubject(s.key); cancel(); }}
+              onClick={() => goSubject(s.key)}
             >
               {s.icon} {s.label} ({counts[s.key]})
             </button>
           ))}
+        </div>
+
+        {/* Date filter — top-left, defaults to this shelf's latest day. */}
+        <div className="row" style={{ gap: 8, marginBottom: 16, alignItems: "center", flexWrap: "wrap" }}>
+          <span className="muted" style={{ fontSize: "0.82rem" }}>📅 Date:</span>
+          <select
+            className="select"
+            style={{ width: "auto", padding: "6px 30px 6px 12px", fontSize: "0.85rem" }}
+            value={dateFilter}
+            onChange={(e) => setDateFilter(e.target.value)}
+            disabled={!items.length}
+          >
+            <option value="all">Saari dates ({items.length})</option>
+            {dates.map((d) => (
+              <option key={d.key} value={d.key}>{d.label} ({d.n})</option>
+            ))}
+          </select>
+          {dateFilter !== "all" && (
+            <button className="btn btn--ghost btn--sm" onClick={() => setDateFilter("all")}>Saari dates dikhao</button>
+          )}
         </div>
 
         <p className="muted" style={{ fontSize: "0.84rem", marginBottom: 10 }}>
@@ -748,9 +831,13 @@ export default function WrongQuestionsPage() {
             {active.label} mein abhi kuch nahi. Screenshot copy karo aur yahin <strong>Ctrl+V</strong> dabao —
             question turant add ho jayega (Save dabane ki zaroorat nahi).
           </div>
+        ) : shown.length === 0 ? (
+          <div className="placeholder">
+            Is date par koi question nahi. Upar se dusri date chuno ya “Saari dates”.
+          </div>
         ) : (
           <div style={{ display: "grid", gap: 12 }}>
-            {items.map((rec) => (
+            {shown.map((rec) => (
               <WrongCard
                 key={rec.id}
                 rec={rec}
@@ -763,5 +850,21 @@ export default function WrongQuestionsPage() {
         )}
       </section>
     </>
+  );
+}
+
+// useSearchParams needs a Suspense boundary or the whole route opts out of
+// static rendering.
+export default function WrongQuestionsPage() {
+  return (
+    <Suspense
+      fallback={
+        <section className="hero">
+          <span className="hero__eyebrow">❌ Wrong Questions</span>
+        </section>
+      }
+    >
+      <WrongInner />
+    </Suspense>
   );
 }
