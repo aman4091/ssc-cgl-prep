@@ -152,20 +152,25 @@ function md(s) {
   return t;
 }
 
+// One block → HTML. Ported from each notes package's preview.html so the site
+// renders with the SAME shape/size/look the data was authored against:
+//   heading → a ◆ section rule (.nt-sec), sub-headings quieter (.nt-sub)
+//   rule    → a statement line (.nt-stmt); grouped into a RULE card by renderBlocks
+//   note    → .nt-tip (quiet) / .nt-key (boxed highlight) / .nt-tip.diag
+//   list/example → hanging-dot bullets (ul.nt-pts)
 function blockHtml(b, hashHierarchy) {
   if (b.type === "heading") {
-    // Some books mark a main section heading with a leading "# " (polity: 368 of
-    // 593); subheadings have none. Strip the marker (transcriber markup, not book
-    // text). Only split hierarchy when the book actually USES "#": then "# …" is
-    // an h3 main heading and a plain one is a quieter h4. When no heading in the
-    // book carries a marker (static GK: 0 of 1017), every heading is an h3.
+    // A "# " marker means a MAIN heading (polity); a plain heading in such a book
+    // is a sub-heading. Books with no markers (this one, static GK) → every
+    // heading is a main section.
     const m = /^(#+)\s+/.exec(b.text);
     const text = m ? b.text.slice(m[0].length) : b.text;
-    return m || !hashHierarchy
-      ? "<h3>" + md(text) + "</h3>"
-      : "<h4>" + md(text) + "</h4>";
+    const sub = !m && hashHierarchy;
+    return sub
+      ? '<div class="nt-sub">' + md(text) + "</div>"
+      : '<div class="nt-sec">' + md(text) + "</div>";
   }
-  if (b.type === "rule") return '<div class="nt-rule">' + md(b.text) + "</div>";
+  if (b.type === "rule") return '<div class="nt-stmt">' + md(b.text) + "</div>";
   // ⚡ Quick Revise — the highest-yield facts of a subsection, one glance (static GK).
   if (b.type === "qr") {
     const cells = (b.cells || [])
@@ -190,21 +195,25 @@ function blockHtml(b, hashHierarchy) {
   if (b.type === "hook") return '<div class="nt-hook">' + md(b.text) + "</div>";
   if (b.type === "list")
     return (
-      '<ul class="nt-list">' +
+      '<ul class="nt-pts">' +
       (b.items || []).map((i) => "<li>" + md(i) + "</li>").join("") +
       "</ul>"
     );
   if (b.type === "example")
-    return (b.items || [])
-      .map(
-        (i) =>
-          '<div class="nt-ex">' +
-          (i.n != null ? '<span class="nt-n">' + esc(i.n) + ".</span>" : "") +
-          md(i.text) +
-          (i.note ? '<span class="nt-nt">' + md(i.note) + "</span>" : "") +
-          "</div>"
-      )
-      .join("");
+    return (
+      '<ul class="nt-pts">' +
+      (b.items || [])
+        .map(
+          (i) =>
+            "<li>" +
+            (i.n != null ? "<b>" + esc(i.n) + ".</b> " : "") +
+            md(i.text) +
+            (i.note ? '<span class="nt-nt">' + md(i.note) + "</span>" : "") +
+            "</li>"
+        )
+        .join("") +
+      "</ul>"
+    );
   if (b.type === "table") {
     const h = b.headers
       ? "<thead><tr>" +
@@ -219,11 +228,52 @@ function blockHtml(b, hashHierarchy) {
       .join("");
     return '<div class="nt-scrollx"><table>' + h + "<tbody>" + r + "</tbody></table></div>";
   }
-  if (b.type === "note")
-    return '<div class="nt-note' + (b.boxed ? " box" : "") + '">' + md(b.text) + "</div>";
-  // No "figure" branch — text-only dataset by the owner's decision. Diagrams are
-  // transcribed into words; the scan at the foot of the page carries the drawing.
+  if (b.type === "note") {
+    const diag = /^\s*(📍|📐|Diagram|Map)/u.test(b.text || "");
+    if (diag) return '<div class="nt-tip diag">' + md(b.text) + "</div>";
+    if (b.boxed) return '<div class="nt-key">' + md(b.text) + "</div>";
+    return '<div class="nt-tip">' + md(b.text) + "</div>";
+  }
   return "";
+}
+
+// A "Rule-N" heading, or a `rule` block that carries examples/notes, becomes a
+// bounded RULE card (badge + statement + body) so each rule reads as its own
+// rule instead of flat prose — exactly what the source preview.html does.
+const RULE_RE = /^\s*\**\s*rule\b/i;
+const isRuleHd = (t) => RULE_RE.test(String(t || ""));
+function ruleLabel(t) {
+  const m = String(t || "").replace(/\*/g, "").match(/rule\s*[:\-\s]*([0-9]+[A-Za-z]?)/i);
+  return m ? "RULE " + m[1].toUpperCase() : "RULE";
+}
+function renderBlocks(blocks, hashHierarchy) {
+  const bl = blocks || [];
+  let out = "";
+  let i = 0;
+  while (i < bl.length) {
+    const b = bl[i];
+    if (b.type === "heading" && isRuleHd(b.text)) {
+      let j = i + 1;
+      let inner = "";
+      while (j < bl.length && bl[j].type !== "heading") { inner += blockHtml(bl[j], hashHierarchy); j++; }
+      out += '<div class="nt-rulecard"><span class="nt-rulehd">' + esc(ruleLabel(b.text)) + "</span>" + inner + "</div>";
+      i = j;
+    } else if (b.type === "rule") {
+      let j = i + 1;
+      let body = "";
+      while (j < bl.length && bl[j].type !== "heading" && bl[j].type !== "rule") { body += blockHtml(bl[j], hashHierarchy); j++; }
+      if (body) {
+        out += '<div class="nt-rulecard"><span class="nt-rulehd">RULE</span><div class="nt-stmt">' + md(b.text) + "</div>" + body + "</div>";
+      } else {
+        out += blockHtml(b, hashHierarchy); // a lone formula line stays plain
+      }
+      i = j;
+    } else {
+      out += blockHtml(b, hashHierarchy);
+      i++;
+    }
+  }
+  return out;
 }
 
 // meta.topics lists RUNS; merge by name so a chapter that appears twice cannot
@@ -365,12 +415,7 @@ export default function NotesReader({ book }) {
               {p.continues_from_prev && (
                 <div className="nt-cont">… pichhle page se aage</div>
               )}
-              {p.blocks.map((b, i) => (
-                <div
-                  key={i}
-                  dangerouslySetInnerHTML={{ __html: blockHtml(b, hashHierarchy) }}
-                />
-              ))}
+              <div dangerouslySetInnerHTML={{ __html: renderBlocks(p.blocks, hashHierarchy) }} />
               {p.continues_to_next && (
                 <div className="nt-cont">agle page pe jaari …</div>
               )}

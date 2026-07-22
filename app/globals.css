@@ -2021,9 +2021,10 @@ label.glass-card:hover { border-color: var(--accent2); }
 /* ---- a page card ---- */
 .nt-card {
   background: var(--card); border: 1px solid var(--line);
-  border-radius: var(--radius); padding: 18px; margin-bottom: 16px;
+  border-radius: 16px; padding: 22px 26px 10px; margin-bottom: 20px;
   min-width: 0; overflow-wrap: anywhere;
 }
+@media (max-width: 560px) { .nt-card { padding: 16px 16px 6px; } }
 .nt-hd {
   display: flex; justify-content: space-between; align-items: center;
   border-bottom: 1px solid var(--line); padding-bottom: 8px; margin-bottom: 12px;
@@ -2059,38 +2060,76 @@ label.glass-card:hover { border-color: var(--accent2); }
   .nt-page-img { border-radius: 0; max-height: calc(100dvh - 120px); }
 }
 
-/* ---- headings / emphasis (the markup contract) ---- */
-.nt-card h3 { font-size: 16px; color: var(--accent); margin: 16px 0 6px; line-height: 1.3; }
-.nt-card h4 { font-size: 14.5px; color: var(--ink); font-weight: 700; margin: 12px 0 4px; line-height: 1.3; }
+/* ---- emphasis (the markup contract): red pen bold, blue pen underline ---- */
 .nt-card b, .nt-card strong { color: var(--accent); font-weight: 600; }
 .nt-card u { text-decoration-color: var(--accent2); text-underline-offset: 2px; }
 
-/* ---- rule (a plain transcribed line) ---- */
-.nt-rule { margin: 6px 0; }
-
-/* ---- list: two columns, collapses on mobile ---- */
-ul.nt-list { margin: 6px 0; padding-left: 20px; columns: 2; column-gap: 26px; }
-ul.nt-list li { margin: 2px 0; break-inside: avoid; }
-
-/* ---- example (blue pen, left rule) ---- */
-.nt-ex { margin: 8px 0 8px 4px; padding-left: 11px; border-left: 3px solid var(--accent2); }
-.nt-ex .nt-n { color: var(--dim); font-size: 12px; margin-right: 5px; }
-.nt-ex .nt-nt { display: block; color: var(--dim); font-size: 12.5px; margin-left: 16px; }
-
-/* ---- boxed note ---- */
-.nt-note {
-  background: var(--bg); border: 1px solid var(--line);
-  border-radius: var(--radius-sm); padding: 8px 11px; margin: 9px 0; font-size: 14.5px;
+/* ---- ◆ section heading: type + a soft rule line, no box (from preview.html) ---- */
+.nt-sec {
+  margin: 22px 0 10px; font-size: 16.5px; font-weight: 800; color: var(--ink);
+  display: flex; align-items: center; gap: 9px; line-height: 1.3;
 }
-.nt-note.box { border-left: 3px solid var(--accent); }
+.nt-sec:first-child { margin-top: 4px; }
+.nt-sec::before {
+  content: ""; width: 8px; height: 8px; border-radius: 2px;
+  background: var(--accent); transform: rotate(45deg); flex: 0 0 auto;
+}
+.nt-sec::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+/* a quieter sub-heading (books that use "# " hierarchy) */
+.nt-sub { margin: 14px 0 4px; font-size: 14.5px; font-weight: 700; color: var(--accent); line-height: 1.3; }
+
+/* ---- rule / formula statement: reads as a rule, blue left rule ---- */
+.nt-stmt {
+  font-size: 15.5px; line-height: 1.72; color: var(--ink); margin: 9px 0;
+  padding-left: 12px; border-left: 2px solid var(--accent2);
+}
+.nt-stmt b { color: var(--accent); }
+
+/* ---- a RULE card: each book rule bounded, with a RULE badge ---- */
+.nt-rulecard {
+  border: 1px solid var(--line); border-left: 3px solid var(--accent);
+  border-radius: 12px; padding: 14px 16px 8px; margin: 14px 0;
+  background: color-mix(in srgb, var(--accent) 4%, var(--card));
+}
+.nt-rulehd {
+  display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: .09em;
+  color: #fff; background: var(--accent); border-radius: 6px; padding: 3px 10px; margin: 0 0 4px;
+}
+.nt-rulecard .nt-stmt { border-left: 0; padding-left: 0; font-weight: 600; margin: 8px 0; }
+.nt-rulecard ul.nt-pts { margin-top: 6px; }
+
+/* ---- flowing bullets: hanging dot, no per-item box ---- */
+ul.nt-pts { list-style: none; margin: 8px 0 14px; padding: 0; }
+ul.nt-pts li {
+  position: relative; font-size: 15.5px; line-height: 1.72; color: var(--ink);
+  padding: 4px 0 4px 20px; break-inside: avoid;
+}
+ul.nt-pts li::before {
+  content: ""; position: absolute; left: 3px; top: 13px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent2);
+}
+ul.nt-pts li b { color: var(--accent); font-weight: 700; }
+.nt-pts .nt-nt { display: block; color: var(--dim); font-size: 12.5px; margin-left: 4px; }
+
+/* ---- note as a quiet tip / a key-fact highlight / a diagram caption ---- */
+.nt-tip {
+  font-size: 14px; line-height: 1.6; color: var(--dim); margin: 9px 0 9px 2px;
+  border-left: 2px solid var(--line); padding: 2px 0 2px 12px;
+}
+.nt-tip.diag { color: var(--accent2); font-style: italic; border-left-color: var(--accent2); }
+.nt-key {
+  font-size: 15.5px; font-weight: 700; color: var(--ink); background: var(--mark);
+  border-left: 3px solid #e0ab00; border-radius: 0 8px 8px 0; padding: 8px 14px; margin: 11px 0;
+}
 
 /* ---- tables (wide ones scroll themselves, never the page) ---- */
-.nt-scrollx { overflow-x: auto; }
-.nt-card table { border-collapse: collapse; margin: 10px 0; font-size: 14px; width: 100%; }
+.nt-scrollx { overflow-x: auto; margin: 12px 0; }
+.nt-card table { border-collapse: collapse; margin: 0; font-size: 14.5px; width: 100%; }
 .nt-card th, .nt-card td {
-  border: 1px solid var(--line); padding: 5px 9px; text-align: left; vertical-align: top;
+  padding: 9px 13px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line);
 }
-.nt-card th { background: var(--bg); font-weight: 600; }
+.nt-card thead th { color: var(--accent); font-weight: 800; border-bottom: 2px solid var(--line); }
+.nt-card tbody tr:last-child td { border-bottom: 0; }
 
 /* ---- uncertain word — deliberately loud (open the scan, don't trust it) ---- */
 .nt-qm { background: var(--mark); border-radius: 3px; padding: 0 2px; font-weight: 600; }
@@ -2105,9 +2144,6 @@ ul.nt-list li { margin: 2px 0; break-inside: avoid; }
   border: 1px solid var(--line); border-radius: var(--radius-sm);
 }
 
-@media (max-width: 640px) {
-  ul.nt-list { columns: 1; }
-}
 
 /* ============================================================================
    Full-screen test runner — one question at a time, distraction-free.
