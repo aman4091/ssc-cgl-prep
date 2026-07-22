@@ -216,13 +216,12 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
 
   return (
     <div className="glass-card">
-      {/* Actions sit ABOVE the question, like the PYQ/bank cards — a pasted
-          screenshot is tall, and buttons underneath meant scrolling past the
-          whole image to reach them. On a phone (.q-head__actions media rule)
-          only the q-act--keep pair survives — ✨ Gemini and 🎯 20 — icon-only. */}
-      <div className="q-head__actions" style={{ justifyContent: "flex-start", marginBottom: 12 }}>
+      {/* Actions sit ABOVE the question, right-aligned like the PYQ/bank cards.
+          On a phone (.q-head__actions media rule) only the q-act--keep buttons
+          survive — Show answer, ✨ Gemini and 🎯 20 — with Edit/Delete hidden. */}
+      <div className="q-head__actions" style={{ marginBottom: 12 }}>
         {(hasAnswer || q.solution || rec.note || rec.detail) && (
-          <button className="btn btn--ghost btn--sm" onClick={() => setShown((v) => !v)}>
+          <button className="btn btn--ghost btn--sm q-act--keep" onClick={() => setShown((v) => !v)}>
             {shown ? "🙈 Hide answer" : "👁️ Show answer"}
           </button>
         )}
