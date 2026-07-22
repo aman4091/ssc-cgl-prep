@@ -54,7 +54,9 @@ export default function Navbar() {
         const seen = new Set();
         const links = [];
         for (const c of rows) {
-          const label = c.chapter || c.label || c.topic || c.slug;
+          // Image-anchored notes (Brahmastra) list chapters as plain strings;
+          // the text books list objects. Handle both.
+          const label = typeof c === "string" ? c : (c.chapter || c.label || c.topic || c.slug);
           if (!label || seen.has(label)) continue;
           seen.add(label);
           links.push({

@@ -146,10 +146,15 @@ export default function NotesReader({ book }) {
   const [query, setQuery] = useState("");
 
   const meta = book?.meta || { topics: [], total_pages: 0 };
+  // Image-anchored books (Brahmastra maths formulas) render every page as a
+  // scan and list their chapters as plain strings; the text books transcribe
+  // pages into blocks and list chapters as objects. Branch on the flag.
+  const imageMode = meta.render_mode === "image";
   const nav = useMemo(() => navTopics(meta.topics), [meta.topics]);
+  const topicNames = imageMode ? (meta.topics || []) : nav.map((t) => t.topic);
   // A ?topic= that names no chapter in this book would silently show an empty
   // reader, so fall back to the whole book instead.
-  const active = nav.some((t) => t.topic === topic) ? topic : null;
+  const active = topicNames.includes(topic) ? topic : null;
 
   // Does this book use "# " heading markers for hierarchy? (polity yes, static no)
   const hashHierarchy = useMemo(
@@ -165,20 +170,23 @@ export default function NotesReader({ book }) {
     // Chapter cover pages are decorative collages with no content — skip them.
     let ps = (book?.pages || []).filter((p) => !p.is_cover);
     if (active) ps = ps.filter((p) => p.topic === active);
-    if (q) ps = ps.filter((p) => JSON.stringify(p.blocks).toLowerCase().includes(q));
+    // Image pages have no text to search; the search box is hidden for them.
+    if (q && !imageMode) ps = ps.filter((p) => JSON.stringify(p.blocks).toLowerCase().includes(q));
     return ps;
-  }, [book, active, query]);
+  }, [book, active, query, imageMode]);
 
 
   return (
     <div className="notesdoc">
       <aside className="notesdoc__nav">
-        <input
-          className="notesdoc__search"
-          placeholder="🔍 Notes mein khojo…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
+        {!imageMode && (
+          <input
+            className="notesdoc__search"
+            placeholder="🔍 Notes mein khojo…"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        )}
         <div className="notesdoc__where">
           {active ? (
             <>
@@ -193,6 +201,22 @@ export default function NotesReader({ book }) {
       <div className="notesdoc__main">
         {pages.length === 0 ? (
           <div className="placeholder">Kuch nahi mila. 😕</div>
+        ) : imageMode ? (
+          // Image-anchored: the scan IS the content. One <img> per page, lazy.
+          pages.map((p) => (
+            <div className="nt-card nt-card--img" key={p.book_page}>
+              <div className="nt-hd">
+                <b>{p.topic}</b>
+                <span className="nt-meta">page {p.book_page}</span>
+              </div>
+              <img
+                className="nt-page-img"
+                loading="lazy"
+                src={`${book.scanBase}/${String(p.scan).split("/").pop()}`}
+                alt={`${p.topic} — page ${p.book_page}`}
+              />
+            </div>
+          ))
         ) : (
           pages.map((p) => (
             <div className="nt-card" key={p.book_page}>
