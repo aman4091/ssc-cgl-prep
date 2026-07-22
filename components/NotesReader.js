@@ -155,8 +155,15 @@ export default function NotesReader({ book }) {
   // scan and list their chapters as plain strings; the text books transcribe
   // pages into blocks and list chapters as objects. Branch on the flag.
   const imageMode = meta.render_mode === "image";
-  const nav = useMemo(() => navTopics(meta.topics), [meta.topics]);
-  const topicNames = imageMode ? (meta.topics || []) : nav.map((t) => t.topic);
+  // Chapters come as plain strings (Brahmastra maths, History) OR as objects
+  // with page ranges (Polity/English/Static). navTopics only understands the
+  // object form, so for string topics use them directly.
+  const topicsAreStrings = typeof (meta.topics || [])[0] === "string";
+  const nav = useMemo(
+    () => (topicsAreStrings ? [] : navTopics(meta.topics)),
+    [meta.topics, topicsAreStrings]
+  );
+  const topicNames = topicsAreStrings ? (meta.topics || []) : nav.map((t) => t.topic);
   // A ?topic= that names no chapter in this book would silently show an empty
   // reader, so fall back to the whole book instead.
   const active = topicNames.includes(topic) ? topic : null;
@@ -172,8 +179,9 @@ export default function NotesReader({ book }) {
 
   const pages = useMemo(() => {
     const q = query.trim().toLowerCase();
-    // Chapter cover pages are decorative collages with no content — skip them.
-    let ps = (book?.pages || []).filter((p) => !p.is_cover);
+    // Skip chapter covers (decorative) and practice pages (printed MCQ/one-liner
+    // sheets — History marks these kind:"practice"); their scans stay on R2.
+    let ps = (book?.pages || []).filter((p) => !p.is_cover && p.kind !== "practice");
     if (active) ps = ps.filter((p) => p.topic === active);
     // Image pages have no text to search; the search box is hidden for them.
     if (q && !imageMode) ps = ps.filter((p) => JSON.stringify(p.blocks).toLowerCase().includes(q));
