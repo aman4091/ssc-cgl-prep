@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
+import ZoomableImage from "@/components/ZoomableImage";
 
 // Notes reader — a React port of polity_notes/preview.html's renderer.
 //
@@ -144,6 +145,10 @@ export default function NotesReader({ book }) {
   const params = useSearchParams();
   const topic = params.get("topic");
   const [query, setQuery] = useState("");
+  // Image-mode: which scan the zoom lightbox is showing (null = closed). A page
+  // scan fits the phone width, so formulas read small; tapping opens it in the
+  // pinch/zoom viewer — the same "fit, then tap to zoom" the image banks use.
+  const [zoom, setZoom] = useState(null);
 
   const meta = book?.meta || { topics: [], total_pages: 0 };
   // Image-anchored books (Brahmastra maths formulas) render every page as a
@@ -203,20 +208,24 @@ export default function NotesReader({ book }) {
           <div className="placeholder">Kuch nahi mila. 😕</div>
         ) : imageMode ? (
           // Image-anchored: the scan IS the content. One <img> per page, lazy.
-          pages.map((p) => (
-            <div className="nt-card nt-card--img" key={p.book_page}>
-              <div className="nt-hd">
-                <b>{p.topic}</b>
-                <span className="nt-meta">page {p.book_page}</span>
+          pages.map((p) => {
+            const src = `${book.scanBase}/${String(p.scan).split("/").pop()}`;
+            return (
+              <div className="nt-card nt-card--img" key={p.book_page}>
+                <div className="nt-hd">
+                  <b>{p.topic}</b>
+                  <span className="nt-meta">page {p.book_page} · 🔍 tap to zoom</span>
+                </div>
+                <img
+                  className="nt-page-img"
+                  loading="lazy"
+                  src={src}
+                  alt={`${p.topic} — page ${p.book_page}`}
+                  onClick={() => setZoom(src)}
+                />
               </div>
-              <img
-                className="nt-page-img"
-                loading="lazy"
-                src={`${book.scanBase}/${String(p.scan).split("/").pop()}`}
-                alt={`${p.topic} — page ${p.book_page}`}
-              />
-            </div>
-          ))
+            );
+          })
         ) : (
           pages.map((p) => (
             <div className="nt-card" key={p.book_page}>
@@ -248,6 +257,15 @@ export default function NotesReader({ book }) {
           ))
         )}
       </div>
+
+      {zoom && (
+        <div className="lightbox" onClick={() => setZoom(null)}>
+          <button className="lightbox__x" onClick={() => setZoom(null)}>✕</button>
+          <div className="lightbox__body" onClick={(e) => e.stopPropagation()}>
+            <ZoomableImage src={zoom} alt="page scan" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -2037,10 +2037,27 @@ label.glass-card:hover { border-color: var(--accent2); }
 /* Image-anchored notes (Brahmastra): the page scan IS the content. Tighter
    padding so the image gets the width, and the scan fits the column — never
    scrolls the page sideways on a phone. */
-.nt-card--img { padding: 10px; }
+.nt-card--img { padding: 8px; }
 .nt-page-img {
   display: block; width: 100%; height: auto; max-width: 100%;
-  border-radius: 8px; background: #fff;
+  border-radius: 8px; background: #fff; cursor: zoom-in;
+}
+/* On a phone the formulas read small at column width, so give the scan the
+   WHOLE screen: cancel the container + card padding so it goes edge-to-edge,
+   and tapping opens the pinch-zoom viewer. The negative margin must match the
+   container's own padding at each breakpoint (16px ≤768, 12px ≤560) or the
+   page overflows sideways. */
+@media (max-width: 768px) {
+  .nt-card--img {
+    padding: 0; border: none; background: transparent;
+    margin-left: -16px; margin-right: -16px; border-radius: 0;
+  }
+  .nt-card--img .nt-hd { padding: 0 16px 6px; margin-bottom: 6px; }
+  .nt-page-img { border-radius: 0; }
+}
+@media (max-width: 560px) {
+  .nt-card--img { margin-left: -12px; margin-right: -12px; }
+  .nt-card--img .nt-hd { padding: 0 12px 6px; }
 }
 
 /* ---- headings / emphasis (the markup contract) ---- */
