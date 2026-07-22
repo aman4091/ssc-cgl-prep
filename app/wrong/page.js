@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
-  SUBJECTS, getWrongBook, countsBySubject, isPracticeable, imagesOf, imageKey, isSubject,
-  dayKey, dayLabel, storeImages, addWrong, updateWrong, removeWrong, clearWrong, setOcrText, setDetail,
+  SUBJECTS, getWrongBook, isPracticeable, imagesOf, imageKey, isSubject,
+  dayKey, dayLabel, storeImages, addWrong, updateWrong, removeWrong, setOcrText, setDetail,
 } from "@/lib/wrongbook";
 import { getFile } from "@/lib/filestore";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
@@ -217,41 +216,37 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
 
   return (
     <div className="glass-card">
-      {/* When it was added — the day this question landed in the book. */}
-      <div className="row" style={{ marginBottom: 8 }}>
-        <span
-          className="time-pill"
-          style={{ background: "var(--accent-wash)", color: "var(--accent-2)", fontSize: "0.76rem" }}
-          title="Is din add hua tha"
-        >
-          📅 {dayLabel(rec.at)}
-        </span>
-      </div>
-
       {/* Actions sit ABOVE the question, like the PYQ/bank cards — a pasted
           screenshot is tall, and buttons underneath meant scrolling past the
-          whole image to reach them. */}
-      <div className="row" style={{ gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
+          whole image to reach them. On a phone (.q-head__actions media rule)
+          only the q-act--keep pair survives — ✨ Gemini and 🎯 20 — icon-only. */}
+      <div className="q-head__actions" style={{ justifyContent: "flex-start", marginBottom: 12 }}>
         {(hasAnswer || q.solution || rec.note || rec.detail) && (
           <button className="btn btn--ghost btn--sm" onClick={() => setShown((v) => !v)}>
             {shown ? "🙈 Hide answer" : "👁️ Show answer"}
           </button>
         )}
         <button
-          className="btn btn--ghost btn--sm"
+          className="btn btn--ghost btn--sm q-act--keep"
           onClick={askGemini}
           disabled={!!busy}
           title="Prompt + question copy karke Gemini kholo (image se text apne aap padh liya jayega)"
         >
-          {busy === "gemini" ? (prog ? `${prog}%` : "…") : copied ? "✓ Copied" : "✨ Gemini"}
+          {busy === "gemini"
+            ? (prog ? `${prog}%` : "…")
+            : copied
+              ? "✓"
+              : <><span className="ask__ico">✨</span><span className="ask__word"> Gemini</span></>}
         </button>
         <button
-          className="btn btn--ghost btn--sm"
+          className="btn btn--ghost btn--sm q-act--keep"
           onClick={make20}
           disabled={!!busy}
           title="Isi type ke 20 naye questions generate karo"
         >
-          {busy === "similar" ? (prog ? `${prog}%` : "…") : "🎯 20"}
+          {busy === "similar"
+            ? (prog ? `${prog}%` : "…")
+            : <><span className="ask__ico">🎯</span><span className="ask__word"> 20 similar</span></>}
         </button>
         <button className="btn btn--ghost btn--sm" onClick={onEdit}>✏️ Edit</button>
         <button className="btn btn--ghost btn--sm" onClick={onDelete}>🗑️ Delete</button>
@@ -414,10 +409,8 @@ function WrongInner() {
   // the in-page chips are the same control. Default: Reasoning.
   const urlSubject = sp.get("subject");
   const subject = isSubject(urlSubject) ? urlSubject : "reasoning";
-  const goSubject = (k) => router.replace(`/wrong?subject=${k}`, { scroll: false });
 
   const [items, setItems] = useState([]);
-  const [counts, setCounts] = useState(() => Object.fromEntries(SUBJECTS.map((s) => [s.key, 0])));
   const [dateFilter, setDateFilter] = useState("all"); // "all" | a dayKey
   const [open, setOpen] = useState(false);      // add/edit form open
   const [editing, setEditing] = useState(null); // record id being edited
@@ -443,7 +436,6 @@ function WrongInner() {
   // every edit/delete/tag so a chosen date doesn't jump around under you.
   const refresh = () => {
     setItems(getWrongBook(subject));
-    setCounts(countsBySubject());
   };
   useEffect(() => { r2Status().then(setCloud).catch(() => {}); }, []);
 
@@ -460,7 +452,6 @@ function WrongInner() {
   useEffect(() => {
     const list = getWrongBook(subject);
     setItems(list);
-    setCounts(countsBySubject());
     const latest = list.reduce((mx, r) => (r.at > mx ? r.at : mx), "");
     setDateFilter(latest ? dayKey(latest) : "all");
     cancel();
@@ -598,11 +589,6 @@ function WrongInner() {
     await removeWrong(id);
     refresh();
   };
-  const clearShelf = async () => {
-    if (!confirm(`${active.label} ke saare ${items.length} questions hata dein?`)) return;
-    await clearWrong(subject);
-    refresh();
-  };
 
   // Practice what's currently shown — the whole subject when the date is "all",
   // or just the picked day's questions when a date is selected.
@@ -626,17 +612,27 @@ function WrongInner() {
   return (
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
-        <div className="row between">
-          <span className="hero__eyebrow">❌ Wrong Questions</span>
-          <Link href="/mistakes" className="btn btn--ghost btn--sm">🔴 Mistake Notebook</Link>
+        <div className="row between" style={{ flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+          <span className="hero__eyebrow">❌ Wrong Questions · {active.icon} {active.label}</span>
+          {/* Date dropdown, top-right — like the Current Affairs date picker. */}
+          {items.length > 0 && (
+            <select
+              className="input"
+              style={{ width: "auto", padding: "5px 9px", fontSize: "0.85rem" }}
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value)}
+              title="Date ke hisaab se filter — is subject ki latest date par default"
+            >
+              <option value="all">Saari dates ({items.length})</option>
+              {dates.map((d) => (
+                <option key={d.key} value={d.key}>{d.label} ({d.n})</option>
+              ))}
+            </select>
+          )}
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.7rem, 4vw, 2.6rem)" }}>
           Wrong <span className="grad">Questions</span>
         </h1>
-        <p className="hero__sub">
-          Screenshot lo aur kahin bhi <strong>Ctrl+V</strong> — question seedha yahan add ho jayega.
-          Subject ke hisaab se apni khud ki list; ye Mistake Notebook se alag hai.
-        </p>
       </section>
 
       <section className="section" style={{ marginTop: 12 }}>
@@ -655,61 +651,20 @@ function WrongInner() {
           </div>
         )}
 
-        {/* Subject shelves — same set as the left-menu buttons; both drive ?subject. */}
-        <div className="chips" style={{ marginBottom: 12 }}>
-          {SUBJECTS.map((s) => (
-            <button
-              key={s.key}
-              className={`chip chip--btn chip--lg ${subject === s.key ? "is-active" : ""}`}
-              onClick={() => goSubject(s.key)}
-            >
-              {s.icon} {s.label} ({counts[s.key]})
-            </button>
-          ))}
-        </div>
-
-        {/* Date filter — top-left, defaults to this shelf's latest day. */}
-        <div className="row" style={{ gap: 8, marginBottom: 16, alignItems: "center", flexWrap: "wrap" }}>
-          <span className="muted" style={{ fontSize: "0.82rem" }}>📅 Date:</span>
-          <select
-            className="select"
-            style={{ width: "auto", padding: "6px 30px 6px 12px", fontSize: "0.85rem" }}
-            value={dateFilter}
-            onChange={(e) => setDateFilter(e.target.value)}
-            disabled={!items.length}
-          >
-            <option value="all">Saari dates ({items.length})</option>
-            {dates.map((d) => (
-              <option key={d.key} value={d.key}>{d.label} ({d.n})</option>
-            ))}
-          </select>
-          {dateFilter !== "all" && (
-            <button className="btn btn--ghost btn--sm" onClick={() => setDateFilter("all")}>Saari dates dikhao</button>
-          )}
-        </div>
-
-        <p className="muted" style={{ fontSize: "0.84rem", marginBottom: 10 }}>
-          {busy
-            ? "📋 Image save ho rahi hai…"
-            : `📋 Screenshot copy karke yahan Ctrl+V dabao — question seedha ${active.label} mein add ho jayega.`}
-        </p>
+        {busy && (
+          <p className="muted" style={{ fontSize: "0.84rem", marginBottom: 10 }}>📋 Image save ho rahi hai…</p>
+        )}
         {flash && (
           <p style={{ color: "var(--success)", fontSize: "0.86rem", fontWeight: 600, marginBottom: 10 }}>{flash}</p>
         )}
 
-        <div className="row" style={{ gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
-          <button className="btn btn--primary btn--sm" onClick={() => (open ? cancel() : setOpen(true))}>
-            {open ? "✕ Cancel" : "✍️ Type a question"}
-          </button>
-          {practiceable.length > 0 && (
+        {practiceable.length > 0 && (
+          <div className="row" style={{ gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
             <button className="btn btn--ghost btn--sm" onClick={practice}>
               🎯 Practice ({practiceable.length})
             </button>
-          )}
-          {items.length > 0 && (
-            <button className="btn btn--ghost btn--sm" onClick={clearShelf}>🗑️ Clear {active.label}</button>
-          )}
-        </div>
+          </div>
+        )}
 
         {open && (
           <div className="glass-card" ref={formRef} style={{ marginBottom: 16 }}>
@@ -828,8 +783,7 @@ function WrongInner() {
 
         {items.length === 0 ? (
           <div className="placeholder">
-            {active.label} mein abhi kuch nahi. Screenshot copy karo aur yahin <strong>Ctrl+V</strong> dabao —
-            question turant add ho jayega (Save dabane ki zaroorat nahi).
+            {active.label} mein abhi kuch nahi — screenshot copy karke <strong>Ctrl+V</strong>.
           </div>
         ) : shown.length === 0 ? (
           <div className="placeholder">
