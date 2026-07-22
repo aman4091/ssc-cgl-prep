@@ -3,7 +3,82 @@
 import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
+import { getSettings } from "@/lib/storage";
 import ZoomableImage from "@/components/ZoomableImage";
+
+// Plain text of a page's blocks — what the ✨ Gemini button sends. Strips the
+// transcription markup (**bold**, __underline__, [?…] unsure marks) to words.
+function stripMd(s) {
+  return String(s || "")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/__([^_]+)__/g, "$1")
+    .replace(/\[\?([^\]]*)\]/g, (m, g) => (g ? g + "?" : "?"))
+    .replace(/\s+/g, " ")
+    .trim();
+}
+function blockText(b) {
+  if (!b) return "";
+  if (b.type === "heading" || b.type === "rule" || b.type === "note" || b.type === "hook")
+    return stripMd(String(b.text || "").replace(/^#+\s+/, ""));
+  if (b.type === "list") return (b.items || []).map((i) => "• " + stripMd(i)).join("\n");
+  if (b.type === "example")
+    return (b.items || []).map((i) => "• " + stripMd(i.text) + (i.note ? " — " + stripMd(i.note) : "")).join("\n");
+  if (b.type === "qr")
+    return (b.cells || []).map((c) => stripMd(c.k) + ": " + stripMd(c.v)).join("\n");
+  if (b.type === "table") {
+    const head = b.headers ? b.headers.map(stripMd).join(" | ") : "";
+    const rows = (b.rows || []).map((r) => r.map(stripMd).join(" | ")).join("\n");
+    return [head, rows].filter(Boolean).join("\n");
+  }
+  return "";
+}
+function pageText(p) {
+  return (p.blocks || []).map(blockText).filter(Boolean).join("\n");
+}
+
+// Settings holds a prompt per subject plus a generic one; a GS notes page must
+// carry the GS instructions. Same precedence the question cards use.
+function promptFor(subject) {
+  const st = getSettings();
+  const perSubject = String((st.shortcutPrompts || {})[subject] || "").trim();
+  return perSubject || String(st.geminiPrompt || "").trim();
+}
+
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); return true; } catch { /* fall through */ }
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch { return false; }
+}
+
+// ✨ per-page Gemini button: copies the GS prompt + this page's text and opens
+// Gemini — the same gesture the question cards use, for a notes page.
+function GeminiBtn({ text, subject }) {
+  const [done, setDone] = useState(false);
+  const go = async () => {
+    const body = String(text || "").trim();
+    if (!body) return;
+    const pre = promptFor(subject);
+    await copyText(pre ? `${pre}\n\n${body}` : body);
+    setDone(true);
+    setTimeout(() => setDone(false), 1500);
+    try { window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
+  };
+  return (
+    <button
+      className="nt-gemini"
+      onClick={go}
+      title="Is page ka text + GS prompt copy karke Gemini kholo"
+    >
+      {done ? "✓" : "✨"}
+    </button>
+  );
+}
 
 // Notes reader — a React port of polity_notes/preview.html's renderer.
 //
@@ -239,7 +314,10 @@ export default function NotesReader({ book }) {
             <div className="nt-card" key={p.book_page}>
               <div className="nt-hd">
                 <b>{p.topic}</b>
-                <span className="nt-meta">page {p.book_page}</span>
+                <span className="nt-hd__right">
+                  <GeminiBtn text={pageText(p)} subject={book.subject} />
+                  <span className="nt-meta">page {p.book_page}</span>
+                </span>
               </div>
               {p.continues_from_prev && (
                 <div className="nt-cont">… pichhle page se aage</div>
