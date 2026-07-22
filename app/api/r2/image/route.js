@@ -6,8 +6,10 @@ import { r2Config } from "@/lib/r2server";
 // bytes of a screenshot it just uploaded — which OCR needs, since tesseract
 // runs in the browser. Proxying makes it same-origin.
 //
-// Restricted to our own public base and the wrong/ prefix, so this can't be
-// turned into an open proxy or pointed at an internal address.
+// Restricted to our own public base, so this can't be turned into an open proxy
+// or pointed at an internal address. Any object under our bucket is fair game
+// (wrong/ screenshots, notes scans) — it's all our own study material, and the
+// notes' ✨ Gemini button OCRs a scan the same way Wrong Questions reads one.
 export const runtime = "nodejs";
 
 export async function GET(req) {
@@ -15,7 +17,7 @@ export async function GET(req) {
   if (!cfg.ok) return new Response("R2 not configured", { status: 501 });
 
   const url = new URL(req.url).searchParams.get("url") || "";
-  const prefix = `${cfg.publicBase}/wrong/`;
+  const prefix = `${cfg.publicBase}/`;
   if (!url.startsWith(prefix)) {
     return new Response("Not an image from this store", { status: 400 });
   }

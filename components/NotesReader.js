@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
 import { getSettings } from "@/lib/storage";
+import { readImageText } from "@/lib/client-ai";
 import ZoomableImage from "@/components/ZoomableImage";
 
 // Plain text of a page's blocks — what the ✨ Gemini button sends. Strips the
@@ -76,6 +77,45 @@ function GeminiBtn({ text, subject }) {
       title="Is page ka text + GS prompt copy karke Gemini kholo"
     >
       {done ? "✓" : "✨"}
+    </button>
+  );
+}
+
+// ✨ for an IMAGE page (handwritten English Grammar): OCR the scan first — same
+// as Wrong Questions reads a screenshot, so Gemini vision (if ON) or tesseract —
+// then copy the subject prompt + that text and open Gemini. The R2 image comes
+// through our proxy since r2.dev sends no CORS header.
+function ImageGeminiBtn({ src, subject }) {
+  const [state, setState] = useState(""); // "" | "…" | "NN%" | "✓" | "✕"
+  const busy = state === "…" || /%$/.test(state);
+  const go = async () => {
+    if (busy) return;
+    setState("…");
+    try {
+      const res = await fetch(`/api/r2/image?url=${encodeURIComponent(src)}`);
+      if (!res.ok) throw new Error("img");
+      const blob = await res.blob();
+      const { text } = await readImageText(blob, (pr) => setState(`${Math.round(pr * 100)}%`));
+      const body = String(text || "").trim();
+      if (!body) { setState("✕"); setTimeout(() => setState(""), 1500); return; }
+      const pre = promptFor(subject);
+      await copyText(pre ? `${pre}\n\n${body}` : body);
+      setState("✓");
+      setTimeout(() => setState(""), 1500);
+      try { window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
+    } catch {
+      setState("✕");
+      setTimeout(() => setState(""), 1500);
+    }
+  };
+  return (
+    <button
+      className="nt-gemini"
+      onClick={go}
+      disabled={busy}
+      title="Is page ko padhkar (OCR) prompt ke saath Gemini mein copy karo"
+    >
+      {state || "✨"}
     </button>
   );
 }
@@ -297,7 +337,10 @@ export default function NotesReader({ book }) {
               <div className="nt-card nt-card--img" key={p.book_page}>
                 <div className="nt-hd">
                   <b>{p.topic}</b>
-                  <span className="nt-meta">page {p.book_page} · 🔍 tap to zoom</span>
+                  <span className="nt-hd__right">
+                    {book.gemini && <ImageGeminiBtn src={src} subject={book.subject} />}
+                    <span className="nt-meta">page {p.book_page} · 🔍 tap to zoom</span>
+                  </span>
                 </div>
                 <img
                   className="nt-page-img"
