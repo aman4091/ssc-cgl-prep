@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   SUBJECTS, getWrongBook, countsBySubject, isPracticeable, imagesOf, imageKey,
-  storeImages, addWrong, updateWrong, removeWrong, clearWrong, setOcrText,
+  storeImages, addWrong, updateWrong, removeWrong, clearWrong, setOcrText, setDetail,
 } from "@/lib/wrongbook";
 import { getFile } from "@/lib/filestore";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
@@ -13,6 +13,7 @@ import { r2Status } from "@/lib/r2client";
 import { saveQuiz, makeId, getSettings } from "@/lib/storage";
 import { generateSimilar, readImageText } from "@/lib/client-ai";
 import ZoomableImage from "@/components/ZoomableImage";
+import Markdown from "@/components/Markdown";
 
 // Wrong Questions — a hand-kept book, one shelf per subject.
 //
@@ -104,7 +105,7 @@ function promptFor(subject) {
   return perSubject || String(st.geminiPrompt || "").trim();
 }
 
-function WrongCard({ rec, onEdit, onDelete, onOcr }) {
+function WrongCard({ rec, onEdit, onDelete, onChange }) {
   const router = useRouter();
   const [shown, setShown] = useState(false);
   // Which of this record's images the lightbox is showing (null = closed).
@@ -114,6 +115,10 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
   const [copied, setCopied] = useState(false);
   const [prog, setProg] = useState(0);       // tesseract OCR progress, 0-100
   const [manual, setManual] = useState(""); // text to copy by hand if the clipboard refused
+  // The paste box for Gemini's answer — opens when you press ✨ Gemini, so the
+  // reply has somewhere to land as this question's details.
+  const [pasteOpen, setPasteOpen] = useState(false);
+  const [pasteText, setPasteText] = useState("");
   const { urls, missing, loading } = useImageUrls(imagesOf(rec));
   const q = rec.q || {};
   const opts = q.options || [];
@@ -149,7 +154,7 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
     const text = parts.join("\n").trim();
     if (!text) throw new Error("Image se koi text nahi mila.");
     setOcrText(rec.id, text);
-    onOcr && onOcr();
+    onChange && onChange();
     return text;
   };
 
@@ -163,11 +168,27 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
       if (ok) { setCopied(true); setTimeout(() => setCopied(false), 1800); }
       else setManual(full); // clipboard blocked — show it so nothing is lost
       window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer");
+      // Give the reply somewhere to land — pre-fill with anything saved before.
+      setPasteText(rec.detail || "");
+      setPasteOpen(true);
     } catch (e) {
       setErr(e.message);
     } finally {
       setBusy("");
     }
+  };
+
+  const savePaste = () => {
+    setDetail(rec.id, pasteText);
+    setPasteOpen(false);
+    setShown(true); // reveal it right away so the save is visible
+    onChange && onChange();
+  };
+  const pasteFromClip = async () => {
+    try {
+      const t = await navigator.clipboard.readText();
+      if (t) setPasteText((p) => (p ? `${p}\n${t}` : t));
+    } catch { /* clipboard blocked — user can Ctrl+V into the box */ }
   };
 
   const make20 = async () => {
@@ -200,7 +221,7 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
           screenshot is tall, and buttons underneath meant scrolling past the
           whole image to reach them. */}
       <div className="row" style={{ gap: 8, flexWrap: "wrap", marginBottom: 12 }}>
-        {(hasAnswer || q.solution || rec.note) && (
+        {(hasAnswer || q.solution || rec.note || rec.detail) && (
           <button className="btn btn--ghost btn--sm" onClick={() => setShown((v) => !v)}>
             {shown ? "🙈 Hide answer" : "👁️ Show answer"}
           </button>
@@ -226,6 +247,27 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
       </div>
 
       {err && <p style={{ color: "var(--danger)", fontSize: "0.82rem", marginBottom: 10 }}>{err}</p>}
+
+      {/* Paste Gemini's answer here — becomes this question's saved details. */}
+      {pasteOpen && (
+        <div className="answer-box" style={{ marginBottom: 12 }}>
+          <span className="vd-label">📥 Gemini ka answer / details yahan paste karo</span>
+          <textarea
+            className="textarea"
+            rows={5}
+            style={{ marginTop: 8, width: "100%" }}
+            value={pasteText}
+            onChange={(e) => setPasteText(e.target.value)}
+            autoFocus
+            placeholder="Gemini se answer copy karke yahan paste (Ctrl+V) karo — ye is question ke saath details ban jayega."
+          />
+          <div className="row mt-8" style={{ gap: 8, flexWrap: "wrap" }}>
+            <button className="btn btn--primary btn--sm" onClick={savePaste} disabled={!pasteText.trim()}>💾 Save</button>
+            <button className="btn btn--ghost btn--sm" onClick={pasteFromClip}>📋 Paste from clipboard</button>
+            <button className="btn btn--ghost btn--sm" onClick={() => setPasteOpen(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
 
       {/* Clipboard refused (it can, once OCR has eaten the user gesture) — put
           the text on screen instead of pretending the copy worked. */}
@@ -319,6 +361,16 @@ function WrongCard({ rec, onEdit, onDelete, onOcr }) {
               </div>
             );
           })}
+        </div>
+      )}
+
+      {shown && rec.detail && (
+        <div
+          className="mt-8"
+          style={{ fontSize: "0.9rem", borderTop: "1px solid var(--glass-border)", paddingTop: 10 }}
+        >
+          <p className="muted" style={{ fontSize: "0.78rem", marginBottom: 4 }}>✨ Gemini · details</p>
+          <Markdown>{rec.detail}</Markdown>
         </div>
       )}
 
@@ -704,7 +756,7 @@ export default function WrongQuestionsPage() {
                 rec={rec}
                 onEdit={() => startEdit(rec)}
                 onDelete={() => remove(rec.id)}
-                onOcr={() => refresh()}
+                onChange={() => refresh()}
               />
             ))}
           </div>
