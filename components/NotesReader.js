@@ -159,6 +159,17 @@ function md(s) {
 //   note    → .nt-tip (quiet) / .nt-key (boxed highlight) / .nt-tip.diag
 //   list/example → hanging-dot bullets (ul.nt-pts)
 function blockHtml(b, hashHierarchy) {
+  // A big all-caps section banner (Parmar polity), above the ◆ sub-headings.
+  if (b.type === "section") return '<div class="nt-bigsec">' + md(b.text) + "</div>";
+  // A cropped figure from the book (mind-maps, diagrams) — src is a full R2 URL.
+  if (b.type === "figure")
+    return (
+      '<figure class="nt-fig"><img loading="lazy" src="' +
+      esc(b.src || "") +
+      '" alt="' + esc(b.caption || "figure") + '">' +
+      (b.caption ? "<figcaption>" + md(b.caption) + "</figcaption>" : "") +
+      "</figure>"
+    );
   if (b.type === "heading") {
     // A "# " marker means a MAIN heading (polity); a plain heading in such a book
     // is a sub-heading. Books with no markers (this one, static GK) → every
