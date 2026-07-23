@@ -47,9 +47,40 @@ function dispatchAppend(id, count, done) {
   catch { /* no window */ }
 }
 
+// Cross-click memory of what a page has already been quizzed on, so pressing
+// the button again asks NEW questions instead of the same ones — until the page
+// is exhausted (a cycle), then it resets and repeats from the top.
+const ASKED_KEY = "cgl.notesquiz.asked";
+function readAsked() { try { return JSON.parse(localStorage.getItem(ASKED_KEY) || "{}"); } catch { return {}; } }
+function getAsked(pk) { return readAsked()[pk] || []; }          // array of question texts
+function addAsked(pk, texts) {
+  const all = readAsked();
+  const seen = new Set((all[pk] || []).map(normQ));
+  const merged = [...(all[pk] || [])];
+  for (const t of texts) { const k = normQ(t); if (t && !seen.has(k)) { seen.add(k); merged.push(t); } }
+  all[pk] = merged.slice(-120); // cap the memory per page
+  localStorage.setItem(ASKED_KEY, JSON.stringify(all));
+}
+function clearAsked(pk) { const all = readAsked(); delete all[pk]; localStorage.setItem(ASKED_KEY, JSON.stringify(all)); }
+const pageKeyOf = (book, page) => `${book?.scanBase || ""}#${page.book_page}`;
+
+// Drop questions whose stem matches anything already asked or already in this quiz.
+function freshOnly(questions, ...excludeLists) {
+  const seen = new Set();
+  for (const list of excludeLists) for (const t of list) seen.add(normQ(t));
+  const out = [];
+  for (const q of questions || []) {
+    const k = normQ(q.question);
+    if (!k || seen.has(k)) continue;
+    seen.add(k); out.push(q);
+  }
+  return out;
+}
+
 // One page can rarely yield 50 distinct questions, so this stops when a batch
-// adds nothing new (deduped by question stem) — never pads with repeats.
-async function streamNotesQuiz(text, quizId) {
+// adds nothing new — never pads with repeats. Everything it adds is remembered
+// against the page so the NEXT click continues with different questions.
+async function streamNotesQuiz(text, quizId, pk) {
   let dry = 0;
   for (;;) {
     const before = getQuiz(quizId);
@@ -57,16 +88,17 @@ async function streamNotesQuiz(text, quizId) {
     const have = before.questions.length;
     if (have >= QUIZ_TARGET) break;
 
-    const seen = new Set(before.questions.map((q) => normQ(q.question)));
+    const asked = getAsked(pk);
+    const here = before.questions.map((q) => q.question);
     let fresh = [];
     try {
-      const b = await generateNotesQuiz(text, Math.min(QUIZ_BATCH, QUIZ_TARGET - have), [...seen].slice(-40));
-      fresh = (b.questions || []).filter((q) => { const k = normQ(q.question); if (seen.has(k)) return false; seen.add(k); return true; });
+      const b = await generateNotesQuiz(text, Math.min(QUIZ_BATCH, QUIZ_TARGET - have), [...asked, ...here]);
+      fresh = freshOnly(b.questions, asked, here);
     } catch { fresh = []; }
 
     const quiz = getQuiz(quizId);
     if (!quiz) return;
-    if (fresh.length) quiz.questions = [...quiz.questions, ...fresh];
+    if (fresh.length) { quiz.questions = [...quiz.questions, ...fresh]; addAsked(pk, fresh.map((q) => q.question)); }
     dry = fresh.length ? 0 : dry + 1;
     const finished = dry >= 2 || quiz.questions.length >= QUIZ_TARGET; // page ran dry
     quiz.streaming = !finished;
@@ -78,8 +110,8 @@ async function streamNotesQuiz(text, quizId) {
   if (quiz && quiz.streaming) { quiz.streaming = false; saveQuiz(quiz); dispatchAppend(quizId, quiz.questions.length, true); }
 }
 
-// The ✎ Quiz button on a page: first batch now, rest topped up in the background.
-function PageQuizBtn({ page, title }) {
+// The 📝 button on a page: first batch now, rest topped up in the background.
+function PageQuizBtn({ page, book }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
@@ -89,17 +121,29 @@ function PageQuizBtn({ page, title }) {
     if (text.length < 30) { setErr("kam text"); setTimeout(() => setErr(""), 1500); return; }
     setBusy(true); setErr("");
     try {
-      const first = await generateNotesQuiz(text, QUIZ_BATCH, []);
-      const qs = first.questions || [];
-      if (!qs.length) throw new Error("nahi bana");
+      const pk = pageKeyOf(book, page);
+      // Exclude everything this page has already been quizzed on so the questions
+      // are new. If that yields nothing, the page is exhausted → new cycle: forget
+      // the history and generate from scratch (repeats allowed again).
+      let asked = getAsked(pk);
+      let first = await generateNotesQuiz(text, QUIZ_BATCH, asked);
+      let fresh = freshOnly(first.questions, asked);
+      if (!fresh.length) {
+        clearAsked(pk); asked = [];
+        first = await generateNotesQuiz(text, QUIZ_BATCH, []);
+        fresh = freshOnly(first.questions, []);
+      }
+      if (!fresh.length) throw new Error("nahi bana");
+      addAsked(pk, fresh.map((q) => q.question));
+
       const quizId = makeId();
-      const done = qs.length >= QUIZ_TARGET;
+      const done = fresh.length >= QUIZ_TARGET;
       saveQuiz({
-        id: quizId, title: `${title || "Notes"} · page ${page.book_page} quiz`,
-        source: "notesquiz", createdAt: new Date().toISOString(), questions: qs, streaming: !done,
+        id: quizId, title: `${book?.title || "Notes"} · page ${page.book_page} quiz`,
+        source: "notesquiz", createdAt: new Date().toISOString(), questions: fresh, streaming: !done,
       });
       router.push(`/quizzes/${quizId}`);
-      if (!done) streamNotesQuiz(text, quizId);
+      if (!done) streamNotesQuiz(text, quizId, pk);
     } catch (e) {
       setErr(e.message === "nahi bana" ? "Quiz nahi bana — dobara try karo." : (e.message || "Error"));
       setBusy(false);
@@ -108,7 +152,7 @@ function PageQuizBtn({ page, title }) {
   };
   return (
     <>
-      <button className="nt-gemini" onClick={go} disabled={busy} title="Is page se 50-question quiz banao">
+      <button className="nt-gemini" onClick={go} disabled={busy} title="Is page se 50-question quiz banao (har baar naye questions)">
         {busy ? "…" : "📝"}
       </button>
       {err && <span className="nt-meta" style={{ color: "var(--accent)" }}>{err}</span>}
@@ -498,7 +542,7 @@ export default function NotesReader({ book }) {
               <div className="nt-hd">
                 <b>{p.topic}</b>
                 <span className="nt-hd__right">
-                  <PageQuizBtn page={p} title={book.title} />
+                  <PageQuizBtn page={p} book={book} />
                   <GeminiBtn text={pageText(p)} subject={book.subject} />
                   <span className="nt-meta">page {p.book_page}</span>
                 </span>

@@ -20,7 +20,7 @@ export async function POST(req) {
 
     const n = Math.min(Math.max(parseInt(count, 10) || 10, 1), 15);
     const notes = String(text).slice(0, 12000);
-    const exList = (exclude || []).slice(0, 60).map((s) => "- " + String(s).slice(0, 120)).join("\n");
+    const exList = (exclude || []).slice(-120).map((s) => "- " + String(s).slice(0, 140)).join("\n");
 
     const SYSTEM = `You are an SSC CGL / GK quiz setter. You are given STUDY NOTES (facts, points, tables) on ONE topic. Create NEW multiple-choice questions that TEST the facts in these notes. Output STRICT JSON only — no markdown, no commentary.
 
