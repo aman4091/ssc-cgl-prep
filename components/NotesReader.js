@@ -11,7 +11,10 @@ import ZoomableImage from "@/components/ZoomableImage";
 // transcription markup (**bold**, __underline__, [?…] unsure marks) to words.
 function stripMd(s) {
   return String(s || "")
-    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/^\s*\*\s+/, "")            // leading "* " bullet marker
+    .replace(/\*\*([^*]+)\*\*/g, "$1")   // **bold** → text (before single-*)
+    .replace(/\*([^*\n]+)\*/g, "$1")     // *italic* → text
+    .replace(/\*/g, "")                  // any leftover lone asterisk marker
     .replace(/__([^_]+)__/g, "$1")
     .replace(/\[\?([^\]]*)\]/g, (m, g) => (g ? g + "?" : "?"))
     .replace(/\s+/g, " ")
@@ -262,8 +265,12 @@ function esc(s) {
 }
 
 function md(s) {
-  let t = esc(s);
-  t = t.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");
+  let t = esc(s).replace(/^\s*\*\s+/, ""); // drop a leading "* " bullet marker
+  t = t.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>");  // **bold** — before single-*
+  t = t.replace(/\*([^*\n]+)\*/g, "<i>$1</i>");    // *italic*
+  // Any leftover lone asterisk is a transcription marker (bullet/emphasis with no
+  // pair), never real content in these notes — drop it so no stray * shows.
+  t = t.replace(/\*/g, "");
   t = t.replace(/__([^_]+)__/g, "<u>$1</u>");
   t = t.replace(
     /\[\?([^\]]*)\]/g,
