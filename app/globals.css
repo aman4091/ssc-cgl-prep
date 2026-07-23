@@ -1074,6 +1074,19 @@ label.glass-card:hover { border-color: var(--accent2); }
 }
 .stat__num { font-size: 1.7rem; font-weight: 800; line-height: 1.1; }
 .stat__label { font-size: 0.76rem; color: var(--text-3); }
+
+/* Mock Marks tracker */
+.mm-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 620px) { .mm-stats { grid-template-columns: repeat(2, 1fr); } }
+.mm-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 520px; }
+.mm-table th, .mm-table td { padding: 6px 8px; text-align: center; border-bottom: 1px solid var(--glass-border); white-space: nowrap; }
+.mm-table th { color: var(--text-3); font-weight: 600; font-size: 0.76rem; }
+.mm-table th:first-child, .mm-table td:first-child { text-align: left; }
+.mm-table .mm-derived { color: var(--accent-2); }
+.mm-table .mm-total td { border-top: 1px solid var(--glass-border); border-bottom: none; font-weight: 600; }
+.mm-in { padding: 5px 8px; height: auto; font-size: 0.85rem; }
+.mm-in.mm-num { width: 72px; text-align: center; }
+.mm-table td:first-child .mm-in { width: 100%; min-width: 130px; text-align: left; }
 @media (max-width: 780px) {
   .stat-row { grid-template-columns: repeat(2, 1fr); }
   .stat__num { font-size: 1.4rem; }
