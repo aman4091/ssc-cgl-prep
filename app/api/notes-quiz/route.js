@@ -3,6 +3,21 @@
 // Used by the "📝 Quiz" button on each notes page. Batched by the caller, with
 // an EXCLUDE list of already-asked stems so batches don't repeat.
 
+// A reply cut off by max_tokens is not valid JSON, and the old greedy-brace
+// fallback threw on it — losing a whole batch and stalling the 50-question
+// top-up. Pull the complete question objects out of whatever did arrive:
+// question objects have no nested braces, so [^{}]* matches one exactly.
+function salvage(content) {
+  const out = [];
+  for (const m of String(content).match(/\{[^{}]*\}/g) || []) {
+    try {
+      const o = JSON.parse(m);
+      if (o && o.question && Array.isArray(o.options)) out.push(o);
+    } catch { /* partial object at the cut — skip */ }
+  }
+  return out;
+}
+
 function friendly(status, raw) {
   if (status === 401) return "Invalid API key (401) — Settings mein sahi DeepSeek key daalo.";
   if (status === 402) return "Insufficient balance (402) — DeepSeek account mein credit daalo.";
@@ -53,7 +68,7 @@ Rules:
             { role: "user", content: user },
           ],
           temperature: temp, // caller raises this on dry rounds for more variety
-          max_tokens: 4000,
+          max_tokens: 6000,
           ...(useJsonMode ? { response_format: { type: "json_object" } } : {}),
         }),
       });
@@ -71,7 +86,9 @@ Rules:
     const content = data?.choices?.[0]?.message?.content || "{}";
     let parsed;
     try { parsed = JSON.parse(content); }
-    catch { const m = content.match(/\{[\s\S]*\}/); parsed = m ? JSON.parse(m[0]) : { title: "", questions: [] }; }
+    catch { parsed = { title: "", questions: salvage(content) }; }
+    if (!Array.isArray(parsed.questions) || !parsed.questions.length)
+      parsed = { title: parsed.title, questions: salvage(content) };
 
     const questions = Array.isArray(parsed.questions)
       ? parsed.questions.filter(

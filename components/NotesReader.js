@@ -80,61 +80,89 @@ function freshOnly(questions, ...excludeLists) {
   return out;
 }
 
-// The page MUST reach 50 questions. Phase 1 asks for genuinely new questions
-// (excluding what earlier clicks already covered). When that runs dry, Phase 2
-// (fill mode) drops the cross-click history so the model may re-cover the page —
-// it only avoids duplicating what's already in THIS quiz. A final recycle-pad
-// guarantees exactly 50 even if the model still comes up short on a thin page.
+// A padded copy of a question — same facts, options in a different order — so a
+// last-resort repeat at least doesn't read as the identical card twice.
+function reshuffle(q) {
+  const opts = Array.isArray(q.options) ? q.options : [];
+  const order = opts.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return { ...q, options: order.map((i) => opts[i]), answer: order.indexOf(q.answer) };
+}
+
+// The quiz MUST land on 50. Nothing here is allowed to end the run short.
+const LANES = 3;         // batches fired together — 3×10 covers 50 in two rounds
+const DRY_BEFORE_RELAX = 2;
+
+// Three phases, each entered after 2 empty rounds instead of 6 (the old wait
+// burned ~6 slow round-trips before it ever relaxed, which is why the count
+// froze at 23 and looked stuck):
+//   0 — genuinely new: excludes what earlier clicks on this page already asked
+//   1 — page-repeat allowed: drops that history, only avoids stems in THIS quiz
+//   2 — no exclude list at all, high temperature
+// and if even phase 2 comes back empty, pad from the quiz's own questions.
 async function streamNotesQuiz(text, quizId, pk) {
-  let dry = 0, fillMode = false;
-  for (;;) {
+  let phase = 0, dry = 0;
+
+  for (let round = 0; round < 24; round++) {
     const before = getQuiz(quizId);
     if (!before) return; // deleted
     const have = before.questions.length;
     if (have >= QUIZ_TARGET) break;
 
-    const asked = getAsked(pk);
+    const need = QUIZ_TARGET - have;
     const here = before.questions.map((q) => q.question);
-    let fresh = [];
-    try {
-      // Push temperature up as batches run dry, so it keeps finding new angles.
-      const temp = Math.min(0.98, 0.6 + dry * 0.1);
-      const want = Math.min(15, QUIZ_TARGET - have);
-      // Phase 2 stops excluding the page's asked-history (repeats vs OLD quizzes
-      // allowed) but never duplicates a stem already in the current quiz.
-      const exclude = fillMode ? here : [...asked, ...here];
-      const b = await generateNotesQuiz(text, want, exclude, temp);
-      fresh = fillMode ? freshOnly(b.questions, here) : freshOnly(b.questions, asked, here);
-    } catch { fresh = []; }
+    const asked = phase === 0 ? getAsked(pk) : [];
+    // Full width while questions keep coming; a single probe lane once a round
+    // has come back empty, so a thin page doesn't burn 3 calls per dry retry.
+    const lanes = dry > 0 ? 1 : Math.max(1, Math.min(LANES, Math.ceil(need / QUIZ_BATCH)));
+
+    // Fire the batches in parallel — small batches keep the options sane (the
+    // one-big-call problem), and running them together makes 50 arrive fast.
+    const packs = await Promise.all(
+      Array.from({ length: lanes }, (_, i) =>
+        generateNotesQuiz(
+          text,
+          Math.min(QUIZ_BATCH, need),
+          phase === 2 ? [] : [...asked, ...here],
+          Math.min(1.0, 0.55 + 0.12 * (dry + i)) // vary per lane so they differ
+        ).then((r) => r.questions || []).catch(() => [])
+      )
+    );
+    const fresh = freshOnly(packs.flat(), asked, here).slice(0, need);
 
     const quiz = getQuiz(quizId);
     if (!quiz) return;
     if (fresh.length) {
       quiz.questions = [...quiz.questions, ...fresh];
-      if (!fillMode) addAsked(pk, fresh.map((q) => q.question));
+      if (phase === 0) addAsked(pk, fresh.map((q) => q.question));
       dry = 0;
+      quiz.streaming = quiz.questions.length < QUIZ_TARGET;
+      saveQuiz(quiz);
+      dispatchAppend(quizId, quiz.questions.length, !quiz.streaming);
+      if (!quiz.streaming) return;
     } else {
       dry += 1;
+      if (dry >= DRY_BEFORE_RELAX) {
+        if (phase >= 2) break;  // every angle dry → pad below
+        phase += 1; dry = 0;
+      }
     }
-
-    // Genuine-fresh questions exhausted → switch to fill mode instead of quitting.
-    if (!fillMode && dry >= 6) { fillMode = true; dry = 0; }
-
-    // Last resort: even fill mode is dry but we're still short → recycle this
-    // quiz's own questions so the count still lands on exactly 50.
-    if (fillMode && dry >= 3 && quiz.questions.length > 0 && quiz.questions.length < QUIZ_TARGET) {
-      const base = quiz.questions.slice();
-      for (let i = 0; quiz.questions.length < QUIZ_TARGET; i++) quiz.questions.push(base[i % base.length]);
-    }
-
-    const finished = quiz.questions.length >= QUIZ_TARGET;
-    quiz.streaming = !finished;
-    saveQuiz(quiz);
-    dispatchAppend(quizId, quiz.questions.length, finished);
-    if (finished) return;
   }
+
+  // Still short (thin page, or DeepSeek down) → recycle this quiz's own
+  // questions with shuffled options so it still hands over exactly 50.
   const quiz = getQuiz(quizId);
-  if (quiz && quiz.streaming) { quiz.streaming = false; saveQuiz(quiz); dispatchAppend(quizId, quiz.questions.length, true); }
+  if (!quiz) return;
+  if (quiz.questions.length) {
+    const base = quiz.questions.slice();
+    for (let i = 0; quiz.questions.length < QUIZ_TARGET; i++) quiz.questions.push(reshuffle(base[i % base.length]));
+  }
+  quiz.streaming = false;
+  saveQuiz(quiz);
+  dispatchAppend(quizId, quiz.questions.length, true);
 }
 
 // The 📝 button on a page: first batch now, rest topped up in the background.
@@ -153,11 +181,16 @@ function PageQuizBtn({ page, book }) {
       // are new. If that yields nothing, the page is exhausted → new cycle: forget
       // the history and generate from scratch (repeats allowed again).
       let asked = getAsked(pk);
-      let first = await generateNotesQuiz(text, QUIZ_BATCH, asked);
+      let first = await generateNotesQuiz(text, QUIZ_BATCH, asked).catch(() => ({ questions: [] }));
       let fresh = freshOnly(first.questions, asked);
       if (!fresh.length) {
         clearAsked(pk); asked = [];
-        first = await generateNotesQuiz(text, QUIZ_BATCH, []);
+        first = await generateNotesQuiz(text, QUIZ_BATCH, []).catch(() => ({ questions: [] }));
+        fresh = freshOnly(first.questions, []);
+      }
+      if (!fresh.length) {
+        // Last try before giving up — no exclude list, high temperature.
+        first = await generateNotesQuiz(text, QUIZ_BATCH, [], 0.95);
         fresh = freshOnly(first.questions, []);
       }
       if (!fresh.length) throw new Error("nahi bana");
