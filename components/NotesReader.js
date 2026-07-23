@@ -95,7 +95,10 @@ async function streamNotesQuiz(text, quizId, pk) {
     const here = before.questions.map((q) => q.question);
     let fresh = [];
     try {
-      const b = await generateNotesQuiz(text, Math.min(QUIZ_BATCH, QUIZ_TARGET - have), [...asked, ...here]);
+      // Push temperature up as batches run dry, so it keeps finding new angles
+      // and gets closer to 50 instead of giving up early.
+      const temp = Math.min(0.95, 0.6 + dry * 0.12);
+      const b = await generateNotesQuiz(text, Math.min(QUIZ_BATCH, QUIZ_TARGET - have), [...asked, ...here], temp);
       fresh = freshOnly(b.questions, asked, here);
     } catch { fresh = []; }
 
@@ -103,7 +106,7 @@ async function streamNotesQuiz(text, quizId, pk) {
     if (!quiz) return;
     if (fresh.length) { quiz.questions = [...quiz.questions, ...fresh]; addAsked(pk, fresh.map((q) => q.question)); }
     dry = fresh.length ? 0 : dry + 1;
-    const finished = dry >= 2 || quiz.questions.length >= QUIZ_TARGET; // page ran dry
+    const finished = dry >= 4 || quiz.questions.length >= QUIZ_TARGET; // give up only after real effort
     quiz.streaming = !finished;
     saveQuiz(quiz);
     dispatchAppend(quizId, quiz.questions.length, finished);

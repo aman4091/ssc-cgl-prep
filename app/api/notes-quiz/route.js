@@ -12,7 +12,8 @@ function friendly(status, raw) {
 
 export async function POST(req) {
   try {
-    const { text, count = 10, exclude = [], apiKey, model, baseUrl } = await req.json();
+    const { text, count = 10, exclude = [], temperature, apiKey, model, baseUrl } = await req.json();
+    const temp = Math.min(1.0, Math.max(0.2, Number(temperature) || 0.6));
     if (!apiKey || !apiKey.trim())
       return Response.json({ error: "API key missing. Settings mein daalo." }, { status: 400 });
     if (!text || text.trim().length < 30)
@@ -51,7 +52,7 @@ Rules:
             { role: "system", content: SYSTEM },
             { role: "user", content: user },
           ],
-          temperature: 0.5, // a little variety so batches differ
+          temperature: temp, // caller raises this on dry rounds for more variety
           max_tokens: 4000,
           ...(useJsonMode ? { response_format: { type: "json_object" } } : {}),
         }),
