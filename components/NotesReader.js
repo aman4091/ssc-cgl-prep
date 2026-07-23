@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
-import { getSettings } from "@/lib/storage";
-import { readImageText } from "@/lib/client-ai";
+import { getSettings, saveQuiz, getQuiz, makeId } from "@/lib/storage";
+import { readImageText, generateNotesQuiz } from "@/lib/client-ai";
 import ZoomableImage from "@/components/ZoomableImage";
 
 // Plain text of a page's blocks — what the ✨ Gemini button sends. Strips the
@@ -35,6 +35,85 @@ function blockText(b) {
 }
 function pageText(p) {
   return (p.blocks || []).map(blockText).filter(Boolean).join("\n");
+}
+
+// ---- per-page "make a quiz from this page" (50 Q, batched + streamed) ----
+const QUIZ_TARGET = 50;
+const QUIZ_BATCH = 10;
+const normQ = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9ऀ-ॿ]+/g, "").slice(0, 80);
+
+function dispatchAppend(id, count, done) {
+  try { window.dispatchEvent(new CustomEvent("cgl:quiz-appended", { detail: { id, count, done } })); }
+  catch { /* no window */ }
+}
+
+// One page can rarely yield 50 distinct questions, so this stops when a batch
+// adds nothing new (deduped by question stem) — never pads with repeats.
+async function streamNotesQuiz(text, quizId) {
+  let dry = 0;
+  for (;;) {
+    const before = getQuiz(quizId);
+    if (!before) return; // deleted
+    const have = before.questions.length;
+    if (have >= QUIZ_TARGET) break;
+
+    const seen = new Set(before.questions.map((q) => normQ(q.question)));
+    let fresh = [];
+    try {
+      const b = await generateNotesQuiz(text, Math.min(QUIZ_BATCH, QUIZ_TARGET - have), [...seen].slice(-40));
+      fresh = (b.questions || []).filter((q) => { const k = normQ(q.question); if (seen.has(k)) return false; seen.add(k); return true; });
+    } catch { fresh = []; }
+
+    const quiz = getQuiz(quizId);
+    if (!quiz) return;
+    if (fresh.length) quiz.questions = [...quiz.questions, ...fresh];
+    dry = fresh.length ? 0 : dry + 1;
+    const finished = dry >= 2 || quiz.questions.length >= QUIZ_TARGET; // page ran dry
+    quiz.streaming = !finished;
+    saveQuiz(quiz);
+    dispatchAppend(quizId, quiz.questions.length, finished);
+    if (finished) return;
+  }
+  const quiz = getQuiz(quizId);
+  if (quiz && quiz.streaming) { quiz.streaming = false; saveQuiz(quiz); dispatchAppend(quizId, quiz.questions.length, true); }
+}
+
+// The ✎ Quiz button on a page: first batch now, rest topped up in the background.
+function PageQuizBtn({ page, title }) {
+  const router = useRouter();
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const go = async () => {
+    if (busy) return;
+    const text = pageText(page);
+    if (text.length < 30) { setErr("kam text"); setTimeout(() => setErr(""), 1500); return; }
+    setBusy(true); setErr("");
+    try {
+      const first = await generateNotesQuiz(text, QUIZ_BATCH, []);
+      const qs = first.questions || [];
+      if (!qs.length) throw new Error("nahi bana");
+      const quizId = makeId();
+      const done = qs.length >= QUIZ_TARGET;
+      saveQuiz({
+        id: quizId, title: `${title || "Notes"} · page ${page.book_page} quiz`,
+        source: "notesquiz", createdAt: new Date().toISOString(), questions: qs, streaming: !done,
+      });
+      router.push(`/quizzes/${quizId}`);
+      if (!done) streamNotesQuiz(text, quizId);
+    } catch (e) {
+      setErr(e.message === "nahi bana" ? "Quiz nahi bana — dobara try karo." : (e.message || "Error"));
+      setBusy(false);
+      setTimeout(() => setErr(""), 2500);
+    }
+  };
+  return (
+    <>
+      <button className="nt-gemini" onClick={go} disabled={busy} title="Is page se 50-question quiz banao">
+        {busy ? "…" : "📝"}
+      </button>
+      {err && <span className="nt-meta" style={{ color: "var(--accent)" }}>{err}</span>}
+    </>
+  );
 }
 
 // Settings holds a prompt per subject plus a generic one; a GS notes page must
@@ -419,6 +498,7 @@ export default function NotesReader({ book }) {
               <div className="nt-hd">
                 <b>{p.topic}</b>
                 <span className="nt-hd__right">
+                  <PageQuizBtn page={p} title={book.title} />
                   <GeminiBtn text={pageText(p)} subject={book.subject} />
                   <span className="nt-meta">page {p.book_page}</span>
                 </span>
