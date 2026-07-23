@@ -80,11 +80,13 @@ function freshOnly(questions, ...excludeLists) {
   return out;
 }
 
-// One page can rarely yield 50 distinct questions, so this stops when a batch
-// adds nothing new — never pads with repeats. Everything it adds is remembered
-// against the page so the NEXT click continues with different questions.
+// The page MUST reach 50 questions. Phase 1 asks for genuinely new questions
+// (excluding what earlier clicks already covered). When that runs dry, Phase 2
+// (fill mode) drops the cross-click history so the model may re-cover the page —
+// it only avoids duplicating what's already in THIS quiz. A final recycle-pad
+// guarantees exactly 50 even if the model still comes up short on a thin page.
 async function streamNotesQuiz(text, quizId, pk) {
-  let dry = 0;
+  let dry = 0, fillMode = false;
   for (;;) {
     const before = getQuiz(quizId);
     if (!before) return; // deleted
@@ -95,18 +97,37 @@ async function streamNotesQuiz(text, quizId, pk) {
     const here = before.questions.map((q) => q.question);
     let fresh = [];
     try {
-      // Push temperature up as batches run dry, so it keeps finding new angles
-      // and gets closer to 50 instead of giving up early.
-      const temp = Math.min(0.95, 0.6 + dry * 0.12);
-      const b = await generateNotesQuiz(text, Math.min(QUIZ_BATCH, QUIZ_TARGET - have), [...asked, ...here], temp);
-      fresh = freshOnly(b.questions, asked, here);
+      // Push temperature up as batches run dry, so it keeps finding new angles.
+      const temp = Math.min(0.98, 0.6 + dry * 0.1);
+      const want = Math.min(15, QUIZ_TARGET - have);
+      // Phase 2 stops excluding the page's asked-history (repeats vs OLD quizzes
+      // allowed) but never duplicates a stem already in the current quiz.
+      const exclude = fillMode ? here : [...asked, ...here];
+      const b = await generateNotesQuiz(text, want, exclude, temp);
+      fresh = fillMode ? freshOnly(b.questions, here) : freshOnly(b.questions, asked, here);
     } catch { fresh = []; }
 
     const quiz = getQuiz(quizId);
     if (!quiz) return;
-    if (fresh.length) { quiz.questions = [...quiz.questions, ...fresh]; addAsked(pk, fresh.map((q) => q.question)); }
-    dry = fresh.length ? 0 : dry + 1;
-    const finished = dry >= 4 || quiz.questions.length >= QUIZ_TARGET; // give up only after real effort
+    if (fresh.length) {
+      quiz.questions = [...quiz.questions, ...fresh];
+      if (!fillMode) addAsked(pk, fresh.map((q) => q.question));
+      dry = 0;
+    } else {
+      dry += 1;
+    }
+
+    // Genuine-fresh questions exhausted → switch to fill mode instead of quitting.
+    if (!fillMode && dry >= 6) { fillMode = true; dry = 0; }
+
+    // Last resort: even fill mode is dry but we're still short → recycle this
+    // quiz's own questions so the count still lands on exactly 50.
+    if (fillMode && dry >= 3 && quiz.questions.length > 0 && quiz.questions.length < QUIZ_TARGET) {
+      const base = quiz.questions.slice();
+      for (let i = 0; quiz.questions.length < QUIZ_TARGET; i++) quiz.questions.push(base[i % base.length]);
+    }
+
+    const finished = quiz.questions.length >= QUIZ_TARGET;
     quiz.streaming = !finished;
     saveQuiz(quiz);
     dispatchAppend(quizId, quiz.questions.length, finished);
