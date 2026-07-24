@@ -1,0 +1,57 @@
+{
+ "book": "Error Pro (Aman Sir English)",
+ "source": "Aman Sir Error Pro — Complete Book (SSC English grammar practice)",
+ "author": "Aman Vashishth (Aman Sir English)",
+ "total": 820,
+ "note": "Every question, its 4 options, the correct answer and the explanation are the book's own. Nothing generated. Explanations are Hinglish/Hindi as printed.",
+ "chapters": [
+  {
+   "slug": "pronoun",
+   "label": "Pronoun",
+   "icon": "🧑",
+   "count": 130
+  },
+  {
+   "slug": "noun",
+   "label": "Noun",
+   "icon": "📛",
+   "count": 145
+  },
+  {
+   "slug": "article",
+   "label": "Article",
+   "icon": "🅰️",
+   "count": 115
+  },
+  {
+   "slug": "question-tag",
+   "label": "Question Tag",
+   "icon": "❓",
+   "count": 90
+  },
+  {
+   "slug": "superfluous",
+   "label": "Superfluous",
+   "icon": "✂️",
+   "count": 60
+  },
+  {
+   "slug": "conditionals",
+   "label": "Conditionals",
+   "icon": "🔀",
+   "count": 70
+  },
+  {
+   "slug": "parts-of-speech-figure-of-speech",
+   "label": "Parts of Speech + Figure of Speech",
+   "icon": "🧩",
+   "count": 130
+  },
+  {
+   "slug": "types-of-clauses-types-of-sentences",
+   "label": "Types of Clauses + Types of Sentences",
+   "icon": "🔗",
+   "count": 80
+  }
+ ]
+}
