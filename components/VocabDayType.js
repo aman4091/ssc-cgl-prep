@@ -8,7 +8,7 @@ import {
   typeIcon, typeLabel, isBookmarked, toggleBookmark,
   setEntryType, TYPES,
 } from "@/lib/vocab";
-import { saveQuiz, getSettings } from "@/lib/storage";
+import { saveQuiz } from "@/lib/storage";
 import { vocabDetail } from "@/lib/client-ai";
 import { getStatByParts } from "@/lib/qstats";
 import WordPopup from "@/components/WordPopup";
@@ -87,18 +87,17 @@ export default function VocabDayType({ day, type }) {
   };
   const toggleBm = () => { const on = toggleBookmark(items[sel].word); setBm(on); };
 
-  // ✨ Gemini: copy this word / idiom / phrase with a prompt asking for its full
-  // detail, then open Gemini so it can be pasted — same gesture the question and
-  // notes cards use. A custom English prompt (Settings) overrides the default.
+  // ✨ Gemini: copy this word / idiom / phrase with a fixed prompt asking Gemini
+  // to explain it, give examples, and make it stick forever — then open Gemini so
+  // it can be pasted. This prompt is DEDICATED to vocab; it does NOT use the
+  // English shortcut prompt that the question/notes cards share.
   const [copied, setCopied] = useState(false);
   const askGemini = async () => {
     const it = items[sel];
     if (!it) return;
-    const st = getSettings();
-    const custom = String((st.shortcutPrompts || {}).english || "").trim();
     const label = typeLabel(type);
-    const base = custom ||
-      `Is ${label} ki poori detail Hinglish mein samjhao — meaning, use kaise hota hai, ek example sentence, aur milte-julte words/phrases:`;
+    const base =
+      `Is ${label} ko aasaan Hinglish mein detail se samjhao. Kuch example sentences bhi do jisme ye sahi tarah use hua ho. Aur aisa tarika ya trick batao ki ye hamesha ke liye yaad rah jaaye:`;
     const body = it.def ? `${it.word} — ${it.def}` : it.word;
     await copyText(`${base}\n\n${body}`);
     setCopied(true);
