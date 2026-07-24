@@ -8,10 +8,24 @@ import {
   typeIcon, typeLabel, isBookmarked, toggleBookmark,
   setEntryType, TYPES,
 } from "@/lib/vocab";
-import { saveQuiz } from "@/lib/storage";
+import { saveQuiz, getSettings } from "@/lib/storage";
 import { vocabDetail } from "@/lib/client-ai";
 import { getStatByParts } from "@/lib/qstats";
 import WordPopup from "@/components/WordPopup";
+
+// Copy to clipboard, with a hidden-textarea fallback for when the async
+// clipboard API is blocked. Same helper the notes/question Gemini buttons use.
+async function copyText(text) {
+  try { await navigator.clipboard.writeText(text); return true; } catch { /* fall through */ }
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch { return false; }
+}
 
 // same question text buildMcq uses, so counts line up with what was attempted
 function vocabCount(it) {
@@ -72,6 +86,25 @@ export default function VocabDayType({ day, type }) {
     if (next >= 0 && next < items.length) openWord(next);
   };
   const toggleBm = () => { const on = toggleBookmark(items[sel].word); setBm(on); };
+
+  // ✨ Gemini: copy this word / idiom / phrase with a prompt asking for its full
+  // detail, then open Gemini so it can be pasted — same gesture the question and
+  // notes cards use. A custom English prompt (Settings) overrides the default.
+  const [copied, setCopied] = useState(false);
+  const askGemini = async () => {
+    const it = items[sel];
+    if (!it) return;
+    const st = getSettings();
+    const custom = String((st.shortcutPrompts || {}).english || "").trim();
+    const label = typeLabel(type);
+    const base = custom ||
+      `Is ${label} ki poori detail Hinglish mein samjhao — meaning, use kaise hota hai, ek example sentence, aur milte-julte words/phrases:`;
+    const body = it.def ? `${it.word} — ${it.def}` : it.word;
+    await copyText(`${base}\n\n${body}`);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+    try { window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
+  };
 
   // Swipe the word card: right-to-left for the next word, left-to-right for the
   // previous. Only a clearly horizontal, clearly long drag counts — otherwise
@@ -212,6 +245,14 @@ export default function VocabDayType({ day, type }) {
                       aria-label="Reload meaning"
                     >
                       {loading ? "⏳" : "🔄"}
+                    </button>
+                    <button
+                      className="btn btn--ghost btn--sm"
+                      onClick={askGemini}
+                      title="Is word/idiom ki detail ke liye Gemini kholo (prompt + word copy ho jayega)"
+                      aria-label="Ask Gemini"
+                    >
+                      {copied ? "✓ Copied" : "✨ Gemini"}
                     </button>
                     <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark">
                       {bm ? "★ Saved" : "☆ Bookmark"}
