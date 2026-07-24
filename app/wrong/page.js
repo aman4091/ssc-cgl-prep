@@ -96,6 +96,46 @@ async function copyText(text) {
   }
 }
 
+// Redraw any image blob as a PNG — the ONE format browsers reliably accept on
+// the clipboard (JPEG/WebP get rejected by clipboard.write). A blob that is
+// already PNG is passed straight through.
+function blobToPng(blob) {
+  if (blob?.type === "image/png") return Promise.resolve(blob);
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(blob);
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const c = document.createElement("canvas");
+        c.width = img.naturalWidth || img.width;
+        c.height = img.naturalHeight || img.height;
+        c.getContext("2d").drawImage(img, 0, 0);
+        c.toBlob(
+          (b) => { URL.revokeObjectURL(url); b ? resolve(b) : reject(new Error("PNG banana fail")); },
+          "image/png"
+        );
+      } catch (e) { URL.revokeObjectURL(url); reject(e); }
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("Image load fail")); };
+    img.src = url;
+  });
+}
+
+// Copy the actual picture to the clipboard so it can be pasted straight into
+// Gemini — no lossy OCR, exact for fractions / figures. `getBlob` is called
+// LAZILY inside the ClipboardItem so navigator.clipboard.write fires within the
+// click gesture (the browser awaits the blob itself); if we awaited first, the
+// gesture would expire and the write would be refused. Returns false when the
+// browser has no image-clipboard support (most mobile) so callers can fall back.
+async function copyImageToClipboard(getBlob) {
+  if (typeof ClipboardItem === "undefined" || !navigator.clipboard?.write) return false;
+  try {
+    const item = new ClipboardItem({ "image/png": (async () => blobToPng(await getBlob()))() });
+    await navigator.clipboard.write([item]);
+    return true;
+  } catch { return false; }
+}
+
 // 20-similar is generated in small BATCHES, not one 20-question shot. In one shot
 // the model (DeepSeek) gets overloaded and returns junk options — worst on maths.
 // So make the first 5, open the quiz, then keep topping up in the background to 20;
@@ -151,6 +191,9 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
   const [busy, setBusy] = useState("");     // "" | "gemini" | "similar"
   const [err, setErr] = useState("");
   const [copied, setCopied] = useState(false);
+  const [imgCopied, setImgCopied] = useState(false); // Gemini copied the image (not text)
+  const [imgFlow, setImgFlow] = useState(false);     // manual box is holding a prompt, not fallback text
+  const [copiedIdx, setCopiedIdx] = useState(-1);    // per-image "📋 copy" feedback
   const [prog, setProg] = useState(0);       // tesseract OCR progress, 0-100
   const [manual, setManual] = useState(""); // text to copy by hand if the clipboard refused
   // The paste box for Gemini's answer — opens when you press ✨ Gemini, so the
@@ -161,6 +204,28 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
   const q = rec.q || {};
   const opts = q.options || [];
   const hasAnswer = Number.isInteger(q.answer) && opts.length > 0;
+
+  // Fetch one image's bytes. An R2 image comes through our own proxy (r2.dev
+  // sends no CORS header); a local fallback is read out of IndexedDB.
+  const imageBlob = async (im) => {
+    if (im.url) {
+      const res = await fetch(`/api/r2/image?url=${encodeURIComponent(im.url)}`);
+      if (!res.ok) throw new Error("Image load nahi hui.");
+      return await res.blob();
+    }
+    const blob = await getFile(im.id).catch(() => null);
+    if (!blob) throw new Error("Image is device par nahi hai.");
+    return blob;
+  };
+
+  // Copy one specific image to the clipboard — for pasting straight into Gemini.
+  const copyOneImage = async (i) => {
+    setErr("");
+    const im = imagesOf(rec)[i];
+    const ok = await copyImageToClipboard(() => imageBlob(im));
+    if (ok) { setCopiedIdx(i); setTimeout(() => setCopiedIdx(-1), 1500); }
+    else setErr("Is browser mein image copy support nahi — ✨ Gemini button OCR text bhej dega.");
+  };
 
   // The text to send onward. An image-only question has none until OCR reads it,
   // so that runs on first use and the result is cached on the record — it's
@@ -173,19 +238,10 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
       throw new Error("Is question ka text nahi hai — Edit karke likh do.");
     }
     // Read whichever engine Settings selects: Gemini vision if it is ON, else
-    // tesseract in the browser. R2 images come through our own proxy because
-    // r2.dev sends no CORS header.
+    // tesseract in the browser.
     const parts = [];
     for (const im of imgs) {
-      let blob;
-      if (im.url) {
-        const res = await fetch(`/api/r2/image?url=${encodeURIComponent(im.url)}`);
-        if (!res.ok) throw new Error("Image load nahi hui.");
-        blob = await res.blob();
-      } else {
-        blob = await getFile(im.id).catch(() => null);
-        if (!blob) throw new Error("Image is device par nahi hai.");
-      }
+      const blob = await imageBlob(im);
       const { text: part } = await readImageText(blob, (pr) => setProg(Math.round(pr * 100)));
       if (part) parts.push(part);
     }
@@ -197,8 +253,27 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
   };
 
   const askGemini = async () => {
-    setBusy("gemini"); setErr(""); setManual(""); setProg(0);
+    setBusy("gemini"); setErr(""); setManual(""); setImgFlow(false); setProg(0);
+    const imgs = imagesOf(rec);
     try {
+      // Image question → copy the PICTURE itself so Gemini reads it directly
+      // (exact for fractions / figures, unlike lossy OCR). The prompt goes in the
+      // manual box to paste as the message after the image. If the browser has no
+      // image-clipboard (most mobile), fall through to the OCR-text path below.
+      if (imgs.length) {
+        const ok = await copyImageToClipboard(() => imageBlob(imgs[0]));
+        if (ok) {
+          setImgCopied(true); setTimeout(() => setImgCopied(false), 1800);
+          const pre = promptFor(rec.subject);
+          setImgFlow(true);
+          setManual(pre || "Is question ko solve karke sahi answer aur short steps do.");
+          window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer");
+          setPasteText(rec.detail || "");
+          setPasteOpen(true);
+          return;
+        }
+      }
+      // Text path: typed question, or an image whose clipboard-copy isn't supported.
       const text = await ensureText();
       const pre = promptFor(rec.subject);
       const full = pre ? `${pre}\n\n${text}` : text;
@@ -272,13 +347,15 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
           className="btn btn--ghost btn--sm q-act--keep"
           onClick={askGemini}
           disabled={!!busy}
-          title="Prompt + question copy karke Gemini kholo (image se text apne aap padh liya jayega)"
+          title="Gemini kholo — image waala question ho to seedhi picture copy hoti hai (paste karke poochho), warna text"
         >
           {busy === "gemini"
             ? (prog ? `${prog}%` : "…")
-            : copied
-              ? "✓"
-              : <><span className="ask__ico">✨</span><span className="ask__word"> Gemini</span></>}
+            : imgCopied
+              ? "🖼️ ✓"
+              : copied
+                ? "✓"
+                : <><span className="ask__ico">✨</span><span className="ask__word"> Gemini</span></>}
         </button>
         <button
           className="btn btn--ghost btn--sm q-act--keep"
@@ -322,9 +399,11 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
       {manual && (
         <div style={{ marginBottom: 10 }}>
           <p className="muted" style={{ fontSize: "0.8rem" }}>
-            Clipboard block ho gaya — ye text khud copy karke Gemini mein paste karo:
+            {imgFlow
+              ? "🖼️ Image clipboard pe copy ho gayi — Gemini mein Ctrl+V karo. Ye prompt bhi paste kar sakte ho:"
+              : "Clipboard block ho gaya — ye text khud copy karke Gemini mein paste karo:"}
           </p>
-          <textarea className="textarea" rows={4} readOnly value={manual} onFocus={(e) => e.target.select()} />
+          <textarea className="textarea" rows={imgFlow ? 2 : 4} readOnly value={manual} onFocus={(e) => e.target.select()} />
         </div>
       )}
 
@@ -332,20 +411,29 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
           Shown capped here and opened full-size (and zoomable) on tap, rather
           than letting one question eat the whole screen. */}
       {urls.map((u, i) => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          key={i}
-          src={u}
-          alt={`Wrong question ${i + 1}`}
-          onClick={() => setLb(i)}
-          title="Tap to enlarge"
-          style={{
-            width: "100%", maxHeight: "min(70vh, 620px)", objectFit: "contain",
-            objectPosition: "left top",
-            borderRadius: 10, marginBottom: 10, display: "block",
-            background: "#fff", cursor: "zoom-in",
-          }}
-        />
+        <div key={i} style={{ position: "relative", marginBottom: 10 }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={u}
+            alt={`Wrong question ${i + 1}`}
+            onClick={() => setLb(i)}
+            title="Tap to enlarge"
+            style={{
+              width: "100%", maxHeight: "min(70vh, 620px)", objectFit: "contain",
+              objectPosition: "left top",
+              borderRadius: 10, display: "block",
+              background: "#fff", cursor: "zoom-in",
+            }}
+          />
+          <button
+            className="btn btn--ghost btn--sm"
+            onClick={(e) => { e.stopPropagation(); copyOneImage(i); }}
+            title="Is image ko copy karo (Gemini mein paste karne ke liye)"
+            style={{ position: "absolute", top: 6, right: 6, background: "rgba(0,0,0,0.55)", color: "#fff", borderColor: "transparent" }}
+          >
+            {copiedIdx === i ? "✓ Copied" : "📋 Copy"}
+          </button>
+        </div>
       ))}
 
       {/* Cloud sync carries the record but not the blob, so on another device a
@@ -412,6 +500,20 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
         </div>
       )}
 
+      {/* The correct answer — always visible, right under the question/image. */}
+      {rec.answer && (
+        <p
+          className="mt-8"
+          style={{
+            fontSize: "0.95rem", fontWeight: 700, color: "var(--success)",
+            display: "flex", gap: 6, alignItems: "baseline", whiteSpace: "pre-wrap",
+          }}
+        >
+          <span>✅ Answer:</span>
+          <span style={{ color: "var(--text)" }}>{rec.answer}</span>
+        </p>
+      )}
+
       {shown && rec.detail && (
         <div
           className="mt-8"
@@ -463,6 +565,7 @@ function WrongInner() {
   const [opts, setOpts] = useState(["", "", "", ""]);
   const [ans, setAns] = useState(0);
   const [sol, setSol] = useState("");
+  const [answer, setAnswer] = useState(""); // short, always-visible correct answer
   const [note, setNote] = useState("");
   const [withOpts, setWithOpts] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -485,7 +588,7 @@ function WrongInner() {
 
   const reset = () => {
     setImages([]); setText(""); setOpts(["", "", "", ""]); setAns(0);
-    setSol(""); setNote(""); setWithOpts(false); setErr("");
+    setSol(""); setAnswer(""); setNote(""); setWithOpts(false); setErr("");
   };
   const cancel = () => { setOpen(false); setEditing(null); reset(); };
 
@@ -592,6 +695,7 @@ function WrongInner() {
     setOpts(o.length ? [...o] : ["", "", "", ""]);
     setAns(Number.isInteger(rec.q?.answer) ? rec.q.answer : 0);
     setSol(rec.q?.solution || "");
+    setAnswer(rec.answer || "");
     setNote(rec.note || "");
     setWithOpts(o.filter(Boolean).length >= 2);
     setErr("");
@@ -614,9 +718,9 @@ function WrongInner() {
     setBusy(true);
     try {
       if (editing) {
-        await updateWrong(editing, { q, images, note });
+        await updateWrong(editing, { q, images, note, answer });
       } else {
-        const rec = addWrong({ subject, q, images, note });
+        const rec = addWrong({ subject, q, images, note, answer });
         setDateFilter(dayKey(rec.at)); // show the day it just landed on
       }
       cancel();
@@ -767,6 +871,17 @@ function WrongInner() {
             <div className="mt-16">
               <label className="vd-label">Question text (optional — image hi kaafi hai)</label>
               <textarea className="textarea" rows={2} value={text} onChange={(e) => setText(e.target.value)} />
+            </div>
+
+            <div className="mt-8">
+              <label className="vd-label" style={{ color: "var(--success)" }}>✅ Sahi answer — har question ke neeche dikhega</label>
+              <input
+                className="input"
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+                placeholder="e.g. (B)  ya  42  ya  'past perfect'"
+                style={{ width: "100%" }}
+              />
             </div>
 
             <div className="mt-8">
