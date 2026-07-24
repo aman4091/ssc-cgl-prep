@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import PlanPractice from "@/components/PlanPractice";
 import {
   PLAN, MOCK_DAYS, BASELINE, TARGETS, SEC_META, QA_TYPE_LIST,
   getPlanner, setStartDate, toggleBlock, setQaRating, currentDayNum, dayCompletion, planStreak,
@@ -61,8 +62,9 @@ function BlockCard({ block, done, onToggle }) {
             {block.t}
           </div>
           <p className="muted" style={{ fontSize: "0.84rem", lineHeight: 1.5, margin: 0 }}>{block.task}</p>
-          {block.links.length > 0 && (
+          {(block.links.length > 0 || block.auto) && (
             <div className="row" style={{ gap: 6, flexWrap: "wrap", marginTop: 8 }}>
+              {block.auto && <PlanPractice auto={block.auto} title={block.t} />}
               {block.links.map((l, i) => (
                 <Link key={i} href={l.href} className="btn btn--ghost btn--sm">{l.label} →</Link>
               ))}
@@ -281,6 +283,7 @@ export default function TodayPage() {
               </div>
               <p className="muted" style={{ fontSize: "0.82rem", lineHeight: 1.5, margin: "4px 0 0" }}>{u.tip}</p>
               <div className="row" style={{ gap: 6, flexWrap: "wrap", marginTop: 8 }}>
+                {u.auto && <PlanPractice auto={{ n: 15, specs: u.auto }} title={u.name} />}
                 {u.links.map((l, j) => (
                   <Link key={j} href={l.href} className="btn btn--ghost btn--sm">{l.label} →</Link>
                 ))}
