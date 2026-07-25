@@ -65,13 +65,21 @@ async function buildSet(auto) {
 
   const served = readServed();
   const perSpec = [];
-  for (const [bank, slug] of specs) {
+  for (const [bank, slug, chapters] of specs) {
     const L = LOADERS[bank];
     if (!L) continue;
     let all = [];
     try { all = (await L.load(slug)).filter(usable); } catch { all = []; }
+    // Optional third element: chapter names inside the bank (WAR tags every
+    // question) — so the FR day serves FR questions, not the whole subject.
+    // Filter miss (renamed chapter) falls back to the whole pool, never empty.
+    if (chapters && chapters.length) {
+      const want = new Set(chapters.map((c) => String(c).toLowerCase().trim()));
+      const filtered = all.filter((q) => q.chapter && want.has(String(q.chapter).toLowerCase().trim()));
+      if (filtered.length) all = filtered;
+    }
     if (!all.length) continue;
-    const key = bank + ":" + slug;
+    const key = bank + ":" + slug + (chapters && chapters.length ? ":" + chapters.join("|") : "");
     const used = new Set(served[key] || []);
     let fresh = all.filter((q) => !used.has(qKey(q)));
     if (!fresh.length) { fresh = all; served[key] = []; } // cycle poora — reset
