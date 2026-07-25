@@ -1,8 +1,32 @@
 {
  "source": "crazygktrick.com",
  "sourceNote": "Monthly current-affairs compilations (crazygktrick.com)",
- "total": 555,
+ "total": 595,
  "days": [
+  {
+   "period": "2026-07-25",
+   "label": "25 July 2026",
+   "count": 10,
+   "source": "Daily Current Affairs (GS Course by Akshay Sir)"
+  },
+  {
+   "period": "2026-07-24",
+   "label": "24 July 2026",
+   "count": 10,
+   "source": "Daily Current Affairs (GS Course by Akshay Sir)"
+  },
+  {
+   "period": "2026-07-23",
+   "label": "23 July 2026",
+   "count": 10,
+   "source": "Daily Current Affairs (GS Course by Akshay Sir)"
+  },
+  {
+   "period": "2026-07-22",
+   "label": "22 July 2026",
+   "count": 10,
+   "source": "Daily Current Affairs (GS Course by Akshay Sir)"
+  },
   {
    "period": "2026-07-21",
    "label": "21 July 2026",
