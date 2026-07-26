@@ -2225,10 +2225,9 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 }
 
 /* ===== Notebook: subject rail + chapter drill-in ===== */
+/* Desktop / wide: subjects as a sticky left rail beside the notes. */
 .nb-shell { display: grid; grid-template-columns: 92px 1fr; gap: 12px; align-items: start; }
-@media (max-width: 360px) { .nb-shell { grid-template-columns: 78px 1fr; gap: 8px; } }
 
-/* Left rail — one button per subject, sticky so it stays as the notes scroll. */
 .nb-rail { display: flex; flex-direction: column; gap: 8px; position: sticky; top: 12px; }
 .nb-subj {
   position: relative;
@@ -2246,6 +2245,23 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
   position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px;
   padding: 0 5px; border-radius: 999px; background: var(--accent); color: #fff;
   font-size: 0.66rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+}
+
+/* Phone: the left rail eats the width and squashes the notes. Drop to one column
+   and lay the subjects out as a horizontal strip ON TOP, so the notes get the
+   full width below them. Four subjects share one row (wrap if a name is long). */
+@media (max-width: 640px) {
+  .nb-shell { grid-template-columns: 1fr; gap: 10px; }
+  /* Four equal columns so every subject sits on one even top row, icon over
+     label to stay narrow enough for "Reasoning". */
+  .nb-rail {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+    position: static; top: auto;
+  }
+  .nb-subj { padding: 8px 4px; border-radius: 12px; gap: 2px; }
+  .nb-subj__icon { font-size: 1.15rem; }
+  .nb-subj__label { font-size: 0.72rem; }
+  .nb-subj__count { top: -5px; right: -3px; }
 }
 
 .nb-main { min-width: 0; }
