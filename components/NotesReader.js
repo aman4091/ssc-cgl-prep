@@ -515,10 +515,12 @@ export default function NotesReader({ book }) {
   // pinch/zoom viewer — the same "fit, then tap to zoom" the image banks use.
   const [zoom, setZoom] = useState(null);
 
-  // The per-page Hinglish reader (Parmar books): hxPage is the open page, hxEdit
-  // whether the paste box is up, hxText the draft. Desktop shows English +
-  // Hinglish side by side; a phone shows only the Hinglish (English col hidden).
-  const isParmar = String(book?.slug || "").startsWith("parmar-");
+  // The per-page Hinglish reader (Parmar GK books + Gopal Verma's English
+  // Formula book): hxPage is the open page, hxEdit whether the paste box is up,
+  // hxText the draft. Desktop shows English + Hinglish side by side; a phone
+  // shows only the Hinglish (English col hidden).
+  const slug = String(book?.slug || "");
+  const hasHinglish = slug.startsWith("parmar-") || slug === "eng-formula";
   const [hxPage, setHxPage] = useState(null);
   const [hxEdit, setHxEdit] = useState(false);
   const [hxText, setHxText] = useState("");
@@ -637,7 +639,7 @@ export default function NotesReader({ book }) {
               <div className="nt-hd">
                 <b>{p.topic}</b>
                 <span className="nt-hd__right">
-                  {isParmar && (
+                  {hasHinglish && (
                     <button
                       className="nt-hindi"
                       onClick={() => openHinglish(p)}
