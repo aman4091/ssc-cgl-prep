@@ -1,29 +1,58 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "@/components/Markdown";
-import { getEntries, addEntry, updateEntry, deleteEntry, compressImage } from "@/lib/notebook";
+import {
+  getEntries, addEntry, updateEntry, deleteEntry, compressImage, fileLegacyEntries,
+  restoreTitlesFromBackup, readFilingBackup,
+} from "@/lib/notebook";
+import { NB_SUBJECTS, subjectByLabel, chaptersFor } from "@/lib/notebookTaxonomy";
 
-// A personal, free-form notebook. Tap + to add an entry — a Subject + Topic on
-// top, then a rule (text), an image, or both. The main view is a compact LIST;
-// tapping an entry opens it in a POPUP with the full note / image. Text + images
-// both live in one synced key, so it shows up on every device.
+// A personal notebook, filed like the rest of the app: pick a Subject from the
+// left rail (GS / Maths / English / Reasoning), drill into a Chapter, and the
+// notes for that chapter show up. Tap + to add a note into the open subject +
+// chapter — a rule (text), an image, or both. Everything lives in one synced key
+// so it shows up on every device.
 export default function NotebookPage() {
   const [entries, setEntries] = useState(null); // null = not loaded yet
+  const [subjectKey, setSubjectKey] = useState(NB_SUBJECTS[0].key);
+  const [chapter, setChapter] = useState(null);  // null = show the chapter list
   const [composing, setComposing] = useState(false);
   const [viewId, setViewId] = useState(null);   // entry open in the popup
   const [editing, setEditing] = useState(false); // popup is in edit mode
 
   // composer / editor fields
-  const [subject, setSubject] = useState("");
-  const [topic, setTopic] = useState("");
+  const [subjectLabel, setSubjectLabel] = useState(NB_SUBJECTS[0].label);
+  const [topicLabel, setTopicLabel] = useState("");
+  const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const fileRef = useRef(null);
+  const touchRef = useRef(null); // swipe start point for the note popup
 
-  useEffect(() => { setEntries(getEntries()); }, []);
+  const [hasBackup, setHasBackup] = useState(false);
+
+  // File the legacy flat notes into English › Noun once, heal any titles an early
+  // filing dropped (from the local backup), then load.
+  useEffect(() => {
+    fileLegacyEntries();
+    restoreTitlesFromBackup();
+    const list = getEntries();
+    setEntries(list);
+    setHasBackup(readFilingBackup().length > 0);
+    // Land on the first subject that actually has notes, so it isn't an empty screen.
+    const withNotes = NB_SUBJECTS.find((s) => list.some((e) => e.subject === s.label));
+    if (withNotes) setSubjectKey(withNotes.key);
+  }, []);
+
+  const recoverTitles = () => {
+    const { hadBackup, restored } = restoreTitlesFromBackup();
+    setEntries(getEntries());
+    if (!hadBackup) alert("Is device pe backup nahi mila — titles yahan se recover nahi ho paaye.");
+    else alert(restored ? `${restored} note ke title wapas aa gaye.` : "Sab titles pehle se set hain.");
+  };
 
   // Lock the page scroll while a popup (view or composer) is open.
   useEffect(() => {
@@ -32,9 +61,86 @@ export default function NotebookPage() {
     return () => document.body.classList.remove("modal-open");
   }, [composing, viewId]);
 
-  const resetFields = () => { setSubject(""); setTopic(""); setText(""); setImg(""); setErr(""); setBusy(false); };
+  const subject = NB_SUBJECTS.find((s) => s.key === subjectKey) || NB_SUBJECTS[0];
+
+  // Count notes per subject and per chapter of the open subject.
+  const byEntry = entries || [];
+  const subjectCounts = useMemo(() => {
+    const m = {};
+    for (const s of NB_SUBJECTS) m[s.label] = 0;
+    for (const e of byEntry) if (e.subject in m) m[e.subject] += 1;
+    return m;
+  }, [byEntry]);
+
+  // Chapters to show for the open subject: the fixed list, PLUS any orphan topic
+  // that has notes but isn't in the list (so nothing filed under an old label hides).
+  const chapterRows = useMemo(() => {
+    const counts = {};
+    for (const e of byEntry) {
+      if (e.subject !== subject.label) continue;
+      const t = (e.topic || "Miscellaneous").trim() || "Miscellaneous";
+      counts[t] = (counts[t] || 0) + 1;
+    }
+    const seen = new Set();
+    const rows = [];
+    for (const ch of subject.chapters) { rows.push({ ch, count: counts[ch] || 0 }); seen.add(ch); }
+    for (const t of Object.keys(counts)) if (!seen.has(t)) rows.push({ ch: t, count: counts[t] });
+    return rows;
+  }, [byEntry, subject]);
+
+  const chapterEntries = useMemo(() => {
+    if (!chapter) return [];
+    return byEntry.filter(
+      (e) => e.subject === subject.label && ((e.topic || "Miscellaneous").trim() || "Miscellaneous") === chapter
+    );
+  }, [byEntry, subject, chapter]);
+
+  // Where the open note sits in the chapter's list, so Prev/Next and swipe can
+  // step through the same notes shown behind the popup.
+  const viewIdx = viewId != null ? chapterEntries.findIndex((e) => e.id === viewId) : -1;
+  const goRel = (delta) => {
+    if (viewIdx < 0) return;
+    const ni = viewIdx + delta;
+    if (ni < 0 || ni >= chapterEntries.length) return;
+    setViewId(chapterEntries[ni].id);
+    setEditing(false); resetFields();
+  };
+
+  // Swipe left → next, swipe right → previous. Guard on dx > dy so a vertical
+  // scroll of a long note isn't read as a page turn.
+  const onTouchStart = (e) => { const t = e.touches[0]; touchRef.current = { x: t.clientX, y: t.clientY }; };
+  const onTouchEnd = (e) => {
+    if (!touchRef.current || editing) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchRef.current.x;
+    const dy = t.clientY - touchRef.current.y;
+    touchRef.current = null;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) goRel(dx < 0 ? 1 : -1);
+  };
+
+  // Desktop: arrow keys walk the same list while a note is open (not while editing).
+  useEffect(() => {
+    if (viewId == null || editing) return;
+    const onKey = (e) => {
+      if (e.key === "ArrowLeft") goRel(-1);
+      else if (e.key === "ArrowRight") goRel(1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }); // no deps: re-bind each render so goRel closes over the current index
+
+  const pickSubject = (key) => { setSubjectKey(key); setChapter(null); };
+
+  const resetFields = () => { setTitle(""); setText(""); setImg(""); setErr(""); setBusy(false); };
   const closeComposer = () => { setComposing(false); resetFields(); };
   const closeView = () => { setViewId(null); setEditing(false); resetFields(); };
+
+  const openComposer = () => {
+    resetFields();
+    setSubjectLabel(subject.label);
+    setTopicLabel(chapter || subject.chapters[0]);
+    setComposing(true);
+  };
 
   const attach = async (file) => {
     if (!file) return;
@@ -52,18 +158,28 @@ export default function NotebookPage() {
   };
 
   const saveNew = () => {
-    if (!subject.trim() && !topic.trim() && !text.trim() && !img) { setErr("Kuch to bharo — subject, note ya image."); return; }
-    try { addEntry({ subject, topic, text, img }); setEntries(getEntries()); closeComposer(); }
-    catch { setErr("Storage full ho gaya (image bahut badi). Chhoti image try karo."); }
+    if (!text.trim() && !img) { setErr("Kuch to bharo — note ya image."); return; }
+    try {
+      addEntry({ title, subject: subjectLabel, topic: topicLabel, text, img });
+      const list = getEntries();
+      setEntries(list);
+      // Jump the view to where the note just landed, so it's visible.
+      const s = subjectByLabel(subjectLabel);
+      if (s) setSubjectKey(s.key);
+      setChapter(topicLabel);
+      closeComposer();
+    } catch { setErr("Storage full ho gaya (image bahut badi). Chhoti image try karo."); }
   };
 
   const openView = (e) => { setViewId(e.id); setEditing(false); };
   const startEdit = (e) => {
     setEditing(true);
-    setSubject(e.subject || ""); setTopic(e.topic || ""); setText(e.text || ""); setImg(""); setErr("");
+    setSubjectLabel(e.subject || subject.label);
+    setTopicLabel(e.topic || "Miscellaneous");
+    setTitle(e.title || ""); setText(e.text || ""); setImg(""); setErr("");
   };
   const saveEdit = () => {
-    updateEntry(viewId, { subject, topic, text });
+    updateEntry(viewId, { title, subject: subjectLabel, topic: topicLabel, text });
     setEntries(getEntries()); setEditing(false); resetFields();
   };
 
@@ -83,50 +199,71 @@ export default function NotebookPage() {
   // A plain render FUNCTION (not a nested component): calling it returns JSX that
   // reconciles in place, so the inputs keep focus while you type. Defining this
   // as a <Form/> component would remount on every keystroke and drop focus.
-  const renderForm = ({ onSave, onCancel, saveLabel }) => (
-    <>
-      <input
-        className="input"
-        value={subject}
-        onChange={(e) => setSubject(e.target.value)}
-        placeholder="Subject (e.g. English, Maths, GK)…"
-        style={{ width: "100%", fontWeight: 600 }}
-      />
-      <input
-        className="input mt-8"
-        value={topic}
-        onChange={(e) => setTopic(e.target.value)}
-        placeholder="Topic (e.g. Pronoun, Percentage)…"
-        style={{ width: "100%" }}
-      />
-      <textarea
-        className="input mt-8"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        onPaste={onPaste}
-        placeholder="Rule / note likho… (image bhi yahan paste kar sakte ho)"
-        rows={6}
-        style={{ width: "100%", resize: "vertical", fontSize: "0.95rem" }}
-      />
-      {img && (
-        <div style={{ marginTop: 12 }}>
-          <img src={img} alt="attached" style={{ maxWidth: "100%", borderRadius: 10, display: "block" }} />
-          <button className="btn btn--ghost btn--sm" onClick={() => setImg("")} style={{ marginTop: 8 }}>✕ Image hatao</button>
+  const renderForm = ({ onSave, onCancel, saveLabel }) => {
+    const chapterOpts = chaptersFor(subjectLabel);
+    // If an entry sat under an old label, keep it selectable so editing doesn't lose it.
+    const opts = chapterOpts.includes(topicLabel) || !topicLabel ? chapterOpts : [topicLabel, ...chapterOpts];
+    return (
+      <>
+        <input
+          className="input"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title (optional)…"
+          style={{ width: "100%", fontWeight: 600, marginBottom: 8 }}
+        />
+        <div className="row" style={{ gap: 8 }}>
+          <select
+            className="input"
+            value={subjectLabel}
+            onChange={(e) => {
+              const next = e.target.value;
+              setSubjectLabel(next);
+              const chs = chaptersFor(next);
+              if (!chs.includes(topicLabel)) setTopicLabel(chs[0]);
+            }}
+            style={{ flex: 1, fontWeight: 600 }}
+          >
+            {NB_SUBJECTS.map((s) => <option key={s.key} value={s.label}>{s.icon} {s.label}</option>)}
+          </select>
+          <select
+            className="input"
+            value={topicLabel}
+            onChange={(e) => setTopicLabel(e.target.value)}
+            style={{ flex: 1 }}
+          >
+            {opts.map((c) => <option key={c} value={c}>{c}</option>)}
+          </select>
         </div>
-      )}
-      <input ref={fileRef} type="file" accept="image/*" hidden
-        onChange={(e) => { attach(e.target.files?.[0]); e.target.value = ""; }} />
-      {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 10 }}>{err}</p>}
-      <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
-        <button className="btn btn--ghost btn--sm" onClick={() => fileRef.current?.click()} disabled={busy}>
-          {busy ? "…" : "🖼️ Image add"}
-        </button>
-        <div style={{ flex: 1 }} />
-        <button className="btn btn--ghost btn--sm" onClick={onCancel}>Cancel</button>
-        <button className="btn btn--primary btn--sm" onClick={onSave} disabled={busy}>💾 {saveLabel}</button>
-      </div>
-    </>
-  );
+        <textarea
+          className="input mt-8"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          onPaste={onPaste}
+          placeholder="Rule / note likho… (image bhi yahan paste kar sakte ho)"
+          rows={6}
+          style={{ width: "100%", resize: "vertical", fontSize: "0.95rem" }}
+        />
+        {img && (
+          <div style={{ marginTop: 12 }}>
+            <img src={img} alt="attached" style={{ maxWidth: "100%", borderRadius: 10, display: "block" }} />
+            <button className="btn btn--ghost btn--sm" onClick={() => setImg("")} style={{ marginTop: 8 }}>✕ Image hatao</button>
+          </div>
+        )}
+        <input ref={fileRef} type="file" accept="image/*" hidden
+          onChange={(e) => { attach(e.target.files?.[0]); e.target.value = ""; }} />
+        {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 10 }}>{err}</p>}
+        <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
+          <button className="btn btn--ghost btn--sm" onClick={() => fileRef.current?.click()} disabled={busy}>
+            {busy ? "…" : "🖼️ Image add"}
+          </button>
+          <div style={{ flex: 1 }} />
+          <button className="btn btn--ghost btn--sm" onClick={onCancel}>Cancel</button>
+          <button className="btn btn--primary btn--sm" onClick={onSave} disabled={busy}>💾 {saveLabel}</button>
+        </div>
+      </>
+    );
+  };
 
   const openEntry = viewId != null ? (entries || []).find((e) => e.id === viewId) : null;
 
@@ -135,7 +272,7 @@ export default function NotebookPage() {
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">📓 Notebook</span>
-          <button className="btn btn--primary btn--sm" onClick={() => { resetFields(); setComposing(true); }} title="Naya add karo" aria-label="Add">
+          <button className="btn btn--primary btn--sm" onClick={openComposer} title="Naya add karo" aria-label="Add">
             ＋ Add
           </button>
         </div>
@@ -143,39 +280,83 @@ export default function NotebookPage() {
           My <span className="grad">Notebook</span>
         </h1>
         <p className="hero__sub">
-          Har entry pe subject + topic daalo, phir rule / note ya image. List mein sab short
-          dikhega — kisi ko tap karo to popup mein poora khul jaayega. Har device pe sync.
+          Left se subject chuno, phir chapter — us chapter ke saare notes yahin dikhenge.
+          ＋ Add se note ya image daalo. Har device pe sync.
         </p>
+        {hasBackup && (
+          <button className="btn btn--ghost btn--sm mt-8" onClick={recoverTitles} title="Purane titles wapas laao">
+            🩹 Purane titles recover karo
+          </button>
+        )}
       </section>
 
       <section className="section">
         {entries === null ? (
           <div className="placeholder">Loading… 📓</div>
-        ) : entries.length === 0 ? (
-          <div className="placeholder">
-            Notebook khaali hai. Upar <b>＋ Add</b> dabao aur pehla note / image daalo. ✍️
-          </div>
         ) : (
-          <div className="grid" style={{ gap: 10 }}>
-            {entries.map((e) => (
-              <button
-                key={e.id}
-                className="glass-card"
-                onClick={() => openView(e)}
-                style={{ width: "100%", textAlign: "left", cursor: "pointer", color: "inherit", padding: "12px 14px" }}
-              >
-                <div className="row between" style={{ gap: 8 }}>
-                  <span style={{ display: "flex", gap: 8, alignItems: "baseline", flexWrap: "wrap", minWidth: 0 }}>
-                    <strong style={{ fontSize: "0.95rem" }}>{e.subject || "Untitled"}</strong>
-                    {e.topic && <span className="chip" style={{ fontSize: "0.72rem" }}>{e.topic}</span>}
-                  </span>
-                  <span className="muted" style={{ fontSize: "1rem", flexShrink: 0 }}>›</span>
+          <div className="nb-shell">
+            {/* Left rail — subjects */}
+            <aside className="nb-rail">
+              {NB_SUBJECTS.map((s) => (
+                <button
+                  key={s.key}
+                  className={`nb-subj${s.key === subjectKey ? " is-active" : ""}`}
+                  onClick={() => pickSubject(s.key)}
+                >
+                  <span className="nb-subj__icon">{s.icon}</span>
+                  <span className="nb-subj__label">{s.label}</span>
+                  {subjectCounts[s.label] > 0 && <span className="nb-subj__count">{subjectCounts[s.label]}</span>}
+                </button>
+              ))}
+            </aside>
+
+            {/* Main — chapters, or a chapter's notes */}
+            <div className="nb-main">
+              <div className="nb-crumb">
+                <button className="nb-crumb__btn" onClick={() => setChapter(null)}>
+                  {subject.icon} {subject.label}
+                </button>
+                {chapter && <><span className="nb-crumb__sep">›</span><span className="nb-crumb__here">{chapter}</span></>}
+              </div>
+
+              {!chapter ? (
+                <div className="grid" style={{ gap: 8 }}>
+                  {chapterRows.map(({ ch, count }) => (
+                    <button
+                      key={ch}
+                      className="glass-card nb-chapter"
+                      onClick={() => setChapter(ch)}
+                    >
+                      <span className="nb-chapter__name">{ch}</span>
+                      <span className="nb-chapter__meta">
+                        <span className="muted" style={{ fontSize: "0.78rem" }}>{count} note{count === 1 ? "" : "s"}</span>
+                        <span className="muted" style={{ fontSize: "1rem" }}>›</span>
+                      </span>
+                    </button>
+                  ))}
                 </div>
-                <div className="muted" style={{ fontSize: "0.82rem", marginTop: 4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                  {preview(e)}{e.img && (e.text || "").trim() ? " · 🖼️" : ""}
+              ) : chapterEntries.length === 0 ? (
+                <div className="placeholder">
+                  <b>{chapter}</b> mein abhi koi note nahi. Upar <b>＋ Add</b> dabao. ✍️
                 </div>
-              </button>
-            ))}
+              ) : (
+                <div className="grid" style={{ gap: 10 }}>
+                  {chapterEntries.map((e) => (
+                    <button
+                      key={e.id}
+                      className="glass-card"
+                      onClick={() => openView(e)}
+                      style={{ width: "100%", textAlign: "left", cursor: "pointer", color: "inherit", padding: "12px 14px" }}
+                    >
+                      {e.title && <div style={{ fontSize: "0.95rem", fontWeight: 600, marginBottom: 3 }}>{e.title}</div>}
+                      <div className="muted" style={{ fontSize: "0.82rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        {preview(e)}{e.img && (e.text || "").trim() ? " · 🖼️" : ""}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </section>
@@ -193,40 +374,68 @@ export default function NotebookPage() {
         </div>
       )}
 
-      {/* View / edit one entry — popup */}
+      {/* View / edit one entry — popup. Fixed header + scrollable body + a sticky
+          Prev/Next footer; swipe left/right on a phone steps through the chapter. */}
       {openEntry && (
         <div className="modal-overlay" onClick={closeView}>
-          <div className="modal glass-card" onClick={(ev) => ev.stopPropagation()}>
-            <div className="row between" style={{ alignItems: "flex-start", gap: 8, marginBottom: 16 }}>
-              <span style={{ display: "flex", gap: 8, alignItems: "baseline", flexWrap: "wrap", minWidth: 0 }}>
-                <h2 style={{ fontSize: "1.15rem", margin: 0 }}>{openEntry.subject || "Untitled"}</h2>
-                {openEntry.topic && <span className="chip" style={{ fontSize: "0.74rem" }}>{openEntry.topic}</span>}
-              </span>
-              <button className="btn btn--ghost btn--sm" onClick={closeView} aria-label="Close">✕</button>
+          <div
+            className="modal glass-card nb-view"
+            onClick={(ev) => ev.stopPropagation()}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            <div className="nb-view__bar">
+              <div className="row between" style={{ alignItems: "flex-start", gap: 8 }}>
+                <span style={{ display: "flex", gap: 8, alignItems: "baseline", flexWrap: "wrap", minWidth: 0 }}>
+                  <h2 style={{ fontSize: "1.15rem", margin: 0 }}>{openEntry.title || openEntry.subject || "Untitled"}</h2>
+                  {openEntry.topic && <span className="chip" style={{ fontSize: "0.74rem" }}>{openEntry.topic}</span>}
+                </span>
+                <button className="btn btn--ghost btn--sm" onClick={closeView} aria-label="Close">✕</button>
+              </div>
             </div>
 
             {editing ? (
-              renderForm({ onSave: saveEdit, onCancel: () => { setEditing(false); resetFields(); }, saveLabel: "Update" })
+              <div className="nb-view__body">
+                {renderForm({ onSave: saveEdit, onCancel: () => { setEditing(false); resetFields(); }, saveLabel: "Update" })}
+              </div>
             ) : (
               <>
-                {openEntry.text && (
-                  <div style={{ fontSize: "0.95rem" }}>
-                    <Markdown>{openEntry.text}</Markdown>
+                <div className="nb-view__body">
+                  {openEntry.text && (
+                    <div style={{ fontSize: "0.95rem" }}>
+                      <Markdown>{openEntry.text}</Markdown>
+                    </div>
+                  )}
+                  {openEntry.img && (
+                    <a href={openEntry.img} target="_blank" rel="noreferrer" style={{ display: "block", marginTop: openEntry.text ? 12 : 0 }}>
+                      <img src={openEntry.img} alt="note" loading="lazy" style={{ maxWidth: "100%", borderRadius: 10, display: "block" }} />
+                    </a>
+                  )}
+                  <div className="row between mt-16" style={{ alignItems: "center" }}>
+                    <span className="muted" style={{ fontSize: "0.72rem" }}>
+                      {new Date(openEntry.createdAt).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
+                    </span>
+                    <span className="row" style={{ gap: 6 }}>
+                      <button className="btn btn--ghost btn--sm" onClick={() => startEdit(openEntry)} title="Edit">✏️ Edit</button>
+                      <button className="btn btn--ghost btn--sm" onClick={() => remove(openEntry.id)} title="Delete">🗑️ Delete</button>
+                    </span>
                   </div>
-                )}
-                {openEntry.img && (
-                  <a href={openEntry.img} target="_blank" rel="noreferrer" style={{ display: "block", marginTop: openEntry.text ? 12 : 0 }}>
-                    <img src={openEntry.img} alt="note" loading="lazy" style={{ maxWidth: "100%", borderRadius: 10, display: "block" }} />
-                  </a>
-                )}
-                <div className="row between mt-16" style={{ alignItems: "center" }}>
-                  <span className="muted" style={{ fontSize: "0.72rem" }}>
-                    {new Date(openEntry.createdAt).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
-                  </span>
-                  <span className="row" style={{ gap: 6 }}>
-                    <button className="btn btn--ghost btn--sm" onClick={() => startEdit(openEntry)} title="Edit">✏️ Edit</button>
-                    <button className="btn btn--ghost btn--sm" onClick={() => remove(openEntry.id)} title="Delete">🗑️ Delete</button>
-                  </span>
+                </div>
+
+                <div className="nb-view__nav">
+                  <button
+                    className="btn btn--ghost btn--sm"
+                    onClick={() => goRel(-1)}
+                    disabled={viewIdx <= 0}
+                    aria-label="Previous note"
+                  >‹ Prev</button>
+                  <span className="nb-view__count">{viewIdx + 1} / {chapterEntries.length}</span>
+                  <button
+                    className="btn btn--ghost btn--sm"
+                    onClick={() => goRel(1)}
+                    disabled={viewIdx < 0 || viewIdx >= chapterEntries.length - 1}
+                    aria-label="Next note"
+                  >Next ›</button>
                 </div>
               </>
             )}
