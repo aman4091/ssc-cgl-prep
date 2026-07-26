@@ -1,10 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
 import { getSettings, saveQuiz, getQuiz, makeId } from "@/lib/storage";
 import { readImageText, generateNotesQuiz } from "@/lib/client-ai";
+import { hinglishKey, getHinglish, setHinglish } from "@/lib/noteshinglish";
 import ZoomableImage from "@/components/ZoomableImage";
 
 // Plain text of a page's blocks — what the ✨ Gemini button sends. Strips the
@@ -513,6 +514,35 @@ export default function NotesReader({ book }) {
   // pinch/zoom viewer — the same "fit, then tap to zoom" the image banks use.
   const [zoom, setZoom] = useState(null);
 
+  // The per-page Hinglish reader (Parmar books): hxPage is the open page, hxEdit
+  // whether the paste box is up, hxText the draft. Desktop shows English +
+  // Hinglish side by side; a phone shows only the Hinglish (English col hidden).
+  const isParmar = String(book?.slug || "").startsWith("parmar-");
+  const [hxPage, setHxPage] = useState(null);
+  const [hxEdit, setHxEdit] = useState(false);
+  const [hxText, setHxText] = useState("");
+
+  const openHinglish = (p) => {
+    const existing = getHinglish(hinglishKey(book, p));
+    setHxPage(p);
+    setHxText(existing);
+    setHxEdit(!existing); // nothing pasted yet → open straight into the paste box
+  };
+  const closeHx = () => { setHxPage(null); setHxEdit(false); setHxText(""); };
+  const saveHx = () => {
+    const t = String(hxText || "").trim();
+    if (!t) { alert("Pehle is page ka poora Hinglish paste karo — khaali save nahi hoga."); return; }
+    setHinglish(hinglishKey(book, hxPage), t);
+    setHxText(t);
+    setHxEdit(false); // saved → flip to the side-by-side view
+  };
+
+  // Lock the page scroll while the Hinglish reader is open.
+  useEffect(() => {
+    document.body.classList.toggle("modal-open", hxPage !== null);
+    return () => document.body.classList.remove("modal-open");
+  }, [hxPage]);
+
   const meta = book?.meta || { topics: [], total_pages: 0 };
   // Image-anchored books (Brahmastra maths formulas) render every page as a
   // scan and list their chapters as plain strings; the text books transcribe
@@ -606,6 +636,15 @@ export default function NotesReader({ book }) {
               <div className="nt-hd">
                 <b>{p.topic}</b>
                 <span className="nt-hd__right">
+                  {isParmar && (
+                    <button
+                      className="nt-hindi"
+                      onClick={() => openHinglish(p)}
+                      title="Is page ka Hinglish — English ke saath side-by-side (mobile pe sirf Hinglish)"
+                    >
+                      हिंदी
+                    </button>
+                  )}
                   <PageQuizBtn page={p} book={book} />
                   <GeminiBtn text={pageText(p)} subject={book.subject} />
                   <span className="nt-meta">page {p.book_page}</span>
@@ -630,6 +669,57 @@ export default function NotesReader({ book }) {
           ))
         )}
       </div>
+
+      {hxPage && (
+        <div className="nx-overlay" onClick={closeHx}>
+          <div className="nx-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="nx-bar">
+              <b>{hxPage.topic} · page {hxPage.book_page}</b>
+              <span className="row" style={{ gap: 6 }}>
+                {!hxEdit && (
+                  <button className="btn btn--ghost btn--sm" onClick={() => setHxEdit(true)} title="Hinglish badlo">✏️ Edit</button>
+                )}
+                <button className="btn btn--ghost btn--sm" onClick={closeHx} aria-label="Close">✕</button>
+              </span>
+            </div>
+
+            {hxEdit ? (
+              <div className="nx-edit">
+                <p className="nt-meta" style={{ marginBottom: 8 }}>
+                  Is page ka poora Hinglish version yahan paste karo. (Save karne pe English ke saath side-by-side khulega.)
+                </p>
+                <textarea
+                  className="input"
+                  value={hxText}
+                  onChange={(e) => setHxText(e.target.value)}
+                  placeholder="Hinglish yahan paste karo…"
+                />
+                <div className="row mt-8" style={{ gap: 8, justifyContent: "flex-end" }}>
+                  <button
+                    className="btn btn--ghost btn--sm"
+                    onClick={() => (getHinglish(hinglishKey(book, hxPage)) ? setHxEdit(false) : closeHx())}
+                  >Cancel</button>
+                  <button className="btn btn--primary btn--sm" onClick={saveHx}>💾 Save</button>
+                </div>
+              </div>
+            ) : (
+              <div className="nx-body">
+                <div className="nx-col nx-col--en">
+                  <div className="nx-col__hd">English</div>
+                  <div
+                    className="notesdoc nx-col__doc"
+                    dangerouslySetInnerHTML={{ __html: renderBlocks(hxPage.blocks, hashHierarchy) }}
+                  />
+                </div>
+                <div className="nx-col nx-col--hi">
+                  <div className="nx-col__hd">Hinglish</div>
+                  <div className="nx-hi-text">{getHinglish(hinglishKey(book, hxPage))}</div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {zoom && (
         <div className="lightbox" onClick={() => setZoom(null)}>
