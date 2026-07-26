@@ -23,11 +23,13 @@ export default function NotebookPage() {
   // composer / editor fields
   const [subjectLabel, setSubjectLabel] = useState(NB_SUBJECTS[0].label);
   const [topicLabel, setTopicLabel] = useState("");
+  const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [img, setImg] = useState("");
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const fileRef = useRef(null);
+  const touchRef = useRef(null); // swipe start point for the note popup
 
   // File the legacy flat notes into English › Noun once, then load.
   useEffect(() => {
@@ -80,9 +82,43 @@ export default function NotebookPage() {
     );
   }, [byEntry, subject, chapter]);
 
+  // Where the open note sits in the chapter's list, so Prev/Next and swipe can
+  // step through the same notes shown behind the popup.
+  const viewIdx = viewId != null ? chapterEntries.findIndex((e) => e.id === viewId) : -1;
+  const goRel = (delta) => {
+    if (viewIdx < 0) return;
+    const ni = viewIdx + delta;
+    if (ni < 0 || ni >= chapterEntries.length) return;
+    setViewId(chapterEntries[ni].id);
+    setEditing(false); resetFields();
+  };
+
+  // Swipe left → next, swipe right → previous. Guard on dx > dy so a vertical
+  // scroll of a long note isn't read as a page turn.
+  const onTouchStart = (e) => { const t = e.touches[0]; touchRef.current = { x: t.clientX, y: t.clientY }; };
+  const onTouchEnd = (e) => {
+    if (!touchRef.current || editing) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - touchRef.current.x;
+    const dy = t.clientY - touchRef.current.y;
+    touchRef.current = null;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) goRel(dx < 0 ? 1 : -1);
+  };
+
+  // Desktop: arrow keys walk the same list while a note is open (not while editing).
+  useEffect(() => {
+    if (viewId == null || editing) return;
+    const onKey = (e) => {
+      if (e.key === "ArrowLeft") goRel(-1);
+      else if (e.key === "ArrowRight") goRel(1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }); // no deps: re-bind each render so goRel closes over the current index
+
   const pickSubject = (key) => { setSubjectKey(key); setChapter(null); };
 
-  const resetFields = () => { setText(""); setImg(""); setErr(""); setBusy(false); };
+  const resetFields = () => { setTitle(""); setText(""); setImg(""); setErr(""); setBusy(false); };
   const closeComposer = () => { setComposing(false); resetFields(); };
   const closeView = () => { setViewId(null); setEditing(false); resetFields(); };
 
@@ -111,7 +147,7 @@ export default function NotebookPage() {
   const saveNew = () => {
     if (!text.trim() && !img) { setErr("Kuch to bharo — note ya image."); return; }
     try {
-      addEntry({ subject: subjectLabel, topic: topicLabel, text, img });
+      addEntry({ title, subject: subjectLabel, topic: topicLabel, text, img });
       const list = getEntries();
       setEntries(list);
       // Jump the view to where the note just landed, so it's visible.
@@ -127,10 +163,10 @@ export default function NotebookPage() {
     setEditing(true);
     setSubjectLabel(e.subject || subject.label);
     setTopicLabel(e.topic || "Miscellaneous");
-    setText(e.text || ""); setImg(""); setErr("");
+    setTitle(e.title || ""); setText(e.text || ""); setImg(""); setErr("");
   };
   const saveEdit = () => {
-    updateEntry(viewId, { subject: subjectLabel, topic: topicLabel, text });
+    updateEntry(viewId, { title, subject: subjectLabel, topic: topicLabel, text });
     setEntries(getEntries()); setEditing(false); resetFields();
   };
 
@@ -156,6 +192,13 @@ export default function NotebookPage() {
     const opts = chapterOpts.includes(topicLabel) || !topicLabel ? chapterOpts : [topicLabel, ...chapterOpts];
     return (
       <>
+        <input
+          className="input"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title (optional)…"
+          style={{ width: "100%", fontWeight: 600, marginBottom: 8 }}
+        />
         <div className="row" style={{ gap: 8 }}>
           <select
             className="input"
@@ -287,6 +330,7 @@ export default function NotebookPage() {
                       onClick={() => openView(e)}
                       style={{ width: "100%", textAlign: "left", cursor: "pointer", color: "inherit", padding: "12px 14px" }}
                     >
+                      {e.title && <div style={{ fontSize: "0.95rem", fontWeight: 600, marginBottom: 3 }}>{e.title}</div>}
                       <div className="muted" style={{ fontSize: "0.82rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                         {preview(e)}{e.img && (e.text || "").trim() ? " · 🖼️" : ""}
                       </div>
@@ -312,40 +356,68 @@ export default function NotebookPage() {
         </div>
       )}
 
-      {/* View / edit one entry — popup */}
+      {/* View / edit one entry — popup. Fixed header + scrollable body + a sticky
+          Prev/Next footer; swipe left/right on a phone steps through the chapter. */}
       {openEntry && (
         <div className="modal-overlay" onClick={closeView}>
-          <div className="modal glass-card" onClick={(ev) => ev.stopPropagation()}>
-            <div className="row between" style={{ alignItems: "flex-start", gap: 8, marginBottom: 16 }}>
-              <span style={{ display: "flex", gap: 8, alignItems: "baseline", flexWrap: "wrap", minWidth: 0 }}>
-                <h2 style={{ fontSize: "1.15rem", margin: 0 }}>{openEntry.subject || "Untitled"}</h2>
-                {openEntry.topic && <span className="chip" style={{ fontSize: "0.74rem" }}>{openEntry.topic}</span>}
-              </span>
-              <button className="btn btn--ghost btn--sm" onClick={closeView} aria-label="Close">✕</button>
+          <div
+            className="modal glass-card nb-view"
+            onClick={(ev) => ev.stopPropagation()}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+          >
+            <div className="nb-view__bar">
+              <div className="row between" style={{ alignItems: "flex-start", gap: 8 }}>
+                <span style={{ display: "flex", gap: 8, alignItems: "baseline", flexWrap: "wrap", minWidth: 0 }}>
+                  <h2 style={{ fontSize: "1.15rem", margin: 0 }}>{openEntry.title || openEntry.subject || "Untitled"}</h2>
+                  {openEntry.topic && <span className="chip" style={{ fontSize: "0.74rem" }}>{openEntry.topic}</span>}
+                </span>
+                <button className="btn btn--ghost btn--sm" onClick={closeView} aria-label="Close">✕</button>
+              </div>
             </div>
 
             {editing ? (
-              renderForm({ onSave: saveEdit, onCancel: () => { setEditing(false); resetFields(); }, saveLabel: "Update" })
+              <div className="nb-view__body">
+                {renderForm({ onSave: saveEdit, onCancel: () => { setEditing(false); resetFields(); }, saveLabel: "Update" })}
+              </div>
             ) : (
               <>
-                {openEntry.text && (
-                  <div style={{ fontSize: "0.95rem" }}>
-                    <Markdown>{openEntry.text}</Markdown>
+                <div className="nb-view__body">
+                  {openEntry.text && (
+                    <div style={{ fontSize: "0.95rem" }}>
+                      <Markdown>{openEntry.text}</Markdown>
+                    </div>
+                  )}
+                  {openEntry.img && (
+                    <a href={openEntry.img} target="_blank" rel="noreferrer" style={{ display: "block", marginTop: openEntry.text ? 12 : 0 }}>
+                      <img src={openEntry.img} alt="note" loading="lazy" style={{ maxWidth: "100%", borderRadius: 10, display: "block" }} />
+                    </a>
+                  )}
+                  <div className="row between mt-16" style={{ alignItems: "center" }}>
+                    <span className="muted" style={{ fontSize: "0.72rem" }}>
+                      {new Date(openEntry.createdAt).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
+                    </span>
+                    <span className="row" style={{ gap: 6 }}>
+                      <button className="btn btn--ghost btn--sm" onClick={() => startEdit(openEntry)} title="Edit">✏️ Edit</button>
+                      <button className="btn btn--ghost btn--sm" onClick={() => remove(openEntry.id)} title="Delete">🗑️ Delete</button>
+                    </span>
                   </div>
-                )}
-                {openEntry.img && (
-                  <a href={openEntry.img} target="_blank" rel="noreferrer" style={{ display: "block", marginTop: openEntry.text ? 12 : 0 }}>
-                    <img src={openEntry.img} alt="note" loading="lazy" style={{ maxWidth: "100%", borderRadius: 10, display: "block" }} />
-                  </a>
-                )}
-                <div className="row between mt-16" style={{ alignItems: "center" }}>
-                  <span className="muted" style={{ fontSize: "0.72rem" }}>
-                    {new Date(openEntry.createdAt).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
-                  </span>
-                  <span className="row" style={{ gap: 6 }}>
-                    <button className="btn btn--ghost btn--sm" onClick={() => startEdit(openEntry)} title="Edit">✏️ Edit</button>
-                    <button className="btn btn--ghost btn--sm" onClick={() => remove(openEntry.id)} title="Delete">🗑️ Delete</button>
-                  </span>
+                </div>
+
+                <div className="nb-view__nav">
+                  <button
+                    className="btn btn--ghost btn--sm"
+                    onClick={() => goRel(-1)}
+                    disabled={viewIdx <= 0}
+                    aria-label="Previous note"
+                  >‹ Prev</button>
+                  <span className="nb-view__count">{viewIdx + 1} / {chapterEntries.length}</span>
+                  <button
+                    className="btn btn--ghost btn--sm"
+                    onClick={() => goRel(1)}
+                    disabled={viewIdx < 0 || viewIdx >= chapterEntries.length - 1}
+                    aria-label="Next note"
+                  >Next ›</button>
                 </div>
               </>
             )}
