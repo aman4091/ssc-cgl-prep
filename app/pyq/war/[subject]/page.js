@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { loadWarSubject, warSubjectMeta } from "@/lib/warbank";
 import { getResume } from "@/lib/qprogress";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
+import { useDoneTabs, DoneTabBar } from "@/components/DoneControls";
 
 const PAGE = 50; // render in slices — 562 cards at once janks a phone
 
@@ -31,6 +32,8 @@ export default function WarSubjectPage() {
   useEffect(() => { setShown(PAGE); }, [chapter, subject]);
 
   const filtered = chapter === "" ? qs : qs.filter((q) => q.chapter === chapter);
+
+  const { tab, setTab, list, pendingCount, doneCount } = useDoneTabs(filtered);
 
   if (ready && !meta) {
     return (
@@ -103,8 +106,13 @@ export default function WarSubjectPage() {
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
           <>
+            <DoneTabBar tab={tab} setTab={setTab} pendingCount={pendingCount} doneCount={doneCount} />
+            {list.length === 0 ? (
+              <div className="placeholder">{tab === "done" ? "Abhi tak kuch 'ho gaya' mark nahi kiya." : "Sab ho gaye! 🎉"}</div>
+            ) : (
+            <>
             <div className="grid" style={{ gap: 14 }}>
-              {filtered.slice(0, shown).map((q, i) => (
+              {list.slice(0, shown).map((q, i) => (
                 // Read-only: these live in a static file, so no edit/delete
                 // (both write localStorage). Answering still archives to the
                 // Mistake Notebook, and "save to a chapter" still works.
@@ -117,14 +125,16 @@ export default function WarSubjectPage() {
                   chapterName={`WAR · ${meta.label}`}
                   archiveOnAnswer
                   fileToChapter
-                  allQuestions={filtered}
+                  allQuestions={list}
                 />
               ))}
             </div>
-            {shown < filtered.length && (
+            {shown < list.length && (
               <button className="btn btn--ghost btn--block mt-16" onClick={() => setShown((n) => n + PAGE)}>
-                ▼ Show {Math.min(PAGE, filtered.length - shown)} more ({shown} / {filtered.length})
+                ▼ Show {Math.min(PAGE, list.length - shown)} more ({shown} / {list.length})
               </button>
+            )}
+            </>
             )}
           </>
         )}

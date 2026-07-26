@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { loadGkIndex, loadGkTopic } from "@/lib/gkbank";
 import { getResume } from "@/lib/qprogress";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
+import { useDoneTabs, DoneTabBar } from "@/components/DoneControls";
 
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are
@@ -37,6 +38,8 @@ export default function GkTopicPage() {
   const back = topic?.subject === "english"
     ? { href: "/pyq/mirror", label: "← Mirror of Common Errors" }
     : { href: "/pyq/gktricks", label: "← GKTricks" };
+
+  const { tab, setTab, list, pendingCount, doneCount } = useDoneTabs(qs);
 
   if (ready && !topic) {
     return (
@@ -87,8 +90,13 @@ export default function GkTopicPage() {
           <div className="placeholder">Is topic mein koi question nahi. 🤔</div>
         ) : (
           <>
+            <DoneTabBar tab={tab} setTab={setTab} pendingCount={pendingCount} doneCount={doneCount} />
+            {list.length === 0 ? (
+              <div className="placeholder">{tab === "done" ? "Abhi tak kuch 'ho gaya' mark nahi kiya." : "Sab ho gaye! 🎉"}</div>
+            ) : (
+            <>
             <div className="grid" style={{ gap: 14 }}>
-              {qs.slice(0, shown).map((q, i) => (
+              {list.slice(0, shown).map((q, i) => (
                 <PyqQuestionCard
                   resumeKey={resumeKey}
                   key={q.id || i}
@@ -98,14 +106,16 @@ export default function GkTopicPage() {
                   chapterName={topic?.chapter || topic?.label}
                   archiveOnAnswer
                   fileToChapter
-                  allQuestions={qs}
+                  allQuestions={list}
                 />
               ))}
             </div>
-            {shown < qs.length && (
+            {shown < list.length && (
               <button className="btn btn--ghost btn--block mt-16" onClick={() => setShown((n) => n + PAGE)}>
-                ▼ Show {Math.min(PAGE, qs.length - shown)} more ({shown} / {qs.length})
+                ▼ Show {Math.min(PAGE, list.length - shown)} more ({shown} / {list.length})
               </button>
+            )}
+            </>
             )}
           </>
         )}

@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { loadSscMathsChapter, sscMathsChapterMeta } from "@/lib/sscmaths";
 import { getResume } from "@/lib/qprogress";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
+import { useDoneTabs, DoneTabBar } from "@/components/DoneControls";
 
 // One chapter's questions, full width.
 //
@@ -42,6 +43,8 @@ export default function SscMathsChapterPage() {
         (q.options || []).some((o) => String(o).toLowerCase().includes(t))
     );
   }, [qs, query]);
+
+  const { tab, setTab, list, pendingCount, doneCount } = useDoneTabs(filtered);
 
   if (ready && !meta) {
     return (
@@ -94,8 +97,13 @@ export default function SscMathsChapterPage() {
           <div className="placeholder">{query ? "Kuch nahi mila." : "Is chapter mein koi question nahi."}</div>
         ) : (
           <>
+            <DoneTabBar tab={tab} setTab={setTab} pendingCount={pendingCount} doneCount={doneCount} />
+            {list.length === 0 ? (
+              <div className="placeholder">{tab === "done" ? "Abhi tak kuch 'ho gaya' mark nahi kiya." : "Sab ho gaye! 🎉"}</div>
+            ) : (
+            <>
             <div className="grid" style={{ gap: 14 }}>
-              {filtered.slice(0, shown).map((q, i) => (
+              {list.slice(0, shown).map((q, i) => (
                 <PyqQuestionCard
                   resumeKey={resumeKey}
                   key={q.id}
@@ -104,14 +112,16 @@ export default function SscMathsChapterPage() {
                   subject="math"
                   chapterName={`Maths 2025 · ${meta?.label || ""}`}
                   archiveOnAnswer
-                  allQuestions={filtered}
+                  allQuestions={list}
                 />
               ))}
             </div>
-            {shown < filtered.length && (
+            {shown < list.length && (
               <button className="btn btn--ghost btn--block mt-16" onClick={() => setShown((n) => n + PAGE)}>
-                ▼ Show {Math.min(PAGE, filtered.length - shown)} more ({shown} / {filtered.length})
+                ▼ Show {Math.min(PAGE, list.length - shown)} more ({shown} / {list.length})
               </button>
+            )}
+            </>
             )}
           </>
         )}

@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { loadReasonChapter, reasonChapterMeta } from "@/lib/reasonbank";
 import { getResume } from "@/lib/qprogress";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
+import { useDoneTabs, DoneTabBar } from "@/components/DoneControls";
 
 const PAGE = 20; // each question is several images — page in small slices
 
@@ -26,6 +27,8 @@ export default function ReasonbankChapterPage() {
     })();
     return () => { alive = false; };
   }, [chapter]);
+
+  const { tab, setTab, list, pendingCount, doneCount } = useDoneTabs(qs);
 
   if (ready && !meta) {
     return (
@@ -75,18 +78,25 @@ export default function ReasonbankChapterPage() {
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
           <>
+            <DoneTabBar tab={tab} setTab={setTab} pendingCount={pendingCount} doneCount={doneCount} />
+            {list.length === 0 ? (
+              <div className="placeholder">{tab === "done" ? "Abhi tak kuch 'ho gaya' mark nahi kiya." : "Sab ho gaye! 🎉"}</div>
+            ) : (
+            <>
             {/* minmax(0,1fr): the base .grid is a single auto column that grows to
                 its widest child, and a wide crop would drag the whole page
                 sideways. This bounds the column to the container. */}
             <div className="grid" style={{ gap: 14, gridTemplateColumns: "minmax(0, 1fr)" }}>
-              {qs.slice(0, shown).map((q, i) => (
-                <ReasonQuestionCard key={q.id} q={q} index={i} subject="reasoning" resumeKey={resumeKey} chapterName={`Pinnacle Reasoning · ${meta.label}`} allQuestions={qs} />
+              {list.slice(0, shown).map((q, i) => (
+                <ReasonQuestionCard key={q.id} q={q} index={i} subject="reasoning" resumeKey={resumeKey} chapterName={`Pinnacle Reasoning · ${meta.label}`} allQuestions={list} />
               ))}
             </div>
-            {shown < qs.length && (
+            {shown < list.length && (
               <button className="btn btn--ghost btn--block mt-16" onClick={() => setShown((n) => n + PAGE)}>
-                ▼ Show {Math.min(PAGE, qs.length - shown)} more ({shown} / {qs.length})
+                ▼ Show {Math.min(PAGE, list.length - shown)} more ({shown} / {list.length})
               </button>
+            )}
+            </>
             )}
           </>
         )}

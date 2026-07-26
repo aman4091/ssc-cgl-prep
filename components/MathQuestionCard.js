@@ -14,6 +14,7 @@ import AskElsewhere from "./AskElsewhere";
 import PasteAnswer from "./PasteAnswer";
 import QTimer from "./QTimer";
 import FullscreenTestButton from "./FullscreenTestButton";
+import { DoneButton } from "./DoneControls";
 
 // A maths question is IMAGES — the stem, four options and the solution are PNG→
 // WebP crops on the R2 CDN, because maths does not survive being flattened to
@@ -227,6 +228,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
           </span>
           <button className="btn btn--ghost btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
+          <DoneButton q={q} />
         </div>
       </div>
 

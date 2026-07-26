@@ -14,6 +14,7 @@ import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
 import QTimer from "./QTimer";
 import FullscreenTestButton from "./FullscreenTestButton";
+import { DoneButton } from "./DoneControls";
 
 // A reasoning question is IMAGES — MathQuestionCard's twin (same answer/reveal/
 // archive/bookmark machinery, same shortcut / 20-similar / ask buttons), with
@@ -145,6 +146,7 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
           {aiUseful && <span className="q-act--keep"><AskButtons q={tq} subject={subject} /></span>}
           <button className="btn btn--ghost btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
+          <DoneButton q={q} />
         </div>
       </div>
 

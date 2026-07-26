@@ -1492,6 +1492,44 @@ label.glass-card:hover { border-color: var(--accent2); }
   vertical-align: middle;
 }
 
+/* ===== Baaki / Ho gaye tabs — split a bank into pending vs done ===== */
+.done-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.done-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--bg);
+  color: var(--text-2);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+.done-tab:hover { color: var(--text-1); }
+.done-tab--on {
+  border-color: var(--accent);
+  background: var(--accent-wash);
+  color: var(--text-1);
+}
+.done-tab__n {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--glass-border);
+  color: var(--text-2);
+}
+.done-tab--on .done-tab__n { background: var(--accent); color: #fff; }
+
 /* ===== Theory / Notes image gallery ===== */
 .notes-grid {
   display: grid;

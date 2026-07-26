@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { loadErrorProChapter, errorProChapterMeta } from "@/lib/errorprobank";
 import { getResume } from "@/lib/qprogress";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
+import { useDoneTabs, DoneTabBar } from "@/components/DoneControls";
 
 const PAGE = 25;
 
@@ -42,6 +43,8 @@ export default function ErrorProChapterPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resumeKey, ready]);
 
+  const { tab, setTab, list, pendingCount, doneCount } = useDoneTabs(qs);
+
   if (ready && !meta) {
     return (
       <section className="hero">
@@ -71,8 +74,13 @@ export default function ErrorProChapterPage() {
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
           <>
+            <DoneTabBar tab={tab} setTab={setTab} pendingCount={pendingCount} doneCount={doneCount} />
+            {list.length === 0 ? (
+              <div className="placeholder">{tab === "done" ? "Abhi tak kuch 'ho gaya' mark nahi kiya." : "Sab ho gaye! 🎉"}</div>
+            ) : (
+            <>
             <div className="grid" style={{ gap: 14 }}>
-              {qs.slice(0, shown).map((q, i) => (
+              {list.slice(0, shown).map((q, i) => (
                 // Read-only: a static bank has nothing to write back to, so no
                 // edit/delete. Answering still archives to the Mistake Notebook.
                 <PyqQuestionCard
@@ -84,14 +92,16 @@ export default function ErrorProChapterPage() {
                   chapterName={`Error Pro · ${meta.label}`}
                   archiveOnAnswer
                   fileToChapter
-                  allQuestions={qs}
+                  allQuestions={list}
                 />
               ))}
             </div>
-            {shown < qs.length && (
+            {shown < list.length && (
               <button className="btn btn--ghost btn--block mt-16" onClick={() => setShown((n) => n + PAGE)}>
-                ▼ Show {Math.min(PAGE, qs.length - shown)} more ({shown} / {qs.length})
+                ▼ Show {Math.min(PAGE, list.length - shown)} more ({shown} / {list.length})
               </button>
+            )}
+            </>
             )}
           </>
         )}
