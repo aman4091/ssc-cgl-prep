@@ -82,11 +82,16 @@ export default function FullscreenRunner({
     if (submitted) return;
     // bank the time spent on the question you're finishing on
     setTimes((t) => ({ ...t, [cur]: (t[cur] || 0) + (Date.now() - qStartRef.current) / 1000 }));
+    // Whole-test clock ran out: every unanswered question counts as a time-loss —
+    // those 16 untouched questions ARE the mistake, so they go to the Notebook
+    // tagged "time". A manual early Submit keeps the old behavior (untouched are
+    // skipped), so ending a session early doesn't flood the review list.
+    const timeUp = !!(deadline && Date.now() >= deadline - 500);
     if (subject !== undefined) {
       const items = [];
       questions.forEach((qq, i) => {
         const answered = answers[i] !== undefined;
-        const timedOut = !!timedOutQs[i];
+        const timedOut = !!timedOutQs[i] || (!answered && timeUp);
         if (!answered && !timedOut) return; // never reached / untouched — skip
         const p = projection(qq);
         const correct = answered ? answers[i] === qq.answer : false; // time-up = wrong
