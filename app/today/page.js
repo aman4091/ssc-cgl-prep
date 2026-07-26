@@ -43,7 +43,7 @@ function SecBadge({ sec }) {
 
 function BlockCard({ block, done, onToggle }) {
   return (
-    <div className="glass-card target-card" style={done ? { opacity: 0.55 } : undefined}>
+    <div className="glass-card target-card" style={done ? { opacity: 0.55 } : block.core ? { borderColor: "var(--accent)" } : undefined}>
       <div className="row" style={{ gap: 12, alignItems: "flex-start" }}>
         <button
           className={"chk__box" + (done ? " is-on" : "")}
@@ -55,7 +55,14 @@ function BlockCard({ block, done, onToggle }) {
         </button>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="row between" style={{ gap: 8 }}>
-            <SecBadge sec={block.sec} />
+            <span>
+              <SecBadge sec={block.sec} />
+              {block.core && (
+                <span className="badge" style={{ marginLeft: 6, color: "var(--accent)", background: "var(--accent-wash)", border: "none", fontSize: "0.66rem", fontWeight: 800 }}>
+                  CORE
+                </span>
+              )}
+            </span>
             <span className="muted" style={{ fontSize: "0.72rem", whiteSpace: "nowrap" }}>{block.min} min</span>
           </div>
           <div style={{ fontWeight: 700, margin: "4px 0 2px", textDecoration: done ? "line-through" : "none" }}>
@@ -141,6 +148,10 @@ export default function TodayPage() {
   const minDone = p.blocks.reduce((a, b, i) => a + (done[i] ? b.min : 0), 0);
   const streak = planStreak(st);
   const pct = Math.round((doneCount / p.blocks.length) * 100);
+  // CORE pehle render hote hain (original index done-tracking ke liye saath rakha)
+  const ordered = p.blocks.map((b, i) => ({ b, i })).sort((a, z) => (z.b.core ? 1 : 0) - (a.b.core ? 1 : 0));
+  const coreTotal = p.blocks.filter((b) => b.core).length;
+  const coreDone = p.blocks.reduce((a, b, i) => a + (b.core && done[i] ? 1 : 0), 0);
 
   return (
     <>
@@ -194,9 +205,25 @@ export default function TodayPage() {
         <div className="progress" style={{ marginBottom: 10 }}>
           <div className="progress__bar" style={{ width: pct + "%" }} />
         </div>
+        {coreTotal > 0 && (
+          <p className="hint" style={{ marginBottom: 4 }}>
+            <strong style={{ color: coreDone >= coreTotal ? "var(--ok)" : "var(--accent)" }}>
+              CORE {coreDone}/{coreTotal}
+            </strong>
+            {" — pehle sirf yeh. Yeh ho gaye = aaj ka din COUNT hua. Baaki sab bonus hai."}
+          </p>
+        )}
         <p className="hint" style={{ marginBottom: 14 }}>{p.why}</p>
 
-        {p.blocks.map((b, i) => (
+        {coreTotal > 0 && coreDone >= coreTotal && doneCount < p.blocks.length && (
+          <div className="glass-card" style={{ padding: "10px 14px", marginBottom: 12, borderColor: "var(--ok)" }}>
+            <span style={{ color: "var(--ok)", fontWeight: 700, fontSize: "0.85rem" }}>
+              ✓ CORE poora — aaj ka din COUNT ho gaya. Ab jo karega, upar se hai.
+            </span>
+          </div>
+        )}
+
+        {ordered.map(({ b, i }) => (
           <BlockCard
             key={i}
             block={b}
