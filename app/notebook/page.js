@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "@/components/Markdown";
 import {
   getEntries, addEntry, updateEntry, deleteEntry, compressImage, fileLegacyEntries,
+  restoreTitlesFromBackup, readFilingBackup,
 } from "@/lib/notebook";
 import { NB_SUBJECTS, subjectByLabel, chaptersFor } from "@/lib/notebookTaxonomy";
 
@@ -31,15 +32,27 @@ export default function NotebookPage() {
   const fileRef = useRef(null);
   const touchRef = useRef(null); // swipe start point for the note popup
 
-  // File the legacy flat notes into English › Noun once, then load.
+  const [hasBackup, setHasBackup] = useState(false);
+
+  // File the legacy flat notes into English › Noun once, heal any titles an early
+  // filing dropped (from the local backup), then load.
   useEffect(() => {
     fileLegacyEntries();
+    restoreTitlesFromBackup();
     const list = getEntries();
     setEntries(list);
+    setHasBackup(readFilingBackup().length > 0);
     // Land on the first subject that actually has notes, so it isn't an empty screen.
     const withNotes = NB_SUBJECTS.find((s) => list.some((e) => e.subject === s.label));
     if (withNotes) setSubjectKey(withNotes.key);
   }, []);
+
+  const recoverTitles = () => {
+    const { hadBackup, restored } = restoreTitlesFromBackup();
+    setEntries(getEntries());
+    if (!hadBackup) alert("Is device pe backup nahi mila — titles yahan se recover nahi ho paaye.");
+    else alert(restored ? `${restored} note ke title wapas aa gaye.` : "Sab titles pehle se set hain.");
+  };
 
   // Lock the page scroll while a popup (view or composer) is open.
   useEffect(() => {
@@ -270,6 +283,11 @@ export default function NotebookPage() {
           Left se subject chuno, phir chapter — us chapter ke saare notes yahin dikhenge.
           ＋ Add se note ya image daalo. Har device pe sync.
         </p>
+        {hasBackup && (
+          <button className="btn btn--ghost btn--sm mt-8" onClick={recoverTitles} title="Purane titles wapas laao">
+            🩹 Purane titles recover karo
+          </button>
+        )}
       </section>
 
       <section className="section">
