@@ -2241,11 +2241,6 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .nb-subj.is-active { background: var(--accent-wash); border-color: var(--accent); color: var(--text-1); }
 .nb-subj__icon { font-size: 1.35rem; line-height: 1; }
 .nb-subj__label { font-size: 0.72rem; text-align: center; }
-.nb-subj__count {
-  position: absolute; top: -6px; right: -6px; min-width: 18px; height: 18px;
-  padding: 0 5px; border-radius: 999px; background: var(--accent); color: #fff;
-  font-size: 0.66rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
-}
 
 /* Phone: the left rail eats the width and squashes the notes. Drop to one column
    and lay the subjects out as a horizontal strip ON TOP, so the notes get the
@@ -2261,7 +2256,6 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
   .nb-subj { padding: 8px 4px; border-radius: 12px; gap: 2px; }
   .nb-subj__icon { font-size: 1.15rem; }
   .nb-subj__label { font-size: 0.72rem; }
-  .nb-subj__count { top: -5px; right: -3px; }
 }
 
 .nb-main { min-width: 0; }
@@ -2281,6 +2275,19 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 }
 .nb-chapter__name { font-size: 0.92rem; font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
 .nb-chapter__meta { display: inline-flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+/* A note row in a chapter. min-width:0 so, as a grid item, it can shrink to the
+   column instead of stretching to its text — the old nowrap preview ran off the
+   right of a phone. The preview now wraps to two lines and ellipses. */
+.nb-note {
+  width: 100%; min-width: 0; text-align: left; cursor: pointer; color: inherit;
+  padding: 12px 14px;
+}
+.nb-note__title { font-size: 0.95rem; font-weight: 600; margin-bottom: 3px; overflow-wrap: anywhere; }
+.nb-note__preview {
+  font-size: 0.9rem; line-height: 1.45; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
 
 /* The note popup: header pinned on top, note scrolls in the middle, and a Prev/Next
    bar pinned at the bottom (never scrolls). Same split as .pocket-modal — capped

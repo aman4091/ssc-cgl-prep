@@ -63,14 +63,7 @@ export default function NotebookPage() {
 
   const subject = NB_SUBJECTS.find((s) => s.key === subjectKey) || NB_SUBJECTS[0];
 
-  // Count notes per subject and per chapter of the open subject.
   const byEntry = entries || [];
-  const subjectCounts = useMemo(() => {
-    const m = {};
-    for (const s of NB_SUBJECTS) m[s.label] = 0;
-    for (const e of byEntry) if (e.subject in m) m[e.subject] += 1;
-    return m;
-  }, [byEntry]);
 
   // Chapters to show for the open subject: the fixed list, PLUS any orphan topic
   // that has notes but isn't in the list (so nothing filed under an old label hides).
@@ -191,7 +184,7 @@ export default function NotebookPage() {
 
   const preview = (e) => {
     const t = (e.text || "").replace(/\s+/g, " ").trim();
-    if (t) return t.length > 90 ? t.slice(0, 90) + "…" : t;
+    if (t) return t.length > 160 ? t.slice(0, 160) + "…" : t;
     if (e.img) return "🖼️ Image";
     return "—";
   };
@@ -305,7 +298,6 @@ export default function NotebookPage() {
                 >
                   <span className="nb-subj__icon">{s.icon}</span>
                   <span className="nb-subj__label">{s.label}</span>
-                  {subjectCounts[s.label] > 0 && <span className="nb-subj__count">{subjectCounts[s.label]}</span>}
                 </button>
               ))}
             </aside>
@@ -344,12 +336,11 @@ export default function NotebookPage() {
                   {chapterEntries.map((e) => (
                     <button
                       key={e.id}
-                      className="glass-card"
+                      className="glass-card nb-note"
                       onClick={() => openView(e)}
-                      style={{ width: "100%", textAlign: "left", cursor: "pointer", color: "inherit", padding: "12px 14px" }}
                     >
-                      {e.title && <div style={{ fontSize: "0.95rem", fontWeight: 600, marginBottom: 3 }}>{e.title}</div>}
-                      <div className="muted" style={{ fontSize: "0.82rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      {e.title && <div className="nb-note__title">{e.title}</div>}
+                      <div className="muted nb-note__preview">
                         {preview(e)}{e.img && (e.text || "").trim() ? " · 🖼️" : ""}
                       </div>
                     </button>
