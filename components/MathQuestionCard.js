@@ -206,7 +206,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
         <div className="q-head__actions">
           <QTimer q={tq} answered={picked !== null} onRestart={reattempt} />
           {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
-          {Array.isArray(allQuestions) && allQuestions.length > 1 && (
+          {Array.isArray(allQuestions) && allQuestions.length >= 1 && (
             <FullscreenTestButton
               questions={allQuestions}
               startIndex={allQuestions.indexOf(q)}

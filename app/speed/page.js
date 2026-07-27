@@ -7,7 +7,6 @@ import { SPEED_BUCKETS, SPEED_SUBJECTS, getBuckets, speedCounts } from "@/lib/qs
 import { imagesOf } from "@/lib/wrongbook";
 import MathQuestionCard from "@/components/MathQuestionCard";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
-import FullscreenTestButton from "@/components/FullscreenTestButton";
 
 // ⏱ Speed Buckets — Maths & Reasoning.
 //
@@ -120,17 +119,8 @@ function SpeedPage() {
                         <div className="placeholder" style={{ padding: 16 }}>Is bucket mein kuch nahi.</div>
                       ) : (
                         <>
-                          {qs.length >= 1 && (
-                            <div className="row mb-8" style={{ gap: 8, flexWrap: "wrap" }}>
-                              <FullscreenTestButton
-                                questions={qs}
-                                subject={subject}
-                                title={`Speed · ${b.short}`}
-                                label={qs.length > 1 ? `⛶ Poore bucket (${qs.length}) ko dobara lagao` : "⛶ Full-screen mein lagao"}
-                                titleAttr="In questions ko full-screen mein re-attempt karo — naya time record hoga, bucket apne-aap update hoga"
-                              />
-                            </div>
-                          )}
+                          {/* Fullscreen ab har question card ke action-row mein (⛶,
+                              Gemini ke bagal, chota) — bada bucket-button hata diya. */}
                           <div className="grid" style={{ gap: 14, gridTemplateColumns: "minmax(0, 1fr)" }}>
                             {items.map((it, i) =>
                               it.kind === "wb" ? (
