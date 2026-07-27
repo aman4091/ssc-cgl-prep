@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { stats } from "@/lib/srs";
+import { stats, syncWrongBook } from "@/lib/srs";
 
 // CORE-style Revision reminder for /today — "Aaj ka Revision: N cards" → /review.
 export default function RevisionTodayCard() {
   const [s, setS] = useState(null);
   useEffect(() => {
-    const refresh = () => setS(stats());
+    const refresh = () => { syncWrongBook(); setS(stats()); };
     refresh();
     window.addEventListener("cgl:srs-changed", refresh);
     return () => window.removeEventListener("cgl:srs-changed", refresh);

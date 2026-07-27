@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { SPEED_BUCKETS, SPEED_SUBJECTS, getBuckets, speedCounts } from "@/lib/qspeed";
 import { imagesOf } from "@/lib/wrongbook";
 import MathQuestionCard from "@/components/MathQuestionCard";
@@ -15,12 +16,29 @@ import FullscreenTestButton from "@/components/FullscreenTestButton";
 // sahi karo to apne-aap tez bucket mein aa jaata hai. Skip/galat aur Wrong Book
 // ke us subject ke questions "over 2 min" bucket mein.
 
-export default function SpeedPage() {
+export default function SpeedPageWrapper() {
+  return (
+    <Suspense fallback={<section className="section"><div className="placeholder">Loading…</div></section>}>
+      <SpeedPage />
+    </Suspense>
+  );
+}
+
+function SpeedPage() {
+  const sp = useSearchParams();
   const [subject, setSubject] = useState("math");
   const [buckets, setBuckets] = useState(null);
   const [counts, setCounts] = useState({ total: 0 });
   const [open, setOpen] = useState(null); // expanded bucket key
   const [ver, setVer] = useState(0);
+
+  // Nav se aane par seedha us subject + bracket pe khulo.
+  useEffect(() => {
+    const s = sp.get("subject");
+    const b = sp.get("bucket");
+    if (s === "math" || s === "reasoning") setSubject(s);
+    if (b) setOpen(b);
+  }, [sp]);
 
   useEffect(() => {
     setBuckets(getBuckets(subject));

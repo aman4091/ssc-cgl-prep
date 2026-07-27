@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  todayIndex, weakDue, getConfig, stats, getBookmarked, getHistory, getDone20,
+  todayIndex, weakDue, getConfig, stats, getBookmarked, getHistory, getDone20, syncWrongBook,
 } from "@/lib/srs";
 import { pullFreshCoverage, coverageQuota, coverageProgress } from "@/lib/coverage";
 import RevisionDeck from "@/components/RevisionDeck";
@@ -35,6 +35,7 @@ export default function ReviewPage() {
   const [ver, setVer] = useState(0);
 
   const refreshStats = useCallback(() => {
+    syncWrongBook(); // Wrong-Book GS/English -> weak pool
     setSt(stats());
     coverageProgress().then(setCov).catch(() => {});
   }, []);
