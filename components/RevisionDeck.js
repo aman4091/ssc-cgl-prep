@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "./Markdown";
 import { markSeen, toggleBookmark, isBookmarked, enroll } from "@/lib/srs";
+import GeminiFlashButton from "./GeminiFlashButton";
 
 // Flashcard runner for the Revision deck. Ek card ek baar mein — question/word
 // dikho, dimaag mein recall karo, "Dikha" dabao (reveal), phir "Aage". Har weak
@@ -125,7 +126,10 @@ export default function RevisionDeck({ deck, onDone, title = "Aaj ka Revision" }
       <article className="glass-card flash-card">
         <div className="row between" style={{ marginBottom: 8 }}>
           <span className="badge">{card.weak ? "🔁 Revision" : "🆕 Naya (coverage)"}</span>
-          <button className="btn btn--ghost btn--sm" onClick={toggleBk} title="Baad mein dekhne ke liye save" style={bk ? { color: "var(--warning)" } : {}}>{bk ? "🔖" : "🔖"}</button>
+          <span className="row" style={{ gap: 6 }}>
+            <GeminiFlashButton card={card} />
+            <button className="btn btn--ghost btn--sm" onClick={toggleBk} title="Baad mein dekhne ke liye save" style={bk ? { color: "var(--warning)" } : {}}>🔖</button>
+          </span>
         </div>
         <CardFace card={card} revealed={revealed} />
       </article>
