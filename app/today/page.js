@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import PlanPractice from "@/components/PlanPractice";
+import RevisionTodayCard from "@/components/RevisionTodayCard";
 import {
   PLAN, MOCK_DAYS, BASELINE, TARGETS, SEC_META, QA_TYPE_LIST,
   getPlanner, setStartDate, toggleBlock, setQaRating, currentDayNum, dayCompletion, planStreak,
@@ -133,6 +134,7 @@ export default function TodayPage() {
               Shuru karo →
             </button>
           </div>
+          <RevisionTodayCard />
         </section>
       </>
     );
@@ -170,6 +172,10 @@ export default function TodayPage() {
         <p className="hero__sub">
           {p.phase} · {fmtDate(st.startDate, n)}{!isToday && today >= 1 && today <= 40 ? " · (aaj Day " + today + " hai)" : ""}
         </p>
+      </section>
+
+      <section className="section" style={{ paddingTop: 0 }}>
+        <RevisionTodayCard />
       </section>
 
       <section className="section">

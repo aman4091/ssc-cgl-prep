@@ -1554,6 +1554,40 @@ label.glass-card:hover { border-color: var(--accent2); }
 .speed-bucket__chev { color: var(--text-2); font-size: 0.7rem; flex: none; }
 .speed-bucket__body { padding: 4px 12px 16px; border-top: 1px solid var(--glass-border); }
 
+/* ===== Revision (Feature A: SRS flashcards) ===== */
+.srs-stats { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.srs-stat {
+  flex: 1; min-width: 90px; text-align: center; padding: 12px 8px;
+  border: 1px solid var(--glass-border); border-radius: 14px; background: var(--bg);
+}
+.srs-stat__n { display: block; font-size: 1.5rem; font-weight: 800; color: var(--text-1); }
+.srs-stat__l { display: block; font-size: 0.76rem; color: var(--text-2); margin-top: 2px; }
+
+.flash-deck { max-width: 640px; margin: 16px auto 0; }
+.flash-card { min-height: 220px; }
+.flash-face { display: flex; flex-direction: column; gap: 10px; }
+.flash-kind { font-size: 0.76rem; font-weight: 700; color: var(--text-2); }
+.flash-word { font-size: 1.8rem; font-weight: 800; margin: 4px 0; }
+.flash-q { font-size: 1.15rem; font-weight: 600; line-height: 1.5; }
+.flash-meaning { font-size: 1.05rem; color: var(--text-1); }
+.flash-opts { display: flex; flex-direction: column; gap: 8px; }
+.flash-opt {
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+  border: 1px solid var(--glass-border); border-radius: 10px; color: var(--text-1);
+}
+.flash-opt.is-correct { border-color: var(--success); background: color-mix(in srgb, var(--success) 12%, transparent); }
+.flash-opt strong { opacity: 0.6; flex: none; }
+.flash-opt span { flex: 1; min-width: 0; }
+.flash-tick { color: var(--success); font-weight: 700; }
+.flash-reveal {
+  margin-top: 6px; padding-top: 10px; border-top: 1px dashed var(--glass-border);
+  animation: flashIn 0.18s ease;
+}
+@keyframes flashIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.srs-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; }
+.srs-row__t { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
 /* ===== Theory / Notes image gallery ===== */
 .notes-grid {
   display: grid;

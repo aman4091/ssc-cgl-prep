@@ -17,6 +17,7 @@ import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
 import QTimer from "./QTimer";
 import FullscreenTestButton from "./FullscreenTestButton";
+import ReviseButton from "./ReviseButton";
 import { DoneButton } from "./DoneControls";
 
 // One PYQ / chapter question shown as an interactive quiz card:
@@ -136,6 +137,9 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
           {onEdit && !editing && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
           <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
           <DoneButton q={q} />
+          {(subject === "english" || subject === "gs") && (
+            <ReviseButton item={q} kind="q" category={chapterName || subject} subject={subject} />
+          )}
           {onDelete && <button className="btn btn--ghost btn--sm" onClick={onDelete}>✕</button>}
         </div>
       </div>
