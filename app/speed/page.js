@@ -120,14 +120,14 @@ function SpeedPage() {
                         <div className="placeholder" style={{ padding: 16 }}>Is bucket mein kuch nahi.</div>
                       ) : (
                         <>
-                          {qs.length > 1 && (
+                          {qs.length >= 1 && (
                             <div className="row mb-8" style={{ gap: 8, flexWrap: "wrap" }}>
                               <FullscreenTestButton
                                 questions={qs}
                                 subject={subject}
                                 title={`Speed · ${b.short}`}
-                                label={`⛶ In ${qs.length} ko dobara lagao`}
-                                titleAttr="Is bucket ke questions full-screen mein re-attempt karo — naya time record hoga"
+                                label={qs.length > 1 ? `⛶ Poore bucket (${qs.length}) ko dobara lagao` : "⛶ Full-screen mein lagao"}
+                                titleAttr="In questions ko full-screen mein re-attempt karo — naya time record hoga, bucket apne-aap update hoga"
                               />
                             </div>
                           )}
