@@ -6,6 +6,7 @@ import Diagram from "./Diagram";
 import { recordAttempts, keyFor } from "@/lib/qstats";
 import { logActivity } from "@/lib/activity";
 import { addReview, setReviewErrorType } from "@/lib/qreview";
+import { recordSpeed } from "@/lib/qspeed";
 
 // Distraction-free, one-question-at-a-time TEST view that fills the whole screen.
 // It works for EVERY bank because a question is either text (q.question/options/
@@ -58,8 +59,18 @@ export default function FullscreenRunner({
   const qTimeoutRef = useRef(null);
 
   // Per-question time spent — so the report can show ⏱ time-per-question.
-  const [times, setTimes] = useState({});    // index -> seconds accumulated
+  // timesRef is the source of truth (a ref, so React batching/StrictMode can't
+  // strand a bank in a stale closure — the old bug where the report read 0s).
+  // `times` state is just a mirror kept in sync for rendering.
+  const [times, setTimes] = useState({});    // index -> seconds accumulated (mirror of timesRef)
+  const timesRef = useRef({});               // index -> seconds accumulated (authoritative)
   const qStartRef = useRef(Date.now());      // when the current question was entered
+
+  // Which questions you actually opened. A manual Submit only records the ones
+  // you visited — the questions you never reached (Q26–200 after starting at Q10)
+  // do NOT flood the speed tracker. On a whole-test timeout the leftovers DO count.
+  const clampIdx = Math.min(Math.max(0, startIndex), Math.max(0, questions.length - 1));
+  const visitedRef = useRef(new Set([clampIdx]));
 
   const total = questions.length;
   const q = questions[cur];
@@ -80,13 +91,16 @@ export default function FullscreenRunner({
 
   const finish = () => {
     if (submitted) return;
-    // bank the time spent on the question you're finishing on
-    setTimes((t) => ({ ...t, [cur]: (t[cur] || 0) + (Date.now() - qStartRef.current) / 1000 }));
+    // bank the time spent on the question you're finishing on (ref = source of truth)
+    timesRef.current[cur] = (timesRef.current[cur] || 0) + (Date.now() - qStartRef.current) / 1000;
+    setTimes({ ...timesRef.current });
     // Whole-test clock ran out: every unanswered question counts as a time-loss —
     // those 16 untouched questions ARE the mistake, so they go to the Notebook
     // tagged "time". A manual early Submit keeps the old behavior (untouched are
     // skipped), so ending a session early doesn't flood the review list.
     const timeUp = !!(deadline && Date.now() >= deadline - 500);
+    // Speed buckets are for Maths & Reasoning only.
+    const speedSub = subject === "math" || subject === "reasoning" ? subject : null;
     if (subject !== undefined) {
       const items = [];
       questions.forEach((qq, i) => {
@@ -110,6 +124,18 @@ export default function FullscreenRunner({
         });
       }
     }
+    // Speed-bucket capture (Maths/Reasoning): record VISITED questions only, so a
+    // manual Submit at Q25 never drags in Q26–200. On a whole-test timeout the
+    // remaining questions from startIndex onward DO count (they ran out of time).
+    if (speedSub) {
+      questions.forEach((qq, i) => {
+        const answered = answers[i] !== undefined;
+        const reached = visitedRef.current.has(i) || (timeUp && i >= clampIdx);
+        if (!reached) return;                                   // never opened → ignore
+        const correct = answered && answers[i] === qq.answer;   // skip/wrong → over2
+        recordSpeed(qq, { sec: timesRef.current[i] || 0, correct, subject: speedSub });
+      });
+    }
     // reveal everything for the review pass
     const all = {};
     questions.forEach((_, i) => { all[i] = true; });
@@ -121,15 +147,18 @@ export default function FullscreenRunner({
 
   // Bank the seconds spent on the current question and restart its clock. Called
   // explicitly on every navigation (not via an effect — batching/StrictMode made
-  // effect-based commits misattribute the time to the wrong question).
+  // effect-based commits misattribute the time to the wrong question). Writes the
+  // ref first (authoritative) and mirrors it into state for the report.
   const commitQTime = () => {
-    setTimes((t) => ({ ...t, [cur]: (t[cur] || 0) + (Date.now() - qStartRef.current) / 1000 }));
+    timesRef.current[cur] = (timesRef.current[cur] || 0) + (Date.now() - qStartRef.current) / 1000;
+    setTimes({ ...timesRef.current });
     qStartRef.current = Date.now();
   };
   // Go to another question, banking the leaving question's time while attempting.
   const goToQ = (idx) => {
     if (idx === cur || idx < 0 || idx >= total) return;
     if (submitted === false) commitQTime();
+    visitedRef.current.add(idx);
     setCur(idx);
   };
 
@@ -198,6 +227,7 @@ export default function FullscreenRunner({
     setAnswers({}); setRevealed({}); setSubmitted(false);
     setCur(0); startRef.current = Date.now(); setNow(Date.now());
     setTimedOutQs({}); setTimes({});
+    timesRef.current = {}; visitedRef.current = new Set([0]);
     qStartRef.current = Date.now();
     if (perQSec) setQDeadline(Date.now() + perQSec * 1000);
   };
