@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "./Markdown";
 import { markSeen, toggleBookmark, isBookmarked, enroll } from "@/lib/srs";
 import GeminiFlashButton from "./GeminiFlashButton";
+import FlashAnswer from "./FlashAnswer";
 
 // Flashcard runner for the Revision deck. Ek card ek baar mein — question/word
 // dikho, dimaag mein recall karo, "Dikha" dabao (reveal), phir "Aage". Har weak
@@ -44,10 +45,10 @@ function CardFace({ card, revealed }) {
           <img key={im.url} src={im.url} alt="question" className="math-img" />
         ))}
         {ref?.note && <p className="muted" style={{ marginTop: 6 }}>{ref.note}</p>}
+        {/* Wrong-Book image Qs ka answer neeche FlashAnswer (paste/saved) sambhalta.
+            Yahan sirf chhota built-in answer, agar record mein tha. */}
         {revealed && ref?.answer && (
-          <div className="flash-reveal"><strong style={{ color: "var(--success)" }}>Ans:</strong> {ref.answer}
-            {ref.detail && <div className="mt-8"><Markdown>{ref.detail}</Markdown></div>}
-          </div>
+          <div className="flash-reveal"><strong style={{ color: "var(--success)" }}>Ans:</strong> {ref.answer}</div>
         )}
       </div>
     );
@@ -83,6 +84,7 @@ export default function RevisionDeck({ deck, onDone, title = "Aaj ka Revision" }
   const [i, setI] = useState(0);
   const [revealed, setRevealed] = useState(false);
   const [bk, setBk] = useState(false);
+  const [ansVer, setAnsVer] = useState(0); // bump to re-render CardFace after a paste
   const seenRef = useRef(new Set()); // uids already counted (idempotent markSeen per view)
 
   const card = deck[i];
@@ -131,7 +133,8 @@ export default function RevisionDeck({ deck, onDone, title = "Aaj ka Revision" }
             <button className="btn btn--ghost btn--sm" onClick={toggleBk} title="Baad mein dekhne ke liye save" style={bk ? { color: "var(--warning)" } : {}}>🔖</button>
           </span>
         </div>
-        <CardFace card={card} revealed={revealed} />
+        <CardFace key={ansVer} card={card} revealed={revealed} />
+        <FlashAnswer card={card} onSaved={() => setAnsVer((v) => v + 1)} />
       </article>
 
       <div className="row mt-16" style={{ gap: 10, justifyContent: "center" }}>
