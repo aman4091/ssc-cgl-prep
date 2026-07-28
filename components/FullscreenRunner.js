@@ -16,6 +16,12 @@ import { recordSpeed } from "@/lib/qspeed";
 // answer / Next / Submit, exactly what the owner asked for.
 
 const isImg = (q) => !!q?.qImg;
+// Option-less question = Wrong-Book image Q (no options to pick). For these the
+// "Show answer" press IS the answer — nothing to choose.
+const optionlessOf = (q) => {
+  const opts = isImg(q) ? q?.optImgs : q?.options;
+  return !opts || opts.length === 0;
+};
 
 // Image banks key their stats on a text projection ([id] + lossy text), same as
 // their cards do, so a question answered here and in the card share one stat row.
@@ -71,6 +77,8 @@ export default function FullscreenRunner({
   // do NOT flood the speed tracker. On a whole-test timeout the leftovers DO count.
   const clampIdx = Math.min(Math.max(0, startIndex), Math.max(0, questions.length - 1));
   const visitedRef = useRef(new Set([clampIdx]));
+  // Option-less questions freeze their timer the moment "Show answer" is pressed.
+  const frozenRef = useRef(new Set());
 
   const total = questions.length;
   const q = questions[cur];
@@ -91,8 +99,11 @@ export default function FullscreenRunner({
 
   const finish = () => {
     if (submitted) return;
-    // bank the time spent on the question you're finishing on (ref = source of truth)
-    timesRef.current[cur] = (timesRef.current[cur] || 0) + (Date.now() - qStartRef.current) / 1000;
+    // bank the time spent on the question you're finishing on (ref = source of truth);
+    // a frozen (already-"Show answer"-ed) question keeps the time it stopped at.
+    if (!frozenRef.current.has(cur)) {
+      timesRef.current[cur] = (timesRef.current[cur] || 0) + (Date.now() - qStartRef.current) / 1000;
+    }
     setTimes({ ...timesRef.current });
     // Whole-test clock ran out: every unanswered question counts as a time-loss —
     // those 16 untouched questions ARE the mistake, so they go to the Notebook
@@ -104,6 +115,7 @@ export default function FullscreenRunner({
     if (subject !== undefined) {
       const items = [];
       questions.forEach((qq, i) => {
+        if (optionlessOf(qq)) return; // Wrong-Book image Q — apna ghar hai, notebook mein nahi
         const answered = answers[i] !== undefined;
         const timedOut = !!timedOutQs[i] || (!answered && timeUp);
         if (!answered && !timedOut) return; // never reached / untouched — skip
@@ -132,7 +144,9 @@ export default function FullscreenRunner({
         const answered = answers[i] !== undefined;
         const reached = visitedRef.current.has(i) || (timeUp && i >= clampIdx);
         if (!reached) return;                                   // never opened → ignore
-        const correct = answered && answers[i] === qq.answer;   // skip/wrong → over2
+        // Option-less (Wrong-Book): "Show answer" = answered → time decides bucket
+        // (koi galat-sahi nahi). Warna normal: sahi option pe hi time-bucket.
+        const correct = optionlessOf(qq) ? answered : (answered && answers[i] === qq.answer);
         recordSpeed(qq, { sec: timesRef.current[i] || 0, correct, subject: speedSub });
       });
     }
@@ -150,8 +164,10 @@ export default function FullscreenRunner({
   // effect-based commits misattribute the time to the wrong question). Writes the
   // ref first (authoritative) and mirrors it into state for the report.
   const commitQTime = () => {
-    timesRef.current[cur] = (timesRef.current[cur] || 0) + (Date.now() - qStartRef.current) / 1000;
-    setTimes({ ...timesRef.current });
+    if (!frozenRef.current.has(cur)) {
+      timesRef.current[cur] = (timesRef.current[cur] || 0) + (Date.now() - qStartRef.current) / 1000;
+      setTimes({ ...timesRef.current });
+    }
     qStartRef.current = Date.now();
   };
   // Go to another question, banking the leaving question's time while attempting.
@@ -221,22 +237,34 @@ export default function FullscreenRunner({
   const timedOutCount = Object.values(timedOutQs).filter(Boolean).length;
 
   const pick = (oi) => { if (!submitted) setAnswers((a) => ({ ...a, [cur]: oi })); };
-  const showAnswer = () => setRevealed((r) => ({ ...r, [cur]: !r[cur] }));
+  const showAnswer = () => {
+    // Option-less (Wrong-Book) Q: pressing "Show answer" IS answering — freeze the
+    // per-question timer at this moment and mark it done, then reveal.
+    if (!submitted && optionlessOf(q) && answers[cur] === undefined) {
+      timesRef.current[cur] = (timesRef.current[cur] || 0) + (Date.now() - qStartRef.current) / 1000;
+      setTimes({ ...timesRef.current });
+      frozenRef.current.add(cur);
+      qStartRef.current = Date.now();
+      setAnswers((a) => ({ ...a, [cur]: 0 }));
+    }
+    setRevealed((r) => ({ ...r, [cur]: !r[cur] }));
+  };
   const exit = () => { onExit && onExit(); };
   const retry = () => {
     setAnswers({}); setRevealed({}); setSubmitted(false);
     setCur(0); startRef.current = Date.now(); setNow(Date.now());
     setTimedOutQs({}); setTimes({});
-    timesRef.current = {}; visitedRef.current = new Set([0]);
+    timesRef.current = {}; visitedRef.current = new Set([0]); frozenRef.current = new Set();
     qStartRef.current = Date.now();
     if (perQSec) setQDeadline(Date.now() + perQSec * 1000);
   };
 
   const img = isImg(q);
+  const optionless = optionlessOf(q);
   const options = img ? q.optImgs : q.options;
   const shown = !!revealed[cur];
   const chosen = answers[cur];
-  const solution = img ? q.solImg : (q.solution || q.explanation);
+  const solution = (img && q.solImg) ? q.solImg : (q.solution || q.explanation || "");
 
   // ---- result summary ----
   const correct = questions.reduce((a, qq, i) => (answers[i] === qq.answer ? a + 1 : a), 0);
@@ -391,25 +419,35 @@ export default function FullscreenRunner({
                 </div>
               )}
 
-              <div className="fsr__opts">
-                {options.map((opt, oi) => (
-                  <button key={oi} className="fsr__opt" style={optStyle(oi)} onClick={() => pick(oi)}>
-                    <strong style={{ opacity: 0.7 }}>{String.fromCharCode(65 + oi)}</strong>
-                    {img
-                      ? <img src={opt} alt={`Option ${oi + 1}`} className="math-opt-img" />
-                      : <span style={{ flex: 1, minWidth: 0 }}><Markdown inline>{opt}</Markdown></span>}
-                    {shown && oi === q.answer && <span style={{ color: "var(--success)", marginLeft: "auto" }}>✓</span>}
-                  </button>
-                ))}
-              </div>
+              {optionless ? (
+                <p className="muted" style={{ fontSize: "0.85rem" }}>
+                  ℹ️ Is question ke options nahi hain — solve karke <strong>👁️ Show answer</strong> dabao.
+                  Wahi &quot;answer de diya&quot; maana jayega aur time record ho jayega.
+                </p>
+              ) : (
+                <div className="fsr__opts">
+                  {options.map((opt, oi) => (
+                    <button key={oi} className="fsr__opt" style={optStyle(oi)} onClick={() => pick(oi)}>
+                      <strong style={{ opacity: 0.7 }}>{String.fromCharCode(65 + oi)}</strong>
+                      {img
+                        ? <img src={opt} alt={`Option ${oi + 1}`} className="math-opt-img" />
+                        : <span style={{ flex: 1, minWidth: 0 }}><Markdown inline>{opt}</Markdown></span>}
+                      {shown && oi === q.answer && <span style={{ color: "var(--success)", marginLeft: "auto" }}>✓</span>}
+                    </button>
+                  ))}
+                </div>
+              )}
 
               {shown && solution && (
                 <div className="fsr__sol">
-                  <strong style={{ color: "var(--text-2)" }}>Solution: </strong>
-                  {img
+                  <strong style={{ color: "var(--text-2)" }}>Answer: </strong>
+                  {img && q.solImg
                     ? <a href={q.solImg} target="_blank" rel="noreferrer" className="math-img-wrap mt-8"><img src={q.solImg} alt="solution" className="math-img" /></a>
                     : <Markdown inline>{solution}</Markdown>}
                 </div>
+              )}
+              {shown && !solution && optionless && (
+                <div className="fsr__sol"><span className="muted">Is question ka answer abhi save nahi — /speed par answer daal do.</span></div>
               )}
             </div>
           </div>

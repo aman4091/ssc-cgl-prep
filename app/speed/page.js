@@ -3,10 +3,13 @@
 import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { SPEED_BUCKETS, SPEED_SUBJECTS, getBuckets, speedCounts } from "@/lib/qspeed";
+import { SPEED_BUCKETS, SPEED_SUBJECTS, getBuckets, speedCounts, wrongToQuestion } from "@/lib/qspeed";
 import { imagesOf } from "@/lib/wrongbook";
 import MathQuestionCard from "@/components/MathQuestionCard";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
+import FullscreenTestButton from "@/components/FullscreenTestButton";
+import GeminiFlashButton from "@/components/GeminiFlashButton";
+import FlashAnswer from "@/components/FlashAnswer";
 
 // ⏱ Speed Buckets — Maths & Reasoning.
 //
@@ -124,7 +127,7 @@ function SpeedPage() {
                           <div className="grid" style={{ gap: 14, gridTemplateColumns: "minmax(0, 1fr)" }}>
                             {items.map((it, i) =>
                               it.kind === "wb" ? (
-                                <WrongBookRef key={it.key} rec={it.wb} />
+                                <WrongBookRef key={it.key} rec={it.wb} subject={subject} />
                               ) : (
                                 <Card
                                   key={it.key}
@@ -151,23 +154,35 @@ function SpeedPage() {
   );
 }
 
-// A hand-kept Wrong Book question (image + short answer). No timing — it's a
-// "kaam karna hai" reference that lives in the over-2-min bucket. Tap → /wrong.
-function WrongBookRef({ rec }) {
+// A hand-kept Wrong Book question (image, no options). Ab attemptable: ⛶ full-screen
+// mein "Show answer" dabao -> time record -> apne time-bucket mein chala jayega. Sath
+// mein ✨ Gemini (image copy) aur 📥 answer paste (Wrong Book mein bhi save hota).
+function WrongBookRef({ rec, subject }) {
   const imgs = imagesOf(rec);
+  const card = { uid: "wb:" + rec.id, kind: "wb", ref: rec, subject };
   return (
     <article className="glass-card">
-      <div className="row between" style={{ marginBottom: 8 }}>
+      <div className="q-head">
         <span className="badge">📕 Wrong Book</span>
-        <Link href="/wrong" className="btn btn--ghost btn--sm">Kholo →</Link>
+        <div className="q-head__actions">
+          <FullscreenTestButton
+            questions={[wrongToQuestion(rec)]}
+            subject={subject}
+            title="Wrong Book"
+            label="⛶"
+            titleAttr="Full-screen mein solve karo — Show answer dabate hi time record hoga"
+          />
+          <GeminiFlashButton card={card} />
+          <Link href="/wrong" className="btn btn--ghost btn--sm">Kholo →</Link>
+        </div>
       </div>
       {imgs.map((im) => (
         <a key={im.url || im.id} href={im.url || undefined} target="_blank" rel="noreferrer" className="math-img-wrap">
           {im.url ? <img src={im.url} alt="wrong question" className="math-img" /> : <span className="muted">📱 local image</span>}
         </a>
       ))}
-      {rec.answer && <p style={{ marginTop: 8 }}><strong style={{ color: "var(--success)" }}>Ans:</strong> {rec.answer}</p>}
       {rec.note && <p className="muted" style={{ marginTop: 4 }}>{rec.note}</p>}
+      <FlashAnswer card={card} />
     </article>
   );
 }
