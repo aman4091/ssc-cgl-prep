@@ -103,6 +103,10 @@ function SpeedPage() {
               const isOpen = open === b.key;
               // questions in this bucket, for the "re-attempt in fullscreen" set
               const qs = items.filter((it) => it.kind === "timed").map((it) => it.rec.q);
+              // Wrong-Book items -> ek fullscreen set, taaki ⛶ se Next-Next karke
+              // poore bucket ke wrong questions nipta sako (sirf ek nahi).
+              const wbItems = items.filter((it) => it.kind === "wb");
+              const wbQs = wbItems.map((it) => wrongToQuestion(it.wb));
               return (
                 <div key={b.key} className={`speed-bucket speed-bucket--${b.tone}${isOpen ? " is-open" : ""}`}>
                   <button
@@ -127,7 +131,8 @@ function SpeedPage() {
                           <div className="grid" style={{ gap: 14, gridTemplateColumns: "minmax(0, 1fr)" }}>
                             {items.map((it, i) =>
                               it.kind === "wb" ? (
-                                <WrongBookRef key={it.key} rec={it.wb} subject={subject} />
+                                <WrongBookRef key={it.key} rec={it.wb} subject={subject}
+                                  questions={wbQs} startIndex={wbItems.indexOf(it)} />
                               ) : (
                                 <Card
                                   key={it.key}
@@ -157,20 +162,24 @@ function SpeedPage() {
 // A hand-kept Wrong Book question (image, no options). Ab attemptable: ⛶ full-screen
 // mein "Show answer" dabao -> time record -> apne time-bucket mein chala jayega. Sath
 // mein ✨ Gemini (image copy) aur 📥 answer paste (Wrong Book mein bhi save hota).
-function WrongBookRef({ rec, subject }) {
+function WrongBookRef({ rec, subject, questions, startIndex = 0 }) {
   const imgs = imagesOf(rec);
   const card = { uid: "wb:" + rec.id, kind: "wb", ref: rec, subject };
+  // Poore bucket ke wrong questions ek set mein, taaki Next se aage bhi jaa sako.
+  const fsQs = Array.isArray(questions) && questions.length ? questions : [wrongToQuestion(rec)];
+  const fsStart = Array.isArray(questions) && questions.length ? startIndex : 0;
   return (
     <article className="glass-card">
       <div className="q-head">
         <span className="badge">📕 Wrong Book</span>
         <div className="q-head__actions">
           <FullscreenTestButton
-            questions={[wrongToQuestion(rec)]}
+            questions={fsQs}
+            startIndex={fsStart}
             subject={subject}
             title="Wrong Book"
             label="⛶"
-            titleAttr="Full-screen mein solve karo — Show answer dabate hi time record hoga"
+            titleAttr="Full-screen mein solve karo — Show answer dabate hi time record hoga, Next se aage jao"
           />
           <GeminiFlashButton card={card} />
           <Link href="/wrong" className="btn btn--ghost btn--sm">Kholo →</Link>
