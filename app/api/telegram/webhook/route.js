@@ -9,9 +9,8 @@
 // Additive only — tumhara data kabhi delete/overwrite nahi hota.
 
 import { NextResponse, after } from "next/server";
-import { TG, supaGet, supaPut, tgApi, tgSend } from "@/lib/tgserver";
+import { TG, supaGet, supaPut, tgSend } from "@/lib/tgserver";
 import { runBatch } from "@/lib/tgbatch";
-import { clamp } from "@/lib/tgquiz";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -70,6 +69,9 @@ export async function POST(req) {
     if (!rec) return NextResponse.json({ ok: true });
     if (chosen === rec.answer) return NextResponse.json({ ok: true }); // correct
 
+    // Track the miss (app /review Telegram tab + revision) — but koi alag message
+    // nahi bhejte: explanation Telegram poll par hi dikhta, aur alag message list
+    // ke sabse neeche aake question se disconnect ho jaata.
     const wrongRow = (await supaGet("tg:wrong").catch(() => null)) || { items: {} };
     const items = wrongRow.items || {};
     items[pollId] = {
@@ -77,12 +79,6 @@ export async function POST(req) {
       answer: rec.answer, chosen, solution: rec.solution || "", at: new Date().toISOString(),
     };
     await supaPut("tg:wrong", { items });
-
-    const body =
-      `❌ Galat\n\n${clamp(rec.question, 300)}\n\n` +
-      `Tumne: ${rec.options[chosen]}\n✅ Sahi: ${rec.options[rec.answer]}` +
-      (rec.solution ? `\n\n📖 ${clamp(rec.solution, 3500)}` : "");
-    await tgApi("sendMessage", { chat_id: TG.chatId, text: body }).catch(() => {});
   } catch {
     // never fail the webhook
   }
