@@ -12,7 +12,6 @@
 import { NextResponse, after } from "next/server";
 import { TG, supaGet, supaPut, tgSend } from "@/lib/tgserver";
 import { runBatch } from "@/lib/tgbatch";
-import { clamp } from "@/lib/tgquiz";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -26,9 +25,31 @@ function parseCommand(text) {
   return { count: n };
 }
 
-// Telegram plain-text ke liye markdown/LaTeX markers halka saaf karo.
+// Plain-text fallback: markdown/LaTeX markers halka saaf.
 function cleanTg(s) {
   return String(s || "").replace(/\*\*/g, "").replace(/\$\$?/g, "").trim().slice(0, 3800);
+}
+
+const escHtml = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+// Markdown (DeepSeek/bank solution) -> Telegram HTML: **bold** dikhega, headings
+// bold, "- " bullets "• " ban jaate. LaTeX $..$ strip (Telegram render nahi karta).
+// Raw ko pehle cap karte taaki koi <b> tag beech mein na kate.
+function mdToHtml(s) {
+  let t = String(s || "").replace(/\$\$?/g, "").slice(0, 3500);
+  t = escHtml(t);
+  t = t.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");     // **bold**
+  t = t.replace(/^#{1,6}\s*(.+)$/gm, "<b>$1</b>");  // ## Heading -> bold
+  t = t.replace(/^\s*[-*]\s+/gm, "• ");             // - / * bullet -> •
+  return t.trim();
+}
+
+// Ek reply bhejo: pehle HTML (bold ke saath), parse fail ho to plain fallback.
+async function sendReply(text, replyToId) {
+  const base = { chat_id: TG.chatId, reply_to_message_id: replyToId, allow_sending_without_reply: true };
+  const res = await tgSend("sendMessage", { ...base, text: mdToHtml(text), parse_mode: "HTML" });
+  if (!res.ok) return tgSend("sendMessage", { ...base, text: cleanTg(text) });
+  return res;
 }
 
 // Tumhari app-Settings (synced blob se) — DeepSeek key, model, baseUrl, aur prompt
@@ -75,7 +96,7 @@ async function deepExplain(origin, rec) {
       }),
     });
     const j = await res.json().catch(() => ({}));
-    if (j.answer) return "🧠 Detailed (DeepSeek):\n\n" + cleanTg(j.answer);
+    if (j.answer) return "🧠 **Detailed (DeepSeek)**\n\n" + j.answer; // raw md — sendReply HTML banayega
     return "⚠️ " + (j.error || "DeepSeek jawab nahi de paaya. App Settings mein DeepSeek key hai? (Sync ON?)");
   } catch (e) {
     return "⚠️ " + String(e.message || e);
@@ -132,19 +153,13 @@ export async function POST(req) {
             after(async () => {
               await tgSend("sendChatAction", { chat_id: TG.chatId, action: "typing" });
               const ans = await deepExplain(origin, rec);
-              await tgSend("sendMessage", {
-                chat_id: TG.chatId, text: ans,
-                reply_to_message_id: replied.message_id, allow_sending_without_reply: true,
-              });
+              await sendReply(ans, replied.message_id);
             });
           } else {
             const text = rec.solution
-              ? `📖 ${cleanTg(rec.solution)}`
+              ? `📖 ${rec.solution}`
               : `ℹ️ Iska chhota solution stored nahi. Detailed ke liye is quiz ko reply karke "detail" likho.`;
-            await tgSend("sendMessage", {
-              chat_id: TG.chatId, text,
-              reply_to_message_id: replied.message_id, allow_sending_without_reply: true,
-            });
+            await sendReply(text, replied.message_id);
           }
         }
       } catch { /* ignore */ }
@@ -180,12 +195,9 @@ export async function POST(req) {
     // Reply hone se message question se juda rehta — tap karke upar jump kar sakte.
     if (rec.messageId) {
       const body =
-        `✅ Sahi: ${rec.options[rec.answer]}` +
-        (rec.solution ? `\n\n📖 ${clamp(rec.solution, 3500)}` : "");
-      await tgSend("sendMessage", {
-        chat_id: TG.chatId, text: body,
-        reply_to_message_id: rec.messageId, allow_sending_without_reply: true,
-      });
+        `**✅ Sahi:** ${rec.options[rec.answer]}` +
+        (rec.solution ? `\n\n📖 ${rec.solution}` : "");
+      await sendReply(body, rec.messageId);
     }
   } catch {
     // never fail the webhook
