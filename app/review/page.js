@@ -6,6 +6,7 @@ import {
   todayIndex, weakDue, getConfig, stats, getBookmarked, getHistory, getDone20, syncWrongBook,
 } from "@/lib/srs";
 import { pullFreshCoverage, coverageQuota, coverageProgress } from "@/lib/coverage";
+import { importTelegramWrong, getTelegramWrong } from "@/lib/tgimport";
 import RevisionDeck from "@/components/RevisionDeck";
 
 // Round-robin expand weak-due items into individual exposure cards (an item with
@@ -33,9 +34,12 @@ export default function ReviewPage() {
   const [st, setSt] = useState({ enrolled: 0, due: 0, dueExposures: 0, done20: 0, bookmarked: 0 });
   const [cov, setCov] = useState({ pct: 0, pass: 1, passes: 4, total: 0, served: 0 });
   const [ver, setVer] = useState(0);
+  const tgWrong = getTelegramWrong(); // Telegram quiz misses (re-reads on ver bump)
 
   const refreshStats = useCallback(() => {
     syncWrongBook(); // Wrong-Book GS/English -> weak pool
+    // Telegram quiz misses -> revision (naye galat answers pull karo)
+    importTelegramWrong().then((n) => { if (n) setVer((v) => v + 1); }).catch(() => {});
     setSt(stats());
     coverageProgress().then(setCov).catch(() => {});
   }, []);
@@ -123,6 +127,7 @@ export default function ReviewPage() {
               ["due", `📝 Aaj (${st.dueExposures})`],
               ["saved", `🔖 Saved (${st.bookmarked})`],
               ["history", "🕘 History"],
+              ["telegram", `📲 Telegram (${tgWrong.length})`],
               ["done", `✅ Pakka (${st.done20})`],
             ].map(([k, label]) => (
               <button key={k} role="tab" aria-selected={tab === k}
@@ -154,6 +159,7 @@ export default function ReviewPage() {
 
           {tab === "saved" && <ItemList items={getBookmarked()} empty="Koi flashcard save nahi. Deck mein 🔖 dabao." />}
           {tab === "history" && <HistoryList />}
+          {tab === "telegram" && <TelegramList items={tgWrong} />}
           {tab === "done" && <ItemList items={getDone20()} empty="Abhi kuch 'pakka' (20+ baar) nahi hua." />}
         </section>
       )}
@@ -176,6 +182,48 @@ function ItemList({ items, empty }) {
           <span className="badge">{it.kind === "vocab" ? "🔤" : it.subject === "gs" ? "🌍" : "📘"}</span>
           <span className="srs-row__t">{label(it)}</span>
           <span className="muted">{it.seen}×</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TelegramList({ items }) {
+  if (!items.length) {
+    return (
+      <div className="placeholder mt-16">
+        Abhi tak Telegram se koi galat answer nahi aaya. Group ke quiz mein jo galat karoge
+        wo yahaan (aur revision deck mein) apne-aap aa jayega.
+      </div>
+    );
+  }
+  const subIcon = (s) => (s === "vocab" ? "🔤" : s === "gs" ? "🌍" : "📘");
+  return (
+    <div className="grid mt-16" style={{ gap: 10, gridTemplateColumns: "minmax(0,1fr)" }}>
+      {items.map((it) => (
+        <div key={it.key + it.at} className="glass-card">
+          <div className="row between" style={{ marginBottom: 6 }}>
+            <span className="badge">{subIcon(it.subject)} {it.subject}</span>
+            <span className="muted" style={{ fontSize: ".8rem" }}>
+              {(() => { try { return new Date(it.at).toLocaleDateString("en-GB", { day: "2-digit", month: "short" }); } catch { return ""; } })()}
+            </span>
+          </div>
+          <p style={{ fontWeight: 600, marginBottom: 8 }}>{it.question}</p>
+          <div className="grid" style={{ gap: 4 }}>
+            {(it.options || []).map((o, oi) => (
+              <div
+                key={oi}
+                className="muted"
+                style={{
+                  fontSize: ".9rem",
+                  color: oi === it.answer ? "#7ee787" : oi === it.chosen ? "#ff9a9a" : undefined,
+                }}
+              >
+                {oi === it.answer ? "✅ " : oi === it.chosen ? "❌ " : "• "}{o}
+              </div>
+            ))}
+          </div>
+          {it.solution && <p className="muted" style={{ marginTop: 8, fontSize: ".85rem" }}>📖 {it.solution}</p>}
         </div>
       ))}
     </div>
