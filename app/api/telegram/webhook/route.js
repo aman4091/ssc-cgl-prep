@@ -11,6 +11,7 @@
 import { NextResponse, after } from "next/server";
 import { TG, supaGet, supaPut, tgSend } from "@/lib/tgserver";
 import { runBatch } from "@/lib/tgbatch";
+import { clamp } from "@/lib/tgquiz";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
@@ -69,9 +70,7 @@ export async function POST(req) {
     if (!rec) return NextResponse.json({ ok: true });
     if (chosen === rec.answer) return NextResponse.json({ ok: true }); // correct
 
-    // Track the miss (app /review Telegram tab + revision) — but koi alag message
-    // nahi bhejte: explanation Telegram poll par hi dikhta, aur alag message list
-    // ke sabse neeche aake question se disconnect ho jaata.
+    // Track the miss (app /review Telegram tab + revision).
     const wrongRow = (await supaGet("tg:wrong").catch(() => null)) || { items: {} };
     const items = wrongRow.items || {};
     items[pollId] = {
@@ -79,6 +78,18 @@ export async function POST(req) {
       answer: rec.answer, chosen, solution: rec.solution || "", at: new Date().toISOString(),
     };
     await supaPut("tg:wrong", { items });
+
+    // Full solution us hi question ke REPLY mein (poll ki 200-char limit se aage).
+    // Reply hone se message question se juda rehta — tap karke upar jump kar sakte.
+    if (rec.messageId) {
+      const body =
+        `✅ Sahi: ${rec.options[rec.answer]}` +
+        (rec.solution ? `\n\n📖 ${clamp(rec.solution, 3500)}` : "");
+      await tgSend("sendMessage", {
+        chat_id: TG.chatId, text: body,
+        reply_to_message_id: rec.messageId, allow_sending_without_reply: true,
+      });
+    }
   } catch {
     // never fail the webhook
   }
