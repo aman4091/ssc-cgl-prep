@@ -31,42 +31,52 @@ function cleanTg(s) {
   return String(s || "").replace(/\*\*/g, "").replace(/\$\$?/g, "").trim().slice(0, 3800);
 }
 
-// Tumhare Settings ka prompt (synced blob se): per-subject shortcutPrompts, warna
-// general geminiPrompt. Blank -> "" (route default EXPLAIN_PROMPT use karega).
-async function userPromptFor(subject) {
+// Tumhari app-Settings (synced blob se) — DeepSeek key, model, baseUrl, aur prompt
+// sab yahin se. Matlab jo site par set hai wahi Telegram par. Env sirf fallback.
+async function userAi(subject) {
+  const fallback = {
+    customPrompt: "",
+    apiKey: process.env.DEEPSEEK_API_KEY || "",
+    model: process.env.DEEPSEEK_MODEL || "deepseek-chat",
+    baseUrl: process.env.DEEPSEEK_BASE_URL || "https://api.deepseek.com",
+  };
   try {
     const data = await supaGet(TG.syncCode);
     const ls = (data && data.localStorage) || {};
     const s = ls["cgl.settings"] ? JSON.parse(ls["cgl.settings"]) : {};
     const subj = subject === "vocab" ? "english" : subject;
     const sp = (s.shortcutPrompts || {})[subj];
-    return (sp && sp.trim()) || (s.geminiPrompt && s.geminiPrompt.trim()) || "";
-  } catch { return ""; }
+    return {
+      customPrompt: (sp && sp.trim()) || (s.geminiPrompt && s.geminiPrompt.trim()) || "",
+      apiKey: (s.apiKey && s.apiKey.trim()) || fallback.apiKey,
+      model: (s.model && s.model.trim()) || fallback.model,
+      baseUrl: (s.baseUrl && s.baseUrl.trim()) || fallback.baseUrl,
+    };
+  } catch { return fallback; }
 }
 
-// Detailed explanation site ke hi /api/ask se — TUMHARE settings ka prompt
-// (customPrompt) use karta, server-side DEEPSEEK_API_KEY env se.
+// Detailed explanation site ke hi /api/ask se — TUMHARE settings ka prompt + model
+// + key (synced blob se). Server-side koi hardcode nahi.
 async function deepExplain(origin, rec) {
   const correct = rec.options[rec.answer];
   const question =
     `${rec.question}\n\nOptions:\n` +
     rec.options.map((o, i) => `${String.fromCharCode(65 + i)}. ${o}`).join("\n") +
     `\n\nCorrect answer (already verified): ${correct}`;
-  const customPrompt = await userPromptFor(rec.subject);
+  const ai = await userAi(rec.subject);
   try {
     const res = await fetch(origin + "/api/ask", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        question, mode: "explain", customPrompt,
+        question, mode: "explain",
         subject: rec.subject === "vocab" ? "english" : rec.subject,
-        apiKey: process.env.DEEPSEEK_API_KEY || "",
-        model: process.env.DEEPSEEK_MODEL || "deepseek-chat",
+        customPrompt: ai.customPrompt, apiKey: ai.apiKey, model: ai.model, baseUrl: ai.baseUrl,
       }),
     });
     const j = await res.json().catch(() => ({}));
     if (j.answer) return "🧠 Detailed (DeepSeek):\n\n" + cleanTg(j.answer);
-    return "⚠️ " + (j.error || "DeepSeek se jawab nahi aaya. Vercel mein DEEPSEEK_API_KEY env set hai?");
+    return "⚠️ " + (j.error || "DeepSeek jawab nahi de paaya. App Settings mein DeepSeek key hai? (Sync ON?)");
   } catch (e) {
     return "⚠️ " + String(e.message || e);
   }

@@ -39,8 +39,8 @@ Vercel → Project → **Settings → Environment Variables** (Production):
 | `CRON_SECRET` | koi random string — Vercel Cron isi se authorize karega |
 | `TELEGRAM_USER_ID` | *(optional)* tumhari telegram user id |
 | `TG_BATCH` | *(optional)* `/start` par kitne quiz — default `100` |
-| `DEEPSEEK_API_KEY` | *(optional)* reply mein `detail` par DeepSeek explanation ke liye |
-| `DEEPSEEK_MODEL` | *(optional)* default `deepseek-chat` |
+| `DEEPSEEK_API_KEY` | *(optional fallback)* reply `detail` ke liye — warna app Settings se |
+| `DEEPSEEK_MODEL` | *(optional fallback)* warna app Settings ka model |
 
 Set karne ke baad **Redeploy** karo (nayi env tabhi lagti hai).
 
@@ -69,9 +69,11 @@ jaye. So `/start` pehle *due* (dobara-dikhne-wale) uthata, phir naye se batch bh
 
 **Kisi question ki explanation chahiye?** Us quiz ko **reply** karo:
 - Reply mein **kuch bhi** (jaise `?`) → us question ka **stored solution**.
-- Reply mein **`detail`** (ya `deep`) → **DeepSeek** se detailed explanation, tumhare
-  **Settings ke prompt** se (per-subject `shortcutPrompts`, warna general `geminiPrompt`).
-  Iske liye `DEEPSEEK_API_KEY` env set hona chahiye.
+- Reply mein **`detail`** (ya `deep`) → **DeepSeek** se detailed explanation. Key,
+  **model**, aur prompt sab **tumhari app Settings** se aate hain (synced blob se) —
+  jaise site par. Model badalna ho to bas **Settings → DeepSeek model** field badlo
+  (jaise `deepseek-chat` ya `deepseek-reasoner`). Sync ON hona chahiye. (Chaaho to
+  `DEEPSEEK_API_KEY`/`DEEPSEEK_MODEL` env se override kar sakte ho.)
 
 > ⏱️ Telegram ek group mein **~20 message/min** hi bhej deta (flood limit). Isliye
 > 100 polls **kuch minute** mein aate hain (backoff ke saath). Vercel **Hobby** par
