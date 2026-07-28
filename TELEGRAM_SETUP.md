@@ -38,14 +38,14 @@ Vercel → Project → **Settings → Environment Variables** (Production):
 | `TG_SYNC_CODE` | tumhara **sync code** (app Settings) — isse tumhari vocab padhi jayegi |
 | `CRON_SECRET` | koi random string — Vercel Cron isi se authorize karega |
 | `TELEGRAM_USER_ID` | *(optional)* tumhari telegram user id |
-| `TG_POST_COUNT` | *(optional)* ek baar mein kitne quiz — default `15` |
-| `TG_SUBJECTS` | *(optional)* default `vocab,english,gs` |
+| `TG_BATCH` | *(optional)* `/start` par kitne quiz — default `100` |
 
 Set karne ke baad **Redeploy** karo (nayi env tabhi lagti hai).
 
 > ⚠️ Vocab tabhi aayegi jab tumne app mein **Sync ON** karke push kiya ho (vocab
-> localStorage mein hai; cron use tumhare synced blob se padhta hai). English/GS
-> PYQ banks repo ke saath aate hain, unke liye sync zaroori nahi.
+> localStorage mein hai; server tumhare synced blob se padhta hai). English/GS
+> banks (engbank, errorpro, gk, war, cabank) repo ke saath aate hain, unke liye
+> sync zaroori nahi.
 
 ## 4. Webhook register karo (ek baar, ek command)
 `<TOKEN>`, `<APP>` (jaise `yourapp.vercel.app`) aur `<WEBHOOK_SECRET>` daal ke:
@@ -56,30 +56,41 @@ curl "https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://<APP>/api/teleg
 
 `{"ok":true,"result":true,...}` aaye to ho gaya.
 
-## 5. Auto-post schedule
-- **`vercel.json`** already ek daily cron set karta hai: roz **09:00 IST** (03:30 UTC)
-  pe `/api/telegram/post` chalega. Time badalna ho to `vercel.json` ka `schedule`
-  badlo (cron UTC mein hai).
-- Vercel **Hobby** plan par cron **din mein ek baar** hi chal sakta hai. Din mein
-  kai baar chahiye to **cron-job.org** (free) se ye URL apne time par hit karao:
-  `https://<APP>/api/telegram/post?secret=<TG_CRON_SECRET>` — is case mein Vercel
-  env mein `TG_CRON_SECRET` bhi set kar do.
+## 5. Questions kaise mangao — `/start`
+Group mein bas **`/start`** bhejo → ek batch quiz polls aa jayenge (default **100**,
+`TG_BATCH` se badlo). Aur chahiye? Dobara **`/start`** — agle 100 (naye). Chhota
+batch: **`/start 30`**. (Aliases: `/next`, `/quiz`, `/go`.)
+
+Har question ek **spaced-repetition** schedule mein jaata hai: aaj jo aaya wo **kal**
+ek baar, phir **3 din**, **7**, **15**, **30** din baad dobara — jab tak yaad na ho
+jaye. So `/start` pehle *due* (dobara-dikhne-wale) uthata, phir naye se batch bharता.
+
+> ⏱️ Telegram ek group mein **~20 message/min** hi bhej deta (flood limit). Isliye
+> 100 polls **kuch minute** mein aate hain (backoff ke saath). Vercel **Hobby** par
+> function 60 sec baad ruk jata — us case mein ek `/start` par ~40–50 aayenge, baaki
+> ke liye phir `/start` dabao. Pro par poora 100 ek baar.
+
+**(Optional) Roz auto-post:** `vercel.json` ek daily cron rakhta hai (09:00 IST) jo
+`/api/telegram/post` hit karta. Nahi chahiye to `vercel.json` se `crons` hata do.
+Manual test: browser mein `https://<APP>/api/telegram/post?count=5` (secret set ho
+to `&secret=...`).
 
 ## 6. Test karo
-1. Browser mein `https://<APP>/api/telegram/post` (agar `CRON_SECRET`/`TG_CRON_SECRET`
-   set hai to `?secret=...` lagao) — group mein quiz polls aa jayenge.
+1. Group mein **`/start 5`** bhejo → 5 quiz polls aa jayenge.
 2. Ek quiz **galat** answer karo → Telegram turant sahi option + poora solution
    message dega.
 3. App mein **/review → 📲 Telegram** tab kholo → wo galat question yahaan +
    revision deck mein aa gaya hoga.
+4. Kal phir **`/start`** → kuch kal-wale (spaced) + naye mixed aayenge.
 
 ---
 
 ### Kaise kaam karta hai (short)
-- `/api/telegram/post` — banks + vocab se fresh MCQ uthata, quiz poll bhejta,
-  `tg:polls` mein poll→question map save karta, `tg:state` mein "bhej diya" yaad
-  rakhta (45 din tak repeat nahi).
-- `/api/telegram/webhook` — tumhara answer aata; galat hua to `tg:wrong` mein daalta
-  + poora solution message bhejta.
-- App load par `lib/tgimport.js` `tg:wrong` se naye misses ko pull karke `/review`
-  ke revision system (MCQ flashcard) mein enroll karta.
+- **`/start`** (webhook) / **cron** dono `lib/tgbatch.runBatch` chalate: sab sources
+  (vocab, engbank, errorpro, gk, war, cabank) se MIXED batch banata — pehle DUE
+  (spaced re-asks), phir fresh. Har bheja question `tg:sched` mein next-due ke saath,
+  aur `tg:polls` mein poll→question (wrong-tracking ke liye).
+- **`/api/telegram/webhook`** — `/start` command bhi handle karta aur tumhara answer
+  bhi; galat hua to `tg:wrong` mein daalta + poora solution message bhejta.
+- App load par `lib/tgimport.js` `tg:wrong` se naye misses ko `/review` revision
+  system (MCQ flashcard) + 📲 Telegram tab mein le aata.
