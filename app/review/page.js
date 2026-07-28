@@ -68,7 +68,12 @@ export default function ReviewPage() {
         weak: false, srsKey: null, subject: c.subject,
       }));
     }
-    setDeck([...weakCards, ...coverCards]);
+    // Deck order (user): pehle VOCAB, phir PYQ (q/ca), last mein WRONG questions (wb).
+    // Stable sort within each group weak-then-coverage / deficit order preserve karta.
+    const rankOf = (k) => (k === "vocab" ? 0 : k === "wb" ? 2 : 1);
+    const full = [...weakCards, ...coverCards];
+    full.sort((a, b) => rankOf(a.kind) - rankOf(b.kind));
+    setDeck(full);
   }, []);
 
   const start = async () => { setRunning(true); await buildDeck(); };
