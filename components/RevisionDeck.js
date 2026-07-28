@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "./Markdown";
-import { markSeen, toggleBookmark, isBookmarked, enroll } from "@/lib/srs";
+import { markSeen, toggleBookmark, isBookmarked, enroll, srsKey } from "@/lib/srs";
 import GeminiFlashButton from "./GeminiFlashButton";
 import FlashAnswer from "./FlashAnswer";
 
@@ -15,6 +15,18 @@ import FlashAnswer from "./FlashAnswer";
 
 function fmtType(t) {
   return t === "idiom" ? "Idiom/Phrase" : t === "vocab" ? "Vocabulary" : "One Word";
+}
+
+// Coverage card ko spaced-repetition mein daalte waqt sirf render-bhar ka data
+// rakho (poora bank object nahi) — taaki cgl.srs chhota rahe aur sync halka.
+function slimRef(kind, ref) {
+  if (!ref) return ref;
+  if (kind === "vocab") return { word: ref.word, def: ref.def, type: ref.type };
+  return {
+    id: ref.id, question: ref.question, options: ref.options, answer: ref.answer,
+    solution: ref.solution || ref.explanation || ref.detail || "",
+    qImg: ref.qImg || ref.img, passage: ref.passage,
+  };
 }
 
 function CardFace({ card, revealed }) {
@@ -96,10 +108,18 @@ export default function RevisionDeck({ deck, onDone, title = "Aaj ka Revision" }
   }, [i]); // eslint-disable-line
 
   const next = () => {
-    // bank the exposure for weak cards, once per card instance
-    if (card?.weak && card.srsKey && !seenRef.current.has(card.uid)) {
+    // Har card (weak ya coverage) ek baar dekhne par spaced-repetition mein banta:
+    // coverage card pehli baar dikhte hi enroll ho jata, taaki kal/aage dobara aaye.
+    if (card && !seenRef.current.has(card.uid)) {
       seenRef.current.add(card.uid);
-      markSeen(card.srsKey);
+      let key = card.weak ? card.srsKey : null;
+      if (!key) {
+        key = enroll({
+          kind: card.kind, ref: slimRef(card.kind, card.ref),
+          src: "seen", category: card.subject, subject: card.subject,
+        });
+      }
+      if (key) markSeen(key);
     }
     if (i + 1 >= total) { onDone && onDone(); return; }
     setI(i + 1);

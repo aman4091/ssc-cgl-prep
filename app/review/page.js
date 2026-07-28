@@ -3,26 +3,19 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import {
-  todayIndex, weakDue, getConfig, stats, getBookmarked, getHistory, getDone20, syncWrongBook,
+  todayIndex, weakDue, getConfig, setBatch, stats, getBookmarked, getHistory, getDone20, syncWrongBook,
 } from "@/lib/srs";
-import { pullFreshCoverage, coverageQuota, coverageProgress } from "@/lib/coverage";
+import { pullFreshCoverage, coverageProgress } from "@/lib/coverage";
 import { importTelegramWrong, getTelegramWrong } from "@/lib/tgimport";
 import RevisionDeck from "@/components/RevisionDeck";
 
-// Round-robin expand weak-due items into individual exposure cards (an item with
-// deficit 3 shows 3 times, never back-to-back), capped at `cap`.
-function interleaveWeak(due, cap) {
-  const pools = due.map((d) => ({ d, left: d.deficit }));
-  const out = [];
-  let any = true;
-  while (any && out.length < cap) {
-    any = false;
-    for (const p of pools) {
-      if (out.length >= cap) break;
-      if (p.left > 0) { out.push(p.d); p.left--; any = true; }
-    }
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
-  return out;
+  return a;
 }
 
 const subjOf = (item) => item.subject || (item.kind === "vocab" ? "english" : "");
@@ -35,6 +28,7 @@ export default function ReviewPage() {
   const [cov, setCov] = useState({ pct: 0, pass: 1, passes: 4, total: 0, served: 0 });
   const [ver, setVer] = useState(0);
   const tgWrong = getTelegramWrong(); // Telegram quiz misses (re-reads on ver bump)
+  const { batch } = getConfig();      // cards per Start (self-paced)
 
   const refreshStats = useCallback(() => {
     syncWrongBook(); // Wrong-Book GS/English -> weak pool
@@ -54,30 +48,29 @@ export default function ReviewPage() {
   const buildDeck = useCallback(async () => {
     setDeck(null);
     const today = todayIndex();
-    const { budget } = getConfig();
-    const due = weakDue(today);
-    const weak = interleaveWeak(due, budget);
-    const weakCards = weak.map((w, idx) => ({
+    const { batch } = getConfig();
+    // Sab enrolled jo due hain. Ek din mein ek item ek hi baar (jo aaj dekh liya
+    // wo aaj dobara nahi) — spacing "aaj ek baar, kal ek baar" jaisa.
+    const allDue = weakDue(today);
+    const dueToday = allDue.filter((d) => d.item.lastDay !== today);
+    const weakCards = dueToday.slice(0, batch).map((w, idx) => ({
       uid: `w${idx}:${w.key}`, kind: w.item.kind, ref: w.item.ref,
       weak: true, srsKey: w.key, subject: subjOf(w.item),
     }));
-    const coverN = Math.max(0, budget - weakCards.length);
+    // Baaki batch fresh coverage se bharo (jo pehle nahi dekhe) — sab sources se
+    // round-robin (Eng, War, GK-tricks, Vocab, CA daily+monthly), enrolled ko chhod ke.
+    const coverN = Math.max(0, batch - weakCards.length);
     let coverCards = [];
     if (coverN > 0) {
-      const excl = new Set(due.map((d) => d.key));
-      const quota = await coverageQuota().catch(() => coverN);
-      const cover = await pullFreshCoverage(Math.min(coverN, quota), excl).catch(() => []);
+      const excl = new Set(allDue.map((d) => d.key));
+      const cover = await pullFreshCoverage(coverN, excl).catch(() => []);
       coverCards = cover.map((c, idx) => ({
         uid: `c${idx}:${c.coverKey}`, kind: c.kind, ref: c.ref,
         weak: false, srsKey: null, subject: c.subject,
       }));
     }
-    // Deck order (user): pehle VOCAB, phir PYQ (q/ca), last mein WRONG questions (wb).
-    // Stable sort within each group weak-then-coverage / deficit order preserve karta.
-    const rankOf = (k) => (k === "vocab" ? 0 : k === "wb" ? 2 : 1);
-    const full = [...weakCards, ...coverCards];
-    full.sort((a, b) => rankOf(a.kind) - rankOf(b.kind));
-    setDeck(full);
+    // MIXED: due reviews + naye coverage sab randomly mix (user: "randomly mix karke puch").
+    setDeck(shuffle([...weakCards, ...coverCards]));
   }, []);
 
   const start = async () => { setRunning(true); await buildDeck(); };
@@ -139,21 +132,25 @@ export default function ReviewPage() {
 
           {tab === "due" && (
             <div className="mt-16">
-              {st.dueExposures === 0 && st.enrolled === 0 ? (
-                <div className="placeholder">
-                  Abhi tak kuch enroll nahi. Kisi English/GS question par 🔁 dabao, ya koi galti karo —
-                  wo yahaan revision mein aa jaayega. Bank coverage bhi shuru kar sakte ho.
+              <div className="glass-card">
+                <p style={{ marginBottom: 10 }}>
+                  Ek baar mein <strong>{batch}</strong> cards — Vocab + English + GS + Current Affairs sab{" "}
+                  <strong>mixed</strong>. Aaj <strong>{st.dueExposures}</strong> due
+                  {st.enrolled > 0 && <> · <strong>{st.enrolled}</strong> enrolled</>}. Jo aaj dekhoge wo
+                  kal (phir aage) dobara aata rahega — jab tak yaad na ho jaye.
+                </p>
+                <div className="row" style={{ gap: 8, marginBottom: 12, flexWrap: "wrap", alignItems: "center" }}>
+                  <span className="muted">Batch:</span>
+                  {[50, 100, 200, 500].map((n) => (
+                    <button key={n} className={`btn btn--sm ${batch === n ? "btn--primary" : "btn--ghost"}`}
+                      onClick={() => { setBatch(n); setVer((v) => v + 1); }}>{n}</button>
+                  ))}
                 </div>
-              ) : (
-                <div className="glass-card">
-                  <p style={{ marginBottom: 10 }}>
-                    Aaj <strong>{st.dueExposures}</strong> revision-cards due hain
-                    {st.enrolled > 0 && <> · <strong>{st.enrolled}</strong> items enrolled</>}.
-                    Naye bank-questions bhi is deck mein flashcard ban ke aayenge (coverage).
-                  </p>
-                  <button className="btn btn--primary btn--block" onClick={start}>▶ Revision shuru karo</button>
-                </div>
-              )}
+                <button className="btn btn--primary btn--block" onClick={start}>▶ {batch} cards shuru karo</button>
+                <p className="muted" style={{ marginTop: 8, textAlign: "center", fontSize: ".85rem" }}>
+                  Khatam? Dobara dabao → agle {batch}.
+                </p>
+              </div>
             </div>
           )}
 
