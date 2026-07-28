@@ -39,6 +39,8 @@ Vercel → Project → **Settings → Environment Variables** (Production):
 | `CRON_SECRET` | koi random string — Vercel Cron isi se authorize karega |
 | `TELEGRAM_USER_ID` | *(optional)* tumhari telegram user id |
 | `TG_BATCH` | *(optional)* `/start` par kitne quiz — default `100` |
+| `DEEPSEEK_API_KEY` | *(optional)* reply mein `detail` par DeepSeek explanation ke liye |
+| `DEEPSEEK_MODEL` | *(optional)* default `deepseek-chat` |
 
 Set karne ke baad **Redeploy** karo (nayi env tabhi lagti hai).
 
@@ -64,6 +66,12 @@ batch: **`/start 30`**. (Aliases: `/next`, `/quiz`, `/go`.)
 Har question ek **spaced-repetition** schedule mein jaata hai: aaj jo aaya wo **kal**
 ek baar, phir **3 din**, **7**, **15**, **30** din baad dobara — jab tak yaad na ho
 jaye. So `/start` pehle *due* (dobara-dikhne-wale) uthata, phir naye se batch bharता.
+
+**Kisi question ki explanation chahiye?** Us quiz ko **reply** karo:
+- Reply mein **kuch bhi** (jaise `?`) → us question ka **stored solution**.
+- Reply mein **`detail`** (ya `deep`) → **DeepSeek** se detailed explanation, tumhare
+  **Settings ke prompt** se (per-subject `shortcutPrompts`, warna general `geminiPrompt`).
+  Iske liye `DEEPSEEK_API_KEY` env set hona chahiye.
 
 > ⏱️ Telegram ek group mein **~20 message/min** hi bhej deta (flood limit). Isliye
 > 100 polls **kuch minute** mein aate hain (backoff ke saath). Vercel **Hobby** par

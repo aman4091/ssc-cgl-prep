@@ -110,7 +110,7 @@ export async function POST(req) {
 
     let system =
       mode === "shortcut" ? (customPrompt && customPrompt.trim() ? customPrompt.trim() : SHORTCUT_ONLY_PROMPT) :
-      mode === "explain" ? EXPLAIN_PROMPT :
+      mode === "explain" ? (customPrompt && customPrompt.trim() ? customPrompt.trim() : EXPLAIN_PROMPT) :
       mode === "ca" ? CA_EXPLAIN_PROMPT :
       TUTOR_PROMPT;
 

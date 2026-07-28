@@ -1,10 +1,11 @@
 // POST /api/telegram/webhook  — Telegram har update yahan bhejta hai.
 //
-// Do cheezein:
-//  1. "/start" (ya "/next", "/quiz", "/go") message  -> ek batch (default TG_BATCH)
-//     mixed quiz polls group mein bhejta. Turant 200 return karke `after()` mein
-//     background bhejta, taaki Telegram timeout pe retry na kare (double sending).
-//  2. "poll_answer" -> galat answer tg:wrong mein + poora solution message.
+// Teen cheezein:
+//  1. "/start" (ya /next /quiz /go) -> ek batch (default TG_BATCH) mixed quiz polls.
+//     Turant 200 return karke `after()` mein background bhejta (Telegram retry se bacho).
+//  2. Kisi quiz ko REPLY karo -> uski explanation: koi bhi text = stored solution;
+//     "detail"/"deep" = DeepSeek se detailed (tumhare Settings ke prompt se).
+//  3. "poll_answer" -> galat answer tg:wrong mein + full solution us quiz ke reply mein.
 //
 // Additive only — tumhara data kabhi delete/overwrite nahi hota.
 
@@ -23,6 +24,52 @@ function parseCommand(text) {
   if (!m) return null;
   const n = m[2] ? Math.max(1, Math.min(200, Number(m[2]))) : TG.batch;
   return { count: n };
+}
+
+// Telegram plain-text ke liye markdown/LaTeX markers halka saaf karo.
+function cleanTg(s) {
+  return String(s || "").replace(/\*\*/g, "").replace(/\$\$?/g, "").trim().slice(0, 3800);
+}
+
+// Tumhare Settings ka prompt (synced blob se): per-subject shortcutPrompts, warna
+// general geminiPrompt. Blank -> "" (route default EXPLAIN_PROMPT use karega).
+async function userPromptFor(subject) {
+  try {
+    const data = await supaGet(TG.syncCode);
+    const ls = (data && data.localStorage) || {};
+    const s = ls["cgl.settings"] ? JSON.parse(ls["cgl.settings"]) : {};
+    const subj = subject === "vocab" ? "english" : subject;
+    const sp = (s.shortcutPrompts || {})[subj];
+    return (sp && sp.trim()) || (s.geminiPrompt && s.geminiPrompt.trim()) || "";
+  } catch { return ""; }
+}
+
+// Detailed explanation site ke hi /api/ask se — TUMHARE settings ka prompt
+// (customPrompt) use karta, server-side DEEPSEEK_API_KEY env se.
+async function deepExplain(origin, rec) {
+  const correct = rec.options[rec.answer];
+  const question =
+    `${rec.question}\n\nOptions:\n` +
+    rec.options.map((o, i) => `${String.fromCharCode(65 + i)}. ${o}`).join("\n") +
+    `\n\nCorrect answer (already verified): ${correct}`;
+  const customPrompt = await userPromptFor(rec.subject);
+  try {
+    const res = await fetch(origin + "/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        question, mode: "explain", customPrompt,
+        subject: rec.subject === "vocab" ? "english" : rec.subject,
+        apiKey: process.env.DEEPSEEK_API_KEY || "",
+        model: process.env.DEEPSEEK_MODEL || "deepseek-chat",
+      }),
+    });
+    const j = await res.json().catch(() => ({}));
+    if (j.answer) return "🧠 Detailed (DeepSeek):\n\n" + cleanTg(j.answer);
+    return "⚠️ " + (j.error || "DeepSeek se jawab nahi aaya. Vercel mein DEEPSEEK_API_KEY env set hai?");
+  } catch (e) {
+    return "⚠️ " + String(e.message || e);
+  }
 }
 
 export async function POST(req) {
@@ -55,7 +102,47 @@ export async function POST(req) {
     return NextResponse.json({ ok: true });
   }
 
-  // ---- 2. quiz answer ----
+  // ---- 2. kisi quiz ko REPLY karo -> uski explanation ----
+  //   • koi bhi text (jaise "?")     -> quick stored solution
+  //   • "detail" / "deep" / "ai"/"??"-> DeepSeek se detailed (settings prompt se)
+  const replied = msg && msg.reply_to_message;
+  if (replied) {
+    const fromOwner = !ownerId || String(msg.from?.id || "") === String(ownerId);
+    const rightChat = String(msg.chat?.id || "") === String(TG.chatId);
+    if (fromOwner && rightChat) {
+      try {
+        const pollsRow = (await supaGet("tg:polls")) || { polls: {} };
+        const polls = pollsRow.polls || {};
+        let rec = replied.poll && replied.poll.id ? polls[replied.poll.id] : null;
+        if (!rec) rec = Object.values(polls).find((r) => r.messageId === replied.message_id);
+        if (rec) {
+          const t = String(msg.text || "").trim().toLowerCase();
+          const wantsDeep = /^(\/?detail|deep|\bai\b|\?\?)/.test(t);
+          if (wantsDeep) {
+            after(async () => {
+              await tgSend("sendChatAction", { chat_id: TG.chatId, action: "typing" });
+              const ans = await deepExplain(origin, rec);
+              await tgSend("sendMessage", {
+                chat_id: TG.chatId, text: ans,
+                reply_to_message_id: replied.message_id, allow_sending_without_reply: true,
+              });
+            });
+          } else {
+            const text = rec.solution
+              ? `📖 ${cleanTg(rec.solution)}`
+              : `ℹ️ Iska chhota solution stored nahi. Detailed ke liye is quiz ko reply karke "detail" likho.`;
+            await tgSend("sendMessage", {
+              chat_id: TG.chatId, text,
+              reply_to_message_id: replied.message_id, allow_sending_without_reply: true,
+            });
+          }
+        }
+      } catch { /* ignore */ }
+    }
+    return NextResponse.json({ ok: true });
+  }
+
+  // ---- 3. quiz answer ----
   const pa = update.poll_answer;
   if (!pa || !Array.isArray(pa.option_ids) || pa.option_ids.length === 0) {
     return NextResponse.json({ ok: true });
