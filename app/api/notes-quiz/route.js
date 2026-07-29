@@ -46,7 +46,7 @@ Rules:
 - Create ${n} questions. Only use facts PRESENT in the notes — never invent facts not in them. If the notes genuinely can't yield ${n} distinct questions, return fewer; do NOT pad with repeats or made-up facts.
 - Each question: one clear factual MCQ answerable from the notes, with 4 options — the correct one plus 3 plausible-but-wrong distractors.
 - Test DIFFERENT facts each time. Do NOT repeat any question already in the EXCLUDE list below.
-- Keep language faithful to the notes (Hindi/English as written). Keep questions tight and exam-style.
+- LANGUAGE (very important): ALWAYS write every question, option, and explanation in ENGLISH — even if the study notes are in Hindi/Devanagari. TRANSLATE the facts to English. Prefer plain English; light Hinglish (roman-script Hindi words) is fine ONLY where it reads naturally, but NEVER output pure Hindi and NEVER use Devanagari script. Keep proper nouns/technical terms in English. Keep questions tight and exam-style.
 - If there is too little to make even one question, return {"title":"","questions":[]}.`;
 
     const user =
