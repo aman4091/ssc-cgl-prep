@@ -5,7 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
 import { getSettings, saveQuiz, getQuiz, makeId } from "@/lib/storage";
 import { readImageText, generateNotesQuiz } from "@/lib/client-ai";
-import { hinglishKey, getHinglish, setHinglish } from "@/lib/noteshinglish";
+import { hinglishKey, getHinglish, setHinglish, subscribeHinglish } from "@/lib/noteshinglish";
 import ZoomableImage from "@/components/ZoomableImage";
 import Markdown from "@/components/Markdown";
 
@@ -524,6 +524,10 @@ export default function NotesReader({ book }) {
   const [hxPage, setHxPage] = useState(null);
   const [hxEdit, setHxEdit] = useState(false);
   const [hxText, setHxText] = useState("");
+  // Re-render when the Hinglish store changes — on save AND when the durable
+  // IndexedDB copy finishes hydrating on load (so already-saved pages appear).
+  const [, setHxTick] = useState(0);
+  useEffect(() => subscribeHinglish(() => setHxTick((n) => n + 1)), []);
 
   const openHinglish = (p) => {
     const existing = getHinglish(hinglishKey(book, p));
@@ -535,17 +539,9 @@ export default function NotesReader({ book }) {
   const saveHx = () => {
     const t = String(hxText || "").trim();
     if (!t) { alert("Pehle is page ka poora Hinglish paste karo — khaali save nahi hoga."); return; }
-    const ok = setHinglish(hinglishKey(book, hxPage), t);
-    if (!ok) {
-      // Write didn't persist (browser storage full). Stay in the edit box so the
-      // paste is NOT lost, and tell the user what happened + how to fix it.
-      alert(
-        "Save nahi ho paya — browser ka storage bhara hua lag raha hai.\n\n" +
-        "Tumhara paste yahin hai (khoya nahi). Thodi jagah banao (jaise Settings/My Quizzes " +
-        "se purane generated quizzes hata do), phir dobara 💾 Save dabao."
-      );
-      return; // keep hxEdit=true and hxText intact
-    }
+    // Durable copy → IndexedDB; the in-memory cache updates synchronously, so the
+    // side-by-side view shows the paste immediately even if localStorage is full.
+    setHinglish(hinglishKey(book, hxPage), t);
     setHxText(t);
     setHxEdit(false); // saved → flip to the side-by-side view
   };
