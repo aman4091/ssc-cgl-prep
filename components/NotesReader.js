@@ -535,7 +535,17 @@ export default function NotesReader({ book }) {
   const saveHx = () => {
     const t = String(hxText || "").trim();
     if (!t) { alert("Pehle is page ka poora Hinglish paste karo — khaali save nahi hoga."); return; }
-    setHinglish(hinglishKey(book, hxPage), t);
+    const ok = setHinglish(hinglishKey(book, hxPage), t);
+    if (!ok) {
+      // Write didn't persist (browser storage full). Stay in the edit box so the
+      // paste is NOT lost, and tell the user what happened + how to fix it.
+      alert(
+        "Save nahi ho paya — browser ka storage bhara hua lag raha hai.\n\n" +
+        "Tumhara paste yahin hai (khoya nahi). Thodi jagah banao (jaise Settings/My Quizzes " +
+        "se purane generated quizzes hata do), phir dobara 💾 Save dabao."
+      );
+      return; // keep hxEdit=true and hxText intact
+    }
     setHxText(t);
     setHxEdit(false); // saved → flip to the side-by-side view
   };
