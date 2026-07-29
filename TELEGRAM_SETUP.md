@@ -53,19 +53,43 @@ Set karne ke baad **Redeploy** karo (nayi env tabhi lagti hai).
 `<TOKEN>`, `<APP>` (jaise `yourapp.vercel.app`) aur `<WEBHOOK_SECRET>` daal ke:
 
 ```
-curl "https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://<APP>/api/telegram/webhook&secret_token=<WEBHOOK_SECRET>&allowed_updates=%5B%22poll_answer%22,%22message%22%5D"
+curl "https://api.telegram.org/bot<TOKEN>/setWebhook?url=https://<APP>/api/telegram/webhook&secret_token=<WEBHOOK_SECRET>&allowed_updates=%5B%22poll_answer%22,%22message%22,%22callback_query%22%5D"
 ```
 
 `{"ok":true,"result":true,...}` aaye to ho gaya.
 
-## 5. Questions kaise mangao — `/start`
-Group mein bas **`/start`** bhejo → ek batch quiz polls aa jayenge (default **100**,
-`TG_BATCH` se badlo). Aur chahiye? Dobara **`/start`** — agle 100 (naye). Chhota
-batch: **`/start 30`**. (Aliases: `/next`, `/quiz`, `/go`.)
+> ⚠️ **Menu buttons ke liye `callback_query` zaroori hai** (upar ke curl me already
+> hai). Agar tumne pehle purana curl chalaya tha (sirf poll_answer+message), to ye
+> naya wala **dobara chalao** — warna English/GS/Notes ke buttons dabane par kuch
+> nahi hoga.
+
+## 5. Questions kaise mangao — `/start` (button menu)
+Group mein bas **`/start`** bhejo → ek **button menu** khulega:
+
+- **🎲 Mixed 10** — teeno (GS + English + Vocab) ka random mix, 10 polls.
+- **📘 English** → **PYQ bank** / **Error-spotting** → chapter chuno → us chapter ke
+  **10 questions**. Neeche **▶️ Aur 10** se agle 10.
+- **📗 GS** → **GK Topics** / **WAR bank** / **Current Affairs** → chapter/month/day
+  chuno → 10 questions.
+- **📔 Notes** → book → topic → **page-by-page** padho (◀️ Prev / Next ▶️). Text page
+  par **📝 Quiz banao (10)** se us page ke MCQ Telegram par (site jaisa, DeepSeek se).
+  Image-book ke pages scan photo ke roop me aate.
+- **✍️ Mere Questions** — app me "📁 Save to a chapter" se daale gaye questions (Sync
+  ON hona chahiye) yahan English/GS tab me apne aap dikhte.
+
+Har chapter me **priority**: pehle wo questions jo **kabhi nahi aaye**, fir **repeat**
+(spaced). Har bheja question tracked — galat karo to app `/review` → 📲 Telegram tab me.
+
+**Seedha batch chahiye (bina menu)?** `/start 30` likho — 30 mixed polls turant.
+(Aliases: `/next`, `/quiz`, `/go`; `/menu` bhi menu kholta hai.)
+
+**Naya content apne aap:** bank JSON me question add karo, naya Current-Affairs daily
+aaye, ya app me "📁 Save to a chapter" se question daalo — sab **live** padha jaata,
+menu me apne aap aa jaata (koi setup nahi). Custom + vocab ke liye **Sync ON** ho.
 
 Har question ek **spaced-repetition** schedule mein jaata hai: aaj jo aaya wo **kal**
 ek baar, phir **3 din**, **7**, **15**, **30** din baad dobara — jab tak yaad na ho
-jaye. So `/start` pehle *due* (dobara-dikhne-wale) uthata, phir naye se batch bharता.
+jaye. So mixed batch pehle *due* (dobara-dikhne-wale) uthata, phir naye se bharta.
 
 **Kisi question ki explanation chahiye?** Us quiz ko **reply** karo:
 - Reply mein **kuch bhi** (jaise `?`) → us question ka **stored solution**.

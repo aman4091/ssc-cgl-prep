@@ -11,26 +11,30 @@
 
 import { NextResponse, after } from "next/server";
 import { TG, supaGet, supaPut, tgSend } from "@/lib/tgserver";
-import { runBatch } from "@/lib/tgbatch";
+import { runBatch, runChapter, runNotesQuiz } from "@/lib/tgbatch";
+import { escHtml } from "@/lib/tgquiz";
+import {
+  rootMenu, tabMenu, sourceMenu, notesBooksMenu, notesTopicsMenu, notesPageView,
+} from "@/lib/tgmenu";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
 const ownerId = process.env.TELEGRAM_USER_ID || ""; // optional: only YOU can trigger/track
 
+// Bare "/start" (or /menu) -> button menu; "/start 30" -> direct mixed batch.
 function parseCommand(text) {
-  const m = String(text || "").trim().match(/^\/(start|next|quiz|go)(?:@\w+)?(?:\s+(\d+))?/i);
+  const m = String(text || "").trim().match(/^\/(start|next|quiz|go|menu)(?:@\w+)?(?:\s+(\d+))?/i);
   if (!m) return null;
-  const n = m[2] ? Math.max(1, Math.min(200, Number(m[2]))) : TG.batch;
-  return { count: n };
+  const explicit = !!m[2];
+  const n = explicit ? Math.max(1, Math.min(200, Number(m[2]))) : TG.batch;
+  return { count: n, explicit };
 }
 
 // Plain-text fallback: markdown/LaTeX markers halka saaf.
 function cleanTg(s) {
   return String(s || "").replace(/\*\*/g, "").replace(/\$\$?/g, "").trim().slice(0, 3800);
 }
-
-const escHtml = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 // Markdown (DeepSeek/bank solution) -> Telegram HTML: **bold** dikhega, headings
 // bold, "- " bullets "• " ban jaate. LaTeX $..$ strip (Telegram render nahi karta).
@@ -103,6 +107,130 @@ async function deepExplain(origin, rec) {
   }
 }
 
+// ---- Inline-menu (callback_query) helpers -----------------------------------
+
+// Show a menu payload {text, reply_markup} by editing the tapped message in
+// place. If that message is a photo (came from a notes image page), replace it.
+async function editMenu(chatId, messageId, menu) {
+  const res = await tgSend("editMessageText", {
+    chat_id: chatId, message_id: messageId,
+    text: menu.text, parse_mode: "HTML", reply_markup: menu.reply_markup,
+    disable_web_page_preview: true,
+  });
+  if (!res.ok) {
+    await tgSend("deleteMessage", { chat_id: chatId, message_id: messageId }).catch(() => {});
+    await tgSend("sendMessage", {
+      chat_id: chatId, text: menu.text, parse_mode: "HTML",
+      reply_markup: menu.reply_markup, disable_web_page_preview: true,
+    });
+  }
+}
+
+// Render one notes page. Text page -> edit message text (+ figure photos);
+// image-book page -> replace with a scan photo carrying the nav buttons.
+async function showNotesPage(origin, chatId, messageId, slug, tIdx, pIdx) {
+  const view = await notesPageView(origin, slug, tIdx, pIdx);
+  if (view.kind === "image") {
+    await tgSend("deleteMessage", { chat_id: chatId, message_id: messageId }).catch(() => {});
+    await tgSend("sendPhoto", {
+      chat_id: chatId, photo: view.photo, caption: view.caption,
+      parse_mode: "HTML", reply_markup: view.reply_markup,
+    });
+    return;
+  }
+  const res = await tgSend("editMessageText", {
+    chat_id: chatId, message_id: messageId, text: view.text, parse_mode: "HTML",
+    reply_markup: view.reply_markup, disable_web_page_preview: true,
+  });
+  if (!res.ok) {
+    await tgSend("deleteMessage", { chat_id: chatId, message_id: messageId }).catch(() => {});
+    await tgSend("sendMessage", {
+      chat_id: chatId, text: view.text, parse_mode: "HTML",
+      reply_markup: view.reply_markup, disable_web_page_preview: true,
+    });
+  }
+  for (const f of (view.figures || []).slice(0, 3)) {
+    await tgSend("sendPhoto", { chat_id: chatId, photo: f }).catch(() => {});
+  }
+}
+
+// Send a mixed batch in the background + a status line (used by /start N and 🎲).
+function sendMixedBatch(origin, count) {
+  after(async () => {
+    await tgSend("sendMessage", { chat_id: TG.chatId, text: `📤 ${count} quiz bhej raha hoon…` });
+    const r = await runBatch(origin, count).catch((e) => ({ sent: 0, errors: [String(e.message || e)] }));
+    await tgSend("sendMessage", {
+      chat_id: TG.chatId,
+      text: r.sent ? `✅ ${r.sent} quiz bhej diye. Aur? /start` : `⚠️ ${(r.errors && r.errors[0]) || "kuch nahi bheja"}`,
+    });
+  });
+}
+
+// Route one button press. `answerCallbackQuery` stops the tap spinner.
+async function handleCallback(origin, cq) {
+  const data = String(cq.data || "");
+  const chatId = cq.message?.chat?.id;
+  const messageId = cq.message?.message_id;
+  await tgSend("answerCallbackQuery", { callback_query_id: cq.id });
+  const [tok, a, b, c] = data.split("|");
+
+  switch (tok) {
+    case "noop":
+      return;
+    case "home":
+      return editMenu(chatId, messageId, rootMenu());
+    case "b":
+      return sendMixedBatch(origin, Math.max(1, Math.min(200, Number(a) || 10)));
+    case "t":
+      return editMenu(chatId, messageId, await tabMenu(a));
+    case "s":
+      return editMenu(chatId, messageId, await sourceMenu(origin, a, 0, b || ""));
+    case "sp":
+      return editMenu(chatId, messageId, await sourceMenu(origin, a, Number(b) || 0, c || ""));
+    case "c": {
+      const src = a, idx = Number(b) || 0;
+      after(async () => {
+        await tgSend("sendMessage", { chat_id: TG.chatId, text: "📤 10 questions bhej raha hoon…" });
+        const r = await runChapter(origin, src, idx, 10).catch((e) => ({ sent: 0, errors: [String(e.message || e)] }));
+        await tgSend("sendMessage", {
+          chat_id: TG.chatId,
+          text: r.sent ? `✅ ${r.sent} bhej diye.` : `⚠️ ${(r.errors && r.errors[0]) || "kuch nahi bheja"}`,
+          reply_markup: { inline_keyboard: [[{ text: "▶️ Aur 10", callback_data: `c|${src}|${idx}` }, { text: "🔙 Menu", callback_data: "home" }]] },
+        });
+      });
+      return;
+    }
+    case "nb":
+      return editMenu(chatId, messageId, notesBooksMenu(0));
+    case "nbp":
+      return editMenu(chatId, messageId, notesBooksMenu(Number(a) || 0));
+    case "nk":
+      return editMenu(chatId, messageId, await notesTopicsMenu(origin, a, 0));
+    case "ntp":
+      return editMenu(chatId, messageId, await notesTopicsMenu(origin, a, Number(b) || 0));
+    case "nt":
+      return showNotesPage(origin, chatId, messageId, a, Number(b) || 0, 0);
+    case "np":
+      return showNotesPage(origin, chatId, messageId, a, Number(b) || 0, Number(c) || 0);
+    case "nq": {
+      const slug = a, tIdx = Number(b) || 0, pIdx = Number(c) || 0;
+      after(async () => {
+        await tgSend("sendMessage", { chat_id: TG.chatId, text: "🧠 Notes se quiz bana raha hoon… (thoda ruko)" });
+        const ai = await userAi("gs");
+        const r = await runNotesQuiz(origin, slug, tIdx, pIdx, ai, 10).catch((e) => ({ sent: 0, error: String(e.message || e) }));
+        await tgSend("sendMessage", {
+          chat_id: TG.chatId,
+          text: r.sent ? `✅ ${r.sent} quiz bhej diye.` : `⚠️ ${r.error || "quiz nahi bana"}`,
+          reply_markup: { inline_keyboard: [[{ text: "🔁 Aur 10", callback_data: `nq|${slug}|${tIdx}|${pIdx}` }, { text: "🔙 Menu", callback_data: "home" }]] },
+        });
+      });
+      return;
+    }
+    default:
+      return;
+  }
+}
+
 export async function POST(req) {
   if (TG.webhookSecret) {
     const got = req.headers.get("x-telegram-bot-api-secret-token") || "";
@@ -113,22 +241,32 @@ export async function POST(req) {
   const update = await req.json().catch(() => null);
   if (!update) return NextResponse.json({ ok: true });
 
-  // ---- 1. "/start" style command ----
+  // ---- 0. inline-menu button press (callback_query) ----
+  const cq = update.callback_query;
+  if (cq) {
+    const fromOwner = !ownerId || String(cq.from?.id || "") === String(ownerId);
+    const rightChat = String(cq.message?.chat?.id || "") === String(TG.chatId);
+    if (fromOwner && rightChat) {
+      await handleCallback(origin, cq).catch(() => {});
+    } else {
+      await tgSend("answerCallbackQuery", { callback_query_id: cq.id }); // stop spinner
+    }
+    return NextResponse.json({ ok: true });
+  }
+
+  // ---- 1. "/start" -> button menu; "/start 30" -> direct mixed batch ----
   const msg = update.message;
   const cmd = msg && parseCommand(msg.text);
   if (cmd) {
     const fromOwner = !ownerId || String(msg.from?.id || "") === String(ownerId);
     const rightChat = String(msg.chat?.id || "") === String(TG.chatId);
     if (fromOwner && rightChat) {
-      // Respond now; send the batch after the response so Telegram doesn't retry.
-      after(async () => {
-        await tgSend("sendMessage", { chat_id: TG.chatId, text: `📤 ${cmd.count} quiz bhej raha hoon…` });
-        const r = await runBatch(origin, cmd.count).catch((e) => ({ sent: 0, error: String(e.message || e) }));
-        await tgSend("sendMessage", {
-          chat_id: TG.chatId,
-          text: r.error ? `⚠️ ${r.error}` : `✅ ${r.sent} quiz bhej diye. Aur chahiye? /start dabao.`,
-        });
-      });
+      if (cmd.explicit) {
+        sendMixedBatch(origin, cmd.count); // "/start 30" — background batch + status
+      } else {
+        const m = rootMenu(); // bare "/start" — open the button menu
+        await tgSend("sendMessage", { chat_id: TG.chatId, text: m.text, parse_mode: "HTML", reply_markup: m.reply_markup });
+      }
     }
     return NextResponse.json({ ok: true });
   }
