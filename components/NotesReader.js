@@ -58,15 +58,26 @@ function dispatchAppend(id, count, done) {
 const ASKED_KEY = "cgl.notesquiz.asked";
 function readAsked() { try { return JSON.parse(localStorage.getItem(ASKED_KEY) || "{}"); } catch { return {}; } }
 function getAsked(pk) { return readAsked()[pk] || []; }          // array of question texts
+// This is a pure dedup CACHE (avoids repeating questions across clicks). It must
+// never crash the quiz on a full localStorage — so on quota we fall back to
+// keeping only this page's list, and if even that fails we just skip it (the
+// worst case is a repeated question, not lost data).
+function writeAsked(all, pk) {
+  try { localStorage.setItem(ASKED_KEY, JSON.stringify(all)); return; }
+  catch {
+    try { localStorage.setItem(ASKED_KEY, JSON.stringify(pk ? { [pk]: all[pk] || [] } : {})); }
+    catch { /* storage full — dedup memory is expendable */ }
+  }
+}
 function addAsked(pk, texts) {
   const all = readAsked();
   const seen = new Set((all[pk] || []).map(normQ));
   const merged = [...(all[pk] || [])];
   for (const t of texts) { const k = normQ(t); if (t && !seen.has(k)) { seen.add(k); merged.push(t); } }
   all[pk] = merged.slice(-120); // cap the memory per page
-  localStorage.setItem(ASKED_KEY, JSON.stringify(all));
+  writeAsked(all, pk);
 }
-function clearAsked(pk) { const all = readAsked(); delete all[pk]; localStorage.setItem(ASKED_KEY, JSON.stringify(all)); }
+function clearAsked(pk) { const all = readAsked(); delete all[pk]; writeAsked(all, null); }
 const pageKeyOf = (book, page) => `${book?.scanBase || ""}#${page.book_page}`;
 
 // Drop questions whose stem matches anything already asked or already in this quiz.
