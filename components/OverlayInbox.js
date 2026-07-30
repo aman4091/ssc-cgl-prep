@@ -8,6 +8,17 @@
 
 import { useEffect, useRef } from "react";
 import { addWrong, setDetail, storeImages, isSubject } from "@/lib/wrongbook";
+import { shedOldQuizzes } from "@/lib/storage";
+
+// localStorage full hone par purane generated quizzes shed karke retry — wahi
+// self-heal jo saveQuiz mein hai, warna yaha addWrong chupchaap fail hota
+// rehta aur overlay ke questions kabhi nahi dikhte.
+function withSpace(fn) {
+  for (;;) {
+    try { return fn(); }
+    catch (e) { if (!shedOldQuizzes()) throw e; }
+  }
+}
 
 const PORTS = [5000, 5001, 5002]; // overlay ka pick_port 5000 busy hone par aage badhta hai
 const POLL_MS = 5000;
@@ -48,8 +59,8 @@ export default function OverlayInbox() {
                 const blob = await imgRes.blob();
                 const file = new File([blob], `${it.qid}.png`, { type: "image/png" });
                 const { images } = await storeImages([file]);
-                const rec = addWrong({ subject, q: null, images, note: "" });
-                if (it.answer) setDetail(rec.id, it.answer);
+                const rec = withSpace(() => addWrong({ subject, q: null, images, note: "" }));
+                if (it.answer) withSpace(() => setDetail(rec.id, it.answer));
                 done.add(it.qid);
                 saveDone(done);
               }
