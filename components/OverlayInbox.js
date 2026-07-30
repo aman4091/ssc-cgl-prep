@@ -1,0 +1,71 @@
+"use client";
+
+// Desktop ke Mock Test Helper overlay (F:\over, Flask on 127.0.0.1:5000) se
+// wrong questions receive karta hai. Overlay har saved answer ko ek queue mein
+// rakhta hai; ye component queue poll karke har item ko wrong-book mein daal
+// deta hai (screenshot → R2/IndexedDB image, Gemini answer → detail), phir
+// overlay ko ack bhejta hai. Overlay band ho to fetch chupchaap fail — no UI.
+
+import { useEffect, useRef } from "react";
+import { addWrong, setDetail, storeImages, isSubject } from "@/lib/wrongbook";
+
+const PORTS = [5000, 5001, 5002]; // overlay ka pick_port 5000 busy hone par aage badhta hai
+const POLL_MS = 5000;
+const DONE_KEY = "overlayInbox.done"; // qids already added — ack fail par duplicate na bane
+
+const readDone = () => {
+  try { return new Set(JSON.parse(localStorage.getItem(DONE_KEY)) || []); }
+  catch { return new Set(); }
+};
+const saveDone = (set) => {
+  try { localStorage.setItem(DONE_KEY, JSON.stringify([...set].slice(-500))); }
+  catch { /* ignore */ }
+};
+
+export default function OverlayInbox() {
+  const busy = useRef(false);
+
+  useEffect(() => {
+    const tick = async () => {
+      if (busy.current) return;
+      busy.current = true;
+      try {
+        for (const port of PORTS) {
+          const base = `http://127.0.0.1:${port}`;
+          let items;
+          try {
+            const res = await fetch(`${base}/pending-wrong`, { cache: "no-store" });
+            if (!res.ok) continue;
+            items = await res.json();
+          } catch { continue; } // overlay is port par nahi chal raha
+          const done = readDone();
+          for (const it of items || []) {
+            const subject = isSubject(it.subject) ? it.subject : "math";
+            try {
+              if (!done.has(it.qid)) {
+                const imgRes = await fetch(`${base}/img/${it.qid}`, { cache: "no-store" });
+                if (!imgRes.ok) continue;
+                const blob = await imgRes.blob();
+                const file = new File([blob], `${it.qid}.png`, { type: "image/png" });
+                const { images } = await storeImages([file]);
+                const rec = addWrong({ subject, q: null, images, note: "" });
+                if (it.answer) setDetail(rec.id, it.answer);
+                done.add(it.qid);
+                saveDone(done);
+              }
+              await fetch(`${base}/ack-wrong/${it.qid}`, { method: "POST" });
+            } catch { /* agla poll phir try karega */ }
+          }
+          break; // jis port par overlay mila, wahi kaafi hai
+        }
+      } finally {
+        busy.current = false;
+      }
+    };
+    tick();
+    const id = setInterval(tick, POLL_MS);
+    return () => clearInterval(id);
+  }, []);
+
+  return null;
+}
