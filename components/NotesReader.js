@@ -3,8 +3,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
-import { getSettings, saveQuiz, getQuiz, makeId } from "@/lib/storage";
-import { readImageText, generateNotesQuiz } from "@/lib/client-ai";
+import { getSettings } from "@/lib/storage";
+import { readImageText } from "@/lib/client-ai";
+import { startNotesQuiz } from "@/lib/notesquiz";
 import { hinglishKey, getHinglish, setHinglish, subscribeHinglish } from "@/lib/noteshinglish";
 import ZoomableImage from "@/components/ZoomableImage";
 import Markdown from "@/components/Markdown";
@@ -42,142 +43,8 @@ function pageText(p) {
   return (p.blocks || []).map(blockText).filter(Boolean).join("\n");
 }
 
-// ---- per-page "make a quiz from this page" (50 Q, batched + streamed) ----
-const QUIZ_TARGET = 50;
-const QUIZ_BATCH = 10;
-const normQ = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9ऀ-ॿ]+/g, "").slice(0, 80);
-
-function dispatchAppend(id, count, done) {
-  try { window.dispatchEvent(new CustomEvent("cgl:quiz-appended", { detail: { id, count, done } })); }
-  catch { /* no window */ }
-}
-
-// Cross-click memory of what a page has already been quizzed on, so pressing
-// the button again asks NEW questions instead of the same ones — until the page
-// is exhausted (a cycle), then it resets and repeats from the top.
-const ASKED_KEY = "cgl.notesquiz.asked";
-function readAsked() { try { return JSON.parse(localStorage.getItem(ASKED_KEY) || "{}"); } catch { return {}; } }
-function getAsked(pk) { return readAsked()[pk] || []; }          // array of question texts
-// This is a pure dedup CACHE (avoids repeating questions across clicks). It must
-// never crash the quiz on a full localStorage — so on quota we fall back to
-// keeping only this page's list, and if even that fails we just skip it (the
-// worst case is a repeated question, not lost data).
-function writeAsked(all, pk) {
-  try { localStorage.setItem(ASKED_KEY, JSON.stringify(all)); return; }
-  catch {
-    try { localStorage.setItem(ASKED_KEY, JSON.stringify(pk ? { [pk]: all[pk] || [] } : {})); }
-    catch { /* storage full — dedup memory is expendable */ }
-  }
-}
-function addAsked(pk, texts) {
-  const all = readAsked();
-  const seen = new Set((all[pk] || []).map(normQ));
-  const merged = [...(all[pk] || [])];
-  for (const t of texts) { const k = normQ(t); if (t && !seen.has(k)) { seen.add(k); merged.push(t); } }
-  all[pk] = merged.slice(-120); // cap the memory per page
-  writeAsked(all, pk);
-}
-function clearAsked(pk) { const all = readAsked(); delete all[pk]; writeAsked(all, null); }
-const pageKeyOf = (book, page) => `${book?.scanBase || ""}#${page.book_page}`;
-
-// Drop questions whose stem matches anything already asked or already in this quiz.
-function freshOnly(questions, ...excludeLists) {
-  const seen = new Set();
-  for (const list of excludeLists) for (const t of list) seen.add(normQ(t));
-  const out = [];
-  for (const q of questions || []) {
-    const k = normQ(q.question);
-    if (!k || seen.has(k)) continue;
-    seen.add(k); out.push(q);
-  }
-  return out;
-}
-
-// A padded copy of a question — same facts, options in a different order — so a
-// last-resort repeat at least doesn't read as the identical card twice.
-function reshuffle(q) {
-  const opts = Array.isArray(q.options) ? q.options : [];
-  const order = opts.map((_, i) => i);
-  for (let i = order.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [order[i], order[j]] = [order[j], order[i]];
-  }
-  return { ...q, options: order.map((i) => opts[i]), answer: order.indexOf(q.answer) };
-}
-
-// The quiz MUST land on 50. Nothing here is allowed to end the run short.
-const LANES = 3;         // batches fired together — 3×10 covers 50 in two rounds
-const DRY_BEFORE_RELAX = 2;
-
-// Three phases, each entered after 2 empty rounds instead of 6 (the old wait
-// burned ~6 slow round-trips before it ever relaxed, which is why the count
-// froze at 23 and looked stuck):
-//   0 — genuinely new: excludes what earlier clicks on this page already asked
-//   1 — page-repeat allowed: drops that history, only avoids stems in THIS quiz
-//   2 — no exclude list at all, high temperature
-// and if even phase 2 comes back empty, pad from the quiz's own questions.
-async function streamNotesQuiz(text, quizId, pk) {
-  let phase = 0, dry = 0;
-
-  for (let round = 0; round < 24; round++) {
-    const before = getQuiz(quizId);
-    if (!before) return; // deleted
-    const have = before.questions.length;
-    if (have >= QUIZ_TARGET) break;
-
-    const need = QUIZ_TARGET - have;
-    const here = before.questions.map((q) => q.question);
-    const asked = phase === 0 ? getAsked(pk) : [];
-    // Full width while questions keep coming; a single probe lane once a round
-    // has come back empty, so a thin page doesn't burn 3 calls per dry retry.
-    const lanes = dry > 0 ? 1 : Math.max(1, Math.min(LANES, Math.ceil(need / QUIZ_BATCH)));
-
-    // Fire the batches in parallel — small batches keep the options sane (the
-    // one-big-call problem), and running them together makes 50 arrive fast.
-    const packs = await Promise.all(
-      Array.from({ length: lanes }, (_, i) =>
-        generateNotesQuiz(
-          text,
-          Math.min(QUIZ_BATCH, need),
-          phase === 2 ? [] : [...asked, ...here],
-          Math.min(1.0, 0.55 + 0.12 * (dry + i)) // vary per lane so they differ
-        ).then((r) => r.questions || []).catch(() => [])
-      )
-    );
-    const fresh = freshOnly(packs.flat(), asked, here).slice(0, need);
-
-    const quiz = getQuiz(quizId);
-    if (!quiz) return;
-    if (fresh.length) {
-      quiz.questions = [...quiz.questions, ...fresh];
-      if (phase === 0) addAsked(pk, fresh.map((q) => q.question));
-      dry = 0;
-      quiz.streaming = quiz.questions.length < QUIZ_TARGET;
-      saveQuiz(quiz);
-      dispatchAppend(quizId, quiz.questions.length, !quiz.streaming);
-      if (!quiz.streaming) return;
-    } else {
-      dry += 1;
-      if (dry >= DRY_BEFORE_RELAX) {
-        if (phase >= 2) break;  // every angle dry → pad below
-        phase += 1; dry = 0;
-      }
-    }
-  }
-
-  // Still short (thin page, or DeepSeek down) → recycle this quiz's own
-  // questions with shuffled options so it still hands over exactly 50.
-  const quiz = getQuiz(quizId);
-  if (!quiz) return;
-  if (quiz.questions.length) {
-    const base = quiz.questions.slice();
-    for (let i = 0; quiz.questions.length < QUIZ_TARGET; i++) quiz.questions.push(reshuffle(base[i % base.length]));
-  }
-  quiz.streaming = false;
-  saveQuiz(quiz);
-  dispatchAppend(quizId, quiz.questions.length, true);
-}
-
+// The notes-quiz engine (batching + 50-target streaming + cross-click dedup)
+// now lives in lib/notesquiz.js so the per-chapter quiz button shares it.
 // The 📝 button on a page: first batch now, rest topped up in the background.
 function PageQuizBtn({ page, book }) {
   const router = useRouter();
@@ -189,34 +56,11 @@ function PageQuizBtn({ page, book }) {
     if (text.length < 30) { setErr("kam text"); setTimeout(() => setErr(""), 1500); return; }
     setBusy(true); setErr("");
     try {
-      const pk = pageKeyOf(book, page);
-      // Exclude everything this page has already been quizzed on so the questions
-      // are new. If that yields nothing, the page is exhausted → new cycle: forget
-      // the history and generate from scratch (repeats allowed again).
-      let asked = getAsked(pk);
-      let first = await generateNotesQuiz(text, QUIZ_BATCH, asked).catch(() => ({ questions: [] }));
-      let fresh = freshOnly(first.questions, asked);
-      if (!fresh.length) {
-        clearAsked(pk); asked = [];
-        first = await generateNotesQuiz(text, QUIZ_BATCH, []).catch(() => ({ questions: [] }));
-        fresh = freshOnly(first.questions, []);
-      }
-      if (!fresh.length) {
-        // Last try before giving up — no exclude list, high temperature.
-        first = await generateNotesQuiz(text, QUIZ_BATCH, [], 0.95);
-        fresh = freshOnly(first.questions, []);
-      }
-      if (!fresh.length) throw new Error("nahi bana");
-      addAsked(pk, fresh.map((q) => q.question));
-
-      const quizId = makeId();
-      const done = fresh.length >= QUIZ_TARGET;
-      saveQuiz({
-        id: quizId, title: `${book?.title || "Notes"} · page ${page.book_page} quiz`,
-        source: "notesquiz", createdAt: new Date().toISOString(), questions: fresh, streaming: !done,
+      const pk = `${book?.scanBase || ""}#${page.book_page}`;
+      const { quizId } = await startNotesQuiz({
+        text, pk, title: `${book?.title || "Notes"} · page ${page.book_page} quiz`,
       });
       router.push(`/quizzes/${quizId}`);
-      if (!done) streamNotesQuiz(text, quizId, pk);
     } catch (e) {
       setErr(e.message === "nahi bana" ? "Quiz nahi bana — dobara try karo." : (e.message || "Error"));
       setBusy(false);
