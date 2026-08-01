@@ -9,7 +9,7 @@ export const metadata = { title: "PYQ — SSC CGL Pre" };
 const SUBS = [
   { icon: "🎯", name: "WAR", count: "3,152", desc: "12 subjects, exam ke saath.", href: "/pyq/war" },
   { icon: "📚", name: "Pinnacle English", count: "7,585", desc: "15 chapters, solutions ke saath.", href: "/pyq/pinnacle" },
-  { icon: "🎯", name: "Error Pro", count: "820", desc: "Aman Sir — 8 chapters, error-spotting practice.", href: "/pyq/errorpro" },
+  { icon: "🎯", name: "Error Pro", count: "980", desc: "Aman Sir — 9 chapters, error-spotting practice.", href: "/pyq/errorpro" },
   { icon: "🧮", name: "Pinnacle Maths", count: "6,420", desc: "27 chapters, poore solution ke saath.", href: "/pyq/mathbank" },
   { icon: "🧮", name: "Maths 2025", count: "5,600", desc: "29 chapters — har question pe exam, date aur shift.", href: "/pyq/maths2025" },
   { icon: "🧠", name: "Pinnacle Reasoning", count: "3,543", desc: "32 chapters, verbal aur non-verbal.", href: "/pyq/reasonbank" },
