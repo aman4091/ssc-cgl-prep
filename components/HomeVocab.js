@@ -8,7 +8,7 @@
 // the old DeepSeek meanings/tricks never leak back in.
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getDayTypeItems, buildTypeQuiz, typeIcon, typeLabel } from "@/lib/vocab";
 import { saveQuiz } from "@/lib/storage";
@@ -41,6 +41,19 @@ export default function HomeVocab({ day, type }) {
   const meaning = item ? getMine(item.word) : "";
 
   const go = (d) => { const n = idx + d; if (n >= 0 && n < items.length) setIdx(n); };
+
+  // Swipe the card left→next / right→prev. Only a clearly horizontal, clearly
+  // long drag counts, so scrolling a long meaning never flicks the word.
+  const touch = useRef(null);
+  const onTouchStart = (e) => { const t = e.touches[0]; touch.current = { x: t.clientX, y: t.clientY }; };
+  const onTouchEnd = (e) => {
+    const start = touch.current; touch.current = null;
+    if (!start) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - start.x, dy = t.clientY - start.y;
+    if (Math.abs(dx) < 55 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    go(dx < 0 ? 1 : -1);
+  };
 
   const askGemini = async () => {
     if (!item) return;
@@ -86,7 +99,7 @@ export default function HomeVocab({ day, type }) {
       </section>
 
       <section className="section">
-        <div className="glass-card" style={{ padding: 20 }}>
+        <div className="glass-card" style={{ padding: 20 }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           <div className="row between" style={{ alignItems: "baseline" }}>
             <h1 className="grad" style={{ fontSize: "clamp(1.8rem, 6vw, 2.6rem)" }}>{item.word}</h1>
             <span className="muted" style={{ fontSize: "0.85rem" }}>{idx + 1}/{items.length}</span>
@@ -126,7 +139,17 @@ export default function HomeVocab({ day, type }) {
             </div>
           )}
 
-          <div className="row between mt-24">
+          {/* Sticky so Prev/Next stay reachable while scrolling a long meaning. */}
+          <div
+            className="row between"
+            style={{
+              position: "sticky", bottom: 8, zIndex: 5, gap: 8,
+              marginTop: 24, marginLeft: -20, marginRight: -20,
+              padding: "10px 20px 4px",
+              background: "var(--card)",
+              borderTop: "1px solid var(--glass-border)",
+            }}
+          >
             <button className="btn btn--ghost" onClick={() => go(-1)} disabled={idx === 0}>← Prev</button>
             <button className="btn btn--ghost" onClick={() => go(1)} disabled={idx === items.length - 1}>Next →</button>
           </div>
