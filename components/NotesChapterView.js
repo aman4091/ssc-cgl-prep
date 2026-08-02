@@ -145,7 +145,7 @@ export default function NotesChapterView({ slug, topic }) {
           </button>
         </span>
       </div>
-      <div className="notesdoc__main">
+      <div className="notesdoc__main reader">
         {pages.map((p) => (
           <PageBlock key={p.book_page} book={book} page={p} />
         ))}
