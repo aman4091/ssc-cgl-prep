@@ -62,7 +62,7 @@
 
   --success: var(--ok);
   --danger: var(--bad);
-  --warning: #fbbf24;
+  --warning: #946606; /* dark amber — gold was invisible as text on light paper */
 
   /* ---- the menu ----
      Both states are the theme's own pen. Selected is the pen at full strength;
