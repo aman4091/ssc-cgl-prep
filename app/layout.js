@@ -9,6 +9,7 @@ import FocusEnforcer from "@/components/FocusEnforcer";
 import VocabPrefetch from "@/components/VocabPrefetch";
 import SyncManager from "@/components/SyncManager";
 import OverlayInbox from "@/components/OverlayInbox";
+import VocabFeeder from "@/components/VocabFeeder";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -46,6 +47,7 @@ export default function RootLayout({ children }) {
         <VocabPrefetch />
         <SyncManager />
         <OverlayInbox />
+        <VocabFeeder />
       </body>
     </html>
   );

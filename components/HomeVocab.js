@@ -10,18 +10,10 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getDayTypeItems, buildTypeQuiz, typeIcon, typeLabel } from "@/lib/vocab";
+import { getDayTypeItems, buildTypeQuiz, typeIcon, typeLabel, getMine, setMine } from "@/lib/vocab";
 import { saveQuiz } from "@/lib/storage";
 import { copyText } from "@/lib/notesrender";
 import Markdown from "@/components/Markdown";
-
-const MINE_KEY = "cgl.vocab.mine";
-function readMine() { try { return JSON.parse(localStorage.getItem(MINE_KEY) || "{}") || {}; } catch { return {}; } }
-function getMine(word) { return String(readMine()[word] || ""); }
-function setMine(word, text) {
-  const all = readMine(); all[word] = text;
-  try { localStorage.setItem(MINE_KEY, JSON.stringify(all)); } catch { /* quota — non-critical */ }
-}
 
 export default function HomeVocab({ day, type }) {
   const router = useRouter();
@@ -68,7 +60,7 @@ export default function HomeVocab({ day, type }) {
   const savePaste = () => {
     const t = String(paste || "").trim();
     if (!t || !item) return;
-    setMine(item.word, t);
+    try { setMine(item.word, t); } catch { /* quota — non-critical */ }
     setPaste(""); setEditing(false); setTick((n) => n + 1);
   };
 
