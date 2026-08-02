@@ -21,10 +21,30 @@ export default function HomeFeed() {
 
   useEffect(() => {
     const sync = () => { setItems(getItems()); setActive(getActiveId()); };
+    // Restore the open chapter from the URL (?sel=). This is ALSO what gives each
+    // chapter a DISTINCT address, so Edge/Chrome "reading mode" — which caches its
+    // reader view per URL — doesn't keep showing the first chapter it captured.
+    try {
+      const fromUrl = new URLSearchParams(window.location.search).get("sel");
+      if (fromUrl && getItems().some((it) => it.id === fromUrl)) setActiveId(fromUrl);
+    } catch { /* ignore */ }
     sync();
     setReady(true);
     return subscribeHome(sync);
   }, []);
+
+  // Keep the URL in step with the open chapter (shallow — no reload), so reading
+  // mode / share / back-button each see a unique address per chapter.
+  useEffect(() => {
+    if (!ready || !activeId) return;
+    try {
+      const u = new URL(window.location.href);
+      if (u.searchParams.get("sel") !== activeId) {
+        u.searchParams.set("sel", activeId);
+        window.history.replaceState(null, "", u.toString());
+      }
+    } catch { /* ignore */ }
+  }, [activeId, ready]);
 
   if (!ready) return <section className="section"><div className="placeholder">…</div></section>;
 
@@ -57,7 +77,7 @@ export default function HomeFeed() {
   if (!active || active.kind === "vocab") {
     const n = nextUp();
     body = n ? (
-      <HomeVocab day={n.day} type={n.type} />
+      <HomeVocab key="vocab" day={n.day} type={n.type} />
     ) : (
       <section className="section">
         <div className="home-head"><h1>Aage kya</h1></div>
@@ -66,7 +86,7 @@ export default function HomeFeed() {
       </section>
     );
   } else {
-    body = <NotesChapterView slug={active.slug} topic={active.topic} />;
+    body = <NotesChapterView key={active.id} slug={active.slug} topic={active.topic} />;
   }
 
   return (
