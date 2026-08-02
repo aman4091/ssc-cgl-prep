@@ -29,9 +29,11 @@ export default function SyncManager() {
           return;
         }
         // 1) Local changes ALWAYS win first — push them so a target you just added
-        //    is never overwritten by an older cloud copy.
+        //    is never overwritten by an older cloud copy. The push also absorbs the
+        //    cloud's pasted meanings/Hinglish; if it pulled any in, reload to show.
         if (localHash() !== s.syncPushedHash) {
-          await pushSync();
+          const r = await pushSync();
+          if (r && r.absorbed && !stopped) { window.location.reload(); return; }
           return;
         }
         // 2) Local is clean → if another device pushed newer, pull it + reload.

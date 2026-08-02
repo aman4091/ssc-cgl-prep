@@ -77,9 +77,10 @@ export default function SettingsPage() {
   const doPush = async () => {
     setSyncBusy(true); setSyncMsg("Cloud pe push ho raha hai…");
     try {
-      const t = await pushSync();
+      const { at: t, absorbed } = await pushSync();
       const s = { ...getSettings(), syncAuto: true }; // first push -> auto ON from now on
       saveSettings(s); setSettings(s);
+      if (absorbed) { setSyncMsg("✓ Push + doosre device ka data mil gaya — reload…"); setTimeout(() => window.location.reload(), 700); return; }
       setSyncMsg(`✓ Push ho gaya · ${new Date(t).toLocaleString("en-IN")} — ab AUTO ON, dobara button dabane ki zaroorat nahi.`);
     } catch (e) { setSyncMsg("❌ " + e.message); }
     finally { setSyncBusy(false); }
