@@ -3,10 +3,21 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "@/components/Markdown";
 import {
-  getEntries, addEntry, updateEntry, deleteEntry, compressImage, fileLegacyEntries,
+  getEntries, addEntry, updateEntry, deleteEntry, fileLegacyEntries,
   restoreTitlesFromBackup, readFilingBackup,
 } from "@/lib/notebook";
 import { NB_SUBJECTS, subjectByLabel, chaptersFor } from "@/lib/notebookTaxonomy";
+import { storeImages } from "@/lib/wrongbook";
+import { getFile } from "@/lib/filestore";
+
+// An image descriptor ({url} on R2, or {id} for an IndexedDB blob) → a src the
+// <img> can show. R2 URLs are used directly; local blobs become object URLs.
+async function resolveSrc(desc) {
+  if (!desc) return "";
+  if (desc.url) return desc.url;
+  try { const b = await getFile(desc.id); return b ? URL.createObjectURL(b) : ""; }
+  catch { return ""; }
+}
 
 // A personal notebook, filed like the rest of the app: pick a Subject from the
 // left rail (GS / Maths / English / Reasoning), drill into a Chapter, and the
@@ -26,7 +37,9 @@ export default function NotebookPage() {
   const [topicLabel, setTopicLabel] = useState("");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [img, setImg] = useState("");
+  const [image, setImage] = useState(null);    // {url}|{id} descriptor, or null
+  const [imageSrc, setImageSrc] = useState(""); // displayable src for the preview
+  const [viewImgs, setViewImgs] = useState([]); // resolved srcs for the open note
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const fileRef = useRef(null);
@@ -124,7 +137,7 @@ export default function NotebookPage() {
 
   const pickSubject = (key) => { setSubjectKey(key); setChapter(null); };
 
-  const resetFields = () => { setTitle(""); setText(""); setImg(""); setErr(""); setBusy(false); };
+  const resetFields = () => { setTitle(""); setText(""); setImage(null); setImageSrc(""); setErr(""); setBusy(false); };
   const closeComposer = () => { setComposing(false); resetFields(); };
   const closeView = () => { setViewId(null); setEditing(false); resetFields(); };
 
@@ -139,8 +152,15 @@ export default function NotebookPage() {
     if (!file) return;
     if (!file.type?.startsWith("image/")) { setErr("Sirf image file add kar sakte ho."); return; }
     setBusy(true); setErr("");
-    try { setImg(await compressImage(file)); }
-    catch (e) { setErr(e.message || "Image add nahi hui."); }
+    try {
+      // Compress + upload to R2 (falls back to a local IndexedDB blob). The entry
+      // keeps only a tiny descriptor, so localStorage never fills up with images.
+      const { images, localOnly } = await storeImages([file]);
+      const desc = images[0];
+      setImage(desc);
+      setImageSrc(await resolveSrc(desc));
+      if (localOnly) setErr("Image sirf is device pe save hui (net/R2 nahi mila) — dusre device pe nahi dikhegi.");
+    } catch (e) { setErr(e.message || "Image add nahi hui."); }
     finally { setBusy(false); }
   };
 
@@ -151,9 +171,9 @@ export default function NotebookPage() {
   };
 
   const saveNew = () => {
-    if (!text.trim() && !img) { setErr("Kuch to bharo — note ya image."); return; }
+    if (!text.trim() && !image) { setErr("Kuch to bharo — note ya image."); return; }
     try {
-      addEntry({ title, subject: subjectLabel, topic: topicLabel, text, img });
+      addEntry({ title, subject: subjectLabel, topic: topicLabel, text, images: image ? [image] : [] });
       const list = getEntries();
       setEntries(list);
       // Jump the view to where the note just landed, so it's visible.
@@ -161,7 +181,7 @@ export default function NotebookPage() {
       if (s) setSubjectKey(s.key);
       setChapter(topicLabel);
       closeComposer();
-    } catch { setErr("Storage full ho gaya (image bahut badi). Chhoti image try karo."); }
+    } catch { setErr("Save nahi hua — dobara try karo."); }
   };
 
   const openView = (e) => { setViewId(e.id); setEditing(false); };
@@ -169,7 +189,7 @@ export default function NotebookPage() {
     setEditing(true);
     setSubjectLabel(e.subject || subject.label);
     setTopicLabel(e.topic || "Miscellaneous");
-    setTitle(e.title || ""); setText(e.text || ""); setImg(""); setErr("");
+    setTitle(e.title || ""); setText(e.text || ""); setImage(null); setImageSrc(""); setErr("");
   };
   const saveEdit = () => {
     updateEntry(viewId, { title, subject: subjectLabel, topic: topicLabel, text });
@@ -182,10 +202,11 @@ export default function NotebookPage() {
     if (viewId === id) closeView();
   };
 
+  const hasImg = (e) => !!e.img || (e.images || []).length > 0;
   const preview = (e) => {
     const t = (e.text || "").replace(/\s+/g, " ").trim();
     if (t) return t.length > 160 ? t.slice(0, 160) + "…" : t;
-    if (e.img) return "🖼️ Image";
+    if (hasImg(e)) return "🖼️ Image";
     return "—";
   };
 
@@ -237,10 +258,10 @@ export default function NotebookPage() {
           rows={6}
           style={{ width: "100%", resize: "vertical", fontSize: "0.95rem" }}
         />
-        {img && (
+        {imageSrc && (
           <div style={{ marginTop: 12 }}>
-            <img src={img} alt="attached" style={{ maxWidth: "100%", borderRadius: 10, display: "block" }} />
-            <button className="btn btn--ghost btn--sm" onClick={() => setImg("")} style={{ marginTop: 8 }}>✕ Image hatao</button>
+            <img src={imageSrc} alt="attached" style={{ maxWidth: "100%", borderRadius: 10, display: "block" }} />
+            <button className="btn btn--ghost btn--sm" onClick={() => { setImage(null); setImageSrc(""); }} style={{ marginTop: 8 }}>✕ Image hatao</button>
           </div>
         )}
         <input ref={fileRef} type="file" accept="image/*" hidden
@@ -259,6 +280,15 @@ export default function NotebookPage() {
   };
 
   const openEntry = viewId != null ? (entries || []).find((e) => e.id === viewId) : null;
+
+  // Resolve the open note's image descriptors ({url}/{id}) into showable srcs.
+  useEffect(() => {
+    let alive = true;
+    const descs = openEntry?.images || [];
+    if (!descs.length) { setViewImgs([]); return; }
+    Promise.all(descs.map(resolveSrc)).then((srcs) => { if (alive) setViewImgs(srcs.filter(Boolean)); });
+    return () => { alive = false; };
+  }, [openEntry?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -341,7 +371,7 @@ export default function NotebookPage() {
                     >
                       {e.title && <div className="nb-note__title">{e.title}</div>}
                       <div className="muted nb-note__preview">
-                        {preview(e)}{e.img && (e.text || "").trim() ? " · 🖼️" : ""}
+                        {preview(e)}{hasImg(e) && (e.text || "").trim() ? " · 🖼️" : ""}
                       </div>
                     </button>
                   ))}
@@ -402,6 +432,11 @@ export default function NotebookPage() {
                       <img src={openEntry.img} alt="note" loading="lazy" style={{ maxWidth: "100%", borderRadius: 10, display: "block" }} />
                     </a>
                   )}
+                  {viewImgs.map((src, i) => (
+                    <a key={i} href={src} target="_blank" rel="noreferrer" style={{ display: "block", marginTop: (openEntry.text || openEntry.img || i) ? 12 : 0 }}>
+                      <img src={src} alt="note" loading="lazy" style={{ maxWidth: "100%", borderRadius: 10, display: "block" }} />
+                    </a>
+                  ))}
                   <div className="row between mt-16" style={{ alignItems: "center" }}>
                     <span className="muted" style={{ fontSize: "0.72rem" }}>
                       {new Date(openEntry.createdAt).toLocaleString("en-IN", { day: "numeric", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
