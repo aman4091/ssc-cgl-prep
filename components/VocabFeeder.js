@@ -15,7 +15,7 @@
 // Overlay band ho to fetch chupchaap fail — no UI.
 
 import { useEffect, useRef } from "react";
-import { TYPES, nextUp, totalDays, getDayTypeItems, getMine, setMine } from "@/lib/vocab";
+import { TYPES, nextUp, totalDays, getDayTypeItems, getDayProgress, getMine, setMine } from "@/lib/vocab";
 import { shedOldQuizzes } from "@/lib/storage";
 
 // localStorage full → purane generated quizzes shed karke retry (OverlayInbox
@@ -30,10 +30,14 @@ function withSpace(fn) {
 const PORTS = [5000, 5001, 5002];
 const POLL_MS = 5000;
 
-// Day ke words jinki apni (Gemini) meaning abhi nahi hai.
+// Day ke words jinki apni (Gemini) meaning abhi nahi hai — sirf un types ke
+// jinka is day ka quiz ABHI NAHI hua. Jo type quiz-done hai wo "ho chuka" —
+// uske bache words dobara nahi bhejne (warna already-done cheez baar-baar aati).
 function pendingWords(day) {
+  const done = new Set(getDayProgress(day).doneTypes);
   const out = [];
   for (const t of TYPES) {
+    if (done.has(t.key)) continue;
     for (const it of getDayTypeItems(day, t.key)) {
       if (!getMine(it.word).trim()) out.push({ word: it.word, def: it.def || "", type: t.key });
     }
