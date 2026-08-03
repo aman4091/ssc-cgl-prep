@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { vocabDetail } from "@/lib/client-ai";
-import { getDetail, setDetail, clearDetail, addEntry, TYPES } from "@/lib/vocab";
+import { getDetail, setDetail, clearDetail, addEntry, addNewWord, TYPES } from "@/lib/vocab";
 
 export default function WordPopup({ word, onClose }) {
   const [cur, setCur] = useState(word);
@@ -43,6 +43,7 @@ export default function WordPopup({ word, onClose }) {
 
   const add = (type) => {
     addEntry(cur, detail?.meaning || "", type);
+    addNewWord(cur); // /new-words page ki list mein bhi dikhe
     setAdded(type);
   };
 

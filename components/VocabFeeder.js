@@ -15,7 +15,7 @@
 // Overlay band ho to fetch chupchaap fail — no UI.
 
 import { useEffect, useRef } from "react";
-import { TYPES, nextUp, totalDays, getDayTypeItems, getDayProgress, getMine, setMine } from "@/lib/vocab";
+import { TYPES, nextUp, totalDays, getDayTypeItems, getDayProgress, getMine, setMine, addNewWord } from "@/lib/vocab";
 import { shedOldQuizzes } from "@/lib/storage";
 
 // localStorage full → purane generated quizzes shed karke retry (OverlayInbox
@@ -83,6 +83,8 @@ export default function VocabFeeder() {
             if (res.ok) {
               for (const it of (await res.json()) || []) {
                 if (!it.word) continue;
+                // overlay ke 📋 button ka apna word -> New Words list mein bhi
+                if (it.new) withSpace(() => addNewWord(it.word));
                 // khali meaning save nahi karni, par ack zaroor — queue clear rahe
                 if (it.meaning) withSpace(() => setMine(it.word, it.meaning));
                 await fetch(`${base}/ack-vocab`, {
