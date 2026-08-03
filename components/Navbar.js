@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NAV_GROUPS, NAV_DIRECT, trailForPath, nodeAt } from "@/lib/nav";
+import { getNewWords } from "@/lib/vocab";
 
 // The menu, and only the menu.
 //
@@ -30,6 +31,19 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => { setTrail(trailForPath(pathname)); }, [pathname]);
+
+  // /new-words par menu ki jagah words ki list dikhti hai (upar wala logo
+  // pehle se homepage par le jata hai). 5s refresh — overlay se naya word
+  // aate hi list mein dikhe.
+  const onNewWords = pathname === "/new-words";
+  const [newWords, setNewWords] = useState([]);
+  useEffect(() => {
+    if (!onNewWords) return undefined;
+    const load = () => setNewWords([...getNewWords()].reverse()); // naya pehle
+    load();
+    const id = setInterval(load, 5000);
+    return () => clearInterval(id);
+  }, [onNewWords]);
 
   // A group can describe a BANK instead of listing links: which index to read,
   // which array in it holds the chapters, and what those rows link to. Fetched
@@ -74,7 +88,8 @@ export default function Navbar() {
   }, [trail, bankLinks]);
   // Navigating means you are done with the menu — and on a phone it sits over
   // the page you just opened.
-  useEffect(() => { setOpen(false); }, [pathname]);
+  // params bhi: /new-words par word chunne se sirf query badalti hai.
+  useEffect(() => { setOpen(false); }, [pathname, params]);
   useEffect(() => {
     if (!open) return undefined;
     const onKey = (e) => e.key === "Escape" && setOpen(false);
@@ -140,7 +155,23 @@ export default function Navbar() {
       </div>
 
       <nav className="drawer__nav">
-        {current ? (
+        {onNewWords ? (
+          /* ---- /new-words: menu ki jagah saved words ki list ---- */
+          newWords.length ? (
+            newWords.map((w, i) => (
+              <Link
+                key={w}
+                href={`/new-words?w=${encodeURIComponent(w)}`}
+                className={`drawer__link ${(params.get("w") || newWords[0]) === w ? "is-active" : ""}`}
+              >
+                <span className="drawer__ico">{i + 1}.</span>
+                {w}
+              </Link>
+            ))
+          ) : (
+            <span className="drawer__link" style={{ color: "var(--dim)" }}>Abhi koi word nahi</span>
+          )
+        ) : current ? (
           /* ---- level 2: one group, in place of the list ---- */
           <>
             <button className="drawer__back" onClick={() => setTrail((t) => t.slice(0, -1))}>

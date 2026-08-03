@@ -6,12 +6,23 @@
 // Overlay se meaning VocabFeeder ke through aati hai — 5s refresh usse page
 // khula hone par bhi utha leta hai.
 
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { getNewWords, getOws, getMine, setMine } from "@/lib/vocab";
 import { copyText } from "@/lib/notesrender";
 import Markdown from "@/components/Markdown";
 
+// useSearchParams (sidebar ?w= sync) ko Suspense boundary chahiye, warna
+// pura page static rendering se opt-out ho jata hai.
 export default function NewWordsPage() {
+  return (
+    <Suspense fallback={null}>
+      <NewWordsInner />
+    </Suspense>
+  );
+}
+
+function NewWordsInner() {
   const [words, setWords] = useState([]);
   const [idx, setIdx] = useState(0);
   const [paste, setPaste] = useState("");
@@ -33,6 +44,22 @@ export default function NewWordsPage() {
   }, []);
   // New word -> collapse the paste box and clear the draft.
   useEffect(() => { setPaste(""); setEditing(false); }, [idx]);
+
+  // Left sidebar (Navbar) word list ?w= se jodta hai: click -> wahi card.
+  const router = useRouter();
+  const sel = useSearchParams().get("w");
+  useEffect(() => {
+    if (!sel || !words.length) return;
+    const i = words.findIndex((w) => String(w).toLowerCase() === sel.toLowerCase());
+    if (i >= 0 && i !== idx) setIdx(i);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sel, words]);
+  // Prev/Next se badla to URL bhi saath — sidebar highlight sahi rahe.
+  useEffect(() => {
+    const w = words[idx];
+    if (w && sel !== w) router.replace(`/new-words?w=${encodeURIComponent(w)}`, { scroll: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx, words]);
 
   const word = words[idx] || null;
   const def = word ? defs[String(word).toLowerCase()] || "" : "";
