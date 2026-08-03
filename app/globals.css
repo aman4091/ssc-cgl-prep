@@ -104,6 +104,70 @@
   --font-mono: ui-monospace, "Cascadia Code", Consolas, monospace;
 }
 
+/* ============ NIGHT MODE ============
+   The light "paper" palette above is the default. Adding data-theme="dark" on
+   <html> (the top-right toggle does this) re-points the same tokens back to a
+   calm dark palette — every component reads the tokens, so this re-skins all of
+   it. Only the .reader (hard-coded cream) needs its own dark overrides below. */
+:root[data-theme="dark"] {
+  --bg: #16181c;
+  --card: #1e2126;
+  --line: #31353c;
+  --ink: #e8e6e3;
+  --dim: #9aa0a6;
+  --accent2: #8ab4f8;
+  --ok: #6bd39a;
+  --bad: #ff8a7a;
+  --mark: #5c4b00;
+
+  --bg-2: #22262c;
+  --glass-bg-strong: #262a31;
+  --glass-border-strong: #434852;
+  --text-3: #767c83;
+
+  --accent: #ff8a7a;
+  --on-accent: #16181c;      /* dark ink to sit on the light accent */
+  --warning: #fbbf24;
+  --glass-shadow: none;
+  color-scheme: dark;
+}
+:root[data-theme="dark"] body { color-scheme: dark; }
+
+/* .reader hard-codes a cream page — give it a dark reading surface at night. */
+:root[data-theme="dark"] .reader { background: #1b1d22; color: #e6e2da; border-color: #31353c; }
+:root[data-theme="dark"] .reader .nx-hi-text,
+:root[data-theme="dark"] .reader .nx-hi-text .md { color: #e6e2da; }
+:root[data-theme="dark"] .reader .md h1,
+:root[data-theme="dark"] .reader .md h2,
+:root[data-theme="dark"] .reader .md h3,
+:root[data-theme="dark"] .reader .md h4,
+:root[data-theme="dark"] .reader .md h5,
+:root[data-theme="dark"] .reader .md strong,
+:root[data-theme="dark"] .reader .md b { color: #f4f0e6; }
+:root[data-theme="dark"] .reader .nt-card + .nt-card { border-top-color: #31353c; }
+:root[data-theme="dark"] .reader .nt-meta { color: #8f96a0; }
+:root[data-theme="dark"] .reader .btn--ghost { color: var(--text-1); border-color: var(--glass-border); background: var(--glass-bg); }
+:root[data-theme="dark"] .reader .input { background: #14161a; color: #e6e2da; border-color: #31353c; }
+:root[data-theme="dark"] .reader .md a { color: #8ab4f8; }
+:root[data-theme="dark"] .reader .md code { background: #262a31; }
+:root[data-theme="dark"] .reader .md li::marker { color: #6b7280; }
+:root[data-theme="dark"] .reader .md hr { border-top-color: #31353c; }
+:root[data-theme="dark"] .reader .md blockquote { border-left-color: #31353c; color: #b7bcc4; }
+:root[data-theme="dark"] .reader .md th,
+:root[data-theme="dark"] .reader .md td { border-color: #31353c; }
+
+/* The day/night toggle — a small fixed control in the top-right corner. */
+.theme-toggle {
+  position: fixed; top: 10px; right: 12px; z-index: 400;
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--card); color: var(--text-1);
+  font-size: 1.1rem; line-height: 1; cursor: pointer;
+  display: grid; place-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+}
+.theme-toggle:hover { border-color: var(--glass-border-strong); }
+
 * {
   box-sizing: border-box;
   margin: 0;

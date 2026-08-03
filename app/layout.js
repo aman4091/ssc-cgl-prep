@@ -10,6 +10,7 @@ import VocabPrefetch from "@/components/VocabPrefetch";
 import SyncManager from "@/components/SyncManager";
 import OverlayInbox from "@/components/OverlayInbox";
 import VocabFeeder from "@/components/VocabFeeder";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -23,6 +24,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body className={inter.variable}>
+        {/* Apply the saved theme before paint so there is no light-flash. */}
+        <script dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('ui.theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}" }} />
+        <ThemeToggle />
         <div className="bg-orbs" aria-hidden="true">
           <span className="orb orb--1" />
           <span className="orb orb--2" />
