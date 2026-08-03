@@ -48,7 +48,9 @@ export default function SyncManager() {
 
     // push immediately when leaving (mobile: app switch / lock fires 'hidden')
     const pushOnLeave = async () => {
-      if (!active() || busy.current) return;
+      // Never push before this device has SEEDED from the cloud (pulled at least
+      // once). A fresh/empty device pushing its snapshot would wipe the live data.
+      if (!active() || busy.current || !getSettings().syncPushedHash) return;
       if (localHash() !== (getSettings().syncPushedHash || "")) {
         busy.current = true;
         try { await pushSync(); } catch { /* ignore */ } finally { busy.current = false; }
