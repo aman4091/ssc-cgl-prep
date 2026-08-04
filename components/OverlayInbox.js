@@ -59,7 +59,8 @@ export default function OverlayInbox() {
                 const blob = await imgRes.blob();
                 const file = new File([blob], `${it.qid}.png`, { type: "image/png" });
                 const { images } = await storeImages([file]);
-                const rec = withSpace(() => addWrong({ subject, q: null, images, note: "" }));
+                // qid saath rakho — overlay ke answers page (q093...) se match hota hai
+                const rec = withSpace(() => addWrong({ subject, q: null, images, note: "", qid: it.qid }));
                 if (it.answer) withSpace(() => setDetail(rec.id, it.answer));
                 done.add(it.qid);
                 saveDone(done);

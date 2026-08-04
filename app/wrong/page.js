@@ -338,6 +338,19 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
           On a phone (.q-head__actions media rule) only the q-act--keep buttons
           survive — Show answer, ✨ Gemini and 🎯 20 — with Edit/Delete hidden. */}
       <div className="q-head__actions" style={{ marginBottom: 12 }}>
+        {/* Overlay se aaya question number — overlay ke answers page (q093
+            wale headings) se seedha match karta hai. */}
+        {rec.qid && (
+          <span
+            className="muted"
+            style={{
+              marginRight: "auto", alignSelf: "center", fontSize: "0.8rem",
+              fontWeight: 700, letterSpacing: "0.02em",
+            }}
+          >
+            🔖 {rec.qid}
+          </span>
+        )}
         {(hasAnswer || q.solution || rec.note || rec.detail) && (
           <button className="btn btn--ghost btn--sm q-act--keep" onClick={() => setShown((v) => !v)}>
             {shown ? "🙈 Hide answer" : "👁️ Show answer"}
