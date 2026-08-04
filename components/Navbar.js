@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NAV_GROUPS, NAV_DIRECT, trailForPath, nodeAt } from "@/lib/nav";
-import { getNewWords } from "@/lib/vocab";
+import { getNewWordEntries, newWordDayKey, newWordDayLabel } from "@/lib/vocab";
 
 // The menu, and only the menu.
 //
@@ -32,18 +32,36 @@ export default function Navbar() {
 
   useEffect(() => { setTrail(trailForPath(pathname)); }, [pathname]);
 
-  // /new-words par menu ki jagah words ki list dikhti hai (upar wala logo
-  // pehle se homepage par le jata hai). 5s refresh — overlay se naya word
+  // /new-words par menu ki jagah pehle DATES dikhti hain (jis din words add
+  // hue), date kholne par us din ke words. 5s refresh — overlay se naya word
   // aate hi list mein dikhe.
   const onNewWords = pathname === "/new-words";
-  const [newWords, setNewWords] = useState([]);
+  const [newEntries, setNewEntries] = useState([]);
   useEffect(() => {
     if (!onNewWords) return undefined;
-    const load = () => setNewWords([...getNewWords()].reverse()); // naya pehle
+    const load = () => setNewEntries([...getNewWordEntries()].reverse()); // naya pehle
     load();
     const id = setInterval(load, 5000);
     return () => clearInterval(id);
   }, [onNewWords]);
+  // Din ke groups — nayi date upar, bina-date wale ("Purane words") sabse neeche.
+  const nwDay = onNewWords ? params.get("day") : null;
+  const nwGroups = [];
+  if (onNewWords) {
+    const m = new Map();
+    for (const e of newEntries) {
+      const k = newWordDayKey(e.at);
+      if (!m.has(k)) m.set(k, { key: k, label: newWordDayLabel(e.at), words: [] });
+      m.get(k).words.push(e.w);
+    }
+    nwGroups.push(...m.values());
+    nwGroups.sort((a, b) =>
+      a.key === "old" ? 1 : b.key === "old" ? -1 : a.key < b.key ? 1 : -1
+    );
+  }
+  const nwDayWords = nwDay
+    ? (nwGroups.find((g) => g.key === nwDay) || {}).words || []
+    : [];
 
   // A group can describe a BANK instead of listing links: which index to read,
   // which array in it holds the chapters, and what those rows link to. Fetched
@@ -156,16 +174,35 @@ export default function Navbar() {
 
       <nav className="drawer__nav">
         {onNewWords ? (
-          /* ---- /new-words: menu ki jagah saved words ki list ---- */
-          newWords.length ? (
-            newWords.map((w, i) => (
+          /* ---- /new-words: pehle dates, date ke andar us din ke words ---- */
+          nwDay ? (
+            <>
+              <Link href="/new-words" className="drawer__link">
+                <span className="drawer__chev">←</span> Saari dates
+              </Link>
+              {nwDayWords.map((w, i) => (
+                <Link
+                  key={w}
+                  href={`/new-words?day=${encodeURIComponent(nwDay)}&w=${encodeURIComponent(w)}`}
+                  className={`drawer__link ${(params.get("w") || nwDayWords[0]) === w ? "is-active" : ""}`}
+                >
+                  <span className="drawer__ico">{i + 1}.</span>
+                  {w}
+                </Link>
+              ))}
+              {!nwDayWords.length && (
+                <span className="drawer__link" style={{ color: "var(--dim)" }}>Is date par kuch nahi</span>
+              )}
+            </>
+          ) : nwGroups.length ? (
+            nwGroups.map((g) => (
               <Link
-                key={w}
-                href={`/new-words?w=${encodeURIComponent(w)}`}
-                className={`drawer__link ${(params.get("w") || newWords[0]) === w ? "is-active" : ""}`}
+                key={g.key}
+                href={`/new-words?day=${encodeURIComponent(g.key)}`}
+                className="drawer__link"
               >
-                <span className="drawer__ico">{i + 1}.</span>
-                {w}
+                <span className="drawer__ico">📅</span>
+                {g.label} ({g.words.length})
               </Link>
             ))
           ) : (

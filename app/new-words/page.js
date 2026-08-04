@@ -6,9 +6,11 @@
 // Overlay se meaning VocabFeeder ke through aati hai — 5s refresh usse page
 // khula hone par bhi utha leta hai.
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getNewWords, getOws, getMine, setMine } from "@/lib/vocab";
+import {
+  getNewWordEntries, newWordDayKey, newWordDayLabel, getOws, getMine, setMine,
+} from "@/lib/vocab";
 import { copyText } from "@/lib/notesrender";
 import Markdown from "@/components/Markdown";
 
@@ -23,7 +25,7 @@ export default function NewWordsPage() {
 }
 
 function NewWordsInner() {
-  const [words, setWords] = useState([]);
+  const [entries, setEntries] = useState([]);
   const [idx, setIdx] = useState(0);
   const [paste, setPaste] = useState("");
   const [editing, setEditing] = useState(false);
@@ -32,7 +34,7 @@ function NewWordsInner() {
   const [defs, setDefs] = useState({});
 
   const refresh = () => {
-    setWords([...getNewWords()].reverse()); // naya word sabse aage
+    setEntries([...getNewWordEntries()].reverse()); // naya word sabse aage
     const map = {};
     for (const it of getOws()) map[String(it.word).toLowerCase()] = it.def || "";
     setDefs(map);
@@ -45,25 +47,38 @@ function NewWordsInner() {
   // New word -> collapse the paste box and clear the draft.
   useEffect(() => { setPaste(""); setEditing(false); }, [idx]);
 
-  // Left sidebar (Navbar) word list ?w= se jodta hai: click -> wahi card.
+  // Left sidebar (Navbar) se jodta hai: ?day= us din ke words, ?w= wahi card.
   const router = useRouter();
-  const sel = useSearchParams().get("w");
+  const sp = useSearchParams();
+  const sel = sp.get("w");
+  const dayParam = sp.get("day");
+  const words = useMemo(() => {
+    const list = dayParam
+      ? entries.filter((e) => newWordDayKey(e.at) === dayParam)
+      : entries;
+    return list.map((e) => e.w);
+  }, [entries, dayParam]);
   useEffect(() => {
     if (!sel || !words.length) return;
     const i = words.findIndex((w) => String(w).toLowerCase() === sel.toLowerCase());
     if (i >= 0 && i !== idx) setIdx(i);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sel, words]);
-  // Prev/Next se badla to URL bhi saath — sidebar highlight sahi rahe.
+  // Date badli to pehle word se shuru.
+  useEffect(() => { setIdx(0); }, [dayParam]);
+  // Prev/Next se badla to URL bhi saath (day preserve) — sidebar highlight sahi rahe.
   useEffect(() => {
     const w = words[idx];
-    if (w && sel !== w) router.replace(`/new-words?w=${encodeURIComponent(w)}`, { scroll: false });
+    if (!w || sel === w) return;
+    const dayBit = dayParam ? `day=${encodeURIComponent(dayParam)}&` : "";
+    router.replace(`/new-words?${dayBit}w=${encodeURIComponent(w)}`, { scroll: false });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idx, words]);
 
   const word = words[idx] || null;
   const def = word ? defs[String(word).toLowerCase()] || "" : "";
   const meaning = word ? getMine(word) : "";
+  const curAt = word ? (entries.find((e) => e.w === word) || {}).at : "";
 
   const go = (d) => { const n = idx + d; if (n >= 0 && n < words.length) setIdx(n); };
 
@@ -110,14 +125,19 @@ function NewWordsInner() {
   return (
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
-        <span className="hero__eyebrow">🆕 New Words · {words.length}</span>
+        <span className="hero__eyebrow">
+          🆕 New Words · {words.length}
+          {dayParam && ` · 📅 ${dayParam === "old" ? "Purane words" : newWordDayLabel(curAt)}`}
+        </span>
       </section>
 
       <section className="section">
         <div className="glass-card" style={{ padding: 20 }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
           <div className="row between" style={{ alignItems: "baseline" }}>
             <h1 className="grad" style={{ fontSize: "clamp(1.8rem, 6vw, 2.6rem)" }}>{word}</h1>
-            <span className="muted" style={{ fontSize: "0.85rem" }}>{idx + 1}/{words.length}</span>
+            <span className="muted" style={{ fontSize: "0.85rem" }}>
+              {curAt ? `📅 ${newWordDayLabel(curAt)} · ` : ""}{idx + 1}/{words.length}
+            </span>
           </div>
           {def && <p className="muted mt-8" style={{ fontStyle: "italic" }}>{def}</p>}
 
