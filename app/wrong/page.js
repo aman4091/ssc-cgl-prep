@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   SUBJECTS, getWrongBook, isPracticeable, imagesOf, imageKey, isSubject,
   dayKey, dayLabel, storeImages, addWrong, updateWrong, removeWrong, setOcrText, setDetail,
+  findByQid,
 } from "@/lib/wrongbook";
 import { getFile } from "@/lib/filestore";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
@@ -183,7 +184,7 @@ function promptFor(subject) {
   return perSubject || String(st.geminiPrompt || "").trim();
 }
 
-function WrongCard({ rec, onEdit, onDelete, onChange }) {
+function WrongCard({ rec, onEdit, onDelete, onChange, highlight }) {
   const router = useRouter();
   const [shown, setShown] = useState(false);
   // Which of this record's images the lightbox is showing (null = closed).
@@ -333,7 +334,11 @@ function WrongCard({ rec, onEdit, onDelete, onChange }) {
   };
 
   return (
-    <div className="glass-card">
+    <div
+      className="glass-card"
+      id={rec.qid ? `wb-${rec.qid}` : undefined}
+      style={highlight ? { borderColor: "var(--accent)", boxShadow: "0 0 0 1px var(--accent)" } : undefined}
+    >
       {/* Actions sit ABOVE the question, right-aligned like the PYQ/bank cards.
           On a phone (.q-head__actions media rule) only the q-act--keep buttons
           survive — Show answer, ✨ Gemini and 🎯 20 — with Edit/Delete hidden. */}
@@ -566,6 +571,10 @@ function WrongInner() {
   // the in-page chips are the same control. Default: Reasoning.
   const urlSubject = sp.get("subject");
   const subject = isSubject(urlSubject) ? urlSubject : "reasoning";
+  // Overlay ke answers page se deep-link: ?qid=q093 us record par le jata hai,
+  // ?d=2026-08-03 (record na mile to) us date ka filter laga deta hai.
+  const urlQid = sp.get("qid");
+  const urlDay = sp.get("d");
 
   const [items, setItems] = useState([]);
   const [dateFilter, setDateFilter] = useState("all"); // "all" | a dayKey
@@ -610,11 +619,24 @@ function WrongInner() {
   useEffect(() => {
     const list = getWrongBook(subject);
     setItems(list);
-    const latest = list.reduce((mx, r) => (r.at > mx ? r.at : mx), "");
-    setDateFilter(latest ? dayKey(latest) : "all");
+    // Deep-link (overlay ke ❌ Wrong book se): qid mila to us record ki shelf
+    // aur date par jao; nahi mila to link ki date try karo; warna latest day.
+    const target = urlQid ? findByQid(urlQid) : null;
+    if (target && target.subject !== subject) {
+      router.replace(`/wrong?subject=${target.subject}&qid=${urlQid}`);
+      return;
+    }
+    if (target) {
+      setDateFilter(dayKey(target.at));
+    } else if (urlDay && list.some((r) => dayKey(r.at) === urlDay)) {
+      setDateFilter(urlDay);
+    } else {
+      const latest = list.reduce((mx, r) => (r.at > mx ? r.at : mx), "");
+      setDateFilter(latest ? dayKey(latest) : "all");
+    }
     cancel();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subject]);
+  }, [subject, urlQid, urlDay]);
 
   // Distinct days present on this shelf, newest first, each with its label+count.
   const dates = useMemo(() => {
@@ -639,6 +661,16 @@ function WrongInner() {
   }, [dates]);
 
   const shown = dateFilter === "all" ? items : items.filter((r) => dayKey(r.at) === dateFilter);
+
+  // Deep-link ka card render hone ke baad uspar scroll karo.
+  useEffect(() => {
+    if (!urlQid || !shown.some((r) => r.qid === urlQid)) return undefined;
+    const t = setTimeout(() => {
+      document.getElementById(`wb-${urlQid}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 300);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [urlQid, shown.length]);
 
   // Paste = the question is added. No form, no Save.
   //
@@ -965,6 +997,7 @@ function WrongInner() {
               <WrongCard
                 key={rec.id}
                 rec={rec}
+                highlight={!!urlQid && rec.qid === urlQid}
                 onEdit={() => startEdit(rec)}
                 onDelete={() => remove(rec.id)}
                 onChange={() => refresh()}
