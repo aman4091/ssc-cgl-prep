@@ -106,8 +106,16 @@ export default function Navbar() {
   }, [trail, bankLinks]);
   // Navigating means you are done with the menu — and on a phone it sits over
   // the page you just opened.
-  // params bhi: /new-words par word chunne se sirf query badalti hai.
-  useEffect(() => { setOpen(false); }, [pathname, params]);
+  // params bhi: /new-words par word chunne se sirf query badalti hai. Lekin
+  // `day` chunna menu ke ANDAR agla level kholna hai (us din ke words) — us
+  // par drawer band nahi hota, warna phone par date dabate hi list gayab.
+  const paramsSansDay = (() => {
+    const p = new URLSearchParams(params);
+    p.delete("day");
+    return p.toString();
+  })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { setOpen(false); }, [pathname, paramsSansDay]);
   useEffect(() => {
     if (!open) return undefined;
     const onKey = (e) => e.key === "Escape" && setOpen(false);

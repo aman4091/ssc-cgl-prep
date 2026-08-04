@@ -70,6 +70,11 @@ function NewWordsInner() {
   useEffect(() => {
     const w = words[idx];
     if (!w || sel === w) return;
+    // Pehli load (koi w chuna nahi, pehla card) par URL mat chhedo — w judte
+    // hi phone ka drawer band ho jata hai, jabki user abhi date ke words ki
+    // list dekh raha hota hai. Sidebar bina w ke bhi pehla word highlight
+    // karta hai.
+    if (!sel && idx === 0) return;
     const dayBit = dayParam ? `day=${encodeURIComponent(dayParam)}&` : "";
     router.replace(`/new-words?${dayBit}w=${encodeURIComponent(w)}`, { scroll: false });
     // eslint-disable-next-line react-hooks/exhaustive-deps
