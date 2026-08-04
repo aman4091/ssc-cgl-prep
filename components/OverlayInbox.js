@@ -7,7 +7,7 @@
 // overlay ko ack bhejta hai. Overlay band ho to fetch chupchaap fail — no UI.
 
 import { useEffect, useRef } from "react";
-import { addWrong, setDetail, storeImages, isSubject } from "@/lib/wrongbook";
+import { addWrong, setDetail, storeImages, isSubject, findByQid, dedupeByQid } from "@/lib/wrongbook";
 import { shedOldQuizzes } from "@/lib/storage";
 
 // localStorage full hone par purane generated quizzes shed karke retry — wahi
@@ -53,27 +53,37 @@ export default function OverlayInbox() {
           for (const it of items || []) {
             const subject = isSubject(it.subject) ? it.subject : "math";
             try {
-              if (!done.has(it.qid)) {
+              // done-list ke saath book bhi check karo — dusri tab (apni
+              // done-list ke saath) isse pehle hi add kar chuki ho sakti hai
+              if (!done.has(it.qid) && !findByQid(it.qid)) {
                 const imgRes = await fetch(`${base}/img/${it.qid}`, { cache: "no-store" });
                 if (!imgRes.ok) continue;
                 const blob = await imgRes.blob();
                 const file = new File([blob], `${it.qid}.png`, { type: "image/png" });
                 const { images } = await storeImages([file]);
-                // qid saath rakho — overlay ke answers page (q093...) se match hota hai
-                const rec = withSpace(() => addWrong({ subject, q: null, images, note: "", qid: it.qid }));
-                if (it.answer) withSpace(() => setDetail(rec.id, it.answer));
+                // upload ke seconds mein dusri tab race jeet sakti hai —
+                // add se theek pehle aakhri baar check (duplicates ki wajah)
+                if (!findByQid(it.qid)) {
+                  // qid saath rakho — overlay ke answers page (q093...) se match hota hai
+                  const rec = withSpace(() => addWrong({ subject, q: null, images, note: "", qid: it.qid }));
+                  if (it.answer) withSpace(() => setDetail(rec.id, it.answer));
+                }
                 done.add(it.qid);
                 saveDone(done);
               }
               await fetch(`${base}/ack-wrong/${it.qid}`, { method: "POST" });
             } catch { /* agla poll phir try karega */ }
           }
+          // race se phir bhi ban gaye duplicates turant saaf ho jayen
+          if ((items || []).length) await dedupeByQid().catch(() => {});
           break; // jis port par overlay mila, wahi kaafi hai
         }
       } finally {
         busy.current = false;
       }
     };
+    // pehle se pade duplicates (do-tab race ke) ek baar saaf karo
+    dedupeByQid().catch(() => {});
     tick();
     const id = setInterval(tick, POLL_MS);
     return () => clearInterval(id);
