@@ -10,6 +10,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   getNewWordEntries, newWordDayKey, newWordDayLabel, getOws, getMine, setMine,
+  removeNewWord, renameNewWord,
 } from "@/lib/vocab";
 import { copyText } from "@/lib/notesrender";
 import Markdown from "@/components/Markdown";
@@ -44,8 +45,12 @@ function NewWordsInner() {
     const id = setInterval(() => { refresh(); setTick((n) => n + 1); }, 5000);
     return () => clearInterval(id);
   }, []);
-  // New word -> collapse the paste box and clear the draft.
-  useEffect(() => { setPaste(""); setEditing(false); }, [idx]);
+  // Word ka apna edit (rename) mode.
+  const [renaming, setRenaming] = useState(false);
+  const [renameText, setRenameText] = useState("");
+
+  // New word -> collapse the paste box, clear the draft, rename band.
+  useEffect(() => { setPaste(""); setEditing(false); setRenaming(false); }, [idx]);
 
   // Left sidebar (Navbar) se jodta hai: ?day= us din ke words, ?w= wahi card.
   const router = useRouter();
@@ -86,6 +91,25 @@ function NewWordsInner() {
   const curAt = word ? (entries.find((e) => e.w === word) || {}).at : "";
 
   const go = (d) => { const n = idx + d; if (n >= 0 && n < words.length) setIdx(n); };
+
+  // 🗑️ word hatao (meaning samet) — confirm ke baad.
+  const delWord = () => {
+    if (!word) return;
+    if (!confirm(`"${word}" ko New Words se hata dein? Iski saved meaning bhi hat jayegi.`)) return;
+    removeNewWord(word);
+    setIdx((i) => Math.max(0, Math.min(i, words.length - 2)));
+    refresh();
+  };
+  // ✏️ word ka naam/spelling badlo — meaning naye naam par chali jati hai.
+  const saveRename = () => {
+    const t = renameText.trim();
+    if (!t || !word || t === word) { setRenaming(false); return; }
+    renameNewWord(word, t);
+    setRenaming(false);
+    refresh();
+    const dayBit = dayParam ? `day=${encodeURIComponent(dayParam)}&` : "";
+    router.replace(`/new-words?${dayBit}w=${encodeURIComponent(t)}`, { scroll: false });
+  };
 
   // Swipe left→next / right→prev (HomeVocab jaisa hi).
   const touch = useRef(null);
@@ -138,10 +162,37 @@ function NewWordsInner() {
 
       <section className="section">
         <div className="glass-card" style={{ padding: 20 }} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <div className="row between" style={{ alignItems: "baseline" }}>
-            <h1 className="grad" style={{ fontSize: "clamp(1.8rem, 6vw, 2.6rem)" }}>{word}</h1>
-            <span className="muted" style={{ fontSize: "0.85rem" }}>
-              {curAt ? `📅 ${newWordDayLabel(curAt)} · ` : ""}{idx + 1}/{words.length}
+          <div className="row between" style={{ alignItems: "baseline", gap: 8, flexWrap: "wrap" }}>
+            {renaming ? (
+              <div className="row" style={{ gap: 6, flex: 1, minWidth: 220 }}>
+                <input
+                  className="input"
+                  value={renameText}
+                  onChange={(e) => setRenameText(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && saveRename()}
+                  autoFocus
+                  style={{ flex: 1 }}
+                />
+                <button className="btn btn--primary btn--sm" onClick={saveRename}>💾</button>
+                <button className="btn btn--ghost btn--sm" onClick={() => setRenaming(false)}>✕</button>
+              </div>
+            ) : (
+              <h1 className="grad" style={{ fontSize: "clamp(1.8rem, 6vw, 2.6rem)" }}>{word}</h1>
+            )}
+            <span className="row" style={{ gap: 6, alignItems: "center" }}>
+              <span className="muted" style={{ fontSize: "0.85rem" }}>
+                {curAt ? `📅 ${newWordDayLabel(curAt)} · ` : ""}{idx + 1}/{words.length}
+              </span>
+              <button
+                className="btn btn--ghost btn--sm"
+                title="Word ka naam/spelling badlo"
+                onClick={() => { setRenameText(word); setRenaming(true); }}
+              >
+                ✏️
+              </button>
+              <button className="btn btn--ghost btn--sm" title="Word delete karo" onClick={delWord}>
+                🗑️
+              </button>
             </span>
           </div>
           {def && <p className="muted mt-8" style={{ fontStyle: "italic" }}>{def}</p>}
