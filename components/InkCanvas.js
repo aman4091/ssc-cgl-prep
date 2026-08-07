@@ -53,6 +53,14 @@ const penSeen = {
 
 const dist2 = (ax, ay, bx, by) => (ax - bx) ** 2 + (ay - by) ** 2;
 
+// Ek move ke saare points. getCoalescedEvents() sirf asli hardware events par
+// bharta hai — synthetic event par Chrome KHAALI list deta hai, aur us haalat
+// mein bina is fallback ke ek bhi point na jude aur stroke bindu bhar reh jaye.
+function coalesced(e) {
+  const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : null;
+  return evs && evs.length ? evs : [e];
+}
+
 // Point se segment ki doori — eraser ka hit test yahi hai.
 function distToSeg(px, py, ax, ay, bx, by) {
   const dx = bx - ax;
@@ -213,7 +221,16 @@ const InkCanvas = forwardRef(function InkCanvas(
   // seedhi constant width — warna line bewajah patli-moti dikhti hai.
   function widthOf(st, pr) {
     if (st.tool === "hl" || !st._hasPressure) return 1;
-    return Math.max(0.3, Math.min(1.6, 0.35 + 0.65 * (pr == null ? 0.5 : pr)));
+    // Beech ka pressure (0.5) THEEK 1 deta hai — yaani bilkul wahi motai jo
+    // bina-pressure wala roop deta hai.
+    //
+    // Ye zaroori hai kyunki `_hasPressure` stroke ke BEECH mein sach hota hai
+    // (pehle point par pata nahi hota ki stylus pressure bhejta bhi hai ya
+    // nahi). Pehle formula 0.35 + 0.65*p tha, jo 0.5 par 0.675 deta — matlab
+    // pata chalte hi poora stroke patla ho jata tha. Likhne ke baad line apne
+    // aap patli hone wali shikayat theek yahi thi.
+    const p = pr == null ? 0.5 : pr;
+    return Math.max(0.35, Math.min(1.5, 0.55 + 0.9 * p));
   }
 
   const redrawDone = useCallback(() => {
@@ -306,7 +323,15 @@ const InkCanvas = forwardRef(function InkCanvas(
         const pr = ev.pressure;
         // Asli pressure sirf tab maano jab wo 0 aur 0.5 se alag ho — mouse
         // hamesha 0.5 bhejta hai aur kuch styli pehle move tak 0.
-        if (pr > 0 && Math.abs(pr - 0.5) > 0.02) st._hasPressure = true;
+        //
+        // Jis pal ye sach hota hai, stroke ka roop badal jata hai. Isliye live
+        // layer ko poora dobara banwate hain — warna stroke ka shuruaati hissa
+        // purane roop mein dikhta rehta aur pen uthate hi (jab poora stroke
+        // ek saath banta hai) achanak badal jata.
+        if (pr > 0 && Math.abs(pr - 0.5) > 0.02 && !st._hasPressure) {
+          st._hasPressure = true;
+          st._redrawLive = true;
+        }
         st.points.push({ x: p.x, y: p.y, p: pr || 0.5 });
       }
     };
@@ -400,8 +425,7 @@ const InkCanvas = forwardRef(function InkCanvas(
       if (eraseRef.current) {
         e.preventDefault();
         syncOrigin();
-        const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
-        for (const ev of evs) eraseAt(toInk(ev.clientX, ev.clientY));
+        for (const ev of coalesced(e)) eraseAt(toInk(ev.clientX, ev.clientY));
         return;
       }
 
@@ -413,9 +437,16 @@ const InkCanvas = forwardRef(function InkCanvas(
       // S Pen 120-240 Hz par sample karta hai jabki pointermove ek frame mein ek
       // baar hi aata hai. Coalesced na lein to aadhe se zyada samples phenk denge
       // aur tez stroke polygon jaisa dikhega. Ye optimisation nahi, buniyaad hai.
-      addPoints(e.getCoalescedEvents ? e.getCoalescedEvents() : [e]);
+      addPoints(coalesced(e));
 
       const lctx = liveRef.current.getContext("2d");
+      // Pressure ka pata abhi-abhi chala — ab tak ka stroke purane roop mein
+      // bana hua hai, use poora dobara banao. Ye ek hi baar hota hai.
+      if (st._redrawLive) {
+        st._redrawLive = false;
+        st._drawn = 0;
+        clearLayer(liveRef);
+      }
       applyTf(lctx);
       paintStroke(lctx, st, st._drawn); // sirf naya hissa
       st._drawn = st.points.length;
