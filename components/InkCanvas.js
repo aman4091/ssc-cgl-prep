@@ -145,13 +145,28 @@ const InkCanvas = forwardRef(function InkCanvas(
     ctx.setTransform(k, 0, 0, k, -(s?.scrollLeft || 0) * dpr, -(s?.scrollTop || 0) * dpr);
   }, []);
 
-  const toInk = useCallback((clientX, clientY) => {
+  // Screen se ink coordinates. Origin (rect + scroll) EK BAAR per event padha
+  // jata hai, har point par nahi.
+  //
+  // Ye seedha latency ka sawaal hai: getBoundingClientRect() aur scrollTop dono
+  // browser se layout ginwate hain, aur ek pointermove mein coalesced points
+  // 20-30 tak aa sakte hain. Per-point padhne par har stroke browser ko
+  // sainkdon baar layout dobara ginwa raha tha — pen ke peeche latakti line ka
+  // sabse bada hissa yahi tha.
+  const originRef = useRef({ left: 0, top: 0, sx: 0, sy: 0 });
+  const syncOrigin = useCallback(() => {
     const s = surfaceRef.current;
+    if (!s) return;
     const r = s.getBoundingClientRect();
+    originRef.current = { left: r.left, top: r.top, sx: s.scrollLeft, sy: s.scrollTop };
+  }, []);
+
+  const toInk = useCallback((clientX, clientY) => {
     const { unitPx } = viewRef.current;
+    const o = originRef.current;
     return {
-      x: (clientX - r.left + s.scrollLeft) / unitPx,
-      y: (clientY - r.top + s.scrollTop) / unitPx,
+      x: (clientX - o.left + o.sx) / unitPx,
+      y: (clientY - o.top + o.sy) / unitPx,
     };
   }, []);
 
@@ -352,6 +367,7 @@ const InkCanvas = forwardRef(function InkCanvas(
 
       e.preventDefault();
       try { stack.setPointerCapture(e.pointerId); } catch { /* ignore */ }
+      syncOrigin();
       startStroke(e);
     };
 
@@ -382,6 +398,7 @@ const InkCanvas = forwardRef(function InkCanvas(
 
       if (eraseRef.current) {
         e.preventDefault();
+        syncOrigin();
         const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
         for (const ev of evs) eraseAt(toInk(ev.clientX, ev.clientY));
         return;
@@ -390,6 +407,7 @@ const InkCanvas = forwardRef(function InkCanvas(
       const st = drawRef.current;
       if (!st) return;
       e.preventDefault();
+      syncOrigin();
 
       // S Pen 120-240 Hz par sample karta hai jabki pointermove ek frame mein ek
       // baar hi aata hai. Coalesced na lein to aadhe se zyada samples phenk denge
@@ -451,7 +469,13 @@ const InkCanvas = forwardRef(function InkCanvas(
       if (b.y1 > h - GROW_NEAR) h = Math.min(MAX_H, h + GROW_BY);
 
       commit({ ...d, h, strokes }, { type: "add", strokes: [st] });
-      redrawDone();
+      // Sirf naya stroke done layer par chipkao. Pehle yahan poora redrawDone()
+      // tha, jo har visible stroke dobara banata — matlab jitna page bharta
+      // jata, pen uthate hi utna bada jhatka lagta. Naya stroke to pehle se
+      // sahi jagah par hai, use bas ek baar draw karna hai.
+      const dctx = doneRef.current.getContext("2d");
+      applyTf(dctx);
+      paintStroke(dctx, st);
       clearLayer(liveRef);
       clearLayer(predRef);
     };
@@ -459,6 +483,7 @@ const InkCanvas = forwardRef(function InkCanvas(
     const onCancel = (e) => { onUp(e); };
 
     const onScroll = () => {
+      syncOrigin();
       redrawDone();
       clearLayer(liveRef);
       clearLayer(predRef);
