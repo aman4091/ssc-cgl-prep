@@ -94,6 +94,7 @@ const InkCanvas = forwardRef(function InkCanvas(
   const drawRef = useRef(null);   // abhi chal raha stroke
   const eraseRef = useRef(null);  // abhi chal raha eraser drag
   const touchRef = useRef(null);  // 1-finger pan / 2-finger pinch
+  const predBoxRef = useRef(null); // pichhli prediction ka dabba (CSS px) — sirf itna clear hota hai
   const viewRef = useRef({ w: 0, h: 0, dpr: 1, unitPx: 1 });
   const zoomRef = useRef(1);
 
@@ -421,10 +422,30 @@ const InkCanvas = forwardRef(function InkCanvas(
 
       // Prediction: asli latency kam nahi hoti, par ink nib ke neeche baithti
       // dikhti hai. Apni layer par, har move par mit'ti hui — commit kabhi nahi.
+      // Prediction ki poonch apni layer par — aur sirf PICHHLA chhota dabba
+      // clear hota hai, poora canvas nahi.
+      //
+      // Poora clearRect DPR 3 par ~70 lakh pixel chhoota hai, aur ye har move
+      // par chalta hai — 120 baar per second. Wahi kaam main thread ko atkata
+      // hai, jisse browser samples jama karke ek saath deta hai (pen test page
+      // par coalesced ka bada number theek yahi batata hai). Poonch do-teen
+      // point ki hoti hai, to uska dabba bhi utna hi chhota hai.
       const pctx = predRef.current.getContext("2d");
-      const { w, h, dpr } = viewRef.current;
-      pctx.setTransform(1, 0, 0, 1, 0, 0);
-      pctx.clearRect(0, 0, w * dpr, h * dpr);
+      const { dpr } = viewRef.current;
+      const pb = predBoxRef.current;
+      if (pb) {
+        pctx.setTransform(1, 0, 0, 1, 0, 0);
+        // "full" = pichhli baar dabba bharosemand nahi tha, to poora saaf karo.
+        // Safety valve: dabbe ka hisaab kabhi galat nikla to zyada se zyada ek
+        // frame ka nishan rahega, chipka hua kachra nahi.
+        if (pb === "full") {
+          const v = viewRef.current;
+          pctx.clearRect(0, 0, v.w * dpr, v.h * dpr);
+        } else {
+          pctx.clearRect(pb.x * dpr, pb.y * dpr, pb.w * dpr, pb.h * dpr);
+        }
+        predBoxRef.current = null;
+      }
       const pred = e.getPredictedEvents ? e.getPredictedEvents() : [];
       if (pred.length) {
         applyTf(pctx);
@@ -436,6 +457,26 @@ const InkCanvas = forwardRef(function InkCanvas(
         pctx.globalAlpha = 0.75;
         paintStroke(pctx, tail);
         pctx.globalAlpha = 1;
+
+        // Agli baar isi dabbe ko clear karna hai — CSS px mein yaad rakh lo.
+        let x0 = Infinity; let y0 = Infinity; let x1 = -Infinity; let y1 = -Infinity;
+        for (const p of tail.points) {
+          if (p.x < x0) x0 = p.x;
+          if (p.x > x1) x1 = p.x;
+          if (p.y < y0) y0 = p.y;
+          if (p.y > y1) y1 = p.y;
+        }
+        const o = originRef.current;
+        const upx = viewRef.current.unitPx;
+        const pad = st.size * 2 + 6;
+        predBoxRef.current = [x0, y0, x1, y1].every(Number.isFinite)
+          ? {
+            x: (x0 - pad) * upx - o.sx,
+            y: (y0 - pad) * upx - o.sy,
+            w: (x1 - x0 + pad * 2) * upx,
+            h: (y1 - y0 + pad * 2) * upx,
+          }
+          : "full";
       }
     };
 
@@ -478,6 +519,7 @@ const InkCanvas = forwardRef(function InkCanvas(
       paintStroke(dctx, st);
       clearLayer(liveRef);
       clearLayer(predRef);
+      predBoxRef.current = null;
     };
 
     const onCancel = (e) => { onUp(e); };
@@ -487,6 +529,7 @@ const InkCanvas = forwardRef(function InkCanvas(
       redrawDone();
       clearLayer(liveRef);
       clearLayer(predRef);
+      predBoxRef.current = null;
     };
 
     stack.addEventListener("pointerdown", onDown, { passive: false });

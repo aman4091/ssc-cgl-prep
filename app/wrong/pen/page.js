@@ -33,7 +33,7 @@ export default function PenTestPage() {
   const cvsRef = useRef(null);
   const [s, setS] = useState({
     type: "—", pressure: 0, maxPressure: 0, tiltX: 0, tiltY: 0, twist: 0,
-    buttons: 0, coalesced: 0, maxCoalesced: 0, predicted: 0, hz: 0,
+    buttons: 0, coalesced: 0, maxCoalesced: 0, predicted: 0, hz: 0, gap: 0, maxGap: 0,
   });
   const [seenButtons, setSeenButtons] = useState([]);
   const [keys, setKeys] = useState([]);
@@ -41,8 +41,26 @@ export default function PenTestPage() {
 
   const ticks = useRef([]);
   const last = useRef(null);
+  // Stats ref mein jama hote hain aur sirf 8 baar per second screen par jate
+  // hain. Pehle har pointermove par setState hota tha — 120 React render per
+  // second — aur wo khud main thread ko itna atkata tha ki browser samples
+  // jama karke ek saath deta. Yaani page apni hi slowness naap raha tha aur
+  // "coalesced 79" jaise number de raha tha. Maapne wali cheez ko halka hona
+  // hi padta hai.
+  const acc = useRef({
+    type: "—", pressure: 0, maxPressure: 0, tiltX: 0, tiltY: 0, twist: 0,
+    buttons: 0, coalesced: 0, maxCoalesced: 0, predicted: 0, hz: 0, gap: 0, maxGap: 0,
+  });
+  const lastAt = useRef(0);
 
   useEffect(() => { setDpr(window.devicePixelRatio || 1); }, []);
+
+  // Screen 8 baar per second refresh — padhne ke liye kaafi, aur likhte waqt
+  // main thread par bojh na ke barabar.
+  useEffect(() => {
+    const iv = setInterval(() => setS({ ...acc.current }), 125);
+    return () => clearInterval(iv);
+  }, []);
 
   // Pen ke buttons agar BLE keyboard ki tarah keys bhejte hain to yahan pakde
   // jayenge. Mi Pen aksar kuch nahi bhejta — tab ye list khaali rahegi, aur
@@ -80,19 +98,24 @@ export default function PenTestPage() {
       const now = performance.now();
       ticks.current.push(now);
       while (ticks.current.length && now - ticks.current[0] > 1000) ticks.current.shift();
-      setS((p) => ({
-        type: e.pointerType,
-        pressure: e.pressure,
-        maxPressure: Math.max(p.maxPressure, e.pressure),
-        tiltX: e.tiltX || 0,
-        tiltY: e.tiltY || 0,
-        twist: e.twist || 0,
-        buttons: e.buttons,
-        coalesced,
-        maxCoalesced: Math.max(p.maxCoalesced, coalesced),
-        predicted,
-        hz: ticks.current.length,
-      }));
+      // Do event ke beech ka faasla — main thread atakne ka sabse seedha saboot.
+      // 120Hz par ~8ms hona chahiye; 50ms+ ka matlab kuch block kar raha hai.
+      const gap = lastAt.current ? now - lastAt.current : 0;
+      lastAt.current = now;
+      const a = acc.current;
+      a.type = e.pointerType;
+      a.pressure = e.pressure;
+      a.maxPressure = Math.max(a.maxPressure, e.pressure);
+      a.tiltX = e.tiltX || 0;
+      a.tiltY = e.tiltY || 0;
+      a.twist = e.twist || 0;
+      a.buttons = e.buttons;
+      a.coalesced = coalesced;
+      a.maxCoalesced = Math.max(a.maxCoalesced, coalesced);
+      a.predicted = predicted;
+      a.hz = ticks.current.length;
+      a.gap = Math.round(gap);
+      if (gap > 0 && gap < 2000) a.maxGap = Math.max(a.maxGap, Math.round(gap));
       if (e.buttons > 1) {
         setSeenButtons((v) => (v.some((x) => x.b === e.buttons)
           ? v
@@ -195,10 +218,13 @@ export default function PenTestPage() {
           {row("Pressure", s.pressure.toFixed(3), `max dekha: ${s.maxPressure.toFixed(3)}`)}
           {row("Tilt X / Y", `${s.tiltX}° / ${s.tiltY}°`)}
           {row("Buttons (abhi)", `${s.buttons} — ${btnNames(s.buttons)}`)}
-          {row("Coalesced / move", s.coalesced, `max: ${s.maxCoalesced}`)}
+          {row("Coalesced / move", s.coalesced,
+            s.maxCoalesced > 8 ? `max: ${s.maxCoalesced} ⚠️ thread atak raha hai` : `max: ${s.maxCoalesced}`)}
           {row("Predicted / move", s.predicted)}
           {row("Events per second", s.hz, s.hz > 90 ? "✅ tez" : s.hz ? "dheema" : "")}
-          {row("Device pixel ratio", dpr)}
+          {row("Do event ka faasla", `${s.gap} ms`,
+            s.maxGap > 50 ? `max: ${s.maxGap} ms ⚠️` : `max: ${s.maxGap} ms ✅`)}
+          {row("Device pixel ratio", dpr, dpr >= 3 ? "bahut pixel" : "")}
         </div>
 
         <div className="glass-card mt-16">
