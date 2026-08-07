@@ -18,6 +18,10 @@ import { localHash } from "@/lib/sync";
 //     batate hain ki pen kitni tezi se sample kar raha hai aur hum kitne points
 //     sach mein pakad rahe hain.
 
+// Vercel ye env var har deploy par khud bharta hai. Local dev par khaali rehta
+// hai, isliye "dev".
+const BUILD = (process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || "dev").slice(0, 7);
+
 const btnNames = (b) => {
   const out = [];
   if (b & 1) out.push("tip");
@@ -249,6 +253,30 @@ export default function PenTestPage() {
         <h1 className="hero__title" style={{ fontSize: "clamp(1.4rem, 4vw, 2rem)" }}>
           Pen kya <span className="grad">bhej raha hai</span>
         </h1>
+        {/* Version stamp — bina iske pata hi nahi chalta ki tablet naya code
+            chala raha hai ya service worker purana pakde baitha hai. Vercel
+            NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA khud deta hai. */}
+        <p className="muted" style={{ fontSize: "0.78rem", marginTop: 4 }}>
+          build: <strong>{BUILD}</strong>
+          <button
+            className="btn btn--ghost btn--sm"
+            style={{ marginLeft: 10 }}
+            onClick={async () => {
+              try {
+                const rs = await navigator.serviceWorker?.getRegistrations?.();
+                if (rs) await Promise.all(rs.map((r) => r.unregister()));
+                if (window.caches) {
+                  const ks = await caches.keys();
+                  await Promise.all(ks.map((k) => caches.delete(k)));
+                }
+              } catch { /* ignore */ }
+              window.location.reload();
+            }}
+            title="Service worker aur cache hata kar taaza code laao"
+          >
+            🔄 Purana cache hatao
+          </button>
+        </p>
         <p className="hero__sub" style={{ fontSize: "0.86rem" }}>
           Neeche wale kaagaz par pen se likho. Phir pen ke <strong>dono buttons</strong> dabakar
           likho — agar wo browser tak pahunchte hain to &quot;Buttons jo dekhe&quot; mein dikhenge.

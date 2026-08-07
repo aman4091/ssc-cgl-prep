@@ -135,16 +135,37 @@ function SolveInner() {
 
   // ── saving ────────────────────────────────────────────────────────────────
 
+  // Pen kaagaz par ho to bhaari kaam mat karo — thodi der baad dobara try karo.
+  //
+  // Ye lag ki asli jad thi. onChange stroke KHATAM hone par 700ms ka timer
+  // lagata hai. Agla stroke 500ms par shuru hua, to 700ms par save theek us
+  // stroke ke BEECH chal padta tha. Aur saveLocalInk ke andar encodeDoc har
+  // stroke ka har point ghoomta hai — yaani page jitna bharta jata, ye jhatka
+  // utna hi bada hota jata. Isliye "shuru mein theek tha, baad mein atakne
+  // laga".
+  const deferIfDrawing = useCallback((fn, timerRef, ms = 350) => {
+    if (inkRef.current?.isDrawing?.()) {
+      clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(fn, ms);
+      return true;
+    }
+    return false;
+  }, []);
+
   const flushLocal = useCallback(async () => {
     const r = recRef.current;
     if (!r || !liveDoc.current) return;
+    if (deferIfDrawing(() => flushLocal(), localT)) return;
     clearTimeout(localT.current);
     await saveLocalInk(r.id, liveDoc.current).catch(() => {});
-  }, []);
+  }, [deferIfDrawing]);
 
   const flushCloud = useCallback(async () => {
     const r = recRef.current;
     if (!r || !liveDoc.current) return;
+    // Upload aur bhaari hai (encode + gzip), isliye ye bhi pen uthne ka intezaar
+    // karta hai.
+    if (deferIfDrawing(() => flushCloud(), cloudT, 600)) return;
     clearTimeout(cloudT.current);
     setState("uploading");
     try {
@@ -154,7 +175,7 @@ function SolveInner() {
       // pushInk khud queue mein daal chuka hai — online aate hi chala jayega.
       setState("offline");
     }
-  }, []);
+  }, [deferIfDrawing]);
 
   const onChange = useCallback((next) => {
     liveDoc.current = next;

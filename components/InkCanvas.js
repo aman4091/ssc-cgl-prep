@@ -588,6 +588,10 @@ const InkCanvas = forwardRef(function InkCanvas(
   useImperativeHandle(ref, () => ({
     canUndo: () => undoRef.current.length > 0,
     canRedo: () => redoRef.current.length > 0,
+    // Abhi pen kaagaz par hai? Save/upload karne wale iska intezaar karte hain —
+    // encodeDoc har stroke ka har point ghoomta hai, aur wo stroke ke beech chal
+    // gaya to nib wahin ruk jati hai.
+    isDrawing: () => !!drawRef.current || !!eraseRef.current,
     zoom: () => zoomRef.current,
     undo() {
       const op = undoRef.current.pop();
