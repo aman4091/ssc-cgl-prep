@@ -22,6 +22,18 @@ import { localHash, setSyncPaused } from "@/lib/sync";
 // hai, isliye "dev".
 const BUILD = (process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA || "dev").slice(0, 7);
 
+// Page khulne ke pehle kuch second app ka boot hote hain — bundle parse,
+// hydration, aur layout ke background components (vocab prefetch, feeder,
+// overlay inbox) apna kaam nipta rahe hote hain. Us dauraan likhoge to ek hi
+// bada jhatka teeno number kharab kar deta hai (ek 1.7s ka long task = 1.7s ka
+// gap = ~200 coalesced samples — teen alag baatein nahi, ek hi).
+//
+// Solve page par ye dikkat nahi aati kyunki wahan tu /wrong se hokar aata hai,
+// tab tak boot khatam ho chuka hota hai. Isliye maap bhi boot ke baad se hi
+// shuru hoti hai — warna ye page hamesha lag dikhata rahega jo asal mein
+// likhne se koi lena-dena nahi rakhta.
+const BOOT_MS = 6000;
+
 const btnNames = (b) => {
   const out = [];
   if (b & 1) out.push("tip");
@@ -189,11 +201,14 @@ export default function PenTestPage() {
       a.twist = e.twist || 0;
       a.buttons = e.buttons;
       a.coalesced = coalesced;
-      if (live) a.maxCoalesced = Math.max(a.maxCoalesced, coalesced);
       a.predicted = predicted;
       a.hz = ticks.current.length;
       a.gap = Math.round(gap);
-      if (gap > 0) a.maxGap = Math.max(a.maxGap, Math.round(gap));
+      // Max sirf boot ke baad ginte hain — upar wali wajah.
+      if (now > BOOT_MS) {
+        if (live) a.maxCoalesced = Math.max(a.maxCoalesced, coalesced);
+        if (gap > 0) a.maxGap = Math.max(a.maxGap, Math.round(gap));
+      }
       if (e.buttons > 1) {
         setSeenButtons((v) => (v.some((x) => x.b === e.buttons)
           ? v
@@ -308,6 +323,11 @@ export default function PenTestPage() {
           Neeche wale kaagaz par pen se likho. Phir pen ke <strong>dono buttons</strong> dabakar
           likho — agar wo browser tak pahunchte hain to &quot;Buttons jo dekhe&quot; mein dikhenge.
         </p>
+        <p className="muted" style={{ fontSize: "0.78rem", marginTop: 6 }}>
+          ⏳ Page khulne ke pehle {BOOT_MS / 1000} second app ke boot ke hain — us dauraan ke
+          jhatke ginti mein nahi aate, kyunki likhne se unka koi lena-dena nahi. Saaf maap ke
+          liye do-teen second ruk kar likhna, ya neeche &quot;maap reset&quot; daba dena.
+        </p>
       </section>
 
       <section className="section">
@@ -335,6 +355,16 @@ export default function PenTestPage() {
           {row("Do event ka faasla", `${s.gap} ms`,
             s.maxGap > 50 ? `max: ${s.maxGap} ms ⚠️` : `max: ${s.maxGap} ms ✅`)}
           {row("Device pixel ratio", dpr, dpr >= 3 ? "bahut pixel" : "")}
+          <button
+            className="btn btn--ghost btn--sm mt-8"
+            onClick={() => {
+              const a = acc.current;
+              a.maxCoalesced = 0; a.maxGap = 0; a.maxPressure = 0;
+              setLongTasks([]);
+            }}
+          >
+            🔄 Maap reset
+          </button>
         </div>
 
         <div className="glass-card mt-16">
