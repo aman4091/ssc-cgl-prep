@@ -188,8 +188,36 @@ function SolveInner() {
     router.push(`/wrong?subject=${subject}${d !== "all" ? `&d=${encodeURIComponent(d)}` : ""}`);
   }, [flushLocal, flushCloud, router, subject, d]);
 
+  // Eraser toggle karte waqt wapas usi tool par jaana hai jispar tha (pen ya
+  // highlighter), isliye pichhla tool yaad rakhte hain.
+  const prevTool = useRef("pen");
+  const toggleEraser = useCallback(() => {
+    setTool((t) => {
+      if (t === "eraser") return prevTool.current || "pen";
+      prevTool.current = t;
+      return "eraser";
+    });
+  }, []);
+
   useEffect(() => {
     const onKey = (e) => {
+      // Mi Pen ke side buttons Bluetooth se PageUp/PageDown bhejte hain — wo
+      // digitizer se nahi aate, isliye pointer event ke `buttons` mein kabhi
+      // nahi dikhte. Yahi unhe pakadne ka ekmatra raasta hai.
+      //
+      // Is pen mein eraser waala ulta sira bhi nahi hai, isliye eraser ko
+      // button par daalna sabse zyada kaam ka hai; dusra button undo.
+      //
+      // preventDefault zaroori hai — warna ye keys likhne wale kaagaz ko hi
+      // scroll kar dengi. repeat wale ignore, warna button dabaye rakhne par
+      // eraser jhilmilata rahega aur undo ka dhher lag jayega.
+      if (e.key === "PageDown" || e.key === "PageUp") {
+        e.preventDefault();
+        if (e.repeat) return;
+        if (e.key === "PageDown") toggleEraser();
+        else inkRef.current?.undo();
+        return;
+      }
       if (e.key === "ArrowRight") go(idx + 1);
       else if (e.key === "ArrowLeft") go(idx - 1);
       else if (e.key === "Escape") exit();
@@ -201,7 +229,7 @@ function SolveInner() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [go, exit, idx]);
+  }, [go, exit, idx, toggleEraser]);
 
   if (!rec) {
     return (
@@ -309,7 +337,7 @@ function SolveInner() {
       <div className="inkv__tools">
         <button className="btn btn--ghost btn--sm" aria-pressed={tool === "pen"} onClick={() => setTool("pen")} title="Pen">✏️</button>
         <button className="btn btn--ghost btn--sm" aria-pressed={tool === "hl"} onClick={() => setTool("hl")} title="Highlighter">🖍️</button>
-        <button className="btn btn--ghost btn--sm" aria-pressed={tool === "eraser"} onClick={() => setTool("eraser")} title="Eraser — S Pen ka ulta sira apne aap chalta hai">🧽</button>
+        <button className="btn btn--ghost btn--sm" aria-pressed={tool === "eraser"} onClick={toggleEraser} title="Eraser — pen ka NEECHE wala button bhi yahi karta hai">🧽</button>
 
         <span className="inkv__sep" />
         {PALETTE.map((c, i) => (
@@ -331,7 +359,7 @@ function SolveInner() {
         ))}
 
         <span className="inkv__sep" />
-        <button className="btn btn--ghost btn--sm" onClick={() => inkRef.current?.undo()} disabled={!inkRef.current?.canUndo()} title="Undo">↩</button>
+        <button className="btn btn--ghost btn--sm" onClick={() => inkRef.current?.undo()} disabled={!inkRef.current?.canUndo()} title="Undo — pen ka UPAR wala button bhi yahi karta hai">↩</button>
         <button className="btn btn--ghost btn--sm" onClick={() => inkRef.current?.redo()} disabled={!inkRef.current?.canRedo()} title="Redo">↪</button>
         <button
           className="btn btn--ghost btn--sm"
