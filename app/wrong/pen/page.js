@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { localHash } from "@/lib/sync";
 
 // 🖊️ Pen test — ye page batata hai ki browser tere stylus se SACH MEIN kya dekh
 // raha hai. Guess karne ke bajay yahan likh kar number padh lo.
@@ -38,6 +39,8 @@ export default function PenTestPage() {
   const [seenButtons, setSeenButtons] = useState([]);
   const [keys, setKeys] = useState([]);
   const [dpr, setDpr] = useState(1);
+  const [longTasks, setLongTasks] = useState([]);
+  const [hashTest, setHashTest] = useState(null);
 
   const ticks = useRef([]);
   const last = useRef(null);
@@ -52,6 +55,8 @@ export default function PenTestPage() {
     buttons: 0, coalesced: 0, maxCoalesced: 0, predicted: 0, hz: 0, gap: 0, maxGap: 0,
   });
   const lastAt = useRef(0);
+  const drawing = useRef(false); // stroke chal raha hai? gap sirf tab ginte hain
+  const moves = useRef(0);       // is stroke mein kitne move — pehla wala chhodna hai
 
   useEffect(() => { setDpr(window.devicePixelRatio || 1); }, []);
 
@@ -61,6 +66,41 @@ export default function PenTestPage() {
     const iv = setInterval(() => setS({ ...acc.current }), 125);
     return () => clearInterval(iv);
   }, []);
+
+  // Long tasks — browser khud batata hai ki main thread 50ms se zyada kis kaam
+  // mein atka. Coalesced ka bada number ISKA nateeja hota hai, wajah nahi;
+  // asli wajah yahan dikhti hai.
+  useEffect(() => {
+    if (typeof PerformanceObserver === "undefined") return undefined;
+    let po;
+    try {
+      po = new PerformanceObserver((list) => {
+        const add = list.getEntries().map((en) => ({
+          ms: Math.round(en.duration),
+          at: new Date().toLocaleTimeString(),
+        }));
+        if (add.length) setLongTasks((v) => [...add.reverse(), ...v].slice(0, 10));
+      });
+      po.observe({ entryTypes: ["longtask"] });
+    } catch { return undefined; }
+    return () => { try { po.disconnect(); } catch { /* ignore */ } };
+  }, []);
+
+  // Shak ka sabse bada mulzim: SyncManager har 45 second par localHash() chalata
+  // hai, jo POORA cgl.* localStorage stringify karke har character par ghoomta
+  // hai — main thread par, sync. Agar tera data bhaari hai to wo theek beech
+  // likhne mein thread rok sakta hai. Guess karne se behtar hai naap lena.
+  const runHashTest = () => {
+    let bytes = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i) || "";
+      bytes += k.length + (localStorage.getItem(k) || "").length;
+    }
+    const t0 = performance.now();
+    localHash();
+    const ms = performance.now() - t0;
+    setHashTest({ ms: Math.round(ms), kb: Math.round(bytes / 1024) });
+  };
 
   // Pen ke buttons agar BLE keyboard ki tarah keys bhejte hain to yahan pakde
   // jayenge. Mi Pen aksar kuch nahi bhejta — tab ye list khaali rahegi, aur
@@ -99,10 +139,17 @@ export default function PenTestPage() {
       ticks.current.push(now);
       while (ticks.current.length && now - ticks.current[0] > 1000) ticks.current.shift();
       // Do event ke beech ka faasla — main thread atakne ka sabse seedha saboot.
-      // 120Hz par ~8ms hona chahiye; 50ms+ ka matlab kuch block kar raha hai.
-      const gap = lastAt.current ? now - lastAt.current : 0;
-      lastAt.current = now;
+      // 120Hz par ~8ms hona chahiye.
+      //
+      // Sirf STROKE ke andar ginte hain. Pehle har event ke beech ginta tha, to
+      // pen uthakar do second sochne par bhi "1233ms — thread atka" dikh jata
+      // tha, jabki kuch atka hi nahi tha. Aur pointerdown ke turant baad wala
+      // pehla move bhi chhod dete hain: usme browser down se ab tak ke saare
+      // samples ek saath deta hai, wo normal hai.
       const a = acc.current;
+      const live = drawing.current && moves.current > 0;
+      const gap = live && lastAt.current ? now - lastAt.current : 0;
+      lastAt.current = now;
       a.type = e.pointerType;
       a.pressure = e.pressure;
       a.maxPressure = Math.max(a.maxPressure, e.pressure);
@@ -111,11 +158,11 @@ export default function PenTestPage() {
       a.twist = e.twist || 0;
       a.buttons = e.buttons;
       a.coalesced = coalesced;
-      a.maxCoalesced = Math.max(a.maxCoalesced, coalesced);
+      if (live) a.maxCoalesced = Math.max(a.maxCoalesced, coalesced);
       a.predicted = predicted;
       a.hz = ticks.current.length;
       a.gap = Math.round(gap);
-      if (gap > 0 && gap < 2000) a.maxGap = Math.max(a.maxGap, Math.round(gap));
+      if (gap > 0) a.maxGap = Math.max(a.maxGap, Math.round(gap));
       if (e.buttons > 1) {
         setSeenButtons((v) => (v.some((x) => x.b === e.buttons)
           ? v
@@ -147,6 +194,9 @@ export default function PenTestPage() {
       e.preventDefault();
       try { box.setPointerCapture(e.pointerId); } catch { /* ignore */ }
       last.current = null;
+      drawing.current = true;
+      moves.current = 0;
+      lastAt.current = 0;   // naya stroke — ginti yahin se shuru
       note(e, 1, 0);
     };
     const onMove = (e) => {
@@ -156,8 +206,13 @@ export default function PenTestPage() {
       const pr = e.getPredictedEvents ? e.getPredictedEvents() : [];
       draw(co);
       note(e, co.length, pr.length);
+      moves.current += 1;
     };
-    const onUp = (e) => { last.current = null; note(e, 1, 0); };
+    const onUp = (e) => {
+      last.current = null;
+      drawing.current = false;
+      note(e, 1, 0);
+    };
 
     box.addEventListener("pointerdown", onDown, { passive: false });
     box.addEventListener("pointermove", onMove, { passive: false });
@@ -225,6 +280,40 @@ export default function PenTestPage() {
           {row("Do event ka faasla", `${s.gap} ms`,
             s.maxGap > 50 ? `max: ${s.maxGap} ms ⚠️` : `max: ${s.maxGap} ms ✅`)}
           {row("Device pixel ratio", dpr, dpr >= 3 ? "bahut pixel" : "")}
+        </div>
+
+        <div className="glass-card mt-16">
+          <h3 style={{ fontSize: "0.95rem" }}>⏱️ Thread kis kaam mein atka (long tasks)</h3>
+          <p className="muted" style={{ fontSize: "0.8rem", marginTop: 4 }}>
+            50ms se lambe kaam. Likhte waqt yahan kuch aata hai to wahi lag ki asli wajah hai.
+          </p>
+          {longTasks.length === 0 ? (
+            <p className="muted" style={{ fontSize: "0.84rem", marginTop: 6 }}>Abhi tak kuch nahi ✅</p>
+          ) : (
+            <ul style={{ fontSize: "0.86rem", marginTop: 6, paddingLeft: 18 }}>
+              {longTasks.map((t, i) => (
+                <li key={i}><strong>{t.ms} ms</strong> <span className="muted">({t.at})</span></li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div className="glass-card mt-16">
+          <h3 style={{ fontSize: "0.95rem" }}>🧪 Sync hash test</h3>
+          <p className="muted" style={{ fontSize: "0.8rem", marginTop: 4 }}>
+            SyncManager har 45 second par yahi kaam karta hai — poora localStorage stringify
+            karke hash. Agar ye 100ms se zyada leta hai, to likhte waqt beech-beech mein
+            thread isi ki wajah se rukta hai.
+          </p>
+          <button className="btn btn--ghost btn--sm mt-8" onClick={runHashTest}>Chala kar dekho</button>
+          {hashTest && (
+            <p className="mt-8" style={{ fontSize: "0.9rem", fontWeight: 700 }}>
+              {hashTest.ms} ms · localStorage {hashTest.kb} KB{" "}
+              <span style={{ color: hashTest.ms > 100 ? "var(--danger)" : "var(--success)" }}>
+                {hashTest.ms > 100 ? "⚠️ yahi mulzim hai" : "✅ theek hai"}
+              </span>
+            </p>
+          )}
         </div>
 
         <div className="glass-card mt-16">

@@ -11,6 +11,7 @@ import {
   getConflictInk, clearConflictInk,
 } from "@/lib/ink";
 import { useImageUrls } from "@/lib/wrongimages";
+import { setSyncPaused } from "@/lib/sync";
 import InkCanvas, { PALETTE, PEN_SIZES } from "@/components/InkCanvas";
 import WrongAnswerBlock from "@/components/WrongAnswerBlock";
 
@@ -94,6 +95,14 @@ function SolveInner() {
       document.body.style.overflow = prev;
       try { if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {}); } catch { /* ignore */ }
     };
+  }, []);
+
+  // Jab tak yahan likh rahe ho, background sync band. Uska poora-localStorage
+  // hash main thread par chalta hai aur stroke ke beech aa jaye to nib rok deta
+  // hai. Bahar niklte hi wapas chalu — tab wo pointer bhi le jayega.
+  useEffect(() => {
+    setSyncPaused(true);
+    return () => setSyncPaused(false);
   }, []);
 
   // Ruki hui uploads — khulte hi aur online wapas aate hi.

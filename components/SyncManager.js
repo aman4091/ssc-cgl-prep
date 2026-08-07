@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { getSettings } from "@/lib/storage";
-import { syncReady, pushSync, pullSync, remoteInfo, localHash } from "@/lib/sync";
+import { syncReady, pushSync, pullSync, remoteInfo, localHash, isSyncPaused } from "@/lib/sync";
 
 // Fully automatic cloud sync — no manual buttons needed. While auto-sync is on:
 //  • if another device pushed newer data → pull it and reload (so it shows up)
@@ -13,7 +13,9 @@ export default function SyncManager() {
 
   useEffect(() => {
     let stopped = false;
-    const active = () => getSettings().syncAuto && syncReady();
+    // isSyncPaused: solve view khula ho to sync ka bhaari hash/stringify likhne
+    // ke beech mein nahi chalna chahiye.
+    const active = () => getSettings().syncAuto && syncReady() && !isSyncPaused();
 
     const cycle = async () => {
       if (busy.current || !active() || document.hidden) return;
