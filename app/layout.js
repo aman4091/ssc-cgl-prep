@@ -11,6 +11,7 @@ import SyncManager from "@/components/SyncManager";
 import OverlayInbox from "@/components/OverlayInbox";
 import VocabFeeder from "@/components/VocabFeeder";
 import ThemeToggle from "@/components/ThemeToggle";
+import SWRegister from "@/components/SWRegister";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -18,6 +19,20 @@ export const metadata = {
   title: "SSC CGL Pre — Prep Hub",
   description:
     "SSC CGL Prelims preparation — daily targets, quizzes, and auto PDF-to-quiz powered by AI.",
+  manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "CGL Prep" },
+};
+
+// maximumScale/userScalable band isliye ki stylus se likhte waqt do ungliyan
+// lag jayen to poora page zoom na ho jaye — zoom likhne wali surface ka apna
+// hai. viewportFit cover se tablet ke rounded corners tak background jata hai.
+export const viewport = {
+  themeColor: "#16181c",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }) {
@@ -50,6 +65,7 @@ export default function RootLayout({ children }) {
         <FocusEnforcer />
         <VocabPrefetch />
         <SyncManager />
+        <SWRegister />
         <OverlayInbox />
         <VocabFeeder />
       </body>

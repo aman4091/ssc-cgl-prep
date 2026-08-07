@@ -2585,3 +2585,102 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
   .nb-view__bar { padding: 16px 16px 12px; }
   .nb-view__body { padding: 14px 16px 16px; }
 }
+
+/* ───────────────────────────────────────────────────────────────────────────
+   ✍️ Handwriting — Wrong Notebook ka stylus solve view
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Ye .mt-12 ~20 jagah use ho raha tha (MathQuestionCard, /wrong ka card) par
+   kabhi define hi nahi hua — chupchaap kuch nahi kar raha tha. Ab kar raha hai. */
+.mt-12 { margin-top: 12px; }
+
+/* Overlay — .fsr ki tarah z-index 2000 par, isliye Navbar (100), ThemeToggle
+   (400), lightbox (300) aur CA-rush sab apne aap dhak jate hain. app/layout.js
+   ko chhune ki zaroorat nahi padti. */
+.inkv {
+  position: fixed; inset: 0; z-index: 2000;
+  display: flex; flex-direction: column;
+  background: var(--bg); color: var(--text-1);
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+.inkv__top {
+  flex: none;
+  display: flex; align-items: center; gap: 10px; flex-wrap: nowrap;
+  padding: calc(8px + env(safe-area-inset-top, 0px)) 12px 8px;
+  border-bottom: 1px solid var(--glass-border);
+  background: var(--glass-bg-strong);
+  min-height: 46px;
+}
+.inkv__title {
+  font-size: 0.84rem; font-weight: 700; color: var(--text-2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+}
+.inkv__pill {
+  flex: none; font-size: 0.76rem; font-weight: 700; color: var(--text-2);
+  padding: 3px 9px; border-radius: 999px;
+  border: 1px solid var(--glass-border); background: var(--bg);
+}
+.inkv__body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+.inkv__q {
+  flex: none; max-height: 38vh; overflow-y: auto; overscroll-behavior: contain;
+  padding: 12px 14px; border-bottom: 1px solid var(--glass-border);
+}
+.inkv__q img { width: 100%; border-radius: 8px; background: #fff; display: block; margin-bottom: 8px; }
+.inkv__q--slim { max-height: 46px; overflow: hidden; padding: 10px 14px; }
+.inkv__ink { flex: 1; min-height: 0; position: relative; }
+.inkv__tools {
+  flex: none;
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--glass-border);
+  background: var(--glass-bg-strong);
+}
+.inkv__sep { width: 1px; align-self: stretch; background: var(--glass-border); margin: 2px 4px; }
+.inkv__swatch {
+  width: 26px; height: 26px; border-radius: 50%; flex: none;
+  border: 2px solid transparent; cursor: pointer; padding: 0;
+}
+.inkv__swatch[aria-pressed="true"] { border-color: var(--accent); transform: scale(1.12); }
+.inkv .btn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+
+/* Landscape / bada tablet: question baayen, likhne ki jagah dayen. Right-hand
+   writer ka haath surface par baithta hai, question uske neeche nahi aata. */
+@media (orientation: landscape) and (min-width: 820px) {
+  .inkv__body { flex-direction: row; }
+  .inkv__q {
+    max-height: none; width: 38%; min-width: 280px; max-width: 520px;
+    border-bottom: none; border-right: 1px solid var(--glass-border);
+  }
+  .inkv__q--slim { width: 46px; max-height: none; padding: 10px 6px; }
+}
+
+/* Kaagaz. Theme ke saath badalta hai taaki raat mein aankh na chubhe, aur ink
+   ka rang PALETTE se usi hisaab se aata hai (lib se index save hota hai, hex nahi). */
+.ink-surface {
+  position: absolute; inset: 0;
+  overflow: auto;
+  background: #fbf8f0;
+  background-image: repeating-linear-gradient(
+    to bottom, transparent, transparent 33px, rgba(90, 105, 130, 0.18) 33px, rgba(90, 105, 130, 0.18) 34px
+  );
+  /* Pen se likhte waqt page kabhi scroll na ho — touch scroll hum khud
+     handle karte hain (InkCanvas ka 1-ungli pan). overscroll-behavior Chrome ka
+     pull-to-refresh maarta hai, jo stroke ke beech mein aa jaye to sabse bura. */
+  touch-action: none;
+  overscroll-behavior: none;
+  user-select: none; -webkit-user-select: none;
+  -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent;
+}
+[data-theme="dark"] .ink-surface {
+  background: #1b1f26;
+  background-image: repeating-linear-gradient(
+    to bottom, transparent, transparent 33px, rgba(150, 170, 200, 0.14) 33px, rgba(150, 170, 200, 0.14) 34px
+  );
+}
+/* Spacer sirf scroll ki lambai deta hai. Canvases sticky rehte hain aur sirf
+   viewport jitne bade hote hain — poore page jitna tall canvas DPR 3 par
+   sainkdon MB kha jata aur Chrome ki 16384px limit bhi paar kar deta. */
+.ink-spacer { position: relative; }
+.ink-stack { position: sticky; top: 0; left: 0; width: 0; height: 0; }
+.ink-c { position: absolute; top: 0; left: 0; touch-action: none; }

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- App icon. Maskable ke liye zaroori hai ki asli cheez beech ke 80% mein
+       rahe — Android kinare kaat kar apne shape mein dhaal deta hai. -->
+  <rect width="512" height="512" fill="#16181c"/>
+  <g transform="translate(0,6)">
+    <!-- copy ke panne ki lakeerein -->
+    <g stroke="#3a4150" stroke-width="9" stroke-linecap="round">
+      <line x1="150" y1="196" x2="362" y2="196"/>
+      <line x1="150" y1="256" x2="362" y2="256"/>
+      <line x1="150" y1="316" x2="362" y2="316"/>
+    </g>
+    <!-- stylus se likhi hui lakeer -->
+    <path d="M152 330 C 196 250, 232 250, 262 296 C 288 336, 318 330, 352 268"
+          fill="none" stroke="#ff8a7a" stroke-width="22"
+          stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- nib -->
+    <path d="M352 268 l30 -18 -8 34 z" fill="#ff8a7a"/>
+  </g>
+</svg>

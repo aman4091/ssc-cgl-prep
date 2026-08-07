@@ -5,15 +5,17 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   SUBJECTS, getWrongBook, isPracticeable, imagesOf, imageKey, isSubject,
   dayKey, dayLabel, storeImages, addWrong, updateWrong, removeWrong, setOcrText, setDetail,
-  findByQid,
+  findByQid, hasInk, inkCount,
 } from "@/lib/wrongbook";
 import { getFile } from "@/lib/filestore";
+import { useImageUrls } from "@/lib/wrongimages";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { r2Status } from "@/lib/r2client";
 import { saveQuiz, getQuiz, makeId, getSettings } from "@/lib/storage";
 import { generateSimilar, readImageText } from "@/lib/client-ai";
+import { precacheShelf } from "@/lib/inkoffline";
 import ZoomableImage from "@/components/ZoomableImage";
-import Markdown from "@/components/Markdown";
+import WrongAnswerBlock from "@/components/WrongAnswerBlock";
 
 // Wrong Questions — a hand-kept book, one shelf per subject.
 //
@@ -25,36 +27,8 @@ import Markdown from "@/components/Markdown";
 // all optional extras you can fill in later with Edit; options only matter if
 // you want the question in a practice quiz.
 
-// Display URLs for a record's images. An R2 image is already a URL; a local
-// fallback has to be read out of IndexedDB and object-URL'd (and revoked).
-// `missing` counts local blobs this device doesn't have — what a synced record
-// looks like when its image never made it to R2.
-function useImageUrls(images) {
-  const [state, setState] = useState({ urls: [], missing: 0, loading: true });
-  const key = (images || []).map(imageKey).join(",");
-  useEffect(() => {
-    let alive = true;
-    const made = [];
-    setState((s) => ({ ...s, loading: true }));
-    (async () => {
-      const out = [];
-      let gone = 0;
-      for (const img of images || []) {
-        if (img.url) { out.push(img.url); continue; }
-        const blob = await getFile(img.id).catch(() => null);
-        if (!blob) { gone += 1; continue; }
-        const u = URL.createObjectURL(blob);
-        made.push(u);
-        out.push(u);
-      }
-      if (alive) setState({ urls: out, missing: gone, loading: false });
-      else made.forEach((u) => URL.revokeObjectURL(u));
-    })();
-    return () => { alive = false; made.forEach((u) => URL.revokeObjectURL(u)); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key]);
-  return state;
-}
+// useImageUrls ab lib/wrongimages.js mein hai — solve view bhi wahi hook use
+// karta hai, taaki do copies dhire-dhire alag na ho jayein.
 
 // The question as plain text — typed stem + lettered options, or whatever OCR
 // read off the screenshot. This is what gets copied to Gemini and what the
@@ -385,6 +359,20 @@ function WrongCard({ rec, onEdit, onDelete, onChange, highlight }) {
             ? (prog ? `${prog}%` : "…")
             : <><span className="ask__ico">🎯</span><span className="ask__word"> 20 similar</span></>}
         </button>
+        {/* ✍️ Solve — tablet par stylus se is question ke neeche solution likho.
+            q-act--keep zaroori hai: 1024px se neeche .q-head__actions ke baaki
+            saare buttons chhup jate hain, aur tablet hi wo device hai jiske liye
+            ye button banaya gaya hai. */}
+        <button
+          className="btn btn--ghost btn--sm q-act--keep"
+          onClick={() => router.push(
+            `/wrong/solve?subject=${rec.subject}&d=${encodeURIComponent(dayKey(rec.at))}&id=${rec.id}`
+          )}
+          title="Stylus se solution likho"
+        >
+          <span className="ask__ico">✍️</span>
+          <span className="ask__word">{hasInk(rec) ? ` ${inkCount(rec)}` : " Solve"}</span>
+        </button>
         <button className="btn btn--ghost btn--sm" onClick={onEdit}>✏️ Edit</button>
         <button className="btn btn--ghost btn--sm" onClick={onDelete}>🗑️ Delete</button>
       </div>
@@ -494,72 +482,11 @@ function WrongCard({ rec, onEdit, onDelete, onChange, highlight }) {
         </div>
       )}
 
-      {q.question && <p style={{ fontWeight: 600, whiteSpace: "pre-wrap" }}>{q.question}</p>}
-
-      {opts.length > 0 && (
-        <div className="mt-8" style={{ display: "grid", gap: 6 }}>
-          {opts.map((o, i) => {
-            const right = shown && i === q.answer;
-            return (
-              <div
-                key={i}
-                style={{
-                  padding: "8px 12px", borderRadius: 8, fontSize: "0.92rem",
-                  border: `1px solid ${right ? "var(--success)" : "var(--glass-border)"}`,
-                  background: right ? "rgba(34,197,94,0.10)" : "transparent",
-                }}
-              >
-                <strong style={{ opacity: 0.6, marginRight: 8 }}>{String.fromCharCode(65 + i)}</strong>
-                {o}
-                {right && <span style={{ color: "var(--success)", marginLeft: 8 }}>✓</span>}
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {/* The correct answer — always visible, right under the question/image. */}
-      {rec.answer && (
-        <p
-          className="mt-8"
-          style={{
-            fontSize: "0.95rem", fontWeight: 700, color: "var(--success)",
-            display: "flex", gap: 6, alignItems: "baseline", whiteSpace: "pre-wrap",
-          }}
-        >
-          <span>✅ Answer:</span>
-          <span style={{ color: "var(--text)" }}>{rec.answer}</span>
-        </p>
-      )}
-
-      {shown && rec.detail && (
-        <div
-          className="mt-8"
-          style={{ fontSize: "0.9rem", borderTop: "1px solid var(--glass-border)", paddingTop: 10 }}
-        >
-          <p className="muted" style={{ fontSize: "0.78rem", marginBottom: 4 }}>✨ Gemini · details</p>
-          <Markdown>{rec.detail}</Markdown>
-        </div>
-      )}
-
-      {shown && (q.solution || rec.note) && (
-        <p className="muted mt-8" style={{ fontSize: "0.86rem", whiteSpace: "pre-wrap" }}>
-          {q.solution && <>💡 {q.solution}</>}
-          {q.solution && rec.note && <br />}
-          {rec.note && <>📝 {rec.note}</>}
-        </p>
-      )}
-
-      {rec.ocrText && (
-        <details className="mt-8">
-          <summary className="muted" style={{ fontSize: "0.78rem", cursor: "pointer" }}>
-            📄 Image se pada hua text
-          </summary>
-          <p className="muted" style={{ fontSize: "0.82rem", whiteSpace: "pre-wrap", marginTop: 6 }}>
-            {rec.ocrText}
-          </p>
-        </details>
-      )}
+      {/* Question ka text, options, answer, details, solution, note aur OCR —
+          sab WrongAnswerBlock mein. Solve view bhi wahi component render karta
+          hai (bas answer chhupa kar), taaki dono jagah ek jaisa dikhe aur ek
+          jagah ka badlaav dusri jagah reh na jaye. */}
+      <WrongAnswerBlock rec={rec} shown={shown} />
     </div>
   );
 }
@@ -596,6 +523,7 @@ function WrongInner() {
   // device-only — worth saying up front rather than after the fact.
   const [cloud, setCloud] = useState({ configured: true });
   const [flash, setFlash] = useState("");   // "added" confirmation after a paste
+  const [dl, setDl] = useState("");         // "⬇️ Offline" ka progress
   const fileRef = useRef(null);
   const formRef = useRef(null);
 
@@ -798,6 +726,29 @@ function WrongInner() {
     router.push(`/quizzes/${quiz.id}`);
   };
 
+  // Ye shelf offline ke liye utaar lo — images service worker ke cache mein,
+  // handwriting IndexedDB mein.
+  const downloadOffline = async () => {
+    if (!shown.length) return;
+    setDl("⬇️ 0%");
+    try {
+      const res = await precacheShelf(shown, (n, total) => {
+        setDl(`⬇️ ${Math.round((n / total) * 100)}%`);
+      });
+      setDl("");
+      setFlash(
+        res.images
+          ? `✅ ${shown.length} question offline ke liye tayar (${res.ink} par writing bhi).`
+          : "✅ Writing utar gayi. Images offline tabhi chalengi jab app HTTPS par khuli ho (installed app ya Vercel link)."
+      );
+      setTimeout(() => setFlash(""), 6000);
+    } catch {
+      setDl("");
+      setFlash("❌ Offline download nahi ho paya.");
+      setTimeout(() => setFlash(""), 4000);
+    }
+  };
+
   const { urls: formUrls } = useImageUrls(images);
 
   return (
@@ -849,10 +800,31 @@ function WrongInner() {
           <p style={{ color: "var(--success)", fontSize: "0.86rem", fontWeight: 600, marginBottom: 10 }}>{flash}</p>
         )}
 
-        {practiceable.length > 0 && (
+        {shown.length > 0 && (
           <div className="row" style={{ gap: 8, marginBottom: 14, flexWrap: "wrap" }}>
-            <button className="btn btn--ghost btn--sm" onClick={practice}>
-              🎯 Practice ({practiceable.length})
+            {practiceable.length > 0 && (
+              <button className="btn btn--ghost btn--sm" onClick={practice}>
+                🎯 Practice ({practiceable.length})
+              </button>
+            )}
+            {/* Poori shelf ko ek copy ki tarah kholo — pehle question se shuru,
+                phir ← → se panne palto. */}
+            <button
+              className="btn btn--ghost btn--sm"
+              onClick={() => router.push(
+                `/wrong/solve?subject=${subject}&d=${encodeURIComponent(dateFilter)}&id=${shown[0].id}`
+              )}
+              title="Stylus se ek-ek karke solve karo"
+            >
+              ✍️ Solve karo ({shown.length})
+            </button>
+            <button
+              className="btn btn--ghost btn--sm"
+              onClick={downloadOffline}
+              disabled={!!dl}
+              title="In questions ki images aur writing tablet par utaar lo — phir bina internet ke bhi khulenge"
+            >
+              {dl || `⬇️ Offline (${shown.length})`}
             </button>
           </div>
         )}
