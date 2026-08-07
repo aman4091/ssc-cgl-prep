@@ -79,8 +79,13 @@ export default function PenTestPage() {
     let po;
     try {
       po = new PerformanceObserver((list) => {
+        // Page khulne se kitni der baad — ye batana zaroori hai. Load ke pehle
+        // 2-3 second mein aaya bada task app ke boot ka hai (bundle parse +
+        // hydration) aur likhne se uska koi lena-dena nahi. Likhte waqt aaya
+        // task hi asli mujrim hai.
         const add = list.getEntries().map((en) => ({
           ms: Math.round(en.duration),
+          since: (en.startTime / 1000).toFixed(1),
           at: new Date().toLocaleTimeString(),
         }));
         if (add.length) setLongTasks((v) => [...add.reverse(), ...v].slice(0, 10));
@@ -95,15 +100,26 @@ export default function PenTestPage() {
   // hai — main thread par, sync. Agar tera data bhaari hai to wo theek beech
   // likhne mein thread rok sakta hai. Guess karne se behtar hai naap lena.
   const runHashTest = () => {
-    let bytes = 0;
+    let chars = 0;
+    const rows = [];
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i) || "";
-      bytes += k.length + (localStorage.getItem(k) || "").length;
+      const n = k.length + (localStorage.getItem(k) || "").length;
+      chars += n;
+      rows.push({ k, kb: n / 1024 });
     }
+    rows.sort((a, b) => b.kb - a.kb);
     const t0 = performance.now();
     localHash();
     const ms = performance.now() - t0;
-    setHashTest({ ms: Math.round(ms), kb: Math.round(bytes / 1024) });
+    setHashTest({
+      ms: Math.round(ms),
+      kb: Math.round(chars / 1024),
+      // localStorage har character ko 2 byte mein rakhta hai, aur quota bytes
+      // mein naapa jata hai — isliye asli kharcha lagbhag dugna hai.
+      mb: (chars * 2 / 1048576).toFixed(1),
+      top: rows.slice(0, 8).map((r) => ({ k: r.k, kb: Math.round(r.kb) })),
+    });
   };
 
   // Pen ke buttons agar BLE keyboard ki tarah keys bhejte hain to yahan pakde
@@ -320,7 +336,13 @@ export default function PenTestPage() {
           ) : (
             <ul style={{ fontSize: "0.86rem", marginTop: 6, paddingLeft: 18 }}>
               {longTasks.map((t, i) => (
-                <li key={i}><strong>{t.ms} ms</strong> <span className="muted">({t.at})</span></li>
+                <li key={i}>
+                  <strong>{t.ms} ms</strong>{" "}
+                  <span className="muted">
+                    — page khulne ke {t.since}s baad
+                    {Number(t.since) < 4 ? " (app ka boot — chinta ki baat nahi)" : " ⚠️"}
+                  </span>
+                </li>
               ))}
             </ul>
           )}
@@ -335,12 +357,26 @@ export default function PenTestPage() {
           </p>
           <button className="btn btn--ghost btn--sm mt-8" onClick={runHashTest}>Chala kar dekho</button>
           {hashTest && (
-            <p className="mt-8" style={{ fontSize: "0.9rem", fontWeight: 700 }}>
-              {hashTest.ms} ms · localStorage {hashTest.kb} KB{" "}
-              <span style={{ color: hashTest.ms > 100 ? "var(--danger)" : "var(--success)" }}>
-                {hashTest.ms > 100 ? "⚠️ yahi mulzim hai" : "✅ theek hai"}
-              </span>
-            </p>
+            <>
+              <p className="mt-8" style={{ fontSize: "0.9rem", fontWeight: 700 }}>
+                {hashTest.ms} ms · localStorage {hashTest.kb} KB (~{hashTest.mb} MB){" "}
+                <span style={{ color: hashTest.ms > 100 ? "var(--danger)" : "var(--success)" }}>
+                  {hashTest.ms > 100 ? "⚠️" : "✅"}
+                </span>
+              </p>
+              {Number(hashTest.mb) >= 4 && (
+                <p style={{ fontSize: "0.84rem", color: "var(--danger)", marginTop: 6 }}>
+                  ⚠️ localStorage bhar chuka hai. Browser ki limit yahi hai — iske aage naya
+                  data <strong>chupchaap save hona band</strong> ho sakta hai. Neeche dekho
+                  kis cheez ne jagah ghera hai.
+                </p>
+              )}
+              <ul style={{ fontSize: "0.84rem", marginTop: 8, paddingLeft: 18 }}>
+                {hashTest.top.map((r) => (
+                  <li key={r.k}><strong>{r.kb} KB</strong> — {r.k}</li>
+                ))}
+              </ul>
+            </>
           )}
         </div>
 
