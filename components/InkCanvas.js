@@ -37,6 +37,20 @@ export const PALETTE = [
 export const PEN_SIZES = [2.5, 4.5, 8];
 export const HL_SIZE = 20;
 
+// getPredictedEvents() ki poonch — BAND.
+//
+// Prediction nib se do point AAGE ink kheenchti hai taaki line ungli ke neeche
+// baithi lage. Fayda lagbhag ek frame (~8ms) ka hai. Nuksaan ye ki stroke ke
+// ant mein haath dheema hota hai par predictor purani raftaar se aage ka
+// andaaza lagata rehta hai — isliye har stroke ke aage ek seedhi lakeer nikal
+// aati hai jo pen uthate hi gayab hoti hai. Har baar dikhne wali ye lakeer us
+// ~8ms se kahin zyada khatakti hai, khaaskar ab jab asli stall theek ho chuke
+// hain (coalesced 115 se 3 par aa gaya).
+//
+// Code jaan-boojh kar rakha hai — kabhi latency dobara chubhe to yahi true
+// karna hai, aur uske saath poonch ko chhota/feeka karna padega.
+const PREDICT = false;
+
 const MAX_H = 40000;      // ink units — bas ek runaway guard, practically infinite
 const GROW_BY = 900;
 const GROW_NEAR = 260;    // itna paas likha to apne aap jagah badhao
@@ -477,7 +491,7 @@ const InkCanvas = forwardRef(function InkCanvas(
         }
         predBoxRef.current = null;
       }
-      const pred = e.getPredictedEvents ? e.getPredictedEvents() : [];
+      const pred = PREDICT && e.getPredictedEvents ? e.getPredictedEvents() : [];
       if (pred.length) {
         applyTf(pctx);
         const tail = { ...st, points: [st.points[st.points.length - 1]], _drawn: 0 };

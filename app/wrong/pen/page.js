@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { localHash } from "@/lib/sync";
+import { localHash, setSyncPaused } from "@/lib/sync";
 
 // 🖊️ Pen test — ye page batata hai ki browser tere stylus se SACH MEIN kya dekh
 // raha hai. Guess karne ke bajay yahan likh kar number padh lo.
@@ -63,6 +63,17 @@ export default function PenTestPage() {
   const moves = useRef(0);       // is stroke mein kitne move — pehla wala chhodna hai
 
   useEffect(() => { setDpr(window.devicePixelRatio || 1); }, []);
+
+  // Yahan bhi sync band — solve page ki tarah.
+  //
+  // Warna ye page apni maap kharab kar deta hai: sync ka poora-localStorage
+  // hash/push (~1.2s) yahin theek stroke ke beech chal jata tha, aur numbers
+  // pen ke bare mein kuch batane ke bajay sync ke bare mein batate the. Sync ka
+  // kharcha alag se neeche wale hash test button se naapa jata hai.
+  useEffect(() => {
+    setSyncPaused(true);
+    return () => setSyncPaused(false);
+  }, []);
 
   // Screen 8 baar per second refresh — padhne ke liye kaafi, aur likhte waqt
   // main thread par bojh na ke barabar.
