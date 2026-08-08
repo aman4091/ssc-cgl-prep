@@ -2,7 +2,7 @@
  "book": "Error Pro (Aman Sir English)",
  "source": "Aman Sir Error Pro — Complete Book (SSC English grammar practice)",
  "author": "Aman Vashishth (Aman Sir English)",
- "total": 1338,
+ "total": 1492,
  "note": "Every question, its 4 options, the correct answer and the explanation are the book's own. Nothing generated. Explanations are Hinglish/Hindi as printed.",
  "chapters": [
   {
@@ -39,7 +39,13 @@
    "slug": "article",
    "label": "Article",
    "icon": "🅰️",
-   "count": 115
+   "count": 129
+  },
+  {
+   "slug": "adverb-inversion",
+   "label": "Adverb + Inversion",
+   "icon": "🏷️",
+   "count": 140
   },
   {
    "slug": "question-tag",
