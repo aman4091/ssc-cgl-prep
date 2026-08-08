@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   SUBJECTS, getWrongBook, isSubject, imagesOf, dayKey, dayLabel,
   storeImages, addWrong, removeWrong, isPracticeable,
-  setDetail2, setShownDetail, shownDetail,
+  setDetail2, setShownDetail, shownDetail, displayOrder,
 } from "@/lib/wrongbook";
 import { copyImageToClipboard, imageBlob } from "@/lib/imgclip";
 import { localInkCounts } from "@/lib/ink";
@@ -38,38 +38,9 @@ function cleanAnswer(s) {
   return t.replace(/^[^\n]*image_[0-9a-f]{4,}\.(?:png|jpe?g|webp)[^\n]*\n+/i, "").trim();
 }
 
-// qid ka number (q093 -> 93). Overlay list ko qid ke hisaab se chadhte kram
-// mein rakhta hai, isliye Question 1 hamesha wahi rehta hai. Bina qid wale
-// (haath se paste kiye) records ke liye 0 — wo apne time se lagte hain.
-const qnum = (r) => {
-  const m = /^q(\d+)$/.exec(r.qid || "");
-  return m ? Number(m[1]) : 0;
-};
-
-// PURANA UPAR, NAYA NEECHE — DATE ke hisaab se.
-//
-// Pehle ye qid se lagta tha, is bharose par ki qid ek badhta hua counter hai to
-// uska kram date ka kram hoga. Wo galat nikla: purane questions site par BAAD
-// mein pahunche (overlay ka backfill), to unka qid chhota hai par unki date
-// badi. Nateeja — 4 August upar aur 24 July neeche, theek ulta.
-//
-// Card par jo date dikhti hai wo rec.at hai, isliye sort bhi wahi se hona
-// chahiye — jo dikh raha hai aur jis kram mein laga hai, dono ek baat kahen.
-// qid sirf tab kaam aata hai jab do records ka waqt bilkul ek ho.
-//
-// Iske upar: bina-mark wale pehle, ✅ wale sabse neeche — mark karte hi question
-// neeche chala jata hai aur agla upar aa jata hai. Bilkul overlay jaisa.
-function order(items, done) {
-  const cmp = (a, b) => {
-    const ta = a.at || "";
-    const tb = b.at || "";
-    if (ta !== tb) return ta < tb ? -1 : 1;   // purani date pehle
-    return qnum(a) - qnum(b);                 // ek hi waqt ho to qid se
-  };
-  const pending = items.filter((r) => !done.has(r.id)).sort(cmp);
-  const marked = items.filter((r) => done.has(r.id)).sort(cmp);
-  return [...pending, ...marked];
-}
+// Kram lib/wrongbook.js ke displayOrder() se aata hai — solve page bhi wahi
+// use karta hai, warna dono lists alag-alag kram mein lag jati hain (aur ek
+// baar lag chuki thi: yahan ka pehla question wahan aakhri nikla).
 
 function AnsCard({ rec, n, done, inkN, fresh, onToggle, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight }) {
   const { urls, missing } = useImageUrls(imagesOf(rec));
@@ -272,7 +243,7 @@ function AnswersInner() {
     return () => clearInterval(id);
   }, [refresh]);
 
-  const list = useMemo(() => order(items, done), [items, done]);
+  const list = useMemo(() => displayOrder(items, done), [items, done]);
   const doneCount = list.filter((r) => done.has(r.id)).length;
 
   // Deep-link: overlay ke local page ka per-question link yahan aata hai.
@@ -333,8 +304,17 @@ function AnswersInner() {
     refresh();
   };
 
+  // `d` (date filter) jaan-boojh kar NAHI bhej rahe.
+  //
+  // Wo purane /wrong page ka hissa tha. Yahan koi date filter hai hi nahi, par
+  // link us question ki date bhej raha tha — jisse solve page ki list sirf USI
+  // din tak sikud jati thi. Har question alag din ka ho to har baar "1/1", aur
+  // timer khatam hone par agla question hota hi nahi tha.
+  //
+  // Bina `d` ke solve page poori shelf leta hai — wahi list, wahi kram jo yahan
+  // dikh raha hai.
   const onOpen = (rec) => {
-    router.push(`/wrong/solve?subject=${rec.subject}&d=${encodeURIComponent(dayKey(rec.at))}&id=${rec.id}`);
+    router.push(`/wrong/solve?subject=${rec.subject}&id=${rec.id}`);
   };
 
   // Paste = question add. Wahi flow jo pehle /wrong par tha — overlay band ho to

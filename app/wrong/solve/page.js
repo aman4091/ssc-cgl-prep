@@ -5,7 +5,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   getWrongBook, getWrongById, isSubject, imagesOf, dayKey, dayLabel,
   subjectLabel, setInk,
+  displayOrder,
 } from "@/lib/wrongbook";
+import { getDoneSet } from "@/lib/answersdone";
 import {
   openInk, saveLocalInk, pushInk, emptyDoc, flushInkQueue,
   getConflictInk, clearConflictInk,
@@ -62,7 +64,13 @@ function SolveInner() {
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const all = getWrongBook(subject);
-    setList(d === "all" ? all : all.filter((r) => dayKey(r.at) === d));
+    const shelf = d === "all" ? all : all.filter((r) => dayKey(r.at) === d);
+    // WAHI kram jo /answers par dikhta hai (purana upar, naya neeche, ✅ neeche).
+    // Pehle yahan getWrongBook ka apna newest-first kram chalta tha, aur nateeja
+    // ye tha ki /answers ka pehla question yahan AAKHRI baithta — timer khatam
+    // hone par "agla" hota hi nahi tha. Ek hi displayOrder dono jagah, taaki
+    // dobara aisa na ho.
+    setList(displayOrder(shelf, getDoneSet()));
     setReady(true);
   }, [subject, d]);
 
