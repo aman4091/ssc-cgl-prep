@@ -4,7 +4,7 @@ import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   getWrongBook, getWrongById, isSubject, imagesOf, dayKey, dayLabel,
-  subjectLabel, setInk,
+  subjectLabel, setInk, setOcrText,
   displayOrder,
 } from "@/lib/wrongbook";
 import { getDoneSet } from "@/lib/answersdone";
@@ -14,6 +14,10 @@ import {
 } from "@/lib/ink";
 import { useImageUrls } from "@/lib/wrongimages";
 import { setSyncPaused } from "@/lib/sync";
+import { getQuiz } from "@/lib/storage";
+import { makeSimilarQuiz } from "@/lib/similar";
+import { readImageText } from "@/lib/client-ai";
+import { imageBlob } from "@/lib/imgclip";
 import InkCanvas, { PALETTE, PEN_SIZES } from "@/components/InkCanvas";
 import WrongAnswerBlock from "@/components/WrongAnswerBlock";
 
@@ -45,6 +49,33 @@ const TIMER_PRESETS = [36, 45, 60, 90];
 const TIMER_KEY = "ink.timer";
 const mmss = (s) => `${Math.floor(Math.max(0, s) / 60)}:${String(Math.max(0, s) % 60).padStart(2, "0")}`;
 
+// Quiz ke questions ko wrongbook-record ki shakl do.
+//
+// `id` stable rehna chahiye — ink isi se IndexedDB mein sambhalti hai, to reload
+// ya wapas aane par har question ki apni writing wahi milti hai. `images: []`
+// hone se image wala poora hissa apne aap chup jata hai, aur explanation
+// `detail` mein jaata hai jahan se WrongAnswerBlock use dikhata hai.
+function quizRecords(quizId, quiz) {
+  if (!quiz || !Array.isArray(quiz.questions)) return [];
+  return quiz.questions.map((q, i) => ({
+    id: `qz_${quizId}_${i}`,
+    subject: quiz.subject || "math",
+    q: {
+      question: q.question || "",
+      options: q.options || [],
+      answer: Number.isInteger(q.answer) ? q.answer : 0,
+      solution: q.solution || "",
+    },
+    images: [],
+    note: "",
+    answer: "",
+    qid: "",
+    at: quiz.createdAt || new Date().toISOString(),
+    detail: q.explanation || q.solution || "",
+    _quiz: true,
+  }));
+}
+
 function SolveInner() {
   const router = useRouter();
   const sp = useSearchParams();
@@ -52,6 +83,7 @@ function SolveInner() {
   const subject = isSubject(urlSubject) ? urlSubject : "reasoning";
   const d = sp.get("d") || "all";
   const id = sp.get("id") || "";
+  const quizId = sp.get("quiz") || "";
 
   // Wahi shelf jo /wrong par khuli thi — subject + date filter.
   //
@@ -62,7 +94,29 @@ function SolveInner() {
   // items useEffect mein load karta hai.
   const [list, setList] = useState([]);
   const [ready, setReady] = useState(false);
+
+  // Do source ho sakte hain: wrong book ki shelf, ya ek generated quiz
+  // (?quiz=<id>) — 🎯 20 similar ke naye questions.
+  //
+  // Quiz ke question ko wahi shakl de dete hain jo wrongbook record ki hai
+  // (pseudo-record), taaki poora page — canvas, timer, prev/next, answer reveal,
+  // WrongAnswerBlock — bina kisi badlaav ke chal jaye. Ink IndexedDB mein isi
+  // synthetic id se sambhalti hai, to har generated question ki apni writing
+  // bachti hai.
   useEffect(() => {
+    if (quizId) {
+      const load = () => {
+        const quiz = getQuiz(quizId);
+        setList(quizRecords(quizId, quiz));
+        setReady(true);
+      };
+      load();
+      // 20 similar chhote batch mein bharta hai — naye questions aate hi list
+      // mein aa jayein.
+      const onAppend = (e) => { if (e.detail?.id === quizId) load(); };
+      window.addEventListener("cgl:quiz-appended", onAppend);
+      return () => window.removeEventListener("cgl:quiz-appended", onAppend);
+    }
     const all = getWrongBook(subject);
     const shelf = d === "all" ? all : all.filter((r) => dayKey(r.at) === d);
     // WAHI kram jo /answers par dikhta hai (purana upar, naya neeche, ✅ neeche).
@@ -72,7 +126,8 @@ function SolveInner() {
     // dobara aisa na ho.
     setList(displayOrder(shelf, getDoneSet()));
     setReady(true);
-  }, [subject, d]);
+    return undefined;
+  }, [subject, d, quizId]);
 
   const found = list.findIndex((r) => r.id === id);
   const idx = Math.max(0, found);
@@ -227,16 +282,56 @@ function SolveInner() {
     if (!target) return;
     await flushLocal();
     flushCloud();
-    router.replace(`/wrong/solve?subject=${subject}&d=${encodeURIComponent(d)}&id=${target.id}`);
-  }, [list, flushLocal, flushCloud, router, subject, d]);
+    router.replace(quizId
+      ? `/wrong/solve?quiz=${quizId}&id=${target.id}`
+      : `/wrong/solve?subject=${subject}&id=${target.id}`);
+  }, [list, flushLocal, flushCloud, router, subject, quizId]);
 
   // Wapas Answers page par — /wrong hata diya gaya hai, ab wahi list yahan
   // dikhti hai. Date filter uske paas nahi hai, isliye sirf subject le jaate hain.
+  // Quiz mode se nikalte waqt quiz player par, taaki score/review mil sake.
   const exit = useCallback(async () => {
     await flushLocal();
     flushCloud();
-    router.push(`/answers?subject=${subject}`);
-  }, [flushLocal, flushCloud, router, subject]);
+    router.push(quizId ? `/quizzes/${quizId}` : `/answers?subject=${subject}`);
+  }, [flushLocal, flushCloud, router, subject, quizId]);
+
+  // ── 🎯 20 similar ─────────────────────────────────────────────────────────
+  // Isi question jaise 20 naye banao aur UNHE BHI yahin stylus se solve karo —
+  // quiz player par jaane ki zaroorat nahi. Sirf maths/reasoning ke liye, kyunki
+  // english/GS mein "similar" ka matlab nahi banta.
+  const [simBusy, setSimBusy] = useState("");
+  const canSimilar = rec && !rec._quiz && (rec.subject === "math" || rec.subject === "reasoning");
+
+  const make20 = async () => {
+    if (!rec) return;
+    setSimBusy("…");
+    try {
+      // Generator ko TEXT chahiye. Image-only question par wo hota nahi, isliye
+      // ek baar OCR chala kar record par cache kar lete hain — wo plain text hai,
+      // to agli baar (aur dusre device par) dobara nahi padhna padta.
+      let question = rec.q?.question || rec.ocrText || "";
+      const options = (rec.q?.options || []).filter(Boolean);
+      if (!question) {
+        const imgs = imagesOf(rec);
+        if (!imgs.length) throw new Error("Is question ka na text hai na image.");
+        setSimBusy("OCR…");
+        const blob = await imageBlob(imgs[0]);
+        const { text } = await readImageText(blob, (p) => setSimBusy(`OCR ${Math.round(p * 100)}%`));
+        question = (text || "").trim();
+        if (!question) throw new Error("Image se text nahi mila.");
+        setOcrText(rec.id, question);
+      }
+      setSimBusy("bana raha…");
+      const newQuizId = await makeSimilarQuiz({ question, options }, rec.subject, "Similar · stylus");
+      stopTimer();
+      await flushLocal();
+      router.push(`/wrong/solve?quiz=${newQuizId}`);
+    } catch (e) {
+      setSimBusy("");
+      alert(e.message || "Similar nahi ban paye.");
+    }
+  };
 
   // ── ⏱️ Timer ──────────────────────────────────────────────────────────────
   // `dur` chuna hua waqt hai (yaad rehta hai), `running` chain chal rahi hai ya
@@ -347,7 +442,9 @@ function SolveInner() {
       <div className="inkv__top">
         <button className="btn btn--ghost btn--sm" onClick={exit} title="Wrong Notebook par wapas">←</button>
         <span className="inkv__title">
-          {subjectLabel(rec.subject)} · {dayLabel(rec.at)}{rec.qid ? ` · 🔖 ${rec.qid}` : ""}
+          {rec._quiz
+            ? `🎯 Similar · ${subjectLabel(rec.subject)}`
+            : `${subjectLabel(rec.subject)} · ${dayLabel(rec.at)}${rec.qid ? ` · 🔖 ${rec.qid}` : ""}`}
         </span>
         <span className="inkv__pill" style={{ marginLeft: "auto" }}>{stateLabel}</span>
 
@@ -500,6 +597,12 @@ function SolveInner() {
         <span className="inkv__sep" />
         {/* Peeche jaana = chain todna (tera niyam). Aage jaana chain ka hissa
             hai, isliye wo timer nahi rokta — bas nayi ghadi shuru ho jati hai. */}
+        {canSimilar && (
+          <button className="btn btn--ghost btn--sm" onClick={make20} disabled={!!simBusy}
+            title="Isi type ke 20 naye questions banao — aur unhe bhi yahin stylus se solve karo">
+            {simBusy || "🎯 20"}
+          </button>
+        )}
         <button className="btn btn--ghost btn--sm" onClick={() => { stopTimer(); go(idx - 1); }} disabled={idx <= 0}>← Q</button>
         <button className="btn btn--ghost btn--sm" onClick={() => go(idx + 1)} disabled={idx >= list.length - 1}>Q →</button>
       </div>

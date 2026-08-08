@@ -597,6 +597,13 @@ export default function QuizPlayer() {
           <span className="hero__eyebrow">📝 {quiz.title}</span>
           <div className="row" style={{ gap: 8 }}>
             <FullscreenTestButton questions={quiz.questions} title={quiz.title} subject={quiz.subject || ""} timeLimitSec={quiz.timeLimitSec || 0} />
+            {/* Tablet par is quiz ke har question ke neeche stylus se rough work.
+                Wahi solve page hai jo wrong book use karta hai — quiz ke questions
+                use pseudo-record ban kar milte hain, to canvas/timer/prev-next sab
+                waisa hi chalta hai. PYQ ke "🎯 20 similar" ke baad yahi raasta hai. */}
+            <Link href={`/wrong/solve?quiz=${quiz.id}`} className="btn btn--ghost btn--sm" title="Stylus se solve karo (tablet)">
+              ✍️ Stylus
+            </Link>
             <Link href="/quizzes" className="btn btn--ghost btn--sm">Exit</Link>
           </div>
         </div>
