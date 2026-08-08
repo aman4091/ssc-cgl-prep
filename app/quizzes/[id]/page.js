@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { getQuiz, saveQuiz, makeId } from "@/lib/storage";
+import { getQuiz, saveQuiz, makeId, deleteQuiz } from "@/lib/storage";
 import { askAI, generateSimilar } from "@/lib/client-ai";
 import Markdown from "@/components/Markdown";
 import Diagram from "@/components/Diagram";
@@ -148,7 +148,7 @@ export default function QuizPlayer() {
         <div className="glass-card center">
           <h2>Quiz not found</h2>
           <p className="muted mt-8">It may have been deleted, or the link is wrong.</p>
-          <Link href="/quizzes" className="btn btn--primary mt-16">← Back to Quizzes</Link>
+          <Link href="/answers" className="btn btn--primary mt-16">← Answers</Link>
         </div>
       </section>
     );
@@ -231,6 +231,12 @@ export default function QuizPlayer() {
         count: items.length,
         correct: items.filter((x) => x.correct).length,
       });
+      // Quiz ab bekaar hai — galat questions Mistake Notebook mein ja chuke aur
+      // stats bhi darj ho gaye. Rakhne se sirf localStorage bharta hai (jo cap
+      // ke kagaar par hai) aur "My Quizzes" mein purane attempts ka dher lagta
+      // hai. Result screen `quiz` ke memory-copy se banti hai, isliye delete ke
+      // baad bhi poori dikhti hai.
+      deleteQuiz(quiz.id);
     }
     setSubmitted(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -407,7 +413,7 @@ export default function QuizPlayer() {
             <span className="hero__eyebrow">✅ Result</span>
             <div className="row" style={{ gap: 8 }}>
               <button className="btn btn--primary btn--sm" onClick={() => router.back()}>← Back</button>
-              <Link href="/quizzes" className="btn btn--ghost btn--sm">All quizzes</Link>
+              <Link href="/answers" className="btn btn--ghost btn--sm">📖 Answers</Link>
             </div>
           </div>
           <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>{quiz.title}</h1>
@@ -604,7 +610,7 @@ export default function QuizPlayer() {
             <Link href={`/wrong/solve?quiz=${quiz.id}`} className="btn btn--ghost btn--sm" title="Stylus se solve karo (tablet)">
               ✍️ Stylus
             </Link>
-            <Link href="/quizzes" className="btn btn--ghost btn--sm">Exit</Link>
+            <Link href="/answers" className="btn btn--ghost btn--sm">Exit</Link>
           </div>
         </div>
         {quiz.streaming && (

@@ -78,7 +78,7 @@ export default function MistakesPage() {
               </button>
             )}
             <Link href="/bookmarks" className="btn btn--ghost btn--sm">⭐ Bookmarks</Link>
-            <Link href="/quizzes" className="btn btn--ghost btn--sm">← Quizzes</Link>
+            <Link href="/answers" className="btn btn--ghost btn--sm">📖 Answers</Link>
           </div>
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.7rem, 4vw, 2.6rem)" }}>

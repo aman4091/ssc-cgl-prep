@@ -14,7 +14,9 @@ import {
 } from "@/lib/ink";
 import { useImageUrls } from "@/lib/wrongimages";
 import { setSyncPaused } from "@/lib/sync";
-import { getQuiz } from "@/lib/storage";
+import { getQuiz, deleteQuiz } from "@/lib/storage";
+import { recordAttempts } from "@/lib/qstats";
+import { recordQuizAttempts } from "@/lib/qreview";
 import { makeSimilarQuiz } from "@/lib/similar";
 import { readImageText } from "@/lib/client-ai";
 import { imageBlob } from "@/lib/imgclip";
@@ -308,6 +310,7 @@ function SolveInner() {
   // reload ho jaye to attempt na ude.
   const [picks, setPicks] = useState({});
   const [showResult, setShowResult] = useState(false);
+  const [resultRows, setResultRows] = useState([]);
   const picksKey = quizId ? `ink.picks.${quizId}` : "";
 
   useEffect(() => {
@@ -319,6 +322,53 @@ function SolveInner() {
 
   const answered = list.filter((r) => picks[r.id] !== undefined).length;
 
+  // Quiz khatam — galat questions Mistake Notebook mein, phir quiz khud delete.
+  //
+  // Recording wahi do call hain jo quiz player use karta hai, taaki stylus se
+  // diya gaya quiz bhi wahi nishaan chhode: qstats (attempt/accuracy) aur
+  // qreview (Mistake Notebook ki wrong bucket).
+  //
+  // Quiz delete hone ke baad bhi result dikhna chahiye, isliye rows ka snapshot
+  // pehle state mein le lete hain — screen `list` par tiki rehti to quiz hatte
+  // hi khaali ho jati.
+  const finish = useCallback((finalPicks) => {
+    stopTimer();
+    const rows = list.map((r, i) => {
+      const p = finalPicks[r.id];
+      const right = r.q?.answer ?? 0;
+      return {
+        id: r.id, i, p, right,
+        question: r.q?.question || "",
+        options: r.q?.options || [],
+        detail: r.detail || "",
+        ok: p === right,
+        skipped: p === undefined,
+      };
+    });
+    setResultRows(rows);
+    setShowResult(true);
+
+    try {
+      const attempted = rows.filter((x) => !x.skipped);
+      const items = attempted.map((x) => ({
+        q: { question: x.question, options: x.options, answer: x.right },
+        correct: x.ok,
+      }));
+      recordAttempts(items);
+      recordQuizAttempts(items.map((it) => ({ ...it, source: "similar", category: "Similar · stylus" })));
+    } catch { /* recording fail ho to bhi result dikhna chahiye */ }
+
+    // Quiz ab bekaar hai — galat questions Mistake Notebook mein ja chuke.
+    // Rakhne se sirf localStorage bharta hai (jo pehle se cap ke kagaar par hai).
+    try { deleteQuiz(quizId); localStorage.removeItem(picksKey); } catch { /* ignore */ }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [list, quizId, picksKey]);
+  // stopTimer deps mein JAAN-BOOJH KAR nahi hai: wo neeche timer wale hisse mein
+  // declare hota hai, aur deps array render ke waqt hi evaluate ho jata hai —
+  // yaani wahan use likhne se "Cannot access 'stopTimer' before initialization"
+  // aata hai aur poora page hi nahi khulta. Body mein use karna theek hai, wo
+  // baad mein chalti hai.
+
   const pick = (optIdx) => {
     if (!rec) return;
     const next = { ...picks, [rec.id]: optIdx };
@@ -326,7 +376,7 @@ function SolveInner() {
     try { localStorage.setItem(picksKey, JSON.stringify(next)); } catch { /* quota */ }
     // Chuna aur aage — theek waise hi jaise timer khatam hone par hota hai.
     if (idx < list.length - 1) setTimeout(() => go(idx + 1), 220);
-    else { stopTimer(); setShowResult(true); }
+    else finish(next);
   };
 
   // ── 🎯 20 similar ─────────────────────────────────────────────────────────
@@ -473,12 +523,9 @@ function SolveInner() {
   // Result — sab khatam hone ke baad ek saath. Har row se us question par wapas
   // ja sakte ho, taaki apna rough work dobara dekh sako.
   if (showResult && quizId) {
-    const rows = list.map((r, i) => {
-      const p = picks[r.id];
-      const right = r.q?.answer ?? 0;
-      return { r, i, p, right, ok: p === right, skipped: p === undefined };
-    });
+    const rows = resultRows;
     const score = rows.filter((x) => x.ok).length;
+    const wrongN = rows.filter((x) => !x.ok).length;
     return (
       <div className="inkv">
         <div className="inkv__top">
@@ -489,22 +536,27 @@ function SolveInner() {
           </button>
         </div>
         <div className="inkv__result">
-          {rows.map(({ r, i, p, right, ok, skipped }) => (
-            <div key={r.id} className={`inkv__rrow${ok ? " is-ok" : skipped ? " is-skip" : " is-bad"}`}>
+          <p className="muted" style={{ fontSize: "0.86rem", marginBottom: 12 }}>
+            {wrongN > 0
+              ? `❌ ${wrongN} galat question Mistake Notebook mein chala gaya. Quiz ab hata diya gaya — jagah bekaar nahi ghere.`
+              : "✅ Sab sahi. Quiz hata diya gaya."}
+          </p>
+          {rows.map(({ id: rid, i, p, right, ok, skipped, question, options, detail }) => (
+            <div key={rid} className={`inkv__rrow${ok ? " is-ok" : skipped ? " is-skip" : " is-bad"}`}>
               <div className="row between">
                 <strong>{ok ? "✅" : skipped ? "⏭️" : "❌"} Q{i + 1}</strong>
                 <button className="btn btn--ghost btn--sm" onClick={() => { setShowResult(false); go(i); }}>
                   ✍️ Rough work dekho
                 </button>
               </div>
-              <p style={{ whiteSpace: "pre-wrap", margin: "6px 0" }}>{r.q?.question}</p>
+              <p style={{ whiteSpace: "pre-wrap", margin: "6px 0" }}>{question}</p>
               <p className="muted" style={{ fontSize: "0.86rem" }}>
-                Tumne: {skipped ? "chhod diya" : `${String.fromCharCode(65 + p)}) ${r.q?.options?.[p] ?? ""}`}
-                {" · "}Sahi: {String.fromCharCode(65 + right)}) {r.q?.options?.[right] ?? ""}
+                Tumne: {skipped ? "chhod diya" : `${String.fromCharCode(65 + p)}) ${options[p] ?? ""}`}
+                {" · "}Sahi: {String.fromCharCode(65 + right)}) {options[right] ?? ""}
               </p>
-              {r.detail && (
+              {detail && (
                 <div className="answer-box mt-8" style={{ fontSize: "0.88rem" }}>
-                  <Markdown>{r.detail}</Markdown>
+                  <Markdown>{detail}</Markdown>
                 </div>
               )}
             </div>
@@ -573,7 +625,7 @@ function SolveInner() {
               </button>
             )}
             {!slim && quizId && (
-              <button className="btn btn--ghost btn--sm" onClick={() => setShowResult(true)}>
+              <button className="btn btn--ghost btn--sm" onClick={() => finish(picks)}>
                 🏁 Result ({answered}/{list.length})
               </button>
             )}
