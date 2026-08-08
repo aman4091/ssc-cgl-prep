@@ -46,22 +46,25 @@ const qnum = (r) => {
   return m ? Number(m[1]) : 0;
 };
 
-// PURANA UPAR, NAYA NEECHE.
+// PURANA UPAR, NAYA NEECHE — DATE ke hisaab se.
 //
-// qid ek badhta hua global counter hai (q007 < q093), isliye qid ke chadhte kram
-// mein sort karna hi "jo pehle add hua wo pehle" hai — aaj ka question sabse
-// neeche aata hai. Jinke paas qid nahi (haath se paste kiye) unhe `at` se lagate
-// hain, wahi soch.
+// Pehle ye qid se lagta tha, is bharose par ki qid ek badhta hua counter hai to
+// uska kram date ka kram hoga. Wo galat nikla: purane questions site par BAAD
+// mein pahunche (overlay ka backfill), to unka qid chhota hai par unki date
+// badi. Nateeja — 4 August upar aur 24 July neeche, theek ulta.
+//
+// Card par jo date dikhti hai wo rec.at hai, isliye sort bhi wahi se hona
+// chahiye — jo dikh raha hai aur jis kram mein laga hai, dono ek baat kahen.
+// qid sirf tab kaam aata hai jab do records ka waqt bilkul ek ho.
 //
 // Iske upar: bina-mark wale pehle, ✅ wale sabse neeche — mark karte hi question
 // neeche chala jata hai aur agla upar aa jata hai. Bilkul overlay jaisa.
 function order(items, done) {
   const cmp = (a, b) => {
-    const na = qnum(a);
-    const nb = qnum(b);
-    if (na && nb) return na - nb;
-    if (na || nb) return na ? -1 : 1; // qid wale pehle
-    return (a.at || "") < (b.at || "") ? -1 : 1;
+    const ta = a.at || "";
+    const tb = b.at || "";
+    if (ta !== tb) return ta < tb ? -1 : 1;   // purani date pehle
+    return qnum(a) - qnum(b);                 // ek hi waqt ho to qid se
   };
   const pending = items.filter((r) => !done.has(r.id)).sort(cmp);
   const marked = items.filter((r) => done.has(r.id)).sort(cmp);
