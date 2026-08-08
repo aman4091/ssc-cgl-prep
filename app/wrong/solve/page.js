@@ -296,7 +296,10 @@ function SolveInner() {
   const exit = useCallback(async () => {
     await flushLocal();
     flushCloud();
-    router.push(quizId ? `/quizzes/${quizId}` : `/answers?subject=${subject}`);
+    // Quiz mode se bhi /answers par hi. Pehle yahan /quizzes/<id> tha, par quiz
+    // khatam hote hi delete ho jata hai — to back dabane par "Quiz not found"
+    // milta tha. Answers page hi is app ka ghar hai.
+    router.push(`/answers?subject=${subject}`);
   }, [flushLocal, flushCloud, router, subject, quizId]);
 
   // ── Quiz mode: jawab chunna aur ant mein result ───────────────────────────

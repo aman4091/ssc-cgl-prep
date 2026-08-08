@@ -81,11 +81,23 @@ export async function POST(req) {
       (Array.isArray(sample.options) ? "Options: " + sample.options.join(" | ") + "\n" : "") +
       `\nIdentify the exact rule/concept this sample tests, then generate ${n} NEW questions testing the SAME rule/concept.`;
 
-    const result = await deepseekChat({
+    // Khaali jawab par dobara maango.
+    //
+    // DeepSeek kabhi-kabhi HTTP 200 ke saath BILKUL khaali content lauta deta
+    // hai — koi error nahi, bas kuch nahi. Ye lossy input par zyada hota hai:
+    // PYQ maths ka qText tooti hui fractions aur adhoore glyph se bhara hota hai
+    // (question asli mein image hai), jabki stylus wala raasta OCR/typed saaf
+    // text bhejta hai. Isiliye ek hi API par PYQ fail hota tha aur tablet chalta
+    // tha.
+    //
+    // Ek khaali jawab ko haar maan lena galat hai — dobara poochhne par aksar aa
+    // jata hai. Temperature thoda badha kar poochhte hain, warna wahi soch wahi
+    // khaali jawab de sakti hai.
+    const ask = (temperature) => deepseekChat({
       apiKey,
       model,
       baseUrl,
-      temperature: 0.2,
+      temperature,
       jsonMode: true,
       maxTokens: 8000,
       messages: [
@@ -93,6 +105,11 @@ export async function POST(req) {
         { role: "user", content: sampleText },
       ],
     });
+
+    let result = await ask(0.2);
+    for (let tryN = 0; tryN < 2 && result.ok && !(result.content || "").trim(); tryN++) {
+      result = await ask(0.5 + tryN * 0.2);
+    }
 
     if (!result.ok) return Response.json({ error: result.error }, { status: result.status });
 
