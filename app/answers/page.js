@@ -5,7 +5,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   SUBJECTS, getWrongBook, isSubject, imagesOf, dayKey, dayLabel,
   storeImages, addWrong, removeWrong, isPracticeable,
+  setDetail2, setShownDetail, shownDetail, hasInk, inkCount,
 } from "@/lib/wrongbook";
+import { copyImageToClipboard, imageBlob } from "@/lib/imgclip";
+import { getSettings } from "@/lib/storage";
 import { getDoneSet, toggleDone, pruneDone } from "@/lib/answersdone";
 import { useImageUrls } from "@/lib/wrongimages";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
@@ -57,10 +60,61 @@ function order(items, done) {
   return [...pending, ...marked];
 }
 
-function AnsCard({ rec, n, done, onToggle, onDelete, onOpen, highlight }) {
+function AnsCard({ rec, n, done, onToggle, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight }) {
   const { urls, missing } = useImageUrls(imagesOf(rec));
   const [lb, setLb] = useState(null);
-  const answer = cleanAnswer(rec.detail || rec.q?.solution || "");
+  const [pasteOpen, setPasteOpen] = useState(false);
+  const [pasteText, setPasteText] = useState("");
+  const [editing, setEditing] = useState(false);
+  const [copied, setCopied] = useState("");
+
+  const a1 = cleanAnswer(rec.detail || rec.q?.solution || "");
+  const a2 = cleanAnswer(rec.detail2 || "");
+
+  const ping = (k) => { setCopied(k); setTimeout(() => setCopied(""), 1600); };
+
+  // ✨ Gemini — question ki TASVEER clipboard par daal kar Gemini khol do.
+  //
+  // Image bhejna OCR se behtar hai: fractions aur figures jaise-ke-taise jaate
+  // hain. Prompt saath mein nahi ja sakta (clipboard par ek waqt mein ek hi
+  // cheez), isliye overlay wali chaal: yahan wapas aate hi prompt apne aap copy
+  // ho jata hai — phir Gemini mein dobara paste kar do.
+  const askGemini = async () => {
+    const imgs = imagesOf(rec);
+    if (imgs.length) {
+      const ok = await copyImageToClipboard(() => imageBlob(imgs[0]));
+      if (ok) {
+        ping("gem");
+        onArm();
+        onFlash("🖼️ Image copy ho gayi — Gemini mein paste karo, phir yahan wapas aao (prompt apne aap copy hoga)");
+      } else {
+        onFlash("Is browser mein image copy support nahi — 📋 Prompt se kaam chalao");
+      }
+    }
+    window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer");
+    setPasteText("");
+    setEditing(false);
+    setPasteOpen(true);
+  };
+
+  const copyPrompt = async () => {
+    try { await navigator.clipboard.writeText(prompt); ping("pr"); }
+    catch { onFlash("Copy nahi hua — dobara try karo"); }
+  };
+
+  // 📥 = naya DUSRA answer (pehla fold mein bach jata hai). ✏️ = jo abhi dikh
+  // raha hai usi ko sudharo.
+  const openPaste = () => { setEditing(false); setPasteText(""); setPasteOpen(true); };
+  const openEdit = () => { setEditing(true); setPasteText(shownDetail(rec)); setPasteOpen(true); };
+  const savePaste = () => {
+    const t = pasteText.trim();
+    if (!t) return;
+    if (editing) setShownDetail(rec.id, t);
+    else setDetail2(rec.id, t);
+    setPasteOpen(false);
+    setPasteText("");
+    onChange();
+  };
 
   return (
     <div
@@ -72,6 +126,7 @@ function AnsCard({ rec, n, done, onToggle, onDelete, onOpen, highlight }) {
         <span className="ansp__qid">
           {" ("}{rec.qid || "—"}{rec.at ? ` · ${dayLabel(rec.at)}` : ""}{")"}
         </span>
+        {hasInk(rec) && <span className="ansp__ink" title="Is question par handwriting hai">✍️ {inkCount(rec)}</span>}
       </h2>
 
       {urls.map((u, i) => (
@@ -89,14 +144,43 @@ function AnsCard({ rec, n, done, onToggle, onDelete, onOpen, highlight }) {
           <input type="checkbox" checked={done} onChange={() => onToggle(rec)} />
           Ho gaya
         </label>
-        <button className="ansp__btn ansp__btn--go" onClick={() => onOpen(rec)}>
-          ✍️ Solve
-        </button>
+        <button className="ansp__btn ansp__btn--go" onClick={() => onOpen(rec)}>✍️ Solve</button>
+        <button className="ansp__btn" onClick={askGemini}>{copied === "gem" ? "🖼️ ✓" : "✨ Gemini"}</button>
+        <button className="ansp__btn" onClick={copyPrompt}>{copied === "pr" ? "✓" : "📋 Prompt"}</button>
+        <button className="ansp__btn" onClick={openPaste}>📥 Answer paste</button>
+        {shownDetail(rec) && <button className="ansp__btn" onClick={openEdit}>✏️ Edit</button>}
         <button className="ansp__btn" onClick={() => onDelete(rec)}>🗑️ Delete</button>
       </div>
 
-      {answer ? (
-        <div className="ansp__answer"><Markdown>{answer}</Markdown></div>
+      {pasteOpen && (
+        <div className="ansp__paste">
+          <textarea
+            value={pasteText}
+            onChange={(e) => setPasteText(e.target.value)}
+            autoFocus
+            placeholder={editing
+              ? "Answer sudhaar kar Save dabao"
+              : "Gemini ka answer yahan paste karo (Ctrl+V), phir Save — pehla answer mitega nahi"}
+          />
+          <div className="ansp__acts">
+            <button className="ansp__btn ansp__btn--go" onClick={savePaste} disabled={!pasteText.trim()}>💾 Save</button>
+            <button className="ansp__btn" onClick={() => setPasteOpen(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
+
+      {/* Dusra answer aane par wahi dikhta hai; pehla mitta nahi — fold mein
+          bach jata hai, taaki dono padhe ja sakein. Overlay par bhi aisa hi tha. */}
+      {a2 ? (
+        <>
+          <div className="ansp__answer"><Markdown>{a2}</Markdown></div>
+          <details className="ansp__old">
+            <summary>Pehla answer dekho</summary>
+            <div className="ansp__answer"><Markdown>{a1}</Markdown></div>
+          </details>
+        </>
+      ) : a1 ? (
+        <div className="ansp__answer"><Markdown>{a1}</Markdown></div>
       ) : (
         <div className="ansp__answer ansp__answer--empty">Is question ka answer abhi nahi hai.</div>
       )}
@@ -159,6 +243,37 @@ function AnswersInner() {
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlQid, list.length]);
+
+  // ✨ Gemini ke saath prompt clipboard par nahi ja sakta (ek waqt mein ek hi
+  // cheez, aur image jaa chuki hai). Overlay wali chaal: Gemini kholte waqt ek
+  // nishaan laga do, aur user jab is tab par WAPAS aata hai to prompt apne aap
+  // copy kar do — phir wo Gemini mein dobara paste kar deta hai.
+  const armed = useRef(false);
+  const promptText = useMemo(() => {
+    const st = getSettings();
+    const perSubject = String((st.shortcutPrompts || {})[subject] || "").trim();
+    return perSubject || String(st.geminiPrompt || "").trim()
+      || "Is question ko solve karke sahi answer aur short steps do. Hinglish mein.";
+  }, [subject]);
+
+  useEffect(() => {
+    const onFocus = async () => {
+      if (!armed.current) return;
+      armed.current = false;
+      try {
+        await navigator.clipboard.writeText(promptText);
+        setFlash("📋 Prompt copy ho gaya — Gemini mein paste karke bhejo");
+        setTimeout(() => setFlash(""), 4000);
+      } catch { /* user 📋 Prompt button use kar lega */ }
+    };
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, [promptText]);
+
+  const flashNow = useCallback((msg) => {
+    setFlash(msg);
+    setTimeout(() => setFlash(""), 5000);
+  }, []);
 
   const onToggle = (rec) => {
     const now = toggleDone(rec.id);
@@ -315,6 +430,10 @@ function AnswersInner() {
               onToggle={onToggle}
               onDelete={onDelete}
               onOpen={onOpen}
+              onChange={refresh}
+              prompt={promptText}
+              onArm={() => { armed.current = true; }}
+              onFlash={flashNow}
               highlight={!!urlQid && r.qid === urlQid}
             />
           ))

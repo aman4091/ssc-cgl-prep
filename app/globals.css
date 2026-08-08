@@ -2836,3 +2836,21 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
   .ansp__card { padding: 12px; margin: 12px 0; }
   .ansp__stats { justify-content: flex-start; }
 }
+
+/* Answers page — Gemini flow ke naye hisse */
+.ansp__ink {
+  margin-left: 10px; font-size: 12px; font-weight: 700; color: #a6e3a1;
+  background: #1e1e2e; border-radius: 999px; padding: 2px 9px; vertical-align: middle;
+}
+.ansp__paste { margin-top: 10px; }
+.ansp__paste textarea {
+  width: 100%; min-height: 120px; box-sizing: border-box;
+  background: #1e1e2e; color: #cdd6f4; border: 1px solid #45475a;
+  border-radius: 8px; padding: 10px; font-family: inherit; font-size: 14px;
+}
+.ansp__paste textarea:focus { outline: none; border-color: #89b4fa; }
+.ansp__btn:disabled { opacity: 0.5; cursor: default; }
+/* Pehla answer — dusra aane par yahan fold ho jata hai, mitta nahi. */
+.ansp__old { margin-top: 10px; }
+.ansp__old summary { color: #6c7086; cursor: pointer; font-size: 13px; padding: 4px 0; }
+.ansp__old summary:hover { color: #cdd6f4; }
