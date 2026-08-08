@@ -29,7 +29,7 @@ import WrongAnswerBlock from "@/components/WrongAnswerBlock";
 // dono ke beech aana-jaana seedha rahe.
 
 const LOCAL_MS = 700;    // IndexedDB — sasta, isliye jaldi
-const CLOUD_MS = 6000;   // R2 upload — mehnga, isliye ruk kar
+const CLOUD_MS = 6000;   // cloud upload band hai (lib/ink.js ka CLOUD switch) — sirf wapas chalu karne ke liye pada hai
 
 function SolveInner() {
   const router = useRouter();
@@ -157,24 +157,24 @@ function SolveInner() {
     if (!r || !liveDoc.current) return;
     if (deferIfDrawing(() => flushLocal(), localT)) return;
     clearTimeout(localT.current);
-    await saveLocalInk(r.id, liveDoc.current).catch(() => {});
-  }, [deferIfDrawing]);
-
-  const flushCloud = useCallback(async () => {
-    const r = recRef.current;
-    if (!r || !liveDoc.current) return;
-    // Upload aur bhaari hai (encode + gzip), isliye ye bhi pen uthne ka intezaar
-    // karta hai.
-    if (deferIfDrawing(() => flushCloud(), cloudT, 600)) return;
-    clearTimeout(cloudT.current);
-    setState("uploading");
     try {
-      await pushInk(r, liveDoc.current, setInk);
+      await saveLocalInk(r.id, liveDoc.current);
       setState("saved");
     } catch {
-      // pushInk khud queue mein daal chuka hai — online aate hi chala jayega.
       setState("offline");
     }
+  }, [deferIfDrawing]);
+
+  // Cloud upload ab band hai (lib/ink.js ka CLOUD switch) — handwriting isi
+  // device par rehti hai. pushInk khud no-op hai, par call hi nahi karte taaki
+  // encode+gzip ka kaam bhi na ho.
+  const flushCloud = useCallback(async () => {
+    if (!pushInk) return;
+    const r = recRef.current;
+    if (!r || !liveDoc.current) return;
+    if (deferIfDrawing(() => flushCloud(), cloudT, 600)) return;
+    clearTimeout(cloudT.current);
+    try { await pushInk(r, liveDoc.current, setInk); } catch { /* device-local */ }
   }, [deferIfDrawing]);
 
   const onChange = useCallback((next) => {
@@ -182,9 +182,7 @@ function SolveInner() {
     setState((s) => (s === "offline" ? s : "dirty"));
     clearTimeout(localT.current);
     localT.current = setTimeout(() => { flushLocal(); }, LOCAL_MS);
-    clearTimeout(cloudT.current);
-    cloudT.current = setTimeout(() => { flushCloud(); }, CLOUD_MS);
-  }, [flushLocal, flushCloud]);
+  }, [flushLocal]);
 
   // App background mein gaya / tab band — jo pending hai turant likh do.
   useEffect(() => {
@@ -277,7 +275,9 @@ function SolveInner() {
     );
   }
 
-  const stateLabel = { saved: "💾 saved", dirty: "✍️ …", uploading: "⏳ upload", offline: "📴 device par" }[state];
+  // Ink device-local hai, to "upload" jaisa koi haal nahi bacha. "offline" ab
+  // sirf ek hi matlab rakhta hai: device par likhna hi fail ho gaya.
+  const stateLabel = { saved: "💾 saved", dirty: "✍️ …", uploading: "💾 saved", offline: "⚠️ save fail" }[state];
 
   return (
     <div className="inkv">

@@ -5,9 +5,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   SUBJECTS, getWrongBook, isSubject, imagesOf, dayKey, dayLabel,
   storeImages, addWrong, removeWrong, isPracticeable,
-  setDetail2, setShownDetail, shownDetail, hasInk, inkCount,
+  setDetail2, setShownDetail, shownDetail,
 } from "@/lib/wrongbook";
 import { copyImageToClipboard, imageBlob } from "@/lib/imgclip";
+import { localInkCounts } from "@/lib/ink";
 import { getSettings } from "@/lib/storage";
 import { getDoneSet, toggleDone, pruneDone } from "@/lib/answersdone";
 import { useImageUrls } from "@/lib/wrongimages";
@@ -45,8 +46,15 @@ const qnum = (r) => {
   return m ? Number(m[1]) : 0;
 };
 
-// Bina-mark wale pehle (chadhte kram mein), ✅ wale sabse neeche — mark karte hi
-// question neeche chala jata hai aur agla upar aa jata hai. Bilkul overlay jaisa.
+// PURANA UPAR, NAYA NEECHE.
+//
+// qid ek badhta hua global counter hai (q007 < q093), isliye qid ke chadhte kram
+// mein sort karna hi "jo pehle add hua wo pehle" hai — aaj ka question sabse
+// neeche aata hai. Jinke paas qid nahi (haath se paste kiye) unhe `at` se lagate
+// hain, wahi soch.
+//
+// Iske upar: bina-mark wale pehle, ✅ wale sabse neeche — mark karte hi question
+// neeche chala jata hai aur agla upar aa jata hai. Bilkul overlay jaisa.
 function order(items, done) {
   const cmp = (a, b) => {
     const na = qnum(a);
@@ -60,7 +68,7 @@ function order(items, done) {
   return [...pending, ...marked];
 }
 
-function AnsCard({ rec, n, done, onToggle, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight }) {
+function AnsCard({ rec, n, done, inkN, fresh, onToggle, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight }) {
   const { urls, missing } = useImageUrls(imagesOf(rec));
   const [lb, setLb] = useState(null);
   const [pasteOpen, setPasteOpen] = useState(false);
@@ -118,15 +126,17 @@ function AnsCard({ rec, n, done, onToggle, onDelete, onOpen, onChange, prompt, o
 
   return (
     <div
-      className={`ansp__card${done ? " is-done" : ""}${highlight ? " is-hit" : ""}`}
+      className={`ansp__card${done ? " is-done" : ""}${highlight ? " is-hit" : ""}${fresh ? " is-new" : ""}`}
       id={`ans-${rec.id}`}
     >
       <h2>
-        {done ? "✅ " : ""}Question {n}
+        {fresh ? "🆕 " : ""}{done ? "✅ " : ""}Question {n}
         <span className="ansp__qid">
           {" ("}{rec.qid || "—"}{rec.at ? ` · ${dayLabel(rec.at)}` : ""}{")"}
         </span>
-        {hasInk(rec) && <span className="ansp__ink" title="Is question par handwriting hai">✍️ {inkCount(rec)}</span>}
+        {inkN > 0 && (
+          <span className="ansp__ink" title="Is device par is question ki handwriting hai">✍️ {inkN}</span>
+        )}
       </h2>
 
       {urls.map((u, i) => (
@@ -206,6 +216,9 @@ function AnswersInner() {
 
   const [items, setItems] = useState([]);
   const [done, setDone] = useState(() => new Set());
+  // ✍️ badge — is DEVICE par kis question ki handwriting hai. Ink cloud par
+  // nahi jati (lib/ink.js ka CLOUD switch), isliye ginti bhi device-local hai.
+  const [inkCounts, setInkCounts] = useState({});
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
   const [flash, setFlash] = useState("");
@@ -214,12 +227,38 @@ function AnswersInner() {
 
   // localStorage effect mein padho, render ke dauraan nahi — warna server khaali
   // HTML bhejta hai aur client bhara hua, aur React poora tree phenk deta hai.
+  // Naye question ka pata — kyunki wo sabse NEECHE judta hai.
+  //
+  // Purana upar / naya neeche wala kram padhne ke liye theek hai, par uska ek
+  // nuksaan hai: overlay se question aata hai to wo screen ke bahar, list ke ant
+  // mein chupchaap jud jata hai. Isliye jo ids pehle nahi thi unhe yaad rakhte
+  // hain — upar ek patti aa jati hai aur us card par nishaan lag jata hai.
+  const seenIds = useRef(null);
+  const [freshIds, setFreshIds] = useState(() => new Set());
+
   const refresh = useCallback(() => {
     const list = getWrongBook(subject);
+    const ids = new Set(list.map((r) => r.id));
+    if (seenIds.current) {
+      const added = [...ids].filter((id) => !seenIds.current.has(id));
+      if (added.length) setFreshIds((prev) => new Set([...prev, ...added]));
+    }
+    seenIds.current = ids;
     setItems(list);
     setDone(pruneDone(new Set(getWrongBook().map((r) => r.id))));
+    setInkCounts(localInkCounts());
     setReady(true);
   }, [subject]);
+
+  // Subject badla to nayi shelf ke saare records "naye" nahi hain — ginti
+  // shuru se karo.
+  useEffect(() => { seenIds.current = null; setFreshIds(new Set()); }, [subject]);
+
+  const gotoFresh = () => {
+    const first = list.find((r) => freshIds.has(r.id));
+    if (first) document.getElementById(`ans-${first.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    setFreshIds(new Set());
+  };
 
   useEffect(() => {
     refresh();
@@ -413,6 +452,14 @@ function AnswersInner() {
           )}
         </div>
 
+        {/* Naya question list ke ANT mein judta hai, isliye wo screen se bahar
+            ho sakta hai — ye patti batati hai ki aaya hai aur wahan le jaati hai. */}
+        {freshIds.size > 0 && (
+          <button className="ansp__newbar" onClick={gotoFresh}>
+            ➕ {freshIds.size} naya question aaya — neeche dekho ↓
+          </button>
+        )}
+
         {flash && <p className="ansp__flash">{flash}</p>}
         {err && <p className="ansp__err">{err}</p>}
 
@@ -427,6 +474,8 @@ function AnswersInner() {
               rec={r}
               n={i + 1}
               done={done.has(r.id)}
+              inkN={inkCounts[r.id] || 0}
+              fresh={freshIds.has(r.id)}
               onToggle={onToggle}
               onDelete={onDelete}
               onOpen={onOpen}

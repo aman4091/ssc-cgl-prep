@@ -2854,3 +2854,14 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .ansp__old { margin-top: 10px; }
 .ansp__old summary { color: #6c7086; cursor: pointer; font-size: 13px; padding: 4px 0; }
 .ansp__old summary:hover { color: #cdd6f4; }
+
+/* Naya question list ke ANT mein judta hai (purana upar, naya neeche) — isliye
+   ek patti aur card par nishaan, warna wo screen se bahar chupchaap jud jaata. */
+.ansp__newbar {
+  display: block; width: 100%; margin: 0 0 12px;
+  background: #f9e2af; color: #1e1e2e; border: 0; border-radius: 8px;
+  padding: 10px 14px; font-weight: bold; font-size: 14px;
+  font-family: inherit; cursor: pointer; text-align: left;
+}
+.ansp__newbar:hover { background: #f5d47f; }
+.ansp__card.is-new { box-shadow: 0 0 0 2px #f9e2af; }
