@@ -2881,3 +2881,25 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 }
 .inkv__tnote { display: block; font-size: 0.76rem; color: var(--text-3); margin-bottom: 8px; }
 .inkv__tmenu .btn.is-on { border-color: var(--accent); color: var(--accent); }
+
+/* Quiz mode ke options aur result — solve page ke andar */
+.inkv__opt {
+  display: block; width: 100%; text-align: left;
+  padding: 10px 12px; border-radius: 10px; min-height: 44px;
+  border: 1px solid var(--glass-border); background: var(--bg);
+  color: var(--text-1); font: inherit; font-size: 0.92rem; cursor: pointer;
+}
+.inkv__opt:hover { border-color: var(--accent2); }
+.inkv__opt strong { opacity: 0.6; margin-right: 8px; }
+/* Chuna hua option — sirf itna nishaan ki kya chuna. Sahi/galat quiz ke ant
+   mein hi pata chalta hai, warna quiz ka matlab hi khatam. */
+.inkv__opt.is-picked { border-color: var(--accent); background: var(--accent-wash); }
+
+.inkv__result { flex: 1; overflow-y: auto; padding: 14px; }
+.inkv__rrow {
+  border: 1px solid var(--glass-border); border-left-width: 4px;
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 12px; background: var(--card);
+}
+.inkv__rrow.is-ok { border-left-color: var(--success); }
+.inkv__rrow.is-bad { border-left-color: var(--danger); }
+.inkv__rrow.is-skip { border-left-color: var(--text-3); }

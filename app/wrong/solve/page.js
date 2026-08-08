@@ -20,6 +20,7 @@ import { readImageText } from "@/lib/client-ai";
 import { imageBlob } from "@/lib/imgclip";
 import InkCanvas, { PALETTE, PEN_SIZES } from "@/components/InkCanvas";
 import WrongAnswerBlock from "@/components/WrongAnswerBlock";
+import Markdown from "@/components/Markdown";
 
 // ✍️ Solve — tablet par stylus se Wrong Notebook ke question ke neeche solution
 // likhne ki jagah.
@@ -296,6 +297,38 @@ function SolveInner() {
     router.push(quizId ? `/quizzes/${quizId}` : `/answers?subject=${subject}`);
   }, [flushLocal, flushCloud, router, subject, quizId]);
 
+  // ── Quiz mode: jawab chunna aur ant mein result ───────────────────────────
+  //
+  // Quiz ka poora matlab yahi hai ki answer beech mein na dikhe — pehle saare
+  // question karo, phir ek saath dekho. Isliye yahan "Check karo" nahi hai;
+  // option dabate hi bas agla question khul jata hai, sahi/galat kuch nahi
+  // batata. Sab khatam hone par result screen aata hai.
+  //
+  // Picks localStorage mein (device-local, bina cgl. prefix) taaki galti se
+  // reload ho jaye to attempt na ude.
+  const [picks, setPicks] = useState({});
+  const [showResult, setShowResult] = useState(false);
+  const picksKey = quizId ? `ink.picks.${quizId}` : "";
+
+  useEffect(() => {
+    if (!picksKey) return;
+    try { setPicks(JSON.parse(localStorage.getItem(picksKey) || "{}") || {}); }
+    catch { setPicks({}); }
+    setShowResult(false);
+  }, [picksKey]);
+
+  const answered = list.filter((r) => picks[r.id] !== undefined).length;
+
+  const pick = (optIdx) => {
+    if (!rec) return;
+    const next = { ...picks, [rec.id]: optIdx };
+    setPicks(next);
+    try { localStorage.setItem(picksKey, JSON.stringify(next)); } catch { /* quota */ }
+    // Chuna aur aage — theek waise hi jaise timer khatam hone par hota hai.
+    if (idx < list.length - 1) setTimeout(() => go(idx + 1), 220);
+    else { stopTimer(); setShowResult(true); }
+  };
+
   // ── 🎯 20 similar ─────────────────────────────────────────────────────────
   // Isi question jaise 20 naye banao aur UNHE BHI yahin stylus se solve karo —
   // quiz player par jaane ki zaroorat nahi. Sirf maths/reasoning ke liye, kyunki
@@ -437,6 +470,50 @@ function SolveInner() {
   // sirf ek hi matlab rakhta hai: device par likhna hi fail ho gaya.
   const stateLabel = { saved: "💾 saved", dirty: "✍️ …", uploading: "💾 saved", offline: "⚠️ save fail" }[state];
 
+  // Result — sab khatam hone ke baad ek saath. Har row se us question par wapas
+  // ja sakte ho, taaki apna rough work dobara dekh sako.
+  if (showResult && quizId) {
+    const rows = list.map((r, i) => {
+      const p = picks[r.id];
+      const right = r.q?.answer ?? 0;
+      return { r, i, p, right, ok: p === right, skipped: p === undefined };
+    });
+    const score = rows.filter((x) => x.ok).length;
+    return (
+      <div className="inkv">
+        <div className="inkv__top">
+          <button className="btn btn--ghost btn--sm" onClick={exit}>←</button>
+          <span className="inkv__title">🏁 Result · {score}/{list.length}</span>
+          <button className="btn btn--ghost btn--sm" style={{ marginLeft: "auto" }} onClick={() => setShowResult(false)}>
+            ← Questions par wapas
+          </button>
+        </div>
+        <div className="inkv__result">
+          {rows.map(({ r, i, p, right, ok, skipped }) => (
+            <div key={r.id} className={`inkv__rrow${ok ? " is-ok" : skipped ? " is-skip" : " is-bad"}`}>
+              <div className="row between">
+                <strong>{ok ? "✅" : skipped ? "⏭️" : "❌"} Q{i + 1}</strong>
+                <button className="btn btn--ghost btn--sm" onClick={() => { setShowResult(false); go(i); }}>
+                  ✍️ Rough work dekho
+                </button>
+              </div>
+              <p style={{ whiteSpace: "pre-wrap", margin: "6px 0" }}>{r.q?.question}</p>
+              <p className="muted" style={{ fontSize: "0.86rem" }}>
+                Tumne: {skipped ? "chhod diya" : `${String.fromCharCode(65 + p)}) ${r.q?.options?.[p] ?? ""}`}
+                {" · "}Sahi: {String.fromCharCode(65 + right)}) {r.q?.options?.[right] ?? ""}
+              </p>
+              {r.detail && (
+                <div className="answer-box mt-8" style={{ fontSize: "0.88rem" }}>
+                  <Markdown>{r.detail}</Markdown>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="inkv">
       <div className="inkv__top">
@@ -488,9 +565,16 @@ function SolveInner() {
             <button className="btn btn--ghost btn--sm" onClick={() => setSlim((v) => !v)}>
               {slim ? "▼ Question" : "▲ Chhupao"}
             </button>
-            {!slim && (
+            {/* Quiz mode mein "Check karo" nahi — quiz ka matlab hi yahi hai ki
+                answer beech mein na dikhe. Sab khatam hone par ek saath. */}
+            {!slim && !quizId && (
               <button className="btn btn--ghost btn--sm" onClick={() => setShown((v) => !v)}>
                 {shown ? "🙈 Hide" : "👁️ Check karo"}
+              </button>
+            )}
+            {!slim && quizId && (
+              <button className="btn btn--ghost btn--sm" onClick={() => setShowResult(true)}>
+                🏁 Result ({answered}/{list.length})
               </button>
             )}
           </div>
@@ -506,9 +590,29 @@ function SolveInner() {
                   📷 {missing} image is device par nahi hai (R2 par upload nahi hui thi).
                 </p>
               )}
-              {/* Answer jaan-boojh kar chhupa hai — /wrong ke card par wo hamesha
-                  dikhta hai, par yahan pehle likhna hai, phir check karna hai. */}
-              <WrongAnswerBlock rec={rec} shown={shown} hideAnswer />
+
+              {quizId ? (
+                // Quiz: option dabao = jawab. Sahi/galat abhi nahi batate — bas
+                // agla question khul jata hai. Nishaan sirf itna ki kaunsa chuna.
+                <>
+                  {rec.q?.question && <p style={{ fontWeight: 600, whiteSpace: "pre-wrap" }}>{rec.q.question}</p>}
+                  <div className="mt-8" style={{ display: "grid", gap: 6 }}>
+                    {(rec.q?.options || []).filter(Boolean).map((o, i) => (
+                      <button
+                        key={i}
+                        className={`inkv__opt${picks[rec.id] === i ? " is-picked" : ""}`}
+                        onClick={() => pick(i)}
+                      >
+                        <strong>{String.fromCharCode(65 + i)}</strong> {o}
+                      </button>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                /* Answer jaan-boojh kar chhupa hai — /wrong ke card par wo hamesha
+                   dikhta hai, par yahan pehle likhna hai, phir check karna hai. */
+                <WrongAnswerBlock rec={rec} shown={shown} hideAnswer />
+              )}
             </>
           )}
         </div>
