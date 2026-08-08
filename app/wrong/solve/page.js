@@ -31,6 +31,18 @@ import WrongAnswerBlock from "@/components/WrongAnswerBlock";
 const LOCAL_MS = 700;    // IndexedDB — sasta, isliye jaldi
 const CLOUD_MS = 6000;   // cloud upload band hai (lib/ink.js ka CLOUD switch) — sirf wapas chalu karne ke liye pada hai
 
+// ⏱️ Per-question timer. Ek waqt chun lo — utna hi milta hai, phir agla question
+// APNE AAP khul jata hai aur wahi waqt dobara chalu ho jata hai. Chain tab tak
+// chalti hai jab tak khud na roko ya peeche na jao.
+//
+// Exam ki raftaar banane ke liye hai, isliye seconds mein — SSC mein ek maths
+// question par itna hi waqt milta hai.
+const TIMER_PRESETS = [36, 45, 60, 90];
+// Device-local preference — `cgl.` prefix nahi, kyunki ye setting is device ki
+// hai aur sync par bhejne layak nahi (aur wo localStorage waise bhi bhari hai).
+const TIMER_KEY = "ink.timer";
+const mmss = (s) => `${Math.floor(Math.max(0, s) / 60)}:${String(Math.max(0, s) % 60).padStart(2, "0")}`;
+
 function SolveInner() {
   const router = useRouter();
   const sp = useSearchParams();
@@ -218,6 +230,49 @@ function SolveInner() {
     router.push(`/answers?subject=${subject}`);
   }, [flushLocal, flushCloud, router, subject]);
 
+  // ── ⏱️ Timer ──────────────────────────────────────────────────────────────
+  // `dur` chuna hua waqt hai (yaad rehta hai), `running` chain chal rahi hai ya
+  // nahi, `left` bacha hua waqt.
+  const [dur, setDur] = useState(0);
+  const [running, setRunning] = useState(false);
+  const [left, setLeft] = useState(0);
+  const [tOpen, setTOpen] = useState(false);
+
+  useEffect(() => {
+    try { setDur(Number(localStorage.getItem(TIMER_KEY)) || 0); } catch { /* ignore */ }
+  }, []);
+
+  const startTimer = (secs) => {
+    setDur(secs);
+    setLeft(secs);
+    setRunning(true);
+    setTOpen(false);
+    try { localStorage.setItem(TIMER_KEY, String(secs)); } catch { /* ignore */ }
+  };
+  const stopTimer = () => { setRunning(false); setTOpen(false); };
+
+  // Ghadi — har second ek.
+  useEffect(() => {
+    if (!running || !dur) return undefined;
+    const id = setInterval(() => setLeft((s) => s - 1), 1000);
+    return () => clearInterval(id);
+  }, [running, dur]);
+
+  // Waqt khatam — agla question apne aap. Aakhri par pahunch gaye to chain
+  // apne aap ruk jati hai, warna wo wahin baar-baar bajti rehti.
+  useEffect(() => {
+    if (!running || left > 0) return;
+    if (idx < list.length - 1) go(idx + 1);
+    else setRunning(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [left, running]);
+
+  // Naya question khula (chahe timer se, chahe haath se) — ghadi phir se poori.
+  useEffect(() => {
+    if (running && dur) setLeft(dur);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rec?.id]);
+
   // Eraser toggle karte waqt wapas usi tool par jaana hai jispar tha (pen ya
   // highlighter), isliye pichhla tool yaad rakhte hain.
   const prevTool = useRef("pen");
@@ -287,6 +342,38 @@ function SolveInner() {
           {subjectLabel(rec.subject)} · {dayLabel(rec.at)}{rec.qid ? ` · 🔖 ${rec.qid}` : ""}
         </span>
         <span className="inkv__pill" style={{ marginLeft: "auto" }}>{stateLabel}</span>
+
+        {/* ⏱️ — band ho to ghadi ka nishaan, chalu ho to bacha hua waqt.
+            Dabate hi waqt chunne ka chhota panel khulta hai. */}
+        <div className="inkv__timer">
+          <button
+            className={`inkv__pill inkv__tbtn${running ? " is-on" : ""}${running && left <= 10 ? " is-low" : ""}`}
+            onClick={() => setTOpen((v) => !v)}
+            title="Har question ke liye waqt set karo"
+          >
+            {running ? `⏱ ${mmss(left)}` : "⏱"}
+          </button>
+          {tOpen && (
+            <div className="inkv__tmenu">
+              <span className="inkv__tnote">Har question ko itna waqt — phir agla apne aap</span>
+              <div className="row" style={{ gap: 6 }}>
+                {TIMER_PRESETS.map((s) => (
+                  <button
+                    key={s}
+                    className={`btn btn--ghost btn--sm${dur === s && running ? " is-on" : ""}`}
+                    onClick={() => startTimer(s)}
+                  >
+                    {s}s
+                  </button>
+                ))}
+              </div>
+              {running && (
+                <button className="btn btn--ghost btn--sm btn--block mt-8" onClick={stopTimer}>⏹ Rok do</button>
+              )}
+            </div>
+          )}
+        </div>
+
         <span className="inkv__pill">{idx + 1}/{list.length}</span>
       </div>
 
@@ -403,7 +490,9 @@ function SolveInner() {
         <button className="btn btn--ghost btn--sm" onClick={() => inkRef.current?.grow()} title="Aur jagah jodo">➕ jagah</button>
 
         <span className="inkv__sep" />
-        <button className="btn btn--ghost btn--sm" onClick={() => go(idx - 1)} disabled={idx <= 0}>← Q</button>
+        {/* Peeche jaana = chain todna (tera niyam). Aage jaana chain ka hissa
+            hai, isliye wo timer nahi rokta — bas nayi ghadi shuru ho jati hai. */}
+        <button className="btn btn--ghost btn--sm" onClick={() => { stopTimer(); go(idx - 1); }} disabled={idx <= 0}>← Q</button>
         <button className="btn btn--ghost btn--sm" onClick={() => go(idx + 1)} disabled={idx >= list.length - 1}>Q →</button>
       </div>
     </div>

@@ -2865,3 +2865,19 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 }
 .ansp__newbar:hover { background: #f5d47f; }
 .ansp__card.is-new { box-shadow: 0 0 0 2px #f9e2af; }
+
+/* ⏱️ Solve page ka per-question timer */
+.inkv__timer { position: relative; flex: none; }
+.inkv__tbtn { cursor: pointer; font-family: inherit; }
+.inkv__tbtn.is-on { color: var(--success); border-color: var(--success); font-variant-numeric: tabular-nums; }
+/* Aakhri 10 second — nazar apne aap chali jaye, warna waqt khatam hone ka
+   pata hi tab chalta hai jab agla question khul chuka hota hai. */
+.inkv__tbtn.is-low { color: var(--danger); border-color: var(--danger); }
+.inkv__tmenu {
+  position: absolute; top: calc(100% + 6px); right: 0; z-index: 5;
+  background: var(--glass-bg-strong); border: 1px solid var(--glass-border);
+  border-radius: 10px; padding: 10px; min-width: 220px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+.inkv__tnote { display: block; font-size: 0.76rem; color: var(--text-3); margin-bottom: 8px; }
+.inkv__tmenu .btn.is-on { border-color: var(--accent); color: var(--accent); }
