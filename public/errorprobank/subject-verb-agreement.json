@@ -1,0 +1,2107 @@
+{
+ "chapter": "Subject Verb Agreement",
+ "slug": "subject-verb-agreement",
+ "count": 150,
+ "questions": [
+  {
+   "id": "subject-verb-agreement-0001",
+   "question": "Each and every man, (a)/woman and child were given (b)/food yesterday evening.(c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "Use was in place of were. Explanation:- agar distributive adjective ka use kiya jaaye toh bhale hi nouns 'and' se join kiye gaye ho verb singular verb aati hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0002",
+   "question": "Neither the doctors nor (a)/ the nurse were present (b)/ when the patient (c)/ reached the hospital.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "use 'was' instead of 'were'. Explanation:- kyunki agar do nouns neither…nor, either…..or, not only……but also, or, se connected ho tab verb, verb ke paas wale subject ke according aati hai, isliye yahan verb 'nurse' ke according singular aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0003",
+   "question": "Five hours are too (a)/short a time to (b)/judge one's character.(c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 0,
+   "solution": "Use is in place of are. Explanation:- kyunki time, value, weight and length ko dikhane wale words jab ek unit ki tarah kaam karte hai toh unhe uncountable ki tarah treat kiya jaata hai. Eg. 10 kilometers is a long distance to travel on foot. 10000 rupees is a very big amount for me.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0004",
+   "question": "Both Reeta and Ronika (a)/ has won (b)/ the dance competition (c)/ this year.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "use 'have' instead of 'has'. Explanation:- kyunki yahan 'Rita' aur 'Ronika' dono subject 'and' conjunction se joined hain isliye verb plural aayegi. Note:- 'both' koi distributive adjective nahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0005",
+   "question": "The horse and (a)/carriage have been standing at (b)/the door for two hours.(c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "Use has in place of have. Explanation:- yahan is sentence me 'the horse and carriage' (ghoda baggi) ek unit ki tarah kaam kar raha hai isliye verb singular aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0006",
+   "question": "They all, except Shirin, were very sad (a)/ during the farewell party given (b)/ to the teacher retiring, and her (c)/ indifference were well noticed.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 3,
+   "solution": "use 'was' instead of 'were'. Explanation:- kyunki yahan subject 'indifference' hai isliye singular aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0007",
+   "question": "More persons (a)/than one has been (b)/involved in this quarrel.(c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "Use have in place of has. Explanation:- More than one + noun(singular) + verb(singular) More + noun(plural) + than one + verb(plural)",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0008",
+   "question": "The boy, as well as (a)/ his friends, were (b)/ absent from the class (c)/ when the teacher came.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "use 'was' instead of 'were'. Explanation:- kyunki as well as, except, in addition to, with, along with etc. yeh sab prepositional phrases hain isliye inke baad aane wala noun inka object ho jaata hai aur verb first wale noun ke according aati hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0009",
+   "question": "It is I who has (a)/always helped you (b)/in time of need.(c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 0,
+   "solution": "Use have in place of has. Explanation:- who relative pronoun ka apna koi number gender nahi hota ye jisko refer karta hai usi ke according verb leta hai yahan yeh 'I' pronoun ke liye aaya hai isliye verb 'I' ke according 'have' aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0010",
+   "question": "Children listens to people (a)/ speaking around them (b)/ for a long time before (c)/ they begin to speak.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 0,
+   "solution": "use 'listen' instead of 'listens'. Explanation:- kyunki 'child' ka plural children hota hai aur yahan subject 'children' hai toh iske according plural verb 'listen' aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0011",
+   "question": "Many a profound thinker (a)/believe that the march of civilization (b)/has not coincided with real human progress.(c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "Use believes in place of believe. Explanation:- Many a + noun (singular) + verb (singular) 'many a' - distributive adjective ki tarah kaam karta hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0012",
+   "question": "The number of students (a)/ attending their classes (b)/ are constantly decreasing (c)/ in our university.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "use 'is' instead of 'are'. Explanation:- kyunki – The Number of + Noun (Plural) + Verb (Singular) A Number of + Noun (Plural) + Verb (Plural)",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0013",
+   "question": "In the struggle (a)/between the bad and the good, the (b)/bad is ultimately defeated.(c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 2,
+   "solution": "Use are in place of is. Explanation:- 'the bad' = bad people the + adj = Common plural noun the rich = rich people",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0014",
+   "question": "One of the major challenges (a)/ he faced during his (b)/ undergraduate days were (c)/ the shortage of money.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "use 'was' instead of 'were'. Explanation:- kyunki yahan is verb ka subject 'one' hai isliye iske according singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0015",
+   "question": "The staff of his college is (a)/opposed to the takeover because (b)/they are convinced that they will lose their jobs.(c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 0,
+   "solution": "Use are in place of is. Explanation:- 'staff' noun ke sath sentence ke according singular and plural dono verb aa sakti hain, sentence me aage 'they' and 'their' jaise words se clear ho rha hai ki 'staff' word ko plural me use kiya jayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0016",
+   "question": "Every (a)/ curious child (b)/ want to (c)/ rip open a toy.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "use 'wants' instead of 'want'. Explanation:- every + noun(singular) + verb (singular)",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0017",
+   "question": "No one were (a)/ present when I (b)/ entered the hall.(c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 0,
+   "solution": "use 'was' instead of 'were'. Explanation:- kyunki 'no-one' subject ke sath verb singular aati hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0018",
+   "question": "What I like the most about these (a)/stories are the fact that (b)/ they teach(c)/ us important life lessons.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'are' with 'is'. Explanation:- yahan b part me aayi verb ka subject 'what' se bna hua aage ka poora noun clause hai. Isliye verb singular aayegi. Note:- yahan 'stories' subject nhi hai wo to 'about' preposition ka object hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0019",
+   "question": "The proposal which was passed (a)/by all the members last month have (b)/not been implemented yet.(c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "replace 'have' with 'has'. Explanation:- yhan b part me aayi verb ka subject 'The proposal' hai isliye verb singular aayegi. 'The proposal' subject ke baad adjectival clause likha hai, isliye verb subject se door likhi gyi hai, uss se confuse nhi hona hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0020",
+   "question": "The contrast between (a)/Britain and other countries (b)/of Europe (c)/are striking.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 3,
+   "solution": "use 'is' instead of 'are'. Explanation:- kyunki yahan subject 'the contrast' hai jo ki singular hai isliye singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0021",
+   "question": "The river Yamuna (a)/ has many non-native species (b)/ like goldfish that is affecting (c)/ its ecosystem.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "use 'are' instead of 'is'. Explanation:- kyunki 'that' relative pronoun yahan 'non native species' ko refer karne ke liye rakha gya hai isliye 'that' ke baad plural aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0022",
+   "question": "Great many students (a)/ who are good at (b)/other subjects perform poorly (c)/in English.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 0,
+   "solution": "use 'a great many' instead of 'great many'. Explanation:- kyunki yahan mahaan students nahi bahut saare students wala meaning dena hai jo ki 'a good/great many + noun' se aata hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0023",
+   "question": "Each member (a)/ of the team (b)/ receive a memorabilia (c)/ after the match is over.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "use 'receives' instead of 'receive'. Explanation:- kyunki 'member' noun se pehle 'each' distributive adjective laga hai isliye member subject ki verb singular aayegi which is 'receives'",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0024",
+   "question": "The blue Lotus (a)/ is one of the most beautiful flowers (b)/ which grows (c)/ in her garden.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "use 'grow' instead of 'grows'. Explanation:- kyunki yahan 'which' ka antecedent 'flowers' plural noun hai uske according verb 'grow' aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0025",
+   "question": "The perception (a)/ of success (b)/ vary (c)/ from person to person.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "use 'varies' instead of 'vary'. Explanation:- kyunki yahan subject 'perception' hai jo ki singular noun hai isliye verb singular aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0026",
+   "question": "Rehan and Ronit are (a)/ good friends and (b)/ it don't matter to them (c)/ as to who is wealthier.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "use 'doesn't' instead of 'don't'. Explanation:- kyunki yahan subject 'it' hai jo ki singular hai uske according singular verb 'doesn't' aayegi. Note :- 'as to' me koi mistake nhi hai 'as to' ka meaning hota hai – related to something matlab kisi vishay se sambandhit",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0027",
+   "question": "It have been only (a)/ through writing (b)/ that men have been able (c)/ to spread their ideas to mankind.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 0,
+   "solution": "use 'has' instead of 'have'. Explanation:- kyunki yahan 'it' singular noun hai isliye iske according singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0028",
+   "question": "Billionaire Philip is (a)/ the owner of (b)/ the luxury yacht Lionheart, which worth (c)/ an estimated $150 million.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "use 'which is worth' instead of 'which worth'. Explanation:- kyunki 'worth' ek adjective hai yeh verb ka kaam nahi kar sakta isliye 'is' linking verb ka use karke structure sahi karna padega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0029",
+   "question": "One of (a)/ the biggest enterprise (b)/ in India (c)/ is declaring a lockout.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "use 'enterprises' instead of 'enterprise'. Explanation:- kyunki 'of' preposition yahan selection ke liye aati hai isliye aage likha noun plural form me aata hai. One of + Noun (Plural) + Verb (Singular)",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0030",
+   "question": "Participating in (a)/ the Republic Day Parade (b)/ are considered an honour (c)/ by many people.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "use 'is' instead of 'are'. Explanation:- kyunki yahan subject banane ka kaam 'participating' gerund kar raha hai aur 'gerund' ya infinitive jab subject ka kaam karte hain toh verb singular aati hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0031",
+   "question": "Sterling is only twenty-four but have achieved so much in his professional football career.",
+   "options": [
+    "but have achieved so much",
+    "in his professional football career",
+    "No Error",
+    "Sterling is only twenty four"
+   ],
+   "answer": 0,
+   "solution": "use 'has' instead of 'have'. Explanation:- kyunki 'sterling' kisi person ka name hai jo ki proper noun ho jayega aur singular verb lega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0032",
+   "question": "The problem of world hunger arises because of the economic inequality that distort food distribution.",
+   "options": [
+    "The problem of",
+    "that distort food distribution",
+    "world hunger arises",
+    "because of the economic inequality"
+   ],
+   "answer": 1,
+   "solution": "use 'distorts' instead of 'distort'. Explanation:- kyunki yahan that relative pronoun - the economic inequality ko refer kar raha hai jo ki singular noun hai isliye yahan singular verb aayegi",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0033",
+   "question": "It is estimated that most of the addict, a whopping 85%, in God's own country Kerala, are below 25 years of age.",
+   "options": [
+    "It is estimated that",
+    "are below 25",
+    "most of the addict",
+    "a whopping 85%"
+   ],
+   "answer": 2,
+   "solution": "use 'most of the addicts' instead of 'most of the addict'. Explanation:- Most of + Noun (Plural) most of the addicts = jyadatar addicts",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0034",
+   "question": "Our most memorable meeting with Spielberg happened while we were at the Berlin Film Festival in 1977, where the film 'Shatranj ke Khilari' were being screened as India's official entry.",
+   "options": [
+    "Our most memorable meeting",
+    "while we were at",
+    "where the film",
+    "were being screened"
+   ],
+   "answer": 3,
+   "solution": "use 'was' instead of 'were'. Explanation:- kyunki yahan subject 'shatranj ke khiladi' ek movie ka name hai jo ki proper noun hoga isliye singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0035",
+   "question": "A recent government report highlight that the shortage of teachers in higher educational institutions is greater than that in countries like China, Brazil, Sweden and Russia.",
+   "options": [
+    "A recent government report highlight",
+    "in higher educational institutions",
+    "that the shortage of teachers",
+    "is greater than"
+   ],
+   "answer": 0,
+   "solution": "use 'highlights' instead of 'highlight'. Explanation:- kyuki yahan subject 'a recent government report' hai jo ki singular noun hai isliye singular verb aayegi. Note :- waise 'highlights' ke alawa yhan 'highlighted' ya 'has highlighted' lga kar bhi theek kar sakte hain. Inn sabka tense alag hai ussi hisab se meaning bhi thoda alag alag hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0036",
+   "question": "Despite warnings the driver continued to speed and have been caught by the traffic police.",
+   "options": [
+    "Despite warnings",
+    "and have been caught",
+    "the driver continued to speed",
+    "by the traffic police"
+   ],
+   "answer": 1,
+   "solution": "use 'was caught' instead of 'have been caught'. Explanation:- Subject singular hai toh verb bhi singular aayegi isiliye 'have been caught' ki jagah 'has been caught' yaa behtar hoga ki 'was caught' ka prayog karen, sentence ke meaning ke according.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0037",
+   "question": "The news / of his involvement / in illegal activities /have shocked everybody.",
+   "options": [
+    "have shocked everybody",
+    "in illegal activities",
+    "of his involvement",
+    "The news"
+   ],
+   "answer": 0,
+   "solution": "use 'has' instead of 'have'. Explanation:- kyunki 'news' ek uncountable noun maana jaata hai isliye singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0038",
+   "question": "He wanted to know / the reason / why his low score / in Mathematics.",
+   "options": [
+    "why his low score",
+    "He wanted to know",
+    "the reason",
+    "in Mathematics"
+   ],
+   "answer": 0,
+   "solution": "use 'why his score was low' instead of 'why his score low'. Explanation:- kyunki sentence ki grammar and meaning ko correct karne ke liye yahan 'his score' ko subject banana padega aur uske baad verb 'was' lagayi jaayegi aur 'low' subject complement ban jayega. Note :- Yahan ese bhi likh sakte hain:- he wanted to know the reason for his low score. dono hi structure sahi hain.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0039",
+   "question": "Either Ramesh or Reema have the keys to the cupboard.",
+   "options": [
+    "the keys",
+    "to the cupboard",
+    "or Reema have",
+    "Either Ramesh"
+   ],
+   "answer": 2,
+   "solution": "use 'has' instead of 'have'. Explanation:- kyunki agar do nouns neither…nor, either…..or, not only……but also, or, se connected ho tab verb apne paas wale noun ke according aati hai isliye yahan subject 'Reema' ke according singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0040",
+   "question": "Over the years, the writer Amish has evolved to what millions of youngsters aspires to be today – an intellectual.",
+   "options": [
+    "Over the years",
+    "aspires to be today",
+    "Amish has evolved",
+    "millions of youngsters"
+   ],
+   "answer": 1,
+   "solution": "use 'aspire' instead of 'aspires'. Explanation:- kyunki yahan subject 'millions of youngsters' hai jo ki plural noun hai isliye iske according plural verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0041",
+   "question": "When there were a strong wind, the pine trees made sad, eerie sounds.",
+   "options": [
+    "the pine trees made",
+    "sad, eerie sounds",
+    "a strong wind",
+    "When there were"
+   ],
+   "answer": 3,
+   "solution": "use 'was' instead of 'were'. Explanation:- kyunki yahan 'there' introductory subject hai aur real subject 'a strong wind' hai jo ki ek singular noun ki tarah use kiya gya hai isliye singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0042",
+   "question": "A large amount of money he invested were wasted.",
+   "options": [
+    "A large amount",
+    "he invested",
+    "were wasted",
+    "of money"
+   ],
+   "answer": 2,
+   "solution": "use 'was wasted' instead of 'were wasted'. Explanation:- kyunki yahan is verb ka subject 'A large amount of money' hai jisme 'a large amount of' ek quantity ko dikhane wala adjectival phrase hai aur 'money' subject hai jo ki ek uncountable noun hota hai isliye singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0043",
+   "question": "Despite incessant rains, she is the only one who plan to attend the meeting at the ministry.",
+   "options": [
+    "Despite incessant rains",
+    "who plan to attend",
+    "the meeting at the ministry",
+    "she is the only one"
+   ],
+   "answer": 1,
+   "solution": "use 'plans' instead of 'plan' and 'that' instead of 'who'. Explanation:- kyunki yahan 'the only one' ko refer karna hai jiske liye relative pronoun that aayega aur 'that' ke baad singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0044",
+   "question": "Organizing World Cup matches in England imply that rains can be a constant threat.",
+   "options": [
+    "be a constant threat",
+    "in England imply",
+    "that rains can be",
+    "Organizing World Cup matches"
+   ],
+   "answer": 1,
+   "solution": "use 'implies' instead of 'imply'. Explanation:- kyunki yahan subject ka kaam 'organizing' gerund kar raha hai 'world cup matches' gerund ka object hai. Gerund ya infinitive jab subject bante hain toh verb singular lagayi jaati hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0045",
+   "question": "That he managed to win (a)/ the championship despite his (b)/injury were really surprising. (c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 2,
+   "solution": "Replace 'were really surprising' with 'was really surprising'. Explanation:- yhan c part mein aayi verb ka subject 'that' se bana hua aage ka poora noun clause hai. Isliye verb singular aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0046",
+   "question": "Most of the work of this NGO are of little benefit to the disadvantaged.",
+   "options": [
+    "Most of the work",
+    "of this NGO",
+    "to the disadvantaged",
+    "are of little benefit"
+   ],
+   "answer": 3,
+   "solution": "use 'is' instead of 'are'. Explanation:- kyunki all/most/some/plenty etc ke case me verb us noun ke according aati hai jisko ye refer krte hain yahan wo noun 'work' hai jo ki ek uncountable noun hai, isliye singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0047",
+   "question": "A Royal Bengal tigress and her three cubs was poison and their carcasses left to rot in the Wildlife Sanctuary in Goa.",
+   "options": [
+    "A Royal Bengal tigress",
+    "and their carcasses left to rot",
+    "in the Wildlife Sanctuary in Goa",
+    "and her three cubs was poison"
+   ],
+   "answer": 3,
+   "solution": "use 'were poisoned' instead of 'was poison'. Explanation:- kyunki yahan subject 'A Royal Bengal tigress and her three cubs' plural hai isliye plural verb aayegi aur yhan passive meaning dena hai ki – 'unhe zeher diya gya tha' isliye 'were poisoned' ayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0048",
+   "question": "Whether he will accept (a)/ the offer or not(b)/ remain a mystery(c)/ to everyone in the office.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'remain' with 'remains'. Explanation:- yhan c part me aayi verb ka subject 'whether........or not' ye poora noun clause hai. Isliye verb singular aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0049",
+   "question": "The neighbourhood were getting disturbed with the loud music that was playing at the wedding party in the big bungalow.",
+   "options": [
+    "in the big bungalow",
+    "The neighbourhood were getting disturbed",
+    "that was playing",
+    "at the wedding party"
+   ],
+   "answer": 1,
+   "solution": "use 'was' instead of 'were'. Explanation:- kyunki yahan 'neighborhood' singular noun hai isliye iske according singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0050",
+   "question": "According to environment activists, demolition of unauthorised apartment complexes are became a lesson for land encroachers.",
+   "options": [
+    "demolition of unauthorised apartment complexes",
+    "are became",
+    "for land encroachers",
+    "According to"
+   ],
+   "answer": 1,
+   "solution": "Use 'will become' instead of 'are became'. Explanation:- yahan subject 'demolition' hai jo ki singular noun hai isliye singular verb aayegi aur 'are became' tense ke according bhi sahi nhi hai. Sentence ke meaning ke according yahan 'has become/became/is becoming/will become' in verbs ka use kiya jaa sakta hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0051",
+   "question": "People with full time sedentary jobs who commuting long distances, may have sleep problems due to lack of exercise.",
+   "options": [
+    "due to lack of exercise",
+    "may have sleep problems",
+    "People with full time sedentary jobs",
+    "who commuting long distances"
+   ],
+   "answer": 3,
+   "solution": "use 'commute' instead of 'commuting'. Explanation:- kyunki v1+ing bina 'helping verb' ke nahi aati isliye 'commuting' galat hai aur yahan habitual action ki baat ho rhi hai isliye 'who' ke baad waali verb present indefinite me likhi jaayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0052",
+   "question": "Prasad recalled that meeting people have been a part of his life as a student activist.",
+   "options": [
+    "meeting people have been",
+    "Prasad recalled that",
+    "a part of his life",
+    "as a student activist"
+   ],
+   "answer": 0,
+   "solution": "use 'had' instead of 'have'. Explanation:- kyunki yahan subject ka kaam 'meeting' gerund kar raha hai aur people iss gerund ka object hai. Gerund ya infinitive jab subject bante hain toh verb singular lagayi jaati hai. Aur main clause past mein hai toh usually sub-clause ko bhi past me hi likhte hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0053",
+   "question": "The simplest way to get proper recognition are through doing things with dedication and sincerity.",
+   "options": [
+    "with dedication and sincerity",
+    "are through doing things",
+    "to get proper recognition",
+    "The simplest way"
+   ],
+   "answer": 1,
+   "solution": "use 'is' instead of 'are'. Explanation:- kyunki yahan subject 'the simplest way' hai jo ki ek singular noun hai isliye singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0054",
+   "question": "The man with a lost eye have been accused of murder of two girls in his neighbourhood.",
+   "options": [
+    "have been accused for",
+    "in his neighbourhood",
+    "murder of two girls",
+    "The man with a lost eye"
+   ],
+   "answer": 0,
+   "solution": "use 'has' instead of 'have'. Explanation:- kyunki yahan subject 'The man' hai jo ki singular noun hai isliye singular verb aayegi. Note :- the man with a lost eye- wo vyakti jo ek aankh se andha hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0055",
+   "question": "The Prime Minister, along with the other ministers have left for America.",
+   "options": [
+    "for America",
+    "The Prime Minister, along with",
+    "have left",
+    "the other ministers"
+   ],
+   "answer": 2,
+   "solution": "use 'has' instead of 'have'. Explanation:- kyunki jab do nouns 'with, along with, together with, in addition to, as well as, like, besides' in sab words se connect kiye jaate hain toh ye word prepositional phrase ka kaam karte hain aur inke baad aane wala noun prepositional object ban jaata hai isliye verb first noun jo subject ka kaam karta hai uske according aati hai. Yahan verb Prime Minister ke according singular aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0056",
+   "question": "Everything that I like to eat are fattening.",
+   "options": [
+    "to eat",
+    "are fattening",
+    "I like",
+    "Everything that"
+   ],
+   "answer": 1,
+   "solution": "use 'is' instead of 'are'. Explanation:- kyunki yahan subject 'everything' hai jo aur 'that…..fattening' ye everything ke liye adjectival clause hai isilye 'everything' ke according singular verb is aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0057",
+   "question": "Only one copy of the book, running into 1200 pages, on Gandhiji's visit to the State of Andhra Pradesh, remain now.",
+   "options": [
+    "running into 1200 pages",
+    "remain now",
+    "on Gandhiji's visit to the State",
+    "Only one copy of the book"
+   ],
+   "answer": 1,
+   "solution": "use 'remains' instead of 'remain'. Explanation:- kyunki yahan subject 'only one copy' hai jo ki singular noun hai isliye singular verb aayegi. Note:- running into 1200 pages = jisme pages ki sankhaya 1200 hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0058",
+   "question": "Our class teacher who (a)/ encourages and helps all her students(b)/ are respected by everyone in the school. (c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 2,
+   "solution": "Replace 'are respected' with 'is respected'. Explanation:- yhan c part me aayi verb ka subject 'Our class teacher' hai isliye verb singular aayegi. 'Our class teacher ' subject ke baad adjective clause likha hai isliye verb subject se door likhi gyi hai uss se confuse nhi hona hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0059",
+   "question": "The famous author and actor are being honoured at a function today.",
+   "options": [
+    "at a function today",
+    "The famous author and actor",
+    "No error",
+    "are being honoured"
+   ],
+   "answer": 3,
+   "solution": "use 'is' instead of 'are'. Explanation:- kyunki yahan 'the famous author and actor' singular noun hai kyunki yahan definite article 'the' ek noun ke aage hi laga hua hai isliye famous author aur actor dono ek hi person hai, isliye iske according singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0060",
+   "question": "The birth of a girl bring great joy to Neha's family.",
+   "options": [
+    "The birth",
+    "of a girl",
+    "to Neha's family",
+    "bring great joy"
+   ],
+   "answer": 3,
+   "solution": "yahan verb ka subject 'birth' noun hai jo ki singular hai isliye sentence me di gayi plural 'bring' verb galat ho gayi yahan 'brings' bhi nahi aa sakta kyunki ye koi habitual action nahi hai. Best meaning ke liye yhan 'brought' ya 'has brought ' ka use karenge.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0061",
+   "question": "Neither John nor Simon are coming to the meeting.",
+   "options": [
+    "were coming to the meeting",
+    "No substitution",
+    "are coming to meeting",
+    "is coming to the meeting"
+   ],
+   "answer": 3,
+   "solution": "'Neither…..nor/Either…..or/Not only…..but also' wale structure me verb uss noun ke according aati hai jo verb ke paas hota hai isliye yhan 'Simon' ke according verb singular aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0062",
+   "question": "Honesty as well as discipline are required to succeed in life.",
+   "options": [
+    "are requirement to succeed in life.",
+    "is required to succeed in life",
+    "has required to succeed in life",
+    "No substitution"
+   ],
+   "answer": 1,
+   "solution": "'as well as' yhan prepositional phrase hai isliye 'honesty' subject banega aur ye singular hai to verb bhi singular aayegi isliye option A and D galat hain. Meaning ke according C option sahi nhi hai isliye B option Answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0063",
+   "question": "Shubham and I were watching football match in our bedroom.",
+   "options": [
+    "I were watched",
+    "I was watching",
+    "me is watching",
+    "No improvement"
+   ],
+   "answer": 3,
+   "solution": "Yhan 'and' conjunction se 2 subjects join kiye gye hain isliye 'I' ayega aur verb plural aayegi. isliye D option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0064",
+   "question": "Many an old story were retold, and ancient conundrum repeated.",
+   "options": [
+    "Many an old story was retold",
+    "Many old story were retold",
+    "Many an old stories were retold",
+    "No improvement required"
+   ],
+   "answer": 0,
+   "solution": "'Many a/an' ke sath singular noun aata hai aur verb bhi singular aati hai isliye A option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0065",
+   "question": "The probable side effects of this medication include burning and itching.",
+   "options": [
+    "including burning and itching",
+    "can be including burning and itching",
+    "includes burning and itching",
+    "No improvement required"
+   ],
+   "answer": 3,
+   "solution": "yhan subject 'side effects' hai jo ki plural hai isliye plural verb aayegi isliye C option galat hai. V1+ ing form bina helping ke nhi aati isliye A option galat hai. yhan continuous wala meaning nhi dena hai isliye B option galat hai. Meaning and grammar ke according D option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0066",
+   "question": "Neither of the political parties have had much interest in environmental causes.",
+   "options": [
+    "No improvement required",
+    "Neither of the political parties have had any",
+    "Neither of the political parties have much",
+    "Neither of the political parties has had much"
+   ],
+   "answer": 3,
+   "solution": "Yhan subject 'neither' jo ki distributive pronoun hai isliye verb singular aayegi. D option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0067",
+   "question": "The plants readily respond to these stimulus.",
+   "options": [
+    "readily respond to these stimuli",
+    "ready respond to these stimuli",
+    "readily responds to this stimulus",
+    "No improvement required"
+   ],
+   "answer": 0,
+   "solution": "Yhan subject 'plants' plural hai aur these ke baad plural ayega isliye A option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0068",
+   "question": "Either the bears or the lion has escaped from the zoo.",
+   "options": [
+    "have escaped from the zoo",
+    "are escaped from the zoo",
+    "No substitution",
+    "is escaped from the zoo"
+   ],
+   "answer": 2,
+   "solution": "'Neither…..nor/Either…..or/Not only…..but also' ke pair me verb uss subject ke according aati hai jo verb ke pass hota hai isliye 'lion' ke according verb singular aayegi. isliye A and B options galat hain. Yhan passive nhi active voice aayegi isliye D option galat hai. C option grammatically sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0069",
+   "question": "The student with his parents were asked for waiting outside the Principal's office.",
+   "options": [
+    "was asked to wait",
+    "were asked to wait",
+    "No substitution",
+    "were asked to be waiting"
+   ],
+   "answer": 0,
+   "solution": "yhan 'with' preposition hai aur 'parents' prepositional object hai and subject 'student' hai aur verb singular aayegi. isliye A option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0070",
+   "question": "We must realise that learning from mistakes is an important part of life",
+   "options": [
+    "mistakes are an",
+    "mistakes is the",
+    "No improvement",
+    "mistakes are a"
+   ],
+   "answer": 2,
+   "solution": "yhan clause me subject 'learning' (gerund) hai isliye verb singular aayegi isliye A and D options galat hain. yhan meaning ye dena hai ki 'galtiyon se seekhna jindgi ka ek important part hai' isliye meaning and grammar ke according C option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0071",
+   "question": "Indian team were declared the winner of the cricket World Cup.",
+   "options": [
+    "Was declare",
+    "Were declared",
+    "Was declared",
+    "was declaring"
+   ],
+   "answer": 2,
+   "solution": "'Indian team' ek collective noun hai jo ki ek unit mana jayega isliye verb singular aayegi aur meaning ke according yhan passive voice aayegi isliye C option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0072",
+   "question": "I, Anjali Menon, is happy to let you know that I have married Chetan Sharma.",
+   "options": [
+    "No improvement",
+    "are happy to let you know",
+    "am happy to let you know",
+    "has happy to let you know"
+   ],
+   "answer": 2,
+   "solution": "yhan real subject 'I' hai aur ' Anjali Menon' case in apposition hai isliye 'I' ke according 'am' verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0073",
+   "question": "There are indications that the prospects for growth in industrial output has improved.",
+   "options": [
+    "Have improved",
+    "Have improvements",
+    "Has improvements",
+    "Had improvements"
+   ],
+   "answer": 0,
+   "solution": "Yhan subject 'prospects' hai isliye verb plural aayegi aur yhan 'improve hue hain' meaning dena hai isliye A option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0074",
+   "question": "Nothing but books and magazines please her.",
+   "options": [
+    "Were pleasing",
+    "Are pleasing",
+    "Pleases",
+    "No improvement"
+   ],
+   "answer": 2,
+   "solution": "sahi structure ye hota hai :- Nothing but + noun + verb (singular) isliye C option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0075",
+   "question": "Setbacks and failures has always been an integral part of science.",
+   "options": [
+    "Has always being",
+    "Were always been",
+    "No improvement",
+    "Have always been"
+   ],
+   "answer": 3,
+   "solution": "yhan subject 'Setbacks and failures' hain isliye verb plural aayegi isliye D option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0076",
+   "question": "Not only the boss but also all the employees were involved in this fraud.",
+   "options": [
+    "Were involving",
+    "Was involved",
+    "No improvement",
+    "Has been involved"
+   ],
+   "answer": 2,
+   "solution": "'Neither…..nor/Either…..or/Not only…..but also' also ke pair me verb uss noun ke according aati hai jo verb ke pass hota hai isliye 'employees' ke according verb plural aayegi aur meaning ye dena hai ki 'involved the' isliye C option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0077",
+   "question": "A new pair of shoes have been purchased by me.",
+   "options": [
+    "has been purchased",
+    "has been purchasing",
+    "was purchasing",
+    "No improvement"
+   ],
+   "answer": 0,
+   "solution": "yhan subject 'A pair' hai isliye verb singular aayegi aur meaning ke according verb passive voice mein aayegi isliye A option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0078",
+   "question": "None of the guests were willing to stay till the next day.",
+   "options": [
+    "was willing to stayed",
+    "No improvement",
+    "was willing to stay",
+    "were willing for staying"
+   ],
+   "answer": 2,
+   "solution": "'None of noun' ke baad singular verb prefer ki jaati hai aur willing ke baad infinitive 'to stay' aayega isliye C option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0079",
+   "question": "Each boy and each girl of our was present at the annual function.",
+   "options": [
+    "were present",
+    "was presented",
+    "No improvement",
+    "were presenting"
+   ],
+   "answer": 2,
+   "solution": "'Each' ek distributive adjective hai isliye bhale hi 2 nouns 'and' se jude hue hain par verb singular hi aayegi aur yhan meaning dena hai 'present tha' isliye C option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0080",
+   "question": "Every of these students is able to speak English fluently.",
+   "options": [
+    "Each",
+    "All",
+    "None",
+    "No improvement"
+   ],
+   "answer": 0,
+   "solution": "'Every' ek adjective hota hai isliye ye subject nhi ban sakta isliye D option galat hai. All ke sath verb plural aati hai isliye B option galat hai. None se meaning change ho jayega isliye C option galat hai. Meaning and grammar ke according A option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0081",
+   "question": "As soon as the monsoon starts, the number of tourists start decreasing.",
+   "options": [
+    "start decreases",
+    "starting decrease",
+    "starts decreasing",
+    "No improvement"
+   ],
+   "answer": 2,
+   "solution": "Sahi structure ye hota hai :- 'The number of + noun(plural) + verb(sing)' isliye C option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0082",
+   "question": "There has been many incidents of robbery in this area.",
+   "options": [
+    "are been",
+    "No improvement",
+    "have been",
+    "are being"
+   ],
+   "answer": 2,
+   "solution": "yhan 'there' introductory subject hai aur real subject 'many incidents' hai. isliye verb plural aayegi aur meaning ke according perfect tense ayega isliye C option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0083",
+   "question": "A number of innocent people dies owing to wars all over the world every year.",
+   "options": [
+    "is dying owing to wars",
+    "are died owing to wars",
+    "No improvement",
+    "die owing to wars"
+   ],
+   "answer": 3,
+   "solution": "sahi structure ye hota hai - 'A number of + noun(plural) + verb (plural)' isliye plural verb aayegi aur die verb ka passive nhi hota isliye D option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0084",
+   "question": "I know very well that one of you have stolen my book.",
+   "options": [
+    "has stolen",
+    "had stolen",
+    "No improvement",
+    "stealing"
+   ],
+   "answer": 0,
+   "solution": "yhan subject 'one' hai isliye verb singular aayegi isliye C option galat hai. V1+ ing bina helping verb ke nhi aata isliye D option galat hai. yhan past perfect nhi ayega isliye B option galat hai. Meaning and grammar ke according A option sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0085",
+   "question": "Among those broken chairs were lying a brand new table.",
+   "options": [
+    "were laying",
+    "was lying",
+    "no improvement",
+    "was laying"
+   ],
+   "answer": 1,
+   "solution": "yhan inversion structure ka use hua hai. real subject 'table' hai isliye verb singular aayegi. yhan meaning dena hai ki 'padi thi' isliye B option 'was lying' sahi hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 01"
+  },
+  {
+   "id": "subject-verb-agreement-0086",
+   "question": "Only the quality of the products (a)/ and the efficiency of the service (b)/ doesn't determine (c)/ the company's overall reputation. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'doesn't' with 'don't'. Explanation:- Sentence mein 'the quality' and 'the efficiency' do subject hai jo 'and' conjunction se jude hai, kyunki subject plural hai, isliye verb bhi plural aayega, isliye 'doesn't' ki jagah par 'don't' plural verb sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0087",
+   "question": "Aarav believes that (a)/ it don't make any difference (b)/ whether you succeed instantly (c)/ or achieve your goals after years of hard work. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'don't' with 'doesn't'. Explanation:- Sentence mein 'whether you………..hard work' poore clause ko subject banane ki bajaaye 'it' introductory subject lagana prefer karte hai, aur 'it' ke sath verb singular aati hai, aage chahe real subject singular ho yaa plural. Isliye sentence mein 'don't' ki jagah par 'doesn't' singular verb sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0088",
+   "question": "Each and every student, (a)/ teacher and parent (b)/ were requested to attend (c)/ the annual function held in the auditorium. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'were requested' with 'was requested'. Explanation:- Sentence mein 'were' ki jagah 'was' aayega kyunki yahan bhale hi 3 subject ho, lekin 'each' aur 'every' distributive nature ke words hai, jinke sath singular verb aati hai, isliye yahan 'were' ki jagah 'was' aayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0089",
+   "question": "Neither the manager nor the employees (a)/ was willing to accept (b)/ the new working conditions (c)/ introduced by the company last month. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'was willing' with 'were willing'. Explanation:- Sentence mein 'was' ki jagah par 'were' aayega kyunki 'either-or, neither-nor, not only – but also' ke baad verb, verb ke pass waale subject ke according hai, toh sentence mein pass wala 'employees' plural subject hai, isliye yahan 'was' ki jagah 'were' plural verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0090",
+   "question": "I don't think that (a)/ two miles are a long distance (b)/ to be covered on foot at your age. (c)/ No error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "replace 'are' with 'is'. Explanation:- Sentence mein 'are' ki jagah 'is' aayega kyunki 'time, weight, value, distance' ko dikhaane waale jo words agar single unit ki tarah kaam kare toh inke sath singular verb aati hai, aur sentence mein 'a' article bhi hint hai ki 'two miles' subject ek single unit ki tarah kaam kar raha hai, isliye yahan 'are' ki jagah 'is' aayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0091",
+   "question": "Both the director of the company and his senior advisors (a)/ has emphasized (b)/ the need for transparency (c)/ in all the financial transactions.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'has' with 'have'. Explanation:- Sentence mein 'has' ki jagah 'have' aayega kyunki 'both' se pata chal raha ki dono subject ki baat ho rahi hai 'the director' aur 'senior advisors' ki, isliye yahan 'has' ki jagah 'have' plural verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0092",
+   "question": "I know very well (a)/ that bread and butter (b)/ have been your favourite breakfast (c)/ since childhood.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'have' with 'has'. Explanation:- Sentence mein 'have' ki jagah 'has' aayega kyunki kuch complementary food jaise 'bread and butter, curry and rice' yeh combination food hote hai, jo humesha sath mein khaaye jaate hai, isliye inke sath singular verb aati hai, isliye 'have' ki jagah 'has' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0093",
+   "question": "The performance of the athletes, as (a)/ well as the coaches, in the (b)/ international sports meet (c)/ were appreciated by the whole country. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 3,
+   "solution": "replace 'were' with 'was'. Explanation:- Sentence mein 'were' ki jagah 'was' aayega kyunki 'the perfomance' singular subject hai, baaki 'athletes, coaches, international sport meet' prepositions ke object hai, toh verb subject ke according aati hai, isliye yahan 'were' ki jagah 'was' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0094",
+   "question": "More than one applicant (a)/ have claimed (b)/ that the terms and conditions (c)/ mentioned in the contract were misleading. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'have claimed' with 'has claimed'. Explanation:- Sentence mein 'have' ki jagah 'has' aayega kyunki 'more than one' ek distributive nature ka adjective hai jiske baad 'singular noun' aur 'singular verb' aati hai, isliye yahan 'have' ki jagah 'has' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0095",
+   "question": "The committee members, (a)/ in addition to the chairman, (b)/ was invited to participate in the annual conference (c)/ held at the capital last week. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'was invited' with 'were invited'. Explanation:-Sentence mein 'was' ki jagah 'were' aayega kyunki 'the committee members' subject hai, kyunki 'in addition to' ek prepositional phrase hai jiska object 'the chairman' hai, toh 'committee members' plural subject hai jiske according plural verb aayegi, isliye yahan 'was' ki jagah 'were' sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0096",
+   "question": "It is I who (a)/ has been trying for years (b)/ to bring peace between the two rival communities (c)/ divided by decades of mistrust and hatred. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'has been' with 'have been'. Explanation:- Sentence mein 'has' ki jagah 'have' aayega kyunki 'who' relative pronoun ka koi number, gender nahi hota, yeh apne antecedent ke according verb leta hai, toh 'who' sentence mein 'I' subject ke liye likha hai, jiske liye plural verb aayegi, isliye 'has' ki jagah 'have' sabse sahi answer hoga. Note:- 'I' ke sath kuch tense mein verb singular aati hai, kuch mein plural aati hai. yeh yaad he karna padega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0097",
+   "question": "Children absorbs knowledge (a)/ not merely through books (b)/ but also from the behaviour (c)/ and values of adults around them. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 0,
+   "solution": "replace 'absorbs' with 'absorb'. Explanation:- Sentence mein 'children' noun plural hai, jiske according plural verb aayegi, verb mein 's/es' lagane se verb singular ho jaati hai, isliye yahan 'absorbs' ki jagah 'absorb' plural verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0098",
+   "question": "Many a visionary leader (a)/ believe that the essence of democracy (b)/ lies not in power but in the collective voice (c)/ of its enlightened citizens. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'believe' with 'believes'. Explanation:- Sentence mein 'believe' ki jagah 'believes' aayega kyunki 'many a' ke sath noun aata hai tab wo 'distributive adjective' ki tarah kaam karta hai, isliye iske sath noun singular aur verb singular aati hai, isliye yahan 'believe' ki jagah 'believes' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0099",
+   "question": "The number of tourists (a)/ visiting historical monuments in India (b)/ have drastically declined (c)/ since the new travel restrictions were imposed.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'have' with has'. Explanation:- Sentence mein 'have' ki jagah 'has' aayega kyunki 'the number' yahan subject hai jo ki singular hai jiske according singular verb aayegi, isliye yahan 'have' ki jagah 'has' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0100",
+   "question": "The oppressed (a)/ has finally found (b)/ the courage to raise their voice (c)/ against years of injustice. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'has' with 'have'. Explanation:- Sentence mien 'has' ki jagah 'have' aayega kyunki 'the' ke sath 'qualitative adjective' lagane se wo common plural noun ban jaata hai, jaise 'the weak, the brave, the poor'. Waise hee 'the oppressed' common plural noun hai jo saare 'oppressed log' ko refer kar raha hai jiske liye plural verb aayegi, isliye 'has' ki jagah 'have' plural verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0101",
+   "question": "One of the books (a)/ that were carefully kept on the upper shelf of the large wooden cabinet (b)/ have disappeared mysteriously (c)/ from the library this morning, leaving the librarian quite puzzled. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'have disappeared' with 'has disappeared'. Explanation:- Sentence mein 'have disappeared' verb ka subject 'one' hai, kyunki 'one' singular subject hai jiske liye singular verb aayegi, isliye yahan 'have' ki jagah par 'has' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0102",
+   "question": "The jury has finally given (a)/ their verdict on the controversial corruption case (b)/ although the verdict was not unanimous (c)/ yet it was passed as it cleared the majority criteria. ((d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 0,
+   "solution": "replace 'has' with 'have'. Explanation:- Sentence mein 'has' ki jagah 'have' aayega, kyunki 'jury' collective noun hai jiske sath singular verb aati hai, lekin aisa koi hint ho jisse pata chal chale ki single unit ki tarah kaam nahi kar raha toh iske sath plural aayega, sentence mein hint hai 'their verdict' aur 'the verdict was not unanimous', isliye yahan 'has' ki jagah 'have' plural verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0103",
+   "question": "Every man, woman, and child (a)/ were evacuated (b)/ safely from the flooded village (c)/by the rescue team . (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'were evacuated' with 'was evacuated'. Explanation:- Sentence mein 'were' ki jagah 'was' aayega kyunki yahan bhale hi 3 subject ho, lekin 'each' aur 'every' distributive nature ke words ke lage hone ke kaaran 'singular' verb aayegi, isliye yahan 'were' ki jagah 'was' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0104",
+   "question": "Someone among the large and restless (a)/ crowd were constantly shouting (b)/ loud and aggressive slogans (c)/ during the politician's speech at the public rally yesterday afternoon. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'were constantly' with 'was constantly'. Explanation:- Sentence mein 'were' ki jagah 'was' aayega kyunki yahan subject 'someone' hai aur 'someone, everyone, nobody, anybody etc.' pronoun ke sath singular verb aati hai, isliye sentence mein 'were' ki jagah 'was' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0105",
+   "question": "Mathematics have always (a)/ been a difficult subject for me (b)/ since childhood but this time (c)/ I hope to pass the exam.(d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 0,
+   "solution": "replace 'have' with 'has'. Explanation:- Sentence mein 'have' ki jagah 'has' aayega kyunki 'mathematics, physics, biology etc.' jab yeh subject ke naam hote hai, toh yeh singular verb lete hai, isliye yahan 'have' ki jagah 'has' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0106",
+   "question": "The difference between the genetic structures of humans and chimpanzees (a)/ are so minimal (b)/ that scientists often describe them (c)/ as evolutionarily close species. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'are' with 'is'. Explanation:- Sentence mein 'are' ki jagah 'is' aayega kyunki sentence mein 'the difference' singular subject hai jiske liye singular verb aayegi, isliye yahan 'are' ki jagah 'is' singular verb aayegi. sentence mein 'between' preposition hai jiska object 'the genetic structures' aur 'of' preposition ka object 'human and chimpanzees'",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0107",
+   "question": "The company has launched several innovative gadgets (a)/ that is designed (b)/ to improve daily productivity (c)/ in both homes and offices. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'is designed' with 'are designed'. Explanation:- Sentence mein 'is' ki jagah 'are' aayega kyunki relative pronoun jisko refer karte hai uske according verb lete hai, 'that' relative pronoun 'innovative gadgets' ke liye aaya joki plural subject hai, toh plural subject ke according plural verb aayegi, isliye yahan 'is' ki jagah 'are' aayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0108",
+   "question": "A Great many people (a)/ living in metropolitan cities (b)/ faces mental health issues (c)/ due to the pressure of constant competition. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'faces' with 'face'. Explanation:- Sentence mein 'faces' ki jagah 'face' aayega kyunki sentence mein 'a great/good many + noun(plural) + verb(plural)' ka structure follow ho raha, jiske according yahan verb plural aayega, isliye yahan 'faces' ki jagah 'face' plural verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0109",
+   "question": "Each tourist (a)/ visiting the remote island (b)/ require a special entry permit (c)/ issued by the local administration. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'require' with 'requires'. Explanation:- Sentence mein 'require' ki jagah 'requires' aayega kyunki 'each' distributive nature ka word hai jo ek ek karke baat karta hai jiske sath noun (singular) aur verb(singular) aati hai, isliye yahan 'require' ki jagah 'requires' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0110",
+   "question": "A mansion near the Hoogli river (a)/ which worth more than ten million dollars, (b)/ was recently purchased by a Hollywood actor. (c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "put 'is' helping verb before 'worth more'. Explanation:- Sentence mein 'worth' se pehle 'is' helping verb aayegi kyunki 'the mansion' subject ki verb 'was purchased' hai, lekin 'which' relative pronoun se clause 'mansion' ke liye likha hai, jisme verb nahi hai, kyunki 'which' singular subject 'mansion' ke liye likha hai, aur 'worth' koi verb nahi hoti, isliye yahan singular verb aayegi, isliye 'worth more' se pehle 'is' helping verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0111",
+   "question": "Helping the underprivileged (a)/ during natural calamities (b)/ reflect the true spirit (c)/ of humanity and compassion. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'reflect' with 'reflects'. Explanation:- Sentence mein 'reflect' ki jagah 'reflects' aayega kyunki sentence mein 'helping' noun/gerund hai aur 'the underprivileged' object of gerund hai. Agar 'infinitive/ gerund' subject bante hai toh singular verb lete hai, isliye yahan 'reflect' ki jagah 'reflects' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0112",
+   "question": "Amitabh Bachchan, the legendary icon of Indian cinema (a)/ have inspired millions (b)/ through his discipline and dedication. (c)/ no error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "replace 'have inspired' with 'has inspired'. Explanation:- Sentence mein 'have' ki jagah 'has' aayega kyunki 'Amitabh bachchan' subject hai aur 'the legendary of Indian cinema' subject ke liye likha hai, yeh case in apposition hai jo subject ke liye likha hai, toh verb humesha subject ke according aati hai, kyunki subject singular hai, isliye yahan 'have' ki jagah 'has' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0113",
+   "question": "\"The Fast and the Furious\" (a)/ have continued to dominate the global box office (b)/  for over two decades, establishing itself as one (c)/ of the most successful action franchises in cinematic history. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'have continued' with 'has continued'. Explanation:- Sentence mein 'have' ki jagah 'has' aayega kyunki sentence mein 'The Fast and the furious' subject hai aur movie ka naam hai, toh 'movie, novel' wagera ke naam ek proper noun hote hai, jinke sath singular verb aati hai, isliye yahan 'have' ki jagah 'has' aayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0114",
+   "question": "A comprehensive study on the effects of social media consumption (a)/ show that prolonged screen time (b)/ has an adverse impact (c)/ on the cognitive performance of adolescents. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'show' with 'shows'. Explanation:- Sentence mein 'show' ki jagah 'shows' aayega kyunki 'a comprehensive study' ek singular subject hai jiske according singular verb aayegi, isliye yahan 'show' ki jagah 'shows' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0115",
+   "question": "The news of the shocking incident (a)/ reported from R.G. Kar Medical College in Kolkata, (b)/ have shaken the conscience of the entire nation. (c)/ No error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 2,
+   "solution": "replace 'have shaken' with 'has shaken'. Explanation:- Sentence mein 'have' ki jagah 'has' aayega kyunki 'the news' subject ki verb 'have shaken' hai, kyunki 'the news' uncountable noun hai aur uncountable noun ke sath singular verb aati hai, isliye yahan 'have' ki jagah 'has' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0116",
+   "question": "The investigators wanted to know (a)/ why the forest fire in the upper Himalayan region (b)/ spreading uncontrollably (c)/ despite several days of continuous rainfall. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'spreading' with 'was spreading'. Explanation:- Sentence mein 'spreading' ki jagah 'was spreading' aayega kyunki 'why….. continuous rainfall' waale clause mein verb nahi hai aur 'the forest fire' subject ko verb ki jarurat hai, kyunki sentence past mein aur singular subject hai, isliye yahan 'spreading' se pehle 'was' helping verb ka use karenge.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0117",
+   "question": "There were a severe earthquake (a)/ in the northern region last winter (b)/ that caused widespread destruction (c)/ and left hundreds of families homeless for weeks. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 0,
+   "solution": "replace 'were' with 'was'. Explanation:- Sentence mein 'were' ki jagah 'was' aayega kyunki 'there' yahan introductory subject aur iske baad verb uske real subject ke according aayega, kyunki sentence mein real subject 'a severe earthquake' singular subject hai, isliye yahan 'were' ki jagah 'was' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0118",
+   "question": "Don't order more milk because (a)/ three fourths of the milk that we brought (b)/ have not been used yet (c)/ No error. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 2,
+   "solution": "replace 'have not been used' with 'has not been used'. Explanation: Sentence mein 'have not been used' ki jagah 'has not been used' aayega kyunki 'three fourths of the milk' ek uncountable noun (milk) ko refer karta hai, aur uncountable noun ke sath singular verb aati hai. Isliye yahan 'have' ki jagah 'has' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0119",
+   "question": "Out of the entire rescue team, he was the only one (a)/ that remain inside the flooded cave (b)/ until all the trapped miners were safely evacuated. (c)/ No error. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "replace 'remain' with 'remained'. Explanation:- Sentence mein 'remain' ki jagah 'remained' aayega kyunki 'that' wala clause 'he' subject ke liye likha hai, aur 'that' relative pronoun jiske liye lagta hai uske according verb leta hai., isiliye yahan verb 'only one' ke according singular aayegi aur 'he was' se pata chal raha ki past ke kisi action ki baat ho rahi, isliye 'remain' verb bhi past indefinite tense mein aayegi, isliye yahan 'remain' ki jagah 'remained' sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0120",
+   "question": "Plenty of the news (a)/ circulating on social media platforms (b)/ are either fabricated (c)/ or exaggerated beyond reality. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'are either' with 'is either'. Explanation:- Sentence mein 'are' ki jagah 'is' aayega kyunki 'half, most, some, all, 50%, plenty + of' inn words ka koi number, gender nahi hota yeh jiske liye lagaye jaate hai uske according verb lete hai. Toh 'plenty of' 'the news' uncountable noun ke liye likha hai, jiske sath singular verb aati hai, isliye yahan 'are' ki jagah 'is' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0121",
+   "question": "The journalist and the photographer (a)/ was arrested by the local police (b)/ while documenting illegal mining activities (c)/ near the border of the national reserve. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'was arrested' with 'were arrested'. Explanation:- Sentence mein 'was' ki jagah 'were' aayega kyunki sentence mein do subject hai 'journalist' aur 'photographer', aur sentence mein aisa koi hint nahi hai jisse pata chale ki dono kaam ek hee aadmi ka hai, isliye left ko base maan kar verb mein correction karenge, kyunki do subject hai isliye yahan plural verb aayegi, isliye 'was' ki jagah 'were' aayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0122",
+   "question": "The whole cast of the new movie (a)/ were invited to the international film festival (b)/ for the special premiere night (c)/ along with the director. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'were invited' with 'was invited'. Explanation:- Sentence mein 'were' ki jagah 'was' aayega kyunki 'cast' ek collective noun hai jo poore movie ki unit ko ek group ki tarah refer kar raha hai, isliye 'cast' subject ke liye singular verb aayegi, isliye 'were' ki jagah 'was' aayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0123",
+   "question": "According to the experts, the rise of fuel prices (a)/ over the past six months have caused a sharp increase (b)/ in transportation costs and overall inflation. (c)/ No error (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "replace 'have caused' with 'has caused'. Explanation:- Sentence mein 'have' ki jagah 'has' aayega kyunki sentence mein subject 'rise' hai jiske according singular verb aayegi, isliye 'have' ki jagah 'has' aayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0124",
+   "question": "The most practical way to tackle the issue of plastic pollution (a)/ are to adopt sustainable alternatives (b)/ and spread awareness about waste segregation and recycling. (c)/ No error. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "replace 'are to adopt' with 'is to adopt'. Explanation:- Sentence mein 'are' ki jagah 'is' aayega kyunki sentence mein 'practical way' singular subject hai jiske according singular verb aayegi, isliye yahan 'are' ki jagah 'is' aayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0125",
+   "question": "Everything that the municipality has planned (a)/ for the city's waste segregation system (b)/ are expected to make the recycling process more efficient (c)/ and reduce landfill pressure. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'are expected' with 'is expected'. Explanation:- Sentence mein 'are' ki jagah 'is' aayega kyunki sentence mein 'everything' subject hai jiski verb 'are expected' hai, kyunki 'everything, anything, something, anybody etc.' ke sath singular verb aati hai, isliye yahan 'are' ki jagah 'is' aayega. 'that…..se lekar….system' tak adjectival clause hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0126",
+   "question": "Only one copy of the ancient manuscript, (a)/ believed to have been written by Buddhist scholars over two thousand years ago, (b)/ remain preserved in a climate-controlled chamber of the National Archives (c)/ No error. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 2,
+   "solution": "replace 'remain' with 'remains'. Explanation:- Sentence mein 'remain' ki jagah 'remains' aayega kyunki sentence mein 'only one copy' subject hai jiski verb 'remain' hai. kyunki subject singular hai isliye yahan singular verb aayegi, isliye 'remain' ki jagah 'remains' singular verb aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0127",
+   "question": "Those who maintain transparency in their work (a)/ and communicate honestly with clients (b)/ is considered trustworthy (c)/ by their team leaders and superiors. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 2,
+   "solution": "replace 'is considered' with 'are considered'. Explanation:- Sentence mein 'is' ki jagah 'are' aayega kyunki 'who…..se lekar….clients' tak yeh ek adjectival clause hai, sentence mein 'those' subject ki verb 'is considered' hai, kyunki 'those' plural subject hai isliye iski verb bhi plural aayegi, isliye yahan 'is' ki jagah 'are' aayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0128",
+   "question": "The principal and founder of St. (a)/ Joseph's International School were invited (b)/ to speak at the Global Educators' Conference (c)/ held in Singapore last month. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "(d)"
+   ],
+   "answer": 1,
+   "solution": "replace 'were invited' with 'was invited'. Explanation:- Sentence mein 'were' ki jagah 'was' aayega kyunki sentence mein 'the principal' aur 'founder' dono ek hee person ho sakta hai iska matlab ek hee subject ke baare mein baat ho rahi hai, isliye singular verb aayegi, isliye yahan 'were' ki jagah 'was' sabse sahi answer hoga. Note:- agar sentence mein clear ho ki dono person alag alag hai, toh dono person ke sath 'the' article use hoga aur verb bhi plural aayegi.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0129",
+   "question": "Law and order (a)/ are maintained strictly in this city (b)/ thanks to the efficient police force. (c)/ No error. (d)",
+   "options": [
+    "(a)",
+    "(b)",
+    "(c)",
+    "No error"
+   ],
+   "answer": 1,
+   "solution": "replace 'are maintained' with 'is maintained'. Explanation:- Sentence mein 'are' ki jagah 'is' aayega kyunki 'law and order' subject alag alag nahi balki ek hee complementary cheez hai, toh yeh ek singular subject ke tarah likha hai, isliye iske sath singular verb aayegi, isliye yahan 'are' ki jagah 'is' aayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0130",
+   "question": "Neither the police officer nor the suspect were telling the truth about what happened near the railway station.",
+   "options": [
+    "was telling the truth",
+    "were telling truth",
+    "are telling the truth",
+    "had told the truth"
+   ],
+   "answer": 0,
+   "solution": "'neither…..nor, either……or, not only……but also' ke case mein nearest subject ke according verb aati hai. sentence mein nearest 'the suspect' singular subject hai jiske according singular verb aayegi, aur sentence past ka hai isliye past ki singular verb aayegi, isliye diye gaye options mein option A 'was telling the truth' sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0131",
+   "question": "The captain, as well as his teammates, are responsible for maintaining discipline on the field.",
+   "options": [
+    "is responsible",
+    "has responsible",
+    "were responsible",
+    "are responsibility"
+   ],
+   "answer": 0,
+   "solution": "Sentence mein 'as well as' prepositional phrase hai jiska object 'teammates' hai, toh sentence mein 'the captain' singular subject hai jiske liye singular verb aayegi, isliye diye gaye options mein se option A 'is responsible' sabse sahi answer hoga. Option B galat hoga kyunki 'has' ke baad verb ki 3rd form aati hai.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0132",
+   "question": "My father and I was discussing the importance of financial planning while driving to the office.",
+   "options": [
+    "have discussing",
+    "was discussed",
+    "are discussing",
+    "were discussing"
+   ],
+   "answer": 3,
+   "solution": "Sentence mein 'my father and I' do subject isliye yahan plural verb aayegi, sentence mein 'while driving to the office' se pata chal raha ki past ka action hai, isliye past ki plural verb aayegi, toh diye gaye options mein se option D 'were discussing' sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0133",
+   "question": "Many a brave soldier have sacrificed their life for the nation during the great wars of history.",
+   "options": [
+    "have sacrificed his life",
+    "has sacrificed his life",
+    "was sacrificed his life",
+    "have sacrificed their lives"
+   ],
+   "answer": 1,
+   "solution": "Sentence mein 'many a + noun(singular) + verb(singular)' ka structure follow ho raha hai jiske according singular verb aayegi, isliye option A aur D galat honge. Sentence mein active wala meaning dena hai 'bahut saare soldier ne sacrifice kari', isliye option B 'has sacrificed his life' sabse sahi answer hoga. option C se passive wala meaning aayega.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0134",
+   "question": "The sound of heavy rain make me feels calm and sleepy whenever I sit near the window.",
+   "options": [
+    "makes me to feel calm and sleepy",
+    "make me feeling calm and sleepy",
+    "makes me feel calm and sleepy",
+    "make me felt calm and sleepy"
+   ],
+   "answer": 2,
+   "solution": "Sentence mein 'the sound' subject hai isliye subject ke according singular verb aayegi, isliye option B aur D galat honge. 'make' verb ke baad bare infinitive aayega matlab bina 'to' ke, isliye diye gaye options mein se option C 'makes me feel calm and sleepy' sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0135",
+   "question": "Either of the candidates have shown great leadership qualities during the election campaign across the state.",
+   "options": [
+    "has shown great leadership qualities during the election campaign",
+    "have shown great leadership qualities in the election campaign",
+    "were showing great leadership qualities during the election campaign",
+    "had shown great leadership qualities during the election campaign"
+   ],
+   "answer": 0,
+   "solution": "Sentence mein 'either' subject hai, kyunki 'either' ek distributive nature ka pronoun hai jiske baad singular verb aati hai, isliye option B aur C galat honge. Option D bhi galat hoga kyunki past perfect tense ka past ke do action ka comparison karane ke liye hota hai. Toh diye gaye options mein option A sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0136",
+   "question": "The boy with his two friends were caught playing games on the school computer during class hours.",
+   "options": [
+    "are caught playing games on the school computer",
+    "were caught playing games in the school computer",
+    "had caught playing games on the school computer",
+    "was caught playing games on the school computer"
+   ],
+   "answer": 3,
+   "solution": "Sentence mein 'with' preposition hai jiska object 'two friends' hai, 'the boy' subject hai jiske according singular verb chahiye, isliye option A aur B galat honge. Option C bhi galat hoga kyunki past perfect tense past ke do action ka comparison karane ke liye hota hai. toh diye gaye option mein option D sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0137",
+   "question": "Playing outdoor games in the evening improve both physical strength and mental focus among children.",
+   "options": [
+    "improves both physical strength and mental focus",
+    "improve both physical strength as well as mental focus",
+    "improving both physical strength and mental focus",
+    "has improved both physical strength and mental focus"
+   ],
+   "answer": 0,
+   "solution": "Sentence mein 'playing' subject hai gerund hai aur 'outdoor games' gerund ke object hai', toh 'playing' gerund ke according singular verb aayegi, isliye option C bhi galat hoga kyunki 'v1+ing' bina helping verb ki galat hai. sentence mein kahi gayi baat ek fact ki tarah hai isliye isse present indefinite tense mein likhenge, isliye diye gaye options mein se option A sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0138",
+   "question": "She, the victim of the recent kidnapping incident, were rescued safely by the police near the city border early this morning.",
+   "options": [
+    "was rescued safely by the police near the city border",
+    "were rescuing safely by the police near the city border",
+    "has rescued safely by the police near the city border",
+    "had rescuing safely by the police near the city border"
+   ],
+   "answer": 0,
+   "solution": "Sentence mein 'the victim…..incident' yeh case in apposition hai jo 'she' subject ke liye likha hai,'she' subject ke according singular verb chahiye, isliye option B galat hoga. option C bhi galat hoga kyunki isse passive wala meaning aayega. option D bhi galat hoga kyunki 'had' ke baad verb ki 3rd form aati hai, toh diye gaye options mein se option A sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0139",
+   "question": "The tension between the two rival gangs have intensified over the past few weeks after the murder incident in the city.",
+   "options": [
+    "have been intensified over the past few weeks",
+    "have intensified since the past few weeks",
+    "has intensify over the past few weeks",
+    "has intensified over the past few weeks"
+   ],
+   "answer": 3,
+   "solution": "Sentence mein 'between' preposition hai jiska object 'rival gangs' hai, 'tension' subject hai jiske according singular aayega, isliye option A aur B galat honge. Option C bhi galat hoga kyunki 'has' ke baad verb ki 3rd form aati hai. Toh diye gaye options mein se option D sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0140",
+   "question": "The chances of survival after the plane crash has improved because of quick rescue operations near the forest area.",
+   "options": [
+    "have improved because of quick rescue operations",
+    "has improving because of quick rescue operations",
+    "have improving because of quick rescue operations",
+    "had improve because of quick rescue operations"
+   ],
+   "answer": 0,
+   "solution": "Sentence mein 'chances' plural subject hai jiske according plural verb aayegi, isliye option B galat hoga. Option C aur D dono galat honge kyunki 'have, had' ke baad verb ki 3rd form aati hai. toh diye gaye options mein se option A sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0141",
+   "question": "The Times of India were published from multiple cities across the country during the colonial period.",
+   "options": [
+    "has published",
+    "were publishing",
+    "have published",
+    "was published"
+   ],
+   "answer": 3,
+   "solution": "Sentence mein 'the times of india' newspaper ka naam hai, ek proper noun hai jiske sath singular verb aati hai, isliye option B aur C galat honge. Sentence mein 'during colonial period' se pata chal raha ki past ki baat ho rahi hai, isliye option D 'was published' sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0142",
+   "question": "Nothing but a few old memories remain in the deserted house after the terrible murder that happened years ago.",
+   "options": [
+    "have remained",
+    "were remaining",
+    "remains",
+    "No improvement"
+   ],
+   "answer": 2,
+   "solution": "Sentence mein 'nothing but + noun + verb(singular) ka structure follow ho raha hai jiske according singular verb aayegi, toh diye gaye options mein option C 'remains' singular verb sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0143",
+   "question": "Not only the victim's family but also the police officers was searching for clues in the dense jungle after the murder.",
+   "options": [
+    "No improvement",
+    "has searched for clues in the dense jungle",
+    "are searching for clues in the dense jungle",
+    "were searching for clues in the dense jungle"
+   ],
+   "answer": 3,
+   "solution": "'neither…..nor, either…..or, not only…..but also' ke case mein nearest subject ke according verb aati hai. sentence mein nearest 'police officers' plural subject hai isliye yaha plural verb aayegi, isliye option A aur B galat honge. Option C bhi sahi ho sakta hai lekin sentence ke according jabardasti tense change karne ke jarurat nahi hai, isliye diye gaye options mein option D sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0144",
+   "question": "None of the rescuers were willing to climb down into the collapsed mine because of the heavy smoke.",
+   "options": [
+    "were willing for climbing down into the collapsed mine",
+    "was willing to climb down into the collapsed mine",
+    "had willing to climb down into the collapsed mine",
+    "No improvement"
+   ],
+   "answer": 1,
+   "solution": "Sentence mein 'none' subject hai jiske sath verb singular, plural dono aa sakti hai, lekin formal English mein singular ko prefer karte hai, kyunki sentence improvement karna hai, isliye options mein singular verb prefer kar sakte hai. isliye diye gaye options mein se option B 'was' singular verb wala sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0145",
+   "question": "Each flower and each leaf in the garden were shining beautifully after the morning rain when the sun appeared.",
+   "options": [
+    "were shined beautifully after the morning rain",
+    "was shining beautifully after the morning rain",
+    "was shining beautifully after morning rain",
+    "No improvement"
+   ],
+   "answer": 1,
+   "solution": "Sentence mein bhale hee 'flower' aur 'leaf' do subject ho lekin 'each' distributive nature ke word ke lage hone ke kaaran yahan singular verb aayegi, isliye option A aur D galat honge. Sentence mein particular kisi din ki morning ki baat hui hai toh morning se pehle 'the' specific article ka use hoga, isliye diye gaye options mein se option B sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0146",
+   "question": "Every of these paintings is displayed beautifully in the art exhibition near the city museum.",
+   "options": [
+    "Every of these paintings are displayed",
+    "All of these paintings is displayed",
+    "Each of these paintings are displayed",
+    "Each of these paintings is displayed"
+   ],
+   "answer": 3,
+   "solution": "Option A nahi hoga kyunki 'every' ek adjective hota hai yeh subject nahi ban sakta. Option B bhi galat hoga kyunki 'all' subject ke sath plural verb aati hai. 'each' ek distributive nature ka word hai subject hai jiske sath singular verb aati hai, isliye diye gaye options mein option D sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0147",
+   "question": "There has been several complaints about the poor condition of the city roads after the heavy rainfall last week.",
+   "options": [
+    "have being",
+    "has being",
+    "have been",
+    "No improvement"
+   ],
+   "answer": 2,
+   "solution": "Sentence mein 'there' introductory subject hai aur real subject 'several complaints' plural subject hai jiske according plural verb aayegi, isliye option B aur D galat honge. Option A galat hoga kyunki 'have' ke baad verb ki 3rd form aati hai, isliye diye gaye options mein se option C 'have been' sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0148",
+   "question": "A number of vehicles was parked outside the stadium despite strict no-parking rules during the final match.",
+   "options": [
+    "No improvement",
+    "has been parked",
+    "were being parked",
+    "were parked"
+   ],
+   "answer": 3,
+   "solution": "Sentence mein 'a number of' quantitative adjective hai aur 'vehicles' subject hai jiske according plural verb aayegi, isliye option A aur B galat honge. Option C bhi galat hoga kyunki isse matlab 'unhe park kiya jaa raha tha', sentence mein jabardasti meaning badalne ki jarurat nahi sirf grammar theek karni hai. isliye diye gaye options mein se option D 'were parked' sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0149",
+   "question": "One of the girls have been selected for the national-level dance performance after a tough audition.",
+   "options": [
+    "has been selected",
+    "were selected",
+    "have selected",
+    "No improvement"
+   ],
+   "answer": 0,
+   "solution": "Sentence mein 'one of + noun(plural) + verb(singular)' ka structure follow ho raha hai jiske according singular verb aayegi, isliye B,C aur D teeno galat honge, isliye diye gaye options mein se option A 'has been selected' sabse sahi answer hoga.",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  },
+  {
+   "id": "subject-verb-agreement-0150",
+   "question": "Near the riverbank were lying a beautiful wooden boat half-buried in the sand after the storm.",
+   "options": [
+    "has lying",
+    "were laying",
+    "was laying",
+    "was lying"
+   ],
+   "answer": 3,
+   "solution": "Sentence mein inversion follow ho raha hai jisme 'near' preposition hai jiska object 'the riverbank' aur real subject hai 'boat', kyunki 'boat' singular subject hai isliye yahan singular verb aayegi, isliye option B galat hoga. option A bhi galat hoga kyunki 'has' ke baad verb ki 3rd form aati hai. option C bhi nahi hoga kyunki 'laying' ka matlab hoga 'rakhna, letana' toh boat yahan kisi ko thodi leta rahi hai, isliye diye gaye options mein option D 'was lying' sabse sahi answer hoga",
+   "chapter": "Subject Verb Agreement",
+   "set": "Subject Verb Agreement Level - 02"
+  }
+ ]
+}
