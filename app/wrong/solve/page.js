@@ -212,11 +212,13 @@ function SolveInner() {
     router.replace(`/wrong/solve?subject=${subject}&d=${encodeURIComponent(d)}&id=${target.id}`);
   }, [list, flushLocal, flushCloud, router, subject, d]);
 
+  // Wapas Answers page par — /wrong hata diya gaya hai, ab wahi list yahan
+  // dikhti hai. Date filter uske paas nahi hai, isliye sirf subject le jaate hain.
   const exit = useCallback(async () => {
     await flushLocal();
     flushCloud();
-    router.push(`/wrong?subject=${subject}${d !== "all" ? `&d=${encodeURIComponent(d)}` : ""}`);
-  }, [flushLocal, flushCloud, router, subject, d]);
+    router.push(`/answers?subject=${subject}`);
+  }, [flushLocal, flushCloud, router, subject]);
 
   // Eraser toggle karte waqt wapas usi tool par jaana hai jispar tha (pen ya
   // highlighter), isliye pichhla tool yaad rakhte hain.
@@ -265,7 +267,7 @@ function SolveInner() {
     return (
       <div className="inkv">
         <div className="inkv__top">
-          <button className="btn btn--ghost btn--sm" onClick={() => router.push("/wrong")}>← Wapas</button>
+          <button className="btn btn--ghost btn--sm" onClick={() => router.push("/answers")}>← Wapas</button>
           <span className="inkv__title">Solve</span>
         </div>
         <div className="placeholder" style={{ margin: 20 }}>

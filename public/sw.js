@@ -9,12 +9,16 @@
  */
 // V badalte hi purane caches activate par saaf ho jate hain. Jab bhi is file ka
 // vyavhaar badle ya purana cache shaq ke ghere mein aaye, ise badha dena.
-const V = "v2";
+const V = "v3";
 const SHELL = `cgl-shell-${V}`;
 const BLOBS = `cgl-r2-${V}`;
 
+// addAll ATOMIC hai — ek bhi URL 404 de to poora precache reject ho jata hai aur
+// shell cache khaali reh jata hai (aur .catch() ki wajah se chupchaap). Isliye
+// yahan sirf wahi raste rakho jo pakka maujood hain. /wrong hata diya gaya hai —
+// ab app /answers par khulti hai.
 self.addEventListener("install", (e) => {
-  e.waitUntil(caches.open(SHELL).then((c) => c.addAll(["/wrong", "/manifest.webmanifest", "/icon-192.png"])).catch(() => {}));
+  e.waitUntil(caches.open(SHELL).then((c) => c.addAll(["/answers", "/manifest.webmanifest", "/icon-192.png"])).catch(() => {}));
   self.skipWaiting();
 });
 
@@ -42,7 +46,9 @@ async function networkFirst(req) {
     if (res && res.ok) cache.put(req, res.clone()).catch(() => {});
     return res;
   } catch {
-    return (await cache.match(req)) || (await cache.match("/wrong")) || Response.error();
+    // Offline aur ye page cache mein nahi — /answers par gira do, wahi app ka
+    // ghar hai (pehle /wrong tha, jo ab maujood hi nahi).
+    return (await cache.match(req)) || (await cache.match("/answers")) || Response.error();
   }
 }
 

@@ -182,7 +182,7 @@ function WrongBookRef({ rec, subject, questions, startIndex = 0 }) {
             titleAttr="Full-screen mein solve karo — Show answer dabate hi time record hoga, Next se aage jao"
           />
           <GeminiFlashButton card={card} />
-          <Link href="/wrong" className="btn btn--ghost btn--sm">Kholo →</Link>
+          <Link href="/answers" className="btn btn--ghost btn--sm">Kholo →</Link>
         </div>
       </div>
       {imgs.map((im) => (

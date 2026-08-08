@@ -10,8 +10,8 @@ export default function manifest() {
   return {
     name: "SSC CGL Pre — Prep Hub",
     short_name: "CGL Prep",
-    description: "SSC CGL prep — Wrong Questions, notes aur stylus se handwriting.",
-    start_url: "/wrong",
+    description: "SSC CGL prep — Answers, notes aur stylus se handwriting.",
+    start_url: "/answers",
     scope: "/",
     display: "standalone",
     orientation: "any", // tablet ko portrait aur landscape dono chahiye
@@ -28,7 +28,7 @@ export default function manifest() {
       { src: "/icon.svg", sizes: "any", type: "image/svg+xml" },
     ],
     shortcuts: [
-      { name: "✍️ Solve", url: "/wrong" },
+      { name: "✍️ Solve", url: "/answers" },
     ],
   };
 }

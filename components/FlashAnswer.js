@@ -90,7 +90,7 @@ export default function FlashAnswer({ card, onSaved }) {
           <span className="vd-label">📥 Gemini ka answer yahan paste karo</span>
           <textarea className="textarea" rows={5} style={{ marginTop: 8, width: "100%" }} value={text}
             onChange={(e) => setText(e.target.value)} autoFocus
-            placeholder="Gemini se copy karke Ctrl+V — save karne pe agli baar yahi dikhega (Wrong-Book image ka answer /wrong mein bhi save ho jayega)." />
+            placeholder="Gemini se copy karke Ctrl+V — save karne pe agli baar yahi dikhega (Wrong-Book image ka answer /answers mein bhi save ho jayega)." />
           <div className="row mt-8" style={{ gap: 8, flexWrap: "wrap" }}>
             <button className="btn btn--primary btn--sm" onClick={save} disabled={!text.trim()}>💾 Save</button>
             <button className="btn btn--ghost btn--sm" onClick={pasteClip}>📋 Paste from clipboard</button>

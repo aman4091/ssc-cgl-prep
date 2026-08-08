@@ -290,7 +290,7 @@ export default function PenTestPage() {
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">🖊️ Pen test</span>
-          <Link href="/wrong" className="btn btn--ghost btn--sm">← Wrong Questions</Link>
+          <Link href="/answers" className="btn btn--ghost btn--sm">← Answers</Link>
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.4rem, 4vw, 2rem)" }}>
           Pen kya <span className="grad">bhej raha hai</span>

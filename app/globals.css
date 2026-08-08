@@ -2684,3 +2684,155 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .ink-spacer { position: relative; }
 .ink-stack { position: sticky; top: 0; left: 0; width: 0; height: 0; }
 .ink-c { position: absolute; top: 0; left: 0; touch-action: none; }
+
+/* ───────────────────────────────────────────────────────────────────────────
+   📖 Answers page — overlay (F:\over) wala Catppuccin look, site par
+   ───────────────────────────────────────────────────────────────────────────
+   Palette jaan-boojh kar .ansp ke ANDAR scoped hai. Site ka apna light/dark
+   theme hai; ye rang usse bahar nikal gaye to har page par leak karenge. Isi
+   wajah se yahan tokens (var(--bg) waghera) use nahi ho rahe — ye page theme se
+   azaad, hamesha Catppuccin dark hi rehta hai, jaisa overlay par tha.
+
+   Overlay par rail viewport par fixed thi. Yahan site ka apna nav baayen taraf
+   hota hai, isliye rail sticky column ban gayi hai — dikhti wahi jaisi hai, par
+   nav se ladti nahi. */
+.ansp {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  border-radius: 12px;
+  padding: 14px;
+  margin-top: 8px;
+}
+.ansp__side {
+  position: sticky; top: 8px;
+  flex: none; width: 56px; max-height: 88vh; overflow-y: auto;
+  background: #181825; border-radius: 8px; padding: 8px 6px; text-align: center;
+}
+.ansp__side a {
+  display: block; padding: 6px 0; margin: 4px 0; border-radius: 6px;
+  background: #313244; color: #cdd6f4; text-decoration: none;
+  font-weight: bold; font-size: 14px;
+}
+.ansp__side a:hover { background: #45475a; }
+.ansp__side a.is-done { background: #1e1e2e; color: #6c7086; }
+
+.ansp__main { flex: 1; min-width: 0; max-width: 900px; }
+.ansp__main h1 { color: #89b4fa; font-size: 1.5rem; margin: 0 0 12px; }
+
+.ansp__stats {
+  display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 16px;
+  font-size: 14px; font-weight: bold; justify-content: flex-end;
+}
+.ansp__stats span { background: #313244; border-radius: 8px; padding: 6px 14px; }
+.ansp__stats .tot { color: #89b4fa; }
+.ansp__stats .did { color: #a6e3a1; }
+.ansp__stats .left { color: #f9e2af; }
+
+.ansp__chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.ansp__chips a {
+  padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600;
+  background: #313244; color: #cdd6f4; text-decoration: none;
+}
+.ansp__chips a:hover { background: #45475a; }
+.ansp__chips a.is-active { background: #89b4fa; color: #1e1e2e; }
+
+/* Card */
+.ansp__card {
+  background: #313244; border-radius: 10px; padding: 18px; margin: 18px 0;
+  scroll-margin-top: 12px;
+}
+.ansp__card.is-done { opacity: 0.6; }
+.ansp__card.is-done h2 { color: #6c7086; }
+.ansp__card.is-hit { box-shadow: 0 0 0 2px #f9e2af; }
+.ansp__card h2 { margin: 0 0 10px; color: #f9e2af; font-size: 18px; }
+.ansp__qid { color: #6c7086; font-weight: 400; font-size: 14px; }
+.ansp__card img {
+  max-width: 100%; border: 2px solid #45475a; border-radius: 8px;
+  display: block; background: #fff; cursor: zoom-in;
+}
+.ansp__note { color: #f9e2af; font-size: 13px; margin-top: 8px; }
+
+.ansp__acts { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
+.ansp__acts--top { margin: 0 0 12px; }
+.ansp__hint { color: #6c7086; font-size: 13px; margin-right: auto; }
+.ansp__mark {
+  display: flex; align-items: center; gap: 6px; cursor: pointer;
+  background: #1e1e2e; border-radius: 6px; padding: 5px 12px;
+  font-size: 13px; font-weight: bold; color: #a6e3a1;
+}
+.ansp__mark input { width: 16px; height: 16px; cursor: pointer; accent-color: #a6e3a1; }
+.ansp__btn {
+  background: #45475a; color: #cdd6f4; border: 0; border-radius: 6px;
+  padding: 6px 14px; cursor: pointer; font-weight: bold; font-size: 13px;
+  font-family: inherit;
+}
+.ansp__btn:hover { background: #585b70; }
+.ansp__btn--go { background: #89b4fa; color: #1e1e2e; }
+.ansp__btn--go:hover { background: #a6c8ff; }
+
+.ansp__flash { color: #a6e3a1; font-size: 14px; font-weight: 600; margin: 6px 0; }
+.ansp__err { color: #f38ba8; font-size: 13px; margin: 6px 0; }
+.ansp__empty { color: #6c7086; font-size: 18px; padding: 20px 0; }
+
+/* Answer — Markdown.js site ke tokens maankar chalta hai, isliye uske andar ke
+   elements ko yahan apne rang dene padte hain. */
+.ansp__answer {
+  margin-top: 12px; padding: 14px; background: #1e1e2e; border-radius: 8px;
+  line-height: 1.6; font-size: 15px; color: #cdd6f4; overflow-x: auto;
+}
+.ansp__answer--empty { color: #6c7086; font-style: italic; }
+.ansp__answer p { margin: 8px 0; }
+.ansp__answer ul, .ansp__answer ol { margin: 8px 0; padding-left: 24px; }
+.ansp__answer li { margin: 4px 0; }
+.ansp__answer strong { color: #a6e3a1; }
+.ansp__answer em { color: #cdd6f4; }
+.ansp__answer a { color: #89b4fa; }
+.ansp__answer h1, .ansp__answer h2, .ansp__answer h3,
+.ansp__answer h4, .ansp__answer h5 { color: #f9e2af; font-size: 16px; margin: 12px 0 6px; }
+.ansp__answer code { background: #181825; color: #f5c2e7; padding: 1px 5px; border-radius: 4px; }
+.ansp__answer pre { background: #181825; padding: 10px; border-radius: 6px; overflow-x: auto; }
+.ansp__answer pre code { background: none; padding: 0; }
+.ansp__answer blockquote {
+  border-left: 3px solid #45475a; margin: 8px 0; padding: 2px 0 2px 12px; color: #bac2de;
+}
+.ansp__answer hr { border: 0; border-top: 1px solid #45475a; margin: 12px 0; }
+.ansp__answer table { border-collapse: collapse; margin: 8px 0; }
+.ansp__answer th, .ansp__answer td { border: 1px solid #45475a; padding: 4px 10px; }
+.ansp__answer img { max-width: 100%; border-radius: 6px; }
+.ansp__answer .katex { color: #cdd6f4; }
+
+/* Markdown.js apne wrapper par class="md" lagata hai, aur globals ka
+   `.md { color: var(--text-1) }` us div par KHUD lagta hai. Parent ka color
+   uske aage nahi chalta — child ka apna explicit rang hamesha inheritance ko
+   haraa deta hai. Light theme mein --text-1 gehra kaala hai, to dark card par
+   answer ka poora normal text gayab ho jata tha (heading aur bold apne rules ki
+   wajah se dikhte rehte the, isliye pakadne mein der lagi).
+   Isliye `.md` ke wo saare rules jo theme tokens par tike hain, yahan .ansp ke
+   ANDAR override ho rahe hain — baaki site ka markdown waisa hi rehta hai. */
+.ansp__answer .md { color: #cdd6f4; }
+.ansp__answer .md h1, .ansp__answer .md h2, .ansp__answer .md h3,
+.ansp__answer .md h4 { color: #f9e2af; }
+.ansp__answer .md strong, .ansp__answer .md b { color: #a6e3a1; }
+.ansp__answer .md a { color: #89b4fa; }
+.ansp__answer .md blockquote { border-left-color: #45475a; color: #bac2de; }
+.ansp__answer .md th, .ansp__answer .md td { border-color: #45475a; }
+.ansp__answer .md code { background: #181825; color: #f5c2e7; }
+.ansp__answer .md pre { background: #181825; }
+
+/* Phone: 56px rail + card padding milkar screen kha jate hain, isliye rail upar
+   ek horizontal patti ban jati hai. */
+@media (max-width: 640px) {
+  .ansp { flex-direction: column; padding: 10px; gap: 8px; }
+  .ansp__side {
+    position: static; width: auto; max-height: none;
+    display: flex; gap: 6px; overflow-x: auto; padding: 6px;
+  }
+  .ansp__side a { flex: none; min-width: 34px; margin: 0; }
+  .ansp__main { max-width: none; }
+  .ansp__card { padding: 12px; margin: 12px 0; }
+  .ansp__stats { justify-content: flex-start; }
+}
