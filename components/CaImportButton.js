@@ -8,7 +8,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getSettings } from "@/lib/storage";
 import { extractPdfTextSmart, caFromText } from "@/lib/client-ai";
 import { addEntry, addEntryQuestions } from "@/lib/feed";
 
@@ -22,7 +21,9 @@ export default function CaImportButton({ bucket = "daily" }) {
     const file = e.target.files?.[0];
     e.target.value = "";
     if (!file) return;
-    if (!getSettings().apiKey) { setErr("Pehle Settings mein DeepSeek API key daalo."); return; }
+    // No upfront key gate: the questions are parsed WITHOUT AI, so even with no
+    // DeepSeek key we still add them (in English). The key is only used to make
+    // them Hinglish; if it's missing/failing, we fall back to English silently.
 
     setBusy(true); setErr(""); setStatus("PDF padh raha hoon…");
     try {
