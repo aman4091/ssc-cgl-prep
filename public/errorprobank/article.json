@@ -1,7 +1,7 @@
 {
  "chapter": "Article",
  "slug": "article",
- "count": 129,
+ "count": 128,
  "questions": [
   {
    "id": "article-0001",
@@ -1685,20 +1685,6 @@
   },
   {
    "id": "article-0121",
-   "question": "The travel agency offers exciting packages to the Brazil and the United Arab Emirates for both leisure and business travelers.",
-   "options": [
-    "Brazil and United Arab Emirates",
-    "Brazil and the United Arab Emirates",
-    "The Brazil and United Arab Emirates",
-    "Brazil and the United Arab Emirates"
-   ],
-   "answer": 1,
-   "solution": "Sentence mein 'brazil' se pehle 'the' nahi ayega kyunki aise countries jo countries ki grouping se bani hai unke sath 'the' articles ka use hota hai jaise 'the USA, the USSR, the UAE', kyunki 'brazil' koi grouping country nahi hai, isliye isse pehle 'the' article nahi ayega aur 'UAE' se pehle 'the' article ayega. Toh diye gaye options mein se option B sabse sahi answer hoga.",
-   "chapter": "Article",
-   "set": "Level 02"
-  },
-  {
-   "id": "article-0122",
    "question": "Select the grammatically correct statement from among the given options.",
    "options": [
     "It is a beautiful movie. I can watch the movie again with my friends.",
@@ -1712,7 +1698,7 @@
    "set": "Level 02"
   },
   {
-   "id": "article-0123",
+   "id": "article-0122",
    "question": "Select the grammatically correct sentence.",
    "options": [
     "The effort to clean the park helped the community to restore a beauty of its surroundings.",
@@ -1726,7 +1712,7 @@
    "set": "Level 02"
   },
   {
-   "id": "article-0124",
+   "id": "article-0123",
    "question": "Select the grammatically correct sentence.",
    "options": [
     "As a European country, France plays a major role in promoting global peace and cooperation.",
@@ -1740,7 +1726,7 @@
    "set": "Level 02"
   },
   {
-   "id": "article-0125",
+   "id": "article-0124",
    "question": "Select the grammatically correct sentence.",
    "options": [
     "It was the tiring day for Rahul with the lot of tasks and the couple of phone calls.",
@@ -1754,7 +1740,7 @@
    "set": "Level 02"
   },
   {
-   "id": "article-0126",
+   "id": "article-0125",
    "question": "Select the grammatically correct sentence.",
    "options": [
     "A wolf cannot protect another wolf against a stronger rival in the wild.",
@@ -1768,7 +1754,7 @@
    "set": "Level 02"
   },
   {
-   "id": "article-0127",
+   "id": "article-0126",
    "question": "Select the grammatically correct sentence.",
    "options": [
     "The harder he works, more he succeeds in achieving his dreams.",
@@ -1782,7 +1768,7 @@
    "set": "Level 02"
   },
   {
-   "id": "article-0128",
+   "id": "article-0127",
    "question": "Select the grammatically correct sentence.",
    "options": [
     "Rabindranath Tagore is known as the Shakespeare of Bengal for his literary brilliance.",
@@ -1796,7 +1782,7 @@
    "set": "Level 02"
   },
   {
-   "id": "article-0129",
+   "id": "article-0128",
    "question": "The practice of feeding poors during festive seasons is a noble act appreciated by everyone.",
    "options": [
     "feed the poor",
