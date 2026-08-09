@@ -9,7 +9,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { getSettings } from "@/lib/storage";
-import { extractPdfTextSmart, caImportChunked } from "@/lib/client-ai";
+import { extractPdfTextSmart, caFromText } from "@/lib/client-ai";
 import { addEntry, addEntryQuestions } from "@/lib/feed";
 
 export default function CaImportButton({ bucket = "daily" }) {
@@ -33,12 +33,13 @@ export default function CaImportButton({ bucket = "daily" }) {
             : `📷 Scan OCR… page ${p.page}/${p.total}`
         );
       });
-      if (!text || text.trim().length < 20) throw new Error("Is PDF se text nahi nikla.");
+      if (!text || text.trim().length < 20) throw new Error("Is PDF se text nahi nikla (shayad scanned/locked hai).");
 
-      setStatus("Hinglish mein questions bana raha hoon…");
-      const { questions } = await caImportChunked(text, (i, t, so) =>
-        setStatus(`Hinglish bana raha hoon… ${i}/${t} (abhi tak ${so} questions)`)
-      );
+      setStatus("Questions nikaal raha hoon…");
+      const { questions } = await caFromText(text, (phase, done, total) => {
+        if (phase === "hinglish") setStatus(`Hinglish bana raha hoon… ${done}/${total}`);
+        else setStatus(`AI se nikaal raha hoon… ${done}/${total || "?"}`);
+      });
       if (!questions.length) throw new Error("Is PDF mein koi question nahi mila.");
 
       const title = file.name.replace(/\.pdf$/i, "").slice(0, 80) || "Current Affairs";
