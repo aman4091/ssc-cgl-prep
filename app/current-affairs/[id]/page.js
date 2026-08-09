@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { getEntry, updateEntry } from "@/lib/feed";
+import { getEntry, getEntries, updateEntry } from "@/lib/feed";
 import { isCaBankId, loadCaBankEntry, loadCaBankIndex, caBankId } from "@/lib/cabank";
 import { saveQuiz, makeId, getSettings } from "@/lib/storage";
 import { verifyQuiz, askAI } from "@/lib/client-ai";
@@ -52,20 +52,39 @@ export default function CurrentAffairsDetail() {
   const builtin = isCaBankId(id);
   const refresh = () => { if (!builtin) setEntry(getEntry(id)); };
   useEffect(() => {
+    let alive = true;
+    // The date dropdown = built-in bank periods MERGED with the user's own
+    // imported entries of the same bucket, newest first — so an imported
+    // daily/monthly PDF is reachable from its tab like any built-in date.
+    const mine = (bucket) =>
+      getEntries("current", bucket).map((e) => ({
+        id: e.id,
+        label: `📄 ${e.title || e.date || "Import"}`,
+        count: (e.questions || []).length,
+        sort: e.date || (e.createdAt || "").slice(0, 10),
+      }));
+    const merged = (b, bucket) => {
+      const list = (bucket === "daily" ? b?.days : b?.months) || [];
+      const builtins = list.map((p) => ({ id: caBankId(p.period), label: p.label, count: p.count, sort: p.period }));
+      return [...builtins, ...mine(bucket)].sort((x, y) => (x.sort < y.sort ? 1 : -1));
+    };
     if (builtin) {
-      let alive = true;
       loadCaBankEntry(id).then((e) => { if (alive) { setEntry(e); setReady(true); } });
       loadCaBankIndex().then((b) => {
         if (!alive || !b) return;
         // Whichever list this entry belongs to is the one worth offering.
         const inDays = (b.days || []).some((d) => caBankId(d.period) === id);
-        setTab(inDays ? "daily" : "monthly");
-        const list = inDays ? b.days : b.months;
-        setSiblings((list || []).slice().sort((a, b2) => (a.period < b2.period ? 1 : -1)));
+        const t = inDays ? "daily" : "monthly";
+        setTab(t);
+        setSiblings(merged(b, t));
       });
       return () => { alive = false; };
     }
     refresh(); setReady(true);
+    const t = getEntry(id)?.bucket === "monthly" ? "monthly" : "daily";
+    setTab(t);
+    loadCaBankIndex().then((b) => { if (alive) setSiblings(merged(b, t)); });
+    return () => { alive = false; };
     /* eslint-disable-next-line */
   }, [id]);
 
@@ -188,7 +207,7 @@ export default function CurrentAffairsDetail() {
           <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
             {/* Import your own current-affairs PDF (questions + answers written
                 in Hinglish) as a new dated entry — works even on built-in dates. */}
-            <CaImportButton bucket={entry.bucket || tab || "daily"} />
+            <CaImportButton />
             {/* The only way between dates now — the grid page is gone, so there
                 is nothing to link "All dates" at. */}
             {siblings.length > 1 && (
@@ -198,9 +217,9 @@ export default function CurrentAffairsDetail() {
                 value={id}
                 onChange={(e) => router.push(`/current-affairs/${e.target.value}`)}
               >
-                {siblings.map((p) => (
-                  <option key={p.period} value={caBankId(p.period)}>
-                    {p.label} ({p.count})
+                {siblings.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.label} ({s.count})
                   </option>
                 ))}
               </select>

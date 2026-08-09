@@ -1,31 +1,30 @@
 "use client";
 
-// A "+" on the Current Affairs page: pick a current-affairs PDF, extract the
-// questions in it, rewrite each question + answer in HINGLISH (matching how CA
-// answers already look), save them as a NEW dated CA entry, and open it.
-// Works everywhere — even on a read-only built-in date — because it always
-// creates the user's own entry rather than editing the current one.
+// "+" on the Current Affairs page: pick a current-affairs PDF, extract its
+// questions (code-parsed for the standard Q.N/a-d/Correct Answer format, AI
+// fallback otherwise), save them as a NEW dated CA entry, and open it.
+// Two explicit buttons — Daily / Monthly — so the entry lands in the right tab
+// (guessing from the page you happened to be on filed monthlies under daily).
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { extractPdfTextSmart, caFromText } from "@/lib/client-ai";
 import { addEntry, addEntryQuestions } from "@/lib/feed";
 
-export default function CaImportButton({ bucket = "daily" }) {
+export default function CaImportButton() {
   const router = useRouter();
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState("");   // "" | "daily" | "monthly"
   const [status, setStatus] = useState("");
   const [err, setErr] = useState("");
 
-  const onFile = async (e) => {
+  const onFile = async (e, bucket) => {
     const file = e.target.files?.[0];
     e.target.value = "";
-    if (!file) return;
-    // No upfront key gate: the questions are parsed WITHOUT AI, so even with no
-    // DeepSeek key we still add them (in English). The key is only used to make
-    // them Hinglish; if it's missing/failing, we fall back to English silently.
+    if (!file || busy) return;
+    // No upfront key gate: parsing is AI-free; the key only makes answers
+    // Hinglish (the page's auto-explainer fills those in progressively).
 
-    setBusy(true); setErr(""); setStatus("PDF padh raha hoon…");
+    setBusy(bucket); setErr(""); setStatus("PDF padh raha hoon…");
     try {
       const { text } = await extractPdfTextSmart(file, (p) => {
         setStatus(
@@ -38,8 +37,7 @@ export default function CaImportButton({ bucket = "daily" }) {
 
       setStatus("Questions nikaal raha hoon…");
       const { questions } = await caFromText(text, (phase, done, total) => {
-        if (phase === "hinglish") setStatus(`Hinglish bana raha hoon… ${done}/${total}`);
-        else setStatus(`AI se nikaal raha hoon… ${done}/${total || "?"}`);
+        if (phase === "ai") setStatus(`AI se nikaal raha hoon… ${done}/${total || "?"}`);
       });
       if (!questions.length) throw new Error("Is PDF mein koi question nahi mila.");
 
@@ -51,20 +49,25 @@ export default function CaImportButton({ bucket = "daily" }) {
     } catch (e2) {
       setErr(e2.message || "Kuch gadbad ho gayi.");
     } finally {
-      setBusy(false); setStatus("");
+      setBusy(""); setStatus("");
     }
   };
 
+  const btn = (bucket, label) => (
+    <label
+      className={`btn btn--sm ${bucket === "daily" ? "btn--primary" : "btn--ghost"}`}
+      style={{ opacity: busy ? 0.6 : 1, pointerEvents: busy ? "none" : "auto" }}
+      title={`${bucket === "daily" ? "Daily" : "Monthly"} current-affairs PDF import karo (questions Hinglish answers ke saath)`}
+    >
+      {busy === bucket ? "⏳ …" : label}
+      <input type="file" accept="application/pdf" hidden onChange={(e) => onFile(e, bucket)} />
+    </label>
+  );
+
   return (
     <>
-      <label
-        className="btn btn--primary btn--sm"
-        style={{ opacity: busy ? 0.6 : 1, pointerEvents: busy ? "none" : "auto" }}
-        title="Current-affairs PDF import karo (question + answer Hinglish mein)"
-      >
-        {busy ? "⏳ …" : "➕ PDF import"}
-        <input type="file" accept="application/pdf" hidden onChange={onFile} />
-      </label>
+      {btn("daily", "➕ Daily PDF")}
+      {btn("monthly", "➕ Monthly PDF")}
       {(status || err) && (
         <span style={{ flexBasis: "100%", fontSize: "0.8rem", color: err ? "var(--bad)" : "var(--dim)" }}>
           {err || status}
