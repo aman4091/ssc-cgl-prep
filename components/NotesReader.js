@@ -39,7 +39,7 @@ function blockText(b) {
   }
   return "";
 }
-function pageText(p) {
+export function pageText(p) {
   return (p.blocks || []).map(blockText).filter(Boolean).join("\n");
 }
 
