@@ -70,7 +70,9 @@ export default function CurrentAffairsRush() {
 
   const update = (patch) => { const next = { ...cfg, ...patch }; setCfgState(next); setCfg(next); };
 
-  if (!hasQ) return null;
+  // hideFab: user ne button chhupa rakha hai (panel ka "🚫 Button chhupao" /
+  // Settings). Sync ke saath har device par lagta hai.
+  if (!hasQ || cfg.hideFab) return null;
 
   return (
     <>
@@ -99,6 +101,13 @@ export default function CurrentAffairsRush() {
               </select>
             </label>
             <button className="btn btn--primary btn--block mt-8" onClick={trigger}>Quiz now</button>
+            <button
+              className="btn btn--ghost btn--block mt-8"
+              onClick={() => update({ hideFab: true })}
+              title="Ye 📰 button chhup jayega — wapas lana ho to Settings me"
+            >
+              🚫 Button chhupao
+            </button>
           </div>
         )}
         <button className="rush-btn rush-btn--ca" onClick={() => setPanel((v) => !v)} title="Current Affairs Rush">📰</button>

@@ -6,6 +6,7 @@ import { exportAll, exportDataOnly, importAll, downloadBlob } from "@/lib/backup
 import { getDaysOverview } from "@/lib/vocab";
 import { pushSync, pullSync } from "@/lib/sync";
 import PyqManager from "@/components/PyqManager";
+import CaRushSetting from "@/components/CaRushSetting";
 
 const SYNC_SQL = `create table if not exists syncs (
   code text primary key,
@@ -447,6 +448,9 @@ export default function SettingsPage() {
           )}
         </div>
       </section>
+
+      {/* Current Affairs Rush — floating button on/off */}
+      <CaRushSetting />
 
       {/* PYQ Manager — apni books/topics/questions */}
       <PyqManager />
