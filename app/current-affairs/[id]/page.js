@@ -12,6 +12,7 @@ import YouTubePlayer from "@/components/YouTubePlayer";
 import Markdown from "@/components/Markdown";
 import QuestionEditor from "@/components/QuestionEditor";
 import FeedUploader from "@/components/FeedUploader";
+import CaImportButton from "@/components/CaImportButton";
 import AskButtons from "@/components/AskButtons";
 import PasteAnswer from "@/components/PasteAnswer";
 
@@ -185,6 +186,9 @@ export default function CurrentAffairsDetail() {
         <div className="row between">
           <span className="hero__eyebrow">📰 Current Affairs</span>
           <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
+            {/* Import your own current-affairs PDF (questions + answers written
+                in Hinglish) as a new dated entry — works even on built-in dates. */}
+            <CaImportButton bucket={entry.bucket || tab || "daily"} />
             {/* The only way between dates now — the grid page is gone, so there
                 is nothing to link "All dates" at. */}
             {siblings.length > 1 && (
