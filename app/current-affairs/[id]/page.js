@@ -59,9 +59,11 @@ export default function CurrentAffairsDetail() {
     const mine = (bucket) =>
       getEntries("current", bucket).map((e) => ({
         id: e.id,
-        label: `📄 ${e.title || e.date || "Import"}`,
+        label: `📄 ${e.date || e.title || "Import"}`,
         count: (e.questions || []).length,
-        sort: e.date || (e.createdAt || "").slice(0, 10),
+        // `period` is the sortable form ("2026-07"); `date` may be a pretty
+        // label ("July 2026") that doesn't sort against built-in periods.
+        sort: e.period || (/^\d{4}/.test(e.date || "") ? e.date : "") || (e.createdAt || "").slice(0, 10),
       }));
     const merged = (b, bucket) => {
       const list = (bucket === "daily" ? b?.days : b?.months) || [];
