@@ -1,47 +1,54 @@
-import fs from "node:fs";
-import path from "node:path";
+"use client";
+
+// There is no Current Affairs index/grid — this route just opens the NEWEST
+// entry of the requested tab and redirects to it.
+//
+// It used to be a server component reading only public/cabank/index.json, but
+// the user's own imported entries live in localStorage — a freshly imported
+// "July 2026" is newer than the bank's June yet the tab kept opening June. So
+// this is now a tiny client resolver: merge the built-in periods with the
+// user's entries of that bucket, pick the newest, replace() to it.
+
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { caBankId } from "@/lib/cabank";
+import { useRouter, useSearchParams } from "next/navigation";
+import { loadCaBankIndex, caBankId } from "@/lib/cabank";
+import { getEntries } from "@/lib/feed";
 
-// There is no Current Affairs index any more — no grid of every date.
-//
-// It used to render that grid and then a useEffect would router.replace() to the
-// newest entry, which is why the grid flashed up for an instant on every visit.
-// This is a SERVER component: it reads the bank, works out the newest period and
-// redirects before anything reaches the browser, so nothing flashes because
-// nothing renders.
-//
-// Moving between dates is the dropdown on the entry itself.
-export const metadata = { title: "Current Affairs · SSC CGL Prep" };
-
-function newest(list) {
-  return [...(list || [])].sort((a, b) => (a.period < b.period ? 1 : -1))[0];
+function sortKeyOfEntry(e) {
+  // `period` is the sortable form ("2026-07"); `date` may be a pretty label
+  // ("July 2026") that doesn't compare against ISO periods.
+  return e.period || (/^\d{4}/.test(e.date || "") ? e.date : "") || (e.createdAt || "").slice(0, 10);
 }
 
-export default async function CurrentAffairsIndex({ searchParams }) {
-  const sp = await searchParams;
-  const tab = sp?.tab || "daily";
+function Resolver() {
+  const router = useRouter();
+  const sp = useSearchParams();
+  const tab = sp.get("tab") || "daily";
+  const [empty, setEmpty] = useState(false);
 
-  let index = { days: [], months: [] };
-  try {
-    index = JSON.parse(
-      fs.readFileSync(path.join(process.cwd(), "public", "cabank", "index.json"), "utf8")
-    );
-  } catch {
-    /* bank missing — fall through to the message below */
-  }
+  useEffect(() => {
+    if (tab !== "daily" && tab !== "monthly") { setEmpty(true); return; }
+    let alive = true;
+    loadCaBankIndex().then((b) => {
+      if (!alive) return;
+      const list = (tab === "daily" ? b?.days : b?.months) || [];
+      const candidates = [
+        ...list.map((p) => ({ id: caBankId(p.period), sort: p.period })),
+        ...getEntries("current", tab).map((e) => ({ id: e.id, sort: sortKeyOfEntry(e) })),
+      ].sort((x, y) => (x.sort < y.sort ? 1 : -1));
+      if (candidates[0]) router.replace(`/current-affairs/${candidates[0].id}`);
+      else setEmpty(true);
+    });
+    return () => { alive = false; };
+  }, [tab, router]);
 
-  const top = newest(tab === "monthly" ? index.months : tab === "daily" ? index.days : null);
-  if (top) redirect(`/current-affairs/${caBankId(top.period)}`);
-
-  // Only Yearly reaches here: the bank ships daily and monthly compilations and
-  // nothing yearly, so there is no entry to open.
+  if (!empty) return null; // redirecting — render nothing, no flash
   return (
     <section className="hero">
       <span className="hero__eyebrow">📰 Current Affairs</span>
       <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>
-        Yearly <span className="grad">abhi khaali hai</span>
+        {tab === "yearly" ? "Yearly" : "Yahan"} <span className="grad">abhi khaali hai</span>
       </h1>
       <p className="hero__sub">Is compilation mein daily aur monthly hi hain.</p>
       <div className="row mt-16" style={{ gap: 8 }}>
@@ -49,5 +56,13 @@ export default async function CurrentAffairsIndex({ searchParams }) {
         <Link href="/current-affairs?tab=monthly" className="btn btn--ghost btn--sm">🗓️ Monthly</Link>
       </div>
     </section>
+  );
+}
+
+export default function CurrentAffairsIndex() {
+  return (
+    <Suspense fallback={null}>
+      <Resolver />
+    </Suspense>
   );
 }
