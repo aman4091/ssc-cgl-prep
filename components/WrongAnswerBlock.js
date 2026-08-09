@@ -1,5 +1,6 @@
 "use client";
 
+import { cleanAnswer } from "@/lib/wrongbook";
 import Markdown from "./Markdown";
 
 // Ek Wrong-Question record ka answer / options / details / solution / note.
@@ -15,6 +16,13 @@ export default function WrongAnswerBlock({ rec, shown, hideAnswer = false }) {
   const q = rec.q || {};
   const opts = (q.options || []).filter(Boolean);
   const showAnswer = rec.answer && (!hideAnswer || shown);
+
+  // Do answer ho sakte hain — /answers par 📥 se paste kiya gaya DUSRA answer
+  // pehle wale ko mitata nahi, wo fold ke peeche bach jata hai. Yahan pehle sirf
+  // `detail` (yaani pehla) dikhta tha, isliye tablet par naya answer paste karne
+  // ke baad bhi purana hi milta tha. Ab wahi hisaab jo card par hai.
+  const a1 = cleanAnswer(rec.detail || "");
+  const a2 = cleanAnswer(rec.detail2 || "");
 
   return (
     <>
@@ -55,13 +63,21 @@ export default function WrongAnswerBlock({ rec, shown, hideAnswer = false }) {
         </p>
       )}
 
-      {shown && rec.detail && (
+      {shown && (a2 || a1) && (
         <div
           className="mt-8"
           style={{ fontSize: "0.9rem", borderTop: "1px solid var(--glass-border)", paddingTop: 10 }}
         >
           <p className="muted" style={{ fontSize: "0.78rem", marginBottom: 4 }}>✨ Gemini · details</p>
-          <Markdown>{rec.detail}</Markdown>
+          <Markdown>{a2 || a1}</Markdown>
+          {a2 && a1 && (
+            <details className="mt-8">
+              <summary className="muted" style={{ fontSize: "0.78rem", cursor: "pointer" }}>
+                Pehla answer dekho
+              </summary>
+              <div style={{ marginTop: 6 }}><Markdown>{a1}</Markdown></div>
+            </details>
+          )}
         </div>
       )}
 

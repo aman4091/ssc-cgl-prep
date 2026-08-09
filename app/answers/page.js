@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   SUBJECTS, getWrongBook, isSubject, imagesOf, dayKey, dayLabel,
   storeImages, addWrong, removeWrong, isPracticeable,
-  setDetail2, setShownDetail, shownDetail, displayOrder,
+  setDetail2, setShownDetail, shownDetail, displayOrder, cleanAnswer,
 } from "@/lib/wrongbook";
 import { copyImageToClipboard, imageBlob } from "@/lib/imgclip";
 import { localInkCounts } from "@/lib/ink";
@@ -29,14 +29,8 @@ import ZoomableImage from "@/components/ZoomableImage";
 
 const POLL_MS = 5000; // overlay ka naya question khuli hui page par bhi dikhe
 
-// Gemini har jawab ke shuru mein apni hi file ka naam likh deta hai —
-// "File **image_afc044.png** mein diye gaye question ka sahi answer..." — jo
-// padhne mein kachra hai. Overlay ka storage.clean_answer() bhi aisi hi safai
-// karta hai.
-function cleanAnswer(s) {
-  const t = String(s || "").replace(/\r/g, "").trim();
-  return t.replace(/^[^\n]*image_[0-9a-f]{4,}\.(?:png|jpe?g|webp)[^\n]*\n+/i, "").trim();
-}
+// cleanAnswer (Gemini ke "File **image_abc.png** …" wale kachre ki safai) ab
+// lib/wrongbook.js mein hai — solve page ko bhi wahi chahiye thi.
 
 // Kram lib/wrongbook.js ke displayOrder() se aata hai — solve page bhi wahi
 // use karta hai, warna dono lists alag-alag kram mein lag jati hain (aur ek

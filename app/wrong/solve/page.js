@@ -7,7 +7,7 @@ import {
   subjectLabel, setInk, setOcrText,
   displayOrder,
 } from "@/lib/wrongbook";
-import { getDoneSet } from "@/lib/answersdone";
+import { getDoneSet, isDone, toggleDone } from "@/lib/answersdone";
 import {
   openInk, saveLocalInk, pushInk, emptyDoc, flushInkQueue,
   getConflictInk, clearConflictInk,
@@ -462,6 +462,26 @@ function SolveInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rec?.id]);
 
+  // ── ✅ Ho gaya ────────────────────────────────────────────────────────────
+  // Wahi mark jo /answers ke card par hai (lib/answersdone.js), taaki tablet par
+  // solve karte-karte hi nishaan lag jaye aur wo question wahan sabse neeche
+  // chala jaye.
+  //
+  // Mark lagne par yahan ki list ko DOBARA sort NAHI karte, jaan-boojh kar: kram
+  // page khulte waqt ek baar tay hota hai, aur beech mein badal dene se `idx`
+  // khisak jata — ✅ dabate hi kisi aur question par pahunch jaate. Naya kram
+  // agli baar khulne par.
+  const [doneNow, setDoneNow] = useState(false);
+  useEffect(() => {
+    setDoneNow(rec && !rec._quiz ? isDone(rec.id) : false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rec?.id]);
+
+  const markDone = () => {
+    if (!rec) return;
+    try { setDoneNow(toggleDone(rec.id)); } catch { /* localStorage bhara — mark chhod do */ }
+  };
+
   // Eraser toggle karte waqt wapas usi tool par jaana hai jispar tha (pen ya
   // highlighter), isliye pichhla tool yaad rakhte hain.
   const prevTool = useRef("pen");
@@ -630,6 +650,19 @@ function SolveInner() {
             {!slim && quizId && (
               <button className="btn btn--ghost btn--sm" onClick={() => finish(picks)}>
                 🏁 Result ({answered}/{list.length})
+              </button>
+            )}
+            {/* Quiz ke pseudo-records wrong book mein hain hi nahi — unhe mark
+                karne se sirf `cgl.answersDone` mein bekaar ids jama hoti. */}
+            {!quizId && (
+              <button
+                className="btn btn--ghost btn--sm"
+                aria-pressed={doneNow}
+                onClick={markDone}
+                title="Answers page par ye question sabse neeche chala jayega"
+                style={{ marginLeft: "auto" }}
+              >
+                {doneNow ? "✅ Ho gaya" : "☑️ Ho gaya"}
               </button>
             )}
           </div>
