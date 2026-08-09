@@ -13,6 +13,7 @@ import { extractPdfTextSmart, generateQuizChunked } from "@/lib/client-ai";
 import {
   getUserBooks, addUserBook, getUserTopics, addUserTopic,
   addUserTopicQuestions, userTopicCount, deleteUserTopic, deleteUserBook,
+  SHELF_BOOKS,
 } from "@/lib/userpyq";
 
 const SUBJECTS = [
@@ -31,7 +32,8 @@ export default function PyqManager() {
   const [newBook, setNewBook] = useState("");
   const [newBookSub, setNewBookSub] = useState("gs");
 
-  const activeBookId = bookId || books[0]?.id || "";
+  // Default = pehli EXISTING bank (GKTricks) — user seedha usme add kar sake.
+  const activeBookId = bookId || SHELF_BOOKS[0].id;
   const topics = useMemo(() => getUserTopics(activeBookId), [activeBookId, books.length]); // eslint-disable-line react-hooks/exhaustive-deps
   const [topicId, setTopicId] = useState("");
   const [newTopic, setNewTopic] = useState("");
@@ -115,9 +117,10 @@ export default function PyqManager() {
       <div className="glass-card">
         <h3>📚 PYQ Manager</h3>
         <p className="muted mt-8" style={{ fontSize: "0.88rem" }}>
-          Apni PYQ book banao (jaise &quot;Medieval History&quot;), usme topic/parts banao, aur
-          questions bharo — PDF se (part 1, part 2… ek-ek karke) ya paste karke. Book PYQ
-          page par sabse upar dikhegi.
+          Kisi bhi <b>existing PYQ book</b> (GKTricks, Error Pro, WAR…) mein apne naye
+          topics/questions daalo — wo usi book ke shelf par dikhenge. Ya apni <b>nayi book</b>
+          banao (jaise &quot;Medieval History&quot;) — wo PYQ page par sabse upar aayegi. Questions
+          PDF se (part 1, part 2… ek-ek karke) ya paste karke.
         </p>
 
         {/* Book */}
@@ -125,10 +128,18 @@ export default function PyqManager() {
           <label>Book</label>
           <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
             <select className="select" style={{ flex: 1, minWidth: 160 }} value={activeBookId} onChange={(e) => { setBookId(e.target.value); setTopicId(""); }}>
-              {!books.length && <option value="">— koi book nahi —</option>}
-              {books.map((b) => <option key={b.id} value={b.id}>{b.icon} {b.name}</option>)}
+              <optgroup label="Existing PYQ books">
+                {SHELF_BOOKS.map((b) => <option key={b.id} value={b.id}>{b.icon} {b.name}</option>)}
+              </optgroup>
+              {books.length > 0 && (
+                <optgroup label="Meri books">
+                  {books.map((b) => <option key={b.id} value={b.id}>{b.icon} {b.name}</option>)}
+                </optgroup>
+              )}
             </select>
-            {activeBookId && <button className="btn btn--ghost btn--sm" onClick={delBook} title="Book delete">🗑️</button>}
+            {activeBookId.startsWith("ub_") && (
+              <button className="btn btn--ghost btn--sm" onClick={delBook} title="Book delete">🗑️</button>
+            )}
           </div>
           <div className="row mt-8" style={{ gap: 8, flexWrap: "wrap" }}>
             <input className="input" style={{ flex: 1, minWidth: 140 }} placeholder="➕ Nayi book ka naam…" value={newBook} onChange={(e) => setNewBook(e.target.value)} onKeyDown={(e) => e.key === "Enter" && makeBook()} />

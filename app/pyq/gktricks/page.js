@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { loadGkIndex } from "@/lib/gkbank";
+import UserShelfTopics from "@/components/UserShelfTopics";
 
 // The crazygktrick bank, GS half — Polity and Ancient History. These used to be
 // mixed into the General Awareness upload bank, where they had no shelf of their
@@ -33,6 +34,8 @@ export default function GkTricksPage() {
       </section>
 
       <section className="section">
+        {/* Is bank ke andar user ke apne topics (Settings -> PYQ Manager) */}
+        <UserShelfTopics shelfId="shelf_gktricks" />
         <h3 className="mt-8">🌍 GS</h3>
         {!topics ? (
           <div className="placeholder">Loading… 📚</div>

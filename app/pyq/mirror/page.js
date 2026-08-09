@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { loadGkIndex } from "@/lib/gkbank";
+import UserShelfTopics from "@/components/UserShelfTopics";
 
 // "A Mirror of Common Errors" — the error-spotting half of the crazygktrick
 // bank. It used to sit inside the English upload bank as an unnamed tab; here it
@@ -32,6 +33,8 @@ export default function MirrorPage() {
       </section>
 
       <section className="section">
+        {/* Is bank ke andar user ke apne topics (Settings -> PYQ Manager) */}
+        <UserShelfTopics shelfId="shelf_mirror" />
         {!topics ? (
           <div className="placeholder">Loading… 📚</div>
         ) : topics.length === 0 ? (

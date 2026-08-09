@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { loadWarIndex } from "@/lib/warbank";
+import UserShelfTopics from "@/components/UserShelfTopics";
 
 // The WAR book's own 12 subjects. The book is browsed as a book — its subjects
 // and chapters are the ones it printed, not the site's gs chapters.
@@ -34,6 +35,8 @@ export default function WarPage() {
       </section>
 
       <section className="section">
+        {/* Is bank ke andar user ke apne topics (Settings -> PYQ Manager) */}
+        <UserShelfTopics shelfId="shelf_war" />
         {!book ? (
           <div className="placeholder">Loading the book… 📚</div>
         ) : subjects.length === 0 ? (

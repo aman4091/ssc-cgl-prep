@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { loadReasonIndex } from "@/lib/reasonbank";
+import UserShelfTopics from "@/components/UserShelfTopics";
 
 // Pinnacle Reasoning — the book's 32 chapters, browsed as a book.
 export default function ReasonbankPage() {
@@ -33,6 +34,8 @@ export default function ReasonbankPage() {
       </section>
 
       <section className="section">
+        {/* Is bank ke andar user ke apne topics (Settings -> PYQ Manager) */}
+        <UserShelfTopics shelfId="shelf_reasonbank" />
         {!book ? (
           <div className="placeholder">Loading the book… 📚</div>
         ) : chapters.length === 0 ? (

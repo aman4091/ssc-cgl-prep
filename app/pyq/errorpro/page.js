@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { loadErrorProIndex } from "@/lib/errorprobank";
+import UserShelfTopics from "@/components/UserShelfTopics";
 
 // The Error Pro (Aman Sir English) book's own grammar chapters, browsed as a book.
 export default function ErrorProPage() {
@@ -33,6 +34,8 @@ export default function ErrorProPage() {
       </section>
 
       <section className="section">
+        {/* Is bank ke andar user ke apne topics (Settings -> PYQ Manager) */}
+        <UserShelfTopics shelfId="shelf_errorpro" />
         {!book ? (
           <div className="placeholder">Loading the book… 📚</div>
         ) : chapters.length === 0 ? (

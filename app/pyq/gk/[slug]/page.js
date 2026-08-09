@@ -35,6 +35,8 @@ export default function GkTopicPage() {
           slug, label: t.name, icon: book?.icon || "📘",
           subject: book?.subject || "gs", chapter: t.name,
           userBookId: t.bookId, userBookName: book?.name || "Meri book",
+          // Shelf-books (existing banks) go back to the bank's own shelf page.
+          userBackHref: book?.href || `/pyq/my/${t.bookId}`,
         });
         setQs(getUserTopicQuestions(slug));
       }
@@ -53,7 +55,7 @@ export default function GkTopicPage() {
 
   // Where "back" goes depends on which shelf this topic sits on.
   const back = topic?.userBookId
-    ? { href: `/pyq/my/${topic.userBookId}`, label: `← ${topic.userBookName}` }
+    ? { href: topic.userBackHref, label: `← ${topic.userBookName}` }
     : topic?.subject === "english"
     ? { href: "/pyq/mirror", label: "← Mirror of Common Errors" }
     : { href: "/pyq/gktricks", label: "← GKTricks" };

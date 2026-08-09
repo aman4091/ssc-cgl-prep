@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { loadEngIndex } from "@/lib/engbank";
+import UserShelfTopics from "@/components/UserShelfTopics";
 
 // The Pinnacle English book's own 15 chapters, browsed as a book.
 export default function PinnaclePage() {
@@ -33,6 +34,8 @@ export default function PinnaclePage() {
       </section>
 
       <section className="section">
+        {/* Is bank ke andar user ke apne topics (Settings -> PYQ Manager) */}
+        <UserShelfTopics shelfId="shelf_pinnacle" />
         {!book ? (
           <div className="placeholder">Loading the book… 📚</div>
         ) : chapters.length === 0 ? (

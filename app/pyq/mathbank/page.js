@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { loadMathIndex } from "@/lib/mathbank";
+import UserShelfTopics from "@/components/UserShelfTopics";
 
 // Pinnacle Maths — the book's 27 chapters, browsed as a book.
 export default function MathbankPage() {
@@ -33,6 +34,8 @@ export default function MathbankPage() {
       </section>
 
       <section className="section">
+        {/* Is bank ke andar user ke apne topics (Settings -> PYQ Manager) */}
+        <UserShelfTopics shelfId="shelf_mathbank" />
         {!book ? (
           <div className="placeholder">Loading the book… 📚</div>
         ) : chapters.length === 0 ? (
