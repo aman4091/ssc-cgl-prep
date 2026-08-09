@@ -13,6 +13,7 @@ import {
   removeNewWord, renameNewWord,
 } from "@/lib/vocab";
 import { copyText } from "@/lib/notesrender";
+import { startChapterQuiz } from "@/lib/notesquiz";
 import Markdown from "@/components/Markdown";
 
 // useSearchParams (sidebar ?w= sync) ko Suspense boundary chahiye, warna
@@ -139,6 +140,43 @@ function NewWordsInner() {
     setPaste(""); setEditing(false); setTick((n) => n + 1);
   };
 
+  // 📝 Quiz — jo view khula hai usi ke words se (ek date chuni hai to us date
+  // ke, warna saare). Har word ka blob (word + def + pasted meaning) notes-quiz
+  // engine mein jata hai, jo 50 questions SAB words par spread karta hai. Nayi
+  // date apne aap cover — button hamesha current view par chalta hai.
+  const [quizBusy, setQuizBusy] = useState(false);
+  const [quizErr, setQuizErr] = useState("");
+  const makeQuiz = async () => {
+    if (quizBusy) return;
+    const list = dayParam ? entries.filter((e) => newWordDayKey(e.at) === dayParam) : entries;
+    const texts = list
+      .map((e) => {
+        const d = defs[String(e.w).toLowerCase()] || "";
+        const m = getMine(e.w) || "";
+        return [`Word: ${e.w}`, d, m].filter(Boolean).join("\n");
+      })
+      .filter((t) => t.length >= 30); // bina meaning wale word se question nahi ban sakta
+    if (!texts.length) {
+      setQuizErr("Pehle in words ki meaning paste karo — tabhi quiz banega.");
+      setTimeout(() => setQuizErr(""), 3000);
+      return;
+    }
+    setQuizBusy(true); setQuizErr("");
+    try {
+      const label = dayParam ? (dayParam === "old" ? "Purane words" : newWordDayLabel(curAt)) : "Saare words";
+      const { quizId } = await startChapterQuiz({
+        texts,
+        pk: `newwords#${dayParam || "all"}`,
+        title: `New Words · ${label} quiz`,
+      });
+      router.push(`/quizzes/${quizId}`);
+    } catch (e) {
+      setQuizErr(e.message === "nahi bana" ? "Quiz nahi bana — dobara try karo." : (e.message || "Error"));
+      setQuizBusy(false);
+      setTimeout(() => setQuizErr(""), 3000);
+    }
+  };
+
   if (!words.length) {
     return (
       <section className="section">
@@ -154,10 +192,23 @@ function NewWordsInner() {
   return (
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
-        <span className="hero__eyebrow">
-          🆕 New Words · {words.length}
-          {dayParam && ` · 📅 ${dayParam === "old" ? "Purane words" : newWordDayLabel(curAt)}`}
-        </span>
+        <div className="row between" style={{ alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <span className="hero__eyebrow">
+            🆕 New Words · {words.length}
+            {dayParam && ` · 📅 ${dayParam === "old" ? "Purane words" : newWordDayLabel(curAt)}`}
+          </span>
+          <span className="row" style={{ gap: 6, alignItems: "center" }}>
+            {quizErr && <span className="nt-meta" style={{ color: "var(--accent)" }}>{quizErr}</span>}
+            <button
+              className="btn btn--primary btn--sm"
+              onClick={makeQuiz}
+              disabled={quizBusy}
+              title={dayParam ? "Is date ke words se quiz banao" : "Saare new words se quiz banao"}
+            >
+              {quizBusy ? "…" : "📝 Quiz"}
+            </button>
+          </span>
+        </div>
       </section>
 
       <section className="section">
