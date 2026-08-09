@@ -9,7 +9,7 @@
  */
 // V badalte hi purane caches activate par saaf ho jate hain. Jab bhi is file ka
 // vyavhaar badle ya purana cache shaq ke ghere mein aaye, ise badha dena.
-const V = "v3";
+const V = "v4";
 const SHELL = `cgl-shell-${V}`;
 const BLOBS = `cgl-r2-${V}`;
 
@@ -37,6 +37,21 @@ async function cacheFirst(req, cacheName) {
   const res = await fetch(req);
   if (res && (res.ok || res.type === "opaque")) cache.put(req, res.clone()).catch(() => {});
   return res;
+}
+
+// Question banks (/errorprobank/*.json, /engbank/*.json, …) badalte rehte hain —
+// naye chapter judte hain, counts badhte hain. cacheFirst unhe hamesha ke liye
+// jama kar leta tha, isliye jis device ne bank ek baar khola, use naya chapter
+// kabhi dikhta hi nahi tha. Ab: cache turant do (offline chalta rahe), saath hi
+// chupchaap network se laa kar cache badal do — agli baar naya data.
+async function staleWhileRevalidate(req, cacheName) {
+  const cache = await caches.open(cacheName);
+  const hit = await cache.match(req);
+  const fresh = fetch(req).then((res) => {
+    if (res && res.ok) cache.put(req, res.clone()).catch(() => {});
+    return res;
+  }).catch(() => null);
+  return hit || (await fresh) || Response.error();
 }
 
 async function networkFirst(req) {
@@ -79,7 +94,10 @@ self.addEventListener("fetch", (e) => {
 
   if (req.mode === "navigate") { e.respondWith(networkFirst(req)); return; }
 
-  if (/\.(?:png|jpe?g|webp|gif|svg|woff2?|css|json)$/.test(url.pathname)) {
+  // JSON = data (question banks, notes index). Kabhi immutable nahi — SWR.
+  if (/\.json$/.test(url.pathname)) { e.respondWith(staleWhileRevalidate(req, SHELL)); return; }
+
+  if (/\.(?:png|jpe?g|webp|gif|svg|woff2?|css)$/.test(url.pathname)) {
     e.respondWith(cacheFirst(req, SHELL));
   }
 });
