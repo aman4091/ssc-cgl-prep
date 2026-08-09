@@ -3,19 +3,22 @@ import { deepseekChat, parseJsonLoose } from "@/lib/deepseek";
 // Convert a page of current-affairs questions (from a user's PDF) into the CA
 // question shape, keeping the questions FAITHFUL to the source but writing
 // everything in natural HINGLISH — matching how CA answers already look.
-const PROMPT = `You convert CURRENT-AFFAIRS questions from a PDF into clean JSON, keeping each question FAITHFUL to the source and writing everything in natural HINGLISH (Hindi + English mix in Roman/Latin script — the way Indian aspirants actually speak).
+const PROMPT = `You turn a page of CURRENT-AFFAIRS material (from a PDF) into practice MCQs written in natural HINGLISH (Hindi + English mix in Roman/Latin script — the way Indian aspirants actually speak).
 
 Return STRICT JSON only, no markdown fences, no commentary:
 { "questions": [ { "question": "...", "options": ["...","...","...","..."], "answer": 0, "detail": "..." } ] }
 
-Rules:
-- Extract only the questions that ACTUALLY appear in the text. Do NOT invent new topics. Keep each question's meaning exactly as given ("as it is") — just rewrite the wording in Hinglish.
-- "question": the question in Hinglish. KEEP proper nouns as-is in English — names of people, places, organisations, schemes, awards, books, dates and numbers must stay in their original English form (do NOT transliterate or translate names).
-- "options": exactly 4 options in Hinglish (again keep names/terms in English as-is). If the source already gives options, reuse them. If it is a one-line Q&A with a single correct answer, build 4 plausible options with the correct one included.
-- "answer": 0-based index of the CORRECT option. If the source marks/states the answer, honour it; otherwise choose the correct one from your own knowledge.
-- "detail": a SHORT Hinglish explanation (2-4 lines, markdown allowed) — why the answer is correct plus the one key fact to remember, in the same helpful tone a current-affairs answer key uses.
-- Skip page headers, footers, watermarks, page numbers and instructions — only real questions.
-- Output valid JSON only.`;
+The PDF text can be in EITHER form — handle both:
+- If it ALREADY has questions (MCQs / one-line Q&A): extract them FAITHFULLY, keep each question's meaning exactly "as it is", just reword in Hinglish. Reuse the given options/answer.
+- If it is current-affairs CONTENT / notes / one-liners with NO ready-made questions: CREATE clear MCQs from the important facts (dates, appointments, awards, schemes, summits, sports, books, deaths, rankings, etc.) — roughly one question per notable fact. Make as many good questions as the content genuinely supports.
+
+Rules for every question:
+- "question": in Hinglish. KEEP proper nouns as-is in English — names of people, places, organisations, schemes, awards, books, dates and numbers stay in their original English form (do NOT transliterate/translate names).
+- "options": exactly 4 options; keep names/terms in English as-is; exactly ONE correct. When creating options, make the 3 wrong ones plausible (similar type — other names/dates/places).
+- "answer": 0-based index of the CORRECT option (honour the source's answer if given; else use your own knowledge).
+- "detail": a SHORT Hinglish explanation (2-4 lines, markdown allowed) — why the answer is correct plus the one key fact to remember.
+- Skip page headers, footers, watermarks, page numbers, ads and instructions. If a bit of text has no usable fact, skip it.
+- Output valid JSON only. If there is truly nothing usable, return {"questions":[]}.`;
 
 export async function POST(req) {
   try {
