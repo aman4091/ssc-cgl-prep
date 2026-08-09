@@ -1,0 +1,3367 @@
+{
+ "chapter": "Voice",
+ "slug": "voice",
+ "count": 240,
+ "questions": [
+  {
+   "id": "voice-0001",
+   "question": "Ishika saw the tiger in the forest.",
+   "options": [
+    "The tiger saw by Ishika in the forest",
+    "The tiger was seen by the forest in Ishika.",
+    "The tiger was seen by Ishika in the forest.",
+    "The tiger sees Ishika in the forest."
+   ],
+   "answer": 2,
+   "solution": "'saw' past indefinite ka active hai, toh iska passive 'was/were + v3' se banega, active ke subject ko passive mein 'by' ke sath likhte hai, isliye 'was seen by ishika' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0002",
+   "question": "Lovely tunes are composed by Domnica.",
+   "options": [
+    "Domnica composed lovely tunes",
+    "Domnica composes tunes lovely.",
+    "Domnica will compose lovely tunes.",
+    "Domnica composes lovely tunes."
+   ],
+   "answer": 3,
+   "solution": "'are composed' present indefinite ka passive hai, toh iska active 'v1 yaa do/does+v1' se banega, 'lovely tunes' subject active mein object ban jayega, isliye option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0003",
+   "question": "The meal was not prepared by us.",
+   "options": [
+    "We had not prepare the meal.",
+    "We did not prepare the meal.",
+    "We did not preparing the meal.",
+    "We did prepare the meal."
+   ],
+   "answer": 1,
+   "solution": "'was not prepared' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye 'did not prepare' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0004",
+   "question": "The homework must be done by you.",
+   "options": [
+    "You should have done the homework.",
+    "You do the homework.",
+    "You will do the homework.",
+    "You must do the homework."
+   ],
+   "answer": 3,
+   "solution": "'must be done' passive mein likha hai, toh iska active 'must+v1' se banega, isliye 'must do' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0005",
+   "question": "The painting was admired by art enthusiasts from around the world.",
+   "options": [
+    "The painting was being admired by art enthusiasts from around the world.",
+    "Art enthusiasts from around the world admired the painting.",
+    "Art enthusiasts from around the world have admired the painting.",
+    "The painting has been admired by art enthusiasts from around the world."
+   ],
+   "answer": 1,
+   "solution": "'was admired' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye 'admired' v2 wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0006",
+   "question": "He will be made President by the people.",
+   "options": [
+    "People will be making him the President",
+    "The people will make him President",
+    "By the people, he shall be made the President.",
+    "He will be made President by the people."
+   ],
+   "answer": 1,
+   "solution": "'will be made' future indefinite ka passive hai, toh iska active 'will make' se banega, isliye option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0007",
+   "question": "The contract was grabbed by the biggest telecom company in India.",
+   "options": [
+    "The biggest telecom company in India grabbed the contract.",
+    "The biggest telecom company in India grabs the contract.",
+    "The biggest telecom company in India will grab the contract.",
+    "The biggest telecom company in India has grabbed the contract."
+   ],
+   "answer": 0,
+   "solution": "'was grabbed' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye 'grabbed' v2 wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0008",
+   "question": "Ajit does not help me with my homework.",
+   "options": [
+    "I am not help by Ajit with my homework.",
+    "I am not helped by Ajit with my homework.",
+    "I am helped by Ajit with my homework.",
+    "I am help by Ajit with my homework."
+   ],
+   "answer": 1,
+   "solution": "'does not help' present indefinite ka active hai, toh iska passive 'is/am/are not helped' se banega, isliye 'am not helped' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0009",
+   "question": "The letter will be delivered by the postman tomorrow.",
+   "options": [
+    "The postman delivered the letter tomorrow",
+    "The postman will have delivered the letter tomorrow.",
+    "The postman will deliver the letter tomorrow.",
+    "The postman will be delivering the letter tomorrow."
+   ],
+   "answer": 2,
+   "solution": "'will be delivered' future indefinite ka passive hai, toh iska active 'will +v1' se banega, isliye 'will deliver' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0010",
+   "question": "Neena will visit Greece in May.",
+   "options": [
+    "Greece had been visited by Neena in May.",
+    "Greece has been visited by Neena in May.",
+    "Greece will be visited by Neena in May.",
+    "Greece will visit Neena in May"
+   ],
+   "answer": 2,
+   "solution": "'will visit' future indefinite ka active hai, toh iska passive 'will be visited' se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0011",
+   "question": "The poor cat was brutally chased by the kids.",
+   "options": [
+    "The kids brutally chase the poor cat.",
+    "The kids did brutally chased the poor cat.",
+    "The kids were brutally chasing the poor cat.",
+    "The kids brutally chased the poor cat."
+   ],
+   "answer": 3,
+   "solution": "'was chased' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye v2 'chased' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0012",
+   "question": "The teachers of our school have already taken this training.",
+   "options": [
+    "This training has already been taken by the teachers of our school.",
+    "This training has been taken by the teachers of our school.",
+    "This training has already been taken by the our school teachers.",
+    "This training was already taken by the teachers of our school."
+   ],
+   "answer": 0,
+   "solution": "'have already taken' present perfect ka active hai, toh iska passive 'has/have+been+v3' se banega, isliye passive mein 'has already been taken' ayega aur 'by' ke sath 'the teachers of our school' ayega, isliye option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0013",
+   "question": "Ravi will play the match.",
+   "options": [
+    "The match is played by Ravi.",
+    "The match will have been played by Ravi.",
+    "The match will be playing by Ravi.",
+    "The match will be played by Ravi."
+   ],
+   "answer": 3,
+   "solution": "'will play' active hai, toh iska passive 'will be played' hoga, joki option D mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0014",
+   "question": "The letter was being typed by the secretary when the phone rang.",
+   "options": [
+    "The secretary will type the letter when the phone rings.",
+    "The secretary types the letter when the phone rings",
+    "The secretary was typing the letter when the phone rang.",
+    "The secretary is typing the letter when the phone rings."
+   ],
+   "answer": 2,
+   "solution": "'was being typed' past continuous ka passive hai, toh iska active 'was/were + typing' se banega, isliye 'was typing' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0015",
+   "question": "He must deliver pizza.",
+   "options": [
+    "Pizza has to be delivered by him.",
+    "Pizza have to be delivered by him.",
+    "Pizza must be delivered by him.",
+    "Pizza can be delivered by him."
+   ],
+   "answer": 2,
+   "solution": "'must deliver' active mein likha hai, toh iska passive 'must be delivered' se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0016",
+   "question": "Sonam does not like bananas.",
+   "options": [
+    "Banana is not liked by Sonam.",
+    "Bananas have not been liked by Sonam.",
+    "Bananas are not liked by Sonam.",
+    "Bananas had not been liked by Sonam."
+   ],
+   "answer": 2,
+   "solution": "'does not like' present indefinite ka active hai, toh iska passive 'is/am/are+v3' se banega, 'bananas' plural hai, isliye 'are not liked' sahi hoga, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0017",
+   "question": "Someone has taken my secret diary.",
+   "options": [
+    "My secret diary had been taken by someone.",
+    "My secret diary has to be taken by someone.",
+    "My secret diary has been taken by someone.",
+    "My secret diary will have been taken by someone."
+   ],
+   "answer": 2,
+   "solution": "'has taken' present perfect ka active hai, toh iska passive 'has/have been taken' se banega, isliye 'has been taken' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0018",
+   "question": "The drug pedlar was arrested by the narcotics team.",
+   "options": [
+    "The narcotics team was arrested the drug pedlar.",
+    "The narcotics team arrest the drug pedlar.",
+    "The narcotics team arrested the drug pedlar.",
+    "The narcotics team has arrested the drug pedlar."
+   ],
+   "answer": 2,
+   "solution": "'was arrested' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye v2 'arrested' wala option C sabse sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0019",
+   "question": "Scientists were conducting experiments on the newly discovered species.",
+   "options": [
+    "Experiments on the newly discovered species had been conducted by the scientists.",
+    "The newly discovered species has been conducting experiments by scientists.",
+    "The newly discovered species has been experimented on by scientists.",
+    "Experiments were being conducted on the newly discovered species by scientists."
+   ],
+   "answer": 3,
+   "solution": "'were conducting' past continuous ka active hai, toh iska passive 'was/were being conducted' se banega, isliye 'were being conducted' wala option D sabse sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0020",
+   "question": "I will never overlook this creativity.",
+   "options": [
+    "This creativity will never be overlooked by me.",
+    "This creativity will be overlooked by me.",
+    "This creativity will being overlooked by me.",
+    "This creativity will not never be overlooked by me."
+   ],
+   "answer": 0,
+   "solution": "'will never overlook' future indefinite ka active hai, toh iska passive 'will never be overlooked' se banega, joki option A mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0021",
+   "question": "Who invited you to this party ?",
+   "options": [
+    "By whom you are invited to this party?",
+    "By whom are you invited to this party?",
+    "By whom you were invited to this party?",
+    "By whom were you invited to this party?"
+   ],
+   "answer": 3,
+   "solution": "'invited' past indefinite ka active hai, toh iska passive 'was/were invited' se banega, aur 'who' passive mein 'by whom' mein change hoga, interrogative sentence hai, isliye verb 'you' subject se pehle ayegi, isliye 'by whom were you invited to this party?' option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0022",
+   "question": "The team will announce the winner tomorrow.",
+   "options": [
+    "The team will announce tomorrow the winner.",
+    "The winner will announce tomorrow by the team.",
+    "The winner will be announced by the team tomorrow.",
+    "Tomorrow will be announced the winner by the team."
+   ],
+   "answer": 2,
+   "solution": "'will announce' future indefinite ka active hai, toh iska passive 'will be announced' se banega, aur passive mein 'the winner' subject banega, isliye option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0023",
+   "question": "Rick was completing graduation last year.",
+   "options": [
+    "Graduation is being completed by Rick last year.",
+    "Graduation was being completed by Rick last year.",
+    "Graduation were completed by Rick last year.",
+    "Graduation was completed by Rick last year"
+   ],
+   "answer": 1,
+   "solution": "'was completing' past continuous ka active hai, toh iska passive 'was/were being completed' se banega, isliye 'was being completed' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0024",
+   "question": "The children have made the box.",
+   "options": [
+    "The box is being made by the children.",
+    "Children had made the box.",
+    "The box had been made by the children.",
+    "The box has been made by the children."
+   ],
+   "answer": 3,
+   "solution": "'have made' present perfect ka active hai, toh iska passive 'has/have been made' se banega, isliye 'has been made' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0025",
+   "question": "They are organising a concert for charity.",
+   "options": [
+    "A concert is being organised by them for charity.",
+    "They are organising a charity concert.",
+    "They are being organised a concert for charity.",
+    "A concert for charity is organising by them."
+   ],
+   "answer": 0,
+   "solution": "'are organising' present continuous ka active hai, toh iska passive 'is/am/are being organised' se banega, 'a concert' subject banega jiske according 'is' singular helping verb ayegi, isliye 'is being organized' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0026",
+   "question": "Martha made pancakes yesterday.",
+   "options": [
+    "Pancakes had been made by Martha yesterday.",
+    "Pancakes were being made by Martha yesterday.",
+    "Pancakes were made by Martha yesterday.",
+    "Pancakes was made by Martha yesterday."
+   ],
+   "answer": 2,
+   "solution": "'made' past indefinite ka active hai, toh iska passive 'was/were made' se banega, passive mein 'pancakes' plural subject hai jiske according 'were made' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0027",
+   "question": "I will be gifted a fancy doll by them the next day.",
+   "options": [
+    "They gifted me a fancy doll yesterday.",
+    "They are gifting me a fancy doll the next day.",
+    "They gift me a fancy doll the previous day.",
+    "They will gift me a fancy doll tomorrow."
+   ],
+   "answer": 3,
+   "solution": "'will be gifted' future indefinite ka passive hai, toh iska active 'will gift' se banega, isliye 'will gift' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0028",
+   "question": "He will give a lecture on personality development.",
+   "options": [
+    "A lecture on personality development can be given by him.",
+    "A lecture will be given on personality development.",
+    "A lecture on personality development will be given by him.",
+    "A lecture on personality development will be giving by him."
+   ],
+   "answer": 2,
+   "solution": "'will give' future indefinite ka active hai, toh iska passive 'will be given' se banega, aur 'on personality development' 'lecture' ke liye aaya hai, toh sahi meaning ke liye issi ke sath rahega, isliye option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0029",
+   "question": "The poor fellow was laughed at by the crowd.",
+   "options": [
+    "The crowd was laughed at the poor fellow.",
+    "The crowd had laughed at the poor fellow.",
+    "The crowd is laughed at the poor fellow.",
+    "The crowd laughed at the poor fellow."
+   ],
+   "answer": 3,
+   "solution": "'was laughed' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye v2 'laughed' wala option D sahi hoga",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0030",
+   "question": "They are building a new hospital in the city.",
+   "options": [
+    "A new hospital was built in the city by them.",
+    "A new hospital has been built in the city by them.",
+    "A new hospital will be built in the city by them.",
+    "A new hospital is being built in the city by them."
+   ],
+   "answer": 3,
+   "solution": "'are building' present continuous ka active hai, toh iska passive 'is/am/are being built' se banega, isliye 'is being built' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0031",
+   "question": "They have built a new bridge across the river.",
+   "options": [
+    "A new bridge has been built across the river by them.",
+    "A new bridge by them has been built across the river.",
+    "A new bridge has built across the river by them.",
+    "The river has been built a new bridge by them."
+   ],
+   "answer": 0,
+   "solution": "'have built' present perfect ka active hai, toh iska passive 'has/have been built' se banega, aur passive mein 'a new bridge' subject banega aur 'by them' last mein ayega, isliye option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0032",
+   "question": "By whom were you injured?",
+   "options": [
+    "Who has injured you?",
+    "Who injured you?",
+    "Who had injured you?",
+    "Who had been injuring you?"
+   ],
+   "answer": 1,
+   "solution": "'were you injured' past indefinite ka passive hai, iska active 'v2 yaa did+v1' se banega, isliye v2 'injured' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0033",
+   "question": "Were the plants being grafted by the gardener?",
+   "options": [
+    "Was the gardener grafting the plants?",
+    "Was the gardener grafted the plants?",
+    "Were the plants grafting the gardener?",
+    "Were the gardener grafting the plants?"
+   ],
+   "answer": 0,
+   "solution": "'were being grafted' past continuous ka passive hai, iska active 'was/were grafting' se banega, passive mein 'gardener' subject banega, isliye 'was' singular verb ayegi, isliye option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0034",
+   "question": "Dipesh will send Rakesh away to college for certain reasons.",
+   "options": [
+    "Rakesh will have to be sent away to college for certain reasons by Dipesh.",
+    "Rakesh will be sent away to college for certain reasons by Dipesh.",
+    "Rakesh would have been sent away to college for certain reasons by Dipesh.",
+    "Rakesh would be sent away to college for certain reasons by Dipesh."
+   ],
+   "answer": 1,
+   "solution": "'will send' future indefinite ka active hai, toh passive 'will be sent' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0035",
+   "question": "Why are you repeatedly called by her?",
+   "options": [
+    "Why she calls you repeatedly?",
+    "Why had she called you repeatedly?",
+    "Why was she calling you repeatedly?",
+    "Why does she call you repeatedly?"
+   ],
+   "answer": 3,
+   "solution": "'are called' present indefinite ka passive hai, toh iska active 'v1 yaa do/does+v1' se banega, kyunki sentence interrogative hai, isliye subject 'she' se pehle 'does' singular verb ayegi, isliye option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0036",
+   "question": "Can you compose an inspiring poem?",
+   "options": [
+    "Can an inspiring poem be composed?",
+    "An inspiring poem can be composed by you.",
+    "Can an inspiring poem be composed by you?",
+    "Can an inspiring poem by you composed?"
+   ],
+   "answer": 2,
+   "solution": "'can compose' active mein hai, toh passive mein 'can be composed' se banega, aur 'you' subject passive mein 'by you' mein change hoga, isliye option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0037",
+   "question": "The tutor was not teaching the student.",
+   "options": [
+    "The student was teaching the tutor.",
+    "The student was not taught by the tutor.",
+    "The student was not being taught by the tutor.",
+    "The student was not being teaching by the tutor."
+   ],
+   "answer": 2,
+   "solution": "'was not teaching' past continuous ka active hai, toh iska passive 'was/were not being taught' se banega, isliye 'was not being taught' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0038",
+   "question": "People will respect his bravado.",
+   "options": [
+    "His bravado will being respected by people.",
+    "His bravado will have to be respected by people.",
+    "His bravado will be respected by people.",
+    "His bravado will be respect by people."
+   ],
+   "answer": 2,
+   "solution": "'will respect' active mein likha hai, toh iska passive 'will be respected' se banega, isliye option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0039",
+   "question": "People know Stellenbosch for its greenery and delicious street foods.",
+   "options": [
+    "Stellenbosch was known to people for its greenery and delicious street foods.",
+    "Stellenbosch is known to people for its greenery and delicious street foods.",
+    "Stellenbosch had been known to people for its greenery and delicious street foods.",
+    "Stellenbosch have been known to people for its greenery and delicious street foods"
+   ],
+   "answer": 1,
+   "solution": "'know' present indefinite ka active hai, toh iska passive 'is/am/are known' se banega, toh 'is known' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0040",
+   "question": "The cashier had finished the assigned task on time.",
+   "options": [
+    "The assigned task is finished by the cashier on time.",
+    "The assigned task has been finished by the cashier on time.",
+    "The assigned task had been finished by the cashier on time.",
+    "The assigned task was finished by the cashier on time."
+   ],
+   "answer": 2,
+   "solution": "'had finished' past perfect ka active hai, toh iska passive 'had been finished' se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0041",
+   "question": "Data is being collected by the researcher.",
+   "options": [
+    "The researcher has collected data.",
+    "The researcher is collecting data.",
+    "The researcher has been collecting data.",
+    "The researcher will be collecting data."
+   ],
+   "answer": 1,
+   "solution": "'is being collected' present continuous ka passive hai, toh iska active 'is/am/are collecting' se banega, isliye 'is collecting' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0042",
+   "question": "The concert tickets were bought by my friend",
+   "options": [
+    "My friend has bought the concert tickets.",
+    "My friend bought the concert tickets.",
+    "My friend buys the concert tickets.",
+    "My friend is buying the concert tickets."
+   ],
+   "answer": 1,
+   "solution": "'were bought' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye v2 'bought' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0043",
+   "question": "Inayat did not greet her.",
+   "options": [
+    "She was not going to be greeted by Inayat.",
+    "She was not at all greeted by Inayat.",
+    "She was not greeted by Inayat.",
+    "She was not being greeted by Inayat."
+   ],
+   "answer": 2,
+   "solution": "'did not greet' past indefinite ka active hai, toh iska passive 'was/were not greeted' se banega, isliye 'was not greeted' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0044",
+   "question": "Meenakshi could have sent a reply.",
+   "options": [
+    "A reply could have be sent by Meenakshi.",
+    "A reply could have been sent by Meenakshi.",
+    "A reply could have sent by Meenakshi.",
+    "A reply could have been send by Meenakshi."
+   ],
+   "answer": 1,
+   "solution": "'could have sent' active voice mein hai, toh iska passive 'could have been sent' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0045",
+   "question": "The school will hire new teachers.",
+   "options": [
+    "New teachers will join the school.",
+    "The school will be hiring new teachers.",
+    "New teachers are hired by the school.",
+    "New teachers will be hired by the school."
+   ],
+   "answer": 3,
+   "solution": "'will hire' active mein likha hai, toh iska passive 'will be hired' se banega, joki option D mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0046",
+   "question": "The teenager delivered the speech.",
+   "options": [
+    "The speech has been delivered by the teenager.",
+    "The speech is delivered by the teenager.",
+    "The speech was delivered by the teenager.",
+    "The speech was being delivered by the teenager."
+   ],
+   "answer": 2,
+   "solution": "'delivered' past indefinite ka active hai, toh iska passive 'was/were delivered' se banega, isliye 'was delivered' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0047",
+   "question": "Priya washes her clothes in the evening.",
+   "options": [
+    "The clothes was washed by Priya in the evening.",
+    "The clothes are washed by Priya in the evening.",
+    "The clothes is washed by Priya in the evening.",
+    "The clothes were washed by Priya in the evening."
+   ],
+   "answer": 1,
+   "solution": "'washes' present indefinite ka active hai, toh iska passive 'is/am/are washed' se banega, toh passive mein 'clothes' plural subject banega, isliye plural verb 'are washed' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0048",
+   "question": "The baker baked the cake.",
+   "options": [
+    "The cake was baked by the baker",
+    "The cake had been baked by the baker.",
+    "The baker has been baking the cake.",
+    "The cake has been baked by the baker."
+   ],
+   "answer": 0,
+   "solution": "'baked' past indefinite ka active hai, toh iska passive 'was/were baked' se banega, isliye 'was baked' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0049",
+   "question": "Select the sentence that is expressed in passive voice.",
+   "options": [
+    "I prefer tea to coffee.",
+    "Children are participating in sand-art competition.",
+    "She sketches beautifully.",
+    "The consignment was delivered yesterday."
+   ],
+   "answer": 3,
+   "solution": "Question mein passive voice wala option batana hai, isliye 'was delivered' past indefinite ka passive wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0050",
+   "question": "He has written a best-selling novel.",
+   "options": [
+    "A best-selling novel was being written by him",
+    "A best-selling novel has been written by him.",
+    "A best-selling novel was written by him.",
+    "A best-selling novel would have been written by him."
+   ],
+   "answer": 1,
+   "solution": "'has written' present perfect ka active hai, toh iska passive 'has/have been written' se banega, isliye 'has been written' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0051",
+   "question": "He wrote an inspiring speech for the event.",
+   "options": [
+    "An inspiring speech was being written by him for the event.",
+    "An inspiring speech was written by him for the event.",
+    "An inspiring speech is written by him for the event.",
+    "An inspiring speech has been written by him for the event."
+   ],
+   "answer": 1,
+   "solution": "'wrote' past indefinite ka active hai, toh iska passive 'was/were written' se banega, isliye 'was written' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0052",
+   "question": "He was given a reward for his contribution by the Governor.",
+   "options": [
+    "For his contribution, he was rewarded by the governor.",
+    "The governor rewarded him.",
+    "The governor gave him a reward for his contribution.",
+    "Rewarded by the governor, as he contributed along."
+   ],
+   "answer": 2,
+   "solution": "'was given' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye v2 'gave' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0053",
+   "question": "The mother loves the baby.",
+   "options": [
+    "The baby was loved by the mother.",
+    "The baby will be loved by the mother.",
+    "The baby has been loved by the mother.",
+    "The baby is loved by the mother."
+   ],
+   "answer": 3,
+   "solution": "'loves' present indefinite ka active hai, toh iska passive 'is/am/are loved' se banega, isliye 'is loved' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0054",
+   "question": "The chef prepares the meal with great care.",
+   "options": [
+    "The meal was prepared with great care by the chef.",
+    "The meal will be prepared with great care by the chef.",
+    "The meal is prepared with great care by the chef.",
+    "The meal has been prepared with great care by the chef."
+   ],
+   "answer": 2,
+   "solution": "'prepares' present indefinite ka active hai, toh iska passive 'is/am/are prepared' se banega, isliye 'is prepared' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0055",
+   "question": "The novels of Dickens are being read by Mayank.",
+   "options": [
+    "Mayank is reading the novels of Dickens.",
+    "Mayank has been reading the novels of Dickens.",
+    "Mayank was reading the novels of Dickens.",
+    "Mayank had been reading the novels of Dickens."
+   ],
+   "answer": 0,
+   "solution": "'are being read' present continuous ka passive hai, toh iska active 'is/am/are reading' se banega, isliye 'is reading' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0056",
+   "question": "A comic play was performed by the comedian.",
+   "options": [
+    "The comedian performs a comic play.",
+    "The comedian performed a comic play.",
+    "The comedian performance a comic play.",
+    "The comedian do perform a comic play."
+   ],
+   "answer": 1,
+   "solution": "'was performed' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, toh v2 'performed' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0057",
+   "question": "They are repairing the old bridge after the monsoon.",
+   "options": [
+    "The old bridge has been repaired after the monsoon.",
+    "The old bridge is repaired after the monsoon.",
+    "The old bridge is being repaired after the monsoon.",
+    "The old bridge will be repaired after the monsoon."
+   ],
+   "answer": 2,
+   "solution": "'are repairing' present continuous ka active hai, toh iska passive 'is/am/are + being + v3' se banega, isliye 'is being repaired' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0058",
+   "question": "He had cleaned the bathroom.",
+   "options": [
+    "The bathroom has cleaned by him.",
+    "The bathroom had cleaned by him.",
+    "The bathroom had been cleaned by him.",
+    "The bathroom has been cleaned by him."
+   ],
+   "answer": 2,
+   "solution": "'had cleaned' past perfect ka active hai, toh iska passive 'had been cleaned' se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0059",
+   "question": "The mechanic will repair the bicycle on Sunday.",
+   "options": [
+    "The bicycle will repaired by the mechanic on Sunday.",
+    "The bicycle will be repaired by the mechanic on Sunday.",
+    "The bicycle will be repairing by the mechanic on Sunday.",
+    "The bicycle would be repaired by the mechanic on Sunday"
+   ],
+   "answer": 1,
+   "solution": "'will repair' active mein hai, toh iska passive 'will be repaired' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0060",
+   "question": "We should clean the house regularly.",
+   "options": [
+    "The house should have been cleaned regularly by us.",
+    "The house should be being cleaned regularly by us.",
+    "The house should be cleaned regularly by us.",
+    "The house should be clean regularly by us."
+   ],
+   "answer": 2,
+   "solution": "'should clean' active mein likha hai, toh iska passive 'should be cleaned' se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0061",
+   "question": "His father's arm was bandaged by the kind nurse.",
+   "options": [
+    "The kind nurse has bandaged his father's arm.",
+    "The kind nurse had bandaged his father's arm.",
+    "The kind nurse bandages his father's arm.",
+    "The kind nurse bandaged his father's arm."
+   ],
+   "answer": 3,
+   "solution": "'was bandaged' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, toh v2 'bandaged' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0062",
+   "question": "Rohit did not slap Kunal.",
+   "options": [
+    "Kunal was not being slapped by Rohit.",
+    "Kunal had not been slapped by Rohit.",
+    "Kunal was not slapped by Rohit.",
+    "Kunal has not been slapped by Rohit."
+   ],
+   "answer": 2,
+   "solution": "'did not slap' past indefinite ka active hai, toh iska passive 'was/were not slapped' se banega, isliye 'was not slapped' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0063",
+   "question": "Will you give me an independent project?",
+   "options": [
+    "Will you be given an independent project by me?",
+    "Would an independent project be given?",
+    "Would I be given an independent project?",
+    "Will I be given an independent project by you?"
+   ],
+   "answer": 3,
+   "solution": "'will give' future indefinite ka active hai, toh iska passive 'will be given' se banega, aur 'me' passive mein 'I' subject ban jayega, isliye option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0064",
+   "question": "The issue has been successfully resolved by the customer care team.",
+   "options": [
+    "The customer care team successfully resolves the issue.",
+    "The customer care team successfully resolved the issue.",
+    "The issue has successfully resolved the customer care team.",
+    "The customer care team has successfully resolved the issue."
+   ],
+   "answer": 3,
+   "solution": "'has been resolved' present perfect ka passive hai, toh iska active 'has/have resolved' se banega, aur active mein 'the customer care team' subject banega, isliye option D sahi answer hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0065",
+   "question": "Gill scored 3 centuries in Tata IPL 2023.",
+   "options": [
+    "3 centuries has been scored by Gill in Tata IPL 2023.",
+    "3 centuries were scored by Gill in Tata IPL 2023.",
+    "3 centuries had been scored by Gill in Tata IPL 2023.",
+    "3 centuries were being scored by Gill in Tata IPL 2023."
+   ],
+   "answer": 1,
+   "solution": "'scored' past indefinite ka active hai, toh iska passive 'was/were scored' se banega, isliye 'were scored' wala option B sahi answer hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0066",
+   "question": "A famous company conducted the workshop for its customers.",
+   "options": [
+    "The workshop were conducted by a famous company for its customers.",
+    "The workshop had been conducted by a famous company for its customers.",
+    "The workshop was conducted by a famous company for its customers.",
+    "The workshop is conducted by a famous company for its customers."
+   ],
+   "answer": 2,
+   "solution": "'conducted' past indefinite ka active hai, toh iska passive 'was/were conducted' se banega, aur 'the workshop' singular subject hai, isliye singular verb 'was conducted' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0067",
+   "question": "How have they been ordered by the minister?",
+   "options": [
+    "How have the minister ordered them?",
+    "How had the minister ordered them?",
+    "How did the minister order them?",
+    "How has the minister ordered them?"
+   ],
+   "answer": 3,
+   "solution": "'have been ordered' present perfect ka passive hai, toh iska active 'has/have ordered' se banega, aur active mein 'the minister' singular subject banega, isliye 'has ordered' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0068",
+   "question": "Reena is attending a seminar online.",
+   "options": [
+    "The seminar were attended by Reena online.",
+    "The seminar is being attended by Reena online.",
+    "The seminar was being attended by Reena online.",
+    "The seminar was to be attended by Reena online"
+   ],
+   "answer": 1,
+   "solution": "'is attending' present continuous ka active hai, toh iska passive 'is/am/are being attended' se banega, isliye 'is being attended' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0069",
+   "question": "One can achieve nothing without hard work.",
+   "options": [
+    "Nothing is achieved without hard work.",
+    "Nothing will be achieved without hard work.",
+    "Nothing has been achieved without hard work.",
+    "Nothing can be achieved without hard work."
+   ],
+   "answer": 3,
+   "solution": "'can achieve' active mein likha hai, toh iska passive 'can be achieved' se banega, joki option D mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0070",
+   "question": "Bhavna saw him carrying your suitcase.",
+   "options": [
+    "Your suitcase carried by him was seen by Bhavna.",
+    "He was seen by Bhavna carrying your suitcase.",
+    "He had been seen by Bhavna carrying your suitcase.",
+    "Your suitcase was seen by Bhavna carrying him."
+   ],
+   "answer": 1,
+   "solution": "'saw' past indefinite ka active hai, toh iska passive 'was/were seen' se banega, 'saw' verb ka object 'him' passive mein 'he' subject mein change ho jayega, isliye 'he' subject aur 'was seen' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0071",
+   "question": "These kinds of stories are written by Peter.",
+   "options": [
+    "Peter writes these kinds of stories.",
+    "Peter has written these kinds of stories.",
+    "Peter can write these kinds of stories.",
+    "Peter write these kinds of stories."
+   ],
+   "answer": 0,
+   "solution": "'are written' present indefinite ka passive hai, toh iska active 'v1 yaa do/does+v1' se banega, aur active mein 'peter' singular subject banega, isliye 'writes' singular verb wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0072",
+   "question": "A party is being given by her on the occasion of her sixteenth birthday.",
+   "options": [
+    "She will give a party on the occasion of her sixteenth birthday.",
+    "She is giving a party on the occasion of her sixteenth birthday.",
+    "She was giving a party on the occasion of her sixteenth birthday.",
+    "She has given a party on the occasion of her sixteenth birthday"
+   ],
+   "answer": 1,
+   "solution": "'is being given' present continuous ka passive hai, toh iska active 'is/am/are giving' se banega, isliye 'is giving' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0073",
+   "question": "The workers will not be satisfied with empty promises.",
+   "options": [
+    "Empty promises cannot satisfy the workers.",
+    "Empty promises do not satisfy the workers.",
+    "Empty promises will not satisfy the workers.",
+    "Empty promises would not satisfy the workers"
+   ],
+   "answer": 2,
+   "solution": "'will not be satisfied' future indefinite ka passive hai, toh iska active 'will not satisfy' se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0074",
+   "question": "Why didn't your father accompany you?",
+   "options": [
+    "Why didn't you be accompanied by your father?",
+    "Why were you not accompanied by your father?",
+    "Why wasn't your father accompanied by you?",
+    "Why have you not been accompanied by your father?"
+   ],
+   "answer": 1,
+   "solution": "'didn't accompany' past indefinite ka active hai, toh iska passive 'was/were not accompanied' se banega, aur passive mein 'you' subject banega, jiske liye 'were you not accompanied' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0075",
+   "question": "I am often invited by them to join their club.",
+   "options": [
+    "I often invite them to join the club.",
+    "The club often invites me to join them.",
+    "They often invite me to join their club.",
+    "They have often invited me to join their club"
+   ],
+   "answer": 2,
+   "solution": "'am often invited' present indefinite ka passive hai, toh iska active 'v1 yaa do/does+v1' se banega, aur 'by them' active mein 'they' subject mein change ho jayega, isliye 'they often invite me' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0076",
+   "question": "She held the child's hand firmly.",
+   "options": [
+    "The child's hand is held firmly.",
+    "The child's hand has been held firmly.",
+    "The child's hand held firmly.",
+    "The child's hand was held firmly"
+   ],
+   "answer": 3,
+   "solution": "'held' past indefinite ka active hai, toh iska passive 'was/were held' se banega, isliye 'was held' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0077",
+   "question": "A party was organized by Rayan on his 40th Birthday.",
+   "options": [
+    "Rayan organized a party on his 40th Birthday.",
+    "A party organized Rayan on his 40th Birthday",
+    "Rayan will be organizing a party on his 40th Birthday.",
+    "Rayan has organized a party on his 40th Birthday"
+   ],
+   "answer": 0,
+   "solution": "'was organized' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, aur active mein 'rayan' subject banega, isliye 'rayan organized a party' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0078",
+   "question": "Sherin is waiting for her friend.",
+   "options": [
+    "Her friend is waiting for Sherin.",
+    "Her friend will be waiting for Sherin.",
+    "Her friend has been waiting for Sherin.",
+    "Her friend is being waited for by Sherin."
+   ],
+   "answer": 3,
+   "solution": "'is waiting for' present continuous ka active hai, toh iska passive 'is/am/are being waited for' se banega, isliye 'is being waited for' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0079",
+   "question": "Mandeep has repaired the truck.",
+   "options": [
+    "The truck had been repaired by Mandeep.",
+    "The truck is been repaired by Mandeep.",
+    "The truck has been repaired by Mandeep.",
+    "The truck have been repaired by Mandeep."
+   ],
+   "answer": 2,
+   "solution": "'has repaired' present perfect ka active hai, toh iska passive 'has/have been repaired' se banega, aur passive mein 'truck' singular subject banega, isliye 'has been repaired' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0080",
+   "question": "It was decided by Salim Ali to devote his life to the preservation of Indian birds.",
+   "options": [
+    "Salim Ali decided to devote his life to the preservation of Indian birds.",
+    "Salim devoted his life to the preservation of Indian birds.",
+    "Salim Ali has decided to devote his life to the preservation of Indian birds.",
+    "Salim Ali had decided to devote his life to the preservation of Indian birds."
+   ],
+   "answer": 0,
+   "solution": "'was decided' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye v2 'decided' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0081",
+   "question": "We had repaired the roads before the monsoon set in.",
+   "options": [
+    "The roads were repaired before the monsoon set in.",
+    "The roads had been repaired before the monsoon set in.",
+    "The roads have been repaired before the monsoon set in.",
+    "The roads are repaired before the monsoon set in"
+   ],
+   "answer": 1,
+   "solution": "'had repaired' past perfect ka active hai, toh iska passive 'had been repaired' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0082",
+   "question": "His mother accompanies him wherever he goes.",
+   "options": [
+    "He has accompanied his mother wherever she has gone.",
+    "He was accompanied by his mother wherever he went.",
+    "He is accompanied by his mother wherever he goes.",
+    "He accompanies his mother wherever she goes."
+   ],
+   "answer": 2,
+   "solution": "'accompanies' present indefinite ka active hai, toh iska passive 'is/am/are accompanied' se banega, isliye 'is accompanied' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0083",
+   "question": "By whom have these facts been verified?",
+   "options": [
+    "Who has verified these facts?",
+    "Who is verifying these facts?",
+    "Who had verified these facts?",
+    "Who have verified these facts?"
+   ],
+   "answer": 0,
+   "solution": "'have been verified' present perfect ka passive hai, toh iska active 'has/have verified' se banega, aur 'by whom' active mein 'who' mein change hoga, 'who' ke sath jab tak koi reference naa ho toh isse singular maante hai, isliye 'has verified' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0084",
+   "question": "The test flight of Gaganyan was successfully carried out by the scientists of ISRO.",
+   "options": [
+    "The test flight of Gaganyan successfully carried out the scientists of ISRO",
+    "The scientists of ISRO successfully carried out the test flight of Gaganyan.",
+    "The scientists of ISRO will successfully carry out the test flight of Gaganyan.",
+    "The scientists of ISRO are successfully carrying out the test flight of Gaganyan."
+   ],
+   "answer": 1,
+   "solution": "'was carried out' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, aur 'the scientist of ISRO' active mein subject banega, isliye v2 'carried out' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0085",
+   "question": "The explosion caused serious damage in Ukraine.",
+   "options": [
+    "In Ukraine, serious damage had been caused by the explosion.",
+    "Serious damage has been caused by the explosion in Ukraine.",
+    "Serious damage in Ukraine has been caused by the explosion.",
+    "Serious damage was caused by the explosion in Ukraine"
+   ],
+   "answer": 3,
+   "solution": "'caused' past indefinite ka active hai, toh iska passive 'was/were caused' se banega, isliye 'was caused' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0086",
+   "question": "Did you hear that noise?",
+   "options": [
+    "Was that noise heard by you?",
+    "Is that noise heard by you?",
+    "Wasn't that noise heard by you?",
+    "Has that noise been heard by you?"
+   ],
+   "answer": 0,
+   "solution": "'did hear' past indefinite ka active hai, toh iska passive 'was/were heard' se banega, isliye 'was that noise heard by you' option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0087",
+   "question": "Someone has drunk all the wine in the glass.",
+   "options": [
+    "All the wine in the glass had being drunk.",
+    "All the wine in the glass has been drunk by someone.",
+    "All the wine in the glass had been drunk.",
+    "All the wine in the glass has drunk."
+   ],
+   "answer": 1,
+   "solution": "'has drunk' present perfect ka active hai, toh iska passive 'has/have been drunk' se banega, isliye 'has been drunk' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0088",
+   "question": "Daniel is buying a car.",
+   "options": [
+    "A car is bought by Daniel.",
+    "A car is buy by Daniel.",
+    "A car is being bought by Daniel.",
+    "A car were being bought by Daniel."
+   ],
+   "answer": 2,
+   "solution": "'is buying' present continuous ka active hai, toh iska passive 'is/am/are being bought' se banega, isliye 'is being bought' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0089",
+   "question": "Hopefully, the match will be won by our team.",
+   "options": [
+    "Hopefully, our team will have win the match.",
+    "Hopefully, our team will win the match.",
+    "Hopefully, our team will be winning the match.",
+    "Hopefully, our team will be win the match."
+   ],
+   "answer": 1,
+   "solution": "'will be won' future indefinite ka passive hai, toh iska active 'will win' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0090",
+   "question": "He must be written to by us.",
+   "options": [
+    "We can write.",
+    "We must write to him.",
+    "I We are writing to him.",
+    "I have been writing to him."
+   ],
+   "answer": 1,
+   "solution": "'must be written' passive mein likha hai, toh iska active 'must write' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0091",
+   "question": "The courier service had delivered the parcel.",
+   "options": [
+    "The parcel service was being delivered by the courier service.",
+    "The parcel delivered the courier service.",
+    "The parcel had been delivered by the courier service.",
+    "The parcel was been delivered by the courier service."
+   ],
+   "answer": 2,
+   "solution": "'had delivered' past perfect ka active hai, toh iska passive 'had been delivered' se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0092",
+   "question": "An enquiry is demanded by us.",
+   "options": [
+    "We have demanded an enquiry.",
+    "We will demand an enquiry.",
+    "We are demanding an enquiry.",
+    "We demand an enquiry."
+   ],
+   "answer": 3,
+   "solution": "'is demanded' present indefinite ka passive hai, toh iska active 'v1 yaa do/does+v1' se banega, isliye v1 'demand' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0093",
+   "question": "I am not interested in this assignment.",
+   "options": [
+    "This assignment does not interest me.",
+    "This assignment did not interest me.",
+    "This assignment has not interested me.",
+    "This assignment is not interesting me."
+   ],
+   "answer": 0,
+   "solution": "'am not interested' present indefinite ka passive hai, toh iska active 'v1 yaa do/does+v1' se banega, isliye 'does not interest' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0094",
+   "question": "India is exporting handicrafts to several countries.",
+   "options": [
+    "Handicrafts were exported to several countries by India.",
+    "Handicrafts have been exported to several countries by India.",
+    "Handicrafts are exported to several countries by India.",
+    "Handicrafts are being exported to several countries by India."
+   ],
+   "answer": 3,
+   "solution": "'is exporting' present continuous ka active hai, toh iska passive 'is/am/are being exported' se banega, isliye 'are being exported' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0095",
+   "question": "My son learns his lessons every day.",
+   "options": [
+    "His lessons got learnt every day by my son.",
+    "His lessons is learnt by my son every day.",
+    "His lessons do learn every day by my son.",
+    "His lessons are learnt by my son every day."
+   ],
+   "answer": 3,
+   "solution": "'learns' present indefinite ka active hai, toh iska passive 'is/am/are learnt' se banega, aur passive mein 'his lessons' subject banega, isliye plural verb 'are learnt' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0096",
+   "question": "I was invited by my aunt.",
+   "options": [
+    "My aunt invited me.",
+    "My aunt will invite me.",
+    "My aunt has invited me.",
+    "My aunt is inviting me."
+   ],
+   "answer": 0,
+   "solution": "'was invited' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye v2 'invited' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0097",
+   "question": "Nick won the lottery.",
+   "options": [
+    "The lottery was won by Nick.",
+    "The lottery has been win by Nick.",
+    "The lottery is won by Nick.",
+    "The lottery is being won by Nick"
+   ],
+   "answer": 0,
+   "solution": "'won' past indefinite ka active hai, toh iska passive 'was/were won' se banega, isliye 'was won' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0098",
+   "question": "A new invention has been made by him.",
+   "options": [
+    "He was making a new invention.",
+    "He had been making a new invention.",
+    "He has made a new invention.",
+    "He were making a new invention"
+   ],
+   "answer": 2,
+   "solution": "'has been made' present perfect ka passive hai, toh iska active 'has/have made' se banega, isliye 'has made' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0099",
+   "question": "The tiger killed a deer.",
+   "options": [
+    "A deer had been killed by the tiger",
+    "A deer was killed by the tiger.",
+    "A deer has been killed by the tiger.",
+    "The deer was killed by a tiger."
+   ],
+   "answer": 1,
+   "solution": "'killed' past indefinite ka active hai, toh iska passive 'was/were killed' se banega, aur passive mein 'a deer' subject banega, isliye 'a deer was killed by the tiger' option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0100",
+   "question": "Lata has committed a heinous crime.",
+   "options": [
+    "A heinous crime have been committed by Lata.",
+    "A heinous crime has been committed by Lata.",
+    "A heinous crime was committed by Lata.",
+    "A heinous crime was being committed by Lata."
+   ],
+   "answer": 1,
+   "solution": "'has committed' present perfect ka active hai, toh iska passive 'has/have been committed' se banega, aur passive mein 'a heinous crime' singular subject banega, isliye 'has been committed' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0101",
+   "question": "Sita made gulab jamuns.",
+   "options": [
+    "Gulab jamuns made Sita.",
+    "Gulab jamuns was made by Sita.",
+    "Gulab jamuns were made by Sita.",
+    "Gulab jamun is made by Sita."
+   ],
+   "answer": 2,
+   "solution": "'made' past indefinite ka active mein hai, toh iska passive 'was/were made' se banega, aur passive mein 'gulab jamuns' subject ban jayega, isliye plural verb 'were made' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0102",
+   "question": "Rahim was writing a letter.",
+   "options": [
+    "A letter was written by Rahim",
+    "A letter was being written by Rahim.",
+    "Rahim had been writing a letter.",
+    "A letter did Rahim write"
+   ],
+   "answer": 1,
+   "solution": "'was writing' past continuous ka active hai, toh iska passive 'was/were being written' se banega, isliye 'was being written' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 01"
+  },
+  {
+   "id": "voice-0103",
+   "question": "Because of his caring nature he is appreciated by all.",
+   "options": [
+    "Because of his caring nature all appreciate him.",
+    "Because of his caring nature everyone appreciate him.",
+    "Because of his caring nature all will appreciate him.",
+    "Because of his caring nature all appreciated him."
+   ],
+   "answer": 0,
+   "solution": "'is appreciated' present indefinite ka passive hai, toh iska active 'v1 yaa do/does+v1' se banega, aur active mein 'all' subject hoga, isliye v1 'appreciate' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0104",
+   "question": "By whom was grammar taught to you?",
+   "options": [
+    "Did he teach you grammar?",
+    "Who had taught you grammar?",
+    "You were taught grammar by whom?",
+    "Who taught you grammar?"
+   ],
+   "answer": 3,
+   "solution": "'was grammar taught' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega aur 'by whom' active mein 'who' mein change hoga, option A isliye galat hoga kyunki 'who' nahi hai, isliye 'who' aur v2 'taught' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0105",
+   "question": "Historians tell us how this country was divided into three.",
+   "options": [
+    "We are told by historians how this country has been divided into three.",
+    "We are told by historians how this country divided into three.",
+    "We are told by historians how this country was divided into three.",
+    "We have been told by historians how this country was divided into three."
+   ],
+   "answer": 2,
+   "solution": "'tell' present indefinite ka active hai, toh iska passive 'is/am/are+v3' se banega, passive mein 'we' subject banega, jiske according 'are told' sahi hoga, 'was divided' waale clause ka voice change nahi hoga kyunki isme doer nahi likha jo active mein subject banega, ise aisa he chod denge, isliye option C sabse sahi answer hoga. Note:- jab bole change the voice toh sentence mein active waali cheez passive mein aur passive waali active mein.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0106",
+   "question": "By whom was Hindi taught to you?",
+   "options": [
+    "By whom were you taught Hindi?",
+    "Who teaches you Hindi?",
+    "Who taught you Hindi?",
+    "Who were you taught Hindi by?"
+   ],
+   "answer": 2,
+   "solution": "'was taught' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, aur 'by whom' active mein 'who' mein change hoga, isliye 'who taught you hindi' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0107",
+   "question": "Throw the jacket.",
+   "options": [
+    "Let us throw the jacket",
+    "The jacket was thrown by you.",
+    "Let the jacket be thrown.",
+    "The jacket must thrown by you"
+   ],
+   "answer": 2,
+   "solution": "Sentence imperative hai, transitive hai, order jaisa hai, isliye iska passive 'let' se banayenge aur 'throw' passive mein 'be thrown' mein change hoga, isliye option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0108",
+   "question": "People say Shyam is wise and honest.",
+   "options": [
+    "It is believed that Shyam is wise and honest.",
+    "Let's say that Shyam is wise and honest.",
+    "Shyam is wise and honest is said by people.",
+    "It is said that Shyam is wise and honest."
+   ],
+   "answer": 3,
+   "solution": "'say' present indefinite ka active hai, toh iska passive 'is/am/are said' se banega, aur jab 'people' wagera kuch kehte hai toh passive mein 'by people' nahi likhte hai, poore clause ko subject banane mein koi dikkat nahi hai, lekin 'it' introductory wala subject ho toh usse prefer karte hai, isliye 'it is said' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0109",
+   "question": "They were watching a movie on TV when their friends came.",
+   "options": [
+    "A movie on TV was watching by them when their friends came.",
+    "A movie on TV was being watched by them when their friends came.",
+    "When their friends came, a movie on TV was watched by them.",
+    "A movie on TV is being watched by them when their friend came"
+   ],
+   "answer": 1,
+   "solution": "'were watching' past continuous ka active hai, toh iska passive 'was/were being watched' se banega, isliye 'was being watched' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0110",
+   "question": "Tigers look after their cubs till they can hunt on their own.",
+   "options": [
+    "Till cubs can hunt on their own, tigers look at them.",
+    "Cubs are looked after by tigers till they can hunt on their own.",
+    "Cubs are looked by tigers till they can hunt on their own.",
+    "After cubs can hunt on their own, tigers do not look them."
+   ],
+   "answer": 1,
+   "solution": "'look after' present indefinite ka active hai, toh iska passive 'is/am/are+v3' se banega, isliye 'are looked after' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0111",
+   "question": "My mother will bake two dozen cookies for the bake sale.",
+   "options": [
+    "Two dozen cookies shall be baked by my mother for the bake sale.",
+    "Two dozen cookies will be baked by my mother for the bake sale.",
+    "Two dozen cookies will baked by my mother for the bake sale.",
+    "Two dozen cookies will have been baked by my mother for the bake sale."
+   ],
+   "answer": 1,
+   "solution": "'will bake' future indefinite ka active hai, toh iska passive 'will be baked' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0112",
+   "question": "They will send Madhu away to a boarding school.",
+   "options": [
+    "Madhu will be sent away to a boarding school by them.",
+    "Madhu will send away to a boarding school by them.",
+    "Madhu shall be sent away to a boarding school by them.",
+    "Madhu will have been sent away to a boarding school by them."
+   ],
+   "answer": 0,
+   "solution": "'will send' future indefinite ka active hai, toh iska passive 'will be sent' se banega, joki option A mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0113",
+   "question": "The company will launch the new product next month, and they are already promoting it through  various marketing channels.",
+   "options": [
+    "The new product will be launched by the company next month, and it is already being promoted through various marketing channels.",
+    "The new product were been launched by the company next month, and it already was promoting through various marketing channels.",
+    "The new product was launched by the company next month, and it is already promoted through various marketing channels.",
+    "The new product will have been launched by the company next month, and it was already being promoted through various marketing channels."
+   ],
+   "answer": 0,
+   "solution": "'will launch' active mein hai, toh iska passive 'will+be+v3' se banega, isliye 'will be launched' wala option A sahi hoga. Aur 'are promoting' passive mein 'is/am/are + being + V3' se banega, Subject 'it' singular hai isliye 'is being promoted' hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0114",
+   "question": "Don't let Dylan fool you!",
+   "options": [
+    "Do not be fooled by Dylan.",
+    "Do not ever be fooled by Dylan.",
+    "Do not be fool by Dylan.",
+    "Do not have been fooled by Dylan."
+   ],
+   "answer": 0,
+   "solution": "'let' ka passive generally 'allow, suggest' wagera se banate hai, lekin aisa koi option nahi hai, isliye diye gaye options mein se best meaning aur grammar ke according option A sabse sahi hoga. option D mein perfect tense ka use galat hai, option C mein 'be' ke 'v3' ka use nahi kiya, option B mein jabardasti 'ever' ka use kar diya.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0115",
+   "question": "People consider that Radha is creative in her work.",
+   "options": [
+    "Radha's creativity in her work is considered by others.",
+    "It is considered that Radha is creative in her work.",
+    "Creativity in work by Radha is considered by people.",
+    "People have considered Radha's creativity in her work."
+   ],
+   "answer": 1,
+   "solution": "'consider' present indefinite ka active hai, toh iska passive 'is/am/are considered' se banega, jab active mein 'people' subject ho toh passive mein 'by people' nahi likhte aur passive mein jab object clause ho toh 'it' introductory subject wala prefer karte hai, isliye 'it is considered' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0116",
+   "question": "The police had caught the thief on the day before yesterday.",
+   "options": [
+    "The thief has been caught by the police on the day before yesterday.",
+    "The thief had been caught by the police on the day before yesterday.",
+    "The thief was being caught by the police on the day before yesterday.",
+    "The thief had caught by the police on the day before yesterday."
+   ],
+   "answer": 1,
+   "solution": "'had caught' past perfect ka active hai, toh iska passive 'had been caught' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0117",
+   "question": "I will finish this book in a month.",
+   "options": [
+    "This book would be finished by me in a month.",
+    "This book will be finished by me in a month.",
+    "Will be book finish by me in a month.",
+    "Will this book be finished by me in a month?"
+   ],
+   "answer": 1,
+   "solution": "'will finish' future indefinite ka active hai, toh iska passive 'will be finished' se banega, joki option B mein follow ho raha hai. Option 4 galat hoga kyunki yeh interrogative mein likha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0118",
+   "question": "His behaviour vexes me sometimes.",
+   "options": [
+    "He is being vexing me with his behaviour.",
+    "Sometimes he vexes me with his behaviour.",
+    "I am sometimes vexed by his behaviour.",
+    "His behaviour is vexed."
+   ],
+   "answer": 2,
+   "solution": "'vexes' present indefinite ka active hai, toh iska passive 'is/am/are vexed' se banega, passive mein 'me' 'I' mein change ho jayega jiske according 'am' helping verb ayegi, isliye option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0119",
+   "question": "Trigonometry has been taught by him for donkey's years.",
+   "options": [
+    "He had been teaching trigonometry for donkey's years.",
+    "He has been trigonometry teaching for donkey's years.",
+    "He is teaching trigonometry for donkey's years.",
+    "He has been teaching trigonometry for donkey's years."
+   ],
+   "answer": 3,
+   "solution": "'has been taught' present perfect ka passive hai, toh iska active 'has/have taught' se banega, lekin aisa koi option nahi hai, 4 options mein se best choose karna hai, option A galat hoga kyunki past perfect tense hai. option B bhi galat hoga kyunki structure galat hai, option C bhi galat hoga kyunki present continuous tense hai. option D sahi hoga kyunki 'present perfect continuous ka passive possible nahi hota, lekin passive banana padh jaaye toh iske passive ko present perfect mein likhte hai, isliye option D 'present perfect continous' ka passive 'present perfect' ho jayega, isliye given options mein se option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0120",
+   "question": "We have to say little in this matter.",
+   "options": [
+    "Little had to be said in this matter.",
+    "In this matter, little is to be said.",
+    "In this matter, little must be said.",
+    "Little has to be said in this matter."
+   ],
+   "answer": 3,
+   "solution": "'have to say' active mein likha hai, toh iska passive 'has/have to be said' se banega, isliye 'has to be said' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0121",
+   "question": "You will be given a ticket by the manager.",
+   "options": [
+    "A ticket will be given to you by the manager.",
+    "The manager will give you a ticket.",
+    "The ticket was given to you by the manager.",
+    "The manager should give you a ticket."
+   ],
+   "answer": 1,
+   "solution": "'will be given' future indefinite ka passive hai, toh iska active 'will give' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0122",
+   "question": "The research team is conducting experiments on a new drug that could revolutionise the treatment of the disease.",
+   "options": [
+    "Experiments have been conducted on a new drug that could have revolutionised the treatment of the disease through the research team.",
+    "Experiments were being conducted on a new drug that could revolutionise the treatment of the disease by the research team.",
+    "Experiments are conducted on a new drug that could revolutionise the treatment of the disease from the research team.",
+    "Experiments are being conducted on a new drug that could revolutionise the treatment of the disease by the research team"
+   ],
+   "answer": 3,
+   "solution": "'is conducting' present continuous ka active hai, toh iska passive 'is/am/are being conducted' se banega, isliye 'are being conducted' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0123",
+   "question": "Aspirations give us the clarity of our goals.",
+   "options": [
+    "The clarity of our goals has been given by aspirations.",
+    "The clarity is given of our goals by aspirations.",
+    "The clarity of our goals are given by aspirations.",
+    "The clarity of our goals is given by aspirations"
+   ],
+   "answer": 3,
+   "solution": "'give' present indefinite ka active hai, toh iska passive 'is/am/are given' se banega, option mein passive direct object 'the clarity of our goals' se banaya hai agar indirect object 'us' se hota toh isse prefer karte, 'of our goals' 'the clarity' ke liye likha hai isliye sath ayega, aur 'the clarity' singular subject hai, isliye 'is given' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0124",
+   "question": "I will help you in submitting the assignment.",
+   "options": [
+    "You will help by me in submitting the assignment.",
+    "In submitting the assignment, I will be helped by you.",
+    "In submitting the assignment, you would be helped by me.",
+    "You will be helped by me in submitting the assignment."
+   ],
+   "answer": 3,
+   "solution": "'will help' future indefinite ka active hai, toh iska passive 'will be helped' se banega, aur passive mein 'you' subject banega, isliye 'you will be helped' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0125",
+   "question": "Why didn't she bring her son to my house ?",
+   "options": [
+    "Why wasn't her son brought by her to my house?",
+    "Why isn't her son brought to my house?",
+    "Why wasn't her son brought to my house?",
+    "Why isn't her son brought by you to my house?"
+   ],
+   "answer": 0,
+   "solution": "'didn't bring' past indefinite ka active hai, toh iska passive 'was/were brought' se banega, aur 'she' passive mein 'by her' mein change hoga, toh 'wasn't her son brought by her' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0126",
+   "question": "An unexpected call disturbed Maria terribly which compelled her to stop the performance.",
+   "options": [
+    "Maria was disturbed terribly by an unexpected call which compelled her to stop the performance.",
+    "Maria could be disturbed terribly by an unexpected call which compelled her to stop the performance.",
+    "Maria disturbed terribly by an unexpected call which compelled her to stop the performance.",
+    "Maria had been disturbed terribly by an unexpected call which compelled her to stop the performance."
+   ],
+   "answer": 0,
+   "solution": "'disturbed' past indefinite ka active hai, toh iska passive 'was/were disturbed' se banega, passive mein 'maria' subject hogi, jiske liye singular verb 'was disturbed' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0127",
+   "question": "The supermarket may declare a weekend offer for all the food items.",
+   "options": [
+    "A weekend offer may have been declared by the supermarket for all the food items.",
+    "A weekend offer would be declared by the supermarket for all the food items.",
+    "A weekend offer may be declared by the supermarket for all the food items.",
+    "A weekend offer may declare by the supermarket for all the food items."
+   ],
+   "answer": 2,
+   "solution": "'may declare' active mein likha hai, toh iska passive 'may be declared' se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0128",
+   "question": "The two old queens are signing the treaty today.",
+   "options": [
+    "The treaty is signing by the two old queens today.",
+    "The treaty is going to be signed by the two old queens today.",
+    "The treaty is being signed by the two old queens today.",
+    "The treaty is signed by the two old queens today"
+   ],
+   "answer": 2,
+   "solution": "'are signing' present continuous ka active hai, toh iska passive 'is/am/are being signed' se banega, isliye option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0129",
+   "question": "My friend did not steal my money.",
+   "options": [
+    "My friend was not stolen by my money.",
+    "My money has not been stolen by my friend.",
+    "My money is stolen by my friend.",
+    "My money was not stolen by my friend."
+   ],
+   "answer": 3,
+   "solution": "'did not steal' past indefinite ka active hai, toh iska passive 'was/were not stolen' se banega, aur passive mein 'my money' subject banega, isliye singular verb 'was not stolen' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0130",
+   "question": "Why do we have to accept these conditions?",
+   "options": [
+    "Why do these conditions have to be accepted?",
+    "Why should these conditions be accepted?",
+    "These conditions do not have to be accepted.",
+    "Why are these conditions needed to be accepted?"
+   ],
+   "answer": 0,
+   "solution": "'do' ko helping verb aur 'have' ko main verb maanke passive nahi hoga kyunki yahan pe 'have' ka matlab possession wala hai jiska passive nahi hota, isliye yeh 'do have' wala structure same rahega aur 'to accept' infinitive ka passive 'to be accepted' ho jayega, isliye 'why do these conditions have to be accepted?' option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0131",
+   "question": "John bought sweets at the store when he visited yesterday.",
+   "options": [
+    "Sweets were to be bought by John at the store when he visited yesterday.",
+    "Sweets were bought by John at the store when he visited yesterday.",
+    "Sweets were being bought by John at the store when he visited yesterday.",
+    "Sweets are bought by John at the store when he visited yesterday"
+   ],
+   "answer": 1,
+   "solution": "'bought' past indefinite ka active hai, toh iska passive 'was/were bought' se banega, passive mein 'sweets' plural subject banega, isliye 'were bought' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0132",
+   "question": "I learnt a great lesson from my failure.",
+   "options": [
+    "A great lesson is learnt by me from my failure.",
+    "A great lesson was learnt by me from my failure.",
+    "A great lesson is being learnt by me from my failure.",
+    "A great lesson learnt by me from my failure."
+   ],
+   "answer": 1,
+   "solution": "'learnt' past indefinite ka active hai, toh iska passive 'was/were learnt' se banega, isliye 'was learnt' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0133",
+   "question": "Let the fire be kept burning at night.",
+   "options": [
+    "You must burn the fire at night.",
+    "Let the fire burning at night",
+    "The fire should be burnt at night.",
+    "Keep the fire burning at night."
+   ],
+   "answer": 3,
+   "solution": "'let' aur 'be kept' se pata chal raha ki yeh imperative ka passive hai, isliye iska active imperative hoga, option B galat hoga kyunki 'let' ke baad verb ki base form aati hai. option A aur C bhi galat hoga kyunki 'imperative' mein sentence 'verb' se start hota hai, isliye 'keep the fire burning at night' option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0134",
+   "question": "I bade him write the composition twice.",
+   "options": [
+    "He was bid to write the composition twice.",
+    "He was baden to write the composition twice.",
+    "He was bade to write the composition twice.",
+    "He was bidden to write the composition twice."
+   ],
+   "answer": 3,
+   "solution": "'bade' past indefinite ka active hai, toh iska passive 'was/were bidden' se banega, isliye 'was bidden' wala option D sahi hoga. 'bid' verb forms 'bid, bade, bidden'",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0135",
+   "question": "Somebody sent him a cheque for a hundred euros as his remuneration.",
+   "options": [
+    "He was sent a cheque for a hundred euros as his remuneration by someone.",
+    "He was been sent a cheque for a hundred euros as his remuneration someone.",
+    "He sent a cheque for a hundred euros as his remuneration someone.",
+    "He is sent a cheque for a hundred euros as his remuneration someone."
+   ],
+   "answer": 0,
+   "solution": "'sent' past indefinite ka active hai, toh iska passive 'was/were sent' se banega, isliye 'was sent' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0136",
+   "question": "Everybody wants others to respect them.",
+   "options": [
+    "Everybody wanted to be respected by others.",
+    "Everybody wants to be respected by others.",
+    "They want others to be respected by everybody.",
+    "Everybody wants to respect others."
+   ],
+   "answer": 1,
+   "solution": "Iss sentence ka passive pure meaning ke base pe banaya jayega, kyunki iska meaning hai 'har koi chahta hai dusre uski respect kare', isliye iska passive 'want' verb se nahi balki 'to respect' ka passive karke banaya jayega aur yahan 'everybody aur them' ek hi hai, isliye passive karte samay 'to be respected' ka subject 'they' dubara nahi likhenge wo kaam 'everybody' ne kar diya hai. isliye 'everybody wants to be respected by others' option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0137",
+   "question": "Take these two pills with warm water.",
+   "options": [
+    "You may take these two pills with warm water.",
+    "You are ordered to take these two pills with warm water.",
+    "These two pills should be taken with warm water.",
+    "Warm water should be taken with these two pills."
+   ],
+   "answer": 2,
+   "solution": "Option A galat hoga kyunki isme passive nahi kiya, option D mein meaning galat hai. yeh sentence ek advice hai, isliye dono option B aur C sahi hai lekin, aise maana ki yeh advice kisi doctor wagera ne di hai, isliye isse 'order' nahi 'advice' mana hai, isliye 'advice' wala option C behtar hai B se. agar C option nahi hota toh B ko tick karna padta.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0138",
+   "question": "The wedding planner is making all the reservations and arrangements in advance.",
+   "options": [
+    "All the reservations and arrangements are to be made by the wedding planner in advance.",
+    "All the reservations and arrangements are being made by the wedding planner in advance.",
+    "All the reservations and arrangements are being making by the wedding planner in advance.",
+    "All the reservations and arrangements are made by the wedding planner in advance."
+   ],
+   "answer": 1,
+   "solution": "'is making' present continuous ka active hai, toh iska passive 'is/am/are being made' se banega, aur passive mein 'reservations and arrangements' plural subject banega, isliye 'are being made' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0139",
+   "question": "I am upset because my cell phone has been stolen.",
+   "options": [
+    "I was upset because they have stolen my cell phone.",
+    "I am upset because someone has stolen my cell phone.",
+    "I am upset because someone has been stealing my cell phone.",
+    "I have been upset because an unknown person has stolen my cell phone"
+   ],
+   "answer": 2,
+   "solution": "Option A galat hoga kyunki isme passive nahi kiya, option D mein meaning galat hai. yeh sentence ek advice hai, isliye dono option B aur C sahi hai lekin, aise maana ki yeh advice kisi doctor wagera ne di hai, isliye isse 'order' nahi 'advice' mana hai, isliye 'advice' wala option C behtar hai B se. agar C option nahi hota toh B ko tick karna padta.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0140",
+   "question": "The painting was done by his son.",
+   "options": [
+    "His son is doing the painting.",
+    "His son did the painting.",
+    "The painting was completed by his son.",
+    "The painting was his son work."
+   ],
+   "answer": 1,
+   "solution": "'was done' past indefinite ka passive hai, toh iska active v2 'did' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0141",
+   "question": "The lifeguard rescued Molly and her family.",
+   "options": [
+    "Molly and her family were rescued by a lifeguard.",
+    "Molly and her family were being rescued by a lifeguard.",
+    "Molly and her family is rescued by a lifeguard.",
+    "Molly and her family was rescued by a lifeguard"
+   ],
+   "answer": 0,
+   "solution": "'rescued' past indefinite ka active hai, toh iska passive 'was/were rescued' se banega, aur passive mein 'Molly and her family' subject banega, isliye yahan plural verb 'were rescued' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0142",
+   "question": "The earthquake had devastated the village beyond imagination.",
+   "options": [
+    "The village had devastated by the earthquake beyond imagination.",
+    "The village had been devastated beyond imagination by the earthquake.",
+    "The village was devastated by the earthquake beyond imagination.",
+    "The village has been devastated by the earthquake beyond imagination"
+   ],
+   "answer": 1,
+   "solution": "'had devastated' past perfect ka active hai, toh iska passive 'had been devastated' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0143",
+   "question": "I am recognised for my contribution to the academic world.",
+   "options": [
+    "People recognised me for my contribution to the academic world.",
+    "People recognise me for my contribution to the academic world.",
+    "People recognise me for their contribution to the academic world.",
+    "I recognise for my contribution to the academic world."
+   ],
+   "answer": 1,
+   "solution": "'am recognized' present indefinite ka passive hai, toh iska active 'v1 yaa do/does+v1' se banega, aur 'people' usse recognize karenge uske contribution ke liye, isliye 'people recognize me for my contribution' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0144",
+   "question": "Sara was bringing the cake for the party.",
+   "options": [
+    "The cake for the party was being bought by Sara.",
+    "The cake for the party is being brought by Sara.",
+    "The cake for the party was being brought by Sara.",
+    "The cake for the party were being brought by Sara."
+   ],
+   "answer": 2,
+   "solution": "'was bringing' past continuous ka active hai, toh iska passive 'was/were being brought' se banega, aur passive mein 'cake' subject banega, isliye singular verb 'was being brought' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0145",
+   "question": "Rohan verbally insulted Stephen in front of his parents.",
+   "options": [
+    "Stephen was verbally being insulted by Rohan in front of his parents.",
+    "Stephen has verbally insulted by Rohan in front of his parents.",
+    "Stephen was verbally insulted by Rohan in front of his parents.",
+    "Stephen had been verbally insulted by Rohan in front of his parents."
+   ],
+   "answer": 2,
+   "solution": "'insulted' past indefinite ka active hai, toh iska passive 'was/were insulted' se banega, isliye 'was verbally insulted' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0146",
+   "question": "Let the experts emphasise the importance of renewable energy.",
+   "options": [
+    "Let the importance of renewable energy be emphasised by the experts.",
+    "The importance of renewable energy let be emphasised by the experts.",
+    "Let the importance of renewable energy is emphasised by the experts.",
+    "The importance of renewable energy will be emphasised by the experts."
+   ],
+   "answer": 0,
+   "solution": "'let' ke passive mein 'allow' wagera mein change karke banata hai, lekin 'allow' koi option nahi hai, isliye 'let' ko waise he chod ke verb ko 'be+v3' mein change kar denge, isliye 'let the importance of renewable energy be emphasized' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0147",
+   "question": "Lemon tastes sour.",
+   "options": [
+    "Lemon has been tasted sour.",
+    "Lemon is tasted sour.",
+    "Lemon is sour when it is tasted.",
+    "Lemon has been sour when tasted."
+   ],
+   "answer": 2,
+   "solution": "'taste' yahan linking verb hai, isliye iska passive 'lemon is sour when it is tasted' hoga, iska 'passive not possible' bhi answer ho sakta hai, dono answer possible hai, agar dono option mein ho 'passive not possible' prefer karna.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0148",
+   "question": "What information was shared with the school authority by the inspection team?",
+   "options": [
+    "What information has the inspection team shared with the school authority?",
+    "What information did the inspection team share by the school authority?",
+    "What information did the inspection team share with the school authority?",
+    "What information the inspection team shared with the school authority?"
+   ],
+   "answer": 2,
+   "solution": "'was shared' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, kyunki interrogative wala active banega, isliye 'did share' sahi hoga, kyunki yahan active bana rahe hai, isliye yahan 'share with the school authority' ayega, isliye option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0149",
+   "question": "It is your duty to help the poor people in your parish.",
+   "options": [
+    "The poor people in your parish are to be helped by you.",
+    "It is suggested that you do your duty to help the poor in your parish.",
+    "The poor people in the parish are helped by you as duty.",
+    "You may be allowed to help the poor people in your parish."
+   ],
+   "answer": 0,
+   "solution": "'is' yahan linking verb ki tarah kaam kar rahi hai, isliye iska passive nahi hoga, balki 'to help' infinitive ka passive karenge, isliye 'to be helped' hoga, isliye option A sahi hoga. baaki options se meaning galat aa raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0150",
+   "question": "His parents will send him to a boarding school next year.",
+   "options": [
+    "He will be sent to a boarding school next year by his parents.",
+    "He will be sent to a boarding school by his parents next year.",
+    "He is to be sent to a boarding school next year by his parents.",
+    "He would be sent to a boarding school next year by his parents"
+   ],
+   "answer": 0,
+   "solution": "'will send' future indefinite ka active hai, toh iska passive 'will be sent' se banega, option A aur B dono sahi hai lekin preference ki baat kare, toh 'by + doer' last mein likha wala prefer karte hai, isliye option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0151",
+   "question": "His father fed the kids every day.",
+   "options": [
+    "The kids had been fed by the father every day.",
+    "The kids have been fed by his father every day.",
+    "The kids were being fed by his father every day.",
+    "The kids were fed by his father every day"
+   ],
+   "answer": 3,
+   "solution": "'fed' past indefinite ka active hai, toh iska passive 'was/were fed' se banega, aur passive mein 'kids' plural subject banega, isliye plural verb 'were fed' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0152",
+   "question": "Nidhi draws the diagrams.",
+   "options": [
+    "The diagrams are drawn by Nidhi.",
+    "Diagrams are drawn by the Nidhi.",
+    "The diagrams are being drawn by the Nidhi.",
+    "It is Nidhi who is drawing the diagrams."
+   ],
+   "answer": 0,
+   "solution": "'draws' present indefinite ka active hai, toh iska passive 'is/am/are drawn' se banega, aur passive mein 'the diagrams' plural subject hai, isliye plural verb 'are drawn' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0153",
+   "question": "The lion was chasing the stag behind the bush.",
+   "options": [
+    "The stag had been chased by the lion behind the bush.",
+    "The stag was chased by the lion behind the bush.",
+    "The stag was being chased by the lion behind the bush.",
+    "The stag is being chased by the lion behind the bush."
+   ],
+   "answer": 2,
+   "solution": "'was chasing' past continuous ka active hai, toh iska passive 'was/were being chased' se banega, isliye 'was being chased' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0154",
+   "question": "Some students are known to grow wise early.",
+   "options": [
+    "Some students have been knowing that they grow wise early.",
+    "People know that some students grow wise early.",
+    "Few of us know that students grow wise early.",
+    "We all know that students grew wise early."
+   ],
+   "answer": 1,
+   "solution": "'are known' present indefinite ka passive hai, toh iska active 'know yaa do/does know' se banega, option A galat hoga kyunki isme present perfect tense ka use kiya hai. option C aur D bhi galat honge kyunki 'some students' ki jagah 'students' likh diya. passive mein 'by people' understood hota hai isliye likhte nahi hai, lekin active mein subject ke roop mein likh sakte hai. isliye 'people know' aur 'some students' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0155",
+   "question": "Mr. Gupta and his brothers remodelled their house to help it sell.",
+   "options": [
+    "Their house was remodelled by Mr. Gupta and his brothers to help it sell.",
+    "Their house is remodelled by Mr. Gupta and his brothers to help it sell.",
+    "Their house was to be remodelled by Mr. Gupta and his brothers to help it sell.",
+    "Their house was being remodelled by Mr. Gupta and his brothers to help it sell."
+   ],
+   "answer": 0,
+   "solution": "'remodelled' past indefinite ka active hai, toh iska passive 'was/were remodelled' se banega, isliye 'was remodelled' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0156",
+   "question": "Nargis quickly picks out the important files from her office shelf.",
+   "options": [
+    "The important files are quickly being picked out by Nargis from her office shelf.",
+    "The important files will be quickly picked out by Nargis from her office shelf.",
+    "The important files are quickly picked out by Nargis from her office shelf.",
+    "The important files have quickly been picked out by Nargis from her office shelf"
+   ],
+   "answer": 2,
+   "solution": "'picks out' present indefinite ka active hai, toh iska passive 'is/am/are picked out' se banega, isliye 'are quickly picked out' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0157",
+   "question": "When will the dress be returned?",
+   "options": [
+    "When would you return the dress?",
+    "When shall you return the dress?",
+    "When will you return the dress?",
+    "When will you be returning the dress?"
+   ],
+   "answer": 2,
+   "solution": "'will be returned' future indefinite ka passive hai, toh iska active 'will return' se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0158",
+   "question": "He had not committed the mistake.",
+   "options": [
+    "The mistake had not been committed by him.",
+    "The mistake has not been committed by him.",
+    "The mistake was not committed by him.",
+    "Had the mistake been committed by him?"
+   ],
+   "answer": 0,
+   "solution": "'had not committed' past perfect ka active hai, toh iska passive 'had not been committed' se banega, joki option A mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0159",
+   "question": "People don't use this road much.",
+   "options": [
+    "This road isn't much used by people.",
+    "This road cannot be used much by people.",
+    "This road isn't used much by public.",
+    "This road isn't used much"
+   ],
+   "answer": 3,
+   "solution": "'don't use' present indefinite ka active hai, toh iska passive 'is/am/are not used' se banega, aur active mein 'people' agar subject ho toh passive mein 'by people' nahi likhte, isliye 'isn't used' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0160",
+   "question": "The scholar of the department could help the junior students in the proposed coaching.",
+   "options": [
+    "The junior students could be helped by the scholar of the department in the proposed coaching.",
+    "The junior students could have been helped by the scholar of the department in the proposed coaching.",
+    "The junior students could have helped by the scholar of the department in the proposed coaching.",
+    "The junior students can help by the scholar of the department in the proposed coaching."
+   ],
+   "answer": 0,
+   "solution": "'could help' active mein likha hai, toh iska passive 'could be helped' se banega, joki option A mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0161",
+   "question": "Mary was cooking the meal.",
+   "options": [
+    "The meal was already being cooked by Mary.",
+    "Mary was about to cook the meal.",
+    "The meal was being cooked by Mary.",
+    "The meal were being cooked by Mary"
+   ],
+   "answer": 2,
+   "solution": "'was cooking' past continuous ka active hai, toh iska passive 'was/were being cooked' se banega, aur passive mein 'the meal' singular subject banega, isliye singular verb 'was being cooked' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0162",
+   "question": "You must have submitted the important documents.",
+   "options": [
+    "The important documents must have been submitted by you.",
+    "The important documents might be submitted by you.",
+    "The important documents must be submitted by you.",
+    "The important documents may have been submitted by you."
+   ],
+   "answer": 0,
+   "solution": "'must have submitted' active mein likha hai, toh iska passive 'must have been submitted' se banega, joki option A mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0163",
+   "question": "I have to stay in Netherlands for a year till I finish my course.",
+   "options": [
+    "I may be allowed to stay in Netherlands for a year till I finish my course.",
+    "It is suggested that I stay in Netherlands for a year till I finish my course.",
+    "I am obliged to stay in Netherlands for a year till I finish my course.",
+    "Let me stay in Netherlands for a year till I finish my course"
+   ],
+   "answer": 2,
+   "solution": "'have to' modal hai aur 'stay' intransitive verb hai isliye iske passive nahi ho sakta aur passive hona chaiye tha 'finish' ka, lekin iske passive ka koi option nahi hai, isliye diye gaye options mein se best choose karna hai. option D galat hoga kyunki passive nahi kiya. Option A galat hoga kyunki iska matlab 'mujhe rehne diya jaaye'. Option B bhi galat hoga kyunki iska matlab 'aise salaah dii jaati hai ki mujhe netherland mein rehna pade'. Sentence ka matlab hai 'mujhe Netherlands mein rehna padega' aur same yehi meaning option C mein aa raha hai, kyunki 'I am obliged to stay' ka matlab 'mujhe rehna padega', isliye option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0164",
+   "question": "Somebody sent me a gift on my anniversary.",
+   "options": [
+    "I was surprised to have been sent a gift on my anniversary.",
+    "Someone sent a gift on my anniversary.",
+    "I was sent a gift on my anniversary by someone.",
+    "I would be sent a gift on my anniversary by someone"
+   ],
+   "answer": 2,
+   "solution": "'sent' past indefinite ka active hai, toh iska passive 'was/were sent' se banega aur passive indirect object se banana prefer karte hai, isliye passive mein 'me' kaa 'I' ho jayega, isliye 'I was sent' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0165",
+   "question": "The administrator will give you a cheque.",
+   "options": [
+    "A cheque shall be given to you by the administrator.",
+    "A cheque was given to you by the administrator.",
+    "A cheque will be given to you by the administrator.",
+    "A cheque would be given to you by the administrator"
+   ],
+   "answer": 2,
+   "solution": "'will give' future indefinite ka active hai, toh iska passive 'will be given' se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0166",
+   "question": "Leave the premises at once.",
+   "options": [
+    "You are told to leave the premises at once.",
+    "Someone is to leave the premises at once.",
+    "People left the premises at once.",
+    "Let the premises be left at once."
+   ],
+   "answer": 3,
+   "solution": "Sentence imperative hai transitive hai aur order jaise lag raha hai, isliye iska passive 'let' se banega jiska structure 'let+object+be+v3' se banega, isliye 'let +object + be left' wala option D sahi hoga. Note:- 'yeh question jab SSC mein aaya tha tab iske D option mein 'to be left' likha tha isliye yeh challenge ki category ka question tha'",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0167",
+   "question": "Who teaches you English?",
+   "options": [
+    "Who has been taught you English?",
+    "By whom were you taught English?",
+    "By whom are you taught English?",
+    "By whom was English taught to you?"
+   ],
+   "answer": 2,
+   "solution": "'teaches' present indefinite ka active hai, toh iska passive 'is/am/are taught' se banega, aur passive mein 'who' 'by whom' mein change ho jayega, isliye 'by whom are you taught english' option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0168",
+   "question": "The employer paid him the salary.",
+   "options": [
+    "He was paid by the employer salary.",
+    "He was being paid the salary by the employer.",
+    "The salary was paid to him by the employer.",
+    "He had been paid the salary by the employer"
+   ],
+   "answer": 2,
+   "solution": "'paid' past indefinite ka active hai, toh iska passive 'was/were paid' se banega, aur passive mein indirect object se banana prefer karte hai, lekin option A ka structure sahi nahi hai, isliye option A galat hoga. toh ise direct object 'the salary' se banayenge, jisse 'the salary was paid' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0169",
+   "question": "A selected group of activists had been invited by the minister before the announcement of the strike.",
+   "options": [
+    "The minister had been inviting a selected group of activists before the announcement of the strike.",
+    "The minister had invited a selected group of activists before the announcement of the strike.",
+    "The minister invited a selected group of activists before the announcement of the strike.",
+    "The minister was inviting a selected group of activists before the announcement of the strike."
+   ],
+   "answer": 1,
+   "solution": "'had been invited' past perfect ka passive hai, toh iska active 'had invited' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0170",
+   "question": "Mike decided to skip work.",
+   "options": [
+    "Work is being skipped by Mike.",
+    "Work was skipped by Mike.",
+    "Work is decided to be skipped by Mike.",
+    "The work was decided to be skipped by Mike."
+   ],
+   "answer": 3,
+   "solution": "'decided' past indefinite ka active hai, toh iska passive 'was/were decided' se banega, isliye 'was decided' wala option D sahi hoga. Note:- halanki yeh option sahi nahi hai. Waise sahi passive 'It was decided by mike to skip work' hota. lekin diye gaye options mein se best option D hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0171",
+   "question": "A farewell party for me has been organised by my office colleagues.",
+   "options": [
+    "My office colleagues are going to organise a farewell party for me.",
+    "My office colleagues have organised a farewell party for me.",
+    "My office colleagues are organising a farewell party for me.",
+    "A farewell party for me is about to be organised by my office colleagues"
+   ],
+   "answer": 1,
+   "solution": "'has been organized' present perfect ka passive hai, toh iska active 'has/have organized' se banega, isliye 'have organized' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0172",
+   "question": "He likes people to flatter him.",
+   "options": [
+    "He likes people to be flattered by him.",
+    "He likes to have been flattered by people.",
+    "He liked to be flattered by people.",
+    "He likes to be flattered by people."
+   ],
+   "answer": 3,
+   "solution": "Correct answer is 'He likes to be flattered by people'. Iss sentence ka passive pure meaning ke base pe banaya jayega, sentence ka meaning hai 'usse pasand hai ki log usse flatter kare', isliye iska passive 'likes' verb se nahi balki 'to flatter' infinitive ko passive karke banaya jayega aur yahan 'he aur him' ek hi hai, isliye passive karte samay 'to be flattered' ka subject \"he\" dubara likhne ki jarurat nahi hai, isliye 'he likes to be flattered by people' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0173",
+   "question": "Granny had given Uncle Ken a good lecture on how to be a responsible adult.",
+   "options": [
+    "Uncle Ken was giving a good lecture to Granny on how to be a responsible adult.",
+    "Granny was given a good lecture by Uncle Ken on how to be a responsible adult.",
+    "Uncle Ken was being given a good lecture by Granny on how to be a responsible adult.",
+    "Uncle Ken had been given a good lecture by Granny on how to be a responsible adult."
+   ],
+   "answer": 3,
+   "solution": "'had given' past perfect ka active hai, toh iska passive 'had been given' se banega, joki option D mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0174",
+   "question": "Not much damage to the life and property was caused by the cyclone in July this year at the Andhra coast.",
+   "options": [
+    "The cyclone has not caused much damage to the life and property in July this year at the Andhra coast.",
+    "The cyclone could not cause much damage to the life and property in July this year at the.",
+    "The Andhra coast did not cause much damage to the life and property in July this year at the cyclone.",
+    "The cyclone did not cause much damage to the life and property in July this year at the Andhra coast"
+   ],
+   "answer": 3,
+   "solution": "'was caused' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, aur passive mein 'the cyclone' subject banega, isliye 'the cyclone did not cause' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0175",
+   "question": "Rani's car is twelve years old but it has not been used much.",
+   "options": [
+    "Rani's car is twelve years old but it hasn't used her much.",
+    "Rani's car is twelve years old but she hasn't used it much.",
+    "Rani's car is twelve years old but she isn't using it much.",
+    "Rani's car is twelve years old but she didn't use it much."
+   ],
+   "answer": 1,
+   "solution": "'has not been used' present perfect ka passive hai, toh iska active 'has/have not used' se banega, aur passive 'she' subject hoga kyunki 'she' ne use nahi kari, isliye 'she hasn't used' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0176",
+   "question": "How many members were informed about the meeting in time?",
+   "options": [
+    "How many members could you inform about the meeting in time?",
+    "How many members have you informed about the meeting in time?",
+    "How many meetings did you inform about the members in time?",
+    "How many members did you inform about the meeting in time?"
+   ],
+   "answer": 3,
+   "solution": "'were informed' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, aur active bhi interrogative banega, isliye 'how many members' se starting hogi, isliye 'did you inform' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0177",
+   "question": "Let your son manage your business after your retirement.",
+   "options": [
+    "Let your retirement be managed by your son after your business.",
+    "Let your business be managed by your son after your retirement.",
+    "Your business can be managed by your son after your retirement.",
+    "Your business is being managed by your son after your retirement"
+   ],
+   "answer": 1,
+   "solution": "'let' ko passive mein 'allow' mein change karke banata hai, lekin 'allow' wala koi option nahi hai, isliye 'let' ko waise he chod ke verb ko 'be+v3' mein change kar denge, isliye 'let your business be managed' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0178",
+   "question": "Has Rahul been declared fit to play the next match?",
+   "options": [
+    "Have they declared Rahul fit to play the next match?",
+    "Did they declare Rahul fit to play the next match?",
+    "Are they declaring Rahul fit to play the next match?",
+    "Has Rahul declared the next match fit to play?"
+   ],
+   "answer": 0,
+   "solution": "'has been declared' present perfect ka passive hai, toh iska active 'has/have declared' se banega, option mein active mein 'they' ko subject banaya hai, isliye 'have they declared' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0179",
+   "question": "The king covered the hole with a huge stone.",
+   "options": [
+    "A huge stone was covered by the king with a hole.",
+    "The hole was covered by the king with a huge stone.",
+    "The king was covered by the hole with a huge stone.",
+    "The hole has been covered by the king with a huge stone."
+   ],
+   "answer": 1,
+   "solution": "'covered' past indefinite ka active hai, toh iska passive 'was/were covered' se banega, aur passive mein 'the hole' subject banega, jiske liye singular verb 'was covered' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0180",
+   "question": "Please do not pluck any flowers from the temple compound.",
+   "options": [
+    "No flowers can be plucked from the temple compound.",
+    "How can any flowers be plucked from the temple compound?",
+    "You are requested not to pluck any flowers from the temple compound.",
+    "Let any flowers not to be plucked from the temple compound."
+   ],
+   "answer": 2,
+   "solution": "Sentence imperative hai request wala hai transitive wala hai, jiska passive 'you are requested' se banta hai, isliye option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0181",
+   "question": "The money shall have been withdrawn from the bank by tomorrow.",
+   "options": [
+    "We shall have withdrawn the money from the bank by tomorrow.",
+    "We are going to withdraw the money from the bank by tomorrow.",
+    "We shall be withdrawing the money from the bank by tomorrow.",
+    "We shall withdraw the money from the bank by tomorrow."
+   ],
+   "answer": 0,
+   "solution": "'shall have been withdrawn' passive mein likha hai, toh iska active 'shall have withdrawn' se banega, joki option A mein follow ho raha hai",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0182",
+   "question": "Nobody has brought this fact to my notice.",
+   "options": [
+    "This fact had not been brought to my notice by anybody.",
+    "This fact has not been brought to my notice by anybody.",
+    "This fact is not being brought to my notice by nobody.",
+    "This fact was not brought to my notice by anybody."
+   ],
+   "answer": 1,
+   "solution": "'has brought' present perfect ka active hai, toh iska passive 'has/have not been brought' se banega, isliye 'has not been brought' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0183",
+   "question": "Nothing can be achieved without hard work.",
+   "options": [
+    "One has achieved nothing without hard work.",
+    "One can achieve nothing without hard work.",
+    "One could achieve nothing without hard work.",
+    "One will achieve nothing without hard work."
+   ],
+   "answer": 1,
+   "solution": "'can be achieved' passive mein likha hai, toh iska active 'can achieve' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0184",
+   "question": "She is going to serve tea in silver cups today.",
+   "options": [
+    "Tea will have been served in silver cups today.",
+    "Tea will be served in silver cups today.",
+    "Tea should be served in silver cups today.",
+    "Tea is going to be served in silver cups today."
+   ],
+   "answer": 3,
+   "solution": "Iss sentence mein 'is going' ka passive nahi hoga balki 'to serve' infinitive ka hoga, aur passive mein 'tea' subject banega, isliye 'tea is going to be served' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0185",
+   "question": "Who could have made such a silly mistake?",
+   "options": [
+    "By whom could such a silly mistake be made?",
+    "By whom could such a silly mistake have been made?",
+    "By whom can such a silly mistake have been made?",
+    "By whom can such a silly mistake be made?"
+   ],
+   "answer": 1,
+   "solution": "'could have made' active mein likha hai, toh iska passive 'could have been made' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0186",
+   "question": "Those who help themselves are helped by God.",
+   "options": [
+    "God is helping those who are helping others.",
+    "If you help yourself, God will help you.",
+    "God helps those who help themselves.",
+    "Help yourself and God will help you."
+   ],
+   "answer": 2,
+   "solution": "'who….se lekar… Themselves' tak yeh clause 'those' ke liye likha hai, isliye yeh clause 'those' ke sath he ayega, aur 'are helped' present indefinite ka passive hai, toh iska active 'v1 yaa do/does+v1' se banega, aur active mein 'god' subject banega, isliye 'God helps those who help themselves' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0187",
+   "question": "A bed time story was made by him for me every night.",
+   "options": [
+    "I made a bed time story for him every night.",
+    "He has been making a bed time story for me every night.",
+    "He has made a bed time story for me every night.",
+    "He made a bed time story for me every night."
+   ],
+   "answer": 3,
+   "solution": "'was made' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, aur 'by him' active mein 'he' mein change ho jayega, isliye v2 'he made' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0188",
+   "question": "The flood victims of Assam have to make highway their home every year.",
+   "options": [
+    "Highway has made the flood victims of Assam their home every year.",
+    "Highway has been made their home every year by the flood victims of Assam.",
+    "Highway is being made their home every year by the flood victims of Assam.",
+    "Highway has to be made their home every year by the flood victims of Assam."
+   ],
+   "answer": 3,
+   "solution": "'have to' model hai aur 'make' verb hai aur active mein likha hai, toh iska passive 'has/have to be made' se banega, aur passive mein 'highway' subject banega, isliye singular verb 'has to be made' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0189",
+   "question": "Pay the electricity bill for the month of April.",
+   "options": [
+    "The electricity bill for the month of April has to be paid.",
+    "We should pay the electricity bill for the month of April.",
+    "Let us pay the electricity bill for the month of April.",
+    "Let the electricity bill for the month of April be paid"
+   ],
+   "answer": 3,
+   "solution": "Sentence imperative hai transitive hai aur order jaise lag raha hai, isliye iska passive 'let' se banega jiska structure 'let+ object+be+v3' se banega, isliye 'let +object + be paid' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0190",
+   "question": "Could you share your car keys?",
+   "options": [
+    "Could your car keys be shared by you?",
+    "Could your car keys be share by you?",
+    "Can your car keys be shared by you?",
+    "Could your car keys shared by you?"
+   ],
+   "answer": 0,
+   "solution": "'could share' active mein likha hai, toh iska passive 'could be shared' se banega, joki option A mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0191",
+   "question": "My brother has sent me a message.",
+   "options": [
+    "A message has been sent to me by my brother.",
+    "I have been sent a message to by my brother.",
+    "A message have been sent to me.",
+    "A message was sent to me by my brother."
+   ],
+   "answer": 0,
+   "solution": "'has sent' present perfect ka active hai, toh iska passive 'has/have been sent' se banega, passive mein indirect object 'me' aur direct object 'a message' dono se bana sakte hai, lekin option B mein 'to by my brother' structure galat hai, isliye direct object 'a message has been sent' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0192",
+   "question": "Have you written the right answer?",
+   "options": [
+    "Has the right answer been written by you?",
+    "Was the right answer been written by you?",
+    "Have the right answer been written by you?",
+    "Has the right answer being written by you?"
+   ],
+   "answer": 0,
+   "solution": "'has written' present perfect ka active hai, toh iska passive 'has/have been written' se banega, aur passive mein 'the right answer' subject banega, isliye singular verb 'has the right answer been written by you' option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0193",
+   "question": "The man was repairing the tyres of his car.",
+   "options": [
+    "The tyres of his car was being repaired by the man.",
+    "The tyres of his car were being repaired by the man.",
+    "The tyres of his car were been repaired by the man.",
+    "The tyres of his car were repaired by the man."
+   ],
+   "answer": 1,
+   "solution": "'was repairing' past continuous ka active hai, toh iska passive 'was/were being repaired' se banega, aur passive 'the tyres of his car' subject banega, isliye plural verb 'were being repaired' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0194",
+   "question": "Our maid will clean the house every Saturday from today onwards.",
+   "options": [
+    "The house shall be cleaned by our maid every Saturday from today onwards",
+    "The house will be cleaned by our maid every Saturday from today onwards.",
+    "The house will have been cleaned by our maid every Saturday from today onwards.",
+    "The house will be cleaning by our maid every Saturday from today onwards"
+   ],
+   "answer": 1,
+   "solution": "'will clean' future indefinite ka active hai, toh iska passive 'will be cleaned' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0195",
+   "question": "Let us donate the money.",
+   "options": [
+    "We are told to donate the money.",
+    "Let the money is donated by us.",
+    "Let the money be donated by us.",
+    "The money was donated by us"
+   ],
+   "answer": 2,
+   "solution": "'let' ka passive yaa toh 'allow' se banta hai yaa 'let + object + be+v3' se banta hai, 'allow' wala option nahi hai isliye 'let the money be donated by us' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0196",
+   "question": "Tejaswi had been offered a huge amount by the publisher last year for translating the work.",
+   "options": [
+    "A huge amount had been offered to Tejaswi by the publisher last year for translating the work.",
+    "The publisher offered Tejaswi a huge amount last year for translating the work.",
+    "The publisher had offered Tejaswi a huge amount last year for translating the work.",
+    "The publisher had to offer Tejaswi a huge amount last year for translating the work."
+   ],
+   "answer": 2,
+   "solution": "'had been offered' past perfect ka passive hai, toh iska active 'had offered' se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0197",
+   "question": "Change passive to active. The ministers were being briefed about the situation by the intelligence officers.",
+   "options": [
+    "The intelligence officers briefed the ministers about the situation.",
+    "The intelligence officers had briefed the ministers.",
+    "The ministers were briefed by the intelligence officers.",
+    "The intelligence officers were briefing the ministers."
+   ],
+   "answer": 3,
+   "solution": "Sentence mein 'were being briefed' past continuous ka passive hai, toh iska active 'was/were + ing' se banega, active mein 'intelligence officers' subject plural hai, isliye plural verb 'were briefing' wala option D sahi answer hoga. Note:- agar sentence mein kuch reh jaaye, toh aapko priority deni hai meaning aur tense ko.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0198",
+   "question": "Change active to passive: They had instructed us to prioritize systemic reforms.",
+   "options": [
+    "We were instructed by them to prioritize systemic reforms.",
+    "We have been instructed by them to prioritize systemic reforms.",
+    "We are being instructed by them to prioritize systemic reforms.",
+    "We had been instructed by them to prioritize systemic reforms."
+   ],
+   "answer": 3,
+   "solution": "Yeh sentence past perfect tense ka active hai jiska passive 'had+been+v3' se banega aur 'instructed' di-transitive verb hai jiska passive indirect object 'us' se banana prefer karte hai, isliye 'us' passive mein subject 'we' ban jayega, isliye 'we' subject aur 'had been instructed' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0199",
+   "question": "Change active to passive: We are going to start the project soon.",
+   "options": [
+    "The project is going to be started soon.",
+    "The project was going to be started soon.",
+    "The project is being going to be started soon.",
+    "The project has been going to be started soon."
+   ],
+   "answer": 0,
+   "solution": "iss sentence mein 'going' ka use future ko dikhane ke liye use hua hai isliye iska passive nahi hoga, toh passive 'to start' infinitive ka hoga jiska passive 'to be started' hoga aur passive mein 'the project' subject banega jiske according 'is' singular verb ayegi, isliye option A sabse sahi answer hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0200",
+   "question": "Change active to passive: The authorities are to close the road.",
+   "options": [
+    "The road to be closed by the authorities.",
+    "The road is to be closed by the authorities.",
+    "The road has to be closed by the authorities.",
+    "The road will be closed by the authorities."
+   ],
+   "answer": 1,
+   "solution": "Sentence mein 'are' linking verb hai jiska passive nahi hota, isliye yahan 'to close' infinitive ka passive hoga, jiska passive 'to be closed' hoga, aur passive mein 'the road' subject banega jiske according 'is' singular verb ayegi, isliye option B sabse sahi answer hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0201",
+   "question": "Change active to passive: Historians may well reinterpret the artifact after new evidence emerges.",
+   "options": [
+    "The artifact may well be reinterpreted by historians after new evidence emerges.",
+    "The artifact may have been reinterpreted by historians after new evidence emerges.",
+    "The artifact will be reinterpreted well by historians after new evidence emerges.",
+    "The artifact could well be reinterpreting by historians after new evidence emerges."
+   ],
+   "answer": 0,
+   "solution": "Sentence mein 'may well reinterpreted' active voice mein likha hai, jiska passive 'may well be reinterpreted' hoga aur passive mein 'the artifact' subject banega, isliye option A sabse sahi answer hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0202",
+   "question": "Will the car be driven by Mannat in the race?",
+   "options": [
+    "Will in the race Mannat drive the car?",
+    "Will Mannat drive the car in the race?",
+    "Will Mannat be driving the car in the race?",
+    "In the race, will Mannat drive the car?"
+   ],
+   "answer": 1,
+   "solution": "'will be driven' future indefinite ka passive hai toh, iska active 'will drive' se banega, aur 'mannat' passive mein subject banega, isliye 'will mannat drive the car' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0203",
+   "question": "Rekha was very fascinated by the solitude offered by the hillside.",
+   "options": [
+    "The solitude offered by the hillside fascinated Rekha very much.",
+    "The solitude offered by the hillside was fascinating Rekha very much.",
+    "The solitude was offering Rekha the hillside fascination very much.",
+    "The solitude was offered by the hillside fascinating Rekha very much"
+   ],
+   "answer": 0,
+   "solution": "'was fascinated' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye v2 'fascinated' wala option A sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0204",
+   "question": "One must adopt a life of self-control.",
+   "options": [
+    "A life of self-control was adopted by one.",
+    "A life of self-control must be adopted by one.",
+    "A life of self-control will be adopted by one.",
+    "A life of self-control has adopted by one"
+   ],
+   "answer": 1,
+   "solution": "'must adopt' active mein likha hai, toh iska passive 'must be adopted' se banega, joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0205",
+   "question": "I have not discouraged him from doing anything.",
+   "options": [
+    "He had not been discouraged from doing anything by me.",
+    "He is not discouraging from doing anything by me.",
+    "He has not been discouraged from doing anything by me.",
+    "He has not discouraged from doing anything by me"
+   ],
+   "answer": 2,
+   "solution": "'have not discouraged' present perfect ka active hai, toh iska passive 'has/have not been discouraged' se banega, isliye 'has not been discouraged' wala option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0206",
+   "question": "A machine had been developed by Dr. John Gibbon in the US after twenty years.",
+   "options": [
+    "Dr. John Gibbon was developing a machine in the US after twenty years.",
+    "Dr. John Gibbon developed a machine in the US after twenty years.",
+    "Dr. John Gibbon has developed a machine in the US after twenty years.",
+    "Dr. John Gibbon had developed a machine in the US after twenty years"
+   ],
+   "answer": 3,
+   "solution": "'had been developed' past perfect ka passive hai, toh iska active 'had developed' se banega, isliye 'had developed' wala option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0207",
+   "question": "It was found that my shoes were cleaned.",
+   "options": [
+    "It was found that somebody had cleaned my shoes",
+    "I found that somebody had cleaned my shoes",
+    "Somebody found out that he had cleaned my shoes",
+    "Someone found my shoes cleaned."
+   ],
+   "answer": 3,
+   "solution": "Correct answer is 'someone found my shoes cleaned'. 'was found' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, aur 'were cleaned' bhi active mein 'cleaned' mein change hoga, isliye 'someone found my shoes cleaned' wala option D sahi hoga. Note:- baaki options mein tense aur meaning galat hai aur iss question ka best option hota 'someone found that somebody cleaned my shoes', lekin diye gaye options mein se best choose karna hota hai, isliye option D sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0208",
+   "question": "The cat was hit with a bat.",
+   "options": [
+    "Somebody has hit the cat by bat.",
+    "Somebody had hit the cat with a bat.",
+    "Somebody hit the cat with a bat.",
+    "Somebody hits the cat with a bat."
+   ],
+   "answer": 2,
+   "solution": "'was hit' past indefinite ka passive hai, toh iska active 'v2 yaa did+v1' se banega, isliye v2 'hit' wala option C sahi hoga. 'Hit' verb ki teeno form same hoti hai.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0209",
+   "question": "When did you call me?",
+   "options": [
+    "When have I called by you?",
+    "When was I called by you?",
+    "When was you called by me?",
+    "When were you called by me?"
+   ],
+   "answer": 1,
+   "solution": "'did call' past indefinite ka active hai, toh iska passive 'was/were called' se banega, aur passive mein 'I' subject banega, isliye singular verb 'was I called' wala option B sahi hoga.",
+   "chapter": "Voice",
+   "set": "Voice Level - 02"
+  },
+  {
+   "id": "voice-0210",
+   "question": "Change passive to active. Was the conclusion reached by the jury after reviewing all the evidence?",
+   "options": [
+    "Did the jury reach the conclusion after reviewing all the evidence?",
+    "Was all the evidence reviewed after reaching a conclusion by the jury?",
+    "Had the jury reached a conclusion by the time the evidence was reviewed?",
+    "Did the evidence conclude the jury's review?"
+   ],
+   "answer": 0,
+   "solution": "Sentence mein 'was the conclusion reached' se pata chal raha ki past indefinite ka passive hai aur interrogative bhi hai, isliye iska active 'did+ reach' se banega aur interrogative bhi rahega, aur 'the jury' yahan subject banega, isliye 'did the jury reach' wala option A sahi answer hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0211",
+   "question": "Change passive to active. A solution has been suggested by the team to resolve the issue.",
+   "options": [
+    "The team had suggested a solution to resolve the issue.",
+    "The team was suggesting a solution to resolve the issue.",
+    "The team suggested a solution to resolve the issue.",
+    "The team has suggested a solution to resolve the issue."
+   ],
+   "answer": 3,
+   "solution": "Sentence mein 'has been suggested' present perfect tense ka passive hai, isliye iska active 'has/have+v3' se banega, aur active mein 'the team' subject banega, jiske according singular verb 'has' ayegi, isliye option D sabse sahi answer hoga. Note:- agar question mein likha hota change the voice matlab active to passive yaa passive to active toh 'to resolve' infinitive ko bhi change karna padta passive mein.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0212",
+   "question": "Change active to passive: Legal advisors urged the firm to amend the draft immediately.",
+   "options": [
+    "It was urged that the firm amend the draft immediately.",
+    "The draft was urged by legal advisors to be amended.",
+    "The firm was urged by legal advisors to amend the draft immediately.",
+    "Legal advice was urging amendment of the draft."
+   ],
+   "answer": 2,
+   "solution": "Sentence mein 'urged' past indefinite ka active hai toh iska passive 'was/were+ urged' se banega, aur 'urged' ek di-transitive verb hai jiska passive indirect object se banana prefer karte hai joki 'the firm' hai, isliye 'the firm' subject ke according 'was urged' singular verb ayegi, isliye option C sabse sahi answer hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0213",
+   "question": "Change passive to active. The changes must have been implemented without consulting the advisory board.",
+   "options": [
+    "They must implement the changes without consulting anyone.",
+    "The advisory board must not have been consulted during changes.",
+    "Someone must have implemented the changes without consulting the advisory board.",
+    "The changes must be implemented without advisory consultation."
+   ],
+   "answer": 2,
+   "solution": "'must have been implemented' se pata chal raha ki sentence passive mein hai, toh iska active 'must have implemented' se banega, aur sentence mein object nahi diya isliye active mein 'someone' subject ban jayega, isliye option C sabse sahi answer hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0214",
+   "question": "Change passive to active. They will be delivering the parcels this afternoon.",
+   "options": [
+    "The parcels will be being delivered this afternoon.",
+    "The parcels are being delivered this afternoon.",
+    "The parcels will being delivered this afternoon.",
+    "The parcels will have been delivered this afternoon."
+   ],
+   "answer": 0,
+   "solution": "'will be delivering' future continuous ka active hai, lekin iska passive possible nahi hai kyunki passive mein 'be + being' ka structure banta hai, jo grammatically galat hota hai, lekin passive not possible jaisa koi option nahi hai, isliye 'will be' ko as it is chodke 'delivering' ko gerund maanke iska passive 'being delivered' se bana lenge, isliye 'will be being delivered' sahi hoga, isliye option A sabse sahi answer hoga. Note:- agar passive not possible option hota hai toh wo prefer karte, lekin aisa option naa hone ke kaaran option A sahi maana.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0215",
+   "question": "Change active to passive: They have been neglecting maintenance of the archives for years.",
+   "options": [
+    "Maintenance of the archives had been neglected by them for years.",
+    "Maintenance of the archives is being neglected by them for years.",
+    "Maintenance of the archives was being neglected by them for years.",
+    "Maintenance of the archives has been being neglected by them for years."
+   ],
+   "answer": 3,
+   "solution": "'have been neglecting' present perfect continuous ka active hai, lekin iska passive possible nahi kyunki passive mein 'been + being' ka structure banta hai, jo grammatically galat hota hai, lekin passive not possible option nahi hai, isliye 'have been' ko as it is chodke 'neglecting' ko gerund maanke iska passive 'being neglected' se bana lenge, aur 'maintenance' subject ke according singular verb 'has' ayegi, isliye 'has been being neglected' wala option D sahi answer hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0216",
+   "question": "Change active to passive: They had been negotiating the deal for months.",
+   "options": [
+    "The deal had been negotiating for months.",
+    "The deal had been being negotiated for months.",
+    "The deal has been being negotiated for months.",
+    "The deal was being negotiated for months."
+   ],
+   "answer": 1,
+   "solution": "'had been negotiating' past perfect continuous ka active hai, lekin iska passive possible nahi hai kyunki passive mein 'been + being' ka structure banta hai, jo grammatically galat hota hai, lekin passive not possible option nahi hai, isliye 'had been' ko as it is chodke 'negotiating' ko gerund maanke iska passive 'being negotiated' se bana lenge, isliye 'had been being negotiated' sahi hoga joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0217",
+   "question": "Change active to passive: The professor could have been explaining differential topology for hours.",
+   "options": [
+    "Differential topology could have be being explained for hours by the professor.",
+    "Differential topology could have explained for hours by the professor.",
+    "Differential topology could have been being explained for hours by the professor.",
+    "Differential topology could have had been been explained for hours by the professor."
+   ],
+   "answer": 2,
+   "solution": "'could have been explaining' ka passive possible nahi kyunki iske passive mein 'been + being' ka structure banta hai, jo grammatically galat hota hai, lekin passive not possible option nahi hai, isliye 'could have been' ko as it is chodke 'explaining' ko gerund maanke iska passive 'being explained' se bana lenge, isliye 'could have been being explained' sahi hoga joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0218",
+   "question": "Change active to passive: The team will be revising the algorithms during the workshop.",
+   "options": [
+    "The algorithms were being revised during the workshop.",
+    "The algorithms will be been revised during the workshop.",
+    "The algorithms will be revised during the workshop.",
+    "The algorithms will be being revised during the workshop."
+   ],
+   "answer": 3,
+   "solution": "'will be revising' ka passive possible nahi kyunki iske passive mein 'be + being' ka structure banta hai, jo grammatically galat hota hai, lekin passive not possible option nahi hai, isliye 'will be' ko as it is chodke 'revising' ko gerund maanke iska passive 'being revised' se bana lenge, isliye 'will be being revised' sahi hoga joki option D mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0219",
+   "question": "Change active to passive: They may have been undervaluing the intellectual property portfolio.",
+   "options": [
+    "The intellectual property portfolio may have be being undervalued.",
+    "The intellectual property portfolio may have undervalued.",
+    "The intellectual property portfolio may have been being undervalued.",
+    "The intellectual property portfolio may have had been been undervalued."
+   ],
+   "answer": 2,
+   "solution": "'may have been undervalued' ka passive possible nahi kyunki iske passive mein 'been + being' ka structure banta hai, jo grammatically galat hota hai, lekin passive not possible option nahi hai, isliye 'may have been' ko as it is chodke 'undervaluing' ko gerund maanke iska passive 'being undervalued' se bana lenge, isliye 'may have been being undervalued' sahi hoga joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0220",
+   "question": "Change active to passive: The committee had been debating complex amendments when the bell rang.",
+   "options": [
+    "Complex amendments had had been been debated by the committee when the bell rang.",
+    "Complex amendments had been being debated by the committee when the bell rang.",
+    "Complex amendments had be being debated by the committee when the bell rang.",
+    "Complex amendments had debated by the committee when the bell rang."
+   ],
+   "answer": 1,
+   "solution": "'had been debating' ka passive possible nahi hai kyunki iske passive mein 'been + being' ka structure banta hai, jo grammatically galat hota hai, lekin passive not possible option nahi hai, isliye 'had been' ko as it is chodke 'debating' ko gerund maanke iska passive 'being debated' se bana lenge, isliye 'had been being debated' sahi hoga joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0221",
+   "question": "Change active to passive: They had not been considering alternative scenarios sufficiently.",
+   "options": [
+    "Alternative scenarios had not had been considered sufficiently.",
+    "Alternative scenarios were not being considered sufficiently.",
+    "Alternative scenarios had not considered sufficiently.",
+    "Alternative scenarios had not been being considered sufficiently."
+   ],
+   "answer": 3,
+   "solution": "'had not been considering' ka passive possible nahi kyunki iske passive mein 'been + being' ka structure banta hai, jo grammatically galat hota hai, lekin passive not possible option nahi hai, isliye 'had not been' ko as it is chodke 'considering' ko gerund maanke iska passive 'being considered' se bana lenge, isliye 'had not been being considered' sahi hoga joki option D mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0222",
+   "question": "Change passive to active. She was made to feel responsible for the team's failure by the manager.",
+   "options": [
+    "The manager had her feel responsible for the team's failure.",
+    "The manager made her feel responsible for the team's failure.",
+    "The team's failure was blamed on her by the manager.",
+    "The manager got her to be blamed for the team's failure."
+   ],
+   "answer": 1,
+   "solution": "'was made' past indefinite ka passive hai, isliye iska active verb ki 2nd form 'made' se banega, sentence mein 'the manager' doer tha, toh active mein subject ban jayega, isliye 'the manager made' sahi hoga, aur yahan 'made' causative verb hai jiske baad 'her' receiver ayega, kyunki 'her' 'feel' karne ke doer hai, isliye 'to feel' infinitive ko bare infinitive mein likhenge, isliye 'the manager made her feel' sahi hoga joki option B mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0223",
+   "question": "Change passive to active. The children were made to apologize by the principal for their behavior.",
+   "options": [
+    "The principal was made to apologize to the children.",
+    "The principal had made the children apologize.",
+    "The principal made the children apologize for their behavior.",
+    "The principal was apologizing to the children for their behavior."
+   ],
+   "answer": 2,
+   "solution": "'were made' past indefinite ka passive hai, isliye iska active verb ki 2nd form 'made' se banega, sentence mein 'the principal' doer tha, toh active mein subject ban jayega, isliye 'the principal made' sahi hoga, aur yahan 'made' causative verb hai jiske baad 'the children' receiver ayega, kyunki 'children' 'apologize' karne ke doer hai, isliye 'to apologize' infinitive ko bare infinitive mein likhenge, isliye 'the principal made the children apologize' sahi hoga joki option C mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0224",
+   "question": "Change passive to active. The audience was made to believe that the product was revolutionary.",
+   "options": [
+    "The presenter made the audience believe the product was revolutionary.",
+    "The audience believed the product to be revolutionary.",
+    "The audience was forced to believe in the product.",
+    "The presenter convinced the audience of the product's use."
+   ],
+   "answer": 0,
+   "solution": "'was made' past indefinite ka passive hai, isliye iska active verb ki 2nd form 'made' se banega, sentence mein 'by + doer' nahi likha lekin option mein hint hai 'the presenter', isliye 'the presenter' sahi hoga, aur yahan 'made' causative verb hai jiske baad 'the audience' receiver ayega, kyunki 'audience' 'believe' karne ke doer hai, isliye 'to believe' infinitive ko bare infinitive mein likhenge, isliye 'the presenter made the audience believe' sahi hoga joki option A mein follow ho raha hai. Note:- 'the product was revolutionary' ka active nahi hoga kyunki 'was' yahan linking verb hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0225",
+   "question": "Change active to passive: They had been making the staff report discrepancies silently.",
+   "options": [
+    "The staff had been made to report discrepancies silently.",
+    "The staff were made to report discrepancies silently.",
+    "Discrepancies had been reported silently by the staff.",
+    "The staff had been made report discrepancies silently."
+   ],
+   "answer": 0,
+   "solution": "'had been making' se pata chal raha ki sentence active mein hai aur yeh causative verb ka sentence hai, toh passive mein 'the staff' subject banega aur 'had been making' passive mein 'had been made' ho jayega, kyunki yeh causative verb ka sentence hai isliye iske passive mein 'made' ke baad infinitive ayega, isliye 'to report' sahi hoga, isliye option A sahi answer hoga. Note:- agar yeh option nahi hota toh 'had been being made' karna padta lekin aisa koi option nahi diya aur 'had been made' wala structure grammatically sahi hota hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0226",
+   "question": "Change active to passive: The court let the plaintiff argue the motion without interruption.",
+   "options": [
+    "The motion was argued by the plaintiff without interruption.",
+    "The plaintiff was let to argue the motion without interruption.",
+    "The plaintiff was allowed to argue the motion without interruption.",
+    "The court was letting the plaintiff argue the motion."
+   ],
+   "answer": 2,
+   "solution": "'let' verb ka passive nahi karte, balki isse 'allow' wagera mein change kar lete hai, aur 'let' verb ka object 'plaintiff' hai aur 'argue' bare infinitive hai, option A galat hoga kyunki 'argue' ko verb bana diya hai, jabki verb 'let' hai, option D bhi galat hoga kyunki isse 'letting' ing mein change kar diya, option B bhi galat hoga kyunki 'let' ko allow wagera mein change karte hai, option C sahi hoga kyunki 'the plaintiff' subject ban jayega, 'let' ko 'was allowed' mein change kar diya aur 'argue' bare infinitive ko 'to argue' mein change kar diya, isliye option C sahi hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0227",
+   "question": "Change active to passive: They should have had the matter re-examined before escalation.",
+   "options": [
+    "The matter should have had to be re-examined before escalation.",
+    "The matter should have been re-examined before escalation.",
+    "The matter should have been had re-examined.",
+    "The matter should have been made to be re-examined."
+   ],
+   "answer": 1,
+   "solution": "Passive voice mein 'the matter' subject banega aur passive 'be + v3' ka structure follow hota hai, isliye 'should have been re-examined' sahi hoga, isliye option B sahi hoga. Note:- Yeh sentence pehle se hee passive hai kyunki 'matter' receiver ke sath past participle likhne se passive wala meaning hee aata hai, aur passive karne se meaning change ho jayega, lekin itna galat bhi nahi hai isliye diye gaye options mein se option B sahi answer hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0228",
+   "question": "Change passive to active. The candidates were found to have been submitting forged documents during verification.",
+   "options": [
+    "The verification process found the candidates had submitted forged documents.",
+    "It was found that forged documents had been submitted by candidates.",
+    "The candidates were found submitting forgeries, as verified.",
+    "Officials found that the candidates had been submitting forged documents."
+   ],
+   "answer": 3,
+   "solution": "Sentence mein passive se active change karna hai, isliye 'were found' passive ko active mein 'found' mein change karna padega, isliye option B aur C galat honge. option A bhi galat hoga kyunki 'verification process' pata nahi lagayegi koi insaan official wagera pata lagaye galti. 'to have been submitting' yeh ek perfect infinitive ka structure hai aur yeh tab lagaye jaate hai jab koi kaam pehle ho chuka ho aur perfect tense bhi isliye lagaya jaata hai, kyunki sentence past ka hai isliye iss perfect infinitive ko active mein past perfect continuous 'had been submitting' mein change kar denge. Documents wagera kisi college, institutions ne hee galat paaye honge, isliye yahan 'officials' subject banega, isliye option D diye gaye options mein se sabse sahi answer hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0229",
+   "question": "Change passive to active. The agreement was found to have been violated despite multiple warnings.",
+   "options": [
+    "It was found that someone violated the agreement.",
+    "Authorities found that the agreement was being violated.",
+    "Authorities found the agreement had been violated.",
+    "It had been found that the agreement was violated."
+   ],
+   "answer": 2,
+   "solution": "Sentence ko passive to active karna hai, isliye 'was found' aur 'to have been violated' mein se ek bhi agar active mein ho jaaye toh sahi hoga kyunki isme best option nahi hai. 'to have been violated' yeh ek perfect infinitive ka structure hai aur yeh tab lagaye jaate hai jab koi kaam pehle ho chuka ho aur perfect tense bhi isliye lagaya jaata hai, kyunki sentence past ka hai isliye iss perfect infinitive ko active mein past perfect 'had been violated' mein change kar denge. Option A galat hoga kyunki 'violated' past indefinite tense mein likha hai, option B bhi galat hoga kyunki 'was being violated' galat tense ka use kiya hai, option D bhi galat hoga kyunki 'had been found' galat tense ka use kiya hai. diye gaye options mein se option C sahi hoga kyunki 'was found' ko 'found' mein change kar diya aur 'had been violated' ko passive mein hee chod diya. Baaki option mein tense ki galti hai lekin option C mein atleast 'was found' ko active mein change kiya aur 'had been violated' ko passive mein hee chod diya aur tense bhi sahi hai, isliye option C se kaam chalana padega. Better answer :- authorities found that someone had violated the agreement despite multiple warnings.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0230",
+   "question": "Change passive to active. The claim that the system had been tampered with was dismissed as baseless.",
+   "options": [
+    "The system tampered the claim, which was dismissed.",
+    "The dismissal of the system tampering was claimed.",
+    "It was dismissed as baseless that the system was tampered with.",
+    "Authorities dismissed the claim that someone had tampered with the system."
+   ],
+   "answer": 3,
+   "solution": "Sentence mein passive to active change karna hai, 'the claim' subject hai jiski verb 'was dismissed' hai aur 'that....se lekar.... With' tak adjectival clause 'claim' ke liye, isliye 'was dismissed' active mein 'dismissed' verb ki 2nd form mein change hoga aur 'had been tampered' active mein 'had tampered' mein change hoga, aur claim ko dismiss karne wala koi doer hoga, isliye active mein subject 'authorities' ho jayega, aur aisa sirf option D mein follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0231",
+   "question": "Change passive to active. The possibility of the files being leaked before the official release was not ruled out.",
+   "options": [
+    "Officials ruled out the leak before the files were released.",
+    "The leak of the files was ruled out before the release.",
+    "Someone did not rule out the possibility that the files were leaked before release.",
+    "The release happened before ruling out the leak possibility."
+   ],
+   "answer": 2,
+   "solution": "Sentence ko passive to active karna hai, isliye 'was not ruled out' aur 'being leaked' mein se ek bhi agar active mein ho jaaye toh sahi hoga kyunki isme best option nahi hai. option A, B aur D galat honge kyunki isme 'not' nahi hai jisse meaning he galat ho jayega. Option C sahi hoga kyunki 'was not ruled out' passive ko active mein 'did not rule' kar diya, toh option C mein kam se kam ek ko passive kar diya aur meaning bhi aisa koi galat nahi aa raha, isliye option C se kaam chal jayega. Best answer:- authorities/they/people did not rule out the possibility of someone leaking the files before the official release.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0232",
+   "question": "Change passive to active. The construction is alleged to have been halted due to environmental violations.",
+   "options": [
+    "It is alleged that the authorities halted the construction.",
+    "Authorities allegedly halted the construction.",
+    "The authorities are alleged to have halted the construction.",
+    "The violation allegedly halted the construction."
+   ],
+   "answer": 2,
+   "solution": "Sentence ko passive to active karna hai, isliye 'is alleged' aur 'to have been halted' mein se ek bhi agar active mein ho jaaye toh sahi hoga kyunki isme best option nahi hai. option A, B aur D galat honge kyunki 'have been halted' perfect tense ko 'halted' past tense mein change kar diya hai, isliye teeno option galat honge. Option C se kaam chal jayega kyunki 'have been halted' perfect tense ko active mein 'have halted' mein change kar diya aur 'is alleged' ko 'are alleged' passive mein hee chod diya, agar ek verb bhi active mein change ho jaaye toh yeh structure bhi sahi hota hai. Other possible answer:- people/they allege that authorities have halted the construction due to environmental violations.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0233",
+   "question": "Change passive to active. New protocols are expected to have been implemented by the end of the fiscal year.",
+   "options": [
+    "Authorities implemented the protocols by the fiscal year-end.",
+    "The administration expects to implement protocols soon.",
+    "Authorities are expected to implement new protocols by fiscal year-end.",
+    "The protocols were implemented as expected."
+   ],
+   "answer": 2,
+   "solution": "Sentence ko passive to active karna hai, isliye 'are expected' aur 'to have been implemented' mein se ek bhi agar active mein ho jaaye toh sahi hoga kyunki isme best option nahi hai. option A aur D galat hoga kyunki 'implemented', 'were implemented' dono mein past tense ka use hai joki galat hai. option B bhi galat hoga kyunki passive mein bataya ki 'fiscal year' ke end tak hoga lekin ismein 'soon' kar diya. 'expect' se pata chal raha ki future ki baat karni hai, agar 'to have implemented' hota tho behtar hota, lekin future ko dikhaane ke liye infinitive bhi use hota hai, isliye 'to implement' se bhi kaam chal jayega, isliye option C sahi hoga. Better answer:- 'people expect authorities to have implemented the new protocols by the end of the fiscal year'.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0234",
+   "question": "Change passive to active. The land is believed to have been acquired illegally by the company through forged documents.",
+   "options": [
+    "The company is believed to have acquired the land illegally.",
+    "The company acquired the land illegally, as believed.",
+    "Someone believed the company acquired land illegally.",
+    "The company had acquired land using forged documents."
+   ],
+   "answer": 0,
+   "solution": "Sentence ko passive to active karna hai, isliye 'is believed' aur 'to have been acquired' mein se ek bhi agar active mein ho jaaye toh sahi hoga kyunki isme best option nahi hai. option C, B aur D isliye galat honge kyunki inme galat past indefinite tense aur D mein past perfect tense ka use hua hai, lekin sentence mein present tense ki baat ki hai. option A sahi hoga kyunki 'to have been acquired' perfect tense ko active mein 'have acquired' mein change kar diya aur 'is believed' passive mein hee chod diya, toh ek verb bhi agar active mein ho jaaye toh yeh structure bhi sahi hota hai. Other possible answer:- authorities/they/people believe that company has acquired the land illegally through forged documents.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0235",
+   "question": "Change passive to active. Rare minerals are known to have been secretly extracted from the site by unauthorized workers before the inspection.",
+   "options": [
+    "Unauthorized workers extracted the rare minerals before inspection.",
+    "The site was secretly mined before the inspection.",
+    "Unauthorized workers are known to have secretly extracted rare minerals before inspection.",
+    "The minerals had been extracted prior to inspection."
+   ],
+   "answer": 2,
+   "solution": "Sentence ko passive to active karna hai, isliye 'are known' aur 'have been secretly extracted' mein se ek bhi agar active mein ho jaaye toh sahi hoga kyunki isme best option nahi hai. option A, B aur D isliye galat honge kyunki inme galat past indefinite tense aur D mein past perfect tense ka use hua hai, lekin sentence mein present tense ki baat hai. option C sahi hoga kyunki 'have been secretly extracted' perfect tense ko active mein 'have secretly extracted' mein change kar diya aur 'are known' passive mein hee chod diya, agar ek verb bhi agar active mein ho jaaye toh yeh structure bhi sahi hota. Other possible answer:- authorities/they/people know that unauthorized workers have extracted rare minerals before inspection.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0236",
+   "question": "Change passive to active. The draft is understood to have been reviewed by the legal department last week.",
+   "options": [
+    "The legal department is understood to have reviewed the draft last week.",
+    "The draft was reviewed last week, as is understood.",
+    "It was understood the legal team is reviewing the draft.",
+    "The draft understood itself to be reviewed."
+   ],
+   "answer": 0,
+   "solution": "Sentence ko passive to active karna hai, isliye 'is understood' aur 'have been reviewed' mein se ek bhi agar active mein ho jaaye toh sahi hoga kyunki isme best option nahi hai. option B,C aur D isliye galat honge kyunki inme galat past indefinite tense use kiya hai, lekin sentence mein present tense ki baat ki hai. option A sahi hoga kyunki 'have been reviewed' perfect tense ko active mein 'have reviewed' mein change kar diya aur 'is understood' passive mein hee chod diya, toh ek verb bhi agar active mein ho jaaye toh yeh structure bhi sahi hota. Other possible answer:- they/people understand that the legal department had reviewed/ reviewed the draft last week. (had reviewed/ reviewed) isliye kyunki 'last week' ke sath past tense ka use hota hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0237",
+   "question": "Change passive to active. The investigation was believed to have been compromised by internal leaks.",
+   "options": [
+    "The investigation compromised internal leaks, as believed.",
+    "It was believed that internal leaks had compromised the investigation.",
+    "Someone believed the investigation was compromising leaks.",
+    "Internal leaks are believed to compromise the investigation."
+   ],
+   "answer": 1,
+   "solution": "Sentence ko passive to active karna hai, isliye 'was believed' aur 'have been compromised' mein se ek bhi agar active mein ho jaaye toh sahi hoga kyunki isme best option nahi hai. option D galat hoga kyunki isse present tense mein change kar diya. Option C bhi galat hoga kyunki 'have been compromised' perfect tense ko 'was compromising' past continuous mein change kar diya. Option A bhi galat hoga kyunki perfect tense ko past tense mein change kar diya. Option B chal jayega kyunki sentence past ka hai aur investigation compromised pehle hui hogi, isliye present perfect ko past perfect mein change kar sakte hai, isliye 'had compromised' sahi hoga aur 'was believed' ko passive mein hee chod diya, agar do verb mein se ek bhi active mein ho jaaye yaa tense ke according change ho jaaye toh yeh structure sahi hota hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0238",
+   "question": "Change passive to active. The decision was expected to be made by the council after further review.",
+   "options": [
+    "The council expected making a decision after review.",
+    "It was expected that the council would make the decision after review.",
+    "The council made the decision as was expected.",
+    "The council was expected to have made the decision."
+   ],
+   "answer": 1,
+   "solution": "Sentence mein 'was expected' aur 'to be made' passive mein hai agar ek bhi verb active mein ho jaaye toh sahi ho jayega kyunki best option nahi hai. option B sahi hoga kyunki 'to be made' ko 'would make' active mein change kar diya, yahan 'would' ka use meaning ke according kiya hai kyunki 'had' likhne se matlab hoga unhone expect kar liya tha, lekin 'expect' mein cheezein future mein hoti hai, isliye yahan 'would make' sahi hai aur isliye yeh structure bhi chal jayega. Other Possible Answer 1. Yaa toh dono active ho jaaye 2. Yaa dono mein koi ek active ho jaaye 3. Yaa 'it' introductory subject lagake ek verb ko meaning ke according active mein ho jaaye, yeh teeno structure sahi hote hai aur iss question mein 3rd structure follow ho raha hai.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0239",
+   "question": "Change passive to active. No efforts were seen to have been made by the officials to resolve the crisis.",
+   "options": [
+    "It was seen that officials resolved the crisis.",
+    "Officials were seen resolving the crisis effortfully.",
+    "The officials seemed to have resolved the crisis.",
+    "It was seen that the officials had made no efforts to resolve the crisis."
+   ],
+   "answer": 3,
+   "solution": "Sentence mein 'were seen' aur 'to have been made' passive mein hai agar ek bhi verb active mein ho jaaye toh sahi ho jayega kyunki best option nahi hai. option D chal jayega kyunki 'to have been made' perfect tense ko active mein 'had made' past perfect mein change kar diya meaning ke according, 'were seen' se pata chal raha hai past ka sentence hai, isliye perfect tense ko bhi past perfect mein change kar diya, isliye option D ka structure sahi hoga.",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "voice-0240",
+   "question": "Change passive to active. A decision has been taken to have the proposal reviewed by an external panel.",
+   "options": [
+    "An external panel has reviewed the proposal.",
+    "The proposal is being reviewed by an external panel.",
+    "They have decided to get the proposal reviewed by an external panel.",
+    "The proposal was reviewed by the panel as per the decision."
+   ],
+   "answer": 2,
+   "solution": "Sentence mein 'has been taken' aur 'to have the proposal reviewed' yeh dono passive mein hai aur second verb causative verb ka passive hai, agar inn dono mein ek bhi active ho jaaye toh option sahi maan lenge kyunki best option nahi hai. option C sahi hoga kyunki 'has been taken' ka active 'have decided' kar diya jo concise version hai 'have taken' ka, isliye 'have decided' bhi sahi hai aur causative verb ke structure ko waisa he chod diya 'to get the proposal reviewed', kyunki ek ko active kiya isliye option C chal jayega/ sahi ho jayega. Best option:- they have taken a decision to get/have an external panel to review the proposal'",
+   "chapter": "Voice",
+   "set": "Eduquity Pattern"
+  }
+ ]
+}

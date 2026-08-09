@@ -2,7 +2,7 @@
  "book": "Error Pro (Aman Sir English)",
  "source": "Aman Sir Error Pro — Complete Book (SSC English grammar practice)",
  "author": "Aman Vashishth (Aman Sir English)",
- "total": 2191,
+ "total": 2431,
  "note": "Every question, its 4 options, the correct answer and the explanation are the book's own. Nothing generated. Explanations are Hinglish/Hindi as printed.",
  "chapters": [
   {
@@ -88,6 +88,12 @@
    "label": "Conditionals",
    "icon": "🔀",
    "count": 70
+  },
+  {
+   "slug": "voice",
+   "label": "Voice",
+   "icon": "🔄",
+   "count": 240
   },
   {
    "slug": "parts-of-speech-figure-of-speech",
