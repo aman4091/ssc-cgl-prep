@@ -5,6 +5,19 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NAV_GROUPS, NAV_DIRECT, trailForPath, nodeAt } from "@/lib/nav";
 import { getNewWordEntries, newWordDayKey, newWordDayLabel } from "@/lib/vocab";
+import { getUserTopics } from "@/lib/userpyq";
+
+// Nav group key -> user "shelf book" id (Settings → PYQ Manager): jab bank ka
+// menu khule to user ke apne topics bhi uske chapters ke saath dikhein.
+const SHELF_BY_NAVKEY = {
+  warbank: "shelf_war",
+  pinnacle: "shelf_pinnacle",
+  errorpro: "shelf_errorpro",
+  pinmaths: "shelf_mathbank",
+  pinreason: "shelf_reasonbank",
+  gktricks: "shelf_gktricks",
+  mirror: "shelf_mirror",
+};
 
 // The menu, and only the menu.
 //
@@ -98,6 +111,13 @@ export default function Navbar() {
               : `${g.bank.href}/${c.slug}`,
             label,
           });
+        }
+        // User ke apne topics is bank ke andar (Settings → PYQ Manager) —
+        // list mein sabse upar, "📖" ke saath.
+        const shelfId = SHELF_BY_NAVKEY[g.key];
+        if (shelfId) {
+          const mine = getUserTopics(shelfId).map((t) => ({ href: `/pyq/gk/${t.id}`, label: `📖 ${t.name}` }));
+          if (mine.length) links.unshift(...mine);
         }
         setBankLinks((prev) => ({ ...prev, [g.key]: links }));
       })

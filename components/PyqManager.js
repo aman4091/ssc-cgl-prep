@@ -9,7 +9,8 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { getSettings } from "@/lib/storage";
-import { extractPdfTextSmart, generateQuizChunked } from "@/lib/client-ai";
+import { extractPdfTextSmart, generateQuizChunked, generateMcqChunked } from "@/lib/client-ai";
+import { parseCaMcqs } from "@/lib/caparse";
 import {
   getUserBooks, addUserBook, getUserTopics, addUserTopic,
   addUserTopicQuestions, userTopicCount, deleteUserTopic, deleteUserBook,
@@ -56,14 +57,29 @@ export default function PyqManager() {
     setTopicId(t.id); setNewTopic(""); refresh();
   };
 
-  // Common tail: text -> AI questions -> topic. `tag` becomes each question's
-  // source ("Part 3" filenames se khud aa jata hai).
+  // Common tail: text -> questions -> topic. `tag` becomes each question's
+  // source ("Part 3" filenames se khud aa jata hai). Format auto-detect:
+  //   1) Ready-made MCQs (Q + a-d + marked answer) -> code se parse, AI-free.
+  //   2) Q&A one-liners ("Q.) ... Ans: ...")       -> gk-to-mcq AI (book ka
+  //      answer wahi rehta hai, 3 galat options bante hain — GKTricks isi se bana).
+  //   3) Baaki kuch bhi                             -> generic AI extractor.
   const importText = async (text, tag) => {
     if (!activeTopicId) throw new Error("Pehle topic banao/chuno.");
-    if (!getSettings().apiKey) throw new Error("DeepSeek API key Settings mein daalo (upar wala card).");
-    const { questions } = await generateQuizChunked(text, (i, t, so) =>
-      setStatus(`AI questions nikaal raha hai… chunk ${i}/${t} (${so} mile)`)
-    );
+
+    let questions = parseCaMcqs(text);
+    if (!questions.length) {
+      if (!getSettings().apiKey) throw new Error("DeepSeek API key Settings mein daalo (upar wala card).");
+      const pairCount = (text.match(/\bAns(?:wer)?\s*[:.\-]/gi) || []).length;
+      if (pairCount >= 3) {
+        ({ questions } = await generateMcqChunked(text, (i, t, so) =>
+          setStatus(`Q&A se MCQ bana raha hai… ${i}/${t} (${so} bane)`)
+        ));
+      } else {
+        ({ questions } = await generateQuizChunked(text, (i, t, so) =>
+          setStatus(`AI questions nikaal raha hai… chunk ${i}/${t} (${so} mile)`)
+        ));
+      }
+    }
     if (!questions.length) throw new Error("Isme koi question nahi mila.");
     const tagged = tag ? questions.map((q) => ({ ...q, source: q.source || tag })) : questions;
     const added = addUserTopicQuestions(activeTopicId, tagged);
