@@ -1,0 +1,3213 @@
+{
+ "chapter": "Narration",
+ "slug": "narration",
+ "count": 229,
+ "questions": [
+  {
+   "id": "narration-0001",
+   "question": "She said she was seeing her brother the following day.",
+   "options": [
+    "She said, \"I am seeing my brother tomorrow.\"",
+    "She says, \"I will see my brother tomorrow.\"",
+    "She said, \"I was seeing my brother tomorrow.\"",
+    "She said, \"I should see my brother tomorrow.\""
+   ],
+   "answer": 0,
+   "solution": "Indirect mein ‘was seeing’ past continuous hai, toh direct ke present continuous se aaya hoga, isliye present continuous wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0002",
+   "question": "She said, \"I have finished my work.\"",
+   "options": [
+    "She said that she had finished her work.",
+    "She said that she would finish her work.",
+    "She said that she will finish her work.",
+    "She said that she has finished her work."
+   ],
+   "answer": 0,
+   "solution": "Direct mein ‘have finished’ present perfect hai, toh indirect mein past perfect mein change ho jata hai, isliye ‘had finished’ past perfect wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0003",
+   "question": "She said to me, \"I shall come to meet you tomorrow.\"",
+   "options": [
+    "She asked me that could she come to meet me the next day.",
+    "She tells me that she could come to meet me tomorrow.",
+    "She told me that she will come to meet me tomorrow.",
+    "She told me that she would come to meet me the next day."
+   ],
+   "answer": 3,
+   "solution": "‘shall’ indirect speech mein ‘should’ yaa ‘would’ mein change ho jata hai, diye gaye options mein option D mein hee ‘would’ aa raha hai, isliye option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0004",
+   "question": "She said that she could bake cookies.",
+   "options": [
+    "She had said, \"I can bake cookies.\"",
+    "She said, \"I can bake cookies.\"",
+    "She says, \"I can bake cookies.\"",
+    "She said, \"I may bake cookies.\""
+   ],
+   "answer": 1,
+   "solution": "‘could’ indirect mein hai, toh direct mein ‘can’ yaa ‘could’ se aaya hoga, aur indirect mein ‘said’, direct ki reporting verb ‘said’ se aaya hoga, isliye ‘said’ aur ‘can’ wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0005",
+   "question": "He said, \"I have finished my homework.\"",
+   "options": [
+    "He said that he had to finish his homework.",
+    "He said that he has finished his homework.",
+    "He said that he would finish his homework.",
+    "He said that he had finished his homework."
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘have finished’ present perfect hai, toh indirect mein past perfect mein change ho jata hai, isliye ‘had finished’ past perfect wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0006",
+   "question": "Ron said to me, “He had his lunch at 2 p.m. yesterday.”",
+   "options": [
+    "Ron told me that he ate his lunch at 2 p.m. the previous day.",
+    "Ron told me that he had had his lunch at 2 p.m. the previous day.",
+    "Ron told me that he had his lunch at 2 p.m. the previous day.",
+    "Ron told me that he had eaten his lunch at 2 p.m. the previous day."
+   ],
+   "answer": 1,
+   "solution": "Direct mein ‘had’ past indefinite diya hai, toh indirect mein past perfect mein change ho jayega, isliye ‘had had’ wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0007",
+   "question": "The child says, “I do not want to go to school.”",
+   "options": [
+    "The child say that I do not want to go to school.",
+    "The child says that I do not want to go to school.",
+    "The child says that he do not want to go to school.",
+    "The child says that he does not want to go to school"
+   ],
+   "answer": 3,
+   "solution": "Direct mein reporting verb ‘says’ present ki lagi hai, isliye reporting speech ke tense mein koi change nahi hoga aur ‘I do’ first person child ke according ‘he does’ mein change hoga, isliye option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0008",
+   "question": "Sakshi said that she would do it then or never.",
+   "options": [
+    "Sakshi said, \"I would do it then or never.\"",
+    "Sakshi said, \"I have to do it now or never.\"",
+    "Sakshi said, \"I will do it now or never.\"",
+    "Sakshi said, \"I will do it then or never.\""
+   ],
+   "answer": 2,
+   "solution": "Indirect mein ‘would’ direct ke ‘will, would, shall’ se aaya hoga aur ‘then’ direct ke ‘now’ se aaya hoga, isliye diye gaye options mein se ‘I will do it now or never’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0009",
+   "question": "Jatin said, \"I was at home yesterday.\"",
+   "options": [
+    "Jatin said that he was at home yesterday.",
+    "Jatin said that he had been at home the day before.",
+    "Jatin said he was at home the day before.",
+    "Jatin said he was at home."
+   ],
+   "answer": 1,
+   "solution": "Direct mein ‘was’ past indefinite hai, toh indirect mein ‘past perfect’ mein change hoga, isliye ‘had been’ past perfect wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0010",
+   "question": "\"I am not feeling well,\" said Mary.",
+   "options": [
+    "Mary says that she is not feeling well.",
+    "Mary said that she is not feeling well.",
+    "Mary says that she wasn't feeling well.",
+    "Mary said that she was not feeling well."
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘am not feeling’ present continuous hai, toh indirect mein ‘past continuous’ mein change hoga, aur reported verb indirect mein ‘said’ he rahegi, isliye ‘said’ aur ‘was not feeling’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0011",
+   "question": "He exclaimed with delight that he had won the first prize.",
+   "options": [
+    "\"Wow! I might win the first prize,\" said he.",
+    "\"Hurrah! I have won the first prize,\" said he.",
+    "\"Hurrah! I win the first prize,\" said he.",
+    "\"Hurrah! I will win the first prize,\" said he."
+   ],
+   "answer": 1,
+   "solution": "Indirect mein ‘had won’ past perfect hai, toh direct mein ‘past indefinite, perfect, present perfect’ se aaya hoga, isliye diye gaye options mein se ‘have won’ present perfect wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0012",
+   "question": "Gita said, \"I lost my umbrella.\"",
+   "options": [
+    "Gita said that I lost my umbrella.",
+    "Gita said that she had lost her umbrella.",
+    "Gita expressed that she has lost her umbrella.",
+    "Gita told me that he lost her umbrella."
+   ],
+   "answer": 1,
+   "solution": "Direct mein ‘lost’ past indefinite diya hai, toh indirect mein ‘past perfect’ mein change hoga, isliye ‘had lost’ past perfect wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0013",
+   "question": "Ritu said, \"I am eating apples.\"",
+   "options": [
+    "Ritu said that she was eating apples.",
+    "Ritu said that she has been eating apples.",
+    "Ritu told that she was eating apples.",
+    "Ritu said that she had been eating apples."
+   ],
+   "answer": 0,
+   "solution": "Direct mein ‘am eating’ present continuous diya hai, toh indirect mein ‘past continuous’ mein change hoga, aur indirect mein ‘said’ he rahega, kyunki ‘said to’ indirect mein ‘told’ mein change hota hai, isliye ‘said’ aur ‘was eating’ past continuous wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0014",
+   "question": "My father said, \"Neha shall come back by 3:00 p.m.\"",
+   "options": [
+    "My father said that Neha should come back by 3:00 p.m.",
+    "My father told that Neha should come back by 3:00 p.m.",
+    "My father told that Neha shall come back by 3:00 p.m.",
+    "My father said that Neha will come back by 3:00 p.m."
+   ],
+   "answer": 0,
+   "solution": "Direct mein ‘shall’ diya hai, toh indirect mein ‘should, would’ mein change hoga, aur indirect mein ‘said’ he rahega, isliye ‘said’ aur ‘should’ wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0015",
+   "question": "He said, \"I can't attend the meeting tomorrow.\"",
+   "options": [
+    "He said that he couldn't attend the meeting tomorrow.",
+    "He said that he couldn't attend the meeting the next day.",
+    "He said that he can't attend the meeting tomorrow.",
+    "He said that he can't attend the meeting the next day."
+   ],
+   "answer": 1,
+   "solution": "Direct mein ‘can't’ diya hai, toh indirect mein ‘couldn't’ mein change hoga aur ‘tomorrow’ indirect mein ‘the next day’, isliye ‘couldn't’ aur ‘the next day’ wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0016",
+   "question": "The Minister explained that he was working for the benefit of the country.",
+   "options": [
+    "The Minister explains, \"I will work for the benefit of the country.\"",
+    "The Minister explained, \"I am working for the benefit of the country.\"",
+    "The Minister explained, \"He was working for the benefit of the country.\"",
+    "The Minister explained, \"I was working for the benefit of the country.\""
+   ],
+   "answer": 1,
+   "solution": "Indirect mein ‘was working’ past continuous hai, toh direct ke present continuous se aaya hoga, isliye ‘am working’ present continuous wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0017",
+   "question": "He promised, \"He will not do the mistake again.”",
+   "options": [
+    "He promised that he would not do the mistake next time.",
+    "He promised that he would not did the mistake next time.",
+    "He promised that he will not do the mistake again.",
+    "He promises that he will not do the mistake again."
+   ],
+   "answer": 0,
+   "solution": "Direct mein ‘will not do’ diya hai, toh indirect mein ‘would not do’ mein change hoga, joki option A mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0018",
+   "question": "Bajrang said, “I went to Chandigarh yesterday.”",
+   "options": [
+    "Bajrang said that he had gone to Chandigarh the day before.",
+    "Bajrang said that he was gone to Chandigarh the day before.",
+    "Bajrang said that he gone to Chandigarh the day before.",
+    "Bajrang said that he have gone to Chandigarh the day before"
+   ],
+   "answer": 0,
+   "solution": "Direct mein ‘went’ past indefinite diya hai, toh indirect mein past perfect mein change hoga, isliye ‘had gone’ wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0019",
+   "question": "He said, \"My mother will be here tomorrow.\"",
+   "options": [
+    "He said that his mother would be there the next day.",
+    "He said that his mother would be here tomorrow.",
+    "He said that my mother will be here the next day.",
+    "He said that my mother will be here tomorrow."
+   ],
+   "answer": 0,
+   "solution": "Direct mein ‘will be here tomorrow’ diya hai, toh indirect mein ‘would be there the next day’ mein change ho jayega, isliye option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0020",
+   "question": "Ram said, \"I watched football.\"",
+   "options": [
+    "Ram said that I shall watch football.",
+    "Ram said that he had watched football.",
+    "Ram said that they watched football.",
+    "Ram said that he watches football."
+   ],
+   "answer": 1,
+   "solution": "Direct mein ‘watched’ past indefinite mein likha hai, toh indirect mein past perfect mein change hoga, isliye ‘had watched’ wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0021",
+   "question": "He said, \"I am going to the party tonight.\"",
+   "options": [
+    "He said that he would go to the party that night.",
+    "He said that he was going to the party tonight.",
+    "He said that he was going to the party that night.",
+    "He said that he is going to the party tonight."
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘am going’ present continuous diya hai, toh indirect mein ‘past continous’ mein change hoga aur ‘tonight’ indirect mein ‘that night’ mein change hoga, isliye ‘was going’ aur ‘that night’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0022",
+   "question": "She said, \"I cannot call you at this time.\"",
+   "options": [
+    "She said that she could not call me at that time.",
+    "She said that she cannot call me at that time.",
+    "She said that she would not call me at this time.",
+    "She said that she could not call me this time."
+   ],
+   "answer": 0,
+   "solution": "Direct mein ‘cannot call you at this time’ diya hai, toh indirect mein ‘could not call you at that time’ mein change ho jayega, isliye option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0023",
+   "question": "Rohan said, “I will arrive late.”",
+   "options": [
+    "Rohan says that he is late in his arrival.",
+    "Rohan said that he would arrive late.",
+    "Rohan said that I will arrive late.",
+    "Rohan said that he is arriving late"
+   ],
+   "answer": 1,
+   "solution": "Direct mein ‘will arrive’ likha hai, toh indirect mein ‘would arrive’ mein change hoga, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0024",
+   "question": "Rathan said, \"I have written a poem.\"",
+   "options": [
+    "Rathan said that he has written a poem.",
+    "Rathan said that he wrote a poem.",
+    "Rathan said that I had written a poem.",
+    "Rathan said that he had written a poem."
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘have written’ present perfect mein hai, toh indirect mein ‘past perfect’ mein change hoga aur reported speech ka ‘I’ ‘rathan’ ke according ‘he’ mein change hoga, isliye ‘he had written’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0025",
+   "question": "Mohan said, \"I shall go as soon as it is possible.\"",
+   "options": [
+    "Mohan said that he would go as soon as it is possible.",
+    "Mohan said that he will go as soon as it is possible.",
+    "Mohan said that he would go as soon as it was possible.",
+    "Mohan said that he will go as soon as it was possible."
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘shall’ aur ‘it is possible’ diya hai, toh indirect mein ‘should, would’ aur ‘it was possible’ mein change hoga, isliye ‘would’ aur ‘it was possible’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0026",
+   "question": "He said that it would be fun if I could join.",
+   "options": [
+    "He said, \"It will be fun if you can join.\"",
+    "He said, \"It will have been fun if you had joined.\"",
+    "He said, \"It will have been fun if I could have joined.\"",
+    "He said, \"It will have been fun if I had joined.\""
+   ],
+   "answer": 0,
+   "solution": "Indirect speech mein ‘would be fun’ aur ‘could’ diya hai, toh direct mein ‘will be fun’ aur ‘can’ se aaya hoga, isliye ‘will be fun’ aur ‘can’ wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0027",
+   "question": "The teacher informed that the exam had been postponed.",
+   "options": [
+    "The teacher informs, \"The exam had been postponed.\"",
+    "The teacher informed, \"The exam was being postponed.\"",
+    "The teacher informs, \"The exam has been postponed.\"",
+    "The teacher informed, \"The exam has been postponed.\""
+   ],
+   "answer": 3,
+   "solution": "Indirect speech mein ‘had been postponed’ past perfect hai, toh direct ke ‘present perfect’ se aaya hoga, aur reporting verb ‘informed’ past mein hai, toh direct mein bhi reporting verb ‘informed’ he rahi hogi, isliye ‘informed’ aur ‘has been postponed’ wala option D sahi hoga",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0028",
+   "question": "He said, \"I shall need a copy of the documents.\"",
+   "options": [
+    "He said that he will need a copy of the documents.",
+    "He said that he shall need a copy of the document.",
+    "He said that he is going to need a copy of the document",
+    "He said that he would need a copy of the documents"
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘shall’ diya hai, toh indirect mein ‘should, would’ mein change hoga, isliye ‘would’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0029",
+   "question": "Raju said to Reghu, \"Stay back.”",
+   "options": [
+    "Raju ordered Reghu to stay back.",
+    "Raju had ordered Reghu to stay back.",
+    "Raju orders Reghu to stay back.",
+    "Raju has ordered Reghu to stay back."
+   ],
+   "answer": 0,
+   "solution": "Direct speech imperative hai, isliye ‘order/advice/request + infinitive’ se banega, aur reporting verb past ki hai aur sentence order ka hai, isliye ‘raju ordered reghu to stay back’ wala option A sahi hoga. Note:- reporting verb ka tense direct se indirect jaate waqt change nahi hota.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0030",
+   "question": "“I am playing the keyboard,\" she explained.",
+   "options": [
+    "She explained that she is playing the keyboard.",
+    "She said that she had been playing the keyboard.",
+    "She said that she is playing the keyboard.",
+    "She explained that she was playing the keyboard."
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘am playing’ present continuous hai, toh indirect mein ‘past continuous’ mein change hoga, isliye ‘was playing’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0031",
+   "question": "They said that they had been waiting for the bus for over an hour.",
+   "options": [
+    "\"We have been waiting for the bus for over an hour,\" they said.",
+    "\"We waited for the bus for over an hour,\" they said.",
+    "\"We had waited for the bus for over an hour,\" they said.",
+    "\"We are waiting for the bus for over an hour,\" they said."
+   ],
+   "answer": 0,
+   "solution": "Indirect mein ‘had been waiting’ past perfect continuous diya hai aur ‘over an hour’ duration di hai, toh duration ke sath present perfect continuous tense ka use hota hai, isliye direct mein ‘have been waiting’ present perfect continuous wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0032",
+   "question": "He told me that he would have finished the project by the following day.",
+   "options": [
+    "\"I have finished the project by tomorrow,\" he said to me.",
+    "\"I would finish the project,\" he said to me tomorrow.",
+    "\"I will finish the project by the next day,\" he said to me.",
+    "\"I will have finished the project by tomorrow,\" he said to me."
+   ],
+   "answer": 3,
+   "solution": "Indirect mein ‘would have finished’ diya hai, toh direct mein ‘will have finished’ se aaya hoga, joki option D mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0033",
+   "question": "The Priest said, “God loves all his creations.”",
+   "options": [
+    "The Priest said that God is about to love all his creations.",
+    "The Priest said that God will love all his creations.",
+    "The Priest said that God loves all his creations.",
+    "The Priest said that God loved all his creations"
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘god loves all his creations’ proverb hai isliye indirect mein jaate waqt koi tense change nahi hoga, isliye option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0034",
+   "question": "The customer asked the tailor, \"Will you have the dress ready by Tuesday?”",
+   "options": [
+    "The customer asked the tailor if he should have the dress ready by Tuesday.",
+    "The customer asked the tailor if he would have the dress ready by Tuesday.",
+    "The customer asked the tailor if he will have the dress ready by Tuesday.",
+    "The customer asked the tailor if he would like to have the dress ready by Tuesday."
+   ],
+   "answer": 1,
+   "solution": "Direct mein ‘will you have’ diye hai, toh indirect mein ‘would have’ mein change hoga, isliye ‘would have’ wala option B sahi hoga. option D mein jabardasti ‘like to’ ka use kiya hai isliye galat hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0035",
+   "question": "My daughter said, “Ayush has got a packet of toffee for his friends.”",
+   "options": [
+    "My daughter said that Ayush has had got a packet of toffee for his friends.",
+    "My daughter said that Ayush has got a packet of toffee for his friends.",
+    "My daughter said that Ayush had got a packet of toffee for his friends.",
+    "My daughter said that Ayush has been got a packet of toffee for his friends"
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘has got’ present perfect diya hai, toh indirect mein past perfect mein change hoga, isliye ‘had got’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0036",
+   "question": "She said to me, “Don’t worry about me.”",
+   "options": [
+    "She told me not to worry about her.",
+    "She told me don’t worry about her.",
+    "She told me to not be worried about her.",
+    "She told me to not to worry about me."
+   ],
+   "answer": 0,
+   "solution": "Direct ki reporting speech mein imperative ka structure diya hai, toh indirect mein infinitive se banega, isliye ‘not to worry’ wala option A sahi hoga. Note:- infinitive ka negative ke liye infinitive se pehle ‘not’ lagta hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0037",
+   "question": "“I will help you,” he will say to me.",
+   "options": [
+    "He says to me that he would help me.",
+    "He will tell me that he will help me.",
+    "He tells me that he helped me.",
+    "He told me that he will help me."
+   ],
+   "answer": 1,
+   "solution": "Direct mein reporting ‘will say’ likha hai, isliye reporting verb aur reporting speech ke tense mein koi change nahi hoga, sirf ‘say to’ indirect mein ‘tell’ mein change ho jayega, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0038",
+   "question": "The little boy said, “My cat can climb the tree.”",
+   "options": [
+    "The little boy said that his cat climbed the tree.",
+    "The little boy said that his cat had climbed the tree.",
+    "The little boy said that his cat could climb the tree.",
+    "The little boy said that his cat can climb the tree."
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘can climb’ diya hai, toh indirect mein ‘could climb’ mein change hoga, isliye option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0039",
+   "question": "Koushik said to Tarun, \"You are a good cricketer.\"",
+   "options": [
+    "Koushik told Tarun that he had been a good cricketer.",
+    "Koushik told that Tarun is a good cricketer.",
+    "Koushik told Tarun that he was a good cricketer.",
+    "Koushik tells Tarun that he is a good cricketer."
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘are’ present indefinite mein likha hai, toh indirect mein past indefinite mein change hoga, isliye ‘he was a good cricketer’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0040",
+   "question": "She remarked, \"I visited that museum last week.\"",
+   "options": [
+    "She remarked that she had visited that museum the previous week.",
+    "She remarked that I had visited that museum last week.",
+    "She remarked that she visited that museum the previous week.",
+    "She remarked that she has visited that museum the previous week."
+   ],
+   "answer": 0,
+   "solution": "‘visited’ past indefinite hai jo ki indirect mein past perfect mein change hoga or ‘last week’ ‘previous week’ mein change hoga isliye option A sahi hoga",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0041",
+   "question": "He asked me affectionately what he could do for me.",
+   "options": [
+    "He said to me, \"What should be done for you?\"",
+    "He said to me, \"What can be done for me?\"",
+    "He said to me, \"What can I do for you, dear?\"",
+    "He said to me, \"What could he do?\""
+   ],
+   "answer": 2,
+   "solution": "Indirect mein ‘could do’ diya hai, toh direct mein ‘can do’ se bana hoga, jab usne directly pucha hoga, toh bola hoga ‘what can I do’, isliye option C sabse sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0042",
+   "question": "Mukesh said to me, “You are wrong”.",
+   "options": [
+    "Mukesh told me that you are wrong.",
+    "Mukesh tells me that I am wrong.",
+    "Mukesh told me that he was wrong.",
+    "Mukesh told me that I was wrong."
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘are wrong’ present indefinite diya hai, toh indirect mein past indefinite mein change hoga aur ‘you’ second person ‘me’ ke according ‘I’ mein change hoga, isliye ‘I was wrong’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0043",
+   "question": "He said to her, \"Do you know French?\"",
+   "options": [
+    "He asked her that does she know French.",
+    "He asked her whether she has known French.",
+    "He asked her if she knew French.",
+    "He asked her if she knows French."
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘do you know’ present indefinite hai, toh indirect mein past indefinite mein change hoga, diye gaye options mein se sirf option C mein ‘knew’ past indefinite follow ho raha hai. isliye C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0044",
+   "question": "The student requested them to take him to the reception.",
+   "options": [
+    "\"Take me to the reception,\" said the student.",
+    "\"Please take me in the reception,\" said the student.",
+    "\"Please take me to the reception,\" said the student.",
+    "\"Take me to the reception now,\" said the student."
+   ],
+   "answer": 2,
+   "solution": "Indirect mein ‘requested’ aur ‘to take’ infinitive se pata chal raha ki imperative sentence hai jo direct speech mein ‘please’ se bana hoga, aur ‘to the reception’ direct indirect mein same rahega, isliye ‘please take me to the reception’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0045",
+   "question": "\"You were warned by us three days ago,\" the manager shouted at him.",
+   "options": [
+    "The manager shouted at him that he was warned by them three days ago.",
+    "The manager shouted at him that he was warned by them three days earlier.",
+    "The manager shouted at him that he had been warned by them three days before.",
+    "The manager shouted at him that he was warned by them three days before."
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘were warned’ past indefinite likha hai, toh indirect mein past perfect mein change hoga, isliye ‘had been warned’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0046",
+   "question": "\"I am going to play with my friends,\" the child says to his mother.",
+   "options": [
+    "The child asked his mother that he is going to play with his friends.",
+    "The child told his mother that I am going to play with my friends.",
+    "The child said to his mother that he was going to play with his friends.",
+    "The child tells his mother that he is going to play with his friends."
+   ],
+   "answer": 3,
+   "solution": "Direct ki reporting verb mein ‘says to’ present tense diya hai, isliye reported speech ke tense mein koi change nahi hoga, aur ‘says to’ ‘tells’ mein change ho jayega isliye option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0047",
+   "question": "The reporter reported, \"The US President is arriving to India this week.”",
+   "options": [
+    "The reporter reports that the US President is arriving to India that week.",
+    "The reporter reported that the US President was arriving to India that week.",
+    "The reporter reported that the US President was arriving to India this week.",
+    "The reporter reported that the US President is arriving to India next week."
+   ],
+   "answer": 1,
+   "solution": "Direct mein ‘is arriving’ present continuous diya hai, toh indirect mein past continuous mein change ho jayega aur ‘this week’ ‘that week’ mein change ho jayega, isliye ‘was arriving to india that week’ option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0048",
+   "question": "The principal said that he would hold a meeting the next day.",
+   "options": [
+    "\"I will be holding a meeting tomorrow,\" the principal said.",
+    "\"Tomorrow, I will hold a meeting,\" says the principal.",
+    "\"I will hold a meeting tomorrow,\" said the principal.",
+    "\"A meeting will be held by me,\" said the principal."
+   ],
+   "answer": 2,
+   "solution": "Indirect mein ‘would hold’ likha hai, toh direct mein ‘will hold’ se aaya hoga, aur ‘the next day’ direct ke ‘tomorrow’ se aaya hoga, isliye ‘will hold’ ‘tomorrow’ wala option C sahi hoga. option B ki reporting verb present mein likhi hai, isliye yeh option galat hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0049",
+   "question": "The captain exclaimed with joy that he had won the toss.",
+   "options": [
+    "The captain said, “Hurrah! I have won the toss.”",
+    "The captain said, “Hurrah! I might win the toss.”",
+    "The captain said, “Hurrah! I may win the toss.”",
+    "The captain said, “Hurrah! I could win the toss.”"
+   ],
+   "answer": 0,
+   "solution": "Indirect mein past perfect diya hai, toh direct mein ‘present perfect’ se aaya hoga, isliye option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0050",
+   "question": "She said, \"Bravo! You have done well.\"",
+   "options": [
+    "She applauded her saying that she had done well.",
+    "She told her saying that she had done well.",
+    "She applauded her saying that she did well.",
+    "She applauded her saying that she has done well."
+   ],
+   "answer": 0,
+   "solution": "‘Bravo’ se pata chal raha ki exclamatory wala sentence hai, isliye isse ‘applauded’ se banayenge aur direct mein ‘have done’ present perfect diya hai, toh indirect mein past perfect se banayenge, isliye ‘applauded’ aur ‘had done’ wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0051",
+   "question": "Little Sam requested to let him rest there.",
+   "options": [
+    "Little Sam said, \"Do rest here.\"",
+    "Little Sam said, \"Let us rest here.\"",
+    "Little Sam said, \"Let me be resting here.\"",
+    "Little Sam said, \"Let me rest here.\""
+   ],
+   "answer": 3,
+   "solution": "Sentence mein ‘little sam’ ne khud ko bola isliye ‘him’ aaya toh direct speech mein ‘me’ mein change hoga aur indirect mein ‘let’ diya hai, toh direct mein bhi ‘let’ hoga, isliye ‘let me rest here’ option D sahi hoga. option C mein ‘ing’ form ka use kiya hai joki galat hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0052",
+   "question": "He said, “These dresses are cheap.”",
+   "options": [
+    "He said that those dresses was cheap.",
+    "He said that these dresses are cheap.",
+    "He said that these dresses were cheap.",
+    "He said that those dresses were cheap"
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘are’ present indefinite likha hai, toh indirect mein past indefinite ayega, aur ‘these’ indirect mein ‘those’ mein change ho jayega, kyunki ‘dresses’ plural hai, isliye ‘those dresses were cheap’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0053",
+   "question": "She said, \"How beautiful is the rain!\"",
+   "options": [
+    "She exclaimed with joy that the rain had been beautiful.",
+    "She exclaimed with joy that the rain has been beautiful.",
+    "She exclaimed with joy that the rain is beautiful.",
+    "She exclaimed with joy that the rain was beautiful."
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘is’ present indefinite likha hai, toh indirect mein past indefinite se banega, isliye ‘was’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0054",
+   "question": "Mrs. Lisa suggested that we should purchase the property.",
+   "options": [
+    "Mrs. Lisa said, \"Let us purchase the property.\"",
+    "Mrs. Lisa said, \"Property must be purchased by us.\"",
+    "Mrs. Lisa told, \"You may purchase the property.\"",
+    "Mrs. Lisa said, \"Please purchase the property.\""
+   ],
+   "answer": 0,
+   "solution": "Indirect mein ‘suggested that we should’ se pata chal raha ki ‘let’ ke imperative se bana hai, isliye diye gaye options mein se ‘let us purchase’ wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0055",
+   "question": "Sneha said to me, “I am doing my homework.”",
+   "options": [
+    "Sneha told me that she was doing her homework.",
+    "Sneha told me that she had been doing her homework.",
+    "Sneha told me that she were doing her homework.",
+    "Sneha told me that she has been doing her homework."
+   ],
+   "answer": 0,
+   "solution": "Direct mein ‘am doing’ present continuous diya hai, toh indirect mein past continuous ayega, kyunki ‘she’ subject banega, isliye yahan singular verb ‘was doing’ wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0056",
+   "question": "She asked, \"Are you coming to the party?\"",
+   "options": [
+    "She asked are you going to the party.",
+    "She asked if I was coming to the party.",
+    "She asked if I am coming to the party.",
+    "She asked if I can come to the party."
+   ],
+   "answer": 1,
+   "solution": "Direct mein ‘are you coming’ present continuous likha hai, toh indirect mein past continuous mein change hoga, isliye ‘was coming’ wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0057",
+   "question": "Megha asked Reena where she was going that day.",
+   "options": [
+    "Megha asked Reena, \"Where were you going that day?\"",
+    "Megha asked Reena, \"Where were you going today?\"",
+    "Megha asked Reena, \"Where have you been going today?\"",
+    "Megha asked Reena, \"Where are you going today?\""
+   ],
+   "answer": 3,
+   "solution": "Indirect mein ‘was going’ past continuous likha hai, toh direct mein present continuous se aaya hoga, isliye ‘are you going’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0058",
+   "question": "He said, \"Alas! I am a ruined man.\"",
+   "options": [
+    "He applauded with sorrow that he was a ruined man.",
+    "He confessed with sorrow that he was a ruined man.",
+    "He cried out with sorrow that he was a ruined man.",
+    "He wished that he was a ruined man."
+   ],
+   "answer": 2,
+   "solution": "‘applaud’ ka matlab ‘tareef’ karna, ‘confessed’ ka ‘guhna kubul karna’, ‘wished’ ka matlab ‘iccha karna’, ‘cried out’ ka matlab ‘zor se chillana yaa pukarna’, kyunki ‘alas’ ka matlab ‘dukhi hona’, isliye indirect mein ‘cried out’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0059",
+   "question": "John said, “I cannot come with you.”",
+   "options": [
+    "John says that he cannot come with me.",
+    "John said that he will not be coming with me.",
+    "John said that he would not come with me.",
+    "John said that he could not come with me"
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘cannot’ hai, toh indirect mein ‘could not’ mein change hoga, joki option D mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0060",
+   "question": "Shreya said, “I have been feeling very hungry.”",
+   "options": [
+    "Shreya said that she had been feeling very hungry.",
+    "Shreya said that she was feeling very hungry.",
+    "Shreya said that she have been feeling very hungry.",
+    "Shreya said that she has been feeling very hungry."
+   ],
+   "answer": 0,
+   "solution": "Direct mein ‘have been feeling’ diya hai, toh indirect mein ‘had been feeling’ mein change hoga, joki option A mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0061",
+   "question": "They said, \"We were planning to visit you next week.\"",
+   "options": [
+    "They said that they have been planning to visit him next week.",
+    "They said that they had planned to visit him next week.",
+    "They said that they are planning to visit him the coming week.",
+    "They said that they had been planning to visit him the following week."
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘were planning’ past continuous mein likha hai, toh indirect mein past perfect continuous mein change hoga, isliye ‘had been planning’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0062",
+   "question": "The father said, \"Ramu, try again\".",
+   "options": [
+    "The father advised Ramu to try again.",
+    "The father requested Ramu to try again.",
+    "The father told Ramu that he tried again.",
+    "The father said that Ramu tries again."
+   ],
+   "answer": 0,
+   "solution": "Direct speech imperative hai, isliye ‘try’ ‘to try’ mein change hoga aur yeh baat ‘father’ ne ‘ramu’ ko ek advice ke roop mein di hai, isliye ‘advised’ aur ‘to try’ wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0063",
+   "question": "\"I have not completed the assignment yet,\" the student admitted.",
+   "options": [
+    "The student admitted that he/she hadn't been able to complete the assignment yet.",
+    "The student admitted that he/she hasn't been able to complete the assignment yet.",
+    "The student admitted that he/she hasn't completed the assignment yet.",
+    "The student admitted that he/she hadn't completed the assignment yet."
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘have not completed’ present perfect ke active mein likha hai, toh indirect mein past perfect ke active mein change hoga, isliye ‘hadn't completed’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0064",
+   "question": "Simon said to me, “He is not well.”",
+   "options": [
+    "Simon told me that he is not well.",
+    "Simon told him that I am not well.",
+    "Simon told me that he was not well.",
+    "Simon told him that he was not well"
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘is’ present indefinite diya hai, toh indirect mein past indefinite ‘was’ se banega, aur ‘simon told me’ hoga, isliye option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0065",
+   "question": "The boss said to the secretary, \"Don't forget to order A3 size paper.\"",
+   "options": [
+    "The boss instructed the secretary not to forget to order A3 size paper.",
+    "The boss told the secretary that she didn't forget to order A3 size paper.",
+    "The boss asked the secretary to order A3 size paper.",
+    "The boss told the secretary that she should not forget to order A3 size paper."
+   ],
+   "answer": 0,
+   "solution": "Yeh ek imperative sentence ki direct speech hai, isliye indirect mein ‘not to forget’ se banega, toh diye gaye options mein ‘not to forget’ wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0066",
+   "question": "She said, “I love to eat pineapple.”",
+   "options": [
+    "She said that she love to eat pineapple.",
+    "She said that I loved to eat pineapple.",
+    "She said that she loved to eat pineapple.",
+    "She said that she had loved to eat pineapple"
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘love’ present indefinite diya hai, toh indirect mein ‘loved’ past indefinite se banega, aur indirect mein ‘I’ ‘she’ ke according ‘she’ mein change hoga, isliye ‘she loved’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0067",
+   "question": "\"Why is he crying?\" he asked.",
+   "options": [
+    "He asked why he was crying.",
+    "She asked why he is crying.",
+    "She asked why he was crying.",
+    "He asked why she crying."
+   ],
+   "answer": 0,
+   "solution": "Correct answer is ‘He asked why he was crying’. Direct mein ‘is he crying’ present continuous mein likha hai, toh indirect mein past continuous mein change hoga, aur indirect mein ‘he asked’ he rahega, isliye ‘he asked why he was crying’ wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0068",
+   "question": "The tourist said, \"Wow! what a wonderful view.\"",
+   "options": [
+    "The tourist exclaimed with joy that it was a wonderful view.",
+    "The tourist explained with joy that the view is wonderful.",
+    "The tourist said that the view is wonderful.",
+    "The tourist told what a wonderful view it is."
+   ],
+   "answer": 0,
+   "solution": "‘what a wonderful view’ waali baat present situation mein kahin gayi hogi, lekin jab yeh indirect mein batayi jayegi toh past ki baat ho chuki hogi, isliye ise indirect mein past indefinite mein change karenge, isliye ‘it was a wonderful view’ wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0069",
+   "question": "The traffic police told me that I couldn't park my two-wheeler there.",
+   "options": [
+    "The traffic police said to me, \"I can't park my two-wheeler there.\"",
+    "The traffic police told me, \"I couldn't park my two-wheeler here.\"",
+    "The traffic police said to me, \"You can't park your two-wheeler here.\"",
+    "The traffic police said, \"Do not park the two-wheeler here.\""
+   ],
+   "answer": 2,
+   "solution": "Indirect mein ‘couldn't’ likha hai, toh direct mein ‘can't, couldn't’ se bana hoga aur ‘there’ direct mein ‘here’ se aaya hoga, indirect mein ladka apni baat bata raha hai jo police ne usse kaha, toh direct mein police ne usse ‘you’ kaha hoga, isliye ‘you can't’ aur ‘here’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0070",
+   "question": "The traveller asked the owner if he could stay in that tavern. The peasant replied that he could.",
+   "options": [
+    "The traveller said, \"Could I stay in this tavern?\" The peasant replied, \"He should.\"",
+    "The traveller said, \"May I stay in this tavern?\" The peasant replies, \"You can.\"",
+    "The traveller said, \"Can I stay in this tavern?\" The peasant replied, \"You can.\"",
+    "The traveller said, \"Can I stay in this tavern?\" The peasant replied, \"She could.\""
+   ],
+   "answer": 2,
+   "solution": "Indirect mein ‘if he could’ aur ‘that he could’ likhe hai, toh direct mein do ‘can’ se aaye honge, isliye do ‘can’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0071",
+   "question": "My aunt said that they had shifted to a new house.",
+   "options": [
+    "\"I am shifting to a new house,\" said my aunt.",
+    "\"We will be shifting to a new house,\" said my aunt.",
+    "\"We are shifting to a new house,\" said my aunt.",
+    "\"We have shifted to a new house,\" said my aunt."
+   ],
+   "answer": 3,
+   "solution": "Indirect mein ‘had shifted’ past perfect mein likha hai, toh direct mein present perfect se aaya hoga, isliye ‘have shifted’ present perfect wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0072",
+   "question": "Ammu said, \"How brilliant I am!\"",
+   "options": [
+    "Ammu exclaimed that she was being brilliant.",
+    "Ammu exclaimed that she is brilliant.",
+    "Ammu exclaimed that she was brilliant.",
+    "Ammu exclaimed that she has been brilliant."
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘I am’ present indefinite likha hai, toh indirect mein past indefinite mein change hoga, isliye ‘she was brilliant’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0073",
+   "question": "'I am determined to publish my findings,' the scientist asserted confidently.",
+   "options": [
+    "The scientist confidently asserted that she is determined to publish her findings.",
+    "The scientist confidently asserted that she had determined to publish her findings.",
+    "The scientist confidently asserted that she would be determined to publish her findings.",
+    "The scientist confidently asserted that she was determined to publish her findings."
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘am determined’ present indefinite diya hai, toh indirect mein past indefinite mein change hoga, isliye ‘she was determined’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0074",
+   "question": "The District Magistrate ordered the police to work all night and put an end to those riots.",
+   "options": [
+    "The District Magistrate told the police, \"Work all night and put to end these riots.\"",
+    "The District Magistrate told the police, \"Work all night and put an end to these riots.\"",
+    "The District Magistrate told the police, \"Work all night and put an end to their riots.\"",
+    "The District Magistrate told the police, \"Work all night to put an end these riots.\""
+   ],
+   "answer": 1,
+   "solution": "Sentence mein ‘ordered’ aur ‘to work’ infinitive se pata chal raha ki imperative ke direct se bana hai, aur ‘those’ direct ke ‘these’ se aaya hoga aur ‘work all night and put an end’ wala structure direct mein bhi same rahega, isliye ‘these’ aur ‘work all night’ same structure wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0075",
+   "question": "The soldier said to his fellow soldiers, \"I have buried our brave comrade here",
+   "options": [
+    "The soldier told his fellow soldiers that he had buried their brave comrade there.",
+    "The soldier told us that I had buried their brave comrade here.",
+    "The soldier told his fellow soldiers that I had buried our brave comrade there.",
+    "The soldier told us that he had buried our brave comrade there."
+   ],
+   "answer": 0,
+   "solution": "Sentence ke reporting speech mein ‘I’ jab indirect mein change hoga toh first person ‘soldier’ ke according ‘he’ mein change hoga, isliye option B aur C galat honge. Option D bhi galat hoga kyunki ‘told’ ke baad jabardasti ‘us’ ka use kiya hai joki galat hai, isliye diye gaye options mein se option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0076",
+   "question": "She asked me why I was not eating.",
+   "options": [
+    "She said, \"Why don't you eat?\"",
+    "She said, \"Why am I not eating?\"",
+    "She said, \"Why are you not eating?\"",
+    "She said, \"Why is he not eating?\""
+   ],
+   "answer": 2,
+   "solution": "Indirect mein ‘I was not eating’ past continuous likha hai, toh direct mein present continuous se bana hoga, jab ladki ne directly pucha hoga toh usse ‘you’ bola, isliye ‘why are you not eating’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0077",
+   "question": "He said to his friend, “Let us leave for the trek tomorrow.”",
+   "options": [
+    "He suggested to his friend that they should leave for the trek the next day",
+    "He told his friend to leave for the trek the next day.",
+    "He suggested his friend that let us leave for the trek tomorrow.",
+    "He suggested to his friend to leave for the trek the next day."
+   ],
+   "answer": 0,
+   "solution": "Direct mein ‘let’ diya hai, indirect mein ‘suggest/propose’ aur ‘that’ clause lagake ‘should’ se banta hai, isliye diye gaye options mein se ‘suggested’ aur ‘they should leave’ wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0078",
+   "question": "Reena said to Rhea, “I will not accompany you on this trip.”",
+   "options": [
+    "Reena said to Rhea that she will not accompany her on the trip.",
+    "Reena said to Rhea that she will not accompany her on this trip.",
+    "Reena told Rhea that she would not accompany her on that trip.",
+    "Reena said to Rhea that she will not be accompanying her on this trip"
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘will not’ diya hai, toh indirect mein ‘would not’ se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0079",
+   "question": "I said to you, “He cannot be trusted completely.”",
+   "options": [
+    "You told me that he cannot be trusted completely.",
+    "You told me that he could not be trusted completely.",
+    "I said you that he cannot be trusted completely.",
+    "I told you that he could not be trusted completely."
+   ],
+   "answer": 3,
+   "solution": "Direct se indirect mein ‘said to’ ‘told’ mein change ho jayega aur ‘cannot’ ‘could not’ mein change ho jayega, isliye ‘I told you that he could not’ wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0080",
+   "question": "Isha told Shivani that they didn’t need to buy tickets for the match as she had been given free passes for two.",
+   "options": [
+    "Isha said to Shivani, “We didn’t need to buy tickets for the match as I am given free passes for two.”",
+    "Isha said to Shivani, “We don’t need to buy tickets for the match as I have been given free passes for two.”",
+    "Isha said to Shivani, “They didn’t need to buy tickets for the match as she was given free passes for two.”",
+    "Isha said to Shivani, “They didn’t need to buy tickets for the match as I am given free passes for two.”"
+   ],
+   "answer": 1,
+   "solution": "Indirect mein ‘didn’t’ past indefinite diya hai, toh direct mein present indefinite se aaya hoga, isliye diye gaye options mein ‘don’t’ present indefinite wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0081",
+   "question": "He said, “My dog died on a cold night”.",
+   "options": [
+    "He said my dog died on a cold night.",
+    "He said his dog died on a cold night.",
+    "He said his dog was dead on a cold night.",
+    "He said his dog had died on a cold night."
+   ],
+   "answer": 3,
+   "solution": "Direct mein ‘died’ past indefinite diya hai, toh indirect mein ‘had died’ past perfect se banega, joki option D mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0082",
+   "question": "She said, “I know where he lives.”",
+   "options": [
+    "She said that she knew where he living.",
+    "She said that she knew where he lived.",
+    "She said I know where he lived.",
+    "She said she had knowledge of where he lived."
+   ],
+   "answer": 1,
+   "solution": "Direct mein ‘know, lives’ present indefinite diya hai, toh indirect mein ‘knew, lived’ se banega, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0083",
+   "question": "I said that I would go to the temple.",
+   "options": [
+    "I said, “I can go to the temple”.",
+    "I said, “I will go to the temple”.",
+    "I said, “I went to the temple”.",
+    "I said, “I go to the temple”."
+   ],
+   "answer": 1,
+   "solution": "Indirect mein ‘would go’ likha hai, toh direct mein ‘will go’ se aaya hoga, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0084",
+   "question": "Mrs. Gomes said, “Virtue is its own reward.”",
+   "options": [
+    "Mrs. Gomes said that Virtue was its own reward.",
+    "Mrs. Gomes said that Virtue is its own reward.",
+    "Mrs. Gomes said that Virtue had its own reward.",
+    "Mrs. Gomes said that Virtue has its own reward."
+   ],
+   "answer": 1,
+   "solution": "Sentence mein proverb di hai, isliye direct se indirect jaate waqt reporting speech mein tense change nahi hoga, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0085",
+   "question": "Mother said that Sam would not pass.",
+   "options": [
+    "Mother said, “Sam would never pass.”",
+    "Mother said, “Sam will not pass.”",
+    "Mother said, “Sam would not pass.”",
+    "Mother said, “Sam will have never passed.”"
+   ],
+   "answer": 1,
+   "solution": "Indirect mein ‘would not pass’ diya hai, toh direct mein ‘will not pass’ se aaya hoga, isliye option B sahi hoga",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0086",
+   "question": "The coach said, “Bravo! You have played well”.",
+   "options": [
+    "The coach informed him that he played well.",
+    "The coach exclaimed that he played well.",
+    "The coach exclaimed that he had played well.",
+    "The coach praised that he has played well"
+   ],
+   "answer": 2,
+   "solution": "Direct mein present perfect diya hai, toh indirect mein ‘had played’ past perfect se banega, joki option C mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0087",
+   "question": "Ross said to Rachel, “We were on a break”.",
+   "options": [
+    "Ross told Rachel that they used to be on a break.",
+    "Ross told Rachel that they were on break.",
+    "Ross told Rachel that they had been on a break.",
+    "Ross told Rachel that they have been on a break"
+   ],
+   "answer": 2,
+   "solution": "Direct mein ‘were’ past indefinite diya hai, toh indirect mein past perfect tense ayega, isliye ‘had been’ wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 01"
+  },
+  {
+   "id": "narration-0088",
+   "question": "She told me that she had already finished the project.",
+   "options": [
+    "She said, \"She will have finished the project.\"",
+    "She told me, \" He had already finished the project.\"",
+    "She said to her, \"I already finished the project.\"",
+    "She said to me, \"I have already finished the project.\""
+   ],
+   "answer": 3,
+   "solution": "Indirect speech mein 'past perfect', direct speech mein 'present perfect, past indefinite, past perfect' teeno se ban sakta hai, agar sentence mein 'yesterday, day before' wagera likha ho toh past indefinite se bana hoga, yaa sentence mein past ke do clause ka comparison kara hoga toh 'past perfect' se banega, aur kuch bhi hint nahi hai toh 'present perfect' se banega. Indirect mein 'told' direct mein 'said to' se ayega, aur sentence mein koi hint nahi hai past indefinite yaa past perfect ki, isliye direct speech mein 'present perfect' wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0089",
+   "question": "He told me that I could eat from his plate.",
+   "options": [
+    "He said, “You can eat from my plate.”",
+    "He said to me, “Can you eat from my plate?”",
+    "He said, “I can eat from my plate.”",
+    "He said to me, “You can eat from my plate.”"
+   ],
+   "answer": 3,
+   "solution": "Indirect mein 'told' likha hai, toh direct ke reporting verb 'said to' se aaya hoga, isliye option A aur C galat honge, aur indirect mein kahi gayi baat koi interrogative nahi hai, isliye iska interrogative wala option B bhi galat hoga, isliye diye gaye options mein se option D 'you can eat from my plate' wala option sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0090",
+   "question": "The priest said, “Death is inevitable.”",
+   "options": [
+    "The priest said death had been inevitable.",
+    "The priest said that death is inevitable.",
+    "The priest said that death was inevitable.",
+    "The priest told that death had been inevitable"
+   ],
+   "answer": 1,
+   "solution": "Direct mein 'death is inevitable' waali baat proverb hai, ek fact ki tarah use ho rahi hai, toh indirect mein jaate waqt iske tense mein koi change nahi hoga, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0091",
+   "question": "The teacher was happy to meet her and asked, “When did you complete all these?”",
+   "options": [
+    "The teacher was happy to meet her and asked when she had completed all those.",
+    "The teacher was happy to meet her and asked when she had been completing all those.",
+    "The teacher was happy to meet her and asked when did she complete all those.",
+    "The teacher was happy to meet her and asked when had she completed all those"
+   ],
+   "answer": 0,
+   "solution": "Direct mein 'did you complete' past indefinite tense diya hai, toh indirect mein 'had completed' past perfect se banega, isliye option C galat hoga. option D bhi galat hoga kyunki direct se indirect interrogative sentence assertive mein change ho jata hai, jisme 'verb' 'subject' ke baad aati hai. option B mein past perfect continuous ka use kiya hai joki galat hai, isliye 'had completed' wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0092",
+   "question": "The Principal said to the students, “Listen to the announcement carefully.”",
+   "options": [
+    "The Principal ordered the students that listen to the announcement carefully.",
+    "The Principal told the students that listen to the announcement carefully.",
+    "The Principal ordered the students to listen to the announcement carefully.",
+    "The Principal suggested the students that they should listen to the announcement carefully."
+   ],
+   "answer": 2,
+   "solution": "Direct mein 'listen to the announcement' se pata chal raha ki imperative hai, toh indirect mein infinitive 'to listen' se banega, isliye 'ordered the students to listen' wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0093",
+   "question": "Mona said to me, “Are you planning a trip to Disneyland?”",
+   "options": [
+    "Mona enquired of me if I was planning a trip to Disneyland.",
+    "Mona asked me that was I planning a trip to Disneyland?",
+    "Mona enquired of me that was I planning a trip to Disneyland.",
+    "Mona asked me if I had been planning a trip to Disneyland?"
+   ],
+   "answer": 0,
+   "solution": "Direct mein 'are you planning' present continuous diya hai aur interrogative bhi hai, isliye indirect mein assertive mein change hoga jisme verb subject ke baad aati hai aur past continuous tense ayega, isliye 'I was planning' wala option A sahi hoga. option C mein verb subject se pehle hai, isliye galat hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0094",
+   "question": "The doctor advised me to take bed rest and eat nutritious food.",
+   "options": [
+    "The doctor told me, \"I should take bed rest and eat nutritious food.\"",
+    "The doctor said to me, \"You take bed rest and eat nutritious food.\"",
+    "The doctor said to me, \"I take bed rest and eat nutritious food.\"",
+    "The doctor said to me, \"Take bed rest and eat nutritious food.\""
+   ],
+   "answer": 3,
+   "solution": "Indirect mein agar 'order/advice/request + infinitive' hai, direct speech ke imperative sentence se aaya hoga, 'verb' se start hone waala imperative hota hai, isliye option D sabse sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0095",
+   "question": "The beggar woman said, “What will I do with so much money, my dear Prince?”",
+   "options": [
+    "The beggar woman told the Prince what she would do with so much money.",
+    "The beggar woman said to the Prince what she could do with so much money.",
+    "The beggar woman said to the Prince what would she do with so much money.",
+    "The beggar woman asked the Prince what she should do with so much money"
+   ],
+   "answer": 3,
+   "solution": "Direct speech mein kahi gayi baat interrogative hai, isliye indirect mein 'asked' se banayenge, isliye 'asked' wala option D sahi hai. Note:- option D mein 'should' ki jagah 'would' aana chaiye tha, lekin jab yeh question paper mein aaya tha toh option D hee sahi maana tha, joki galat tha, isliye yeh challenge karne wala question tha",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0096",
+   "question": "She told her friend that she had been studying for her examination.",
+   "options": [
+    "She told her friend, \"I had studied for my examination.\"",
+    "She told her friend, \"I am studying for my examination.\"",
+    "She told her friend, \"I was studying for my examination.”",
+    "She tells her friend, \"I have been studying for my examination.\""
+   ],
+   "answer": 2,
+   "solution": "Indirect mein 'had been studying' past perfect continuous diya hai, toh direct ke 'past continuous, present perfect continuous' se aaya hoga, option D present perfect continuous galat hoga kyunki reporting verb ka tense galat hai, isliye 'was studying' past continuous wala option C sahi hoga. Note:- agar present perfect ke sath 'told' bhi hota toh bhi galat hota kyunki 'present perfect continuous' ke sath duration batana padta hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0097",
+   "question": "They said that they were practising for the next annual function.",
+   "options": [
+    "They said, \"They were practising for the next annual function.\"",
+    "They said, \"We are practising for the next annual function.\"",
+    "They said, \"We are practising for tomorrow's annual function.\"",
+    "They said, \"We have been practising for the next annual function.\""
+   ],
+   "answer": 1,
+   "solution": "Indirect mein 'were practising' past continuous mein hai, toh direct mein 'present continuous' se aaya hoga, aur 'next annual function' same he rahega kyunki yahan 'next' koi adverb nahi jo 'tomorrow' se aaya hoga balki 'next' yahan adjective hai 'jo annual function' ke sath likha hai, isliye 'are practising' present continous aur 'the next annual function' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0098",
+   "question": "He said to me, “Please pass the salt.”",
+   "options": [
+    "He asked for the salt.",
+    "He requested me to pass the salt.",
+    "He requested me that I pass the salt.",
+    "He advised me that I should pass the salt"
+   ],
+   "answer": 1,
+   "solution": "Direct mein 'please pass' se pata chal raha ki imperative hai, toh indirect mein 'requested' aur 'to pass' mein change hoga, isliye 'he requested me to pass the salt' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0099",
+   "question": "My friend Ganesh said, “I could solve the biggest problem very easily.”",
+   "options": [
+    "My friend Ganesh said that he could solved the biggest problem very easily.",
+    "My friend Ganesh said that he can solve the biggest problem very easily.",
+    "My friend Ganesh said that he would solve the biggest problem very easily.",
+    "My friend Ganesh said that he could solve the biggest problem very easily"
+   ],
+   "answer": 3,
+   "solution": "Direct mein 'could solve' diya hai, toh indirect mein 'could solve' he rahega, isliye option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0100",
+   "question": "She said, ”I called yesterday, but there was no response”.",
+   "options": [
+    "She said that she had called the day before, but there was no response.",
+    "She said that I called day before, but there was no response.",
+    "She said I called yesterday, but there was no response.",
+    "She said she called yesterday, but there was no response"
+   ],
+   "answer": 0,
+   "solution": "Direct mein 'called yesterday' past indefinite likha hai, toh indirect mein past perfect mein change hoga, isliye 'had called the day before' wala option A sahi hoga. Note:- 'but there was no response' ka tense kisi bhi option mein change nahi kiya isliye isse aise chod denge, toh diye gaye options mein se best option A hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0101",
+   "question": "He said he was going for shopping and asked if he might get me anything.",
+   "options": [
+    "He said, “I’m going for shopping. Can I get you anything?”",
+    "He said, “I’m going for shopping. May I get you anything?”",
+    "He said, “I will go for shopping. Do you want anything?”",
+    "He said, “I will be going for shopping. May I get you anything?”"
+   ],
+   "answer": 1,
+   "solution": "Indirect mein 'was going' past continuous diya hai, toh direct mein present continuous se aaya hoga aur indirect mein 'might' direct ke 'may' se aaya hoga, isliye 'I'm going for shopping. May I get' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0102",
+   "question": "Pawan said, “I am preparing hot coffee for you.”",
+   "options": [
+    "Pawan said that he was preparing hot coffee for me.",
+    "Pawan had said that he was preparing hot coffee for me.",
+    "Pawan has said that he was preparing hot coffee for me.",
+    "Pawan says that he was preparing hot coffee for me."
+   ],
+   "answer": 0,
+   "solution": "Reporting verb mein agar 'said' diya hai, toh indirect mein bhi 'said' he rahega, reporting verb ka tense change nahi hota, isliye 'had said, has said, says' option B, C aur D teeno galat honge.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0103",
+   "question": "The librarian said to her, “Can you return the books?”",
+   "options": [
+    "The librarian asked her if she could return the books.",
+    "The librarian greeted her if she could return the books.",
+    "The librarian asked her that if she could return the books.",
+    "The librarian asked her that could she return her books"
+   ],
+   "answer": 0,
+   "solution": "Yeh sentence interrogative hai toh indirect mein 'said to' reporting verb 'asked' mein change hogi aur 'can' 'could' mein change hoga. option D isliye galat hoga kyunki assertive mein verb subject ke baad aati hai. option C bhi galat hoga kyunki 'asked' ke sath 'if' conjunction ki tarah kaam karti, lekin isme 'that' conjunction bhi likhi hai, option B mein 'greeted' likha hai, isliye galat hai, toh option A 'asked her if she could' wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0104",
+   "question": "The passenger says to the railway clerk, “Is the train late?”",
+   "options": [
+    "The passenger has asked the railway clerk whether the train is late.",
+    "The passenger asked the railway clerk was the train late.",
+    "The passenger asks the railway clerk was the train late.",
+    "The passenger asks the railway clerk if the train is late."
+   ],
+   "answer": 3,
+   "solution": "Agar reporting verb 'says' present mein likhi hai, toh indirect mein reporting verb aur speech ke tense mein koi change nahi hota, isliye B, C aur A galat honge, aur 'asks' 'if the train is late' wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0105",
+   "question": "“Why have you come so early today?” The coach asked the athlete.",
+   "options": [
+    "The coach asked the athlete why he came so early that day.",
+    "The coach asked the athlete why he had come so early that day.",
+    "The coach asked the athlete why had he come so early that day.",
+    "The coach asked the athlete why did he come so early today"
+   ],
+   "answer": 1,
+   "solution": "Direct mein 'have you come' present perfect diya hai aur interrogative hai, toh indirect mein past perfect mein change hoga aur assertive sentence banega, jisme verb subject ke baad aati hai, isliye 'had come' wala option B sahi hoga. option C mein verb subject ke pehle hai, isliye galat hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0106",
+   "question": "Arjun asked whether I wanted to join the job.",
+   "options": [
+    "Arjun said if I was ready to join the job",
+    "Arjun said, “Do you wish to join the job?”",
+    "Arjun said, “Do you want to join the job?”",
+    "Arjun replied, “Do you want to join the job?”"
+   ],
+   "answer": 2,
+   "solution": "Indirect mein 'wanted' past indefinite likha hai, toh direct mein present indefinite se aaya hoga, option A mein 'was' hai isliye galat hoga, option B mein 'want' ko 'wish' kar diya isliye galat hai, option D mein 'replied' kar diya jabki direct mein arjun ne pucha hoga, isliye option D galat hai, isliye 'said' aur 'do you want' wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0107",
+   "question": "The solicitor said, \"Let us solve the dispute over the land.”",
+   "options": [
+    "The solicitor wished that they should solve the dispute over the land.",
+    "The solicitor suggested that they might solve the dispute over the land.",
+    "The solicitor suggested that they should solve the dispute over the land.",
+    "The solicitor ordered that we should solve the dispute over the land."
+   ],
+   "answer": 2,
+   "solution": "'let' ka indirect speech mein reporting verb ko 'suggest, propose, order' wagera mein change karte hai aur inke sath 'that' lagake agle clause mein 'should' se banate hai kyunki yahan 'chaiye' wala meaning chaiye hai, isliye 'suggested that they should solve' wala option C sahi hoga. yeh sentence 'koi order, wish' wagera meaning ka nahi hai, isliye option A aur D galat honge.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0108",
+   "question": "My little sister said, “What a beautiful sight!”",
+   "options": [
+    "My little sister exclaimed that it was a beautiful sight.",
+    "My little sister said that it is a beautiful sight.",
+    "My little sister said that it had been a beautiful sight.",
+    "My little sister said that it would be a beautiful sight."
+   ],
+   "answer": 0,
+   "solution": "Jab direct mein 'what a beautiful sight' kaha hoga toh obvious baat hai present ki baat ho rahi hogi, jab indirect mein batayenge toh yeh baat past ki ho jayegi, isliye yahan past indefinite 'it was a beautiful sight' mein change karenge, isliye option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0109",
+   "question": "My friend said to me, \"Do you know the recipe of mango ice-cream?”",
+   "options": [
+    "My friend asked me that I knew the recipe of mango ice-cream.",
+    "My friend asked me if I know the recipe of mango ice-cream.",
+    "My friend asked me if I knew the recipe of mango ice-cream.",
+    "My friend asked me that I know the recipe of mango ice-cream."
+   ],
+   "answer": 2,
+   "solution": "Direct mein 'do you know' present indefinite likha hai, toh indirect mein past indefinite mein change hoga, kyunki direct speech interrogative hai, isliye 'said to' reporting verb 'asked' mein change hogi, jiske sath 'if' conjunction ka use hota hai, isliye 'asked me if I knew' past indefinite wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0110",
+   "question": "Kiran says that he worked hard for a good rank.",
+   "options": [
+    "Kiran said, “I worked hard for a good rank”.",
+    "Kiran says, “I work hard for good rank”.",
+    "Kiran has said, “I worked hard for a good rank”.",
+    "Kiran says, “I worked hard for a good rank”."
+   ],
+   "answer": 3,
+   "solution": "Indirect mein 'says' se pata chal raha ki reporting verb present ki rahi hogi, isliye reporting speech mein koi change nahi hoga, isliye reporting verb 'says' aur reporting speech 'I worked hard' wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0111",
+   "question": "My friend told me that he was very thirsty and requested me to give him a glass of water.",
+   "options": [
+    "My friend was saying to me, \"I am very thirsty. Please give me a glass of water.\"",
+    "My friend told to me, \"I am very thirsty. Please give me a glass of water.\"",
+    "My friend said to me, \"I was very thirsty. Gave me a glass of water.\"",
+    "My friend said to me, \"I am very thirsty. Please give me a glass of water."
+   ],
+   "answer": 3,
+   "solution": "Indirect mein 'told' likha hai, toh direct ki reporting verb 'said to' se aaya hoga, isliye option A galat hai, option B bhi galat hoga kyunki 'told' ke baad 'to' galat hota hai. indirect mein 'was thirsty' past indefinite likha hai, toh direct mein present indefinite se aaya hoga, isliye option D 'I am thirsty' wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0112",
+   "question": "Vicky asked them whether they wanted to join the party he had organised.",
+   "options": [
+    "Vicky said to them, “Do you want to join the party I have organised?”",
+    "Vicky said to him, “Do you want to join the party I organised?”",
+    "Vicky said to them, “Do you want to join the party I organised?”",
+    "Vicky said to him, “Do you want to join the party I have organised?”"
+   ],
+   "answer": 0,
+   "solution": "Indirect mein 'asked them' likha hai, toh direct mein 'said to them' se aaya hoga, isliye option B aur D galat honge, indirect mein 'wanted' past indefinite aur 'had organized' past perfect hai, toh direct ke 'present indefinite' aur 'past indefinite, present perfect' se aaye honge, kyunki sentence mein aisa koi hint nahi 'yesterday, the day before' wala, toh yahan 'present perfect' ko prefer karenge, isliye option A 'do you want' 'I have organized' wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0113",
+   "question": "I said to my father, “Don’t worry! I will complete all the work by tomorrow.”",
+   "options": [
+    "I assured my father that I would have completed all the work by the following day",
+    "I assured my father that I will complete all the work by the following day.",
+    "I assured my father that I would complete all the work by the following day.",
+    "I told my father do not worry I would complete all the work by tomorrow."
+   ],
+   "answer": 2,
+   "solution": "Direct mein 'will complete' aur 'tomorrow' diya hai, toh indirect mein 'would complete' aur 'the following day' mein change hoga, toh yeh dono option C mein follow ho rahe hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0114",
+   "question": "The students said, “We wish we didn’t have to write exams.”",
+   "options": [
+    "The students say we wish they had not written exams.",
+    "The students said they wished they have not written exams.",
+    "The students say that we wish we do not write exams.",
+    "The students said that they wished they didn’t have to write exams."
+   ],
+   "answer": 3,
+   "solution": "Direct mein reporting verb 'said' past mein hai, isliye option A aur C galat honge, direct mein 'wish' present indefinite, toh indirect mein 'wished' mein change hoga. option B bhi galat hoga kyunki 'didn't' past ko present 'have not written' mein change kar diya joki galat hai. toh 'didn't have to' change karne wala koi option nahi hai, isliye waise he chodna padega, isliye option D 'they wished they didn't have' sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0115",
+   "question": "He ordered his soldiers to take that bird away. Its gilded cage reminded him of his father whom he had imprisoned.",
+   "options": [
+    "He said to his soldiers, \"May this bird be taken away. Its gilded cage reminds me of my father whom I imprisoned.\"",
+    "He said to his soldiers, \"Take the bird away. Its gilded cage reminded him of his father whom I imprison.\"",
+    "He said to his soldiers, \"Take this bird away. Its gilded cage reminded me of my father whom I imprison.\"",
+    "He said to his soldiers, \"Take this bird away. Its gilded cage reminds me of my father whom I imprisoned.\""
+   ],
+   "answer": 3,
+   "solution": "Indirect mein 'order' aur 'to take' se pata chal raha ki yeh imperative ka indirect speech hai, aur 'that bird' direct speech mein 'this bird' mein change hoga, aur 'had imprisoned' past perfect hai, toh direct mein 'past indefinite, present perfect, past perfect' se aaya hoga, toh 'take this bird away' aur 'I imprisoned' past indefinite wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0116",
+   "question": "\"Dear daughter,\" she said caressing her cheeks, \"have you come to comfort me in my time of need?\"",
+   "options": [
+    "Caressing her daughter's cheeks, she asked affectionately if she had come to comfort her in her time of need.",
+    "Caressing her daughter's cheeks, she said affectionately if she had been coming to comfort her in her time of need.",
+    "Caressing her daughter's cheeks, she asked affectionately if she did come to comfort her in her time of need.",
+    "Caressing her daughter's cheeks, she said affectionately if she has come to comfort her in her time of need."
+   ],
+   "answer": 0,
+   "solution": "Direct mein 'have come' present perfect diya hai, toh indirect mein past perfect mein change hoga, isliye 'had come' past perfect wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0117",
+   "question": "My sister requested me to bring her a watch.",
+   "options": [
+    "She said, \"My sister, please bring me a watch.\"",
+    "\"Please bring me a watch,\" said my sister.",
+    "My sister said, \"Will you bring me a watch?\"",
+    "\"Please bring my sister a watch,\" said she."
+   ],
+   "answer": 1,
+   "solution": "Indirect mein 'requested' aur 'to bring' infinitive se pata chal raha ki imperative sentence hai jo direct speech mein 'please' se bana hoga, aur reporting verb mein uski sister ne kaha, toh indirect ka 'her' direct mein 'me' mein change ho jayega, isliye 'please bring me a watch' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0118",
+   "question": "My friend said to me, \"Do you want to accompany us on this tour?\"",
+   "options": [
+    "My friend asked me if he wanted to accompany them on that tour.",
+    "My friend asked me if I wanted to accompany us on that tour.",
+    "My friend asked me if I wanted to accompany them on that tour?",
+    "My friend asked me if I wanted to accompany them on that tour."
+   ],
+   "answer": 3,
+   "solution": "Direct mein 'do you want' present indefinite likha hai, toh indirect mein past indefinite mein change hoga. Direct mein yeh interrogative tha, toh indirect mein assertive mein change hoga, isliye option C galat hoga. 'do' ke baad 'you' second person 'me' ke liye likha hai, isliye indirect ke change karte waqt 'I' mein change hoga, isliye option A galat hoga. aur 'accompany' ke baad 'us' first person 'friend' ke liye likha hai, toh 'friend' ke according 'them' mein change hoga, isliye 'I wanted to accompany them on that tour' wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0119",
+   "question": "The manager said to the employee, “ Why were you absent yesterday?”",
+   "options": [
+    "The manager asked the employee why he had been absent the previous day.",
+    "The manager told the employee why he had been absent the previous day.",
+    "The manager asked the employee why had been he absent the previous day.",
+    "The manager enquired the employee for his absence the previous day"
+   ],
+   "answer": 0,
+   "solution": "Direct mein past indefinite tense diya hai passive wala, toh indirect mein past perfect ayega passive wala, isliye option D galat hoga. option C bhi galat hoga kyunki indirect mein assertive sentence banega jisme verb subject ke baad ayegi. Kyunki interrogative ka question hai isliye 'said to' indirect mein 'asked' mein change hoga, isliye 'asked' aur 'had been absent' wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0120",
+   "question": "Ravi said to me, “Do you know the house of your family doctor?”",
+   "options": [
+    "Ravi asked me if I knew the house of my family doctor.",
+    "Ravi asked did I know the house of our family doctor.",
+    "Ravi said to me if did I know the house of our family doctor.",
+    "Ravi told me to know the house of our family doctor"
+   ],
+   "answer": 0,
+   "solution": "Direct speech 'present indefinite' mein likhi hai, toh indirect mein past indefinite mein change hoga, isliye option D galat hoga. aur B aur C bhi galat honge kyunki indirect mein assertive banta hai, lekin 'did I know' interrogative mein use hota hai, isliye B aur C galat honge, isliye 'asked me if I knew' wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0121",
+   "question": "Mahendra told her that he would be waiting for her at the theatre.",
+   "options": [
+    "Mahendra told her, “He will be waiting for her at the theatre.”",
+    "Mahendra asked her, “I will be waiting for you at the theatre.”",
+    "Mahendra inquired her, “He will be waiting for you at the theatre.”",
+    "Mahendra told her, “I will be waiting for you at the theatre.”"
+   ],
+   "answer": 3,
+   "solution": "Indirect mein 'he' ka use first person 'mahendra' ke liye kiya gaya hai, toh direct mein first person ke according 'I will be waiting' ayega, isliye option A aur C galat honge. Option B bhi galat hoga kyunki mahendra ne usse kuch pucha nahi balki bataya hai, isliye 'asked' wala option B galat hoga aur 'told her' wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0122",
+   "question": "Henry playfully asked the kids, “How can you split this paper further into pieces?”",
+   "options": [
+    "Henry playfully asked the kids how they could have split that further into pieces.",
+    "Henry playfully asked the kids how they could split that paper further into pieces.",
+    "Henry playfully asked the kids how could they split that further into pieces.",
+    "Henry playfully asked the kids that how they could split that further into pieces"
+   ],
+   "answer": 1,
+   "solution": "Direct mein 'how can you split' likha hai, toh indirect mein 'how they could split' se banega, isliye option A aur C galat honge. Option D bhi galat hoga kyunki 'that' ke baad 'paper' nahi likha. Isliye 'how they could split that paper' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0123",
+   "question": "The old king said, “Good Heavens, I am ruined.”",
+   "options": [
+    "The old king was shocked that he was ruined.",
+    "The old king blamed heavens that he was ruined.",
+    "The old king exclaimed with sorrow that he was ruined.",
+    "The old king cried out that good heavens has ruined him"
+   ],
+   "answer": 2,
+   "solution": "'good heavens' ka matlab 'hey bhagwan mein barbaad ho gaya', toh yeh dukhi hone waali hai, isliye yahan indirect mein 'exclaimed with sorrow' wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0124",
+   "question": "The manager said that he would be on leave the next day.",
+   "options": [
+    "The manager has said, “I will be on leave tomorrow”.",
+    "The manager said, “I would be on leave that day”.",
+    "The manager has said, “He will be on leave today”.",
+    "The manager said, “I will be on leave tomorrow”."
+   ],
+   "answer": 3,
+   "solution": "Indirect mein 'the next day', direct mein 'tomorrow' se aaya hoga, isliye B aur C galat honge, aur indirect mein 'said' likha hai, toh direct mein reporting verb 'said' he hogi, isliye option A bhi galat hoga, isliye diye gaye options mein se option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0125",
+   "question": "Mother warned me not to make a mess of the living room again.",
+   "options": [
+    "Mother warned, \"Don't you dare to have made a mess of the living room again.\"",
+    "Mother told me, \"Do not make a mess from the living room again.\"",
+    "Mother warned, \"Don't make a mess of the living room again!\"",
+    "Mother instructed, \"You may not be making a mess of the living room again.\""
+   ],
+   "answer": 2,
+   "solution": "'warned' aur 'to make' infinitive se pata chal raha ki imperative ka indirect hai. option D imperative nahi hai, isliye galat hai. option A bhi galat hoga kyunki isme 'make' ki jagah 'dare' kar diya. Option B bhi galat hoga kyunki 'from the living room' galat hai. isliye 'warned' aur 'don't make a mess' wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0126",
+   "question": "I said that when it stopped drizzling we would have to start digging again.",
+   "options": [
+    "I said, “When it stopped to drizzle we must start digging again.”",
+    "I said, “When it stops drizzling we must start digging again.”",
+    "I said, “When drizzle will stop then we will start digging again.”",
+    "I said, “When it stops to drizzle we will start digging again.”"
+   ],
+   "answer": 1,
+   "solution": "Indirect mein 'stopped' past indefinite diya hai, toh direct mein present indefinite se aaya hoga, isliye option A aur C galat honge aur 'would have to start' ka matlab 'humhe karna padega', toh compulsion wala meaning chaiye, isliye direct mein 'we must start digging' sahi hoga, isliye present indefinite aur 'we must start digging' wala option B sahi hoga. Note:- 'will have to start' hota toh usse tick karte, lekin given options mein best choose karna hai, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0127",
+   "question": "He exclaimed that he was a very stupid fellow.",
+   "options": [
+    "\"How a stupid fellow are you!\" he remarked.",
+    "\"What a stupid fellow you are!\" he remarked.",
+    "\"Are you a stupid fellow!\" he remarked.",
+    "\"How a stupid fellow you are!\" he remarked."
+   ],
+   "answer": 1,
+   "solution": "Indirect mein 'was' past indefinite likha hai, toh direct mein present indefinite se bana hoga, option A aur C isliye galat honge kyunki subject se pehle verb ka use interrogative mein hota, lekin indirect speech interrogative nahi hai. option D bhi galat hoga kyunki 'how' aur 'stupid' ke beech mein 'a' article galat hai kyunki 'how' adverb hai 'stupid' adjective hai, isliye diye gaye options mein se 'what a stupid fellow you are' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0128",
+   "question": "Sourabh said, “Alas! We have been cheated.”",
+   "options": [
+    "Sourabh exclaimed with sorrow that they have been cheated.",
+    "Sourabh said that oh we have cheated.",
+    "Sourabh exclaimed with sorrow that they had been cheated.",
+    "Sourabh was sad that they were cheated."
+   ],
+   "answer": 2,
+   "solution": "'alas!' ka matlab 'dukhi hona' aur direct mein 'have been cheated' present perfect diya hai, toh indirect mein past perfect ayega, isliye 'had been cheated' wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0129",
+   "question": "She said to me, “I was thinking of going out for dinner but changed my mind later on.”",
+   "options": [
+    "She said me that she was thinking of going out for dinner but changed her mind later on.",
+    "She said that she thought of going out for dinner but changed her mind later on.",
+    "She told me that I was thinking of going out for dinner but changed my mind later on.",
+    "She told me that she had been thinking of going out for dinner but changed her mind later on"
+   ],
+   "answer": 3,
+   "solution": "Direct mein 'was thinking' past continuous diya hai, toh indirect mein past perfect continuous se banega, aur 'changed' past indefinite ko change nahi kiya toh isse aise he chod denge, isliye 'she had been thinking' wala option D sahi hoga. Note:- past perfect continuous past ke kisi action se just pehle hota hai, jaise sochne wala mind change karne se pehle hoga, isliye option D ka structure, meaning, grammar wise sahi hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0130",
+   "question": "The boy said to the teacher, \"Sir, I am weak in Maths and seek your advice.\"",
+   "options": [
+    "The boy told the teacher that he was weak in Maths and seek his advice.",
+    "The boy told the teacher that he was weak in Maths and sought his advice.",
+    "The boy told the teacher that he is weak in Maths and see his advice.",
+    "The boy told that he was weak in Maths and sought his advice"
+   ],
+   "answer": 1,
+   "solution": "Direct se indirect 'said to' 'told' mein change hoga aur direct mein 'am weak, seek' present indefinite mein likha hai, toh indirect mein 'was weak, sought' past indefinite mein change hoga, isliye 'the boy told the teacher, was weak and sought' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0131",
+   "question": "The manager said to the peon, \"Why were you absent yesterday?\"",
+   "options": [
+    "The manager enquired why the peon was absent the previous day.",
+    "The manager asked the peon why he was absent the previous day.",
+    "The manager asked the peon why he had been absent the previous day.",
+    "The manager asked the peon why had he been absent the previous day."
+   ],
+   "answer": 2,
+   "solution": "Direct mein 'were you absent' past indefinite mein likha hai, toh indirect mein 'past perfect' mein change hoga, aur interrogative sentence indirect mein likhte waqt assertive mein change ho jata hai, isliye verb subject ke baad ayegi, isliye 'he had been absent' wala option C sahi hoga",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0132",
+   "question": "Calling me a friend, Surjit Singh encouraged me and advised me not to lose heart.",
+   "options": [
+    "Surjit Singh asked me, \"Cheer up, friend. Do not lose heart.\"",
+    "Surjit Singh demanded, \"Cheer up, friend. Do not lose heart.\"",
+    "Surjit Singh said, \"Cheer up, friend. Do not lose heart.\"",
+    "Surjit Singh ordered me, \"Cheer up, friend. Do not lose heart.\""
+   ],
+   "answer": 2,
+   "solution": "Sentence indirect mein likha hai aur yeh baat koi 'order, demand' nahi hai, isliye option B aur D galat honge, 'asked' ka matlab 'kisi se kuch kehna bhi hota hai, lekin koi kaam wagera karne ke liye bhi' 'asked' ka use karte hai, isliye option A bhi galat hoga. indirect speech waali simply dost ko kahi gayi hai, isliye 'surjit singh said' wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0133",
+   "question": "She said, \"Don't the children like the cake?\"",
+   "options": [
+    "She enquired about whether the children liked the cake",
+    "she asked me whether the children didn’t like the cake.",
+    "She asked whether the children liked the cake.",
+    "She wondered why the children didn’t like the cake."
+   ],
+   "answer": 1,
+   "solution": "Direct mein 'don't the children like' present indefinite hai, toh indirect mein past indefinite mein change hoga. option A aur C isliye galat honge kyunki isme 'not' nahi likha. Option D bhi galat hoga kyunki 'why' se meaning galat ho raha hai, isliye 'asked me whether, didn't like' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0134",
+   "question": "The reporter said that an event had been organised for the President the previous day.",
+   "options": [
+    "The reporter said, “An event is organised for the President today.”",
+    "The reporter said, “An event is organised for the President yesterday.”",
+    "The reporter said, “An event was organised for the President yesterday.”",
+    "The reporter said, “Let us organise an event for the President the next day.”"
+   ],
+   "answer": 2,
+   "solution": "Indirect mein past perfect diya hai, toh direct mein 'past indefinite, present perfect, past perfect' se aaya hoga, lekin 'the previous day' se pata chal raha ki direct mein 'yesterday' se aaya hoga, jiski wazah se 'past perfect' direct mein past indefinite se bana hoga, isliye option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0135",
+   "question": "The team manager said, “Let’s have some refreshments.”",
+   "options": [
+    "The team manager requested that we should have some refreshments.",
+    "The team manager suggested us to have some refreshments.",
+    "The team manager suggested that we may have some refreshments.",
+    "The team manager regretted that we should have some refreshments."
+   ],
+   "answer": 1,
+   "solution": "Direct mein kahi gayi baat koi request yaa regret nahi hai, isliye option A aur D galat honge. Sentence ka matlab hai 'chalo kuch khaake aate hai', lekin 'may' ka use toh permission wagera dene ke liye hota hai, isliye option C bhi galat hoga. sentence 'let's' ka hai toh indirect mein 'suggest, advice' aur 'that' clause lagake 'should' se banate hai, lekin aisa koi option nahi hai, diye gaye mein se best option choose karna hoga, isliye option B 'suggested us to have some' wala option sahi hoga. Note:- given options mein se B option best hai isliye majburi mein yehi mark karna padega. Iska best possible answer hota 'the team manager suggested that we should have refreshments'",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0136",
+   "question": "My grandfather said, “Always respect the National Flag.”",
+   "options": [
+    "My grandfather said that respect the national flag always.",
+    "My grandfather wished to respect the national flag always.",
+    "My grandfather advised me to respect the national flag always.",
+    "My grandfather asked if I respect the national flag always."
+   ],
+   "answer": 2,
+   "solution": "Yeh ek imperative hai aur advise ki tarah hai, isliye indirect 'advised' aur 'to respect' se banega, isliye option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0137",
+   "question": "The lady said, “Most of the trains are running late today.”",
+   "options": [
+    "The lady said that most of the trains were running late the next day.",
+    "The lady said that most of the trains were running late that day.",
+    "The lady said that most of the trains are running late that day.",
+    "The lady said that most of the trains were running late today"
+   ],
+   "answer": 1,
+   "solution": "Direct mein 'are running' present continuous diya hai, toh indirect mein past continuous mein change aur 'today' 'that day' mein change hoga, isliye 'were running late that day' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0138",
+   "question": "Tom said that he had a strange experience the day before.",
+   "options": [
+    "Tom exclaimed, \"What a strange experience it was!\"",
+    "Tom said, \"I will have a strange experience the day before.\"",
+    "Tom said, \"I must have a strange experience the day before.\"",
+    "Tom said, \"I had a strange experience yesterday.\""
+   ],
+   "answer": 3,
+   "solution": "Indirect mein 'the day before' likha hai, toh direct mein 'yesterday' se aaya hoga, isliye diye gaye options mein se 'yesterday' wala option D sahi hoga. Waise option D ke according indirect mein 'had had' hona chaiye tha lekin diye gaye options mein se best option lagana hota hai, isliye 'yesterday' ke according option D sahi hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0139",
+   "question": "Mr. Collin said, “Let me deliver the letters to the postman”.",
+   "options": [
+    "Mr. Collin said that let he be allowed to deliver the letters to the postman.",
+    "Mr. Collin requested that he might be allowed to deliver the letters to the postman.",
+    "Mr. Collin suggested with joy that he wished to deliver the letters to the postman.",
+    "Mr. Collin asked if he was allowed to deliver the letters to the postman"
+   ],
+   "answer": 1,
+   "solution": "Direct speech mein kahi gayi baat koi interrogation yaa khushi ki baat nahi hai, isliye option C aur D galat honge. 'let' ka indirect 'suggest, request, propose' wagera se banate hai, aur sentence mein kahi gayi baat ek permission ke taur pe hai, jiske liye 'request' 'may' ka use karte hai, isliye option B sahi hoga kyunki agar main clause past mein hota hai toh sub clause mein 'may' ki past form 'might' aa rahi hai, isliye diye gaye options mein se option B sahi hoga. option A isliye galat kyunki 'let' aur 'be allowed' dono sath mein galat hote hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0140",
+   "question": "\"I've just bought a car,\" said Amar, \"But it isn't insured yet. So I cannot take you for a ride.\"",
+   "options": [
+    "Amar said that he just bought a car but it wasn't insured till then. So, he could not take me for a ride.",
+    "Amar said that he had just bought a car but it wasn't insured till then. So, he could not be taken for a ride.",
+    "Amar said that he had just bought the car but it wasn't insured till then. So, he could not take me for a ride.",
+    "Amar said that he had just bought a car but it wasn't insured till then. So, he could not take me for a ride"
+   ],
+   "answer": 3,
+   "solution": "Direct mein 'I have bought' present perfect likha hai, toh indirect mein 'had bought' past perfect ayega, isliye option A galat hoga aur 'cannot take' indirect mein 'could not take' mein change hoga, isliye option B bhi galat hoga. direct mein 'a car' likha hai, isliye 'had bought', 'could not take', 'a car' wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0141",
+   "question": "“Leave me alone” yelled the little boy in the movie, “or else I will start shouting loudly.”",
+   "options": [
+    "The little boy in the movie shouted that he should be left alone or else he would start shouting loudly.",
+    "The little boy wanted to be left alone or else he will start shouting loudly.",
+    "The little boy in the movie cried to be left alone or else he shall start shouting loudly.",
+    "The little boy requested to be left alone or else he would start shouting loudly"
+   ],
+   "answer": 0,
+   "solution": "Direct mein 'will start' diya hai, toh indirect mein 'would start' hoga, isliye option B aur C galat honge. Option D bhi galat hoga kyunki isme direct ki tarah 'in the movie' nahi likha. Isliye diye gaye options mein se option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0142",
+   "question": "My father said to me, “Slow and steady wins the race.”",
+   "options": [
+    "My father told me that slow and steady win the race.",
+    "My father taught me that slow and steady wins the race.",
+    "My father taught me that slow and steady has won the race.",
+    "My father told me that slow and steady has won the race."
+   ],
+   "answer": 1,
+   "solution": "'slow and steady wins the race' yeh ek proverb hai, direct se indirect jaate waqt proverb, universal fact' wagera ke tense mein koi change nahi hota, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0143",
+   "question": "I said to Sharma, “Please give me your book”.",
+   "options": [
+    "I request Sharma please give me your book.",
+    "I requested Sharma to give me his book.",
+    "I requested Sharma to give your book.",
+    "I requested Sharma book."
+   ],
+   "answer": 1,
+   "solution": "yeh ek imperative sentence aur 'please' bhi likha hai, isliye indirect mein 'requested' aur 'to give' se banega 'your book' 'sharma' ke liye likha hai, indirect mein 'sharma' ke according 'his book' mein change hoga, isliye 'I requested Sharma to give me his book' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0144",
+   "question": "You said, “Priya kept watching television till her mother exploded at her.”",
+   "options": [
+    "You said that Priya had kept watching television till her mother exploded at her",
+    "You said that Priya kept watching television till her mother had exploded at her.",
+    "You said that Priya kept watching television till her mother exploded at her.",
+    "You said that Priya had kept watching television till her mother had exploded at her."
+   ],
+   "answer": 2,
+   "solution": "Direct se indirect mein agar do past ke action 'when, while' conjunction se jude ho aur yeh pata ho ki dono action sath mein ho rahe hai, toh indirect mein tense change nahi hoga. kis circumstances mein change hoga, agar option hee naa ho bina tense change wala, toh usme yeh dekhna ki konsa action pehle khatam hua, jo pehle khatam hoga usse past perfect mein change karenge. Dusra circumstance hai ki ek kaam chalta raha jab tab dusra nahi hua, toh aise m bhi past perfect mein change kar sakte hai. lekin iss particular sentence mein yeh dikkat hai ki yahan 'watching' present participle bhi likha hua hai, isliye isse bina change kiya hua prefer karenge, isliye option C sahi hoga. Note:- agar 'watched' likha hota toh 'had watched' mein change wala prefer hota.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0145",
+   "question": "She asked Aditi, “Where did you have lunch yesterday?”",
+   "options": [
+    "She asked Aditi whether she was having lunch yesterday.",
+    "She asked Aditi where she was having lunch the previous day.",
+    "She asked Aditi if she had lunch yesterday.",
+    "She asked Aditi where she had had lunch the previous day."
+   ],
+   "answer": 3,
+   "solution": "Direct mein 'did you have' past indefinite diya hai, toh indirect mein past perfect mein change hoga, isliye 'had had' past perfect wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0146",
+   "question": "He said, “I must stay with her as her condition is critical.”",
+   "options": [
+    "He said he would stay with her as her condition is critical.",
+    "He said that he has to stay with her as her condition has been critical.",
+    "He said that he would have to stay with her as her condition was critical.",
+    "He said he must stay with her as her condition were critical."
+   ],
+   "answer": 2,
+   "solution": "Direct mein 'is critical' diya hai, toh indirect mein 'was critical' mein change hoga, isliye option C sahi hoga. Note:- direct se indirect mein 'must' 'had to' mein change hota hai aur 'had to' aur 'would have to' dono ka matlab same hota hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0147",
+   "question": "The manager said to her, “Will you accept the revised salary?”",
+   "options": [
+    "The manager asked her whether she accepted the revised salary.",
+    "The manager asked her whether she would accept the revised salary.",
+    "The manager asked her whether she has accepted the revised salary.",
+    "The manager asked her whether she will accept the revised salary"
+   ],
+   "answer": 1,
+   "solution": "Direct mein 'will you accept' diya hai, toh indirect mein 'would accept' mein change hoga, joki option B mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0148",
+   "question": "The Principal said, “What a good performance, Sonu! You have won the competition.”",
+   "options": [
+    "The Principal surprised Sonu with news of his good performance and winning the competition.",
+    "The Principal applauded that Sonu had performed well and declared that he had won the competition.",
+    "The Principal cried out to Sonu that he had good performance and he had won the competition.",
+    "The Principal told Sonu about his good performance and that he has won the competition."
+   ],
+   "answer": 1,
+   "solution": "Direct mein 'have won' present perfect diya hai, toh indirect mein 'had won' past perfect mein change hoga, isliye option A aur D galat honge. Option C bhi galat hoga kyunki 'cried out' ka matlab 'kisi ko cheekh ke bulana' lekin sentence ke according uski tareef kari gayi hai, isliye option C galat hoga. aur meaning, tense ke according option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0149",
+   "question": "Girish said, “We have not gone to Mexico”.",
+   "options": [
+    "Girish said that they had not went to Mexico.",
+    "Girish said that they has not gone to Mexico.",
+    "Girish said that we had not gone to Mexico.",
+    "Girish said that they had not gone to Mexico"
+   ],
+   "answer": 3,
+   "solution": "Direct mein 'have not gone' present perfect diya hai, toh indirect mein 'had not gone' past perfect mein change hoga. Jab third person girish ki baat indirectly batayega toh wo third person usme include nahi hoga, isliye girish wagera ke liye 'they' ka use karenge, isliye 'they had not gone' wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0150",
+   "question": "Hari said to the boy, \"What's the matter? Why are you crying? Be cheerful.\"",
+   "options": [
+    "Hari asked the boy what the matter was and why he was crying. He asked him to be cheerful.",
+    "Hari asks the boy what the matter was and why he was crying. He asks him to be cheerful.",
+    "Hari asked the boy what the matter was and why he was crying. He asks him to be cheerful.",
+    "Hari asked the boy what was the matter and he was crying. He asked him to be cheerful"
+   ],
+   "answer": 0,
+   "solution": "Direct se indirect jaate waqt interrogative assertive mein change hota hai, 'what is the matter' indirect mein 'what the matter was' mein change hoga, isliye option D galat hoga, kyunki reporting verb past mein hai, 'be cheerful' indirect mein 'asked him to be cheerful' mein change hoga, isliye 'asks' wala option B aur C galat honge, aur diye gaye options mein se option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0151",
+   "question": "The teacher said to me, “You have not followed my instructions properly.”",
+   "options": [
+    "The teacher told me that I was not following her instructions properly.",
+    "The teacher told me that I had not followed her instructions properly.",
+    "The teacher told me that I had not been following her instructions properly.",
+    "The teacher told me that I have not followed her instructions properly"
+   ],
+   "answer": 1,
+   "solution": "Direct mein 'have not followed' diya hai, toh indirect mein 'had not followed' mein change hoga, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0152",
+   "question": "I said to Hia, “Don’t litter”.",
+   "options": [
+    "I advised Hia to not litter",
+    "I implored Hia not to litter.",
+    "I ordered Hia to not litter.",
+    "I offered Hia to not litter"
+   ],
+   "answer": 1,
+   "solution": "Sentence imperative hai aur sentence mein kahi gayi baat 'order, request' dono ho sakti hai, indirect mein infinitive ka negative karna hai aur 'not' ka use 'infinitive' ke beech mein nahi hota, isliye diye gaye options mien se 'not to litter' wala option B sahi hoga. Note:- 'implore' ka matlab 'kisi se jor se request se karna'",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0153",
+   "question": "The leader applauded the comrades saying that they had done very well.",
+   "options": [
+    "The leader said to the comrades, “Bravo! You have done very well.”",
+    "The leader said to the comrades, “Cheers! You have been doing very well.”",
+    "The leader said to the comrades, “Great! You could do very well.”",
+    "The leader said to the comrades, “Alas! You have done very well.”"
+   ],
+   "answer": 0,
+   "solution": "Indirect mein 'had done' past perfect likha hai, toh direct mein present perfect se aaya hoga, isliye option B aur C galat honge. Indirect mein comrades ko praise kiya hai, lekin 'alas' ka matlab 'dukhi' hota hai, isliye option D bhi galat hoga. isliye 'bravo! You have done very well' wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0154",
+   "question": "He said to his brother, “Where did you go for a picnic?”",
+   "options": [
+    "He asked his brother where he went for a picnic.",
+    "He asked his brother where he had gone for a picnic.",
+    "He asked his brother where did he go for a picnic.",
+    "He asked his brother where did you go for a picnic."
+   ],
+   "answer": 1,
+   "solution": "Direct mein 'did you go' past indefinite diya hai, toh indirect mein 'had gone' past perfect mein change hoga, joki option B mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0155",
+   "question": "I told you that I had bought a new book for you the day before.",
+   "options": [
+    "I said to you, “I have bought a new book for you the day before.”",
+    "I said to you, “I bought a new book for you yesterday.”",
+    "I said to you, “You have bought a new book for me the day before.”",
+    "I told to you, “I have bought a new book for you yesterday.”"
+   ],
+   "answer": 1,
+   "solution": "Indirect mein 'had bought' past perfect diya hai, toh direct mein 'past perfect, past indefinite, present perfect se aaya' hoga. Past perfect tab hoga jab past ke do action ka comparison hoga, past indefinite tab hoga jab hint ho 'yesterday, the day before' wagera, nahi toh present perfect hoga. sentence mein hint hai 'the day before', isliye direct mein 'past indefinite se bana hoga, isliye 'I bought a new book' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0156",
+   "question": "Rahul said to Mohit, “I am taking my family to Kashmir for a vacation tomorrow.”",
+   "options": [
+    "Rahul told Mohit that I am taking my family to Kashmir for a vacation tomorrow.",
+    "Rahul told Mohit that I was taking my family to Kashmir for a vacation the following day.",
+    "Rahul told Mohit that he is taking his family to Kashmir for a vacation tomorrow.",
+    "Rahul told Mohit that he was taking his family to Kashmir for a vacation the following day"
+   ],
+   "answer": 3,
+   "solution": "Direct mein 'am taking' present continuous diya hai, toh indirect mein past continuous mein change hoga, 'I am taking' yeh baat first person 'rahul' ne kahi hai, toh indirect mein 'rahul' ke according 'he' pronoun ayega, isliye 'he was taking' wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0157",
+   "question": "I asked my friend how one could be merry when everything was so messed up.",
+   "options": [
+    "I said to my friend, “ Could one be merry when everything is so messed up?”",
+    "I asked to my friend, “ How can one be merry when everything was so messed up?”",
+    "I said to my friend, “ How can one be merry when everything is so messed up?”",
+    "I said to my friend, “ How one could be merry when everything was so messed up?”"
+   ],
+   "answer": 2,
+   "solution": "Indirect mein 'could' aur 'was messed' diya hai, toh direct mein 'can, could' aur 'is messed' present indefinite tense se aaya hoga, indirect mein 'asked' se pata chal raha ki direct interrogative banega. Option D galat hoga kyunki 'could' helping verb subject ke baad aa rahi hai. option A bhi galat hoga kyunki indirect mein 'how' diya hai, toh direct mein bhi 'how' ayega, isliye 'how can be merry' aur 'is messed' present indefinite wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0158",
+   "question": "She said, “Ruhi slipped when she was trying to board the bus.”",
+   "options": [
+    "She said that Ruhi has slipped when she was trying to board the bus.",
+    "She said that Ruhi slipped when she was trying to board the bus.",
+    "She said that Ruhi had slipped when she was trying to board the bus.",
+    "She says that Ruhi slipped when she was trying to board the bus."
+   ],
+   "answer": 1,
+   "solution": "Direct mein agar do past ke action 'when, while' se jude ho, matlab dono kaam sath mein hue, toh indirect mein tense change nahi hota, sentence mein 'jaise he chadne waali thi waise he slip ho gayi', toh dono kaam sath hue, isliye 'ruhi slipped when she was trying to board the bus' wala option B sahi hoga. option D mein reporting verb 'says' hai jo ki galat hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0159",
+   "question": "Father told Avika to stop watching the TV and eat her food.",
+   "options": [
+    "Father said, “Avika, stop watching the TV and eat your food.”",
+    "Father said, “Avika, Why can’t you stop watching the TV and eat your food?”",
+    "Father said, “Avika, stop watching the TV and eat her food.”",
+    "Father said to Avika, “ Stop eating the TV and watch your food.”"
+   ],
+   "answer": 0,
+   "solution": "Indirect mein 'to stop watching' se pata chal raha ki direct mein imperative se bana hoga, isliye option B aur D galat honge aur direct mein avika ke father usse uska food khaane ke bol rahe honge, isliye direct mein 'your food' ayega, isliye 'stop watching' and 'your food' wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0160",
+   "question": "The policeman told the boys that they could not park their car there.",
+   "options": [
+    "The policeman said to the boys, “You could not park their car there.”",
+    "The policeman said to the boys, “How could you park your car here?”",
+    "The policeman said to the boys, “You cannot park your car here.”",
+    "The policeman told to the boys, “They could not park their car there.”"
+   ],
+   "answer": 2,
+   "solution": "Indirect mein 'could not park' likha hai, toh direct mein 'cannot park' se aaya hoga, joki option C mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0161",
+   "question": "The teacher asked me why I had reached the examination hall so late.",
+   "options": [
+    "The teacher said to me, “Why had I reached the examination hall so late?”",
+    "The teacher said to me, “Why did you reach the examination hall so late?”",
+    "The teacher said to me, “Why you reached the examination hall so late?”",
+    "The teacher said to me, “Why are you reaching the examination hall so late?”"
+   ],
+   "answer": 1,
+   "solution": "Indirect mein 'had reached' past perfect diya hai, toh direct mein 'past perfect, past indefinite, present perfect se aaya hoga, isliye option D galat hoga. option C bhi galat hoga kyunki direct mein interrogative banega aur interrogative mein helping verb ka use hota hai. option A bhi galat hoga kyunki past perfect past ke do action ke comparison ke liye use hota hai, isliye grammar, meaning, structure wise 'did you reach' past indefinite wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0162",
+   "question": "She said to herself, “Shall I have a happy married life?”",
+   "options": [
+    "She wondered if she shall have a happy married life.",
+    "She asked that if she should have a happy married life.",
+    "She wondered if she would have a happy married life.",
+    "She thought that she should have a happy married life."
+   ],
+   "answer": 2,
+   "solution": "Direct mein 'shall' diya hai, toh indirect mein 'should, would' mein change hoga, iss sentence mein wo apne future ke baare mein soch rahi hai, isliye yahan 'would' ka use hoga, joki sirf option C mein follow ho raha hai. Note:- 'shall' ka 'should' permission yaa suggestion ke liye use hota hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0163",
+   "question": "Your sister will say that she has lost her pen again.",
+   "options": [
+    "Your sister will say, “I lost my pen again.”",
+    "Your sister said, “She has lost my pen again.”",
+    "Your sister says, “I lost her pen again.”",
+    "Your sister will say, “I have lost my pen again.”"
+   ],
+   "answer": 3,
+   "solution": "Indirect mein 'will say' se pata chal raha ki direct mein reporting verb 'will say' rahi hogi, jab reporting verb 'present, future' ki ho toh reporting speech ke tense mein koi change nahi hota. Isliye 'said, say' wala option B aur C galat honge, aur present perfect wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0164",
+   "question": "The Headmistress said, \"What a performance!\"",
+   "options": [
+    "The Headmistress said that what a performance.",
+    "The Headmistress exclaimed that it was a great performance.",
+    "The Headmistress praised what a great performance.",
+    "The Headmistress exclaimed what a great performance."
+   ],
+   "answer": 1,
+   "solution": "Direct speech mein 'what a performance' waali uss waqt ki present situation ke liye kahi gayi hogi, isliye indirect mein isse past indefinite mein change karenge aur yeh exclamatory sentence hai, isliye 'exclaimed' aur 'it was a great performance' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0165",
+   "question": "“Don’t be late tomorrow morning,” my mother said to me.",
+   "options": [
+    "My mother warned me not to be late the next day morning.",
+    "My mother warned me not to be late tomorrow morning.",
+    "My mother asks me not to be late tomorrow morning.",
+    "My mother told me don’t be late tomorrow morning."
+   ],
+   "answer": 0,
+   "solution": "Direct mein 'tomorrow' diya hai, toh indirect mein 'the next day' mein change hoga, joki sirf option A mein follow ho raha hai. Aur sentence imperative hai, toh indirect mein 'not to be late' se banega.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0166",
+   "question": "The driver asked a passerby if he could tell him the way to the market.",
+   "options": [
+    "The driver said to a passerby, “Tell me the way to the market, will you”",
+    "The driver said to a passerby, “Please, will you tell me the way to the market?”",
+    "The driver said to a passerby, “Could he tell him the way to the market?”",
+    "The driver said to a passerby, “Can you tell me the way to the market?”"
+   ],
+   "answer": 3,
+   "solution": "Indirect mein 'could' likha hai, toh direct mein 'can' se bana hoga, isliye 'can you tell me' wala option D sahi hoga. Jab kisi se puchoge direct speech mein 'you' bolenge, isliye 'can you tell me' sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0167",
+   "question": "My friend said, “Hello! What are you doing here?”",
+   "options": [
+    "My friend said hello to me and asked what were you doing here.",
+    "My friend said hello and asked me what was I doing there.",
+    "My friend greeted me and asked me what I was doing there.",
+    "My friend wished me and asked me what was I doing here."
+   ],
+   "answer": 2,
+   "solution": "Sentence interrogative hai, toh indirect mein assertive mein change hoga jisme verb subject ke baad aati hai, isliye 'what I was doing' wala option C sahi hoga. Baaki options mein verb subject se pehle aa rahi hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0168",
+   "question": "Jayesh said to Diwakar, “You can top the class if you want to.”",
+   "options": [
+    "Jayesh told Diwakar that he could top the class if he wanted to.",
+    "Jayesh told Diwakar that he would top the class if he wants to.",
+    "Jayesh told Diwakar that you could top the class if you wanted to.",
+    "Jayesh told Diwakar that you can top the class if you want to."
+   ],
+   "answer": 0,
+   "solution": "Direct mein 'can' aur 'want' likha hai, indirect mein 'could' aur 'wanted' mein change hoga, aur direct mein 'you' second person diwakar ke liye likha hai, toh indirect mein diwakar ke according 'he' mein change hoga, isliye 'he could' aur 'he wanted' wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0169",
+   "question": "“Oh, how could I ever thank you, Sir!” said the convict to the Bishop.",
+   "options": [
+    "The convict exclaimed gratefully to the Bishop that how he could ever thank him.",
+    "The convict said to the Bishop that he could never thank him enough.",
+    "Exclaiming gratefully, the convict said to the Bishop that he could never thank him enough.",
+    "The convict told the Bishop that it was difficult for him to thank him."
+   ],
+   "answer": 2,
+   "solution": "Direct mein sentence exclamatory wala hai, isliye indirect mein exclaimed mein change hoga, isliye option B aur D galat honge kyunki isme 'said to' aur 'told' likha hai. Option A galat hoga kyunki indirect mein 'how' likha hai, toh jab bhi exclamatory se assertive mein likhte hai 'how, what' assertive mein nahi aate. Option C sahi hoga kyunki 'exclaiming gratefully' likhna wahi baat hai 'the convict exclaimed gratefully' aur 'he could never thank him enough' ka matlab 'wo use kabhi paryaapt thank you nhi bol payega, toh direct aur indirect mein kahi gayi baat ka meaning same hona chaiye, joki option C se aa raha hai, isliye option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0170",
+   "question": "You told me that you had not slept the previous night and could not work then.",
+   "options": [
+    "You said to me, “I have not slept last night and could not work then.”",
+    "You said to me, “I did not sleep last night and cannot work now.”",
+    "You said to me, “I have not slept the previous night and cannot work then.”",
+    "You said to me, “You did not sleep the previous night and could not work now.”"
+   ],
+   "answer": 1,
+   "solution": "Indirect mein 'the previous night' se pata chal raha ki past perfect 'had not slept' direct mein past indefinite se bana hoga, aur jab direct mein bo ladka khudke ke liye bolega, toh 'I' ka use hoga, isliye 'I did not sleep last night' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0171",
+   "question": "The judge asked the prisoner if he had anything to say for himself.",
+   "options": [
+    "The judge said to the prisoner, “Do you have anything to say for yourself?”",
+    "The judge said to the prisoner, “Did he had anything to say for himself?”",
+    "The judge said to the prisoner, “If you have anything to say for yourself?”",
+    "The judge said to the prisoner, “Does he have anything to say for himself?”"
+   ],
+   "answer": 0,
+   "solution": "Indirect mein 'had' past indefinite hai, toh direct mein present indefinite se aaya hoga, aur jab judge prisoner se puchega direct mein toh 'you' bolega, aur direct mein ab interrogative banana hai, isliye 'H.V.+subject+main verb' structure ayega, isliye 'do you have' wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0172",
+   "question": "She said to me, “Can you look after my baby for a short while?”",
+   "options": [
+    "She asked me that if I could look after her baby for a short while.",
+    "She asked me if I can look after my baby for a short while.",
+    "She asked me if you can look after my baby for a short while.",
+    "She asked me if I could look after her baby for a short while."
+   ],
+   "answer": 3,
+   "solution": "Direct mein 'can' diya hai, toh indirect mein 'could' mein change hoga, aur asked verb ke sath sirf 'if' conjunction aati hai, isliye 'asked me if I could look after' wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0173",
+   "question": "The young man said to his father, “Pardon me, sir.”",
+   "options": [
+    "The young man requested to his father pardon me, sir.",
+    "The young man told his father pardon me.",
+    "The young man begged of his father to pardon him.",
+    "The young man begged of his father to pardon me."
+   ],
+   "answer": 2,
+   "solution": "Direct mein young man ne khudke liye 'me' bola hoga, lekin indirect mein koi third person yeh baat batayega isliye 'him' mein change hoga, isliye 'pardon him' wala option C sahi hoga. Sentence imperative hai isliye 'to pardon' infinitive mein change hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0174",
+   "question": "“What a hopeless fellow you are!” said the teacher to the student.",
+   "options": [
+    "The teacher said the student was what a hopeless fellow.",
+    "The teacher told the student that he was a very hopeless fellow.",
+    "The teacher told the student that you are a very hopeless fellow.",
+    "The teacher told the student what are a hopeless fellow he was."
+   ],
+   "answer": 1,
+   "solution": "Yeh sentence ek exclamatory sentence hai, lekin 'exclaimed' likha wala koi option nahi hai, isliye diye gaye mein se best meaning wala answer sahi hoga. Aur direct se indirect mein past indefinite mein change hoga, direct mein teacher ne 'you' bola, indirect mein 'student' ke according 'he' mein change hoga, isliye 'he was a very hopeless fellow' wala option B sahi hoga. Note:- exclamation wale sentence mein indirect mein 'how, what' ka use nahi hota.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0175",
+   "question": "I said to you, “You should believe her”.",
+   "options": [
+    "I asked whether she should believe you.",
+    "I told you that I should believe her.",
+    "I told you that you should believe her.",
+    "I asked you if you should believe her."
+   ],
+   "answer": 2,
+   "solution": "Yeh sentence koi interrogation wala nahi hai, isliye 'asked' waale option galat hoga. Aur sentence mein first person second person se keh raha hai tujhe believe karna chaiye, isliye 'you' ka 'you' he rahega, isliye 'you should believe' wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0176",
+   "question": "I asked the carpenter how long he would take to polish my furniture.",
+   "options": [
+    "I said to the carpenter, “How long he would take to polish my furniture?”",
+    "I said to the carpenter, “How long he would take to polish his furniture?”",
+    "I said to the carpenter, “How long will you take to polish my furniture?”",
+    "I said to the carpenter, “How long you would take to polish my furniture?"
+   ],
+   "answer": 2,
+   "solution": "Indirect mein 'he would take' diye hai, toh direct mein 'will you take' se aaya hoga, isliye option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0177",
+   "question": "“Remove all the stains carefully and clean the windows,” said the contractor to the worker.",
+   "options": [
+    "The contractor said to the worker that you should remove all the stains carefully and clean the windows.",
+    "The contractor requested the worker to remove all the stains carefully and clean the windows.",
+    "The contractor instructed the worker to remove all the stains carefully and clean the windows.",
+    "The contractor told the worker that by removing all the stains carefully, the windows will be cleaned."
+   ],
+   "answer": 2,
+   "solution": "Sentence imperative hai, toh indirect mein infinitive 'to remove' se banega, isliye option A aur D galat honge, aur indirect mein contractor worker ko 'instruct, order' dega naa ki 'request' karega, isliye 'instructed the worker to remove' wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0178",
+   "question": "He said, “Oh, how I would have loved to visit Kashmir this year.”",
+   "options": [
+    "He said that he will have loved to visit Kashmir this year.",
+    "He exclaimed how I would have loved to visit Kashmir this year.",
+    "He exclaimed that how he would have loved to visit Kashmir that year.",
+    "He exclaimed that he would have really loved to visit Kashmir that year"
+   ],
+   "answer": 3,
+   "solution": "Direct se indirect jaate waqt exclamatory sentence assertive mein change hota aur indirect mein 'how, what' ka use nahi hota, isliye option B aur C galat honge. Direct mein 'would have' indirect mein bhi 'would have' he rahega, isliye 'will' wala option A galat hoga. Isliye 'exclaimed that he would have really loved' wala option D sahi hoga. 'really' intensity badhaane ke liye use kiya hai, jo meaning, grammar wise sahi hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0179",
+   "question": "Granny said to Nina, “I don’t know why you think it is so wonderful.”",
+   "options": [
+    "Granny said to Nina that she hadn’t known why she was thinking it was so wonderful.",
+    "Granny said to Nina that she doesn’t know why she thinks it was so wonderful.",
+    "Granny said to Nina that she didn’t know why she thought it was so wonderful.",
+    "Granny said to Nina that I don’t know why you think it is so wonderful"
+   ],
+   "answer": 2,
+   "solution": "Direct mein 'don't know' present indefinite diya hai, toh indirect mein 'didn't know' past indefinite mein change hoga, isliye option C sabse sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0180",
+   "question": "Taru asked Kavya if she would help her in setting up her new dressing table.",
+   "options": [
+    "Taru said to Kavya, “Will you help me in setting up her new dressing table?”",
+    "Taru said to Kavya, “How would you help me in setting up my new dressing table?”",
+    "Taru said to Kavya, “Will you help me in setting up my new dressing table?”",
+    "Taru said to Kavya, “Would you help her in setting up my new dressing table?”"
+   ],
+   "answer": 2,
+   "solution": "Option B galat hoga kyunki indirect mein 'how' wagera ki koi baat nahi hui. Option D bhi galat hoga kyunki jab kavya puchegi, 'kya tum meri madad karogi', toh 'you help me' bolegi, isliye option D galat hai. Option A bhi galat hoga kavya puchega 'meri dressing table set up karne mein', toh 'setting up my dressing table' bolegi, isliye option A galat hoga. Aur diye gaye options mein se meaning, grammar wise 'will you help', 'setting up my dressing' wala option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0181",
+   "question": "The announcer requested the audience to switch off their mobile phones for the next two hours.",
+   "options": [
+    "The announcer said to the audience, “You all switch off your mobile phones for the next two hours.”",
+    "The announcer said to the audience, “Please switch off your mobile phones for the next two hours.”",
+    "The announcer told the audience, “You have to switch off your mobile phones for the next two hours.”",
+    "The announcer said to the audience, “You can switch off your mobile phones for the next two hours.”"
+   ],
+   "answer": 1,
+   "solution": "Indirect mein 'requested' aur 'to switch off' se pata chal raha ki, direct imperative hoga jisme request hogi, isliye 'please switch off' imperative wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0182",
+   "question": "The mother asked the daughter, \"Can we buy tonight's dinner from the restaurant?\"",
+   "options": [
+    "The mother asked the daughter could they buy that night’s dinner from the restaurant.",
+    "The mother asked the daughter if they could buy that night’s dinner from the restaurant.",
+    "The mother asked the daughter if they can buy tonight’s dinner from the restaurant.",
+    "The mother asked the daughter if could they buy that night’s dinner from the restaurant."
+   ],
+   "answer": 1,
+   "solution": "Yeh ek interrogative sentence hai, aur 'can' indirect mein 'could' mein change hoga, isliye option C galat hoga. Option A bhi galat hoga kyunki 'if' conjunction ka use nahi hua. Option D bhi galat hoga kyunki direct se indirect jaate waqt interrogative assertive mein change hota hai jisme verb subject ke baad aati hai, isliye option D galat hoga. Toh diye gaye options mein se 'if they could buy that night's' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0183",
+   "question": "The stranger said to me “What is your name?”",
+   "options": [
+    "The stranger has asked me what is my name.",
+    "The stranger asked me what my name was.",
+    "The stranger asked me what was my name.",
+    "Told me what my name is"
+   ],
+   "answer": 1,
+   "solution": "Direct se indirect jaate waqt interrogative assertive mein change hota hai jisme verb subject ke baad aati hai, isliye 'what my name was' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0184",
+   "question": "Somnath said that they had been there for two-and-a-half years and were going to stay another ten months.",
+   "options": [
+    "Somnath was saying, \"We has been here for two-and-a-half years. We are going to stay another ten months.\"",
+    "Somnath said, \"We have been here for two-and-a-half years. We are going to stay another ten months.\"",
+    "Somnath had said , \"We have been here for two-and-a-half years. We were going to stay another ten months.\"",
+    "Somnath said, \"He have been here for two-and-a-half years. We are going to stay another ten months.\""
+   ],
+   "answer": 1,
+   "solution": "Indirect mein past perfect aur past continous diye hai, toh direct mein present perfect aur present continuous se aaya hoga, kyunki dono action sath mein ho rahe hai, isliye present se past mein change hue honge. Option A galat hoga kyunki 'We' ke sath 'has' helping verb galat hai. Option D bhi galat hoga kyunki 'he' ke sath 'have' helping verb galat hai. Option C bhi galat hoga kyunki direct mein dono tense present ke hone chaiye. Option B sahi hoga kyunki 'have been' aur 'are going' se bana hoga, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0185",
+   "question": "Mudassir warned the child, “Be careful and be slow.”",
+   "options": [
+    "Mudassir warned the child that he be careful and be slow.",
+    "Mudassir warned the child to be careful and to be slow.",
+    "Mudassir warned the child to be careful and should be slow.",
+    "Mudassir warned the child that he should be careful and be slow."
+   ],
+   "answer": 1,
+   "solution": "Sentence imperative hai, toh 'infinitive' se banega, isliye 'to be careful and to be slow' wala option B sahi hoga. Waise 'to be careful and slow' hota toh best hota, lekin diye gaye options mein se option B best hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0186",
+   "question": "Mohit ordered Rohit to be honest.",
+   "options": [
+    "Mohit said, “Rohit, you should be honest.”",
+    "Mohit said, “Rohit, you must be honest.”",
+    "Mohit said, “Rohit, you can be honest.”",
+    "Mohit said, “Rohit, you would be honest.”"
+   ],
+   "answer": 1,
+   "solution": "Indirect mein 'ordered' likha hai, toh yaha compulsion wala meaning chaiye, isliye 'must' ka use karenge, isliye direct mein 'must be honest' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0187",
+   "question": "The teacher said, “William Shakespeare was born in Stratford- upon-Avon.”",
+   "options": [
+    "The teacher said that William Shakespeare have been born in Stratford-upon-Avon.",
+    "The teacher said that William Shakespeare was born in Stratford- upon-Avon.",
+    "The teacher said that William Shakespeare has been born in Stratford-upon-Avon.",
+    "The teacher said that William Shakespeare is born in Stratford- upon-Avon"
+   ],
+   "answer": 1,
+   "solution": "Direct mein 'birth place' bataya hai jo ki past ka ek fact ke taur pe hai, direct se indirect jaate waqt 'fact, proverb' wagera ke tense change nahi hote, isliye 'was born' wala option B sahi hoga. Note:- fact past ka bhi ho sakta hai, universal fact bhi ho sakta hai.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0188",
+   "question": "“Where is your office?” Anita said to me.",
+   "options": [
+    "Anita asked where my office were.",
+    "Anita enquired where my office was.",
+    "Anita asked where was my office?",
+    "Anita enquired about your office"
+   ],
+   "answer": 1,
+   "solution": "Sentence interrogative hai toh indirect mein assertive mein change hoga jisme verb subject ke baad ayegi. Isliye option C galat hoga. Option D bhi galat hoga kyunki isme 'was' verb nahi hai. Option B sahi hoga kyunki 'office' ke sath singular verb ayegi, isliye 'my office was' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0189",
+   "question": "I asked Joe to meet for lunch on Saturday.",
+   "options": [
+    "I says, “Let’s meet for lunch on Saturday Joe”.",
+    "I said, “Let’s meet for lunch on Saturday, Joe”.",
+    "I said, “We shall meet for lunch at Saturday Joe”.",
+    "I said, “Let’s meets for lunch at Saturday Joe”."
+   ],
+   "answer": 1,
+   "solution": "Indirect mein 'to meet' infinitive likha hai, toh direct mein imperative se banega aur saare options mein 'let's' se banaya, option A galat hoga kyunki reporting verb present hai. Option D bhi galat hoga kyunki 'at Saturday' likha hai. Option C bhi galat hoga kyunki 'shall' se indirect 'should, would' aata. Isliye 'lets's meet for lunch on Saturday' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0190",
+   "question": "The teacher paused and said, “Those who are tired of listening to me can go. I shall not mind it.”",
+   "options": [
+    "The teacher ordered that those who were tired of listening to him would go and that he would not mind that.",
+    "The teacher paused and then said that those who have been tired of listening to him would go and that he would not mind that.",
+    "The teacher exclaimed with a pause and then said that those who are tired of listening to me can go. I shall not mind it.",
+    "The teacher paused and said that those who were tired of listening to him could go and that he would not mind that."
+   ],
+   "answer": 3,
+   "solution": "Direct mein 'are tired' 'can go' aur 'shall' diya hai, toh indirect mein 'were tired', 'could go', 'should, would' mein change hoga, isliye 'were tired', 'could go' aur 'would' wala option D sahi hoga.",
+   "chapter": "Narration",
+   "set": "Narration Level - 02"
+  },
+  {
+   "id": "narration-0191",
+   "question": "The officer ordered the troops to retreat mmediately.",
+   "options": [
+    "\"Retreat now!\" ordered the officer.",
+    "\"Troops, you must retreat!\" said the officer.",
+    "\"Retreat immediately,\" the officer ordered.",
+    "The officer said, \"They must retreat now.\""
+   ],
+   "answer": 2,
+   "solution": "Sentence indirect speech mein hai jisme 'ordered' aur 'to retreat' se pata chal raha ki direct imperative sentence hoga. option B aur D galat honge kyunki yeh imperative nahi hai. option C sahi hoga kyunki indirect speech mein 'immediately' diya hai toh direct speech mein 'immediately' hee sahi hoga, isliye option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0192",
+   "question": "The manager told the staff that deadlines must be followed strictly.",
+   "options": [
+    "\"Deadlines must be followed strictly,\" said the manager.",
+    "\"You should follow deadlines strictly,\" said the manager.",
+    "\"Follow deadlines strictly,\" the manager said.",
+    "\"Deadlines are to be followed,\" said the manager."
+   ],
+   "answer": 0,
+   "solution": "Sentence indirect speech mein hai aur direct se indirect speech mein 'must' 'had to' mein change ho jata hai, lekin isme 'must' ko change nahi kiya toh koi problem nahi hai, isliye direct speech mein same 'must be followed' wala option A sahi hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0193",
+   "question": "The judge said that justice must be served at any cost.",
+   "options": [
+    "\"Justice should be served at any cost,\" said the judge.",
+    "\"Justice must be served at any cost,\" the judge said.",
+    "\"We serve justice at any cost,\" said the judge.",
+    "\"One must serve justice,\" the judge said."
+   ],
+   "answer": 1,
+   "solution": "Sentence indirect speech mein hai aur direct se indirect speech mein 'must' 'had to' mein change ho jata hai, lekin isme 'must' ko change nahi kiya toh koi problem nahi hai, isliye direct speech mein same 'must be served' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0194",
+   "question": "The librarian said that silence must be maintained in the library.",
+   "options": [
+    "\"Silence should be maintained in the library,\" said the librarian.",
+    "\"You will maintain silence in the library,\" the librarian said.",
+    "\"Maintain silence in the library,\" said the librarian.",
+    "\"Must you maintain silence in the library?\" asked the librarian."
+   ],
+   "answer": 0,
+   "solution": "Sentence indirect speech mein hai aur assertive sentence hai. option B galat hoga kyunki indirect speech mein 'will' ka 'would' ho jata. Option C bhi galat hoga kyunki yeh ek imperative sentence hai jise indirect speech mein 'to maintain' se likhna padta. Option D bhi galat hoga kyunki yeh interrogative mein likha hai. isliye diye gaye options mein se option A sahi hoga kyunki 'must be maintained' ka direct speech mein 'should be maintained' se bana sakte hai, kyunki given options mein se best option choose karna padta hai, aur itna variation chalta hai.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0195",
+   "question": "The diplomat said that only after the ceasefire would negotiations begin.",
+   "options": [
+    "\"Negotiations begin only after the ceasefire,\" said the diplomat.",
+    "\"Only after the ceasefire, negotiations would begin,\" said the diplomat.",
+    "\"Only after the ceasefire will negotiations begin,\" said the diplomat.",
+    "\"Negotiations would begin once the ceasefire is announced,\" said the diplomat."
+   ],
+   "answer": 2,
+   "solution": "Sentence mein 'only after the ceasefire' yeh inversion hai toh direct speech mein bhi inversion se start hoga 'would' direct speech mein 'will' ho jayega, isliye indirect speech mein inversion se start ho aur uske baad 'will' aise option C mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0196",
+   "question": "I said, \"Let us start early.\"",
+   "options": [
+    "I said let us start early.",
+    "I told that we must start early.",
+    "I suggested that we should start early.",
+    "I suggested us to start early."
+   ],
+   "answer": 2,
+   "solution": "Yeh sentence ek suggestion hai, aur 'let' ko indirect speech mein likhna avoid karte hai, isliye isse 'suggested/proposed/advised' mein change kar dete hai aur 'us' indirect speech mein 'we' mein change ho jayega, isliye diye gaye options mein se option C 'I suggested that we should start early' sahi hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0197",
+   "question": "She said, \"Let him not be disturbed during the meeting.\"",
+   "options": [
+    "She asked not to disturb him during the meeting.",
+    "She advised that he should not be disturbed during the meeting.",
+    "She said that let him not be disturbed.",
+    "She ordered no one disturb him."
+   ],
+   "answer": 1,
+   "solution": "Generally 'let' ko indirect speech mein likhna avoid karte hai, isliye isse 'suggested/ proposed/ advised' mein change kar dete hai, meaning se option A aur C bhi sahi lag rahe honge, lekin 'let' ko indirect speech mein 'advise/suggest' wagera mein change karte hai, isliye 'she advised that he should' wala option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0198",
+   "question": "He said, \"Do it right now.\"",
+   "options": [
+    "He said do it immediately.",
+    "He told to do it now.",
+    "He told me to do it at once.",
+    "He told me do it right now."
+   ],
+   "answer": 2,
+   "solution": "Yeh ek imperative sentence hai jisme indirect speech mein infinitive se banana padta hai, option A aur D galat honge kyunki isme infinitive 'to do' ka use nahi kiya. Option B bhi galat hoga kyunki 'told' ke baad 'me' object ayega kyunki yeh ek transitive verb hai. yahan 'me' manna padega kyunki imperative ko indirect speech mein infinitive se banate hai isliye yahan di-transitive verb bhi chaiye. Option C sahi hoga jisme infinitive 'to do' ka structure follow ho raha hai, 'right now' ka 'at once' itna change allowed hota hai. isliye 'he told me to do it at once' option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0199",
+   "question": "She said, \"Let him go.\"",
+   "options": [
+    "She said let him go.",
+    "She suggested him to go.",
+    "She ordered to let him go.",
+    "She suggested that he should be allowed to go."
+   ],
+   "answer": 3,
+   "solution": "Indirect speech mein 'let' ko 'suggest/advice/propose/order' mein change kare dete hai. option A aur C galat honge kyunki isme indirect speech mein 'let' likha chod diya. Aur 'suggest' ke sath 'that' lagake 'should' ke sath clause banega kyunki meaning 'salaah' waala chaiye, isliye option D 'she suggested that he should be allowed to go' sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0200",
+   "question": "The teacher said to the students, \"Work hard to pass the exam.\"",
+   "options": [
+    "The teacher said the students work hard.",
+    "The teacher told the students to worked hard.",
+    "The teacher advised the students to work hard to pass the exam.",
+    "The teacher asked the students that they must work hard."
+   ],
+   "answer": 2,
+   "solution": "Sentence imperative hai isliye isse indirect speech mein infinitive se banana padega, toh indirect speech mein 'to work hard' ayega, jo ki option C mein follow ho raha hai, isliye option C sahi hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0201",
+   "question": "She said that they had already left before she arrived.",
+   "options": [
+    "\"They have already left before I arrived,\" she said.",
+    "\"They already left before I arrived,\" she said.",
+    "\"They had already left before I arrived,\" she said.",
+    "\"They left before I had arrived,\" she said."
+   ],
+   "answer": 2,
+   "solution": "Sentence mein past perfect ka structure follow ho raha hai, jisme past ke do action hai, jo action pehle hota hai usse past perfect mein likhte hai dusre ko past indefinite mein, seedha rule hai past perfect indirect speech mein same rehta, aur yahan past perfect ka combo bhi hai, isliye iska same structure ka direct speech hee sahi answer hoga, isliye option C sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0202",
+   "question": "The envoy reported that the negotiations were languishing because neither party would concede procedural precedence.",
+   "options": [
+    "The envoy reported, \"The negotiations languish because neither party would concede procedural precedence.\"",
+    "The envoy said, \"The negotiations are languishing because neither party will be conceding procedural precedence.\"",
+    "The envoy said, \"The negotiations are languishing because neither party will concede procedural precedence.\"",
+    "The envoy said, \"Negotiations languished, no party conceding precedence.\""
+   ],
+   "answer": 2,
+   "solution": "Sentence indirect speech hai toh 'were languishing' direct speech mein 'are languishing' aur 'would concede' direct speech mein 'will concede' hoga, yeh dono cheez option C mein follow ho rahi hai.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0203",
+   "question": "The curator noted that the pigments were deteriorating faster than the varnish could protect them.",
+   "options": [
+    "The curator noted, \"The pigments are deteriorating faster than the varnish can protect them.\"",
+    "The curator noted, \"The pigments were deteriorating faster than the varnish can be protected by them.\"",
+    "The curator noted, \"Pigments deteriorate faster than varnish protects.\"",
+    "The curator noted, \"Pigment deterioration faster than varnish can protect.\""
+   ],
+   "answer": 0,
+   "solution": "Sentence indirect speech mein hai toh 'were deteriorating' direct speech mein 'are deteriorating' hoga aur 'could protect' direct speech mein 'can protect' hoga, yeh dono cheez option A mein follow ho rahi hai.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0204",
+   "question": "The assistant said that she was not feeling well and would leave early.",
+   "options": [
+    "\"I am not feeling well and will leave early,\" the assistant said.",
+    "\"I was not feeling well and would leave early,\" said the assistant.",
+    "\"I'm not well and am leaving,\" she said.",
+    "\"I am not well and I leave now,\" said the assistant."
+   ],
+   "answer": 0,
+   "solution": "Sentence indirect speech mein hai toh 'was not feeling' direct speech mein 'is/am/are not feeling' se banega aur 'would leave early' direct speech mein 'will leave early' se banega, kyunki direct speech mein subject 'I' banega, isliye 'am' helping verb ayegi, aur yeh dono cheez option A mein follow ho rahi hai.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0205",
+   "question": "The botanist sighed that the rare orchid had germinated, only to succumb to a latent fungal blight.",
+   "options": [
+    "The botanist sighed, \"The rare orchid did germinate, only to succumb to a latent fungal blight.\"",
+    "The botanist sighed, \"A rare orchid had germinated only to succumb to a latent fungal blight.\"",
+    "The botanist sighed, \"The rare orchid germinated, only to succumb to a latent fungal blight.\"",
+    "The botanist sighed, \"Rare orchid germinates but succumbs to fungus.\""
+   ],
+   "answer": 2,
+   "solution": "Sentence indirect speech mein hai, aur 'had germinated' past perfect tense direct speech mein past indefinite, present perfect yaa past perfect mein change hoga. option D galat hoga kyunki yeh present indefinite tense mein hai. option A bhi galat hoga kyunki 'did' negative yaa interrogative sentence mein use hota hai. option B bhi galat hoga kyunki past perfect tense ka use past ke do action ke comparison ke liye hota hai, lekin isme koi comparison nahi hua. Isliye option C sahi hoga kyunki 'germinated' past indefinite tense indirect speech mein 'had germinated' mein change ho jayega, isliye option C sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0206",
+   "question": "She asked him if he had ever been to the Taj Mahal.",
+   "options": [
+    "She asked him, \"Did you ever go to the Taj Mahal?\"",
+    "She asked him, \"Were you at the Taj Mahal?\"",
+    "She asked him, \"Have you ever been to the Taj Mahal?\"",
+    "She asked him, \"Do you ever go to the Taj Mahal?\""
+   ],
+   "answer": 2,
+   "solution": "Sentence interrogative ka indirect speech mein hai, aur 'had ever been' past perfect tense direct speech mein past indefinite, present perfect yaa past perfect mein change hoga, agar indirect speech mein past perfect hai aur teeno option hai toh direct speech 'past perfect' tab choose hoga jab past ke do action ka comparison hoga yaa aur past indefinite/present perfect option hee na ho. Past indefinite tab choose karenge jab 'yesterday/day before' aise wala combination ho. Otherwise 99% times present perfect wala hee prefer karna hai. isliye present perfect wala option C sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0207",
+   "question": "The historian observed that the records had been tampered with.",
+   "options": [
+    "The historian said, \"Someone tampered with the records.\"",
+    "The historian said, \"The records had been tampered with.\"",
+    "He said, \"The records are tampered with.\"",
+    "He observed, \"The records are fake.\""
+   ],
+   "answer": 1,
+   "solution": "Sentence indirect mein hai aur 'had been tampered' past perfect ka passive hai. option C aur D galat honge kyunki yeh present tense mein likhe hai, past perfect tabhi use hoga jab past ke doo action ka comparison hoo yaa aur koi behtar option naa ho. Option A bhi galat hai kyunki jabardasti isse active mein likha aur same wahi passive wala option B hai. isliye option B sabse sahi answer hoga. Note:- agar 'have been tampered' hota toh best option hota yaa iske baad 'were tampered' bhi option B se pehle sahi hota",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0208",
+   "question": "The professor said that had he known earlier, he would have made the necessary arrangements.",
+   "options": [
+    "\"If I knew earlier, I would have made the necessary arrangements,\" said the professor.",
+    "\"Had I known earlier, I would have made the necessary arrangements,\" said the professor.",
+    "\"If I would have known earlier, I would make arrangements,\" the professor said.",
+    "\"Had I knew earlier, I would arrange things,\" said the professor."
+   ],
+   "answer": 1,
+   "solution": "Sentence indirect speech mein aur yeh closed conditional ka sentence hai, conditional ke sentence mein indirect se direct mein change karte waqt tense mein koi change nahi sirf pronoun change hoga, toh direct mein 'he' ke according 'I' pronoun ayega aur baaki tense same rahega, isliye option B sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0209",
+   "question": "He observed that, had market liquidity vanished entirely, the exchange would have suspended trading.",
+   "options": [
+    "He said, \"If market liquidity vanishes entirely, the exchange suspends trading.\"",
+    "He said, \"Had market liquidity vanished entirely, the exchange would have suspended trading.\"",
+    "He said, \"The exchange will suspend trading if market liquidity had vanished entirely.\"",
+    "He said, \"If the exchange suspended trading, it was because market liquidity vanished entirely.\""
+   ],
+   "answer": 1,
+   "solution": "Sentence indirect speech mein hai aur 'had+v3, would have v3' se pata chal raha ki closed conditional ka sentence hai, toh conditional ke sentence mein indirect se direct jaate waqt tense mein koi change nahi hota, sirf pronoun change hota hai, isliye diye gaye options mein se option B sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0210",
+   "question": "The lawyer said that had the evidence not been tampered with, the verdict could have been different.",
+   "options": [
+    "\"If the evidence had not tampered with, the verdict could change,\" said the lawyer.",
+    "\"If the evidence were not tampered with, the verdict could have changed,\" the lawyer said.",
+    "\"Had the evidence not been tampered with, the verdict could have been different,\" said the lawyer.",
+    "\"Had not the evidence tampered, the verdict may differ,\" said he."
+   ],
+   "answer": 2,
+   "solution": "Sentence indirect speech mein hai aur 'had+v3, could have v3' se pata chal raha ki closed conditional ka sentence hai, toh conditional ke sentence mein indirect se direct jaate waqt tense mein koi change nahi hota, sirf pronoun change hota hai, isliye diye gaye options mein se option C sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0211",
+   "question": "She noted that, had the literary trope not been overused, the metaphor might still have resonated with the audience.",
+   "options": [
+    "She said, \"If the literary trope was not overused, the metaphor may still resonate with the audience.\"",
+    "She said, \"Had the literary trope not been overused, the metaphor might still have resonated with the audience.\"",
+    "She said, \"Had the literary trope not been overused, the metaphor must still resonate with the audience.\"",
+    "She said, \"If the literary trope had not been overused, the metaphor will still resonate with the audience.\""
+   ],
+   "answer": 1,
+   "solution": "Sentence indirect speech mein hai aur 'had+been+v3, might have v3' se pata chal raha ki closed conditional ka sentence hai, toh conditional ke sentence mein indirect se direct jaate waqt tense mein koi change nahi hota, sirf pronoun change hota hai, isliye diye gaye options mein se option B sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0212",
+   "question": "He speculated that, had stochastic volatility been incorporated, the valuation would perhaps have been more conservative.",
+   "options": [
+    "He speculated, \"Had stochastic volatility been incorporated, the valuation would perhaps have been more conservative.\"",
+    "He speculated, \"If stochastic volatility is incorporated, valuation will perhaps be conservative.\"",
+    "He speculated, \"If volatility had been incorporated, valuation perhaps more conservative.\"",
+    "He said, \"Stochastic volatility incorporation would make valuation conservative.\""
+   ],
+   "answer": 0,
+   "solution": "Sentence indirect speech mein hai aur 'had+been+v3, would have v3' se pata chal raha ki closed conditional ka sentence hai, toh conditional ke sentence mein indirect se direct jaate waqt tense mein koi change nahi hota, sirf pronoun change hota hai, isliye diye gaye options mein se option A sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0213",
+   "question": "He asserted that the cryptographic protocol might have resisted the attack had entropy been truly random.",
+   "options": [
+    "He asserted, \"Had entropy been truly random, the cryptographic protocol might have resisted the attack.\"",
+    "He said, \"If entropy is truly random, protocol might resist attack.\"",
+    "He asserted, \"If entropy had been random, protocol might resist attack.\"",
+    "He said, \"Entropy random, protocol resists attack.\""
+   ],
+   "answer": 0,
+   "solution": "Sentence indirect speech mein hai aur 'had+v3, might have v3' se pata chal raha ki closed conditional ka sentence hai, toh conditional ke sentence mein indirect se direct jaate waqt tense mein koi change nahi hota, sirf pronoun change hota hai, isliye diye gaye options mein se option A sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0214",
+   "question": "He remarked that the sculpture would have commanded greater gravitas had the pedestal been proportionally austere.",
+   "options": [
+    "He said, \"The sculpture would have commanded greater gravitas had the pedestal been proportionally austere.\"",
+    "He said, \"If the pedestal is proportionally austere, the sculpture commands greater gravitas.\"",
+    "He said, \"The sculpture will command greater gravitas if the pedestal had been austere.\"",
+    "He said, \"Had the pedestal been austere, the sculpture must have commanded greater gravitas.\""
+   ],
+   "answer": 0,
+   "solution": "Sentence indirect speech mein hai aur 'had+v3, would have v3' se pata chal raha ki closed conditional ka sentence hai, toh conditional ke sentence mein indirect se direct jaate waqt tense mein koi change nahi hota, sirf pronoun change hota hai, isliye diye gaye options mein se option A sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0215",
+   "question": "He confessed that the violin concerto would have remained fragmentary had the late maestro not bequeathed his annotated sketches.",
+   "options": [
+    "He said, \"The violin concerto would have remained fragmentary had the late maestro not bequeathed his annotated sketches.\"",
+    "He said, \"The violin concerto would have remained fragmentary if the late maestro not bequeathed his annotated sketches.\"",
+    "He said, \"The violin concerto will be remaining fragmentary had the late maestro not bequeathed his annotated sketches.\"",
+    "He said, \"The violin concerto would be fragmentary if sketches had not been bequeathed.\""
+   ],
+   "answer": 0,
+   "solution": "Sentence indirect speech mein hai aur 'had+v3, would have v3' se pata chal raha ki closed conditional ka sentence hai, toh conditional ke sentence mein indirect se direct jaate waqt tense mein koi change nahi hota, sirf pronoun change hota hai, isliye diye gaye options mein se option A sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0216",
+   "question": "She posited that the narrative would have achieved greater cohesion had the author maintained a single focalisation.",
+   "options": [
+    "She said, \"If the author maintains a single focalisation, the narrative will achieve greater cohesion.\"",
+    "She said, \"The narrative would have achieved greater cohesion had the author maintained a single focalisation.\"",
+    "She said, \"The narrative will achieve greater cohesion if a single focalisation was maintained by the author.\"",
+    "She said, \"Had the author maintained a single focalisation, the narrative must achieve greater cohesion.\""
+   ],
+   "answer": 1,
+   "solution": "Sentence indirect speech mein hai aur 'had+v3, would have v3' se pata chal raha ki closed conditional ka sentence hai, toh conditional ke sentence mein indirect se direct jaate waqt tense mein koi change nahi hota, sirf pronoun change hota hai, isliye diye gaye options mein se option B sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0217",
+   "question": "The zoologist warned that the island's carrying capacity might be exceeded should invasive species proliferate unchecked.",
+   "options": [
+    "The zoologist said, \"The island's carrying capacity will be exceeded if invasive species proliferate unchecked.\"",
+    "The zoologist said, \"Should invasive species have proliferated unchecked, the island's carrying capacity would be exceeded.\"",
+    "The zoologist said, \"The island's carrying capacity might be exceeded should invasive species proliferate unchecked.\"",
+    "The zoologist said, \"If invasive species proliferated unchecked, the carrying capacity had been exceeded.\""
+   ],
+   "answer": 2,
+   "solution": "Option B aur D galat honge kyunki 'proliferate' verb ki 1st form direct speech mein change nahi hogi, lekin option B mein present perfect 'have proliferated' mein change kar diya aur option D mein past indefinite 'proliferated' mein joki galat hai, option A bhi galat hoga kyunki 'will be exceeded' se jabardasti karne ke bajaye same 'might be exceeded' same wala option hai, toh same waale ko prefer karenge, isliye 'might be exceeded' wala option C sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0218",
+   "question": "He commented that the policy's efficacy would remain conjectural until longitudinal data accrued.",
+   "options": [
+    "He commented \"The efficacy of the policy remains conjectural as the data are yet to be collected.\"",
+    "He commented, \"The policy's efficacy will remain conjectural until longitudinal data accrue.\"",
+    "He commented, \"Until longitudinal data had accrued, the policy's efficacy might have remained conjectural.\"",
+    "He commented, \"Efficacy remains conjecture till data accumulates.\""
+   ],
+   "answer": 1,
+   "solution": "Sentence indirect speech mein hai, toh 'would' direct speech mein 'will' aur 'accrued' past indefinite 'accrue' present indefinite mein change ho jayega aur aisa sirf option B mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0219",
+   "question": "She said that she used to play the violin when she was young.",
+   "options": [
+    "\"I played the violin when I was young,\" she said.",
+    "\"I use to play the violin when I was young,\" she said.",
+    "\"I used to play the violin when I was young,\" she said.",
+    "\"I was playing the violin when I was young,\" she said."
+   ],
+   "answer": 2,
+   "solution": "Sentence indirect speech mein aur 'used to' pehle se hee past form hai direct se indirect speech mein 'used to' same he rehte hai aur 'used to' past hai toh 'young' waali baat bhi past mein hee hogi, toh direct speech mein 'used to' aur 'I was young' sahi hoga, joki diye gaye options mein se option C mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0220",
+   "question": "The professor remarked that students needed to submit their papers before Friday.",
+   "options": [
+    "\"Students need to submit their papers before Friday,\" the professor remarked.",
+    "\"Students needed to submit their papers before Friday,\" said the professor.",
+    "\"Submit your papers before Friday,\" the professor instructed.",
+    "\"You were to submit your papers before Friday,\" said the professor."
+   ],
+   "answer": 0,
+   "solution": "Sentence indirect speech mein hai aur 'needed' past indefinite direct speech mein 'need' present indefinite mein change hoga, aisa sirf option A mein follow ho raha hai.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0221",
+   "question": "Rita said, \"Please close the window.\"",
+   "options": [
+    "Rita asked to close the window.",
+    "Rita said to close the window.",
+    "Rita requested that the window is closed.",
+    "Rita requested to close the window."
+   ],
+   "answer": 3,
+   "solution": "Yeh ek imperative sentence hai toh indirect speech mein 'infinitive' se banega aur 'please' ke wazah se 'requested' ayega, isliye option D 'rita requested to close the window' sahi answer hoga. Note:- agar requested ke baad 'me' likha hota toh behtar hota.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0222",
+   "question": "She indicated that, unless the quorum were met promptly, the charter amendments would lapse.",
+   "options": [
+    "She said, \"Unless the quorum had been met promptly, the charter amendments would have lapsed.\"",
+    "She said, \"Unless the quorum is met promptly, the charter amendments will lapse.\"",
+    "She said, \"If the quorum was not met promptly, the charter amendments might have lapsed.\"",
+    "She said, \"If the quorum is promptly met, the charter amendments must not lapse.\""
+   ],
+   "answer": 1,
+   "solution": "Sentence indirect mein hai toh 'were met' direct speech mein 'is met' aur 'would lapse' direct speech mein 'will lapse' se aaya hoga, joki option B mein follow ho raha hai. option B waali ek factual type ki situation hai aur 'is met' indirect speech mein 'was met' mein change hona chaiye tha lekin indirect speech mein toh change nahi kar sakte, isliye sirf 4 options mein se best option choose kar sakte, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0223",
+   "question": "The lecturer argued that, given sufficient entropic isolation, the reaction rate could asymptotically approach zero.",
+   "options": [
+    "The lecturer said, \"Given sufficient entropic isolation, the reaction rate could asymptotically approach zero.\"",
+    "The lecturer said, \"If sufficient entropic isolation was given, the reaction rate will asymptotically approach zero.\"",
+    "The lecturer said, \"Given sufficient entropic isolation, the reaction rate can asymptotically approach zero.\"",
+    "The lecturer said, \"If the reaction rate approached zero, it must have had sufficient entropic isolation.\""
+   ],
+   "answer": 0,
+   "solution": "Sentence indirect speech mein hai aur 'could' direct speech mein 'can, could' se aaya hoga, isliye option B aur D toh galat honge. 'can' 'ability' show karne ke liye hota hai, aur jab direct speech mein ek clause ho toh 'can' se 'could' mein change hoga, lekin 'could' 'possibility' show karne ke liye hota hai, jab direct speech mein condition ho toh 'could' ka 'could' he rehta hai, diye gaye sentence mein 'possibility' ki baat karni hai aur do clause bhi hai, isliye indirect se direct mein 'could' ka 'could' he rahega, isliye option A sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0224",
+   "question": "The physicist remarked that time-reversal invariance could be violated under non-unitary evolution.",
+   "options": [
+    "The physicist said, \"Time-reversal invariance can be violated under non-unitary evolution.\"",
+    "He remarked, \"If evolution is non-unitary, time-reversal invariance will be violated.\"",
+    "The physicist said, \"Time-reversal invariance could be violated under non-unitary evolution.\"",
+    "He said, \"Time reversal violates when evolution non-unitary.\""
+   ],
+   "answer": 2,
+   "solution": "Sentence indirect speech mein hai aur 'could' direct speech mein 'can, could' se aaya hoga, isliye option B aur D toh galat honge. 'can' 'ability' show karne ke liye hota hai, aur jab direct speech mein ek clause ho toh 'can' se 'could' mein change hoga, lekin 'could' 'possibility' show karne ke liye hota hai, jab direct speech mein condition ho toh 'could' ka 'could' he rehta hai, diye gaye sentence mein 'possibility' ki baat karni hai aur do clause bhi hai, isliye indirect se direct mein 'could' ka 'could' he rahega, isliye option C sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0225",
+   "question": "She said, \"I enjoy painting.\"",
+   "options": [
+    "She said that she enjoys painting.",
+    "She said that she enjoyed painting.",
+    "She said she was enjoying painting.",
+    "She said that she had enjoyed painting."
+   ],
+   "answer": 1,
+   "solution": "Sentence direct speech mein hai aur yeh ek habitual action dikha raha hai, kaayde se tense mein koi change nahi hona chaiye, agar aisa koi hint nahi ho 'everyday, often etc.' toh iss case mein change kar dena, isliye present indefinite tense indirect speech mein past indefinite tense mein change hoga, isliye option B sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0226",
+   "question": "The patient said, \"It has been three days since I last slept.\"",
+   "options": [
+    "The patient said that it was three days since he last slept.",
+    "The patient said that it had been three days since he had last slept.",
+    "The patient said that he didn't sleep for three days.",
+    "The patient said that he was not sleeping for three days."
+   ],
+   "answer": 1,
+   "solution": "Sentence direct speech mein hai toh 'has been' present perfect indirect mein 'had been' past perfect mein change hoga, isliye baaki option A, C aur D galat honge. Option B mein thoda fault hai kyunki 'slept' past indefinite ko bhi change kar diya, lekin sath mein do past perfect galat hote hai, lekin diye gaye options mein se yehi best option hai aur itna galat nahi hai isse galat question ki category mein aaye, isliye option B sahi hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0227",
+   "question": "The composer explained that, were the leitmotif transposed an octave higher, the tension might dissipate prematurely.",
+   "options": [
+    "The composer said, \"If the leitmotif was transposed an octave higher, the tension will dissipate prematurely.\"",
+    "The composer said, \"Were the leitmotif transposed an octave higher, the tension might dissipate prematurely.\"",
+    "The composer said, \"The tension will dissipate prematurely if the leitmotif had been transposed an octave higher.\"",
+    "The composer said, \"Had the leitmotif been transposed an octave higher, the tension must have dissipated prematurely.\""
+   ],
+   "answer": 1,
+   "solution": "Sentence indirect speech mein aur yeh semi-closed conditional ka question hai, toh indirect se direct jaate waqt conditional ke sentence mein tense mein koi change nahi hota, isliye option B sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0228",
+   "question": "The ethicist argued that, absent informed consent, the study's methodology was fundamentally untenable.",
+   "options": [
+    "The ethicist argued, \"Absent informed consent, the study's methodology is fundamentally untenable.\"",
+    "The ethicist argued, \"If the study lacked informed consent, its methodology had been fundamentally untenable.\"",
+    "The ethicist argued, \"Without informed consent, the study's methodology would have been fundamentally untenable.\"",
+    "The ethicist argued, \"The study's methodology must have been untenable since it lacked informed consent.\""
+   ],
+   "answer": 0,
+   "solution": "Sentence indirect speech mein hai aur 'was fundamentally' past indefinite direct mein 'is fundamentally' present indefinite mein change hoga joki option A mein follow ho raha hai",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  },
+  {
+   "id": "narration-0229",
+   "question": "He said that little did he realize what consequences his words would have.",
+   "options": [
+    "\"Little do I realize what consequences my words would have,\" he said.",
+    "\"Little did I realize what consequences my words would have,\" he said.",
+    "\"I realized little about the consequences of my words,\" he said.",
+    "\"I hardly realize the consequences of my words,\" said he."
+   ],
+   "answer": 1,
+   "solution": "Sentence indirect speech mein hai aur grammar ke according 'did I realize' direct mein 'do I realize' se bana hoga, agar isse present indefinite mein le jayenge to doer ka yeh habitual action ho jayega, lekin sentence ke meaning se pata chal raha ki koi habitual action nahi balki uske galat words ka consequence hai, isliye sahi meaning ke liye tense mein koi change nahi karna padega, isliye option B sabse sahi answer hoga.",
+   "chapter": "Narration",
+   "set": "Eduquity Pattern"
+  }
+ ]
+}
