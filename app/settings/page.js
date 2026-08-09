@@ -5,6 +5,7 @@ import { getSettings, saveSettings, DEFAULT_SETTINGS } from "@/lib/storage";
 import { exportAll, exportDataOnly, importAll, downloadBlob } from "@/lib/backup";
 import { getDaysOverview } from "@/lib/vocab";
 import { pushSync, pullSync } from "@/lib/sync";
+import PyqManager from "@/components/PyqManager";
 
 const SYNC_SQL = `create table if not exists syncs (
   code text primary key,
@@ -446,6 +447,9 @@ export default function SettingsPage() {
           )}
         </div>
       </section>
+
+      {/* PYQ Manager — apni books/topics/questions */}
+      <PyqManager />
 
       {/* Backup & Restore */}
       <section className="section" style={{ maxWidth: 640 }}>

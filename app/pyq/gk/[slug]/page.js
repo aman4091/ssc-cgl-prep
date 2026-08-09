@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadGkIndex, loadGkTopic } from "@/lib/gkbank";
+import { isUserTopicId, getUserTopic, getUserBook, getUserTopicQuestions } from "@/lib/userpyq";
 import { getResume } from "@/lib/qprogress";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import { useDoneTabs, DoneTabBar } from "@/components/DoneControls";
@@ -24,6 +25,22 @@ export default function GkTopicPage() {
   useEffect(() => {
     let alive = true;
     setTopic(null); setQs([]); setReady(false); setShown(PAGE);
+    // "u_" slugs are the user's OWN topics (Settings → PYQ Manager) — same UI,
+    // data from localStorage instead of the static bank.
+    if (isUserTopicId(slug)) {
+      const t = getUserTopic(slug);
+      const book = t ? getUserBook(t.bookId) : null;
+      if (t) {
+        setTopic({
+          slug, label: t.name, icon: book?.icon || "📘",
+          subject: book?.subject || "gs", chapter: t.name,
+          userBookId: t.bookId, userBookName: book?.name || "Meri book",
+        });
+        setQs(getUserTopicQuestions(slug));
+      }
+      setReady(true);
+      return () => { alive = false; };
+    }
     (async () => {
       const [idx, list] = await Promise.all([loadGkIndex(), loadGkTopic(slug)]);
       if (!alive) return;
@@ -35,7 +52,9 @@ export default function GkTopicPage() {
   }, [slug]);
 
   // Where "back" goes depends on which shelf this topic sits on.
-  const back = topic?.subject === "english"
+  const back = topic?.userBookId
+    ? { href: `/pyq/my/${topic.userBookId}`, label: `← ${topic.userBookName}` }
+    : topic?.subject === "english"
     ? { href: "/pyq/mirror", label: "← Mirror of Common Errors" }
     : { href: "/pyq/gktricks", label: "← GKTricks" };
 

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MyPyqBooks from "@/components/MyPyqBooks";
 
 export const metadata = { title: "PYQ — SSC CGL Pre" };
 
@@ -37,6 +38,8 @@ export default function PyqPage() {
       </section>
 
       <section className="section" style={{ marginTop: 20 }}>
+        {/* User ki apni books (Settings → 📚 PYQ Manager) — shipped banks se upar */}
+        <MyPyqBooks />
         <div className="pyq-list">
           {SUBS.map((s) => (
             <Link key={s.name} href={s.href} className="pyq-row">
