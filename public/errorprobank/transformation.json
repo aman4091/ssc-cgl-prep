@@ -1,0 +1,2387 @@
+{
+ "chapter": "Transformation",
+ "slug": "transformation",
+ "count": 170,
+ "questions": [
+  {
+   "id": "transformation-0001",
+   "question": "This painting is the most beautiful creation in the entire gallery.",
+   "options": [
+    "This painting is one of the most beautiful creations in the gallery.",
+    "No other painting in the gallery is as beautiful as this one.",
+    "This painting is more beautiful than many other paintings in the gallery.",
+    "This painting is beautiful in the gallery"
+   ],
+   "answer": 1,
+   "solution": "Sentence ko positive degree adjective mein change karna hai, toh superlative wala meaning positive degree mein 'no other + as beautiful as (simile)' se banta hai, isliye 'no other painting in the gallery is as beautiful as this one' wala option B sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0002",
+   "question": "Mount Everest is higher than any other mountain in the world.",
+   "options": [
+    "Mount Everest is one of the highest mountains in the world.",
+    "Mount Everest is higher than most other mountains in the world.",
+    "Very few mountains are higher than Mount Everest.",
+    "Mount Everest is the highest mountain in the world."
+   ],
+   "answer": 3,
+   "solution": "Sentence ko comparative se superlative mein change karna hai, toh comparative mein 'higher than any other mountain' yeh superlative wala meaning he deta hai, aur superlative degree 'the highest mountain' hoga, isliye 'Mount Everest is the highest mountain in the world' wala option D sahi hoga. option A galat hoga kyunki 'one of the highest mountains' se galat meaning ayega. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0003",
+   "question": "No other festival is as popular as Diwali in India.",
+   "options": [
+    "Diwali is one of the most popular festivals in India.",
+    "Diwali is the most popular festival in India.",
+    "Diwali is more popular than most festivals in India.",
+    "Few festivals are as popular as Diwali."
+   ],
+   "answer": 1,
+   "solution": "Positive degree se superlative mein change karna hai, toh 'no other' ke sath 'simile' likha ho toh superlative wala meaning aata hai, aur superlative mein change bhi karna hai, isliye 'Diwali is the most popular festival in india' wala option B sahi hoga. option A galat hoga kyunki 'one of the' wala structure selection ke case mein use hota hai. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0004",
+   "question": "The Pacific Ocean is larger than all other oceans.",
+   "options": [
+    "The Pacific Ocean is one of the largest oceans.",
+    "The Pacific Ocean is the largest ocean.",
+    "Very few oceans are as large as the Pacific Ocean.",
+    "The Pacific Ocean is larger than most oceans"
+   ],
+   "answer": 1,
+   "solution": "Sentence ko comparative se superlative mein change karna hai, toh 'comparative degree ke sath all/any other' likha ho toh superlative wala meaning aata hai, aur superlative mein change bhi karna hai, isliye 'the pacific ocean is the largest ocean' wala option B sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0005",
+   "question": "No other invention is as useful as electricity.",
+   "options": [
+    "Electricity is one of the most useful inventions.",
+    "Electricity is the most useful invention.",
+    "Electricity is more useful than many other inventions.",
+    "Electricity is useful among all inventions."
+   ],
+   "answer": 1,
+   "solution": "Positive degree se superlative mein change karna hai, toh 'no other' ke sath 'simile' likha ho toh superlative wala meaning aata hai, aur superlative mein change bhi karna hai, 'Electricity is the most useful invention' wala option B sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0006",
+   "question": "He runs faster than any other athlete in his school.",
+   "options": [
+    "He is the fastest runner in his school.",
+    "He runs faster than most other athletes in his school.",
+    "He is one of the fastest runners in his school.",
+    "Few athletes in his school are as fast as him."
+   ],
+   "answer": 0,
+   "solution": "Comparative se superlative mein change karna hai, toh 'comparative degree ke sath all/any other' likha ho toh superlative wala meaning aata hai, aur superlative mein change bhi karna hai, isliye 'He is the fastest runner in his school' wala option A sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0007",
+   "question": "Riya is wiser than many other students in her class.",
+   "options": [
+    "Few students in her class are as wise as Riya.",
+    "Riya is the wisest student in her class.",
+    "Riya is as wise as every student in her class.",
+    "No student in her class is wiser than Riya"
+   ],
+   "answer": 0,
+   "solution": "Comparative ko positive mein change karna hai, agar comparative degree ke sath 'most other/many other' likha ho toh positive mein 'very few/few + simile' mein change hoga, isliye 'few students in her class are as wise as Riya' wala option A sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0008",
+   "question": "The Amazon River is longer than most other rivers in the world.",
+   "options": [
+    "The Amazon River is the longest river in the world.",
+    "The Amazon River is one of the longest rivers in the world.",
+    "No river is longer than the Amazon River.",
+    "Very few rivers are shorter than the Amazon River."
+   ],
+   "answer": 1,
+   "solution": "Comparative se superlative mein change karna hai, toh 'comparative degree ke sath 'most other/many other' likha ho toh superlative mein 'one of the + superlative degree' mein change hoga, isliye 'The Amazon river is one of the longest rivers in the world' wala option B sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0009",
+   "question": "Very few leaders are as respected as Mahatma Gandhi in history.",
+   "options": [
+    "Mahatma Gandhi was the most respected leader in history.",
+    "Mahatma Gandhi was respected more than all leaders in history.",
+    "Mahatma Gandhi was less respected than most leaders in history.",
+    "Mahatma Gandhi was more respected than most other leaders in history."
+   ],
+   "answer": 3,
+   "solution": "Positive se comparative mein change karna hai, toh positive mein 'very few/few + simile' ka structure ho toh comparative mein 'comparative degree ke sath most other/many other' se banta hai, isliye 'Mahatma Gandhi was more respected than most other leaders in history' wala option D sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0010",
+   "question": "He is more hardworking than many other students in the college.",
+   "options": [
+    "Few students in the college are as hardworking as he is.",
+    "No student is as hardworking as he is.",
+    "He is the most hardworking student in the college.",
+    "He is one of the most hardworking students in the college."
+   ],
+   "answer": 0,
+   "solution": "Comparative ko positive mein change karna hai, agar 'comparative degree ke sath 'most other/many other' likha ho toh positive mein 'very few/few + simile' se banta hai, isliye 'Few students in the college are as hardworking as he is' wala option A sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0011",
+   "question": "Few writers in the world are as influential as Shakespeare.",
+   "options": [
+    "Shakespeare is one of the most influential writers in the world.",
+    "Shakespeare is the most influential writer in the world.",
+    "Shakespeare is more influential than most other writers in the world.",
+    "Shakespeare is as influential as every writer in the world."
+   ],
+   "answer": 2,
+   "solution": "Positive se comparative mein change karna hai, toh positive mein 'very few/few + simile' ka structure ho toh comparative mein 'comparative degree ke sath most other/many other' se banta hai, isliye 'Shakespeare is more influential than most other writers in the world' wala option C sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0012",
+   "question": "The Sahara Desert is one of the hottest places on earth.",
+   "options": [
+    "The Sahara Desert is hotter than most other places on earth.",
+    "The Sahara Desert is hotter than every other place on earth.",
+    "No desert is hotter than the Sahara Desert.",
+    "The Sahara Desert is the hottest place on earth."
+   ],
+   "answer": 0,
+   "solution": "Superlative se comparative mein change karna hai, toh superlative mein 'one of' ke baad superlative degree ho, toh comparative mein 'comparative degree ke sath most other/many other' se banta hai, isliye 'the Sahara desert is hotter than most other places on earth' wala option A sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0013",
+   "question": "The library is more peaceful than the crowded market outside.",
+   "options": [
+    "The crowded market is more peaceful than the library is.",
+    "The crowded market is not so peaceful as the library is.",
+    "The crowded market is as peaceful as the library is.",
+    "The library is as noisy as the crowded market is."
+   ],
+   "answer": 1,
+   "solution": "comparative se positive jaana hai toh iss structure mein 'than' ke right side subject ko positive mein starting mein likhenge aur 'not' lagake 'simile' laga denge, isliye 'The crowded market is not so peaceful as the library is' wala option B sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0014",
+   "question": "The movie was not so interesting as the novel written on the same story.",
+   "options": [
+    "The novel was more interesting than the movie was.",
+    "The movie was more interesting than the novel was.",
+    "The novel was not more interesting than the movie was.",
+    "The novel and the movie were equally interesting."
+   ],
+   "answer": 0,
+   "solution": "Positive se Comparative mein jaana hai toh iss structure mein 'not + simile' ke structure ko comparative mein comparative degree mein change kar denge aur 'the movie was' comparative mein comparative degree ke baad ayega, isliye 'the novel was more interesting than the movie was' wala option A sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0015",
+   "question": "This mountain trail is more difficult to climb than the one we attempted last year.",
+   "options": [
+    "The trail we attempted last year is as difficult as this one is.",
+    "The trail we attempted last year is more difficult than this one is.",
+    "The trail we attempted last year is the most difficult.",
+    "The trail we attempted last year is not so difficult to climb as this one is."
+   ],
+   "answer": 3,
+   "solution": "comparative se positive jaana hai toh iss structure mein 'than' ke right side subject ko positive mein starting mein likhenge aur 'not' lagake 'simile' laga denge, isliye 'The trail we attempted last year is not so difficult to climb as this one is' wala option D sahi hoga. Note:- meaning se bhi solve kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0016",
+   "question": "The village pond is as deep as the nearby river in summer.",
+   "options": [
+    "The nearby river is not deeper than the village pond in summer.",
+    "The nearby river is deeper than the village pond in summer.",
+    "The nearby river is less deep than the village pond in summer.",
+    "The village pond is deeper than the nearby river in summer"
+   ],
+   "answer": 0,
+   "solution": "Iss structure mein agar positive se comparative jaana ho toh 'simile' lagi aur 'not' naa laga ho toh comparative mein 'not + comparative degree' mein change karenge, aur subjects palat denge, isliye 'The nearby river is not deeper than the village pond in summer' wala option A sahi hoga. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0017",
+   "question": "The food served at this restaurant is not so delicious as the food served at that hotel.",
+   "options": [
+    "The food served at this restaurant is more delicious than the food served at that hotel.",
+    "The food served at both places is equally delicious.",
+    "The food served at that hotel is more delicious than the food served at this restaurant.",
+    "The food served at this restaurant is not delicious at all."
+   ],
+   "answer": 2,
+   "solution": "Iss structure mein agar positive se comparative jaana ho toh, 'not + simile' waale structure ko positive mein comparative degree mein change karenge, aur subject palat denge, isliye 'The food served at that hotel is more delicious than the food served at this restaurant' wala option C sahi hoga. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0018",
+   "question": "The park near my house is not so large as the city stadium.",
+   "options": [
+    "The city stadium is larger than the park near my house.",
+    "The park near my house is larger than the city stadium.",
+    "Both the park and the city stadium are equally large.",
+    "The park near my house is not larger than the city stadium."
+   ],
+   "answer": 0,
+   "solution": "Iss structure mein agar positive se comparative jaana ho toh, 'not + simile' waale structure ko positive mein comparative degree mein change karenge, aur subject palat denge, isliye 'The city stadium is larger than the park near my house' wala option A sahi hoga. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Change of Degree of Adjective"
+  },
+  {
+   "id": "transformation-0019",
+   "question": "Affirmative: He always speaks the truth in every situation.",
+   "options": [
+    "He does not always tell the truth in every situation.",
+    "He does not tell lies in difficult situations.",
+    "He sometimes tells lies in every situation.",
+    "He never tells lies in any situation."
+   ],
+   "answer": 3,
+   "solution": "Affirmative se negative jaate waqt meaning same rehna chaiye, isliye 'always speaks the truth' ko negative mein 'never tells lies' mein change karenge, isliye 'he never tells lies in any situation' wala option D sahi hoga. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0020",
+   "question": "Affirmative: Everybody in the village admired the bravery of the young soldier.",
+   "options": [
+    "Nobody in the village admired the cowardice of the young soldier.",
+    "Nobody in the village failed to admire the bravery of the young soldier.",
+    "Nobody in the village respected the bravery of the young soldier.",
+    "Nobody in the village was afraid of the young soldier."
+   ],
+   "answer": 1,
+   "solution": "Affirmative se negative jaate waqt meaning same rehna chaiye, isliye 'everybody/ everyone/ all/ every' ko nobody/none/ no one + opposite word' mein change karenge, isliye 'Nobody in the village failed to admire the bravery of the young soldiers' wala option B sahi hoga. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0021",
+   "question": "Affirmative: Only hard-working students succeed in competitive examinations.",
+   "options": [
+    "None but hard-working students succeed in competitive examinations.",
+    "No student can succeed in competitive examinations.",
+    "None but careless students succeed in competitive examinations.",
+    "Every student can succeed in competitive examinations."
+   ],
+   "answer": 0,
+   "solution": "Affirmative se negative mein 'only/alone' ko negative mein 'none but' mein change karenge, isliye 'None but hard-working students succeed in competitive examinations' wala option A sahi hoga. option C mein 'careless students' se meaning galat hoga. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0022",
+   "question": "Affirmative: He must obey the rules of the institution without any excuse.",
+   "options": [
+    "He must not obey the rules of the institution without any excuse.",
+    "He cannot obey the rules of the institution without any excuse.",
+    "He cannot but obey the rules of the institution without any excuse.",
+    "He should disobey the rules of the institution without any excuse."
+   ],
+   "answer": 2,
+   "solution": "Affirmative se negative change karne mein meaning same rehna chaiye, isliye 'must' ko 'cannot but' mein change karenge, isliye 'He cannot but obey the rules of the institution without any excuse' wala option C sahi hoga. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0023",
+   "question": "Affirmative: As soon as the teacher entered the classroom, the students stood up in respect.",
+   "options": [
+    "The students never stood up in respect for the teacher.",
+    "The teacher never entered the classroom before the students stood up.",
+    "No sooner did the teacher enter the classroom than the students stood up in respect.",
+    "No sooner did the students stand up than the teacher entered the classroom."
+   ],
+   "answer": 2,
+   "solution": "Affirmative se negative change karne mein meaning same rehna chaiye, isliye 'as soon as' ko 'no sooner…..than' mein change karenge, sentence mein kehna tha ki 'jaise he teacher aayi waise he student khade ho gaye, isliye 'No sooner did the teacher enter the classroom than the students stood up in respect' wala option C sahi hoga. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0024",
+   "question": "Affirmative: Both honesty and hard work are essential for achieving success in life.",
+   "options": [
+    "Not only honesty as well as hard work is essential for success in life.",
+    "Neither honesty nor hard work is essential for achieving success in life.",
+    "Not honesty but laziness is essential for success in life.",
+    "Not only honesty but also hard work is essential for achieving success in life."
+   ],
+   "answer": 3,
+   "solution": "Affirmative se negative change karne mein meaning same rehna chaiye, isliye 'both…and' ko 'not only….. but also' mein change karenge, isliye 'Not only honesty but also hard work is essential for achieving success in life' wala option D sahi hoga. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0025",
+   "question": "Negative : She never deserts her friends during difficult times.",
+   "options": [
+    "She supports her friends during difficult times.",
+    "She has supported her friends during difficult times.",
+    "She always supports her friends during difficult times.",
+    "She sometimes supports her friends during difficult times."
+   ],
+   "answer": 2,
+   "solution": "Negative se affirmative meaning same chaiye, isliye 'never deserts' ko affirmative mein 'always + opposite word' mein change karenge, isliye 'She always supports her friends during difficult times' wala option C sahi hoga. option A bhi ho sakta hai lekin 'never' ki wazah se affirmative mein 'always' wala prefer karenge, agar option C nahi hota toh option A mark karna padta. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0026",
+   "question": "Affirmative: The boy is too weak to lift the heavy box placed in the corner of the room.",
+   "options": [
+    "The boy is so weak that he must lift the heavy box placed in the corner of the room.",
+    "The boy is so weak that he cannot lift the heavy box placed in the corner of the room.",
+    "The boy is not weak enough to lift the heavy box placed in the corner of the room.",
+    "The boy is never too weak to lift the heavy box placed in the corner of the room."
+   ],
+   "answer": 1,
+   "solution": "Affirmative se negative change karne mein meaning same rehna chaiye, isliye 'too…to' ko 'so…..that…..not' mein change karenge, isliye 'so weak that he cannot lift' wala option B sahi hoga. Note:- meaning se bhi solve kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0027",
+   "question": "Affirmative: All the participants gave their best performance in the cultural program.",
+   "options": [
+    "Not a single participant failed to give his best performance in the cultural program.",
+    "No participant gave his best performance in the cultural program.",
+    "None of the participants gave a performance in the cultural program.",
+    "Some participants failed to give their best performance in the cultural program."
+   ],
+   "answer": 0,
+   "solution": "Affirmative se negative jaate waqt meaning same rehna chaiye, toh option A sahi hoga kyunki iska matlab hai 'ek bhi participant aisa nahi tha jo fail hua best performance dene mein', toh iska same matlab wahi ki 'sabse best performance di', isliye 'Not a single participant failed to give his best performance in the cultural program' option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0028",
+   "question": "Affirmative: He has already completed the assignment.",
+   "options": [
+    "He has not left the assignment incomplete.",
+    "He has not completed the assignment yet.",
+    "He has never completed the assignment given by the teacher.",
+    "He has not already completed the assignment."
+   ],
+   "answer": 0,
+   "solution": "Affirmative se negative jaate waqt meaning same rehna chaiye, toh option A sahi hoga kyunki iska matlab hai 'usne assignment ko incomplete nahi choda' matlab 'assignment complete kiya hai' jo ki same affirmative wala meaning hai, isliye 'He has not left the assignment incomplete' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0029",
+   "question": "Negative : Nobody disrespects her because of her kind nature and helpful attitude.",
+   "options": [
+    "Everybody disrespects her because of her kind nature and helpful attitude.",
+    "Everybody does not disrespect her because of her kind nature and helpful attitude.",
+    "Everybody respects her because of her kind nature and helpful attitude.",
+    "All of them respects her because of her kind nature and helpful attitude."
+   ],
+   "answer": 2,
+   "solution": "Negative se affirmative jaate waqt meaning same rehna chaiye, toh option C sahi hoga kyunki iska matlab 'har koi uski respect karta hai' matlab 'koi bhi usko disrespect nahi karte' jo ki same negative wala meaning hai, isliye 'Everybody respects her because of her kind nature and helpful attitude' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0030",
+   "question": "Affirmative: Everybody knows that honesty is the best policy in life.",
+   "options": [
+    "Nobody is ignorant of the fact that honesty is the best policy in life.",
+    "Nobody knows that honesty is the best policy in life.",
+    "Everybody ignores that honesty is the best policy in life.",
+    "Everybody believes dishonesty is the best policy in life."
+   ],
+   "answer": 0,
+   "solution": "Affirmative se negative jaate waqt meaning same rehna chaiye, toh option A sahi hoga kyunki iska matlab 'iss fact se koi anjaan nahi hai ki honesty best policy hai' matlab 'har koi janta hai honesty best policy' jo ki same affirmative wala meaning hai, isliye 'Nobody is ignorant of the fact that honesty is the best policy in life' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0031",
+   "question": "Affirmative: He can achieve success in life with determination and hard work.",
+   "options": [
+    "He cannot be determined to achieve success in life",
+    "He cannot achieve success in life with determination and hard work.",
+    "He can fail in life with determination and hard work.",
+    "He cannot achieve success in life without determination and hard work."
+   ],
+   "answer": 3,
+   "solution": "Affirmative se negative jaate waqt meaning same rehna chaiye, toh option D sahi hoga kyunki iska matlab 'wo success nahi achieve kar sakta bina determination aur hard work ke' matlab 'wo success achieve kar sakta hai determination aur hard work se' joki same meaning hai affirmative wala, isliye 'He cannot achieve success in life without determination and hard work' wala option D sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0032",
+   "question": "Negative : No sooner the thief saw the policeman than he started running.",
+   "options": [
+    "The thief saw the policeman and started running.",
+    "When the policeman saw the thief, he started running.",
+    "As soon as the thief saw the policeman, he started running.",
+    "Both the thief and the policeman saw each other and started running"
+   ],
+   "answer": 2,
+   "solution": "Negative se affirmative jaate waqt meaning same rehna chaiye, option A, B aur C teeno ke meaning almost same hai, lekin 'no sooner….than' ka matlab dono ke beech time ka gap nahi tha, aur same wahi meaning 'as soon as' se aata hai, isliye teeno mein se best 'As soon as the thief saw the policeman, he started running' option C hoga.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0033",
+   "question": "Negative : She is so weak that she can't climb the stairs.",
+   "options": [
+    "She is not so weak that she can't climb the stairs.",
+    "She is never weak that she can't climb the stairs.",
+    "She is too weak to climb the stairs.",
+    "She does not need any help to climb the stairs."
+   ],
+   "answer": 2,
+   "solution": "Negative se affirmative jaate waqt meaning same rehna chaiye, toh option C sahi hoga kyunki iska matlab 'wo stairs chadne ke liye bahut kamjor hai' matlab 'wo itni kamjor hai ki stairs nahi chad sakti' joki same negative wala meaning hai, isliye 'She is too weak to climb the stairs' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0034",
+   "question": "Affirmative: Only the brave can face such dangerous challenges in life.",
+   "options": [
+    "No one can face such dangerous challenges in life.",
+    "None but the cowardly can face such dangerous challenges in life.",
+    "None but the weak can face such dangerous challenges in life.",
+    "None but the brave can face such dangerous challenges in life."
+   ],
+   "answer": 3,
+   "solution": "Affirmative se negative jaate waqt meaning same rehna chaiye, toh option D sahi hoga kyunki iska matlab 'koi nahi sirf brave face kar sakta hai', matlab 'sirf brave face kar sakte hai' jo ki same affirmative wala meaning hai, isliye 'None but the brave can face such dangerous challenges in life' wala option D sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0035",
+   "question": "Negative: You cannot qualify the exam without studying hard.",
+   "options": [
+    "You can qualify the exam without studying hard.",
+    "You can qualify the exam only by studying hard.",
+    "You can not fail the exam without studying hard.",
+    "You may qualify the exam if you study hard."
+   ],
+   "answer": 1,
+   "solution": "Negative se affirmative jaate waqt meaning same rehna chaiye, toh option B sahi hoga kyunki iska matlab 'sirf hard study karke tum exam qualify kar sakte hai' matlab 'tum qualify nahi kar sakte exam bina hard study ke' jo ki same negative wala meaning hai, isliye 'You can qualify the exam only by studying hard' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0036",
+   "question": "Affirmative: All men are mortal by the law of nature.",
+   "options": [
+    "Some men are immortal by the law of nature.",
+    "No man is mortal by the law of nature.",
+    "No man is immortal by the law of nature.",
+    "Every man is immortal by the law of nature."
+   ],
+   "answer": 2,
+   "solution": "Affirmative se negative jaate waqt meaning same rehna chaiye, toh option C sahi hoga kyunki iska matlab 'koi bhi aadmi immortal nahi hai' matlab 'har koi mortal hai', joki same meaning hai affirmative wala isliye 'No man is immortal by the law of nature' wala option C sahi hoga. 'mortal' ka matlab 'jo mar jaaye', 'immortal' ka matlab 'jo mare nahi'",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0037",
+   "question": "Negative : He never neglects to do his duty sincerely and faithfully.",
+   "options": [
+    "He sometimes avoids doing his duty sincerely and faithfully.",
+    "He never tries to do his duty sincerely and faithfully.",
+    "He always tries to do his duty sincerely and faithfully.",
+    "He never finishes his duty sincerely and faithfully."
+   ],
+   "answer": 2,
+   "solution": "Negative se affirmative jaate waqt meaning same rehna chaiye, toh option C sahi hoga kyunki iska matlab 'wo humesha try karta hai apni duty sincerely aur faithfully karne ke liye' matlab 'wo kabhi neglect nahi karta apni duty ko sincerely aur faithfully karne ke liye' joki same negative wala meaning hai, isliye 'He always tries to do his duty sincerely and faithfully' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0038",
+   "question": "Affirmative: The poor villagers are always grateful for the help they receive from charitable people.",
+   "options": [
+    "The poor villagers are never ungrateful for the help they receive from charitable people.",
+    "The poor villagers are not grateful for the help they receive from charitable people.",
+    "The poor villagers are never grateful for the help they receive from charitable people.",
+    "The poor villagers are sometimes ungrateful for the help they receive from charitable people."
+   ],
+   "answer": 0,
+   "solution": "Affirmative se negative jaate waqt meaning same rehna chaiye, toh option A sahi hoga kyunki iska matlab 'poor villagers kabhi bhi ungrateful nahi hote' matlab 'wo humesha grateful rehte hai' joki same meaning hai affirmative wala. Isliye 'The poor villagers are never ungrateful for the help they receive from charitable people' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Affirmative to Negative"
+  },
+  {
+   "id": "transformation-0039",
+   "question": "Is he not the best player in the team?",
+   "options": [
+    "He is not the best player in the team.",
+    "He is the best player in the team.",
+    "He was the best player in the team.",
+    "He may be the best player in the team."
+   ],
+   "answer": 1,
+   "solution": "Interrogative se assertive mein closest meaning aane chaiye, agar interrogative negative hoga toh assertive positive banega, isliye 'he is the best player in the team' option B sahi hoga. tense mein koi change nhi hoga. Note:- interrogative mein kahi gayi baat ko aisa maana hai ki saamne waale ko iss baat ka pata hai, tabhi assertive mein change ho payega.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0040",
+   "question": "Can anyone deny the importance of education in modern society?",
+   "options": [
+    "Everyone can deny the importance of education.",
+    "No one can deny the importance of education.",
+    "Some people can deny the importance of education.",
+    "Few can deny the importance of education."
+   ],
+   "answer": 1,
+   "solution": "Agar interrogative positive hai toh assertive negative banega, interrogative ka matlab 'kya koi deny kar sakta hai importance of education ko' toh assertive mein hoga 'koi nahi kar sakta deny', isliye 'no one can deny the importance of education' option B sahi hoga. Note:- interrogative mein kahi gayi baat ko aisa maana hai ki saamne waale ko iss baat ka pata hai, tabhi assertive mein change ho payega.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0041",
+   "question": "Who does not admire a brave and honest person?",
+   "options": [
+    "No one admires a brave and honest person.",
+    "Everyone admires a brave and honest person.",
+    "Some admire a brave and honest person.",
+    "Few admire a brave and honest person."
+   ],
+   "answer": 1,
+   "solution": "Agar interrogative negative hai toh assertive positive banega, aur 'who' assertive mein 'everyone' mein change hoga, interrogative ka matlab hai 'kon admire nahi karta brave person ko' toh assertive mein matlab hoga 'har koi admire karta hai brave person ko', isliye 'Everyone admires a brave and honest person' option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0042",
+   "question": "Is this the right way to treat your younger brother?",
+   "options": [
+    "This is the right way to treat your younger brother.",
+    "This is not the right way to treat your younger brother.",
+    "This may be the right way to treat your younger brother.",
+    "This was the right way to treat your younger brother."
+   ],
+   "answer": 1,
+   "solution": "Agar interrogative positive hai toh assertive negative banega, interrogative ka matlab 'kya yeh sahi tarika chote bhai ko treat karne ka', toh assertive mein matlab hoga 'yeh sahi tarika nahi hai treat karne ka', isliye 'This is not the right way to treat your younger brother' option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0043",
+   "question": "Did she not complete the assignment on time yesterday?",
+   "options": [
+    "She did not complete the assignment on time yesterday.",
+    "She completed the assignment on time yesterday.",
+    "She was completing the assignment on time yesterday.",
+    "She will complete the assignment on time yesterday."
+   ],
+   "answer": 1,
+   "solution": "Agar interrogative negative hai toh assertive positive banega, interrogative mein matlab hai 'kya usne kal assignment complete kiya tha', toh assertive mein matlab hoga 'kal usne assignment complete kar diya tha', isliye 'She completed the assignment on time yesterday' option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0044",
+   "question": "Can we ever forget the sacrifices of our freedom fighters?",
+   "options": [
+    "We can forget the sacrifices of our freedom fighters.",
+    "We may forget the sacrifices of our freedom fighters.",
+    "We cannot forget the sacrifices of our freedom fighters.",
+    "We should forget the sacrifices of our freedom fighters."
+   ],
+   "answer": 2,
+   "solution": "Agar interrogative positive hai toh assertive negative banega, interrogative ka matlab 'kya hum kabhi bhool sakte hai freedom fighters ke sacrifices ko', toh assertive mein matlab hoga 'hum nahi bhool sakte freedom fighters ke sacrifices ko', isliye 'We cannot forget the sacrifices of our freedom fighters' option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0045",
+   "question": "Who can solve such a complicated problem without proper training?",
+   "options": [
+    "Everyone can solve it such a complicated problem without proper training.",
+    "Someone can solve it such a complicated problem without proper training.",
+    "Few can solve it such a complicated problem without proper training.",
+    "No one can solve such a complicated problem without proper training."
+   ],
+   "answer": 3,
+   "solution": "Agar interrogative positive hai toh assertive negative banega, kyunki interrogative positive hai isliye 'who' 'no one' mein change hoga, interrogative mein matlab hai 'without proper training ke kon solve kar sakta hai aisa complicated problem', toh assertive mein matlab hoga 'koi solve nahi kar sakta complicated problem bina proper training ke', isliye 'No one can solve such a complicated problem without proper training' option D sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0046",
+   "question": "He is a man of great courage and determination.",
+   "options": [
+    "Is he not a man of great courage and determination?",
+    "Is he a man of courage and determination?",
+    "Wasn't he a man of courage and determination?",
+    "He may be a man of courage and determination?"
+   ],
+   "answer": 0,
+   "solution": "Agar assertive positive hai toh interrogative negative hoga, agar assertive mein aisa kaha ki 'wo great courage aur determination wala aadmi hai', toh interrogative mein aise kahenge 'kya wo great courage aur determination wala aadmi nahi hai?', isliye 'Is he not a man of great courage and determination?' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0047",
+   "question": "You realize the seriousness of the situation now.",
+   "options": [
+    "Do you not realize the seriousness of the situation now?",
+    "You do not realize the seriousness of the situation now?",
+    "Did you realize the seriousness of the situation now?",
+    "Do you realize the seriousness of the situation now?"
+   ],
+   "answer": 0,
+   "solution": "Agar assertive positive hai toh interrogative negative hoga, agar assertive mein aisa kaha 'ab aapko situation ki seriousness ka ehsas ho gaya hai', toh interrogative mein aisa kaha hoga 'kya ab aapko situation ki seriousness ka ehsaas nhi ho raha hai?', isliye 'Do you not realize the seriousness of the situation now?' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0048",
+   "question": "Is there anything more valuable than time in a person's life?",
+   "options": [
+    "Something is more valuable than time in a person's life.",
+    "Nothing is more valuable than time in a person's life.",
+    "Everything is more valuable than time in a person's life.",
+    "Time is not valuable in a person's life."
+   ],
+   "answer": 1,
+   "solution": "Agar interrogative positive hai toh assertive negative banega, interrogative ka matlab hai 'kya samay se jyada aur koi valuable cheez hai kisi ki life mein' toh assertive mein matlab hoga 'samay se koi valuable cheez nahi kisi ki life mein', isliye 'Nothing is more valuable than time in a person's life' option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0049",
+   "question": "No one can question the honesty of that respected judge.",
+   "options": [
+    "Can everyone question the honesty of that respected judge?",
+    "Can someone question the honesty of that respected judge?",
+    "Can anyone question the honesty of that respected judge?",
+    "Few can question the honesty of that respected judge?"
+   ],
+   "answer": 2,
+   "solution": "Agar assertive negative hai toh interrogative positive hoga, assertive ka matlab hai 'koi nahi hai jo uss respected judge ki honesty pe sawal utthaye', toh interrogative mein kaha hoga 'kya koi sawal uttha sakta hai respected judge ki honesty pe', isliye 'Can anyone question the honesty of that respected judge?' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0050",
+   "question": "Who does not wish to live a happy and peaceful life?",
+   "options": [
+    "No one wishes to live a happy and peaceful life.",
+    "Everyone wishes to live a happy and peaceful life.",
+    "Some wish to live happily.",
+    "Few wish to live peacefully."
+   ],
+   "answer": 1,
+   "solution": "Agar interrogative negative hai toh assertive positive banega, interrogative mein matlab 'aisa kon nahi hai jo happy aur peaceful life nahi jeena chahta', toh assertive mein matlab hoga 'har koi chahta hai ki wo happy aur peaceful life jiye', isliye 'Everyone wishes to live a happy and peaceful life' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0051",
+   "question": "Is this not the most beautiful painting in the gallery?",
+   "options": [
+    "This is the most beautiful painting in the gallery.",
+    "This is not the most beautiful painting in the gallery.",
+    "This was the most beautiful painting in the gallery.",
+    "This may be beautiful in the gallery."
+   ],
+   "answer": 0,
+   "solution": "Agar interrogative negative hai toh assertive positive banega, interrogative mein matlab 'kya yeh sabse acchi painting nahi hai', toh assertive mein matlab hoga 'yeh sabse acchi painting hai iss gallery ki', isliye 'This is the most beautiful painting in the gallery' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0052",
+   "question": "He helped you when you were in trouble last year.",
+   "options": [
+    "Did he help you when you were in trouble last year?",
+    "Did he not help you when you were in trouble last year?",
+    "Was he helping you when you were in trouble last year?",
+    "Will he help you when you were in trouble last year?"
+   ],
+   "answer": 1,
+   "solution": "Agar assertive positive hai toh interrogative negative hoga, assertive ka matlab hai 'usne tumhari madad ki thi jab tum musibat mein the', toh interrogative mein matlab hoga 'kya usne tumhari madad nahi ki thi jab tum musibat mein the', isliye 'Did he not help you when you were in trouble last year?' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0053",
+   "question": "Can we survive without clean drinking water for long?",
+   "options": [
+    "We can survive without clean drinking water for long.",
+    "We may survive without clean drinking water for long.",
+    "We cannot survive without clean drinking water for long.",
+    "We should survive without clean drinking water for long."
+   ],
+   "answer": 2,
+   "solution": "Agar interrogative positive hai toh assertive negative banega, interrogative mein matlab hai 'kya hum survive kar payenge bina saaf paani ke', toh assertive mein matlab hoga 'hum survive nahi kar payenge bina saaf paani ke jyada der tak', isliye 'We cannot survive without clean drinking water for long' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0054",
+   "question": "Who can deny the fact that hard work leads to success?",
+   "options": [
+    "Everyone can deny the fact that hard work leads to success.",
+    "Some can deny the fact that hard work leads to success.",
+    "Few can deny the fact that hard work leads to success.",
+    "No one can deny the fact that hard work leads to success."
+   ],
+   "answer": 3,
+   "solution": "Agar interrogative positive hai toh assertive negative banega, interrogative mein matlab hai 'yeh fact kon deny karege ki hard work se success milti hai', toh assertive mein matlab hoga 'yeh fact koi deny nahi kar sakta ki hard work se success milti hai', isliye 'No one can deny the fact that hard work leads to success' wala option D sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0055",
+   "question": "He is the most hardworking employee in the office.",
+   "options": [
+    "He is the most hardworking employee in the office.",
+    "Is he the most hardworking employee in the office?",
+    "Is he not the most hardworking employee in the office?",
+    "Does he be the most hardworking employee in the office?"
+   ],
+   "answer": 2,
+   "solution": "Agar assertive positive hai toh interrogative negative hoga, assertive ka matlab hai 'wo hardworking employee hai office mein', toh interrogative mein hoga 'kya wo hard working employee hai office mein', isliye 'Is he not the most hardworking employee in the office?' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0056",
+   "question": "Do they not respect their teachers and elders?",
+   "options": [
+    "They never disrespect their teachers and elders.",
+    "They do not respect their teachers.",
+    "They respected their teachers.",
+    "They will respect their teachers."
+   ],
+   "answer": 0,
+   "solution": "Agar interrogative negative hai toh assertive positive banega, interrogative mein matlab hai 'kya wo respect nahi karte elders aur teachers ki', toh assertive mein 'wo kabhi disrespect nahi karta elders aur teachers ki', isliye 'They never disrespect their teachers and elders' wala option A sahi hoga. option C mein past tense kar diya.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0057",
+   "question": "Is there any better place to relax than your own home?",
+   "options": [
+    "There is a better place than your own home to relax.",
+    "Nothing is better than your own home to relax.",
+    "Everything is better than your own home to relax.",
+    "Home is not good to relax"
+   ],
+   "answer": 1,
+   "solution": "Agar interrogative positive hai toh assertive negative banega, interrogative mein matlab hai 'kya isse aur acchi jagah hai relax karne ke liye', toh assertive mein hoga 'khudke ghar ke alawa aur koi acchi jagah nahi hai', isliye 'Nothing is better than your own home to relax' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0058",
+   "question": "Can anyone live peacefully without mutual respect and understanding?",
+   "options": [
+    "Everyone can live peacefully without mutual respect and understanding.",
+    "Some can live peacefully without mutual respect and understanding.",
+    "No one can live peacefully without mutual respect and understanding.",
+    "Few can live peacefully without mutual respect and understanding."
+   ],
+   "answer": 2,
+   "solution": "Agar interrogative positive hai toh assertive negative banega, interrogative mein matlab hai 'kya koi bina mutual respect aur understanding ke peacefully reh sakta hai', toh assertive hoga ki 'koi bina mutual respect aur understanding ke peacefully nahi reh sakta', isliye 'No one can live peacefully without mutual respect and understanding' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Interrogative to Assertive"
+  },
+  {
+   "id": "transformation-0059",
+   "question": "What a magnificent palace the king has built near the river!",
+   "options": [
+    "The king built a very magnificent palace near the river.",
+    "The palace built by the king near the river is magnificent.",
+    "The king has built a very magnificent palace near the river.",
+    "The king is building a magnificent palace near the river."
+   ],
+   "answer": 2,
+   "solution": "Exclamatory se assertive mein change karte waqt 'how, what' ki intensity ko maintain rakhne ke liye 'very' adverb ka use karte hai aur noun ho toh adjective ka use karte hai, isliye 'the king has built a very magnificent palace near the river' wala option C sahi hoga. option A mein tense ka use galat hai.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0060",
+   "question": "How beautifully the young dancer performed in front of the audience last night!",
+   "options": [
+    "The dancer performed beautifully in front of the audience last night.",
+    "The dancer performed very beautifully in front of the audience last night.",
+    "The dancer is performing beautifully in front of the audience last night.",
+    "The dancer will perform tonight."
+   ],
+   "answer": 1,
+   "solution": "Exclamatory se assertive mein change karte waqt 'how, what' ki intensity ko maintain rakhne ke liye 'very' adverb ka use karte, isliye 'performed very beautifully' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0061",
+   "question": "What an exciting cricket match we watched at the stadium yesterday evening!",
+   "options": [
+    "We watched a cricket match yesterday.",
+    "We were watching a very exciting cricket match at the stadium yesterday evening.",
+    "We watched an exciting cricket match at the stadium yesterday evening.",
+    "We watched a very exciting cricket match at the stadium yesterday evening."
+   ],
+   "answer": 3,
+   "solution": "Exclamatory se assertive mein change karte waqt 'how, what' ki intensity ko maintain rakhne ke liye 'very' adverb ka use karte, isliye option D sahi hoga kyunki 'watched a very exciting match' isme intensity badhaane wala word aa raha hai. Note:- change karte waqt tense same rehna chaiye.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0062",
+   "question": "How cleverly the thief escaped from the police despite tight security!",
+   "options": [
+    "The thief escaped cleverly from the police despite tight security.",
+    "The thief escaped very cleverly from the police despite tight security.",
+    "The thief was escaping very cleverly from the police despite tight security.",
+    "The thief escaped cleverly."
+   ],
+   "answer": 1,
+   "solution": "Exclamatory se assertive mein change karte waqt 'how, what' ki intensity ko maintain rakhne ke liye 'very' adverb ka use karte, isliye option B sahi hoga kyunki 'escaped very cleverly' isme intensity badhaane wala word aa raha hai. option C mein tense galat hai.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0063",
+   "question": "What a wonderful speech the leader delivered at the national conference!",
+   "options": [
+    "The leader delivered a wonderful speech at the national conference.",
+    "The leader delivered a wonderful speech.",
+    "The speech delivered by the leader was wonderful.",
+    "The leader delivered a very wonderful speech at the national conference."
+   ],
+   "answer": 3,
+   "solution": "Exclamatory se assertive mein change karte waqt 'how, what' ki intensity ko maintain rakhne ke liye 'very' adverb ka use karte, isliye 'delivered a very wonderful speech' wala option D sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0064",
+   "question": "How quickly the rescue team reached the accident site during the storm!",
+   "options": [
+    "The rescue team reached the accident site.",
+    "The rescue team reached the accident site quickly during the storm.",
+    "The rescue team reached the accident site very quickly during the storm.",
+    "The rescue team is reaching the accident site during the storm."
+   ],
+   "answer": 2,
+   "solution": "Exclamatory se assertive mein change karte waqt 'how, what' ki intensity ko maintain rakhne ke liye 'very' adverb ka use karte, isliye 'the accident site very quickly' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0065",
+   "question": "How kind of you to help me in this difficult time!",
+   "options": [
+    "You are how kind to help me in this difficult time.",
+    "It is very kind of you to help me in this difficult time.",
+    "You are very kind person because you helped me.",
+    "It was kind of you to help me in this difficult time."
+   ],
+   "answer": 1,
+   "solution": "Exclamatory se assertive mein change karte waqt 'how, what' ki intensity ko maintain rakhne ke liye 'very' adverb ka use karte, aur exclamatory mein subject aur verb nahi hai, isliye 'it is, it was' subject ka use karenge, option D galat hoga kyunki 'it was kind' mein 'very' nahi hai aur aisa 'present, past' ka koi hint nahi hai, isliye 'it is very kind of you' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0066",
+   "question": "Hurray! We have won the match.",
+   "options": [
+    "It is nice that we won the match.",
+    "It is a matter of joy that we have won the match.",
+    "We have finally won the match.",
+    "It is good to know that we won the match."
+   ],
+   "answer": 1,
+   "solution": "Exclamatory se assertive mein jaate waqt 'hurrah!' ko 'it is a matter of joy' mein change karte hai, kyunki 'hurrah' ka matlab 'khushi ki baat', isliye 'it is matter of joy' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0067",
+   "question": "Alas! His father died yesterday.",
+   "options": [
+    "I am sad that his father died yesterday.",
+    "I am sad because his father died yesterday.",
+    "It is extremely sad that his father died yesterday.",
+    "He is sad because his father dies yesterday."
+   ],
+   "answer": 2,
+   "solution": "Exclamatory se assertive mein jaate waqt 'Alas!' ko 'it is extremely sad' mein change karte hai, kyunki 'Alas' ka matlab 'dukh ki baat hona', isliye 'It is extremely sad that his father died yesterday' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0068",
+   "question": "This is a very interesting movie.",
+   "options": [
+    "What an interesting movie this is!",
+    "How an interesting movie this is!",
+    "Hurray! It is an interesting movie.",
+    "Wow! We liked the movie."
+   ],
+   "answer": 0,
+   "solution": "Assertive mein 'this is very interesting movie' likha hai, toh exclamatory mein 'what an interesting movie' se aaya hoga, isliye option A sahi hoga. 'how' ke baad 'noun, pronoun' interrogative mein aate hai, aur exclamatory mein 'how' ke baad 'adjective' aate hai, isliye option B galat hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0069",
+   "question": "These delivery agents live a very miserable life.",
+   "options": [
+    "How a miserable life these delivery agents live!",
+    "What a miserable life these delivery agents live!",
+    "How can these delivery agents live a miserable life!",
+    "What a miserable life these delivery agents lived!"
+   ],
+   "answer": 1,
+   "solution": "'how' ke baad 'noun, pronoun' yaa 'verb' interrogative mein aate hai, aur exclamatory mein 'how' ke baad 'adjective' aate hai, isliye option A aur C galat honge. Assertive mein 'live' present tense likha hai, toh exclamatory mein bhi present tense 'live' hoga, isliye option D galat hoga aur option B sahi hoga",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0070",
+   "question": "If only he had told me his problems earlier!",
+   "options": [
+    "I wish he has told me his problems earlier.",
+    "I wish he had told me his problems earlier.",
+    "I wish he told me his problems earlier.",
+    "I wish he could tell me his problems earlier."
+   ],
+   "answer": 1,
+   "solution": "Exclamatory mein 'would that, oh that, if only' ho toh, toh assertive mein 'I wish' mein change hota hai, kyunki yeh word 'imagination' ko dikhaate hai, aur imaginary ke liye 'v2 yaa had+v3' ka use hota hai, isliye 'I wish he had told me his problems earlier' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0071",
+   "question": "This question is really stupid.",
+   "options": [
+    "How stupid this question is!",
+    "Wow what a stupid question!",
+    "I don't think that it is a valid question.",
+    "How dare you ask this question?"
+   ],
+   "answer": 0,
+   "solution": "Option B galat hoga kyunki isme 'this' nahi hai aur 'wow' aur 'what' dono sath galat honge, baaki exclamatory mein change karna hai, lekin option C aur D exclamatory nahi hai. isliye assertive mein likhi baat 'how stupid this question is!' exclamatory sentence se aayi hogi, isliye option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0072",
+   "question": "All the members are dancing very gracefully.",
+   "options": [
+    "What a graceful dance all the members are showing!",
+    "How gracefully are all the members dancing!",
+    "How gracefully all the members are dancing!",
+    "Wow they have danced gracefully!"
+   ],
+   "answer": 2,
+   "solution": "Option B galat hoga kyunki helping verb subject se pehle interrogative mein aati hai. option D bhi galat hoga kyunki isme tense perfect tense ka use kara hai. option A bhi galat hoga kyunki 'are dancing' ka 'are showing' kar diya, assertive se exclamatory chaiye hai, isliye 'How gracefully all the members are dancing!' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0073",
+   "question": "If only I had wings!",
+   "options": [
+    "I wish I had wings.",
+    "I wish I had had wings.",
+    "I wish I have wings.",
+    "I had wish I had wings."
+   ],
+   "answer": 0,
+   "solution": "Exclamatory mein 'would that, oh that, if only' ho toh, toh assertive mein 'I wish' mein change hota hai, kyunki yeh word 'imagination' ko dikhaate hai, aur imaginary ke liye 'v2 yaa had+v3' ka use hota hai, kyunki exclamatory mein 'v2' hai, isliye 'I wish I had wings' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0074",
+   "question": "Would that I could find my lost watch!",
+   "options": [
+    "I want to find my lost watch.",
+    "I would like if I find my lost watch.",
+    "I wish I could find my lost watch.",
+    "I wish I can find my lost watch."
+   ],
+   "answer": 2,
+   "solution": "Exclamatory mein 'would that, oh that, if only' ho toh, toh assertive mein 'I wish' mein change hota hai, kyunki yeh word 'imagination' ko dikhaate hai, aur exclamatory mein 'I could' hai, isliye 'I wish I could find my lost watch' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0075",
+   "question": "Bravo ! You have topped the exam.",
+   "options": [
+    "It is a matter of praise that you have topped the exam.",
+    "I like that you have topped the exam.",
+    "You have topped the exam because you studied hard.",
+    "What a performance you gave in the exam."
+   ],
+   "answer": 0,
+   "solution": "Exclamatory se assertive mein jaate waqt 'Bravo!' ko 'it is a matter of joy' mein change karte hai, kyunki 'bravo' ka matlab 'tareef karna', isliye 'It is a matter of praise that you have topped the exam' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0076",
+   "question": "How beautifully the garden was decorated for the wedding ceremony!",
+   "options": [
+    "The garden was decorated beautifully for the wedding ceremony.",
+    "The garden was decorated very beautifully for the wedding ceremony.",
+    "The garden was decorated for the wedding ceremony.",
+    "The garden is decorated."
+   ],
+   "answer": 1,
+   "solution": "Exclamatory se assertive mein change karte waqt 'how, what' ki intensity ko maintain rakhne ke liye 'very' adverb ka use karte, isliye option B 'was decorated very beautifully' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0077",
+   "question": "A very terrible storm destroyed the small village near the coast.",
+   "options": [
+    "How a terrible storm destroyed the small village near the coast!",
+    "Why a terrible storm destroyed the small village near the coast!",
+    "What a terrible storm destroyed the small village near the coast!",
+    "The village was destroyed by a very terrible storm!"
+   ],
+   "answer": 2,
+   "solution": "'how' ke baad 'noun, pronoun' yaa 'verb' interrogative mein aate hai, aur exclamatory mein 'how' ke baad 'adjective' aate hai, isliye option A galat hoga. option D mein exclamatory wala koi word nahi hai isliye galat hai. option B mein 'why' ka use galat hai, isliye 'what a terrible storm' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0078",
+   "question": "What a player he was!",
+   "options": [
+    "He was a great player.",
+    "I liked that player a lot.",
+    "He was a very famous player of his time.",
+    "He was a player of importance."
+   ],
+   "answer": 0,
+   "solution": "Exclamatory se assertive mein change karte waqt 'how, what' ki intensity ko maintain rakhne ke liye 'very' adverb ka use karte aur noun ho toh adjective ka use karte hai, isliye 'he was a great player' wala option A sahi hoga. option B meaning galat hai, option C mein 'famous player' kar diya. Option D mein 'player of importance' galat hai.",
+   "chapter": "Transformation",
+   "set": "Exclamatory to Assertive"
+  },
+  {
+   "id": "transformation-0079",
+   "question": "Hearing the sudden announcement, the passengers rushed towards the boarding gate.",
+   "options": [
+    "When the passengers heard the sudden announcement, they rushed towards the boarding gate.",
+    "After hearing the sudden announcement, the passengers rushed towards the boarding gate.",
+    "The passengers rushed towards the boarding gate and heard the announcement.",
+    "The passengers heard the sudden announcement so they rushed towards the boarding gate."
+   ],
+   "answer": 0,
+   "solution": "Simple to complex mein change karte waqt subordinate conjunction ka use karte hai, agar present participle diya ho, toh complex mein change karte waqt 'since, as, when' conjunction ka use karte hai, isliye 'When the passengers heard the sudden announcement, they rushed towards the boarding gate' wala option A sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0080",
+   "question": "Completing the training programme successfully, she applied for a higher managerial position.",
+   "options": [
+    "After completing the training programme successfully, she applied for a higher position.",
+    "As she completed the training programme successfully, she applied for a higher managerial position.",
+    "She completed the training programme successfully and applied for a higher position.",
+    "She completed the training programme successfully and then applied for a higher position."
+   ],
+   "answer": 1,
+   "solution": "Simple to complex mein subordinate conjunction ka use karte hai, agar present participle diya ho toh complex mein change karte waqt 'since, as, when' subordinate conjunction ka use karte hai, isliye 'as she completed' wala option B sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai. 'as' conjunction ka matlab 'jab' bhi hota hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0081",
+   "question": "Being exhausted after the long journey, the travellers decided to rest at a nearby lodge.",
+   "options": [
+    "As the travellers were exhausted after the long journey, they decided to rest at a nearby lodge.",
+    "The travellers were exhausted after the long journey when they decided to rest at a nearby lodge.",
+    "The travellers were exhausted after the long journey and they decided to rest at a nearby lodge.",
+    "When exhausted the travellers after the long journey decided to rest?"
+   ],
+   "answer": 0,
+   "solution": "'being' yahan present participle hai, aur isliye complex mein change karte waqt 'since, as, when' subordinate conjunction ka use karenge, simple sentence ka meaning hai 'kyunki wo thake hue the, isliye unhone decide kiya rest karne ka', aur wahi same meaning complex mein 'as the travelers were exhausted' wala option A se aa raha hai, isliye option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0082",
+   "question": "Being unfamiliar with the software, the employees required additional training.",
+   "options": [
+    "The employees were unfamiliar with the software, so they required additional training.",
+    "Since the employees were unfamiliar with the software, they required additional training.",
+    "Since being unfamiliar with the software, employees required training.",
+    "The employees required training when unfamiliar with the software."
+   ],
+   "answer": 1,
+   "solution": "Kyunki 'being' yahan present participle hai, isliye complex mein change karte waqt 'since, as, when' subordinate conjunction ka use karenge. option C mein 'since' ke baad clause nahi ban raha, isliye galat hoga. simple sentence ka matlab hai 'kyunki familiar nahi the software se, isliye employee ko additional training required hai', toh same simple wala meaning option B se aa raha hai, isliye option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0083",
+   "question": "The box was too heavy to be lifted by a single worker.",
+   "options": [
+    "The box was so heavy that a single worker could not lift it.",
+    "The box was so heavy that a single worker cannot lift it.",
+    "The box was very heavy so that a single worker could not lift it.",
+    "The box was too heavy and a single worker could not lift it."
+   ],
+   "answer": 0,
+   "solution": "Simple to complex mein 'too....to' wala structure 'so.....that' mein change hota hai, kyunki simple mein 'the box was' past tense ka use kiya hai, isliye complex mein change karte waqt dono clause mein past tense prefer karenge, isliye 'The box was so heavy that a single worker could not lift it' wala option A sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0084",
+   "question": "She was too nervous to speak during the interview.",
+   "options": [
+    "She was too nervous and she could not speak during the interview.",
+    "She was very nervous so that she could not speak during the interview.",
+    "She was so nervous that she cannot speak during the interview.",
+    "She was so nervous that she could not speak during the interview."
+   ],
+   "answer": 3,
+   "solution": "Simple to complex mein 'too....to' wala structure 'so.....that' mein change hota hai, kyunki simple mein 'she was' past tense ka use kiya hai, isliye complex mein change karte waqt dono clause mein past tense prefer karenge, isliye 'She was so nervous that she could not speak during the interview' wala option D sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0085",
+   "question": "The government launched awareness campaigns to reduce traffic accidents.",
+   "options": [
+    "The government launched awareness campaigns when traffic accidents reduced.",
+    "The government launched awareness campaigns and traffic accidents reduced.",
+    "The government launched awareness campaigns so that traffic accidents could be reduced",
+    "The government launched awareness campaigns so traffic accidents reduced."
+   ],
+   "answer": 2,
+   "solution": "Simple sentene mein 'to reduce' infinitive 'why' ka reply hai, toh complex mein 'so that' (taaki) waali conjunction lagake banate hai, isliye 'so that accidents could be reduced' wala option C sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0086",
+   "question": "She saved money to support her higher education abroad.",
+   "options": [
+    "She saved money because she supported her higher education abroad.",
+    "She saved money so that she could support her higher education abroad.",
+    "She saved money when supporting her higher education abroad.",
+    "She saved money but she supported her higher education abroad."
+   ],
+   "answer": 1,
+   "solution": "Simple sentence mein 'to support' infinitive 'why' ka reply hai, toh complex mein 'so that' (taaki) waali conjunction lagake banate hai, isliye 'so that she could support' wala option B sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0087",
+   "question": "Despite facing financial difficulties, the company continued its expansion.",
+   "options": [
+    "Though the company faced financial difficulties, it continued its expansion.",
+    "Because the company faced financial difficulties, it continued expansion.",
+    "The company continued expansion when facing financial difficulties.",
+    "The company faced financial difficulties, but it continued expansion."
+   ],
+   "answer": 0,
+   "solution": "Simple sentence mein agar 'despite, in spite of' diya ho, toh complex mein 'though, although' conjunction se banate hai, isliye 'though the company faced' wala option A sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0088",
+   "question": "Despite being inexperienced, the candidate handled the interview confidently.",
+   "options": [
+    "The candidate handled the interview confidently since he was inexperienced.",
+    "Because the candidate was inexperienced, he handled the interview confidently.",
+    "The candidate handled the interview confidently, but he was inexperienced.",
+    "Although the candidate was inexperienced, he handled the interview confidently."
+   ],
+   "answer": 3,
+   "solution": "Simple sentence mein agar 'despite, in spite of' diya ho, toh complex mein 'though, although' conjunction se banate hai, isliye 'although the candidate was inexperienced' wala option D sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0089",
+   "question": "Because of heavy rainfall, the match was postponed indefinitely.",
+   "options": [
+    "Since it rained heavily, the match was postponed indefinitely.",
+    "When it rained heavily, the match was postponed indefinitely?",
+    "Because the rain is heavy, the match will be postponed indefinitely.",
+    "It rained heavily, and the match was postponed indefinitely."
+   ],
+   "answer": 0,
+   "solution": "Simple sentence mein agar 'because of' preposition di ho, toh complex mein 'since, as, because' conjunction se banate hai, isliye 'since it rained heavily' wala option A sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0090",
+   "question": "Because of his dedication, he gained the trust of his colleagues.",
+   "options": [
+    "When he was dedicated, he gained the trust of his colleagues?",
+    "Since he was dedicated, he gained the trust of his colleagues.",
+    "He was dedicated, and he gained the trust of his colleagues.",
+    "He was dedicated, and so he gained the trust of his colleagues."
+   ],
+   "answer": 1,
+   "solution": "Simple sentence mein agar 'because of' preposition di ho, toh complex mein 'since, as, because' conjunction se banate hai, isliye 'since he was dedicated' wala option B sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0091",
+   "question": "I noticed a child crying near the entrance of the hospital.",
+   "options": [
+    "I noticed a child who was crying near the entrance of the hospital.",
+    "I noticed a child because he was crying near the entrance of the hospital.",
+    "I noticed a child which was crying near the entrance of the hospital.",
+    "I noticed a child and he was crying near the entrance of the hospital."
+   ],
+   "answer": 0,
+   "solution": "Simple sentence mein agar 'noun (object) + present participle' diya ho, toh complex mein 'noun (object) + object ke according relative pronoun + relative pronoun ke according verb' structure se banta hai, 'child' human being hoga aur human being ke liye 'who, whom' relative pronoun ka use karte hai, isliye 'a child who was crying' wala option A sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0092",
+   "question": "She saw a man running towards the burning building.",
+   "options": [
+    "She saw a man so he was running towards the burning building.",
+    "She saw a man as was running towards the burning building.",
+    "She saw a man which was running towards the burning building.",
+    "She saw a man who was running towards the burning building."
+   ],
+   "answer": 3,
+   "solution": "Simple sentence mein agar 'noun (object) + present participle' diya ho, toh complex mein 'noun (object) + object ke according relative pronoun + relative pronoun ke according verb' structure se banta hai, 'man' human being hoga aur human being ke liye 'who, whom' relative pronoun ka use karte hai, isliye 'a man who was running' wala option D sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0093",
+   "question": "Without following the safety instructions, the workers risk serious injuries.",
+   "options": [
+    "If the workers do not follow the safety instructions, they risk serious injuries.",
+    "The workers do not follow the safety instructions, and they risk serious injuries.",
+    "Because the workers do not follow the safety instructions, they risk serious injuries.",
+    "The workers do not follow the safety instructions, yet they risk serious injuries."
+   ],
+   "answer": 0,
+   "solution": "Simple sentence ke starting mein agar 'without' diya ho, toh complex mein 'if/ in case' subordinate conjunction se banate hai, isliye 'if the workers do not follow the safety instructions' wala option A sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0094",
+   "question": "Without adequate preparation, the team cannot perform effectively.",
+   "options": [
+    "The team does not have adequate preparation, and it cannot perform effectively.",
+    "The team does not have adequate preparation, but it cannot perform effectively.",
+    "Because the team does not have adequate preparation, it cannot perform effectively.",
+    "If the team does not have adequate preparation, it cannot perform effectively."
+   ],
+   "answer": 3,
+   "solution": "Simple sentence ke starting mein agar 'without' diya ho, toh complex mein 'if/ in case' subordinate conjunction se banate hai, isliye 'if the team does not have adequate preparation' wala option D sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0095",
+   "question": "She received the phone call at the time of attending an important meeting.",
+   "options": [
+    "She received the phone call when she was attending an important meeting.",
+    "She received the phone call because she was attending an important meeting.",
+    "She received the phone call and she was attending an important meeting.",
+    "She received the phone call but she was attending an important meeting."
+   ],
+   "answer": 0,
+   "solution": "Simple sentence mein agar 'at the time' structure diya ho, toh complex mein 'when, while' subordinate conjunction se banate hai, isliye 'She received the phone call when she was attending an important meeting' wala option A sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0096",
+   "question": "The power went out at the time of conducting the online examination.",
+   "options": [
+    "The power went out and the online examination was being conducted.",
+    "The power went out because the online examination was being conducted.",
+    "The power went out during the conduction of the online examination.",
+    "The power went out when the online examination was being conducted."
+   ],
+   "answer": 3,
+   "solution": "Simple sentence mein agar 'at the time' structure diya ho, toh complex mein 'when, while' subordinate conjunction se banate hai, isliye 'The power went out when the online examination was being conducted' wala option D sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0097",
+   "question": "It was a magnificent monument.",
+   "options": [
+    "The monument was magnificent when I saw it.",
+    "It was a monument and it was magnificent.",
+    "It was a monument which was magnificent.",
+    "It was a monument because it was magnificent."
+   ],
+   "answer": 2,
+   "solution": "Simple sentence mein agar noun ke liye 'adjective' diya ho toh, toh complex mein 'that/which' relative pronoun se clause banate hai, isliye 'it was a monument which was magnificent' wala option C sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0098",
+   "question": "She bought a comfortable chair.",
+   "options": [
+    "She bought a chair which was comfortable.",
+    "She bought a chair because it was comfortable.",
+    "She bought a chair, and it was comfortable.",
+    "She bought a chair although it was uncomfortable."
+   ],
+   "answer": 0,
+   "solution": "Simple sentence mein agar noun ke liye 'adjective' diya ho toh, toh complex mein 'that/which' relative pronoun se clause banate hai, isliye 'She bought a chair which was comfortable' wala option A sahi hoga. Note:- meaning se bhi simple to complex change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Complex"
+  },
+  {
+   "id": "transformation-0099",
+   "question": "When the compliance officer reviewed the internal audit findings carefully, she forwarded the corrective action plan to senior management.",
+   "options": [
+    "Because the compliance officer reviewed the internal audit findings carefully, she forwarded the corrective action plan to senior management.",
+    "The compliance officer reviewed the internal audit findings carefully and she forwarded the corrective action plan to senior management.",
+    "Reviewing the internal audit findings carefully, the compliance officer forwarded the corrective action plan to senior management.",
+    "Having reviewed the internal audit findings carefully, the compliance officer was forwarding the corrective action plan to senior management."
+   ],
+   "answer": 2,
+   "solution": "Complex to simple jaate waqt simple sentence mein koi bhi conjunction ka use nahi hota, isliye do clause ko jodne waali 'because' aur 'and' conjunction waale option A aur B galat honge. Complex to simple mein tense aur meaning same rehna chaiye, isliye option D 'was forwarding' galat hoga, isliye 'reviewing the internal audit findings' wala option C sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Complex to Simple"
+  },
+  {
+   "id": "transformation-0100",
+   "question": "Since the technical staff were unfamiliar with the upgraded automation interface, they organized detailed orientation sessions before deployment.",
+   "options": [
+    "The technical staff were unfamiliar with the upgraded automation interface so they organized detailed orientation sessions before deployment.",
+    "Because the technical staff are unfamiliar with the upgraded automation interface, they organized detailed orientation sessions before deployment.",
+    "Having unfamiliar with the upgraded automation interface, the technical staff organized detailed orientation sessions before deployment.",
+    "Being unfamiliar with the upgraded automation interface, the technical staff organized detailed orientation sessions before deployment."
+   ],
+   "answer": 3,
+   "solution": "Complex to simple jaate waqt simple sentence mein koi bhi conjunction ka use nahi hota hai, isliye do clause ko jodne waali 'so' aur 'because' conjunction waale option A aur B galat honge. Option C bhi galat hoga kyunki 'having' ke baad 'v3' aata hai kyunki yeh 'perfect participle' ka structure hota hai, isliye meaning aur tense wise 'being unfamiliar with the upgraded automation interface' wala option D sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Complex to Simple"
+  },
+  {
+   "id": "transformation-0101",
+   "question": "The documentation requirements were so extensive that the legal team could not finalize the agreement within the stipulated timeframe.",
+   "options": [
+    "The documentation requirements were too extensive for the legal team to finalize the agreement within the stipulated timeframe.",
+    "The documentation requirements were extensive and the legal team could not finalize the agreement within the stipulated timeframe.",
+    "The documentation requirements were too extensive so the legal team could not finalize the agreement within the stipulated timeframe.",
+    "Because the documentation requirements were extensive, the legal team could not finalize the agreement within the stipulated timeframe."
+   ],
+   "answer": 0,
+   "solution": "Complex to simple jaate waqt simple sentence mein koi bhi conjunction ka use nahi hota hai, isliye do clause ko jodne 'and', 'so' and 'because' conjunction waale option B, C and D galat honge. Aur waise bhi simple sentence mein 'too.....to' wala structure, complex mein 'so... that' waale structure mein change hota hai, toh complex to simple mein 'so...that' wala 'too.......to' waale structure mein change hoga, isliye 'were too extensive for the legal team to finalize' wala option A sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Complex to Simple"
+  },
+  {
+   "id": "transformation-0102",
+   "question": "The organization implemented multi-layer encryption mechanisms so that confidential customer data could remain protected during transmission.",
+   "options": [
+    "The organization had implemented multi-layer encryption mechanisms protecting confidential customer data during transmission.",
+    "Because the organization implemented multi-layer encryption mechanisms, confidential customer data remained protected during transmission.",
+    "The organization implemented multi-layer encryption mechanisms and confidential customer data remained protected during transmission.",
+    "The organization implemented multi-layer encryption mechanisms to protect confidential customer data during transmission."
+   ],
+   "answer": 3,
+   "solution": "Complex to simple jaate waqt simple sentence mein koi bhi conjunction ka use nahi hota hai, isliye do clause ko jodne waali 'because' aur 'and' conjunction waale option B aur C galat honge. Option A mein 'had implemented' galat tense ka use kiya hai isliye galat hoga. Aur waise bhi simple sentence mein 'to +v1' infinitive wala structure, complex mein 'so that' waale structure mein change hota hai, toh complex to simple mein 'so that' wala 'to +v1' infinitive waale structure mein change hoga, isliye 'multi-layer mechanisms to protect confidential customer data' wala option D sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Complex to Simple"
+  },
+  {
+   "id": "transformation-0103",
+   "question": "Although they encountered persistent equipment failures, the scientists completed the environmental impact assessment.",
+   "options": [
+    "Encountering persistent equipment failures, the scientists completed the environmental impact assessment.",
+    "In spite of encountering persistent equipment failures, the scientists completed the environmental impact assessment.",
+    "The scientists encountered persistent equipment failures and they completed the environmental impact assessment.",
+    "Because the scientists encountered persistent equipment failures, they completed the environmental impact assessment."
+   ],
+   "answer": 1,
+   "solution": "Simple sentence mein conjuntion ka use nahi hota, isliye do clause jo jodne waali 'and' aur 'because' conjunciton wale option C aur D galat honge. Kyunki contradiction dikhaana hai, simple sentence mein 'in spite of, despite' wala structure, complex mein 'although, though' waale structure mein change hota hai, toh complex to simple mein 'although, though' wala 'in spite of, despite' waale structure mein change hoga, isliye 'In spite of encountering persistent equipment failures' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Complex to Simple"
+  },
+  {
+   "id": "transformation-0104",
+   "question": "Since the data server was temporarily offline due to scheduled maintenance, remote monitoring operations were halted.",
+   "options": [
+    "Because the data server was temporarily offline due to scheduled maintenance, remote monitoring operations were halted.",
+    "The data server had been temporarily offline due to scheduled maintenance, remote monitoring operations were halted.",
+    "The data server was temporarily offline due to scheduled maintenance and remote monitoring operations were halted.",
+    "Because of the temporary offline status of the data server due to scheduled maintenance, remote monitoring operations were halted."
+   ],
+   "answer": 3,
+   "solution": "Simple sentence mein conjuntion ka use nahi hota, isliye do clause jo jodne waali 'because' aur 'and' conjunciton wale option A aur C galat honge. Option B mein 'had been' galat tense ka use hai, isliye B galat hoga. Simple sentence mein 'because of' preposition di gayi ho, complex mein 'since, as, because' waale conjunction se banate hai, toh complex to simple mein 'since, as, because' wala 'because of' preposition mein change hoga, isliye 'Because of the temporary offline status of the data server' wala option D sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Complex to Simple"
+  },
+  {
+   "id": "transformation-0105",
+   "question": "The surveillance officer noticed a vehicle that was moving suspiciously near the restricted perimeter.",
+   "options": [
+    "The surveillance officer noticed a vehicle moving suspiciously near the restricted perimeter.",
+    "The surveillance officer noticed a vehicle and it was moving suspiciously near the restricted perimeter.",
+    "The surveillance officer had noticed a vehicle moving suspiciously near the restricted perimeter.",
+    "Because the vehicle was moving suspiciously near the restricted perimeter, the surveillance officer noticed it."
+   ],
+   "answer": 0,
+   "solution": "Simple sentence mein conjuntion ka use nahi hota, isliye do clause jo jodne waali 'and' aur 'because' conjunciton wale option B aur D galat honge. Simple sentence mein agar 'object + present participle' diya ho, toh complex mein 'object + object ke according relative pronoun' structure se banta hai, toh complex to simple mein 'object + relative pronoun' wala 'object + present participle' mein change hoga, isliye 'surveillance officer noticed a vehicle moving suspiciously' wala option A sahi hoga. option C mein 'had noticed' galat tense use hua hai. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Complex to Simple"
+  },
+  {
+   "id": "transformation-0106",
+   "question": "If the technicians do not calibrate the monitoring equipment regularly, significant measurement inaccuracies may arise.",
+   "options": [
+    "The technicians do not calibrate the monitoring equipment regularly and significant measurement inaccuracies may arise.",
+    "Without calibrated the monitoring equipment regularly, significant measurement inaccuracies may arise.",
+    "Without calibrating the monitoring equipment regularly, significant measurement inaccuracies may arise.",
+    "Because the technicians do not calibrate the monitoring equipment regularly, significant measurement inaccuracies may arise."
+   ],
+   "answer": 2,
+   "solution": "Simple sentence mein agar 'without' preposition ho, toh complex mein 'if/ in case' mein change karte hai, toh complex to simple mein 'if/ in case' wala 'without' preposition mein change hoga, isliye 'Without calibrating the monitoring equipment regularly' wala option C sahi hoga. jisme 'without' preposition hai aur 'calibrating' gerund preposition ka object. Option B mein 'calibrated' past participle (adjective) 'without' preposition ka object nahi ban payega. Isliye option B galat hai.",
+   "chapter": "Transformation",
+   "set": "Complex to Simple"
+  },
+  {
+   "id": "transformation-0107",
+   "question": "The control panel malfunctioned when engineers were performing advanced diagnostic adjustments.",
+   "options": [
+    "The engineers were performing advanced diagnostic adjustments and the control panel malfunctioned.",
+    "Because engineers were performing advanced diagnostic adjustments, the control panel malfunctioned.",
+    "The control panel malfunctioned at the time of performing advanced diagnostic adjustments.",
+    "The control panel had malfunctioned at the time of performing advanced diagnostic adjustments."
+   ],
+   "answer": 2,
+   "solution": "Simple sentence mein agar 'at the time' diya ho, toh complex mein 'when/while' mein change karte hai, toh complex to simple mein 'when/while' wala 'at the time' mein change hoga, isliye 'The control panel malfunctioned at the time of performing' wala option C sahi hoga. option D mein 'had malfunctioned' galat tense ka use kiya hai. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Complex to Simple"
+  },
+  {
+   "id": "transformation-0108",
+   "question": "The board approved a policy that was economically feasible and environmentally sustainable.",
+   "options": [
+    "Because the policy was economically feasible and environmentally sustainable, the board approved it.",
+    "The board approved a policy and it was economically feasible and environmentally sustainable.",
+    "The board had approved an economically feasible and environmentally sustainable policy.",
+    "The board approved an economically feasible and environmentally sustainable policy."
+   ],
+   "answer": 3,
+   "solution": "Simple sentence mein agar 'adjective' diya ho, toh complex mein 'that/which' relative pronoun se clause banate hai, toh complex to simple mein 'that/which' relative pronoun se clause wala 'adjective' mein change, toh complex mein 'that was economically ..... ..sustainble' yeh adjective clause hai, jo 'a policy' ke liye aaya hai, isliye 'The board approved an economically feasible and environmentally sustainable policy' wala option D sahi hoga. option C mein 'had approved' tense galat hai. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Complex to Simple"
+  },
+  {
+   "id": "transformation-0109",
+   "question": "Arriving at the research centre early, the interns organized the laboratory equipment.",
+   "options": [
+    "The interns arrived early at the research centre, but they organized laboratory equipment.",
+    "The interns arrived early at the research centre because they organized laboratory equipment.",
+    "The interns arrived early at the research centre, and they organized laboratory equipment.",
+    "The interns arrived early at the research centre although they organized laboratory equipment."
+   ],
+   "answer": 2,
+   "solution": "Simple sentence mein jab do kaam sequence mein ho rahe hote hai, toh compound mein pehle pehli cheez likhenge uske baad 'and' coordinate conjunction laga ke dusri cheez likhenge, aur tense same rahega, isliye 'The interns arrived early at the research centre, and they organized laboratory equipment' wala option C sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0110",
+   "question": "Completing the strategic review, the board members approved the policy revisions unanimously.",
+   "options": [
+    "The board completed the strategic review and it approved the policy revisions unanimously.",
+    "The board completed the strategic review since they approved the policy revisions unanimously.",
+    "The board completed the strategic review but it approved the policy revisions unanimously.",
+    "The board completed the strategic review although they approved the policy revisions unanimously."
+   ],
+   "answer": 0,
+   "solution": "Simple sentence mein jab do kaam sequence mein ho rahe hote hai, toh compound mein pehle pehli cheez likhenge uske baad 'and' coordinate conjunction laga ke dusri cheez likhenge, aur tense same rahega. Isliye 'The board completed the strategic review and it approved the policy revisions unanimously' wala option A sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0111",
+   "question": "The engineer finalized the design and he submitted the technical proposal.",
+   "options": [
+    "The engineer finalized the design because he submitted the technical proposal.",
+    "Finalizing the design, the engineer submitted the technical proposal.",
+    "The engineer finalized the design to submit the technical proposal.",
+    "The engineer finalized the design but he submitted the technical proposal."
+   ],
+   "answer": 1,
+   "solution": "Simple sentence mein jab ek ke baad dusri cheez ho rahi ho, toh compound mein pehle pehli cheez likhenge uske baad 'and' coordinate conjunction laga ke dusri cheez likhenge, toh compound to complex mein reverse hoga, isliye 'Finalizing the design, the engineer submitted the technical proposal' wala option B sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0112",
+   "question": "Besides being analytical, the consultant demonstrates exceptional interpersonal communication.",
+   "options": [
+    "The consultant is analytical but he demonstrates exceptional interpersonal communication.",
+    "The consultant is analytical or demonstrates exceptional interpersonal communication.",
+    "Not only is the consultant analytical but also he demonstrates exceptional interpersonal communication.",
+    "The consultant is analytical because he demonstrates exceptional interpersonal communication."
+   ],
+   "answer": 2,
+   "solution": "Simple sentence mein agar 'besides being' diya ho, toh compound mein 'not only……. But also' se banayenge, isliye 'Not only is the consultant analytical but also he demonstrates exceptional interpersonal communication' wala option C sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0113",
+   "question": "Besides being environmentally conscious, the organization invests in community development.",
+   "options": [
+    "The organization is environmentally conscious since it invests in community development.",
+    "Not only is the organization environmentally conscious but also it invests in community development.",
+    "The organization is environmentally conscious yet it invests in community development.",
+    "The organization is environmentally conscious although it invests in community development."
+   ],
+   "answer": 1,
+   "solution": "Simple sentence mein agar 'besides being' diya ho, toh compound mein 'not only……. But also' se banayenge, isliye 'Not only is the organization environmentally conscious but also it invests in community development' wala option B sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0114",
+   "question": "Not only is the professor an inspiring lecturer but also he is a dedicated mentor.",
+   "options": [
+    "Being an inspiring lecturer, the professor is a dedicated mentor.",
+    "The professor is an inspiring lecturer but a dedicated mentor.",
+    "Besides being an inspiring lecturer, the professor is a dedicated mentor.",
+    "The professor is an inspiring lecturer so he is a dedicated mentor."
+   ],
+   "answer": 2,
+   "solution": "Simple sentence mein agar 'besides being' diya ho, toh compound mein 'not only……. but also' se banta hai, toh compound to simple mein reverse hoga, isliye 'besides being an inspiring lecturer' wala option C sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0115",
+   "question": "In spite of encountering setbacks, the team delivered the software ahead of schedule.",
+   "options": [
+    "The team encountered setbacks, but it delivered software ahead of schedule.",
+    "The team encountered setbacks because it delivered software ahead of schedule.",
+    "The team encountered setbacks although it delivered software ahead of schedule.",
+    "The team encountered setbacks, so it delivered software ahead of schedule."
+   ],
+   "answer": 0,
+   "solution": "Simple sentence mein agar 'in spite of/despite' preposition di gayi ho, toh compound mein 'but' coordinate conjunction se banate hai, isliye 'The team encountered setbacks, but it delivered software ahead of schedule' wala option A sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0116",
+   "question": "Despite facing opposition, the committee implemented reforms.",
+   "options": [
+    "The committee faced opposition, but it implemented reforms.",
+    "The committee faced opposition because it implemented reforms.",
+    "The committee faced opposition although it implemented reforms.",
+    "The committee faced opposition, so it implemented reforms."
+   ],
+   "answer": 0,
+   "solution": "Simple sentence mein agar 'in spite of/despite' preposition di gayi ho, toh compound mein 'but' coordinate conjunction se banate hai, isliye 'The committee faced opposition, but it implemented reforms' wala option A sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0117",
+   "question": "The expedition team was exhausted but it continued the ascent.",
+   "options": [
+    "Being exhausted, the team continued the ascent.",
+    "Because the team was exhausted, it continued the ascent.",
+    "In spite of being exhausted, the team continued the ascent.",
+    "The team was exhausted although it continued the ascent."
+   ],
+   "answer": 2,
+   "solution": "Simple sentence mein agar 'in spite of/despite' preposition di gayi ho, toh compound mein 'but' coordinate conjunction se banate hai, toh compound to simple mein reverse ho jayega, isliye 'in spite of being exhausted, the team continued the ascent' wala option C sahi hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0118",
+   "question": "You must adhere to the project timeline to ensure timely completion.",
+   "options": [
+    "You must adhere to the project timeline because you ensure timely completion.",
+    "You must adhere to the project timeline, or you will not ensure timely completion.",
+    "You must adhere to the project timeline although you ensure timely completion.",
+    "You must adhere to the project timeline so that you ensure timely completion."
+   ],
+   "answer": 1,
+   "solution": "Jab simple sentence mein advice di jaaye ki vyakti ko kuch achieve karne ke liye kuch karna hoga, toh compound sentence 'person must do…………or the person will not' structure se banega, isliye 'You must adhere to the project timeline, or you will not ensure timely completion' wala option B sahi hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0119",
+   "question": "Students must practice regularly to perform confidently in the exam.",
+   "options": [
+    "Students must practice regularly so that they will perform confidently in the exam.",
+    "Students must practice regularly since they will perform confidently in the exam.",
+    "Students must practice regularly, or they will not perform confidently in the exam.",
+    "Students must practice regularly although they will perform confidently in the exam."
+   ],
+   "answer": 2,
+   "solution": "Jab simple sentence mein advice di jaaye ki kisi vyakti ko kuch achieve karne ke liye kuch karna hoga, toh compound sentence 'person must do…………or the person will not' structure se banega, isliye 'Students must practice regularly, or they will not perform confidently in the exam' wala option C sahi hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0120",
+   "question": "You must verify the data carefully or you will produce inaccurate results.",
+   "options": [
+    "Verifying the data carefully, you will produce inaccurate results.",
+    "If you don't verify the data carefully, you will produce inaccurate results.",
+    "You must verify the data carefully to avoid producing inaccurate results.",
+    "You must verify the data carefully although you produce inaccurate results."
+   ],
+   "answer": 2,
+   "solution": "Jab simple sentence mein advice di jaaye ki vyakti ko kuch achieve karne ke liye kuch karna hoga, toh compound sentence 'person must do……or the person will not' structure se banega, toh compound to simple mein reverse ho jayega, isliye 'You must verify the data carefully to avoid producing inaccurate results' wala option C sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0121",
+   "question": "The witness must reveal the truth to avoid being prosecuted.",
+   "options": [
+    "The witness must reveal the truth so that he will not be prosecuted.",
+    "The witness must reveal the truth, or he will be prosecuted.",
+    "The witness must reveal the truth because he will be prosecuted.",
+    "The witness must reveal the truth, and he will be prosecuted."
+   ],
+   "answer": 1,
+   "solution": "Jab simple sentence mein kaha jaaye ki vyakti ko kuch karna hoga 'escape/avoid' karne ke liye, toh compound mein 'person must do…….or the person will + verb/ will be + verb's past participle' structure se banega, isliye 'The witness must reveal the truth, or he will be prosecuted' wala option B sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0122",
+   "question": "The company must comply with standards to avoid being penalized.",
+   "options": [
+    "The company must comply with standards, and it will be penalized.",
+    "The company must comply with standards, or it will be penalized.",
+    "The company must comply with standards since it will be penalized.",
+    "The company must comply with standards so that it will not be penalized."
+   ],
+   "answer": 1,
+   "solution": "Jab simple sentence mein kaha jaaye ki vyakti ko kuch karna hoga 'escape/avoid' karne ke liye, toh compound mein 'person must do…….or the person will + verb/ will be + verb's past participle' structure se banega, isliye 'The company must comply with standards, or it will be penalized' wala option B sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0123",
+   "question": "The suspect must cooperate or he will be detained.",
+   "options": [
+    "Cooperating, the suspect will be detained.",
+    "If he cooperates, he will not be detained.",
+    "The suspect must cooperate to avoid being detained.",
+    "The suspect must cooperate so he will not be detained."
+   ],
+   "answer": 2,
+   "solution": "Jab simple sentence mein kaha jaaye ki vyakti ko kuch karna hoga 'escape/avoid' karne ke liye, toh compound mein 'person must do…….or the person will + verb/ will be + verb's past participle' structure se banega, toh compound to simple mein reverse hoga, isliye 'The suspect must cooperate to avoid being detained' wala option C sahi hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0124",
+   "question": "The athlete trained rigorously to achieve peak performance.",
+   "options": [
+    "The athlete trained rigorously although he achieved performance.",
+    "The athlete trained rigorously because he achieved performance.",
+    "The athlete trained rigorously and he achieved peak performance.",
+    "The athlete trained rigorously since he achieved performance."
+   ],
+   "answer": 2,
+   "solution": "Jab simple sentence mein yeh bataya jaaye ki kuch paane ke liye kisi ne kuch kiya aur 'to+v1' infinitive aaya ho, toh compound sentence mein 'and' conjunction se banayenge, isliye 'The athlete trained rigorously and he achieved peak performance' option C sahi hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0125",
+   "question": "The research team collaborated extensively to produce findings.",
+   "options": [
+    "The research team collaborated extensively then it produced findings.",
+    "The research team collaborated extensively and it produced findings.",
+    "The research team collaborated extensively although it produced findings.",
+    "The research team collaborated extensively because it produced findings."
+   ],
+   "answer": 1,
+   "solution": "Jab simple sentence mein yeh bataya jaaye ki kuch paane ke liye kisi ne kuch kiya aur 'to+v1' infinitive aaya ho, toh compound sentence mein 'and' conjunction se banayenge, isliye 'The research team collaborated extensively and it produced findings' wala option B sahi hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0126",
+   "question": "The entrepreneur invested strategically and he expanded globally.",
+   "options": [
+    "The entrepreneur invested strategically to expand globally.",
+    "The entrepreneur invested strategically although he expanded globally.",
+    "Because he invested strategically, he expanded globally.",
+    "The entrepreneur invested strategically yet expanded globally."
+   ],
+   "answer": 0,
+   "solution": "Jab simple sentence mein yeh bataya jaaye ki kuch paane ke liye kisi ne kuch kiya aur 'to+v1' infinitive aaya ho, toh compound sentence mein 'and' conjunction se banate hai, toh compound to simple mein reverse ho jayega, isliye 'The entrepreneur invested strategically to expand globally' option A sahi hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0127",
+   "question": "Being extremely motivated, the candidate pursued his research abroad.",
+   "options": [
+    "The candidate was extremely motivated, but he pursued his research abroad.",
+    "The candidate was extremely motivated, so he pursued his research abroad.",
+    "The candidate was extremely motivated to pursue his research abroad.",
+    "The candidate was extremely motivated because he pursued his research abroad."
+   ],
+   "answer": 1,
+   "solution": "Agar simple sentence mein kisi person ke kuch karne ka kaaran (cause) bataya jaaye, toh compound mein do clause ko 'so' conjunction se jodke banayenge, isliye 'The candidate was extremely motivated, so he pursued his research abroad' wala option B sahi hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0128",
+   "question": "Being financially independent, she made confident investments.",
+   "options": [
+    "She was financially independent, but she made investments.",
+    "She was financially independent when she made investments.",
+    "She was financially independent because she made investments.",
+    "She was financially independent, so she made investments."
+   ],
+   "answer": 3,
+   "solution": "Agar simple sentence mein kisi person ke kuch karne ka kaaran (cause) bataye, toh compound mein do clause ko 'so' conjunction se jodke banayenge, isliye 'She was financially independent, so she made investments' wala option D sahi hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0129",
+   "question": "He was committed to innovation so he explored unconventional solutions.",
+   "options": [
+    "He was committed to innovation although he explored unconventional solutions.",
+    "Because he was committed to innovation, he explored unconventional solutions.",
+    "He was committed to innovation to explore unconventional solutions.",
+    "Being committed to innovation, he explored unconventional solutions."
+   ],
+   "answer": 3,
+   "solution": "Agar simple sentence mein kisi person ke kuch karne ka kaaran (cause) bataye, toh compound mein do clause ko 'so' conjunction se jodke banate hai, aur compound to simple mein reverse ho jayega, isliye 'Being committed to innovation, he explored unconventional solutions' wala option D sahi hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0130",
+   "question": "The organization rewarded the employee for his dedication towards the growth of the organization.",
+   "options": [
+    "The employee showed dedication towards the growth of the organization because the organization rewarded him.",
+    "The employee showed dedication towards the growth of the organization, and the organization rewarded him.",
+    "The employee showed dedication towards the growth of the organization, so the organization rewarded him.",
+    "The employee showed dedication towards the growth of the organization, but the organization did not reward him."
+   ],
+   "answer": 2,
+   "solution": "Agar simple sentence mein 'for' likha ho, aur iske pehle result aur iske baad kaaran (cause) likha ho, toh compound mein cause ko 'so, and therefore' conjunction se jodke result likhenge, isliye 'The employee showed dedication towards the growth of the organization, so the organization rewarded him' wala option C sahi hoga. option B 'and' wala bhi grammatically theek hai lekin result type baat karni hai, isliye 'so' wala prefer hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0131",
+   "question": "The committee appreciated the researcher for her contribution to the project.",
+   "options": [
+    "The researcher contributed to the project, so the committee appreciated her.",
+    "The researcher contributed to the project, and the committee appreciated her.",
+    "The researcher contributed to the project because the committee appreciated her.",
+    "The researcher contributed to the project yet the committee appreciated her."
+   ],
+   "answer": 0,
+   "solution": "Agar simple sentence mein 'for' likha ho, aur iske pehle result aur iske baad kaaran (cause) likha ho, toh compound mein cause ko 'so, and therefore' conjunction se jodke result likhenge, isliye 'The researcher contributed to the project, so the committee appreciated her' wala option A sahi hoga. option B 'and' wala bhi grammatically theek hai lekin result type baat karni hai, isliye 'so' wala prefer hoga. Note:- meaning se bhi change kar sakte hai.",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0132",
+   "question": "The engineer demonstrated precision so the organization entrusted him with projects.",
+   "options": [
+    "Because he demonstrated precision, the organization entrusted him with projects.",
+    "The organization entrusted the engineer with projects for his precision.",
+    "He demonstrated precision to entrust him with projects.",
+    "After being entrusted with the project the engineer demonstrated precision."
+   ],
+   "answer": 1,
+   "solution": "Agar simple sentence mein 'for' likha ho, aur iske pehle result likha ho aur iske baad kaaran (cause) likha ho, toh compound mein cause ko 'so, and therefore' conjunction se jodke result likhte hai, toh compound to simple mein reverse ho jayega, isliye 'The organization entrusted the engineer with projects for his precision' wala option B sahi hoga. Note:- meaning se bhi change kar sakte hai",
+   "chapter": "Transformation",
+   "set": "Simple to Compound"
+  },
+  {
+   "id": "transformation-0133",
+   "question": "The policy appeared controversial, but the regulatory board approved it after careful review.",
+   "options": [
+    "Because the policy appeared controversial, the regulatory board approved it after careful review.",
+    "The policy appeared controversial and the regulatory board approved it after careful review.",
+    "Although the policy appeared controversial, the regulatory board approved it after careful review.",
+    "The policy appeared controversial while the regulatory board approved it after careful review."
+   ],
+   "answer": 2,
+   "solution": "Compound mein contradiction wala meaning 'but, yet' conjunction se aata hai, aur complex mein 'though, although' se aata hai, aur compound se complex mein meaning same rahe, isliye 'Although the policy appeared controversial, the regulatory board approved it after careful review' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0134",
+   "question": "The investigation was prolonged, yet the audit committee maintained complete transparency.",
+   "options": [
+    "Though the investigation was prolonged, the audit committee maintained complete transparency.",
+    "Because the investigation was prolonged, the audit committee maintained complete transparency.",
+    "The investigation was prolonged while the audit committee maintained complete transparency.",
+    "The investigation was prolonged and the audit committee maintained complete transparency."
+   ],
+   "answer": 0,
+   "solution": "Compound mein contradiction wala meaning 'but, yet' conjunction se aata hai, aur complex mein 'though, although' se aata hai, aur compound se complex mein meaning same rahe, isliye 'Though the investigation was prolonged' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0135",
+   "question": "Although the device encountered repeated calibration errors, the engineers restored its functionality.",
+   "options": [
+    "The device encountered repeated calibration errors while the engineers restored its functionality.",
+    "The device encountered repeated calibration errors but the engineers restored its functionality.",
+    "Because the device encountered repeated calibration errors, the engineers restored its functionality.",
+    "The device encountered repeated calibration errors and the engineers restored its functionality."
+   ],
+   "answer": 1,
+   "solution": "Sentence mein 'although' se pata chal raha ki complex hai, toh compound mein same meaning aur contradiction 'but, yet' se ayega, isliye 'The device encountered repeated calibration errors but the engineers restored its functionality' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0136",
+   "question": "Follow the prescribed safety checklist, or unexpected operational hazards may occur.",
+   "options": [
+    "The prescribed safety checklist is followed while unexpected operational hazards occur.",
+    "Follow the prescribed safety checklist and unexpected operational hazards may occur.",
+    "Unless the prescribed safety checklist is followed, unexpected operational hazards may occur.",
+    "Because the prescribed safety checklist is followed, unexpected operational hazards may occur."
+   ],
+   "answer": 2,
+   "solution": "Compound mein agar 'or (warna)' wala meaning aaye, toh complex mein meaning same rakhne ke liye 'if….not, unless, lest…..should' se banayenge, isliye 'Unless the prescribed safety checklist is followed, unexpected operational hazards may occur' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0137",
+   "question": "Accelerate the evacuation process, or critical delays could worsen the emergency situation.",
+   "options": [
+    "Accelerate the evacuation process lest critical delays should worsen the emergency situation.",
+    "The evacuation process is accelerated although critical delays worsen the emergency situation.",
+    "The evacuation process is accelerated, so critical delays worsen the emergency situation.",
+    "The evacuation process is accelerated and critical delays worsen the emergency situation."
+   ],
+   "answer": 0,
+   "solution": "Compound mein agar 'or (warna)' wala meaning aaye, toh complex mein meaning same rakhne ke liye 'if….not, unless, lest…..should' se banayenge, isliye 'Accelerate the evacuation process lest critical delays should worsen the emergency situation' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0138",
+   "question": "If the financial projections are not reassessed carefully, the organization may face severe budgetary constraints.",
+   "options": [
+    "The financial projections are not reassessed and the organization may face constraints.",
+    "Reassess the financial projections carefully, or the organization may face severe budgetary constraints.",
+    "The financial projections are not reassessed so that the organization may face constraints.",
+    "The financial projections are not reassessed while the organization faces constraints."
+   ],
+   "answer": 1,
+   "solution": "Sentence mein 'if……not' se pata chal raha ki complex hai, agar complex mein 'if……not, unless, lest….should' aaya hai, toh iska matlab compound mein 'or (warna)' waali conjunction se bana hoga, toh complex to compound jaana hai, isliye 'Reassess the financial projections carefully, or the organization may face severe budgetary constraints' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0139",
+   "question": "Enhance employee engagement initiatives, and overall workplace productivity will improve.",
+   "options": [
+    "If employee engagement initiatives are enhanced, overall workplace productivity will improve.",
+    "Employee engagement initiatives are enhanced, so overall workplace productivity improves.",
+    "Because employee engagement initiatives are enhanced, overall workplace productivity improves.",
+    "Employee engagement initiatives are enhanced and overall workplace productivity improves."
+   ],
+   "answer": 0,
+   "solution": "Jab compound mein 'and' conjunction 'reason' 'result' ko joda ho, toh complex mein meaning same rakhne ke liye 'if' conjunction se banayenge, isliye 'If employee engagement initiatives are enhanced, overall workplace productivity will improve' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0140",
+   "question": "Invest in advanced analytics tools, and decision-making accuracy will increase across departments.",
+   "options": [
+    "Advanced analytics tools are invested in so that decision-making accuracy increases.",
+    "If advanced analytics tools are invested in, decision-making accuracy will increase across departments.",
+    "Advanced analytics tools are invested in and decision-making accuracy increases.",
+    "Because analytics tools are invested in, decision-making accuracy increases."
+   ],
+   "answer": 1,
+   "solution": "Jab compound mein 'and' conjunction 'reason' 'result' ko joda ho, toh complex mein meaning same rakhne ke liye 'if' conjunction se banayenge, isliye 'If advanced analytics tools are invested in, decision-making accuracy will increase across departments' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0141",
+   "question": "If the management implements transparent policies, employee trust will strengthen.",
+   "options": [
+    "Because management implements transparent policies, employee trust strengthens.",
+    "The management implements transparent policies while employee trust strengthens.",
+    "The management implements transparent policies and employee trust will strengthen.",
+    "The management implements transparent policies but employee trust strengthens."
+   ],
+   "answer": 2,
+   "solution": "Complex mein 'if' conjunction se 'reason' 'result' ko bataya hai, toh compound mein 'and' conjunction se 'reason' 'result' ko jodke aaya hoga, isliye complex to compound same meaning 'The management implements transparent policies and employee trust will strengthen' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0142",
+   "question": "The emergency alarm sounded, and the evacuation procedure was initiated immediately.",
+   "options": [
+    "The emergency alarm sounded although evacuation procedure was initiated immediately.",
+    "If the emergency alarm sounded, evacuation procedure was initiated immediately.",
+    "The emergency alarm sounded and evacuation procedure was initiated immediately.",
+    "As soon as the emergency alarm sounded, the evacuation procedure was initiated immediately."
+   ],
+   "answer": 3,
+   "solution": "Jab compound mein 'and' conjunction lagake time ki baat ho, matlab 'jaise he kuch hua, yeh karna pada' iss type ka meaning aaye, toh complex mein 'when, as soon as' conjunction se banayenge, isliye 'As soon as the emergency alarm sounded, the evacuation procedure was initiated immediately' wala option D sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0143",
+   "question": "The inspection team arrived at the facility and began conducting detailed safety assessments.",
+   "options": [
+    "The inspection team arrived at the facility although they began conducting detailed safety assessments.",
+    "When the inspection team arrived at the facility, they began conducting detailed safety assessments.",
+    "Not only the inspection team arrived at the facility but also began conducting detailed safety assessments.",
+    "The inspection team arrived at the facility, so began conducting detailed safety assessments."
+   ],
+   "answer": 1,
+   "solution": "Jab compound mein 'and' conjunction lagake time ki baat ho, matlab 'jaise he kuch hua, yeh karna pada' iss type ka meaning aaye, toh complex mein 'when, as soon as' conjunction se banayenge, isliye 'When the inspection team arrived at the facility, they began conducting detailed safety assessments' wala option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0144",
+   "question": "When the data verification process concluded successfully, the report was released to stakeholders.",
+   "options": [
+    "The data verification process concluded successfully but the report was released to stakeholders.",
+    "Because the data verification process concluded successfully, the report was released to stakeholders.",
+    "The data verification process concluded successfully and the report was released to stakeholders.",
+    "After concluding the data verification process successfully, the report was released to stakeholders."
+   ],
+   "answer": 2,
+   "solution": "Sentence mein 'when' conjunction se pata chal raha ki complex hai, aur iska meaning hai 'jaise he verification khatam hua, report release ho gayi', toh time ki baat ho rahi, joki same meaning compound mein 'and' conjunction se aata hai, isliye 'The data verification process concluded successfully and the report was released to stakeholders' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0145",
+   "question": "I met a consultant and he specializes in international trade regulations.",
+   "options": [
+    "I met a consultant who specializes in international trade regulations.",
+    "I met a consultant although he specializes in international trade regulations.",
+    "I met a consultant and he specializes in international trade regulations.",
+    "Because he specializes in international trade regulations, I met him."
+   ],
+   "answer": 0,
+   "solution": "Compound mein jab first clause ke noun ke liye dusra clause likha jaaye aur dono ko 'and' conjunction se joda jaaye, toh complex mein first clause ke noun ke liye adjectival clause banake likhte hai, isliye 'I met a consultant who specializes in international trade regulations' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0146",
+   "question": "The committee selected a candidate and she demonstrated exceptional leadership potential.",
+   "options": [
+    "The committee selected a candidate although she demonstrated leadership potential.",
+    "She demonstrated exceptional leadership potential, so the committee selected her.",
+    "The committee selected a candidate who demonstrated exceptional leadership potential.",
+    "The committee selected a candidate and she demonstrated leadership potential."
+   ],
+   "answer": 2,
+   "solution": "Compound mein jab first clause ke noun ke liye dusra clause likha jaaye aur dono ko 'and' conjunction se joda jaaye, toh complex mein first clause ke noun ke liye adjectival clause banake likhte hai, isliye 'The committee selected a candidate who demonstrated exceptional leadership potential' wala option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0147",
+   "question": "The organization recruited a professional who possesses extensive experience in crisis management.",
+   "options": [
+    "The organization recruited a professional, and he possesses extensive experience in crisis management.",
+    "The organization recruited a professional, so he possesses extensive experience in crisis management.",
+    "The organization recruited a professional because he possesses extensive experience in crisis management.",
+    "The organization recruited a professional while he possesses extensive experience in crisis management."
+   ],
+   "answer": 0,
+   "solution": "Jab complex mein first clause mein noun ke liye adjectival clause likha toh, compound mein 'and' se do clauses judke aaya hoga, isliye 'The organization recruited a professional and he possesses extensive experience in crisis management' wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0148",
+   "question": "The network congestion was very severe, and therefore online services became temporarily unavailable.",
+   "options": [
+    "The network congestion was very severe, so online services became temporarily unavailable.",
+    "The network congestion was very severe, but online services became temporarily unavailable.",
+    "Online services became temporarily unavailable when the network congestion was very severe.",
+    "The network congestion was so severe that online services became temporarily unavailable."
+   ],
+   "answer": 3,
+   "solution": "Agar compound mein 'very' ke sath 'and so/hence/therefore' likha ho toh, toh complex 'so…..that' conjunction se banayenge, isliye 'The network congestion was so severe that online services became temporarily unavailable' wala option D sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0149",
+   "question": "The workload was very demanding, so employees experienced considerable professional burnout.",
+   "options": [
+    "The workload was very demanding, and employees experienced considerable professional burnout.",
+    "Since the workload was very demanding, employees experienced considerable professional burnout.",
+    "Because of the demanding workload, employees experienced considerable professional burnout.",
+    "Employees experienced considerable professional burnout when the workload was very demanding."
+   ],
+   "answer": 1,
+   "solution": "Compound mein matlab hai 'workload demanding tha, isliye employees ne experience kiya burnout ko', toh option A galat hoga kyunki complex mein 'and' conjunction ka use nahi hota. Option C bhi galat hoga kyunki isme koi conjunction nahi hai 'because of' preposition hoti hai. compound mein matlab hai 'workload demanding tha, isliye employee ne experience kiya burnout' aur same compound wala meaning option B mein aa raha hai 'kyunki workload demanding tha, employees ne experience kiya burnout ko', isliye option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0150",
+   "question": "The auditorium was so overcrowded that several participants remained standing throughout the conference.",
+   "options": [
+    "The auditorium was overcrowded while participants remained standing throughout the conference.",
+    "Since the auditorium was overcrowded, several participants remained standing throughout the conference.",
+    "Because of the overcrowded auditorium, participants remained standing throughout the conference.",
+    "The auditorium was overcrowded and therefore several participants remained standing throughout the conference."
+   ],
+   "answer": 3,
+   "solution": "Agar compound mein 'very' ke sath 'and so/hence/therefore' likha ho toh, toh complex 'so…..that' conjunction se banate hai, toh complex to compound mein reverse ho jayega, isliye 'was overcrowded and therefore several participants' wala option D sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Compound to Complex"
+  },
+  {
+   "id": "transformation-0151",
+   "question": "As the committee recognized the urgency of regulatory reform, it expedited the approval process without further deliberation.",
+   "options": [
+    "The committee recognized the urgency of regulatory reform and expedited the approval process without further deliberation.",
+    "Recognizing the urgency of regulatory reform, the committee expedited the approval process without further deliberation.",
+    "Having recognized the urgency of regulatory reform, the committee was expediting the approval process without further deliberation.",
+    "The committee's recognition of urgency of regulatory reform had led to the expedition of the approval process without further deliberation."
+   ],
+   "answer": 1,
+   "solution": "Complex to simple mein meaning aur tense change nahi hona chaiye aur simple mein ek hee clause aata hai, isliye option A galat hoga kyunki 'and' conjunction do clause ko jod rahi hai. option C bhi galat hoga kyunki isme 'was expediting' tense change kar diya. Option D bhi galat hoga kyunki 'had led' galat tense ka use hua hai, isliye option B sahi hoga kyunki isme tense aur meaning dono sahi hai.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0152",
+   "question": "The sudden erosion of investor confidence triggered prolonged instability in regional financial markets.",
+   "options": [
+    "Because investor confidence eroded suddenly, prolonged instability occurred in regional financial markets.",
+    "Investor confidence eroded suddenly while prolonged instability occurred in regional financial markets.",
+    "Investor confidence eroded suddenly and prolonged instability occurred in regional financial markets.",
+    "With investor confidence eroding suddenly, prolonged instability occurred in regional financial markets."
+   ],
+   "answer": 0,
+   "solution": "Option C galat hoga kyunki clause jodne ke liye 'and' conjunction ka use compound mein hota hai. option D mein 'occurred' ek hee main verb hai, matlab ek hee clause hai toh yeh simple sentence hoga isliye option D bhi galat hoga. option B bhi galat hoga kyunki 'while' yahan contradiction dikha raha hai. option A ka matlab hai 'kyunki achanak se investor confidence erode ho gaya tha, prolong instability aa gayi thi markets mein', toh option A ka meaning same simple sentence se hai, isliye option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0153",
+   "question": "The analyst reviewed the projections carefully, and he presented a cautiously optimistic outlook.",
+   "options": [
+    "Because the analyst reviewed the projections carefully, he presented a cautiously optimistic outlook.",
+    "The analyst reviewed the projections carefully, so presented a cautiously optimistic outlook.",
+    "After reviewing the projections carefully, the analyst presented a cautiously optimistic outlook.",
+    "The analyst's careful review of projections is resulting in the presentation of a cautiously optimistic outlook."
+   ],
+   "answer": 2,
+   "solution": "Option A aur B galat honge kyunki isme 'because' aur 'so' conjunction se do clause ko joda hai, lekin simple mein ek hee clause aata hai. option D bhi galat hoga kyunki 'is resulting' present tense kar diya jabki complex mein 'presented' past indefinite tense hai. option C ka matlab hai 'projection ko carefully review karne ke baad analyst ne present kiya optimistic outlook ko', toh option C se same compound wala meaning aa raha hai aur isme ek he clause hai, isliye option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0154",
+   "question": "The institution's strategic restructuring enhanced operational flexibility across multiple departments.",
+   "options": [
+    "The institution underwent strategic restructuring, and operational flexibility improved across multiple departments.",
+    "Because the institution underwent strategic restructuring, operational flexibility improved across multiple departments.",
+    "The institution underwent strategic restructuring to improve operational flexibility across multiple departments.",
+    "Strategic restructuring enhanced operational flexibility while multiple departments adjusted."
+   ],
+   "answer": 0,
+   "solution": "Compound sentence 'FANBOYS' coordinate conjunction se bante hai, isliye option B aur D galat honge kyunki 'because' aur 'while' subordinate conjunction hoti hai. option C bhi galat hoga kyunki bina conjunction ke simple sentence hote hai, isliye meaning, tense aur conjunction wise option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0155",
+   "question": "While the infrastructure modernization demanded substantial investment, it significantly improved service reliability.",
+   "options": [
+    "The infrastructure modernization demanded substantial investment but significantly improved service reliability.",
+    "The infrastructure modernization demanded substantial investment, and significantly improved service reliability.",
+    "Because the infrastructure modernization demanded substantial investment, significantly improved service reliability.",
+    "The infrastructure modernization demanded substantial investment to improve service reliability significantly"
+   ],
+   "answer": 0,
+   "solution": "Compound sentence 'FANBOYS' coordinate conjunction se bante hai, complex mein sentence ka matlab hai 'halanki infrastructure modernization demand kar raha tha investment, isne significantly improve kar diya service reliability ko', toh sentence mein contradiction ki baat ho rahi hai, aur compound mein contradiction 'but, yet' conjunction se aata hai, isliye diye gaye options mein sahi meaning aur 'but' conjunction wala option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0156",
+   "question": "The research team detected sampling inconsistencies, and they revised the experimental methodology.",
+   "options": [
+    "Detecting sampling inconsistencies, the research team revised the experimental methodology.",
+    "Because the research team detected sampling inconsistencies, they revised the experimental methodology.",
+    "The research team detected sampling inconsistencies so that it can revise the experimental methodology.",
+    "The research team's detection of sampling inconsistencies led to a revision of the experimental methodology."
+   ],
+   "answer": 1,
+   "solution": "Compound se complex mein change karna hai, option A aur D galat honge kyunki yeh simple sentence hai jisme ek hee clause hai. option C bhi galat hoga kyunki 'revised' ko 'can revise' mein change kar diya, isliye meaning aur conjunction wise option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0157",
+   "question": "Since the directive lacked procedural clarity, operational delays became inevitable across administrative units.",
+   "options": [
+    "The directive lacked procedural clarity and operational delays became inevitable across administrative units.",
+    "Owing to the directive's lack of procedural clarity, operational delays became inevitable across administrative units.",
+    "Because the directive lacked procedural clarity, operational delays became inevitable across administrative units.",
+    "The directive lacked procedural clarity, so operational delays became inevitable across administrative units."
+   ],
+   "answer": 1,
+   "solution": "Complex to simple mein change karna hai, simple mein ek hee clause hote hai. option A, C aur D galat honge kyunki isme 'and', 'because' aur 'so' conjunction se do clause jud rahe hai. isliye meaning aur clause wise option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0158",
+   "question": "Persistent fluctuations in commodity prices created uncertainty among long-term investors.",
+   "options": [
+    "Commodity prices fluctuated persistently and uncertainty emerged among long-term investors.",
+    "Since commodity prices fluctuated persistently, uncertainty emerged among long-term investors.",
+    "With commodity prices fluctuating persistently, uncertainty emerged among long-term investors.",
+    "Commodity prices fluctuated persistently so uncertainty emerged among long-term investors."
+   ],
+   "answer": 1,
+   "solution": "Simple se complex jana hai, aur complex subordinate conjunction se bante hai. option A aur D galat honge kyunki 'and' aur 'so' coordinate conjunction hoti hai jisse compound sentence bante hai. option C bhi galat hoga kyunki isme koi conjunction nahi hai aur yeh simple sentence hai, toh meaning aur conjunction wise option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0159",
+   "question": "The negotiations reached an impasse, and both delegations reassessed their diplomatic strategies.",
+   "options": [
+    "Following the impasse in negotiations, both delegations reassessed their diplomatic strategies.",
+    "The negotiations reached an impasse and both delegations reassessed their diplomatic strategies.",
+    "Because the negotiations reached an impasse, both delegations reassessed their diplomatic strategies.",
+    "The impasse in negotiations will make both delegations reassess their diplomatic strategies."
+   ],
+   "answer": 0,
+   "solution": "Compound se simple jana hai, simple mein ek hee clause hote hai. option B aur C galat honge kyunki 'and' aur 'because' conjunction do clause ko jod rahi hai. option D bhi galat hoga kyunki 'will make' yaha future tense kar diya. Isliye meaning aur tense wise option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0160",
+   "question": "Although technological adoption accelerated rapidly, regulatory oversight evolved at a comparatively slower pace.",
+   "options": [
+    "Technological adoption accelerated rapidly, so regulatory oversight evolved at a comparatively slower pace.",
+    "Technological adoption accelerated rapidly and regulatory oversight evolved at a comparatively slower pace.",
+    "If technological adoption accelerated rapidly, regulatory oversight evolved slowly.",
+    "Technological adoption accelerated rapidly, but regulatory oversight evolved at a comparatively slower pace."
+   ],
+   "answer": 3,
+   "solution": "Complex se compound jana hai, complex mein 'although' se pata chal raha ki contradiction dikhaana hai, toh compound mein contradiction 'but, yet' conjunction se dikhaate hai, isliye diye gaye options mein se meaning aur conjunction wise 'but' wala option D sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0161",
+   "question": "The abrupt withdrawal of funding disrupted several ongoing community development initiatives.",
+   "options": [
+    "Funding was withdrawn abruptly, and therefore several ongoing community development initiatives were disrupted.",
+    "Because funding was withdrawn abruptly, several ongoing community development initiatives were disrupted.",
+    "Funding was withdrawn abruptly while several community initiatives were disrupted.",
+    "The abrupt withdrawal of funding resulted in the disruption of several development community initiatives."
+   ],
+   "answer": 0,
+   "solution": "Simple se compound jana hai aur compound mein 'FANBOYS' conjunction ka use hota hai. option B aur C galat honge kyunki 'because' aur 'while' subordinate conjunction hoti hai jisse complex sentence bante hai. option D bhi galat hoga kyunki isme ek hee clause likha hai. isliye meaning aur 'and' conjunction wise option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0162",
+   "question": "The committee reviewed the evidence carefully, and it reached a unanimous verdict.",
+   "options": [
+    "Having reviewed the evidence carefully, the committee reached a unanimous verdict.",
+    "The committee reviewed the evidence carefully to reach a unanimous verdict.",
+    "The committee reviewed the evidence carefully, so it reached a unanimous verdict.",
+    "After the reviewed evidence, the committee reached a unanimous verdict."
+   ],
+   "answer": 0,
+   "solution": "Compound se simple jana hai, simple mein ek hee clause aata hai. option C galat hoga kyunki isme 'so' conjunction ka use hua hai. compound sentence ka matlab hai 'committee ne evidence ko acche se review kiya aur wo unanimous verdict pe pahuch gayi'. Option D mein 'the reviewed evidence' ka matlab 'aise evidence ka review ho chuka ho' toh option D ka meaning compound se alag ayega, isliye option D galat hoga. option B bhi galat hoga kyunki iska matlab 'unanimous verdict pe pahuchne ke liye committee ne review kiya', lekin compound ka matlab hai 'review kiya aur unanimous verdict pe pahuche', isliye option B galat hoga. isliye meaning wise option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0163",
+   "question": "The organization introduced flexible work policies, and employee satisfaction improved significantly.",
+   "options": [
+    "The organization introduced flexible work policies so employee satisfaction improved significantly.",
+    "The introduction of flexible work policies led to a significant improvement in employee satisfaction.",
+    "Because the organization introduced flexible work policies, employee satisfaction improved significantly.",
+    "Because of the introduction of flexible work policies, employee satisfaction will improve significantly."
+   ],
+   "answer": 1,
+   "solution": "Compound se simple jana hai. option A aur C galat honge kyunki 'so' se compound aur 'because' se complex sentence bante hai. option D mein 'will improve' future tense ka use kiya hai, aur compound mein 'improved' tense ka use hai, isliye option D galat hoga. jab kisi cheez ka result batana ho toh 'led to, resulted in' se connect karke simple bana sakte hai, isliye meaning wise option B sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0164",
+   "question": "If the organization fails to diversify its investment portfolio, long-term financial risks may intensify.",
+   "options": [
+    "The organization fails to diversify its investment portfolio to intensify long-term financial risks.",
+    "Because the organization fails to diversify its investment portfolio, long-term financial risks may intensify.",
+    "Without diversifying its investment portfolio, the organization may face intensified long-term financial risks.",
+    "The organization fails to diversify its investment portfolio so long-term financial risks may intensify."
+   ],
+   "answer": 2,
+   "solution": "Complex se simple jana hai. option B aur D galat honge kyunki 'because' aur 'so' conjunction se do clause jud rahe hai. option A bhi galat hoga kyunki compound sentence ke according iska meaning galat hai. isliye sahi meaning ke according option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0165",
+   "question": "Not only is the policy financially sustainable but it is also environmentally responsible in the long run.",
+   "options": [
+    "Being financially sustainable, the policy is environmentally responsible in the long run.",
+    "In spite of being financially sustainable, the policy is environmentally responsible in the long run.",
+    "The policy is financially sustainable although it is not environmentally responsible in the long run.",
+    "The policy is both financially sustainable and environmentally responsible in the long run."
+   ],
+   "answer": 3,
+   "solution": "Compound se simple jana hai, option C galat hoga kyunki 'although' conjunction ka use nahi hoga simple mein. Koi contradiction nahi hai isliye B option nahi hoga. waise A option simple sentence hai lekin yahan koi reason nahi batana hai isliye A option nhi hoga. Compound sentence ka matlab hai 'yeh policy financially sustainable hee nahi balki environmentally responsible bhi hai', toh same compound wala meaning option D mein aa raha hai 'policy financially sustainable aur environmentally responsible bhi hai'. Note :- yahan 'and' conjunction se do clause nahi balki adjective jud rahe hai, isliye option D simple sentence hai.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0166",
+   "question": "The candidate must verify all credentials carefully, or discrepancies may emerge during evaluation.",
+   "options": [
+    "The candidate must verify all credentials carefully avoiding discrepancies during evaluation.",
+    "The candidate must verify all credentials carefully although discrepancies may emerge during evaluation.",
+    "The candidate must verify all credentials carefully to prevent discrepancies during evaluation.",
+    "The candidate must verify all credentials carefully while discrepancies emerge during evaluation."
+   ],
+   "answer": 2,
+   "solution": "Compound se simple jana hai. option B aur D galat honge kyunki 'although' aur 'while' conjunction se complex sentence bante hai. compound sentence ka matlab hai 'candidates acche se verify kare credentials warna discrepancies ayenge evaluation ke waqt'. Option mein 'avoiding discrepancies' ka matlab hoga 'discrepancies avoid karte hue', joki compound ke according galat hoga, isliye option A galat hoga. aur option C ka matlab 'evaluation ke duaran discrepancies ko rokne karne ke liye', isliye meaning ke according option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0167",
+   "question": "The research assistant analyzed the survey responses thoroughly and identified several unexpected behavioral trends.",
+   "options": [
+    "Identifying several unexpected behavioral trends, the research assistant analyzed the survey responses thoroughly.",
+    "The research assistant analyzed the survey responses thoroughly while identifying unexpected trends.",
+    "The research assistant analyzed the survey responses thoroughly to identify several unexpected behavioral trends.",
+    "Because the research assistant analyzed the survey responses thoroughly, unexpected trends were identified."
+   ],
+   "answer": 2,
+   "solution": "Compound se simple jana hai. option B aur D galat honge kyunki 'while' aur 'because' se complex sentence bante hai. compound mein matlab hai 'assistant ne survey response ko thoroughly analyze kiya aur pata lagaya unexpected behavioral trends', jabki option A ka matlab hai 'several unexpected behavioral trends ko identify karte hue, assistant ne analyze kiya', toh option A ka meaning compound sentence se alag hai, isliye option A galat hoga, isliye meaning wise option C sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0168",
+   "question": "The operational constraints were so severe that the project team could not adhere to the original timeline.",
+   "options": [
+    "The operational constraints were too severe for the project team to adhere to the original timeline.",
+    "The operational constraints were severe and the project team could not adhere to the original timeline.",
+    "Because of the operational constraints, the project team may not adhere to the original timeline.",
+    "The operational constraints were too severe so the project team could not adhere to the original timeline."
+   ],
+   "answer": 0,
+   "solution": "Complex se simple jana hai. option B galat hoga kyunki 'and' conjunction se do clause jud rahe hai. option D mein 'too severe so' likha lekin 'too…ke sath…to' ka pair hota hai, isliye option D bhi galat hoga. option C mein 'may not adhere' likha hai, lekin complex mein 'could not adhere' jisse meaning galat ayega, isliye option C bhi galat hoga. isliye diye gaye options mein se meaning wise option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0169",
+   "question": "The system failure occurred when technicians were executing routine maintenance checks.",
+   "options": [
+    "The system failure occurred during the execution of routine maintenance checks by technicians.",
+    "Technicians were executing routine maintenance checks and the system failure occurred.",
+    "The system failure occurred because technicians were executing routine maintenance checks.",
+    "The system failure had occurred during the execution of routine maintenance checks by technicians."
+   ],
+   "answer": 0,
+   "solution": "Complex se simple jana hai. option B aur C galat honge kyunki 'and' aur 'because' conjunction do clauses ko joda hai. option D mein 'had occurred' likha hai, joki compound ke according tense galat hai, isliye option D bhi galat hoga. isliye diye gaye options mein se meaning ke according option A sahi hoga.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  },
+  {
+   "id": "transformation-0170",
+   "question": "The committee selected a proposal which was strategically innovative and economically feasible.",
+   "options": [
+    "The committee had selected a strategically innovative and economically feasible proposal.",
+    "The committee selected a proposal and it was strategically innovative and economically feasible.",
+    "Owing to the strategic innovation and economic feasibility, this proposal was selected.",
+    "The committee selected a strategically innovative and economically feasible proposal."
+   ],
+   "answer": 3,
+   "solution": "Complex se simple jana hai. option B galat hoga kyunki 'and' conjunction se do clause ko jod rahe hai. option A bhi galat hoga kyunki 'had selected' galat tense ka use hai. option C mein 'committee' he gayab ho gayi ki kisne proposal select kiya, isliye option C bhi galat hoga. isliye diye gaye options mein se D sahi hoga. Note:- agar option D nahi hota toh diye gaye options mein se option C mark hota.",
+   "chapter": "Transformation",
+   "set": "Mixed Practice"
+  }
+ ]
+}
