@@ -427,8 +427,6 @@ function AnswersInner() {
               className={s.key === subject ? "is-active" : ""}
             >
               {s.icon} {s.label}
-              {/* har chip par us subject ka aaj ka apna count */}
-              <b className="ansp__cbadge">{counts[s.key] || 0}</b>
             </a>
           ))}
         </div>
