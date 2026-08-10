@@ -11,6 +11,7 @@ import { copyImageToClipboard, imageBlob } from "@/lib/imgclip";
 import { localInkCounts } from "@/lib/ink";
 import { getSettings } from "@/lib/storage";
 import { getDoneSet, toggleDone, pruneDone } from "@/lib/answersdone";
+import { getCounts, bumpCount, countMark } from "@/lib/qcounter";
 import { useImageUrls } from "@/lib/wrongimages";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { saveQuiz, makeId } from "@/lib/storage";
@@ -184,6 +185,9 @@ function AnswersInner() {
 
   const [items, setItems] = useState([]);
   const [done, setDone] = useState(() => new Set());
+  // 🔢 aaj kis subject ke kitne question hue (raat 3 baje reset) — mark karte
+  // hi apne aap badhta hai, overlay ke counter jaisa hi hisaab.
+  const [counts, setCounts] = useState({});
   // ✍️ badge — is DEVICE par kis question ki handwriting hai. Ink cloud par
   // nahi jati (lib/ink.js ka CLOUD switch), isliye ginti bhi device-local hai.
   const [inkCounts, setInkCounts] = useState({});
@@ -214,6 +218,7 @@ function AnswersInner() {
     seenIds.current = ids;
     setItems(list);
     setDone(pruneDone(new Set(getWrongBook().map((r) => r.id))));
+    setCounts(getCounts()); // 5s poll — 3 baje din badla to yahin pata chal jata hai
     setInkCounts(localInkCounts());
     setReady(true);
   }, [subject]);
@@ -290,7 +295,12 @@ function AnswersInner() {
       else next.delete(rec.id);
       return next;
     });
+    // ✅ lagate hi aaj ka counter +1, hatate hi −1 (wahi question dobara
+    // mark karo to ginti dobara nahi badhti — qcounter ids yaad rakhta hai)
+    setCounts(countMark(rec.id, rec.subject || subject, now));
   };
+
+  const nudge = (delta) => setCounts({ ...counts, [subject]: bumpCount(subject, delta) });
 
   const onDelete = async (rec) => {
     if (!confirm("Ye question hata du? Iski writing aur image bhi jayegi.")) return;
@@ -395,6 +405,13 @@ function AnswersInner() {
 
       <div className="ansp__main">
         <div className="ansp__stats">
+          {/* Aaj ka counter — mark karne se apne aap badhta hai, aur haath se
+              bhi (mock ke question jo yahan nahi hain, wo bhi gin lo). */}
+          <span className="cnt" title="Aaj is subject ke kitne question hue (raat 3 baje reset)">
+            🔢 {active.label} aaj: {counts[subject] || 0}
+            <button type="button" onClick={() => nudge(-1)} aria-label="ek kam">−</button>
+            <button type="button" onClick={() => nudge(1)} aria-label="ek zyada">+</button>
+          </span>
           <span className="tot">📊 Total: {list.length}</span>
           <span className="did">✅ Ho gaye: {doneCount}</span>
           <span className="left">⏳ Baaki: {list.length - doneCount}</span>
@@ -410,6 +427,8 @@ function AnswersInner() {
               className={s.key === subject ? "is-active" : ""}
             >
               {s.icon} {s.label}
+              {/* har chip par us subject ka aaj ka apna count */}
+              <b className="ansp__cbadge">{counts[s.key] || 0}</b>
             </a>
           ))}
         </div>

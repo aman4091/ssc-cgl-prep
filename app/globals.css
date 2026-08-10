@@ -2740,6 +2740,25 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .ansp__chips a:hover { background: #45475a; }
 .ansp__chips a.is-active { background: #89b4fa; color: #1e1e2e; }
 
+/* 🔢 Aaj ka counter — ✅ mark karte hi apne aap badhta hai, +/− se haath se bhi.
+   Har chip par us subject ka apna aaj ka count. Raat 3 baje sab 0 se shuru. */
+.ansp__stats .cnt {
+  color: #cba6f7; display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 8px 4px 14px;
+}
+.ansp__stats .cnt button {
+  background: #45475a; color: #cdd6f4; border: 0; border-radius: 6px;
+  width: 28px; height: 26px; cursor: pointer; font-size: 15px;
+  font-weight: bold; font-family: inherit; line-height: 1;
+}
+.ansp__stats .cnt button:hover { background: #585b70; }
+.ansp__chips a { display: inline-flex; align-items: center; gap: 7px; }
+.ansp__cbadge {
+  background: #1e1e2e; color: #cba6f7; border-radius: 999px;
+  padding: 1px 8px; font-size: 12px; min-width: 18px; text-align: center;
+}
+.ansp__chips a.is-active .ansp__cbadge { color: #f9e2af; }
+
 /* Card */
 .ansp__card {
   background: #313244; border-radius: 10px; padding: 18px; margin: 18px 0;
