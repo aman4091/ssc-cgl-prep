@@ -86,11 +86,17 @@ function AnsCard({ rec, n, done, inkN, fresh, onToggle, onDelete, onOpen, onChan
   const savePaste = () => {
     const t = pasteText.trim();
     if (!t) return;
-    if (editing) setShownDetail(rec.id, t);
-    else setDetail2(rec.id, t);
-    setPasteOpen(false);
-    setPasteText("");
-    onChange();
+    try {
+      if (editing) setShownDetail(rec.id, t);
+      else setDetail2(rec.id, t);
+      setPasteOpen(false);
+      setPasteText("");
+      onChange();
+      onFlash("✅ Answer save ho gaya");
+    } catch (e) {
+      console.error("savePaste failed:", e);
+      onFlash("❌ Save nahi hua — storage full ya koi error. Thoda quizzes/purane data saaf karke try karo.");
+    }
   };
 
   return (
