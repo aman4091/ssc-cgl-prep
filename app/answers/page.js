@@ -14,7 +14,7 @@ import { getDoneSet, toggleDone, pruneDone } from "@/lib/answersdone";
 import { getCounts, bumpCount, countMark } from "@/lib/qcounter";
 import { useImageUrls } from "@/lib/wrongimages";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
-import { saveQuiz, makeId } from "@/lib/storage";
+import { saveQuiz, makeId, freeRegenerableSpace, storageUsage } from "@/lib/storage";
 import { precacheShelf } from "@/lib/inkoffline";
 import Markdown from "@/components/Markdown";
 import ZoomableImage from "@/components/ZoomableImage";
@@ -95,7 +95,9 @@ function AnsCard({ rec, n, done, inkN, fresh, onToggle, onDelete, onOpen, onChan
       onFlash("✅ Answer save ho gaya");
     } catch (e) {
       console.error("savePaste failed:", e);
-      onFlash("❌ Save nahi hua — storage full ya koi error. Thoda quizzes/purane data saaf karke try karo.");
+      const top = storageUsage().slice(0, 4);
+      const lines = top.map((x) => `${x.key}: ${(x.bytes / 1024).toFixed(1)} KB`).join(" | ");
+      onFlash(`❌ Save nahi hua — localStorage full. Top: ${lines}`);
     }
   };
 
@@ -450,6 +452,17 @@ function AnswersInner() {
               {dl || `⬇️ Offline (${list.length})`}
             </button>
           )}
+          <button
+            className="ansp__btn"
+            onClick={() => {
+              const bytes = freeRegenerableSpace();
+              refresh();
+              flashNow(bytes > 0 ? `🧹 ${(bytes / 1024).toFixed(0)} KB saf ho gayi` : "🧹 Abhi koi safai nahi hui");
+            }}
+            title="Purane quizzes, activity, feed caches hatao — save ke liye jagah banao"
+          >
+            🧹 Free space
+          </button>
         </div>
 
         {/* Naya question list ke ANT mein judta hai, isliye wo screen se bahar
