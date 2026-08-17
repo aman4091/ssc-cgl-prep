@@ -15,6 +15,7 @@ import PasteAnswer from "./PasteAnswer";
 import QTimer from "./QTimer";
 import FullscreenTestButton from "./FullscreenTestButton";
 import { DoneButton } from "./DoneControls";
+import { isDone } from "@/lib/qdone";
 
 // A maths question is IMAGES — the stem, four options and the solution are PNG→
 // WebP crops on the R2 CDN, because maths does not survive being flattened to
@@ -78,6 +79,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   const [bm, setBm] = useState(false);
   const [flash, setFlash] = useState("");
   const [peek, setPeek] = useState(false);   // 👁️ — bina attempt kiye answer
+  const [done, setDone] = useState(false);   // sirf dikhawe ke liye (dhundhla card)
   const archiveTimer = useRef(null);
 
   // The text projection the machinery keys on. `id` in the question text keeps
@@ -110,6 +112,12 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   };
 
   useEffect(() => { setBm(isQBookmarked(tq)); setShortcut(getSavedShortcut(tq)); }, [q.id]);
+  useEffect(() => {
+    const h = () => setDone(isDone(q));
+    h();
+    window.addEventListener("cgl:qdone-changed", h);
+    return () => window.removeEventListener("cgl:qdone-changed", h);
+  }, [q]);
   useEffect(() => () => { if (archiveTimer.current) clearTimeout(archiveTimer.current); }, []);
 
   const choose = (oi) => {
@@ -201,7 +209,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   const st = getStat(tq);
 
   return (
-    <article className="qcard" id={`q-${index}`}>
+    <article className={`qcard${done ? " is-done" : ""}`} id={`q-${index}`}>
       <h2 className="qcard__h">
         Question {index + 1}
         <span className="qcard__qid">
@@ -265,7 +273,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
         </span>
         <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
         <button className="btn" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
-        <DoneButton q={q} />
+        <DoneButton q={q} subject={subject} />
       </div>
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}

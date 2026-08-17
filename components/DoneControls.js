@@ -2,31 +2,33 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { doneKeyFor, getDoneSet, isDone, toggleDone } from "@/lib/qdone";
+import { countMark } from "@/lib/qcounter";
 
-// The ✓ toggle that sits in a question card's action row. Marking it "ho gaya"
-// moves the card from the Baaki tab to the Ho gaye tab — the page re-filters on
-// the cgl:qdone-changed event that toggleDone fires. Carries q-act--keep so it
-// survives the mobile action-row (where un-kept buttons are hidden).
-export function DoneButton({ q }) {
+// Answers page wala ✅ "Ho gaya" — checkbox + label, ☐/☑ button nahi. Mark
+// karte hi QBoard card ko list ke ANT mein khiska deta hai (cgl:qdone-changed
+// par), aur aaj ka counter +1 ho jata hai — bilkul /answers jaisa. Ek question
+// ko baar-baar mark/unmark karo to ginti nahi bigadti (qcounter ids yaad rakhta
+// hai). q-act--keep isliye ki mobile ki action-row mein ye chhupe nahi.
+export function DoneButton({ q, subject }) {
   const [done, setDone] = useState(false);
   useEffect(() => { setDone(isDone(q)); }, [q]);
-  // Stay in sync if the same question is toggled elsewhere (e.g. its twin on the
-  // other tab, or a second open card of the same question).
+  // Stay in sync if the same question is toggled elsewhere (e.g. a second open
+  // card of the same question).
   useEffect(() => {
     const h = () => setDone(isDone(q));
     window.addEventListener("cgl:qdone-changed", h);
     return () => window.removeEventListener("cgl:qdone-changed", h);
   }, [q]);
-  const toggle = () => setDone(toggleDone(q));
+  const toggle = () => {
+    const now = toggleDone(q);
+    setDone(now);
+    if (subject) countMark(doneKeyFor(q), subject, now);
+  };
   return (
-    <button
-      className="btn btn--ghost btn--sm q-act--keep"
-      onClick={toggle}
-      title={done ? "Ho gaya — hatao (Baaki mein wapas)" : "Ye question ho gaya — mark karo"}
-      style={done ? { color: "var(--success)" } : {}}
-    >
-      {done ? "☑" : "☐"}
-    </button>
+    <label className="qmark q-act--keep" title={done ? "Ho gaya — hatao" : "Ye question ho gaya — mark karo"}>
+      <input type="checkbox" checked={done} onChange={toggle} />
+      Ho gaya
+    </label>
   );
 }
 

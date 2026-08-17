@@ -89,6 +89,7 @@
      ye dikhta hi nahi tha. Ab headings ka apna rang hai — body ink se alag, par
      link (--accent2) aur red-pen <b> se bhi alag, taaki teeno gadd-madd na ho. */
   --head: #df8e1d;
+  --mauve: #8839ef;   /* counter — Answers page ka 🔢 wahi rang leta hai */
   /* **bold** ka apna rang — Answers page par bhi bold hara hai. Heading peela,
      bold hara, link neela: teen alag pen, teen alag kaam. */
   --emph: #40a02b;
@@ -143,6 +144,7 @@
   --accent: #89b4fa;
   --head: #f9e2af;    /* yellow — ansp__card h2 aur answer ke headings */
   --emph: #a6e3a1;    /* green — **bold** */
+  --mauve: #cba6f7;   /* counter */
   --on-accent: #1e1e2e;
   --warning: #f9e2af;
   --glass-shadow: none;
@@ -2888,6 +2890,10 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
   background: var(--card); border-radius: var(--radius); padding: 18px;
   scroll-margin-top: 12px;
 }
+/* Ho gaya — Answers page ki tarah card dhundhla ho jata hai (mitta nahi, bas
+   peeche hat jata hai) aur QBoard use list ke ant mein khiska deta hai. */
+.qcard.is-done { opacity: 0.6; }
+.qcard.is-done .qcard__h { color: var(--text-3); }
 .qcard__h {
   margin: 0 0 10px; color: var(--head); font-size: 18px; font-weight: 700;
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
@@ -2919,6 +2925,64 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .qcard__opt.is-right { border-color: var(--ok); background: var(--ok-wash); }
 .qcard__opt.is-wrong { border-color: var(--bad); background: var(--bad-wash); }
 .qcard__opt b { opacity: 0.7; margin-right: 8px; }
+
+/* Board — Answers page ka poora dhaancha: baayen numbered rail, upar aaj ka
+   counter + ginti, aur neeche cards (ho gaye sabse aakhir mein). Wahi naap,
+   par tokens se, kyunki PYQ pages theme ke saath chalte hain. */
+.qboard { display: flex; gap: 12px; align-items: flex-start; }
+.qboard__side {
+  position: sticky; top: 8px;
+  flex: none; width: 56px; max-height: 88vh; overflow-y: auto;
+  background: var(--bg-2); border-radius: 8px; padding: 8px 6px; text-align: center;
+}
+.qboard__side a {
+  display: block; padding: 6px 0; margin: 4px 0; border-radius: var(--radius-sm);
+  background: var(--card); color: var(--text-1); text-decoration: none;
+  font-weight: bold; font-size: 14px; cursor: pointer;
+}
+.qboard__side a:hover { background: var(--glass-bg-strong); }
+.qboard__side a.is-done { background: var(--bg); color: var(--text-3); }
+.qboard__main { flex: 1; min-width: 0; }
+.qboard__stats {
+  display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 16px;
+  font-size: 14px; font-weight: bold; justify-content: flex-end; align-items: center;
+}
+.qboard__stats span { background: var(--card); border-radius: 8px; padding: 6px 14px; }
+.qboard__stats .tot { color: var(--accent2); }
+.qboard__stats .did { color: var(--ok); }
+.qboard__stats .left { color: var(--warning); }
+.qboard__stats .cnt {
+  color: var(--mauve); display: inline-flex; align-items: center; gap: 8px;
+  padding: 4px 8px 4px 14px;
+}
+.qboard__stats .cnt button {
+  background: var(--glass-bg-strong); color: var(--text-1); border: 0; border-radius: var(--radius-sm);
+  width: 28px; height: 26px; cursor: pointer; font-size: 15px;
+  font-weight: bold; font-family: inherit; line-height: 1;
+}
+.qboard__stats .cnt button:hover { background: var(--glass-border-strong); }
+.qboard__cards { display: grid; gap: 14px; }
+
+/* "Ho gaya" — Answers page wala checkbox, ☐/☑ button nahi. */
+.qmark {
+  display: flex; align-items: center; gap: 6px; cursor: pointer;
+  background: var(--bg); border-radius: var(--radius-sm); padding: 5px 12px;
+  font-size: 13px; font-weight: bold; color: var(--ok);
+}
+.qmark input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--ok); }
+
+/* Phone: 56px rail + card padding milkar screen kha jaate hain (Answers page
+   par bhi yahi hota tha), isliye rail upar ek horizontal patti ban jaati hai. */
+@media (max-width: 640px) {
+  .qboard { flex-direction: column; gap: 8px; }
+  .qboard__side {
+    position: static; width: auto; max-height: none;
+    display: flex; gap: 6px; overflow-x: auto; padding: 6px;
+  }
+  .qboard__side a { flex: none; min-width: 34px; margin: 0; }
+  .qboard__stats { justify-content: flex-start; }
+  .qcard { padding: 12px; }
+}
 
 /* Answer — bilkul .ansp__answer jaisa: alag block, neeche, apni surface par. */
 .qcard__answer {

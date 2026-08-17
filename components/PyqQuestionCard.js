@@ -19,6 +19,7 @@ import QTimer from "./QTimer";
 import FullscreenTestButton from "./FullscreenTestButton";
 import ReviseButton from "./ReviseButton";
 import { DoneButton } from "./DoneControls";
+import { isDone } from "@/lib/qdone";
 
 // One PYQ / chapter question — Answers page (/answers) wali shakl mein: peela
 // "Question N" sar, neeche options, phir buttons ki patti, aur ANSWER apne alag
@@ -42,8 +43,15 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   const [flash, setFlash] = useState("");
   const [editing, setEditing] = useState(false);
   const [peek, setPeek] = useState(false);   // 👁️ — bina attempt kiye answer
+  const [done, setDone] = useState(false);   // sirf dikhawe ke liye (dhundhla card)
   const archiveTimer = useRef(null);
   useEffect(() => { setBm(isQBookmarked(q)); setShortcut(getSavedShortcut(q)); }, [q]);
+  useEffect(() => {
+    const h = () => setDone(isDone(q));
+    h();
+    window.addEventListener("cgl:qdone-changed", h);
+    return () => window.removeEventListener("cgl:qdone-changed", h);
+  }, [q]);
   useEffect(() => () => { if (archiveTimer.current) clearTimeout(archiveTimer.current); }, []);
 
   const paper = q.paper || q.source;
@@ -125,7 +133,7 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   const st = getStat(q);
 
   return (
-    <article className="qcard" id={`q-${index}`}>
+    <article className={`qcard${done ? " is-done" : ""}`} id={`q-${index}`}>
       {/* Sar — Answers page ka `Question N (qid · date)`. Yahan qid ki jagah
           paper/source hai, kyunki PYQ ka pata wahi hai. */}
       <h2 className="qcard__h">
@@ -212,7 +220,7 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
         <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
         {onEdit && !editing && <button className="btn" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
         <button className="btn" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
-        <DoneButton q={q} />
+        <DoneButton q={q} subject={subject} />
         {subject !== "math" && subject !== "reasoning" && (
           <ReviseButton item={q} kind="q" category={chapterName || subject} subject={subject} />
         )}

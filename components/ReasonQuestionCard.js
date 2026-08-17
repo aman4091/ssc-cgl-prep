@@ -15,6 +15,7 @@ import PasteAnswer from "./PasteAnswer";
 import QTimer from "./QTimer";
 import FullscreenTestButton from "./FullscreenTestButton";
 import { DoneButton } from "./DoneControls";
+import { isDone } from "@/lib/qdone";
 
 // A reasoning question is IMAGES — MathQuestionCard's twin (same answer/reveal/
 // archive/bookmark machinery, same shortcut / 20-similar / ask buttons), with
@@ -47,6 +48,8 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   const [recorded, setRecorded] = useState(false);
   const [bm, setBm] = useState(false);
   const [flash, setFlash] = useState("");
+  const [peek, setPeek] = useState(false);   // 👁️ — bina attempt kiye answer
+  const [done, setDone] = useState(false);   // sirf dikhawe ke liye (dhundhla card)
   const archiveTimer = useRef(null);
 
   // The text projection the machinery keys on. `id` in the question text keeps
@@ -63,6 +66,12 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   };
 
   useEffect(() => { setBm(isQBookmarked(tq)); setShortcut(getSavedShortcut(tq)); }, [q.id]);
+  useEffect(() => {
+    const h = () => setDone(isDone(q));
+    h();
+    window.addEventListener("cgl:qdone-changed", h);
+    return () => window.removeEventListener("cgl:qdone-changed", h);
+  }, [q]);
   useEffect(() => () => { if (archiveTimer.current) clearTimeout(archiveTimer.current); }, []);
 
   const choose = (oi) => {
@@ -101,6 +110,7 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   const reattempt = () => {
     setPicked(null);
     setRevealed(false);
+    setPeek(false);
     setFlash("");
     setRecorded(false);
   };
@@ -121,60 +131,42 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   // A pasted Gemini answer is the solution from then on — the book's own
   // solution image is dropped rather than shown underneath it.
   const solution = shortcut || q.solution || q.explanation || "";
+  const shown = revealed || peek;
 
   const st = getStat(tq);
 
   return (
-    <article className="glass-card" id={`q-${index}`}>
-      <div className="q-head">
-        <h3 className="q-head__n">
-          <span className="rule-card__n">{index + 1}.</span>
-        </h3>
-        <div className="q-head__actions">
-          <QTimer q={tq} answered={picked !== null} onRestart={reattempt} />
-          {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
-          {Array.isArray(allQuestions) && allQuestions.length >= 1 && (
-            <FullscreenTestButton
-              questions={allQuestions}
-              startIndex={allQuestions.indexOf(q)}
-              title={chapterName || "Pinnacle Reasoning"}
-              subject={subject}
-              label="⛶"
-              titleAttr="Isi question se full-screen test shuru karo"
-            />
-          )}
-          {aiUseful && <span className="q-act--keep"><AskButtons q={tq} subject={subject} /></span>}
-          <button className="btn btn--ghost btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
-          <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
-          <DoneButton q={q} />
-        </div>
-      </div>
-
-      {aiUseful && <PasteAnswer q={tq} />}
+    <article className={`qcard${done ? " is-done" : ""}`} id={`q-${index}`}>
+      <h2 className="qcard__h">
+        Question {index + 1}
+        <span className="qcard__qid">
+          {q.id ? `(${q.id})` : ""}
+          {st?.attempts > 0 ? ` · 🔁 ${st.attempts}x (${st.correct}/${st.attempts})` : ""}
+        </span>
+      </h2>
 
       {/* The chapter Direction — on a non-verbal question this IS the task */}
-      {q.instruction && <p className="reason-direction mt-12">{q.instruction}</p>}
+      {q.instruction && <p className="reason-direction">{q.instruction}</p>}
 
       {/* The stem — the figure (if any) is baked into this crop */}
       <a href={q.qImg} target="_blank" rel="noreferrer" className="math-img-wrap mt-12">
         <img src={q.qImg} alt={alt} loading="lazy" className="math-img" />
       </a>
 
-      <div className="grid" style={{ gap: 8, marginTop: 12, gridTemplateColumns: "minmax(0, 1fr)" }}>
+      {aiUseful && <PasteAnswer q={tq} />}
+
+      <div className="qcard__opts" style={{ gridTemplateColumns: "minmax(0, 1fr)" }}>
         {q.optImgs.map((src, oi) => {
-          const s = {
-            display: "flex", alignItems: "center", gap: 10, textAlign: "left",
-            padding: "8px 12px", borderRadius: 10, minHeight: 46,
-            borderWidth: "1px", borderStyle: "solid", borderColor: "var(--glass-border)",
-            background: "var(--bg)", cursor: picked === null ? "pointer" : "default",
-          };
-          if (revealed) {
-            if (oi === q.answer) { s.borderColor = "var(--ok)"; s.background = "var(--ok-wash)"; }
-            else if (oi === picked) { s.borderColor = "var(--accent)"; s.background = "var(--accent-wash)"; }
-          }
+          const right = shown && oi === q.answer;
+          const wrong = revealed && oi === picked && oi !== q.answer;
           return (
-            <button key={oi} className="math-opt" style={s} onClick={() => choose(oi)}>
-              <strong style={{ opacity: 0.7 }}>{String.fromCharCode(65 + oi)}</strong>
+            <button
+              key={oi}
+              className={`qcard__opt math-opt${picked === null ? " is-pick" : ""}${right ? " is-right" : ""}${wrong ? " is-wrong" : ""}`}
+              style={{ display: "flex", alignItems: "center", gap: 10, minHeight: 46 }}
+              onClick={() => choose(oi)}
+            >
+              <b>{String.fromCharCode(65 + oi)}</b>
               {/* A figure option needs room; a text option is one line. */}
               <img
                 src={src}
@@ -182,50 +174,68 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
                 loading="lazy"
                 className={q.figOpts ? "math-opt-img math-opt-img--fig" : "math-opt-img"}
               />
-              {revealed && oi === q.answer && <span style={{ color: "var(--success)", marginLeft: "auto" }}>✓</span>}
+              {right && <span style={{ color: "var(--ok)", marginLeft: "auto" }}>✓</span>}
             </button>
           );
         })}
       </div>
 
+      <div className="qcard__acts">
+        <QTimer q={tq} answered={picked !== null} onRestart={reattempt} />
+        {!shown && (
+          <button className="btn" onClick={() => setPeek(true)} title="Bina attempt kiye solution dekho">👁️ Answer</button>
+        )}
+        {Array.isArray(allQuestions) && allQuestions.length >= 1 && (
+          <FullscreenTestButton
+            questions={allQuestions}
+            startIndex={allQuestions.indexOf(q)}
+            title={chapterName || "Pinnacle Reasoning"}
+            subject={subject}
+            label="⛶"
+            titleAttr="Isi question se full-screen test shuru karo"
+          />
+        )}
+        {aiUseful && <span className="q-act--keep"><AskButtons q={tq} subject={subject} /></span>}
+        <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
+        <button className="btn" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
+        <DoneButton q={q} subject={subject} />
+      </div>
+
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
-
-      {revealed && (
-        <div className="mt-12">
-          <strong style={{ color: "var(--text-2)", fontSize: "0.86rem" }}>Solution: </strong>
-          {solution ? (
-            <div className="mt-8" style={{ fontSize: "0.86rem" }}><Markdown>{solution}</Markdown></div>
-          ) : q.solImg ? (
-            <div className="math-img-wrap mt-8">
-              <img src={q.solImg} alt="solution" loading="lazy" className="math-img" />
-            </div>
-          ) : (
-            <p className="muted mt-8" style={{ fontSize: "0.85rem" }}>
-              Is question ka solution book mein nahi chhapa. Correct option upar mark hai.
-            </p>
-          )}
-        </div>
-      )}
-
-      {revealed && aiUseful && (
-        <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
-        </div>
-      )}
-
-      {revealed && !aiUseful && (
-        <p className="muted mt-12" style={{ fontSize: "0.8rem" }}>
+      {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}
+      {!aiUseful && (
+        <p className="qcard__note">
           🖼️ Figure question — ismein AI ko bhejne layak text hai hi nahi, isliye Gemini/shortcut
-          buttons yahan nahi hain. Solution upar image mein hai.
+          buttons yahan nahi hain. Solution neeche image mein hai.
         </p>
       )}
 
-      {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}
-      {scShown && shortcut && (
-        <div className="answer-box mt-12">
-          <Markdown>{shortcut}</Markdown>
-          <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
-            {scLoading ? "Thinking…" : "🔄 New shortcut"}
-          </button>
+      {/* ANSWER — Answers page wala alag block, sabse neeche. */}
+      {shown ? (
+        <div className="qcard__answer">
+          <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
+            ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
+          </p>
+          {solution ? (
+            <Markdown>{solution}</Markdown>
+          ) : q.solImg ? (
+            <div className="math-img-wrap">
+              <img src={q.solImg} alt="solution" loading="lazy" className="math-img" />
+            </div>
+          ) : (
+            <span style={{ color: "var(--text-3)", fontStyle: "italic" }}>
+              Is question ka solution book mein nahi chhapa. Correct option upar mark hai.
+            </span>
+          )}
+          {scShown && shortcut && (
+            <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
+              {scLoading ? "Thinking…" : "🔄 New shortcut"}
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="qcard__answer qcard__answer--empty">
+          Answer neeche yahin aayega — option chuno ya 👁️ dabao.
         </div>
       )}
     </article>
