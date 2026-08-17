@@ -11,6 +11,7 @@ import SyncManager from "@/components/SyncManager";
 import OverlayInbox from "@/components/OverlayInbox";
 import VocabFeeder from "@/components/VocabFeeder";
 import ThemeToggle from "@/components/ThemeToggle";
+import StoreGate from "@/components/StoreGate";
 import SWRegister from "@/components/SWRegister";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -51,23 +52,29 @@ export default function RootLayout({ children }) {
             so on a wide screen .shell places it as the left column and main as
             the right. On a phone .shell is a plain block and the menu is the
             off-canvas drawer it has always been. */}
-        <div className="shell">
-          {/* Navbar reads the query string to tell rows apart that share a path
-              (the Current Affairs tabs), and useSearchParams needs a Suspense
-              boundary or every page opts out of static rendering. */}
-          <Suspense fallback={<aside className="drawer" />}>
-            <Navbar />
-          </Suspense>
-          <main className="container">{children}</main>
-        </div>
-        <Footer />
-        <CurrentAffairsRush />
-        <FocusEnforcer />
-        <VocabPrefetch />
-        <SyncManager />
-        <SWRegister />
-        <OverlayInbox />
-        <VocabFeeder />
+        {/* Bulky data ab IndexedDB (lib/bigstore) mein hai aur wo async hai.
+            Menu/widgets bhi wahi data padhte hain, isliye poora app hydrate
+            hone ke BAAD mount hota hai — warna pehli render par khaali list
+            dikhti (aur sync khaali snapshot push kar sakta tha). */}
+        <StoreGate>
+          <div className="shell">
+            {/* Navbar reads the query string to tell rows apart that share a path
+                (the Current Affairs tabs), and useSearchParams needs a Suspense
+                boundary or every page opts out of static rendering. */}
+            <Suspense fallback={<aside className="drawer" />}>
+              <Navbar />
+            </Suspense>
+            <main className="container">{children}</main>
+          </div>
+          <Footer />
+          <CurrentAffairsRush />
+          <FocusEnforcer />
+          <VocabPrefetch />
+          <SyncManager />
+          <SWRegister />
+          <OverlayInbox />
+          <VocabFeeder />
+        </StoreGate>
       </body>
     </html>
   );

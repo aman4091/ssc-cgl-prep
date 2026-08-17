@@ -79,7 +79,9 @@ export default function SettingsPage() {
   const doPush = async () => {
     setSyncBusy(true); setSyncMsg("Cloud pe push ho raha hai…");
     try {
-      const { at: t, absorbed } = await pushSync();
+      // Manual push = user jaan-boojh kar keh raha hai "yahi sahi copy hai",
+      // isliye shrink-guard bypass (force).
+      const { at: t, absorbed } = await pushSync({ force: true });
       const s = { ...getSettings(), syncAuto: true }; // first push -> auto ON from now on
       saveSettings(s); setSettings(s);
       if (absorbed) { setSyncMsg("✓ Push + doosre device ka data mil gaya — reload…"); setTimeout(() => window.location.reload(), 700); return; }
