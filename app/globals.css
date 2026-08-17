@@ -79,6 +79,13 @@
      glassy look the theme drops (theme.css does the same with color-mix on
      .opt.correct / .opt.wrong). Blended into --bg because that is what an
      option sits on inside a card. */
+  /* Heading pen. Notes jo user khud paste karta hai (homepage chapter view aur
+     notes reader — dono ek hi .reader surface hai) unke ## headings pehle body
+     text jaise hi rang ke the, isliye scroll karte waqt section shuru kahan hua
+     ye dikhta hi nahi tha. Ab headings ka apna rang hai — body ink se alag, par
+     link (--accent2) aur red-pen <b> se bhi alag, taaki teeno gadd-madd na ho. */
+  --head: #8a3324;
+
   --ok-wash: color-mix(in srgb, var(--ok) 15%, var(--bg));
   --bad-wash: color-mix(in srgb, var(--bad) 15%, var(--bg));
   --accent-wash: color-mix(in srgb, var(--accent) 15%, var(--bg));
@@ -131,6 +138,7 @@
   --text-3: #71767c;
 
   --accent: #ff8a7a;
+  --head: #ffb26b;           /* kaale page par headings — garam amber, alag dikhe */
   --on-accent: #08090a;      /* dark ink to sit on the light accent */
   --warning: #fbbf24;
   --glass-shadow: none;
@@ -142,11 +150,9 @@
 :root[data-theme="dark"] .reader { background: #0d0e10; color: #e3e0da; border-color: #26282c; }
 :root[data-theme="dark"] .reader .nx-hi-text,
 :root[data-theme="dark"] .reader .nx-hi-text .md { color: #e3e0da; }
-:root[data-theme="dark"] .reader .md h1,
-:root[data-theme="dark"] .reader .md h2,
-:root[data-theme="dark"] .reader .md h3,
-:root[data-theme="dark"] .reader .md h4,
-:root[data-theme="dark"] .reader .md h5,
+/* Headings apna rang (--head) rakhte hain — yahan sirf bold ink chahiye. Pehle
+   heading aur <b> dono ek hi rule mein the, isliye heading ka rang yahin dab
+   jata tha; ab alag hain, warna --head kabhi dikhta hi nahi. */
 :root[data-theme="dark"] .reader .md strong,
 :root[data-theme="dark"] .reader .md b { color: #f4f0e6; }
 :root[data-theme="dark"] .reader .nt-card + .nt-card { border-top-color: #26282c; }
@@ -2297,7 +2303,7 @@ label.glass-card:hover { border-color: var(--accent2); }
 .reader .md h1, .reader .md h2, .reader .md h3, .reader .md h4, .reader .md h5 {
   font-family: Georgia, "Times New Roman", serif;
   font-weight: 700;
-  color: #17130b;
+  color: var(--head);
   line-height: 1.25;
   margin: 1.5em 0 0.5em;
 }
