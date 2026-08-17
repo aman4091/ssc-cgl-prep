@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import PlanPractice from "@/components/PlanPractice";
 import RevisionTodayCard from "@/components/RevisionTodayCard";
-import { pageText } from "@/components/NotesReader";
+import PageQuizRow from "@/components/PageQuizRow";
 import {
   SEC_META, CORE_KEYS,
   getRbe, setStartDate, toggleItem, planFor, advFor,
@@ -13,8 +12,6 @@ import {
 } from "@/lib/rbe50";
 import { QA_TYPE_LIST, getPlanner, setQaRating } from "@/lib/planner";
 import { parmarFor } from "@/lib/rbeparmar";
-import { loadNotes } from "@/lib/notesbank";
-import { startNotesQuiz } from "@/lib/notesquiz";
 
 const RATINGS = [
   { val: "a", label: "Aata hai", color: "var(--ok, #6bd39a)" },
@@ -51,90 +48,18 @@ function LinkBtns({ links }) {
   );
 }
 
-// Under a GK test item: the matching Parmar book pages, each as a 📝 quiz button
-// (same engine + dedup key as the notes reader's per-page button, so questions
-// don't repeat across the two entry points). Pages load only when opened —
-// /today must not fetch four notes books on render.
+// Under a GK test item: the matching Parmar chapters, each expandable into its
+// per-page 📝 quiz buttons (PageQuizRow — shared with /gs15, so the two pages
+// share one quiz engine and one dedup memory).
 function ParmarQuiz({ map }) {
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const [loaded, setLoaded] = useState(null); // null = not loaded, "err" = fetch failed
-  const [busy, setBusy] = useState(0);        // book_page being generated
-  const [err, setErr] = useState("");
-
-  const toggle = async () => {
-    setOpen((v) => !v);
-    if (loaded) return;
-    const b = await loadNotes(map.book);
-    if (!b) { setLoaded("err"); return; }
-    const groups = map.chapters.map((ch) => ({
-      ch,
-      pages: (b.pages || []).filter((p) => !p.is_cover && p.kind !== "practice" && p.topic === ch),
-    })).filter((g) => g.pages.length);
-    setLoaded({ book: b, groups });
-  };
-
-  const quiz = async (p) => {
-    if (busy) return;
-    const text = pageText(p);
-    if (text.length < 30) { setErr("Is page pe text kam hai — scan wala page hai."); setTimeout(() => setErr(""), 2500); return; }
-    setBusy(p.book_page);
-    setErr("");
-    try {
-      const { quizId } = await startNotesQuiz({
-        text,
-        pk: `${loaded.book.scanBase}#${p.book_page}`,
-        title: `${loaded.book.title} · page ${p.book_page} quiz`,
-      });
-      router.push(`/quizzes/${quizId}`);
-    } catch (e) {
-      setErr(e.message === "nahi bana" ? "Quiz nahi bana — dobara try karo." : (e.message || "Error"));
-      setBusy(0);
-      setTimeout(() => setErr(""), 3000);
-    }
-  };
-
   return (
     <div style={{ marginTop: 6 }}>
-      <button className="btn btn--ghost btn--sm" onClick={toggle}>
-        📔 Parmar quiz: {map.chapters.join(" + ")} {open ? "▴" : "▾"}
-      </button>
-      {open && (
-        loaded === null ? (
-          <p className="hint" style={{ margin: "6px 0 0" }}>Pages load ho rahe hain…</p>
-        ) : loaded === "err" ? (
-          <p className="hint" style={{ margin: "6px 0 0" }}>Notes book load nahi hui — net check karo.</p>
-        ) : (
-          <div style={{ marginTop: 6 }}>
-            {loaded.groups.map((g) => (
-              <div key={g.ch} className="row" style={{ gap: 6, flexWrap: "wrap", alignItems: "center", marginBottom: 4 }}>
-                {loaded.groups.length > 1 && (
-                  <span className="muted" style={{ fontSize: "0.72rem" }}>{g.ch}:</span>
-                )}
-                {g.pages.map((p) => (
-                  <button
-                    key={p.book_page}
-                    className="btn btn--ghost btn--sm"
-                    disabled={!!busy}
-                    onClick={() => quiz(p)}
-                    title={`Page ${p.book_page} se 50-question quiz (har baar naye questions)`}
-                  >
-                    {busy === p.book_page ? "…" : `📝 p.${p.book_page}`}
-                  </button>
-                ))}
-                <Link
-                  href={`/notes/${map.book}?topic=${encodeURIComponent(g.ch)}`}
-                  className="btn btn--ghost btn--sm"
-                  style={{ opacity: 0.8 }}
-                >
-                  Notes →
-                </Link>
-              </div>
-            ))}
-            {err && <p className="hint" style={{ margin: "2px 0 0", color: "var(--accent)" }}>{err}</p>}
-          </div>
-        )
-      )}
+      {map.chapters.map((ch) => (
+        <div key={ch} className="row" style={{ gap: 6, flexWrap: "wrap", alignItems: "center", marginBottom: 4 }}>
+          <span className="muted" style={{ fontSize: "0.74rem" }}>📔 Parmar · {ch}</span>
+          <PageQuizRow book={map.book} chapter={ch} />
+        </div>
+      ))}
     </div>
   );
 }
