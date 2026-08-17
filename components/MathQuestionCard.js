@@ -77,6 +77,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   const [recorded, setRecorded] = useState(false);
   const [bm, setBm] = useState(false);
   const [flash, setFlash] = useState("");
+  const [peek, setPeek] = useState(false);   // 👁️ — bina attempt kiye answer
   const archiveTimer = useRef(null);
 
   // The text projection the machinery keys on. `id` in the question text keeps
@@ -147,6 +148,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   const reattempt = () => {
     setPicked(null);
     setRevealed(false);
+    setPeek(false);
     setFlash("");
     setRecorded(false);
   };
@@ -194,105 +196,105 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   // A pasted Gemini answer is the solution from then on — the book's own
   // solution image is dropped rather than shown underneath it.
   const solution = shortcut || q.solution || q.explanation || "";
+  const shown = revealed || peek;
 
   const st = getStat(tq);
 
   return (
-    <article className="glass-card" id={`q-${index}`}>
-      <div className="q-head">
-        <h3 className="q-head__n">
-          <span className="rule-card__n">{index + 1}.</span>
-        </h3>
-        <div className="q-head__actions">
-          <QTimer q={tq} answered={picked !== null} onRestart={reattempt} />
-          {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
-          {Array.isArray(allQuestions) && allQuestions.length >= 1 && (
-            <FullscreenTestButton
-              questions={allQuestions}
-              startIndex={allQuestions.indexOf(q)}
-              title={chapterName || "Pinnacle Maths"}
-              subject={subject}
-              label="⛶"
-              titleAttr="Isi question se full-screen test shuru karo"
-            />
-          )}
-          <span className="q-act--keep">
-            <AskElsewhere
-              q={geminiQ}
-              subject={subject}
-              url="https://gemini.google.com/app"
-              label="✨ Gemini"
-              title="Question copy karke Gemini kholo — phir answer paste karo"
-              onAsked={openPaste}
-            />
-          </span>
-          <button className="btn btn--ghost btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
-          <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
-          <DoneButton q={q} />
-        </div>
-      </div>
-
-      <PasteAnswer q={tq} />
+    <article className="qcard" id={`q-${index}`}>
+      <h2 className="qcard__h">
+        Question {index + 1}
+        <span className="qcard__qid">
+          {q.id ? `(${q.id})` : ""}
+          {st?.attempts > 0 ? ` · 🔁 ${st.attempts}x (${st.correct}/${st.attempts})` : ""}
+        </span>
+      </h2>
 
       {/* The stem — figure (if any) is baked into this crop */}
       {/* Not a link: tapping the question used to open the raw image in a
           new tab, which is never what you meant on a phone. */}
-      <div className="math-img-wrap mt-12">
+      <div className="math-img-wrap">
         <img src={q.qImg} alt={alt} loading="lazy" className="math-img" />
       </div>
 
-      <div className="grid" style={{ gap: 8, marginTop: 12, gridTemplateColumns: "minmax(0, 1fr)" }}>
+      <PasteAnswer q={tq} />
+
+      <div className="qcard__opts" style={{ gridTemplateColumns: "minmax(0, 1fr)" }}>
         {q.optImgs.map((src, oi) => {
-          const s = {
-            display: "flex", alignItems: "center", gap: 10, textAlign: "left",
-            padding: "8px 12px", borderRadius: 10, minHeight: 46,
-            borderWidth: "1px", borderStyle: "solid", borderColor: "var(--glass-border)",
-            background: "var(--bg)", cursor: picked === null ? "pointer" : "default",
-          };
-          if (revealed) {
-            if (oi === q.answer) { s.borderColor = "var(--ok)"; s.background = "var(--ok-wash)"; }
-            else if (oi === picked) { s.borderColor = "var(--accent)"; s.background = "var(--accent-wash)"; }
-          }
+          const right = shown && oi === q.answer;
+          const wrong = revealed && oi === picked && oi !== q.answer;
           return (
-            <button key={oi} className="math-opt" style={s} onClick={() => choose(oi)}>
-              <strong style={{ opacity: 0.7 }}>{String.fromCharCode(65 + oi)}</strong>
+            <button
+              key={oi}
+              className={`qcard__opt math-opt${picked === null ? " is-pick" : ""}${right ? " is-right" : ""}${wrong ? " is-wrong" : ""}`}
+              style={{ display: "flex", alignItems: "center", gap: 10, minHeight: 46 }}
+              onClick={() => choose(oi)}
+            >
+              <b>{String.fromCharCode(65 + oi)}</b>
               <img src={src} alt={tq.options[oi]} loading="lazy" className="math-opt-img" />
-              {revealed && oi === q.answer && <span style={{ color: "var(--success)", marginLeft: "auto" }}>✓</span>}
+              {right && <span style={{ color: "var(--ok)", marginLeft: "auto" }}>✓</span>}
             </button>
           );
         })}
       </div>
 
-      {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
+      <div className="qcard__acts">
+        <QTimer q={tq} answered={picked !== null} onRestart={reattempt} />
+        {!shown && (
+          <button className="btn" onClick={() => setPeek(true)} title="Bina attempt kiye solution dekho">👁️ Answer</button>
+        )}
+        {Array.isArray(allQuestions) && allQuestions.length >= 1 && (
+          <FullscreenTestButton
+            questions={allQuestions}
+            startIndex={allQuestions.indexOf(q)}
+            title={chapterName || "Pinnacle Maths"}
+            subject={subject}
+            label="⛶"
+            titleAttr="Isi question se full-screen test shuru karo"
+          />
+        )}
+        <span className="q-act--keep">
+          <AskElsewhere
+            q={geminiQ}
+            subject={subject}
+            url="https://gemini.google.com/app"
+            label="✨ Gemini"
+            title="Question copy karke Gemini kholo — phir answer paste karo"
+            onAsked={openPaste}
+          />
+        </span>
+        <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
+        <button className="btn" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
+        <DoneButton q={q} />
+      </div>
 
-      {revealed && (
-        <div className="mt-12">
-          <strong style={{ color: "var(--text-2)", fontSize: "0.86rem" }}>Solution: </strong>
+      {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
+      {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}
+
+      {/* ANSWER — Answers page wala alag block, sabse neeche. */}
+      {shown ? (
+        <div className="qcard__answer">
+          <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
+            ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
+          </p>
           {/* A pasted Gemini answer replaces the book's solution image outright,
               rather than being stacked under it. */}
           {solution ? (
-            <div className="mt-8" style={{ fontSize: "0.86rem" }}><Markdown>{solution}</Markdown></div>
+            <Markdown>{solution}</Markdown>
           ) : (
-            <div className="math-img-wrap mt-8">
+            <div className="math-img-wrap">
               <img src={q.solImg} alt="solution" loading="lazy" className="math-img" />
             </div>
           )}
+          {scShown && shortcut && (
+            <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
+              {scLoading ? "Thinking…" : "🔄 New shortcut"}
+            </button>
+          )}
         </div>
-      )}
-
-      {/* 20-similar is always available — you can spin up a same-type practice
-          set without answering first. Shortcut stays behind reveal because it
-          explains the (now shown) solution. */}
-      <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
-      </div>
-
-      {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}
-      {scShown && shortcut && (
-        <div className="answer-box mt-12">
-          <Markdown>{shortcut}</Markdown>
-          <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
-            {scLoading ? "Thinking…" : "🔄 New shortcut"}
-          </button>
+      ) : (
+        <div className="qcard__answer qcard__answer--empty">
+          Answer neeche yahin aayega — option chuno ya 👁️ dabao.
         </div>
       )}
     </article>

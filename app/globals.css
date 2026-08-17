@@ -2873,6 +2873,65 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .ansp__newbar:hover { background: #f5d47f; }
 .ansp__card.is-new { box-shadow: 0 0 0 2px #f9e2af; }
 
+/* ───────────────────────────────────────────────────────────────────────────
+   📚 PYQ question card — wahi Answers page wali shakl, har PYQ question par
+   ───────────────────────────────────────────────────────────────────────────
+   Owner ne kaha PYQ ke questions bhi Answers page jaise dikhein: peela
+   "Question N" sar, neeche pill buttons ki patti, aur answer apne alag block
+   mein NEECHE.
+
+   Yahan .ansp__* classes dobara istemaal NAHI ki jaa saktin: wo page jaan-boojh
+   kar hamesha dark hai (rang hex mein likhe hain), jabki PYQ pages theme ke
+   saath chalte hain. Isliye wahi naap, par TOKENS se — aur kyunki site ki dark
+   theme ab wahi Mocha hai, raat mein dono bilkul ek jaise dikhte hain. */
+.qcard {
+  background: var(--card); border-radius: var(--radius); padding: 18px;
+  scroll-margin-top: 12px;
+}
+.qcard__h {
+  margin: 0 0 10px; color: var(--head); font-size: 18px; font-weight: 700;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+}
+.qcard__qid { color: var(--text-3); font-weight: 400; font-size: 14px; }
+.qcard__stem { margin: 0 0 4px; }
+.qcard__acts { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center; }
+/* Andar ke chhote components (QTimer, DoneButton, ReviseButton…) apne .btn ke
+   saath aate hain. Unhe ek-ek karke badalne se accha yahin ek jagah Answers
+   page wali pill de do — wahi rang, wahi naap. */
+.qcard__acts .btn, .qcard__acts .btn--ghost, .qcard__acts .btn--sm {
+  background: var(--glass-bg-strong); color: var(--text-1); border: 0;
+  border-radius: var(--radius-sm); padding: 6px 14px;
+  font-weight: bold; font-size: 13px; line-height: 1.3; transform: none;
+}
+.qcard__acts .btn:hover { background: var(--glass-border-strong); border: 0; transform: none; }
+.qcard__acts .btn:disabled { opacity: 0.5; cursor: default; }
+
+/* Options — Answers page par MCQ hote hi nahi, isliye ye hissa PYQ ka apna hai.
+   Card ab uthi hui surface hai, to option uske neeche wali (page) surface par
+   baithta hai; warna dono ek hi rang ke ho jate aur option dikhta hi nahi. */
+.qcard__opts { display: grid; gap: 8px; margin-top: 12px; }
+.qcard__opt {
+  text-align: left; padding: 10px 14px; border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border); background: var(--bg); color: var(--text-1);
+  font-size: 0.92rem; font-family: inherit;
+}
+.qcard__opt.is-pick { cursor: pointer; }
+.qcard__opt.is-right { border-color: var(--ok); background: var(--ok-wash); }
+.qcard__opt.is-wrong { border-color: var(--bad); background: var(--bad-wash); }
+.qcard__opt b { opacity: 0.7; margin-right: 8px; }
+
+/* Answer — bilkul .ansp__answer jaisa: alag block, neeche, apni surface par. */
+.qcard__answer {
+  margin-top: 12px; padding: 14px; background: var(--bg); border-radius: var(--radius-sm);
+  line-height: 1.6; font-size: 15px; overflow-x: auto;
+}
+.qcard__answer--empty {
+  color: var(--text-3); font-size: 14px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.qcard__answer .md { font-size: 15px; }
+.qcard__note { color: var(--warning); font-size: 13px; margin-top: 8px; }
+
 /* ⏱️ Solve page ka per-question timer */
 .inkv__timer { position: relative; flex: none; }
 .inkv__tbtn { cursor: pointer; font-family: inherit; }

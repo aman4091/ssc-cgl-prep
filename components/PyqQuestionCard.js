@@ -20,8 +20,14 @@ import FullscreenTestButton from "./FullscreenTestButton";
 import ReviseButton from "./ReviseButton";
 import { DoneButton } from "./DoneControls";
 
-// One PYQ / chapter question shown as an interactive quiz card:
-// pick an option -> reveal correct/wrong + solution, plus shortcut / 20-similar / doubt.
+// One PYQ / chapter question — Answers page (/answers) wali shakl mein: peela
+// "Question N" sar, neeche options, phir buttons ki patti, aur ANSWER apne alag
+// block mein sabse neeche.
+//
+// Farak sirf itna: Answers page par answer hamesha khula rehta hai (wahan koi
+// quiz nahi hai), yahan question attempt karne ki cheez hai — isliye answer ka
+// block hamesha maujood hai par option chunne tak (ya 👁️ dabane tak) andar
+// "Answer dekho" likha rehta hai. 👁️ se koi attempt record nahi hota.
 export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, allQuestions }) {
   const router = useRouter();
   const [picked, setPicked] = useState(null);
@@ -35,6 +41,7 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   const [bm, setBm] = useState(false);
   const [flash, setFlash] = useState("");
   const [editing, setEditing] = useState(false);
+  const [peek, setPeek] = useState(false);   // 👁️ — bina attempt kiye answer
   const archiveTimer = useRef(null);
   useEffect(() => { setBm(isQBookmarked(q)); setShortcut(getSavedShortcut(q)); }, [q]);
   useEffect(() => () => { if (archiveTimer.current) clearTimeout(archiveTimer.current); }, []);
@@ -91,6 +98,7 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   const reattempt = () => {
     setPicked(null);
     setRevealed(false);
+    setPeek(false);
     setFlash("");
     setRecorded(false);
   };
@@ -110,44 +118,28 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   // A pasted Gemini answer is the solution from then on — the book's own
   // explanation is dropped rather than shown underneath it.
   const solution = shortcut || q.solution || q.explanation || "";
+  // Answer block khula hai ya nahi. 👁️ (peek) sirf dikhata hai — attempt,
+  // timer aur wrong-book usse nahi chhedte.
+  const shown = revealed || peek;
 
   const st = getStat(q);
 
   return (
-    <article className="glass-card" id={`q-${index}`}>
-      <div className="q-head">
-        <h3 className="q-head__n">
-          <span className="rule-card__n">{index + 1}.</span>
-        </h3>
-        <div className="q-head__actions">
-          <QTimer q={q} answered={picked !== null} onRestart={reattempt} />
-          {st?.attempts > 0 && <span className="done-badge" title={`${st.correct}/${st.attempts}`}>🔁 {st.attempts}x</span>}
-          {Array.isArray(allQuestions) && allQuestions.length > 1 && (
-            <FullscreenTestButton
-              questions={allQuestions}
-              startIndex={allQuestions.indexOf(q)}
-              title={chapterName || "Test"}
-              subject={subject || ""}
-              label="⛶"
-              titleAttr="Isi question se full-screen test shuru karo"
-            />
-          )}
-          <span className="q-act--keep"><AskButtons q={q} subject={subject} /></span>
-          <button className="btn btn--ghost btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
-          {onEdit && !editing && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
-          <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
-          <DoneButton q={q} />
-          {subject !== "math" && subject !== "reasoning" && (
-            <ReviseButton item={q} kind="q" category={chapterName || subject} subject={subject} />
-          )}
-          {onDelete && <button className="btn btn--ghost btn--sm" onClick={onDelete}>✕</button>}
-        </div>
-      </div>
+    <article className="qcard" id={`q-${index}`}>
+      {/* Sar — Answers page ka `Question N (qid · date)`. Yahan qid ki jagah
+          paper/source hai, kyunki PYQ ka pata wahi hai. */}
+      <h2 className="qcard__h">
+        Question {index + 1}
+        <span className="qcard__qid">
+          {paper ? `(${paper})` : ""}
+          {st?.attempts > 0 ? ` · 🔁 ${st.attempts}x (${st.correct}/${st.attempts})` : ""}
+        </span>
+      </h2>
 
       {/* The stem, on its own line under the number. Some questions ARE a crop of
           the printed page — the stacked fractions never made it into the PDF's
           text layer, so the image carries the stem, the tag and the options. */}
-      <div className="q-stem">
+      <div className="qcard__stem">
         {q.img ? (
           <img src={q.img} alt={`Question ${index + 1}`} loading="lazy" className="q-crop" />
         ) : (
@@ -179,58 +171,86 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
 
       <Diagram svg={q.diagram} />
 
-      <div className="grid" style={{ gap: 8, marginTop: 12 }}>
+      <div className="qcard__opts">
         {q.options.map((opt, oi) => {
-          const s = {
-            textAlign: "left", padding: "10px 14px", borderRadius: 10,
-            borderWidth: "1px", borderStyle: "solid", borderColor: "var(--glass-border)",
-            background: "var(--bg)", color: "var(--text-1)", cursor: picked === null ? "pointer" : "default", fontSize: "0.92rem",
-          };
-          if (revealed) {
-            if (oi === q.answer) { s.borderColor = "var(--ok)"; s.background = "var(--ok-wash)"; }
-            else if (oi === picked) { s.borderColor = "var(--accent)"; s.background = "var(--accent-wash)"; }
-          }
+          const right = shown && oi === q.answer;
+          const wrong = revealed && oi === picked && oi !== q.answer;
           return (
-            <button key={oi} style={s} onClick={() => choose(oi)}>
-              <strong style={{ opacity: 0.7, marginRight: 8 }}>{String.fromCharCode(65 + oi)}</strong>
+            <button
+              key={oi}
+              className={`qcard__opt${picked === null ? " is-pick" : ""}${right ? " is-right" : ""}${wrong ? " is-wrong" : ""}`}
+              onClick={() => choose(oi)}
+            >
+              <b>{String.fromCharCode(65 + oi)}</b>
               {/* The crop already shows what each option says. */}
               {!q.img && <Markdown inline>{opt}</Markdown>}
-              {revealed && oi === q.answer && <span style={{ color: "var(--success)", marginLeft: 8 }}>✓</span>}
+              {right && <span style={{ color: "var(--ok)", marginLeft: 8 }}>✓</span>}
             </button>
           );
         })}
       </div>
 
-      {q.keyDisputed && revealed && (
-        <p className="mt-12" style={{ color: "var(--danger)", fontSize: "0.82rem" }}>
-          ⚠ Book ki key galat lagti hai. {q.keyDisputed}
-        </p>
+      {/* Buttons ki patti — Answers page par ye card ke beech mein hai, yahan
+          options ke NEECHE, kyunki upar rakhne se pehle sawaal padho ki nahi
+          wala kram toot jata hai. */}
+      <div className="qcard__acts">
+        <QTimer q={q} answered={picked !== null} onRestart={reattempt} />
+        {!shown && (
+          <button className="btn" onClick={() => setPeek(true)} title="Bina attempt kiye answer dekho">👁️ Answer</button>
+        )}
+        {Array.isArray(allQuestions) && allQuestions.length > 1 && (
+          <FullscreenTestButton
+            questions={allQuestions}
+            startIndex={allQuestions.indexOf(q)}
+            title={chapterName || "Test"}
+            subject={subject || ""}
+            label="⛶"
+            titleAttr="Isi question se full-screen test shuru karo"
+          />
+        )}
+        <span className="q-act--keep"><AskButtons q={q} subject={subject} /></span>
+        <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
+        {onEdit && !editing && <button className="btn" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
+        <button className="btn" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
+        <DoneButton q={q} />
+        {subject !== "math" && subject !== "reasoning" && (
+          <ReviseButton item={q} kind="q" category={chapterName || subject} subject={subject} />
+        )}
+        {onDelete && <button className="btn" onClick={onDelete} title="Delete">🗑️</button>}
+      </div>
+
+      {q.keyDisputed && shown && (
+        <p className="qcard__note">⚠ Book ki key galat lagti hai. {q.keyDisputed}</p>
       )}
-      {q.sourceDefect && (
-        <p className="mt-8 muted" style={{ fontSize: "0.8rem" }}>⚠ {q.sourceDefect}</p>
-      )}
+      {q.sourceDefect && <p className="qcard__note">⚠ {q.sourceDefect}</p>}
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
-
-      {revealed && solution && (
-        <div className="muted mt-12" style={{ fontSize: "0.86rem" }}>
-          <strong style={{ color: "var(--text-2)" }}>Solution: </strong>
-          <Markdown inline>{solution}</Markdown>
-        </div>
-      )}
-
-      {revealed && (
-        <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
-        </div>
-      )}
-
       {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}
-      {scShown && shortcut && (
-        <div className="answer-box mt-12">
-          <Markdown>{shortcut}</Markdown>
-          <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
-            {scLoading ? "Thinking…" : "🔄 New shortcut"}
-          </button>
+
+      {/* ANSWER — Answers page ki tarah apne block mein, sabse neeche. Block
+          hamesha maujood hai; khaali ho to wahi batata hai aur khol deta hai. */}
+      {shown ? (
+        <div className="qcard__answer">
+          {q.answer != null && q.options?.[q.answer] != null && (
+            <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
+              ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
+              {!q.img && q.options[q.answer] ? ` — ${q.options[q.answer]}` : ""}
+            </p>
+          )}
+          {solution ? <Markdown>{solution}</Markdown> : (
+            <span style={{ color: "var(--text-3)", fontStyle: "italic" }}>
+              Is question ka explanation abhi nahi hai — ✨ Gemini se laa kar paste kar do.
+            </span>
+          )}
+          {scShown && shortcut && (
+            <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
+              {scLoading ? "Thinking…" : "🔄 New shortcut"}
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="qcard__answer qcard__answer--empty">
+          Answer neeche yahin aayega — option chuno ya 👁️ dabao.
         </div>
       )}
       </>
