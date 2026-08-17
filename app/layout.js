@@ -28,7 +28,7 @@ export const metadata = {
 // lag jayen to poora page zoom na ho jaye — zoom likhne wali surface ka apna
 // hai. viewportFit cover se tablet ke rounded corners tak background jata hai.
 export const viewport = {
-  themeColor: "#08090a",
+  themeColor: "#1e1e2e",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -36,12 +36,15 @@ export const viewport = {
   viewportFit: "cover",
 };
 
+// Dark (Catppuccin Mocha) ab DEFAULT hai — wahi Answers page wala look. Isliye
+// data-theme yahin server par likha jaata hai; neeche wali script sirf tab
+// badalti hai jab user ne khud "light" chuna ho. Ulta karne par har load pe
+// light theme ki ek jhalak dikhti thi.
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en" data-theme="dark" data-scroll-behavior="smooth">
       <body className={inter.variable}>
-        {/* Apply the saved theme before paint so there is no light-flash. */}
-        <script dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('ui.theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}" }} />
+        <script dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('ui.theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}" }} />
         <ThemeToggle />
         <div className="bg-orbs" aria-hidden="true">
           <span className="orb orb--1" />

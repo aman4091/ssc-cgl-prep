@@ -10,12 +10,12 @@ import { useEffect, useState } from "react";
 const KEY = "ui.theme";
 
 export default function ThemeToggle() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
 
   useEffect(() => {
     let saved = null;
     try { saved = localStorage.getItem(KEY); } catch { /* ignore */ }
-    const isDark = saved === "dark";
+    const isDark = saved !== "light";   // default raat — site ki theme dark hai
     setDark(isDark);
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
   }, []);
