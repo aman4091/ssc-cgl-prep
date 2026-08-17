@@ -9,7 +9,7 @@ import { pageText } from "@/components/NotesReader";
 
 // One notes CHAPTER as a row of per-page 📝 quiz buttons plus a link to the
 // chapter itself. Shared by /today (RBE GK items -> matching Parmar chapter) and
-// /gs15 (the 15-day sweep), so both hit the same quiz engine and the same
+// /gs30 (the six-pass GS sweep), so both hit the same quiz engine and the same
 // cross-click dedup key — a page quizzed from one page won't repeat its
 // questions when opened from the other.
 //

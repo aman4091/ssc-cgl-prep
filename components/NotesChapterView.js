@@ -28,9 +28,24 @@ function PageBlock({ book, page }) {
   useEffect(() => { if (!edit) setText(getHinglish(k)); }, [saved, edit, k]);
 
   const askGemini = async () => {
-    const body = pageText(page) || `${page.topic} — page ${page.book_page}`;
-    const pre = promptFor(book.subject);
-    await copyText(pre ? `${pre}\n\n${body}` : body);
+    const body = pageText(page);
+    let copy;
+    if (body) {
+      // Page has transcribed text → send it with the subject's usual prompt.
+      const pre = promptFor(book.subject);
+      copy = pre ? `${pre}\n\n${body}` : body;
+    } else {
+      // Image-only / text-less page: there is NO source text to hand over, so a
+      // bare "Topic — page N" is useless. Instead ask Gemini to TEACH the topic
+      // in detail, so the user can paste the explanation straight back as notes.
+      copy =
+        `"${page.topic}" (${book.title}) — is topic ko Hinglish mein detail se samjhao.\n` +
+        `• Concept clear karo — ye hota kya hai aur kyun important hai.\n` +
+        `• Saare zaroori rules/points, types aur exceptions cover karo.\n` +
+        `• Har point ke saath 1–2 easy example do.\n` +
+        `Aise likho ki seedha study notes ban jaayein — headings + bullet points mein, short aur clear.`;
+    }
+    await copyText(copy);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
     try { window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer"); } catch { /* ignore */ }

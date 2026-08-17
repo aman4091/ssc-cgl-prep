@@ -49,7 +49,7 @@ function LinkBtns({ links }) {
 }
 
 // Under a GK test item: the matching Parmar chapters, each expandable into its
-// per-page 📝 quiz buttons (PageQuizRow — shared with /gs15, so the two pages
+// per-page 📝 quiz buttons (PageQuizRow — shared with /gs30, so the two pages
 // share one quiz engine and one dedup memory).
 function ParmarQuiz({ map }) {
   return (
