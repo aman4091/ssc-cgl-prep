@@ -2,7 +2,7 @@
 
 // Settings → 📚 PYQ Manager: apni PYQ books banao aur unme questions bharo.
 // Ek hi jagah se: nayi book (subject ke saath), usme naya topic/chapter, aur
-// questions — 📄 PDF se (part 1, part 2 … ek-ek karke) ya 📋 paste karke.
+// questions — 📄 PDF se (part 1, part 2 … saari ek saath) ya 📋 paste karke.
 // Questions AI (DeepSeek) se nikalte hain (wahi engine jo baaki app use karti
 // hai), duplicates khud skip hote hain, aur book PYQ page par dikhti hai.
 
@@ -63,7 +63,7 @@ export default function PyqManager() {
   //   2) Q&A one-liners ("Q.) ... Ans: ...")       -> gk-to-mcq AI (book ka
   //      answer wahi rehta hai, 3 galat options bante hain — GKTricks isi se bana).
   //   3) Baaki kuch bhi                             -> generic AI extractor.
-  const importText = async (text, tag) => {
+  const importText = async (text, tag, head = "") => {
     if (!activeTopicId) throw new Error("Pehle topic banao/chuno.");
 
     let questions = parseCaMcqs(text);
@@ -72,11 +72,11 @@ export default function PyqManager() {
       const pairCount = (text.match(/\bAns(?:wer)?\s*[:.\-]/gi) || []).length;
       if (pairCount >= 3) {
         ({ questions } = await generateMcqChunked(text, (i, t, so) =>
-          setStatus(`Q&A se MCQ bana raha hai… ${i}/${t} (${so} bane)`)
+          setStatus(`${head}Q&A se MCQ bana raha hai… ${i}/${t} (${so} bane)`)
         ));
       } else {
         ({ questions } = await generateQuizChunked(text, (i, t, so) =>
-          setStatus(`AI questions nikaal raha hai… chunk ${i}/${t} (${so} mile)`)
+          setStatus(`${head}AI questions nikaal raha hai… chunk ${i}/${t} (${so} mile)`)
         ));
       }
     }
@@ -86,21 +86,49 @@ export default function PyqManager() {
     return { added, dup: questions.length - added };
   };
 
+  // Ek saath kitni bhi PDF. Ek-ek karke (parallel nahi) — har PDF ke andar AI
+  // ke kai chunk jaate hain, saath chala do to key rate-limit kha jaati hai aur
+  // progress bhi padha nahi jaata. Ek PDF fail ho to baaki rukti nahi; sirf
+  // wahi error list mein jaati hai.
   const onPdf = async (e) => {
-    const file = e.target.files?.[0];
+    const files = Array.from(e.target.files || []);
     e.target.value = "";
-    if (!file || busy) return;
-    setBusy(true); setErr(""); setStatus("PDF padh raha hoon…");
-    try {
-      const { text } = await extractPdfTextSmart(file, (p) =>
-        setStatus(p.phase === "text" ? `PDF padh raha hoon… ${p.page}/${p.total}` : `📷 OCR… ${p.page}/${p.total}`)
-      );
-      if (!text || text.trim().length < 20) throw new Error("Is PDF se text nahi nikla.");
+    if (!files.length || busy) return;
+
+    // "Part 2" aur "Part 10" — numeric sort, warna 10 pehle aa jata hai aur
+    // questions book ki tarteeb se ulte pad jaate hain.
+    files.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }));
+
+    setBusy(true); setErr(""); setStatus("");
+    let added = 0, dup = 0, ok = 0, fatal = "";
+    const failed = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
       const tag = file.name.replace(/\.pdf$/i, "").slice(0, 60);
-      const { added, dup } = await importText(text, tag);
-      setStatus(`✅ ${added} questions add hue${dup ? ` · ${dup} duplicate skip` : ""} — "${tag}"`);
-    } catch (e2) { setErr(e2.message || "Error"); setStatus(""); }
-    finally { setBusy(false); }
+      const head = files.length > 1 ? `[${i + 1}/${files.length}] ${tag} — ` : "";
+      try {
+        const { text } = await extractPdfTextSmart(file, (p) =>
+          setStatus(head + (p.phase === "text" ? `PDF padh raha hoon… ${p.page}/${p.total}` : `📷 OCR… ${p.page}/${p.total}`))
+        );
+        if (!text || text.trim().length < 20) throw new Error("PDF se text nahi nikla");
+        const r = await importText(text, tag, head);
+        added += r.added; dup += r.dup; ok += 1;
+      } catch (e2) {
+        const msg = e2.message || "Error";
+        failed.push(`${tag} (${msg})`);
+        // Key nahi hai / topic nahi chuna — ye har PDF par wahi rahega, isliye
+        // baaki 13 PDF ko bekaar mein padhne ka koi matlab nahi.
+        if (/API key|topic banao/i.test(msg)) { fatal = msg; break; }
+      }
+    }
+
+    // ok = jo sach mein lag gayi. files.length - failed.length galat hota:
+    // fatal par loop tootta hai, to jo PDF chhui hi nahi wo "ho gayi" gin jaati.
+    setStatus(ok ? `✅ ${ok}/${files.length} PDF · ${added} questions add hue${dup ? ` · ${dup} duplicate skip` : ""}` : "");
+    if (fatal) setErr(fatal);
+    else if (failed.length) setErr(`${failed.length} PDF nahi hui — ${failed.join(" · ")}`);
+    setBusy(false);
   };
 
   const onPaste = async () => {
@@ -136,7 +164,7 @@ export default function PyqManager() {
           Kisi bhi <b>existing PYQ book</b> (GKTricks, Error Pro, WAR…) mein apne naye
           topics/questions daalo — wo usi book ke shelf par dikhenge. Ya apni <b>nayi book</b>
           banao (jaise &quot;Medieval History&quot;) — wo PYQ page par sabse upar aayegi. Questions
-          PDF se (part 1, part 2… ek-ek karke) ya paste karke.
+          PDF se (part 1, part 2… <b>saari ek saath chun lo</b>) ya paste karke.
         </p>
 
         {/* Book */}
@@ -187,8 +215,8 @@ export default function PyqManager() {
           <label>Questions add karo</label>
           <div className="row" style={{ gap: 10, flexWrap: "wrap" }}>
             <label className="btn btn--primary btn--sm" style={{ opacity: busy || !activeTopicId ? 0.6 : 1, pointerEvents: busy || !activeTopicId ? "none" : "auto" }}>
-              {busy ? "⏳ …" : "📄 PDF se"}
-              <input type="file" accept="application/pdf" hidden onChange={onPdf} />
+              {busy ? "⏳ …" : "📄 PDF se (ek ya kai)"}
+              <input type="file" accept="application/pdf" multiple hidden onChange={onPdf} />
             </label>
           </div>
           <textarea
