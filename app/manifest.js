@@ -15,8 +15,8 @@ export default function manifest() {
     scope: "/",
     display: "standalone",
     orientation: "any", // tablet ko portrait aur landscape dono chahiye
-    background_color: "#16181c",
-    theme_color: "#16181c",
+    background_color: "#08090a",
+    theme_color: "#08090a",
     // PNG 192 aur 512 dono chahiye — Chrome inhi ko dekh kar "Install app"
     // offer karta hai. SVG bhi de rahe hain, par usi ke bharose mat rehna.
     // maskable: Android icon ko apne shape mein kaat'ta hai, isliye icon.svg

@@ -28,7 +28,7 @@ export const metadata = {
 // lag jayen to poora page zoom na ho jaye — zoom likhne wali surface ka apna
 // hai. viewportFit cover se tablet ke rounded corners tak background jata hai.
 export const viewport = {
-  themeColor: "#16181c",
+  themeColor: "#08090a",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,

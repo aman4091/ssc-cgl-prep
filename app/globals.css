@@ -110,23 +110,28 @@
    calm dark palette — every component reads the tokens, so this re-skins all of
    it. Only the .reader (hard-coded cream) needs its own dark overrides below. */
 :root[data-theme="dark"] {
-  --bg: #16181c;
-  --card: #1e2126;
-  --line: #31353c;
-  --ink: #e8e6e3;
+  /* Owner ne kaha "bilkul dark" (Gemini jaisa): page ab lagbhag KAALA hai, aur
+     surfaces uske upar sirf ek-ek step upar uthti hain. Steps chhote hain par
+     jaan-boojh ke — page #08090a, card #141517, uthi hui cheez #1c1e21 — isse
+     card dikhta bhi hai aur screen kahin bhi "grey" nahi lagti. Ise halka mat
+     karo, warna wahi purana slate-grey wapas aa jayega. */
+  --bg: #08090a;
+  --card: #141517;
+  --line: #26282c;
+  --ink: #e6e6e6;
   --dim: #9aa0a6;
   --accent2: #8ab4f8;
   --ok: #6bd39a;
   --bad: #ff8a7a;
   --mark: #5c4b00;
 
-  --bg-2: #22262c;
-  --glass-bg-strong: #262a31;
-  --glass-border-strong: #434852;
-  --text-3: #767c83;
+  --bg-2: #101113;
+  --glass-bg-strong: #1c1e21;
+  --glass-border-strong: #3a3d42;
+  --text-3: #71767c;
 
   --accent: #ff8a7a;
-  --on-accent: #16181c;      /* dark ink to sit on the light accent */
+  --on-accent: #08090a;      /* dark ink to sit on the light accent */
   --warning: #fbbf24;
   --glass-shadow: none;
   color-scheme: dark;
@@ -134,9 +139,9 @@
 :root[data-theme="dark"] body { color-scheme: dark; }
 
 /* .reader hard-codes a cream page — give it a dark reading surface at night. */
-:root[data-theme="dark"] .reader { background: #1b1d22; color: #e6e2da; border-color: #31353c; }
+:root[data-theme="dark"] .reader { background: #0d0e10; color: #e3e0da; border-color: #26282c; }
 :root[data-theme="dark"] .reader .nx-hi-text,
-:root[data-theme="dark"] .reader .nx-hi-text .md { color: #e6e2da; }
+:root[data-theme="dark"] .reader .nx-hi-text .md { color: #e3e0da; }
 :root[data-theme="dark"] .reader .md h1,
 :root[data-theme="dark"] .reader .md h2,
 :root[data-theme="dark"] .reader .md h3,
@@ -144,17 +149,17 @@
 :root[data-theme="dark"] .reader .md h5,
 :root[data-theme="dark"] .reader .md strong,
 :root[data-theme="dark"] .reader .md b { color: #f4f0e6; }
-:root[data-theme="dark"] .reader .nt-card + .nt-card { border-top-color: #31353c; }
+:root[data-theme="dark"] .reader .nt-card + .nt-card { border-top-color: #26282c; }
 :root[data-theme="dark"] .reader .nt-meta { color: #8f96a0; }
 :root[data-theme="dark"] .reader .btn--ghost { color: var(--text-1); border-color: var(--glass-border); background: var(--glass-bg); }
-:root[data-theme="dark"] .reader .input { background: #14161a; color: #e6e2da; border-color: #31353c; }
+:root[data-theme="dark"] .reader .input { background: #08090a; color: #e3e0da; border-color: #26282c; }
 :root[data-theme="dark"] .reader .md a { color: #8ab4f8; }
-:root[data-theme="dark"] .reader .md code { background: #262a31; }
+:root[data-theme="dark"] .reader .md code { background: #1c1e21; }
 :root[data-theme="dark"] .reader .md li::marker { color: #6b7280; }
-:root[data-theme="dark"] .reader .md hr { border-top-color: #31353c; }
-:root[data-theme="dark"] .reader .md blockquote { border-left-color: #31353c; color: #b7bcc4; }
+:root[data-theme="dark"] .reader .md hr { border-top-color: #26282c; }
+:root[data-theme="dark"] .reader .md blockquote { border-left-color: #26282c; color: #b7bcc4; }
 :root[data-theme="dark"] .reader .md th,
-:root[data-theme="dark"] .reader .md td { border-color: #31353c; }
+:root[data-theme="dark"] .reader .md td { border-color: #26282c; }
 
 /* The day/night toggle — a small fixed control in the top-right corner. */
 .theme-toggle {
