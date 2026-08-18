@@ -30,7 +30,13 @@ export default function HomeFeed() {
     } catch { /* ignore */ }
     sync();
     setReady(true);
-    return subscribeHome(sync);
+    // Doosre device se data aane par ye screen KHUD taazi ho jati hai. Pehle
+    // iske liye poora page reload hota tha — aur wahi quiz ke beech answers kha
+    // jata tha. Ab sync bas ek event chhodta hai aur jise zaroorat hai wo sun
+    // leta hai; kisi ka kaam beech mein nahi tootta.
+    const unsubHome = subscribeHome(sync);
+    window.addEventListener("cgl:sync-applied", sync);
+    return () => { unsubHome(); window.removeEventListener("cgl:sync-applied", sync); };
   }, []);
 
   // Keep the URL in step with the open chapter (shallow — no reload), so reading
