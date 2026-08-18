@@ -112,6 +112,20 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   };
 
   useEffect(() => { setBm(isQBookmarked(tq)); setShortcut(getSavedShortcut(tq)); }, [q.id]);
+  // Paste kiya hua Gemini answer sabse upar hai: save hote hi card usse utha leta
+  // hai aur answer block khol deta hai — book ka apna solution/explanation
+  // (ya solution image) tab dikhta hi nahi. Reload ka intezaar nahi.
+  useEffect(() => {
+    const h = (e) => {
+      if (e.detail?.key && e.detail.key !== keyFor(tq)) return;
+      const s = getSavedShortcut(tq);
+      setShortcut(s);
+      if (s) setPeek(true);
+    };
+    window.addEventListener("cgl:shortcut-saved", h);
+    return () => window.removeEventListener("cgl:shortcut-saved", h);
+  }, [q.id]);
+
   useEffect(() => {
     const h = () => setDone(isDone(q));
     h();

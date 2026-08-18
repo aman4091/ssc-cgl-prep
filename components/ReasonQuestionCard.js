@@ -66,6 +66,20 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   };
 
   useEffect(() => { setBm(isQBookmarked(tq)); setShortcut(getSavedShortcut(tq)); }, [q.id]);
+  // Paste kiya hua Gemini answer sabse upar hai: save hote hi card usse utha leta
+  // hai aur answer block khol deta hai — book ka apna solution/explanation
+  // (ya solution image) tab dikhta hi nahi. Reload ka intezaar nahi.
+  useEffect(() => {
+    const h = (e) => {
+      if (e.detail?.key && e.detail.key !== keyFor(tq)) return;
+      const s = getSavedShortcut(tq);
+      setShortcut(s);
+      if (s) setPeek(true);
+    };
+    window.addEventListener("cgl:shortcut-saved", h);
+    return () => window.removeEventListener("cgl:shortcut-saved", h);
+  }, [q.id]);
+
   useEffect(() => {
     const h = () => setDone(isDone(q));
     h();
@@ -153,7 +167,10 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
         <img src={q.qImg} alt={alt} loading="lazy" className="math-img" />
       </a>
 
-      {aiUseful && <PasteAnswer q={tq} />}
+      {/* Paste box HAR question par — figure (non-verbal) par bhi. ✨ Gemini ab
+          tasveer copy karta hai, to answer wahan se aata hai; usse rakhne ki jagah
+          na hone se wo mehnat bekaar ja rahi thi. */}
+      <PasteAnswer q={tq} />
 
       <div className="qcard__opts" style={{ gridTemplateColumns: "minmax(0, 1fr)" }}>
         {q.optImgs.map((src, oi) => {

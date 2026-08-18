@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { askAI, generateSimilar } from "@/lib/client-ai";
 import { saveQuiz, makeId } from "@/lib/storage";
 import { setResume } from "@/lib/qprogress";
-import { recordAttempts, getStat } from "@/lib/qstats";
+import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { addReview } from "@/lib/qreview";
@@ -46,6 +46,20 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   const [done, setDone] = useState(false);   // sirf dikhawe ke liye (dhundhla card)
   const archiveTimer = useRef(null);
   useEffect(() => { setBm(isQBookmarked(q)); setShortcut(getSavedShortcut(q)); }, [q]);
+  // Paste kiya hua Gemini answer sabse upar hai: save hote hi card usse utha leta
+  // hai aur answer block khol deta hai — book ka apna solution/explanation
+  // (ya solution image) tab dikhta hi nahi. Reload ka intezaar nahi.
+  useEffect(() => {
+    const h = (e) => {
+      if (e.detail?.key && e.detail.key !== keyFor(q)) return;
+      const s = getSavedShortcut(q);
+      setShortcut(s);
+      if (s) setPeek(true);
+    };
+    window.addEventListener("cgl:shortcut-saved", h);
+    return () => window.removeEventListener("cgl:shortcut-saved", h);
+  }, [q]);
+
   useEffect(() => {
     const h = () => setDone(isDone(q));
     h();
