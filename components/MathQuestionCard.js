@@ -92,20 +92,15 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
     options: q.optText && q.optText.length === 4 ? q.optText : ["a", "b", "c", "d"],
   };
 
-  // Maths-only Gemini prompt: this bank is about speed, so it asks for the
-  // fastest way to crack the question rather than the shared "answer + short
-  // explanation" prompt. Baked into the question text (no promptKey) so the
-  // global geminiPrompt setting — used by every other bank — is untouched. The
-  // text is the lossy qText (the question is an image); good for word problems,
-  // imperfect for fraction-heavy ones.
-  const MATHS_PROMPT =
-    "Is question ko seconds mein kaise solve karein — sabse fast trick/shortcut " +
-    "batao, lamba method nahi. Hinglish mein.";
+  // Prompt HAMESHA Settings se aata hai (Settings → maths ka apna prompt, warna
+  // generic wala). Pehle yahan ek prompt code mein guttha hua tha, isliye
+  // Settings mein badalne ka koi asar hi nahi hota tha — wo galat tha.
+  //
   // qImg saath bhejna zaroori hai: AskElsewhere yahi dekh kar text ki jagah
   // TASVEER clipboard par daalta hai. Text (qText) lossy hai — fraction-bhare
   // question ismein toot jate hain.
   const geminiQ = {
-    question: MATHS_PROMPT + "\n\n" + (q.qText || ""),
+    question: q.qText || "",
     options: tq.options,
     qImg: q.qImg,
   };
@@ -273,7 +268,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
             url="https://gemini.google.com/app"
             label="✨ Gemini"
             title="Question ki image copy karke Gemini kholo — phir answer paste karo"
-            imagePrompt={MATHS_PROMPT}
+            promptKey="geminiPrompt"
             onAsked={openPaste}
           />
         </span>

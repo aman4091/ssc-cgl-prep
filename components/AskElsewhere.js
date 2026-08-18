@@ -34,7 +34,7 @@ function LabelParts({ label }) {
   );
 }
 
-export default function AskElsewhere({ q, subject, className = "btn btn--ghost btn--sm", url, label, title, promptKey, onAsked, imagePrompt }) {
+export default function AskElsewhere({ q, subject, className = "btn btn--ghost btn--sm", url, label, title, promptKey, onAsked }) {
   const [done, setDone] = useState(false);
   const go = async () => {
     const ping = () => { setDone(true); setTimeout(() => setDone(false), 1500); };
@@ -51,7 +51,8 @@ export default function AskElsewhere({ q, subject, className = "btn btn--ghost b
     if (questionImage(q)) {
       const ok = await copyQuestionImage(q);
       if (ok) {
-        armPrompt(imagePrompt || promptFor(subject, promptKey || "geminiPrompt"));
+        // Prompt hamesha Settings se: pehle is subject ka apna, warna generic.
+        armPrompt(promptFor(subject, promptKey || "geminiPrompt"));
         toast("🖼️ Image copy ho gayi — Gemini mein paste karo; yahan wapas aate hi prompt apne aap copy ho jayega");
         ping();
         open();
