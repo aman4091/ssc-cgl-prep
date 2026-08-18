@@ -61,12 +61,20 @@ console.log("\n3) Storage saaf ho gaya (Safari 7-din / clear site data) -> delet
   t("data wapas aa gaya", JSON.parse(r.nextJson).length, 2);
 }
 
-console.log("\n4) Jaan-boojh kar kiya delete phir bhi chalta hai (tombstone row)");
+console.log("\n4) DELETE vs GAYAB — ab ye do alag cheezein hain");
 {
   const before = J([{ id: "a" }, { id: "b" }]);
-  const after = J([{ id: "a" }]);                       // user ne b delete kiya
-  const r = reconcileStore(after, sentOf(before), []);
-  t("ek delete row bani", r.toSend, [{ item_id: "L#b", deleted: true, data: null }]);
+  const after = J([{ id: "a" }]);                       // b ab nahi hai
+
+  // (a) User ne delete dabaya -> bigstore ne likhte waqt khabar darj ki
+  const withNews = reconcileStore(after, sentOf(before), [], ["L#b"]);
+  t("khabar hai -> delete bheja gaya", withNews.toSend, [{ item_id: "L#b", deleted: true, data: null }]);
+  t("koi missing nahi", withNews.missing, []);
+
+  // (b) Wahi tasveer, par delete hua hi nahi (IDB row kharab / write fail)
+  const noNews = reconcileStore(after, sentOf(before), [], []);
+  t("khabar nahi -> EK BHI delete nahi bheja", noNews.toSend, []);
+  t("balki 'missing' bata diya", noNews.missing, ["L#b"]);
 }
 
 console.log("\n5) Delete cloud se aaya -> local par bhi lagta hai");
@@ -126,12 +134,16 @@ console.log("\n9) gktricks/PYQ ki asli shakl — question par id nahi hoti");
   t("wapas wahi bana", JSON.parse(rebuild(recs)), JSON.parse(json));
 }
 
-console.log("\n10) Store hi khatam ho gaya -> null (aur delete rows)");
+console.log("\n10) Poora store gayab — khabar ke bina cloud par kuch nahi hota");
 {
-  const before = J([{ id: "a" }]);
-  const r = reconcileStore(null, sentOf(before), []);
-  t("store null", r.nextJson, null);
-  t("delete bheja", r.toSend, [{ item_id: "L#a", deleted: true, data: null }]);
+  const before = J([{ id: "a" }, { id: "b" }]);
+  const idsOf = (json) => [...shred(json).keys()];
+  const r = reconcileStore(null, sentOf(before), [], []);
+  t("cloud ko kuch nahi bheja", r.toSend, []);
+  t("dono missing bataye", r.missing.sort(), ["L#a", "L#b"]);
+  // Khud clear kiya ho to khabar hoti hai, aur tab delete jata hai.
+  const cleared = reconcileStore(null, sentOf(before), [], idsOf(before));
+  t("khabar ho to dono delete gaye", cleared.toSend.map((x) => x.item_id).sort(), ["L#a", "L#b"]);
 }
 
 console.log("\n11) Kuch nahi badla -> na likhna, na bhejna");
@@ -140,6 +152,45 @@ console.log("\n11) Kuch nahi badla -> na likhna, na bhejna");
   const r = reconcileStore(json, sentOf(json), []);
   t("local same", r.changed, false);
   t("bhejne ko kuch nahi", r.toSend, []);
+}
+
+console.log("\n12) CHOKE POINT: storeSet khud delete ki khabar darj karta hai");
+{
+  // bigstore browser ka code hai — ek chhota localStorage stub kaafi hai.
+  const mem = new Map();
+  globalThis.window = globalThis;
+  globalThis.localStorage = {
+    get length() { return mem.size; },
+    key: (i) => [...mem.keys()][i] ?? null,
+    getItem: (k) => (mem.has(k) ? mem.get(k) : null),
+    setItem: (k, v) => { mem.set(k, String(v)); },
+    removeItem: (k) => { mem.delete(k); },
+  };
+  const bsrc = readFileSync(new URL("../lib/bigstore.js", import.meta.url), "utf8")
+    .replace('from "./syncitems"', `from ${J(pathToFileURL(tmp).href)}`);
+  const btmp = join(mkdtempSync(join(tmpdir(), "bigstore-")), "bigstore.mjs");
+  writeFileSync(btmp, bsrc);
+  const bs = await import(pathToFileURL(btmp).href);
+
+  const K = "cgl.userpyq.topics";
+  bs.storeSet(K, J([{ id: "a" }, { id: "b" }, { id: "c" }]));
+  t("naya store likhne par koi tombstone nahi", bs.getTombstones()[K], undefined);
+
+  bs.storeSet(K, J([{ id: "a" }, { id: "c" }]));               // user ne b hataya
+  t("hataye gaye record ki khabar darj hui", bs.getTombstones()[K], ["L#b"]);
+
+  bs.storeSet(K, J([{ id: "a" }, { id: "c" }, { id: "d" }]));  // naya add
+  t("add karne se khabar nahi badli", bs.getTombstones()[K], ["L#b"]);
+
+  // Sync jab cloud se aaya delete local par lagata hai to khabar darj NAHI honi
+  // chahiye — warna wo delete apna hi tombstone bana kar hamesha ghoomta rahega.
+  bs.setTombstoneCapture(false);
+  bs.storeSet(K, J([{ id: "a" }, { id: "d" }]));
+  bs.setTombstoneCapture(true);
+  t("sync ke apne write se khabar nahi bani", bs.getTombstones()[K], ["L#b"]);
+
+  bs.clearTombstones({ [K]: ["L#b"] });                        // push ho gaya
+  t("bhejne ke baad khabar hat gayi", bs.getTombstones()[K], undefined);
 }
 
 console.log(`\n${pass} pass, ${fail} fail\n`);

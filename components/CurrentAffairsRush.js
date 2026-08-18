@@ -6,6 +6,7 @@ import { addReview } from "@/lib/qreview";
 import AskButtons from "@/components/AskButtons";
 
 const CFG_KEY = "cgl.carush";
+import { storeSet } from "@/lib/bigstore";
 const DEFAULT_CFG = { enabled: false, intervalMin: 60 };
 
 function getCfg() {
@@ -13,7 +14,7 @@ function getCfg() {
   try { const raw = localStorage.getItem(CFG_KEY); return raw ? { ...DEFAULT_CFG, ...JSON.parse(raw) } : DEFAULT_CFG; }
   catch { return DEFAULT_CFG; }
 }
-function setCfg(cfg) { localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); }
+function setCfg(cfg) { storeSet(CFG_KEY, JSON.stringify(cfg)); }
 
 export default function CurrentAffairsRush() {
   const [cfg, setCfgState] = useState(DEFAULT_CFG);

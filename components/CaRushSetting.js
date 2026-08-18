@@ -6,6 +6,7 @@
 import { useEffect, useState } from "react";
 
 const CFG_KEY = "cgl.carush";
+import { storeSet } from "@/lib/bigstore";
 
 export default function CaRushSetting() {
   const [cfg, setCfgState] = useState(null);
@@ -18,7 +19,7 @@ export default function CaRushSetting() {
   const update = (patch) => {
     const next = { ...cfg, ...patch };
     setCfgState(next);
-    try { localStorage.setItem(CFG_KEY, JSON.stringify(next)); } catch { /* ignore */ }
+    try { storeSet(CFG_KEY, JSON.stringify(next)); } catch { /* ignore */ }
   };
   const showFab = !cfg.hideFab;
 

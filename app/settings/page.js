@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { getSettings, saveSettings, DEFAULT_SETTINGS } from "@/lib/storage";
 import { exportAll, exportDataOnly, importAll, downloadBlob } from "@/lib/backup";
 import { getDaysOverview } from "@/lib/vocab";
-import { syncOnce, listRescue, restoreRescue, getSyncLog, SETUP_SQL } from "@/lib/sync";
+import { syncOnce, resyncAll, listRescue, restoreRescue, getSyncLog, SETUP_SQL } from "@/lib/sync";
 import PyqManager from "@/components/PyqManager";
 import CaRushSetting from "@/components/CaRushSetting";
 
@@ -88,6 +88,19 @@ export default function SettingsPage() {
       setSyncMsg(`✓ Sab sync hai · ${line} — ab AUTO chalu, button dabane ki zaroorat nahi.`);
     } catch (e) { setSyncMsg("❌ " + e.message); }
     finally { setSyncBusy(false); }
+  };
+
+  // "Cloud se sab dobara laao": cursor/yaad mita kar poori cloud wapas utaarta
+  // hai aur local mein JODTA hai. Ye kuch delete nahi karta — bina yaad ke device
+  // sirf utaar sakta hai, bhej nahi sakta. Sync log mein "missing" dikhe to yahi
+  // dabana hai.
+  const doResync = async () => {
+    setSyncBusy(true); setSyncMsg("Cloud se sab dobara laa raha hoon…");
+    try {
+      const r = await resyncAll();
+      setSyncMsg(`✓ ${r.pulled} records dobara aaye — reload…`);
+      setTimeout(() => window.location.reload(), 800);
+    } catch (e) { setSyncMsg("❌ " + e.message); setSyncBusy(false); }
   };
 
   const openLog = async () => {
@@ -533,12 +546,15 @@ export default function SettingsPage() {
           {showLog && (
             <div className="mt-8">
               {log.length === 0 && <p className="muted" style={{ fontSize: "0.82rem" }}>Abhi koi sync nahi hui.</p>}
+              <p className="hint">↓ aaye · ↑ bheje · 🗑 delete (sirf jo tumne khud kiye) · ⚠️ missing = koi record is device se bina delete kiye gayab hai. Cloud par wo zinda hai — neeche wala button dabao.</p>
+              <button className="btn btn--ghost btn--sm mt-8" onClick={doResync} disabled={syncBusy}>↺ Cloud se sab dobara laao</button>
               {log.map((e, i) => (
                 <div key={i} style={{ fontSize: "0.8rem", padding: "5px 0", borderBottom: "1px solid var(--line)" }}>
                   <span className="muted">{new Date(e.at).toLocaleString("en-IN")}</span>{" · "}
                   <span style={{ color: "var(--ok)" }}>↓ {e.pulled}</span>{" · "}
                   <span style={{ color: "var(--accent2)" }}>↑ {e.pushed}</span>
                   {e.deleted ? <span style={{ color: "var(--bad)" }}>{" · 🗑 " + e.deleted}</span> : null}
+                  {e.missing ? <span style={{ color: "var(--warning)" }}>{" · ⚠️ " + e.missing + " missing"}</span> : null}
                   {e.stores?.length ? <span className="muted">{" · " + e.stores.join(", ").replace(/cgl\./g, "")}</span> : null}
                 </div>
               ))}

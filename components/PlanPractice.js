@@ -39,10 +39,11 @@ const usable = (q) =>
 const qKey = (q) => String(q.id || (q.question || "").slice(0, 80));
 
 const SERVED_KEY = "cgl.planserved"; // { [specKey]: [qKey, …] }
+import { storeSet } from "@/lib/bigstore";
 function readServed() {
   try { return JSON.parse(localStorage.getItem(SERVED_KEY) || "{}"); } catch { return {}; }
 }
-function writeServed(v) { try { localStorage.setItem(SERVED_KEY, JSON.stringify(v)); } catch { /* quota */ } }
+function writeServed(v) { try { storeSet(SERVED_KEY, JSON.stringify(v)); } catch { /* quota */ } }
 
 function shuffle(a) {
   const arr = [...a];
