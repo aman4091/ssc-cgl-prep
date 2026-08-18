@@ -4,17 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { getSettings, saveSettings, DEFAULT_SETTINGS } from "@/lib/storage";
 import { exportAll, exportDataOnly, importAll, downloadBlob } from "@/lib/backup";
 import { getDaysOverview } from "@/lib/vocab";
-import { pushSync, pullSync, syncOnce, listRescue, restoreRescue } from "@/lib/sync";
+import { syncOnce, listRescue, restoreRescue, getSyncLog, SETUP_SQL } from "@/lib/sync";
 import PyqManager from "@/components/PyqManager";
 import CaRushSetting from "@/components/CaRushSetting";
 
-const SYNC_SQL = `create table if not exists syncs (
-  code text primary key,
-  data jsonb not null,
-  updated_at timestamptz not null default now()
-);
-alter table syncs enable row level security;
-create policy "anon all" on syncs for all to anon using (true) with check (true);`;
 
 function mask(key) {
   if (!key) return "";
@@ -79,42 +72,28 @@ export default function SettingsPage() {
   const [rescue, setRescue] = useState([]);
   const [showRescue, setShowRescue] = useState(false);
 
-  // Ek hi asli button. Ye na "push" hai na "pull" — dono taraf ka data key-by-key
-  // JOD deta hai (lib/sync.js). Isliye ismein kuch delete hone ka darr nahi.
+  const [log, setLog] = useState([]);
+  const [showLog, setShowLog] = useState(false);
+
+  // Ek hi button, aur ye "poora data bhejo" nahi karta — sirf badle hue records
+  // upar, naye records neeche. Manual push/pull ka concept hi khatam ho gaya.
   const doSync = async () => {
-    setSyncBusy(true); setSyncMsg("Sync ho raha hai — dono taraf ka data jod raha hoon…");
+    setSyncBusy(true); setSyncMsg("Sync ho raha hai…");
     try {
-      const r = await syncOnce();
-      const s = { ...getSettings(), syncAuto: true }; // pehli sync ke baad AUTO ON
-      saveSettings(s); setSettings(s);
-      if (r.applied) { setSyncMsg("✓ Sync ho gaya, naya data mil gaya — reload…"); setTimeout(() => window.location.reload(), 700); return; }
-      setSyncMsg(`✓ Sab sync hai${r.sent ? " (cloud bhi update ho gaya)" : ""} · ${new Date().toLocaleTimeString("en-IN")} — ab AUTO chalu, button dabane ki zaroorat nahi.`);
+      const r = await syncOnce({ onProgress: setSyncMsg });
+      const st = { ...getSettings(), syncAuto: true };  // pehli sync ke baad AUTO ON
+      saveSettings(st); setSettings(st);
+      const line = `${r.pulled} aaye · ${r.pushed} bheje${r.deleted ? ` · ${r.deleted} delete` : ""}`;
+      if (r.applied) { setSyncMsg(`✓ ${line} — reload…`); setTimeout(() => window.location.reload(), 700); return; }
+      setSyncMsg(`✓ Sab sync hai · ${line} — ab AUTO chalu, button dabane ki zaroorat nahi.`);
     } catch (e) { setSyncMsg("❌ " + e.message); }
     finally { setSyncBusy(false); }
   };
 
-  // Neeche wale do sirf tab ke liye hain jab do device ki ek hi cheez alag-alag
-  // ho aur tumhe khud tay karna ho kiski chalegi. Ye bhi kuch delete nahi karte.
-  const doPush = async () => {
-    setSyncBusy(true); setSyncMsg("Takraav mein is device ko sahi maan raha hoon…");
-    try {
-      const { at: t, absorbed } = await pushSync({ force: true });
-      const s = { ...getSettings(), syncAuto: true };
-      saveSettings(s); setSettings(s);
-      if (absorbed) { setSyncMsg("✓ Ho gaya + doosre device ka data bhi mila — reload…"); setTimeout(() => window.location.reload(), 700); return; }
-      setSyncMsg(`✓ Is device ki copy chal gayi · ${new Date(t).toLocaleString("en-IN")}`);
-    } catch (e) { setSyncMsg("❌ " + e.message); }
-    finally { setSyncBusy(false); }
-  };
-  const doPull = async () => {
-    if (!confirm("Jahan-jahan dono taraf ek hi cheez alag hai, wahan CLOUD wali chalegi. (Kuch delete nahi hoga.) Theek hai?")) return;
-    setSyncBusy(true); setSyncMsg("Takraav mein cloud ko sahi maan raha hoon…");
-    try {
-      const t = await pullSync();
-      saveSettings({ ...getSettings(), syncAuto: true });
-      setSyncMsg("✓ Ho gaya — reload ho raha hai…");
-      setTimeout(() => window.location.reload(), 700);
-    } catch (e) { setSyncMsg("❌ " + e.message); setSyncBusy(false); }
+  const openLog = async () => {
+    const next = !showLog;
+    setShowLog(next);
+    if (next) { try { setLog(await getSyncLog()); } catch { setLog([]); } }
   };
 
   const openRescue = async () => {
@@ -127,7 +106,7 @@ export default function SettingsPage() {
     setSyncBusy(true); setSyncMsg("Rescue copy wapas laa raha hoon…");
     try {
       const n = await restoreRescue(key);
-      setSyncMsg(`✓ ${n} cheezein wapas aa gayi — reload…`);
+      setSyncMsg(`✓ ${n} store wapas jud gaye — reload…`);
       setTimeout(() => window.location.reload(), 800);
     } catch (e) { setSyncMsg("❌ " + e.message); setSyncBusy(false); }
   };
@@ -525,7 +504,7 @@ export default function SettingsPage() {
             Targets, checklist, progress, mistakes, vocab, quizzes — sab devices pe <strong>apne aap sync</strong>. (PDF/image files sync nahi hote — unke liye upar wala backup.) Koi login nahi — bas ek secret <strong>sync code</strong>. Same code = same data.
           </p>
           <p className="hint" style={{ marginTop: 6 }}>
-            🔁 Sync ab <strong>jodta</strong> hai, badalta nahi: har device ko yaad rehta hai pichhli baar kya tha, isliye jo tumne yahan banaya wo bhi bachta hai aur jo doosre device par banaya wo bhi. Ek device purana ho to bhi doosre ka data nahi udta. Delete tabhi hota hai jab tum khud kisi device par delete karo.
+            🔁 Sync ab <strong>poora data nahi bhejta</strong> — sirf jo record badla hai wahi. Isliye purana device doosre ka naya data uda hi nahi sakta: jo uske paas hai hi nahi, uske baare mein wo kuch keh hi nahi sakta. Delete tabhi hota hai jab tum khud kisi device par delete karo.
           </p>
           <div className="field mt-16">
             <label>Supabase Project URL</label>
@@ -548,16 +527,23 @@ export default function SettingsPage() {
           </div>
           {syncMsg && <p className="mt-16" style={{ color: "var(--accent-2)", fontSize: "0.88rem" }}>{syncMsg}</p>}
 
-          {/* Takraav-tie-breaker. Rozmarra mein inki zaroorat nahi — sirf tab jab
-              ek hi cheez do device par alag ho aur tumhe tay karna ho kiski chale. */}
-          <details className="mt-16">
-            <summary className="muted" style={{ fontSize: "0.82rem", cursor: "pointer" }}>⚖️ Takraav ho to kiski chale? (zaroori nahi)</summary>
-            <div className="row mt-8" style={{ gap: 10, flexWrap: "wrap" }}>
-              <button className="btn btn--ghost btn--sm" onClick={doPush} disabled={syncBusy}>⬆️ Is device ki</button>
-              <button className="btn btn--ghost btn--sm" onClick={doPull} disabled={syncBusy}>⬇️ Cloud wali</button>
+          {/* Sync log: bharosa mere kehne par nahi, tumhare dekhne par. Har sync
+              ka hisaab — kitne aaye, kitne gaye, kitne delete hue. */}
+          <button className="btn btn--ghost btn--sm mt-16" onClick={openLog}>{showLog ? "✕ Hide log" : "📋 Sync log (kya-kya hua)"}</button>
+          {showLog && (
+            <div className="mt-8">
+              {log.length === 0 && <p className="muted" style={{ fontSize: "0.82rem" }}>Abhi koi sync nahi hui.</p>}
+              {log.map((e, i) => (
+                <div key={i} style={{ fontSize: "0.8rem", padding: "5px 0", borderBottom: "1px solid var(--line)" }}>
+                  <span className="muted">{new Date(e.at).toLocaleString("en-IN")}</span>{" · "}
+                  <span style={{ color: "var(--ok)" }}>↓ {e.pulled}</span>{" · "}
+                  <span style={{ color: "var(--accent2)" }}>↑ {e.pushed}</span>
+                  {e.deleted ? <span style={{ color: "var(--bad)" }}>{" · 🗑 " + e.deleted}</span> : null}
+                  {e.stores?.length ? <span className="muted">{" · " + e.stores.join(", ").replace(/cgl\./g, "")}</span> : null}
+                </div>
+              ))}
             </div>
-            <p className="hint" style={{ marginTop: 6 }}>Dono mein se koi bhi kuch <strong>delete nahi</strong> karta — sirf tay karte hain ki jahan takraav hai wahan kiski value rahegi.</p>
-          </details>
+          )}
 
           {/* Rescue: sync har badlav se pehle is device ka snapshot rakh deta hai.
               Kabhi kuch gadbad lage to yahan se wapas — aur wo bhi JOD kar, taaki
@@ -578,14 +564,14 @@ export default function SettingsPage() {
               ))}
             </div>
           )}
-          <button className="btn btn--ghost btn--sm mt-16" onClick={() => setShowSql((v) => !v)}>{showSql ? "✕ Hide setup" : "🛠️ Supabase setup (one-time SQL)"}</button>
+          <button className="btn btn--ghost btn--sm mt-16" onClick={() => setShowSql((v) => !v)}>{showSql ? "✕ Hide setup" : "🛠️ Sync setup (ek baar SQL)"}</button>
           {showSql && (
             <>
               <p className="hint" style={{ marginTop: 10 }}>
-                Supabase pe free project banao → <strong>SQL Editor</strong> mein ye ek baar chalao, phir
-                <strong> Project Settings → API</strong> se Project URL + anon key upar daalo:
+                Supabase → <strong>SQL Editor</strong> mein ye <strong>ek baar</strong> chalao (per-record sync ki nayi table).
+                Purani <code>syncs</code> table waise hi padi rehne do — pehli sync uska data khud utha legi.
               </p>
-              <pre style={{ whiteSpace: "pre-wrap", fontSize: "0.76rem", background: "var(--bg)", padding: 12, borderRadius: 8, overflowX: "auto" }}>{SYNC_SQL}</pre>
+              <pre style={{ whiteSpace: "pre-wrap", fontSize: "0.76rem", background: "var(--bg)", padding: 12, borderRadius: 8, overflowX: "auto" }}>{SETUP_SQL}</pre>
               <p className="hint" style={{ color: "var(--warning)" }}>
                 ⚠️ Sync-code mode mein table anon key se accessible hota hai — <strong>sync code hi tumhari privacy hai</strong>. Isliye lamba, random code rakho aur kisi ko mat batao.
               </p>

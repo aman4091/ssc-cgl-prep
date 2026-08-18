@@ -1,20 +1,20 @@
-// Sync merge ka regression test — `npm run test:sync`.
+// Sync ka regression test — `npm run test:sync`.
 //
-// Ye tests isliye repo mein hain, scratchpad mein nahi: sync ki galti chupi rehti
-// hai (data aaj nahi, do din baad gayab milta hai) aur uska koi UI nahi jisse
-// pakda ja sake. Har baar sync ko chhedne se pehle aur baad mein ye chalao.
+// Ye tests repo mein isliye hain (scratchpad mein nahi): sync ki galti chupi
+// rehti hai — data aaj nahi, do din baad gayab milta hai — aur use pakadne ka
+// koi UI nahi. Sync chhedne se PEHLE aur BAAD mein ye chalao.
 //
-// lib/syncmerge.js ESM hai par package CommonJS hai, isliye node use seedha
-// import nahi kar sakta — source ko ek temp .mjs mein copy karke import karte hain.
+// lib/syncitems.js ESM hai par package CommonJS, isliye source ko ek temp .mjs
+// mein copy karke import karte hain.
 import { readFileSync, writeFileSync, mkdtempSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { pathToFileURL } from "node:url";
 
-const src = readFileSync(new URL("../lib/syncmerge.js", import.meta.url), "utf8");
-const tmp = join(mkdtempSync(join(tmpdir(), "syncmerge-")), "syncmerge.mjs");
+const src = readFileSync(new URL("../lib/syncitems.js", import.meta.url), "utf8");
+const tmp = join(mkdtempSync(join(tmpdir(), "syncitems-")), "syncitems.mjs");
 writeFileSync(tmp, src);
-const { threeWayMerge, hashMap, diffLocal, mergeValues } = await import(pathToFileURL(tmp).href);
+const { shred, rebuild, reconcileStore, hashRecords } = await import(pathToFileURL(tmp).href);
 
 const J = JSON.stringify;
 let pass = 0, fail = 0;
@@ -22,144 +22,124 @@ function t(name, got, want) {
   if (J(got) === J(want)) { pass++; console.log("  ok   " + name); }
   else { fail++; console.log("  FAIL " + name + "\n       got  " + J(got) + "\n       want " + J(want)); }
 }
-const many = (n) => { const o = {}; for (let i = 0; i < n; i++) o["cgl.k" + i] = J({ v: i }); return o; };
+// Ek device ki "pichhli sync ki yaad" — jo uske paas tab tha.
+const sentOf = (json) => hashRecords(shred(json));
+// Cloud ke rows, jaise pullSince() se aate hain.
+const rowsOf = (json) => [...shred(json)].map(([item_id, data]) => ({ item_id, data, deleted: false }));
 
-console.log("\n1) ASLI HAADSA: purana device apne aap ko push karta tha aur naya data ud jata tha");
+console.log("\n1) ASLI HAADSA — purana device doosre ka naya data uda hi nahi sakta");
 {
-  const yday = { "cgl.home.items": J([{ id: "a" }]), "cgl.qstats": J({ x: 1 }) };
-  const base = hashMap(yday);                                            // dono ne kal sync kiya tha
-  const cloud = { "cgl.home.items": J([{ id: "a" }, { id: "b" }]), "cgl.qstats": J({ x: 1 }) }; // computer ne topic add kiya
-  const tablet = { "cgl.home.items": J([{ id: "a" }]), "cgl.qstats": J({ x: 1, y: 2 }) };       // tablet purana + background write
-  const r = threeWayMerge(tablet, cloud, base);
-  t("computer ka naya topic nahi uda", JSON.parse(r.merged["cgl.home.items"]), [{ id: "a" }, { id: "b" }]);
-  t("tablet ka apna naya data bhi bacha", JSON.parse(r.merged["cgl.qstats"]), { x: 1, y: 2 });
-  t("tablet par list update hui", JSON.parse(r.writes["cgl.home.items"]), [{ id: "a" }, { id: "b" }]);
-  t("kuch delete nahi hua", r.deletes, []);
-}
-
-console.log("\n2) Bilkul naya device (base null): dono taraf ka data milna chahiye");
-{
-  const fresh = { "cgl.settings": J({ theme: "dark" }) };
-  const cloud = { "cgl.home.items": J([{ id: "a" }]), "cgl.settings": J({ theme: "light", font: "x" }) };
-  const r = threeWayMerge(fresh, cloud, null);
-  t("cloud ka data mila", JSON.parse(r.merged["cgl.home.items"]), [{ id: "a" }]);
-  t("settings jud gayi (local jeeta)", JSON.parse(r.merged["cgl.settings"]), { theme: "dark", font: "x" });
-  t("kuch delete nahi", r.deletes, []);
-}
-
-console.log("\n3) Jaan-boojh kar kiya delete phir bhi chalna chahiye");
-{
-  const base = hashMap({ "cgl.quizzes": J([{ id: "q1" }]), "cgl.x": J(1) });
-  const r = threeWayMerge({ "cgl.x": J(1) }, { "cgl.quizzes": J([{ id: "q1" }]), "cgl.x": J(1) }, base);
-  t("delete cloud tak gaya", r.merged["cgl.quizzes"], undefined);
-}
-
-console.log("\n4) Browser ne local storage saaf kar diya -> delete NAHI, wapas bharo");
-{
-  const all = many(20);
-  const r = threeWayMerge({ "cgl.k0": all["cgl.k0"] }, all, hashMap(all));
-  t("wipe pakda gaya", r.wiped, true);
-  t("cloud par sab bacha", Object.keys(r.merged).length, 20);
-  t("device par 19 wapas aa rahe", Object.keys(r.writes).length, 19);
-  t("koi delete nahi", r.deletes, []);
-}
-
-console.log("\n5) Cloud row khaali mil gayi -> device khud ko NA mitaye, ulta cloud bhar de");
-{
-  const all = many(20);
-  const r = threeWayMerge(all, {}, hashMap(all));
-  t("remote-wipe pakda gaya", r.remoteWiped, true);
-  t("local par kuch nahi hata", r.deletes, []);
-  t("cloud wapas bhar raha hai", Object.keys(r.merged).length, 20);
-}
-
-console.log("\n6) Dono taraf se ek saath sab gayab -> jo bacha hai wo bhi na jaye");
-{
-  const all = many(20);
-  const r = threeWayMerge({ "cgl.k0": all["cgl.k0"] }, {}, hashMap(all));
-  t("dono taraf wipe", [r.wiped, r.remoteWiped], [true, true]);
-  t("bachi hui key bachi", Object.keys(r.merged), ["cgl.k0"]);
-  t("local se kuch nahi hata", r.deletes, []);
-}
-
-console.log("\n7) Cloud se sirf ek cheez sach mein delete hui -> wo delete honi chahiye");
-{
-  const all = many(20);
-  const remote = { ...all }; delete remote["cgl.k3"];
-  const r = threeWayMerge(all, remote, hashMap(all));
-  t("wipe nahi samjha", r.remoteWiped, false);
-  t("wahi ek hati", r.deletes, ["cgl.k3"]);
-}
-
-console.log("\n8) Dono taraf ek hi list badli -> union, kuch na khoye");
-{
-  const base = hashMap({ "cgl.feed.entries": J([{ id: "e1", at: "1" }]) });
-  const r = threeWayMerge(
-    { "cgl.feed.entries": J([{ id: "e1", at: "1" }, { id: "e2", at: "2" }]) },
-    { "cgl.feed.entries": J([{ id: "e1", at: "1" }, { id: "e3", at: "3" }]) },
-    base
-  );
-  t("dono nayi entries bachi", JSON.parse(r.merged["cgl.feed.entries"]).map((e) => e.id), ["e1", "e2", "e3"]);
-}
-
-console.log("\n9) Ek hi record dono jagah edit -> naya timestamp jeete");
-{
-  const a = J([{ id: "r1", note: "purana", updatedAt: "2026-08-18T10:00:00Z" }]);
-  const b = J([{ id: "r1", note: "naya", updatedAt: "2026-08-18T12:00:00Z" }]);
-  t("naya wala jeeta", JSON.parse(mergeValues(a, b))[0].note, "naya");
-}
-
-console.log("\n10) Nested object (settings jaisa) -> gehra merge");
-{
-  const a = J({ ui: { theme: "dark" }, plan: { mon: ["m1"] } });
-  const b = J({ ui: { font: "big" }, plan: { mon: ["m2"] }, extra: 1 });
-  t("nested jud gaya", JSON.parse(mergeValues(a, b)), { ui: { font: "big", theme: "dark" }, plan: { mon: ["m1", "m2"] }, extra: 1 });
-}
-
-console.log("\n11) Kuch nahi badla -> network chhoona hi nahi");
-{
-  const same = { "cgl.a": J([1, 2]) };
-  const r = threeWayMerge(same, same, hashMap(same));
-  t("remote ko bhejne ko kuch nahi", r.remoteDiffers, false);
-  t("local par likhne ko kuch nahi", r.changedLocally, false);
-}
-
-console.log("\n12) Manual buttons (prefer local/remote) kabhi delete na karein");
-{
-  const local = { "cgl.a": J(1), "cgl.onlyLocal": J(9) };
-  const cloud = { "cgl.a": J(2), "cgl.onlyCloud": J(8) };
-  const rl = threeWayMerge(local, cloud, null, "local");
-  const rr = threeWayMerge(local, cloud, null, "remote");
-  t("local-prefer: a=local, dono side bache", [rl.merged["cgl.a"], !!rl.merged["cgl.onlyLocal"], !!rl.merged["cgl.onlyCloud"]], ["1", true, true]);
-  t("remote-prefer: a=cloud, dono side bache", [rr.merged["cgl.a"], !!rr.merged["cgl.onlyLocal"], !!rr.merged["cgl.onlyCloud"]], ["2", true, true]);
-  t("dono mein zero delete", [rl.deletes.length, rr.deletes.length], [0, 0]);
-}
-
-console.log("\n13) gktricks / PYQ ke apne question (cgl.userpyq.*) — inhi ke Modern wale question ude the");
-{
-  // Shape: { [topicId]: [ {question, options, answer, ...} ] } — in questions par
-  // koi `id` NAHI hota, isliye union content se hota hai (JSON barabar = ek hi).
+  // Kal dono ke paas 1 question tha. Aaj computer par 1000 aur add hue.
   const q = (n) => ({ question: "Q" + n, options: ["a", "b", "c", "d"], answer: 0 });
-  const yday = { "cgl.userpyq.questions": J({ modern: [q(1)] }), "cgl.userpyq.topics": J([{ id: "u_1", name: "Modern" }]) };
-  const base = hashMap(yday);
-  // Computer par kal naye question add hue -> cloud par
-  const cloud = { "cgl.userpyq.questions": J({ modern: [q(1), q(2), q(3)] }), "cgl.userpyq.topics": J([{ id: "u_1", name: "Modern" }]) };
-  // Dusra device purani copy ke saath, aur usne apna alag topic banaya
-  const other = {
-    "cgl.userpyq.questions": J({ modern: [q(1)], polity: [q(9)] }),
-    "cgl.userpyq.topics": J([{ id: "u_1", name: "Modern" }, { id: "u_2", name: "Polity" }]),
-  };
-  const r = threeWayMerge(other, cloud, base);
-  const merged = JSON.parse(r.merged["cgl.userpyq.questions"]);
-  t("Modern ke saare question bache", merged.modern.map((x) => x.question), ["Q1", "Q2", "Q3"]);
-  t("dusre device ka apna topic bhi bacha", merged.polity.map((x) => x.question), ["Q9"]);
-  t("topics list jud gayi", JSON.parse(r.merged["cgl.userpyq.topics"]).map((x) => x.id), ["u_1", "u_2"]);
-  t("kuch delete nahi", r.deletes, []);
+  const yday = J({ modern: [q(0)] });
+  const cloudNow = J({ modern: Array.from({ length: 1001 }, (_, i) => q(i)) });
+
+  // Purana device: uske paas ab bhi kal wali copy hai, aur usne apna alag topic banaya.
+  const oldLocal = J({ modern: [q(0)], polity: [q(9000)] });
+  const r = reconcileStore(oldLocal, sentOf(yday), rowsOf(cloudNow));
+
+  const after = JSON.parse(r.nextJson);
+  t("1000 naye question purane device par aa gaye", after.modern.length, 1001);
+  t("purane device ka apna topic bhi bacha", after.polity.map((x) => x.question), ["Q9000"]);
+  t("purane device ne EK BHI delete nahi bheja", r.toSend.filter((x) => x.deleted).length, 0);
+  t("usne sirf apna naya topic bheja", r.toSend.map((x) => x.item_id.split("/")[0]), ["M:polity"]);
 }
 
-console.log("\n14) diffLocal sahi batata hai kya likhna/hatana hai");
+console.log("\n2) Bilkul naya/khaali device: sab kuch utaarta hai, bhejta kuch nahi");
 {
-  t("diff", diffLocal({ a: "1", b: "2" }, { a: "1", c: "3" }), { writes: { c: "3" }, deletes: ["b"], changedLocally: true });
+  const cloud = J([{ id: "a", n: 1 }, { id: "b", n: 2 }]);
+  const r = reconcileStore(null, {}, rowsOf(cloud));
+  t("dono records aa gaye", JSON.parse(r.nextJson).map((x) => x.id), ["a", "b"]);
+  t("bhejne ko kuch nahi", r.toSend, []);
+}
+
+console.log("\n3) Storage saaf ho gaya (Safari 7-din / clear site data) -> delete NAHI bhejta");
+{
+  // sent aur data ek hi jagah (IndexedDB) rehte hain, isliye dono saath jaate hain.
+  const r = reconcileStore(null, {}, rowsOf(J([{ id: "a" }, { id: "b" }])));
+  t("zero delete", r.toSend.filter((x) => x.deleted).length, 0);
+  t("data wapas aa gaya", JSON.parse(r.nextJson).length, 2);
+}
+
+console.log("\n4) Jaan-boojh kar kiya delete phir bhi chalta hai (tombstone row)");
+{
+  const before = J([{ id: "a" }, { id: "b" }]);
+  const after = J([{ id: "a" }]);                       // user ne b delete kiya
+  const r = reconcileStore(after, sentOf(before), []);
+  t("ek delete row bani", r.toSend, [{ item_id: "L#b", deleted: true, data: null }]);
+}
+
+console.log("\n5) Delete cloud se aaya -> local par bhi lagta hai");
+{
+  const both = J([{ id: "a" }, { id: "b" }]);
+  const r = reconcileStore(both, sentOf(both), [{ item_id: "L#b", deleted: true, data: null }]);
+  t("b hat gaya", JSON.parse(r.nextJson).map((x) => x.id), ["a"]);
+  t("bhejne ko kuch nahi", r.toSend, []);
+}
+
+console.log("\n6) Jis record ko HUMNE badla, uspar hamari chalti hai (aur wo push hota hai)");
+{
+  const base = J([{ id: "a", n: 1 }]);
+  const mine = J([{ id: "a", n: 99 }]);                 // humne badla
+  const theirs = [{ item_id: "L#a", data: { id: "a", n: 5 }, deleted: false }];
+  const r = reconcileStore(mine, sentOf(base), theirs);
+  t("hamara wala raha", JSON.parse(r.nextJson)[0].n, 99);
+  t("aur wahi bheja gaya", r.toSend.map((x) => x.data.n), [99]);
+}
+
+console.log("\n7) Do device, ek hi store, ALAG records -> dono bachte hain");
+{
+  const base = J([{ id: "a" }]);
+  const mine = J([{ id: "a" }, { id: "mine" }]);
+  const r = reconcileStore(mine, sentOf(base), [{ item_id: "L#theirs", data: { id: "theirs" }, deleted: false }]);
+  t("dono naye records saath", JSON.parse(r.nextJson).map((x) => x.id), ["a", "mine", "theirs"]);
+  t("sirf apna wala bheja", r.toSend.map((x) => x.item_id), ["L#mine"]);
+}
+
+console.log("\n8) shred/rebuild: har shakl wapas wahi banni chahiye");
+{
+  const cases = {
+    "id wali list": J([{ id: "x", v: 1 }, { id: "y", v: 2 }]),
+    "bina id ki list": J([3, "a", { z: 1 }]),
+    "map": J({ a: 1, b: "two" }),
+    "map ke andar list": J({ modern: [{ id: "q1" }, { id: "q2" }], polity: [] }),
+
+    "scalar": J(42),
+  };
+  for (const [name, json] of Object.entries(cases)) {
+    const back = rebuild(shred(json));
+    t(name, back === null ? null : JSON.parse(back), JSON.parse(json));
+  }
+  // Khaali container records se banta hi nahi (records se pata nahi chalta ki
+  // wo [] tha ya {}), isliye reconcile use chhedta nahi — churn nahi hota.
+  const r = reconcileStore(J([]), {}, []);
+  t("khaali list waise hi rehti hai", [r.nextJson, r.changed], ["[]", false]);
+}
+
+console.log("\n9) gktricks/PYQ ki asli shakl — question par id nahi hoti");
+{
+  const q = (n) => ({ question: "Q" + n, options: ["a", "b"], answer: 0 });
+  const json = J({ modern: [q(1), q(2)] });
+  const recs = shred(json);
+  t("har question apna record", recs.size, 2);
+  t("record id mein topic bhi hai", [...recs.keys()].every((k) => k.startsWith("M:modern/L~")), true);
+  t("wapas wahi bana", JSON.parse(rebuild(recs)), JSON.parse(json));
+}
+
+console.log("\n10) Store hi khatam ho gaya -> null (aur delete rows)");
+{
+  const before = J([{ id: "a" }]);
+  const r = reconcileStore(null, sentOf(before), []);
+  t("store null", r.nextJson, null);
+  t("delete bheja", r.toSend, [{ item_id: "L#a", deleted: true, data: null }]);
+}
+
+console.log("\n11) Kuch nahi badla -> na likhna, na bhejna");
+{
+  const json = J([{ id: "a" }, { id: "b" }]);
+  const r = reconcileStore(json, sentOf(json), []);
+  t("local same", r.changed, false);
+  t("bhejne ko kuch nahi", r.toSend, []);
 }
 
 console.log(`\n${pass} pass, ${fail} fail\n`);

@@ -2,16 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import { getSettings } from "@/lib/storage";
-import { syncReady, syncOnce, remoteInfo, localHash, isSyncPaused } from "@/lib/sync";
+import { syncReady, syncOnce, hasRemoteChanges, localHash, isSyncPaused } from "@/lib/sync";
 
-// Fully automatic cloud sync — no buttons.
+// Apne aap chalne wala sync — koi button nahi.
 //
 // Pehle yahan faisla hota tha ki "kaun jeetega": local badla ho to PUSH (poora
-// snapshot replace), warna PULL. Wahi faisla data khata tha — thoda purana device
-// bhi khud ko sahi maan kar doosre ka naya data uda deta.
-//
-// Ab yahan koi faisla hai hi nahi. Ek hi kaam hai — `syncOnce()` — jo dono taraf
-// ka data key-by-key JOD deta hai (lib/sync.js). Is component ka kaam sirf itna
+// snapshot replace), warna PULL. Wahi faisla data khata tha. Ab yahan koi faisla
+// hai hi nahi — ek hi kaam hai, `syncOnce()`, jo sirf BADLE HUE records upar
+// bhejta hai aur naye records neeche laata hai. Is component ka kaam bas itna
 // hai: sahi waqt par bulao, aur bekaar mein network mat chhuo.
 export default function SyncManager() {
   const busy = useRef(false);
@@ -19,13 +17,13 @@ export default function SyncManager() {
 
   useEffect(() => {
     let stopped = false;
-    // isSyncPaused: solve/pen view khula ho to bhaari hash/stringify ke beech
-    // mein nahi chalna chahiye (nib ruk jati hai).
+    // isSyncPaused: solve/pen view khula ho to bhaari kaam ke beech mein nahi
+    // chalna chahiye (nib ruk jati hai).
     const active = () => getSettings().syncAuto && syncReady() && !isSyncPaused();
 
     // Reload tabhi jab user kuch likh na raha ho — warna adha type kiya hua
-    // gayab ho jata hai. Ruk gaye to agli cycle par ho jayega; data to already
-    // storage mein likha ja chuka hai, sirf screen purani hai.
+    // gayab ho jata hai. Ruk gaye to agli cycle par ho jayega; data to storage
+    // mein likha ja chuka hai, sirf screen purani hai.
     const reloadIfIdle = () => {
       const el = document.activeElement;
       const typing = el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable);
@@ -39,15 +37,13 @@ export default function SyncManager() {
       if (wantReload.current) { reloadIfIdle(); if (wantReload.current) return; }
       busy.current = true;
       try {
-        const s = getSettings();
-        const dirty = localHash() !== (s.syncPushedHash || "");
-        const remoteAt = await remoteInfo();
-        const remoteNew = (remoteAt || "") !== (s.syncRemoteAt || "");
-        // Dono taraf kuch nahi badla — poora data kheenchne ka koi matlab nahi.
-        if (!dirty && !remoteNew) return;
+        const dirty = localHash() !== (getSettings().syncPushedHash || "");
+        // Dono taraf kuch nahi badla to poora chakkar chalane ka matlab nahi.
+        // hasRemoteChanges ek row bhi nahi kheenchta — sirf "kuch hai kya" poochta hai.
+        if (!dirty && !(await hasRemoteChanges())) return;
         const r = await syncOnce();
         if (r.applied) reloadIfIdle();
-      } catch { /* offline / race — agli cycle par phir */ }
+      } catch { /* offline / setup baaki — agli cycle par phir */ }
       finally { busy.current = false; }
     };
 
