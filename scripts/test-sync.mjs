@@ -135,7 +135,29 @@ console.log("\n12) Manual buttons (prefer local/remote) kabhi delete na karein")
   t("dono mein zero delete", [rl.deletes.length, rr.deletes.length], [0, 0]);
 }
 
-console.log("\n13) diffLocal sahi batata hai kya likhna/hatana hai");
+console.log("\n13) gktricks / PYQ ke apne question (cgl.userpyq.*) — inhi ke Modern wale question ude the");
+{
+  // Shape: { [topicId]: [ {question, options, answer, ...} ] } — in questions par
+  // koi `id` NAHI hota, isliye union content se hota hai (JSON barabar = ek hi).
+  const q = (n) => ({ question: "Q" + n, options: ["a", "b", "c", "d"], answer: 0 });
+  const yday = { "cgl.userpyq.questions": J({ modern: [q(1)] }), "cgl.userpyq.topics": J([{ id: "u_1", name: "Modern" }]) };
+  const base = hashMap(yday);
+  // Computer par kal naye question add hue -> cloud par
+  const cloud = { "cgl.userpyq.questions": J({ modern: [q(1), q(2), q(3)] }), "cgl.userpyq.topics": J([{ id: "u_1", name: "Modern" }]) };
+  // Dusra device purani copy ke saath, aur usne apna alag topic banaya
+  const other = {
+    "cgl.userpyq.questions": J({ modern: [q(1)], polity: [q(9)] }),
+    "cgl.userpyq.topics": J([{ id: "u_1", name: "Modern" }, { id: "u_2", name: "Polity" }]),
+  };
+  const r = threeWayMerge(other, cloud, base);
+  const merged = JSON.parse(r.merged["cgl.userpyq.questions"]);
+  t("Modern ke saare question bache", merged.modern.map((x) => x.question), ["Q1", "Q2", "Q3"]);
+  t("dusre device ka apna topic bhi bacha", merged.polity.map((x) => x.question), ["Q9"]);
+  t("topics list jud gayi", JSON.parse(r.merged["cgl.userpyq.topics"]).map((x) => x.id), ["u_1", "u_2"]);
+  t("kuch delete nahi", r.deletes, []);
+}
+
+console.log("\n14) diffLocal sahi batata hai kya likhna/hatana hai");
 {
   t("diff", diffLocal({ a: "1", b: "2" }, { a: "1", c: "3" }), { writes: { c: "3" }, deletes: ["b"], changedLocally: true });
 }
