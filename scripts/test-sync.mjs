@@ -214,5 +214,21 @@ console.log("\n13) RELOAD LOOP se bachao: bina naye rows ke sync kuch likhe hi n
   }
 }
 
+console.log("\n14) Ek jaisi do entries — na girein, na har sync par 'badla hua' dikhein");
+{
+  // Asli shakl: cgl.qtime jaisa { qkey: [12, 15, 12] }. Dono 12 ka content ek
+  // hi hai. Pehle dono ka record id bhi ek hi banta tha, to ek entry har sync
+  // par GIR jati thi — aur store hamesha "badla hua" dikhta, jisse page baar-baar
+  // reload hota tha.
+  const dup = J({ q1: [12, 15, 12], q2: [7, 7, 7] });
+  t("saari entries records banin", shred(dup).size, 6);
+  t("wapas jodne par wahi list", JSON.parse(rebuild(shred(dup))), JSON.parse(dup));
+  const r = reconcileStore(dup, sentOf(dup), [], []);
+  t("aur sync ko kuch likhna hi nahi", [r.changed, r.toSend.length], [false, 0]);
+
+  const dupList = J([{ id: "a" }, { id: "a" }, "x", "x"]);
+  t("list mein bhi dohraav bachta hai", JSON.parse(rebuild(shred(dupList))), JSON.parse(dupList));
+}
+
 console.log(`\n${pass} pass, ${fail} fail\n`);
 process.exit(fail ? 1 : 0);

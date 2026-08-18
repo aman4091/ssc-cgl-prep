@@ -7,6 +7,7 @@ import { recordAttempts, keyFor } from "@/lib/qstats";
 import { logActivity } from "@/lib/activity";
 import { addReview, setReviewErrorType } from "@/lib/qreview";
 import { recordSpeed } from "@/lib/qspeed";
+import { setSyncPaused } from "@/lib/sync";
 
 // Distraction-free, one-question-at-a-time TEST view that fills the whole screen.
 // It works for EVERY bank because a question is either text (q.question/options/
@@ -48,6 +49,11 @@ export default function FullscreenRunner({
   startIndex = 0,
   onExit,
 }) {
+  // Test chalu hai to sync ko storage chhoone hi nahi dena — answers React
+  // state mein hain, aur beech mein koi jhatka seedha nuksaan hai. Test band
+  // hote hi sync wapas chalu (jo bana wo tab chala jayega).
+  useEffect(() => { setSyncPaused(true); return () => setSyncPaused(false); }, []);
+
   const [cur, setCur] = useState(() => Math.min(Math.max(0, startIndex), Math.max(0, questions.length - 1)));
   const [answers, setAnswers] = useState({});     // index -> chosen option index
   const [revealed, setRevealed] = useState({});   // index -> true (Show answer pressed)

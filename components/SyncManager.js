@@ -4,50 +4,29 @@ import { useEffect, useRef } from "react";
 import { getSettings } from "@/lib/storage";
 import { syncReady, syncOnce, hasRemoteChanges, localHash, isSyncPaused } from "@/lib/sync";
 
-// Apne aap chalne wala sync — koi button nahi.
+// Apne aap chalne wala sync — koi button nahi, aur ab koi RELOAD bhi nahi.
 //
-// Pehle yahan faisla hota tha ki "kaun jeetega": local badla ho to PUSH (poora
-// snapshot replace), warna PULL. Wahi faisla data khata tha. Ab yahan koi faisla
-// hai hi nahi — ek hi kaam hai, `syncOnce()`, jo sirf BADLE HUE records upar
-// bhejta hai aur naye records neeche laata hai. Is component ka kaam bas itna
-// hai: sahi waqt par bulao, aur bekaar mein network mat chhuo.
+// Pehle jab doosre device se data aata tha to ye page reload kar deta tha,
+// taaki naya data screen par dikhe. Wo galat tha, aur mehnga: quiz ke beech
+// reload hote hi saare mark kiye hue answer chale jate the (answers React state
+// mein hote hain, storage mein nahi). Koi app quiz ke beech khud reload nahi
+// karti — theek baat hai.
+//
+// Ab data chupchaap storage mein likh diya jata hai aur bas ek event chhod diya
+// jata hai. Jo screen khudko refresh karna chahti hai wo sun le; baaki screens
+// agli baar khulne par naya data dikha dengi. Kuch khota kabhi nahi — data likha
+// ja chuka hota hai.
 export default function SyncManager() {
   const busy = useRef(false);
-  const wantReload = useRef(false);
 
   useEffect(() => {
     let stopped = false;
-    // isSyncPaused: solve/pen view khula ho to bhaari kaam ke beech mein nahi
-    // chalna chahiye (nib ruk jati hai).
+    // isSyncPaused: quiz/test/pen jaisi screen khuli ho to sync ko storage
+    // chhoona hi nahi chahiye.
     const active = () => getSettings().syncAuto && syncReady() && !isSyncPaused();
-
-    // Reload tabhi jab user kuch likh na raha ho — warna adha type kiya hua
-    // gayab ho jata hai. Ruk gaye to agli cycle par ho jayega; data to storage
-    // mein likha ja chuka hai, sirf screen purani hai.
-    // Reload par ek seedhi lagaam: ek minute mein ek se zyada baar nahi.
-    //
-    // Ye data ka guard nahi hai, sirf app chalti rehne ke liye hai. Agar kabhi
-    // koi store har sync par "badla hua" dikhne lage (aisa ek baar ho chuka
-    // hai — settings ke sync fields ki wajah se), to bina iske page laga rehta
-    // hai reload hone par aur app haath hi nahi aati. Data phir bhi likha ja
-    // chuka hota hai; sirf screen agli baar taazi hoti hai.
-    const RELOAD_GAP_MS = 60000;
-    const reloadIfIdle = () => {
-      const el = document.activeElement;
-      const typing = el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable);
-      if (typing || stopped) { wantReload.current = true; return; }
-      try {
-        const last = Number(sessionStorage.getItem("cgl.sync.reloadAt") || 0);
-        if (Date.now() - last < RELOAD_GAP_MS) { wantReload.current = false; return; }
-        sessionStorage.setItem("cgl.sync.reloadAt", String(Date.now()));
-      } catch { /* ignore */ }
-      wantReload.current = false;
-      window.location.reload();
-    };
 
     const cycle = async () => {
       if (busy.current || !active() || document.hidden) return;
-      if (wantReload.current) { reloadIfIdle(); if (wantReload.current) return; }
       busy.current = true;
       try {
         const dirty = localHash() !== (getSettings().syncPushedHash || "");
@@ -55,7 +34,9 @@ export default function SyncManager() {
         // hasRemoteChanges ek row bhi nahi kheenchta — sirf "kuch hai kya" poochta hai.
         if (!dirty && !(await hasRemoteChanges())) return;
         const r = await syncOnce();
-        if (r.applied) reloadIfIdle();
+        if (r.applied && !stopped) {
+          window.dispatchEvent(new CustomEvent("cgl:sync-applied", { detail: r }));
+        }
       } catch { /* offline / setup baaki — agli cycle par phir */ }
       finally { busy.current = false; }
     };

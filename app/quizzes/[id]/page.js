@@ -14,6 +14,7 @@ import PasteAnswer from "@/components/PasteAnswer";
 import WordPopup from "@/components/WordPopup";
 import FullscreenTestButton from "@/components/FullscreenTestButton";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
+import { setSyncPaused } from "@/lib/sync";
 import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { recordQuizAttempts, quizCategory, setReviewErrorType, ERROR_TYPES } from "@/lib/qreview";
@@ -29,6 +30,12 @@ function fmt(sec) {
 export default function QuizPlayer() {
   const { id } = useParams();
   const router = useRouter();
+  // Quiz khula ho to sync ko storage chhoone hi nahi dena. Answers React state
+  // mein hain, isliye beech mein kuch bhi jhatka lagna seedha nuksaan hai —
+  // aur quiz ke beech koi app khud kuch nahi badalti. Screen band hote hi sync
+  // wapas chalu ho jata hai (jo bhi bana wo tab chala jayega).
+  useEffect(() => { setSyncPaused(true); return () => setSyncPaused(false); }, []);
+
   const [quiz, setQuiz] = useState(undefined);
 
   // attempt state
