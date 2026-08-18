@@ -195,7 +195,10 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
             titleAttr="Isi question se full-screen test shuru karo"
           />
         )}
-        {aiUseful && <span className="q-act--keep"><AskButtons q={tq} subject={subject} /></span>}
+        {/* Gemini ab HAR question par — non-verbal par bhi. Pehle ye chhupa tha
+            kyunki bhejne layak text hi nahi tha; ab TASVEER jati hai, to figure
+            question hi sabse zyada faayda uthata hai. */}
+        <span className="q-act--keep"><AskButtons q={tq} subject={subject} /></span>
         <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
         <button className="btn" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
         <DoneButton q={q} subject={subject} />
@@ -205,8 +208,8 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
       {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}
       {!aiUseful && (
         <p className="qcard__note">
-          🖼️ Figure question — ismein AI ko bhejne layak text hai hi nahi, isliye Gemini/shortcut
-          buttons yahan nahi hain. Solution neeche image mein hai.
+          🖼️ Figure question — ismein bhejne layak TEXT nahi hai, isliye ✨ Gemini question ki
+          tasveer copy karta hai. (🎯 20 text par tika hai, wo yahan kaam nahi karega.)
         </p>
       )}
 

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { getSettings } from "@/lib/storage";
+import { questionImage, copyQuestionImage, promptFor, armPrompt, toast } from "@/lib/geminiask";
 
 // Question + lettered options as plain text. Markdown image (![](url)) becomes the
 // raw URL so figure questions are still askable elsewhere.
@@ -33,9 +34,33 @@ function LabelParts({ label }) {
   );
 }
 
-export default function AskElsewhere({ q, subject, className = "btn btn--ghost btn--sm", url, label, title, promptKey, onAsked }) {
+export default function AskElsewhere({ q, subject, className = "btn btn--ghost btn--sm", url, label, title, promptKey, onAsked, imagePrompt }) {
   const [done, setDone] = useState(false);
   const go = async () => {
+    const ping = () => { setDone(true); setTimeout(() => setDone(false), 1500); };
+    const open = () => {
+      const tmpl0 = String(url != null ? url : (getSettings().askExternalUrl || "")).trim();
+      if (tmpl0) { try { window.open(tmpl0, "_blank", "noopener,noreferrer"); } catch { /* ignore */ } }
+      if (onAsked) { try { onAsked(); } catch { /* ignore */ } }
+    };
+
+    // Question ek TASVEER hai (maths/reasoning crops) to text ki jagah image
+    // bhejo — fractions aur figures jaise-ke-taise jaate hain, jabki inka text
+    // lossy hota hai (non-verbal mein to hota hi nahi). Prompt saath nahi ja
+    // sakta, isliye wapas aate hi wo apne aap copy ho jata hai — lib/geminiask.
+    if (questionImage(q)) {
+      const ok = await copyQuestionImage(q);
+      if (ok) {
+        armPrompt(imagePrompt || promptFor(subject, promptKey || "geminiPrompt"));
+        toast("🖼️ Image copy ho gayi — Gemini mein paste karo; yahan wapas aate hi prompt apne aap copy ho jayega");
+        ping();
+        open();
+        return;
+      }
+      // Is browser mein image-clipboard nahi (zyadatar phone) — neeche text wala
+      // purana raasta chal jayega, taaki button bekaar na ho jaye.
+    }
+
     let text = questionText(q);
     if (promptKey) {
       // Settings holds a prompt PER SUBJECT (shortcutPrompts) as well as the
@@ -48,7 +73,7 @@ export default function AskElsewhere({ q, subject, className = "btn btn--ghost b
       if (pre) text = `${pre}\n\n${text}`;
     }
     try { await navigator.clipboard.writeText(text); } catch { /* ignore */ }
-    setDone(true); setTimeout(() => setDone(false), 1500);
+    ping();
     const tmpl = String(url != null ? url : (getSettings().askExternalUrl || "")).trim();
     if (tmpl) {
       const full = tmpl.includes("%s") ? tmpl.replace("%s", encodeURIComponent(text)) : tmpl;

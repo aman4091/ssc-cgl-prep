@@ -98,11 +98,16 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   // global geminiPrompt setting — used by every other bank — is untouched. The
   // text is the lossy qText (the question is an image); good for word problems,
   // imperfect for fraction-heavy ones.
+  const MATHS_PROMPT =
+    "Is question ko seconds mein kaise solve karein — sabse fast trick/shortcut " +
+    "batao, lamba method nahi. Hinglish mein.";
+  // qImg saath bhejna zaroori hai: AskElsewhere yahi dekh kar text ki jagah
+  // TASVEER clipboard par daalta hai. Text (qText) lossy hai — fraction-bhare
+  // question ismein toot jate hain.
   const geminiQ = {
-    question:
-      "Is question ko seconds mein kaise solve karein — sabse fast trick/shortcut " +
-      "batao, lamba method nahi. Hinglish mein.\n\n" + (q.qText || ""),
+    question: MATHS_PROMPT + "\n\n" + (q.qText || ""),
     options: tq.options,
+    qImg: q.qImg,
   };
   // Pressing Gemini also opens the paste box for THIS question (PasteAnswer
   // listens on cgl:gemini-asked), same as the shared AskButtons does.
@@ -267,7 +272,8 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
             subject={subject}
             url="https://gemini.google.com/app"
             label="✨ Gemini"
-            title="Question copy karke Gemini kholo — phir answer paste karo"
+            title="Question ki image copy karke Gemini kholo — phir answer paste karo"
+            imagePrompt={MATHS_PROMPT}
             onAsked={openPaste}
           />
         </span>

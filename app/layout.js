@@ -8,6 +8,7 @@ import CurrentAffairsRush from "@/components/CurrentAffairsRush";
 import FocusEnforcer from "@/components/FocusEnforcer";
 import VocabPrefetch from "@/components/VocabPrefetch";
 import SyncManager from "@/components/SyncManager";
+import Toast from "@/components/Toast";
 import OverlayInbox from "@/components/OverlayInbox";
 import VocabFeeder from "@/components/VocabFeeder";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -74,6 +75,7 @@ export default function RootLayout({ children }) {
           <FocusEnforcer />
           <VocabPrefetch />
           <SyncManager />
+          <Toast />
           <SWRegister />
           <OverlayInbox />
           <VocabFeeder />
