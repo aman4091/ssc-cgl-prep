@@ -193,5 +193,26 @@ console.log("\n12) CHOKE POINT: storeSet khud delete ki khabar darj karta hai");
   t("bhejne ke baad khabar hat gayi", bs.getTombstones()[K], undefined);
 }
 
+console.log("\n13) RELOAD LOOP se bachao: bina naye rows ke sync kuch likhe hi na");
+{
+  // Agar koi store har sync par "badla hua" dikhne lage, to SyncManager har baar
+  // page reload karta hai aur app haath hi nahi aati. Ek baar aisa ho chuka hai
+  // (settings ke sync fields ki wajah se), isliye har shakl ka round-trip yahan
+  // pinned hai: local == sent, koi row nahi -> changed false, toSend khaali.
+  const shapes = {
+    "settings jaisa object": J({ theme: "dark", model: "x", nested: { a: 1 } }),
+    "quizzes jaisi list": J([{ id: "q1", title: "A" }, { id: "q2", title: "B" }]),
+    "questions ka map": J({ modern: [{ question: "Q1" }, { question: "Q2" }], polity: [] }),
+    "ids ki list": J(["a", "b", "c"]),
+    "counter jaisa map": J({ day: "2026-08-18", math: 12, gs: 3 }),
+    "khaali map": J({}),
+    "khaali list": J([]),
+  };
+  for (const [name, json] of Object.entries(shapes)) {
+    const r = reconcileStore(json, sentOf(json), [], []);
+    t(name, [r.changed, r.toSend.length], [false, 0]);
+  }
+}
+
 console.log(`\n${pass} pass, ${fail} fail\n`);
 process.exit(fail ? 1 : 0);

@@ -24,10 +24,23 @@ export default function SyncManager() {
     // Reload tabhi jab user kuch likh na raha ho — warna adha type kiya hua
     // gayab ho jata hai. Ruk gaye to agli cycle par ho jayega; data to storage
     // mein likha ja chuka hai, sirf screen purani hai.
+    // Reload par ek seedhi lagaam: ek minute mein ek se zyada baar nahi.
+    //
+    // Ye data ka guard nahi hai, sirf app chalti rehne ke liye hai. Agar kabhi
+    // koi store har sync par "badla hua" dikhne lage (aisa ek baar ho chuka
+    // hai — settings ke sync fields ki wajah se), to bina iske page laga rehta
+    // hai reload hone par aur app haath hi nahi aati. Data phir bhi likha ja
+    // chuka hota hai; sirf screen agli baar taazi hoti hai.
+    const RELOAD_GAP_MS = 60000;
     const reloadIfIdle = () => {
       const el = document.activeElement;
       const typing = el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable);
       if (typing || stopped) { wantReload.current = true; return; }
+      try {
+        const last = Number(sessionStorage.getItem("cgl.sync.reloadAt") || 0);
+        if (Date.now() - last < RELOAD_GAP_MS) { wantReload.current = false; return; }
+        sessionStorage.setItem("cgl.sync.reloadAt", String(Date.now()));
+      } catch { /* ignore */ }
       wantReload.current = false;
       window.location.reload();
     };
