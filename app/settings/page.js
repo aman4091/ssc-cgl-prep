@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { getSettings, saveSettings, DEFAULT_SETTINGS } from "@/lib/storage";
 import { exportAll, exportDataOnly, importAll, downloadBlob } from "@/lib/backup";
 import { getDaysOverview } from "@/lib/vocab";
-import { pushSync, pullSync } from "@/lib/sync";
+import { pushSync, pullSync, syncOnce, listRescue, restoreRescue } from "@/lib/sync";
 import PyqManager from "@/components/PyqManager";
 import CaRushSetting from "@/components/CaRushSetting";
 
@@ -76,28 +76,59 @@ export default function SettingsPage() {
   const [syncBusy, setSyncBusy] = useState(false);
   const [syncMsg, setSyncMsg] = useState("");
   const [showSql, setShowSql] = useState(false);
-  const doPush = async () => {
-    setSyncBusy(true); setSyncMsg("Cloud pe push ho raha hai…");
+  const [rescue, setRescue] = useState([]);
+  const [showRescue, setShowRescue] = useState(false);
+
+  // Ek hi asli button. Ye na "push" hai na "pull" — dono taraf ka data key-by-key
+  // JOD deta hai (lib/sync.js). Isliye ismein kuch delete hone ka darr nahi.
+  const doSync = async () => {
+    setSyncBusy(true); setSyncMsg("Sync ho raha hai — dono taraf ka data jod raha hoon…");
     try {
-      // Manual push = user jaan-boojh kar keh raha hai "yahi sahi copy hai",
-      // isliye shrink-guard bypass (force).
-      const { at: t, absorbed } = await pushSync({ force: true });
-      const s = { ...getSettings(), syncAuto: true }; // first push -> auto ON from now on
+      const r = await syncOnce();
+      const s = { ...getSettings(), syncAuto: true }; // pehli sync ke baad AUTO ON
       saveSettings(s); setSettings(s);
-      if (absorbed) { setSyncMsg("✓ Push + doosre device ka data mil gaya — reload…"); setTimeout(() => window.location.reload(), 700); return; }
-      setSyncMsg(`✓ Push ho gaya · ${new Date(t).toLocaleString("en-IN")} — ab AUTO ON, dobara button dabane ki zaroorat nahi.`);
+      if (r.applied) { setSyncMsg("✓ Sync ho gaya, naya data mil gaya — reload…"); setTimeout(() => window.location.reload(), 700); return; }
+      setSyncMsg(`✓ Sab sync hai${r.sent ? " (cloud bhi update ho gaya)" : ""} · ${new Date().toLocaleTimeString("en-IN")} — ab AUTO chalu, button dabane ki zaroorat nahi.`);
+    } catch (e) { setSyncMsg("❌ " + e.message); }
+    finally { setSyncBusy(false); }
+  };
+
+  // Neeche wale do sirf tab ke liye hain jab do device ki ek hi cheez alag-alag
+  // ho aur tumhe khud tay karna ho kiski chalegi. Ye bhi kuch delete nahi karte.
+  const doPush = async () => {
+    setSyncBusy(true); setSyncMsg("Takraav mein is device ko sahi maan raha hoon…");
+    try {
+      const { at: t, absorbed } = await pushSync({ force: true });
+      const s = { ...getSettings(), syncAuto: true };
+      saveSettings(s); setSettings(s);
+      if (absorbed) { setSyncMsg("✓ Ho gaya + doosre device ka data bhi mila — reload…"); setTimeout(() => window.location.reload(), 700); return; }
+      setSyncMsg(`✓ Is device ki copy chal gayi · ${new Date(t).toLocaleString("en-IN")}`);
     } catch (e) { setSyncMsg("❌ " + e.message); }
     finally { setSyncBusy(false); }
   };
   const doPull = async () => {
-    if (!confirm("Cloud se data laa ke is device ka data overwrite kar du?")) return;
-    setSyncBusy(true); setSyncMsg("Cloud se pull ho raha hai…");
+    if (!confirm("Jahan-jahan dono taraf ek hi cheez alag hai, wahan CLOUD wali chalegi. (Kuch delete nahi hoga.) Theek hai?")) return;
+    setSyncBusy(true); setSyncMsg("Takraav mein cloud ko sahi maan raha hoon…");
     try {
       const t = await pullSync();
-      if (!t) { setSyncMsg("Cloud pe abhi kuch nahi — pehle kisi device se ⬆️ Push karo."); setSyncBusy(false); return; }
-      saveSettings({ ...getSettings(), syncAuto: true }); // auto ON from now on
-      setSyncMsg("✓ Pull ho gaya — reload ho raha hai…");
+      saveSettings({ ...getSettings(), syncAuto: true });
+      setSyncMsg("✓ Ho gaya — reload ho raha hai…");
       setTimeout(() => window.location.reload(), 700);
+    } catch (e) { setSyncMsg("❌ " + e.message); setSyncBusy(false); }
+  };
+
+  const openRescue = async () => {
+    const next = !showRescue;
+    setShowRescue(next);
+    if (next) { try { setRescue(await listRescue()); } catch { setRescue([]); } }
+  };
+  const doRestore = async (key, at) => {
+    if (!confirm(`${new Date(at).toLocaleString("en-IN")} wali copy wapas laa du? Aaj ka data bhi bacha rahega — dono jud jayenge.`)) return;
+    setSyncBusy(true); setSyncMsg("Rescue copy wapas laa raha hoon…");
+    try {
+      const n = await restoreRescue(key);
+      setSyncMsg(`✓ ${n} cheezein wapas aa gayi — reload…`);
+      setTimeout(() => window.location.reload(), 800);
     } catch (e) { setSyncMsg("❌ " + e.message); setSyncBusy(false); }
   };
 
@@ -494,7 +525,7 @@ export default function SettingsPage() {
             Targets, checklist, progress, mistakes, vocab, quizzes — sab devices pe <strong>apne aap sync</strong>. (PDF/image files sync nahi hote — unke liye upar wala backup.) Koi login nahi — bas ek secret <strong>sync code</strong>. Same code = same data.
           </p>
           <p className="hint" style={{ marginTop: 6 }}>
-            🔁 Har device pe <strong>pehli baar</strong> URL + key + wahi sync code daal ke ek baar <strong>Push/Pull</strong> karo — uske baad <strong>bina kuch dabaye</strong> apne aap sync hota rahega (change karte hi, aur app kholte hi).
+            🔁 Sync ab <strong>jodta</strong> hai, badalta nahi: har device ko yaad rehta hai pichhli baar kya tha, isliye jo tumne yahan banaya wo bhi bachta hai aur jo doosre device par banaya wo bhi. Ek device purana ho to bhi doosre ka data nahi udta. Delete tabhi hota hai jab tum khud kisi device par delete karo.
           </p>
           <div className="field mt-16">
             <label>Supabase Project URL</label>
@@ -512,11 +543,41 @@ export default function SettingsPage() {
               onChange={(e) => update("syncCode", e.target.value)} spellCheck={false} />
           </div>
           <div className="row mt-16" style={{ gap: 10, flexWrap: "wrap" }}>
-            <button className="btn btn--primary" onClick={doPush} disabled={syncBusy || !(settings.supabaseUrl && settings.supabaseAnonKey && settings.syncCode)}>⬆️ Push now</button>
-            <button className="btn btn--ghost" onClick={doPull} disabled={syncBusy || !(settings.supabaseUrl && settings.supabaseAnonKey && settings.syncCode)}>⬇️ Pull now</button>
+            <button className="btn btn--primary" onClick={doSync} disabled={syncBusy || !(settings.supabaseUrl && settings.supabaseAnonKey && settings.syncCode)}>🔄 Sync now</button>
             {settings.syncLastAt && <span className="muted" style={{ fontSize: "0.8rem", alignSelf: "center" }}>Last sync: {new Date(settings.syncLastAt).toLocaleString("en-IN")}</span>}
           </div>
           {syncMsg && <p className="mt-16" style={{ color: "var(--accent-2)", fontSize: "0.88rem" }}>{syncMsg}</p>}
+
+          {/* Takraav-tie-breaker. Rozmarra mein inki zaroorat nahi — sirf tab jab
+              ek hi cheez do device par alag ho aur tumhe tay karna ho kiski chale. */}
+          <details className="mt-16">
+            <summary className="muted" style={{ fontSize: "0.82rem", cursor: "pointer" }}>⚖️ Takraav ho to kiski chale? (zaroori nahi)</summary>
+            <div className="row mt-8" style={{ gap: 10, flexWrap: "wrap" }}>
+              <button className="btn btn--ghost btn--sm" onClick={doPush} disabled={syncBusy}>⬆️ Is device ki</button>
+              <button className="btn btn--ghost btn--sm" onClick={doPull} disabled={syncBusy}>⬇️ Cloud wali</button>
+            </div>
+            <p className="hint" style={{ marginTop: 6 }}>Dono mein se koi bhi kuch <strong>delete nahi</strong> karta — sirf tay karte hain ki jahan takraav hai wahan kiski value rahegi.</p>
+          </details>
+
+          {/* Rescue: sync har badlav se pehle is device ka snapshot rakh deta hai.
+              Kabhi kuch gadbad lage to yahan se wapas — aur wo bhi JOD kar, taaki
+              aaj ka data bhi na jaye. */}
+          <button className="btn btn--ghost btn--sm mt-16" onClick={openRescue}>{showRescue ? "✕ Hide rescue" : "🛟 Rescue copies (data wapas laao)"}</button>
+          {showRescue && (
+            <div className="mt-8">
+              <p className="hint">Sync se <strong>pehle</strong> ki {rescue.length} copies is device par padi hain. Wapas laane par aaj ka data mitta nahi — dono jud jate hain.</p>
+              {rescue.length === 0 && <p className="muted" style={{ fontSize: "0.82rem" }}>Abhi koi rescue copy nahi (sync ne abhi kuch badla hi nahi).</p>}
+              {rescue.map((r) => (
+                <div key={r.key} className="row between mt-8" style={{ gap: 10, flexWrap: "wrap" }}>
+                  <span style={{ fontSize: "0.82rem" }}>
+                    {new Date(r.at).toLocaleString("en-IN")} · {r.keys} stores · {(r.bytes / 1024 / 1024).toFixed(1)} MB
+                    {r.why ? <span className="muted"> · {r.why}</span> : null}
+                  </span>
+                  <button className="btn btn--ghost btn--sm" onClick={() => doRestore(r.key, r.at)} disabled={syncBusy}>↩️ Wapas laao</button>
+                </div>
+              ))}
+            </div>
+          )}
           <button className="btn btn--ghost btn--sm mt-16" onClick={() => setShowSql((v) => !v)}>{showSql ? "✕ Hide setup" : "🛠️ Supabase setup (one-time SQL)"}</button>
           {showSql && (
             <>
