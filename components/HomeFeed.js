@@ -35,8 +35,12 @@ export default function HomeFeed() {
     // jata tha. Ab sync bas ek event chhodta hai aur jise zaroorat hai wo sun
     // leta hai; kisi ka kaam beech mein nahi tootta.
     const unsubHome = subscribeHome(sync);
-    window.addEventListener("cgl:sync-applied", sync);
-    return () => { unsubHome(); window.removeEventListener("cgl:sync-applied", sync); };
+    // Sync se sirf LIST taazi hoti hai — jo chapter tum khole baithe ho use
+    // haath nahi lagana. Pehle poora sync() chalta tha aur active bhi badal
+    // jata tha, yaani padhte-padhte screen doosre chapter par chali jati thi.
+    const listOnly = () => setItems(getItems());
+    window.addEventListener("cgl:sync-applied", listOnly);
+    return () => { unsubHome(); window.removeEventListener("cgl:sync-applied", listOnly); };
   }, []);
 
   // Keep the URL in step with the open chapter (shallow — no reload), so reading
