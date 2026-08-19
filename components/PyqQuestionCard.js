@@ -236,6 +236,12 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
         <p className="qcard__note">⚠ Book ki key galat lagti hai. {q.keyDisputed}</p>
       )}
       {q.sourceDefect && <p className="qcard__note">⚠ {q.sourceDefect}</p>}
+      {/* Kuch imported paper mein key hi nahi aayi. Bina iske option chunne par
+          kuch hota hi nahi tha aur padhne wale ko lagta tha ki uska sahi jawab
+          galat gina ja raha hai. */}
+      {q.answer == null && (
+        <p className="qcard__note">⚠ Is question ki answer-key source mein nahi thi — ye kisi ginti mein nahi aata.</p>
+      )}
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
       {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}

@@ -35,6 +35,12 @@ import { ExamModeProvider } from "./ExamMode";
 const SET_SIZE = 25;
 const SET_MIN = 15;              // ek set = 15 minute, SSC ke section jaisa
 
+// Kuch imported paper mein kisi question ki key hi nahi hoti (`answer: null`).
+// Aise question par har option galat nikalta hai — na kuch hara hota hai, na
+// koi jawab sahi ginta hai. Unhe hisaab se BAHAR rakhte hain: na Right/Wrong
+// mein, na Mistake Notebook mein. Warna wo har baar jhooti galti banate hain.
+const hasKey = (q) => typeof q?.answer === "number";
+
 const two = (n) => String(n).padStart(2, "0");
 const clock = (s) => `${two(Math.floor(Math.max(0, s) / 60))}:${two(Math.max(0, s) % 60)}`;
 
@@ -255,8 +261,11 @@ export default function QBoard({
   })), [setQs, done, picks, register]);
 
   const n = setQs.length;
-  const right = Object.values(picks).filter((p) => p.correct).length;
-  const answered = Object.keys(picks).length;
+  // Bina key wale question kisi ginti mein nahi aate.
+  const keyed = setQs.map((q, i) => (hasKey(q) ? i : -1)).filter((i) => i >= 0);
+  const noKey = n - keyed.length;
+  const right = keyed.filter((i) => picks[i]?.correct).length;
+  const answered = keyed.filter((i) => picks[i]).length;
   const wrong = answered - right;
   const spent = SET_MIN * 60 - leftSec;
 
@@ -268,7 +277,7 @@ export default function QBoard({
     setTimes(times);
     setDone(true);
     saveSetResult(resumeKey, setIdx, {
-      right, wrong, skipped: n - answered, total: n, sec: spent,
+      right, wrong, skipped: keyed.length - answered, total: keyed.length, sec: spent,
       times,
       picks: Object.fromEntries(
         Object.entries(picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }]),
@@ -281,11 +290,14 @@ export default function QBoard({
     // Poore set ka hisaab yahin darj hota hai — test ke dauraan kuch record
     // nahi hota, kyunki wahan jawab badla ja sakta hai. Sirf aakhri chuna hua
     // ginta hai.
-    const rows = setQs.map((qq, i) => ({
-      q: regRef.current[i] || qq,
-      correct: !!picks[i]?.correct,
-      attempted: !!picks[i],
-    }));
+    const rows = setQs
+      .map((qq, i) => ({
+        q: regRef.current[i] || qq,
+        correct: !!picks[i]?.correct,
+        attempted: !!picks[i],
+        i,
+      }))
+      .filter(({ i }) => hasKey(setQs[i]));
     // Stats — sirf jo attempt kiye.
     const tried = rows.filter((r) => r.attempted);
     if (tried.length) recordAttempts(tried.map(({ q: qq, correct }) => ({ q: qq, correct })));
@@ -296,7 +308,7 @@ export default function QBoard({
     // naya nahi jodna). Sahi jawab bhi naya record nahi banata; wo sirf pehle
     // se pade question ko "ho gaya" nishaan deta hai. Dono shart lib/qreview
     // ke andar hain, isliye yahan se saara hisaab bhej dena theek hai.
-    recordQuizAttempts(rows.map(({ q: qq, correct }, i) => ({
+    recordQuizAttempts(rows.map(({ q: qq, correct, i }) => ({
       q: qq, correct, subject: subject || "", source: "chapter", category: title,
       sec: times[i] || 0,
       onlyExisting: retryRef.current,
@@ -309,7 +321,7 @@ export default function QBoard({
     setCounts(getCounts());
     onSubmit?.({ right, wrong, skipped: n - answered, total: n, sec: spent });
     toTop();
-  }, [done, setIdx, resumeKey, picks, setQs, right, wrong, answered, n, spent, subject, title, single, onSubmit, flushTime, toTop]);
+  }, [done, setIdx, resumeKey, picks, setQs, keyed, right, wrong, answered, spent, subject, title, single, onSubmit, flushTime, toTop]);
 
   // Samay khatam — khud submit. Timer ka matlab hi yahi hai.
   useEffect(() => {
@@ -409,7 +421,7 @@ export default function QBoard({
           {setQs.map((x, i) => {
             const p = picks[i];
             const state = done
-              ? (p ? (p.correct ? "is-right" : "is-wrong") : "is-skip")
+              ? (!hasKey(x) ? "is-skip" : p ? (p.correct ? "is-right" : "is-wrong") : "is-skip")
               : (review[i] ? "is-review" : p ? "is-ans" : "");
             return (
               <a
@@ -430,12 +442,12 @@ export default function QBoard({
             <>
               <span className="tally tally--ans">Right <b>{right}</b></span>
               <span className="tally tally--bad">Wrong <b>{wrong}</b></span>
-              <span className="tally tally--not">Skipped <b>{n - answered}</b></span>
+              <span className="tally tally--not">Skipped <b>{keyed.length - answered}</b></span>
             </>
           ) : (
             <>
               <span className="tally tally--ans">Answered <b>{answered}</b></span>
-              <span className="tally tally--not">Not Answered <b>{n - answered}</b></span>
+              <span className="tally tally--not">Not Answered <b>{keyed.length - answered}</b></span>
               <span className="tally tally--rev">Marked for Review <b>{Object.values(review).filter(Boolean).length}</b></span>
             </>
           )}
@@ -474,11 +486,17 @@ export default function QBoard({
             <span className="res res--right"><b>{right}</b> Right</span>
             <span className="res res--wrong"><b>{wrong}</b> Wrong</span>
             <span className="res res--marks">
-              <b>{fmtMarks(right * 2 - wrong * 0.5)}</b> / {maxMarks(n)} Marks
+              {/* Poore marks bhi sirf un question ke jinki key hai. */}
+              <b>{fmtMarks(right * 2 - wrong * 0.5)}</b> / {maxMarks(keyed.length)} Marks
             </span>
             <span className="res res--acc"><b>{acc}%</b> Accuracy</span>
             <span className="res res--time"><b>{clock(mode === "solutions" ? (results[setIdx]?.sec || 0) : spent)}</b> Time</span>
-            <span className="res res--skip"><b>{n - answered}</b> Skipped</span>
+            <span className="res res--skip"><b>{keyed.length - answered}</b> Skipped</span>
+            {noKey > 0 && (
+              <span className="res res--nokey" title="In question ki answer-key hi nahi hai, isliye ye kisi ginti mein nahi">
+                <b>{noKey}</b> bina key
+              </span>
+            )}
             <button className="btn btn--sm" onClick={() => openSet(setIdx, "test")}>🔁 Attempt again</button>
           </div>
         )}

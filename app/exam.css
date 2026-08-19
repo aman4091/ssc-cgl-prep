@@ -573,6 +573,8 @@
 .examskin .res--right b { color: #14701f; }
 .examskin .res--wrong b { color: #9c0014; }
 .examskin .res--acc b, .examskin .res--time b, .examskin .res--marks b { color: var(--tb-blue); }
+.examskin .res--nokey { background: var(--tb-head); }
+.examskin .res--nokey b { color: var(--tb-dim); }
 .examskin .res--marks { background: var(--tb-blue-soft); }
 
 /* Dobara-test wala popup. */
