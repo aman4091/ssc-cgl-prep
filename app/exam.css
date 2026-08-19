@@ -1,32 +1,24 @@
 /* ===================================================================
-   EXAM SKIN — asli SSC/Testbook wala test screen.
+   SITE THEME — asli SSC/Testbook wala exam screen.
 
-   Owner ne Testbook ka screenshot bhej kar kaha: "PYQ, quizzes aur Answers
-   page — sab isi format mein, isi font mein, isi colour theme mein."
+   Owner ne Testbook ka screenshot bhej kar kaha: pehle PYQ/quizzes/Answers
+   isi format mein, isi font mein, isi rang mein — phir "poori site yehi kar
+   de, dark mode hata de". Ab yahi site ki ekloti theme hai.
 
-   Kyun scoped hai (`.examskin` ke andar), poori site par nahi:
-   baaki site (notes, vocab, planner, home) padhne ki jagah hai — wahan
-   Catppuccin theme aur uska dark mode chalta rahega. Ye teen jagah ATTEMPT
-   karne ki hain, aur attempt asli exam jaisa dikhna chahiye. Isliye skin
-   sirf teen layout par lagti hai:
-       app/pyq/layout.js   app/quizzes/layout.js   app/answers/layout.js
-
-   Kaam kaise karta hai: site ka poora design token-driven hai (globals.css
-   ka sabse upar wala block). Yahan wahi tokens `.examskin` par dobara likhe
-   gaye hain — custom properties inherit hoti hain, isliye andar ka har
-   component (jo `var(--card)`, `var(--accent)` waghera padhta hai) bina
-   chhue exam colour le leta hai. FullscreenRunner ke inline styles bhi
-   var() hi hain, isliye wo bhi apne aap badal jaata hai.
+   Kaise: site ka poora design token-driven hai (globals.css ka sabse upar
+   wala block). Yahan wahi tokens `.examskin` par dobara likhe gaye hain aur
+   wo class <body> par lagti hai (app/layout.js) — custom properties inherit
+   hoti hain, isliye har component (jo `var(--card)`, `var(--accent)` waghera
+   padhta hai) bina chhue exam ka rang le leta hai. FullscreenRunner ke inline
+   styles bhi var() hi hain, isliye wo bhi apne aap badal jata hai.
 
    Neeche structure wale rules sirf un cheezon ke liye hain jo token se nahi
    ban sakti: gol radius ka chaukor ho jaana, option ka radio-circle, palette
-   ke neele/hare box, aur Answers page (.ansp) jiske rang hardcoded hain.
+   ke rangeen box, aur Answers page (.ansp) jiske rang hardcoded the.
 
-   Theme toggle yahan jaan-boojh kar nahi lagta — exam ka rang ek hi hai,
-   safed. Ye wahi soch hai jo pehle se .ansp par lagi hui thi.
+   Dark mode jaan-boojh kar nahi hai — exam ka rang ek hi hota hai, safed.
 
-   Revert karna ho: is file ka import app/layout.js se hata do, ya
-   `git checkout backup-pre-exam-theme`.
+   Revert karna ho: `git checkout backup-pre-exam-theme`.
    =================================================================== */
 
 .examskin {
@@ -112,22 +104,10 @@
   --radius-xl: 4px;
   --blur: 0px;
 
-  /* Poora content area ek safed "test sheet" ban jata hai. Negative margin
-     se container ka padding bhar jata hai, warna dark page ki patti kinare
-     par dikhti rehti hai. */
   color-scheme: light;
-  display: block;
   font-family: var(--tb-font);
   background: var(--tb-page);
   color: var(--tb-ink);
-  border: 1px solid var(--tb-line);
-  border-radius: 4px;
-  padding: 14px 16px 24px;
-  margin: 6px -10px 20px;
-  min-height: 70vh;
-}
-@media (max-width: 640px) {
-  .examskin { margin: 4px -14px 12px; padding: 10px 10px 18px; border-radius: 0; border-width: 1px 0; }
 }
 
 /* Font sirf wrapper par set hai aur inherit hota hai. Har element par

@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { doneKeyFor, getDoneSet, markDoneMany } from "@/lib/qdone";
-import { getCounts, bumpCount, COUNTER_SUBJECTS } from "@/lib/qcounter";
+import { getCounts, bumpCount, countMark, COUNTER_SUBJECTS } from "@/lib/qcounter";
 import { recordQuizAttempts } from "@/lib/qreview";
+import { recordAttempts } from "@/lib/qstats";
 import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import { ExamModeProvider } from "./ExamMode";
 
@@ -212,7 +213,9 @@ export default function QBoard({
     index: i,
     register,
     pick: picks[i]?.opt,
-    onPick: (opt, correct) => setPicks((p) => (p[i] ? p : { ...p, [i]: { opt, correct } })),
+    // Overwrite hota hai, guard nahi — test ke dauraan option badalna allowed
+    // hai, isliye aakhri chuna hua hi ginta hai.
+    onPick: (opt, correct) => setPicks((p) => ({ ...p, [i]: { opt, correct } })),
   })), [setQs, done, picks, register]);
 
   const n = setQs.length;
@@ -234,21 +237,27 @@ export default function QBoard({
     // gaya ka matlab "ye kar chuka hoon", "ye sahi kiya tha" nahi.
     markDoneMany(setQs);
 
-    // Galat AUR chhode hue — dono Mistake Notebook mein. Galat wala card
-    // pehle hi bhej chuka hota hai (usi pehchaan se), par chhoda hua kahin
-    // darj hi nahi hota tha — jabki na aana bhi ek galti hai.
-    const missed = setQs
-      .map((qq, i) => ({ qq, i }))
-      .filter(({ i }) => !picks[i] || !picks[i].correct)
-      .map(({ qq, i }) => ({
-        q: regRef.current[i] || qq,
-        correct: false,
-        subject: subject || "",
-        source: "chapter",
-        category: title,
-      }));
-    if (missed.length) recordQuizAttempts(missed);
+    // Poore set ka hisaab yahin darj hota hai — test ke dauraan kuch record
+    // nahi hota, kyunki wahan jawab badla ja sakta hai. Sirf aakhri chuna hua
+    // ginta hai.
+    const rows = setQs.map((qq, i) => ({
+      q: regRef.current[i] || qq,
+      correct: !!picks[i]?.correct,
+      attempted: !!picks[i],
+    }));
+    // Stats — sirf jo attempt kiye.
+    const tried = rows.filter((r) => r.attempted);
+    if (tried.length) recordAttempts(tried.map(({ q: qq, correct }) => ({ q: qq, correct })));
+    // Mistake Notebook — saare. Galat aur CHHODE hue Wrong bucket mein jaate
+    // hain (na aana bhi ek galti hai), sahi wale "attempted" mein.
+    recordQuizAttempts(rows.map(({ q: qq, correct }) => ({
+      q: qq, correct, subject: subject || "", source: "chapter", category: title,
+    })));
+    // "🔢 Aaj" ki ginti — ek question aaj ek hi baar ginta hai, isliye set
+    // dobara dene par dobara nahi chadhta.
+    for (const qq of setQs) countMark(doneKeyFor(qq), subject, true);
     setResults(getChapterResults(resumeKey));
+    setCounts(getCounts());
     toTop();
   }, [done, setIdx, resumeKey, picks, setQs, right, wrong, answered, n, spent, subject, title, toTop]);
 
@@ -380,7 +389,7 @@ export default function QBoard({
         <div className="qboard__top">
           <button className="btn btn--ghost btn--sm" onClick={() => setSetIdx(null)}>← Sets</button>
           <span className="qboard__title">
-            Set {setIdx + 1} · {n} questions{mode === "solutions" ? " · solutions" : ""}
+            Set {setIdx + 1}{mode === "solutions" ? " · solutions" : ""}
           </span>
           {done && mode === "test" && (
             <span className="qboard__clock">{clock(spent)}</span>
@@ -397,7 +406,6 @@ export default function QBoard({
               <button className="btn btn--ghost btn--sm" onClick={toggleFs}>
                 {fs ? "⤢ Exit full screen" : "⛶ Full screen"}
               </button>
-              <button className="btn btn--submit btn--sm" onClick={submit}>✅ Submit Test</button>
             </>
           )}
         </div>
@@ -409,7 +417,7 @@ export default function QBoard({
             <span className="res res--marks">
               <b>{fmtMarks(right * 2 - wrong * 0.5)}</b> / {maxMarks(n)} Marks
             </span>
-            <span className="res res--acc"><b>{acc}%</b> Accuracy ({right}/{answered || 0} attempted)</span>
+            <span className="res res--acc"><b>{acc}%</b> Accuracy</span>
             <span className="res res--time"><b>{clock(mode === "solutions" ? (results[setIdx]?.sec || 0) : spent)}</b> Time</span>
             <span className="res res--skip"><b>{n - answered}</b> Skipped</span>
             <button className="btn btn--sm" onClick={() => openSet(setIdx, "test")}>🔁 Attempt again</button>
@@ -421,9 +429,9 @@ export default function QBoard({
         {/* Testbook jaisi patti: Previous · Mark for Review · Save & Next ·
             Submit, sab beech mein. Sirf test ke dauraan — natija dekhte waqt
             question palette se badalte ho. */}
+        {done ? null : (
         <div className="qboard__nav">
-          <span className="qboard__pos">Question <b>{at + 1}</b> / {n}</span>
-          {!done && (
+            <span className="qboard__pos">Question <b>{at + 1}</b> / {n}</span>
             <span className="qboard__navbtns">
               <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
               <button
@@ -435,8 +443,8 @@ export default function QBoard({
               <button className="btn" onClick={() => go(at + 1)} disabled={at === n - 1}>Save &amp; Next →</button>
               <button className="btn btn--submit" onClick={submit}>✅ Submit Test</button>
             </span>
-          )}
-        </div>
+          </div>
+        )}
 
         {/* Set ke saare card mount rehte hain, sirf ek dikhta hai — isliye
             peeche jaakar bhi apna chuna hua option waisa ka waisa milta hai. */}

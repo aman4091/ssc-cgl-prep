@@ -12,7 +12,6 @@ import SyncManager from "@/components/SyncManager";
 import Toast from "@/components/Toast";
 import OverlayInbox from "@/components/OverlayInbox";
 import VocabFeeder from "@/components/VocabFeeder";
-import ThemeToggle from "@/components/ThemeToggle";
 import StoreGate from "@/components/StoreGate";
 import SWRegister from "@/components/SWRegister";
 
@@ -30,7 +29,7 @@ export const metadata = {
 // lag jayen to poora page zoom na ho jaye — zoom likhne wali surface ka apna
 // hai. viewportFit cover se tablet ke rounded corners tak background jata hai.
 export const viewport = {
-  themeColor: "#1e1e2e",
+  themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -38,16 +37,15 @@ export const viewport = {
   viewportFit: "cover",
 };
 
-// Dark (Catppuccin Mocha) ab DEFAULT hai — wahi Answers page wala look. Isliye
-// data-theme yahin server par likha jaata hai; neeche wali script sirf tab
-// badalti hai jab user ne khud "light" chuna ho. Ulta karne par har load pe
-// light theme ki ek jhalak dikhti thi.
+// Ek hi theme hai: exam wali safed (app/exam.css). Class <body> par lagti hai,
+// aur tokens inherit hote hain, isliye poori site — notes, vocab, planner, PYQ
+// — sab usi rang aur font mein. Dark mode aur uska toggle hata diye gaye:
+// exam ka rang ek hi hota hai, aur do design system rakhne se toggle dabate hi
+// site doosri site lagne lagti thi.
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="dark" data-scroll-behavior="smooth">
-      <body className={inter.variable}>
-        <script dangerouslySetInnerHTML={{ __html: "try{if(localStorage.getItem('ui.theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}" }} />
-        <ThemeToggle />
+    <html lang="en" data-scroll-behavior="smooth">
+      <body className={`${inter.variable} examskin`}>
         <div className="bg-orbs" aria-hidden="true">
           <span className="orb orb--1" />
           <span className="orb orb--2" />

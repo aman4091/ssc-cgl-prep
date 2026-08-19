@@ -98,9 +98,13 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   useEffect(() => () => { if (archiveTimer.current) clearTimeout(archiveTimer.current); }, []);
 
   const choose = (oi) => {
-    if (picked !== null) return;
+    // Test ke dauraan jawab BADLA ja sakta hai — asli exam mein bhi option
+    // badalte ho. Test ke bahar ek baar chuna to chuna.
+    if (picked !== null && !locked) return;
     const correct = oi === q.answer;
     setPicked(oi);
+    // Test ke dauraan bas nishaan; stats/notebook/ginti sab Submit par.
+    if (locked) { exam?.onPick?.(oi, correct); return; }
     setRevealed(true);
     if (resumeKey) setResume(resumeKey, index);
     if (!recorded) { recordAttempts([{ q: tq, correct }]); setRecorded(true); }
@@ -108,13 +112,9 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
     // natija wahin banta hai.
     exam?.onPick?.(oi, correct);
     addReview(tq, { subject, source: "chapter", category: chapterName || subject, correct });
-    // Test chal raha ho to ye line bhi mat dikhao — "Saved to Wrong" padhte hi
-    // pata chal jata hai ki galat hua, aur quiz ka matlab hi khatam.
-    if (!locked) {
-      setFlash(correct
-        ? "✓ Correct · tracked. Question list mein hi rahega."
-        : "❌ Saved to Wrong (Mistakes). Solution dekho.");
-    }
+    setFlash(correct
+      ? "✓ Correct · tracked. Question list mein hi rahega."
+      : "❌ Saved to Wrong (Mistakes). Solution dekho.");
   };
 
   const fetchShortcut = async () => {
