@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { doneKeyFor, getDoneSet, markDoneMany } from "@/lib/qdone";
 import { getCounts, bumpCount, COUNTER_SUBJECTS } from "@/lib/qcounter";
+import { recordQuizAttempts } from "@/lib/qreview";
 import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import { ExamModeProvider } from "./ExamMode";
 
@@ -40,6 +41,7 @@ export default function QBoard({
   list,                       // page ki apni list (uske filters ke BAAD)
   subject,                    // counter kis subject mein ginega
   resumeKey,                  // chapter ki pehchaan — natije isi naam se sambhalte hain
+  title = "Test",             // Mistake Notebook mein kis naam se jaayega
   renderCard,                 // (q, index, wholeList) => <Card/>
   emptyText = "Yahan koi question nahi.",
 }) {
@@ -194,14 +196,24 @@ export default function QBoard({
 
   const nudge = (delta) => setCounts((c) => ({ ...c, [subject]: bumpCount(subject, delta) }));
 
+  // Maths/Reasoning ke question TASVEER hain — unka notebook wala roop card
+  // khud banata hai (`tq`: id + qText + optText). Wahi roop board ko chahiye
+  // taaki chhoda hua question theek usi pehchaan se Mistake Notebook mein jaye
+  // jis se card galat jawab bhejta hai; warna ek hi question do baar chadh
+  // jata. Isliye card mount hote hi apna roop yahan darj kar deta hai.
+  const regRef = useRef({});
+  const register = useCallback((i, qq) => { regRef.current[i] = qq; }, []);
+
   // Har card ka apna slot: usi ka number, usi ka chuna hua option. Isse card ko
   // question ka koi key milana nahi padta.
   const slots = useMemo(() => setQs.map((_, i) => ({
     locked: !done,
     revealAll: done,
+    index: i,
+    register,
     pick: picks[i]?.opt,
     onPick: (opt, correct) => setPicks((p) => (p[i] ? p : { ...p, [i]: { opt, correct } })),
-  })), [setQs, done, picks]);
+  })), [setQs, done, picks, register]);
 
   const n = setQs.length;
   const right = Object.values(picks).filter((p) => p.correct).length;
@@ -218,14 +230,27 @@ export default function QBoard({
         Object.entries(picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }]),
       ),
     });
-    // Jo sahi ho gaye wo "Ho gaya" — poora set sahi hua to poora set nishaan
-    // laga hua mil jata hai.
-    markDoneMany(
-      Object.entries(picks).filter(([, v]) => v.correct).map(([k]) => setQs[Number(k)]),
-    );
+    // Set de diya = uske saare question "ho gaye" — sirf sahi wale nahi. Ho
+    // gaya ka matlab "ye kar chuka hoon", "ye sahi kiya tha" nahi.
+    markDoneMany(setQs);
+
+    // Galat AUR chhode hue — dono Mistake Notebook mein. Galat wala card
+    // pehle hi bhej chuka hota hai (usi pehchaan se), par chhoda hua kahin
+    // darj hi nahi hota tha — jabki na aana bhi ek galti hai.
+    const missed = setQs
+      .map((qq, i) => ({ qq, i }))
+      .filter(({ i }) => !picks[i] || !picks[i].correct)
+      .map(({ qq, i }) => ({
+        q: regRef.current[i] || qq,
+        correct: false,
+        subject: subject || "",
+        source: "chapter",
+        category: title,
+      }));
+    if (missed.length) recordQuizAttempts(missed);
     setResults(getChapterResults(resumeKey));
     toTop();
-  }, [done, setIdx, resumeKey, picks, setQs, right, wrong, answered, n, spent, toTop]);
+  }, [done, setIdx, resumeKey, picks, setQs, right, wrong, answered, n, spent, subject, title, toTop]);
 
   // Samay khatam — khud submit. Timer ka matlab hi yahi hai.
   useEffect(() => {
@@ -357,9 +382,12 @@ export default function QBoard({
           <span className="qboard__title">
             Set {setIdx + 1} · {n} questions{mode === "solutions" ? " · solutions" : ""}
           </span>
+          {done && mode === "test" && (
+            <span className="qboard__clock">{clock(spent)}</span>
+          )}
           {mode === "test" && (
             <span className={`qboard__clock${low && !done ? " is-low" : ""}`}>
-              ⏱ {done ? `${clock(spent)} liya` : clock(leftSec)}
+              <em>Time Left</em> {clock(leftSec)}
             </span>
           )}
           {/* Full screen aur Submit sirf test ke dauraan — natija dekhte waqt
@@ -381,7 +409,7 @@ export default function QBoard({
             <span className="res res--marks">
               <b>{fmtMarks(right * 2 - wrong * 0.5)}</b> / {maxMarks(n)} Marks
             </span>
-            <span className="res res--acc"><b>{acc}%</b> Accuracy</span>
+            <span className="res res--acc"><b>{acc}%</b> Accuracy ({right}/{answered || 0} attempted)</span>
             <span className="res res--time"><b>{clock(mode === "solutions" ? (results[setIdx]?.sec || 0) : spent)}</b> Time</span>
             <span className="res res--skip"><b>{n - answered}</b> Skipped</span>
             <button className="btn btn--sm" onClick={() => openSet(setIdx, "test")}>🔁 Attempt again</button>
@@ -390,23 +418,23 @@ export default function QBoard({
 
         {/* Previous / Save & Next sirf test ke dauraan. Natija dekhte waqt
             question palette se badla jata hai. */}
+        {/* Testbook jaisi patti: Previous · Mark for Review · Save & Next ·
+            Submit, sab beech mein. Sirf test ke dauraan — natija dekhte waqt
+            question palette se badalte ho. */}
         <div className="qboard__nav">
-          {!done && (
-            <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
-          )}
           <span className="qboard__pos">Question <b>{at + 1}</b> / {n}</span>
           {!done && (
-            <>
+            <span className="qboard__navbtns">
+              <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
               <button
                 className={`btn btn--review${review[at] ? " is-on" : ""}`}
                 onClick={() => setReview((r) => ({ ...r, [at]: !r[at] }))}
               >
                 ⚑ {review[at] ? "Marked" : "Mark for Review"}
               </button>
-              {at === n - 1
-                ? <button className="btn btn--submit" onClick={submit}>✅ Submit Test</button>
-                : <button className="btn" onClick={() => go(at + 1)}>Save &amp; Next →</button>}
-            </>
+              <button className="btn" onClick={() => go(at + 1)} disabled={at === n - 1}>Save &amp; Next →</button>
+              <button className="btn btn--submit" onClick={submit}>✅ Submit Test</button>
+            </span>
           )}
         </div>
 
@@ -416,7 +444,7 @@ export default function QBoard({
           {setQs.map((x, i) => (
             <div key={x._uid ?? x.id ?? i} style={i === at ? undefined : { display: "none" }}>
               <ExamModeProvider value={slots[i]}>
-                {renderCard(x, from + i, all)}
+                {renderCard(x, i, all)}
               </ExamModeProvider>
             </div>
           ))}

@@ -66,6 +66,14 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
     options: hasOptText ? q.optText : ["a", "b", "c", "d"],
   };
 
+  // Board ko apna notebook-wala roop de do. Tasveer wale bank mein `tq`
+  // (id + text) hi wo pehchaan hai jis se galat jawab darj hota hai —
+  // chhoda hua question bhi usi pehchaan se jaana chahiye, warna ek hi
+  // question notebook mein do baar chadh jata.
+  const examReg = exam?.register;
+  const examIdx = exam?.index;
+  useEffect(() => { examReg?.(examIdx, tq); }, [examReg, examIdx, tq.question]);
+
   useEffect(() => { setShortcut(getSavedShortcut(tq)); }, [q.id]);
   // Paste kiya hua Gemini answer sabse upar hai: save hote hi card usse utha leta
   // hai aur answer block khol deta hai — book ka apna solution/explanation

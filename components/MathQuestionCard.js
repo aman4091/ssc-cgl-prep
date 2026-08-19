@@ -93,6 +93,14 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
     options: q.optText && q.optText.length === 4 ? q.optText : ["a", "b", "c", "d"],
   };
 
+  // Board ko apna notebook-wala roop de do. Tasveer wale bank mein `tq`
+  // (id + text) hi wo pehchaan hai jis se galat jawab darj hota hai —
+  // chhoda hua question bhi usi pehchaan se jaana chahiye, warna ek hi
+  // question notebook mein do baar chadh jata.
+  const examReg = exam?.register;
+  const examIdx = exam?.index;
+  useEffect(() => { examReg?.(examIdx, tq); }, [examReg, examIdx, tq.question]);
+
   // Prompt HAMESHA Settings se aata hai (Settings → maths ka apna prompt, warna
   // generic wala). Pehle yahan ek prompt code mein guttha hua tha, isliye
   // Settings mein badalne ka koi asar hi nahi hota tha — wo galat tha.

@@ -31,6 +31,13 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   // kuch pehle jaisa chalta hai.
   const exam = useExamMode();
   const locked = !!exam?.locked;
+  // Board ko apna notebook-wala roop de do. Tasveer wale bank mein `tq`
+  // (id + text) hi wo pehchaan hai jis se galat jawab darj hota hai —
+  // chhoda hua question bhi usi pehchaan se jaana chahiye, warna ek hi
+  // question notebook mein do baar chadh jata.
+  const examReg = exam?.register;
+  const examIdx = exam?.index;
+  useEffect(() => { examReg?.(examIdx, q); }, [examReg, examIdx, q.question]);
   const [picked, setPicked] = useState(exam?.pick ?? null);
   const [revealed, setRevealed] = useState(false);
   const [shortcut, setShortcut] = useState("");

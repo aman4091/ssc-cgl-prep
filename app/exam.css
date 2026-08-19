@@ -516,11 +516,13 @@
 }
 .examskin .qboard__title { color: var(--tb-ink); }
 .examskin .qboard__clock {
-  background: var(--tb-yellow); color: #6b5200; border-radius: 3px; padding: 4px 12px;
-  font-size: 15px;
+  background: var(--tb-yellow); color: #6b5200; border-radius: 3px;
+  padding: 3px 12px; font-size: 16px; text-align: center;
 }
+.examskin .qboard__clock em { color: #7a6200; }
 /* Aakhri minute — Testbook par bhi ghadi laal ho jaati hai. */
 .examskin .qboard__clock.is-low { background: var(--tb-red); color: #fff; }
+.examskin .qboard__clock.is-low em { color: #ffd9dd; }
 
 /* ---- Palette ke rang: neela = chhua nahi, hara = sahi, laal = galat,
    peela = review, aur safed andar ki lakeer = abhi isi par ho ---- */
