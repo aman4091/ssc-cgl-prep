@@ -521,14 +521,19 @@ export default function NotesReader({ book }) {
               {p.continues_to_next && (
                 <div className="nt-cont">agle page pe jaari …</div>
               )}
-              <details className="nt-scan">
-                <summary>📄 Original scan dekho</summary>
-                <img
-                  loading="lazy"
-                  src={scanUrl(book.scanBase, p.book_page)}
-                  alt={`original page ${p.book_page}`}
-                />
-              </details>
+              {/* Sirf un kitaabon par jinke scan hain. Bina scanBase ke ye
+                  "undefined/page-001.jpg" maangta tha — dikhta nahi tha kyunki
+                  details band rehta hai, par tha galat. */}
+              {book.scanBase && (
+                <details className="nt-scan">
+                  <summary>📄 Original scan dekho</summary>
+                  <img
+                    loading="lazy"
+                    src={scanUrl(book.scanBase, p.book_page)}
+                    alt={`original page ${p.book_page}`}
+                  />
+                </details>
+              )}
             </div>
           ))
         )}

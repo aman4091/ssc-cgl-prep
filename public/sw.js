@@ -9,7 +9,7 @@
  */
 // V badalte hi purane caches activate par saaf ho jate hain. Jab bhi is file ka
 // vyavhaar badle ya purana cache shaq ke ghere mein aaye, ise badha dena.
-const V = "v29";
+const V = "v30";
 const SHELL = `cgl-shell-${V}`;
 const BLOBS = `cgl-r2-${V}`;
 
