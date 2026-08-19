@@ -26,7 +26,7 @@
   --tb-blue: #1a4fd6;        /* buttons, palette ke box, links */
   --tb-blue-dark: #123ba8;   /* hover / pressed */
   --tb-blue-soft: #e8effc;   /* chuna hua option, halka wash */
-  --tb-navy: #00008b;        /* markdown ke heading — solution ke andar */
+  --tb-navy: #1a4fd6;        /* neeche wali chhoti headings / bold labels */
   /* Sawaal ka apna rang. Pehle navy tha, par owner ne kaha kaala bold behtar
      padha jaata hai — aur option (400 weight, #1a1a1a) se farak bhi saaf. */
   --tb-q: #000000;
@@ -88,13 +88,15 @@
   --success: var(--tb-green);
   --danger: var(--tb-red);
   --warning: #b26a00;
-  --head: var(--tb-navy);
+  /* Bada heading (## / ###) — kaala aur bhaari. Notes mein wahi sabse pehle
+     nazar aana chahiye; neela heading page ke neele link/label ke saath ghul
+     jata tha. */
+  --head: #000000;
   --mauve: var(--tb-blue);
-  /* **bold** ka apna pen. Hara tha, par safed kaagaz par wo dhula-dhula
-     dikhta tha aur "sahi jawab" wale hare se bhi takra raha tha. Ab gehra
-     baingani — heading (navy), link (neela), galat (laal) aur sahi (hara),
-     chaaron se alag. */
-  --emph: #6b21a8;
+  /* **bold** ka apna pen — heading ke NEECHE wale chhote sar (jaise "Brahmins
+     ka Dominance:"). Hara tha, phir baingani; dono jame nahi. Ab neela: bada
+     heading kaala hai, ye neela — do saaf star. */
+  --emph: var(--tb-blue);
 
   --ok-wash: var(--tb-green-soft);
   --bad-wash: var(--tb-red-soft);
@@ -743,8 +745,9 @@
 .examskin .ansp__answer em { color: var(--tb-ink); }
 .examskin .ansp__answer a, .examskin .ansp__answer .md a { color: var(--tb-blue); }
 .examskin .ansp__answer .md { color: var(--tb-ink); }
-.examskin .ansp__answer :is(h1, h2, h3, h4, h5),
-.examskin .ansp__answer .md :is(h1, h2, h3, h4) { color: var(--tb-navy); }
+.examskin .ansp__answer :is(h1, h2, h3),
+.examskin .ansp__answer .md :is(h1, h2, h3) { color: var(--head); font-weight: 700; }
+.examskin .ansp__answer .md :is(h4, h5, h6) { color: var(--tb-blue); }
 .examskin .ansp__answer code { background: var(--tb-head); color: #a3106b; }
 .examskin .ansp__answer pre { background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 3px; }
 .examskin .ansp__answer blockquote { border-left-color: var(--tb-blue); color: var(--tb-dim); }
@@ -757,7 +760,10 @@
 
 /* Markdown (solution/explanation) — exam ke rang, wahi teen pen. */
 .examskin .md { color: var(--tb-ink); }
-.examskin .md :is(h1, h2, h3, h4) { color: var(--tb-navy); }
+/* Bada sar kaala aur bhaari, uske neeche wale chhote sar neele — do star,
+   dono ek nazar mein alag. */
+.examskin .md :is(h1, h2, h3) { color: var(--head); font-weight: 700; }
+.examskin .md :is(h4, h5, h6) { color: var(--tb-blue); }
 /* **bold** ka pen — token se, taaki ek jagah badalne par har
    solution/notes mein badal jaye. */
 .examskin .md :is(strong, b) { color: var(--emph); }

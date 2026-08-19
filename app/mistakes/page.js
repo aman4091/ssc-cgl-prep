@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getReviewBucket, removeReview, fixReviewAnswer } from "@/lib/qreview";
+import { getReview, removeReview, fixReviewAnswer } from "@/lib/qreview";
 import { findCAEntryForQuestion, fixCAAnswer } from "@/lib/feed";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import FixAnswer from "@/components/FixAnswer";
@@ -22,7 +22,25 @@ import FixAnswer from "@/components/FixAnswer";
 export default function MistakesPage() {
   const [items, setItems] = useState([]);
 
-  const refresh = () => setItems(getReviewBucket("wrong"));
+  // Notebook ek GHOOMTA hua katar hai, ghatti hui list nahi.
+  //
+  // Sabse upar wo question jise sabse zyada der se haath nahi lagaya. Jo abhi
+  // kiya (sahi ya galat) uska `at` abhi ka ho jata hai, to wo sabse neeche
+  // chala jata hai — aur baaki sab ek-ek khisak kar upar aa jaate hain, isliye
+  // wahi question kuch din baad dobara saamne aa jata hai. Naya galat question
+  // bhi `at` ke hisaab se sabse neeche hi lagta hai.
+  //
+  // Sahi ho jaane par question list se GAYAB nahi hota (pehle wo "mastered"
+  // bucket mein chala jata tha aur dikhna band) — bas neeche chala jata hai.
+  // Yaad rehna hi asli imtihaan hai, ek baar sahi kar lena nahi.
+  //
+  // Kram sirf page khulne par banta hai. Jawab dete hi list dobara chhantti to
+  // jo card aap padh rahe ho wahi aankhon ke saamne se khisak jata.
+  const refresh = () => setItems(
+    getReview()
+      .filter((r) => r.everWrong)
+      .sort((a, b) => String(a.at || "").localeCompare(String(b.at || ""))),
+  );
   useEffect(() => { refresh(); }, []);
 
   const remove = (key) => { removeReview(key); refresh(); };
@@ -43,7 +61,9 @@ export default function MistakesPage() {
         </h1>
         <p className="hero__sub">
           Har galat aur chhoda hua question — chahe Vocab ho, Calculation, PYQ ya Current
-          Affairs — yahan apne aap aa jata hai. {items.length > 0 && <b>{items.length} pade hain.</b>}
+          Affairs — yahan apne aap aa jata hai. Jo abhi kiya wo sabse neeche chala
+          jata hai, isliye har question ghoom kar dobara saamne aata rahega.
+          {items.length > 0 && <> <b>{items.length} pade hain.</b></>}
         </p>
       </section>
 
@@ -64,15 +84,21 @@ export default function MistakesPage() {
                       {r.category}
                       {caEntry && <> · <Link href={`/current-affairs/${caEntry.id}`} className="link">📅 {caEntry.date}</Link></>}
                       {isCA(r) && !caEntry && <span title="Ye question ab kisi date entry mein nahi mila"> · 📅 date not found</span>}
+                      {r.correct && <span title="Pichhli baar sahi hua tha — phir bhi ghoom kar aata rahega"> · ✅ pichhli baar sahi</span>}
                     </span>
                     {/* Book ki key hi galat ho to yahin se theek — ye tag nahi,
                         marammat ka auzaar hai, isliye bacha hua hai. */}
                     <FixAnswer q={r.q} onFix={(oi) => fixAnswer(r, oi)} />
                   </div>
+                  {/* archiveOnAnswer se yahan diya hua jawab notebook mein wapas
+                      darj hota hai — usi se `at` naya hota hai aur question
+                      agli baar sabse neeche milta hai. */}
                   <PyqQuestionCard
                     q={r.q}
                     index={0}
                     subject={r.subject}
+                    chapterName={r.category}
+                    archiveOnAnswer
                     onDelete={() => remove(r.key)}
                   />
                 </div>
