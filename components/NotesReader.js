@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
-import { getSettings } from "@/lib/storage";
+import { promptFor } from "@/lib/geminiask";
 import { readImageText } from "@/lib/client-ai";
 import { startNotesQuiz } from "@/lib/notesquiz";
 import { hinglishKey, getHinglish, setHinglish, subscribeHinglish } from "@/lib/noteshinglish";
@@ -75,14 +75,6 @@ function PageQuizBtn({ page, book }) {
       {err && <span className="nt-meta" style={{ color: "var(--accent)" }}>{err}</span>}
     </>
   );
-}
-
-// Settings holds a prompt per subject plus a generic one; a GS notes page must
-// carry the GS instructions. Same precedence the question cards use.
-function promptFor(subject) {
-  const st = getSettings();
-  const perSubject = String((st.shortcutPrompts || {})[subject] || "").trim();
-  return perSubject || String(st.geminiPrompt || "").trim();
 }
 
 async function copyText(text) {
@@ -370,12 +362,15 @@ export default function NotesReader({ book }) {
   // pinch/zoom viewer — the same "fit, then tap to zoom" the image banks use.
   const [zoom, setZoom] = useState(null);
 
-  // The per-page Hinglish reader (Parmar GK books + Gopal Verma's English
-  // Formula book): hxPage is the open page, hxEdit whether the paste box is up,
-  // hxText the draft. Desktop shows English + Hinglish side by side; a phone
-  // shows only the Hinglish (English col hidden).
-  const slug = String(book?.slug || "");
-  const hasHinglish = slug.startsWith("parmar-") || slug === "eng-formula";
+  // Per-page Hinglish reader: hxPage is the open page, hxEdit whether the paste
+  // box is up, hxText the draft. Desktop shows English + Hinglish side by side;
+  // a phone shows only the Hinglish (English col hidden).
+  //
+  // Kaunsi book par ye button aayega ye ab BOOK apni config mein batati hai
+  // (lib/notesbank ka `hinglish`). Pehle yahan slug ka andaza lagaya jata tha
+  // — `slug.startsWith("parmar-")` — isliye koi nayi book jodne par button
+  // chupchaap gayab rehta tha.
+  const hasHinglish = !!book?.hinglish;
   const [hxPage, setHxPage] = useState(null);
   const [hxEdit, setHxEdit] = useState(false);
   const [hxText, setHxText] = useState("");
