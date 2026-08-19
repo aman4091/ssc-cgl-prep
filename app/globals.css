@@ -127,6 +127,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Ye do line page ka 22px ka overflow theek karti hain. Body par browser ka
+   apna 8px margin tha, aur .container par box-sizing content-box — uska
+   max-width upar se 48px padding jod leta tha, isliye wo shell ke khaane se
+   bahar nikal jata. `overflow-x: hidden` usse chhupa deta tha, aur nateeja ye
+   ki daayin taraf ki numbered patti ka aakhri khambha kat jata tha. */
+body { margin: 0; }
+.container { box-sizing: border-box; }
+
 body {
   font-family: var(--font);
   color: var(--text-1);
@@ -1713,10 +1721,17 @@ label.glass-card:hover { border-color: var(--accent2); }
    box for what is really one line of information. So: one row per chapter, name
    and count on the same line, and the badge dropped — the whole row is the link,
    so a word telling you to click it earns nothing. */
-.pyq-list { display: flex; flex-direction: column; gap: 4px; }
+/* Book / chapter ki suchi ab patli lakeeron ki LIST nahi, CARD ka jaal hai —
+   wahi shakl jo set cards ki hai. Markup wahi purana hai (a.pyq-row ke andar
+   icon, naam, sub aur meta), sirf yahan se card ban jata hai, isliye gyarah
+   page chhedne ki zaroorat nahi padi. */
+.pyq-list {
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+}
 .pyq-row {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm);
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  padding: 14px; border: 1px solid var(--line); border-radius: var(--radius);
   background: var(--card); color: var(--ink); text-decoration: none;
 }
 .pyq-row:hover { border-color: var(--accent2); }
@@ -1724,12 +1739,17 @@ label.glass-card:hover { border-color: var(--accent2); }
    book ke naamon ke beech gum na ho jaye: ye kisi ek book ka nahi, sab ka
    darwaza hai. */
 .pyq-row--all {
-  margin-bottom: 10px; border-color: var(--accent2);
-  background: linear-gradient(90deg, var(--accent-wash), var(--card));
+  grid-column: 1 / -1;
+  border-color: var(--accent2);
+  background: var(--accent-wash);
 }
-.pyq-row__ico { font-size: 1rem; width: 22px; text-align: center; flex-shrink: 0; }
-.pyq-row__name { flex: 1; min-width: 0; font-size: 0.92rem; font-weight: 500; }
-.pyq-row__meta { font-size: 0.78rem; color: var(--dim); flex-shrink: 0; white-space: nowrap; }
+.pyq-row__ico { font-size: 1.5rem; line-height: 1; }
+.pyq-row__name { min-width: 0; font-size: 1rem; font-weight: 700; }
+/* meta neeche daayen kone mein — card ki lambai barabar rakhne ke liye. */
+.pyq-row__meta {
+  margin-top: auto; align-self: flex-end;
+  font-size: 0.78rem; font-weight: 700; color: var(--dim); white-space: nowrap;
+}
 /* The PYQ index rows carry a line of description under the name; the chapter
    lists inside each bank do not. */
 /* SSC Maths 2025 — 29 chapters in the left rail, so it scrolls on its own

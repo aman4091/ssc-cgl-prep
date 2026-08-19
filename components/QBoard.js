@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { doneKeyFor, getDoneSet, markDoneMany } from "@/lib/qdone";
-import { getCounts, bumpCount, countMark, COUNTER_SUBJECTS } from "@/lib/qcounter";
+import { getCounts, countMark, COUNTER_SUBJECTS } from "@/lib/qcounter";
 import { recordQuizAttempts } from "@/lib/qreview";
 import { recordAttempts } from "@/lib/qstats";
 import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
@@ -45,8 +45,12 @@ export default function QBoard({
   title = "Test",             // Mistake Notebook mein kis naam se jaayega
   renderCard,                 // (q, index, wholeList) => <Card/>
   emptyText = "Yahan koi question nahi.",
+  // Quiz ke liye: poori list EK hi test hai, set chunne ka parda nahi aata.
+  // (Generated quiz aur notes wala quiz apne aap mein ek paper hote hain.)
+  single = false,
+  onSubmit,                   // submit ke baad page ka apna kaam (vocab din, etc.)
 }) {
-  const [setIdx, setSetIdx] = useState(null);   // null = set chunne ka parda
+  const [setIdx, setSetIdx] = useState(single ? 0 : null);
   const [mode, setMode] = useState("test");     // "test" | "solutions"
   const [cur, setCur] = useState(0);
   const [picks, setPicks] = useState({});       // set ke andar ka number -> { opt, correct }
@@ -74,7 +78,9 @@ export default function QBoard({
 
   const all = useMemo(() => list || [], [list]);
   const total = all.length;
-  const setCount = Math.ceil(total / SET_SIZE);
+  // `single` mein poori list ek hi set hai.
+  const size = single ? Math.max(total, 1) : SET_SIZE;
+  const setCount = Math.ceil(total / size);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const doneSet = useMemo(() => getDoneSet(), [ver]);
   const doneCount = useMemo(
@@ -84,8 +90,9 @@ export default function QBoard({
 
   // Naya chapter (ya naya filter) aaya to seedha set wale parde par.
   useEffect(() => {
-    setSetIdx(null); setAsk(null); setCur(0); setPicks({}); setReview({}); setDone(false);
-  }, [resumeKey, total]);
+    setSetIdx(single ? 0 : null); setAsk(null); setCur(0);
+    setPicks({}); setReview({}); setDone(false); setLeftSec(SET_MIN * 60);
+  }, [resumeKey, total, single]);
 
   // Clock. Solutions dekhte waqt nahi chalta. 0 par khud submit ho jata hai —
   // timer ka matlab hi yahi hai.
@@ -129,10 +136,10 @@ export default function QBoard({
     }, 40);
   }, []);
 
-  const from = setIdx === null ? 0 : setIdx * SET_SIZE;
+  const from = setIdx === null ? 0 : setIdx * size;
   const setQs = useMemo(
-    () => (setIdx === null ? [] : all.slice(from, from + SET_SIZE)),
-    [all, setIdx, from],
+    () => (setIdx === null ? [] : all.slice(from, from + size)),
+    [all, setIdx, from, size],
   );
 
   const openSet = (i, how) => {
@@ -195,8 +202,6 @@ export default function QBoard({
     r.scrollLeft += (er.left - cr.left) - (cr.width - er.width) / 2;
   });
 
-  const nudge = (delta) => setCounts((c) => ({ ...c, [subject]: bumpCount(subject, delta) }));
-
   // Maths/Reasoning ke question TASVEER hain — unka notebook wala roop card
   // khud banata hai (`tq`: id + qText + optText). Wahi roop board ko chahiye
   // taaki chhoda hua question theek usi pehchaan se Mistake Notebook mein jaye
@@ -258,8 +263,9 @@ export default function QBoard({
     for (const qq of setQs) countMark(doneKeyFor(qq), subject, true);
     setResults(getChapterResults(resumeKey));
     setCounts(getCounts());
+    onSubmit?.({ right, wrong, skipped: n - answered, total: n, sec: spent });
     toTop();
-  }, [done, setIdx, resumeKey, picks, setQs, right, wrong, answered, n, spent, subject, title, toTop]);
+  }, [done, setIdx, resumeKey, picks, setQs, right, wrong, answered, n, spent, subject, title, onSubmit, toTop]);
 
   // Samay khatam — khud submit. Timer ka matlab hi yahi hai.
   useEffect(() => {
@@ -273,11 +279,14 @@ export default function QBoard({
     return (
       <div className="qboard__main">
         <div className="qboard__stats">
+          {/* + / − hata diye: ginti ab khud "ho gaya" se aati hai (Submit par
+              har question countMark se ginta hai), isliye haath se chhedne ki
+              zaroorat nahi. Aur wo buttons ek dabane par do badha dete the —
+              bumpCount ek state-updater ke ANDAR chal raha tha, jise React dev
+              mein do baar bulata hai. */}
           {COUNTER_SUBJECTS.includes(subject) && (
             <span className="cnt" title="Aaj is subject ke kitne question hue (raat 3 baje reset)">
               🔢 Aaj: {counts[subject] || 0}
-              <button type="button" onClick={() => nudge(-1)} aria-label="ek kam">−</button>
-              <button type="button" onClick={() => nudge(1)} aria-label="ek zyada">+</button>
             </span>
           )}
           <span className="tot">📊 Total: {total}</span>
@@ -296,8 +305,11 @@ export default function QBoard({
                 <button className="setcard__open" onClick={() => tapSet(i)}>
                   <span className="setcard__n">Set {i + 1}{r ? " ✓" : ""}</span>
                   <span className="setcard__meta">Q {a + 1}–{a + chunk.length} · {chunk.length} questions</span>
+                  {/* Patti ab SAHI jawabon ki hai. Pehle "ho gaye" ki thi, aur
+                      set dete hi saare 25 ho gaye ho jate hain — isliye wo
+                      hamesha poori hari dikhti thi aur kuch batati hi nahi. */}
                   <span className="setcard__bar">
-                    <i style={{ width: `${Math.round((dn / chunk.length) * 100)}%` }} />
+                    <i style={{ width: `${Math.round(((r ? r.right : dn) / chunk.length) * 100)}%` }} />
                   </span>
                   {r ? (
                     <span className="setcard__score">
@@ -387,9 +399,11 @@ export default function QBoard({
 
       <div className="qboard__main">
         <div className="qboard__top">
-          <button className="btn btn--ghost btn--sm" onClick={() => setSetIdx(null)}>← Sets</button>
+          {!single && (
+            <button className="btn btn--ghost btn--sm" onClick={() => setSetIdx(null)}>← Sets</button>
+          )}
           <span className="qboard__title">
-            Set {setIdx + 1}{mode === "solutions" ? " · solutions" : ""}
+            {single ? title : `Set ${setIdx + 1}`}{mode === "solutions" ? " · solutions" : ""}
           </span>
           {done && mode === "test" && (
             <span className="qboard__clock">{clock(spent)}</span>

@@ -1,95 +1,44 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { getQuiz, saveQuiz, makeId, deleteQuiz } from "@/lib/storage";
-import { askAI, generateSimilar } from "@/lib/client-ai";
-import Markdown from "@/components/Markdown";
-import Diagram from "@/components/Diagram";
-import QuestionFollowup from "@/components/QuestionFollowup";
-import AddToChapter from "@/components/AddToChapter";
-import AskButtons from "@/components/AskButtons";
-import PasteAnswer from "@/components/PasteAnswer";
-import WordPopup from "@/components/WordPopup";
-import FullscreenTestButton from "@/components/FullscreenTestButton";
-import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { getQuiz, deleteQuiz } from "@/lib/storage";
 import { setSyncPaused } from "@/lib/sync";
-import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
-import { recordQuizAttempts, quizCategory, setReviewErrorType, ERROR_TYPES } from "@/lib/qreview";
 import { markDayDone, markDayTypeDone } from "@/lib/vocab";
+import PyqQuestionCard from "@/components/PyqQuestionCard";
+import QBoard from "@/components/QBoard";
 
-function fmt(sec) {
-  const s = Math.round(sec || 0);
-  if (s < 60) return `${s}s`;
-  return `${Math.floor(s / 60)}m ${s % 60}s`;
-}
-
+// 📝 Ek quiz khelne ka page — generated "20 similar", notes ke page ka quiz,
+// vocab ka din, Quiz Bank ka paper: sab yahin khulte hain.
+//
+// Ab iska apna koi test-engine nahi hai. Wahi QBoard chalta hai jo PYQ chapter
+// par chalta hai — 15 minute ka clock, ek waqt par ek question, daayin numbered
+// palette, Mark for Review, aur Submit ke baad Right/Wrong/Marks/Accuracy ke
+// saath saare answer. `single` iska matlab hai ki poora quiz EK hi test hai,
+// 25-25 ke set nahi (quiz apne aap mein ek paper hota hai).
+//
+// Purana engine yahin apna alag Prev/Next, apna timer, apni result screen aur
+// error-tagging rakhta tha — do jagah do alag test, dono ko alag-alag sudharna
+// padta tha. Ab ek hi jagah hai.
 export default function QuizPlayer() {
   const { id } = useParams();
-  const router = useRouter();
-  // Quiz khula ho to sync ko storage chhoone hi nahi dena. Answers React state
-  // mein hain, isliye beech mein kuch bhi jhatka lagna seedha nuksaan hai —
-  // aur quiz ke beech koi app khud kuch nahi badalti. Screen band hote hi sync
-  // wapas chalu ho jata hai (jo bhi bana wo tab chala jayega).
-  useEffect(() => { setSyncPaused(true); return () => setSyncPaused(false); }, []);
-
   const [quiz, setQuiz] = useState(undefined);
 
-  // attempt state
-  const [cur, setCur] = useState(0);
-  const [answers, setAnswers] = useState({});
-  const [times, setTimes] = useState({});
-  const [submitted, setSubmitted] = useState(false);
-  const [now, setNow] = useState(0); // for live timer
-  const [deadline, setDeadline] = useState(0); // epoch ms when time runs out (0 = no limit)
-  const [timedOut, setTimedOut] = useState(false);
-  const startRef = useRef(0);
-  const submitRef = useRef(null); // latest submit fn for the timer to call
-  const advanceTimer = useRef(null); // pending auto-advance after picking an option
-
-  // Per-question timer ("30/60/90/120 sec/Q"): pick a limit + Start, and from the
-  // current question onward every question gets that much time. Run out → auto next
-  // (marked "time-up"), never wait. Works for every quiz since this is the one player.
-  const [perQSec, setPerQSec] = useState(0);        // per-question limit in seconds; 0 = off
-  const [perQOn, setPerQOn] = useState(false);      // timed practice actually running
-  const [qDeadline, setQDeadline] = useState(0);    // epoch ms deadline for the CURRENT question
-  const [timedOutQs, setTimedOutQs] = useState({}); // qi -> true: timer expired before an answer
-  const qTimeoutRef = useRef(null);                 // latest per-question-timeout handler
-
-  // word whose meaning is shown in the result-screen pop-up (vocab quizzes)
-  const [wordPopup, setWordPopup] = useState(null);
-
-  // per-question result actions
-  const [shortcuts, setShortcuts] = useState({});
-  const [scLoading, setScLoading] = useState({});
-  const [scShown, setScShown] = useState({});
-  const [explains, setExplains] = useState({});
-  const [exLoading, setExLoading] = useState({});
-  const [exShown, setExShown] = useState({});
-  const [simLoading, setSimLoading] = useState({});
-  const [actionErr, setActionErr] = useState({});
-  const [errorTags, setErrorTags] = useState({}); // qi -> errorType (Mistake Notebook)
-  const [reviewFilter, setReviewFilter] = useState("all"); // result screen: all|wrong|skipped|slow|correct
-
-  const tagError = (qi, q, type) => {
-    setReviewErrorType(keyFor(q), type);
-    setErrorTags((m) => ({ ...m, [qi]: m[qi] === type ? "" : type }));
-  };
+  // Quiz khula ho to sync ko storage chhoone hi nahi dena. Jawab React state
+  // mein hain, isliye beech mein jhatka seedha nuksaan hai. Screen band hote
+  // hi sync wapas chalu (jo bhi bana wo tab chala jayega).
+  useEffect(() => { setSyncPaused(true); return () => setSyncPaused(false); }, []);
 
   useEffect(() => {
     let cancelled = false;
-    const apply = (qz) => {
-      if (cancelled) return;
-      setQuiz(qz || null);
-      startRef.current = Date.now();
-      if (qz?.timeLimitSec) setDeadline(Date.now() + qz.timeLimitSec * 1000);
-    };
+    const apply = (qz) => { if (!cancelled) setQuiz(qz && qz.questions?.length ? qz : null); };
     const local = getQuiz(id);
-    if (local) { apply(local); return; }
-    // Imported Quiz Bank / Mock Test — served on demand from /public (keeps localStorage light).
+    if (local) { apply(local); return undefined; }
+    // Imported Quiz Bank / Mock Test — /public se maanga jata hai, taaki
+    // localStorage halka rahe.
     if (typeof id === "string" && id.startsWith("bank_")) {
-      setQuiz(undefined); // stay in the loading state while fetching
+      setQuiz(undefined);
       fetch(`/quizbank/${encodeURIComponent(id)}.json`)
         .then((r) => (r.ok ? r.json() : null))
         .then(apply)
@@ -100,10 +49,10 @@ export default function QuizPlayer() {
     return () => { cancelled = true; };
   }, [id]);
 
-  // A "similar practice" set streams in: the generator saves the first few and
-  // navigates here immediately, then keeps appending more in the background. Pick
-  // those up live (new questions land at the end, so answers/position by index
-  // are untouched). quiz.streaming flips false when the top-up finishes.
+  // "Similar practice" set dhire-dhire bharta hai: generator pehle kuch save
+  // karke yahan bhej deta hai aur baaki peeche se jodta rehta hai. Naye
+  // question list ke ANT mein aate hain, isliye chuna hua jawab (jo number se
+  // ginta hai) hilta nahi.
   useEffect(() => {
     const onAppend = (e) => {
       if (!e?.detail || e.detail.id !== id) return;
@@ -114,35 +63,6 @@ export default function QuizPlayer() {
     return () => window.removeEventListener("cgl:quiz-appended", onAppend);
   }, [id]);
 
-  // cancel any pending auto-advance if the player unmounts
-  useEffect(() => () => { if (advanceTimer.current) clearTimeout(advanceTimer.current); }, []);
-
-  // Every time we land on a new question while the per-question timer is running,
-  // give it a fresh full clock. Covers every way `cur` can change — auto-advance,
-  // Prev, or a time-up jump — from one place.
-  useEffect(() => {
-    if (perQOn && !submitted) setQDeadline(Date.now() + perQSec * 1000);
-  }, [cur, perQOn, perQSec, submitted]);
-
-  // live ticking timer while attempting; auto-submit when the whole-quiz countdown
-  // hits 0, or auto-advance when the per-question countdown does.
-  useEffect(() => {
-    if (submitted) return;
-    const t = setInterval(() => {
-      const nowMs = Date.now();
-      setNow(nowMs);
-      if (deadline && nowMs >= deadline) {
-        setTimedOut(true);
-        submitRef.current && submitRef.current();
-        return;
-      }
-      if (perQOn && qDeadline && nowMs >= qDeadline) {
-        qTimeoutRef.current && qTimeoutRef.current();
-      }
-    }, 250);
-    return () => clearInterval(t);
-  }, [submitted, deadline, perQOn, qDeadline]);
-
   if (quiz === undefined)
     return <section className="section"><p className="muted">Loading…</p></section>;
 
@@ -151,565 +71,60 @@ export default function QuizPlayer() {
       <section className="section" style={{ marginTop: 24 }}>
         <div className="glass-card center">
           <h2>Quiz not found</h2>
-          <p className="muted mt-8">It may have been deleted, or the link is wrong.</p>
+          <p className="muted mt-8">Ya to delete ho gaya, ya link galat hai.</p>
           <Link href="/answers" className="btn btn--primary mt-16">← Answers</Link>
         </div>
       </section>
     );
 
-  const total = quiz.questions.length;
-  const answeredCount = Object.keys(answers).length;
-
-  const commitTime = () => {
-    const el = (Date.now() - startRef.current) / 1000;
-    setTimes((t) => ({ ...t, [cur]: (t[cur] || 0) + el }));
-    startRef.current = Date.now();
-  };
-
-  const clearAdvance = () => {
-    if (advanceTimer.current) { clearTimeout(advanceTimer.current); advanceTimer.current = null; }
-  };
-
-  const goTo = (idx) => {
-    clearAdvance();
-    commitTime();
-    setCur(idx);
-  };
-
-  // Picking an option auto-advances to the next question — no Next button. A
-  // short beat lets the chosen option flash first. The last question stays put
-  // (nowhere to go) so you can hit Submit.
-  const select = (oi) => {
-    setAnswers((a) => ({ ...a, [cur]: oi }));
-    clearAdvance();
-    if (cur < total - 1) {
-      const from = cur;
-      advanceTimer.current = setTimeout(() => {
-        advanceTimer.current = null;
-        commitTime();
-        setCur((c) => (c === from ? from + 1 : c));
-      }, 220);
+  const onSubmit = () => {
+    // Vocab ka din yahin tick hota hai — submit par, kholne par nahi, taaki
+    // khola-aur-chhoda quiz "ho gaya" na gine.
+    if (quiz.vocabDay) {
+      if (quiz.vocabType) markDayTypeDone(quiz.vocabDay, quiz.vocabType);
+      else markDayDone(quiz.vocabDay);
     }
+    // Quiz ab bekaar hai — galat/chhode question Mistake Notebook mein ja chuke
+    // aur stats bhi darj ho gaye. Rakhne se sirf localStorage bharta hai. Result
+    // screen memory-copy se banti hai, isliye delete ke baad bhi poori dikhti.
+    if (!String(id).startsWith("bank_")) deleteQuiz(quiz.id);
   };
 
-  const submit = () => {
-    if (submitted) return;
-    clearAdvance();
-    commitTime();
-    // track per-question attempts + archive into the Mistake Notebook (site-wide)
-    if (quiz) {
-      const items = [];
-      const reviewItems = [];
-      const timedOutHere = []; // questions missed on the per-question clock
-      quiz.questions.forEach((q, i) => {
-        const answered = answers[i] !== undefined;
-        const timedOut = !!timedOutQs[i];
-        if (answered) {
-          const correct = answers[i] === q.answer;
-          items.push({ q, correct });
-          reviewItems.push({ q, correct, source: quiz.source || "", category: quizCategory(quiz, q) });
-        } else if (timedOut) {
-          // Time limit mein nahi hua → Mistake Notebook mein wrong ke roop mein daalo.
-          items.push({ q, correct: false });
-          reviewItems.push({ q, correct: false, source: quiz.source || "", category: quizCategory(quiz, q) });
-          timedOutHere.push(q);
-        }
-      });
-      recordAttempts(items);
-      recordQuizAttempts(reviewItems);
-      // Tag the timed-out ones as "Time Laga" so they surface in the error log.
-      timedOutHere.forEach((q) => setReviewErrorType(keyFor(q), "time"));
-
-      // Vocab quizzes tick their day here — on submit, not on launch, so a quiz
-      // you opened and abandoned doesn't count as done.
-      if (quiz.vocabDay) {
-        if (quiz.vocabType) markDayTypeDone(quiz.vocabDay, quiz.vocabType);
-        else markDayDone(quiz.vocabDay);
-      }
-
-      // Quiz ab bekaar hai — galat questions Mistake Notebook mein ja chuke aur
-      // stats bhi darj ho gaye. Rakhne se sirf localStorage bharta hai (jo cap
-      // ke kagaar par hai) aur "My Quizzes" mein purane attempts ka dher lagta
-      // hai. Result screen `quiz` ke memory-copy se banti hai, isliye delete ke
-      // baad bhi poori dikhti hai.
-      deleteQuiz(quiz.id);
-    }
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  submitRef.current = submit;
-
-  // Kick off the per-question timer from wherever you are right now.
-  const startPerQ = () => {
-    if (!perQSec) return;
-    setTimedOutQs({});
-    setPerQOn(true);
-    commitTime();
-    setQDeadline(Date.now() + perQSec * 1000);
-  };
-
-  // Per-question clock ran out: if unanswered, note it as "time-up", then move on
-  // (or finish, if this was the last one).
-  qTimeoutRef.current = () => {
-    if (answers[cur] === undefined) setTimedOutQs((m) => ({ ...m, [cur]: true }));
-    if (cur < total - 1) {
-      clearAdvance();
-      commitTime();
-      setCur(cur + 1);
-      setQDeadline(Date.now() + perQSec * 1000);
-    } else {
-      submit();
-    }
-  };
-
-  const retry = () => {
-    clearAdvance();
-    setAnswers({}); setTimes({}); setShortcuts({}); setActionErr({});
-    setExplains({}); setCur(0); setSubmitted(false); setTimedOut(false);
-    setPerQOn(false); setTimedOutQs({}); setQDeadline(0);
-    startRef.current = Date.now();
-    if (quiz?.timeLimitSec) setDeadline(Date.now() + quiz.timeLimitSec * 1000);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  // live time for current question
-  const liveCur = !submitted ? (times[cur] || 0) + (now ? (Date.now() - startRef.current) / 1000 : 0) : 0;
-
-  // countdown remaining (only when the quiz has a time limit)
-  const remainingSec = deadline ? Math.max(0, Math.ceil((deadline - (now || Date.now())) / 1000)) : null;
-  const lowTime = remainingSec !== null && remainingSec <= 60;
-  const fmtClock = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
-
-  // per-question countdown (only while the per-question timer is running)
-  const perQRemain = perQOn && qDeadline ? Math.max(0, Math.ceil((qDeadline - (now || Date.now())) / 1000)) : null;
-  const perQLow = perQRemain !== null && perQRemain <= 10;
-
-  const getShortcut = async (i) => {
-    const q = quiz.questions[i];
-    setScLoading((s) => ({ ...s, [i]: true }));
-    setActionErr((e) => ({ ...e, [i]: "" }));
-    try {
-      const opts = q.options.map((o, oi) => `${String.fromCharCode(65 + oi)}) ${o}`).join("   ");
-      const text =
-        `${q.question}\nOptions: ${opts}\n` +
-        (q.answer != null ? `Correct answer (already verified): ${String.fromCharCode(65 + q.answer)}) ${q.options[q.answer]}\n` : "") +
-        (q.explanation ? `Reason: ${q.explanation}\n` : "");
-      const { answer } = await askAI({ question: text, mode: "shortcut" });
-      setShortcuts((s) => ({ ...s, [i]: answer }));
-      setScShown((s) => ({ ...s, [i]: true }));
-      saveShortcutFor(q, answer); // persist — comes back on next press
-    } catch (err) {
-      setActionErr((e) => ({ ...e, [i]: err.message }));
-    } finally {
-      setScLoading((s) => ({ ...s, [i]: false }));
-    }
-  };
-  const toggleShortcut = (i) => {
-    if (scShown[i]) { setScShown((s) => ({ ...s, [i]: false })); return; }
-    if (shortcuts[i]) { setScShown((s) => ({ ...s, [i]: true })); return; }
-    const saved = getSavedShortcut(quiz.questions[i]);   // saved from a previous time
-    if (saved) { setShortcuts((s) => ({ ...s, [i]: saved })); setScShown((s) => ({ ...s, [i]: true })); return; }
-    getShortcut(i);
-  };
-  const regenShortcut = (i) => { clearSavedShortcut(quiz.questions[i]); setShortcuts((s) => ({ ...s, [i]: "" })); getShortcut(i); };
-
-  const getExplain = async (i) => {
-    const q = quiz.questions[i];
-    setExLoading((s) => ({ ...s, [i]: true }));
-    setActionErr((e) => ({ ...e, [i]: "" }));
-    try {
-      const opts = q.options.map((o, oi) => `${String.fromCharCode(65 + oi)}) ${o}`).join("   ");
-      const text =
-        `${q.question}\nOptions: ${opts}\n` +
-        (q.answer != null ? `Correct answer (already verified): ${String.fromCharCode(65 + q.answer)}) ${q.options[q.answer]}\n` : "") +
-        (q.explanation ? `Short reason: ${q.explanation}\n` : "");
-      const { answer } = await askAI({ question: text, mode: "explain" });
-      setExplains((s) => ({ ...s, [i]: answer }));
-      setExShown((s) => ({ ...s, [i]: true }));
-    } catch (err) {
-      setActionErr((e) => ({ ...e, [i]: err.message }));
-    } finally {
-      setExLoading((s) => ({ ...s, [i]: false }));
-    }
-  };
-  const toggleExplain = (i) => {
-    if (exShown[i]) { setExShown((s) => ({ ...s, [i]: false })); return; }
-    if (explains[i]) { setExShown((s) => ({ ...s, [i]: true })); return; }
-    getExplain(i);
-  };
-
-  const make20 = async (i) => {
-    const q = quiz.questions[i];
-    setSimLoading((s) => ({ ...s, [i]: true }));
-    setActionErr((e) => ({ ...e, [i]: "" }));
-    try {
-      const data = await generateSimilar({ question: q.question, options: q.options }, 20);
-      const newQuiz = {
-        id: makeId(),
-        title: data.title || "Similar (20) · " + quiz.title,
-        source: "similar",
-        createdAt: new Date().toISOString(),
-        questions: data.questions,
-      };
-      saveQuiz(newQuiz);
-      router.push(`/quizzes/${newQuiz.id}`);
-    } catch (err) {
-      setActionErr((e) => ({ ...e, [i]: err.message }));
-    } finally {
-      setSimLoading((s) => ({ ...s, [i]: false }));
-    }
-  };
-
-  // ---------- RESULTS ----------
-  if (submitted) {
-    const correct = quiz.questions.reduce((a, q, i) => (answers[i] === q.answer ? a + 1 : a), 0);
-    const wrong = quiz.questions.reduce(
-      (a, q, i) => (answers[i] !== undefined && answers[i] !== q.answer ? a + 1 : a), 0
-    );
-    const unanswered = total - correct - wrong;
-    const totalTime = Object.values(times).reduce((a, b) => a + b, 0);
-    const pct = Math.round((correct / total) * 100);
-    // Vocab quiz options are single words, so each one can be looked up. For a
-    // maths/GK quiz the options are numbers or phrases — no meaning to show.
-    const isVocab = (quiz.source || "").startsWith("vocab");
-
-    // Result-screen filters — jump straight to the wrong / skipped / slow ones.
-    const SLOW = 60; // seconds; "1 minute se uppar"
-    const slowCount = quiz.questions.reduce((a, _q, i) => ((times[i] || 0) > SLOW ? a + 1 : a), 0);
-    // Per-question timer report: how many ran out of time before an answer.
-    const timedOutCount = Object.values(timedOutQs).filter(Boolean).length;
-    const inTimeCount = perQOn ? total - timedOutCount : 0; // done within the set time
-    const filterDefs = [
-      { key: "all", label: "Sab", n: total },
-      { key: "wrong", label: "❌ Galat", n: wrong },
-      { key: "skipped", label: "⭕ Chhode", n: unanswered },
-      ...(perQOn ? [{ key: "timeup", label: "⏳ Time-up", n: timedOutCount }] : []),
-      { key: "slow", label: "⏱ 1 min+", n: slowCount },
-      { key: "correct", label: "✅ Sahi", n: correct },
-    ];
-    const passesFilter = (qi, q) => {
-      const chosen = answers[qi];
-      const isRight = chosen === q.answer;
-      if (reviewFilter === "wrong") return chosen !== undefined && !isRight;
-      if (reviewFilter === "skipped") return chosen === undefined;
-      if (reviewFilter === "correct") return chosen !== undefined && isRight;
-      if (reviewFilter === "slow") return (times[qi] || 0) > SLOW;
-      if (reviewFilter === "timeup") return !!timedOutQs[qi];
-      return true;
-    };
-    const shownQs = quiz.questions
-      .map((q, qi) => ({ q, qi }))
-      .filter(({ q, qi }) => passesFilter(qi, q));
-
-    return (
-      <>
-        <section className="hero" style={{ paddingBottom: 8 }}>
-          <div className="row between">
-            <span className="hero__eyebrow">✅ Result</span>
-            <div className="row" style={{ gap: 8 }}>
-              <button className="btn btn--primary btn--sm" onClick={() => router.back()}>← Back</button>
-              <Link href="/answers" className="btn btn--ghost btn--sm">📖 Answers</Link>
-            </div>
-          </div>
-          <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>{quiz.title}</h1>
-          {timedOut && (
-            <p className="mt-8" style={{ color: "var(--danger)", fontWeight: 600 }}>
-              ⏳ Time up! The quiz was submitted automatically.
-            </p>
-          )}
-        </section>
-
-        {/* Score summary */}
-        <section className="section" style={{ marginTop: 8 }}>
-          <div className="stat-row">
-            <div className="stat glass"><span className="stat__num grad">{correct}/{total}</span><span className="stat__label">Score · {pct}%</span></div>
-            <div className="stat glass"><span className="stat__num" style={{ color: "var(--success)" }}>{correct}</span><span className="stat__label">Correct ✅</span></div>
-            <div className="stat glass"><span className="stat__num" style={{ color: "var(--danger)" }}>{wrong}</span><span className="stat__label">Wrong ❌</span></div>
-            <div className="stat glass"><span className="stat__num" style={{ color: "var(--text-2)" }}>{unanswered}</span><span className="stat__label">Skipped ⭕</span></div>
-            {perQOn && (
-              <div className="stat glass"><span className="stat__num" style={{ color: "var(--danger)" }}>{timedOutCount}</span><span className="stat__label">Time-up ⏳ · {inTimeCount} in {perQSec}s</span></div>
-            )}
-            <div className="stat glass"><span className="stat__num" style={{ color: "var(--accent-2)" }}>{fmt(totalTime)}</span><span className="stat__label">Total time · avg {fmt(totalTime / total)}</span></div>
-          </div>
-        </section>
-
-        {/* Per-question review */}
-        <section className="section" style={{ marginTop: 12 }}>
-          <div className="row" style={{ gap: 8, flexWrap: "wrap", marginBottom: 14, alignItems: "center" }}>
-            {filterDefs.map((f) => (
-              <button
-                key={f.key}
-                className={`chip chip--btn ${reviewFilter === f.key ? "is-active" : ""}`}
-                onClick={() => { setReviewFilter(f.key); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                disabled={f.n === 0 && f.key !== "all"}
-                style={f.n === 0 && f.key !== "all" ? { opacity: 0.4 } : {}}
-              >
-                {f.label} ({f.n})
-              </button>
-            ))}
-          </div>
-          {shownQs.length === 0 ? (
-            <div className="glass-card center"><p className="muted">Is filter mein koi question nahi. 🎉</p></div>
-          ) : (
-          <div className="grid" style={{ gap: 16 }}>
-            {shownQs.map(({ q, qi }) => {
-              const chosen = answers[qi];
-              const isRight = chosen === q.answer;
-              return (
-                <article key={qi} className="glass-card">
-                  <div className="row between" style={{ alignItems: "flex-start" }}>
-                    <div className="row" style={{ gap: 10, alignItems: "flex-start" }}>
-                      <span className={`badge ${chosen === undefined ? "" : isRight ? "badge--ok" : ""}`}
-                            style={chosen !== undefined && !isRight ? { background: "var(--accent-wash)", color: "var(--danger)", border: "1px solid var(--accent-wash)" } : {}}>
-                        {qi + 1}
-                      </span>
-                      <h3 style={{ fontSize: "1.14rem", fontWeight: 600, lineHeight: 1.5 }}>
-                        <Markdown inline>{q.question}</Markdown>
-                        {(q.paper || q.source) && <span className="paper-tag">📄 {q.paper || q.source}</span>}
-                      </h3>
-                    </div>
-                    <div className="row" style={{ gap: 8, flexShrink: 0, alignItems: "center" }}>
-                      {(() => { const st = getStat(q); return st ? (
-                        <span className="time-pill" title={`${st.correct} correct / ${st.attempts} attempts`} style={{ background: "var(--accent-wash)", color: "var(--accent-2)" }}>
-                          🔁 {st.attempts}x{st.attempts ? ` · ${Math.round((st.correct / st.attempts) * 100)}%` : ""}
-                        </span>
-                      ) : null; })()}
-                      {timedOutQs[qi] && <span className="time-pill" style={{ background: "var(--accent-wash)", color: "var(--danger)" }} title="Time ran out before you answered">⏳ Time up</span>}
-                      <span className="time-pill">⏱ {fmt(times[qi] || 0)}</span>
-                    </div>
-                  </div>
-
-                  <Diagram svg={q.diagram} />
-
-                  <div className="grid" style={{ gap: 8, marginTop: 14 }}>
-                    {q.options.map((opt, oi) => {
-                      const s = {
-                        textAlign: "left", padding: "10px 14px", borderRadius: 10,
-                        borderWidth: "1px", borderStyle: "solid", borderColor: "var(--glass-border)",
-                        background: "var(--bg)",
-                        color: "var(--text-1)", fontSize: "0.92rem",
-                      };
-                      if (oi === q.answer) { s.borderColor = "var(--ok)"; s.background = "var(--ok-wash)"; }
-                      if (oi === chosen && oi !== q.answer) { s.borderColor = "var(--accent)"; s.background = "var(--accent-wash)"; }
-                      if (isVocab) { s.display = "flex"; s.alignItems = "center"; s.gap = 8; }
-                      return (
-                        <div key={oi} style={s}>
-                          <span style={{ flex: 1, minWidth: 0 }}>
-                            <strong style={{ opacity: 0.7, marginRight: 8 }}>{String.fromCharCode(65 + oi)}</strong>
-                            <Markdown inline>{opt}</Markdown>
-                            {oi === q.answer && <span style={{ color: "var(--success)", marginLeft: 8 }}>✓</span>}
-                          </span>
-                          {isVocab && (
-                            <button
-                              className="btn btn--ghost btn--sm"
-                              style={{ flexShrink: 0 }}
-                              onClick={() => setWordPopup(String(opt))}
-                              title={`"${opt}" ka meaning dekho`}
-                              aria-label={`Meaning of ${opt}`}
-                            >
-                              📖
-                            </button>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {chosen !== undefined && !isRight && (
-                    <div className="row mt-12" style={{ gap: 6, flexWrap: "wrap", alignItems: "center" }}>
-                      <span className="muted" style={{ fontSize: "0.8rem" }}>Galti kyun?</span>
-                      {ERROR_TYPES.map((e) => {
-                        const on = errorTags[qi] === e.key;
-                        const suggest = e.key === "time" && !errorTags[qi] && (times[qi] || 0) > Math.max(90, (totalTime / total) * 2);
-                        return (
-                          <button key={e.key} className={`chip chip--btn chip--sm ${on ? "is-active" : ""}`}
-                            style={suggest ? { borderColor: "rgba(251,191,36,0.65)", color: "var(--warning)" } : {}}
-                            onClick={() => tagError(qi, q, e.key)}>
-                            {e.label}{suggest ? " ?" : ""}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {q.explanation && (
-                    <div className="muted mt-16" style={{ fontSize: "0.96rem", lineHeight: 1.6 }}>
-                      <strong style={{ color: "var(--text-2)" }}>Reason: </strong>
-                      <Markdown inline>{q.explanation}</Markdown>
-                    </div>
-                  )}
-
-                  {/* Action buttons */}
-                  <div className="row mt-16" style={{ gap: 10, flexWrap: "wrap" }}>
-                    <button className="btn btn--primary btn--sm" onClick={() => toggleExplain(qi)} disabled={exLoading[qi]}>
-                      {exLoading[qi] ? "Explaining…" : exShown[qi] ? "📖 Hide detail" : "📖 Explain in detail (why? + example)"}
-                    </button>
-                    <button className="btn btn--ghost btn--sm" onClick={() => toggleShortcut(qi)} disabled={scLoading[qi]}>
-                      {scLoading[qi] ? "Thinking…" : scShown[qi] ? "⚡ Hide shortcut" : "⚡ Shortcut trick"}
-                    </button>
-                    <button className="btn btn--ghost btn--sm" onClick={() => make20(qi)} disabled={simLoading[qi]}>
-                      {simLoading[qi] ? "Generating…" : "🎯 20 similar"}
-                    </button>
-                    <AskButtons q={q} />
-                    <AddToChapter q={q} />
-                  </div>
-                  <PasteAnswer q={q} />
-
-                  {actionErr[qi] && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 10 }}>{actionErr[qi]}</p>}
-                  {exShown[qi] && explains[qi] && (
-                    <div className="answer-box mt-16">
-                      <Markdown>{explains[qi]}</Markdown>
-                    </div>
-                  )}
-                  {scShown[qi] && shortcuts[qi] && (
-                    <div className="answer-box mt-16">
-                      <Markdown>{shortcuts[qi]}</Markdown>
-                      <button className="btn btn--ghost btn--sm mt-12" onClick={() => regenShortcut(qi)} disabled={scLoading[qi]}>
-                        {scLoading[qi] ? "Thinking…" : "🔄 New shortcut"}
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Follow-up doubts on this question */}
-                  <QuestionFollowup question={q} />
-                </article>
-              );
-            })}
-          </div>
-          )}
-
-          <div className="row center mt-24" style={{ justifyContent: "center" }}>
-            <button className="btn btn--ghost" onClick={retry}>🔁 Retry Quiz</button>
-          </div>
-        </section>
-
-        {wordPopup && <WordPopup word={wordPopup} onClose={() => setWordPopup(null)} />}
-      </>
-    );
-  }
-
-  // ---------- ATTEMPT (one question at a time) ----------
-  const q = quiz.questions[cur];
   return (
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
-          <span className="hero__eyebrow">📝 {quiz.title}</span>
-          <div className="row" style={{ gap: 8 }}>
-            <FullscreenTestButton questions={quiz.questions} title={quiz.title} subject={quiz.subject || ""} timeLimitSec={quiz.timeLimitSec || 0} />
-            {/* Tablet par is quiz ke har question ke neeche stylus se rough work.
-                Wahi solve page hai jo wrong book use karta hai — quiz ke questions
-                use pseudo-record ban kar milte hain, to canvas/timer/prev-next sab
-                waisa hi chalta hai. PYQ ke "🎯 20 similar" ke baad yahi raasta hai. */}
-            <Link href={`/wrong/solve?quiz=${quiz.id}`} className="btn btn--ghost btn--sm" title="Stylus se solve karo (tablet)">
-              ✍️ Stylus
-            </Link>
-            <Link href="/answers" className="btn btn--ghost btn--sm">Exit</Link>
-          </div>
+          <span className="hero__eyebrow">📝 Quiz</span>
+          <Link href="/answers" className="btn btn--ghost btn--sm">Exit</Link>
         </div>
+        <h1 className="hero__title" style={{ fontSize: "clamp(1.3rem, 3vw, 1.9rem)" }}>
+          {quiz.title}
+        </h1>
         {quiz.streaming && (
           <p className="mt-8" style={{ fontSize: "0.82rem", color: "var(--accent-2)", fontWeight: 600 }}>
-            ⏳ Aur similar questions background mein ban rahe hain… ({total} tak aa gaye)
+            ⏳ Aur questions peeche se aa rahe hain…
           </p>
         )}
-        <div className="row between mt-8">
-          <p className="muted" style={{ fontSize: "0.9rem" }}>Question {cur + 1} of {total} · {answeredCount} answered</p>
-          <div className="row" style={{ gap: 8 }}>
-            {remainingSec !== null && (
-              <span className="time-pill" style={lowTime
-                ? { background: "var(--accent-wash)", color: "var(--danger)", borderColor: "var(--accent)" }
-                : { background: "var(--accent-wash)", color: "var(--accent-2)" }}>
-                ⏳ {fmtClock(remainingSec)}
-              </span>
-            )}
-            {perQRemain !== null && (
-              <span className="time-pill" style={perQLow
-                ? { background: "var(--accent-wash)", color: "var(--danger)", borderColor: "var(--accent)", fontWeight: 700, fontSize: "0.98rem" }
-                : { background: "var(--accent-wash)", color: "var(--accent-2)", fontWeight: 700, fontSize: "0.98rem" }}>
-                ⏳ {perQRemain}s
-              </span>
-            )}
-            <span className="time-pill live">⏱ {fmt(liveCur)}</span>
-          </div>
-        </div>
-
-        {/* Per-question timer: pick a limit + Start; every question from here gets it. */}
-        {!perQOn ? (
-          <div className="row mt-8" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>
-            <span className="muted" style={{ fontSize: "0.82rem" }}>⏱ Per-question timer:</span>
-            <select
-              className="select"
-              value={perQSec}
-              onChange={(e) => setPerQSec(Number(e.target.value))}
-              style={{ width: "auto", padding: "6px 30px 6px 12px", fontSize: "0.85rem" }}
-            >
-              <option value={0}>Off</option>
-              <option value={30}>30 sec / Q</option>
-              <option value={60}>60 sec / Q</option>
-              <option value={90}>90 sec / Q</option>
-              <option value={120}>120 sec / Q</option>
-            </select>
-            <button className="btn btn--primary btn--sm" onClick={startPerQ} disabled={!perQSec}>▶ Start timed</button>
-            <span className="muted" style={{ fontSize: "0.74rem" }}>
-              Is question se aage har question par utna time — khatam hote hi auto next.
-            </span>
-          </div>
-        ) : (
-          <div className="row between mt-8" style={{ alignItems: "center" }}>
-            <span className="muted" style={{ fontSize: "0.8rem" }}>⏱ Timed · {perQSec}s / question</span>
-            <button className="btn btn--ghost btn--sm" onClick={submit}>⏹ Stop &amp; report</button>
-          </div>
-        )}
-
-        {remainingSec !== null && (
-          <p className="muted mt-8" style={{ fontSize: "0.78rem" }}>
-            ⏳ Time limit: {Math.round((quiz.timeLimitSec || 0) / 60)} min · the quiz auto-submits when time runs out.
-          </p>
-        )}
-        <div className="progress"><div className="progress__bar" style={{ width: `${((cur + 1) / total) * 100}%` }} /></div>
       </section>
 
-      <section className="section" style={{ marginTop: 16 }}>
-        <article className="glass-card">
-          {(() => { const st = getStat(q); return st && st.attempts ? (
-            <p className="muted" style={{ fontSize: "0.76rem", marginBottom: 6 }}>🔁 You've attempted this question {st.attempts} times ({st.correct} correct)</p>
-          ) : null; })()}
-          <h3 style={{ fontSize: "1.22rem", fontWeight: 600, lineHeight: 1.5 }}>
-            <Markdown inline>{q.question}</Markdown>
-            {(q.paper || q.source) && <span className="paper-tag">📄 {q.paper || q.source}</span>}
-          </h3>
-          <Diagram svg={q.diagram} />
-          <div className="grid" style={{ gap: 10, marginTop: 18 }}>
-            {q.options.map((opt, oi) => {
-              const isChosen = answers[cur] === oi;
-              const style = {
-                textAlign: "left", padding: "13px 16px", borderRadius: 12,
-                borderWidth: "1px", borderStyle: "solid", borderColor: "var(--glass-border)",
-                background: "var(--bg)",
-                color: "var(--text-1)", cursor: "pointer", transition: "all .15s ease",
-              };
-              if (isChosen) { style.borderColor = "var(--accent)"; style.background = "var(--accent-wash)"; }
-              return (
-                <button key={oi} style={style} onClick={() => select(oi)}>
-                  <span style={{ fontWeight: 700, marginRight: 10, opacity: 0.7 }}>{String.fromCharCode(65 + oi)}</span>
-                  <Markdown inline>{opt}</Markdown>
-                </button>
-              );
-            })}
-          </div>
-          <div className="row mt-16" style={{ justifyContent: "flex-end", gap: 8, flexWrap: "wrap" }}>
-            <AskButtons q={q} />
-          </div>
-          <PasteAnswer q={q} />
-        </article>
-
-        <div className="row between mt-24">
-          <button className="btn btn--ghost" onClick={() => goTo(Math.max(0, cur - 1))} disabled={cur === 0}>← Prev</button>
-          <button className="btn btn--primary" onClick={submit}>✅ Submit ({answeredCount}/{total})</button>
-        </div>
-        <p className="muted mt-8" style={{ fontSize: "0.76rem", textAlign: "center" }}>
-          Option choose karte hi agle question pr chala jayega · Submit kabhi bhi daba sakte ho
-        </p>
+      <section className="section">
+        <QBoard
+          single
+          list={quiz.questions}
+          subject={quiz.subject || ""}
+          resumeKey={`quiz:${quiz.id}`}
+          title={quiz.title}
+          onSubmit={onSubmit}
+          renderCard={(q, i) => (
+            <PyqQuestionCard
+              key={q.id ?? i}
+              q={q}
+              index={i}
+              subject={quiz.subject || ""}
+              chapterName={quiz.title}
+            />
+          )}
+        />
       </section>
     </>
   );
