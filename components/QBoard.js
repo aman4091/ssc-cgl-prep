@@ -1,44 +1,42 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { doneKeyFor, getDoneSet } from "@/lib/qdone";
-import { getResume } from "@/lib/qprogress";
+import { getResume, setResume } from "@/lib/qprogress";
 import { getCounts, bumpCount, COUNTER_SUBJECTS } from "@/lib/qcounter";
 
-// 📚 Ek PYQ chapter/topic ka poora board — bilkul /answers page ke dhaanche
-// mein: baayen numbered rail, upar aaj ka counter + ginti, aur neeche cards
-// jisme "ho gaye" question sabse aakhir mein chale jaate hain.
+// 📚 Ek PYQ chapter/topic ka poora board — asli exam screen ki tarah:
+// EK WAQT MEIN EK QUESTION, daayin taraf numbered palette, aur neeche
+// Previous / Save & Next.
 //
-// Pehle har page khud yahi kaam kar raha tha (useDoneTabs + DoneTabBar + apna
-// slice + apna "Show more"), saat jagah copy hoke. Ab ek hi jagah hai, isliye
-// saare PYQ pages ek jaise chalte hain — aur agli baar shakl badalni ho to ek
-// hi file chhedni padegi.
+// Pehle ye lambi scroll list thi (25 card ek saath, "Show more" se aur).
+// Owner ne Testbook ka screen dikha kar kaha ki attempt aisa nahi hota —
+// wahan ek waqt par ek hi sawaal saamne hota hai. Isliye ab list slice nahi
+// hoti, `cur` chalta hai: palette ka number, Prev/Next, ya ← → arrow key.
 //
-// Tabs jaan-boojh kar hata diye: "Baaki / Ho gaye" do alag list banate the,
-// jisse ho gaya question aankhon se GAYAB ho jata tha. Answers page par wo bas
-// neeche khisak jata hai aur dhundhla ho jata hai — owner ne wahi maanga.
+// Ek question dikhne ka ek aur fayda: 12,000 wali "All" list par bhi sirf ek
+// card mount hota hai, isliye purana RESUME_MAX/Show-more wala jugaad ab
+// zaroori nahi raha.
+//
+// Tabs jaan-boojh kar nahi hain: "Baaki / Ho gaye" do alag list banate the,
+// jisse ho gaya question aankhon se GAYAB ho jata tha. Yahan wo bas list ke
+// aakhir mein khisak jata hai aur palette mein hara ho jata hai.
 
-const DEFAULT_PAGE = 25;
-// Rail har question ka ek link hai. Chapter-bhar (500-1000) tak ye theek hai,
-// par "All" wali subject list 12,000 tak jaati hai — utne anchor banate hi
-// phone atak jata hai. Itni badi list par rail sirf utni lambi hoti hai jitne
-// card abhi khule hain, aur "Show more" ke saath badhti jaati hai.
-const RAIL_MAX = 1500;
-// Aur isi wajah se resume par bhi ek hadd: slice hamesha shuru se banti hai, to
-// "5,000ve question par chhoda tha" ka matlab hai 5,000 card ek saath mount —
-// phone wahin baith jayega. Itni badi list par resume utna hi chalta hai jitna
-// mount karna theek hai; usse aage chhoda ho to list upar se hi khulti hai.
-const RESUME_MAX = 200;
+// Palette har question ka ek box hai. Chapter-bhar (500-1000) tak theek hai,
+// par "All" wali subject list 12,000 tak jaati hai — utne box banate hi phone
+// atak jata hai. Itni badi list par palette sirf ek khidki dikhata hai jo
+// abhi wale question ke aas-paas ki hai (number wahi ke wahi rehte hain).
+const PALETTE_MAX = 1500;
+const PALETTE_WINDOW = 300;
 
 export default function QBoard({
   list,                       // page ki apni list (uske filters ke BAAD)
   subject,                    // counter kis subject mein ginega
   resumeKey,                  // reload par wahin lautne ke liye
-  pageSize = DEFAULT_PAGE,
   renderCard,                 // (q, index, orderedList) => <Card/>
   emptyText = "Yahan koi question nahi.",
 }) {
-  const [shown, setShown] = useState(pageSize);
+  const [cur, setCur] = useState(0);
   const [ver, setVer] = useState(0);           // qdone badla to dobara chhaanto
   const [counts, setCounts] = useState({});
 
@@ -56,15 +54,9 @@ export default function QBoard({
     };
   }, []);
 
-  // Nayi list (chapter badla) aayi to slice shuru se. Dep mein list ki IDENTITY
-  // nahi li ja sakti — jo page apna filter inline karta hai wahan har render par
-  // nayi array banti hai aur "Show more" turant reset ho jata.
-  const listLen = (list || []).length;
-  useEffect(() => { setShown(pageSize); }, [resumeKey, listLen, pageSize]);
-
   // Kram: pehle baaki (apne asli kram mein), phir ho gaye. Answers page ka
   // displayOrder yahi karta hai. Dono taraf kram sthir hai, isliye ek question
-  // mark karne par baaki cards apni jagah nahi badalte.
+  // mark karne par aage-peeche wale apni jagah nahi badalte.
   const { ordered, doneSet, doneCount } = useMemo(() => {
     const set = getDoneSet();
     const pend = [];
@@ -74,47 +66,94 @@ export default function QBoard({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [list, ver]);
 
-  // Reload lands you back where you stopped: the slice is grown past the last
-  // question you answered, and the page scrolls to it.
-  useEffect(() => {
-    if (!resumeKey || !ordered.length) return undefined;
-    const at = getResume(resumeKey);
-    if (at < 0) return undefined;
-    if (ordered.length > RAIL_MAX && at + pageSize > RESUME_MAX) return undefined;
-    setShown((n) => Math.max(n, at + pageSize));
-    const t = setTimeout(() => {
-      document.getElementById(`q-${at}`)?.scrollIntoView({ block: "start" });
-    }, 120);
-    return () => clearTimeout(t);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resumeKey, ordered.length]);
+  const total = ordered.length;
 
-  // Rail ka number abhi render hi na hua ho (slice chhoti hai) to pehle slice
-  // badhao, phir scroll karo — warna link chupchaap kuch nahi karta.
-  const jump = useCallback((i) => {
-    setShown((n) => Math.max(n, i + 1));
-    setTimeout(() => {
-      document.getElementById(`q-${i}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 60);
-  }, []);
+  // Nayi list (chapter badla ya filter) aayi to pehle question par. Dep mein
+  // list ki IDENTITY nahi li ja sakti — jo page apna filter inline karta hai
+  // wahan har render par nayi array banti hai aur position turant reset ho
+  // jaati.
+  const listLen = (list || []).length;
+  useEffect(() => { setCur(0); }, [resumeKey, listLen]);
+
+  // Reload karne par wahin wapas jahan chhoda tha.
+  useEffect(() => {
+    if (!resumeKey || !total) return;
+    const at = getResume(resumeKey);
+    if (at >= 0 && at < total) setCur(at);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resumeKey, total]);
+
+  const go = useCallback((i) => {
+    setCur((c) => {
+      const next = Math.max(0, Math.min(i, total - 1));
+      if (next !== c && resumeKey) setResume(resumeKey, next);
+      return next;
+    });
+    // Naya question upar se shuru ho — warna lamba question padhne ke baad
+    // agla beech se khulta hua lagta hai.
+    setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 40);
+  }, [total, resumeKey]);
+
+  // ← → se agla/pichla. Input/textarea mein type karte waqt nahi (warna
+  // answer paste karte hi question badal jata).
+  useEffect(() => {
+    const h = (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const t = e.target;
+      const tag = t?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || t?.isContentEditable) return;
+      if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1); }
+    };
+    window.addEventListener("keydown", h);
+    return () => window.removeEventListener("keydown", h);
+  }, [cur, go]);
 
   const nudge = (delta) => setCounts((c) => ({ ...c, [subject]: bumpCount(subject, delta) }));
 
-  if (!ordered.length) return <div className="placeholder">{emptyText}</div>;
+  // Palette apne aap abhi wale number par aa jaye. Bina iske 30ve question par
+  // pahunchne ke baad bhi patti 1-10 hi dikhati rehti hai (phone par to wo ek
+  // hi horizontal line hai) aur "main kahan hoon" ka jawab hi nahi milta.
+  // offsetTop kaam nahi karta — desktop par rail sticky hai aur phone par
+  // static, to offsetParent badal jata hai; isliye rect ka fark liya hai.
+  const railRef = useRef(null);
+  useEffect(() => {
+    const r = railRef.current;
+    const el = r?.querySelector("a.is-cur");
+    if (!r || !el) return;
+    const cr = r.getBoundingClientRect();
+    const er = el.getBoundingClientRect();
+    r.scrollTop += (er.top - cr.top) - (cr.height - er.height) / 2;
+    r.scrollLeft += (er.left - cr.left) - (cr.width - er.width) / 2;
+  });
+
+  // Badi list par palette ki khidki — number asli hi rehte hain.
+  const [from, to] = total > PALETTE_MAX
+    ? [Math.max(0, cur - PALETTE_WINDOW / 2), Math.min(total, Math.max(PALETTE_WINDOW, cur + PALETTE_WINDOW / 2))]
+    : [0, total];
+
+  if (!total) return <div className="placeholder">{emptyText}</div>;
+
+  const at = Math.min(cur, total - 1);
+  const q = ordered[at];
 
   return (
     <div className="qboard">
-      <nav className="qboard__side">
-        {(ordered.length > RAIL_MAX ? ordered.slice(0, shown) : ordered).map((q, i) => (
-          <a
-            key={q._uid ?? q.id ?? i}
-            onClick={() => jump(i)}
-            className={doneSet.has(doneKeyFor(q)) ? "is-done" : ""}
-            title={doneSet.has(doneKeyFor(q)) ? "Ho gaya" : undefined}
-          >
-            {i + 1}
-          </a>
-        ))}
+      <nav className="qboard__side" ref={railRef}>
+        {ordered.slice(from, to).map((it, k) => {
+          const i = from + k;
+          const done = doneSet.has(doneKeyFor(it));
+          return (
+            <a
+              key={it._uid ?? it.id ?? i}
+              onClick={() => go(i)}
+              className={`${done ? "is-done" : ""}${i === at ? " is-cur" : ""}`}
+              title={done ? "Ho gaya" : undefined}
+            >
+              {i + 1}
+            </a>
+          );
+        })}
       </nav>
 
       <div className="qboard__main">
@@ -126,20 +165,29 @@ export default function QBoard({
               <button type="button" onClick={() => nudge(1)} aria-label="ek zyada">+</button>
             </span>
           )}
-          <span className="tot">📊 Total: {ordered.length}</span>
+          <span className="tot">📊 Total: {total}</span>
           <span className="did">✅ Ho gaye: {doneCount}</span>
-          <span className="left">⏳ Baaki: {ordered.length - doneCount}</span>
+          <span className="left">⏳ Baaki: {total - doneCount}</span>
+        </div>
+
+        {/* Exam wali patti — screenshot mein bhi ye question ke UPAR hai. */}
+        <div className="qboard__nav">
+          <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
+          <span className="qboard__pos">
+            Question <b>{at + 1}</b> / {total}
+          </span>
+          <button className="btn" onClick={() => go(at + 1)} disabled={at === total - 1}>Save &amp; Next →</button>
         </div>
 
         <div className="qboard__cards">
-          {ordered.slice(0, shown).map((q, i) => renderCard(q, i, ordered))}
+          {renderCard(q, at, ordered)}
         </div>
 
-        {shown < ordered.length && (
-          <button className="btn btn--ghost btn--block mt-16" onClick={() => setShown((n) => n + pageSize)}>
-            ▼ Show {Math.min(pageSize, ordered.length - shown)} more ({shown} / {ordered.length})
-          </button>
-        )}
+        <div className="qboard__nav qboard__nav--bottom">
+          <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
+          <span className="qboard__pos qboard__pos--hint">← → arrow key se bhi</span>
+          <button className="btn" onClick={() => go(at + 1)} disabled={at === total - 1}>Save &amp; Next →</button>
+        </div>
       </div>
     </div>
   );

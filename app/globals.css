@@ -3035,6 +3035,17 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .qboard__stats .cnt button:hover { background: var(--glass-border-strong); }
 .qboard__cards { display: grid; gap: 14px; }
 
+/* Ek waqt mein ek question — aage/peeche jaane ki patti (QBoard exam mode). */
+.qboard__nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; margin: 0 0 12px;
+}
+.qboard__nav--bottom { margin: 12px 0 0; }
+.qboard__pos { font-size: 13px; font-weight: 600; color: var(--text-2); }
+.qboard__pos--hint { font-size: 12px; font-weight: 400; color: var(--text-3); }
+/* Jis number par abhi ho wo palette mein alag dikhe. */
+.qboard__side a.is-cur { outline: 2px solid var(--accent); outline-offset: -2px; }
+
 /* "Ho gaya" — Answers page wala checkbox, ☐/☑ button nahi. */
 .qmark {
   display: flex; align-items: center; gap: 6px; cursor: pointer;

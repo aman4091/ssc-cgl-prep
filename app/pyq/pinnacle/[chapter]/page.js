@@ -7,7 +7,6 @@ import { loadEngChapter, engChapterMeta } from "@/lib/engbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import QBoard from "@/components/QBoard";
 
-const PAGE = 25; // passages are long — fewer per slice than the other banks
 
 export default function PinnacleChapterPage() {
   const { chapter } = useParams();
@@ -65,7 +64,6 @@ export default function PinnacleChapterPage() {
             list={qs}
             subject="english"
             resumeKey={resumeKey}
-            pageSize={PAGE}
             renderCard={(q, i, all) => (
               // Read-only: a static bank has nothing to write back to, so no
               // edit/delete. Answering still archives to the Mistake Notebook.

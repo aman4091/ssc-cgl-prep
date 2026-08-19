@@ -12,7 +12,6 @@ import QBoard from "@/components/QBoard";
 // There is no chapter list on this page — not a dropdown, not a column of name
 // blocks. The chapters live in the left MENU (open "Maths 2025" in the sidebar),
 // so putting them here as well was the same list drawn three times.
-const PAGE = 25; // Simplification is 571 questions; mounting them at once janks a phone
 
 export default function SscMathsChapterPage() {
   const { chapter } = useParams();
@@ -84,7 +83,6 @@ export default function SscMathsChapterPage() {
             list={filtered}
             subject="math"
             resumeKey={resumeKey}
-            pageSize={PAGE}
             renderCard={(q, i, all) => (
               <PyqQuestionCard
                 resumeKey={resumeKey}

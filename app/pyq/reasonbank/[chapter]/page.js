@@ -7,7 +7,6 @@ import { loadReasonChapter, reasonChapterMeta } from "@/lib/reasonbank";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
 import QBoard from "@/components/QBoard";
 
-const PAGE = 20; // each question is several images — page in small slices
 
 export default function ReasonbankChapterPage() {
   const { chapter } = useParams();
@@ -65,7 +64,6 @@ export default function ReasonbankChapterPage() {
             list={qs}
             subject="reasoning"
             resumeKey={resumeKey}
-            pageSize={PAGE}
             renderCard={(q, i, all) => (
               <ReasonQuestionCard key={q.id} q={q} index={i} subject="reasoning" resumeKey={resumeKey} chapterName={`Pinnacle Reasoning · ${meta.label}`} allQuestions={all} />
             )}

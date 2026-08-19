@@ -12,7 +12,6 @@ import QBoard from "@/components/QBoard";
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are
 // unique across the bank, so a single route serves both rather than two
 // near-identical ones.
-const PAGE = 50; // render in slices — 1,077 cards at once janks a phone
 
 export default function GkTopicPage() {
   const { slug } = useParams();
@@ -98,7 +97,6 @@ export default function GkTopicPage() {
             list={qs}
             subject={topic?.subject || "gs"}
             resumeKey={resumeKey}
-            pageSize={PAGE}
             renderCard={(q, i, all) => (
               <PyqQuestionCard
                 resumeKey={resumeKey}

@@ -15,7 +15,6 @@ import QBoard from "@/components/QBoard";
 // question tasveer hain (MathQuestionCard / ReasonQuestionCard), baaki text
 // (PyqQuestionCard). Isliye yahan kiya hua kaam wahan bhi ginta hai aur wahan
 // ka kiya hua yahan — ✅ ho-gaya, ★, stats aur paste kiya Gemini answer sab ek.
-const PAGE = 20; // list 12,000 tak jaati hai — chhoti slice mein hi kholna theek
 
 export default function AllSubjectPage() {
   const { subject } = useParams();
@@ -147,7 +146,6 @@ export default function AllSubjectPage() {
             list={filtered}
             subject={meta.subject}
             resumeKey={resumeKey}
-            pageSize={PAGE}
             emptyText="Is filter par koi question nahi."
             renderCard={(q, i, all) => {
               // Ek hi list mein kai bank hain, isliye har card ke upar uska pata

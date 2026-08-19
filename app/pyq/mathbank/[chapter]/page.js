@@ -7,7 +7,6 @@ import { loadMathChapter, mathChapterMeta } from "@/lib/mathbank";
 import MathQuestionCard from "@/components/MathQuestionCard";
 import QBoard from "@/components/QBoard";
 
-const PAGE = 20; // each question is several images — page in small slices
 
 export default function MathbankChapterPage() {
   const { chapter } = useParams();
@@ -65,7 +64,6 @@ export default function MathbankChapterPage() {
             list={qs}
             subject="math"
             resumeKey={resumeKey}
-            pageSize={PAGE}
             renderCard={(q, i, all) => (
               <MathQuestionCard key={q.id} q={q} index={i} subject="math" resumeKey={resumeKey} chapterName={`Pinnacle Maths · ${meta.label}`} allQuestions={all} />
             )}

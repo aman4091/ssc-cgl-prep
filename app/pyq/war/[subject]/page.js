@@ -7,7 +7,6 @@ import { loadWarSubject, warSubjectMeta } from "@/lib/warbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import QBoard from "@/components/QBoard";
 
-const PAGE = 50; // render in slices — 562 cards at once janks a phone
 
 export default function WarSubjectPage() {
   const { subject } = useParams();
@@ -96,7 +95,6 @@ export default function WarSubjectPage() {
             list={filtered}
             subject="gs"
             resumeKey={resumeKey}
-            pageSize={PAGE}
             renderCard={(q, i, all) => (
               // Read-only: these live in a static file, so no edit/delete
               // (both write localStorage). Answering still archives to the
