@@ -15,17 +15,15 @@ export default function manifest() {
     scope: "/",
     display: "standalone",
     orientation: "any", // tablet ko portrait aur landscape dono chahiye
-    background_color: "#1e1e2e",
-    theme_color: "#1e1e2e",
+    background_color: "#ffffff",
+    theme_color: "#ffffff",
     // PNG 192 aur 512 dono chahiye — Chrome inhi ko dekh kar "Install app"
-    // offer karta hai. SVG bhi de rahe hain, par usi ke bharose mat rehna.
-    // maskable: Android icon ko apne shape mein kaat'ta hai, isliye icon.svg
-    // mein asli cheez beech ke 80% ke andar rakhi gayi hai.
+    // offer karta hai. Purana icon.svg hata diya: ab asli logo (public/logo.png
+    // se banaye gaye PNG) hi har jagah chalta hai.
     icons: [
       { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
       { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
-      { src: "/icon.svg", sizes: "any", type: "image/svg+xml" },
     ],
     shortcuts: [
       { name: "✍️ Solve", url: "/answers" },

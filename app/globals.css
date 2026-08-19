@@ -473,14 +473,13 @@ label.glass-card:hover { border-color: var(--accent2); }
   font-size: 1rem; line-height: 1; cursor: pointer;
 }
 .drawer__x:hover { background: var(--nav-hover); color: var(--ink); }
-.drawer__search { padding: 10px 10px 4px; }
-.drawer__search .input { width: 100%; }
-
 /* ---- sabse upar ki patti: ☰ aur naam ---- */
 .topbar {
-  position: sticky; top: 0; z-index: 40;
+  position: sticky; top: 8px; z-index: 40;
   display: flex; align-items: center; gap: 10px;
-  margin: 8px 0 14px; padding: 8px 12px;
+  /* Kinare se saans lene ki jagah — patti page ki lakeer se chipki hui nahi
+     dikhni chahiye. */
+  margin: 10px 12px 16px; padding: 8px 12px;
   background: var(--card); border: 1px solid var(--line);
   border-radius: var(--radius-lg);
 }
@@ -491,7 +490,7 @@ label.glass-card:hover { border-color: var(--accent2); }
 }
 .topbar__burger:hover { background: var(--nav-hover); }
 .topbar__brand {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; gap: 9px;
   color: var(--ink); text-decoration: none; font-size: 0.95rem;
 }
 /* Test ke dauraan patti bhi nahi — screen sirf paper ki. */
@@ -500,7 +499,15 @@ body.exam-on .topbar { display: none; }
   color: var(--ink); text-decoration: none;
   display: flex; align-items: center; gap: 10px;
 }
-.brand__mark { width: 26px; height: 26px; flex-shrink: 0; }
+/* Logo ab tasveer hai (public/logo.png) — shield lamba hai, chaura nahi,
+   isliye unchai se naapte hain aur chaudai apne aap. */
+.brand__mark {
+  height: 30px; width: auto; flex-shrink: 0;
+  border-radius: 4px; object-fit: contain;
+  /* Upar ek purana .brand__mark hai jo gradient ka chaukor banata tha — wo ab
+     is tasveer ke peeche na jhalke. */
+  background: none;
+}
 .brand__text { display: flex; flex-direction: column; min-width: 0; }
 .brand__text strong { font-size: 0.95rem; line-height: 1.2; }
 .drawer__nav { display: flex; flex-direction: column; padding: 10px; gap: 8px; }

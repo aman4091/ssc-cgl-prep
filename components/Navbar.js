@@ -44,13 +44,10 @@ export default function Navbar() {
   // Phones only: the rail is off-canvas until the hamburger asks for it.
   const [open, setOpen] = useState(false);
 
-  // Dhoondho — Parmar wale menu jaisa. Khaali ho to poori list.
-  const [q, setQ] = useState("");
-
   useEffect(() => { setTrail(trailForPath(pathname)); }, [pathname]);
   // Page badla to menu apne aap band — parda page ke upar hai, khula chhodne
   // par jis page par gaye ho wahi dikhta hi nahi.
-  useEffect(() => { setOpen(false); setQ(""); }, [pathname, params]);
+  useEffect(() => { setOpen(false); }, [pathname, params]);
   // Menu khula ho to peeche ka page scroll na ho.
   useEffect(() => {
     if (!open) return undefined;
@@ -181,22 +178,11 @@ export default function Navbar() {
       ? bankLinks[current.key] || []
       : [...(current.children || []), ...(current.links || [])]
     : NAV_GROUPS;
-  const needle = q.trim().toLowerCase();
-  const match = (r) => !needle || String(r.label || r.name || "").toLowerCase().includes(needle);
-  const rows = rowsAll.filter(match);
-  const directRows = NAV_DIRECT.filter(match);
+  const rows = rowsAll;
 
-  const mark = (
-    /* Inline, not a file: a strict-CSP-safe mark that also inherits the theme's
-       two pens instead of being a fixed-colour image. */
-    <svg className="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
-      <rect x="1" y="1" width="30" height="30" rx="8"
-            fill="none" stroke="var(--accent)" strokeWidth="2" />
-      <circle cx="16" cy="16" r="7.5" fill="none"
-              stroke="var(--accent2)" strokeWidth="2" />
-      <circle cx="16" cy="16" r="2.5" fill="var(--accent)" />
-    </svg>
-  );
+  // Asli logo (public/logo.png). Pehle yahan ek inline SVG mark tha jo theme ke
+  // rang le leta tha; ab site ka apna logo hai.
+  const mark = <img className="brand__mark" src="/logo.png" alt="" />;
 
   return (
     <>
@@ -230,14 +216,6 @@ export default function Navbar() {
         <button className="drawer__x" aria-label="Band karo" onClick={() => setOpen(false)}>✕</button>
       </div>
 
-      <div className="drawer__search">
-        <input
-          className="input"
-          placeholder="Type here to search.."
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-        />
-      </div>
 
       <nav className="drawer__nav">
         {onNewWords ? (
@@ -319,9 +297,7 @@ export default function Navbar() {
               </button>
             ))}
 
-            <div className="drawer__rule" />
-
-            {directRows.map((d) => (
+            {NAV_DIRECT.map((d) => (
               <Link
                 key={d.href}
                 href={d.href}
