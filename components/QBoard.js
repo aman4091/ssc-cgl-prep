@@ -48,6 +48,9 @@ export default function QBoard({
   // Quiz ke liye: poori list EK hi test hai, set chunne ka parda nahi aata.
   // (Generated quiz aur notes wala quiz apne aap mein ek paper hote hain.)
   single = false,
+  // Dobara-attempt wala quiz: galat/chhode question notebook mein NAYA record
+  // nahi banayenge (jo pehle se hai wo sudhrega).
+  noNotebook = false,
   onSubmit,                   // submit ke baad page ka apna kaam (vocab din, etc.)
 }) {
   const [setIdx, setSetIdx] = useState(single ? 0 : null);
@@ -56,12 +59,16 @@ export default function QBoard({
   const [picks, setPicks] = useState({});       // set ke andar ka number -> { opt, correct }
   const [review, setReview] = useState({});     // number -> true (Mark for Review)
   const [leftSec, setLeftSec] = useState(SET_MIN * 60);
+  // Submit ke baad dikhane ke liye: number -> seconds.
+  const [times, setTimes] = useState({});
   const [done, setDone] = useState(false);      // Submit ho gaya (ya solutions mode)
   const [fs, setFs] = useState(false);
   const [ask, setAsk] = useState(null);         // popup: kis set ke liye poochh rahe hain
   const [results, setResults] = useState({});   // pehle diye hue test
   const [ver, setVer] = useState(0);
   const [counts, setCounts] = useState({});
+  // Ye set pehle bhi diya ja chuka hai (ya quiz khud dobara-attempt hai).
+  const retryRef = useRef(false);
 
   useEffect(() => { setCounts(getCounts()); }, []);
   useEffect(() => {
@@ -91,8 +98,10 @@ export default function QBoard({
   // Naya chapter (ya naya filter) aaya to seedha set wale parde par.
   useEffect(() => {
     setSetIdx(single ? 0 : null); setAsk(null); setCur(0);
-    setPicks({}); setReview({}); setDone(false); setLeftSec(SET_MIN * 60);
-  }, [resumeKey, total, single]);
+    setPicks({}); setReview({}); setTimes({}); setDone(false); setLeftSec(SET_MIN * 60);
+    retryRef.current = noNotebook;
+    timeRef.current = { spent: {}, mark: single ? Date.now() : 0, at: 0 };
+  }, [resumeKey, total, single, noNotebook]);
 
   // Clock. Solutions dekhte waqt nahi chalta. 0 par khud submit ho jata hai —
   // timer ka matlab hi yahi hai.
@@ -114,6 +123,21 @@ export default function QBoard({
 
   // Full screen — wahi test ka page, bas poori screen par. Alag runner nahi:
   // timer, palette aur hisaab jaisa yahan hai waisa hi wahan dikhna chahiye.
+  // Har question par kitna waqt laga.
+  //
+  // `spent` mein jama hota hai, aur `mark` batata hai ki abhi wale question par
+  // kab aaye the. Question badalte hi (ya submit par) beech ka waqt us number
+  // ke khaate mein chadh jata hai. Ref isliye — har second state badalne se
+  // poora set dobara render hota, aur ye aankda sirf submit ke waqt chahiye.
+  const timeRef = useRef({ spent: {}, mark: 0, at: 0 });
+  const flushTime = useCallback(() => {
+    const t = timeRef.current;
+    if (!t.mark) return;
+    const add = Math.round((Date.now() - t.mark) / 1000);
+    if (add > 0) t.spent[t.at] = (t.spent[t.at] || 0) + add;
+    t.mark = Date.now();
+  }, []);
+
   const rootRef = useRef(null);
   useEffect(() => {
     const h = () => setFs(!!document.fullscreenElement);
@@ -143,7 +167,11 @@ export default function QBoard({
   );
 
   const openSet = (i, how) => {
-    const prev = how === "solutions" ? getChapterResults(resumeKey)[i] : null;
+    const stored = getChapterResults(resumeKey)[i];
+    const prev = how === "solutions" ? stored : null;
+    // Dobara de rahe ho? To notebook mein NAYA question nahi jayega.
+    retryRef.current = how === "test" && !!stored;
+    timeRef.current = { spent: {}, mark: Date.now(), at: 0 };
     setAsk(null);
     setSetIdx(i);
     setMode(how);
@@ -152,6 +180,7 @@ export default function QBoard({
     setPicks(prev?.picks
       ? Object.fromEntries(Object.entries(prev.picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }]))
       : {});
+    setTimes(prev?.times || {});
     setDone(how === "solutions");
     setLeftSec(SET_MIN * 60);
     toTop();
@@ -165,13 +194,15 @@ export default function QBoard({
   };
 
   const go = useCallback((i) => {
+    flushTime();
+    timeRef.current.at = Math.max(0, Math.min(i, setQs.length - 1));
     setCur((c) => {
       const n = setQs.length;
       if (!n) return c;
       return Math.max(0, Math.min(i, n - 1));
     });
     toTop();
-  }, [setQs.length, toTop]);
+  }, [setQs.length, flushTime, toTop]);
 
   // ← → se agla/pichla. Input/textarea mein type karte waqt nahi.
   useEffect(() => {
@@ -231,9 +262,14 @@ export default function QBoard({
 
   const submit = useCallback(() => {
     if (done || setIdx === null) return;
+    flushTime();
+    const times = { ...timeRef.current.spent };
+    timeRef.current.mark = 0;
+    setTimes(times);
     setDone(true);
     saveSetResult(resumeKey, setIdx, {
       right, wrong, skipped: n - answered, total: n, sec: spent,
+      times,
       picks: Object.fromEntries(
         Object.entries(picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }]),
       ),
@@ -255,8 +291,10 @@ export default function QBoard({
     if (tried.length) recordAttempts(tried.map(({ q: qq, correct }) => ({ q: qq, correct })));
     // Mistake Notebook — saare. Galat aur CHHODE hue Wrong bucket mein jaate
     // hain (na aana bhi ek galti hai), sahi wale "attempted" mein.
-    recordQuizAttempts(rows.map(({ q: qq, correct }) => ({
+    recordQuizAttempts(rows.map(({ q: qq, correct }, i) => ({
       q: qq, correct, subject: subject || "", source: "chapter", category: title,
+      sec: times[i] || 0,
+      onlyExisting: retryRef.current,
     })));
     // "🔢 Aaj" ki ginti — ek question aaj ek hi baar ginta hai, isliye set
     // dobara dene par dobara nahi chadhta.
@@ -265,7 +303,7 @@ export default function QBoard({
     setCounts(getCounts());
     onSubmit?.({ right, wrong, skipped: n - answered, total: n, sec: spent });
     toTop();
-  }, [done, setIdx, resumeKey, picks, setQs, right, wrong, answered, n, spent, subject, title, onSubmit, toTop]);
+  }, [done, setIdx, resumeKey, picks, setQs, right, wrong, answered, n, spent, subject, title, onSubmit, flushTime, toTop]);
 
   // Samay khatam — khud submit. Timer ka matlab hi yahi hai.
   useEffect(() => {
@@ -372,6 +410,7 @@ export default function QBoard({
                 key={x._uid ?? x.id ?? i}
                 onClick={() => go(i)}
                 className={`${state}${i === at ? " is-cur" : ""}`}
+                title={done ? `${times[i] || 0}s` : undefined}
               >
                 {i + 1}
               </a>
@@ -405,11 +444,11 @@ export default function QBoard({
           <span className="qboard__title">
             {single ? title : `Set ${setIdx + 1}`}{mode === "solutions" ? " · solutions" : ""}
           </span>
-          {done && mode === "test" && (
-            <span className="qboard__clock">{clock(spent)}</span>
-          )}
-          {mode === "test" && (
-            <span className={`qboard__clock${low && !done ? " is-low" : ""}`}>
+
+          {/* Ghadi sirf test ke dauraan. Submit ke baad kul waqt natije ki
+              patti mein hai, isliye upar dobara dikhane ki zaroorat nahi. */}
+          {mode === "test" && !done && (
+            <span className={`qboard__clock${low ? " is-low" : ""}`}>
               <em>Time Left</em> {clock(leftSec)}
             </span>
           )}
@@ -465,6 +504,11 @@ export default function QBoard({
         <div className="qboard__cards">
           {setQs.map((x, i) => (
             <div key={x._uid ?? x.id ?? i} style={i === at ? undefined : { display: "none" }}>
+              {/* Submit ke baad hi — test ke dauraan ghadi dikhane se dhyaan
+                  ghadi par chala jata hai, sawaal par nahi. */}
+              {done && (
+                <div className="qtime">⏱ Is question par {times[i] || 0}s lage</div>
+              )}
               <ExamModeProvider value={slots[i]}>
                 {renderCard(x, i, all)}
               </ExamModeProvider>

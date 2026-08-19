@@ -25,9 +25,10 @@ const SHELF_BY_NAVKEY = {
 // replaces the list in place with that group's items and a "← back" row, rather
 // than expanding underneath and pushing the rest of the menu down.
 //
-// It is the left column at every width. Below the breakpoint it just gets
-// narrower; it never moves to the top of the page and there is no hamburger,
-// because a drill-down is short enough not to need one.
+// Ab ye har chaudai par PARDE ke peeche hai: upar ek patli patti (☰ + naam),
+// aur ☰ dabate hi menu baayen se phisal kar page ke UPAR aata hai. Pehle ye
+// desktop par hamesha khada rehta tha aur 210px chaura khaana kha jata tha —
+// jabki menu se kaam ek baar hota hai, padhai poore page par.
 export default function Navbar() {
   const pathname = usePathname();
   const params = useSearchParams();
@@ -43,7 +44,19 @@ export default function Navbar() {
   // Phones only: the rail is off-canvas until the hamburger asks for it.
   const [open, setOpen] = useState(false);
 
+  // Dhoondho — Parmar wale menu jaisa. Khaali ho to poori list.
+  const [q, setQ] = useState("");
+
   useEffect(() => { setTrail(trailForPath(pathname)); }, [pathname]);
+  // Page badla to menu apne aap band — parda page ke upar hai, khula chhodne
+  // par jis page par gaye ho wahi dikhta hi nahi.
+  useEffect(() => { setOpen(false); setQ(""); }, [pathname, params]);
+  // Menu khula ho to peeche ka page scroll na ho.
+  useEffect(() => {
+    if (!open) return undefined;
+    document.body.classList.add("modal-open");
+    return () => document.body.classList.remove("modal-open");
+  }, [open]);
 
   // /new-words par menu ki jagah pehle DATES dikhti hain (jis din words add
   // hue), date kholne par us din ke words. 5s refresh — overlay se naya word
@@ -163,41 +176,67 @@ export default function Navbar() {
   // A group may have BOTH sub-groups and plain links — Notes has three books to
   // drill into and two ordinary rows — so these concatenate rather than one
   // shadowing the other. `rows.map` already renders each shape.
-  const rows = current
+  const rowsAll = current
     ? current.bank
       ? bankLinks[current.key] || []
       : [...(current.children || []), ...(current.links || [])]
     : NAV_GROUPS;
+  const needle = q.trim().toLowerCase();
+  const match = (r) => !needle || String(r.label || r.name || "").toLowerCase().includes(needle);
+  const rows = rowsAll.filter(match);
+  const directRows = NAV_DIRECT.filter(match);
+
+  const mark = (
+    /* Inline, not a file: a strict-CSP-safe mark that also inherits the theme's
+       two pens instead of being a fixed-colour image. */
+    <svg className="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+      <rect x="1" y="1" width="30" height="30" rx="8"
+            fill="none" stroke="var(--accent)" strokeWidth="2" />
+      <circle cx="16" cy="16" r="7.5" fill="none"
+              stroke="var(--accent2)" strokeWidth="2" />
+      <circle cx="16" cy="16" r="2.5" fill="var(--accent)" />
+    </svg>
+  );
 
   return (
     <>
-      {/* Phone only — hidden by CSS once the rail is permanent. */}
-      <button
-        className={`navtoggle ${open ? "is-hidden" : ""}`}
-        aria-label="Menu"
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-      >
-        ☰
-      </button>
+      {/* Sabse upar ki patti — ☰ aur naam, bas. Test ke dauraan ye bhi chhup
+          jaati hai (body.exam-on). */}
+      <header className="topbar">
+        <button
+          className="topbar__burger"
+          aria-label="Menu"
+          aria-expanded={open}
+          onClick={() => setOpen(true)}
+        >
+          ☰
+        </button>
+        <Link href="/" className="topbar__brand">
+          {mark}
+          <strong>SSC CGL Pre</strong>
+        </Link>
+      </header>
+
       {open && <div className="drawer__backdrop" onClick={() => setOpen(false)} />}
     <aside className={`drawer ${open ? "is-open" : ""}`}>
       <div className="drawer__head">
         <Link href="/" className="drawer__brand">
-          {/* Inline, not a file: a strict-CSP-safe mark that also inherits the
-              theme's two pens instead of being a fixed-colour image. */}
-          <svg className="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
-            <rect x="1" y="1" width="30" height="30" rx="8"
-                  fill="none" stroke="var(--accent)" strokeWidth="2" />
-            <circle cx="16" cy="16" r="7.5" fill="none"
-                    stroke="var(--accent2)" strokeWidth="2" />
-            <circle cx="16" cy="16" r="2.5" fill="var(--accent)" />
-          </svg>
+          {mark}
           <span className="brand__text">
             <strong>SSC CGL Pre</strong>
             <span className="drawer__sub">Prep Hub · Prelims</span>
           </span>
         </Link>
+        <button className="drawer__x" aria-label="Band karo" onClick={() => setOpen(false)}>✕</button>
+      </div>
+
+      <div className="drawer__search">
+        <input
+          className="input"
+          placeholder="Type here to search.."
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+        />
       </div>
 
       <nav className="drawer__nav">
@@ -272,7 +311,7 @@ export default function Navbar() {
         ) : (
           /* ---- level 1: names only ---- */
           <>
-            {NAV_GROUPS.map((g) => (
+            {rows.map((g) => (
               <button key={g.key} className="drawer__grouphd" onClick={() => setTrail([g.key])}>
                 <span className="drawer__ico">{g.icon}</span>
                 <span className="drawer__groupname">{g.name}</span>
@@ -282,7 +321,7 @@ export default function Navbar() {
 
             <div className="drawer__rule" />
 
-            {NAV_DIRECT.map((d) => (
+            {directRows.map((d) => (
               <Link
                 key={d.href}
                 href={d.href}

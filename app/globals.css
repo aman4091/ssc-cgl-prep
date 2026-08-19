@@ -217,12 +217,7 @@ main.container {
    for it never to sit across the top. That is affordable now only because the
    menu became a drill-down: the top level is eight short names, so a narrow rail
    holds it without wrapping. On a phone the rail simply gets narrower. */
-.shell {
-  display: grid;
-  grid-template-columns: 164px minmax(0, 1fr);
-  align-items: start;
-}
-@media (min-width: 641px) { .shell { grid-template-columns: 210px minmax(0, 1fr); } }
+.shell { display: block; }
 
 /* ===== Card =====
    The theme's surface: flat fill, a real border, a small radius, no shadow and
@@ -456,13 +451,51 @@ label.glass-card:hover { border-color: var(--accent2); }
    rather than expanding under it. Nothing here is ever tall enough to need
    collapsing. */
 .drawer {
+  position: fixed; top: 0; left: 0; bottom: 0; z-index: 63;
+  width: min(300px, 86vw);
   background: var(--card);
   border-right: 1px solid var(--line);
   display: flex; flex-direction: column;
-  position: sticky; top: 0;
-  height: 100vh; overflow-y: auto;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.2s ease;
 }
-.drawer__head { padding: 14px 12px 10px; border-bottom: 1px solid var(--line); }
+.drawer.is-open { transform: translateX(0); }
+.drawer__backdrop { position: fixed; inset: 0; z-index: 62; background: rgba(0, 0, 0, 0.45); }
+.drawer__head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 12px 10px; border-bottom: 1px solid var(--line);
+}
+.drawer__head .drawer__brand { flex: 1; min-width: 0; }
+.drawer__x {
+  flex: none; width: 30px; height: 30px; border-radius: var(--radius-sm);
+  border: 0; background: transparent; color: var(--dim);
+  font-size: 1rem; line-height: 1; cursor: pointer;
+}
+.drawer__x:hover { background: var(--nav-hover); color: var(--ink); }
+.drawer__search { padding: 10px 10px 4px; }
+.drawer__search .input { width: 100%; }
+
+/* ---- sabse upar ki patti: ☰ aur naam ---- */
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: center; gap: 10px;
+  margin: 8px 0 14px; padding: 8px 12px;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+.topbar__burger {
+  width: 34px; height: 34px; border-radius: var(--radius-sm);
+  border: 0; background: transparent; color: var(--ink);
+  font-size: 1.15rem; line-height: 1; cursor: pointer;
+}
+.topbar__burger:hover { background: var(--nav-hover); }
+.topbar__brand {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--ink); text-decoration: none; font-size: 0.95rem;
+}
+/* Test ke dauraan patti bhi nahi — screen sirf paper ki. */
+body.exam-on .topbar { display: none; }
 .drawer__brand {
   color: var(--ink); text-decoration: none;
   display: flex; align-items: center; gap: 10px;
@@ -470,29 +503,33 @@ label.glass-card:hover { border-color: var(--accent2); }
 .brand__mark { width: 26px; height: 26px; flex-shrink: 0; }
 .brand__text { display: flex; flex-direction: column; min-width: 0; }
 .brand__text strong { font-size: 0.95rem; line-height: 1.2; }
-.drawer__nav { display: flex; flex-direction: column; padding: 8px; gap: 1px; }
+.drawer__nav { display: flex; flex-direction: column; padding: 10px; gap: 8px; }
 
 /* A row: quiet until it is the page you are on, and then it is a solid fill of
    the accent — not a faint tint you have to hunt for. */
 .drawer__link {
-  display: flex; align-items: center; gap: 9px;
-  padding: 7px 9px; border-radius: 6px;
-  color: var(--ink); text-decoration: none; font-size: 13px; font-weight: 400;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; border-radius: var(--radius);
+  border: 1px solid var(--line);
+  color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 500;
 }
 /* Hover is a LIFT, not a fill. It used to be var(--bg) — the page colour, which
    on this dark palette is near-black, so pointing at a subject flashed a black
    bar. */
 .drawer__link:hover { background: var(--nav-hover); color: var(--ink); }
-.drawer__link.is-active { background: var(--nav-active); color: var(--on-accent); font-weight: 600; }
+.drawer__link.is-active {
+  background: var(--nav-active); border-color: var(--nav-active);
+  color: var(--on-accent); font-weight: 700;
+}
 .drawer__link--top { font-weight: 500; }
 .drawer__ico { width: 18px; text-align: center; font-size: 0.95rem; flex-shrink: 0; }
 
 /* ---- level 1: the group rows ---- */
 .drawer__grouphd {
-  display: flex; align-items: center; gap: 9px; width: 100%;
-  padding: 8px 9px; border: 0; border-radius: 6px;
-  background: transparent; color: var(--ink);
-  font: 500 13px/1.3 var(--font); text-align: left; cursor: pointer;
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius);
+  background: var(--card); color: var(--ink);
+  font: 500 14px/1.3 var(--font); text-align: left; cursor: pointer;
 }
 .drawer__grouphd:hover { background: var(--nav-hover); }
 .drawer__groupname { flex: 1; min-width: 0; }
@@ -517,43 +554,8 @@ label.glass-card:hover { border-color: var(--accent2); }
    from the LEFT and never as a bar across the top. The cutoff pairs with the
    min-width block far below; they must stay adjacent (1024 / 1025) or the two
    layouts overlap and the drawer head loses its hamburger clearance. */
-.navtoggle { display: none; }
-.drawer__backdrop { display: none; }
-
-@media (max-width: 1024px) {
-  .shell { display: block; }
-
-  .navtoggle {
-    display: grid; place-items: center;
-    position: fixed; top: 10px; left: 10px; z-index: 62;
-    width: 40px; height: 40px; border-radius: var(--radius-sm);
-    background: var(--card); border: 1px solid var(--line); color: var(--ink);
-    font-size: 1.1rem; line-height: 1; cursor: pointer;
-  }
-
-  .drawer {
-    position: fixed; top: 0; left: 0; bottom: 0; z-index: 63;
-    width: min(226px, 68vw);
-    transform: translateX(-100%);
-    transition: transform 0.2s ease;
-    border-right: 1px solid var(--line);
-  }
-  .drawer.is-open { transform: translateX(0); }
-  /* No clearance needed: the hamburger hides itself once the rail is open, so
-     the brand starts at the edge like it does on a wide screen. */
-  .navtoggle.is-hidden { display: none; }
-
-  .drawer__backdrop {
-    display: block; position: fixed; inset: 0; z-index: 62;
-    background: rgba(0, 0, 0, 0.5);
-  }
-
-  /* The hamburger is pinned over the page, so the page needs room for it. */
-  main.container { padding-top: 56px; }
-
-  /* A word's detail is a pop-up here; freeze the page under it. */
-  body.modal-open { overflow: hidden; }
-}
+/* Menu khula ho to peeche ka page jama rehta hai. */
+body.modal-open { overflow: hidden; }
 
 /* ===== Buttons ===== */
 .btn {
@@ -2125,11 +2127,12 @@ label.glass-card:hover { border-color: var(--accent2); }
    nav all live in the base rules. All that is left here is width: the rail can
    afford to be roomier once there is a screen to spend.
    =================================================================== */
+/* Menu ab khambha nahi, parda hai — isliye page ki poori chaudai content ki
+   hai aur wo beech mein hi rehta hai. Pehle yahan main ko 900px mein baandh
+   kar baayen chipka diya jata tha, kyunki uske baayen 250px ka menu khada
+   rehta tha. */
 @media (min-width: 1025px) {
-  .shell { grid-template-columns: 250px minmax(0, 1fr); }
   .drawer__head { padding: 16px 14px 12px; }
-  /* main is the second column now, so it must not also be centred in the page */
-  main.container { max-width: 900px; margin: 0; padding-left: 22px; padding-right: 22px; }
 }
 /* The menu's subtitle, under the app name in the drawer head. */
 .drawer__sub { font-size: 11px; color: var(--dim); }
@@ -3120,6 +3123,14 @@ body.exam-on .hero { display: none; }
 /* "All" page ke bank/chapter dropdown aur search bhi — paper ke beech mein
    filter badalne ki cheez nahi hoti. */
 body.exam-on .pyq-filters { display: none; }
+
+/* Submit ke baad har question ke upar uska apna waqt. */
+.qtime {
+  font-size: 12px; font-weight: 700; color: var(--dim);
+  margin-bottom: 6px; padding: 4px 10px;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--bg-2); display: inline-block;
+}
 
 /* Gemini aur "🎯 20" test ke dauraan nahi — wo padhai ke auzaar hain, exam ke
    nahi. Submit ke baad apne aap aa jaate hain. */

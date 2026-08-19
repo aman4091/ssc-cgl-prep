@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { getReview, removeReview, fixReviewAnswer } from "@/lib/qreview";
 import { findCAEntryForQuestion, fixCAAnswer } from "@/lib/feed";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
@@ -19,8 +19,21 @@ import FixAnswer from "@/components/FixAnswer";
 // Data waisa ka waisa hai (lib/qreview): mastered/attempted bucket aur
 // errorType ab bhi bharte rehte hain, bas yahan dikhte nahi. Wapas chahiye to
 // sirf ye page badalna hai.
+// Subject ka naam wahi rakha jo poore app mein chalta hai (qcounter ke
+// COUNTER_SUBJECTS) — question card, counter aur ye page sab ek hi shabd
+// samajhte hain. Jinka subject darj hi nahi hua (purane record, ya bina
+// subject wala quiz) wo "Other" mein aa jaate hain.
+const SUBJECTS = [
+  { key: "math", label: "🧮 Maths" },
+  { key: "reasoning", label: "🧠 Reasoning" },
+  { key: "english", label: "📚 English" },
+  { key: "gs", label: "🌍 GS" },
+];
+const subjectLabel = (k) => SUBJECTS.find((s) => s.key === k)?.label || "📝 Other";
+
 export default function MistakesPage() {
-  const [items, setItems] = useState([]);
+  const [all, setAll] = useState([]);
+  const [subject, setSubject] = useState("");   // "" = sab
 
   // Notebook ek GHOOMTA hua katar hai, ghatti hui list nahi.
   //
@@ -36,12 +49,29 @@ export default function MistakesPage() {
   //
   // Kram sirf page khulne par banta hai. Jawab dete hi list dobara chhantti to
   // jo card aap padh rahe ho wahi aankhon ke saamne se khisak jata.
-  const refresh = () => setItems(
+  const refresh = () => setAll(
     getReview()
       .filter((r) => r.everWrong)
       .sort((a, b) => String(a.at || "").localeCompare(String(b.at || ""))),
   );
   useEffect(() => { refresh(); }, []);
+
+  // Kis subject mein kitne pade hain — dropdown mein ginti ke saath dikhta hai,
+  // taaki "Maths mein 40 galtiyaan" khole bina pata chal jaye.
+  const counts = useMemo(() => {
+    const c = {};
+    for (const r of all) {
+      const k = SUBJECTS.some((s) => s.key === r.subject) ? r.subject : "other";
+      c[k] = (c[k] || 0) + 1;
+    }
+    return c;
+  }, [all]);
+  const items = useMemo(
+    () => (subject
+      ? all.filter((r) => (SUBJECTS.some((s) => s.key === r.subject) ? r.subject : "other") === subject)
+      : all),
+    [all, subject],
+  );
 
   const remove = (key) => { removeReview(key); refresh(); };
   // Galat sanjoya hua answer theek karo: notebook ka record AUR jahan se aaya
@@ -68,6 +98,25 @@ export default function MistakesPage() {
       </section>
 
       <section className="section" style={{ marginTop: 12 }}>
+        {all.length > 0 && (
+          <div className="row" style={{ gap: 8, flexWrap: "wrap", marginBottom: 14 }}>
+            <select
+              className="input"
+              style={{ maxWidth: 240 }}
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            >
+              <option value="">Saare subject ({all.length})</option>
+              {SUBJECTS.map((sb) => (
+                <option key={sb.key} value={sb.key} disabled={!counts[sb.key]}>
+                  {sb.label} ({counts[sb.key] || 0})
+                </option>
+              ))}
+              {counts.other > 0 && <option value="other">📝 Other ({counts.other})</option>}
+            </select>
+          </div>
+        )}
+
         {items.length === 0 ? (
           <div className="placeholder">
             Abhi koi galti nahi — bahut badhiya. Koi test do, galat ya chhoda hua question
@@ -81,7 +130,8 @@ export default function MistakesPage() {
                 <div key={r.key}>
                   <div className="row" style={{ gap: 6, flexWrap: "wrap", alignItems: "center", marginBottom: 6 }}>
                     <span className="muted" style={{ fontSize: "0.78rem" }}>
-                      {r.category}
+                      <b>{subjectLabel(r.subject)}</b> · {r.category}
+                      {r.sec > 0 && <span title="Pichhli baar is question par itna waqt laga"> · ⏱ {r.sec}s</span>}
                       {caEntry && <> · <Link href={`/current-affairs/${caEntry.id}`} className="link">📅 {caEntry.date}</Link></>}
                       {isCA(r) && !caEntry && <span title="Ye question ab kisi date entry mein nahi mila"> · 📅 date not found</span>}
                       {r.correct && <span title="Pichhli baar sahi hua tha — phir bhi ghoom kar aata rahega"> · ✅ pichhli baar sahi</span>}

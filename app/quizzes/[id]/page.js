@@ -113,6 +113,10 @@ export default function QuizPlayer() {
           list={quiz.questions}
           subject={quiz.subject || ""}
           resumeKey={`quiz:${quiz.id}`}
+          /* Dobara-attempt wala quiz (Mistake Notebook se bana) apne galat/
+             chhode question notebook mein DOBARA nahi daalta — jo pehle se
+             hai bas wahi sudhrta hai. */
+          noNotebook={quiz.source === "review"}
           title={quiz.title}
           onSubmit={onSubmit}
           renderCard={(q, i) => (
