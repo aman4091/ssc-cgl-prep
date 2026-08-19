@@ -94,6 +94,7 @@ export default function GkTopicPage() {
           <div className="placeholder">Is topic mein koi question nahi. 🤔</div>
         ) : (
           <QBoard
+            title={topic?.chapter || topic?.label || "Test"}
             list={qs}
             subject={topic?.subject || "gs"}
             resumeKey={resumeKey}

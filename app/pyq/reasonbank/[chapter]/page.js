@@ -61,6 +61,7 @@ export default function ReasonbankChapterPage() {
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
           <QBoard
+            title={`Pinnacle Reasoning · ${meta?.label || ""}`}
             list={qs}
             subject="reasoning"
             resumeKey={resumeKey}

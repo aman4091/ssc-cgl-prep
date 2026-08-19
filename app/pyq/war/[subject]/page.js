@@ -92,6 +92,7 @@ export default function WarSubjectPage() {
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
           <QBoard
+            title={`WAR · ${meta?.label || ""}`}
             list={filtered}
             subject="gs"
             resumeKey={resumeKey}

@@ -56,6 +56,7 @@ export default function ErrorProChapterPage() {
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
           <QBoard
+            title={`Error Pro · ${meta?.label || ""}`}
             list={qs}
             subject="english"
             resumeKey={resumeKey}

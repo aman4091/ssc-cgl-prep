@@ -143,6 +143,7 @@ export default function AllSubjectPage() {
           </div>
         ) : (
           <QBoard
+            title={`All · ${meta.label}`}
             list={filtered}
             subject={meta.subject}
             resumeKey={resumeKey}

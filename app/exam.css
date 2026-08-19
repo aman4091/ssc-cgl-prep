@@ -34,7 +34,10 @@
   --tb-blue: #1a4fd6;        /* buttons, palette ke box, links */
   --tb-blue-dark: #123ba8;   /* hover / pressed */
   --tb-blue-soft: #e8effc;   /* chuna hua option, halka wash */
-  --tb-navy: #00008b;        /* question ka text — screenshot mein gehra neela */
+  --tb-navy: #00008b;        /* markdown ke heading — solution ke andar */
+  /* Sawaal ka apna rang. Pehle navy tha, par owner ne kaha kaala bold behtar
+     padha jaata hai — aur option (400 weight, #1a1a1a) se farak bhi saaf. */
+  --tb-q: #000000;
   --tb-green: #22a03d;       /* ho gaya / sahi jawab / PART-A tab */
   --tb-green-soft: #e9f7ea;
   --tb-red: #d0021b;         /* galat, timer, Report link */
@@ -277,14 +280,14 @@
 .examskin .qcard__stem {
   margin: 0;
   padding: 18px 16px;
-  color: var(--tb-navy);
+  color: var(--tb-q);
   font-size: 17px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.6;
   border-bottom: 1px solid var(--tb-line);
 }
 .examskin .qcard__stem .md,
-.examskin .qcard__stem .md p { color: var(--tb-navy); }
+.examskin .qcard__stem .md p { color: var(--tb-q); font-weight: 700; }
 .examskin .qcard__stem .q-crop,
 .examskin .qcard__stem img { border-radius: 0; }
 
@@ -478,6 +481,65 @@
 .examskin .qboard__stats .cnt button:hover,
 .examskin .ansp__stats .cnt button:hover { background: var(--tb-blue-dark); }
 
+/* ---- Set chunne ka parda ---- */
+.examskin .setcard {
+  background: #fff; border: 1px solid var(--tb-line); border-radius: 3px;
+}
+.examskin .setcard:hover { border-color: var(--tb-blue); background: var(--tb-blue-soft); }
+.examskin .setcard__n { color: var(--tb-ink); }
+.examskin .setcard__meta, .examskin .setcard__done { color: var(--tb-dim); }
+.examskin .setcard__bar { background: var(--tb-line-soft); border-radius: 0; }
+.examskin .setcard__bar i { background: var(--tb-green); }
+.examskin .setcard__go { color: var(--tb-blue); }
+
+/* ---- Test ka sar aur ghadi ---- */
+.examskin .qboard__top {
+  background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 3px;
+  padding: 8px 10px;
+}
+.examskin .qboard__title { color: var(--tb-ink); }
+.examskin .qboard__clock {
+  background: var(--tb-yellow); color: #6b5200; border-radius: 3px; padding: 4px 12px;
+  font-size: 15px;
+}
+/* Aakhri minute — Testbook par bhi ghadi laal ho jaati hai. */
+.examskin .qboard__clock.is-low { background: var(--tb-red); color: #fff; }
+
+/* ---- Palette ke rang: neela = chhua nahi, hara = sahi, laal = galat,
+   peela = review, aur safed andar ki lakeer = abhi isi par ho ---- */
+.examskin .qboard__side a.is-right { background: var(--tb-green); color: #fff; }
+.examskin .qboard__side a.is-wrong { background: var(--tb-red); color: #fff; }
+.examskin .qboard__side a.is-review { background: #f5c400; color: #3d2f00; }
+/* Abhi jis par ho — sirf ghera, rang nahi. Pehle ye box safed kar deta tha,
+   jisse abhi wale question ka sahi/galat/review wala rang dikhna hi band ho
+   jata tha. Ab hara/laal/peela neeche se jhalakta rehta hai. */
+.examskin .qboard__side a.is-cur {
+  outline: 3px solid #06205e;
+  outline-offset: 2px;
+  font-weight: 800;
+}
+
+/* ---- Mark for Review ka peela button ---- */
+.examskin .btn--review {
+  background: #f5c400; color: #3d2f00; border-color: #c99f00;
+}
+.examskin .btn--review:hover { background: #e0b400; color: #3d2f00; }
+.examskin .btn--review.is-on { background: #ffd83d; color: #3d2f00; border-color: #3d2f00; }
+
+/* ---- Neeche ka hisaab (Testbook ka "PART-A Analysis") ---- */
+.examskin .qboard__tally {
+  background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 3px;
+  padding: 8px 10px; gap: 8px;
+}
+.examskin .tally {
+  background: #fff; border: 1px solid var(--tb-line); border-radius: 3px;
+  color: var(--tb-dim); font-weight: 700;
+}
+.examskin .tally b { font-size: 15px; }
+.examskin .tally--ans { background: var(--tb-green-soft); color: #14701f; }
+.examskin .tally--not { color: var(--tb-ink); }
+.examskin .tally--rev { background: #fff6cc; color: #6b5200; }
+
 /* Prev / Save & Next ki patti — screenshot mein yahi neele buttons upar hain. */
 .examskin .qboard__nav {
   background: var(--tb-head);
@@ -489,11 +551,6 @@
 .examskin .qboard__pos b { color: var(--tb-blue); font-size: 15px; }
 .examskin .qboard__pos--hint { color: var(--tb-dim); }
 /* Abhi jis number par ho — Testbook par wo box alag dikhta hai. */
-.examskin .qboard__side a.is-cur {
-  background: #fff; color: var(--tb-blue);
-  outline: 2px solid var(--tb-blue); outline-offset: -2px;
-}
-
 .examskin .qmark { background: var(--tb-green-soft); color: #14701f; border-radius: 3px; }
 
 /* Subject / chapter ki list (PYQ ka menu) — exam ke bordered rows. */
@@ -528,7 +585,7 @@
 /* Markdown apna rang khud rakhta hai (.md), isliye sirf h2 par navy lagane se
    sawaal kaala hi dikhta tha — andar wale .md ko bhi batana pada. */
 .examskin .fsr__q,
-.examskin .fsr__q .md { color: var(--tb-navy); font-size: 1.1rem; font-weight: 400; line-height: 1.6; }
+.examskin .fsr__q .md { color: var(--tb-q); font-size: 1.1rem; font-weight: 700; line-height: 1.6; }
 /* Option ka A/B/C/D — wahi radio-circle jo card par hai. */
 .examskin .fsr__opt > strong {
   flex: none; width: 20px; height: 20px;
@@ -555,7 +612,7 @@
 /* .md apna rang khud rakhta hai, isliye h3 ke saath uske andar wale Markdown
    ko bhi navy batana padta hai — warna sawaal kaala hi rehta hai. */
 .examskin article.glass-card > h3,
-.examskin article.glass-card > h3 .md { color: var(--tb-navy); font-weight: 400; font-size: 1.05rem; }
+.examskin article.glass-card > h3 .md { color: var(--tb-q); font-weight: 700; font-size: 1.05rem; }
 .examskin article.glass-card > .grid > button {
   border-radius: 3px !important;
   border-color: var(--tb-line) !important;

@@ -61,6 +61,7 @@ export default function MathbankChapterPage() {
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
           <QBoard
+            title={`Pinnacle Maths · ${meta?.label || ""}`}
             list={qs}
             subject="math"
             resumeKey={resumeKey}

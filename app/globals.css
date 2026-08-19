@@ -3035,6 +3035,43 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .qboard__stats .cnt button:hover { background: var(--glass-border-strong); }
 .qboard__cards { display: grid; gap: 14px; }
 
+/* ---- Set chunne ka parda: chapter 25-25 ke tukdon mein ---- */
+.setgrid {
+  display: grid; gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+}
+.setcard {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  padding: 14px; text-align: left; cursor: pointer; font-family: inherit;
+  background: var(--card); border: 1px solid var(--glass-border);
+  border-radius: var(--radius); color: var(--text-1);
+}
+.setcard:hover { border-color: var(--accent); }
+.setcard__n { font-size: 1.05rem; font-weight: 700; }
+.setcard__meta { font-size: 0.78rem; color: var(--text-3); }
+.setcard__bar {
+  display: block; width: 100%; height: 6px; border-radius: 3px;
+  background: var(--bg-2); overflow: hidden;
+}
+.setcard__bar i { display: block; height: 100%; background: var(--success); }
+.setcard__done { font-size: 0.76rem; color: var(--text-2); }
+.setcard__go { margin-top: 4px; font-size: 0.8rem; font-weight: 700; color: var(--accent); }
+
+/* ---- Test ka sar: naam, ghadi, full screen ---- */
+.qboard__top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.qboard__title { font-weight: 700; font-size: 0.95rem; }
+.qboard__clock { margin-left: auto; font-weight: 700; font-variant-numeric: tabular-nums; }
+.qboard__clock.is-low { color: var(--danger); }
+
+/* Mark for Review ka apna rang — peela, taaki Prev/Next ke neele se alag rahe. */
+.btn--review { background: var(--warning); color: #1a1a1a; border-color: var(--warning); }
+.btn--review.is-on { filter: brightness(0.92); }
+
+/* Neeche ka hisaab — kitne hue, kitne baaki, kitne review ke liye. */
+.qboard__tally { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; font-size: 13px; }
+.tally { padding: 6px 12px; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); }
+.tally b { margin-left: 6px; }
+
 /* Ek waqt mein ek question — aage/peeche jaane ki patti (QBoard exam mode). */
 .qboard__nav {
   display: flex; align-items: center; justify-content: space-between;
@@ -3044,7 +3081,7 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .qboard__pos { font-size: 13px; font-weight: 600; color: var(--text-2); }
 .qboard__pos--hint { font-size: 12px; font-weight: 400; color: var(--text-3); }
 /* Jis number par abhi ho wo palette mein alag dikhe. */
-.qboard__side a.is-cur { outline: 2px solid var(--accent); outline-offset: -2px; }
+.qboard__side a.is-cur { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* "Ho gaya" — Answers page wala checkbox, ☐/☑ button nahi. */
 .qmark {

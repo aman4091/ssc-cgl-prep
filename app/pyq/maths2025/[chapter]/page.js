@@ -80,6 +80,7 @@ export default function SscMathsChapterPage() {
           <div className="placeholder">{query ? "Kuch nahi mila." : "Is chapter mein koi question nahi."}</div>
         ) : (
           <QBoard
+            title={`Maths 2025 · ${meta?.label || ""}`}
             list={filtered}
             subject="math"
             resumeKey={resumeKey}

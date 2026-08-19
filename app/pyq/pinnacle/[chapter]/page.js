@@ -61,6 +61,7 @@ export default function PinnacleChapterPage() {
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
           <QBoard
+            title={`Pinnacle · ${meta?.label || ""}`}
             list={qs}
             subject="english"
             resumeKey={resumeKey}
