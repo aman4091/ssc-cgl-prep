@@ -10,6 +10,7 @@
 
 import { useEffect, useState } from "react";
 import { hydrateStore, storeFlush } from "@/lib/bigstore";
+import { runOneTimeReset } from "@/lib/resetonce";
 
 export default function StoreGate({ children }) {
   const [ready, setReady] = useState(false);
@@ -17,7 +18,13 @@ export default function StoreGate({ children }) {
   useEffect(() => {
     let done = false;
     const finish = () => { if (!done) { done = true; setReady(true); } };
-    hydrateStore().then(finish).catch(finish);
+    // Safaya sirf hydrate POORA hone par. Pehle chalate to khaali cache par
+    // likhte aur IDB se purana data uske baad wapas aa jata. Safety timeout ise
+    // nahi chalata — wo sirf UI kholta hai.
+    hydrateStore()
+      .then(() => { runOneTimeReset(); })
+      .catch(() => {})
+      .finally(finish);
     const t = setTimeout(finish, 2000);
     // Tab band/hide hote waqt pending writes turant likh do.
     const flush = () => { storeFlush(); };
