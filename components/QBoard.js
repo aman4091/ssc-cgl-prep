@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { doneKeyFor, getDoneSet, markDoneMany } from "@/lib/qdone";
 import { getCounts, bumpCount, COUNTER_SUBJECTS } from "@/lib/qcounter";
-import { getChapterResults, saveSetResult, accuracyOf } from "@/lib/settests";
+import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import { ExamModeProvider } from "./ExamMode";
 
 // 📚 Ek PYQ chapter ka board — asli online test.
@@ -267,7 +267,7 @@ export default function QBoard({
                   </span>
                   {r ? (
                     <span className="setcard__score">
-                      {r.right}/{r.total} sahi · {accuracyOf(r)}% · ⏱ {clock(r.sec)}
+                      {fmtMarks(marksOf(r))}/{maxMarks(r.total)} marks · {r.right}/{r.total} sahi · {accuracyOf(r)}%
                     </span>
                   ) : (
                     <span className="setcard__done">✅ {dn} / {chunk.length} ho gaye</span>
@@ -291,7 +291,8 @@ export default function QBoard({
             <div className="setask__box" onClick={(e) => e.stopPropagation()}>
               <h3 className="setask__title">Set {ask + 1} pehle ho chuka hai</h3>
               <p className="setask__sub">
-                {results[ask].right}/{results[ask].total} sahi · {accuracyOf(results[ask])}% ·
+                {fmtMarks(marksOf(results[ask]))}/{maxMarks(results[ask].total)} marks ·
+                {" "}{results[ask].right}/{results[ask].total} sahi · {accuracyOf(results[ask])}% ·
                 ⏱ {clock(results[ask].sec)}
               </p>
               <div className="setask__acts">
@@ -361,16 +362,25 @@ export default function QBoard({
               ⏱ {done ? `${clock(spent)} liya` : clock(leftSec)}
             </span>
           )}
-          <button className="btn btn--ghost btn--sm" onClick={toggleFs}>
-            {fs ? "⤢ Exit full screen" : "⛶ Full screen"}
-          </button>
-          {!done && <button className="btn btn--submit btn--sm" onClick={submit}>✅ Submit Test</button>}
+          {/* Full screen aur Submit sirf test ke dauraan — natija dekhte waqt
+              inka koi kaam nahi. */}
+          {!done && (
+            <>
+              <button className="btn btn--ghost btn--sm" onClick={toggleFs}>
+                {fs ? "⤢ Exit full screen" : "⛶ Full screen"}
+              </button>
+              <button className="btn btn--submit btn--sm" onClick={submit}>✅ Submit Test</button>
+            </>
+          )}
         </div>
 
         {done && (
           <div className="qboard__result">
             <span className="res res--right"><b>{right}</b> Right</span>
             <span className="res res--wrong"><b>{wrong}</b> Wrong</span>
+            <span className="res res--marks">
+              <b>{fmtMarks(right * 2 - wrong * 0.5)}</b> / {maxMarks(n)} Marks
+            </span>
             <span className="res res--acc"><b>{acc}%</b> Accuracy</span>
             <span className="res res--time"><b>{clock(mode === "solutions" ? (results[setIdx]?.sec || 0) : spent)}</b> Time</span>
             <span className="res res--skip"><b>{n - answered}</b> Skipped</span>
@@ -378,20 +388,26 @@ export default function QBoard({
           </div>
         )}
 
+        {/* Previous / Save & Next sirf test ke dauraan. Natija dekhte waqt
+            question palette se badla jata hai. */}
         <div className="qboard__nav">
-          <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
+          {!done && (
+            <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
+          )}
           <span className="qboard__pos">Question <b>{at + 1}</b> / {n}</span>
           {!done && (
-            <button
-              className={`btn btn--review${review[at] ? " is-on" : ""}`}
-              onClick={() => setReview((r) => ({ ...r, [at]: !r[at] }))}
-            >
-              ⚑ {review[at] ? "Marked" : "Mark for Review"}
-            </button>
+            <>
+              <button
+                className={`btn btn--review${review[at] ? " is-on" : ""}`}
+                onClick={() => setReview((r) => ({ ...r, [at]: !r[at] }))}
+              >
+                ⚑ {review[at] ? "Marked" : "Mark for Review"}
+              </button>
+              {at === n - 1
+                ? <button className="btn btn--submit" onClick={submit}>✅ Submit Test</button>
+                : <button className="btn" onClick={() => go(at + 1)}>Save &amp; Next →</button>}
+            </>
           )}
-          {at === n - 1 && !done
-            ? <button className="btn btn--submit" onClick={submit}>✅ Submit Test</button>
-            : <button className="btn" onClick={() => go(at + 1)} disabled={at === n - 1}>Save &amp; Next →</button>}
         </div>
 
         {/* Set ke saare card mount rehte hain, sirf ek dikhta hai — isliye

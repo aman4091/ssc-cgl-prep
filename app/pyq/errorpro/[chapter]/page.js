@@ -72,7 +72,6 @@ export default function ErrorProChapterPage() {
                 chapterName={`Error Pro · ${meta.label}`}
                 archiveOnAnswer
                 fileToChapter
-                allQuestions={all}
               />
             )}
           />

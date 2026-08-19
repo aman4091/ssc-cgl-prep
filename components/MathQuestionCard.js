@@ -11,9 +11,6 @@ import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
 import AskElsewhere from "./AskElsewhere";
 import PasteAnswer from "./PasteAnswer";
-import QTimer from "./QTimer";
-import FullscreenTestButton from "./FullscreenTestButton";
-import { DoneButton } from "./DoneControls";
 import { isDone } from "@/lib/qdone";
 import { useExamMode } from "./ExamMode";
 
@@ -66,7 +63,7 @@ async function streamSimilar(sample, subject, quizId) {
   if (quiz && quiz.streaming) { quiz.streaming = false; saveQuiz(quiz); dispatchAppend(quizId, quiz.questions.length, true); }
 }
 
-export default function MathQuestionCard({ q, index, subject = "math", resumeKey, chapterName, allQuestions }) {
+export default function MathQuestionCard({ q, index, subject = "math", resumeKey, chapterName }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -176,15 +173,6 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   };
   const regenShortcut = () => { clearSavedShortcut(tq); setShortcut(""); fetchShortcut(); };
 
-  // Tapping the stopped clock re-opens the question: the answer is cleared, the
-  // reveal is undone, and QTimer has already restarted from zero.
-  const reattempt = () => {
-    setPicked(null);
-    setRevealed(false);
-    setPeek(false);
-    setFlash("");
-    setRecorded(false);
-  };
 
   // The lossy text extraction leaves junk in qText/optText — lone surrogates
   // where a math glyph was dropped, zero-width spaces, and the printed "(a) "
@@ -246,6 +234,23 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
             <span className="qcard__tries"> · 🔁 {st.attempts}x ({st.correct}/{st.attempts})</span>
           )}
         </span>
+        {/* Gemini aur "20 similar" ab sar mein, sabse daayen. Neeche wali
+            patti test ke dauraan chhupti hai, aur ye do cheezein wahan bhi
+            kaam ki hain — sawaal ke saath hi. */}
+        <span className="qcard__hacts">
+          <span className="q-act--keep">
+          <AskElsewhere
+            q={geminiQ}
+            subject={subject}
+            url="https://gemini.google.com/app"
+            label="✨ Gemini"
+            title="Question ki image copy karke Gemini kholo — phir answer paste karo"
+            promptKey="geminiPrompt"
+            onAsked={openPaste}
+          />
+        </span>
+          <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
+        </span>
       </h2>
 
       {/* The stem — figure (if any) is baked into this crop */}
@@ -277,33 +282,9 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
       </div>
 
       <div className="qcard__acts">
-        <QTimer q={tq} answered={picked !== null} onRestart={reattempt} />
         {!shown && (
           <button className="btn" onClick={() => setPeek(true)} title="Bina attempt kiye solution dekho">👁️ Answer</button>
         )}
-        {Array.isArray(allQuestions) && allQuestions.length >= 1 && (
-          <FullscreenTestButton
-            questions={allQuestions}
-            startIndex={allQuestions.indexOf(q)}
-            title={chapterName || "Pinnacle Maths"}
-            subject={subject}
-            label="⛶"
-            titleAttr="Isi question se full-screen test shuru karo"
-          />
-        )}
-        <span className="q-act--keep">
-          <AskElsewhere
-            q={geminiQ}
-            subject={subject}
-            url="https://gemini.google.com/app"
-            label="✨ Gemini"
-            title="Question ki image copy karke Gemini kholo — phir answer paste karo"
-            promptKey="geminiPrompt"
-            onAsked={openPaste}
-          />
-        </span>
-        <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
-        <DoneButton q={q} subject={subject} />
       </div>
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}

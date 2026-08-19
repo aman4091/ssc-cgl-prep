@@ -93,7 +93,6 @@ export default function SscMathsChapterPage() {
                 subject="math"
                 chapterName={`Maths 2025 · ${meta?.label || ""}`}
                 archiveOnAnswer
-                allQuestions={all}
               />
             )}
           />

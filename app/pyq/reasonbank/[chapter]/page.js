@@ -66,7 +66,7 @@ export default function ReasonbankChapterPage() {
             subject="reasoning"
             resumeKey={resumeKey}
             renderCard={(q, i, all) => (
-              <ReasonQuestionCard key={q.id} q={q} index={i} subject="reasoning" resumeKey={resumeKey} chapterName={`Pinnacle Reasoning · ${meta.label}`} allQuestions={all} />
+              <ReasonQuestionCard key={q.id} q={q} index={i} subject="reasoning" resumeKey={resumeKey} chapterName={`Pinnacle Reasoning · ${meta.label}`} />
             )}
           />
         )}

@@ -158,11 +158,11 @@ export default function AllSubjectPage() {
                     🗂️ {name}
                   </div>
                   {q._card === "math" ? (
-                    <MathQuestionCard q={q} index={i} subject="math" resumeKey={resumeKey} chapterName={name} allQuestions={all} />
+                    <MathQuestionCard q={q} index={i} subject="math" resumeKey={resumeKey} chapterName={name} />
                   ) : q._card === "reason" ? (
-                    <ReasonQuestionCard q={q} index={i} subject="reasoning" resumeKey={resumeKey} chapterName={name} allQuestions={all} />
+                    <ReasonQuestionCard q={q} index={i} subject="reasoning" resumeKey={resumeKey} chapterName={name} />
                   ) : (
-                    <PyqQuestionCard q={q} index={i} subject={meta.subject} resumeKey={resumeKey} chapterName={name} allQuestions={all} />
+                    <PyqQuestionCard q={q} index={i} subject={meta.subject} resumeKey={resumeKey} chapterName={name} />
                   )}
                 </Fragment>
               );

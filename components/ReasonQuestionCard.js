@@ -11,9 +11,6 @@ import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
 import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
-import QTimer from "./QTimer";
-import FullscreenTestButton from "./FullscreenTestButton";
-import { DoneButton } from "./DoneControls";
 import { isDone } from "@/lib/qdone";
 import { useExamMode } from "./ExamMode";
 
@@ -36,7 +33,7 @@ import { useExamMode } from "./ExamMode";
 // copy would go out as "A) a  B) b  C) c  D) d" and any answer that came back
 // would be invented. So the AI helpers are hidden on those 640 questions rather
 // than shipped as a button that reliably lies.
-export default function ReasonQuestionCard({ q, index, subject = "reasoning", resumeKey, chapterName, allQuestions }) {
+export default function ReasonQuestionCard({ q, index, subject = "reasoning", resumeKey, chapterName }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -130,15 +127,6 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   };
   const regenShortcut = () => { clearSavedShortcut(tq); setShortcut(""); fetchShortcut(); };
 
-  // Tapping the stopped clock re-opens the question: the answer is cleared, the
-  // reveal is undone, and QTimer has already restarted from zero.
-  const reattempt = () => {
-    setPicked(null);
-    setRevealed(false);
-    setPeek(false);
-    setFlash("");
-    setRecorded(false);
-  };
 
   const make20 = async () => {
     setSimLoading(true); setErr("");
@@ -172,6 +160,13 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
           {st?.attempts > 0 && (
             <span className="qcard__tries"> · 🔁 {st.attempts}x ({st.correct}/{st.attempts})</span>
           )}
+        </span>
+        {/* Gemini aur "20 similar" ab sar mein, sabse daayen. Neeche wali
+            patti test ke dauraan chhupti hai, aur ye do cheezein wahan bhi
+            kaam ki hain — sawaal ke saath hi. */}
+        <span className="qcard__hacts">
+          <span className="q-act--keep"><AskButtons q={tq} subject={subject} /></span>
+          <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
         </span>
       </h2>
 
@@ -214,26 +209,12 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
       </div>
 
       <div className="qcard__acts">
-        <QTimer q={tq} answered={picked !== null} onRestart={reattempt} />
         {!shown && (
           <button className="btn" onClick={() => setPeek(true)} title="Bina attempt kiye solution dekho">👁️ Answer</button>
-        )}
-        {Array.isArray(allQuestions) && allQuestions.length >= 1 && (
-          <FullscreenTestButton
-            questions={allQuestions}
-            startIndex={allQuestions.indexOf(q)}
-            title={chapterName || "Pinnacle Reasoning"}
-            subject={subject}
-            label="⛶"
-            titleAttr="Isi question se full-screen test shuru karo"
-          />
         )}
         {/* Gemini ab HAR question par — non-verbal par bhi. Pehle ye chhupa tha
             kyunki bhejne layak text hi nahi tha; ab TASVEER jati hai, to figure
             question hi sabse zyada faayda uthata hai. */}
-        <span className="q-act--keep"><AskButtons q={tq} subject={subject} /></span>
-        <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
-        <DoneButton q={q} subject={subject} />
       </div>
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}

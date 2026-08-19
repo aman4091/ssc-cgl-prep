@@ -801,7 +801,6 @@ export default function ChapterPage() {
                     chapterName={chapterName}
                     chapterId={chapterId}
                     archiveOnAnswer
-                    allQuestions={shown}
                     onDelete={() => { removeChapterQuestionByKey(chapterId, chapterQuestionKey(q)); refresh(); }}
                     onEdit={(nq) => { updateChapterQuestion(chapterId, chapterQuestionKey(q), nq); refresh(); }}
                   />
@@ -893,7 +892,6 @@ export default function ChapterPage() {
                     chapterId={chapterId}
                     archiveOnAnswer
                     fileToChapter
-                    allQuestions={gkList}
                     onEdit={(nq) => { saveGkOverride(q.id, nq); setGkEdits((e) => e + 1); }}
                   />
                 ))}

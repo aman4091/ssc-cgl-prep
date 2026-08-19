@@ -109,7 +109,6 @@ export default function WarSubjectPage() {
                 chapterName={`WAR · ${meta.label}`}
                 archiveOnAnswer
                 fileToChapter
-                allQuestions={all}
               />
             )}
           />

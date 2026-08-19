@@ -108,7 +108,6 @@ export default function GkTopicPage() {
                 chapterName={topic?.chapter || topic?.label}
                 archiveOnAnswer
                 fileToChapter
-                allQuestions={all}
               />
             )}
           />

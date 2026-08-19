@@ -13,9 +13,6 @@ import Diagram from "./Diagram";
 import QuestionEditor from "./QuestionEditor";
 import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
-import QTimer from "./QTimer";
-import FullscreenTestButton from "./FullscreenTestButton";
-import { DoneButton } from "./DoneControls";
 import { isDone } from "@/lib/qdone";
 import { useExamMode } from "./ExamMode";
 
@@ -27,7 +24,7 @@ import { useExamMode } from "./ExamMode";
 // quiz nahi hai), yahan question attempt karne ki cheez hai — isliye answer ka
 // block hamesha maujood hai par option chunne tak (ya 👁️ dabane tak) andar
 // "Answer dekho" likha rehta hai. 👁️ se koi attempt record nahi hota.
-export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, allQuestions }) {
+export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -121,15 +118,6 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   // Only "New shortcut" throws away the saved one and makes a fresh trick.
   const regenShortcut = () => { clearSavedShortcut(q); setShortcut(""); fetchShortcut(); };
 
-  // Tapping the stopped clock re-opens the question: the answer is cleared, the
-  // reveal is undone, and QTimer has already restarted from zero.
-  const reattempt = () => {
-    setPicked(null);
-    setRevealed(false);
-    setPeek(false);
-    setFlash("");
-    setRecorded(false);
-  };
 
   const make20 = async () => {
     setSimLoading(true); setErr("");
@@ -166,6 +154,13 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
           {st?.attempts > 0 && (
             <span className="qcard__tries"> · 🔁 {st.attempts}x ({st.correct}/{st.attempts})</span>
           )}
+        </span>
+        {/* Gemini aur "20 similar" ab sar mein, sabse daayen. Neeche wali
+            patti test ke dauraan chhupti hai, aur ye do cheezein wahan bhi
+            kaam ki hain — sawaal ke saath hi. */}
+        <span className="qcard__hacts">
+          <span className="q-act--keep"><AskButtons q={q} subject={subject} /></span>
+          <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
         </span>
       </h2>
 
@@ -227,24 +222,10 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
           options ke NEECHE, kyunki upar rakhne se pehle sawaal padho ki nahi
           wala kram toot jata hai. */}
       <div className="qcard__acts">
-        <QTimer q={q} answered={picked !== null} onRestart={reattempt} />
         {!shown && (
           <button className="btn" onClick={() => setPeek(true)} title="Bina attempt kiye answer dekho">👁️ Answer</button>
         )}
-        {Array.isArray(allQuestions) && allQuestions.length > 1 && (
-          <FullscreenTestButton
-            questions={allQuestions}
-            startIndex={allQuestions.indexOf(q)}
-            title={chapterName || "Test"}
-            subject={subject || ""}
-            label="⛶"
-            titleAttr="Isi question se full-screen test shuru karo"
-          />
-        )}
-        <span className="q-act--keep"><AskButtons q={q} subject={subject} /></span>
-        <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
         {onEdit && !editing && <button className="btn" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
-        <DoneButton q={q} subject={subject} />
         {onDelete && <button className="btn" onClick={onDelete} title="Delete">🗑️</button>}
       </div>
 

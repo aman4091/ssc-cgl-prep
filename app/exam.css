@@ -271,6 +271,13 @@
   font-weight: 700;
 }
 .examskin .qcard__qid { color: var(--tb-dim); font-size: 12px; font-weight: 400; }
+/* Sar ke daayen kone wale do button (Gemini, 🎯 20) — chhote, patli patti
+   mein baithne laayak. */
+.examskin .qcard__hacts .btn {
+  padding: 3px 9px; font-size: 11px; border-radius: 3px;
+  background: var(--tb-blue); color: #fff; border: 1px solid var(--tb-blue-dark);
+}
+.examskin .qcard__hacts .btn:hover { background: var(--tb-blue-dark); }
 
 /* Sawaal — gehra neela, jaisa Testbook par hota hai.
    Sirf rang kaafi nahi tha: pehle question 15px/400 navy tha aur option
@@ -574,7 +581,8 @@
 .examskin .res--wrong { background: var(--tb-red-soft); }
 .examskin .res--right b { color: #14701f; }
 .examskin .res--wrong b { color: #9c0014; }
-.examskin .res--acc b, .examskin .res--time b { color: var(--tb-blue); }
+.examskin .res--acc b, .examskin .res--time b, .examskin .res--marks b { color: var(--tb-blue); }
+.examskin .res--marks { background: var(--tb-blue-soft); }
 
 /* Dobara-test wala popup. */
 .examskin .setask__box {

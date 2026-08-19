@@ -77,7 +77,6 @@ export default function PinnacleChapterPage() {
                 chapterName={`Pinnacle · ${meta.label}`}
                 archiveOnAnswer
                 fileToChapter
-                allQuestions={all}
               />
             )}
           />

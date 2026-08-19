@@ -66,7 +66,7 @@ export default function MathbankChapterPage() {
             subject="math"
             resumeKey={resumeKey}
             renderCard={(q, i, all) => (
-              <MathQuestionCard key={q.id} q={q} index={i} subject="math" resumeKey={resumeKey} chapterName={`Pinnacle Maths · ${meta.label}`} allQuestions={all} />
+              <MathQuestionCard key={q.id} q={q} index={i} subject="math" resumeKey={resumeKey} chapterName={`Pinnacle Maths · ${meta.label}`} />
             )}
           />
         )}
