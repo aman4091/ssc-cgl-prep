@@ -437,15 +437,18 @@
   /* Phone par rail upar ki horizontal patti hi theek hai — 150px ki column
      content ko nichod deti hai. */
   .examskin .qboard,
-  .examskin .ansp { flex-direction: column; }
-  .examskin .qboard__rail { width: auto; }
+  .examskin .ansp { flex-direction: column; align-items: stretch; }
+  .examskin .qboard__rail { display: contents; }
   .examskin .qboard__side,
   .examskin .ansp__side {
     width: auto; display: flex; gap: 6px; overflow-x: auto;
     max-height: none; padding: 6px;
   }
-  /* Phone par hisaab ek line mein hi theek hai. */
-  .examskin .qboard__tally { flex-direction: row; }
+  /* Phone par hisaab ek line mein — par lipat sake, teen pill 390px mein nahi
+     samate. */
+  .examskin .qboard__tally { flex-direction: row; flex-wrap: wrap; }
+  /* Patti upar chipki rahe — question scroll karte waqt bhi number saamne. */
+  .examskin .qboard__side { background: #fff; }
   .examskin .qboard__side a,
   .examskin .ansp__side a { flex: none; min-width: 34px; }
 }

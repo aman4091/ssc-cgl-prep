@@ -291,10 +291,16 @@ export default function QBoard({
     if (tried.length) recordAttempts(tried.map(({ q: qq, correct }) => ({ q: qq, correct })));
     // Mistake Notebook — saare. Galat aur CHHODE hue Wrong bucket mein jaate
     // hain (na aana bhi ek galti hai), sahi wale "attempted" mein.
+    // Notebook mein NAYA question sirf PYQ ke set-test se jata hai (`single`
+    // matlab quiz — vocab ka din, notes ka quiz, "20 similar" — wahan se kuch
+    // naya nahi jodna). Sahi jawab bhi naya record nahi banata; wo sirf pehle
+    // se pade question ko "ho gaya" nishaan deta hai. Dono shart lib/qreview
+    // ke andar hain, isliye yahan se saara hisaab bhej dena theek hai.
     recordQuizAttempts(rows.map(({ q: qq, correct }, i) => ({
       q: qq, correct, subject: subject || "", source: "chapter", category: title,
       sec: times[i] || 0,
       onlyExisting: retryRef.current,
+      fromPyq: !single,
     })));
     // "🔢 Aaj" ki ginti — ek question aaj ek hi baar ginta hai, isliye set
     // dobara dene par dobara nahi chadhta.
@@ -303,7 +309,7 @@ export default function QBoard({
     setCounts(getCounts());
     onSubmit?.({ right, wrong, skipped: n - answered, total: n, sec: spent });
     toTop();
-  }, [done, setIdx, resumeKey, picks, setQs, right, wrong, answered, n, spent, subject, title, onSubmit, flushTime, toTop]);
+  }, [done, setIdx, resumeKey, picks, setQs, right, wrong, answered, n, spent, subject, title, single, onSubmit, flushTime, toTop]);
 
   // Samay khatam — khud submit. Timer ka matlab hi yahi hai.
   useEffect(() => {

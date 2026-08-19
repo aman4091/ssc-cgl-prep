@@ -3072,7 +3072,7 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
   letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.75;
 }
 .qboard__clock.is-low { color: var(--danger); }
-@media (max-width: 640px) { .qboard__title { flex: 100%; order: 3; text-align: left; } }
+@media (max-width: 640px) { .qboard__title { flex: 100%; order: -1; text-align: left; } }
 
 /* Mark for Review ka apna rang — peela, taaki Prev/Next ke neele se alag rahe. */
 .btn--review { background: var(--warning); color: #1a1a1a; border-color: var(--warning); }
@@ -3188,15 +3188,40 @@ body.exam-on .pyq-filters { display: none; }
 /* Phone: 56px rail + card padding milkar screen kha jaate hain (Answers page
    par bhi yahi hota tha), isliye rail upar ek horizontal patti ban jaati hai. */
 @media (max-width: 640px) {
-  .qboard { flex-direction: column; gap: 8px; }
-  .qboard__rail { position: static; width: auto; }
+  /* align-items: stretch ZAROORI hai. Base rule flex-start hai (desktop par
+     rail aur main upar se shuru hon), par column ban jaane par flex-start ka
+     matlab hota hai "bachche apne content jitne chaude" — aur 25 box ki patti
+     1008px chaudi ho jaati thi. Phone 390px ka hai, to wo kat jaati thi aur
+     scroll bhi nahi hoti thi (overflow-x: hidden ne use chhupa rakha tha). */
+  .qboard { flex-direction: column; gap: 8px; align-items: stretch; }
+  /* `display: contents` se rail apne aap ghul jaata hai aur uske do bachche
+     (patti aur hisaab) seedhe .qboard ke bachche ban jaate hain — tabhi unhe
+     alag-alag jagah di ja sakti hai: patti sabse UPAR (aur chipki hui), sawaal
+     beech mein, hisaab sabse NEECHE. Ek hi dabba sticky karte to 220px ki
+     patti phone ki aadhi screen kha jaati. */
+  .qboard__rail { display: contents; }
+  .qboard__side { order: 1; position: sticky; top: 4px; z-index: 5; }
+  .qboard__main { order: 2; }
+  .qboard__tally { order: 3; margin-top: 4px; }
   .qboard__side {
-    position: static; width: auto; max-height: none;
+    width: auto; max-height: none;
     display: flex; gap: 6px; overflow-x: auto; padding: 6px;
   }
   .qboard__side a { flex: none; min-width: 34px; margin: 0; }
   .qboard__stats { justify-content: flex-start; }
   .qcard { padding: 12px; }
+
+  /* Phone: hisaab teen pill ek line mein nahi aata, lipatna chahiye. */
+  .qboard__tally { flex-wrap: wrap; }
+  .qboard__tally .tally { flex: 1 1 auto; justify-content: space-between; }
+
+  /* Test ka sar aur uske buttons — naam apni line par, ghadi aur buttons
+     neeche. Warna 390px mein sab ek doosre ko dhakelte hain. */
+  .qboard__top { gap: 6px; }
+  .qboard__top .btn { flex: 0 0 auto; }
+  .qboard__nav { gap: 6px; }
+  .qboard__navbtns { width: 100%; }
+  .qboard__navbtns .btn { flex: 1 1 auto; justify-content: center; }
 }
 
 /* Answer — bilkul .ansp__answer jaisa: alag block, neeche, apni surface par. */
