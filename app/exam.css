@@ -90,7 +90,11 @@
   --warning: #b26a00;
   --head: var(--tb-navy);
   --mauve: var(--tb-blue);
-  --emph: var(--tb-green);
+  /* **bold** ka apna pen. Hara tha, par safed kaagaz par wo dhula-dhula
+     dikhta tha aur "sahi jawab" wale hare se bhi takra raha tha. Ab gehra
+     baingani — heading (navy), link (neela), galat (laal) aur sahi (hara),
+     chaaron se alag. */
+  --emph: #6b21a8;
 
   --ok-wash: var(--tb-green-soft);
   --bad-wash: var(--tb-red-soft);
@@ -735,7 +739,7 @@
   border-radius: 0; color: var(--tb-ink); font-size: 14px;
 }
 .examskin .ansp__answer--empty { color: var(--tb-dim); background: #fafbfc; border-left-color: var(--tb-line); }
-.examskin .ansp__answer strong, .examskin .ansp__answer .md strong, .examskin .ansp__answer .md b { color: #14701f; }
+.examskin .ansp__answer strong, .examskin .ansp__answer .md strong, .examskin .ansp__answer .md b { color: var(--emph); }
 .examskin .ansp__answer em { color: var(--tb-ink); }
 .examskin .ansp__answer a, .examskin .ansp__answer .md a { color: var(--tb-blue); }
 .examskin .ansp__answer .md { color: var(--tb-ink); }
@@ -754,7 +758,9 @@
 /* Markdown (solution/explanation) — exam ke rang, wahi teen pen. */
 .examskin .md { color: var(--tb-ink); }
 .examskin .md :is(h1, h2, h3, h4) { color: var(--tb-navy); }
-.examskin .md :is(strong, b) { color: #14701f; }
+/* **bold** ka pen — token se, taaki ek jagah badalne par har
+   solution/notes mein badal jaye. */
+.examskin .md :is(strong, b) { color: var(--emph); }
 .examskin .md a { color: var(--tb-blue); }
 .examskin .md code { background: var(--tb-head); color: #a3106b; }
 .examskin .md pre { background: var(--tb-head); border: 1px solid var(--tb-line); }

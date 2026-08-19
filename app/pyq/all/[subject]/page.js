@@ -98,7 +98,9 @@ export default function AllSubjectPage() {
         <p className="hero__sub">{meta.desc}</p>
       </section>
 
-      <section className="section" style={{ marginTop: 4 }}>
+      {/* Test ke dauraan ye patti chhup jaati hai (body.exam-on) — bank/chapter
+          badalne ki cheez paper ke beech mein nahi honi chahiye. */}
+      <section className="section pyq-filters" style={{ marginTop: 4 }}>
         <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
           {banks.length > 1 && (
             <select
@@ -149,14 +151,13 @@ export default function AllSubjectPage() {
             resumeKey={resumeKey}
             emptyText="Is filter par koi question nahi."
             renderCard={(q, i, all) => {
-              // Ek hi list mein kai bank hain, isliye har card ke upar uska pata
-              // — warna "ye question aaya kahan se" ka jawab hi nahi milta.
+              // Bank ka naam card ke upar likhna band kar diya — test ke beech
+              // mein "Pinnacle Maths · Mensuration" padhne ki koi zaroorat nahi,
+              // aur card ke sar mein question ka apna id/paper waise bhi hai.
+              // Naam sirf Mistake Notebook ki category ke liye banta hai.
               const name = `${q._srcLabel} · ${q._chapter}`;
               return (
                 <Fragment key={q._uid}>
-                  <div className="muted" style={{ fontSize: "0.74rem", margin: "16px 0 -8px" }}>
-                    🗂️ {name}
-                  </div>
                   {q._card === "math" ? (
                     <MathQuestionCard q={q} index={i} subject="math" resumeKey={resumeKey} chapterName={name} />
                   ) : q._card === "reason" ? (

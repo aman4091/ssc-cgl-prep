@@ -3117,6 +3117,9 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
    wali patti dhyaan todti hai. QBoard body par nishaan lagata hai (wo hissa
    PAGE banata hai, isliye class hi ek raasta hai). */
 body.exam-on .hero { display: none; }
+/* "All" page ke bank/chapter dropdown aur search bhi — paper ke beech mein
+   filter badalne ki cheez nahi hoti. */
+body.exam-on .pyq-filters { display: none; }
 
 /* Gemini aur "🎯 20" test ke dauraan nahi — wo padhai ke auzaar hain, exam ke
    nahi. Submit ke baad apne aap aa jaate hain. */

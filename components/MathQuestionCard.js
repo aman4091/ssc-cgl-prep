@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { askAI, generateSimilar } from "@/lib/client-ai";
 import { saveQuiz, getQuiz, makeId } from "@/lib/storage";
 import { setResume } from "@/lib/qprogress";
-import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
+import { recordAttempts, keyFor } from "@/lib/qstats";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
@@ -227,7 +227,6 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   // chhode hue question bhi.
   const shown = !locked && (!!exam?.revealAll || revealed || peek);
 
-  const st = getStat(tq);
 
   return (
     <article className={`qcard${done ? " is-done" : ""}`} id={`q-${index}`}>
@@ -235,12 +234,6 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
         Question {index + 1}
         <span className="qcard__qid">
           {q.id ? `(${q.id})` : ""}
-          {/* "kitni baar attempt kiya, kitni baar sahi" — apne span mein, kyunki
-              test ke dauraan ye batana hi nahi chahiye: "1x (1/1)" padhte hi
-              pata chal jata hai ki pichhli baar sahi hua tha. */}
-          {st?.attempts > 0 && (
-            <span className="qcard__tries"> · 🔁 {st.attempts}x ({st.correct}/{st.attempts})</span>
-          )}
         </span>
         {/* Gemini aur "20 similar" ab sar mein, sabse daayen. Neeche wali
             patti test ke dauraan chhupti hai, aur ye do cheezein wahan bhi
