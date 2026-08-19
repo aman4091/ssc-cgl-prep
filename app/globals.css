@@ -3002,9 +3002,14 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
    counter + ginti, aur neeche cards (ho gaye sabse aakhir mein). Wahi naap,
    par tokens se, kyunki PYQ pages theme ke saath chalte hain. */
 .qboard { display: flex; gap: 12px; align-items: flex-start; }
-.qboard__side {
+/* Daayin taraf ka poora khambha: upar numbered palette, neeche hisaab. */
+.qboard__rail {
   position: sticky; top: 8px;
-  flex: none; width: 56px; max-height: 88vh; overflow-y: auto;
+  flex: none; width: 56px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.qboard__side {
+  max-height: 70vh; overflow-y: auto;
   background: var(--bg-2); border-radius: 8px; padding: 8px 6px; text-align: center;
 }
 .qboard__side a {
@@ -3067,6 +3072,34 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .btn--review { background: var(--warning); color: #1a1a1a; border-color: var(--warning); }
 .btn--review.is-on { filter: brightness(0.92); }
 
+/* Test chal raha ho to card ke neeche wali button patti (👁️ Answer, Gemini,
+   🎯 20, Ho gaya) chhup jaati hai — exam mein ye cheezein hoti hi nahi, aur
+   "Answer" ka button to poore timer ka matlab hi khatam kar deta hai.
+   Submit ke baad `is-locked` hat jata hai aur sab wapas aa jata hai. */
+.qboard.is-locked .qcard__acts { display: none; }
+/* "Answer neeche yahin aayega — 👁️ dabao" wali line bhi nahi, kyunki test
+   ke dauraan wo button hai hi nahi aur answer aayega bhi Submit ke baad. */
+.qboard.is-locked .qcard__answer--empty { display: none; }
+
+/* Full screen — wahi test ka page, bas poori screen par. Alag runner banane
+   se timer/palette/hisaab do jagah rakhne padte; ye ek hi rehta hai. */
+.qboard.is-fs {
+  position: fixed; inset: 0; z-index: 2000;
+  overflow-y: auto; background: var(--bg); padding: 12px;
+}
+
+/* Submit ka button — Testbook par bhi ye alag (hara) hota hai. */
+.btn--submit { background: var(--success); color: #fff; border-color: var(--success); }
+
+/* Submit ke baad ka natija. */
+.qboard__result {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 12px; padding: 10px 14px; font-size: 14px;
+  border: 1px solid var(--glass-border); border-radius: var(--radius-sm);
+  background: var(--ok-wash);
+}
+.qboard__result b { font-size: 18px; }
+
 /* Neeche ka hisaab — kitne hue, kitne baaki, kitne review ke liye. */
 .qboard__tally { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; font-size: 13px; }
 .tally { padding: 6px 12px; border-radius: var(--radius-sm); border: 1px solid var(--glass-border); }
@@ -3095,6 +3128,7 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
    par bhi yahi hota tha), isliye rail upar ek horizontal patti ban jaati hai. */
 @media (max-width: 640px) {
   .qboard { flex-direction: column; gap: 8px; }
+  .qboard__rail { position: static; width: auto; }
   .qboard__side {
     position: static; width: auto; max-height: none;
     display: flex; gap: 6px; overflow-x: auto; padding: 6px;

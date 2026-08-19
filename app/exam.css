@@ -403,9 +403,10 @@
    pada). */
 .examskin .qboard,
 .examskin .ansp { flex-direction: row-reverse; gap: 14px; }
+.examskin .qboard__rail { width: 232px; }
 .examskin .qboard__side,
 .examskin .ansp__side {
-  width: 232px;
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 6px;
@@ -414,8 +415,9 @@
   border: 1px solid var(--tb-line);
   border-radius: 3px;
   padding: 10px;
-  max-height: 86vh;
+  max-height: 62vh;
 }
+.examskin .ansp__side { width: 232px; max-height: 86vh; }
 .examskin .qboard__side a,
 .examskin .ansp__side a {
   background: var(--tb-blue);
@@ -433,19 +435,24 @@
 .examskin .ansp__side a.is-done { background: var(--tb-green); color: #fff; }
 
 @media (max-width: 900px) {
+  .examskin .qboard__rail { width: 156px; }
+  .examskin .ansp__side { width: 156px; }
   .examskin .qboard__side,
-  .examskin .ansp__side { width: 150px; grid-template-columns: repeat(3, 1fr); }
+  .examskin .ansp__side { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 640px) {
   /* Phone par rail upar ki horizontal patti hi theek hai — 150px ki column
      content ko nichod deti hai. */
   .examskin .qboard,
   .examskin .ansp { flex-direction: column; }
+  .examskin .qboard__rail { width: auto; }
   .examskin .qboard__side,
   .examskin .ansp__side {
     width: auto; display: flex; gap: 6px; overflow-x: auto;
     max-height: none; padding: 6px;
   }
+  /* Phone par hisaab ek line mein hi theek hai. */
+  .examskin .qboard__tally { flex-direction: row; }
   .examskin .qboard__side a,
   .examskin .ansp__side a { flex: none; min-width: 34px; }
 }
@@ -507,6 +514,10 @@
 
 /* ---- Palette ke rang: neela = chhua nahi, hara = sahi, laal = galat,
    peela = review, aur safed andar ki lakeer = abhi isi par ho ---- */
+/* Test ke dauraan: jawab diya = hara (sahi-galat nahi batata), review = peela.
+   Submit ke baad: hara = sahi, laal = galat, dhundhla = chhoda hua. */
+.examskin .qboard__side a.is-ans { background: var(--tb-green); color: #fff; }
+.examskin .qboard__side a.is-skip { background: #dfe3e8; color: #6b7280; }
 .examskin .qboard__side a.is-right { background: var(--tb-green); color: #fff; }
 .examskin .qboard__side a.is-wrong { background: var(--tb-red); color: #fff; }
 .examskin .qboard__side a.is-review { background: #f5c400; color: #3d2f00; }
@@ -527,9 +538,36 @@
 .examskin .btn--review.is-on { background: #ffd83d; color: #3d2f00; border-color: #3d2f00; }
 
 /* ---- Neeche ka hisaab (Testbook ka "PART-A Analysis") ---- */
+/* Hisaab ab palette ke NEECHE hi khade khambhe mein hai, isliye teeno ek ke
+   neeche ek — 232px mein teen pill ek line mein nahi aate. */
 .examskin .qboard__tally {
+  flex-direction: column;
   background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 3px;
-  padding: 8px 10px; gap: 8px;
+  padding: 8px; gap: 6px;
+}
+.examskin .tally {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.examskin .tally--bad { background: var(--tb-red-soft); color: #9c0014; }
+
+/* Submit — Testbook ka hara button. */
+.examskin .btn--submit { background: var(--tb-green); border-color: #17792c; color: #fff; }
+.examskin .btn--submit:hover { background: #17792c; }
+
+/* Full screen mein page ka apna safed hi rehna chahiye (skin bahar reh jaati
+   hai kyunki fullscreen element DOM se upar uth jata hai). */
+.examskin .qboard.is-fs { background: #fff; padding: 14px; }
+
+/* Submit ke baad ka natija. */
+.examskin .qboard__result {
+  background: var(--tb-green-soft); border: 1px solid var(--tb-green);
+  border-radius: 3px; color: var(--tb-ink);
+}
+
+/* Test ke dauraan chuna hua option — neela, par sahi/galat kuch nahi batata. */
+.examskin .qcard__opt.is-picked { background: var(--tb-blue-soft); }
+.examskin .qcard__opt.is-picked > b {
+  background: var(--tb-blue); border-color: var(--tb-blue-dark); color: #fff;
 }
 .examskin .tally {
   background: #fff; border: 1px solid var(--tb-line); border-radius: 3px;

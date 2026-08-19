@@ -4,31 +4,30 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { doneKeyFor, getDoneSet } from "@/lib/qdone";
 import { keyFor } from "@/lib/qstats";
 import { getCounts, bumpCount, COUNTER_SUBJECTS } from "@/lib/qcounter";
-import FullscreenTestButton from "./FullscreenTestButton";
+import { ExamModeProvider } from "./ExamMode";
 
-// 📚 Ek PYQ chapter ka board — asli online exam ki tarah.
+// 📚 Ek PYQ chapter ka board — asli online test.
 //
 // Do parde hain:
-//   1. SET — chapter 25-25 ke set mein bat jata hai (Set 1, Set 2 …), har set
-//      ek card. 764 question ki ek lambi list ke saamne baithne se behtar hai
-//      ki ek baithak mein 25 ho — utna hi ek asli paper ka tukda hota hai.
-//   2. TEST — set khulte hi 15 minute ka clock chalta hai, ek waqt par EK
-//      question, daayin numbered palette, aur neeche ginti.
+//   1. SET — chapter 25-25 ke tukdon mein bat jata hai (Set 1, Set 2 …), har
+//      ek card. 764 ki lambi list ke saamne baithne se behtar hai ki ek
+//      baithak mein 25 ho — utna hi ek asli paper ka hissa hota hai.
+//   2. TEST — 15 minute ka clock, ek waqt par EK question, daayin numbered
+//      palette aur uske NEECHE hisaab (Answered / Not Answered / Marked).
 //
-// Palette ka rang wahi hai jo exam mein hota hai:
-//     neela  = abhi tak haath nahi lagaya
-//     hara   = sahi
-//     laal   = galat
-//     peela  = Mark for Review
-//     safed + neeli lakeer = abhi isi par ho
+// Test QUIZ ki tarah chalta hai: option chunte hi sahi/galat NAHI batata.
+// Timer ka matlab hi tab hai jab jawab aakhir mein pata chale — isliye card ko
+// ExamMode context se `locked` bheja jata hai aur wo apna answer block, rang
+// aur "Saved to Wrong" wali line sab band rakhta hai. Submit dabate hi
+// `revealAll` chalu hota hai aur poore set ke answer ek saath khul jaate hain.
 //
-// Sahi/galat card ke andar ki baat hai, palette card ke bahar hai — isliye
-// card `recordAttempts` (lib/qstats) se `cgl:q-attempted` bhejta hai aur board
-// wahi sunta hai. Teen card files chhedne ki zaroorat nahi padi.
+// Palette ka rang:
+//   test ke dauraan — neela = chhoda hua, HARA = answer diya, PEELA = review
+//   submit ke baad  — HARA = sahi, LAAL = galat, khaali = chhoda hua
+// Abhi jis par ho uspar gehra ghera rehta hai (rang chhupaye bina).
 //
-// Chuna hua option wapas aane par bhi dikhna chahiye, isliye set ke saare 25
-// card mount rehte hain aur sirf ek dikhta hai (baaki display:none). Ek-ek
-// karke mount/unmount karte to peeche jaate hi jawab gayab ho jata.
+// Set ke 25 card mount rehte hain aur sirf ek dikhta hai. Ek-ek karke mount
+// karte to peeche jaate hi chuna hua option gayab ho jata.
 
 const SET_SIZE = 25;
 const SET_MIN = 15;              // ek set = 15 minute, SSC ke section jaisa
@@ -40,7 +39,6 @@ export default function QBoard({
   list,                       // page ki apni list (uske filters ke BAAD)
   subject,                    // counter kis subject mein ginega
   resumeKey,                  // chapter ki pehchaan — badalte hi board reset
-  title = "Test",             // full-screen test ka naam
   renderCard,                 // (q, index, orderedList) => <Card/>
   emptyText = "Yahan koi question nahi.",
 }) {
@@ -49,6 +47,8 @@ export default function QBoard({
   const [marks, setMarks] = useState({});       // key -> true (sahi) / false (galat)
   const [review, setReview] = useState({});     // key -> true (Mark for Review)
   const [leftSec, setLeftSec] = useState(SET_MIN * 60);
+  const [done, setDone] = useState(false);      // Submit ho gaya
+  const [fs, setFs] = useState(false);          // full screen
   const [ver, setVer] = useState(0);            // qdone badla to dobara chhaanto
   const [counts, setCounts] = useState({});
 
@@ -66,14 +66,15 @@ export default function QBoard({
     };
   }, []);
 
-  // Card ne jawab record kiya — palette ka rang wahin se aata hai.
+  // Card ne jawab record kiya. Board yahi se jaanta hai kaun sa question
+  // attempt hua — aur sahi/galat bhi, par wo Submit tak dikhata nahi.
   useEffect(() => {
     const h = (e) => {
-      const list = e.detail?.marks || [];
-      if (!list.length) return;
+      const got = e.detail?.marks || [];
+      if (!got.length) return;
       setMarks((m) => {
         const next = { ...m };
-        for (const { key, correct } of list) if (key) next[key] = correct;
+        for (const { key, correct } of got) if (key) next[key] = correct;
         return next;
       });
     };
@@ -100,15 +101,37 @@ export default function QBoard({
   // wahan har render par nayi array banti hai aur parda turant reset ho jata.
   const listLen = (list || []).length;
   useEffect(() => {
-    setSetIdx(null); setCur(0); setMarks({}); setReview({});
+    setSetIdx(null); setCur(0); setMarks({}); setReview({}); setDone(false);
   }, [resumeKey, listLen]);
 
-  // Clock — set khulte hi shuru, 0 par ruk jata hai.
+  // Clock. Submit ke baad ruk jata hai; 0 par khud submit ho jata hai — timer
+  // ka matlab hi yahi hai.
   useEffect(() => {
-    if (setIdx === null) return undefined;
-    const t = setInterval(() => setLeftSec((s) => (s > 0 ? s - 1 : 0)), 1000);
+    if (setIdx === null || done) return undefined;
+    const t = setInterval(() => {
+      setLeftSec((s) => {
+        if (s <= 1) { setDone(true); return 0; }
+        return s - 1;
+      });
+    }, 1000);
     return () => clearInterval(t);
-  }, [setIdx]);
+  }, [setIdx, done]);
+
+  // Full screen — wahi test ka page, bas poori screen par. Alag runner nahi:
+  // timer, palette aur hisaab jaisa yahan hai waisa hi wahan dikhna chahiye.
+  const rootRef = useRef(null);
+  useEffect(() => {
+    const h = () => setFs(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", h);
+    return () => document.removeEventListener("fullscreenchange", h);
+  }, []);
+  const toggleFs = () => {
+    const el = rootRef.current;
+    if (!el) return;
+    if (document.fullscreenElement) { document.exitFullscreen?.().catch(() => {}); setFs(false); }
+    // API mana kar de (iOS Safari) to bhi CSS wala full-screen chalta hai.
+    else { el.requestFullscreen?.().catch(() => {}); setFs(true); }
+  };
 
   const from = setIdx === null ? 0 : setIdx * SET_SIZE;
   const setQs = useMemo(
@@ -118,9 +141,7 @@ export default function QBoard({
 
   const openSet = (i) => {
     setSetIdx(i);
-    setCur(0);
-    setMarks({});
-    setReview({});
+    setCur(0); setMarks({}); setReview({}); setDone(false);
     setLeftSec(SET_MIN * 60);
     setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 40);
   };
@@ -133,7 +154,11 @@ export default function QBoard({
     });
     // Naya question upar se shuru ho — warna lamba question padhne ke baad
     // agla beech se khulta hua lagta hai.
-    setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 40);
+    const box = rootRef.current;
+    setTimeout(() => {
+      if (document.fullscreenElement && box) box.scrollTo({ top: 0, behavior: "smooth" });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 40);
   }, [setQs.length]);
 
   // ← → se agla/pichla. Input/textarea mein type karte waqt nahi (warna
@@ -195,7 +220,7 @@ export default function QBoard({
           {Array.from({ length: setCount }, (_, i) => {
             const a = i * SET_SIZE;
             const chunk = ordered.slice(a, a + SET_SIZE);
-            const dn = chunk.filter((q) => doneSet.has(doneKeyFor(q))).length;
+            const dn = chunk.filter((x) => doneSet.has(doneKeyFor(x))).length;
             return (
               <button key={i} className="setcard" onClick={() => openSet(i)}>
                 <span className="setcard__n">Set {i + 1}</span>
@@ -216,92 +241,124 @@ export default function QBoard({
   // ---------- parda 2: test ----------
   const n = setQs.length;
   const at = Math.min(cur, n - 1);
-  const answered = setQs.filter((q) => marks[keyFor(q)] !== undefined).length;
-  const reviewed = setQs.filter((q) => review[keyFor(q)]).length;
+  const answered = setQs.filter((x) => marks[keyFor(x)] !== undefined).length;
+  const reviewed = setQs.filter((x) => review[keyFor(x)]).length;
+  const right = setQs.filter((x) => marks[keyFor(x)] === true).length;
+  const wrong = answered - right;
   const curKey = keyFor(setQs[at]);
   const low = leftSec <= 60;
+  const spent = SET_MIN * 60 - leftSec;
 
-  const toggleReview = () =>
-    setReview((r) => ({ ...r, [curKey]: !r[curKey] }));
+  const submit = () => {
+    setDone(true);
+    if (document.fullscreenElement) { /* full screen mein hi result dikhega */ }
+    setTimeout(() => {
+      const box = rootRef.current;
+      if (document.fullscreenElement && box) box.scrollTo({ top: 0, behavior: "smooth" });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 40);
+  };
 
   return (
-    <div className="qboard">
-      <nav className="qboard__side" ref={railRef}>
-        {setQs.map((q, i) => {
-          const k = keyFor(q);
-          const mk = marks[k];
-          const cls = [
-            i === at ? "is-cur" : "",
-            review[k] ? "is-review" : mk === true ? "is-right" : mk === false ? "is-wrong" : "",
-            mk === undefined && !review[k] && doneSet.has(doneKeyFor(q)) ? "is-done" : "",
-          ].filter(Boolean).join(" ");
-          return (
-            <a key={q._uid ?? q.id ?? i} onClick={() => go(i)} className={cls}>
-              {i + 1}
-            </a>
-          );
-        })}
-      </nav>
+    <ExamModeProvider value={{ locked: !done, revealAll: done }}>
+      <div className={`qboard${fs ? " is-fs" : ""}${done ? "" : " is-locked"}`} ref={rootRef}>
+        <aside className="qboard__rail">
+          <nav className="qboard__side" ref={railRef}>
+            {setQs.map((x, i) => {
+              const k = keyFor(x);
+              const mk = marks[k];
+              // Test ke dauraan sirf itna: haath lagaya ya nahi. Sahi/galat
+              // Submit ke baad hi rang badalta hai.
+              const state = done
+                ? (mk === true ? "is-right" : mk === false ? "is-wrong" : "is-skip")
+                : (review[k] ? "is-review" : mk !== undefined ? "is-ans" : "");
+              return (
+                <a
+                  key={x._uid ?? x.id ?? i}
+                  onClick={() => go(i)}
+                  className={`${state}${i === at ? " is-cur" : ""}`}
+                >
+                  {i + 1}
+                </a>
+              );
+            })}
+          </nav>
 
-      <div className="qboard__main">
-        {/* Test ka sar — naam, clock, full screen. */}
-        <div className="qboard__top">
-          <button className="btn btn--ghost btn--sm" onClick={() => setSetIdx(null)}>← Sets</button>
-          <span className="qboard__title">Set {setIdx + 1} · {n} questions</span>
-          <span className={`qboard__clock${low ? " is-low" : ""}`}>
-            ⏱ {leftSec > 0 ? clock(leftSec) : "00:00 · samay khatam"}
-          </span>
-          <FullscreenTestButton
-            questions={setQs}
-            startIndex={at}
-            title={`${title} · Set ${setIdx + 1}`}
-            subject={subject || ""}
-            /* Full screen mein bhi wahi ghadi chalti rahe — naya 15 min nahi,
-               jitna is set mein bacha hai utna. */
-            timeLimitSec={leftSec}
-            label="⛶ Full screen"
-            titleAttr="Poore set ka full-screen test"
-            className="btn btn--sm"
-          />
-        </div>
+          {/* Hisaab — Testbook par bhi ye palette ke NEECHE hi hota hai. */}
+          <div className="qboard__tally">
+            {done ? (
+              <>
+                <span className="tally tally--ans">Correct <b>{right}</b></span>
+                <span className="tally tally--bad">Wrong <b>{wrong}</b></span>
+                <span className="tally tally--not">Skipped <b>{n - answered}</b></span>
+              </>
+            ) : (
+              <>
+                <span className="tally tally--ans">Answered <b>{answered}</b></span>
+                <span className="tally tally--not">Not Answered <b>{n - answered}</b></span>
+                <span className="tally tally--rev">Marked for Review <b>{reviewed}</b></span>
+              </>
+            )}
+          </div>
+        </aside>
 
-        {stats}
+        <div className="qboard__main">
+          {/* Test ka sar — naam, ghadi, full screen, Submit. */}
+          <div className="qboard__top">
+            <button className="btn btn--ghost btn--sm" onClick={() => setSetIdx(null)}>← Sets</button>
+            <span className="qboard__title">Set {setIdx + 1} · {n} questions</span>
+            <span className={`qboard__clock${low && !done ? " is-low" : ""}`}>
+              ⏱ {done ? `${clock(spent)} liya` : clock(leftSec)}
+            </span>
+            <button className="btn btn--ghost btn--sm" onClick={toggleFs}>
+              {fs ? "⤢ Exit full screen" : "⛶ Full screen"}
+            </button>
+            {!done && (
+              <button className="btn btn--submit btn--sm" onClick={submit}>✅ Submit Test</button>
+            )}
+          </div>
 
-        <div className="qboard__nav">
-          <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
-          <span className="qboard__pos">Question <b>{at + 1}</b> / {n}</span>
-          <button
-            className={`btn btn--review${review[curKey] ? " is-on" : ""}`}
-            onClick={toggleReview}
-          >
-            ⚑ {review[curKey] ? "Marked" : "Mark for Review"}
-          </button>
-          <button className="btn" onClick={() => go(at + 1)} disabled={at === n - 1}>Save &amp; Next →</button>
-        </div>
-
-        {/* Saare 25 card mount rehte hain, sirf ek dikhta hai — isliye peeche
-            jaakar bhi apna chuna hua option waisa ka waisa milta hai. */}
-        <div className="qboard__cards">
-          {setQs.map((q, i) => (
-            <div key={q._uid ?? q.id ?? i} style={i === at ? undefined : { display: "none" }}>
-              {renderCard(q, from + i, ordered)}
+          {done && (
+            <div className="qboard__result">
+              <b>{right} / {n}</b> sahi · {wrong} galat · {n - answered} chhoda ·
+              ⏱ {clock(spent)} {leftSec === 0 ? "· samay khatam ho gaya tha" : ""}
+              <button className="btn btn--ghost btn--sm" onClick={() => openSet(setIdx)}>🔁 Dobara</button>
             </div>
-          ))}
-        </div>
+          )}
 
-        <div className="qboard__nav qboard__nav--bottom">
-          <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
-          <span className="qboard__pos qboard__pos--hint">← → arrow key se bhi</span>
-          <button className="btn" onClick={() => go(at + 1)} disabled={at === n - 1}>Save &amp; Next →</button>
-        </div>
+          {stats}
 
-        {/* Testbook ke "PART-A Analysis" wala hisaab. */}
-        <div className="qboard__tally">
-          <span className="tally tally--ans">Answered <b>{answered}</b></span>
-          <span className="tally tally--not">Not Answered <b>{n - answered}</b></span>
-          <span className="tally tally--rev">Marked for Review <b>{reviewed}</b></span>
+          <div className="qboard__nav">
+            <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
+            <span className="qboard__pos">Question <b>{at + 1}</b> / {n}</span>
+            {!done && (
+              <button
+                className={`btn btn--review${review[curKey] ? " is-on" : ""}`}
+                onClick={() => setReview((r) => ({ ...r, [curKey]: !r[curKey] }))}
+              >
+                ⚑ {review[curKey] ? "Marked" : "Mark for Review"}
+              </button>
+            )}
+            <button className="btn" onClick={() => go(at + 1)} disabled={at === n - 1}>Save &amp; Next →</button>
+          </div>
+
+          <div className="qboard__cards">
+            {setQs.map((x, i) => (
+              <div key={x._uid ?? x.id ?? i} style={i === at ? undefined : { display: "none" }}>
+                {renderCard(x, from + i, ordered)}
+              </div>
+            ))}
+          </div>
+
+          <div className="qboard__nav qboard__nav--bottom">
+            <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
+            <span className="qboard__pos qboard__pos--hint">← → arrow key se bhi</span>
+            {at === n - 1 && !done
+              ? <button className="btn btn--submit" onClick={submit}>✅ Submit Test</button>
+              : <button className="btn" onClick={() => go(at + 1)} disabled={at === n - 1}>Save &amp; Next →</button>}
+          </div>
         </div>
       </div>
-    </div>
+    </ExamModeProvider>
   );
 }

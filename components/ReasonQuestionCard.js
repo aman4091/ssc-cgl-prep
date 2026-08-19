@@ -15,6 +15,7 @@ import QTimer from "./QTimer";
 import FullscreenTestButton from "./FullscreenTestButton";
 import { DoneButton } from "./DoneControls";
 import { isDone } from "@/lib/qdone";
+import { useExamMode } from "./ExamMode";
 
 // A reasoning question is IMAGES — MathQuestionCard's twin (same answer/reveal/
 // archive/bookmark machinery, same shortcut / 20-similar / ask buttons), with
@@ -37,6 +38,11 @@ import { isDone } from "@/lib/qdone";
 // than shipped as a button that reliably lies.
 export default function ReasonQuestionCard({ q, index, subject = "reasoning", resumeKey, chapterName, allQuestions }) {
   const router = useRouter();
+  // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
+  // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
+  // kuch pehle jaisa chalta hai.
+  const exam = useExamMode();
+  const locked = !!exam?.locked;
   const [picked, setPicked] = useState(null);
   const [revealed, setRevealed] = useState(false);
   const [shortcut, setShortcut] = useState("");
@@ -94,9 +100,13 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
     if (resumeKey) setResume(resumeKey, index);
     if (!recorded) { recordAttempts([{ q: tq, correct }]); setRecorded(true); }
     addReview(tq, { subject, source: "chapter", category: chapterName || subject, correct });
-    setFlash(correct
-      ? "✓ Correct · tracked. Question list mein hi rahega."
-      : "❌ Saved to Wrong (Mistakes). Solution dekho.");
+    // Test chal raha ho to ye line bhi mat dikhao — "Saved to Wrong" padhte hi
+    // pata chal jata hai ki galat hua, aur quiz ka matlab hi khatam.
+    if (!locked) {
+      setFlash(correct
+        ? "✓ Correct · tracked. Question list mein hi rahega."
+        : "❌ Saved to Wrong (Mistakes). Solution dekho.");
+    }
   };
 
   const fetchShortcut = async () => {
@@ -141,7 +151,9 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   // A pasted Gemini answer is the solution from then on — the book's own
   // solution image is dropped rather than shown underneath it.
   const solution = shortcut || q.solution || q.explanation || "";
-  const shown = revealed || peek;
+  // Timer chalte waqt kuch nahi khulta; Submit ke baad sab khulta hai —
+  // chhode hue question bhi.
+  const shown = !locked && (!!exam?.revealAll || revealed || peek);
 
   const st = getStat(tq);
 
@@ -171,11 +183,11 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
       <div className="qcard__opts" style={{ gridTemplateColumns: "minmax(0, 1fr)" }}>
         {q.optImgs.map((src, oi) => {
           const right = shown && oi === q.answer;
-          const wrong = revealed && oi === picked && oi !== q.answer;
+          const wrong = shown && oi === picked && oi !== q.answer;
           return (
             <button
               key={oi}
-              className={`qcard__opt math-opt${picked === null ? " is-pick" : ""}${right ? " is-right" : ""}${wrong ? " is-wrong" : ""}`}
+              className={`qcard__opt math-opt${picked === null ? " is-pick" : ""}${picked === oi ? " is-picked" : ""}${right ? " is-right" : ""}${wrong ? " is-wrong" : ""}`}
               style={{ display: "flex", alignItems: "center", gap: 10, minHeight: 46 }}
               onClick={() => choose(oi)}
             >

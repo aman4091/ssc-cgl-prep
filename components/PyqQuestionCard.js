@@ -17,6 +17,7 @@ import QTimer from "./QTimer";
 import FullscreenTestButton from "./FullscreenTestButton";
 import { DoneButton } from "./DoneControls";
 import { isDone } from "@/lib/qdone";
+import { useExamMode } from "./ExamMode";
 
 // One PYQ / chapter question — Answers page (/answers) wali shakl mein: peela
 // "Question N" sar, neeche options, phir buttons ki patti, aur ANSWER apne alag
@@ -28,6 +29,11 @@ import { isDone } from "@/lib/qdone";
 // "Answer dekho" likha rehta hai. 👁️ se koi attempt record nahi hota.
 export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, allQuestions }) {
   const router = useRouter();
+  // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
+  // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
+  // kuch pehle jaisa chalta hai.
+  const exam = useExamMode();
+  const locked = !!exam?.locked;
   const [picked, setPicked] = useState(null);
   const [revealed, setRevealed] = useState(false);
   const [shortcut, setShortcut] = useState("");
@@ -82,9 +88,13 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
       addReview(q, { subject, source: "chapter", category: chapterName || subject, chapterId, correct });
       // No auto-bookmark — only the ★ button bookmarks. Wrong ones still land in
       // the Mistake Notebook (Wrong bucket), and the question stays in the list.
-      setFlash(correct
-        ? "✓ Correct · tracked. Question list mein hi rahega."
-        : "❌ Saved to Wrong (Mistakes). Question list mein hi rahega — solution padho.");
+      // Test chal raha ho to ye line bhi mat dikhao — "Saved to Wrong" padhte hi
+      // pata chal jata hai ki galat hua, aur quiz ka matlab hi khatam.
+      if (!locked) {
+        setFlash(correct
+          ? "✓ Correct · tracked. Question list mein hi rahega."
+          : "❌ Saved to Wrong (Mistakes). Question list mein hi rahega — solution padho.");
+      }
     }
   };
 
@@ -133,7 +143,9 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   const solution = shortcut || q.solution || q.explanation || "";
   // Answer block khula hai ya nahi. 👁️ (peek) sirf dikhata hai — attempt,
   // timer aur wrong-book usse nahi chhedte.
-  const shown = revealed || peek;
+  // Timer chalte waqt kuch nahi khulta; Submit ke baad sab khulta hai —
+  // chhode hue question bhi.
+  const shown = !locked && (!!exam?.revealAll || revealed || peek);
 
   const st = getStat(q);
 
@@ -187,11 +199,11 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
       <div className="qcard__opts">
         {q.options.map((opt, oi) => {
           const right = shown && oi === q.answer;
-          const wrong = revealed && oi === picked && oi !== q.answer;
+          const wrong = shown && oi === picked && oi !== q.answer;
           return (
             <button
               key={oi}
-              className={`qcard__opt${picked === null ? " is-pick" : ""}${right ? " is-right" : ""}${wrong ? " is-wrong" : ""}`}
+              className={`qcard__opt${picked === null ? " is-pick" : ""}${picked === oi ? " is-picked" : ""}${right ? " is-right" : ""}${wrong ? " is-wrong" : ""}`}
               onClick={() => choose(oi)}
             >
               <b>{String.fromCharCode(65 + oi)}</b>
