@@ -45,8 +45,15 @@ export default function QBoard({
   useEffect(() => { setCounts(getCounts()); }, []);
   useEffect(() => {
     const h = () => { setVer((v) => v + 1); setCounts(getCounts()); };
+    // Dono sunte hain: qdone se list dobara chhantti hai, aur counter apna
+    // event mark ke BAAD bhejta hai — usse "🔢 Aaj" wahin ka wahin badh jata
+    // hai (pehle wo agli baar page kholne par hi badalta tha).
     window.addEventListener("cgl:qdone-changed", h);
-    return () => window.removeEventListener("cgl:qdone-changed", h);
+    window.addEventListener("cgl:counter-changed", h);
+    return () => {
+      window.removeEventListener("cgl:qdone-changed", h);
+      window.removeEventListener("cgl:counter-changed", h);
+    };
   }, []);
 
   // Nayi list (chapter badla) aayi to slice shuru se. Dep mein list ki IDENTITY

@@ -1799,6 +1799,71 @@ label.glass-card:hover { border-color: var(--accent2); }
 /* The home page renders the vocab day view itself, so it needs no styles of
    its own — .nextup, the card that used to link there, is gone. */
 
+/* ===== 📝 Notes Quiz hub (/notes/quiz) =====
+   Teen kadam — subject, book, chapter — teen alag pattiyan. Pehli koshish mein
+   sab kuch ek khulti-band list thi: 14 book, unke andar 284 chapter, sab ek hi
+   patli lakeer mein — padhne se pehle hi aankh thak jaati thi. Chapter ab card
+   hain (grid mein), taaki ek nazar mein naam, page-ginti aur "ho chuka" teeno
+   dikh jayein. */
+.nq-sec { margin-top: 14px; }
+.nq-lbl {
+  font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--dim); margin: 0 0 8px; font-weight: 700;
+}
+.nq-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.nq-head__m { text-transform: none; letter-spacing: 0; font-weight: 500; margin-left: 8px; opacity: 0.85; }
+.nq-find { max-width: 240px; font-size: 0.85rem; padding: 6px 10px; }
+.nq-err { color: var(--accent); font-size: 0.85rem; margin: 0 0 10px; }
+
+.nq-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.nq-tab {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  font-size: 0.85rem; font-weight: 500;
+}
+.nq-tab i { font-style: normal; font-size: 0.72rem; color: var(--dim); }
+.nq-tab.is-on { border-color: var(--accent); background: var(--accent-wash); font-weight: 700; }
+.nq-tab.is-on i { color: var(--ink); }
+
+.nq-books { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px; }
+.nq-book {
+  padding: 8px 11px; border-radius: 10px; text-align: left; cursor: pointer;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+}
+.nq-book.is-on { border-color: var(--accent); background: var(--accent-wash); }
+.nq-book__t { font-size: 0.86rem; font-weight: 600; display: block; }
+.nq-book__s { display: block; font-size: 0.71rem; color: var(--dim); font-weight: 400; margin-top: 2px; }
+
+.nq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(258px, 1fr)); gap: 8px; align-items: start; }
+.nq-ch {
+  border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px;
+  background: var(--card); display: flex; flex-direction: column; gap: 7px;
+}
+.nq-ch.is-done { border-color: var(--ok); }
+.nq-ch__hd { display: flex; gap: 8px; align-items: baseline; }
+.nq-ch__no { font-size: 0.72rem; color: var(--dim); font-weight: 700; min-width: 18px; }
+.nq-ch__t { font-size: 0.9rem; font-weight: 600; line-height: 1.3; }
+.nq-ch__m { font-size: 0.73rem; color: var(--dim); margin: 0; }
+.nq-ch__acts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; }
+
+.nq-pages { display: flex; gap: 4px; flex-wrap: wrap; padding-top: 6px; border-top: 1px dashed var(--line); }
+.nq-pg {
+  font-size: 0.72rem; padding: 3px 7px; border-radius: 6px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+}
+.nq-pg.is-done { border-color: var(--ok); }
+.nq-pg:disabled { opacity: 0.5; cursor: default; }
+
+.nq-run { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px; }
+.nq-runq {
+  display: flex; flex-direction: column; gap: 2px; padding: 8px 11px;
+  border: 1px solid var(--line); border-radius: 10px; background: var(--card);
+  color: var(--ink); text-decoration: none; font-size: 0.84rem;
+}
+.nq-runq span { font-size: 0.72rem; color: var(--dim); }
+.nq-runq:hover, .nq-book:hover, .nq-tab:hover, .nq-ch:hover { border-color: var(--accent2); }
+
 /* ===== Home feature cards ===== */
 .home-card { transition: transform 0.15s ease, border-color 0.15s ease; }
 .home-card:hover { transform: translateY(-4px); border-color: var(--accent); }
