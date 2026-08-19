@@ -1,33 +1,34 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { doneKeyFor, getDoneSet } from "@/lib/qdone";
-import { keyFor } from "@/lib/qstats";
+import { doneKeyFor, getDoneSet, markDoneMany } from "@/lib/qdone";
 import { getCounts, bumpCount, COUNTER_SUBJECTS } from "@/lib/qcounter";
+import { getChapterResults, saveSetResult, accuracyOf } from "@/lib/settests";
 import { ExamModeProvider } from "./ExamMode";
 
 // 📚 Ek PYQ chapter ka board — asli online test.
 //
 // Do parde hain:
 //   1. SET — chapter 25-25 ke tukdon mein bat jata hai (Set 1, Set 2 …), har
-//      ek card. 764 ki lambi list ke saamne baithne se behtar hai ki ek
-//      baithak mein 25 ho — utna hi ek asli paper ka hissa hota hai.
+//      ek card. Jo set ho chuka hai uspar uska natija dikhta hai aur dobara
+//      kholne par poochha jata hai: phir se test, ya solutions.
 //   2. TEST — 15 minute ka clock, ek waqt par EK question, daayin numbered
-//      palette aur uske NEECHE hisaab (Answered / Not Answered / Marked).
+//      palette aur uske NEECHE hisaab.
+//
+// Set list ke ASLI kram se katte hain (Set 1 = Q 1-25, hamesha wahi) — "ho
+// gaye neeche" wali chhantayi yahan jaan-boojh kar nahi hai. Warna ek question
+// mark karte hi saare set apne question badal lete aur "Set 3 ka natija" ka
+// koi matlab hi na rehta.
 //
 // Test QUIZ ki tarah chalta hai: option chunte hi sahi/galat NAHI batata.
-// Timer ka matlab hi tab hai jab jawab aakhir mein pata chale — isliye card ko
-// ExamMode context se `locked` bheja jata hai aur wo apna answer block, rang
-// aur "Saved to Wrong" wali line sab band rakhta hai. Submit dabate hi
-// `revealAll` chalu hota hai aur poore set ke answer ek saath khul jaate hain.
+// Timer ka matlab hi tab hai jab jawab aakhir mein khule — isliye card ko
+// ExamMode context se `locked` milta hai aur wo apna answer block, rang aur
+// "Saved to Wrong" wali line sab band rakhta hai. Submit dabate hi poore set
+// ke answer ek saath khul jaate hain.
 //
 // Palette ka rang:
-//   test ke dauraan — neela = chhoda hua, HARA = answer diya, PEELA = review
-//   submit ke baad  — HARA = sahi, LAAL = galat, khaali = chhoda hua
-// Abhi jis par ho uspar gehra ghera rehta hai (rang chhupaye bina).
-//
-// Set ke 25 card mount rehte hain aur sirf ek dikhta hai. Ek-ek karke mount
-// karte to peeche jaate hi chuna hua option gayab ho jata.
+//   test ke dauraan — neela = baaki, HARA = jawab diya, PEELA = review
+//   submit ke baad  — HARA = sahi, LAAL = galat, dhundhla = chhoda hua
 
 const SET_SIZE = 25;
 const SET_MIN = 15;              // ek set = 15 minute, SSC ke section jaisa
@@ -38,26 +39,26 @@ const clock = (s) => `${two(Math.floor(Math.max(0, s) / 60))}:${two(Math.max(0, 
 export default function QBoard({
   list,                       // page ki apni list (uske filters ke BAAD)
   subject,                    // counter kis subject mein ginega
-  resumeKey,                  // chapter ki pehchaan — badalte hi board reset
-  renderCard,                 // (q, index, orderedList) => <Card/>
+  resumeKey,                  // chapter ki pehchaan — natije isi naam se sambhalte hain
+  renderCard,                 // (q, index, wholeList) => <Card/>
   emptyText = "Yahan koi question nahi.",
 }) {
   const [setIdx, setSetIdx] = useState(null);   // null = set chunne ka parda
-  const [cur, setCur] = useState(0);            // set ke andar ka number
-  const [marks, setMarks] = useState({});       // key -> true (sahi) / false (galat)
-  const [review, setReview] = useState({});     // key -> true (Mark for Review)
+  const [mode, setMode] = useState("test");     // "test" | "solutions"
+  const [cur, setCur] = useState(0);
+  const [picks, setPicks] = useState({});       // set ke andar ka number -> { opt, correct }
+  const [review, setReview] = useState({});     // number -> true (Mark for Review)
   const [leftSec, setLeftSec] = useState(SET_MIN * 60);
-  const [done, setDone] = useState(false);      // Submit ho gaya
-  const [fs, setFs] = useState(false);          // full screen
-  const [ver, setVer] = useState(0);            // qdone badla to dobara chhaanto
+  const [done, setDone] = useState(false);      // Submit ho gaya (ya solutions mode)
+  const [fs, setFs] = useState(false);
+  const [ask, setAsk] = useState(null);         // popup: kis set ke liye poochh rahe hain
+  const [results, setResults] = useState({});   // pehle diye hue test
+  const [ver, setVer] = useState(0);
   const [counts, setCounts] = useState({});
 
   useEffect(() => { setCounts(getCounts()); }, []);
   useEffect(() => {
     const h = () => { setVer((v) => v + 1); setCounts(getCounts()); };
-    // Dono sunte hain: qdone se list dobara chhantti hai, aur counter apna
-    // event mark ke BAAD bhejta hai — usse "🔢 Aaj" wahin ka wahin badh jata
-    // hai (pehle wo agli baar page kholne par hi badalta tha).
     window.addEventListener("cgl:qdone-changed", h);
     window.addEventListener("cgl:counter-changed", h);
     return () => {
@@ -66,56 +67,40 @@ export default function QBoard({
     };
   }, []);
 
-  // Card ne jawab record kiya. Board yahi se jaanta hai kaun sa question
-  // attempt hua — aur sahi/galat bhi, par wo Submit tak dikhata nahi.
-  useEffect(() => {
-    const h = (e) => {
-      const got = e.detail?.marks || [];
-      if (!got.length) return;
-      setMarks((m) => {
-        const next = { ...m };
-        for (const { key, correct } of got) if (key) next[key] = correct;
-        return next;
-      });
-    };
-    window.addEventListener("cgl:q-attempted", h);
-    return () => window.removeEventListener("cgl:q-attempted", h);
-  }, []);
+  useEffect(() => { setResults(getChapterResults(resumeKey)); }, [resumeKey, ver]);
 
-  // Kram: pehle baaki (apne asli kram mein), phir ho gaye. Dono taraf kram
-  // sthir hai, isliye ek question mark karne par baaki apni jagah nahi badalte.
-  const { ordered, doneSet, doneCount } = useMemo(() => {
-    const set = getDoneSet();
-    const pend = [];
-    const dn = [];
-    for (const q of list || []) (set.has(doneKeyFor(q)) ? dn : pend).push(q);
-    return { ordered: [...pend, ...dn], doneSet: set, doneCount: dn.length };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [list, ver]);
-
-  const total = ordered.length;
+  const all = useMemo(() => list || [], [list]);
+  const total = all.length;
   const setCount = Math.ceil(total / SET_SIZE);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const doneSet = useMemo(() => getDoneSet(), [ver]);
+  const doneCount = useMemo(
+    () => all.reduce((a, q) => a + (doneSet.has(doneKeyFor(q)) ? 1 : 0), 0),
+    [all, doneSet],
+  );
 
-  // Naya chapter (ya naya filter) aaya to seedha set wale parde par. Dep mein
-  // list ki IDENTITY nahi li ja sakti — jo page apna filter inline karta hai
-  // wahan har render par nayi array banti hai aur parda turant reset ho jata.
-  const listLen = (list || []).length;
+  // Naya chapter (ya naya filter) aaya to seedha set wale parde par.
   useEffect(() => {
-    setSetIdx(null); setCur(0); setMarks({}); setReview({}); setDone(false);
-  }, [resumeKey, listLen]);
+    setSetIdx(null); setAsk(null); setCur(0); setPicks({}); setReview({}); setDone(false);
+  }, [resumeKey, total]);
 
-  // Clock. Submit ke baad ruk jata hai; 0 par khud submit ho jata hai — timer
-  // ka matlab hi yahi hai.
+  // Clock. Solutions dekhte waqt nahi chalta. 0 par khud submit ho jata hai —
+  // timer ka matlab hi yahi hai.
   useEffect(() => {
     if (setIdx === null || done) return undefined;
-    const t = setInterval(() => {
-      setLeftSec((s) => {
-        if (s <= 1) { setDone(true); return 0; }
-        return s - 1;
-      });
-    }, 1000);
+    const t = setInterval(() => setLeftSec((s) => (s > 0 ? s - 1 : 0)), 1000);
     return () => clearInterval(t);
   }, [setIdx, done]);
+
+  // Test ke dauraan page ka apna sar (chapter ka naam, Aaj/Total/Ho gaye) chhup
+  // jata hai — wo page banata hai, QBoard nahi, isliye body par nishaan lagta
+  // hai aur CSS use chhupa deti hai. Submit ke baad sab wapas.
+  const hideChrome = setIdx !== null && !done;
+  useEffect(() => {
+    if (!hideChrome) return undefined;
+    document.body.classList.add("exam-on");
+    return () => document.body.classList.remove("exam-on");
+  }, [hideChrome]);
 
   // Full screen — wahi test ka page, bas poori screen par. Alag runner nahi:
   // timer, palette aur hisaab jaisa yahan hai waisa hi wahan dikhna chahiye.
@@ -133,17 +118,40 @@ export default function QBoard({
     else { el.requestFullscreen?.().catch(() => {}); setFs(true); }
   };
 
+  const toTop = useCallback(() => {
+    setTimeout(() => {
+      const box = rootRef.current;
+      if (document.fullscreenElement && box) box.scrollTo({ top: 0, behavior: "smooth" });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 40);
+  }, []);
+
   const from = setIdx === null ? 0 : setIdx * SET_SIZE;
   const setQs = useMemo(
-    () => (setIdx === null ? [] : ordered.slice(from, from + SET_SIZE)),
-    [ordered, setIdx, from],
+    () => (setIdx === null ? [] : all.slice(from, from + SET_SIZE)),
+    [all, setIdx, from],
   );
 
-  const openSet = (i) => {
+  const openSet = (i, how) => {
+    const prev = how === "solutions" ? getChapterResults(resumeKey)[i] : null;
+    setAsk(null);
     setSetIdx(i);
-    setCur(0); setMarks({}); setReview({}); setDone(false);
+    setMode(how);
+    setCur(0);
+    setReview({});
+    setPicks(prev?.picks
+      ? Object.fromEntries(Object.entries(prev.picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }]))
+      : {});
+    setDone(how === "solutions");
     setLeftSec(SET_MIN * 60);
-    setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 40);
+    toTop();
+  };
+
+  const tapSet = (i) => {
+    // Ek baar de chuke ho to pehle poochho — warna galti se click karte hi
+    // pichhla natija mit jata.
+    if (results[i]) setAsk(i);
+    else openSet(i, "test");
   };
 
   const go = useCallback((i) => {
@@ -152,17 +160,10 @@ export default function QBoard({
       if (!n) return c;
       return Math.max(0, Math.min(i, n - 1));
     });
-    // Naya question upar se shuru ho — warna lamba question padhne ke baad
-    // agla beech se khulta hua lagta hai.
-    const box = rootRef.current;
-    setTimeout(() => {
-      if (document.fullscreenElement && box) box.scrollTo({ top: 0, behavior: "smooth" });
-      else window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 40);
-  }, [setQs.length]);
+    toTop();
+  }, [setQs.length, toTop]);
 
-  // ← → se agla/pichla. Input/textarea mein type karte waqt nahi (warna
-  // answer paste karte hi question badal jata).
+  // ← → se agla/pichla. Input/textarea mein type karte waqt nahi.
   useEffect(() => {
     if (setIdx === null) return undefined;
     const h = (e) => {
@@ -177,10 +178,9 @@ export default function QBoard({
     return () => window.removeEventListener("keydown", h);
   }, [cur, go, setIdx]);
 
-  // Palette apne aap abhi wale number par aa jaye (phone par wo ek horizontal
+  // Palette apne aap abhi wale number par aa jaye (phone par wo horizontal
   // patti hai, wahan ye zyada zaroori hai). offsetTop kaam nahi karta — desktop
-  // par rail sticky hai aur phone par static, to offsetParent badal jata hai;
-  // isliye rect ka fark liya hai.
+  // par rail sticky hai aur phone par static, to offsetParent badal jata hai.
   const railRef = useRef(null);
   useEffect(() => {
     const r = railRef.current;
@@ -194,171 +194,218 @@ export default function QBoard({
 
   const nudge = (delta) => setCounts((c) => ({ ...c, [subject]: bumpCount(subject, delta) }));
 
-  if (!total) return <div className="placeholder">{emptyText}</div>;
+  // Har card ka apna slot: usi ka number, usi ka chuna hua option. Isse card ko
+  // question ka koi key milana nahi padta.
+  const slots = useMemo(() => setQs.map((_, i) => ({
+    locked: !done,
+    revealAll: done,
+    pick: picks[i]?.opt,
+    onPick: (opt, correct) => setPicks((p) => (p[i] ? p : { ...p, [i]: { opt, correct } })),
+  })), [setQs, done, picks]);
 
-  const stats = (
-    <div className="qboard__stats">
-      {COUNTER_SUBJECTS.includes(subject) && (
-        <span className="cnt" title="Aaj is subject ke kitne question hue (raat 3 baje reset)">
-          🔢 Aaj: {counts[subject] || 0}
-          <button type="button" onClick={() => nudge(-1)} aria-label="ek kam">−</button>
-          <button type="button" onClick={() => nudge(1)} aria-label="ek zyada">+</button>
-        </span>
-      )}
-      <span className="tot">📊 Total: {total}</span>
-      <span className="did">✅ Ho gaye: {doneCount}</span>
-      <span className="left">⏳ Baaki: {total - doneCount}</span>
-    </div>
-  );
+  const n = setQs.length;
+  const right = Object.values(picks).filter((p) => p.correct).length;
+  const answered = Object.keys(picks).length;
+  const wrong = answered - right;
+  const spent = SET_MIN * 60 - leftSec;
+
+  const submit = useCallback(() => {
+    if (done || setIdx === null) return;
+    setDone(true);
+    saveSetResult(resumeKey, setIdx, {
+      right, wrong, skipped: n - answered, total: n, sec: spent,
+      picks: Object.fromEntries(
+        Object.entries(picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }]),
+      ),
+    });
+    // Jo sahi ho gaye wo "Ho gaya" — poora set sahi hua to poora set nishaan
+    // laga hua mil jata hai.
+    markDoneMany(
+      Object.entries(picks).filter(([, v]) => v.correct).map(([k]) => setQs[Number(k)]),
+    );
+    setResults(getChapterResults(resumeKey));
+    toTop();
+  }, [done, setIdx, resumeKey, picks, setQs, right, wrong, answered, n, spent, toTop]);
+
+  // Samay khatam — khud submit. Timer ka matlab hi yahi hai.
+  useEffect(() => {
+    if (setIdx !== null && !done && mode === "test" && leftSec === 0) submit();
+  }, [leftSec, setIdx, done, mode, submit]);
+
+  if (!total) return <div className="placeholder">{emptyText}</div>;
 
   // ---------- parda 1: set chuno ----------
   if (setIdx === null) {
     return (
       <div className="qboard__main">
-        {stats}
+        <div className="qboard__stats">
+          {COUNTER_SUBJECTS.includes(subject) && (
+            <span className="cnt" title="Aaj is subject ke kitne question hue (raat 3 baje reset)">
+              🔢 Aaj: {counts[subject] || 0}
+              <button type="button" onClick={() => nudge(-1)} aria-label="ek kam">−</button>
+              <button type="button" onClick={() => nudge(1)} aria-label="ek zyada">+</button>
+            </span>
+          )}
+          <span className="tot">📊 Total: {total}</span>
+          <span className="did">✅ Ho gaye: {doneCount}</span>
+          <span className="left">⏳ Baaki: {total - doneCount}</span>
+        </div>
+
         <div className="setgrid">
           {Array.from({ length: setCount }, (_, i) => {
             const a = i * SET_SIZE;
-            const chunk = ordered.slice(a, a + SET_SIZE);
+            const chunk = all.slice(a, a + SET_SIZE);
             const dn = chunk.filter((x) => doneSet.has(doneKeyFor(x))).length;
+            const r = results[i];
             return (
-              <button key={i} className="setcard" onClick={() => openSet(i)}>
-                <span className="setcard__n">Set {i + 1}</span>
-                <span className="setcard__meta">Q {a + 1}–{a + chunk.length} · {chunk.length} questions</span>
-                <span className="setcard__bar">
-                  <i style={{ width: `${Math.round((dn / chunk.length) * 100)}%` }} />
-                </span>
-                <span className="setcard__done">✅ {dn} / {chunk.length} ho gaye</span>
-                <span className="setcard__go">▶ Test shuru karo · ⏱ {SET_MIN} min</span>
-              </button>
+              <div key={i} className={`setcard${r ? " is-done" : ""}`}>
+                <button className="setcard__open" onClick={() => tapSet(i)}>
+                  <span className="setcard__n">Set {i + 1}{r ? " ✓" : ""}</span>
+                  <span className="setcard__meta">Q {a + 1}–{a + chunk.length} · {chunk.length} questions</span>
+                  <span className="setcard__bar">
+                    <i style={{ width: `${Math.round((dn / chunk.length) * 100)}%` }} />
+                  </span>
+                  {r ? (
+                    <span className="setcard__score">
+                      {r.right}/{r.total} sahi · {accuracyOf(r)}% · ⏱ {clock(r.sec)}
+                    </span>
+                  ) : (
+                    <span className="setcard__done">✅ {dn} / {chunk.length} ho gaye</span>
+                  )}
+                </button>
+                {r ? (
+                  <span className="setcard__acts">
+                    <button className="btn btn--sm" onClick={() => openSet(i, "test")}>🔁 Attempt again</button>
+                    <button className="btn btn--ghost btn--sm" onClick={() => openSet(i, "solutions")}>📖 Result</button>
+                  </span>
+                ) : (
+                  <span className="setcard__go">▶ Test shuru karo · ⏱ {SET_MIN} min</span>
+                )}
+              </div>
             );
           })}
         </div>
+
+        {ask !== null && (
+          <div className="setask" onClick={() => setAsk(null)}>
+            <div className="setask__box" onClick={(e) => e.stopPropagation()}>
+              <h3 className="setask__title">Set {ask + 1} pehle ho chuka hai</h3>
+              <p className="setask__sub">
+                {results[ask].right}/{results[ask].total} sahi · {accuracyOf(results[ask])}% ·
+                ⏱ {clock(results[ask].sec)}
+              </p>
+              <div className="setask__acts">
+                <button className="btn" onClick={() => openSet(ask, "test")}>🔁 Dobara test do</button>
+                <button className="btn btn--ghost" onClick={() => openSet(ask, "solutions")}>📖 Solutions dekho</button>
+                <button className="btn btn--ghost" onClick={() => setAsk(null)}>Rehne do</button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
 
   // ---------- parda 2: test ----------
-  const n = setQs.length;
   const at = Math.min(cur, n - 1);
-  const answered = setQs.filter((x) => marks[keyFor(x)] !== undefined).length;
-  const reviewed = setQs.filter((x) => review[keyFor(x)]).length;
-  const right = setQs.filter((x) => marks[keyFor(x)] === true).length;
-  const wrong = answered - right;
-  const curKey = keyFor(setQs[at]);
   const low = leftSec <= 60;
-  const spent = SET_MIN * 60 - leftSec;
-
-  const submit = () => {
-    setDone(true);
-    if (document.fullscreenElement) { /* full screen mein hi result dikhega */ }
-    setTimeout(() => {
-      const box = rootRef.current;
-      if (document.fullscreenElement && box) box.scrollTo({ top: 0, behavior: "smooth" });
-      else window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 40);
-  };
+  const acc = answered ? Math.round((right / answered) * 100) : 0;
 
   return (
-    <ExamModeProvider value={{ locked: !done, revealAll: done }}>
-      <div className={`qboard${fs ? " is-fs" : ""}${done ? "" : " is-locked"}`} ref={rootRef}>
-        <aside className="qboard__rail">
-          <nav className="qboard__side" ref={railRef}>
-            {setQs.map((x, i) => {
-              const k = keyFor(x);
-              const mk = marks[k];
-              // Test ke dauraan sirf itna: haath lagaya ya nahi. Sahi/galat
-              // Submit ke baad hi rang badalta hai.
-              const state = done
-                ? (mk === true ? "is-right" : mk === false ? "is-wrong" : "is-skip")
-                : (review[k] ? "is-review" : mk !== undefined ? "is-ans" : "");
-              return (
-                <a
-                  key={x._uid ?? x.id ?? i}
-                  onClick={() => go(i)}
-                  className={`${state}${i === at ? " is-cur" : ""}`}
-                >
-                  {i + 1}
-                </a>
-              );
-            })}
-          </nav>
+    <div className={`qboard${fs ? " is-fs" : ""}${done ? "" : " is-locked"}`} ref={rootRef}>
+      <aside className="qboard__rail">
+        <nav className="qboard__side" ref={railRef}>
+          {setQs.map((x, i) => {
+            const p = picks[i];
+            const state = done
+              ? (p ? (p.correct ? "is-right" : "is-wrong") : "is-skip")
+              : (review[i] ? "is-review" : p ? "is-ans" : "");
+            return (
+              <a
+                key={x._uid ?? x.id ?? i}
+                onClick={() => go(i)}
+                className={`${state}${i === at ? " is-cur" : ""}`}
+              >
+                {i + 1}
+              </a>
+            );
+          })}
+        </nav>
 
-          {/* Hisaab — Testbook par bhi ye palette ke NEECHE hi hota hai. */}
-          <div className="qboard__tally">
-            {done ? (
-              <>
-                <span className="tally tally--ans">Correct <b>{right}</b></span>
-                <span className="tally tally--bad">Wrong <b>{wrong}</b></span>
-                <span className="tally tally--not">Skipped <b>{n - answered}</b></span>
-              </>
-            ) : (
-              <>
-                <span className="tally tally--ans">Answered <b>{answered}</b></span>
-                <span className="tally tally--not">Not Answered <b>{n - answered}</b></span>
-                <span className="tally tally--rev">Marked for Review <b>{reviewed}</b></span>
-              </>
-            )}
-          </div>
-        </aside>
+        {/* Hisaab — Testbook par bhi ye palette ke NEECHE hi hota hai. */}
+        <div className="qboard__tally">
+          {done ? (
+            <>
+              <span className="tally tally--ans">Right <b>{right}</b></span>
+              <span className="tally tally--bad">Wrong <b>{wrong}</b></span>
+              <span className="tally tally--not">Skipped <b>{n - answered}</b></span>
+            </>
+          ) : (
+            <>
+              <span className="tally tally--ans">Answered <b>{answered}</b></span>
+              <span className="tally tally--not">Not Answered <b>{n - answered}</b></span>
+              <span className="tally tally--rev">Marked for Review <b>{Object.values(review).filter(Boolean).length}</b></span>
+            </>
+          )}
+        </div>
+      </aside>
 
-        <div className="qboard__main">
-          {/* Test ka sar — naam, ghadi, full screen, Submit. */}
-          <div className="qboard__top">
-            <button className="btn btn--ghost btn--sm" onClick={() => setSetIdx(null)}>← Sets</button>
-            <span className="qboard__title">Set {setIdx + 1} · {n} questions</span>
+      <div className="qboard__main">
+        <div className="qboard__top">
+          <button className="btn btn--ghost btn--sm" onClick={() => setSetIdx(null)}>← Sets</button>
+          <span className="qboard__title">
+            Set {setIdx + 1} · {n} questions{mode === "solutions" ? " · solutions" : ""}
+          </span>
+          {mode === "test" && (
             <span className={`qboard__clock${low && !done ? " is-low" : ""}`}>
               ⏱ {done ? `${clock(spent)} liya` : clock(leftSec)}
             </span>
-            <button className="btn btn--ghost btn--sm" onClick={toggleFs}>
-              {fs ? "⤢ Exit full screen" : "⛶ Full screen"}
-            </button>
-            {!done && (
-              <button className="btn btn--submit btn--sm" onClick={submit}>✅ Submit Test</button>
-            )}
-          </div>
-
-          {done && (
-            <div className="qboard__result">
-              <b>{right} / {n}</b> sahi · {wrong} galat · {n - answered} chhoda ·
-              ⏱ {clock(spent)} {leftSec === 0 ? "· samay khatam ho gaya tha" : ""}
-              <button className="btn btn--ghost btn--sm" onClick={() => openSet(setIdx)}>🔁 Dobara</button>
-            </div>
           )}
+          <button className="btn btn--ghost btn--sm" onClick={toggleFs}>
+            {fs ? "⤢ Exit full screen" : "⛶ Full screen"}
+          </button>
+          {!done && <button className="btn btn--submit btn--sm" onClick={submit}>✅ Submit Test</button>}
+        </div>
 
-          {stats}
-
-          <div className="qboard__nav">
-            <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
-            <span className="qboard__pos">Question <b>{at + 1}</b> / {n}</span>
-            {!done && (
-              <button
-                className={`btn btn--review${review[curKey] ? " is-on" : ""}`}
-                onClick={() => setReview((r) => ({ ...r, [curKey]: !r[curKey] }))}
-              >
-                ⚑ {review[curKey] ? "Marked" : "Mark for Review"}
-              </button>
-            )}
-            <button className="btn" onClick={() => go(at + 1)} disabled={at === n - 1}>Save &amp; Next →</button>
+        {done && (
+          <div className="qboard__result">
+            <span className="res res--right"><b>{right}</b> Right</span>
+            <span className="res res--wrong"><b>{wrong}</b> Wrong</span>
+            <span className="res res--acc"><b>{acc}%</b> Accuracy</span>
+            <span className="res res--time"><b>{clock(mode === "solutions" ? (results[setIdx]?.sec || 0) : spent)}</b> Time</span>
+            <span className="res res--skip"><b>{n - answered}</b> Skipped</span>
+            <button className="btn btn--sm" onClick={() => openSet(setIdx, "test")}>🔁 Attempt again</button>
           </div>
+        )}
 
-          <div className="qboard__cards">
-            {setQs.map((x, i) => (
-              <div key={x._uid ?? x.id ?? i} style={i === at ? undefined : { display: "none" }}>
-                {renderCard(x, from + i, ordered)}
-              </div>
-            ))}
-          </div>
+        <div className="qboard__nav">
+          <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
+          <span className="qboard__pos">Question <b>{at + 1}</b> / {n}</span>
+          {!done && (
+            <button
+              className={`btn btn--review${review[at] ? " is-on" : ""}`}
+              onClick={() => setReview((r) => ({ ...r, [at]: !r[at] }))}
+            >
+              ⚑ {review[at] ? "Marked" : "Mark for Review"}
+            </button>
+          )}
+          {at === n - 1 && !done
+            ? <button className="btn btn--submit" onClick={submit}>✅ Submit Test</button>
+            : <button className="btn" onClick={() => go(at + 1)} disabled={at === n - 1}>Save &amp; Next →</button>}
+        </div>
 
-          <div className="qboard__nav qboard__nav--bottom">
-            <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
-            <span className="qboard__pos qboard__pos--hint">← → arrow key se bhi</span>
-            {at === n - 1 && !done
-              ? <button className="btn btn--submit" onClick={submit}>✅ Submit Test</button>
-              : <button className="btn" onClick={() => go(at + 1)} disabled={at === n - 1}>Save &amp; Next →</button>}
-          </div>
+        {/* Set ke saare card mount rehte hain, sirf ek dikhta hai — isliye
+            peeche jaakar bhi apna chuna hua option waisa ka waisa milta hai. */}
+        <div className="qboard__cards">
+          {setQs.map((x, i) => (
+            <div key={x._uid ?? x.id ?? i} style={i === at ? undefined : { display: "none" }}>
+              <ExamModeProvider value={slots[i]}>
+                {renderCard(x, from + i, all)}
+              </ExamModeProvider>
+            </div>
+          ))}
         </div>
       </div>
-    </ExamModeProvider>
+    </div>
   );
 }

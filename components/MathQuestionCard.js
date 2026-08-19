@@ -73,7 +73,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   // kuch pehle jaisa chalta hai.
   const exam = useExamMode();
   const locked = !!exam?.locked;
-  const [picked, setPicked] = useState(null);
+  const [picked, setPicked] = useState(exam?.pick ?? null);
   const [revealed, setRevealed] = useState(false);
   const [shortcut, setShortcut] = useState("");
   const [scShown, setScShown] = useState(false);
@@ -145,6 +145,9 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
     setRevealed(true);
     if (resumeKey) setResume(resumeKey, index);
     if (!recorded) { recordAttempts([{ q: tq, correct }]); setRecorded(true); }
+    // Test chal raha ho to board ko batao — palette ka rang, ginti aur aakhri
+    // natija wahin banta hai.
+    exam?.onPick?.(oi, correct);
     addReview(tq, { subject, source: "chapter", category: chapterName || subject, correct });
     // Test chal raha ho to ye line bhi mat dikhao — "Saved to Wrong" padhte hi
     // pata chal jata hai ki galat hua, aur quiz ka matlab hi khatam.
@@ -236,7 +239,12 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
         Question {index + 1}
         <span className="qcard__qid">
           {q.id ? `(${q.id})` : ""}
-          {st?.attempts > 0 ? ` · 🔁 ${st.attempts}x (${st.correct}/${st.attempts})` : ""}
+          {/* "kitni baar attempt kiya, kitni baar sahi" — apne span mein, kyunki
+              test ke dauraan ye batana hi nahi chahiye: "1x (1/1)" padhte hi
+              pata chal jata hai ki pichhli baar sahi hua tha. */}
+          {st?.attempts > 0 && (
+            <span className="qcard__tries"> · 🔁 {st.attempts}x ({st.correct}/{st.attempts})</span>
+          )}
         </span>
       </h2>
 

@@ -34,7 +34,7 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   // kuch pehle jaisa chalta hai.
   const exam = useExamMode();
   const locked = !!exam?.locked;
-  const [picked, setPicked] = useState(null);
+  const [picked, setPicked] = useState(exam?.pick ?? null);
   const [revealed, setRevealed] = useState(false);
   const [shortcut, setShortcut] = useState("");
   const [scShown, setScShown] = useState(false);
@@ -82,6 +82,9 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
       recordAttempts([{ q, correct }]);
       setRecorded(true);
     }
+    // Test chal raha ho to board ko batao — palette ka rang, ginti aur aakhri
+    // natija wahin banta hai.
+    exam?.onPick?.(oi, correct);
     // In a chapter list: archive to Attempted (+Correct/Wrong), bookmark, then
     // remove from the list so the next question moves up.
     if (archiveOnAnswer) {
@@ -157,7 +160,12 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
         Question {index + 1}
         <span className="qcard__qid">
           {paper ? `(${paper})` : ""}
-          {st?.attempts > 0 ? ` · 🔁 ${st.attempts}x (${st.correct}/${st.attempts})` : ""}
+          {/* "kitni baar attempt kiya, kitni baar sahi" — apne span mein, kyunki
+              test ke dauraan ye batana hi nahi chahiye: "1x (1/1)" padhte hi
+              pata chal jata hai ki pichhli baar sahi hua tha. */}
+          {st?.attempts > 0 && (
+            <span className="qcard__tries"> · 🔁 {st.attempts}x ({st.correct}/{st.attempts})</span>
+          )}
         </span>
       </h2>
 

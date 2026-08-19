@@ -3046,12 +3046,21 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
 }
 .setcard {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
-  padding: 14px; text-align: left; cursor: pointer; font-family: inherit;
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 14px; color: var(--text-1);
   background: var(--card); border: 1px solid var(--glass-border);
-  border-radius: var(--radius); color: var(--text-1);
+  border-radius: var(--radius);
 }
 .setcard:hover { border-color: var(--accent); }
+/* Poora card ek button hai; jo set ho chuka hai uske do apne button neeche
+   alag hain (Attempt again / Result), isliye wo nested nahi ho sakte. */
+.setcard__open {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 6px;
+  padding: 0; text-align: left; cursor: pointer; font-family: inherit;
+  background: none; border: 0; color: inherit; width: 100%;
+}
+.setcard__acts { display: flex; gap: 6px; flex-wrap: wrap; }
+.setcard__score { font-size: 0.78rem; font-weight: 700; color: var(--success); }
 .setcard__n { font-size: 1.05rem; font-weight: 700; }
 .setcard__meta { font-size: 0.78rem; color: var(--text-3); }
 .setcard__bar {
@@ -3061,6 +3070,21 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .setcard__bar i { display: block; height: 100%; background: var(--success); }
 .setcard__done { font-size: 0.76rem; color: var(--text-2); }
 .setcard__go { margin-top: 4px; font-size: 0.8rem; font-weight: 700; color: var(--accent); }
+
+/* Pehle diya hua set dobara kholne par poochho — dobara test, ya solutions. */
+.setask {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(4, 7, 16, 0.7);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.setask__box {
+  width: 100%; max-width: 420px; padding: 22px;
+  background: var(--card); border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+.setask__title { margin: 0 0 6px; font-size: 1.05rem; font-weight: 700; }
+.setask__sub { margin: 0 0 16px; font-size: 0.85rem; color: var(--text-2); }
+.setask__acts { display: flex; flex-direction: column; gap: 8px; }
 
 /* ---- Test ka sar: naam, ghadi, full screen ---- */
 .qboard__top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
@@ -3087,18 +3111,38 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
   position: fixed; inset: 0; z-index: 2000;
   overflow-y: auto; background: var(--bg); padding: 12px;
 }
+/* Poori screen par question ka box 1400px chauda ho jata tha — ek line mein
+   itne akshar padhe hi nahi jaate. Chaudai wahi rakhi jitni normal page par. */
+.qboard.is-fs .qboard__main { max-width: 860px; }
 
 /* Submit ka button — Testbook par bhi ye alag (hara) hota hai. */
 .btn--submit { background: var(--success); color: #fff; border-color: var(--success); }
 
-/* Submit ke baad ka natija. */
+/* Submit ke baad ka natija — Right / Wrong / Accuracy / Time, sabse upar. */
 .qboard__result {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  margin-bottom: 12px; padding: 10px 14px; font-size: 14px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-bottom: 12px; padding: 10px; font-size: 13px;
   border: 1px solid var(--glass-border); border-radius: var(--radius-sm);
-  background: var(--ok-wash);
+  background: var(--bg-2);
 }
-.qboard__result b { font-size: 18px; }
+.res {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  padding: 6px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border); background: var(--card);
+}
+.res b { font-size: 18px; font-weight: 700; }
+.res--right b { color: var(--success); }
+.res--wrong b { color: var(--danger); }
+.res--acc b { color: var(--accent); }
+
+/* Test ke dauraan page ka apna sar bhi nahi — chapter ka naam aur Aaj/Total
+   wali patti dhyaan todti hai. QBoard body par nishaan lagata hai (wo hissa
+   PAGE banata hai, isliye class hi ek raasta hai). */
+body.exam-on .hero { display: none; }
+
+/* "kitni baar attempt kiya" wala counter test ke andar kahin nahi — na test
+   ke dauraan (wo jawab batata hai), na solutions mein. */
+.qboard .qcard__tries { display: none; }
 
 /* Neeche ka hisaab — kitne hue, kitne baaki, kitne review ke liye. */
 .qboard__tally { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; font-size: 13px; }

@@ -494,6 +494,9 @@
 }
 .examskin .setcard:hover { border-color: var(--tb-blue); background: var(--tb-blue-soft); }
 .examskin .setcard__n { color: var(--tb-ink); }
+.examskin .setcard.is-done { border-left: 3px solid var(--tb-green); }
+.examskin .setcard__score { color: #14701f; }
+.examskin .setcard__open { background: none; }
 .examskin .setcard__meta, .examskin .setcard__done { color: var(--tb-dim); }
 .examskin .setcard__bar { background: var(--tb-line-soft); border-radius: 0; }
 .examskin .setcard__bar i { background: var(--tb-green); }
@@ -558,15 +561,33 @@
    hai kyunki fullscreen element DOM se upar uth jata hai). */
 .examskin .qboard.is-fs { background: #fff; padding: 14px; }
 
-/* Submit ke baad ka natija. */
+/* Submit ke baad ka natija — Right / Wrong / Accuracy / Time. */
 .examskin .qboard__result {
-  background: var(--tb-green-soft); border: 1px solid var(--tb-green);
+  background: var(--tb-head); border: 1px solid var(--tb-line);
   border-radius: 3px; color: var(--tb-ink);
 }
+.examskin .res {
+  background: #fff; border: 1px solid var(--tb-line); border-radius: 3px;
+  color: var(--tb-dim); font-weight: 700;
+}
+.examskin .res--right { background: var(--tb-green-soft); }
+.examskin .res--wrong { background: var(--tb-red-soft); }
+.examskin .res--right b { color: #14701f; }
+.examskin .res--wrong b { color: #9c0014; }
+.examskin .res--acc b, .examskin .res--time b { color: var(--tb-blue); }
 
-/* Test ke dauraan chuna hua option — neela, par sahi/galat kuch nahi batata. */
-.examskin .qcard__opt.is-picked { background: var(--tb-blue-soft); }
-.examskin .qcard__opt.is-picked > b {
+/* Dobara-test wala popup. */
+.examskin .setask__box {
+  background: #fff; border: 1px solid var(--tb-line); border-radius: 3px;
+}
+.examskin .setask__title { color: var(--tb-ink); }
+.examskin .setask__sub { color: var(--tb-dim); }
+
+/* Test ke dauraan chuna hua option — neela, par sahi/galat kuch nahi batata.
+   Submit ke baad hara/laal hi chalta hai, isliye :not() — warna chuna hua
+   option submit ke baad bhi neela hi pada rehta. */
+.examskin .qcard__opt.is-picked:not(.is-right):not(.is-wrong) { background: var(--tb-blue-soft); }
+.examskin .qcard__opt.is-picked:not(.is-right):not(.is-wrong) > b {
   background: var(--tb-blue); border-color: var(--tb-blue-dark); color: #fff;
 }
 .examskin .tally {
