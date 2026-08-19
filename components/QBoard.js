@@ -19,6 +19,16 @@ import { getCounts, bumpCount, COUNTER_SUBJECTS } from "@/lib/qcounter";
 // neeche khisak jata hai aur dhundhla ho jata hai — owner ne wahi maanga.
 
 const DEFAULT_PAGE = 25;
+// Rail har question ka ek link hai. Chapter-bhar (500-1000) tak ye theek hai,
+// par "All" wali subject list 12,000 tak jaati hai — utne anchor banate hi
+// phone atak jata hai. Itni badi list par rail sirf utni lambi hoti hai jitne
+// card abhi khule hain, aur "Show more" ke saath badhti jaati hai.
+const RAIL_MAX = 1500;
+// Aur isi wajah se resume par bhi ek hadd: slice hamesha shuru se banti hai, to
+// "5,000ve question par chhoda tha" ka matlab hai 5,000 card ek saath mount —
+// phone wahin baith jayega. Itni badi list par resume utna hi chalta hai jitna
+// mount karna theek hai; usse aage chhoda ho to list upar se hi khulti hai.
+const RESUME_MAX = 200;
 
 export default function QBoard({
   list,                       // page ki apni list (uske filters ke BAAD)
@@ -63,6 +73,7 @@ export default function QBoard({
     if (!resumeKey || !ordered.length) return undefined;
     const at = getResume(resumeKey);
     if (at < 0) return undefined;
+    if (ordered.length > RAIL_MAX && at + pageSize > RESUME_MAX) return undefined;
     setShown((n) => Math.max(n, at + pageSize));
     const t = setTimeout(() => {
       document.getElementById(`q-${at}`)?.scrollIntoView({ block: "start" });
@@ -87,9 +98,9 @@ export default function QBoard({
   return (
     <div className="qboard">
       <nav className="qboard__side">
-        {ordered.map((q, i) => (
+        {(ordered.length > RAIL_MAX ? ordered.slice(0, shown) : ordered).map((q, i) => (
           <a
-            key={q.id ?? i}
+            key={q._uid ?? q.id ?? i}
             onClick={() => jump(i)}
             className={doneSet.has(doneKeyFor(q)) ? "is-done" : ""}
             title={doneSet.has(doneKeyFor(q)) ? "Ho gaya" : undefined}

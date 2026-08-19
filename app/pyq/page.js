@@ -40,6 +40,19 @@ export default function PyqPage() {
       <section className="section" style={{ marginTop: 20 }}>
         {/* User ki apni books (Settings → 📚 PYQ Manager) — shipped banks se upar */}
         <MyPyqBooks />
+        {/* Sabse upar 🗂️ All — book chunne se pehle ka sawaal "aaj Maths karna
+            hai" hota hai, "Pinnacle Maths ka Algebra kholna hai" nahi. Andar
+            subject ke naam hain, aur har naam ke andar us subject ke saare
+            bank ke saare question ek hi list mein. */}
+        <Link href="/pyq/all" className="pyq-row pyq-row--all">
+          <span className="pyq-row__ico">🗂️</span>
+          <span className="pyq-row__name">
+            All — subject-wise
+            <span className="pyq-row__sub">Maths · Reasoning · English · GS — har subject ke saare question ek jagah.</span>
+          </span>
+          <span className="pyq-row__meta">30,858 Q</span>
+        </Link>
+
         <div className="pyq-list">
           {SUBS.map((s) => (
             <Link key={s.name} href={s.href} className="pyq-row">
