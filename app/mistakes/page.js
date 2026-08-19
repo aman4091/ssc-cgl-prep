@@ -43,15 +43,18 @@ export default function MistakesPage() {
   // wahi question kuch din baad dobara saamne aa jata hai. Naya galat question
   // bhi `at` ke hisaab se sabse neeche hi lagta hai.
   //
-  // Sahi ho jaane par question list se GAYAB nahi hota (pehle wo "mastered"
-  // bucket mein chala jata tha aur dikhna band) — bas neeche chala jata hai.
-  // Yaad rehna hi asli imtihaan hai, ek baar sahi kar lena nahi.
+  // Sahi kar diya = notebook se HAT gaya. Notebook galtiyon ki hai; jo question
+  // ab sahi ho raha hai wo yahan bekaar mein jagah gherta hai. (Ek baar isse
+  // "neeche khisak jata hai par dikhta rehta hai" banaya gaya tha — par phir
+  // sahi kiye hue question bhi list mein dikhte the, jo galat lagta hai.)
+  // Record mitta nahi — stats aur "mastered" ka hisaab uspar tika hai — bas
+  // yahan nahi dikhta. Dobara galat hua to apne aap wapas aa jayega.
   //
   // Kram sirf page khulne par banta hai. Jawab dete hi list dobara chhantti to
   // jo card aap padh rahe ho wahi aankhon ke saamne se khisak jata.
   const refresh = () => setAll(
     getReview()
-      .filter((r) => r.everWrong)
+      .filter((r) => r.everWrong && !r.correct)
       .sort((a, b) => String(a.at || "").localeCompare(String(b.at || ""))),
   );
   useEffect(() => { refresh(); }, []);
@@ -91,8 +94,9 @@ export default function MistakesPage() {
         </h1>
         <p className="hero__sub">
           Har galat aur chhoda hua question — chahe Vocab ho, Calculation, PYQ ya Current
-          Affairs — yahan apne aap aa jata hai. Jo abhi kiya wo sabse neeche chala
-          jata hai, isliye har question ghoom kar dobara saamne aata rahega.
+          Affairs — yahan apne aap aa jata hai. Sahi kar dene par nikal jata hai.
+          Jo abhi chhua wo sabse neeche jata hai, isliye baaki ghoom kar dobara
+          saamne aate rehte hain.
           {items.length > 0 && <> <b>{items.length} pade hain.</b></>}
         </p>
       </section>
@@ -134,7 +138,6 @@ export default function MistakesPage() {
                       {r.sec > 0 && <span title="Pichhli baar is question par itna waqt laga"> · ⏱ {r.sec}s</span>}
                       {caEntry && <> · <Link href={`/current-affairs/${caEntry.id}`} className="link">📅 {caEntry.date}</Link></>}
                       {isCA(r) && !caEntry && <span title="Ye question ab kisi date entry mein nahi mila"> · 📅 date not found</span>}
-                      {r.correct && <span title="Pichhli baar sahi hua tha — phir bhi ghoom kar aata rahega"> · ✅ pichhli baar sahi</span>}
                     </span>
                     {/* Book ki key hi galat ho to yahin se theek — ye tag nahi,
                         marammat ka auzaar hai, isliye bacha hua hai. */}
