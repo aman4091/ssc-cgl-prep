@@ -15,11 +15,9 @@ import WordPopup from "@/components/WordPopup";
 import FullscreenTestButton from "@/components/FullscreenTestButton";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
 import { setSyncPaused } from "@/lib/sync";
-import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { recordQuizAttempts, quizCategory, setReviewErrorType, ERROR_TYPES } from "@/lib/qreview";
 import { markDayDone, markDayTypeDone } from "@/lib/vocab";
-import { logActivity, kindForQuiz } from "@/lib/activity";
 
 function fmt(sec) {
   const s = Math.round(sec || 0);
@@ -71,7 +69,6 @@ export default function QuizPlayer() {
   const [exShown, setExShown] = useState({});
   const [simLoading, setSimLoading] = useState({});
   const [actionErr, setActionErr] = useState({});
-  const [, bumpBm] = useState(0); // re-render on bookmark toggle
   const [errorTags, setErrorTags] = useState({}); // qi -> errorType (Mistake Notebook)
   const [reviewFilter, setReviewFilter] = useState("all"); // result screen: all|wrong|skipped|slow|correct
 
@@ -230,14 +227,6 @@ export default function QuizPlayer() {
         else markDayDone(quiz.vocabDay);
       }
 
-      // Log it for the "kya kiya" page — on submit, so a quiz you opened and
-      // walked away from never shows up as work done.
-      logActivity({
-        label: quiz.title || "Quiz",
-        kind: kindForQuiz(quiz),
-        count: items.length,
-        correct: items.filter((x) => x.correct).length,
-      });
       // Quiz ab bekaar hai — galat questions Mistake Notebook mein ja chuke aur
       // stats bhi darj ho gaye. Rakhne se sirf localStorage bharta hai (jo cap
       // ke kagaar par hai) aur "My Quizzes" mein purane attempts ka dher lagta
@@ -323,7 +312,6 @@ export default function QuizPlayer() {
     getShortcut(i);
   };
   const regenShortcut = (i) => { clearSavedShortcut(quiz.questions[i]); setShortcuts((s) => ({ ...s, [i]: "" })); getShortcut(i); };
-  const toggleBm = (q) => { toggleQBookmark(q); bumpBm((v) => v + 1); };
 
   const getExplain = async (i) => {
     const q = quiz.questions[i];
@@ -486,7 +474,6 @@ export default function QuizPlayer() {
                           🔁 {st.attempts}x{st.attempts ? ` · ${Math.round((st.correct / st.attempts) * 100)}%` : ""}
                         </span>
                       ) : null; })()}
-                      <button className="btn btn--ghost btn--sm" onClick={() => toggleBm(q)} title="Bookmark" style={isQBookmarked(q) ? { color: "var(--warning)" } : {}}>{isQBookmarked(q) ? "★" : "☆"}</button>
                       {timedOutQs[qi] && <span className="time-pill" style={{ background: "var(--accent-wash)", color: "var(--danger)" }} title="Time ran out before you answered">⏳ Time up</span>}
                       <span className="time-pill">⏱ {fmt(times[qi] || 0)}</span>
                     </div>

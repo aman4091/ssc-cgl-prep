@@ -4,9 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Markdown from "./Markdown";
 import Diagram from "./Diagram";
 import { recordAttempts, keyFor } from "@/lib/qstats";
-import { logActivity } from "@/lib/activity";
 import { addReview, setReviewErrorType } from "@/lib/qreview";
-import { recordSpeed } from "@/lib/qspeed";
 import { setSyncPaused } from "@/lib/sync";
 
 // Distraction-free, one-question-at-a-time TEST view that fills the whole screen.
@@ -116,8 +114,6 @@ export default function FullscreenRunner({
     // tagged "time". A manual early Submit keeps the old behavior (untouched are
     // skipped), so ending a session early doesn't flood the review list.
     const timeUp = !!(deadline && Date.now() >= deadline - 500);
-    // Speed buckets are for Maths & Reasoning only.
-    const speedSub = subject === "math" || subject === "reasoning" ? subject : null;
     if (subject !== undefined) {
       const items = [];
       questions.forEach((qq, i) => {
@@ -132,29 +128,7 @@ export default function FullscreenRunner({
         // Time limit mein nahi hua → Mistake Notebook mein "Time Laga" tag ke saath.
         if (!answered && timedOut) setReviewErrorType(keyFor(p), "time");
       });
-      if (items.length) {
-        recordAttempts(items);
-        logActivity({
-          label: title,
-          kind: "pyq",
-          count: items.length,
-          correct: items.filter((x) => x.correct).length,
-        });
-      }
-    }
-    // Speed-bucket capture (Maths/Reasoning): record VISITED questions only, so a
-    // manual Submit at Q25 never drags in Q26–200. On a whole-test timeout the
-    // remaining questions from startIndex onward DO count (they ran out of time).
-    if (speedSub) {
-      questions.forEach((qq, i) => {
-        const answered = answers[i] !== undefined;
-        const reached = visitedRef.current.has(i) || (timeUp && i >= clampIdx);
-        if (!reached) return;                                   // never opened → ignore
-        // Option-less (Wrong-Book): "Show answer" = answered → time decides bucket
-        // (koi galat-sahi nahi). Warna normal: sahi option pe hi time-bucket.
-        const correct = optionlessOf(qq) ? answered : (answered && answers[i] === qq.answer);
-        recordSpeed(qq, { sec: timesRef.current[i] || 0, correct, subject: speedSub });
-      });
+      if (items.length) recordAttempts(items);
     }
     // reveal everything for the review pass
     const all = {};
@@ -453,7 +427,7 @@ export default function FullscreenRunner({
                 </div>
               )}
               {shown && !solution && optionless && (
-                <div className="fsr__sol"><span className="muted">Is question ka answer abhi save nahi — /speed par answer daal do.</span></div>
+                <div className="fsr__sol"><span className="muted">Is question ka answer abhi save nahi — /answers par jaakar daal do.</span></div>
               )}
             </div>
           </div>

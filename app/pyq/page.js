@@ -33,7 +33,6 @@ export default function PyqPage() {
         </p>
         <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
           <Link href="/mistakes" className="btn btn--ghost btn--sm">🔴 Mistake Notebook</Link>
-          <Link href="/bookmarks" className="btn btn--ghost btn--sm">⭐ Bookmarked</Link>
         </div>
       </section>
 

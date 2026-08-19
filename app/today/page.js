@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import PlanPractice from "@/components/PlanPractice";
-import RevisionTodayCard from "@/components/RevisionTodayCard";
 import PageQuizRow from "@/components/PageQuizRow";
 import {
   SEC_META, CORE_KEYS,
@@ -174,7 +173,6 @@ export default function TodayPage() {
               Shuru karo →
             </button>
           </div>
-          <RevisionTodayCard />
         </section>
       </>
     );
@@ -214,7 +212,6 @@ export default function TodayPage() {
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
-        <RevisionTodayCard />
       </section>
 
       <section className="section">

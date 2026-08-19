@@ -6,7 +6,6 @@ import { askAI, generateSimilar } from "@/lib/client-ai";
 import { saveQuiz, getQuiz, makeId } from "@/lib/storage";
 import { setResume } from "@/lib/qprogress";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
-import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
@@ -76,7 +75,6 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   const [simLoading, setSimLoading] = useState(false);
   const [err, setErr] = useState("");
   const [recorded, setRecorded] = useState(false);
-  const [bm, setBm] = useState(false);
   const [flash, setFlash] = useState("");
   const [peek, setPeek] = useState(false);   // 👁️ — bina attempt kiye answer
   const [done, setDone] = useState(false);   // sirf dikhawe ke liye (dhundhla card)
@@ -111,7 +109,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
     catch { /* ignore */ }
   };
 
-  useEffect(() => { setBm(isQBookmarked(tq)); setShortcut(getSavedShortcut(tq)); }, [q.id]);
+  useEffect(() => { setShortcut(getSavedShortcut(tq)); }, [q.id]);
   // Paste kiya hua Gemini answer sabse upar hai: save hote hi card usse utha leta
   // hai aur answer block khol deta hai — book ka apna solution/explanation
   // (ya solution image) tab dikhta hi nahi. Reload ka intezaar nahi.
@@ -174,8 +172,6 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
     setFlash("");
     setRecorded(false);
   };
-
-  const toggleBm = () => { setBm(toggleQBookmark(tq, subject)); };
 
   // The lossy text extraction leaves junk in qText/optText — lone surrogates
   // where a math glyph was dropped, zero-width spaces, and the printed "(a) "
@@ -287,7 +283,6 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
           />
         </span>
         <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
-        <button className="btn" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
         <DoneButton q={q} subject={subject} />
       </div>
 

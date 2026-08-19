@@ -77,7 +77,6 @@ export default function MistakesPage() {
                 {showWeak ? "✕ Hide tracker" : "📉 Weak Area Tracker"}
               </button>
             )}
-            <Link href="/bookmarks" className="btn btn--ghost btn--sm">⭐ Bookmarks</Link>
             <Link href="/answers" className="btn btn--ghost btn--sm">📖 Answers</Link>
           </div>
         </div>

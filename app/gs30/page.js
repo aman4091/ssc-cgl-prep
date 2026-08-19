@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import PlanPractice from "@/components/PlanPractice";
 import PageQuizRow from "@/components/PageQuizRow";
-import RevisionTodayCard from "@/components/RevisionTodayCard";
 import {
   DAYS, SEC_META, PASS_META, PASS_COLOR, TOTAL_CHAPTERS, TOTAL_PAGES, TOTAL_DAYS,
   getGs30, setStartDate, resetGs30, toggleItem, toggleWeak, weakKey, weakCount,
@@ -242,7 +241,6 @@ export default function Gs30Page() {
       </section>
 
       <section className="section" style={{ paddingTop: 0 }}>
-        <RevisionTodayCard />
       </section>
 
       <section className="section">

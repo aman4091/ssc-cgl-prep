@@ -320,7 +320,8 @@ export async function POST(req) {
     if (!rec) return NextResponse.json({ ok: true });
     if (chosen === rec.answer) return NextResponse.json({ ok: true }); // correct
 
-    // Track the miss (app /review Telegram tab + revision).
+    // Miss yahan (Supabase) darj rehti hai — solution reply ke saath. App ka
+    // /review tab hata diya gaya, isliye ise abhi koi screen nahi padhti.
     const wrongRow = (await supaGet("tg:wrong").catch(() => null)) || { items: {} };
     const items = wrongRow.items || {};
     items[pollId] = {

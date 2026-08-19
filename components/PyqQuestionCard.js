@@ -6,10 +6,8 @@ import { askAI, generateSimilar } from "@/lib/client-ai";
 import { saveQuiz, makeId } from "@/lib/storage";
 import { setResume } from "@/lib/qprogress";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
-import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { addReview } from "@/lib/qreview";
-import { logActivity } from "@/lib/activity";
 import Markdown from "./Markdown";
 import Diagram from "./Diagram";
 import QuestionEditor from "./QuestionEditor";
@@ -17,7 +15,6 @@ import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
 import QTimer from "./QTimer";
 import FullscreenTestButton from "./FullscreenTestButton";
-import ReviseButton from "./ReviseButton";
 import { DoneButton } from "./DoneControls";
 import { isDone } from "@/lib/qdone";
 
@@ -39,13 +36,12 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   const [simLoading, setSimLoading] = useState(false);
   const [err, setErr] = useState("");
   const [recorded, setRecorded] = useState(false);
-  const [bm, setBm] = useState(false);
   const [flash, setFlash] = useState("");
   const [editing, setEditing] = useState(false);
   const [peek, setPeek] = useState(false);   // 👁️ — bina attempt kiye answer
   const [done, setDone] = useState(false);   // sirf dikhawe ke liye (dhundhla card)
   const archiveTimer = useRef(null);
-  useEffect(() => { setBm(isQBookmarked(q)); setShortcut(getSavedShortcut(q)); }, [q]);
+  useEffect(() => { setShortcut(getSavedShortcut(q)); }, [q]);
   // Paste kiya hua Gemini answer sabse upar hai: save hote hi card usse utha leta
   // hai aur answer block khol deta hai — book ka apna solution/explanation
   // (ya solution image) tab dikhta hi nahi. Reload ka intezaar nahi.
@@ -78,9 +74,6 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
     if (resumeKey) setResume(resumeKey, index);
     if (!recorded) {
       recordAttempts([{ q, correct }]);
-      // One row per chapter per day — logActivity adds to the existing row, so
-      // 30 questions here is "WAR · Biology · 30", not 30 entries.
-      if (chapterName) logActivity({ label: chapterName, kind: "pyq", count: 1, correct: correct ? 1 : 0 });
       setRecorded(true);
     }
     // In a chapter list: archive to Attempted (+Correct/Wrong), bookmark, then
@@ -124,8 +117,6 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
     setFlash("");
     setRecorded(false);
   };
-
-  const toggleBm = () => { const on = toggleQBookmark(q, subject); setBm(on); };
 
   const make20 = async () => {
     setSimLoading(true); setErr("");
@@ -233,11 +224,7 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
         <span className="q-act--keep"><AskButtons q={q} subject={subject} /></span>
         <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
         {onEdit && !editing && <button className="btn" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
-        <button className="btn" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
         <DoneButton q={q} subject={subject} />
-        {subject !== "math" && subject !== "reasoning" && (
-          <ReviseButton item={q} kind="q" category={chapterName || subject} subject={subject} />
-        )}
         {onDelete && <button className="btn" onClick={onDelete} title="Delete">🗑️</button>}
       </div>
 

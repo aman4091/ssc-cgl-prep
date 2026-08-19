@@ -459,7 +459,7 @@ function AnswersInner() {
               refresh();
               flashNow(bytes > 0 ? `🧹 ${(bytes / 1024).toFixed(0)} KB saf ho gayi` : "🧹 Abhi koi safai nahi hui");
             }}
-            title="Purane quizzes, activity, feed caches hatao — save ke liye jagah banao"
+            title="Purane quizzes aur feed caches hatao — save ke liye jagah banao"
           >
             🧹 Free space
           </button>

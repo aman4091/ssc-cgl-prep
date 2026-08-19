@@ -12,7 +12,6 @@ import { saveQuiz } from "@/lib/storage";
 import { vocabDetail } from "@/lib/client-ai";
 import { getStatByParts } from "@/lib/qstats";
 import WordPopup from "@/components/WordPopup";
-import ReviseButton from "@/components/ReviseButton";
 
 // Copy to clipboard, with a hidden-textarea fallback for when the async
 // clipboard API is blocked. Same helper the notes/question Gemini buttons use.
@@ -257,7 +256,6 @@ export default function VocabDayType({ day, type }) {
                     <button className="btn btn--ghost btn--sm" onClick={toggleBm} title="Bookmark">
                       {bm ? "★ Saved" : "☆ Bookmark"}
                     </button>
-                    <ReviseButton item={items[sel]} kind="vocab" subject="english" />
                     <span className="muted" style={{ fontSize: "0.8rem" }}>{sel + 1}/{items.length}</span>
                     <button className="btn btn--ghost btn--sm vocab-detail__close" onClick={() => { setSel(null); setDet(null); }} title="Close" aria-label="Close">✕</button>
                   </div>

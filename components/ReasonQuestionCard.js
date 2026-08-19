@@ -6,7 +6,6 @@ import { askAI, generateSimilar } from "@/lib/client-ai";
 import { saveQuiz, makeId } from "@/lib/storage";
 import { setResume } from "@/lib/qprogress";
 import { recordAttempts, getStat, keyFor } from "@/lib/qstats";
-import { isQBookmarked, toggleQBookmark } from "@/lib/qbookmarks";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
@@ -46,7 +45,6 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   const [simLoading, setSimLoading] = useState(false);
   const [err, setErr] = useState("");
   const [recorded, setRecorded] = useState(false);
-  const [bm, setBm] = useState(false);
   const [flash, setFlash] = useState("");
   const [peek, setPeek] = useState(false);   // 👁️ — bina attempt kiye answer
   const [done, setDone] = useState(false);   // sirf dikhawe ke liye (dhundhla card)
@@ -65,7 +63,7 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
     options: hasOptText ? q.optText : ["a", "b", "c", "d"],
   };
 
-  useEffect(() => { setBm(isQBookmarked(tq)); setShortcut(getSavedShortcut(tq)); }, [q.id]);
+  useEffect(() => { setShortcut(getSavedShortcut(tq)); }, [q.id]);
   // Paste kiya hua Gemini answer sabse upar hai: save hote hi card usse utha leta
   // hai aur answer block khol deta hai — book ka apna solution/explanation
   // (ya solution image) tab dikhta hi nahi. Reload ka intezaar nahi.
@@ -128,8 +126,6 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
     setFlash("");
     setRecorded(false);
   };
-
-  const toggleBm = () => { setBm(toggleQBookmark(tq, subject)); };
 
   const make20 = async () => {
     setSimLoading(true); setErr("");
@@ -217,7 +213,6 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
             question hi sabse zyada faayda uthata hai. */}
         <span className="q-act--keep"><AskButtons q={tq} subject={subject} /></span>
         <button className="btn q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
-        <button className="btn" onClick={toggleBm} title="Bookmark" style={bm ? { color: "var(--warning)" } : {}}>{bm ? "★" : "☆"}</button>
         <DoneButton q={q} subject={subject} />
       </div>
 
