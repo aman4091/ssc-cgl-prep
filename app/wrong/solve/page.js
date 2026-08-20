@@ -333,10 +333,18 @@ function SolveInner() {
     if (!target) return;
     await flushLocal();
     flushCloud();
-    router.replace(quizId
-      ? `/wrong/solve?quiz=${quizId}&id=${target.id}`
-      : `/wrong/solve?subject=${subject}&id=${target.id}`);
-  }, [list, flushLocal, flushCloud, router, subject, quizId]);
+    // URL ko naye sire se MAT banao — sirf `id` badlo.
+    //
+    // Pehle yahan poora pata dobara likha jata tha (`?quiz=..&id=..`), aur usme
+    // `t` (ghadi) aur `back` (wapas ka pata) dono chhoot jate the. Nateeja:
+    // pehla hi "agla question" dabate hi ghadi gayab ho jati thi (examStart
+    // ab 0 padhta) aur back Answers page par bhej deta tha. Ek hi jad, do
+    // shikayat.
+    const next = new URLSearchParams(sp.toString());
+    next.set("id", target.id);
+    if (!quizId && !next.get("subject")) next.set("subject", subject);
+    router.replace(`/wrong/solve?${next.toString()}`);
+  }, [list, flushLocal, flushCloud, router, subject, quizId, sp]);
 
   // Wapas Answers page par — /wrong hata diya gaya hai, ab wahi list yahan
   // dikhti hai. Date filter uske paas nahi hai, isliye sirf subject le jaate hain.
