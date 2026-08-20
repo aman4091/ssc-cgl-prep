@@ -8,6 +8,7 @@ import PyqQuestionCard from "@/components/PyqQuestionCard";
 import MathQuestionCard from "@/components/MathQuestionCard";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
 import QBoard from "@/components/QBoard";
+import { seededShuffle } from "@/lib/shuffle";
 
 // Ek subject ke SAARE question — har bank, har chapter, ek list mein.
 //
@@ -59,18 +60,30 @@ export default function AllSubjectPage() {
     return [...m.entries()].map(([name, count]) => ({ name, count }));
   }, [qs, src]);
 
+  // Filter ki apni pehchaan — kram ka beej aur set ke natije, dono isi naam se
+  // bandhe hain. Bank/chapter badla to naya naam, isliye ek filter ke "Set 1"
+  // ka natija doosre filter ke "Set 1" par nahi chipakta.
+  const filterKey = `all:${meta?.slug || ""}|${src}|${chapter}|${query.trim().toLowerCase()}`;
+
   // useMemo zaroori hai: bina iske har render par nayi array banti hai aur
   // QBoard use "nayi list" samajh kar apna slice shuru se kar deta hai.
   const filtered = useMemo(() => {
     const t = query.trim().toLowerCase();
-    return qs.filter((q) => {
+    const hit = qs.filter((q) => {
       if (src && q._src !== src) return false;
       if (chapter && q._chapter !== chapter) return false;
       if (!t) return true;
       const hay = `${q.question || ""} ${q.qText || ""} ${(q.options || []).join(" ")} ${(q.optText || []).join(" ")} ${q.source || ""}`;
       return hay.toLowerCase().includes(t);
     });
-  }, [qs, src, chapter, query]);
+    // MILA kar do. List bank aur chapter ke kram mein aati hai, isliye bina
+    // ismein Set 1 poora ek hi chapter ka ban jata tha. Beej filter ka naam hai
+    // — kram sthir rehta hai (reload par wahi, doosre device par bhi wahi), par
+    // ek hi type ke question ek set mein jama nahi hote. Dropdown se koi bank
+    // ya chapter chun lo to milaana usi ke andar hota hai, kyunki tab list mein
+    // wahi bache hote hain.
+    return seededShuffle(hit, filterKey);
+  }, [qs, src, chapter, query, filterKey]);
 
   if (!meta) {
     return (
@@ -82,7 +95,7 @@ export default function AllSubjectPage() {
     );
   }
 
-  const resumeKey = `all:${meta.slug}`;
+  const resumeKey = filterKey;
   const pct = prog.total ? Math.round((prog.done / prog.total) * 100) : 0;
 
   return (

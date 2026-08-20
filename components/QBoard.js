@@ -81,6 +81,22 @@ export default function QBoard({
   const [results, setResults] = useState({});   // pehle diye hue test
   const [ver, setVer] = useState(0);
   const [counts, setCounts] = useState({});
+  // 🙈 Answers chhupao — natija dekh lene ke BAAD wahi set khud se dobara
+  // solve karne ke liye. Sahi jawab, rang, solution: sab chhup jate hain aur
+  // sirf option bachte hain. Option dabate hi us ek question ka jawab khulta
+  // hai, aur uspar pichhli baar ka nishaan bhi ("first attempt").
+  const [hideAns, setHideAns] = useState(false);
+  const [rePicks, setRePicks] = useState({});
+  // Card apna chuna hua option mount par hi padhta hai (useState ka pehla
+  // value), isliye use dobara khaali karne ka ek hi tareeka hai — naya key de
+  // kar remount karna.
+  const [round, setRound] = useState(0);
+  const toggleHide = () => {
+    setRePicks({});
+    setRound((r) => r + 1);
+    setHideAns((v) => !v);
+    toTop();
+  };
   // Ye set pehle bhi diya ja chuka hai (ya quiz khud dobara-attempt hai).
   const retryRef = useRef(false);
 
@@ -113,6 +129,7 @@ export default function QBoard({
   useEffect(() => {
     setSetIdx(single ? 0 : null); setAsk(null); setCur(0);
     setPicks({}); setReview({}); setTimes({}); setDone(false); setLeftSec(SET_MIN * 60);
+    setHideAns(false); setRePicks({});
     retryRef.current = noNotebook;
     timeRef.current = { spent: {}, mark: single ? Date.now() : 0, at: 0 };
   }, [resumeKey, total, single, noNotebook]);
@@ -223,6 +240,7 @@ export default function QBoard({
       : {});
     setTimes(prev?.times || {});
     setDone(how === "solutions");
+    setHideAns(false); setRePicks({});
     setLeftSec(SET_MIN * 60);
     toTop();
   };
@@ -284,16 +302,32 @@ export default function QBoard({
 
   // Har card ka apna slot: usi ka number, usi ka chuna hua option. Isse card ko
   // question ka koi key milana nahi padta.
-  const slots = useMemo(() => setQs.map((_, i) => ({
-    locked: !done,
-    revealAll: done,
-    index: i,
-    register,
-    pick: picks[i]?.opt,
-    // Overwrite hota hai, guard nahi — test ke dauraan option badalna allowed
-    // hai, isliye aakhri chuna hua hi ginta hai.
-    onPick: (opt, correct) => setPicks((p) => ({ ...p, [i]: { opt, correct } })),
-  })), [setQs, done, picks, register]);
+  const slots = useMemo(() => setQs.map((_, i) => (hideAns
+    // 🙈 mode: har question phir se band. Jis par dobara jawab de diya SIRF
+    // wahi khulta hai — baaki chhupe rehte hain, warna ek option dabate hi
+    // poore set ke jawab dikh jate.
+    ? {
+      locked: !rePicks[i],
+      revealAll: !!rePicks[i],
+      index: i,
+      register,
+      pick: rePicks[i]?.opt,
+      onPick: (opt, correct) => setRePicks((p) => ({ ...p, [i]: { opt, correct } })),
+      // Pichhli baar kya lagaya tha — card usi option par nishaan chipka deta
+      // hai (laal agar galat tha, hara agar sahi).
+      firstPick: picks[i]?.opt,
+      firstCorrect: picks[i]?.correct,
+    }
+    : {
+      locked: !done,
+      revealAll: done,
+      index: i,
+      register,
+      pick: picks[i]?.opt,
+      // Overwrite hota hai, guard nahi — test ke dauraan option badalna allowed
+      // hai, isliye aakhri chuna hua hi ginta hai.
+      onPick: (opt, correct) => setPicks((p) => ({ ...p, [i]: { opt, correct } })),
+    })), [setQs, done, picks, register, hideAns, rePicks]);
 
   const n = setQs.length;
   // Bina key wale question kisi ginti mein nahi aate.
@@ -455,16 +489,24 @@ export default function QBoard({
   const at = Math.min(cur, n - 1);
   const low = leftSec <= 60;
   const acc = answered ? Math.round((right / answered) * 100) : 0;
+  // 🙈 mode ka apna hisaab — button par hi dikhta hai.
+  const reAnswered = Object.keys(rePicks).length;
+  const reRight = Object.values(rePicks).filter((x) => x.correct).length;
 
   return (
-    <div className={`qboard${fs ? " is-fs" : ""}${done ? "" : " is-locked"}`} ref={rootRef}>
+    <div className={`qboard${fs ? " is-fs" : ""}${done ? "" : " is-locked"}${hideAns ? " is-hidden-ans" : ""}`} ref={rootRef}>
       <aside className="qboard__rail">
         <nav className="qboard__side" ref={railRef}>
           {setQs.map((x, i) => {
             const p = picks[i];
-            const state = done
-              ? (!hasKey(x) ? "is-skip" : p ? (p.correct ? "is-right" : "is-wrong") : "is-skip")
-              : (review[i] ? "is-review" : p ? "is-ans" : "");
+            // 🙈 mode mein palette bhi jawab nahi batata — warna rang dekh kar
+            // hi pata chal jata ki kaunsa sahi tha. Sirf itna: dobara kiya ya
+            // nahi.
+            const state = hideAns
+              ? (rePicks[i] ? "is-ans" : "")
+              : done
+                ? (!hasKey(x) ? "is-skip" : p ? (p.correct ? "is-right" : "is-wrong") : "is-skip")
+                : (review[i] ? "is-review" : p ? "is-ans" : "");
             return (
               <a
                 key={x._uid ?? x.id ?? i}
@@ -480,7 +522,15 @@ export default function QBoard({
 
         {/* Hisaab — Testbook par bhi ye palette ke NEECHE hi hota hai. */}
         <div className="qboard__tally">
-          {done ? (
+          {hideAns ? (
+            /* 🙈 mode ka apna hisaab — pehli baar ka natija yahan dikhana ulta
+               pad jata: aankhon ke saamne wahi ginti rehti jo abhi chhupayi hai. */
+            <>
+              <span className="tally tally--ans">Dobara sahi <b>{reRight}</b></span>
+              <span className="tally tally--bad">Dobara galat <b>{reAnswered - reRight}</b></span>
+              <span className="tally tally--not">Baaki <b>{n - reAnswered}</b></span>
+            </>
+          ) : done ? (
             <>
               <span className="tally tally--ans">Right <b>{right}</b></span>
               <span className="tally tally--bad">Wrong <b>{wrong}</b></span>
@@ -535,9 +585,18 @@ export default function QBoard({
               </button>
             </>
           )}
+          {/* Natija dekh lene ke baad: wahi set khud se dobara solve karo.
+              Sab jawab chhup jaate hain, sirf option bachte hain. */}
+          {done && (
+            <button className="btn btn--ghost btn--sm" onClick={toggleHide}>
+              {hideAns
+                ? `👁️ Answers dikhao${reAnswered ? ` · ${reRight}/${reAnswered} sahi` : ""}`
+                : "🙈 Answers chhupao"}
+            </button>
+          )}
         </div>
 
-        {done && (
+        {done && !hideAns && (
           <div className="qboard__result">
             <span className="res res--right"><b>{right}</b> Right</span>
             <span className="res res--wrong"><b>{wrong}</b> Wrong</span>
@@ -562,19 +621,25 @@ export default function QBoard({
         {/* Testbook jaisi patti: Previous · Mark for Review · Save & Next ·
             Submit, sab beech mein. Sirf test ke dauraan — natija dekhte waqt
             question palette se badalte ho. */}
-        {done ? null : (
+        {done && !hideAns ? null : (
         <div className="qboard__nav">
             <span className="qboard__pos">Question <b>{at + 1}</b> / {n}</span>
             <span className="qboard__navbtns">
               <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
-              <button
-                className={`btn btn--review${review[at] ? " is-on" : ""}`}
-                onClick={() => setReview((r) => ({ ...r, [at]: !r[at] }))}
-              >
-                ⚑ {review[at] ? "Marked" : "Mark for Review"}
-              </button>
+              {/* 🙈 mode koi test nahi hai — na review ka nishaan chahiye, na
+                  Submit. Wahan sirf aage-peeche jaana hai. */}
+              {!hideAns && (
+                <button
+                  className={`btn btn--review${review[at] ? " is-on" : ""}`}
+                  onClick={() => setReview((r) => ({ ...r, [at]: !r[at] }))}
+                >
+                  ⚑ {review[at] ? "Marked" : "Mark for Review"}
+                </button>
+              )}
               <button className="btn" onClick={() => go(at + 1)} disabled={at === n - 1}>Save &amp; Next →</button>
-              <button className="btn btn--submit" onClick={submit}>✅ Submit Test</button>
+              {!hideAns && (
+                <button className="btn btn--submit" onClick={submit}>✅ Submit Test</button>
+              )}
             </span>
           </div>
         )}
@@ -583,10 +648,10 @@ export default function QBoard({
             peeche jaakar bhi apna chuna hua option waisa ka waisa milta hai. */}
         <div className="qboard__cards">
           {setQs.map((x, i) => (
-            <div key={x._uid ?? x.id ?? i} style={i === at ? undefined : { display: "none" }}>
+            <div key={`${round}:${x._uid ?? x.id ?? i}`} style={i === at ? undefined : { display: "none" }}>
               {/* Submit ke baad hi — test ke dauraan ghadi dikhane se dhyaan
                   ghadi par chala jata hai, sawaal par nahi. */}
-              {done && (
+              {done && !hideAns && (
                 <div className="qtime">⏱ Is question par {times[i] || 0}s lage</div>
               )}
               <ExamModeProvider value={slots[i]}>

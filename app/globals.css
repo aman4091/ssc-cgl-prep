@@ -3086,6 +3086,9 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 /* "Answer neeche yahin aayega — 👁️ dabao" wali line bhi nahi, kyunki test
    ke dauraan wo button hai hi nahi aur answer aayega bhi Submit ke baad. */
 .qboard.is-locked .qcard__answer--empty { display: none; }
+/* 🙈 mode mein bhi wahi — jab tak dobara jawab na do, "answer neeche
+   aayega" wali line kuch batati nahi, sirf jagah ghera karti hai. */
+.qboard.is-hidden-ans .qcard__answer--empty { display: none; }
 
 /* Full screen — wahi test ka page, bas poori screen par. Alag runner banane
    se timer/palette/hisaab do jagah rakhne padte; ye ek hi rehta hai. */
@@ -3159,6 +3162,15 @@ body.exam-on .pyq-filters { display: none; }
 /* Stylus wale parde par poore test ki ghadi (quiz player se ?t= le kar aayi). */
 .inkv__exam { background: var(--mark); color: #6b5200; font-weight: 700; }
 .inkv__exam.is-low { background: var(--danger); color: #fff; }
+
+/* 🙈 mode: jis option par pichhli baar haath gaya tha uspar chhota nishaan. */
+.qcard__first {
+  margin-left: auto; flex: none;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+  padding: 2px 8px; border-radius: var(--radius-sm);
+  background: var(--bad-wash); color: var(--danger);
+}
+.qcard__first.is-ok { background: var(--ok-wash); color: var(--success); }
 
 /* Submit ke baad har question ke upar uska apna waqt. */
 .qtime {

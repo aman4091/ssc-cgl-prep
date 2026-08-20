@@ -204,6 +204,14 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
                 className={q.figOpts ? "math-opt-img math-opt-img--fig" : "math-opt-img"}
               />
               {right && <span style={{ color: "var(--ok)", marginLeft: "auto" }}>✓</span>}
+              {/* Pichhli baar isi option par haath gaya tha — 🙈 mode mein
+                  board yahi batata hai (ExamMode ka firstPick). Jawab khulne
+                  ke BAAD hi dikhta hai, warna nishaan hi answer bata deta. */}
+              {shown && exam?.firstPick === oi && (
+                <span className={`qcard__first${exam.firstCorrect ? " is-ok" : " is-bad"}`}>
+                  first attempt
+                </span>
+              )}
             </button>
           );
         })}

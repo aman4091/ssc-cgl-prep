@@ -216,6 +216,14 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
               {/* The crop already shows what each option says. */}
               {!q.img && <Markdown inline>{opt}</Markdown>}
               {right && <span style={{ color: "var(--ok)", marginLeft: 8 }}>✓</span>}
+              {/* Pichhli baar isi option par haath gaya tha — 🙈 mode mein
+                  board yahi batata hai (ExamMode ka firstPick). Jawab khulne
+                  ke BAAD hi dikhta hai, warna nishaan hi answer bata deta. */}
+              {shown && exam?.firstPick === oi && (
+                <span className={`qcard__first${exam.firstCorrect ? " is-ok" : " is-bad"}`}>
+                  first attempt
+                </span>
+              )}
             </button>
           );
         })}

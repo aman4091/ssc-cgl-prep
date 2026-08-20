@@ -277,6 +277,14 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
               <b>{String.fromCharCode(65 + oi)}</b>
               <img src={src} alt={tq.options[oi]} loading="lazy" className="math-opt-img" />
               {right && <span style={{ color: "var(--ok)", marginLeft: "auto" }}>✓</span>}
+              {/* Pichhli baar isi option par haath gaya tha — 🙈 mode mein
+                  board yahi batata hai (ExamMode ka firstPick). Jawab khulne
+                  ke BAAD hi dikhta hai, warna nishaan hi answer bata deta. */}
+              {shown && exam?.firstPick === oi && (
+                <span className={`qcard__first${exam.firstCorrect ? " is-ok" : " is-bad"}`}>
+                  first attempt
+                </span>
+              )}
             </button>
           );
         })}
