@@ -1012,6 +1012,14 @@ function SolveInner() {
         )}
         <button className="btn btn--ghost btn--sm" onClick={() => { stopTimer(); go(idx - 1); }} disabled={idx <= 0}>← Q</button>
         <button className="btn btn--ghost btn--sm" onClick={() => go(idx + 1)} disabled={idx >= list.length - 1}>Q →</button>
+        {/* Submit yahan neeche bhi — pen wale haath ke paas. Upar bhi ek hai,
+            par ghadi khatam hone ka intezaar karne ki koi wajah nahi: jab lage
+            ki ho gaya, yahin se khatam karo. */}
+        {quizId && (
+          <button className="btn btn--submit btn--sm" style={{ marginLeft: "auto" }} onClick={() => finish(picks)}>
+            ✅ Submit ({answered}/{list.length})
+          </button>
+        )}
       </div>
     </div>
   );
