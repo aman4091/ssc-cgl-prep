@@ -8,6 +8,7 @@ import { setResume } from "@/lib/qprogress";
 import { recordAttempts, keyFor } from "@/lib/qstats";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { addReview } from "@/lib/qreview";
+import { reasonTq } from "@/lib/imgq";
 import Markdown from "./Markdown";
 import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
@@ -60,11 +61,9 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   const hasOptText = Array.isArray(q.optText) && q.optText.filter(Boolean).length === 4;
   // No option text = the question is pictures. Nothing worth sending to an AI.
   const aiUseful = hasOptText;
-  const tq = {
-    ...q,
-    question: `[${q.id}] ${q.instruction ? `${q.instruction} ` : ""}${q.qText || ""}`.trim(),
-    options: hasOptText ? q.optText : ["a", "b", "c", "d"],
-  };
+  // Notebook/stats wala text-roop ab lib/imgq mein hai — stylus wale parde ko
+  // bhi bilkul yahi chahiye (dekho lib/imgq ka note).
+  const tq = reasonTq(q);
 
   // Board ko apna notebook-wala roop de do. Tasveer wale bank mein `tq`
   // (id + text) hi wo pehchaan hai jis se galat jawab darj hota hai —

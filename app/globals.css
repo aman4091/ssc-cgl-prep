@@ -3150,6 +3150,9 @@ body.exam-on .pyq-filters { display: none; }
   font-size: 13px; font-weight: 700; cursor: pointer;
 }
 .inkv__pal a.is-ans { background: var(--success); }
+.inkv__pal a.is-right { background: var(--success); }
+.inkv__pal a.is-wrong { background: var(--danger); }
+.inkv__pal a.is-skip { background: #dfe3e8; color: #6b7280; }
 .inkv__pal a.is-cur { outline: 3px solid #06205e; outline-offset: 2px; }
 @media (min-width: 900px) {
   .inkv__pal {
@@ -3305,6 +3308,10 @@ body.exam-on .pyq-filters { display: none; }
 /* Chuna hua option — sirf itna nishaan ki kya chuna. Sahi/galat quiz ke ant
    mein hi pata chalta hai, warna quiz ka matlab hi khatam. */
 .inkv__opt.is-picked { border-color: var(--accent); background: var(--accent-wash); }
+/* Pehle diya hua set dobara dekhte waqt: sahi hara, tumhara galat laal. */
+.inkv__opt.is-right { border-color: var(--success); background: var(--ok-wash); }
+.inkv__opt.is-wrong { border-color: var(--danger); background: var(--bad-wash); }
+.inkv__opt .qcard__first { margin-left: auto; }
 /* Maths/Reasoning ke option tasveer hote hain — safed plate par, aur itne
    chhote ki chaar ek saath dikh jayen. */
 .inkv__optimg {

@@ -8,6 +8,7 @@ import { setResume } from "@/lib/qprogress";
 import { recordAttempts, keyFor } from "@/lib/qstats";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
 import { addReview } from "@/lib/qreview";
+import { mathTq } from "@/lib/imgq";
 import Markdown from "./Markdown";
 import AskElsewhere from "./AskElsewhere";
 import PasteAnswer from "./PasteAnswer";
@@ -87,11 +88,10 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   // the stats/bookmark/shortcut key unique and stable even when two questions'
   // lossy text collides or is empty.
   const alt = q.qText || `Maths ${q.id}`;
-  const tq = {
-    ...q,
-    question: `[${q.id}] ${q.qText || ""}`.trim(),
-    options: q.optText && q.optText.length === 4 ? q.optText : ["a", "b", "c", "d"],
-  };
+  // Notebook/stats wala text-roop ab lib/imgq mein hai — stylus wale parde ko
+  // bhi bilkul yahi chahiye, aur do jagah do formula rakhne se ek hi question
+  // do alag pehchaan se notebook mein chala jata tha.
+  const tq = mathTq(q);
 
   // Board ko apna notebook-wala roop de do. Tasveer wale bank mein `tq`
   // (id + text) hi wo pehchaan hai jis se galat jawab darj hota hai —

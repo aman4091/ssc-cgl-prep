@@ -17,6 +17,8 @@ import { setSyncPaused } from "@/lib/sync";
 import { getQuiz, deleteQuiz } from "@/lib/storage";
 import { recordAttempts } from "@/lib/qstats";
 import { recordQuizAttempts } from "@/lib/qreview";
+import { getSetResult } from "@/lib/settests";
+import { notebookQ } from "@/lib/imgq";
 import { makeSimilarQuiz } from "@/lib/similar";
 import { readImageText } from "@/lib/client-ai";
 import { imageBlob } from "@/lib/imgclip";
@@ -87,6 +89,10 @@ function quizRecords(quizId, quiz) {
       // hain — useImageUrls URL ko waise hi aage bhej deta hai.
       images: q.qImg ? [{ url: q.qImg }] : [],
       solImg: q.solImg || "",
+      // Asli question object — Mistake Notebook aur stats ko THEEK wahi
+      // pehchaan chahiye jo screen wala test bhejta hai (lib/imgq), warna ek
+      // hi question do alag naam se do baar chadh jata hai.
+      _q: q,
       note: "",
       answer: "",
       qid: "",
@@ -143,7 +149,14 @@ function SolveInner() {
         setList(quizRecords(quizId, quiz));
         // Meta alag rakhte hain: quiz submit ke baad delete ho jata hai, par
         // Mistake Notebook ko subject/naam tabhi chahiye hote hain.
-        setQMeta(quiz ? { source: quiz.source || "", subject: quiz.subject || "", title: quiz.title || "" } : null);
+        setQMeta(quiz ? {
+          source: quiz.source || "",
+          subject: quiz.subject || "",
+          title: quiz.title || "",
+          // PYQ ke set ka pata — uska pichhla natija isi se milta hai.
+          setKey: quiz.setKey || "",
+          setIdx: quiz.setIdx ?? 0,
+        } : null);
         setReady(true);
       };
       load();
@@ -349,14 +362,47 @@ function SolveInner() {
   const [resultRows, setResultRows] = useState([]);
   const picksKey = quizId ? `ink.picks.${quizId}` : "";
 
+  // PYQ ka jo set pehle diya ja chuka hai, uska natija settests mein pada hai.
+  // Wahi yahan bhi chahiye: kholte hi sahi/galat dikhe (test dobara shuru na
+  // ho), aur submit par uske question notebook mein DOBARA na chadhein.
+  const prior = qMeta?.setKey ? getSetResult(qMeta.setKey, qMeta.setIdx) : null;
+  // Review mode = pehle ka natija saamne hai. 🙈 dabate hi ye band ho jata hai
+  // aur set phir se khud solve karne ke liye khul jata hai.
+  const [hideAns, setHideAns] = useState(false);
+  const reviewing = !!prior && !hideAns;
+
   useEffect(() => {
     if (!picksKey) return;
+    // Pehle ka attempt pada ho to wahi bhar do — warna khula hua set ek naye
+    // test jaisa lagta tha aur pichhla kaam kahin dikhta hi nahi tha.
+    // 🙈 chalu ho to pichhla attempt NAHI bharna — poora matlab hi yahi hai ki
+    // set saaf mile. (Pehle yahan shart nahi thi, isliye chhupate hi picks
+    // wapas bhar jate the aur jawab phir se dikhne lagta tha.)
+    const saved = !hideAns && prior?.picks
+      ? Object.fromEntries(list.map((r, i) => [r.id, prior.picks[i]?.opt]).filter(([, v]) => v !== undefined))
+      : null;
+    if (saved && Object.keys(saved).length) { setPicks(saved); setShowResult(false); return; }
     try { setPicks(JSON.parse(localStorage.getItem(picksKey) || "{}") || {}); }
     catch { setPicks({}); }
     setShowResult(false);
-  }, [picksKey]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [picksKey, list.length, hideAns]);
 
   const answered = list.filter((r) => picks[r.id] !== undefined).length;
+  // Pichhli baar kaunsa option lagaya tha (aur sahi tha ya nahi) — 🙈 mode ka
+  // "first attempt" nishaan isi se banta hai.
+  const firstPickOf = (i) => prior?.picks?.[i]?.opt;
+  const firstOkOf = (i) => !!prior?.picks?.[i]?.correct;
+  // 🙈 chalu/band. Chalu karte hi apne chune hue option mit jate hain, taaki
+  // set bilkul saaf mile.
+  const toggleHide = () => {
+    setHideAns((v) => {
+      const next = !v;
+      if (next) { setPicks({}); try { localStorage.removeItem(picksKey); } catch { /* ignore */ } }
+      return next;
+    });
+    setShowResult(false);
+  };
 
   // Quiz khatam — galat questions Mistake Notebook mein, phir quiz khud delete.
   //
@@ -376,7 +422,12 @@ function SolveInner() {
         id: r.id, i, p, right,
         question: r.q?.question || "",
         options: r.q?.options || [],
+        // Tasveer wale bank ka natija bina inke khaali dikhta tha — na sawaal,
+        // na "tumne kya lagaya".
+        qImg: r.images?.[0]?.url || "",
+        optImgs: r.q?.optImgs || [],
         detail: r.detail || "",
+        nq: r._q,
         ok: p === right,
         skipped: p === undefined,
       };
@@ -385,27 +436,32 @@ function SolveInner() {
     setShowResult(true);
 
     try {
+      // Pehchaan ASLI question se banti hai (aur tasveer wale bank mein uske
+      // text-roop se, lib/imgq) — wahi jo screen wala test bhejta hai. Pehle
+      // yahan ek naya object joda jata tha, isliye Maths/Reasoning ka wahi
+      // question notebook mein DOOSRE naam se dobara chadh jata tha.
+      const kind = qMeta?.subject === "reasoning" ? "reason" : "math";
+      const nqOf = (x) => notebookQ(x.nq, x.nq?._card || kind)
+        || { question: x.question, options: x.options, answer: x.right };
       const attempted = rows.filter((x) => !x.skipped);
-      const items = attempted.map((x) => ({
-        q: { question: x.question, options: x.options, answer: x.right },
-        correct: x.ok,
-      }));
+      const items = attempted.map((x) => ({ q: nqOf(x), correct: x.ok }));
       recordAttempts(items);
       // PYQ ke set se aaya quiz? To galat/chhode question Mistake Notebook mein
       // jaane chahiye — bilkul waise hi jaise screen par test dene par jaate
       // hain. Baaki quiz (20 similar, notes ka quiz) ke liye `fromPyq` nahi
       // hota, isliye wo naya record nahi banate (lib/qreview ka niyam).
       const fromPyq = qMeta?.source === "set";
-      const skipped = rows.filter((x) => x.skipped).map((x) => ({
-        q: { question: x.question, options: x.options, answer: x.right },
-        correct: false,
-      }));
+      const skipped = rows.filter((x) => x.skipped).map((x) => ({ q: nqOf(x), correct: false }));
       recordQuizAttempts([...items, ...(fromPyq ? skipped : [])].map((it) => ({
         ...it,
         subject: qMeta?.subject || "",
         source: fromPyq ? "chapter" : "similar",
         category: fromPyq ? (qMeta?.title || "PYQ set") : "Similar · stylus",
         fromPyq,
+        // Ye set pehle diya ja chuka hai — to notebook mein NAYA record nahi
+        // banega, sirf jo pehle se pada hai wo sudhrega. Warna har dobara-
+        // attempt par wahi question phir se jama hota rehta.
+        onlyExisting: !!prior,
       })));
     } catch { /* recording fail ho to bhi result dikhna chahiye */ }
 
@@ -420,18 +476,22 @@ function SolveInner() {
   // aata hai aur poora page hi nahi khulta. Body mein use karna theek hai, wo
   // baad mein chalti hai.
 
-  // Ghadi zero — khud submit. Page nahi badalta: natija yahin, isi parde par.
-  useEffect(() => {
-    if (examStart > 0 && examLeft === 0 && quizId && !showResult) finish(picks);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [examLeft, examStart, quizId, showResult]);
+  // Ghadi zero hone par yahan KHUD submit nahi hota. Pen se likhte waqt beech
+  // mein screen badal jana sabse bura hai — aadha likha kaam saamne se hat
+  // jata. Ghadi laal ho kar 00:00 par ruk jati hai; Result tum khud dabate ho.
 
   const pick = (optIdx) => {
     if (!rec) return;
     const next = { ...picks, [rec.id]: optIdx };
     setPicks(next);
     try { localStorage.setItem(picksKey, JSON.stringify(next)); } catch { /* quota */ }
-    // Chuna aur aage — theek waise hi jaise timer khatam hone par hota hai.
+    // 🙈 mode aur pehle diye hue set mein aage NAHI bhagte: wahan option
+    // dabane ka matlab hai "ab jawab dikhao" — aur agar screen turant badal
+    // jaye to wo jawab dikhta hi nahi. Aur aakhri question par bhi khud submit
+    // nahi hota; Result tum dabaoge.
+    if (hideAns || prior) return;
+    // Naye test mein: chuna aur aage — theek waise hi jaise timer khatam hone
+    // par hota hai.
     if (idx < list.length - 1) setTimeout(() => go(idx + 1), 220);
     else finish(next);
   };
@@ -618,7 +678,7 @@ function SolveInner() {
               ? `❌ ${wrongN} galat question Mistake Notebook mein chala gaya. Quiz ab hata diya gaya — jagah bekaar nahi ghere.`
               : "✅ Sab sahi. Quiz hata diya gaya."}
           </p>
-          {rows.map(({ id: rid, i, p, right, ok, skipped, question, options, detail }) => (
+          {rows.map(({ id: rid, i, p, right, ok, skipped, question, options, detail, qImg, optImgs }) => (
             <div key={rid} className={`inkv__rrow${ok ? " is-ok" : skipped ? " is-skip" : " is-bad"}`}>
               <div className="row between">
                 <strong>{ok ? "✅" : skipped ? "⏭️" : "❌"} Q{i + 1}</strong>
@@ -626,11 +686,22 @@ function SolveInner() {
                   ✍️ Rough work dekho
                 </button>
               </div>
-              <p style={{ whiteSpace: "pre-wrap", margin: "6px 0" }}>{question}</p>
+              {/* Tasveer wale bank mein `question` khali hota hai — wahan crop
+                  hi sawaal hai, isliye natije mein bhi wahi dikhata hai. */}
+              {qImg
+                // eslint-disable-next-line @next/next/no-img-element
+                ? <img src={qImg} alt={`Question ${i + 1}`} style={{ width: "100%", maxWidth: 520, borderRadius: 6, background: "#fff", margin: "6px 0" }} />
+                : <p style={{ whiteSpace: "pre-wrap", margin: "6px 0" }}>{question}</p>}
               <p className="muted" style={{ fontSize: "0.86rem" }}>
                 Tumne: {skipped ? "chhod diya" : `${String.fromCharCode(65 + p)}) ${options[p] ?? ""}`}
                 {" · "}Sahi: {String.fromCharCode(65 + right)}) {options[right] ?? ""}
               </p>
+              {optImgs?.length > 0 && (
+                <p className="muted" style={{ fontSize: "0.86rem", display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+                  {!skipped && <>Tumne: <img className="inkv__optimg" src={optImgs[p]} alt="tumhara jawab" /></>}
+                  Sahi: <img className="inkv__optimg" src={optImgs[right]} alt="sahi jawab" />
+                </p>
+              )}
               {detail && (
                 <div className="answer-box mt-8" style={{ fontSize: "0.88rem" }}>
                   <Markdown>{detail}</Markdown>
@@ -703,15 +774,21 @@ function SolveInner() {
             mein; wrong-book ki shelf apni date/subject se chalti hai. */}
         {quizId && list.length > 1 && (
           <nav className="inkv__pal">
-            {list.map((r, i) => (
-              <a
-                key={r.id}
-                onClick={() => go(i)}
-                className={`${picks[r.id] !== undefined ? "is-ans" : ""}${i === idx ? " is-cur" : ""}`}
-              >
-                {i + 1}
-              </a>
-            ))}
+            {list.map((r, i) => {
+              // Pehle diya hua set dekh rahe ho to number apna natija batata
+              // hai — hara sahi, laal galat, dhundhla chhoda hua. 🙈 mode aur
+              // naye test mein sirf "kiya ya nahi", warna rang hi jawab bata
+              // deta.
+              const p = picks[r.id];
+              const state = reviewing
+                ? (p === undefined ? "is-skip" : p === r.q?.answer ? "is-right" : "is-wrong")
+                : (p !== undefined ? "is-ans" : "");
+              return (
+                <a key={r.id} onClick={() => go(i)} className={`${state}${i === idx ? " is-cur" : ""}`}>
+                  {i + 1}
+                </a>
+              );
+            })}
           </nav>
         )}
         <div className={`inkv__q${slim ? " inkv__q--slim" : ""}`}>
@@ -729,6 +806,14 @@ function SolveInner() {
             {!slim && quizId && (
               <button className="btn btn--ghost btn--sm" onClick={() => finish(picks)}>
                 🏁 Result ({answered}/{list.length})
+              </button>
+            )}
+            {/* Pehle diya hua set: jawab saamne hain. Ise dabate hi sab chhup
+                jata hai aur set khud se dobara solve karne ke liye khul jata
+                hai — jaise screen wale test mein hota hai. */}
+            {!slim && quizId && prior && (
+              <button className="btn btn--ghost btn--sm" onClick={toggleHide}>
+                {hideAns ? "👁️ Answers dikhao" : "🙈 Answers chhupao"}
               </button>
             )}
             {/* Quiz ke pseudo-records wrong book mein hain hi nahi — unhe mark
@@ -767,20 +852,41 @@ function SolveInner() {
                     {(rec.q?.optImgs?.length
                       ? rec.q.optImgs
                       : (rec.q?.options || []).filter(Boolean)
-                    ).map((o, i) => (
-                      <button
-                        key={i}
-                        className={`inkv__opt${picks[rec.id] === i ? " is-picked" : ""}`}
-                        onClick={() => pick(i)}
-                      >
-                        <strong>{String.fromCharCode(65 + i)}</strong>{" "}
-                        {rec.q?.optImgs?.length
-                          // eslint-disable-next-line @next/next/no-img-element
-                          ? <img className="inkv__optimg" src={o} alt={`Option ${String.fromCharCode(65 + i)}`} />
-                          : o}
-                      </button>
-                    ))}
+                    ).map((o, i) => {
+                      // Jawab kab khule: pehle diya hua set dekh rahe ho (tab
+                      // shuru se), ya 🙈 mode mein is question ka jawab de
+                      // diya ho. Naye test mein kabhi nahi.
+                      const open = reviewing || (hideAns && picks[rec.id] !== undefined);
+                      const right = open && i === rec.q?.answer;
+                      const wrong = open && picks[rec.id] === i && i !== rec.q?.answer;
+                      return (
+                        <button
+                          key={i}
+                          className={`inkv__opt${picks[rec.id] === i ? " is-picked" : ""}${right ? " is-right" : ""}${wrong ? " is-wrong" : ""}`}
+                          onClick={() => pick(i)}
+                        >
+                          <strong>{String.fromCharCode(65 + i)}</strong>{" "}
+                          {rec.q?.optImgs?.length
+                            // eslint-disable-next-line @next/next/no-img-element
+                            ? <img className="inkv__optimg" src={o} alt={`Option ${String.fromCharCode(65 + i)}`} />
+                            : o}
+                          {/* 🙈 mode mein: pichhli baar isi option par haath
+                              gaya tha. Jawab khulne ke BAAD hi dikhta hai. */}
+                          {hideAns && open && firstPickOf(idx) === i && (
+                            <span className={`qcard__first${firstOkOf(idx) ? " is-ok" : " is-bad"}`}>first attempt</span>
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
+                  {(reviewing || (hideAns && picks[rec.id] !== undefined)) && (
+                    <div className="answer-box mt-8" style={{ fontSize: "0.9rem" }}>
+                      <b style={{ color: "var(--success)" }}>
+                        ✓ Sahi jawab: {String.fromCharCode(65 + (rec.q?.answer ?? 0))}
+                      </b>
+                      {rec.detail && <div className="mt-8"><Markdown>{rec.detail}</Markdown></div>}
+                    </div>
+                  )}
                 </>
               ) : (
                 /* Answer jaan-boojh kar chhupa hai — /wrong ke card par wo hamesha

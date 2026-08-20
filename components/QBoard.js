@@ -200,6 +200,11 @@ export default function QBoard({
         id,
         title: `${title} · Set ${i + 1}`,
         subject: subject || "",
+        // Set ka pata — stylus wala parda isi se uska pichhla natija dhoondhta
+        // hai (settests), taaki wahan sahi/galat pehle se dikhe aur dobara
+        // wahi record notebook mein na chadhe.
+        setKey: resumeKey || "",
+        setIdx: i,
         // "set" hi wo nishaan hai jisse solve page jaanta hai ki galat/chhode
         // question Mistake Notebook mein bhejne hain.
         source: "set",
