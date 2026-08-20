@@ -17,7 +17,9 @@ import { setSyncPaused } from "@/lib/sync";
 import { getQuiz, deleteQuiz } from "@/lib/storage";
 import { recordAttempts } from "@/lib/qstats";
 import { recordQuizAttempts } from "@/lib/qreview";
-import { getSetResult } from "@/lib/settests";
+import { getSetResult, saveSetResult, marksOf, maxMarks, fmtMarks, accuracyOf } from "@/lib/settests";
+import { doneKeyFor, markDoneMany } from "@/lib/qdone";
+import { countMark } from "@/lib/qcounter";
 import { notebookQ } from "@/lib/imgq";
 import { makeSimilarQuiz } from "@/lib/similar";
 import { readImageText } from "@/lib/client-ai";
@@ -119,11 +121,13 @@ function SolveInner() {
   // waisa hi hai (raftaar ke liye), ye poore paper ke liye.
   const examStart = Number(sp.get("t") || 0);
   const [examLeft, setExamLeft] = useState(examStart > 0 ? Math.floor(examStart) : 0);
+  // Submit ho chuka ho to ghadi ruk jati hai — test khatam matlab khatam.
+  const [submitted, setSubmitted] = useState(false);
   useEffect(() => {
-    if (examStart <= 0) return undefined;
+    if (examStart <= 0 || submitted) return undefined;
     const t = setInterval(() => setExamLeft((v) => (v > 0 ? v - 1 : 0)), 1000);
     return () => clearInterval(t);
-  }, [examStart]);
+  }, [examStart, submitted]);
 
   // Wahi shelf jo /wrong par khuli thi — subject + date filter.
   //
@@ -363,6 +367,12 @@ function SolveInner() {
     // PYQ ke set ka page hamesha khulta hai (QBoard set dobara bana leta hai).
     // Aam quiz submit hote hi delete ho jata hai, isliye uske BAAD wahan
     // bhejne ka matlab "Quiz not found" — tab Answers hi theek hai.
+    // Bina submit kiye nikal rahe ho? To chune hue option mat sambhalo — set
+    // abhi diya hi nahi gaya, aur agli baar wo purane nishaan saamne aane se
+    // lagta hai ki test aadha pada hai.
+    if (!showResultRef.current && picksKey) {
+      try { localStorage.removeItem(picksKey); } catch { /* ignore */ }
+    }
     if (back && (qMeta?.source === "set" || !showResultRef.current)) { router.push(back); return; }
     router.push(`/answers?subject=${subject}`);
     // `showResult` deps mein JAAN-BOOJH KAR nahi hai — wo neeche declare hota
@@ -459,6 +469,7 @@ function SolveInner() {
     });
     setResultRows(rows);
     setShowResult(true);
+    setSubmitted(true);
 
     try {
       // Pehchaan ASLI question se banti hai (aur tasveer wale bank mein uske
@@ -488,13 +499,35 @@ function SolveInner() {
         // attempt par wahi question phir se jama hota rehta.
         onlyExisting: !!prior,
       })));
+      // PYQ ka set hai to uska NATIJA bhi wahin darj karo jahan screen wala
+      // test karta hai. Bina iske chapter page par set "naya ka naya" dikhta
+      // rehta tha — na marks, na "Attempt again", kuch nahi.
+      if (fromPyq && qMeta?.setKey) {
+        const rt = rows.filter((x) => x.ok).length;
+        const ans = rows.filter((x) => !x.skipped).length;
+        saveSetResult(qMeta.setKey, qMeta.setIdx, {
+          right: rt,
+          wrong: ans - rt,
+          skipped: rows.length - ans,
+          total: rows.length,
+          sec: examStart > 0 ? Math.max(0, examStart - examLeft) : 0,
+          picks: Object.fromEntries(
+            rows.filter((x) => !x.skipped).map((x) => [x.i, { opt: x.p, correct: x.ok }]),
+          ),
+        });
+        // Set de diya = uske saare question "ho gaye", aur "🔢 Aaj" mein bhi
+        // gin lo — bilkul screen wale test jaisa.
+        const qs = rows.map((x) => x.nq).filter(Boolean);
+        markDoneMany(qs);
+        for (const qq of qs) countMark(doneKeyFor(qq), qMeta.subject, true);
+      }
     } catch { /* recording fail ho to bhi result dikhna chahiye */ }
 
     // Quiz ab bekaar hai — galat questions Mistake Notebook mein ja chuke.
     // Rakhne se sirf localStorage bharta hai (jo pehle se cap ke kagaar par hai).
     try { deleteQuiz(quizId); localStorage.removeItem(picksKey); } catch { /* ignore */ }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [list, quizId, picksKey, qMeta]);
+  }, [list, quizId, picksKey, qMeta, examStart, examLeft]);
   // stopTimer deps mein JAAN-BOOJH KAR nahi hai: wo neeche timer wale hisse mein
   // declare hota hai, aur deps array render ke waqt hi evaluate ho jata hai —
   // yaani wahan use likhne se "Cannot access 'stopTimer' before initialization"
@@ -704,10 +737,28 @@ function SolveInner() {
           </button>
         </div>
         <div className="inkv__result">
+          {/* Wahi hisaab jo screen wale test ke baad aata hai — Right, Wrong,
+              Marks (+2 / -0.5), Accuracy aur Time. Pehle yahan sirf "5/25"
+              likha aata tha aur baaki kuch nahi. */}
+          {(() => {
+            const attempted = rows.filter((x) => !x.skipped).length;
+            const r = { right: score, wrong: attempted - score, total: rows.length };
+            const secs = examStart > 0 ? Math.max(0, examStart - examLeft) : 0;
+            return (
+              <div className="qboard__result" style={{ marginBottom: 12 }}>
+                <span className="res res--right"><b>{score}</b> Right</span>
+                <span className="res res--wrong"><b>{attempted - score}</b> Wrong</span>
+                <span className="res res--marks"><b>{fmtMarks(marksOf(r))}</b> / {maxMarks(rows.length)} Marks</span>
+                <span className="res res--acc"><b>{accuracyOf(r)}%</b> Accuracy</span>
+                {secs > 0 && <span className="res res--time"><b>{mmss(secs)}</b> Time</span>}
+                <span className="res res--skip"><b>{rows.length - attempted}</b> Skipped</span>
+              </div>
+            );
+          })()}
           <p className="muted" style={{ fontSize: "0.86rem", marginBottom: 12 }}>
             {wrongN > 0
-              ? `❌ ${wrongN} galat question Mistake Notebook mein chala gaya. Quiz ab hata diya gaya — jagah bekaar nahi ghere.`
-              : "✅ Sab sahi. Quiz hata diya gaya."}
+              ? `❌ ${wrongN} galat/chhoda question Mistake Notebook mein chala gaya.`
+              : "✅ Sab sahi."}
           </p>
           {rows.map(({ id: rid, i, p, right, ok, skipped, question, options, detail, qImg, optImgs }) => (
             <div key={rid} className={`inkv__rrow${ok ? " is-ok" : skipped ? " is-skip" : " is-bad"}`}>
@@ -756,7 +807,7 @@ function SolveInner() {
         </span>
         <span className="inkv__pill" style={{ marginLeft: "auto" }}>{stateLabel}</span>
 
-        {examStart > 0 && (
+        {examStart > 0 && !submitted && (
           <span
             className={`inkv__pill inkv__exam${examLeft <= 60 ? " is-low" : ""}`}
             title="Poore test ka bacha hua waqt — quiz player se saath aaya hai"
@@ -834,7 +885,7 @@ function SolveInner() {
                 {shown ? "🙈 Hide" : "👁️ Check karo"}
               </button>
             )}
-            {!slim && quizId && (
+            {!slim && quizId && !submitted && !prior && (
               <button className="btn btn--ghost btn--sm" onClick={() => finish(picks)}>
                 🏁 Result ({answered}/{list.length})
               </button>
@@ -1023,7 +1074,9 @@ function SolveInner() {
         {/* Submit yahan neeche bhi — pen wale haath ke paas. Upar bhi ek hai,
             par ghadi khatam hone ka intezaar karne ki koi wajah nahi: jab lage
             ki ho gaya, yahin se khatam karo. */}
-        {quizId && (
+        {/* Ek baar submit ho gaya to dobara nahi — test khatam matlab khatam.
+            Pehle diye hue set par bhi nahi (wahan dekhna hai, dena nahi). */}
+        {quizId && !submitted && !prior && (
           <button className="btn btn--submit btn--sm" style={{ marginLeft: "auto" }} onClick={() => finish(picks)}>
             ✅ Submit ({answered}/{list.length})
           </button>
