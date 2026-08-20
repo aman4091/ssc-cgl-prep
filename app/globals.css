@@ -3131,6 +3131,10 @@ body.exam-on .hero { display: none; }
    filter badalne ki cheez nahi hoti. */
 body.exam-on .pyq-filters { display: none; }
 
+/* Stylus wale parde par poore test ki ghadi (quiz player se ?t= le kar aayi). */
+.inkv__exam { background: var(--mark); color: #6b5200; font-weight: 700; }
+.inkv__exam.is-low { background: var(--danger); color: #fff; }
+
 /* Submit ke baad har question ke upar uska apna waqt. */
 .qtime {
   font-size: 12px; font-weight: 700; color: var(--dim);

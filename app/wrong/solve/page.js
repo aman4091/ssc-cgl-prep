@@ -87,6 +87,17 @@ function SolveInner() {
   const d = sp.get("d") || "all";
   const id = sp.get("id") || "";
   const quizId = sp.get("quiz") || "";
+  // Poore test ki ghadi. Quiz player se "✍️ Stylus" dabane par bacha hua waqt
+  // `?t=` mein saath aata hai — wahi 15-minute wala clock yahan aage chalta
+  // hai. Iska per-question wale timer se koi lena-dena nahi; wo apni jagah
+  // waisa hi hai (raftaar ke liye), ye poore paper ke liye.
+  const examStart = Number(sp.get("t") || 0);
+  const [examLeft, setExamLeft] = useState(examStart > 0 ? Math.floor(examStart) : 0);
+  useEffect(() => {
+    if (examStart <= 0) return undefined;
+    const t = setInterval(() => setExamLeft((v) => (v > 0 ? v - 1 : 0)), 1000);
+    return () => clearInterval(t);
+  }, [examStart]);
 
   // Wahi shelf jo /wrong par khuli thi — subject + date filter.
   //
@@ -599,6 +610,15 @@ function SolveInner() {
             : `${subjectLabel(rec.subject)} · ${dayLabel(rec.at)}${rec.qid ? ` · 🔖 ${rec.qid}` : ""}`}
         </span>
         <span className="inkv__pill" style={{ marginLeft: "auto" }}>{stateLabel}</span>
+
+        {examStart > 0 && (
+          <span
+            className={`inkv__pill inkv__exam${examLeft <= 60 ? " is-low" : ""}`}
+            title="Poore test ka bacha hua waqt — quiz player se saath aaya hai"
+          >
+            {examLeft > 0 ? `⏱ ${mmss(examLeft)}` : "⏱ samay khatam"}
+          </span>
+        )}
 
         {/* ⏱️ — band ho to ghadi ka nishaan, chalu ho to bacha hua waqt.
             Dabate hi waqt chunne ka chhota panel khulta hai. */}

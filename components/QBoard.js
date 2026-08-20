@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { doneKeyFor, getDoneSet, markDoneMany } from "@/lib/qdone";
 import { getCounts, countMark, COUNTER_SUBJECTS } from "@/lib/qcounter";
@@ -57,6 +58,10 @@ export default function QBoard({
   // Dobara-attempt wala quiz: galat/chhode question notebook mein NAYA record
   // nahi banayenge (jo pehle se hai wo sudhrega).
   noNotebook = false,
+  // Tablet par stylus se solve karne wala rasta (/wrong/solve). Diya ho to
+  // test ke sar mein "✍️ Stylus" ka button aata hai; bacha hua waqt URL se
+  // saath jaata hai, taaki wahan wahi 15-minute wali ghadi chalti rahe.
+  stylusUrl,
   onSubmit,                   // submit ke baad page ka apna kaam (vocab din, etc.)
 }) {
   const [setIdx, setSetIdx] = useState(single ? 0 : null);
@@ -474,6 +479,15 @@ export default function QBoard({
               inka koi kaam nahi. */}
           {!done && (
             <>
+              {stylusUrl && (
+                <Link
+                  className="btn btn--ghost btn--sm"
+                  href={`${stylusUrl}${stylusUrl.includes("?") ? "&" : "?"}t=${leftSec}`}
+                  title="Tablet par stylus se solve karo — wahi ghadi wahan chalti rahegi"
+                >
+                  ✍️ Stylus
+                </Link>
+              )}
               <button className="btn btn--ghost btn--sm" onClick={toggleFs}>
                 {fs ? "⤢ Exit full screen" : "⛶ Full screen"}
               </button>

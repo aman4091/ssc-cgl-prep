@@ -117,6 +117,9 @@ export default function QuizPlayer() {
              chhode question notebook mein DOBARA nahi daalta — jo pehle se
              hai bas wahi sudhrta hai. */
           noNotebook={quiz.source === "review"}
+          /* Tablet par pen se solve karna ho to wahi quiz stylus wale parde
+             par khul jaata hai; bacha hua waqt saath jaata hai. */
+          stylusUrl={`/wrong/solve?quiz=${quiz.id}`}
           title={quiz.title}
           onSubmit={onSubmit}
           renderCard={(q, i) => (
