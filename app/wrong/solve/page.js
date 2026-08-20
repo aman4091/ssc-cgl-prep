@@ -60,23 +60,41 @@ const mmss = (s) => `${Math.floor(Math.max(0, s) / 60)}:${String(Math.max(0, s) 
 // `detail` mein jaata hai jahan se WrongAnswerBlock use dikhata hai.
 function quizRecords(quizId, quiz) {
   if (!quiz || !Array.isArray(quiz.questions)) return [];
-  return quiz.questions.map((q, i) => ({
-    id: `qz_${quizId}_${i}`,
-    subject: quiz.subject || "math",
-    q: {
-      question: q.question || "",
-      options: q.options || [],
-      answer: Number.isInteger(q.answer) ? q.answer : 0,
-      solution: q.solution || "",
-    },
-    images: [],
-    note: "",
-    answer: "",
-    qid: "",
-    at: quiz.createdAt || new Date().toISOString(),
-    detail: q.explanation || q.solution || "",
-    _quiz: true,
-  }));
+  return quiz.questions.map((q, i) => {
+    // Maths aur Reasoning ke bank TASVEER ke hain: sawaal `qImg` mein hai aur
+    // option `optImgs` mein — text wale `question`/`options` khali hote hain.
+    // Pehle yahan sirf text uthaya jata tha, isliye un set par sawaal gayab
+    // rehta tha aur sirf number dikhte the.
+    const opts = Array.isArray(q.options) && q.options.filter(Boolean).length
+      ? q.options
+      : (Array.isArray(q.optText) && q.optText.filter(Boolean).length ? q.optText : []);
+    // Tasveer wale question par uska text DOBARA mat likho — crop mein sawaal
+    // pehle se poora likha hota hai. Sirf chapter ki Direction (instruction)
+    // upar rehne do, wo aksar crop mein hoti hi nahi.
+    const head = q.qImg ? (q.instruction || "") : (q.question || q.qText || "");
+    return {
+      id: `qz_${quizId}_${i}`,
+      subject: quiz.subject || "math",
+      q: {
+        question: head,
+        options: opts,
+        // Option ki tasveerein — jahan text hai hi nahi.
+        optImgs: Array.isArray(q.optImgs) ? q.optImgs : [],
+        answer: Number.isInteger(q.answer) ? q.answer : 0,
+        solution: q.solution || "",
+      },
+      // Sawaal ki tasveer wahi raasta leti hai jo wrong-book ki images leti
+      // hain — useImageUrls URL ko waise hi aage bhej deta hai.
+      images: q.qImg ? [{ url: q.qImg }] : [],
+      solImg: q.solImg || "",
+      note: "",
+      answer: "",
+      qid: "",
+      at: quiz.createdAt || new Date().toISOString(),
+      detail: q.explanation || q.solution || "",
+      _quiz: true,
+    };
+  });
 }
 
 function SolveInner() {
@@ -746,13 +764,20 @@ function SolveInner() {
                 <>
                   {rec.q?.question && <p style={{ fontWeight: 600, whiteSpace: "pre-wrap" }}>{rec.q.question}</p>}
                   <div className="mt-8" style={{ display: "grid", gap: 6 }}>
-                    {(rec.q?.options || []).filter(Boolean).map((o, i) => (
+                    {(rec.q?.optImgs?.length
+                      ? rec.q.optImgs
+                      : (rec.q?.options || []).filter(Boolean)
+                    ).map((o, i) => (
                       <button
                         key={i}
                         className={`inkv__opt${picks[rec.id] === i ? " is-picked" : ""}`}
                         onClick={() => pick(i)}
                       >
-                        <strong>{String.fromCharCode(65 + i)}</strong> {o}
+                        <strong>{String.fromCharCode(65 + i)}</strong>{" "}
+                        {rec.q?.optImgs?.length
+                          // eslint-disable-next-line @next/next/no-img-element
+                          ? <img className="inkv__optimg" src={o} alt={`Option ${String.fromCharCode(65 + i)}`} />
+                          : o}
                       </button>
                     ))}
                   </div>

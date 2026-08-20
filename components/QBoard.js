@@ -171,23 +171,26 @@ export default function QBoard({
   // daal dete hain. Id set ke naam se banti hai, to dobara kholne par wahi
   // quiz phir se bhar jata hai (nayi copy nahi banti), aur submit ke baad
   // solve page use khud delete kar deta hai.
-  const openStylus = () => {
-    if (setIdx === null || !setQs.length) return;
-    const id = `set_${String(resumeKey || "set").replace(/[^A-Za-z0-9]+/g, "_")}_${setIdx}`;
+  // `secs` = ghadi ke bache hue second. 0 do to stylus wala parda BINA ghadi ke
+  // khulta hai — pehle diya hua set sirf pen se dobara solve karne ke liye.
+  const openStylus = (i, secs) => {
+    const qs = all.slice(i * size, i * size + size);
+    if (!qs.length) return;
+    const id = `set_${String(resumeKey || "set").replace(/[^A-Za-z0-9]+/g, "_")}_${i}`;
     try {
       deleteQuiz(id);
       saveQuiz({
         id,
-        title: `${title} · Set ${setIdx + 1}`,
+        title: `${title} · Set ${i + 1}`,
         subject: subject || "",
         // "set" hi wo nishaan hai jisse solve page jaanta hai ki galat/chhode
         // question Mistake Notebook mein bhejne hain.
         source: "set",
         createdAt: new Date().toISOString(),
-        questions: setQs,
+        questions: qs,
       });
     } catch { /* quota — phir bhi khol kar dekh lete hain */ }
-    router.push(`/wrong/solve?quiz=${encodeURIComponent(id)}&t=${leftSec}`);
+    router.push(`/wrong/solve?quiz=${encodeURIComponent(id)}${secs > 0 ? `&t=${secs}` : ""}`);
   };
 
   const toTop = useCallback(() => {
@@ -411,6 +414,13 @@ export default function QBoard({
                   <span className="setcard__acts">
                     <button className="btn btn--sm" onClick={() => openSet(i, "test")}>🔁 Attempt again</button>
                     <button className="btn btn--ghost btn--sm" onClick={() => openSet(i, "solutions")}>📖 Result</button>
+                    {/* Ho chuka set pen se dobara — bina ghadi ke. Naya test
+                        dene ke liye ghadi wali "Attempt again" hai; ye sirf
+                        kaagaz par solve karne ke liye hai. */}
+                    <button className="btn btn--ghost btn--sm" onClick={() => openStylus(i, 0)}
+                      title="Isi set ko tablet par pen se solve karo — bina timer ke">
+                      ✍️ Stylus
+                    </button>
                   </span>
                 ) : (
                   <span className="setcard__go">▶ Test shuru karo · ⏱ {SET_MIN} min</span>
@@ -515,7 +525,7 @@ export default function QBoard({
                   ✍️ Stylus
                 </Link>
               ) : (
-                <button className="btn btn--ghost btn--sm" onClick={openStylus}
+                <button className="btn btn--ghost btn--sm" onClick={() => openStylus(setIdx, leftSec)}
                   title="Isi set ke question tablet par pen se solve karo — wahi ghadi wahan chalti rahegi">
                   ✍️ Stylus
                 </button>
