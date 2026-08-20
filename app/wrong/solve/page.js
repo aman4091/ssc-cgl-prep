@@ -9,7 +9,7 @@ import {
 } from "@/lib/wrongbook";
 import { getDoneSet, isDone, toggleDone } from "@/lib/answersdone";
 import {
-  openInk, saveLocalInk, pushInk, emptyDoc, flushInkQueue,
+  openInk, saveLocalInk, pushInk, emptyDoc, flushInkQueue, dropLocalInk,
   getConflictInk, clearConflictInk,
 } from "@/lib/ink";
 import { useImageUrls } from "@/lib/wrongimages";
@@ -356,6 +356,8 @@ function SolveInner() {
   // Submit ho chuka ya nahi — exit ko ye chahiye, par wo state neeche banti
   // hai. Ref se padhna surakshit hai (render ke waqt nahi padha jata).
   const showResultRef = useRef(false);
+  // Wahi wajah:  bhi exit se NEECHE banti hai.
+  const listRef = useRef([]);
 
   const exit = useCallback(async () => {
     await flushLocal();
@@ -367,11 +369,18 @@ function SolveInner() {
     // PYQ ke set ka page hamesha khulta hai (QBoard set dobara bana leta hai).
     // Aam quiz submit hote hi delete ho jata hai, isliye uske BAAD wahan
     // bhejne ka matlab "Quiz not found" — tab Answers hi theek hai.
-    // Bina submit kiye nikal rahe ho? To chune hue option mat sambhalo — set
-    // abhi diya hi nahi gaya, aur agli baar wo purane nishaan saamne aane se
-    // lagta hai ki test aadha pada hai.
-    if (!showResultRef.current && picksKey) {
-      try { localStorage.removeItem(picksKey); } catch { /* ignore */ }
+    // Bina submit kiye nikal rahe ho? To chuna hua option BHI aur rough work
+    // BHI saaf. Set abhi diya hi nahi gaya — agli baar purane nishaan aur
+    // aadhi-likhi copy saamne aane se lagta hai ki test beech mein pada hai.
+    //
+    // Sirf quiz/set ke pseudo-record par (`_quiz`). Wrong Notebook
+    // ki asli handwriting ko haath NAHI lagate — wo mehnat se likhi hoti hai
+    // aur mit gayi to wapas nahi aati.
+    if (!showResultRef.current && quizId) {
+      try { localStorage.removeItem(`ink.picks.${quizId}`); } catch { /* ignore */ }
+      for (const r of listRef.current) {
+        if (r?._quiz && r.id) { try { await dropLocalInk(r.id); } catch { /* ignore */ } }
+      }
     }
     if (back && (qMeta?.source === "set" || !showResultRef.current)) { router.push(back); return; }
     router.push(`/answers?subject=${subject}`);
@@ -394,6 +403,7 @@ function SolveInner() {
   const [picks, setPicks] = useState({});
   const [showResult, setShowResult] = useState(false);
   showResultRef.current = showResult;
+  listRef.current = list;
   const [resultRows, setResultRows] = useState([]);
   const picksKey = quizId ? `ink.picks.${quizId}` : "";
 
