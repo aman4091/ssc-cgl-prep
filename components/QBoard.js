@@ -212,7 +212,13 @@ export default function QBoard({
         questions: qs,
       });
     } catch { /* quota — phir bhi khol kar dekh lete hain */ }
-    router.push(`/wrong/solve?quiz=${encodeURIComponent(id)}${secs > 0 ? `&t=${secs}` : ""}`);
+    // Back dabane par wahi page — jahan se set khola tha.
+    const back = typeof window !== "undefined"
+      ? encodeURIComponent(window.location.pathname + window.location.search)
+      : "";
+    router.push(
+      `/wrong/solve?quiz=${encodeURIComponent(id)}${secs > 0 ? `&t=${secs}` : ""}${back ? `&back=${back}` : ""}`,
+    );
   };
 
   const toTop = useCallback(() => {
@@ -574,7 +580,7 @@ export default function QBoard({
               {stylusUrl ? (
                 <Link
                   className="btn btn--ghost btn--sm"
-                  href={`${stylusUrl}${stylusUrl.includes("?") ? "&" : "?"}t=${leftSec}`}
+                  href={`${stylusUrl}${stylusUrl.includes("?") ? "&" : "?"}t=${leftSec}&back=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname : "/")}`}
                   title="Tablet par stylus se solve karo — wahi ghadi wahan chalti rahegi"
                 >
                   ✍️ Stylus

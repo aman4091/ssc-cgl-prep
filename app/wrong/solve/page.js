@@ -111,6 +111,8 @@ function SolveInner() {
   const d = sp.get("d") || "all";
   const id = sp.get("id") || "";
   const quizId = sp.get("quiz") || "";
+  // Wapas jaane ka pata — bhejne wala page deta hai (URL-encoded).
+  const back = sp.get("back") ? decodeURIComponent(sp.get("back")) : "";
   // Poore test ki ghadi. Quiz player se "✍️ Stylus" dabane par bacha hua waqt
   // `?t=` mein saath aata hai — wahi 15-minute wala clock yahan aage chalta
   // hai. Iska per-question wale timer se koi lena-dena nahi; wo apni jagah
@@ -339,14 +341,28 @@ function SolveInner() {
   // Wapas Answers page par — /wrong hata diya gaya hai, ab wahi list yahan
   // dikhti hai. Date filter uske paas nahi hai, isliye sirf subject le jaate hain.
   // Quiz mode se nikalte waqt quiz player par, taaki score/review mil sake.
+  // Submit ho chuka ya nahi — exit ko ye chahiye, par wo state neeche banti
+  // hai. Ref se padhna surakshit hai (render ke waqt nahi padha jata).
+  const showResultRef = useRef(false);
+
   const exit = useCallback(async () => {
     await flushLocal();
     flushCloud();
-    // Quiz mode se bhi /answers par hi. Pehle yahan /quizzes/<id> tha, par quiz
-    // khatam hote hi delete ho jata hai — to back dabane par "Quiz not found"
-    // milta tha. Answers page hi is app ka ghar hai.
+    // Jahan se aaye the wahin wapas. Bhejne wala page apna pata `?back=` mein
+    // de deta hai (PYQ ka chapter, quiz ka page). Pehle yahan hamesha /answers
+    // tha — reasoning ka set lagao aur back dabao to Answers page khul jata
+    // tha, jo poori tarah bhatka deta hai.
+    // PYQ ke set ka page hamesha khulta hai (QBoard set dobara bana leta hai).
+    // Aam quiz submit hote hi delete ho jata hai, isliye uske BAAD wahan
+    // bhejne ka matlab "Quiz not found" — tab Answers hi theek hai.
+    if (back && (qMeta?.source === "set" || !showResultRef.current)) { router.push(back); return; }
     router.push(`/answers?subject=${subject}`);
-  }, [flushLocal, flushCloud, router, subject, quizId]);
+    // `showResult` deps mein JAAN-BOOJH KAR nahi hai — wo neeche declare hota
+    // hai aur deps array render ke waqt hi padh liya jata hai, to yahan likhne
+    // se "Cannot access 'showResult' before initialization" aata hai aur poora
+    // page hi nahi khulta (wahi keeda jo stopTimer ke saath tha). Isliye ref.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flushLocal, flushCloud, router, subject, quizId, back, qMeta]);
 
   // ── Quiz mode: jawab chunna aur ant mein result ───────────────────────────
   //
@@ -359,6 +375,7 @@ function SolveInner() {
   // reload ho jaye to attempt na ude.
   const [picks, setPicks] = useState({});
   const [showResult, setShowResult] = useState(false);
+  showResultRef.current = showResult;
   const [resultRows, setResultRows] = useState([]);
   const picksKey = quizId ? `ink.picks.${quizId}` : "";
 
@@ -476,9 +493,15 @@ function SolveInner() {
   // aata hai aur poora page hi nahi khulta. Body mein use karna theek hai, wo
   // baad mein chalti hai.
 
-  // Ghadi zero hone par yahan KHUD submit nahi hota. Pen se likhte waqt beech
-  // mein screen badal jana sabse bura hai — aadha likha kaam saamne se hat
-  // jata. Ghadi laal ho kar 00:00 par ruk jati hai; Result tum khud dabate ho.
+  // Ghadi zero = test khatam. Yahi to timer ka matlab hai, isliye submit khud
+  // ho jata hai — natija isi parde par khulta hai, page nahi badalta.
+  //
+  // Ye SIRF tab hai jab ghadi chal rahi ho (?t= aaya ho). Pehle diya hua set
+  // ya bina timer wala parda dekhte waqt kuch apne aap nahi hota.
+  useEffect(() => {
+    if (examStart > 0 && examLeft === 0 && quizId && !showResult) finish(picks);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [examLeft, examStart, quizId, showResult]);
 
   const pick = (optIdx) => {
     if (!rec) return;
