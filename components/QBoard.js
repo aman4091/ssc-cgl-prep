@@ -1,12 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { doneKeyFor, getDoneSet, markDoneMany } from "@/lib/qdone";
 import { getCounts, countMark, COUNTER_SUBJECTS } from "@/lib/qcounter";
 import { recordQuizAttempts } from "@/lib/qreview";
 import { recordAttempts } from "@/lib/qstats";
 import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
+import { saveQuiz, deleteQuiz } from "@/lib/storage";
 import { ExamModeProvider } from "./ExamMode";
 
 // 📚 Ek PYQ chapter ka board — asli online test.
@@ -64,6 +66,7 @@ export default function QBoard({
   stylusUrl,
   onSubmit,                   // submit ke baad page ka apna kaam (vocab din, etc.)
 }) {
+  const router = useRouter();
   const [setIdx, setSetIdx] = useState(single ? 0 : null);
   const [mode, setMode] = useState("test");     // "test" | "solutions"
   const [cur, setCur] = useState(0);
@@ -161,6 +164,30 @@ export default function QBoard({
     if (document.fullscreenElement) { document.exitFullscreen?.().catch(() => {}); setFs(false); }
     // API mana kar de (iOS Safari) to bhi CSS wala full-screen chalta hai.
     else { el.requestFullscreen?.().catch(() => {}); setFs(true); }
+  };
+
+  // PYQ ka set stylus wale parde par: wahan ka rasta ek SAVED quiz maangta hai
+  // (/wrong/solve?quiz=<id>), isliye isi set ke question ek asthayi quiz mein
+  // daal dete hain. Id set ke naam se banti hai, to dobara kholne par wahi
+  // quiz phir se bhar jata hai (nayi copy nahi banti), aur submit ke baad
+  // solve page use khud delete kar deta hai.
+  const openStylus = () => {
+    if (setIdx === null || !setQs.length) return;
+    const id = `set_${String(resumeKey || "set").replace(/[^A-Za-z0-9]+/g, "_")}_${setIdx}`;
+    try {
+      deleteQuiz(id);
+      saveQuiz({
+        id,
+        title: `${title} · Set ${setIdx + 1}`,
+        subject: subject || "",
+        // "set" hi wo nishaan hai jisse solve page jaanta hai ki galat/chhode
+        // question Mistake Notebook mein bhejne hain.
+        source: "set",
+        createdAt: new Date().toISOString(),
+        questions: setQs,
+      });
+    } catch { /* quota — phir bhi khol kar dekh lete hain */ }
+    router.push(`/wrong/solve?quiz=${encodeURIComponent(id)}&t=${leftSec}`);
   };
 
   const toTop = useCallback(() => {
@@ -479,7 +506,7 @@ export default function QBoard({
               inka koi kaam nahi. */}
           {!done && (
             <>
-              {stylusUrl && (
+              {stylusUrl ? (
                 <Link
                   className="btn btn--ghost btn--sm"
                   href={`${stylusUrl}${stylusUrl.includes("?") ? "&" : "?"}t=${leftSec}`}
@@ -487,6 +514,11 @@ export default function QBoard({
                 >
                   ✍️ Stylus
                 </Link>
+              ) : (
+                <button className="btn btn--ghost btn--sm" onClick={openStylus}
+                  title="Isi set ke question tablet par pen se solve karo — wahi ghadi wahan chalti rahegi">
+                  ✍️ Stylus
+                </button>
               )}
               <button className="btn btn--ghost btn--sm" onClick={toggleFs}>
                 {fs ? "⤢ Exit full screen" : "⛶ Full screen"}

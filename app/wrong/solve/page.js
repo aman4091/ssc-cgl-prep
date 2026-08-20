@@ -107,6 +107,7 @@ function SolveInner() {
   // React poora tree phenk kar dobara banata. /wrong bhi isi wajah se apne
   // items useEffect mein load karta hai.
   const [list, setList] = useState([]);
+  const [qMeta, setQMeta] = useState(null);
   const [ready, setReady] = useState(false);
 
   // Do source ho sakte hain: wrong book ki shelf, ya ek generated quiz
@@ -122,6 +123,9 @@ function SolveInner() {
       const load = () => {
         const quiz = getQuiz(quizId);
         setList(quizRecords(quizId, quiz));
+        // Meta alag rakhte hain: quiz submit ke baad delete ho jata hai, par
+        // Mistake Notebook ko subject/naam tabhi chahiye hote hain.
+        setQMeta(quiz ? { source: quiz.source || "", subject: quiz.subject || "", title: quiz.title || "" } : null);
         setReady(true);
       };
       load();
@@ -369,19 +373,40 @@ function SolveInner() {
         correct: x.ok,
       }));
       recordAttempts(items);
-      recordQuizAttempts(items.map((it) => ({ ...it, source: "similar", category: "Similar · stylus" })));
+      // PYQ ke set se aaya quiz? To galat/chhode question Mistake Notebook mein
+      // jaane chahiye — bilkul waise hi jaise screen par test dene par jaate
+      // hain. Baaki quiz (20 similar, notes ka quiz) ke liye `fromPyq` nahi
+      // hota, isliye wo naya record nahi banate (lib/qreview ka niyam).
+      const fromPyq = qMeta?.source === "set";
+      const skipped = rows.filter((x) => x.skipped).map((x) => ({
+        q: { question: x.question, options: x.options, answer: x.right },
+        correct: false,
+      }));
+      recordQuizAttempts([...items, ...(fromPyq ? skipped : [])].map((it) => ({
+        ...it,
+        subject: qMeta?.subject || "",
+        source: fromPyq ? "chapter" : "similar",
+        category: fromPyq ? (qMeta?.title || "PYQ set") : "Similar · stylus",
+        fromPyq,
+      })));
     } catch { /* recording fail ho to bhi result dikhna chahiye */ }
 
     // Quiz ab bekaar hai — galat questions Mistake Notebook mein ja chuke.
     // Rakhne se sirf localStorage bharta hai (jo pehle se cap ke kagaar par hai).
     try { deleteQuiz(quizId); localStorage.removeItem(picksKey); } catch { /* ignore */ }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [list, quizId, picksKey]);
+  }, [list, quizId, picksKey, qMeta]);
   // stopTimer deps mein JAAN-BOOJH KAR nahi hai: wo neeche timer wale hisse mein
   // declare hota hai, aur deps array render ke waqt hi evaluate ho jata hai —
   // yaani wahan use likhne se "Cannot access 'stopTimer' before initialization"
   // aata hai aur poora page hi nahi khulta. Body mein use karna theek hai, wo
   // baad mein chalti hai.
+
+  // Ghadi zero — khud submit. Page nahi badalta: natija yahin, isi parde par.
+  useEffect(() => {
+    if (examStart > 0 && examLeft === 0 && quizId && !showResult) finish(picks);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [examLeft, examStart, quizId, showResult]);
 
   const pick = (optIdx) => {
     if (!rec) return;
@@ -655,6 +680,22 @@ function SolveInner() {
       </div>
 
       <div className="inkv__body">
+        {/* Question palette — wahi jo test wale parde par hai: kaunsa question
+            ho chuka, kaunsa baaki, aur seedha kisi par jaana. Sirf quiz mode
+            mein; wrong-book ki shelf apni date/subject se chalti hai. */}
+        {quizId && list.length > 1 && (
+          <nav className="inkv__pal">
+            {list.map((r, i) => (
+              <a
+                key={r.id}
+                onClick={() => go(i)}
+                className={`${picks[r.id] !== undefined ? "is-ans" : ""}${i === idx ? " is-cur" : ""}`}
+              >
+                {i + 1}
+              </a>
+            ))}
+          </nav>
+        )}
         <div className={`inkv__q${slim ? " inkv__q--slim" : ""}`}>
           <div className="row" style={{ gap: 6, marginBottom: slim ? 0 : 8 }}>
             <button className="btn btn--ghost btn--sm" onClick={() => setSlim((v) => !v)}>

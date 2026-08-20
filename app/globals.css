@@ -3131,6 +3131,31 @@ body.exam-on .hero { display: none; }
    filter badalne ki cheez nahi hoti. */
 body.exam-on .pyq-filters { display: none; }
 
+/* Stylus wale parde ka question palette — test wale parde jaisa hi.
+   Phone par sabse upar ek patti (jo ungli se chalti hai), tablet/desktop par
+   daayen kinare ek chhota grid. */
+.inkv__pal {
+  flex: none; order: -1;
+  display: flex; gap: 6px; overflow-x: auto;
+  padding: 6px 10px; border-bottom: 1px solid var(--glass-border);
+  background: var(--bg-2);
+}
+.inkv__pal a {
+  flex: none; min-width: 32px; padding: 6px 0; text-align: center;
+  border-radius: var(--radius-sm);
+  background: var(--accent); color: var(--on-accent);
+  font-size: 13px; font-weight: 700; cursor: pointer;
+}
+.inkv__pal a.is-ans { background: var(--success); }
+.inkv__pal a.is-cur { outline: 3px solid #06205e; outline-offset: 2px; }
+@media (min-width: 900px) {
+  .inkv__pal {
+    order: 3; width: 168px; max-height: none; overflow-y: auto; overflow-x: hidden;
+    display: grid; grid-template-columns: repeat(4, 1fr); align-content: start;
+    padding: 10px; border-bottom: 0; border-left: 1px solid var(--glass-border);
+  }
+}
+
 /* Stylus wale parde par poore test ki ghadi (quiz player se ?t= le kar aayi). */
 .inkv__exam { background: var(--mark); color: #6b5200; font-weight: 700; }
 .inkv__exam.is-low { background: var(--danger); color: #fff; }
