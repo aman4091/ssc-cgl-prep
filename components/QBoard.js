@@ -125,13 +125,41 @@ export default function QBoard({
     [all, doneSet],
   );
 
+  // Pichhli list ka nishaan — sirf ye jaanne ke liye ki nayi list "wahi list +
+  // aur question" hai, ya sach mein doosri list.
+  const shapeRef = useRef({ key: null, sig: "", n: 0 });
+
   // Naya chapter (ya naya filter) aaya to seedha set wale parde par.
+  //
+  // Lekin generated quiz DHIRE-DHIRE bharta hai: DeepSeek pehle 10 question
+  // deta hai, quiz khul jata hai, aur baaki peeche se JUDTE rehte hain. Us
+  // waqt sirf list lambi hoti hai — shuru ke question wahi ke wahi. Pehle
+  // yahan `total` badalte hi poora reset chal jata tha, isliye 5 answer laga
+  // kar baithe ho aur naye question aa jayein to sab ud jata tha: chune hue
+  // option, review ke nishaan, ghadi, aur jis question par the wo bhi.
+  // Isliye: agar chalta hua test khula hai aur nayi list purani ka aage-badha
+  // roop hai, to kuch mat chhedo — naye question bas ANT mein aa kar baith
+  // jayenge (picks number se ginte hain, isliye hilte nahi).
   useEffect(() => {
+    const sigOf = (arr) => arr.map((q) => doneKeyFor(q)).join("|");
+    const prev = shapeRef.current;
+    const grew = setIdx !== null
+      && prev.key === resumeKey
+      && prev.n > 0 && total > prev.n
+      && sigOf(all.slice(0, prev.n)) === prev.sig;
+    shapeRef.current = { key: resumeKey, sig: sigOf(all), n: total };
+    if (grew) return;
     setSetIdx(single ? 0 : null); setAsk(null); setCur(0);
     setPicks({}); setReview({}); setTimes({}); setDone(false); setLeftSec(SET_MIN * 60);
     setHideAns(false); setRePicks({});
     retryRef.current = noNotebook;
     timeRef.current = { spent: {}, mark: single ? Date.now() : 0, at: 0 };
+    // `all`/`setIdx` jaan-boojh kar deps mein nahi: list ki pehchaan har append
+    // par nayi banti hai (storage se dobara padhi jati hai), to unhe deps mein
+    // daalne se wahi reset phir se chalne lagta jise ye rok raha hai. Effect ka
+    // closure har render par naya banta hai, isliye yahan hamesha taaza list
+    // hi milti hai.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resumeKey, total, single, noNotebook]);
 
   // Clock. Solutions dekhte waqt nahi chalta. 0 par khud submit ho jata hai —
