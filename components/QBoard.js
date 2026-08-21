@@ -320,6 +320,14 @@ export default function QBoard({
   // Palette apne aap abhi wale number par aa jaye (phone par wo horizontal
   // patti hai, wahan ye zyada zaroori hai). offsetTop kaam nahi karta — desktop
   // par rail sticky hai aur phone par static, to offsetParent badal jata hai.
+  //
+  // Ye SIRF tab chalta hai jab question badle (ya test khule). Pehle iske paas
+  // dependency array tha hi nahi, matlab har render ke baad chalta tha — aur
+  // ghadi har second state badalti hai, to har second. Nateeja: patti apni
+  // marzi se scroll hoti hi nahi thi. Tum 13 par ho aur 25 par jaana hai, patti
+  // ko sarkaya — aur ek second baad wo khud ko wapas 13 par kheench laati.
+  // Lagta tha ki position lock hai; asal mein har second ye effect use ghaseet
+  // kar wapas la raha tha.
   const railRef = useRef(null);
   useEffect(() => {
     const r = railRef.current;
@@ -329,7 +337,11 @@ export default function QBoard({
     const er = el.getBoundingClientRect();
     r.scrollTop += (er.top - cr.top) - (cr.height - er.height) / 2;
     r.scrollLeft += (er.left - cr.left) - (cr.width - er.width) / 2;
-  });
+    // `cur` aur `setIdx` hi kaafi hain: question badalna, aur test ka khulna.
+    // Naye question aane par (streaming quiz) jaan-boojh kar nahi — us waqt
+    // tum patti mein kahin bhi ho sakte ho, aur wahan se hilana wahi purani
+    // galti hogi.
+  }, [cur, setIdx]);
 
   // Maths/Reasoning ke question TASVEER hain — unka notebook wala roop card
   // khud banata hai (`tq`: id + qText + optText). Wahi roop board ko chahiye
