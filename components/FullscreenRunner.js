@@ -5,6 +5,7 @@ import Markdown from "./Markdown";
 import Diagram from "./Diagram";
 import { recordAttempts, keyFor } from "@/lib/qstats";
 import { addReview, setReviewErrorType } from "@/lib/qreview";
+import { recordSlow } from "@/lib/qslow";
 import { setSyncPaused } from "@/lib/sync";
 
 // Distraction-free, one-question-at-a-time TEST view that fills the whole screen.
@@ -129,6 +130,21 @@ export default function FullscreenRunner({
         if (!answered && timedOut) setReviewErrorType(keyFor(p), "time");
       });
       if (items.length) recordAttempts(items);
+      // ⏱️ Time khaane wale — Maths/Reasoning ka jo question 60 second se
+      // zyada le gaya wo /slow par jata hai, chahe sahi hua ho ya galat ya
+      // chhoda hua. `items` yahan kaam ka nahi: usme se Wrong-Book wale image
+      // question aur bina chhue question nikal chuke hain, jabki raftaar ka
+      // hisaab har us question par lagta hai jispar aap RUKE the. timesRef mein
+      // entry hai matlab us par ruke the — baaki lib/qslow khud chhaant leta hai.
+      recordSlow(questions.map((qq, i) => ({
+        q: projection(qq),
+        subject,
+        category: title,
+        sec: timesRef.current[i] || 0,
+        outcome: answers[i] === undefined
+          ? "skip"
+          : (answers[i] === qq.answer ? "right" : "wrong"),
+      })));
     }
     // reveal everything for the review pass
     const all = {};

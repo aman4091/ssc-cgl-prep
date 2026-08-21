@@ -178,7 +178,7 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
         )}
       </div>
 
-      <PasteAnswer q={q} />
+      <PasteAnswer q={q} subject={subject} category={chapterName} kind="text" />
 
       {markControl && <div className="pyq-mark mt-8">{markControl}</div>}
 

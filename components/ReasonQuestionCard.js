@@ -181,7 +181,7 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
       {/* Paste box HAR question par — figure (non-verbal) par bhi. ✨ Gemini ab
           tasveer copy karta hai, to answer wahan se aata hai; usse rakhne ki jagah
           na hone se wo mehnat bekaar ja rahi thi. */}
-      <PasteAnswer q={tq} />
+      <PasteAnswer q={tq} subject={subject} category={chapterName} kind="reason" />
 
       <div className="qcard__opts" style={{ gridTemplateColumns: "minmax(0, 1fr)" }}>
         {q.optImgs.map((src, oi) => {

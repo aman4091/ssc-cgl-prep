@@ -261,7 +261,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
         <img src={q.qImg} alt={alt} loading="lazy" className="math-img" />
       </div>
 
-      <PasteAnswer q={tq} />
+      <PasteAnswer q={tq} subject={subject} category={chapterName} kind="math" />
 
       <div className="qcard__opts" style={{ gridTemplateColumns: "minmax(0, 1fr)" }}>
         {q.optImgs.map((src, oi) => {

@@ -3,12 +3,16 @@
 import { useEffect, useState } from "react";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut, tidyAnswer } from "@/lib/shortcuts";
 import { keyFor } from "@/lib/qstats";
+import { saveGeminiQ, removeGeminiQFor } from "@/lib/geminiq";
 import Markdown from "./Markdown";
 
 // Paste an answer you got from Gemini (or anywhere) and save it as THIS question's
 // shortcut / explanation. Reuses the shortcut store, so it also shows up under the
 // ⚡ Shortcut trick button and syncs across devices.
-export default function PasteAnswer({ q }) {
+// `subject`, `category` aur `kind` sirf /gemini page ke liye hain — wahan
+// question ko uske apne card mein aur sahi subject ke neeche dikhana hai.
+// Na diye jayein to bhi paste chalta hai, bas page par "Other" mein baithega.
+export default function PasteAnswer({ q, subject = "", category = "", kind = "text" }) {
   const [saved, setSaved] = useState("");
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
@@ -31,9 +35,20 @@ export default function PasteAnswer({ q }) {
     const t = tidyAnswer(text.trim());
     if (!t) return;
     saveShortcutFor(q, t);
+    // ✨ Gemini page — HAATH SE paste kiya hua answer wahan bhi jama hota hai.
+    // (App khud jo shortcut trick maangta hai wo isse nahi guzarta, isliye
+    // wahan sirf wahi aata hai jo tumne khud dhoondh kar daala.)
+    saveGeminiQ({ q, subject, category, kind, answer: t });
     setSaved(t); setOpen(false); setShow(true);
   };
-  const clear = () => { if (confirm("Saved answer hata du?")) { clearSavedShortcut(q); setSaved(""); setShow(false); } };
+  const clear = () => {
+    if (!confirm("Saved answer hata du?")) return;
+    clearSavedShortcut(q);
+    // Gemini page se bhi — warna wahan ek aisa answer pada rehta jo question
+    // par hai hi nahi.
+    removeGeminiQFor(q);
+    setSaved(""); setShow(false);
+  };
   const pasteClip = async () => {
     try { const t = await navigator.clipboard.readText(); if (t) setText((p) => (p ? p + "\n" + t : t)); }
     catch { /* clipboard blocked — user can Ctrl+V */ }

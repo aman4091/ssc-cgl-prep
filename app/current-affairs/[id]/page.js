@@ -337,7 +337,7 @@ export default function CurrentAffairsDetail() {
                       </div>
                     )}
                   </div>
-                  {editIdx !== qi && <PasteAnswer q={q} />}
+                  {editIdx !== qi && <PasteAnswer q={q} subject="gs" category="Current Affairs" kind="text" />}
                   {editIdx === qi ? (
                     <QuestionEditor question={q} onSave={(nq) => saveEdit(qi, nq)} onCancel={() => setEditIdx(null)} />
                   ) : (
