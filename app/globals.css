@@ -119,8 +119,11 @@
   --font-mono: ui-monospace, "Cascadia Code", Consolas, monospace;
 }
 
-/* Dark mode hata diya gaya hai — site ki ekloti theme ab exam wali safed hai
-   (app/exam.css, class <body> par). Toggle bhi nikal gaya. */
+/* Do theme hain — din (safed, upar wala :root + app/exam.css ka .examskin)
+   aur raat. Raat ke rang exam.css ke sabse neeche wale block mein hain aur wo
+   sirf --tb-* tokens ko mod kar aati hai; iske apne koi rule nahi. Toggle
+   components/ThemeToggle.js hai, aur pehle paint se pehle nishaan lagane wala
+   chhota script app/layout.js ke <head> mein. */
 
 
 html {
@@ -147,7 +150,11 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   position: relative;
-  color-scheme: light;
+  /* Native cheezein — scrollbar, dropdown, date picker, form control — is
+     ek line se theme ke saath chalti hain. `.examskin` bhi ise set karta hai
+     (aur dark block usse dark), par body ka apna rule zyada khaas hai, isliye
+     yahan bhi wahi token padhna zaroori hai. */
+  color-scheme: var(--scheme, light);
 }
 
 /* The theme's ink rules: <b> is red-pen emphasis, <u> a word underlined in an
@@ -493,6 +500,18 @@ label.glass-card:hover { border-color: var(--accent2); }
   display: flex; align-items: center; gap: 9px;
   color: var(--ink); text-decoration: none; font-size: 0.95rem;
 }
+/* 🌗 Din/raat ka button — patti ke DAAYEN sire par (margin-left:auto naam ko
+   baayen chipkaye rakhta hai). Baaki patti ke hisaab se hi napa gaya hai:
+   wahi 34px ka khaana jo ☰ ka hai, wahi hover. */
+.themetog {
+  margin-left: auto;
+  width: 34px; height: 34px; border-radius: var(--radius-sm);
+  border: 0; background: transparent;
+  font-size: 1.05rem; line-height: 1; cursor: pointer;
+  display: grid; place-items: center;
+}
+.themetog:hover { background: var(--nav-hover); }
+
 /* Test ke dauraan patti bhi nahi — screen sirf paper ki. */
 body.exam-on .topbar { display: none; }
 .drawer__brand {
@@ -2465,7 +2484,7 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .nt-tip.diag { color: var(--accent2); font-style: italic; border-left-color: var(--accent2); }
 .nt-key {
   font-size: 15.5px; font-weight: 700; color: var(--ink); background: var(--mark);
-  border-left: 3px solid #e0ab00; border-radius: 0 8px 8px 0; padding: 8px 14px; margin: 11px 0;
+  border-left: 3px solid var(--tb-key-line, #e0ab00); border-radius: 0 8px 8px 0; padding: 8px 14px; margin: 11px 0;
 }
 
 /* ---- tables (wide ones scroll themselves, never the page) ---- */
@@ -3152,8 +3171,8 @@ body.exam-on .pyq-filters { display: none; }
 .inkv__pal a.is-ans { background: var(--success); }
 .inkv__pal a.is-right { background: var(--success); }
 .inkv__pal a.is-wrong { background: var(--danger); }
-.inkv__pal a.is-skip { background: #dfe3e8; color: #6b7280; }
-.inkv__pal a.is-cur { outline: 3px solid #06205e; outline-offset: 2px; }
+.inkv__pal a.is-skip { background: var(--tb-skip, #dfe3e8); color: var(--tb-skip-ink, #6b7280); }
+.inkv__pal a.is-cur { outline: 3px solid var(--tb-focus, #06205e); outline-offset: 2px; }
 @media (min-width: 900px) {
   .inkv__pal {
     order: 3; width: 168px; max-height: none; overflow-y: auto; overflow-x: hidden;
@@ -3163,7 +3182,7 @@ body.exam-on .pyq-filters { display: none; }
 }
 
 /* Stylus wale parde par poore test ki ghadi (quiz player se ?t= le kar aayi). */
-.inkv__exam { background: var(--mark); color: #6b5200; font-weight: 700; }
+.inkv__exam { background: var(--mark); color: var(--tb-warn-ink, #6b5200); font-weight: 700; }
 .inkv__exam.is-low { background: var(--danger); color: #fff; }
 
 /* 🙈 mode: jis option par pichhli baar haath gaya tha uspar chhota nishaan. */

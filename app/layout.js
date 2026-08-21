@@ -29,7 +29,14 @@ export const metadata = {
 // lag jayen to poora page zoom na ho jaye — zoom likhne wali surface ka apna
 // hai. viewportFit cover se tablet ke rounded corners tak background jata hai.
 export const viewport = {
-  themeColor: "#ffffff",
+  // Phone ka address bar / PWA ki patti. Do entry: browser wahi uthata hai jo
+  // us waqt ki theme se milti hai. Toggle dabate hi lib/theme.js is tag ko
+  // haath se bhi badal deta hai, kyunki `data-theme` prefers-color-scheme se
+  // nahi bandha — wo user ki apni chuni hui cheez hai.
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#141922" },
+  ],
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -37,14 +44,38 @@ export const viewport = {
   viewportFit: "cover",
 };
 
-// Ek hi theme hai: exam wali safed (app/exam.css). Class <body> par lagti hai,
-// aur tokens inherit hote hain, isliye poori site — notes, vocab, planner, PYQ
-// — sab usi rang aur font mein. Dark mode aur uska toggle hata diye gaye:
-// exam ka rang ek hi hota hai, aur do design system rakhne se toggle dabate hi
-// site doosri site lagne lagti thi.
+// Ek hi SKIN hai: exam wali (app/exam.css). Class <body> par lagti hai, aur
+// tokens inherit hote hain, isliye poori site — notes, vocab, planner, PYQ —
+// sab usi rang aur font mein.
+//
+// Uske do roop hain: din (safed) aur raat (dark). Raat wala roop exam.css ke
+// aakhir mein hai aur wo SIRF --tb-* tokens ko doosre rang par mod deta hai —
+// uska apna ek bhi rule nahi. Pehle dark mode isliye hataya gaya tha ki wo
+// apna alag design system leke aata tha aur toggle dabate hi site doosri site
+// lagne lagti thi; ab wo ho hi nahi sakta.
+//
+// Neeche wala chhota script <head> mein isliye hai ki nishaan pehle PAINT se
+// pehle lag jaye. React ke andar karte to raat wale user ko har page par ek
+// safed jhapki milti — aur wahi cheez sabse zyada chubhti hai.
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    /* Script <html> ka apna attribute badalta hai, isliye server ka HTML aur
+       client ka HTML yahan alag honge — ye ISI element par expected hai. */
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('cgl.theme');" +
+              "if(t==='dark')document.documentElement.setAttribute('data-theme','dark');" +
+              // Address bar ka rang bhi yahin — bina-media wala meta sabse aage,
+              // taaki wo upar wali do (OS ki pasand wali) se pehle mile.
+              "if(t){var m=document.createElement('meta');m.id='tc-user';" +
+              "m.name='theme-color';m.content=t==='dark'?'#141922':'#ffffff';" +
+              "document.head.prepend(m)}}catch(e){}",
+          }}
+        />
+      </head>
       <body className={`${inter.variable} examskin`}>
         <div className="bg-orbs" aria-hidden="true">
           <span className="orb orb--1" />

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { NAV_GROUPS, NAV_DIRECT, trailForPath, nodeAt } from "@/lib/nav";
 import { getNewWordEntries, newWordDayKey, newWordDayLabel } from "@/lib/vocab";
 import { getUserTopics } from "@/lib/userpyq";
+import ThemeToggle from "./ThemeToggle";
 
 // Nav group key -> user "shelf book" id (Settings → PYQ Manager): jab bank ka
 // menu khule to user ke apne topics bhi uske chapters ke saath dikhein.
@@ -201,6 +202,10 @@ export default function Navbar() {
           {mark}
           <strong>SSC CGL Pre</strong>
         </Link>
+        {/* Din/raat — patti ke dayein sire par, hamesha ek tap ki doori par.
+            Menu ke ANDAR rakhne se raat mein site kholte hi pehle menu kholna
+            padta, aur wahi ek pal sabse chubhta hai. */}
+        <ThemeToggle />
       </header>
 
       {open && <div className="drawer__backdrop" onClick={() => setOpen(false)} />}

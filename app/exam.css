@@ -43,6 +43,40 @@
   --tb-head: #f1f3f6;        /* box ka sar (header band) */
   --tb-page: #ffffff;
 
+  /* ---- wo rang jo pehle neeche rules ke ANDAR hardcoded pade the ----
+     Token isliye banaye ki dark theme sirf inhe re-point kare — ek bhi rule
+     chhuna na pade. Light ke values bilkul wahi hain jo pehle rules mein
+     likhe the, isliye din wala roop ratti bhar nahi badla. */
+  --tb-soft: #fafbfc;         /* halka sa utha hua tal — "ho gaya" card */
+  --tb-tint: #fbfcfe;         /* answer box / solution ka halka wash */
+  --tb-line-hard: #8a919c;    /* option ke radio circle ki lakeer */
+  --tb-green-dark: #17792c;   /* Submit ka border aur hover */
+  --tb-ok-ink: #14701f;       /* hare wash ke UPAR likha hua */
+  --tb-bad-ink: #9c0014;      /* laal wash ke upar likha hua */
+  --tb-warn-ink: #6b5200;     /* peele ke upar likha hua */
+  --tb-warn-ink-2: #7a6200;   /* ghadi ka chhota "min" wala hissa */
+  --tb-red-ink-soft: #ffd9dd; /* laal ghadi ke andar ka halka text */
+  --tb-rev: #f5c400;          /* Mark for Review ka peela */
+  --tb-rev-hover: #e0b400;
+  --tb-rev-on: #ffd83d;
+  --tb-rev-line: #c99f00;
+  --tb-rev-ink: #3d2f00;
+  --tb-rev-soft: #fff6cc;
+  --tb-key-line: #e0ab00;    /* notes ke "key point" block ki sunehri lakeer */
+  --tb-skip: #dfe3e8;         /* chhoda hua question */
+  --tb-skip-ink: #6b7280;
+  --tb-focus: #06205e;        /* palette mein abhi wale number ka outline */
+  --tb-code: #a3106b;         /* `code` ka rang */
+  --tb-bg-2: #f7f8fa;         /* page se zara gehra tal (rail, code plate) */
+  --tb-raised: #eef1f5;       /* utha hua card ka mazboot roop */
+  --tb-ink-2: #3d4450;        /* doosre darje ka text */
+  --tb-amber: #b26a00;        /* warning / Mark-for-Review wala button */
+  /* Link/heading wala neela ALAG token hai us neele se jo bhari hui button ka
+     background banta hai. Din mein dono ek hi hain; raat mein bhara hua neela
+     gehra rehta hai (uspar safed likha hai) aur likhne wala neela halka ho
+     jata hai, warna kaale page par link padha hi nahi jata. */
+  --tb-blue-ink: var(--tb-blue);
+
   /* Arial jaan-boojh kar: screenshot wahi hai, aur ye har Windows/Android par
      hai. Devanagari fallback zaroori hai — is site ke question mein Hindi
      line beech mein aa jaati hai, aur bina fallback ke wo tofu-box ban jaati
@@ -59,44 +93,44 @@
   --line: var(--tb-line);
   --ink: var(--tb-ink);
   --dim: var(--tb-dim);
-  --accent2: var(--tb-blue);
+  --accent2: var(--tb-blue-ink);
   --ok: var(--tb-green);
   --bad: var(--tb-red);
   --mark: var(--tb-yellow);
 
   --bg-0: var(--tb-page);
   --bg-1: var(--tb-page);
-  --bg-2: #f7f8fa;
+  --bg-2: var(--tb-bg-2);
 
   --glass-bg: var(--tb-page);
-  --glass-bg-strong: #eef1f5;
+  --glass-bg-strong: var(--tb-raised);
   --glass-border: var(--tb-line);
-  --glass-border-strong: #aeb6c2;
+  --glass-border-strong: var(--tb-line-hard);
   --glass-shadow: none;
 
   --text-1: var(--tb-ink);
-  --text-2: #3d4450;
+  --text-2: var(--tb-ink-2);
   --text-3: var(--tb-dim);
 
   --accent: var(--tb-blue);
   --on-accent: #ffffff;
-  --accent-2: var(--tb-blue);
-  --accent-3: var(--tb-blue);
+  --accent-2: var(--tb-blue-ink);
+  --accent-3: var(--tb-blue-ink);
   --accent-grad: linear-gradient(var(--tb-blue), var(--tb-blue));
   --accent-glow: none;
 
   --success: var(--tb-green);
   --danger: var(--tb-red);
-  --warning: #b26a00;
+  --warning: var(--tb-amber);
   /* Bada heading (## / ###) — kaala aur bhaari. Notes mein wahi sabse pehle
      nazar aana chahiye; neela heading page ke neele link/label ke saath ghul
      jata tha. */
-  --head: #000000;
-  --mauve: var(--tb-blue);
+  --head: var(--tb-q);
+  --mauve: var(--tb-blue-ink);
   /* **bold** ka apna pen — heading ke NEECHE wale chhote sar (jaise "Brahmins
      ka Dominance:"). Hara tha, phir baingani; dono jame nahi. Ab neela: bada
      heading kaala hai, ye neela — do saaf star. */
-  --emph: var(--tb-blue);
+  --emph: var(--tb-blue-ink);
 
   --ok-wash: var(--tb-green-soft);
   --bad-wash: var(--tb-red-soft);
@@ -110,6 +144,7 @@
   --radius-xl: 4px;
   --blur: 0px;
 
+  --scheme: light;
   color-scheme: light;
   font-family: var(--tb-font);
   background: var(--tb-page);
@@ -150,8 +185,8 @@
   background: none;
   -webkit-background-clip: initial;
   background-clip: initial;
-  -webkit-text-fill-color: var(--tb-blue);
-  color: var(--tb-blue);
+  -webkit-text-fill-color: var(--tb-blue-ink);
+  color: var(--tb-blue-ink);
 }
 .examskin .hero__sub {
   color: var(--tb-dim);
@@ -176,8 +211,8 @@
 .examskin .btn:hover { background: var(--tb-blue-dark); color: #fff; transform: none; box-shadow: none; }
 .examskin .btn:disabled { opacity: 0.45; cursor: default; }
 .examskin .btn--ghost {
-  background: #fff;
-  color: var(--tb-blue);
+  background: var(--tb-page);
+  color: var(--tb-blue-ink);
   border: 1px solid var(--tb-line);
 }
 .examskin .btn--ghost:hover { background: var(--tb-blue-soft); border-color: var(--tb-blue); color: var(--tb-blue-dark); }
@@ -187,7 +222,7 @@
 .examskin .input,
 .examskin .select,
 .examskin .textarea {
-  background: #fff;
+  background: var(--tb-page);
   border: 1px solid var(--tb-line);
   border-radius: 3px;
   color: var(--tb-ink);
@@ -198,7 +233,7 @@
 .examskin .textarea:focus { border-color: var(--tb-blue); box-shadow: none; outline: 1px solid var(--tb-blue); }
 
 .examskin .chip {
-  background: #fff;
+  background: var(--tb-page);
   border: 1px solid var(--tb-line);
   border-radius: 3px;
   color: var(--tb-dim);
@@ -209,7 +244,7 @@
 
 .examskin .placeholder,
 .examskin .glass-card {
-  background: #fff;
+  background: var(--tb-page);
   border: 1px solid var(--tb-line);
   border-radius: 3px;
   box-shadow: none;
@@ -227,9 +262,9 @@
   font-weight: 700;
 }
 .examskin .stat {
-  background: #fff; border: 1px solid var(--tb-line); border-radius: 3px; box-shadow: none;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 3px; box-shadow: none;
 }
-.examskin .stat__num { color: var(--tb-blue); }
+.examskin .stat__num { color: var(--tb-blue-ink); }
 .examskin .stat__label { color: var(--tb-dim); }
 
 /* =========================================================
@@ -237,13 +272,13 @@
    ========================================================= */
 .examskin .qcard {
   --pad: 0px;
-  background: #fff;
+  background: var(--tb-page);
   border: 1px solid var(--tb-line);
   border-radius: 3px;
   padding: 0;
   overflow: hidden;
 }
-.examskin .qcard.is-done { opacity: 1; background: #fafbfc; }
+.examskin .qcard.is-done { opacity: 1; background: var(--tb-soft); }
 .examskin .qcard.is-done .qcard__h { color: var(--tb-dim); }
 
 /* "Question No. 3" — box ke upar apni patti mein, kaala aur bold. */
@@ -313,7 +348,7 @@
   border: 0;
   border-top: 1px solid var(--tb-line-soft);
   border-radius: 0;
-  background: #fff;
+  background: var(--tb-page);
   color: var(--tb-ink);
   font-size: 15px;
   line-height: 1.55;
@@ -337,9 +372,9 @@
   position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
   width: 22px; height: 22px;
   margin: 0;
-  border: 1px solid #8a919c;
+  border: 1px solid var(--tb-line-hard);
   border-radius: 50%;
-  background: #fff;
+  background: var(--tb-page);
   color: var(--tb-dim);
   font-size: 11px; font-weight: 700; line-height: 20px;
   text-align: center;
@@ -375,14 +410,14 @@
 .examskin .qcard__answer {
   margin: 0;
   padding: 14px 16px;
-  background: #fbfcfe;
+  background: var(--tb-tint);
   border-top: 1px solid var(--tb-line);
   border-left: 3px solid var(--tb-blue);
   border-radius: 0;
   color: var(--tb-ink);
   font-size: 14px;
 }
-.examskin .qcard__answer--empty { color: var(--tb-dim); background: #fafbfc; border-left-color: var(--tb-line); }
+.examskin .qcard__answer--empty { color: var(--tb-dim); background: var(--tb-soft); border-left-color: var(--tb-line); }
 .examskin .qcard__note { color: var(--tb-red); }
 
 /* =========================================================
@@ -404,7 +439,7 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 6px;
   align-content: start;
-  background: #fff;
+  background: var(--tb-page);
   border: 1px solid var(--tb-line);
   border-radius: 3px;
   padding: 10px;
@@ -448,7 +483,7 @@
      samate. */
   .examskin .qboard__tally { flex-direction: row; flex-wrap: wrap; }
   /* Patti upar chipki rahe — question scroll karte waqt bhi number saamne. */
-  .examskin .qboard__side { background: #fff; }
+  .examskin .qboard__side { background: var(--tb-page); }
   .examskin .qboard__side a,
   .examskin .ansp__side a { flex: none; min-width: 34px; }
 }
@@ -467,16 +502,16 @@
 }
 .examskin .qboard__stats span,
 .examskin .ansp__stats span {
-  background: #fff;
+  background: var(--tb-page);
   border: 1px solid var(--tb-line);
   border-radius: 3px;
   padding: 4px 10px;
   color: var(--tb-ink);
 }
-.examskin .qboard__stats .tot, .examskin .ansp__stats .tot { color: var(--tb-blue); }
-.examskin .qboard__stats .did, .examskin .ansp__stats .did { background: var(--tb-green-soft); color: #14701f; }
-.examskin .qboard__stats .left, .examskin .ansp__stats .left { background: var(--tb-yellow); color: #6b5200; }
-.examskin .qboard__stats .cnt, .examskin .ansp__stats .cnt { color: var(--tb-blue); }
+.examskin .qboard__stats .tot, .examskin .ansp__stats .tot { color: var(--tb-blue-ink); }
+.examskin .qboard__stats .did, .examskin .ansp__stats .did { background: var(--tb-green-soft); color: var(--tb-ok-ink); }
+.examskin .qboard__stats .left, .examskin .ansp__stats .left { background: var(--tb-yellow); color: var(--tb-warn-ink); }
+.examskin .qboard__stats .cnt, .examskin .ansp__stats .cnt { color: var(--tb-blue-ink); }
 .examskin .qboard__stats .cnt button,
 .examskin .ansp__stats .cnt button {
   background: var(--tb-blue); color: #fff; border-radius: 3px;
@@ -486,17 +521,17 @@
 
 /* ---- Set chunne ka parda ---- */
 .examskin .setcard {
-  background: #fff; border: 1px solid var(--tb-line); border-radius: 3px;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 3px;
 }
 .examskin .setcard:hover { border-color: var(--tb-blue); background: var(--tb-blue-soft); }
 .examskin .setcard__n { color: var(--tb-ink); }
 .examskin .setcard.is-done { border-left: 3px solid var(--tb-green); }
-.examskin .setcard__score { color: #14701f; }
+.examskin .setcard__score { color: var(--tb-ok-ink); }
 .examskin .setcard__open { background: none; }
 .examskin .setcard__meta, .examskin .setcard__done { color: var(--tb-dim); }
 .examskin .setcard__bar { background: var(--tb-line-soft); border-radius: 0; }
 .examskin .setcard__bar i { background: var(--tb-green); }
-.examskin .setcard__go { color: var(--tb-blue); }
+.examskin .setcard__go { color: var(--tb-blue-ink); }
 
 /* ---- Test ka sar aur ghadi ---- */
 .examskin .qboard__top {
@@ -505,38 +540,38 @@
 }
 .examskin .qboard__title { color: var(--tb-ink); }
 .examskin .qboard__clock {
-  background: var(--tb-yellow); color: #6b5200; border-radius: 3px;
+  background: var(--tb-yellow); color: var(--tb-warn-ink); border-radius: 3px;
   padding: 3px 12px; font-size: 16px; text-align: center;
 }
-.examskin .qboard__clock em { color: #7a6200; }
+.examskin .qboard__clock em { color: var(--tb-warn-ink-2); }
 /* Aakhri minute — Testbook par bhi ghadi laal ho jaati hai. */
 .examskin .qboard__clock.is-low { background: var(--tb-red); color: #fff; }
-.examskin .qboard__clock.is-low em { color: #ffd9dd; }
+.examskin .qboard__clock.is-low em { color: var(--tb-red-ink-soft); }
 
 /* ---- Palette ke rang: neela = chhua nahi, hara = sahi, laal = galat,
    peela = review, aur safed andar ki lakeer = abhi isi par ho ---- */
 /* Test ke dauraan: jawab diya = hara (sahi-galat nahi batata), review = peela.
    Submit ke baad: hara = sahi, laal = galat, dhundhla = chhoda hua. */
 .examskin .qboard__side a.is-ans { background: var(--tb-green); color: #fff; }
-.examskin .qboard__side a.is-skip { background: #dfe3e8; color: #6b7280; }
+.examskin .qboard__side a.is-skip { background: var(--tb-skip); color: var(--tb-skip-ink); }
 .examskin .qboard__side a.is-right { background: var(--tb-green); color: #fff; }
 .examskin .qboard__side a.is-wrong { background: var(--tb-red); color: #fff; }
-.examskin .qboard__side a.is-review { background: #f5c400; color: #3d2f00; }
+.examskin .qboard__side a.is-review { background: var(--tb-rev); color: var(--tb-rev-ink); }
 /* Abhi jis par ho — sirf ghera, rang nahi. Pehle ye box safed kar deta tha,
    jisse abhi wale question ka sahi/galat/review wala rang dikhna hi band ho
    jata tha. Ab hara/laal/peela neeche se jhalakta rehta hai. */
 .examskin .qboard__side a.is-cur {
-  outline: 3px solid #06205e;
+  outline: 3px solid var(--tb-focus);
   outline-offset: 2px;
   font-weight: 800;
 }
 
 /* ---- Mark for Review ka peela button ---- */
 .examskin .btn--review {
-  background: #f5c400; color: #3d2f00; border-color: #c99f00;
+  background: var(--tb-rev); color: var(--tb-rev-ink); border-color: var(--tb-rev-line);
 }
-.examskin .btn--review:hover { background: #e0b400; color: #3d2f00; }
-.examskin .btn--review.is-on { background: #ffd83d; color: #3d2f00; border-color: #3d2f00; }
+.examskin .btn--review:hover { background: var(--tb-rev-hover); color: var(--tb-rev-ink); }
+.examskin .btn--review.is-on { background: var(--tb-rev-on); color: var(--tb-rev-ink); border-color: var(--tb-rev-ink); }
 
 /* ---- Neeche ka hisaab (Testbook ka "PART-A Analysis") ---- */
 /* Hisaab ab palette ke NEECHE hi khade khambhe mein hai, isliye teeno ek ke
@@ -549,15 +584,15 @@
 .examskin .tally {
   display: flex; align-items: center; justify-content: space-between;
 }
-.examskin .tally--bad { background: var(--tb-red-soft); color: #9c0014; }
+.examskin .tally--bad { background: var(--tb-red-soft); color: var(--tb-bad-ink); }
 
 /* Submit — Testbook ka hara button. */
-.examskin .btn--submit { background: var(--tb-green); border-color: #17792c; color: #fff; }
-.examskin .btn--submit:hover { background: #17792c; }
+.examskin .btn--submit { background: var(--tb-green); border-color: var(--tb-green-dark); color: #fff; }
+.examskin .btn--submit:hover { background: var(--tb-green-dark); }
 
 /* Full screen mein page ka apna safed hi rehna chahiye (skin bahar reh jaati
    hai kyunki fullscreen element DOM se upar uth jata hai). */
-.examskin .qboard.is-fs { background: #fff; padding: 14px; }
+.examskin .qboard.is-fs { background: var(--tb-page); padding: 14px; }
 
 /* Submit ke baad ka natija — Right / Wrong / Accuracy / Time. */
 .examskin .qboard__result {
@@ -565,21 +600,21 @@
   border-radius: 3px; color: var(--tb-ink);
 }
 .examskin .res {
-  background: #fff; border: 1px solid var(--tb-line); border-radius: 3px;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 3px;
   color: var(--tb-dim); font-weight: 700;
 }
 .examskin .res--right { background: var(--tb-green-soft); }
 .examskin .res--wrong { background: var(--tb-red-soft); }
-.examskin .res--right b { color: #14701f; }
-.examskin .res--wrong b { color: #9c0014; }
-.examskin .res--acc b, .examskin .res--time b, .examskin .res--marks b { color: var(--tb-blue); }
+.examskin .res--right b { color: var(--tb-ok-ink); }
+.examskin .res--wrong b { color: var(--tb-bad-ink); }
+.examskin .res--acc b, .examskin .res--time b, .examskin .res--marks b { color: var(--tb-blue-ink); }
 .examskin .res--nokey { background: var(--tb-head); }
 .examskin .res--nokey b { color: var(--tb-dim); }
 .examskin .res--marks { background: var(--tb-blue-soft); }
 
 /* Dobara-test wala popup. */
 .examskin .setask__box {
-  background: #fff; border: 1px solid var(--tb-line); border-radius: 3px;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 3px;
 }
 .examskin .setask__title { color: var(--tb-ink); }
 .examskin .setask__sub { color: var(--tb-dim); }
@@ -592,13 +627,13 @@
   background: var(--tb-blue); border-color: var(--tb-blue-dark); color: #fff;
 }
 .examskin .tally {
-  background: #fff; border: 1px solid var(--tb-line); border-radius: 3px;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 3px;
   color: var(--tb-dim); font-weight: 700;
 }
 .examskin .tally b { font-size: 15px; }
-.examskin .tally--ans { background: var(--tb-green-soft); color: #14701f; }
+.examskin .tally--ans { background: var(--tb-green-soft); color: var(--tb-ok-ink); }
 .examskin .tally--not { color: var(--tb-ink); }
-.examskin .tally--rev { background: #fff6cc; color: #6b5200; }
+.examskin .tally--rev { background: var(--tb-rev-soft); color: var(--tb-warn-ink); }
 
 /* Prev / Save & Next ki patti — screenshot mein yahi neele buttons upar hain. */
 .examskin .qboard__nav {
@@ -608,14 +643,14 @@
   padding: 8px 10px;
 }
 .examskin .qboard__pos { color: var(--tb-ink); font-size: 13px; }
-.examskin .qboard__pos b { color: var(--tb-blue); font-size: 15px; }
+.examskin .qboard__pos b { color: var(--tb-blue-ink); font-size: 15px; }
 .examskin .qboard__pos--hint { color: var(--tb-dim); }
 /* Abhi jis number par ho — Testbook par wo box alag dikhta hai. */
-.examskin .qmark { background: var(--tb-green-soft); color: #14701f; border-radius: 3px; }
+.examskin .qmark { background: var(--tb-green-soft); color: var(--tb-ok-ink); border-radius: 3px; }
 
 /* Subject / chapter ki list (PYQ ka menu) — exam ke bordered rows. */
 .examskin .pyq-row {
-  background: #fff;
+  background: var(--tb-page);
   border: 1px solid var(--tb-line);
   border-radius: 3px;
 }
@@ -625,11 +660,11 @@
 .examskin .pyq-row--all { border-left: 3px solid var(--tb-blue); }
 
 .examskin .passage-box {
-  background: #fbfcfe; border: 1px solid var(--tb-line); border-radius: 3px; color: var(--tb-ink);
+  background: var(--tb-tint); border: 1px solid var(--tb-line); border-radius: 3px; color: var(--tb-ink);
 }
 .examskin .passage-box .md { color: var(--tb-ink); }
 .examskin .answer-box {
-  background: #fbfcfe; border: 1px solid var(--tb-line); border-left: 3px solid var(--tb-blue);
+  background: var(--tb-tint); border: 1px solid var(--tb-line); border-left: 3px solid var(--tb-blue);
   border-radius: 0; color: var(--tb-ink);
 }
 
@@ -638,7 +673,7 @@
    Iske option inline style se bante hain, par wo bhi var() padhte hain,
    isliye rang upar wale tokens se hi aa gaye. Yahan sirf dhaancha.
    ========================================================= */
-.examskin .fsr { background: #fff; color: var(--tb-ink); }
+.examskin .fsr { background: var(--tb-page); color: var(--tb-ink); }
 .examskin .fsr__top,
 .examskin .fsr__bottom { background: var(--tb-head); border-color: var(--tb-line); }
 .examskin .fsr__top { border-bottom: 2px solid var(--tb-blue); }
@@ -649,7 +684,7 @@
 /* Option ka A/B/C/D — wahi radio-circle jo card par hai. */
 .examskin .fsr__opt > strong {
   flex: none; width: 20px; height: 20px;
-  border: 1px solid #8a919c; border-radius: 50%; background: #fff;
+  border: 1px solid var(--tb-line-hard); border-radius: 50%; background: var(--tb-page);
   color: var(--tb-dim); font-size: 11px; font-weight: 700; line-height: 18px;
   text-align: center; opacity: 1;
 }
@@ -659,7 +694,7 @@
   font-size: 15px !important;
 }
 .examskin .fsr__sol {
-  background: #fbfcfe; border: 1px solid var(--tb-line); border-left: 3px solid var(--tb-blue);
+  background: var(--tb-tint); border: 1px solid var(--tb-line); border-left: 3px solid var(--tb-blue);
   border-radius: 0; color: var(--tb-ink);
 }
 .examskin .fsr__jump { border-radius: 3px; border-color: var(--tb-line); }
@@ -680,7 +715,7 @@
 .examskin article.glass-card > .grid > button > span:first-child {
   display: inline-flex; align-items: center; justify-content: center;
   flex: none; width: 20px; height: 20px; margin-right: 12px;
-  border: 1px solid #8a919c; border-radius: 50%; background: #fff;
+  border: 1px solid var(--tb-line-hard); border-radius: 50%; background: var(--tb-page);
   color: var(--tb-dim); font-size: 11px; opacity: 1;
 }
 .examskin .progress { background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 3px; }
@@ -692,7 +727,7 @@
    naam le kar exam ke rang par lana pada.
    ========================================================= */
 .examskin .ansp {
-  background: #fff;
+  background: var(--tb-page);
   color: var(--tb-ink);
   font-family: var(--tb-font);
   border-radius: 0;
@@ -701,15 +736,15 @@
 }
 .examskin .ansp__main h1 { color: var(--tb-ink); font-size: 1.2rem; font-weight: 700; }
 .examskin .ansp__chips a {
-  background: #fff; border: 1px solid var(--tb-line); border-radius: 3px; color: var(--tb-dim); font-weight: 700;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 3px; color: var(--tb-dim); font-weight: 700;
 }
 .examskin .ansp__chips a:hover { background: var(--tb-blue-soft); color: var(--tb-blue-dark); }
 .examskin .ansp__chips a.is-active { background: var(--tb-blue); border-color: var(--tb-blue-dark); color: #fff; }
 
 .examskin .ansp__card {
-  background: #fff; border: 1px solid var(--tb-line); border-radius: 3px; padding: 0; overflow: hidden;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 3px; padding: 0; overflow: hidden;
 }
-.examskin .ansp__card.is-done { opacity: 1; background: #fafbfc; }
+.examskin .ansp__card.is-done { opacity: 1; background: var(--tb-soft); }
 .examskin .ansp__card.is-done h2 { color: var(--tb-dim); }
 .examskin .ansp__card.is-hit { box-shadow: 0 0 0 2px var(--tb-blue); }
 .examskin .ansp__card h2 {
@@ -732,48 +767,145 @@
   font-family: var(--tb-font);
 }
 .examskin .ansp__btn:hover { background: var(--tb-blue-dark); }
-.examskin .ansp__btn--go { background: var(--tb-green); border-color: #17792c; color: #fff; }
-.examskin .ansp__btn--go:hover { background: #17792c; }
-.examskin .ansp__mark { background: var(--tb-green-soft); color: #14701f; border-radius: 3px; }
+.examskin .ansp__btn--go { background: var(--tb-green); border-color: var(--tb-green-dark); color: #fff; }
+.examskin .ansp__btn--go:hover { background: var(--tb-green-dark); }
+.examskin .ansp__mark { background: var(--tb-green-soft); color: var(--tb-ok-ink); border-radius: 3px; }
 .examskin .ansp__mark input { accent-color: var(--tb-green); }
-.examskin .ansp__flash { color: #14701f; }
+.examskin .ansp__flash { color: var(--tb-ok-ink); }
 .examskin .ansp__err { color: var(--tb-red); }
 .examskin .ansp__empty { color: var(--tb-dim); font-size: 15px; }
 
 .examskin .ansp__answer {
   margin: 0; padding: 14px;
-  background: #fbfcfe; border-top: 1px solid var(--tb-line); border-left: 3px solid var(--tb-blue);
+  background: var(--tb-tint); border-top: 1px solid var(--tb-line); border-left: 3px solid var(--tb-blue);
   border-radius: 0; color: var(--tb-ink); font-size: 14px;
 }
-.examskin .ansp__answer--empty { color: var(--tb-dim); background: #fafbfc; border-left-color: var(--tb-line); }
+.examskin .ansp__answer--empty { color: var(--tb-dim); background: var(--tb-soft); border-left-color: var(--tb-line); }
 .examskin .ansp__answer strong, .examskin .ansp__answer .md strong, .examskin .ansp__answer .md b { color: var(--emph); }
 .examskin .ansp__answer em { color: var(--tb-ink); }
-.examskin .ansp__answer a, .examskin .ansp__answer .md a { color: var(--tb-blue); }
+.examskin .ansp__answer a, .examskin .ansp__answer .md a { color: var(--tb-blue-ink); }
 .examskin .ansp__answer .md { color: var(--tb-ink); }
 .examskin .ansp__answer :is(h1, h2, h3),
 .examskin .ansp__answer .md :is(h1, h2, h3) { color: var(--head); font-weight: 700; }
-.examskin .ansp__answer .md :is(h4, h5, h6) { color: var(--tb-blue); }
-.examskin .ansp__answer code { background: var(--tb-head); color: #a3106b; }
+.examskin .ansp__answer .md :is(h4, h5, h6) { color: var(--tb-blue-ink); }
+.examskin .ansp__answer code { background: var(--tb-head); color: var(--tb-code); }
 .examskin .ansp__answer pre { background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 3px; }
-.examskin .ansp__answer blockquote { border-left-color: var(--tb-blue); color: var(--tb-dim); }
+.examskin .ansp__answer blockquote { border-left-color: var(--tb-blue-ink); color: var(--tb-dim); }
 .examskin .ansp__answer hr { border-top-color: var(--tb-line); }
 .examskin .ansp__answer :is(th, td) { border-color: var(--tb-line); }
 .examskin .ansp__answer img { border-radius: 0; }
 .examskin .ansp__answer .katex { color: var(--tb-ink); }
-.examskin .ansp__paste { background: #fff; }
-.examskin .ansp__newbar { background: var(--tb-yellow); color: #6b5200; border-radius: 3px; }
+.examskin .ansp__paste { background: var(--tb-page); }
+.examskin .ansp__newbar { background: var(--tb-yellow); color: var(--tb-warn-ink); border-radius: 3px; }
 
 /* Markdown (solution/explanation) — exam ke rang, wahi teen pen. */
 .examskin .md { color: var(--tb-ink); }
 /* Bada sar kaala aur bhaari, uske neeche wale chhote sar neele — do star,
    dono ek nazar mein alag. */
 .examskin .md :is(h1, h2, h3) { color: var(--head); font-weight: 700; }
-.examskin .md :is(h4, h5, h6) { color: var(--tb-blue); }
+.examskin .md :is(h4, h5, h6) { color: var(--tb-blue-ink); }
 /* **bold** ka pen — token se, taaki ek jagah badalne par har
    solution/notes mein badal jaye. */
 .examskin .md :is(strong, b) { color: var(--emph); }
-.examskin .md a { color: var(--tb-blue); }
-.examskin .md code { background: var(--tb-head); color: #a3106b; }
+.examskin .md a { color: var(--tb-blue-ink); }
+.examskin .md code { background: var(--tb-head); color: var(--tb-code); }
 .examskin .md pre { background: var(--tb-head); border: 1px solid var(--tb-line); }
-.examskin .md blockquote { border-left-color: var(--tb-blue); color: var(--tb-dim); }
+.examskin .md blockquote { border-left-color: var(--tb-blue-ink); color: var(--tb-dim); }
 .examskin .md :is(th, td) { border-color: var(--tb-line); }
+
+/* ===================================================================
+   RAAT — dark theme.
+
+   Ye DOOSRI theme nahi hai. Upar `.examskin` mein site ka poora design
+   token-driven hai; yahan sirf wahi kacche rang (--tb-*) doosre value par
+   mod diye gaye hain. Ek bhi component rule, ek bhi layout, ek bhi radius
+   nahi badla — isliye raat wali site theek wahi site hai, bas roshni ulti.
+   (Pehle dark mode isliye hataya gaya tha ki wo apna alag design system
+   leke aata tha; ab wo galti dobara nahi ho sakti — dark ke paas apna
+   koi rule hai hi nahi.)
+
+   Nishaan <html> par lagta hai (data-theme="dark"), body par nahi, taaki
+   pehla paint hone se PEHLE hi set ho jaye — layout.js ka chhota script
+   ise <head> mein hi likh deta hai, warna kaali theme par safed jhapki
+   padti hai.
+
+   Do neele jaan-boojh kar:
+     --tb-blue      = BHARA hua neela (button, palette ka box). Uspar safed
+                      likha hai, isliye ye gehra hi rehta hai.
+     --tb-blue-ink  = LIKHNE wala neela (link, heading, stat). Kaale page par
+                      gehra neela padha nahi jata, isliye ye halka hai.
+   =================================================================== */
+[data-theme="dark"] .examskin {
+  --tb-blue: #3566e0;         /* bhara hua — safed text iske upar tikta hai */
+  --tb-blue-dark: #4a7bf0;    /* hover raat mein CHAMAKTA hai, gehra nahi hota */
+  --tb-blue-ink: #7ea6ff;     /* link / heading / stat */
+  --tb-blue-soft: #17233b;    /* chuna hua option, halka wash */
+  --tb-navy: #7ea6ff;
+  /* Sawaal ka rang — din mein kaala, raat mein sabse safed. Option (--tb-ink)
+     se ek darja upar, taaki farak wahi rahe jo din mein hai. */
+  --tb-q: #f4f6fa;
+  /* Hara thoda gehra hai jitna aankh maangti — kyunki iske UPAR safed likha
+     jata hai (Submit, sahi jawab, palette ka box). Aur halka karte hi safed
+     text uspar tairne lagta tha. */
+  --tb-green: #238a45;
+  --tb-green-dark: #2ba053;
+  --tb-green-soft: #10291a;
+  --tb-ok-ink: #5fd07f;
+  --tb-red: #d8384c;
+  --tb-red-soft: #2c1418;
+  --tb-bad-ink: #ff8b98;
+  --tb-red-ink-soft: #ffd0d6;
+  --tb-orange: #ff9152;
+  /* Highlighter — din mein chamakta peela. Raat mein bhi peela hi rehta to
+     uspar ka halka text mit jata, isliye wahi peela gehra kar diya: nishaan
+     dikhta hai, uspar likha hua padha jata hai. */
+  --tb-yellow: #5b4a00;
+  --tb-warn-ink: #ffd76a;
+  --tb-warn-ink-2: #e6c25e;
+  --tb-amber: #e0a33a;
+  /* Mark for Review ka peela — din jaisa hi chamakta, kyunki uspar hamesha
+     gehra ink (--tb-rev-ink) likha jata hai. */
+  --tb-rev: #e5b800;
+  --tb-rev-hover: #f0c518;
+  --tb-rev-on: #ffd83d;
+  --tb-rev-line: #a88700;
+  --tb-rev-ink: #221a00;
+  --tb-rev-soft: #3a2f00;
+  --tb-key-line: #a88700;
+  --tb-skip: #2a323e;
+  --tb-skip-ink: #9aa3b2;
+  --tb-ink: #e4e8ef;
+  --tb-ink-2: #c3cad6;
+  --tb-dim: #98a1b0;
+  --tb-line: #39414f;
+  --tb-line-soft: #2a313c;
+  --tb-line-hard: #59626f;
+  --tb-head: #1b212b;         /* box ka sar (header band) */
+  --tb-page: #141922;         /* page aur card ka tal */
+  --tb-soft: #1a202a;
+  --tb-tint: #171d26;
+  --tb-bg-2: #0e131a;
+  --tb-raised: #202733;
+  --tb-focus: #9dc0ff;        /* abhi wale number ka outline — ab chamakta hai */
+  --tb-code: #ff93c8;
+
+  --scheme: dark;
+  color-scheme: dark;
+}
+
+/* Do jagah rang seedha `color-mix` se banta hai aur --bg par tika hai; wo
+   token upar se hi dark ho jata hai, isliye kuch karna nahi padta. Lekin
+   menu ka hover raat mein bahut halka pad jata tha — usi pen ko thoda aur
+   ghol diya. */
+[data-theme="dark"] .examskin {
+  --nav-hover: color-mix(in srgb, var(--tb-blue-ink) 22%, var(--tb-page));
+}
+
+/* Question ki TASVEER (Maths/Reasoning ke crop, Answers ke screenshot) safed
+   background wali image hai — uske peeche kaala daalne se wo aur chubhti hai,
+   aur diagram ki lakeeren image ke andar hi hain, unhe chhedna theek nahi.
+   Isliye tasveer safed hi rehti hai, bas uske kinare narm kar diye taaki wo
+   kaale page par kata hua chaukor na lage. */
+[data-theme="dark"] .examskin :is(.q-crop, .ansp__card img, .inkv__q img, .zoomimg__img) {
+  border: 1px solid var(--tb-line);
+}

@@ -7,6 +7,7 @@ import { getDaysOverview } from "@/lib/vocab";
 import { syncOnce, resyncAll, listRescue, restoreRescue, getSyncLog, SETUP_SQL } from "@/lib/sync";
 import PyqManager from "@/components/PyqManager";
 import CaRushSetting from "@/components/CaRushSetting";
+import { getTheme, setTheme } from "@/lib/theme";
 
 
 function mask(key) {
@@ -21,6 +22,12 @@ export default function SettingsPage() {
   const [loaded, setLoaded] = useState(false);
   const [showKey, setShowKey] = useState(false);
   const [testing, setTesting] = useState(false);
+  // Din/raat. Server hamesha "light" bhejta hai, isliye pehli render bhi wahi
+  // maanti hai aur asli haal mount ke baad padha jata hai — warna server aur
+  // client ka HTML alag hota aur React poora tree dobara banata.
+  const [theme, setThemeState] = useState("light");
+  useEffect(() => { setThemeState(getTheme()); }, []);
+  const pickTheme = (t) => setThemeState(setTheme(t));
   const [testResult, setTestResult] = useState(null);
 
   const [vDays, setVDays] = useState([]);
@@ -201,6 +208,34 @@ export default function SettingsPage() {
       </section>
 
       <section className="section" style={{ marginTop: 16, maxWidth: 640 }}>
+        <div className="glass-card">
+          <div className="field">
+            <label>🌗 Theme</label>
+            <div className="row" style={{ gap: 8 }}>
+              <button
+                type="button"
+                className={`chip ${theme === "light" ? "is-active" : ""}`}
+                onClick={() => pickTheme("light")}
+              >
+                ☀️ Din
+              </button>
+              <button
+                type="button"
+                className={`chip ${theme === "dark" ? "is-active" : ""}`}
+                onClick={() => pickTheme("dark")}
+              >
+                🌙 Raat
+              </button>
+            </div>
+            <p className="muted mt-8" style={{ fontSize: "0.82rem" }}>
+              Wahi button upar wali patti mein bhi hai. Ye choice IS device ki hai —
+              sync nahi hoti, taaki tablet raat mein dark rahe aur laptop din mein safed.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section" style={{ maxWidth: 640 }}>
         <div className="glass-card">
           <div className="field">
             <label>DeepSeek API Key</label>
