@@ -125,6 +125,13 @@ export default function QBoard({
     () => all.reduce((a, q) => a + (doneSet.has(doneKeyFor(q)) ? 1 : 0), 0),
     [all, doneSet],
   );
+  // Kitne SET poore diye ja chuke hain — jinka natija sambha hua hai.
+  // `results` mein kabhi-kabhi purane index bhi bache reh jaate hain (chapter
+  // chhota ho jaye to), isliye ginti sirf abhi ke setCount tak hi.
+  const doneSets = useMemo(
+    () => Array.from({ length: setCount }, (_, i) => results[i]).filter(Boolean).length,
+    [results, setCount],
+  );
 
   // Pichhli list ka nishaan — sirf ye jaanne ke liye ki nayi list "wahi list +
   // aur question" hai, ya sach mein doosri list.
@@ -468,6 +475,22 @@ export default function QBoard({
   if (setIdx === null) {
     return (
       <div className="qboard__main">
+        {/* Ye parda SET ka hai, isliye sabse upar set ka hisaab — kul kitne,
+            kitne ho gaye, kitne baaki. Pehle yahan sirf QUESTION ki ginti thi,
+            aur "500 mein se 120 ho gaye" se ye nahi pata chalta tha ki 20 set
+            mein se kitne poore diye ja chuke hain — jabki kaam set-set mein
+            hota hai.
+
+            "Ho gaya" ka matlab yahan: us set ka test DIYA ja chuka hai (uska
+            natija sambha hua hai). Question wali "ho gaye" ginti se ye alag
+            cheez hai — us set ke question ★ ho gaye ho sakte hain bina poora
+            set diye. Isliye dono patti alag hain aur dono par saaf likha hai
+            kis cheez ki ginti hai. */}
+        <div className="qboard__stats">
+          <span className="tot">📚 Total set: {setCount}</span>
+          <span className="did">✅ Set ho gaye: {doneSets}</span>
+          <span className="left">⏳ Set baaki: {setCount - doneSets}</span>
+        </div>
         <div className="qboard__stats">
           {/* + / − hata diye: ginti ab khud "ho gaya" se aati hai (Submit par
               har question countMark se ginta hai), isliye haath se chhedne ki
@@ -479,9 +502,9 @@ export default function QBoard({
               🔢 Aaj: {counts[subject] || 0}
             </span>
           )}
-          <span className="tot">📊 Total: {total}</span>
-          <span className="did">✅ Ho gaye: {doneCount}</span>
-          <span className="left">⏳ Baaki: {total - doneCount}</span>
+          <span className="tot">📊 Total question: {total}</span>
+          <span className="did">✅ Question ho gaye: {doneCount}</span>
+          <span className="left">⏳ Question baaki: {total - doneCount}</span>
         </div>
 
         <div className="setgrid">
