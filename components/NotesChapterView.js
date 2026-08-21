@@ -3,8 +3,16 @@
 // One notes TOPIC (chapter) as a single scrollable column of the user's own
 // Hindi/Hinglish notes. Each page of the topic:
 //   • has Hinglish saved  → render it (Markdown) with a ✏️ Edit affordance;
-//   • has none            → a big paste box + ✨ Gemini button (copies the page's
-//     English text + subject prompt, opens Gemini), 💾 Save writes it.
+//   • has none            → ek PATLI si line ("➕ Hinglish add karo"), jo dabane
+//     par paste box khol deti hai (+ ✨ Gemini, jo page ka English text aur
+//     subject ka prompt copy karke Gemini khol deta hai).
+//
+// Wo patli line jaan-boojh kar hai. Pehle bina-Hinglish wala har page SEEDHA
+// khula hua textarea banta tha, aur ek chapter mein 8-13 page hote hain — to
+// jo Hindi tumne sach mein likhi thi wo khaali dabbon ke dher mein dab jaati
+// thi. Dekhne mein lagta tha ki "homepage par Hindi aa hi nahi rahi", jabki wo
+// wahin hoti thi. Ab likhe hue page saamne hain, aur khaali page ek line ke.
+//
 // Reuses the SAME per-page Hinglish store as the notes reader (setHinglish), so
 // anything added here shows in the reader and vice-versa, and syncs/persists via
 // IndexedDB. No English blocks are rendered — this view is the Hindi notes only.
@@ -20,7 +28,8 @@ import Markdown from "@/components/Markdown";
 function PageBlock({ book, page }) {
   const k = hinglishKey(book, page);
   const saved = getHinglish(k);
-  const [edit, setEdit] = useState(!saved);      // no Hinglish yet → straight to paste box
+  // Khaali page apne aap edit mein nahi khulta — pehle sirf ek line dikhti hai.
+  const [edit, setEdit] = useState(false);
   const [text, setText] = useState(saved);
   const [copied, setCopied] = useState(false);
 
@@ -64,7 +73,7 @@ function PageBlock({ book, page }) {
       <div className="nt-hd">
         <b>{page.topic}</b>
         <span className="nt-hd__right">
-          {!edit && (
+          {!edit && saved && (
             <button className="btn btn--ghost btn--sm" onClick={() => setEdit(true)} title="Hinglish badlo">✏️ Edit</button>
           )}
           <span className="nt-meta">page {page.book_page}</span>
@@ -93,8 +102,17 @@ function PageBlock({ book, page }) {
             <button className="btn btn--primary btn--sm" onClick={save}>💾 Save</button>
           </div>
         </div>
-      ) : (
+      ) : saved ? (
         <div className="nx-hi-text"><Markdown>{text}</Markdown></div>
+      ) : (
+        /* Is page ka Hinglish abhi likha hi nahi — ek line, do button. */
+        <div className="row" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+          <span className="nt-meta">Is page ka Hinglish abhi nahi likha.</span>
+          <button className="btn btn--ghost btn--sm" onClick={() => setEdit(true)}>➕ Hinglish add karo</button>
+          <button className="btn btn--ghost btn--sm" onClick={askGemini} title="Is page ka text + prompt copy karke Gemini kholo">
+            {copied ? "✓ Copied" : "✨ Gemini"}
+          </button>
+        </div>
       )}
     </div>
   );
@@ -146,12 +164,23 @@ export default function NotesChapterView({ slug, topic }) {
   if (!book) return <section className="section"><div className="placeholder">…</div></section>;
   if (!pages.length) return <section className="section"><div className="placeholder">Is chapter mein koi page nahi mila. 😕</div></section>;
 
+  // Kitne page ka Hinglish likha ja chuka hai. Cache se aata hai (getHinglish
+  // synchronous hai), aur subscribeHinglish upar pehle se ye view taazi rakhta
+  // hai — to save karte hi ye ginti bhi badal jati hai.
+  const written = pages.reduce((n, pg) => n + (getHinglish(hinglishKey(book, pg)) ? 1 : 0), 0);
+
   return (
     <section className="section">
       <div className="home-head row between" style={{ marginBottom: 12, alignItems: "flex-start" }}>
         <div>
           <h1>{topic}</h1>
-          <p className="muted">{book.title} · {pages.length} pages</p>
+          <p className="muted">
+            {book.title} · {pages.length} pages
+            {" · "}
+            <b style={{ color: written ? "var(--ok)" : "var(--dim)" }}>
+              {written}/{pages.length} ka Hinglish likha hai
+            </b>
+          </p>
         </div>
         <span className="row" style={{ gap: 6, alignItems: "center" }}>
           {quizErr && <span className="nt-meta" style={{ color: "var(--accent)" }}>{quizErr}</span>}
