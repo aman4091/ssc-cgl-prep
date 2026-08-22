@@ -47,6 +47,14 @@ import NotebookCard from "@/components/NotebookCard";
 
 const POLL_MS = 5000; // overlay ka naya question khuli hui page par bhi dikhe
 
+// Ek baar mein kitne card banayein.
+//
+// Shelf 469 question ki ho sakti hai, aur har mock card apni image IndexedDB
+// se padhta hai (lib/wrongimages). Sab ek saath banane par page seconds ke
+// liye jam jata tha — chip dabao to kuch hota hi nahi lagta tha. Ab pehle
+// itne bante hain, aur neeche pahunchte hi apne aap aur jud jaate hain.
+const PAGE = 25;
+
 // "Sab" chip. isSubject("") false deta hai, isliye URL mein ?subject=all —
 // purane /answers link (bina param) ab bhi Maths hi kholte hain.
 const ALL_SUBJ = { key: "", label: "Sab", icon: "\u{1F4DA}" };
@@ -217,15 +225,26 @@ function AnsCard({ rec, n, done, inkN, fresh, onToggle, onDelete, onOpen, onChan
 export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "math" }) {
   const router = useRouter();
   const sp = useSearchParams();
-  const urlSubject = sp.get("subject");
-  const subject = isSubject(urlSubject)
-    ? urlSubject
-    : urlSubject === "all" || urlSubject === "other"
-      ? (urlSubject === "other" ? "other" : "")
-      : (isSubject(defaultSubject) ? defaultSubject : "");
-  const urlSrc = sp.get("src");
-  const src = isSource(urlSrc) ? urlSrc : defaultSrc;
   const urlQid = sp.get("qid");
+
+  // Chip aur dropdown ab URL se NAHI chalte.
+  //
+  // Pehle har click router.push karta tha. Uska matlab tha poora route dobara
+  // banna — 469 card wali shelf par wo seconds le leta tha, aur lagta tha ki
+  // chip dab hi nahi raha. Ab chunav yahin state mein hai (turant), aur URL
+  // sirf history.replaceState se peechhe-peechhe badal jata hai taaki reload
+  // aur bookmark wahi chhaanti kholein.
+  const [subject, setSubject] = useState(() => {
+    const u = sp.get("subject");
+    if (isSubject(u)) return u;
+    if (u === "all") return "";
+    if (u === "other") return "other";
+    return isSubject(defaultSubject) ? defaultSubject : "";
+  });
+  const [src, setSrc] = useState(() => {
+    const u = sp.get("src");
+    return isSource(u) ? u : defaultSrc;
+  });
 
   const [mock, setMock] = useState([]);      // wrong book (screenshot wale)
   const [nb, setNb] = useState([]);          // quiz/PYQ ke galat
@@ -267,28 +286,51 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     return m.get(r.uid);
   }, []);
 
+  // Har 5 second par sab kuch dobara set karna mehnga tha: naye array matlab
+  // nayi list, naya sort, aur saare card dobara. 99% baar kuch badla hi nahi
+  // hota. Isliye pehle ek sasta nishaan bana kar milaate hain — badla ho tabhi
+  // state chhoote hain, warna poll chupchaap nikal jata hai.
+  const sigRef = useRef({});
   const refresh = useCallback(() => {
-    const mockRows = getWrongBook().map((r) => ({ ...r, __src: "mock", uid: `mock:${r.id}` }));
+    const put = (name, sig, value, setter) => {
+      if (sigRef.current[name] === sig) return false;
+      sigRef.current[name] = sig;
+      setter(value);
+      return true;
+    };
+
+    const rawMock = getWrongBook();
     // Notebook: sirf wahi jo galat hua aur abhi tak sudhra nahi. Sahi kar diya
     // to record mitta nahi (stats uspar tike hain), bas yahan nahi dikhta —
     // dobara galat hua to apne aap wapas aa jayega.
-    const nbRows = getReview()
-      .filter((r) => r.everWrong && !r.correct)
-      .map((r) => ({ ...r, __src: "pyq", uid: `pyq:${r.key}` }));
+    const rawNb = getReview().filter((r) => r.everWrong && !r.correct);
 
-    const ids = new Set(mockRows.map((r) => r.id));
-    if (seenIds.current) {
+    const mSig = rawMock
+      .map((r) => `${r.id}~${r.at}~${r.subject}~${(r.detail || "").length}~${(r.detail2 || "").length}`)
+      .join("|");
+    const nSig = rawNb.map((r) => `${r.key}~${r.at}~${r.subject}`).join("|");
+
+    const ids = new Set(rawMock.map((r) => r.id));
+    if (sigRef.current.mock !== undefined && sigRef.current.mock !== mSig && seenIds.current) {
       const added = [...ids].filter((id) => !seenIds.current.has(id));
       if (added.length) setFreshIds((prev) => new Set([...prev, ...added]));
     }
     seenIds.current = ids;
 
-    setMock(mockRows);
-    setNb(nbRows);
-    setDone(pruneDone(ids));
-    setNbDone(pruneNbDone(new Set(nbRows.map((r) => r.key))));
-    setCounts(getCounts()); // 5s poll — 3 baje din badla to yahin pata chal jata hai
-    setInkCounts(localInkCounts());
+    put("mock", mSig, rawMock.map((r) => ({ ...r, __src: "mock", uid: `mock:${r.id}` })), setMock);
+    put("nb", nSig, rawNb.map((r) => ({ ...r, __src: "pyq", uid: `pyq:${r.key}` })), setNb);
+
+    const d = pruneDone(ids);
+    put("done", [...d].sort().join("|"), d, setDone);
+    const nd = pruneNbDone(new Set(rawNb.map((r) => r.key)));
+    put("nbDone", [...nd].sort().join("|"), nd, setNbDone);
+
+    // 5s poll — 3 baje din badla to yahin pata chal jata hai
+    const c = getCounts();
+    put("counts", JSON.stringify(c), c, setCounts);
+    const ink = localInkCounts();
+    put("ink", JSON.stringify(ink), ink, setInkCounts);
+
     setReady(true);
   }, []);
 
@@ -335,6 +377,33 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   const doneCount = list.filter(isDone).length;
 
+  // Kitne card abhi bane hue hain. Chhaanti badalte hi shuru se.
+  const [visible, setVisible] = useState(PAGE);
+  useEffect(() => { setVisible(PAGE); }, [subject, src]);
+  const shown = useMemo(() => list.slice(0, visible), [list, visible]);
+
+  // Neeche pahunchte hi agla jattha apne aap. Button bhi hai — jinke browser
+  // mein observer na chale unke liye.
+  const tail = useRef(null);
+  useEffect(() => {
+    const el = tail.current;
+    if (!el || typeof IntersectionObserver === "undefined") return undefined;
+    const io = new IntersectionObserver((es) => {
+      if (es.some((e) => e.isIntersecting)) setVisible((v) => Math.min(v + PAGE, list.length));
+    }, { rootMargin: "600px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [list.length]);
+
+  // Rail ka number us card par le jata hai — chahe wo abhi bana hi na ho.
+  // Isliye pehle utne card khol do, phir agle frame mein scroll.
+  const jumpTo = (i, id) => {
+    if (i >= visible) setVisible(Math.min(i + PAGE, list.length));
+    setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, i >= visible ? 120 : 0);
+  };
+
   // Chips par ginti — chuni hui shelf ki, taaki "Maths (12)" ka matlab wahi ho
   // jo neeche dikhega.
   const chipCounts = useMemo(() => {
@@ -353,10 +422,20 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // ginti shuru se karo.
   useEffect(() => { seenIds.current = null; setFreshIds(new Set()); }, [subject, src]);
 
+  // Chhaanti badlo: state turant, URL chupchaap peechhe. replaceState Next ko
+  // dobara render karne par majboor nahi karta — isliye ye ek frame ka kaam
+  // hai, poore route ka nahi.
   const go = (next) => {
     const s = next.subject !== undefined ? next.subject : subject;
     const v = next.src !== undefined ? next.src : src;
-    router.push(`/answers?subject=${s || "all"}&src=${v}`);
+    if (next.subject !== undefined) setSubject(s);
+    if (next.src !== undefined) setSrc(v);
+    try {
+      // Pathname wahi rehta hai jispar ho (/answers ya /mistakes) — Next ko
+      // uske neeche se route nahi badalna chahiye, sirf query.
+      const base = window.location.pathname;
+      window.history.replaceState(null, "", `${base}?subject=${s || "all"}&src=${v}`);
+    } catch { /* purana browser — chhaanti phir bhi chal rahi hai */ }
   };
 
   // Deep-link: overlay ke local page ka per-question link yahan aata hai.
@@ -403,23 +482,30 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   const onToggle = (rec) => {
     const now = toggleDone(rec.id);
-    setDone((prev) => {
-      const next = new Set(prev);
-      if (now) next.add(rec.id);
-      else next.delete(rec.id);
-      return next;
-    });
+    const next = new Set(done);
+    if (now) next.add(rec.id);
+    else next.delete(rec.id);
+    // Nishaan bhi saath mein — warna agla poll wahi set dobara bana kar poori
+    // list ko bekaar mein dobara render kara deta.
+    sigRef.current.done = [...next].sort().join("|");
+    setDone(next);
     // Tick lagate hi aaj ka counter +1, hatate hi -1 (wahi question dobara
     // mark karo to ginti dobara nahi badhti — qcounter ids yaad rakhta hai)
-    setCounts(countMark(rec.id, rec.subject || subject, now));
+    const c = countMark(rec.id, rec.subject || subject, now);
+    sigRef.current.counts = JSON.stringify(c);
+    setCounts(c);
   };
 
   // Notebook ka mark alag store mein — tick lagate hi card apni jagah se hat
   // kar sabse neeche chala jata hai (list yahin dobara banti hai).
   const onToggleNb = (rec) => {
     const now = toggleNbDone(rec.key);
-    setNbDone(getNbDone());
-    setCounts(countMark(rec.key, bucketOf(rec), now));
+    const next = getNbDone();
+    sigRef.current.nbDone = [...next].sort().join("|");
+    setNbDone(next);
+    const c = countMark(rec.key, bucketOf(rec), now);
+    sigRef.current.counts = JSON.stringify(c);
+    setCounts(c);
   };
 
   const nudge = (delta) => {
@@ -544,15 +630,19 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     <div className="ansp">
       {list.length > 0 && (
         <nav className="ansp__side">
-          {list.map((r, i) => (
-            <a
-              key={r.uid}
-              href={r.__src === "mock" ? `#ans-${r.id}` : `#mq-${i + 1}`}
-              className={isDone(r) ? "is-done" : ""}
-            >
-              {i + 1}
-            </a>
-          ))}
+          {list.map((r, i) => {
+            const id = r.__src === "mock" ? `ans-${r.id}` : `mq-${i + 1}`;
+            return (
+              <a
+                key={r.uid}
+                href={`#${id}`}
+                className={isDone(r) ? "is-done" : ""}
+                onClick={(e) => { e.preventDefault(); jumpTo(i, id); }}
+              >
+                {i + 1}
+              </a>
+            );
+          })}
         </nav>
       )}
 
@@ -675,7 +765,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               : "Yaha abhi koi question nahi hai."}
           </p>
         ) : (
-          list.map((r, i) => (r.__src === "mock" ? (
+          shown.map((r, i) => (r.__src === "mock" ? (
             <AnsCard
               key={r.uid}
               rec={r}
@@ -705,6 +795,15 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               onFix={(oi) => onFixNb(r, oi)}
             />
           )))
+        )}
+
+        {/* Aur card — neeche pahunchte hi apne aap khul jate hain. */}
+        {ready && visible < list.length && (
+          <div ref={tail} className="ansp__acts">
+            <button className="ansp__btn" onClick={() => setVisible((v) => Math.min(v + PAGE, list.length))}>
+              ⬇️ Aur {Math.min(PAGE, list.length - visible)} dikhao ({visible}/{list.length})
+            </button>
+          </div>
         )}
       </div>
     </div>
