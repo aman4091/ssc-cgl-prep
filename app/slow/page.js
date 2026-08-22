@@ -165,7 +165,7 @@ export default function SlowPage() {
               🎯 Practice ({list.filter(practiceable).length})
             </button>
           )}
-          <Link href="/mistakes" className="ansp__btn">🔴 Mistake Notebook</Link>
+          <Link href="/answers?subject=all&src=pyq" className="ansp__btn">🔴 Mistake Notebook</Link>
         </div>
 
         {!ready ? (

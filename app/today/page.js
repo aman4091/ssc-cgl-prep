@@ -246,7 +246,7 @@ export default function TodayPage() {
         </p>
         <p className="hint" style={{ marginBottom: 14 }}>
           Har test ke baad 2 minute: galat + slow questions{" "}
-          <Link href="/mistakes" style={{ color: "var(--accent-2, #8ab4f8)" }}>Mistake Notebook</Link> mein.
+          <Link href="/answers?subject=all&src=pyq" style={{ color: "var(--accent-2, #8ab4f8)" }}>Mistake Notebook</Link> mein.
           Wahi cheez marks badhati hai — test khud nahi.
         </p>
 

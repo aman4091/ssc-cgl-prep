@@ -32,7 +32,7 @@ export default function PyqPage() {
           Galat answer seedha Mistake Notebook mein chala jaata hai.
         </p>
         <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
-          <Link href="/mistakes" className="btn btn--ghost btn--sm">🔴 Mistake Notebook</Link>
+          <Link href="/answers?subject=all&src=pyq" className="btn btn--ghost btn--sm">🔴 Mistake Notebook</Link>
         </div>
       </section>
 

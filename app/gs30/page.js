@@ -370,7 +370,7 @@ export default function Gs30Page() {
           </p>
           <p className="hint" style={{ margin: 0 }}>
             Har quiz ke galat questions apne aap{" "}
-            <Link href="/mistakes" style={{ color: "var(--accent-2, #8ab4f8)" }}>Mistake Notebook</Link> mein
+            <Link href="/answers?subject=all&src=pyq" style={{ color: "var(--accent-2, #8ab4f8)" }}>Mistake Notebook</Link> mein
             jaate hain. GS ke marks{" "}
             <Link href="/mock-marks?cat=gk" style={{ color: "var(--accent-2, #8ab4f8)" }}>yahan</Link> likhte
             rehna — <strong>9-10 se 20</strong> hi is mahine ka poora maqsad hai.

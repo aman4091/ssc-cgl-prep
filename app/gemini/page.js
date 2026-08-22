@@ -138,7 +138,7 @@ export default function GeminiPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
-          <Link href="/mistakes" className="ansp__btn">🔴 Mistake Notebook</Link>
+          <Link href="/answers?subject=all&src=pyq" className="ansp__btn">🔴 Mistake Notebook</Link>
           <Link href="/slow" className="ansp__btn">⏱️ Slow Questions</Link>
         </div>
 
