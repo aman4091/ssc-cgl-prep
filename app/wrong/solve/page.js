@@ -197,7 +197,6 @@ function SolveInner() {
   const [tool, setTool] = useState("pen");
   const [colorIdx, setColorIdx] = useState(0);
   const [sizeIdx, setSizeIdx] = useState(1);
-  const [dark, setDark] = useState(false);
   const [, setStats] = useState({ strokes: 0 });
 
   const inkRef = useRef(null);
@@ -211,7 +210,6 @@ function SolveInner() {
 
   // ── overlay: fullscreen + body lock ───────────────────────────────────────
   useEffect(() => {
-    setDark(document.documentElement.getAttribute("data-theme") === "dark");
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     // Fullscreen best-effort — wahi pattern jo FullscreenRunner use karta hai.
@@ -1026,7 +1024,6 @@ function SolveInner() {
               tool={tool}
               colorIdx={colorIdx}
               sizeIdx={sizeIdx}
-              dark={dark}
               onChange={onChange}
               onStats={setStats}
             />
@@ -1047,7 +1044,7 @@ function SolveInner() {
             aria-pressed={colorIdx === i}
             onClick={() => { setColorIdx(i); setTool((t) => (t === "eraser" ? "pen" : t)); }}
             title={c.name}
-            style={{ background: dark ? c.dark : c.light }}
+            style={{ background: c.hex }}
           />
         ))}
 

@@ -25,6 +25,12 @@ import { precacheShelf } from "@/lib/inkoffline";
 import Markdown from "@/components/Markdown";
 import ZoomableImage from "@/components/ZoomableImage";
 import NotebookCard from "@/components/NotebookCard";
+import ChapterReport, { textOf } from "@/components/ChapterReport";
+import {
+  loadTaxonomy, chaptersFor, categoryChapter, chapterLabel,
+  getTags, setTags, pruneTags, autoOn,
+} from "@/lib/qchapter";
+import { tagChaptersByText } from "@/lib/client-ai";
 
 // Answers + Mistake Notebook — ab EK page.
 //
@@ -54,6 +60,9 @@ const POLL_MS = 5000; // overlay ka naya question khuli hui page par bhi dikhe
 // liye jam jata tha — chip dabao to kuch hota hi nahi lagta tha. Ab pehle
 // itne bante hain, aur neeche pahunchte hi apne aap aur jud jaate hain.
 const PAGE = 25;
+
+// Bina poochhe ek page-visit mein itne se zyada question AI ko nahi bhejte.
+const AUTO_CAP = 20;
 
 // "Sab" chip. isSubject("") false deta hai, isliye URL mein ?subject=all —
 // purane /answers link (bina param) ab bhi Maths hi kholte hain.
@@ -258,6 +267,11 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   const [inkCounts, setInkCounts] = useState({});
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
+  // Chapter ke tag + report ka panel + "sirf is chapter ke" wali chhaanti.
+  const [tags, setTagMap] = useState({});
+  const [taxReady, setTaxReady] = useState(false);
+  const [report, setReport] = useState(false);
+  const [chapter, setChapter] = useState("");
   const [flash, setFlash] = useState("");
   const [err, setErr] = useState("");
   const active = subject && subject !== "other"
@@ -317,8 +331,16 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     }
     seenIds.current = ids;
 
-    put("mock", mSig, rawMock.map((r) => ({ ...r, __src: "mock", uid: `mock:${r.id}` })), setMock);
-    put("nb", nSig, rawNb.map((r) => ({ ...r, __src: "pyq", uid: `pyq:${r.key}` })), setNb);
+    const mChanged = put("mock", mSig, rawMock.map((r) => ({ ...r, __src: "mock", uid: `mock:${r.id}` })), setMock);
+    const nChanged = put("nb", nSig, rawNb.map((r) => ({ ...r, __src: "pyq", uid: `pyq:${r.key}` })), setNb);
+
+    // List badli tabhi — delete ho chuke record ke chapter-tag saaf kar do.
+    if (mChanged || nChanged) {
+      pruneTags(new Set([
+        ...rawMock.map((r) => `mock:${r.id}`),
+        ...rawNb.map((r) => `pyq:${r.key}`),
+      ]));
+    }
 
     const d = pruneDone(ids);
     put("done", [...d].sort().join("|"), d, setDone);
@@ -343,10 +365,73 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     return () => clearInterval(id);
   }, [refresh]);
 
+  // Chapter ki list (public/*/index.json) ek baar — iske bina category ko
+  // chapter maana ja hi nahi sakta.
+  useEffect(() => { loadTaxonomy().then(() => setTaxReady(true)); }, []);
+
+  // Tag store: panel se ya auto-tag se badalta hai, dono jagah se sunte hain.
+  useEffect(() => {
+    const h = () => setTagMap(getTags());
+    h();
+    window.addEventListener("cgl:qchapter-changed", h);
+    return () => window.removeEventListener("cgl:qchapter-changed", h);
+  }, []);
+
+  // Chapter kahan se aaya, isi kram mein: khud bataya hua > AI > quiz ki apni
+  // category. Category tabhi chalti hai jab wo asli chapter ho (lib/qchapter) —
+  // "SSC CGL 2023 Shift 2" chapter nahi hai.
+  const chapterOf = useCallback((r) => {
+    const t = tags[r.uid];
+    if (t?.ch) return { ch: t.ch, by: t.by || "me" };
+    const c = taxReady ? categoryChapter(bucketOf(r), r.category) : "";
+    return c ? { ch: c, by: "quiz" } : { ch: "", by: "" };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tags, taxReady]);
+
   const isDone = useCallback(
     (r) => (r.__src === "mock" ? done.has(r.id) : nbDone.has(r.key)),
     [done, nbDone],
   );
+
+  // Naye question apne aap tag ho jayein — panel ka checkbox is par lagta hai.
+  //
+  // Sirf TEXT wale, aur ek page-visit mein girah bhar. Screenshot ke liye har
+  // question ek alag vision call hai; use chupchaap chalane se paise aur waqt
+  // dono jalte, isliye wo sirf panel ke button se hota hai.
+  const autoRan = useRef(false);
+  useEffect(() => {
+    if (!ready || !taxReady || autoRan.current) return;
+    if (!autoOn()) return;
+    const s = getSettings();
+    if (!s.apiKey && !s.geminiApiKey) return;
+    const todo = [...mock, ...nb].filter((r) => !tags[r.uid] && !categoryChapter(bucketOf(r), r.category) && textOf(r));
+    if (!todo.length) return;
+    autoRan.current = true;
+    (async () => {
+      const bySubject = new Map();
+      for (const r of todo.slice(0, AUTO_CAP)) {
+        const k = bucketOf(r);
+        if (!bySubject.has(k)) bySubject.set(k, []);
+        bySubject.get(k).push(r);
+      }
+      for (const [subj, list] of bySubject) {
+        const chapters = chaptersFor(subj).map((c) => c.slug);
+        if (!chapters.length) continue;
+        try {
+          const out = await tagChaptersByText({
+            chapters,
+            texts: list.map((r) => ({ id: r.uid, text: textOf(r) })),
+          });
+          const rowsOut = out.filter((t) => t.chapter).map((t) => ({ uid: t.id, ch: t.chapter, by: "ai" }));
+          if (rowsOut.length) setTags(rowsOut);
+        } catch (e) {
+          // Chupchaap chal raha kaam hai — fail ho to bas ruk jao.
+          console.warn("auto chapter tag failed", e);
+        }
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready, taxReady, mock, nb]);
 
   const pool = useMemo(
     () => (src === "mock" ? mock : src === "pyq" ? nb : [...mock, ...nb]),
@@ -354,6 +439,16 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   );
 
   const rows = useMemo(
+    () => pool
+      .filter((r) => (subject ? bucketOf(r) === subject : true))
+      .filter((r) => (chapter ? chapterOf(r).ch === chapter : true)),
+    [pool, subject, chapter, chapterOf],
+  );
+
+  // Report ke liye: chapter wali chhaanti chhod kar baaki sab lagi hui —
+  // warna "Geometry ke 12" khol kar report kholne par report bhi sirf 12 ki
+  // ban jaati, aur agla chapter dikhta hi nahi.
+  const reportRows = useMemo(
     () => pool.filter((r) => (subject ? bucketOf(r) === subject : true)),
     [pool, subject],
   );
@@ -420,7 +515,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   // Subject ya shelf badli to nayi list ke saare records "naye" nahi hain —
   // ginti shuru se karo.
-  useEffect(() => { seenIds.current = null; setFreshIds(new Set()); }, [subject, src]);
+  useEffect(() => { seenIds.current = null; setFreshIds(new Set()); setChapter(""); }, [subject, src]);
 
   // Chhaanti badlo: state turant, URL chupchaap peechhe. replaceState Next ko
   // dobara render karne par majboor nahi karta — isliye ye ek frame ka kaam
@@ -715,6 +810,16 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           )}
         </div>
 
+        {/* Report se kisi chapter par tap kiya to board bhi wahi dikhata hai —
+            warna report padh kar dobara dhoondhna padta. */}
+        {chapter && (
+          <div className="ansp__chips">
+            <a href="#" className="is-active" onClick={(e) => { e.preventDefault(); setChapter(""); }}>
+              📕 {chapterLabel(chapter)} ({list.length}) &nbsp;✕
+            </a>
+          </div>
+        )}
+
         <div className="ansp__acts ansp__acts--top">
           <span className="ansp__hint">
             {busy ? "⏳ Image save ho rahi hai…" : "📥 Screenshot paste karo (Ctrl+V) — naya question add ho jayega"}
@@ -738,6 +843,13 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
             title="Purane quizzes aur feed caches hatao — save ke liye jagah banao"
           >
             🧹 Free space
+          </button>
+          <button
+            className="ansp__btn"
+            onClick={() => setReport(true)}
+            title="Kis chapter mein sabse zyada galat ho raha hai"
+          >
+            📊 Chapter report
           </button>
           {/* Baaki do shelf jo abhi alag hain — dono ek hi aadat ke hisse hain:
               kya galat hua, aur kya mehnga pada. */}
@@ -795,6 +907,16 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               onFix={(oi) => onFixNb(r, oi)}
             />
           )))
+        )}
+
+        {report && (
+          <ChapterReport
+            records={reportRows}
+            chapterOf={chapterOf}
+            subjectOf={bucketOf}
+            onClose={() => setReport(false)}
+            onPick={(ch) => { setChapter(ch); setReport(false); window.scrollTo({ top: 0 }); }}
+          />
         )}
 
         {/* Aur card — neeche pahunchte hi apne aap khul jate hain. */}

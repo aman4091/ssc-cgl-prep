@@ -3347,3 +3347,44 @@ body.exam-on .pyq-filters { display: none; }
 .inkv__rrow.is-ok { border-left-color: var(--success); }
 .inkv__rrow.is-bad { border-left-color: var(--danger); }
 .inkv__rrow.is-skip { border-left-color: var(--text-3); }
+
+
+/* 📊 Chapter report — Answers board ka panel.
+   Bars ka rang tokens se hai, isliye dono theme mein apne aap chalta hai.
+   Row ek button hai (div nahi): us chapter par tap karke board wahi dikha
+   deta hai, to keyboard aur screen reader ko bhi wahi milna chahiye. */
+.chrep { max-width: 720px; }
+.chrep__bars { display: flex; flex-direction: column; gap: 4px; margin: 10px 0 4px; }
+.chrep__row {
+  display: grid; grid-template-columns: minmax(90px, 34%) 1fr auto;
+  align-items: center; gap: 10px;
+  width: 100%; padding: 6px 8px; border-radius: 8px;
+  border: 1px solid transparent; background: none; cursor: pointer;
+  font-family: inherit; font-size: 0.86rem; color: var(--text-2); text-align: left;
+}
+.chrep__row:hover { background: var(--accent-wash); border-color: var(--glass-border); color: var(--text-1); }
+.chrep__row.is-top { color: var(--text-1); font-weight: 700; }
+.chrep__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chrep__bar { height: 10px; border-radius: 999px; background: var(--glass-border); overflow: hidden; }
+.chrep__bar i { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+.chrep__row.is-top .chrep__bar i { background: var(--danger); }
+.chrep__n { font-variant-numeric: tabular-nums; font-weight: 700; }
+.chrep__n small { font-weight: 400; opacity: 0.7; }
+.chrep__sum {
+  display: flex; gap: 14px; flex-wrap: wrap;
+  padding-top: 8px; border-top: 1px solid var(--glass-border);
+  font-size: 0.82rem; color: var(--text-2);
+}
+.chrep__ask { margin-top: 12px; font-size: 0.86rem; }
+.chrep__ask summary { cursor: pointer; font-weight: 700; color: var(--text-1); }
+.chrep__askrow {
+  display: grid; grid-template-columns: 1fr 190px; gap: 8px;
+  align-items: center; padding: 6px 0; border-bottom: 1px solid var(--glass-border);
+}
+.chrep__q { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); }
+.chrep__askrow .input { padding: 5px 8px; font-size: 0.82rem; }
+@media (max-width: 560px) {
+  .chrep__row { grid-template-columns: 1fr auto; }
+  .chrep__bar { display: none; }
+  .chrep__askrow { grid-template-columns: 1fr; }
+}

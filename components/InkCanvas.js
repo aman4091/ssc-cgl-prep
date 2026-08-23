@@ -26,13 +26,21 @@ import { UNIT_W, emptyDoc } from "@/lib/ink";
 // banati hai.
 
 export const PALETTE = [
-  // Har rang ke do roop — kaunsa chalega ye kaagaz ke rang par depend karta hai,
-  // isliye stroke mein sirf INDEX save hota hai. Theme badle to purani writing
-  // apne aap padhne layak rehti hai.
-  { name: "Ink", light: "#1a1a1e", dark: "#eceff4" },
-  { name: "Blue", light: "#1d4ed8", dark: "#7dd3fc" },
-  { name: "Red", light: "#dc2626", dark: "#fca5a5" },
-  { name: "Green", light: "#15803d", dark: "#86efac" },
+  // Ek rang, ek hi roop.
+  //
+  // Pehle har rang ke do roop the — theme dark ho to halke (#eceff4, #7dd3fc…).
+  // Wo tab tak theek tha jab tak yaad tha ki KAAGAZ kabhi dark nahi hota:
+  // .ink-surface hamesha cream (#fbf8f0) hai, chahe site dark mode mein ho.
+  // Yaani dark theme mein safed-si syahi cream kaagaz par — kuch dikhta hi
+  // nahi tha. Ab dono theme mein wahi gehre rang jo kaagaz par padhne layak
+  // hain.
+  //
+  // Stroke mein ab bhi sirf INDEX save hota hai, rang nahi — isliye purani
+  // writing bhi apne aap in rangon mein khul jati hai.
+  { name: "Ink", hex: "#1a1a1e" },
+  { name: "Blue", hex: "#1d4ed8" },
+  { name: "Red", hex: "#dc2626" },
+  { name: "Green", hex: "#15803d" },
 ];
 export const PEN_SIZES = [2.5, 4.5, 8];
 export const HL_SIZE = 20;
@@ -102,7 +110,7 @@ function bboxOf(stroke) {
 }
 
 const InkCanvas = forwardRef(function InkCanvas(
-  { initialDoc, tool, colorIdx, sizeIdx, dark, onChange, onStats },
+  { initialDoc, tool, colorIdx, sizeIdx, onChange, onStats },
   ref
 ) {
   const surfaceRef = useRef(null);
@@ -125,8 +133,8 @@ const InkCanvas = forwardRef(function InkCanvas(
 
   // tool/color/size ko ref mein bhi rakho — native listeners closure mein purani
   // value pakad lete hain warna, aur listeners dobara bandhna mehnga hai.
-  const optRef = useRef({ tool, colorIdx, sizeIdx, dark });
-  optRef.current = { tool, colorIdx, sizeIdx, dark };
+  const optRef = useRef({ tool, colorIdx, sizeIdx });
+  optRef.current = { tool, colorIdx, sizeIdx };
 
   // Callbacks bhi ref mein: parent har render par naya onChange deta hai, aur
   // agar wo commit → pointer-listener effect ki dependency ban jaye to har
@@ -134,10 +142,7 @@ const InkCanvas = forwardRef(function InkCanvas(
   const cbRef = useRef({ onChange, onStats });
   cbRef.current = { onChange, onStats };
 
-  const colorOf = useCallback((idx) => {
-    const c = PALETTE[idx] || PALETTE[0];
-    return optRef.current.dark ? c.dark : c.light;
-  }, []);
+  const colorOf = useCallback((idx) => (PALETTE[idx] || PALETTE[0]).hex, []);
 
   // ── geometry ───────────────────────────────────────────────────────────────
 
@@ -608,15 +613,13 @@ const InkCanvas = forwardRef(function InkCanvas(
     return () => { ro.disconnect(); window.removeEventListener("orientationchange", onRot); };
   }, [measure, redrawDone]);
 
-  // Theme badla to har stroke ka cached rang bhool jao aur dobara resolve karo.
-  useEffect(() => {
-    for (const st of docRef.current.strokes) st._col = null;
-    redrawDone();
-  }, [dark, redrawDone]);
-
   // Naya question khula — doc badal do aur history saaf.
   useEffect(() => {
     docRef.current = initialDoc || emptyDoc();
+    // Purane doc mein `_col` (resolved hex) save ho gaya ho sakta hai — us
+    // waqt ke dark-theme wale halke rang. Load par use bhula do; rang hamesha
+    // stroke ke INDEX se dobara banta hai.
+    for (const st of docRef.current.strokes || []) st._col = null;
     undoRef.current = [];
     redoRef.current = [];
     zoomRef.current = 1;
