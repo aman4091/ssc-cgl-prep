@@ -39,6 +39,20 @@ import { ExamModeProvider } from "./ExamMode";
 const SET_SIZE = 25;
 const SET_MIN = 15;              // ek set = 15 minute, SSC ke section jaisa
 
+// ⚡ Skip trainer — har question par FAISLE ki khidki.
+//
+// Asli paper mein 25 maths question 15 minute mein karne hain. Us raftaar par
+// asli hunar "solve karna" nahi, "chhodna" hai: 10 second mein tay karo ki ye
+// banega ya nahi, aur nahi to aage badho. Jo log doob jaate hain wo isi ek
+// faisle par doobte hain — ek question par do minute, aur baaki chhoot gaye.
+//
+// Trainer chalu ho to har question par 10 second ki patti chalti hai. Us waqt
+// mein koi option chun liya to ghadi ruk jati hai (ab tum solve kar rahe ho).
+// Kuch nahi chuna, to apne aap agle BINA-JAWAB wale question par. Question
+// chhootta nahi — list mein wahin rehta hai, baad mein wapas aa sakte ho.
+const TRAIN_KEY = "cgl.skiptrainer";
+const TRAIN_SEC = 10;
+
 // Kuch imported paper mein kisi question ki key hi nahi hoti (`answer: null`).
 // Aise question par har option galat nikalta hai — na kuch hara hota hai, na
 // koi jawab sahi ginta hai. Unhe hisaab se BAHAR rakhte hain: na Right/Wrong
@@ -74,6 +88,19 @@ export default function QBoard({
   const [picks, setPicks] = useState({});       // set ke andar ka number -> { opt, correct }
   const [review, setReview] = useState({});     // number -> true (Mark for Review)
   const [leftSec, setLeftSec] = useState(SET_MIN * 60);
+  // Skip trainer: chalu hai ya nahi, aur is question par kitne second bache.
+  const [trainOn, setTrainOn] = useState(false);
+  const [trainLeft, setTrainLeft] = useState(0);
+  useEffect(() => {
+    try { setTrainOn(localStorage.getItem(TRAIN_KEY) === "1"); } catch { /* ignore */ }
+  }, []);
+  const toggleTrain = () => {
+    setTrainOn((v) => {
+      const next = !v;
+      try { localStorage.setItem(TRAIN_KEY, next ? "1" : "0"); } catch { /* ignore */ }
+      return next;
+    });
+  };
   // Submit ke baad dikhane ke liye: number -> seconds.
   const [times, setTimes] = useState({});
   const [done, setDone] = useState(false);      // Submit ho gaya (ya solutions mode)
@@ -309,6 +336,33 @@ export default function QBoard({
     });
     toTop();
   }, [setQs.length, flushTime, toTop]);
+
+  // ⚡ Skip trainer ki ghadi. Ek question par ek khidki; jawab dete hi ruk
+  // jati hai, aur khatam hote hi agle BINA-JAWAB wale question par le jati hai.
+  // Aakhri bina-jawab question par ruk jati hai — warna wahi question baar-baar
+  // dobara shuru hota rehta.
+  useEffect(() => {
+    if (!trainOn || setIdx === null || done || mode !== "test" || picks[cur]) {
+      setTrainLeft(0);
+      return undefined;
+    }
+    let s = TRAIN_SEC;
+    setTrainLeft(s);
+    const id = setInterval(() => {
+      s -= 1;
+      setTrainLeft(s);
+      if (s > 0) return;
+      clearInterval(id);
+      const n = setQs.length;
+      let nxt = -1;
+      for (let k = 1; k < n; k++) {
+        const j = (cur + k) % n;
+        if (!picks[j]) { nxt = j; break; }
+      }
+      if (nxt >= 0) go(nxt);
+    }, 1000);
+    return () => clearInterval(id);
+  }, [trainOn, cur, setIdx, done, mode, picks, setQs.length, go]);
 
   // ← → se agla/pichla. Input/textarea mein type karte waqt nahi.
   useEffect(() => {
@@ -649,6 +703,17 @@ export default function QBoard({
             <span className={`qboard__clock${low ? " is-low" : ""}`}>
               <em>Time Left</em> {clock(leftSec)}
             </span>
+          )}
+          {/* ⚡ Skip trainer — 10 second ka faisla. Ginti tabhi chalti hai jab
+              is question ka jawab abhi tak nahi diya. */}
+          {mode === "test" && !done && (
+            <button
+              className={`qboard__train${trainOn ? " is-on" : ""}`}
+              onClick={toggleTrain}
+              title="Har question par 10 second ka faisla — chhodna seekhne ke liye"
+            >
+              ⚡ {trainOn ? (trainLeft > 0 ? `${trainLeft}s` : "on") : "Skip 10s"}
+            </button>
           )}
           {/* Full screen aur Submit sirf test ke dauraan — natija dekhte waqt
               inka koi kaam nahi. */}

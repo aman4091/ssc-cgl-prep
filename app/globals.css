@@ -3458,3 +3458,18 @@ body.exam-on .pyq-filters { display: none; }
   .tgate { margin: 10px 10px 0; padding: 12px; }
   .tgate__acts { flex-direction: row; }
 }
+
+/* ⚡ Skip trainer ka button — QBoard ke header mein, ghadi ke bagal.
+   Chalu hote hi rang badal jata hai aur usme bacha hua second dikhta hai. */
+.qboard__train {
+  flex: none; cursor: pointer; font-family: inherit;
+  font-size: 0.78rem; font-weight: 700;
+  padding: 5px 10px; border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background: var(--bg); color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+.qboard__train.is-on {
+  border-color: var(--danger, #f38ba8);
+  color: var(--danger, #f38ba8);
+}
