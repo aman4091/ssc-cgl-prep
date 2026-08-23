@@ -3407,3 +3407,54 @@ body.exam-on .pyq-filters { display: none; }
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 .ansp__top:hover { border-color: var(--accent); }
+
+/* 🎯 Aaj ka kaam — homepage ki sabse upar wali patti (components/TodayGate).
+   Ring ek conic-gradient hai: --pct 0..100 par bharti hai. Koi library nahi,
+   koi SVG nahi — ek div, ek variable. */
+.tgate {
+  margin: 12px 16px 0;
+  padding: 14px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg-strong);
+}
+.tgate__top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tgate__top h2 { margin: 0; font-size: 1.1rem; }
+.tgate__sum { margin-left: auto; font-size: 0.86rem; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.tgate__msg { margin: 8px 0 12px; font-size: 0.9rem; color: var(--text-2); }
+.tgate__msg--ok { color: var(--success, #a6e3a1); }
+.tgate__grid {
+  display: grid; gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+.tgate__card {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px; border-radius: var(--radius);
+  border: 1px solid var(--glass-border); background: var(--bg);
+}
+.tgate__card.is-done { border-color: var(--success, #a6e3a1); }
+.tgate__ring {
+  flex: none; width: 46px; height: 46px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 18px;
+  background: conic-gradient(var(--accent) calc(var(--pct) * 1%), var(--glass-border) 0);
+}
+.tgate__ring span {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg); display: grid; place-items: center;
+}
+.tgate__card.is-done .tgate__ring { background: var(--success, #a6e3a1); }
+.tgate__meta { display: flex; flex-direction: column; min-width: 0; }
+.tgate__num { font-size: 0.8rem; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.tgate__acts { margin-left: auto; display: flex; flex-direction: column; gap: 4px; }
+.tgate__edit {
+  display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end;
+  margin: 0 0 12px; padding: 10px; border-radius: var(--radius);
+  border: 1px solid var(--glass-border); background: var(--bg);
+}
+.tgate__edit label { display: flex; flex-direction: column; gap: 3px; font-size: 0.8rem; color: var(--text-2); }
+.tgate__edit .input { width: 110px; padding: 5px 8px; }
+.tgate__links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+@media (max-width: 560px) {
+  .tgate { margin: 10px 10px 0; padding: 12px; }
+  .tgate__acts { flex-direction: row; }
+}

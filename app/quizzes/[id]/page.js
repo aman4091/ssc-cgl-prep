@@ -7,6 +7,8 @@ import { getQuiz, deleteQuiz } from "@/lib/storage";
 import { setSyncPaused } from "@/lib/sync";
 import { markDayDone, markDayTypeDone } from "@/lib/vocab";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
+import MathQuestionCard from "@/components/MathQuestionCard";
+import ReasonQuestionCard from "@/components/ReasonQuestionCard";
 import QBoard from "@/components/QBoard";
 
 // 📝 Ek quiz khelne ka page — generated "20 similar", notes ke page ka quiz,
@@ -122,15 +124,35 @@ export default function QuizPlayer() {
           stylusUrl={`/wrong/solve?quiz=${quiz.id}`}
           title={quiz.title}
           onSubmit={onSubmit}
-          renderCard={(q, i) => (
-            <PyqQuestionCard
-              key={q.id ?? i}
-              q={q}
-              index={i}
-              subject={quiz.subject || ""}
-              chapterName={quiz.title}
-            />
-          )}
+          /* Card question ki SHAKL se chunte hain, quiz ke naam se nahi.
+             Pinnacle Maths/Reasoning ke sawaal tasveer mein hote hain (qImg +
+             optImgs); unhe aam text card mein kholne par wo `q.options.map`
+             par toot jata tha — "Aaj ka set" jaise mile-jule quiz mein yahi
+             hua. Ab har question apne asli card mein khulta hai. */
+          renderCard={(q, i) => {
+            const img = q?.qImg && Array.isArray(q?.optImgs);
+            if (img && (quiz.subject === "reasoning" || q.bank === "reasonbank")) {
+              return (
+                <ReasonQuestionCard key={q.id ?? i} q={q} index={i}
+                  subject="reasoning" chapterName={quiz.title} />
+              );
+            }
+            if (img) {
+              return (
+                <MathQuestionCard key={q.id ?? i} q={q} index={i}
+                  subject="math" chapterName={quiz.title} />
+              );
+            }
+            return (
+              <PyqQuestionCard
+                key={q.id ?? i}
+                q={q}
+                index={i}
+                subject={quiz.subject || ""}
+                chapterName={quiz.title}
+              />
+            );
+          }}
         />
       </section>
     </>

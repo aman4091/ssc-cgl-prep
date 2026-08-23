@@ -12,12 +12,16 @@ import { getItems, getActiveId, setActiveId, removeItem, subscribeHome } from "@
 import HomeVocab from "@/components/HomeVocab";
 import NotesChapterView from "@/components/NotesChapterView";
 import AddItemsModal from "@/components/AddItemsModal";
+import TodayGate from "@/components/TodayGate";
 
 export default function HomeFeed() {
   const [ready, setReady] = useState(false); // localStorage → only after mount
   const [items, setItems] = useState([]);
   const [activeId, setActive] = useState(null);
   const [adding, setAdding] = useState(false);
+  // Aaj ka kaam poora hua ya nahi — TodayGate batata hai.
+  const [dayDone, setDayDone] = useState(true);
+  const [peek, setPeek] = useState(false);   // "phir bhi kholo" — sirf is baar
 
   useEffect(() => {
     const sync = () => { setItems(getItems()); setActive(getActiveId()); };
@@ -99,10 +103,34 @@ export default function HomeFeed() {
     body = <NotesChapterView key={active.id} slug={active.slug} topic={active.topic} />;
   }
 
+  // Roz ka kaam baaki ho to feed band.
+  //
+  // Notes padhna bura nahi hai — par homepage kholte hi notes mein ghus jaana
+  // hi wo aadat thi jisme sabse zyada waqt jata tha aur sabse kamzor subject
+  // sabse zyada talta tha. Isliye pehle aaj ka kaam, phir feed.
+  //
+  // Taala poora nahi hai: ek line ka "phir bhi kholo" hai. Maqsad rokna nahi,
+  // ek baar sochne par majboor karna hai.
+  const locked = !dayDone && !peek;
+
   return (
     <>
-      {bar}
-      {body}
+      <TodayGate onStateChange={setDayDone} />
+      {locked ? (
+        <section className="section">
+          <p className="muted">
+            📖 Notes aur vocab feed aaj ka kaam poora hone par khul jayega.
+          </p>
+          <button className="btn btn--ghost btn--sm mt-8" onClick={() => setPeek(true)}>
+            Phir bhi kholo
+          </button>
+        </section>
+      ) : (
+        <>
+          {bar}
+          {body}
+        </>
+      )}
       {adding && <AddItemsModal onClose={() => setAdding(false)} />}
     </>
   );
