@@ -909,3 +909,11 @@
 [data-theme="dark"] .examskin :is(.q-crop, .ansp__card img, .inkv__q img, .zoomimg__img) {
   border: 1px solid var(--tb-line);
 }
+
+
+/* ⬆️ Sabse upar — exam skin mein wahi neela jo rail ke numbers ka hai. */
+.examskin .ansp__top {
+  background: var(--tb-blue); color: #fff;
+  border: 1px solid var(--tb-line); border-radius: 3px;
+}
+.examskin .ansp__top:hover { background: var(--tb-blue-dark); }

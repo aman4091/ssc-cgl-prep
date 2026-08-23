@@ -546,6 +546,27 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     return () => io.disconnect();
   }, [list.length]);
 
+  // ⬆️ Sabse upar.
+  //
+  // Kinare wali list apne andar scroll hoti hai (88vh se lambi ho jati hai),
+  // isliye neeche pahunchte-pahunchte 1 se 5 uske apne scroll mein chhup jate
+  // hain — Question 1 par jaane ke liye pehle poora page upar laana padta tha.
+  // Ye button dono ko ek saath upar le aata hai: page bhi, aur list bhi.
+  const railRef = useRef(null);
+  const [showTop, setShowTop] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 400);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const toTop = () => {
+    try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch { window.scrollTo(0, 0); }
+    const el = railRef.current;
+    if (!el) return;
+    try { el.scrollTo({ top: 0, behavior: "smooth" }); } catch { el.scrollTop = 0; }
+  };
+
   // Rail ka number us card par le jata hai — chahe wo abhi bana hi na ho.
   // Isliye pehle utne card khol do, phir agle frame mein scroll.
   const jumpTo = (i, id) => {
@@ -789,7 +810,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   return (
     <div className="ansp">
       {list.length > 0 && (
-        <nav className="ansp__side">
+        <nav className="ansp__side" ref={railRef}>
           {list.map((r, i) => {
             const id = r.__src === "mock" ? `ans-${r.id}` : `mq-${i + 1}`;
             return (
@@ -983,6 +1004,12 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               onFix={(oi) => onFixNb(r, oi)}
             />
           )))
+        )}
+
+        {showTop && (
+          <button className="ansp__top" onClick={toTop} title="Sabse upar — Question 1 par" aria-label="Sabse upar jao">
+            ⬆️
+          </button>
         )}
 
         {report && (

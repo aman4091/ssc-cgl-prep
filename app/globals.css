@@ -3388,3 +3388,22 @@ body.exam-on .pyq-filters { display: none; }
   .chrep__bar { display: none; }
   .chrep__askrow { grid-template-columns: 1fr; }
 }
+
+
+/* ⬆️ Sabse upar — Answers board.
+   Kinare wali list apne andar scroll hoti hai, to neeche jaakar Question 1
+   tak wapas aana do scroll ka kaam ban jata tha. Ye button page aur list
+   dono ko ek saath upar le aata hai.
+   Rail upar se 8px par chipki hai aur 88vh se lambi nahi hoti, isliye screen
+   ke bilkul neeche wala kona uske NEECHE bachta hai — button wahin baithta
+   hai aur kisi number ko nahi dhakta. */
+.ansp__top {
+  position: fixed; z-index: 120;
+  bottom: 20px; right: 20px;
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg-strong); color: var(--text-1);
+  font-size: 18px; line-height: 1; cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+.ansp__top:hover { border-color: var(--accent); }
