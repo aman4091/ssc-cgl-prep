@@ -13,7 +13,7 @@ import {
 } from "@/lib/wrongbook";
 import { getDoneMap } from "@/lib/answersdone";
 import { setUnder40 } from "@/lib/under40";
-import { shedOldQuizzes } from "@/lib/storage";
+import { shedOldQuizzes, getSettings } from "@/lib/storage";
 
 // localStorage full hone par purane generated quizzes shed karke retry — wahi
 // self-heal jo saveQuiz mein hai, warna yaha addWrong chupchaap fail hota
@@ -58,9 +58,15 @@ export default function OverlayInbox() {
           for (const it of items || []) {
             const subject = isSubject(it.subject) ? it.subject : "math";
             try {
-              // done-list ke saath book bhi check karo — dusri tab (apni
-              // done-list ke saath) isse pehle hi add kar chuki ho sakti hai
-              if (!done.has(it.qid) && !findByQid(it.qid)) {
+              // Sirf book dekho, apni done-list nahi.
+              //
+              // Pehle `done` (localStorage) bhi rok deti thi. Uska nateeja:
+              // question ek baar bheja gaya, kisi wajah se book mein tika
+              // nahi (purana push, ya book saaf ho gayi), aur dobara KABHI
+              // nahi aaya — overlay par 234 maths the aur site par 142.
+              // findByQid duplicate pehle hi rok deta hai, isliye wo guard
+              // sirf nuksaan kar rahi thi.
+              if (!findByQid(it.qid)) {
                 const imgRes = await fetch(`${base}/img/${it.qid}`, { cache: "no-store" });
                 if (!imgRes.ok) continue;
                 const blob = await imgRes.blob();
@@ -107,6 +113,25 @@ export default function OverlayInbox() {
               body: JSON.stringify({ order, done: doneQids }),
             });
           } catch { /* overlay band — agla poll phir bhej dega */ }
+
+          // Overlay ko Supabase ke kaagaz de do — ek baar.
+          //
+          // Uske baad overlay khud cloud se kram aur ✅ padh leta hai, chahe
+          // is PC par site ka tab khula ho ya na ho. Key wahi hai jo yahan
+          // pehle se padi hai, aur ja rahi hai sirf 127.0.0.1 par — yaani
+          // isi machine par.
+          try {
+            const st = getSettings();
+            if (st.supabaseUrl && st.supabaseAnonKey && st.syncCode) {
+              await fetch(`${base}/supabase-config`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  url: st.supabaseUrl, key: st.supabaseAnonKey, code: st.syncCode,
+                }),
+              });
+            }
+          } catch { /* purana overlay — ye route nahi hai */ }
 
           // ⏱️ Under 40 ki list overlay ke paas hai (wahi timer chalata hai) —
           // yahan uski nakal, taaki wo question aam list se hat jayein.
