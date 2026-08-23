@@ -19,19 +19,30 @@ import FixAnswer from "@/components/FixAnswer";
 const isCA = (r) =>
   r.category === "Current Affairs" || /ca|current/i.test(String(r.source || ""));
 
-export default function NotebookCard({ rec, n, done, bucket, subjectLabel, onToggle, onDelete, onFix }) {
+export default function NotebookCard({ rec, n, done, solved, bucket, subjectLabel, onToggle, onDelete, onFix }) {
   const caEntry = isCA(rec) ? findCAEntryForQuestion(rec.q) : null;
 
   return (
     <div id={`mq-${n}`} className={`ansp__card${done ? " is-done" : ""}`}>
       <h2>
-        {done ? "✅ " : ""}Question {n}
+        {solved ? "🎓 " : done ? "✅ " : ""}Question {n}
         <span className="ansp__qid">
           {" · "}📝 {subjectLabel}
           {rec.category ? ` · ${rec.category}` : ""}
           {rec.sec > 0 ? ` · ⏱ ${rec.sec}s` : ""}
         </span>
       </h2>
+
+      {/* Sahi kar diya to record notebook se nikal jata hai — par ABHI nahi.
+          Pehle wo agle poll par chupchaap gayab ho jata tha, aur jispar tum
+          kaam kar rahe the wahi sawaal screen se hat jata tha. Ab wo yahin
+          rehta hai, bas ye patti laga kar. */}
+      {solved && (
+        <p className="ansp__flash" style={{ margin: "0 14px 8px" }}>
+          🎓 Ab sahi ho gaya — page dobara kholne par notebook se nikal jayega.
+          Dhoondhna ho to upar &quot;🎓 Sudhre hue bhi dikhao&quot;.
+        </p>
+      )}
 
       <div className="row" style={{ gap: 8, flexWrap: "wrap", alignItems: "center", margin: "0 14px 8px" }}>
         {caEntry && (
