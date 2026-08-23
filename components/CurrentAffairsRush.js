@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { randomCurrentAffairsQuestion, getCurrentAffairsQuestions } from "@/lib/feed";
 import { addReview } from "@/lib/qreview";
+import { bumpTask } from "@/lib/dailytask";
 import AskButtons from "@/components/AskButtons";
 
 const CFG_KEY = "cgl.carush";
@@ -52,6 +53,7 @@ export default function CurrentAffairsRush() {
     if (picked !== null) return;
     setPicked(oi);
     addReview(q, { source: "ca-rush", category: "Current Affairs", correct: oi === q.answer });
+    bumpTask("ca", 1);   // homepage ka CA ring — jitne kiye utne gine
     if (advanceRef.current) clearTimeout(advanceRef.current);
     const delay = oi === q.answer ? 1000 : 1800;
     advanceRef.current = setTimeout(() => trigger(), delay);

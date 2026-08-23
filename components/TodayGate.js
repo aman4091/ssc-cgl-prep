@@ -43,15 +43,23 @@ function Ring({ row, busy, locked, onStart }) {
         </span>
       </div>
       <div className="tgate__acts">
-        <button
-          className="btn btn--sm btn--primary"
-          disabled={!!busy || locked}
-          title={locked ? "Pehle Reasoning poora karo" : ""}
-          onClick={() => onStart(row.key)}
-        >
-          {locked ? "🔒 Baad mein" : busy === row.key ? "⏳ ban raha hai…" : "🎯 Aaj ka set"}
-        </button>
-        <Link href={row.href} className="btn btn--ghost btn--sm">Bank</Link>
+        {/* Vocab aur CA ka koi "set" nahi banta — unke apne page hain, aur
+            ginti wahin se apne aap chadhti hai. */}
+        {row.task ? (
+          <Link href={row.href} className="btn btn--sm btn--primary">▶ Kholo</Link>
+        ) : (
+          <>
+            <button
+              className="btn btn--sm btn--primary"
+              disabled={!!busy || locked}
+              title={locked ? "Pehle Reasoning poora karo" : ""}
+              onClick={() => onStart(row.key)}
+            >
+              {locked ? "🔒 Baad mein" : busy === row.key ? "⏳ ban raha hai…" : "🎯 Aaj ka set"}
+            </button>
+            <Link href={row.href} className="btn btn--ghost btn--sm">Bank</Link>
+          </>
+        )}
       </div>
     </div>
   );
