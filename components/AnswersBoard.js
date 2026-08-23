@@ -13,10 +13,10 @@ import { fixCAAnswer } from "@/lib/feed";
 import { copyImageToClipboard, imageBlob } from "@/lib/imgclip";
 import { localInkCounts } from "@/lib/ink";
 import { getSettings } from "@/lib/storage";
-import { toggleDone, pruneDone, getDoneMap } from "@/lib/answersdone";
+import { markDone, pruneDone, getDoneMap } from "@/lib/answersdone";
 import {
   getDoneSet as getNbDone, getDoneMap as getNbDoneMap,
-  toggleDone as toggleNbDone, pruneDone as pruneNbDone,
+  markDone as markNbDone, pruneDone as pruneNbDone,
 } from "@/lib/mistakesdone";
 import { getCounts, bumpCount, countMark } from "@/lib/qcounter";
 import { useImageUrls } from "@/lib/wrongimages";
@@ -97,7 +97,7 @@ const bucketOf = (r) => (KNOWN.has(r.subject) ? r.subject : "other");
 const labelOf = (k) =>
   k === "other" ? "Other" : (SUBJECTS.find((s) => s.key === k) || ALL_SUBJ).label;
 
-function AnsCard({ rec, n, done, inkN, fresh, onToggle, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight }) {
+function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight }) {
   const { urls, missing } = useImageUrls(imagesOf(rec));
   const [lb, setLb] = useState(null);
   const [pasteOpen, setPasteOpen] = useState(false);
@@ -163,11 +163,11 @@ function AnsCard({ rec, n, done, inkN, fresh, onToggle, onDelete, onOpen, onChan
 
   return (
     <div
-      className={`ansp__card${done ? " is-done" : ""}${highlight ? " is-hit" : ""}${fresh ? " is-new" : ""}`}
+      className={`ansp__card${highlight ? " is-hit" : ""}${fresh ? " is-new" : ""}`}
       id={`ans-${rec.id}`}
     >
       <h2>
-        {fresh ? "🆕 " : ""}{done ? "✅ " : ""}Question {n}
+        {fresh ? "🆕 " : ""}Question {n}
         <span className="ansp__qid">
           {" · "}🖼️ {rec.qid || "—"}{rec.at ? ` · ${dayLabel(rec.at)}` : ""}
         </span>
@@ -187,10 +187,10 @@ function AnsCard({ rec, n, done, inkN, fresh, onToggle, onDelete, onOpen, onChan
       )}
 
       <div className="ansp__acts">
-        <label className="ansp__mark">
-          <input type="checkbox" checked={done} onChange={() => onToggle(rec)} />
-          Ho gaya
-        </label>
+        {/* Nishaan nahi, KAAM: dabate hi ye question sabse neeche chala
+            jata hai. Dobara upar aayega to bina kisi tick ke — isliye yahan
+            kuch "laga hua" dikhta bhi nahi. */}
+        <button className="ansp__btn ansp__btn--go" onClick={() => onDone(rec)}>✅ Ho gaya</button>
         <button className="ansp__btn ansp__btn--go" onClick={() => onOpen(rec)}>✍️ Solve</button>
         <button className="ansp__btn" onClick={askGemini}>{copied === "gem" ? "🖼️ ✓" : "✨ Gemini"}</button>
         <button className="ansp__btn" onClick={copyPrompt}>{copied === "pr" ? "✓" : "📋 Prompt"}</button>
@@ -435,13 +435,14 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tags, taxReady]);
 
-  // Kinare wali list ka HARA number aur upar ka "Ho gaye" — dono ka matlab ek
-  // hi hai: is question ka kaam ho chuka. Mock par wo ✅ tick se aata hai;
-  // notebook par tick se BHI aur "ab sahi ho gaya" se bhi.
-  const isDone = useCallback(
-    (r) => (r.__src === "mock" ? done.has(r.id) : (nbDone.has(r.key) || !!r.correct)),
-    [done, nbDone],
-  );
+  // "Ho gaya" ab koi HAALAT nahi hai — ek kaam hai. Dabate hi question neeche
+  // chala jata hai aur nishaan khud hat jata hai, taaki ghoom kar wapas upar
+  // aaye to dobara bina-nishaan ke mile. Isliye yahan na koi hara rang bachta
+  // hai, na koi tick jo laga reh jaye.
+  //
+  // Pehle hara rang tha, aur uske saath ek gali-band: nipta hua question ghoom
+  // kar upar aa jata tha par uspar tick laga hota tha — use neeche bhejne ka
+  // koi tareeka hi nahi bachta tha (tick dabao to wo UT-tick hota tha).
 
   // Naye question apne aap tag ho jayein — panel ka checkbox is par lagta hai.
   //
@@ -545,8 +546,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     };
     return [...rows].sort(cmp);
   }, [rows, sortAt]);
-
-  const doneCount = list.filter(isDone).length;
 
   // Kitne card abhi bane hue hain. Chhaanti badalte hi shuru se.
   const [visible, setVisible] = useState(PAGE);
@@ -679,32 +678,31 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     setTimeout(() => setFlash(""), 5000);
   }, []);
 
-  const onToggle = (rec) => {
-    const now = toggleDone(rec.id);
-    const next = new Set(done);
-    if (now) next.add(rec.id);
-    else next.delete(rec.id);
+  const onDone = (rec) => {
+    markDone(rec.id);
+    const next = new Set(done).add(rec.id);
     // Nishaan bhi saath mein — warna agla poll wahi set dobara bana kar poori
     // list ko bekaar mein dobara render kara deta.
     sigRef.current.done = [...next].sort().join("|");
     setDone(next);
-    setDoneMap(getDoneMap());
+    const m = getDoneMap();
+    sigRef.current.doneMapSig = JSON.stringify(m);
+    setDoneMap(m);
     // Tick lagate hi aaj ka counter +1, hatate hi -1 (wahi question dobara
     // mark karo to ginti dobara nahi badhti — qcounter ids yaad rakhta hai)
-    const c = countMark(rec.id, rec.subject || subject, now);
+    const c = countMark(rec.id, rec.subject || subject, true);
     sigRef.current.counts = JSON.stringify(c);
     setCounts(c);
   };
 
-  // Notebook ka mark alag store mein — tick lagate hi card apni jagah se hat
-  // kar sabse neeche chala jata hai (list yahin dobara banti hai).
-  const onToggleNb = (rec) => {
-    const now = toggleNbDone(rec.key);
+  // Notebook ka nishaan alag store mein — par kaam wahi: neeche bhej do.
+  const onDoneNb = (rec) => {
+    markNbDone(rec.key);
     const next = getNbDone();
     sigRef.current.nbDone = [...next].sort().join("|");
     setNbDone(next);
     setNbDoneMap(getNbDoneMap());
-    const c = countMark(rec.key, bucketOf(rec), now);
+    const c = countMark(rec.key, bucketOf(rec), true);
     sigRef.current.counts = JSON.stringify(c);
     setCounts(c);
   };
@@ -837,7 +835,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               <a
                 key={r.uid}
                 href={`#${id}`}
-                className={isDone(r) ? "is-done" : ""}
                 onClick={(e) => { e.preventDefault(); jumpTo(i, id); }}
               >
                 {i + 1}
@@ -863,8 +860,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
             )}
           </span>
           <span className="tot">📊 Total: {list.length}</span>
-          <span className="did">✅ Ho gaye: {doneCount}</span>
-          <span className="left">⏳ Baaki: {list.length - doneCount}</span>
         </div>
 
         <h1>{active.icon} {active.label} Questions</h1>
@@ -998,10 +993,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               key={r.uid}
               rec={r}
               n={i + 1}
-              done={done.has(r.id)}
               inkN={inkCounts[r.id] || 0}
               fresh={freshIds.has(r.id)}
-              onToggle={onToggle}
+              onDone={onDone}
               onDelete={onDelete}
               onOpen={onOpen}
               onChange={refresh}
@@ -1015,11 +1009,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               key={r.uid}
               rec={r}
               n={i + 1}
-              done={nbDone.has(r.key)}
-              solved={!!r.correct}
               bucket={bucketOf(r)}
               subjectLabel={labelOf(bucketOf(r))}
-              onToggle={() => onToggleNb(r)}
+              onDone={() => onDoneNb(r)}
               onDelete={() => onDeleteNb(r)}
               onFix={(oi) => onFixNb(r, oi)}
             />

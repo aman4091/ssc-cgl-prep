@@ -19,13 +19,13 @@ import FixAnswer from "@/components/FixAnswer";
 const isCA = (r) =>
   r.category === "Current Affairs" || /ca|current/i.test(String(r.source || ""));
 
-export default function NotebookCard({ rec, n, done, solved, bucket, subjectLabel, onToggle, onDelete, onFix }) {
+export default function NotebookCard({ rec, n, bucket, subjectLabel, onDone, onDelete, onFix }) {
   const caEntry = isCA(rec) ? findCAEntryForQuestion(rec.q) : null;
 
   return (
-    <div id={`mq-${n}`} className={`ansp__card${done ? " is-done" : ""}`}>
+    <div id={`mq-${n}`} className="ansp__card">
       <h2>
-        {solved ? "🎓 " : done ? "✅ " : ""}Question {n}
+        Question {n}
         <span className="ansp__qid">
           {" · "}📝 {subjectLabel}
           {rec.category ? ` · ${rec.category}` : ""}
@@ -67,10 +67,8 @@ export default function NotebookCard({ rec, n, done, solved, bucket, subjectLabe
       )}
 
       <div className="ansp__acts">
-        <label className="ansp__mark">
-          <input type="checkbox" checked={done} onChange={onToggle} />
-          Ho gaya
-        </label>
+        {/* Nishaan nahi, kaam — dabate hi question sabse neeche. */}
+        <button className="ansp__btn ansp__btn--go" onClick={onDone}>✅ Ho gaya</button>
         <button className="ansp__btn" onClick={onDelete}>🗑️ Hatao</button>
       </div>
     </div>
