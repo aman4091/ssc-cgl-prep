@@ -64,6 +64,11 @@ const PAGE = 25;
 // Bina poochhe ek page-visit mein itne se zyada question AI ko nahi bhejte.
 const AUTO_CAP = 20;
 
+// Chapter dropdown ki wo entry jo "jinka chapter abhi pata nahi" dikhati hai.
+// Slug jaisa dikhne wala koi bhi naam is jagah takra sakta tha, isliye ye
+// do underscore wala naam — kisi chapter ka slug aisa nahi ho sakta.
+const NO_CHAPTER = "__none";
+
 // "Sab" chip. isSubject("") false deta hai, isliye URL mein ?subject=all —
 // purane /answers link (bina param) ab bhi Maths hi kholte hain.
 const ALL_SUBJ = { key: "", label: "Sab", icon: "\u{1F4DA}" };
@@ -271,7 +276,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   const [tags, setTagMap] = useState({});
   const [taxReady, setTaxReady] = useState(false);
   const [report, setReport] = useState(false);
-  const [chapter, setChapter] = useState("");
+  const [chapter, setChapter] = useState(() => sp.get("ch") || "");
   const [flash, setFlash] = useState("");
   const [err, setErr] = useState("");
   const active = subject && subject !== "other"
@@ -441,7 +446,11 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   const rows = useMemo(
     () => pool
       .filter((r) => (subject ? bucketOf(r) === subject : true))
-      .filter((r) => (chapter ? chapterOf(r).ch === chapter : true)),
+      .filter((r) => {
+        if (!chapter) return true;
+        const ch = chapterOf(r).ch;
+        return chapter === NO_CHAPTER ? !ch : ch === chapter;
+      }),
     [pool, subject, chapter, chapterOf],
   );
 
@@ -452,6 +461,25 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     () => pool.filter((r) => (subject ? bucketOf(r) === subject : true)),
     [pool, subject],
   );
+
+  // Dropdown ki list — sirf wahi chapter jinka koi question yahan hai, aur
+  // sabse zyada galat wala sabse upar. Poori 29 chapter ki list dena bekaar
+  // hai: aadhe khaali honge aur jispar kaam chahiye wo beech mein dab jayega.
+  const chapterOpts = useMemo(() => {
+    const c = new Map();
+    let none = 0;
+    for (const r of reportRows) {
+      const ch = chapterOf(r).ch;
+      if (!ch) { none += 1; continue; }
+      c.set(ch, (c.get(ch) || 0) + 1);
+    }
+    return {
+      list: [...c.entries()]
+        .map(([ch, n]) => ({ ch, n, label: chapterLabel(ch) }))
+        .sort((a, b) => b.n - a.n || a.label.localeCompare(b.label)),
+      none,
+    };
+  }, [reportRows, chapterOf]);
 
   // Kram: pehle bina-tick wale, phir tick wale; dono ke andar purana upar.
   // Yahi hisaab dono purane pages ka tha, isliye kisi bhi shelf ka kram badla
@@ -515,7 +543,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   // Subject ya shelf badli to nayi list ke saare records "naye" nahi hain —
   // ginti shuru se karo.
-  useEffect(() => { seenIds.current = null; setFreshIds(new Set()); setChapter(""); }, [subject, src]);
+  useEffect(() => { seenIds.current = null; setFreshIds(new Set()); }, [subject, src]);
 
   // Chhaanti badlo: state turant, URL chupchaap peechhe. replaceState Next ko
   // dobara render karne par majboor nahi karta — isliye ye ek frame ka kaam
@@ -523,13 +551,20 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   const go = (next) => {
     const s = next.subject !== undefined ? next.subject : subject;
     const v = next.src !== undefined ? next.src : src;
+    // Subject ya shelf badle to chapter apne aap chhoot jata hai — "Maths ka
+    // Geometry" chun kar English par jaane ka koi matlab nahi.
+    const c = next.chapter !== undefined ? next.chapter
+      : (next.subject !== undefined || next.src !== undefined) ? "" : chapter;
     if (next.subject !== undefined) setSubject(s);
     if (next.src !== undefined) setSrc(v);
+    setChapter(c);
     try {
       // Pathname wahi rehta hai jispar ho (/answers ya /mistakes) — Next ko
       // uske neeche se route nahi badalna chahiye, sirf query.
       const base = window.location.pathname;
-      window.history.replaceState(null, "", `${base}?subject=${s || "all"}&src=${v}`);
+      window.history.replaceState(
+        null, "", `${base}?subject=${s || "all"}&src=${v}${c ? `&ch=${encodeURIComponent(c)}` : ""}`,
+      );
     } catch { /* purana browser — chhaanti phir bhi chal rahi hai */ }
   };
 
@@ -784,6 +819,26 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
                 ? "Quiz/PYQ mein jo galat ya chhoda — sawaal apne asli card mein."
                 : "Dono shelf ek saath — screenshot wale bhi, quiz ke galat bhi."}
           </span>
+
+          {/* Chapter ki chhaanti. Report kholne ki zaroorat nahi — "bas
+              geometry ke saare question dekhne hain" seedha yahan se. Report
+              se kisi chapter par tap karo to yahi dropdown uspar aa jata hai. */}
+          <label className="ansp__hint" htmlFor="ansp-ch">Chapter:</label>
+          <select
+            id="ansp-ch"
+            className="input"
+            style={{ maxWidth: 260 }}
+            value={chapter}
+            onChange={(e) => go({ chapter: e.target.value })}
+          >
+            <option value="">📕 Sab chapter ({reportRows.length})</option>
+            {chapterOpts.list.map((c) => (
+              <option key={c.ch} value={c.ch}>{c.label} ({c.n})</option>
+            ))}
+            {chapterOpts.none > 0 && (
+              <option value={NO_CHAPTER}>❓ Chapter pata nahi ({chapterOpts.none})</option>
+            )}
+          </select>
         </div>
 
         <div className="ansp__chips">
@@ -809,16 +864,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
             </a>
           )}
         </div>
-
-        {/* Report se kisi chapter par tap kiya to board bhi wahi dikhata hai —
-            warna report padh kar dobara dhoondhna padta. */}
-        {chapter && (
-          <div className="ansp__chips">
-            <a href="#" className="is-active" onClick={(e) => { e.preventDefault(); setChapter(""); }}>
-              📕 {chapterLabel(chapter)} ({list.length}) &nbsp;✕
-            </a>
-          </div>
-        )}
 
         <div className="ansp__acts ansp__acts--top">
           <span className="ansp__hint">
@@ -915,7 +960,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
             chapterOf={chapterOf}
             subjectOf={bucketOf}
             onClose={() => setReport(false)}
-            onPick={(ch) => { setChapter(ch); setReport(false); window.scrollTo({ top: 0 }); }}
+            onPick={(ch) => { go({ chapter: ch }); setReport(false); window.scrollTo({ top: 0 }); }}
           />
         )}
 
