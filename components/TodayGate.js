@@ -28,7 +28,7 @@ import { buildTodaySet } from "@/lib/todayset";
 // hai, aur menu bhi waise ka waisa hai. Sirf "bina soche browse karna" band
 // hota hai.
 
-function Ring({ row, busy, locked, onStart }) {
+function Ring({ row, n, busy, locked, onStart }) {
   const done = row.left === 0;
   return (
     <div className={`tgate__card${done ? " is-done" : ""}${locked ? " is-locked" : ""}`}>
@@ -36,7 +36,7 @@ function Ring({ row, busy, locked, onStart }) {
         <span>{row.icon}</span>
       </div>
       <div className="tgate__meta">
-        <b>{row.label}</b>
+        <b><span className="tgate__n">{n}</span> {row.label}</b>
         <span className="tgate__num">
           {row.done} / {row.target}
           {done ? " ✅" : ` · ${row.left} baaki`}
@@ -45,17 +45,22 @@ function Ring({ row, busy, locked, onStart }) {
       <div className="tgate__acts">
         {/* Vocab aur CA ka koi "set" nahi banta — unke apne page hain, aur
             ginti wahin se apne aap chadhti hai. */}
-        {row.task ? (
+        {locked ? (
+          // Band = poori tarah band. Ek bhi doosra darwaza khula rahe to wahi
+          // dabaya jata hai — yahi to rokna tha.
+          <button className="btn btn--sm btn--primary" disabled title="Pehle upar wala poora karo">
+            🔒 Baad mein
+          </button>
+        ) : row.task ? (
           <Link href={row.href} className="btn btn--sm btn--primary">▶ Kholo</Link>
         ) : (
           <>
             <button
               className="btn btn--sm btn--primary"
-              disabled={!!busy || locked}
-              title={locked ? "Pehle Reasoning poora karo" : ""}
+              disabled={!!busy}
               onClick={() => onStart(row.key)}
             >
-              {locked ? "🔒 Baad mein" : busy === row.key ? "⏳ ban raha hai…" : "🎯 Aaj ka set"}
+              {busy === row.key ? "⏳ ban raha hai…" : "🎯 Aaj ka set"}
             </button>
             <Link href={row.href} className="btn btn--ghost btn--sm">Bank</Link>
           </>
@@ -145,7 +150,8 @@ export default function TodayGate({ onStateChange }) {
         </p>
       ) : (
         <p className="tgate__msg">
-          Abhi shuru karo: <b>{next.icon} {next.label}</b> — {next.left} question baaki.
+          Abhi sirf yahi: <b>{next.icon} {next.label}</b> — {next.left} baaki.
+          {lock && <> Iske poora hote hi agla khud khul jayega.</>}
         </p>
       )}
 
@@ -168,7 +174,7 @@ export default function TodayGate({ onStateChange }) {
           </label>
           <label className="tgate__lock">
             <input type="checkbox" checked={lock} onChange={(e) => { setLock(e.target.checked); setLockOn(e.target.checked); }} />
-            🔒 Kram se karo (pehle Reasoning)
+            🔒 Kram se karo (ek ke baad ek)
           </label>
           <button
             className="btn btn--sm btn--primary"
@@ -180,8 +186,9 @@ export default function TodayGate({ onStateChange }) {
       )}
 
       <div className="tgate__grid">
-        {plan.map((row) => (
-          <Ring key={row.key} row={row} busy={busy} locked={locked.has(row.key)} onStart={start} />
+        {plan.map((row, i) => (
+          <Ring key={row.key} n={i + 1} row={row} busy={busy}
+            locked={locked.has(row.key)} onStart={start} />
         ))}
       </div>
 
@@ -209,11 +216,11 @@ export default function TodayGate({ onStateChange }) {
       {routine && (
         <ol className="tgate__routine">
           <li><b>Reasoning 50</b> — 45 min. Sabse sasta faayda, isliye sabse pehle.</li>
-          <li><b>Vocab</b> — 20 naye + 40 purane, 30 min. Roz, warna bhool jaoge.</li>
+          <li><b>Vocab 50</b> — 30 min. Ek din ka quiz poora karo, ring bhar jayega.</li>
           <li><b>English PYQ 40</b> — 45 min. Error, improvement, cloze.</li>
+          <li><b>Current Affairs 20</b> — 20 min. Sirf pichhle 6 mahine.</li>
           <li><b>Maths 25</b> — 15 min timer par, phir 45 min review. <b>⚡ Skip 10s</b> on rakho.</li>
           <li><b>GS PYQ 50</b> — 45 min. Pehle PYQ, phir SIRF galat wale ka note.</li>
-          <li><b>Current Affairs 20</b> — 30 min. Sirf pichhle 6 mahine.</li>
           <li><b>Galat questions</b> — 60 min. Asli padhai yahi hai.</li>
           <li><b>Har doosre din full mock</b> — 60 min + 30 min analysis.</li>
         </ol>

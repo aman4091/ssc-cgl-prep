@@ -3494,3 +3494,10 @@ body.exam-on .pyq-filters { display: none; }
   font-size: 0.86rem; color: var(--text-2); line-height: 1.7;
 }
 .tgate__lock { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-2); }
+.tgate__n {
+  display: inline-grid; place-items: center;
+  width: 18px; height: 18px; margin-right: 4px;
+  border-radius: 50%; background: var(--glass-border); color: var(--text-2);
+  font-size: 0.68rem; font-weight: 700;
+}
+.tgate__card.is-done .tgate__n { background: var(--success, #a6e3a1); color: #12331d; }
