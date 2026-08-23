@@ -7,7 +7,12 @@
 // overlay ko ack bhejta hai. Overlay band ho to fetch chupchaap fail — no UI.
 
 import { useEffect, useRef } from "react";
-import { addWrong, setDetail, storeImages, isSubject, findByQid, dedupeByQid } from "@/lib/wrongbook";
+import {
+  addWrong, setDetail, storeImages, isSubject, findByQid, dedupeByQid,
+  getWrongBook, displayOrder, touchWrong,
+} from "@/lib/wrongbook";
+import { getDoneMap } from "@/lib/answersdone";
+import { setUnder40 } from "@/lib/under40";
 import { shedOldQuizzes } from "@/lib/storage";
 
 // localStorage full hone par purane generated quizzes shed karke retry — wahi
@@ -76,6 +81,53 @@ export default function OverlayInbox() {
           }
           // race se phir bhi ban gaye duplicates turant saaf ho jayen
           if ((items || []).length) await dedupeByQid().catch(() => {});
+
+          // ── ab ULTA raasta: site -> overlay ────────────────────────────
+          //
+          // Overlay ke right-edge panel par wahi list, usi kram mein dikhni
+          // chahiye jo Answers page par hai. Kram ka hisaab yahan hai (record
+          // ka waqt + ✅ ka waqt), overlay ke paas nahi — isliye kram aur
+          // marks yahan se wahan bheje jate hain, ulta nahi.
+          //
+          // Tablet par lagaya hua ✅ bhi isi raaste se overlay tak pahunchta
+          // hai: tablet -> Supabase -> is PC ka khula hua site page -> yahan.
+          // Yaani overlay tabhi taaza rehta hai jab site is PC par khuli ho —
+          // aur wahi to har waqt khuli rehti hai (question yahin se aate hain).
+          try {
+            const doneMap = getDoneMap();
+            const order = displayOrder(getWrongBook("math"), doneMap)
+              .map((r) => r.qid)
+              .filter(Boolean);
+            const doneQids = getWrongBook("math")
+              .filter((r) => r.qid && doneMap[r.id] !== undefined)
+              .map((r) => r.qid);
+            await fetch(`${base}/site-state`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ order, done: doneQids }),
+            });
+          } catch { /* overlay band — agla poll phir bhej dega */ }
+
+          // ⏱️ Under 40 ki list overlay ke paas hai (wahi timer chalata hai) —
+          // yahan uski nakal, taaki wo question aam list se hat jayein.
+          try {
+            const res = await fetch(`${base}/under40`, { cache: "no-store" });
+            if (res.ok) setUnder40((await res.json()).qids);
+          } catch { /* ignore */ }
+
+          // Overlay par khola gaya par nipta nahi — us question ko yahan
+          // "abhi hua" bana do, taaki wo dono jagah sabse neeche chala jaye.
+          try {
+            const res = await fetch(`${base}/bumps`, { cache: "no-store" });
+            if (res.ok) {
+              const { bumps } = await res.json();
+              for (const qid of Object.keys(bumps || {})) {
+                withSpace(() => touchWrong(qid));
+                await fetch(`${base}/ack-bump/${qid}`, { method: "POST" });
+              }
+            }
+          } catch { /* ignore */ }
+
           break; // jis port par overlay mila, wahi kaafi hai
         }
       } finally {

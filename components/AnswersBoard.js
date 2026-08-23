@@ -32,6 +32,7 @@ import {
   getTags, setTags, pruneTags, autoOn,
 } from "@/lib/qchapter";
 import { tagChaptersByText } from "@/lib/client-ai";
+import { getUnder40 } from "@/lib/under40";
 
 // Answers + Mistake Notebook — ab EK page.
 //
@@ -75,10 +76,16 @@ const NO_CHAPTER = "__none";
 const ALL_SUBJ = { key: "", label: "Sab", icon: "\u{1F4DA}" };
 
 // Kaunsi shelf dikhani hai.
+//
+// "Under 40" apni alag shelf isliye hai ki wo question rozmarra ki list mein
+// jagah gherte hain aur dete kuch nahi — 40 second ke andar ho chuke hain.
+// Ye mark OVERLAY par lagta hai (40 second ka timer wahi chalata hai); yahan
+// uski sirf nakal aati hai — lib/under40.
 const SOURCES = [
   { key: "all", label: "\u{1F4DA} Sab (dono)" },
   { key: "mock", label: "\u{1F5BC}️ External Mock (screenshot)" },
   { key: "pyq", label: "\u{1F4DD} PYQ / Quiz ke galat" },
+  { key: "u40", label: "⏱️ Under 40 (overlay par nipta diye)" },
 ];
 const isSource = (k) => SOURCES.some((s) => s.key === k);
 
@@ -279,6 +286,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // Chapter ke tag + report ka panel + "sirf is chapter ke" wali chhaanti.
   const [tags, setTagMap] = useState({});
   const [taxReady, setTaxReady] = useState(false);
+  const [u40, setU40] = useState(() => new Set());
   const [report, setReport] = useState(false);
   const [chapter, setChapter] = useState(() => sp.get("ch") || "");
   const [flash, setFlash] = useState("");
@@ -399,6 +407,15 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // chapter maana ja hi nahi sakta.
   useEffect(() => { loadTaxonomy().then(() => setTaxReady(true)); }, []);
 
+  // Under 40 ki list — OverlayInbox har poll par overlay se utha kar likhta
+  // hai, isliye badalne par sunte bhi hain.
+  useEffect(() => {
+    const h = () => setU40(getUnder40());
+    h();
+    window.addEventListener("cgl:under40-changed", h);
+    return () => window.removeEventListener("cgl:under40-changed", h);
+  }, []);
+
   // Tag store: panel se ya auto-tag se badalta hai, dono jagah se sunte hain.
   useEffect(() => {
     const h = () => setTagMap(getTags());
@@ -466,10 +483,13 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, taxReady, mock, nb]);
 
-  const pool = useMemo(
-    () => (src === "mock" ? mock : src === "pyq" ? nb : [...mock, ...nb]),
-    [mock, nb, src],
-  );
+  // Under 40 wale aam shelf se BAHAR — wo apni alag shelf mein milte hain.
+  const isU40 = useCallback((r) => r.__src === "mock" && !!r.qid && u40.has(r.qid), [u40]);
+  const pool = useMemo(() => {
+    if (src === "u40") return mock.filter(isU40);
+    const m = mock.filter((r) => !isU40(r));
+    return src === "mock" ? m : src === "pyq" ? nb : [...m, ...nb];
+  }, [mock, nb, src, isU40]);
 
   const rows = useMemo(
     () => pool
