@@ -33,17 +33,6 @@ export default function NotebookCard({ rec, n, done, solved, bucket, subjectLabe
         </span>
       </h2>
 
-      {/* Sahi kar diya to record notebook se nikal jata hai — par ABHI nahi.
-          Pehle wo agle poll par chupchaap gayab ho jata tha, aur jispar tum
-          kaam kar rahe the wahi sawaal screen se hat jata tha. Ab wo yahin
-          rehta hai, bas ye patti laga kar. */}
-      {solved && (
-        <p className="ansp__flash" style={{ margin: "0 14px 8px" }}>
-          🎓 Ab sahi ho gaya — page dobara kholne par notebook se nikal jayega.
-          Dhoondhna ho to upar &quot;🎓 Sudhre hue bhi dikhao&quot;.
-        </p>
-      )}
-
       <div className="row" style={{ gap: 8, flexWrap: "wrap", alignItems: "center", margin: "0 14px 8px" }}>
         {caEntry && (
           <Link href={`/current-affairs/${caEntry.id}`} className="link">📅 {caEntry.date}</Link>

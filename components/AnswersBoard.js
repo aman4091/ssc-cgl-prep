@@ -276,8 +276,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   const [tags, setTagMap] = useState({});
   const [taxReady, setTaxReady] = useState(false);
   const [report, setReport] = useState(false);
-  // 🎓 "sudhre hue" bhi dikhao — jo notebook se nikal chuke (sahi ho gaye).
-  const [showFixed, setShowFixed] = useState(false);
   const [chapter, setChapter] = useState(() => sp.get("ch") || "");
   const [flash, setFlash] = useState("");
   const [err, setErr] = useState("");
@@ -292,8 +290,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // mein chupchaap jud jata hai. Isliye jo ids pehle nahi thi unhe yaad rakhte
   // hain — upar ek patti aa jati hai aur us card par nishaan lag jata hai.
   const seenIds = useRef(null);
-  // Is baar ke liye chipke hue notebook question — upar refresh() mein wajah.
-  const stickyRef = useRef(new Set());
   const [freshIds, setFreshIds] = useState(() => new Set());
 
   // Kram ka `at` ek baar dekh kar JAMA kar lete hain.
@@ -324,28 +320,16 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
     const rawMock = getWrongBook();
 
-    // Notebook: jo galat hua aur abhi tak sudhra nahi.
+    // Notebook: jo kabhi galat hua, wo yahan REHTA hai — bilkul mock shelf ki
+    // tarah, jahan record kabhi apne aap nahi hatta.
     //
-    // Par ek question JIS WAQT tum uspar kaam kar rahe ho, us waqt gayab nahi
-    // hona chahiye. Pehle aisa hi hota tha: card par sahi option daba do, aur
-    // agle 5-second wale poll par wo chupchaap list se hat jata tha — bina
-    // kuch kahe, jabki card khud keh raha tha "Question list mein hi rahega".
-    // Gemini se answer laa kar wapas aane par yahi sabse zyada khatakta tha:
-    // jispar kaam kar rahe the wahi sawaal gayab.
-    //
-    // Isliye is baar ke liye wo "chipka" rehta hai: page khulne se ab tak jo
-    // bhi notebook mein tha, wo screen par bana rehta hai — bas sahi hote hi
-    // hare nishaan ke saath sabse neeche chala jata hai. Agli baar page kholne
-    // par apne aap nikal jayega, jaisa hona chahiye.
-    //
-    // Record kabhi MITTA nahi — sirf `correct` lagta hai. Isliye "🎓 Sudhre
-    // hue bhi dikhao" se wo dobara saamne aa jaate hain.
-    const allNb = getReview().filter((r) => r.everWrong);
-    for (const r of allNb) if (!r.correct) stickyRef.current.add(`pyq:${r.key}`);
-    const rawNb = allNb.filter(
-      (r) => !r.correct || showFixed || stickyRef.current.has(`pyq:${r.key}`),
-    );
-
+    // Pehle list `everWrong && !correct` par bani thi. Uska matlab tha: card
+    // par sahi option dabate hi question agle poll par chupchaap gayab. Jis
+    // sawaal par tum abhi kaam kar rahe the wahi screen se hat jata tha —
+    // Gemini se answer laa kar wapas aane par to aur bura. Ab sahi hone par wo
+    // sirf sabse NEECHE chala jata hai aur kinare wali list mein uska number
+    // hara ho jata hai. Hatana ho to 🗑️ hai.
+    const rawNb = getReview().filter((r) => r.everWrong);
     const mSig = rawMock
       .map((r) => `${r.id}~${r.at}~${r.subject}~${(r.detail || "").length}~${(r.detail2 || "").length}`)
       .join("|");
@@ -381,7 +365,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     put("ink", JSON.stringify(ink), ink, setInkCounts);
 
     setReady(true);
-  }, [showFixed]);
+  }, []);
 
   useEffect(() => {
     refresh();
@@ -415,8 +399,11 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tags, taxReady]);
 
+  // Kinare wali list ka HARA number aur upar ka "Ho gaye" — dono ka matlab ek
+  // hi hai: is question ka kaam ho chuka. Mock par wo ✅ tick se aata hai;
+  // notebook par tick se BHI aur "ab sahi ho gaya" se bhi.
   const isDone = useCallback(
-    (r) => (r.__src === "mock" ? done.has(r.id) : nbDone.has(r.key)),
+    (r) => (r.__src === "mock" ? done.has(r.id) : (nbDone.has(r.key) || !!r.correct)),
     [done, nbDone],
   );
 
@@ -517,10 +504,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       if (ta !== tb) return ta < tb ? -1 : 1;
       return qnum(a) - qnum(b);
     };
-    // 0 = abhi baaki, 1 = tick kiya hua, 2 = ab sahi ho gaya (agli baar
-    // notebook se nikal jayega). Teeno apne-apne dher mein purana upar.
-    const rank = (r) => (r.__src === "pyq" && r.correct ? 2 : isDone(r) ? 1 : 0);
-    return [0, 1, 2].flatMap((k) => rows.filter((r) => rank(r) === k).sort(cmp));
+    return [...rows.filter((r) => !isDone(r)).sort(cmp), ...rows.filter((r) => isDone(r)).sort(cmp)];
   }, [rows, isDone, atOf]);
 
   const doneCount = list.filter(isDone).length;
@@ -914,16 +898,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           >
             🧹 Free space
           </button>
-          {src !== "mock" && (
-            <button
-              className="ansp__btn"
-              aria-pressed={showFixed}
-              onClick={() => setShowFixed((v) => !v)}
-              title="Jo galat the aur ab sahi ho chuke — wo notebook se nikal jaate hain. Yahan se dobara dekh lo."
-            >
-              {showFixed ? "✅ Sudhre hue dikh rahe hain" : "🎓 Sudhre hue bhi dikhao"}
-            </button>
-          )}
           <button
             className="ansp__btn"
             onClick={() => setReport(true)}
