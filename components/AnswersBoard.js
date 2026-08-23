@@ -13,9 +13,10 @@ import { fixCAAnswer } from "@/lib/feed";
 import { copyImageToClipboard, imageBlob } from "@/lib/imgclip";
 import { localInkCounts } from "@/lib/ink";
 import { getSettings } from "@/lib/storage";
-import { toggleDone, pruneDone } from "@/lib/answersdone";
+import { toggleDone, pruneDone, getDoneMap } from "@/lib/answersdone";
 import {
-  getDoneSet as getNbDone, toggleDone as toggleNbDone, pruneDone as pruneNbDone,
+  getDoneSet as getNbDone, getDoneMap as getNbDoneMap,
+  toggleDone as toggleNbDone, pruneDone as pruneNbDone,
 } from "@/lib/mistakesdone";
 import { getCounts, bumpCount, countMark } from "@/lib/qcounter";
 import { useImageUrls } from "@/lib/wrongimages";
@@ -264,6 +265,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   const [nb, setNb] = useState([]);          // quiz/PYQ ke galat
   const [done, setDone] = useState(() => new Set());     // mock ke id
   const [nbDone, setNbDone] = useState(() => new Set()); // notebook ke key
+  // Wahi mark, par waqt ke saath — kram inhi se banta hai.
+  const [doneMap, setDoneMap] = useState({});
+  const [nbDoneMap, setNbDoneMap] = useState({});
   // Aaj kis subject ke kitne question hue (raat 3 baje reset) — mark karte hi
   // apne aap badhta hai, overlay ke counter jaisa hi hisaab.
   const [counts, setCounts] = useState({});
@@ -292,18 +296,33 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   const seenIds = useRef(null);
   const [freshIds, setFreshIds] = useState(() => new Set());
 
-  // Kram ka `at` ek baar dekh kar JAMA kar lete hain.
+  // ── Kram: ek GHOOMTA hua katar ──────────────────────────────────────────
   //
-  // Notebook ka question andar hi answer karne par uska `at` abhi ka ho jata
-  // hai — aur ye page har 5 second par dobara padhta hai. Bina is jamaav ke wo
-  // card aapke padhte-padhte apni jagah se khisak kar sabse neeche chala jata.
-  // Ab kram sirf page khulne par banta hai; nayi baari agli baar milegi.
-  const atRef = useRef(new Map());
-  const atOf = useCallback((r) => {
-    const m = atRef.current;
-    if (!m.has(r.uid)) m.set(r.uid, String(r.at || ""));
-    return m.get(r.uid);
-  }, []);
+  // Ek hi list, koi dher nahi. Sabse upar wo jise sabse zyada der se haath
+  // nahi lagaya; sabse neeche wo jo abhi-abhi hua. Naya galat question bhi
+  // "abhi hua" hai, isliye wo sabse neeche lagta hai — yaani kal ka naya
+  // question aaj nipte hue ke NEECHE aayega, uske upar nahi. Phir jo bhi tum
+  // niptaoge wo uske neeche chala jayega, aur katar ghoomti rahegi.
+  //
+  // "Aakhri baar kab kuch hua" do jagah se aata hai, jo bhi baad ka ho:
+  //   • record ka apna `at`  — question banne ka waqt, aur notebook mein har
+  //     attempt par naya (isliye jawab dete hi wo sabse neeche chala jata hai)
+  //   • ✅ "Ho gaya" ka waqt — lib/answersdone / lib/mistakesdone
+  //
+  // Pehle yahan `at` ko page khulte hi JAMA kar diya jata tha aur list do
+  // dheron mein bantti thi (pehle baaki, phir ho gaye). Usme naya question
+  // hamesha nipte hue question ke UPAR aa jata tha — jo ghoomti katar nahi,
+  // do alag list thi.
+  const doneAt = useCallback(
+    (r) => (r.__src === "mock" ? (doneMap[r.id] || "") : (nbDoneMap[r.key] || "")),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [doneMap, nbDoneMap],
+  );
+  const sortAt = useCallback((r) => {
+    const a = String(r.at || "");
+    const d = doneAt(r);
+    return d > a ? d : a;
+  }, [doneAt]);
 
   // Har 5 second par sab kuch dobara set karna mehnga tha: naye array matlab
   // nayi list, naya sort, aur saare card dobara. 99% baar kuch badla hi nahi
@@ -354,9 +373,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     }
 
     const d = pruneDone(ids);
-    put("done", [...d].sort().join("|"), d, setDone);
+    if (put("done", [...d].sort().join("|"), d, setDone)) setDoneMap(getDoneMap());
     const nd = pruneNbDone(new Set(rawNb.map((r) => r.key)));
-    put("nbDone", [...nd].sort().join("|"), nd, setNbDone);
+    if (put("nbDone", [...nd].sort().join("|"), nd, setNbDone)) setNbDoneMap(getNbDoneMap());
 
     // 5s poll — 3 baje din badla to yahin pata chal jata hai
     const c = getCounts();
@@ -499,13 +518,13 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       return m ? Number(m[1]) : 0;
     };
     const cmp = (a, b) => {
-      const ta = atOf(a);
-      const tb = atOf(b);
+      const ta = sortAt(a);
+      const tb = sortAt(b);
       if (ta !== tb) return ta < tb ? -1 : 1;
       return qnum(a) - qnum(b);
     };
-    return [...rows.filter((r) => !isDone(r)).sort(cmp), ...rows.filter((r) => isDone(r)).sort(cmp)];
-  }, [rows, isDone, atOf]);
+    return [...rows].sort(cmp);
+  }, [rows, sortAt]);
 
   const doneCount = list.filter(isDone).length;
 
@@ -628,6 +647,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     // list ko bekaar mein dobara render kara deta.
     sigRef.current.done = [...next].sort().join("|");
     setDone(next);
+    setDoneMap(getDoneMap());
     // Tick lagate hi aaj ka counter +1, hatate hi -1 (wahi question dobara
     // mark karo to ginti dobara nahi badhti — qcounter ids yaad rakhta hai)
     const c = countMark(rec.id, rec.subject || subject, now);
@@ -642,6 +662,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     const next = getNbDone();
     sigRef.current.nbDone = [...next].sort().join("|");
     setNbDone(next);
+    setNbDoneMap(getNbDoneMap());
     const c = countMark(rec.key, bucketOf(rec), now);
     sigRef.current.counts = JSON.stringify(c);
     setCounts(c);
