@@ -6,6 +6,7 @@ import Link from "next/link";
 import {
   todayPlan, planDone, nextSubject, getTargets, setTargets,
   getExamDate, setExamDate, daysLeft, SUBJECT_ORDER,
+  lockOn, setLockOn, lockedSubjects, lastMock,
 } from "@/lib/daily";
 import { buildTodaySet } from "@/lib/todayset";
 
@@ -27,10 +28,10 @@ import { buildTodaySet } from "@/lib/todayset";
 // hai, aur menu bhi waise ka waisa hai. Sirf "bina soche browse karna" band
 // hota hai.
 
-function Ring({ row, busy, onStart }) {
+function Ring({ row, busy, locked, onStart }) {
   const done = row.left === 0;
   return (
-    <div className={`tgate__card${done ? " is-done" : ""}`}>
+    <div className={`tgate__card${done ? " is-done" : ""}${locked ? " is-locked" : ""}`}>
       <div className="tgate__ring" style={{ "--pct": row.pct }}>
         <span>{row.icon}</span>
       </div>
@@ -44,10 +45,11 @@ function Ring({ row, busy, onStart }) {
       <div className="tgate__acts">
         <button
           className="btn btn--sm btn--primary"
-          disabled={!!busy}
+          disabled={!!busy || locked}
+          title={locked ? "Pehle Reasoning poora karo" : ""}
           onClick={() => onStart(row.key)}
         >
-          {busy === row.key ? "⏳ ban raha hai…" : "🎯 Aaj ka set"}
+          {locked ? "🔒 Baad mein" : busy === row.key ? "⏳ ban raha hai…" : "🎯 Aaj ka set"}
         </button>
         <Link href={row.href} className="btn btn--ghost btn--sm">Bank</Link>
       </div>
@@ -63,10 +65,15 @@ export default function TodayGate({ onStateChange }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState({});
   const [exam, setExam] = useState("");
+  const [lock, setLock] = useState(true);
+  const [mock, setMock] = useState({ days: null, score: null, n: 0 });
+  const [routine, setRoutine] = useState(false);
 
   const refresh = useCallback(() => {
     const p = todayPlan();
     setPlan(p);
+    setLock(lockOn());
+    setMock(lastMock());
     onStateChange?.(planDone(p));
   }, [onStateChange]);
 
@@ -104,6 +111,7 @@ export default function TodayGate({ onStateChange }) {
   };
 
   if (!plan) return null;
+  const locked = lockedSubjects(plan);
   const done = planDone(plan);
   const next = nextSubject(plan);
   const left = daysLeft();
@@ -150,6 +158,10 @@ export default function TodayGate({ onStateChange }) {
             <input className="input" type="date" value={exam}
               onChange={(e) => setExam(e.target.value)} />
           </label>
+          <label className="tgate__lock">
+            <input type="checkbox" checked={lock} onChange={(e) => { setLock(e.target.checked); setLockOn(e.target.checked); }} />
+            🔒 Kram se karo (pehle Reasoning)
+          </label>
           <button
             className="btn btn--sm btn--primary"
             onClick={() => { setTargets(draft); setExamDate(exam); setEditing(false); refresh(); }}
@@ -161,11 +173,43 @@ export default function TodayGate({ onStateChange }) {
 
       <div className="tgate__grid">
         {plan.map((row) => (
-          <Ring key={row.key} row={row} busy={busy} onStart={start} />
+          <Ring key={row.key} row={row} busy={busy} locked={locked.has(row.key)} onStart={start} />
         ))}
       </div>
 
       {err && <p className="ansp__err">{err}</p>}
+
+      {/* 📊 Mock hi batata hai ki padhai marks mein badal rahi hai ya nahi.
+          Do din se zyada ho gaye to ye patti laal ho jati hai. */}
+      <div className={`tgate__mock${mock.days == null || mock.days >= 2 ? " is-due" : ""}`}>
+        {mock.n === 0 ? (
+          <span>📊 Abhi tak koi full mock darj nahi. Aaj ek do — bina mock ke pata hi nahi chalega ki kya badla.</span>
+        ) : (
+          <span>
+            📊 Aakhri full mock <b>{mock.days === 0 ? "aaj" : `${mock.days} din pehle`}</b>
+            {mock.score != null && <> · {mock.score} marks</>}
+            {mock.days >= 2 && <> — <b>aaj ek aur banta hai.</b></>}
+          </span>
+        )}
+        <Link href="/mock-tests" className="btn btn--ghost btn--sm">▶ Mock do</Link>
+        <Link href="/mock-marks?cat=full" className="btn btn--ghost btn--sm">✍️ Marks likho</Link>
+      </div>
+
+      <button className="tgate__more" onClick={() => setRoutine((v) => !v)}>
+        {routine ? "▲ Routine chhupao" : "▼ Roz ka routine"}
+      </button>
+      {routine && (
+        <ol className="tgate__routine">
+          <li><b>Reasoning 50</b> — 45 min. Sabse sasta faayda, isliye sabse pehle.</li>
+          <li><b>Vocab</b> — 20 naye + 40 purane, 30 min. Roz, warna bhool jaoge.</li>
+          <li><b>English PYQ 40</b> — 45 min. Error, improvement, cloze.</li>
+          <li><b>Maths 25</b> — 15 min timer par, phir 45 min review. <b>⚡ Skip 10s</b> on rakho.</li>
+          <li><b>GS PYQ 50</b> — 45 min. Pehle PYQ, phir SIRF galat wale ka note.</li>
+          <li><b>Current Affairs 20</b> — 30 min. Sirf pichhle 6 mahine.</li>
+          <li><b>Galat questions</b> — 60 min. Asli padhai yahi hai.</li>
+          <li><b>Har doosre din full mock</b> — 60 min + 30 min analysis.</li>
+        </ol>
+      )}
 
       <div className="tgate__links">
         <Link href="/answers?subject=all&src=all" className="btn btn--ghost btn--sm">📖 Galat questions</Link>

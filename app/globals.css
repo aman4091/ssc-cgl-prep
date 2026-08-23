@@ -3473,3 +3473,24 @@ body.exam-on .pyq-filters { display: none; }
   border-color: var(--danger, #f38ba8);
   color: var(--danger, #f38ba8);
 }
+
+/* Aaj ka kaam — mock ki patti, routine, aur band (locked) subject. */
+.tgate__card.is-locked { opacity: 0.55; }
+.tgate__mock {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-top: 12px; padding: 8px 10px; border-radius: var(--radius);
+  border: 1px solid var(--glass-border); background: var(--bg);
+  font-size: 0.85rem; color: var(--text-2);
+}
+.tgate__mock.is-due { border-color: var(--danger, #f38ba8); color: var(--text-1); }
+.tgate__mock .btn { margin-left: auto; }
+.tgate__mock .btn + .btn { margin-left: 0; }
+.tgate__more {
+  margin-top: 10px; padding: 0; border: 0; background: none; cursor: pointer;
+  font-family: inherit; font-size: 0.82rem; font-weight: 700; color: var(--accent);
+}
+.tgate__routine {
+  margin: 8px 0 0; padding-left: 22px;
+  font-size: 0.86rem; color: var(--text-2); line-height: 1.7;
+}
+.tgate__lock { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; color: var(--text-2); }
