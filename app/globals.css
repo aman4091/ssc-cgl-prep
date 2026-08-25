@@ -3501,3 +3501,34 @@ body.exam-on .pyq-filters { display: none; }
   font-size: 0.68rem; font-weight: 700;
 }
 .tgate__card.is-done .tgate__n { background: var(--success, #a6e3a1); color: #12331d; }
+
+/* 🌐 Bahar diya hua test — homepage ki ring se khulne wala chhota form.
+   Grid apne aap simat jata hai, isliye mobile par ek-do khaane per line. */
+.extm {
+  margin-top: 12px; padding: 12px 14px;
+  border: 1px solid var(--glass-border); border-radius: 14px;
+  background: var(--glass-bg);
+}
+.extm__head { display: flex; align-items: center; gap: 8px; }
+.extm__head b { font-size: 0.92rem; }
+.extm__head .btn { margin-left: auto; }
+.extm__grid {
+  display: grid; gap: 10px; margin-top: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+.extm__f { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.extm__f > span { font-size: 0.74rem; color: var(--text-2); }
+.extm__f .input { padding: 6px 9px; width: 100%; }
+.extm__f--wide { grid-column: span 2; }
+.extm__out { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.extm__acts { display: flex; gap: 8px; margin-top: 12px; }
+@media (max-width: 520px) { .extm__f--wide { grid-column: span 1; } }
+
+/* 👆 Swipe ka ishaara — sirf ungli wali screen par. Mouse par ye jhooth hai. */
+.qboard__swipe { display: none; }
+@media (pointer: coarse) {
+  .qboard__swipe {
+    display: inline-block; margin-left: 8px;
+    font-size: 0.72rem; color: var(--text-2); opacity: 0.7; white-space: nowrap;
+  }
+}

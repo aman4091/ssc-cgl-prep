@@ -62,6 +62,30 @@ const hasKey = (q) => typeof q?.answer === "number";
 const two = (n) => String(n).padStart(2, "0");
 const clock = (s) => `${two(Math.floor(Math.max(0, s) / 60))}:${two(Math.max(0, s) % 60)}`;
 
+// 👆 Swipe — ungli se aage-peeche. Mobile par har question ke baad neeche
+// "Save & Next" tak pahunchna padta tha; ab card par hi baayen-daayen kheencho.
+//
+// Ek hi jagah dhyaan dena hota hai: agar ungli kisi aise dabbe par hai jo khud
+// daayen-baayen sarakta hai (chaudi tasveer, table, lamba formula) to wo sarakna
+// hi chahiye — question badalna nahi. Isliye touch shuru hote hi upar tak dekh
+// lete hain ki beech mein koi aisa dabba to nahi.
+const SWIPE_X = 60;      // itna kheenche bina question nahi badlega
+const SWIPE_MS = 700;    // dheere-dheere sarakna swipe nahi hai
+const SWIPE_SKIP = ["INPUT", "TEXTAREA", "SELECT", "BUTTON"];
+
+function swipeBlocked(el, root) {
+  for (let n = el; n && n !== root; n = n.parentElement) {
+    if (n.nodeType !== 1) continue;
+    if (SWIPE_SKIP.includes(n.tagName)) return true;
+    if (n.dataset && n.dataset.noswipe != null) return true;
+    if (n.scrollWidth - n.clientWidth > 4) {
+      const ox = getComputedStyle(n).overflowX;
+      if (ox === "auto" || ox === "scroll") return true;
+    }
+  }
+  return false;
+}
+
 export default function QBoard({
   list,                       // page ki apni list (uske filters ke BAAD)
   subject,                    // counter kis subject mein ginega
@@ -233,6 +257,7 @@ export default function QBoard({
   }, []);
 
   const rootRef = useRef(null);
+  const swipeRef = useRef(null);
   useEffect(() => {
     const h = () => setFs(!!document.fullscreenElement);
     document.addEventListener("fullscreenchange", h);
@@ -635,6 +660,30 @@ export default function QBoard({
   const reAnswered = Object.keys(rePicks).length;
   const reRight = Object.values(rePicks).filter((x) => x.correct).length;
 
+  // Ungli neeche rakhte hi tay kar lete hain ki ye swipe ban sakta hai ya nahi;
+  // uthate waqt sirf naapte hain. Beech mein kuch nahi rokte, isliye page ka
+  // upar-neeche scroll bilkul waisa hi rehta hai.
+  const touchStart = (e) => {
+    if (e.touches.length !== 1) { swipeRef.current = null; return; }
+    const t = e.touches[0];
+    swipeRef.current = {
+      x: t.clientX, y: t.clientY, at: Date.now(),
+      skip: swipeBlocked(e.target, e.currentTarget),
+    };
+  };
+  const touchEnd = (e) => {
+    const s0 = swipeRef.current;
+    swipeRef.current = null;
+    if (!s0 || s0.skip) return;
+    const t = e.changedTouches && e.changedTouches[0];
+    if (!t || Date.now() - s0.at > SWIPE_MS) return;
+    const dx = t.clientX - s0.x, dy = t.clientY - s0.y;
+    // Seedha aage-peeche hi — tirchi ungli ka matlab aksar scroll hota hai.
+    if (Math.abs(dx) < SWIPE_X || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    if (dx < 0) { if (at < n - 1) go(at + 1); }
+    else if (at > 0) go(at - 1);
+  };
+
   return (
     <div className={`qboard${fs ? " is-fs" : ""}${done ? "" : " is-locked"}${hideAns ? " is-hidden-ans" : ""}`} ref={rootRef}>
       <aside className="qboard__rail">
@@ -777,6 +826,8 @@ export default function QBoard({
         {done && !hideAns ? null : (
         <div className="qboard__nav">
             <span className="qboard__pos">Question <b>{at + 1}</b> / {n}</span>
+            {/* Sirf ungli wali screen par — mouse walon ke liye ye jhooth hai. */}
+            <span className="qboard__swipe">👈 swipe 👉</span>
             <span className="qboard__navbtns">
               <button className="btn btn--ghost" onClick={() => go(at - 1)} disabled={at === 0}>← Previous</button>
               {/* 🙈 mode koi test nahi hai — na review ka nishaan chahiye, na
@@ -799,7 +850,7 @@ export default function QBoard({
 
         {/* Set ke saare card mount rehte hain, sirf ek dikhta hai — isliye
             peeche jaakar bhi apna chuna hua option waisa ka waisa milta hai. */}
-        <div className="qboard__cards">
+        <div className="qboard__cards" onTouchStart={touchStart} onTouchEnd={touchEnd}>
           {setQs.map((x, i) => (
             <div key={`${round}:${x._uid ?? x.id ?? i}`} style={i === at ? undefined : { display: "none" }}>
               {/* Submit ke baad hi — test ke dauraan ghadi dikhane se dhyaan

@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   todayPlan, planDone, nextSubject, getTargets, setTargets,
-  getExamDate, setExamDate, daysLeft, SUBJECT_ORDER,
+  getExamDate, setExamDate, daysLeft, SUBJECT_ORDER, SUBJECT_META,
   lockOn, setLockOn, lockedSubjects, lastMock,
 } from "@/lib/daily";
 import { buildTodaySet } from "@/lib/todayset";
+import ExtMock from "@/components/ExtMock";
 
 // 🎯 Aaj ka kaam — homepage ki sabse upar wali patti.
 //
@@ -28,7 +29,7 @@ import { buildTodaySet } from "@/lib/todayset";
 // hai, aur menu bhi waise ka waisa hai. Sirf "bina soche browse karna" band
 // hota hai.
 
-function Ring({ row, n, busy, locked, onStart }) {
+function Ring({ row, n, busy, locked, onStart, onExt }) {
   const done = row.left === 0;
   return (
     <div className={`tgate__card${done ? " is-done" : ""}${locked ? " is-locked" : ""}`}>
@@ -63,6 +64,9 @@ function Ring({ row, n, busy, locked, onStart }) {
               {busy === row.key ? "⏳ ban raha hai…" : "🎯 Aaj ka set"}
             </button>
             <Link href={row.href} className="btn btn--ghost btn--sm">Bank</Link>
+            {/* Bahar (Testbook/RBE) diya hua test bhi isi ring mein ginta hai —
+                warna asli kaam karke bhi darwaza band rehta tha. */}
+            <button className="btn btn--ghost btn--sm" onClick={() => onExt(row.key)}>🌐 Bahar</button>
           </>
         )}
       </div>
@@ -81,6 +85,7 @@ export default function TodayGate({ onStateChange }) {
   const [lock, setLock] = useState(true);
   const [mock, setMock] = useState({ days: null, score: null, n: 0 });
   const [routine, setRoutine] = useState(false);
+  const [ext, setExt] = useState("");   // kis subject ka bahar-wala form khula hai
 
   const refresh = useCallback(() => {
     const p = todayPlan();
@@ -188,9 +193,19 @@ export default function TodayGate({ onStateChange }) {
       <div className="tgate__grid">
         {plan.map((row, i) => (
           <Ring key={row.key} n={i + 1} row={row} busy={busy}
-            locked={locked.has(row.key)} onStart={start} />
+            locked={locked.has(row.key)} onStart={start} onExt={setExt} />
         ))}
       </div>
+
+      {ext && (
+        <ExtMock
+          subject={ext}
+          label={SUBJECT_META[ext]?.label || ext}
+          icon={SUBJECT_META[ext]?.icon || "🌐"}
+          onClose={() => setExt("")}
+          onSaved={() => { setExt(""); refresh(); }}
+        />
+      )}
 
       {err && <p className="ansp__err">{err}</p>}
 

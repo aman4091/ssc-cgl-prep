@@ -5,7 +5,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   FULL_SECTIONS, CATEGORIES, categoryOf,
-  getMocks, addMock, removeMock, mockTotals, sectionStats,
+  getMocks, addMock, removeMock, mockTotals, sectionStats, percentileOf,
 } from "@/lib/mockmarks";
 
 const todayStr = () => new Date().toISOString().slice(0, 10);
@@ -24,6 +24,11 @@ function MockMarksInner() {
   const [name, setName] = useState("");
   const [date, setDate] = useState(todayStr());
   const [sections, setSections] = useState([]);
+  // 📈 Rank aur "kitne mein se" — Testbook/RBE dono saamne dikhate hain, aur
+  // inhi do se percentile banta hai. Score batata hai kitna kiya; percentile
+  // batata hai ki baaki logon ke saamne kahan khade ho — asli chunav wahi hai.
+  const [rank, setRank] = useState("");
+  const [outOf, setOutOf] = useState("");
   const [err, setErr] = useState("");
 
   const refresh = () => setMocks(getMocks(cat.key));
@@ -35,7 +40,7 @@ function MockMarksInner() {
       ? FULL_SECTIONS.map((n) => ({ ...blankSection(), name: n }))
       : [{ ...blankSection(), name: cat.subject }];
 
-  const resetForm = () => { setName(""); setDate(todayStr()); setSections(freshSections()); setErr(""); };
+  const resetForm = () => { setName(""); setDate(todayStr()); setSections(freshSections()); setRank(""); setOutOf(""); setErr(""); };
 
   useEffect(() => { refresh(); setOpen(false); resetForm(); /* eslint-disable-next-line */ }, [cat.key]);
 
@@ -47,13 +52,14 @@ function MockMarksInner() {
     const has = sections.some((s) => Number(s.correct) || Number(s.wrong) || Number(s.total));
     if (!has) { setErr("Marks daalo (correct / wrong / total)."); return; }
     if (!name.trim()) { setErr("Mock ka naam daalo."); return; }
-    addMock({ name, cat: cat.key, date, sections });
+    addMock({ name, cat: cat.key, date, sections, rank, outOf });
     setOpen(false); resetForm(); refresh();
   };
 
   const remove = (id) => { if (confirm("Ye mock hata dein?")) { removeMock(id); refresh(); } };
 
   const draftTotals = mockTotals({ sections });
+  const draftPc = percentileOf(rank, outOf);
 
   return (
     <>
@@ -89,6 +95,22 @@ function MockMarksInner() {
                 <label className="vd-label">Date</label>
                 <input className="input" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
               </div>
+              <div style={{ flex: "1 1 110px" }}>
+                <label className="vd-label">Rank</label>
+                <input className="input" type="number" min="1" inputMode="numeric" placeholder="1240"
+                  value={rank} onChange={(e) => setRank(e.target.value)} />
+              </div>
+              <div style={{ flex: "1 1 130px" }}>
+                <label className="vd-label">Kitne mein se</label>
+                <input className="input" type="number" min="1" inputMode="numeric" placeholder="18500"
+                  value={outOf} onChange={(e) => setOutOf(e.target.value)} />
+              </div>
+              {draftPc != null && (
+                <div style={{ flex: "1 1 110px" }}>
+                  <label className="vd-label">Percentile</label>
+                  <div className="input" style={{ display: "flex", alignItems: "center", color: "var(--accent-2)", fontWeight: 700 }}>{draftPc}</div>
+                </div>
+              )}
             </div>
 
             {isFull ? (
@@ -181,6 +203,13 @@ function MockMarksInner() {
                     <span className="chip">🎯 {t.accuracy}% acc</span>
                     <span className="chip">⏱ {t.timeMin} min</span>
                     <span className="chip muted">{t.attempted}/{t.total} attempted</span>
+                    {m.rank && m.outOf && (
+                      <>
+                        <span className="chip">🏅 Rank <strong>{m.rank}</strong> / {m.outOf}</span>
+                        <span className="chip">📈 <strong>{percentileOf(m.rank, m.outOf)}</strong> %ile</span>
+                      </>
+                    )}
+                    {m.external && <span className="chip muted">🌐 bahar</span>}
                   </div>
                 </div>
               );
