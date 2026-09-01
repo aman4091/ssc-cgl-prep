@@ -14,6 +14,7 @@ import OverlayInbox from "@/components/OverlayInbox";
 import VocabFeeder from "@/components/VocabFeeder";
 import StoreGate from "@/components/StoreGate";
 import SWRegister from "@/components/SWRegister";
+import PathMemo from "@/components/PathMemo";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -109,6 +110,8 @@ export default function RootLayout({ children }) {
           <SWRegister />
           <OverlayInbox />
           <VocabFeeder />
+          {/* Quiz ka Exit "jahan se aaye the" wahin lauta sake — lib/backto */}
+          <PathMemo />
         </StoreGate>
       </body>
     </html>

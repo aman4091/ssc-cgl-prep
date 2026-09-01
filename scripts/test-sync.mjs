@@ -230,5 +230,45 @@ console.log("\n14) Ek jaisi do entries — na girein, na har sync par 'badla hua
   t("list mein bhi dohraav bachta hai", JSON.parse(rebuild(shred(dupList))), JSON.parse(dupList));
 }
 
+console.log("\n15) COUNTER — do device ek doosre ki ginti na mitayein");
+{
+  const today = "2026-08-31";
+
+  // ── Purana roop: poora counter EK dabba tha ────────────────────────────
+  // Laptop par reasoning ke 50 ho chuke. Phone pehli baar sync kar raha hai —
+  // uske paas is store ki koi yaad nahi, isliye uska apna khaali counter
+  // "maine badla hai" gina jata hai aur laptop ka kiya hua uda deta hai.
+  const oldA = J({ day: today, counts: { reasoning: 50, math: 0 }, ids: {}, history: {} });
+  const oldB = J({ day: today, counts: { reasoning: 0, math: 0 }, ids: {}, history: {} });
+  const rOld = reconcileStore(oldB, {}, rowsOf(oldA), []);
+  t("purane roop mein phone laptop ki 50 uda deta tha",
+    JSON.parse(rOld.nextJson).counts.reasoning, 0);
+
+  // ── Naya roop: har device ka apna khaana ───────────────────────────────
+  // Ab byDev ek LIST hai, to sync har device ka alag record banata hai. Phone
+  // sirf APNA record chhoota hai — laptop wale ko haath hi nahi laga sakta.
+  const dev = (id, reasoning) =>
+    ({ id, day: today, counts: { reasoning, math: 0 }, ids: {}, history: {} });
+  const newA = J({ v: 2, byDev: [dev("A", 50)] });
+  const newB = J({ v: 2, byDev: [dev("B", 0)] });
+  const rNew = reconcileStore(newB, {}, rowsOf(newA), []);
+  const byDev = JSON.parse(rNew.nextJson).byDev;
+
+  t("dono device ke khaane bache", byDev.length, 2);
+  t("aaj ka jod 50 hai (kuch gaya nahi)",
+    byDev.filter((e) => e.day === today).reduce((n, e) => n + e.counts.reasoning, 0), 50);
+  t("phone sirf apna khaana bhejta hai",
+    rNew.toSend.map((x) => x.item_id).filter((k) => k.startsWith("M:byDev")), ["M:byDev/L#B"]);
+
+  // Ab phone par bhi 20 ho gaye — laptop ke 50 phir bhi salamat, jod 70.
+  const newB2 = J({ v: 2, byDev: [dev("B", 20), dev("A", 50)] });
+  const r2 = reconcileStore(newB2, sentOf(rNew.nextJson), [], []);
+  const byDev2 = JSON.parse(r2.nextJson).byDev;
+  t("phone par 20 karne ke baad jod 70",
+    byDev2.reduce((n, e) => n + e.counts.reasoning, 0), 70);
+  t("aur push mein sirf phone ka khaana",
+    r2.toSend.map((x) => x.item_id), ["M:byDev/L#B"]);
+}
+
 console.log(`\n${pass} pass, ${fail} fail\n`);
 process.exit(fail ? 1 : 0);

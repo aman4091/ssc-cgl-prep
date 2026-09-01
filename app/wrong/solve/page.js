@@ -27,6 +27,7 @@ import { imageBlob } from "@/lib/imgclip";
 import InkCanvas, { PALETTE, PEN_SIZES } from "@/components/InkCanvas";
 import WrongAnswerBlock from "@/components/WrongAnswerBlock";
 import Markdown from "@/components/Markdown";
+import { backTo } from "@/lib/backto";
 
 // ✍️ Solve — tablet par stylus se Wrong Notebook ke question ke neeche solution
 // likhne ki jagah.
@@ -381,7 +382,10 @@ function SolveInner() {
       }
     }
     if (back && (qMeta?.source === "set" || !showResultRef.current)) { router.push(back); return; }
-    router.push(`/answers?subject=${subject}`);
+    // Aakhri sahara: jo aam page aakhri baar khula tha (lib/backto).
+    // Pehle yahan seedha /answers tha — quiz kahin se bhi shuru karo, ant
+    // mein Answers par hi patak deta tha.
+    router.push(backTo(`/answers?subject=${subject}`));
     // `showResult` deps mein JAAN-BOOJH KAR nahi hai — wo neeche declare hota
     // hai aur deps array render ke waqt hi padh liya jata hai, to yahan likhne
     // se "Cannot access 'showResult' before initialization" aata hai aur poora
@@ -715,7 +719,7 @@ function SolveInner() {
     return (
       <div className="inkv">
         <div className="inkv__top">
-          <button className="btn btn--ghost btn--sm" onClick={() => router.push("/answers")}>← Wapas</button>
+          <button className="btn btn--ghost btn--sm" onClick={() => router.push(backTo("/answers"))}>← Wapas</button>
           <span className="inkv__title">Solve</span>
         </div>
         <div className="placeholder" style={{ margin: 20 }}>

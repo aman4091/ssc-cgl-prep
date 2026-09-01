@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getQuiz, deleteQuiz } from "@/lib/storage";
 import { setSyncPaused } from "@/lib/sync";
+import { backTo } from "@/lib/backto";
 import { markDayDone, markDayTypeDone } from "@/lib/vocab";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import MathQuestionCard from "@/components/MathQuestionCard";
@@ -26,6 +27,14 @@ import QBoard from "@/components/QBoard";
 export default function QuizPlayer() {
   const { id } = useParams();
   const [quiz, setQuiz] = useState(undefined);
+  // ↩️ Exit wahin le jata hai jahan se quiz shuru hua — vocab ka din, homepage
+  // ki ring, notes ka page, jo bhi. Pehle ye hamesha /answers tha, aur vocab ka
+  // din poora karke Answers par aa girna seedha kaam todta tha.
+  //
+  // Pehli render par server aur client ek jaisa rakhna hai (sessionStorage
+  // server par hai hi nahi), isliye effect mein padhte hain.
+  const [back, setBack] = useState("/");
+  useEffect(() => { setBack(backTo("/")); }, []);
 
   // Quiz khula ho to sync ko storage chhoone hi nahi dena. Jawab React state
   // mein hain, isliye beech mein jhatka seedha nuksaan hai. Screen band hote
@@ -74,7 +83,7 @@ export default function QuizPlayer() {
         <div className="glass-card center">
           <h2>Quiz not found</h2>
           <p className="muted mt-8">Ya to delete ho gaya, ya link galat hai.</p>
-          <Link href="/answers" className="btn btn--primary mt-16">← Answers</Link>
+          <Link href={back} className="btn btn--primary mt-16">← Wapas</Link>
         </div>
       </section>
     );
@@ -97,7 +106,7 @@ export default function QuizPlayer() {
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">📝 Quiz</span>
-          <Link href="/answers" className="btn btn--ghost btn--sm">Exit</Link>
+          <Link href={back} className="btn btn--ghost btn--sm">Exit</Link>
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.3rem, 3vw, 1.9rem)" }}>
           {quiz.title}

@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   todayPlan, planDone, nextSubject, getTargets, setTargets,
-  getExamDate, setExamDate, daysLeft, SUBJECT_ORDER, SUBJECT_META,
+  getExamDate, setExamDate, daysLeft, SUBJECT_META,
+  getOrder, setOrder, moveSubject, DEFAULT_ORDER,
   lockOn, setLockOn, lockedSubjects, lastMock,
 } from "@/lib/daily";
 import { buildTodaySet } from "@/lib/todayset";
@@ -28,6 +29,17 @@ import ExtMock from "@/components/ExtMock";
 // hai). Band = padhai band nahi: har ring se seedha us subject ka kaam khulta
 // hai, aur menu bhi waise ka waisa hai. Sirf "bina soche browse karna" band
 // hota hai.
+
+// Har subject ka ek line ka mashwara — routine mein isi kram se lagta hai
+// jis kram mein ring hain.
+const TIPS = {
+  reasoning: "45 min. Sabse sasta faayda — yahan mehnat seedha marks banti hai.",
+  vocab: "30 min. Ek din ka quiz poora karo, ring bhar jayegi.",
+  english: "45 min. Error spotting, improvement, cloze.",
+  ca: "20 min. Sirf pichhle 6 mahine.",
+  math: "15 min timer par, phir 45 min review. ⚡ Skip 10s on rakho.",
+  gs: "45 min. Pehle PYQ, phir SIRF galat wale ka note.",
+};
 
 function Ring({ row, n, busy, locked, onStart, onExt }) {
   const done = row.left === 0;
@@ -86,6 +98,7 @@ export default function TodayGate({ onStateChange }) {
   const [mock, setMock] = useState({ days: null, score: null, n: 0 });
   const [routine, setRoutine] = useState(false);
   const [ext, setExt] = useState("");   // kis subject ka bahar-wala form khula hai
+  const [order, setOrderState] = useState(DEFAULT_ORDER);
 
   const refresh = useCallback(() => {
     const p = todayPlan();
@@ -99,6 +112,7 @@ export default function TodayGate({ onStateChange }) {
     refresh();
     setDraft(getTargets());
     setExam(getExamDate());
+    setOrderState(getOrder());
     // Quiz submit hote hi ginti badalti hai — us page se lautne par turant
     // dikhe, isliye poll bhi aur event bhi.
     const id = setInterval(refresh, 4000);
@@ -162,16 +176,33 @@ export default function TodayGate({ onStateChange }) {
 
       {editing && (
         <div className="tgate__edit">
-          {SUBJECT_ORDER.map((k) => (
-            <label key={k}>
-              {plan.find((r) => r.key === k)?.label}
-              <input
-                className="input" type="number" min="0" max="500"
-                value={draft[k] ?? 0}
-                onChange={(e) => setDraft({ ...draft, [k]: e.target.value })}
-              />
-            </label>
-          ))}
+          {/* Kram aur target ek hi jagah — kyunki dono ek hi sawaal ke jawab
+              hain: "aaj karna kya hai, aur kitna". ▲▼ se khiskao, ginti wahin
+              badlo. Upar-neeche karte hi ring bhi usi kram mein aa jati hain. */}
+          <div className="tgate__ord">
+            <b>Kram — jo upar, wo pehle</b>
+            {order.map((k, i) => (
+              <div className="tgate__ordrow" key={k}>
+                <span className="tgate__n">{i + 1}</span>
+                <span className="tgate__ordname">
+                  {SUBJECT_META[k]?.icon} {SUBJECT_META[k]?.label}
+                </span>
+                <input
+                  className="input" type="number" min="0" max="500"
+                  value={draft[k] ?? 0}
+                  onChange={(e) => setDraft({ ...draft, [k]: e.target.value })}
+                />
+                <button className="btn btn--ghost btn--sm" disabled={i === 0}
+                  onClick={() => setOrderState(moveSubject(k, -1))} title="Upar">▲</button>
+                <button className="btn btn--ghost btn--sm" disabled={i === order.length - 1}
+                  onClick={() => setOrderState(moveSubject(k, +1))} title="Neeche">▼</button>
+              </div>
+            ))}
+            <button className="btn btn--ghost btn--sm"
+              onClick={() => setOrderState(setOrder(DEFAULT_ORDER))}>
+              ↺ Sujhaya hua kram wapas
+            </button>
+          </div>
           <label>
             Exam ki tareekh
             <input className="input" type="date" value={exam}
@@ -230,12 +261,17 @@ export default function TodayGate({ onStateChange }) {
       </button>
       {routine && (
         <ol className="tgate__routine">
-          <li><b>Reasoning 50</b> — 45 min. Sabse sasta faayda, isliye sabse pehle.</li>
-          <li><b>Vocab 50</b> — 30 min. Ek din ka quiz poora karo, ring bhar jayega.</li>
-          <li><b>English PYQ 40</b> — 45 min. Error, improvement, cloze.</li>
-          <li><b>Current Affairs 20</b> — 20 min. Sirf pichhle 6 mahine.</li>
-          <li><b>Maths 25</b> — 15 min timer par, phir 45 min review. <b>⚡ Skip 10s</b> on rakho.</li>
-          <li><b>GS PYQ 50</b> — 45 min. Pehle PYQ, phir SIRF galat wale ka note.</li>
+          {/* Kram wahi jo upar ki ring ka hai — kram badlo to routine bhi
+              badal jati hai, warna neeche likha hua upar wale se ulta padha
+              jata aur dono par se bharosa uth jata. */}
+          {order.map((k) => {
+            const row = plan.find((r) => r.key === k);
+            return (
+              <li key={k}>
+                <b>{row?.label} {row?.target}</b> — {TIPS[k]}
+              </li>
+            );
+          })}
           <li><b>Galat questions</b> — 60 min. Asli padhai yahi hai.</li>
           <li><b>Har doosre din full mock</b> — 60 min + 30 min analysis.</li>
         </ol>

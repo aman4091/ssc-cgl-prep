@@ -3532,3 +3532,14 @@ body.exam-on .pyq-filters { display: none; }
     font-size: 0.72rem; color: var(--text-2); opacity: 0.7; white-space: nowrap;
   }
 }
+
+/* ⚙️ Kram badalne wali patti — ⚙️ Target ke andar. Har line: number, subject,
+   target ki ginti, aur ▲▼. Drag-drop jaan-boojh kar nahi: ungli se drag
+   karne mein page hi scroll ho jata hai. */
+.tgate__ord { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+.tgate__ord > b { font-size: 0.8rem; color: var(--text-2); font-weight: 600; }
+.tgate__ordrow { display: flex; align-items: center; gap: 8px; }
+.tgate__ordname { flex: 1; min-width: 0; font-size: 0.86rem; }
+.tgate__ordrow .input { width: 72px; padding: 5px 8px; }
+.tgate__ordrow .btn { padding: 3px 8px; line-height: 1.1; }
+.tgate__ordrow .btn:disabled { opacity: 0.3; }
