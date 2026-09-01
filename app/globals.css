@@ -3543,3 +3543,48 @@ body.exam-on .pyq-filters { display: none; }
 .tgate__ordrow .input { width: 72px; padding: 5px 8px; }
 .tgate__ordrow .btn { padding: 3px 8px; line-height: 1.1; }
 .tgate__ordrow .btn:disabled { opacity: 0.3; }
+
+/* 📖 Gemini ka popup — ek waqt mein ek sawaal aur uska jawab. */
+.gemr {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(4, 7, 16, 0.9);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px 16px;
+  animation: fadeIn 0.16s ease;
+}
+.gemr__box {
+  width: 100%; max-width: 980px; max-height: 100%;
+  display: flex; flex-direction: column; min-height: 0;
+  background: var(--bg); border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg); overflow: hidden;
+  animation: slideUp 0.2s ease;
+}
+.gemr__top, .gemr__nav {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; background: var(--bg-2);
+  border-bottom: 1px solid var(--glass-border); flex: none;
+}
+.gemr__nav { border-bottom: none; border-top: 1px solid var(--glass-border); }
+.gemr__where { flex: 1; min-width: 0; font-size: 0.82rem; color: var(--text-2);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.gemr__dots { flex: 1; text-align: center; font-size: 0.82rem; color: var(--text-2);
+  font-variant-numeric: tabular-nums; }
+.gemr__body { flex: 1; min-width: 0; overflow-y: auto; padding: 14px; }
+.gemr__nav .ansp__btn:disabled { opacity: 0.35; cursor: default; }
+@media (max-width: 640px) {
+  .gemr { padding: 0; }
+  .gemr__box { max-width: none; border-radius: 0; height: 100%; }
+}
+
+/* 📏 Padhne ki chaudai — lamba jawab poori screen par ek line mein 200+ akshar
+   le leta tha, aur itni lambi line par aankh line ke ant se agli line ke shuru
+   tak wapas hi nahi pahunchti (isiliye kitaab ka column patla hota hai).
+   Sirf jawab par: sawaal aur option apni poori chaudai lete rahenge. */
+.qcard__answer .md, .ansp__answer .md, .answer-box .md { max-width: 78ch; }
+
+/* Aur kuch bhi apne dabbe se bahar na nikle: lamba bina-space wala shabd
+   (URL, formula) flex/grid item ko chauda kar deta hai aur poora layout
+   kinare se bahar chala jata hai. */
+.md { max-width: 100%; overflow-wrap: break-word; }
+.md pre, .md-tablewrap, .md img { max-width: 100%; }
+.qcard { min-width: 0; }

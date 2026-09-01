@@ -7,6 +7,7 @@ import Markdown from "@/components/Markdown";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import MathQuestionCard from "@/components/MathQuestionCard";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
+import GeminiReader from "@/components/GeminiReader";
 
 // ✨ Gemini Answers — jin question ka answer maine khud Gemini se laa kar
 // quiz ke andar paste kiya, wo sab yahan.
@@ -49,6 +50,10 @@ export default function GeminiPage() {
   const [ready, setReady] = useState(false);
   const [subject, setSubject] = useState("");
   const [q, setQ] = useState("");
+  // 📖 Popup mein kaunsa khula hai (null = band). Index chhaanti hui list ka
+  // hai, isliye subject badalte hi popup band kar dete hain — warna 3 number
+  // par koi aur sawaal aa jata.
+  const [reading, setReading] = useState(null);
 
   // Naya sabse upar — lib/geminiq pehle hi usi kram mein rakhta hai (dobara
   // paste karo to wahi record upar aa jata hai), isliye yahan dobara chhantne
@@ -112,7 +117,7 @@ export default function GeminiPage() {
             <a
               key={s.key || "all"}
               href="#"
-              onClick={(e) => { e.preventDefault(); setSubject(s.key); }}
+              onClick={(e) => { e.preventDefault(); setSubject(s.key); setReading(null); }}
               className={s.key === subject ? "is-active" : ""}
             >
               {s.label}
@@ -136,8 +141,13 @@ export default function GeminiPage() {
             style={{ maxWidth: 280 }}
             placeholder="🔍 Answer ya question mein khojo…"
             value={q}
-            onChange={(e) => setQ(e.target.value)}
+            onChange={(e) => { setQ(e.target.value); setReading(null); }}
           />
+          {list.length > 0 && (
+            <button className="ansp__btn" onClick={() => setReading(0)}>
+              📖 Ek-ek karke padho ({list.length})
+            </button>
+          )}
           <Link href="/answers?subject=all&src=pyq" className="ansp__btn">🔴 Mistake Notebook</Link>
           <Link href="/slow" className="ansp__btn">⏱️ Slow Questions</Link>
         </div>
@@ -184,12 +194,23 @@ export default function GeminiPage() {
                 <span className="ansp__hint">
                   Ye jawab question ke &quot;Show answer&quot; mein bhi hai — wahi ek hi jagah se aata hai.
                 </span>
+                <button className="ansp__btn" onClick={() => setReading(i)}>📖 Popup mein padho</button>
                 <button className="ansp__btn" onClick={() => remove(r.key)}>🗑️ Hatao</button>
               </div>
             </div>
           ))
         )}
       </div>
+
+      {reading != null && list[reading] && (
+        <GeminiReader
+          items={list}
+          at={reading}
+          onMove={setReading}
+          onClose={() => setReading(null)}
+          labelOf={(r) => labelOf(bucketOf(r))}
+        />
+      )}
     </div>
   );
 }
