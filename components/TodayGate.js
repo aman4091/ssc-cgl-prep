@@ -7,7 +7,7 @@ import {
   todayPlan, planDone, nextSubject, getTargets, setTargets,
   getExamDate, setExamDate, daysLeft, SUBJECT_META,
   getOrder, setOrder, moveSubject, DEFAULT_ORDER,
-  lockOn, setLockOn, lockedSubjects, lastMock,
+  lastMock,
 } from "@/lib/daily";
 import { buildTodaySet } from "@/lib/todayset";
 import ExtMock from "@/components/ExtMock";
@@ -41,10 +41,10 @@ const TIPS = {
   gs: "45 min. Pehle PYQ, phir SIRF galat wale ka note.",
 };
 
-function Ring({ row, n, busy, locked, onStart, onExt }) {
+function Ring({ row, n, busy, onStart, onExt }) {
   const done = row.left === 0;
   return (
-    <div className={`tgate__card${done ? " is-done" : ""}${locked ? " is-locked" : ""}`}>
+    <div className={`tgate__card${done ? " is-done" : ""}`}>
       <div className="tgate__ring" style={{ "--pct": row.pct }}>
         <span>{row.icon}</span>
       </div>
@@ -58,13 +58,7 @@ function Ring({ row, n, busy, locked, onStart, onExt }) {
       <div className="tgate__acts">
         {/* Vocab aur CA ka koi "set" nahi banta — unke apne page hain, aur
             ginti wahin se apne aap chadhti hai. */}
-        {locked ? (
-          // Band = poori tarah band. Ek bhi doosra darwaza khula rahe to wahi
-          // dabaya jata hai — yahi to rokna tha.
-          <button className="btn btn--sm btn--primary" disabled title="Pehle upar wala poora karo">
-            🔒 Baad mein
-          </button>
-        ) : row.task ? (
+        {row.task ? (
           <Link href={row.href} className="btn btn--sm btn--primary">▶ Kholo</Link>
         ) : (
           <>
@@ -94,7 +88,6 @@ export default function TodayGate({ onStateChange }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState({});
   const [exam, setExam] = useState("");
-  const [lock, setLock] = useState(true);
   const [mock, setMock] = useState({ days: null, score: null, n: 0 });
   const [routine, setRoutine] = useState(false);
   const [ext, setExt] = useState("");   // kis subject ka bahar-wala form khula hai
@@ -103,7 +96,6 @@ export default function TodayGate({ onStateChange }) {
   const refresh = useCallback(() => {
     const p = todayPlan();
     setPlan(p);
-    setLock(lockOn());
     setMock(lastMock());
     onStateChange?.(planDone(p));
   }, [onStateChange]);
@@ -143,7 +135,6 @@ export default function TodayGate({ onStateChange }) {
   };
 
   if (!plan) return null;
-  const locked = lockedSubjects(plan);
   const done = planDone(plan);
   const next = nextSubject(plan);
   const left = daysLeft();
@@ -169,18 +160,18 @@ export default function TodayGate({ onStateChange }) {
         </p>
       ) : (
         <p className="tgate__msg">
-          Abhi sirf yahi: <b>{next.icon} {next.label}</b> — {next.left} baaki.
-          {lock && <> Iske poora hote hi agla khud khul jayega.</>}
+          Agla banta hai: <b>{next.icon} {next.label}</b> — {next.left} baaki.
+          {" "}Par jo aaj karna ho wahi karo — sab khule hain.
         </p>
       )}
 
       {editing && (
         <div className="tgate__edit">
-          {/* Kram aur target ek hi jagah — kyunki dono ek hi sawaal ke jawab
-              hain: "aaj karna kya hai, aur kitna". ▲▼ se khiskao, ginti wahin
-              badlo. Upar-neeche karte hi ring bhi usi kram mein aa jati hain. */}
+          {/* Kram aur target ek hi jagah — dono ek hi sawaal ke jawab hain:
+              "aaj karna kya hai, aur kitna". ▲▼ sirf DIKHNE ka kram badalta
+              hai; koi ring band nahi hoti, kabhi nahi. */}
           <div className="tgate__ord">
-            <b>Kram — jo upar, wo pehle</b>
+            <b>Dikhne ka kram (sab hamesha khule hain)</b>
             {order.map((k, i) => (
               <div className="tgate__ordrow" key={k}>
                 <span className="tgate__n">{i + 1}</span>
@@ -208,10 +199,6 @@ export default function TodayGate({ onStateChange }) {
             <input className="input" type="date" value={exam}
               onChange={(e) => setExam(e.target.value)} />
           </label>
-          <label className="tgate__lock">
-            <input type="checkbox" checked={lock} onChange={(e) => { setLock(e.target.checked); setLockOn(e.target.checked); }} />
-            🔒 Kram se karo (ek ke baad ek)
-          </label>
           <button
             className="btn btn--sm btn--primary"
             onClick={() => { setTargets(draft); setExamDate(exam); setEditing(false); refresh(); }}
@@ -224,7 +211,7 @@ export default function TodayGate({ onStateChange }) {
       <div className="tgate__grid">
         {plan.map((row, i) => (
           <Ring key={row.key} n={i + 1} row={row} busy={busy}
-            locked={locked.has(row.key)} onStart={start} onExt={setExt} />
+            onStart={start} onExt={setExt} />
         ))}
       </div>
 
