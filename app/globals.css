@@ -3586,3 +3586,71 @@ body.exam-on .pyq-filters { display: none; }
 .md { max-width: 100%; overflow-wrap: break-word; }
 .md pre, .md-tablewrap, .md img { max-width: 100%; }
 .qcard { min-width: 0; }
+
+
+/* 🧪 Apna test banao (/make-test) — chapter chuno, ginti chuno.
+   Do hi asli cheez hain: har line par ek chapter, aur neeche chipki hui patti
+   jispar "kitne chune" aur "Test banao" hamesha ungli ke paas rehte hain. */
+.mkt__bar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 10px 12px; background: var(--bg); border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}
+.mkt__bar > b { font-size: 0.86rem; }
+.mkt__num { width: 78px; padding: 6px 8px; text-align: center; font-variant-numeric: tabular-nums; }
+.mkt__chk {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.8rem; color: var(--text-2); white-space: nowrap;
+}
+.mkt__chk .mkt__num { width: 62px; }
+
+.mkt__chosen { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.mkt__chip {
+  background: var(--accent-wash); border-color: var(--accent-wash);
+  cursor: pointer; font-size: 0.78rem;
+}
+.mkt__chip b { font-weight: 600; }
+
+.mkt__grp { margin-bottom: 10px; }
+.mkt__grphead {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; padding: 12px 14px; cursor: pointer; text-align: left;
+  background: var(--bg); border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg); color: inherit; font-size: 0.95rem;
+}
+.mkt__srchead {
+  font-size: 0.76rem; color: var(--text-2); text-transform: uppercase;
+  letter-spacing: 0.04em; margin: 12px 2px 6px;
+}
+.mkt__list { display: flex; flex-direction: column; gap: 4px; }
+.mkt__row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 10px; border: 1px solid transparent; border-radius: 12px;
+  background: var(--bg);
+}
+.mkt__row.is-on { border-color: var(--accent); background: var(--accent-wash); }
+/* Poora naam ek button hai — ek tap mein 5 question, dobara tap mein hata do.
+   Phone par yahi sabse tez rasta hai; sadhe hue number ke liye + − aur khaana. */
+.mkt__name {
+  flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;
+  background: none; border: none; color: inherit; text-align: left;
+  cursor: pointer; padding: 4px 0; font-size: 0.9rem;
+}
+.mkt__sub { font-size: 0.72rem; color: var(--text-3); }
+.mkt__step { display: flex; align-items: center; gap: 4px; flex: none; }
+.mkt__step .btn { padding: 4px 10px; line-height: 1.1; font-size: 0.95rem; }
+.mkt__step .btn:disabled { opacity: 0.3; }
+.mkt__step .mkt__num { width: 58px; padding: 5px 6px; }
+
+.mkt__go {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 10px max(12px, calc((100vw - var(--container)) / 2)) calc(10px + env(safe-area-inset-bottom));
+  background: var(--bg-2); border-top: 1px solid var(--glass-border);
+}
+.mkt__count { font-size: 0.95rem; font-variant-numeric: tabular-nums; }
+.mkt__err { color: var(--danger); font-size: 0.8rem; flex: 1; min-width: 120px; }
+.mkt__go .btn { margin-left: auto; }
+/* Test ke dauraan (body.exam-on) ye patti gayab — paper ke beech mein
+   "Test banao" ka koi kaam nahi. */
+body.exam-on .mkt__go { display: none; }

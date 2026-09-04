@@ -132,6 +132,16 @@ export default function QuizPlayer() {
              par khul jaata hai; bacha hua waqt saath jaata hai. */
           stylusUrl={`/wrong/solve?quiz=${quiz.id}`}
           title={quiz.title}
+          /* Apna banaya hua test apna waqt saath laata hai (lib/mixtest) —
+             10 question ke liye 15 minute dena bemaani hai. Baaki quiz ke liye
+             kuch nahi bhejte, to wahi purana 15 minute chalta hai. */
+          minutes={quiz.minutes}
+          /* 🧪 Apna test bank ke asli PYQ se banta hai (lib/mixtest), isliye
+             yahan galat/chhoda question Mistake Notebook mein waise hi jata
+             hai jaise chapter ke set-test se — apne chapter ke naam ke saath.
+             Baaki quiz (vocab din, notes, "20 similar") pehle jaise: wahan se
+             notebook mein kuch naya nahi jodta. */
+          fromPyq={!!quiz.mix}
           onSubmit={onSubmit}
           /* Card question ki SHAKL se chunte hain, quiz ke naam se nahi.
              Pinnacle Maths/Reasoning ke sawaal tasveer mein hote hain (qImg +
@@ -139,6 +149,18 @@ export default function QuizPlayer() {
              par toot jata tha — "Aaj ka set" jaise mile-jule quiz mein yahi
              hua. Ab har question apne asli card mein khulta hai. */
           renderCard={(q, i) => {
+            // Mile-jule test (🧪 Apna test) mein poore quiz ka ek subject hota
+            // hi nahi — har question apna card aur apna subject saath laata hai
+            // (lib/mixtest ke `_card` / `_subject`). Isliye wo pehle dekhte
+            // hain; na ho to neeche wali purani pehchaan (shakl se) chalti hai.
+            if (q?._card) {
+              const name = q._chapter || quiz.title;
+              if (q._card === "math")
+                return <MathQuestionCard key={q._uid ?? i} q={q} index={i} subject="math" chapterName={name} />;
+              if (q._card === "reason")
+                return <ReasonQuestionCard key={q._uid ?? i} q={q} index={i} subject="reasoning" chapterName={name} />;
+              return <PyqQuestionCard key={q._uid ?? i} q={q} index={i} subject={q._subject || ""} chapterName={name} />;
+            }
             const img = q?.qImg && Array.isArray(q?.optImgs);
             if (img && (quiz.subject === "reasoning" || q.bank === "reasonbank")) {
               return (

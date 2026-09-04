@@ -265,6 +265,10 @@ export default function TodayGate({ onStateChange }) {
       )}
 
       <div className="tgate__links">
+        {/* Ring wala "Aaj ka set" chapter khud chunta hai. Jab aaj ka padha hua
+            pata HO (Trigonometry + Biology), tab ye — chapter aur ginti dono
+            apni marzi ke. */}
+        <Link href="/make-test" className="btn btn--ghost btn--sm">🧪 Apna test banao</Link>
         <Link href="/answers?subject=all&src=all" className="btn btn--ghost btn--sm">📖 Galat questions</Link>
         <Link href="/slow" className="btn btn--ghost btn--sm">⏱️ Slow (skip list)</Link>
         <Link href="/mock-marks?cat=full" className="btn btn--ghost btn--sm">📊 Mock marks</Link>

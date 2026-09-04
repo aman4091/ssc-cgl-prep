@@ -103,15 +103,28 @@ export default function QBoard({
   // test ke sar mein "✍️ Stylus" ka button aata hai; bacha hua waqt URL se
   // saath jaata hai, taaki wahan wahi 15-minute wali ghadi chalti rahe.
   stylusUrl,
+  // Galat/chhoda hua question Mistake Notebook mein NAYA record banayega ya
+  // nahi. Default: sirf tab jab poori list bank ki ho (PYQ ka set-test). Quiz
+  // `single` hote hain aur wahan se kuch naya nahi jodna — vocab ka din, notes
+  // ka quiz, "20 similar" — wahan se notebook bharne ka koi matlab nahi.
+  // Apwaad: 🧪 "Apna test" bhi PYQ hi hai, bas chapter khud chune hue — wo ise
+  // khud khol deta hai (app/quizzes/[id] se), warna asli PYQ karke bhi galat
+  // question kahin darj hi nahi hote.
+  fromPyq,
+  // Test ka waqt (minute). Diya na ho to SET_MIN — 25 question ka set 15 minute,
+  // SSC ke section jaisa. "Apna test banao" wala mix apni ginti ke hisaab se
+  // apna waqt bhejta hai (10 question ke liye 15 minute dena bemaani hai).
+  minutes,
   onSubmit,                   // submit ke baad page ka apna kaam (vocab din, etc.)
 }) {
   const router = useRouter();
+  const setMin = Math.max(1, Math.round(Number(minutes) || SET_MIN));
   const [setIdx, setSetIdx] = useState(single ? 0 : null);
   const [mode, setMode] = useState("test");     // "test" | "solutions"
   const [cur, setCur] = useState(0);
   const [picks, setPicks] = useState({});       // set ke andar ka number -> { opt, correct }
   const [review, setReview] = useState({});     // number -> true (Mark for Review)
-  const [leftSec, setLeftSec] = useState(SET_MIN * 60);
+  const [leftSec, setLeftSec] = useState(setMin * 60);
   // Skip trainer: chalu hai ya nahi, aur is question par kitne second bache.
   const [trainOn, setTrainOn] = useState(false);
   const [trainLeft, setTrainLeft] = useState(0);
@@ -209,7 +222,7 @@ export default function QBoard({
     shapeRef.current = { key: resumeKey, sig: sigOf(all), n: total };
     if (grew) return;
     setSetIdx(single ? 0 : null); setAsk(null); setCur(0);
-    setPicks({}); setReview({}); setTimes({}); setDone(false); setLeftSec(SET_MIN * 60);
+    setPicks({}); setReview({}); setTimes({}); setDone(false); setLeftSec(setMin * 60);
     setHideAns(false); setRePicks({});
     retryRef.current = noNotebook;
     timeRef.current = { spent: {}, mark: single ? Date.now() : 0, at: 0 };
@@ -340,7 +353,7 @@ export default function QBoard({
     setTimes(prev?.times || {});
     setDone(how === "solutions");
     setHideAns(false); setRePicks({});
-    setLeftSec(SET_MIN * 60);
+    setLeftSec(setMin * 60);
     toTop();
   };
 
@@ -474,7 +487,7 @@ export default function QBoard({
   const right = keyed.filter((i) => picks[i]?.correct).length;
   const answered = keyed.filter((i) => picks[i]).length;
   const wrong = answered - right;
-  const spent = SET_MIN * 60 - leftSec;
+  const spent = setMin * 60 - leftSec;
 
   const submit = useCallback(() => {
     if (done || setIdx === null) return;
@@ -516,10 +529,16 @@ export default function QBoard({
     // se pade question ko "ho gaya" nishaan deta hai. Dono shart lib/qreview
     // ke andar hain, isliye yahan se saara hisaab bhej dena theek hai.
     recordQuizAttempts(rows.map(({ q: qq, correct, i }) => ({
-      q: qq, correct, subject: subject || "", source: "chapter", category: title,
+      // Mile-jule test mein poore board ka ek subject/chapter hota hi nahi —
+      // har question apna leke aata hai (lib/mixtest ke `_subject`/`_chapter`).
+      // Isse galat hua question sahi ring mein ginta hai aur Mistake Notebook
+      // mein "Trigonometry" ke naam se chadhta hai, "Mera test" ke naam se
+      // nahi — chapter report isi naam se banti hai.
+      q: qq, correct, subject: qq?._subject || subject || "", source: "chapter",
+      category: qq?._chapter || title,
       sec: times[i] || 0,
       onlyExisting: retryRef.current,
-      fromPyq: !single,
+      fromPyq: fromPyq == null ? !single : !!fromPyq,
     })));
     // ⏱️ Time khaane wale — Maths/Reasoning ka jo question 60 second se zyada
     // le gaya wo /slow par chala jata hai. Yahan `rows` NAHI, poora `setQs`:
@@ -529,19 +548,19 @@ export default function QBoard({
     // chhod deta hai, isliye yahan shart lagane ki zaroorat nahi.
     recordSlow(setQs.map((qq, i) => ({
       q: regRef.current[i] || qq,
-      subject,
-      category: title,
+      subject: qq?._subject || subject,
+      category: qq?._chapter || title,
       sec: times[i] || 0,
       outcome: picks[i] ? (picks[i].correct ? "right" : "wrong") : "skip",
     })));
     // "🔢 Aaj" ki ginti — ek question aaj ek hi baar ginta hai, isliye set
     // dobara dene par dobara nahi chadhta.
-    for (const qq of setQs) countMark(doneKeyFor(qq), subject, true);
+    for (const qq of setQs) countMark(doneKeyFor(qq), qq?._subject || subject, true);
     setResults(getChapterResults(resumeKey));
     setCounts(getCounts());
     onSubmit?.({ right, wrong, skipped: n - answered, total: n, sec: spent });
     toTop();
-  }, [done, setIdx, resumeKey, picks, setQs, keyed, right, wrong, answered, spent, subject, title, single, onSubmit, flushTime, toTop]);
+  }, [done, setIdx, resumeKey, picks, setQs, keyed, right, wrong, answered, spent, subject, title, single, fromPyq, onSubmit, flushTime, toTop]);
 
   // Samay khatam — khud submit. Timer ka matlab hi yahi hai.
   useEffect(() => {
@@ -624,7 +643,7 @@ export default function QBoard({
                     </button>
                   </span>
                 ) : (
-                  <span className="setcard__go">▶ Test shuru karo · ⏱ {SET_MIN} min</span>
+                  <span className="setcard__go">▶ Test shuru karo · ⏱ {setMin} min</span>
                 )}
               </div>
             );
