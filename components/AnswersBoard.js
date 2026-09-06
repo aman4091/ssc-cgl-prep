@@ -313,9 +313,16 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // niptaoge wo uske neeche chala jayega, aur katar ghoomti rahegi.
   //
   // "Aakhri baar kab kuch hua" do jagah se aata hai, jo bhi baad ka ho:
-  //   • record ka apna `at`  — question banne ka waqt, aur notebook mein har
-  //     attempt par naya (isliye jawab dete hi wo sabse neeche chala jata hai)
+  //   • record ka apna waqt — mock ke liye `at` (banne ka waqt); PYQ/notebook
+  //     ke liye `firstAt` (PEHLI baar galat hua tha tab ka waqt), `at` nahi.
   //   • ✅ "Ho gaya" ka waqt — lib/answersdone / lib/mistakesdone
+  //
+  // Pehle yahan nb ke liye `at` istemal hota tha, jo har attempt par naya ho
+  // jata hai — is board ke andar hi option chunte hi (PyqQuestionCard ka
+  // archiveOnAnswer) `at` abhi ka ban jata, aur agle poll (5s) mein sawaal
+  // jawab padhte-padhte hi neeche bhaag jata, "Ho gaya" dabaye bina. `firstAt`
+  // reattempt se nahi badalta, isliye ab sawaal apni jagah tabhi chhodta hai
+  // jab ✅ "Ho gaya" khud dabaya jaye.
   //
   // Pehle yahan `at` ko page khulte hi JAMA kar diya jata tha aur list do
   // dheron mein bantti thi (pehle baaki, phir ho gaye). Usme naya question
@@ -326,8 +333,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [doneMap, nbDoneMap],
   );
+  const baseAt = (r) => String((r.__src === "mock" ? r.at : (r.firstAt || r.at)) || "");
   const sortAt = useCallback((r) => {
-    const a = String(r.at || "");
+    const a = baseAt(r);
     const d = doneAt(r);
     return d > a ? d : a;
   }, [doneAt]);
