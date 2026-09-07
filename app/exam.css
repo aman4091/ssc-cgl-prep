@@ -929,3 +929,103 @@
   background: rgba(16, 19, 28, 0.85);
   backdrop-filter: blur(20px);
 }
+
+/* =========================================================
+   HOMEPAGE — reference (CGL HQ) ka "greeting + stat cards +
+   action hero + quick stats + shortcuts" composition.
+   TodayGate.js isi class-set se apna markup banata hai.
+   ========================================================= */
+
+/* Generic bigger glass card — .glass-card se alag isliye ki wo list-row
+   (patli padding) ke liye hai; ye homepage ke bade blocks ke liye. */
+.examskin .glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)), var(--tb-page);
+  border: 1px solid var(--tb-line);
+  border-radius: 20px;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.examskin .hgreet__kicker {
+  color: var(--tb-blue);
+  font-size: 11px; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase;
+}
+.examskin .hgreet__title {
+  color: var(--tb-q); font-weight: 800; letter-spacing: -0.02em;
+  font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.15; margin: 6px 0 0;
+}
+.examskin .hgreet__title em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--tb-blue), var(--tb-blue-dark));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--tb-blue);
+}
+.examskin .hgreet__sub { color: var(--tb-dim); font-size: 14px; margin: 8px 0 0; }
+
+.examskin .hstats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 720px) { .examskin .hstats { grid-template-columns: repeat(2, 1fr); } }
+.examskin .hcard.is-done { border-color: rgba(16, 185, 129, 0.35); }
+.examskin .hcard__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.examskin .hcard__label { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tb-ink-2); }
+.examskin .hcard__frac { font-size: 10px; color: var(--tb-dim); }
+.examskin .hcard__pct { font-size: 1.6rem; font-weight: 800; color: var(--tb-q); }
+.examskin .hcard__pct small { font-size: 0.9rem; color: var(--tb-dim); font-weight: 700; }
+.examskin .hbar { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); overflow: hidden; margin: 10px 0 12px; }
+.examskin .hbar > i { display: block; height: 100%; border-radius: 999px; background: var(--accent-grad); transition: width 0.4s ease; }
+.examskin .hcard__acts { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.examskin .hhero { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; }
+@media (max-width: 900px) { .examskin .hhero { grid-template-columns: 1fr; } }
+.examskin .hhero__main { position: relative; overflow: hidden; }
+.examskin .hhero__glow {
+  position: absolute; right: -40px; top: -40px; width: 210px; height: 210px; border-radius: 999px;
+  background: rgba(255, 178, 36, 0.12); filter: blur(50px); pointer-events: none;
+}
+.examskin .hhero__eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tb-dim); }
+.examskin .hhero__head { color: var(--tb-q); font-weight: 800; font-size: clamp(1.1rem, 2.4vw, 1.4rem); margin: 4px 0 0; }
+.examskin .hhero__note { color: var(--tb-dim); font-size: 13px; margin: 8px 0 0; }
+.examskin .hhero__note b { color: var(--tb-bad-ink); font-weight: 700; }
+.examskin .hhero__acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+
+.examskin .hquick__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.examskin .hquick__label { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tb-dim); }
+.examskin .hquick { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.examskin .htile {
+  display: block; border-radius: 14px; padding: 12px; border: 1px solid;
+  text-decoration: none; transition: background 0.15s ease;
+}
+.examskin .htile__n { font-size: 1.2rem; font-weight: 800; }
+.examskin .htile__l { font-size: 10px; color: var(--tb-dim); margin-top: 2px; }
+.examskin .htile--rose { background: rgba(244, 63, 94, 0.06); border-color: rgba(244, 63, 94, 0.2); }
+.examskin .htile--rose:hover { background: rgba(244, 63, 94, 0.1); }
+.examskin .htile--rose .htile__n { color: var(--tb-red); }
+.examskin .htile--mint { background: rgba(16, 185, 129, 0.06); border-color: rgba(16, 185, 129, 0.2); }
+.examskin .htile--mint:hover { background: rgba(16, 185, 129, 0.1); }
+.examskin .htile--mint .htile__n { color: var(--tb-green-dark); }
+.examskin .htile--sky { background: rgba(125, 211, 252, 0.06); border-color: rgba(125, 211, 252, 0.2); }
+.examskin .htile--sky:hover { background: rgba(125, 211, 252, 0.1); }
+.examskin .htile--sky .htile__n { color: #7dd3fc; }
+.examskin .htile--violet { background: rgba(167, 139, 250, 0.06); border-color: rgba(167, 139, 250, 0.2); }
+.examskin .htile--violet:hover { background: rgba(167, 139, 250, 0.1); }
+.examskin .htile--violet .htile__n { color: var(--tb-code); }
+
+.examskin .hshort { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 720px) { .examskin .hshort { grid-template-columns: repeat(2, 1fr); } }
+.examskin .hshort__card { text-decoration: none; display: block; transition: border-color 0.15s ease, transform 0.15s ease; }
+.examskin .hshort__card:hover { border-color: var(--tb-line-hard); transform: translateY(-2px); }
+.examskin .hshort__ico {
+  width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 10px;
+}
+.examskin .hshort__t { color: var(--tb-q); font-weight: 700; font-size: 14px; }
+.examskin .hshort__s { color: var(--tb-dim); font-size: 12px; margin-top: 2px; }
+
+.examskin .hsection__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.examskin .hsection__title { color: var(--tb-q); font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+
+.examskin .hpage { display: flex; flex-direction: column; gap: 26px; }
+.examskin .hmockbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: var(--tb-ink-2); font-size: 13px; }
+.examskin .hmockbar.is-due { border-color: rgba(244, 63, 94, 0.35); }
+.examskin .hmockbar span:first-child { flex: 1; min-width: 220px; }
+.examskin .hedit { display: flex; flex-direction: column; gap: 12px; }
+.examskin .hedit__row { display: flex; align-items: center; gap: 8px; }
+.examskin .hedit__row .input { max-width: 90px; }
+.examskin .hroutine { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; color: var(--tb-ink-2); font-size: 14px; }

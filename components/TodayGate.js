@@ -10,9 +10,12 @@ import {
   lastMock,
 } from "@/lib/daily";
 import { buildTodaySet } from "@/lib/todayset";
+import { getReviewBucket } from "@/lib/qreview";
+import { getTodaySeconds, fmtDuration } from "@/lib/pomodoro";
+import { getDaysOverview } from "@/lib/vocab";
 import ExtMock from "@/components/ExtMock";
 
-// 🎯 Aaj ka kaam — homepage ki sabse upar wali patti.
+// 🎯 Aaj ka kaam — homepage.
 //
 // Yahan se hatta nahi. Jaan-boojh kar: exam sar par hai aur sabse bada risaav
 // padhai mein nahi, TAALNE mein hai — homepage kholo, notes khol kar baith
@@ -25,13 +28,10 @@ import ExtMock from "@/components/ExtMock";
 //     chune hue aur kamzor chapter ko zyada mauka (lib/todayset). "Kya karun"
 //     wala bees minute yahin bach jata hai.
 //
-// Roz ka kaam poora hone tak neeche ka feed band rehta hai (HomeFeed dekhta
-// hai). Band = padhai band nahi: har ring se seedha us subject ka kaam khulta
-// hai, aur menu bhi waise ka waisa hai. Sirf "bina soche browse karna" band
-// hota hai.
+// 2026-09-07: shakl "CGL HQ" reference build jaisi — greeting, subject % ke
+// card, ek badi "aaj kya karein" hero + quick-stats panel, phir shortcuts.
+// Kaam wahi hai jo pehle tha, bas patti-aur-ring ki jagah ab yehi tarteeb.
 
-// Har subject ka ek line ka mashwara — routine mein isi kram se lagta hai
-// jis kram mein ring hain.
 const TIPS = {
   reasoning: "45 min. Sabse sasta faayda — yahan mehnat seedha marks banti hai.",
   vocab: "30 min. Ek din ka quiz poora karo, ring bhar jayegi.",
@@ -41,21 +41,26 @@ const TIPS = {
   gs: "45 min. Pehle PYQ, phir SIRF galat wale ka note.",
 };
 
-function Ring({ row, n, busy, onStart, onExt }) {
+function greeting() {
+  const h = new Date().getHours();
+  if (h < 5) return "Raat ki mehnat";
+  if (h < 12) return "Suprabhat";
+  if (h < 17) return "Dopahar ka josh";
+  if (h < 21) return "Shaam ki tayyari";
+  return "Raat ka session";
+}
+
+function SubjectCard({ row, n, busy, onStart, onExt }) {
   const done = row.left === 0;
   return (
-    <div className={`tgate__card${done ? " is-done" : ""}`}>
-      <div className="tgate__ring" style={{ "--pct": row.pct }}>
-        <span>{row.icon}</span>
+    <div className={`glass hcard${done ? " is-done" : ""}`}>
+      <div className="hcard__top">
+        <span className="hcard__label"><span className="tgate__n">{n}</span> {row.icon} {row.label}</span>
+        <span className="hcard__frac">{row.done}/{row.target}</span>
       </div>
-      <div className="tgate__meta">
-        <b><span className="tgate__n">{n}</span> {row.label}</b>
-        <span className="tgate__num">
-          {row.done} / {row.target}
-          {done ? " ✅" : ` · ${row.left} baaki`}
-        </span>
-      </div>
-      <div className="tgate__acts">
+      <div className="hcard__pct">{Math.round(row.pct)}<small>%</small></div>
+      <div className="hbar"><i style={{ width: `${Math.min(100, row.pct)}%` }} /></div>
+      <div className="hcard__acts">
         {/* Vocab aur CA ka koi "set" nahi banta — unke apne page hain, aur
             ginti wahin se apne aap chadhti hai. */}
         {row.task ? (
@@ -67,12 +72,12 @@ function Ring({ row, n, busy, onStart, onExt }) {
               disabled={!!busy}
               onClick={() => onStart(row.key)}
             >
-              {busy === row.key ? "⏳ ban raha hai…" : "🎯 Aaj ka set"}
+              {busy === row.key ? "⏳…" : "🎯 Set"}
             </button>
             <Link href={row.href} className="btn btn--ghost btn--sm">Bank</Link>
             {/* Bahar (Testbook/RBE) diya hua test bhi isi ring mein ginta hai —
                 warna asli kaam karke bhi darwaza band rehta tha. */}
-            <button className="btn btn--ghost btn--sm" onClick={() => onExt(row.key)}>🌐 Bahar</button>
+            <button className="btn btn--ghost btn--sm" onClick={() => onExt(row.key)}>🌐</button>
           </>
         )}
       </div>
@@ -92,11 +97,18 @@ export default function TodayGate({ onStateChange }) {
   const [routine, setRoutine] = useState(false);
   const [ext, setExt] = useState("");   // kis subject ka bahar-wala form khula hai
   const [order, setOrderState] = useState(DEFAULT_ORDER);
+  const [pending, setPending] = useState(0);
+  const [focusSec, setFocusSec] = useState(0);
+  const [vocab, setVocab] = useState({ done: 0, total: 0 });
 
   const refresh = useCallback(() => {
     const p = todayPlan();
     setPlan(p);
     setMock(lastMock());
+    setPending(getReviewBucket("wrong").length);
+    setFocusSec(getTodaySeconds());
+    const days = getDaysOverview();
+    setVocab({ done: days.filter((d) => d.done).length, total: days.length });
     onStateChange?.(planDone(p));
   }, [onStateChange]);
 
@@ -140,80 +152,109 @@ export default function TodayGate({ onStateChange }) {
   const left = daysLeft();
   const total = plan.reduce((n, r) => n + r.done, 0);
   const need = plan.reduce((n, r) => n + r.target, 0);
+  const dateStr = new Date().toLocaleDateString("hi-IN", { weekday: "long", day: "numeric", month: "long" });
+  const mockDue = mock.days == null || mock.days >= 2;
 
   return (
-    <section className="tgate">
-      <div className="tgate__top">
-        <h2>🎯 Aaj ka kaam</h2>
-        <span className="tgate__sum">
-          {total}/{need}
-          {left != null && <> · <b>{left} din</b> bache</>}
-        </span>
-        <button className="btn btn--ghost btn--sm" onClick={() => setEditing((v) => !v)}>
-          {editing ? "Band karo" : "⚙️ Target"}
-        </button>
+    <div className="hpage">
+      <div className="hgreet">
+        <p className="hgreet__kicker">{dateStr}</p>
+        <h1 className="hgreet__title">{greeting()}, <em>chalo shuru karein.</em></h1>
+        <p className="hgreet__sub">Aaj ka plan, kamzor chapter, aur sab tools — ek hi jagah.</p>
       </div>
 
-      {done ? (
-        <p className="tgate__msg tgate__msg--ok">
-          ✅ Aaj ka poora kaam ho gaya. Ab jo mann kare — notes, revision, ya ek full mock.
-        </p>
-      ) : (
-        <p className="tgate__msg">
-          Agla banta hai: <b>{next.icon} {next.label}</b> — {next.left} baaki.
-          {" "}Par jo aaj karna ho wahi karo — sab khule hain.
-        </p>
-      )}
+      <div className="hstats">
+        {plan.map((row, i) => (
+          <SubjectCard key={row.key} n={i + 1} row={row} busy={busy} onStart={start} onExt={setExt} />
+        ))}
+      </div>
+
+      <div className="hhero">
+        <div className="glass hhero__main">
+          <div className="hhero__glow" />
+          <p className="hhero__eyebrow">Aaj kya karein?</p>
+          <p className="hhero__head">
+            {done
+              ? "Aaj ka poora kaam ho gaya. Ab jo mann kare — notes, revision, ya ek full mock."
+              : <>Agla banta hai: {next.icon} {next.label} — {next.left} baaki.</>}
+          </p>
+          <p className="hhero__note">
+            Total <b>{total}/{need}</b>{left != null && <> · <b>{left} din</b> bache</>}
+          </p>
+          <div className="hhero__acts">
+            {!done && (
+              <button className="btn" disabled={!!busy} onClick={() => start(next.key)}>
+                {busy === next.key ? "⏳ ban raha hai…" : `🎯 Aaj ka set — ${next.label}`}
+              </button>
+            )}
+            <Link href="/make-test" className="btn btn--ghost">🧪 Apna test banao</Link>
+            <button className="btn btn--ghost" onClick={() => setEditing((v) => !v)}>
+              {editing ? "Band karo" : "⚙️ Target"}
+            </button>
+          </div>
+        </div>
+
+        <div className="glass">
+          <div className="hquick__top"><span className="hquick__label">📊 Quick stats</span></div>
+          <div className="hquick">
+            <Link href="/answers?subject=all&src=all" className="htile htile--rose">
+              <p className="htile__n">{pending}</p>
+              <p className="htile__l">Mistakes pending</p>
+            </Link>
+            <div className="htile htile--mint">
+              <p className="htile__n">{fmtDuration(focusSec)}</p>
+              <p className="htile__l">Focus aaj</p>
+            </div>
+            <Link href="/mock-marks?cat=full" className="htile htile--sky">
+              <p className="htile__n">{mock.n}</p>
+              <p className="htile__l">Full mocks</p>
+            </Link>
+            <Link href="/vocab" className="htile htile--violet">
+              <p className="htile__n">{vocab.done}/{vocab.total || 0}</p>
+              <p className="htile__l">Vocab days</p>
+            </Link>
+          </div>
+        </div>
+      </div>
 
       {editing && (
-        <div className="tgate__edit">
+        <div className="glass hedit">
           {/* Kram aur target ek hi jagah — dono ek hi sawaal ke jawab hain:
               "aaj karna kya hai, aur kitna". ▲▼ sirf DIKHNE ka kram badalta
               hai; koi ring band nahi hoti, kabhi nahi. */}
-          <div className="tgate__ord">
-            <b>Dikhne ka kram (sab hamesha khule hain)</b>
-            {order.map((k, i) => (
-              <div className="tgate__ordrow" key={k}>
-                <span className="tgate__n">{i + 1}</span>
-                <span className="tgate__ordname">
-                  {SUBJECT_META[k]?.icon} {SUBJECT_META[k]?.label}
-                </span>
-                <input
-                  className="input" type="number" min="0" max="500"
-                  value={draft[k] ?? 0}
-                  onChange={(e) => setDraft({ ...draft, [k]: e.target.value })}
-                />
-                <button className="btn btn--ghost btn--sm" disabled={i === 0}
-                  onClick={() => setOrderState(moveSubject(k, -1))} title="Upar">▲</button>
-                <button className="btn btn--ghost btn--sm" disabled={i === order.length - 1}
-                  onClick={() => setOrderState(moveSubject(k, +1))} title="Neeche">▼</button>
-              </div>
-            ))}
-            <button className="btn btn--ghost btn--sm"
-              onClick={() => setOrderState(setOrder(DEFAULT_ORDER))}>
-              ↺ Sujhaya hua kram wapas
-            </button>
-          </div>
-          <label>
+          <b>Dikhne ka kram (sab hamesha khule hain)</b>
+          {order.map((k, i) => (
+            <div className="hedit__row" key={k}>
+              <span className="tgate__n">{i + 1}</span>
+              <span style={{ flex: 1 }}>{SUBJECT_META[k]?.icon} {SUBJECT_META[k]?.label}</span>
+              <input
+                className="input" type="number" min="0" max="500"
+                value={draft[k] ?? 0}
+                onChange={(e) => setDraft({ ...draft, [k]: e.target.value })}
+              />
+              <button className="btn btn--ghost btn--sm" disabled={i === 0}
+                onClick={() => setOrderState(moveSubject(k, -1))} title="Upar">▲</button>
+              <button className="btn btn--ghost btn--sm" disabled={i === order.length - 1}
+                onClick={() => setOrderState(moveSubject(k, +1))} title="Neeche">▼</button>
+            </div>
+          ))}
+          <button className="btn btn--ghost btn--sm" style={{ alignSelf: "flex-start" }}
+            onClick={() => setOrderState(setOrder(DEFAULT_ORDER))}>
+            ↺ Sujhaya hua kram wapas
+          </button>
+          <label className="hedit__row">
             Exam ki tareekh
             <input className="input" type="date" value={exam}
               onChange={(e) => setExam(e.target.value)} />
           </label>
           <button
-            className="btn btn--sm btn--primary"
+            className="btn btn--sm btn--primary" style={{ alignSelf: "flex-start" }}
             onClick={() => { setTargets(draft); setExamDate(exam); setEditing(false); refresh(); }}
           >
             💾 Save
           </button>
         </div>
       )}
-
-      <div className="tgate__grid">
-        {plan.map((row, i) => (
-          <Ring key={row.key} n={i + 1} row={row} busy={busy}
-            onStart={start} onExt={setExt} />
-        ))}
-      </div>
 
       {ext && (
         <ExtMock
@@ -229,50 +270,76 @@ export default function TodayGate({ onStateChange }) {
 
       {/* 📊 Mock hi batata hai ki padhai marks mein badal rahi hai ya nahi.
           Do din se zyada ho gaye to ye patti laal ho jati hai. */}
-      <div className={`tgate__mock${mock.days == null || mock.days >= 2 ? " is-due" : ""}`}>
+      <div className={`glass hmockbar${mockDue ? " is-due" : ""}`}>
         {mock.n === 0 ? (
           <span>📊 Abhi tak koi full mock darj nahi. Aaj ek do — bina mock ke pata hi nahi chalega ki kya badla.</span>
         ) : (
           <span>
             📊 Aakhri full mock <b>{mock.days === 0 ? "aaj" : `${mock.days} din pehle`}</b>
             {mock.score != null && <> · {mock.score} marks</>}
-            {mock.days >= 2 && <> — <b>aaj ek aur banta hai.</b></>}
+            {mockDue && <> — <b>aaj ek aur banta hai.</b></>}
           </span>
         )}
         <Link href="/mock-tests" className="btn btn--ghost btn--sm">▶ Mock do</Link>
         <Link href="/mock-marks?cat=full" className="btn btn--ghost btn--sm">✍️ Marks likho</Link>
       </div>
 
-      <button className="tgate__more" onClick={() => setRoutine((v) => !v)}>
-        {routine ? "▲ Routine chhupao" : "▼ Roz ka routine"}
-      </button>
-      {routine && (
-        <ol className="tgate__routine">
-          {/* Kram wahi jo upar ki ring ka hai — kram badlo to routine bhi
-              badal jati hai, warna neeche likha hua upar wale se ulta padha
-              jata aur dono par se bharosa uth jata. */}
-          {order.map((k) => {
-            const row = plan.find((r) => r.key === k);
-            return (
-              <li key={k}>
-                <b>{row?.label} {row?.target}</b> — {TIPS[k]}
-              </li>
-            );
-          })}
-          <li><b>Galat questions</b> — 60 min. Asli padhai yahi hai.</li>
-          <li><b>Har doosre din full mock</b> — 60 min + 30 min analysis.</li>
-        </ol>
-      )}
+      <div>
+        <button className="btn btn--ghost btn--sm" onClick={() => setRoutine((v) => !v)}>
+          {routine ? "▲ Routine chhupao" : "▼ Roz ka routine"}
+        </button>
+        {routine && (
+          <ol className="glass hroutine" style={{ marginTop: 10 }}>
+            {/* Kram wahi jo upar ki card ka hai — kram badlo to routine bhi
+                badal jati hai, warna neeche likha hua upar wale se ulta padha
+                jata aur dono par se bharosa uth jata. */}
+            {order.map((k) => {
+              const row = plan.find((r) => r.key === k);
+              return (
+                <li key={k}>
+                  <b>{row?.label} {row?.target}</b> — {TIPS[k]}
+                </li>
+              );
+            })}
+            <li><b>Galat questions</b> — 60 min. Asli padhai yahi hai.</li>
+            <li><b>Har doosre din full mock</b> — 60 min + 30 min analysis.</li>
+          </ol>
+        )}
+      </div>
+
+      <div>
+        <div className="hsection__head">
+          <span className="hsection__title">🧭 Shortcuts</span>
+        </div>
+        <div className="hshort">
+          <Link href="/current-affairs?tab=daily" className="glass hshort__card">
+            <span className="hshort__ico" style={{ background: "rgba(16,185,129,.12)", color: "var(--tb-green-dark)" }}>📰</span>
+            <p className="hshort__t">Current Affairs</p>
+            <p className="hshort__s">Daily dose + quiz</p>
+          </Link>
+          <Link href="/pyq" className="glass hshort__card">
+            <span className="hshort__ico" style={{ background: "rgba(255,178,36,.12)", color: "var(--tb-blue)" }}>🎯</span>
+            <p className="hshort__t">PYQ Bank</p>
+            <p className="hshort__s">Sab banks ek jagah</p>
+          </Link>
+          <Link href="/notes/quiz" className="glass hshort__card">
+            <span className="hshort__ico" style={{ background: "rgba(125,211,252,.12)", color: "#7dd3fc" }}>📔</span>
+            <p className="hshort__t">Notes Library</p>
+            <p className="hshort__s">15 books ek jagah</p>
+          </Link>
+          <Link href="/vocab" className="glass hshort__card">
+            <span className="hshort__ico" style={{ background: "rgba(167,139,250,.12)", color: "var(--tb-code)" }}>🔤</span>
+            <p className="hshort__t">Vocab Builder</p>
+            <p className="hshort__s">Day-wise batches</p>
+          </Link>
+        </div>
+      </div>
 
       <div className="tgate__links">
-        {/* Ring wala "Aaj ka set" chapter khud chunta hai. Jab aaj ka padha hua
-            pata HO (Trigonometry + Biology), tab ye — chapter aur ginti dono
-            apni marzi ke. */}
-        <Link href="/make-test" className="btn btn--ghost btn--sm">🧪 Apna test banao</Link>
         <Link href="/answers?subject=all&src=all" className="btn btn--ghost btn--sm">📖 Galat questions</Link>
         <Link href="/slow" className="btn btn--ghost btn--sm">⏱️ Slow (skip list)</Link>
         <Link href="/mock-marks?cat=full" className="btn btn--ghost btn--sm">📊 Mock marks</Link>
       </div>
-    </section>
+    </div>
   );
 }
