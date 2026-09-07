@@ -9,7 +9,7 @@ import { recordQuizAttempts } from "@/lib/qreview";
 import { recordSlow } from "@/lib/qslow";
 import { recordAttempts } from "@/lib/qstats";
 import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
-import { saveQuiz, deleteQuiz } from "@/lib/storage";
+import { saveQuiz, deleteQuiz, getQuiz } from "@/lib/storage";
 import { ExamModeProvider } from "./ExamMode";
 
 // 📚 Ek PYQ chapter ka board — asli online test.
@@ -116,6 +116,15 @@ export default function QBoard({
   // apna waqt bhejta hai (10 question ke liye 15 minute dena bemaani hai).
   minutes,
   onSubmit,                   // submit ke baad page ka apna kaam (vocab din, etc.)
+  // 🔄 Beech mein chhoda hua quiz — sirf `single` (jaise /quizzes/[id]) ke
+  // liye. Diya ho to har pick/review/question-badal par uska progress isi
+  // saved quiz record ke andar (`_progress`) chupchaap bach jata hai, aur
+  // dobara khulte hi wahin se — chuna hua option, review ke nishaan, jis
+  // question par the. Ghadi dobara poori chalti hai (wo nahi bachti).
+  quizId,
+  // ✕ Exit ka "Discard" — page tay karta hai discard ka matlab kya hai
+  // (deleteQuiz + wapas). Na diya ho to sirf "Baad mein" milta hai.
+  onDiscard,
 }) {
   const router = useRouter();
   const setMin = Math.max(1, Math.round(Number(minutes) || SET_MIN));
@@ -143,6 +152,7 @@ export default function QBoard({
   const [done, setDone] = useState(false);      // Submit ho gaya (ya solutions mode)
   const [fs, setFs] = useState(false);
   const [ask, setAsk] = useState(null);         // popup: kis set ke liye poochh rahe hain
+  const [confirmExit, setConfirmExit] = useState(false); // popup: ✕ Exit (single quiz)
   const [results, setResults] = useState({});   // pehle diye hue test
   const [ver, setVer] = useState(0);
   const [counts, setCounts] = useState({});
@@ -221,8 +231,15 @@ export default function QBoard({
       && sigOf(all.slice(0, prev.n)) === prev.sig;
     shapeRef.current = { key: resumeKey, sig: sigOf(all), n: total };
     if (grew) return;
-    setSetIdx(single ? 0 : null); setAsk(null); setCur(0);
-    setPicks({}); setReview({}); setTimes({}); setDone(false); setLeftSec(setMin * 60);
+    // 🔄 Beech mein chhoda hua quiz — pichhla progress mile to wahin se, warna
+    // khaali shuru. Sirf tab jab list wahi hai (`total` match) — warna kisi
+    // purane, alag lambai wale progress ke number galat sawaal par chipak
+    // jaate.
+    const saved = single && quizId ? getQuiz(quizId)?._progress : null;
+    const resume = saved && saved.total === total ? saved : null;
+    setSetIdx(single ? 0 : null); setAsk(null); setCur(resume?.cur || 0);
+    setPicks(resume?.picks || {}); setReview(resume?.review || {});
+    setTimes({}); setDone(false); setLeftSec(setMin * 60);
     setHideAns(false); setRePicks({});
     retryRef.current = noNotebook;
     timeRef.current = { spent: {}, mark: single ? Date.now() : 0, at: 0 };
@@ -233,6 +250,23 @@ export default function QBoard({
     // hi milti hai.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resumeKey, total, single, noNotebook]);
+
+  // 🔄 Progress bachana — option chuno, review lagao, ya question badlo, aur
+  // 600ms baad (typing ki tarah debounce) chuna hua option/review/position
+  // usi saved quiz record ke `_progress` mein chala jata hai. Ghadi (leftSec)
+  // jaan-boojh kar nahi bachate — dobara khulte hi poora waqt milta hai,
+  // isliye har second yahan likhne ki zaroorat nahi (aur storage bhi bachta
+  // hai — saveQuiz ab replace karta hai, par har second likhna phir bhi
+  // faltu hai).
+  useEffect(() => {
+    if (!single || !quizId || done || setIdx === null) return undefined;
+    const t = setTimeout(() => {
+      const q = getQuiz(quizId);
+      if (!q) return; // quiz delete ho chuka (submit ho gaya kahin aur se)
+      saveQuiz({ ...q, _progress: { total, picks, review, cur } });
+    }, 600);
+    return () => clearTimeout(t);
+  }, [single, quizId, done, setIdx, total, picks, review, cur]);
 
   // Clock. Solutions dekhte waqt nahi chalta. 0 par khud submit ho jata hai —
   // timer ka matlab hi yahi hai.
@@ -761,6 +795,13 @@ export default function QBoard({
           {!single && (
             <button className="btn btn--ghost btn--sm" onClick={() => setSetIdx(null)}>← Sets</button>
           )}
+          {/* `single` (jaise /quizzes/[id]) mein koi "Sets" parda nahi hai
+              jahan wapas jaaya ja sake — test ke dauraan page ka apna Exit
+              link bhi chhup jata hai (body.exam-on), isliye yahi ek rasta
+              bachta tha bahar jaane ka. */}
+          {single && !done && (
+            <button className="btn btn--ghost btn--sm" onClick={() => setConfirmExit(true)}>✕ Exit</button>
+          )}
           <span className="qboard__title">
             {single ? title : `Set ${setIdx + 1}`}{mode === "solutions" ? " · solutions" : ""}
           </span>
@@ -816,6 +857,30 @@ export default function QBoard({
             </button>
           )}
         </div>
+
+        {confirmExit && (
+          <div className="setask" onClick={() => setConfirmExit(false)}>
+            <div className="setask__box" onClick={(e) => e.stopPropagation()}>
+              <h3 className="setask__title">Quiz chhodna hai?</h3>
+              <p className="setask__sub">
+                "Baad mein" karne par jo option chuna hai wo bacha rehta hai — dobara
+                yahin khol kar wahin se aage badh sakte ho (ghadi nayi shuru hogi).
+                "Discard" quiz hi mita dega.
+              </p>
+              <div className="setask__acts">
+                <button className="btn btn--ghost" onClick={() => { setConfirmExit(false); router.back(); }}>
+                  ⏸️ Baad mein
+                </button>
+                {onDiscard && (
+                  <button className="btn btn--danger" onClick={() => { setConfirmExit(false); onDiscard(); }}>
+                    🗑️ Discard
+                  </button>
+                )}
+                <button className="btn btn--ghost" onClick={() => setConfirmExit(false)}>Rehne do</button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {done && !hideAns && (
           <div className="qboard__result">

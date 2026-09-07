@@ -3674,3 +3674,6 @@ body.exam-on .pyq-filters { display: none; }
 /* Test ke dauraan (body.exam-on) ye patti gayab — paper ke beech mein
    "Test banao" ka koi kaam nahi. */
 body.exam-on .mkt__go { display: none; }
+/* "Quiz jahan chhoda tha" resume chip bhi kisi bhi active test ke dauraan
+   nahi — us waqt to isi mein ho sakta hai jo wo dikha raha hai. */
+body.exam-on .hresume { display: none; }

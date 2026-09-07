@@ -9,7 +9,7 @@ import {
   getOrder, setOrder, moveSubject, DEFAULT_ORDER,
   lastMock,
 } from "@/lib/daily";
-import { buildTodaySet } from "@/lib/todayset";
+import { buildTodaySet, buildAutoPractice } from "@/lib/todayset";
 import { getReviewBucket } from "@/lib/qreview";
 import { getTodaySeconds, fmtDuration } from "@/lib/pomodoro";
 import { getDaysOverview } from "@/lib/vocab";
@@ -146,6 +146,23 @@ export default function TodayGate({ onStateChange }) {
     }
   };
 
+  // ⚡ Auto Practice (10) — kisi ek subject ka nahi, SAARE subject ke kamzor
+  // chapter mila kar ek chhota mixed test. Reference build ka "Auto Practice
+  // Set" button, bas 20 ki jagah 10 (roz ka ek chhota warm-up).
+  const [autoBusy, setAutoBusy] = useState(false);
+  const runAutoPractice = async () => {
+    setErr(""); setAutoBusy(true);
+    try {
+      const made = await buildAutoPractice(10);
+      if (!made) { setErr("Auto practice set nahi ban paya."); return; }
+      router.push(`/quizzes/${made.id}`);
+    } catch (e) {
+      setErr(e.message || "Set nahi ban paya.");
+    } finally {
+      setAutoBusy(false);
+    }
+  };
+
   if (!plan) return null;
   const done = planDone(plan);
   const next = nextSubject(plan);
@@ -182,9 +199,12 @@ export default function TodayGate({ onStateChange }) {
             Total <b>{total}/{need}</b>{left != null && <> · <b>{left} din</b> bache</>}
           </p>
           <div className="hhero__acts">
+            <button className="btn" disabled={autoBusy} onClick={runAutoPractice}>
+              {autoBusy ? "⏳ ban raha hai…" : "⚡ Auto Practice (10)"}
+            </button>
             {!done && (
-              <button className="btn" disabled={!!busy} onClick={() => start(next.key)}>
-                {busy === next.key ? "⏳ ban raha hai…" : `🎯 Aaj ka set — ${next.label}`}
+              <button className="btn btn--ghost" disabled={!!busy} onClick={() => start(next.key)}>
+                {busy === next.key ? "⏳ ban raha hai…" : `🎯 ${next.label} ka set`}
               </button>
             )}
             <Link href="/make-test" className="btn btn--ghost">🧪 Apna test banao</Link>

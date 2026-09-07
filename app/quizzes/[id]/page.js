@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { getQuiz, deleteQuiz } from "@/lib/storage";
 import { setSyncPaused } from "@/lib/sync";
 import { backTo } from "@/lib/backto";
@@ -26,6 +26,7 @@ import QBoard from "@/components/QBoard";
 // padta tha. Ab ek hi jagah hai.
 export default function QuizPlayer() {
   const { id } = useParams();
+  const router = useRouter();
   const [quiz, setQuiz] = useState(undefined);
   // ↩️ Exit wahin le jata hai jahan se quiz shuru hua — vocab ka din, homepage
   // ki ring, notes ka page, jo bhi. Pehle ye hamesha /answers tha, aur vocab ka
@@ -101,6 +102,12 @@ export default function QuizPlayer() {
     if (!String(id).startsWith("bank_")) deleteQuiz(quiz.id);
   };
 
+  // ✕ Exit → "Discard" — quiz (aur uska bacha hua progress) mita kar wapas.
+  const onDiscard = () => {
+    if (!String(id).startsWith("bank_")) deleteQuiz(quiz.id);
+    router.push(back);
+  };
+
   return (
     <>
       <section className="hero" style={{ paddingBottom: 8 }}>
@@ -124,6 +131,8 @@ export default function QuizPlayer() {
           list={quiz.questions}
           subject={quiz.subject || ""}
           resumeKey={`quiz:${quiz.id}`}
+          quizId={quiz.id}
+          onDiscard={onDiscard}
           /* Dobara-attempt wala quiz (Mistake Notebook se bana) apne galat/
              chhode question notebook mein DOBARA nahi daalta — jo pehle se
              hai bas wahi sudhrta hai. */
