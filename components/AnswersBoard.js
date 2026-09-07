@@ -33,6 +33,7 @@ import {
 } from "@/lib/qchapter";
 import { tagChaptersByText } from "@/lib/client-ai";
 import { getUnder40 } from "@/lib/under40";
+import { getHardSet, toggleHard, pruneHard } from "@/lib/hardq";
 
 // Answers + Mistake Notebook — ab EK page.
 //
@@ -86,6 +87,8 @@ const SOURCES = [
   { key: "mock", label: "\u{1F5BC}️ External Mock (screenshot)" },
   { key: "pyq", label: "\u{1F4DD} PYQ / Quiz ke galat" },
   { key: "u40", label: "⏱️ Under 40 (overlay par nipta diye)" },
+  // Khud "🔴 Hard" dabaya hua — External Mock ki aam list se hat kar yahan.
+  { key: "hard", label: "🔴 Hard" },
 ];
 const isSource = (k) => SOURCES.some((s) => s.key === k);
 
@@ -97,7 +100,7 @@ const bucketOf = (r) => (KNOWN.has(r.subject) ? r.subject : "other");
 const labelOf = (k) =>
   k === "other" ? "Other" : (SUBJECTS.find((s) => s.key === k) || ALL_SUBJ).label;
 
-function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight }) {
+function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard }) {
   const { urls, missing } = useImageUrls(imagesOf(rec));
   const [lb, setLb] = useState(null);
   const [pasteOpen, setPasteOpen] = useState(false);
@@ -196,6 +199,11 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
         <button className="ansp__btn" onClick={copyPrompt}>{copied === "pr" ? "✓" : "📋 Prompt"}</button>
         <button className="ansp__btn" onClick={openPaste}>📥 Answer paste</button>
         {shownDetail(rec) && <button className="ansp__btn" onClick={openEdit}>✏️ Edit</button>}
+        {/* Dabate hi ye question External Mock ki aam list se hat kar apni
+            alag "🔴 Hard" shelf mein chala jata hai (Kahan-se-aaye dropdown). */}
+        <button className="ansp__btn" onClick={() => onToggleHard(rec)}>
+          {isHardQ ? "✅ Hard se hatao" : "🔴 Hard"}
+        </button>
         <button className="ansp__btn" onClick={() => onDelete(rec)}>🗑️ Delete</button>
       </div>
 
@@ -287,6 +295,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   const [tags, setTagMap] = useState({});
   const [taxReady, setTaxReady] = useState(false);
   const [u40, setU40] = useState(() => new Set());
+  const [hard, setHard] = useState(() => new Set());
   const [report, setReport] = useState(false);
   const [chapter, setChapter] = useState(() => sp.get("ch") || "");
   const [flash, setFlash] = useState("");
@@ -392,6 +401,8 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     if (put("done", [...d].sort().join("|"), d, setDone)) setDoneMap(getDoneMap());
     const nd = pruneNbDone(new Set(rawNb.map((r) => r.key)));
     if (put("nbDone", [...nd].sort().join("|"), nd, setNbDone)) setNbDoneMap(getNbDoneMap());
+    const hd = pruneHard(ids);
+    put("hard", [...hd].sort().join("|"), hd, setHard);
 
     // 5s poll — 3 baje din badla to yahin pata chal jata hai
     const c = getCounts();
@@ -422,6 +433,15 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     h();
     window.addEventListener("cgl:under40-changed", h);
     return () => window.removeEventListener("cgl:under40-changed", h);
+  }, []);
+
+  // 🔴 Hard — khud is page se dabaya hua, isliye button hi likhta hai (koi
+  // overlay poll nahi chahiye), par doosra tab khula ho to bhi sunte hain.
+  useEffect(() => {
+    const h = () => setHard(getHardSet());
+    h();
+    window.addEventListener("cgl:hard-changed", h);
+    return () => window.removeEventListener("cgl:hard-changed", h);
   }, []);
 
   // Tag store: panel se ya auto-tag se badalta hai, dono jagah se sunte hain.
@@ -494,11 +514,15 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   // Under 40 wale aam shelf se BAHAR — wo apni alag shelf mein milte hain.
   const isU40 = useCallback((r) => r.__src === "mock" && !!r.qid && u40.has(r.qid), [u40]);
+  // 🔴 Hard bhi usi tarah bahar — khud dabaya hua, isliye qid ki zaroorat
+  // nahi, record ki apni id se.
+  const isHardQ = useCallback((r) => r.__src === "mock" && hard.has(r.id), [hard]);
   const pool = useMemo(() => {
     if (src === "u40") return mock.filter(isU40);
-    const m = mock.filter((r) => !isU40(r));
+    if (src === "hard") return mock.filter(isHardQ);
+    const m = mock.filter((r) => !isU40(r) && !isHardQ(r));
     return src === "mock" ? m : src === "pyq" ? nb : [...m, ...nb];
-  }, [mock, nb, src, isU40]);
+  }, [mock, nb, src, isU40, isHardQ]);
 
   const rows = useMemo(
     () => pool
@@ -703,6 +727,16 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     setCounts(c);
   };
 
+  // 🔴 Hard — dabate hi turant list se hat jaye, agle 5s poll ka intezaar
+  // nahi (sigRef bhi saath, warna refresh() wahi purana set dekh kar kuch
+  // badla-nahi maan leta).
+  const onToggleHard = (rec) => {
+    toggleHard(rec.id);
+    const h = getHardSet();
+    sigRef.current.hard = [...h].sort().join("|");
+    setHard(h);
+  };
+
   // Notebook ka nishaan alag store mein — par kaam wahi: neeche bhej do.
   const onDoneNb = (rec) => {
     markNbDone(rec.key);
@@ -891,7 +925,11 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               ? "Mock test ke screenshot — tasveer aur uska answer."
               : src === "pyq"
                 ? "Quiz/PYQ mein jo galat ya chhoda — sawaal apne asli card mein."
-                : "Dono shelf ek saath — screenshot wale bhi, quiz ke galat bhi."}
+                : src === "u40"
+                  ? "Overlay par 40 second ke andar nipta diye gaye — External Mock ki aam list se bahar."
+                  : src === "hard"
+                    ? "Khud 🔴 Hard dabaya hua — External Mock ki aam list se bahar."
+                    : "Dono shelf ek saath — screenshot wale bhi, quiz ke galat bhi."}
           </span>
 
           {/* Chapter ki chhaanti. Report kholne ki zaroorat nahi — "bas
@@ -1011,6 +1049,8 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               onArm={() => { armed.current = true; }}
               onFlash={flashNow}
               highlight={!!urlQid && r.qid === urlQid}
+              isHardQ={hard.has(r.id)}
+              onToggleHard={onToggleHard}
             />
           ) : (
             <NotebookCard
