@@ -514,6 +514,26 @@ label.glass-card:hover { border-color: var(--accent2); }
 
 /* Test ke dauraan patti bhi nahi — screen sirf paper ki. */
 body.exam-on .topbar { display: none; }
+
+/* ===== Desktop: permanent sidebar =====
+   2026-09-07: reference build (ssc-cgl-preparation-hubarena) mein desktop par
+   menu hamesha khula ek sidebar hai, phone par band. Same <aside class="drawer">
+   yahan reuse hota hai — bas is chaudai se upar ise off-canvas se nikal kar
+   humesha-khula bana dete hain; neeche (phone/tablet) bilkul pehle jaisa
+   off-canvas drawer hi rehta hai (koi JS badla nahi, sirf ye media query). */
+@media (min-width: 1024px) {
+  .shell { padding-left: 272px; }
+  .drawer {
+    transform: none !important;
+    width: 260px;
+  }
+  .drawer__backdrop { display: none; }
+  .drawer__x { display: none; }
+  /* Sidebar mein naam/logo hamesha dikhta hai, isliye topbar ka apna chhota
+     naam-patti aur ☰ ab zaroorat nahi — bas din/raat toggle bacha rehta hai. */
+  .topbar__burger, .topbar__brand { display: none; }
+  .topbar { justify-content: flex-end; }
+}
 .drawer__brand {
   color: var(--ink); text-decoration: none;
   display: flex; align-items: center; gap: 10px;
