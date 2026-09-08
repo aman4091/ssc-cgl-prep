@@ -14,6 +14,8 @@ import {
 } from "@/lib/vocab";
 import { copyText } from "@/lib/notesrender";
 import { startChapterQuiz } from "@/lib/notesquiz";
+import { getSettings } from "@/lib/storage";
+import { aiSiteUrl } from "@/lib/aisites";
 import Markdown from "@/components/Markdown";
 
 // useSearchParams (sidebar ?w= sync) ko Suspense boundary chahiye, warna
@@ -130,7 +132,7 @@ function NewWordsInner() {
     const body = def ? `${word} — ${def}` : word;
     await copyText(`${base}\n\n${body}`);
     setCopied(true); setTimeout(() => setCopied(false), 1500);
-    try { window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
+    try { window.open(aiSiteUrl(getSettings().askAiSite), "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
   };
 
   const savePaste = () => {

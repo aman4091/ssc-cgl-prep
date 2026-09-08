@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ruleDetail, ruleQuiz } from "@/lib/client-ai";
-import { saveQuiz, makeId } from "@/lib/storage";
+import { saveQuiz, makeId, getSettings } from "@/lib/storage";
+import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { ruleAsText } from "@/lib/pocketbank";
 import Markdown from "./Markdown";
 import AskElsewhere from "./AskElsewhere";
@@ -143,9 +144,9 @@ export default function PocketRulePopup({ rule, onClose, onPrev, onNext, hasPrev
           <div className="row mt-12" style={{ gap: 8, flexWrap: "wrap" }}>
             <AskElsewhere
               q={geminiQ}
-              url="https://gemini.google.com/app"
-              label="✨ Gemini"
-              title="Rule copy karke Gemini kholo — wahan detail mein samajh lo"
+              url={aiSiteUrl(getSettings().askAiSite)}
+              label={`✨ ${aiSiteLabel(getSettings().askAiSite)}`}
+              title={`Rule copy karke ${aiSiteLabel(getSettings().askAiSite)} kholo — wahan detail mein samajh lo`}
             />
             <button className="btn btn--ghost btn--sm" onClick={explain} disabled={!!busy}>
               {busy === "explain" ? "Soch raha…" : "📘 Explain"}

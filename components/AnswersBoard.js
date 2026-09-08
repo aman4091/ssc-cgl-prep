@@ -34,6 +34,7 @@ import {
 import { tagChaptersByText } from "@/lib/client-ai";
 import { getUnder40 } from "@/lib/under40";
 import { getHardSet, toggleHard, pruneHard } from "@/lib/hardq";
+import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 
 // Answers + Mistake Notebook — ab EK page.
 //
@@ -113,12 +114,14 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
 
   const ping = (k) => { setCopied(k); setTimeout(() => setCopied(""), 1600); };
 
-  // Gemini — question ki TASVEER clipboard par daal kar Gemini khol do.
+  // Gemini (ya Settings mein chuni koi aur AI site) — question ki TASVEER
+  // clipboard par daal kar site khol do.
   //
   // Image bhejna OCR se behtar hai: fractions aur figures jaise-ke-taise jaate
   // hain. Prompt saath mein nahi ja sakta (clipboard par ek waqt mein ek hi
   // cheez), isliye overlay wali chaal: yahan wapas aate hi prompt apne aap copy
-  // ho jata hai — phir Gemini mein dobara paste kar do.
+  // ho jata hai — phir wahin dobara paste kar do.
+  const aiSite = getSettings().askAiSite;
   const askGemini = async () => {
     const imgs = imagesOf(rec);
     if (imgs.length) {
@@ -126,12 +129,12 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
       if (ok) {
         ping("gem");
         onArm();
-        onFlash("🖼️ Image copy ho gayi — Gemini mein paste karo, phir yahan wapas aao (prompt apne aap copy hoga)");
+        onFlash(`🖼️ Image copy ho gayi — ${aiSiteLabel(aiSite)} mein paste karo, phir yahan wapas aao (prompt apne aap copy hoga)`);
       } else {
         onFlash("Is browser mein image copy support nahi — 📋 Prompt se kaam chalao");
       }
     }
-    window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer");
+    window.open(aiSiteUrl(aiSite), "_blank", "noopener,noreferrer");
     setPasteText("");
     setEditing(false);
     setPasteOpen(true);
@@ -195,7 +198,7 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
             kuch "laga hua" dikhta bhi nahi. */}
         <button className="ansp__btn ansp__btn--go" onClick={() => onDone(rec)}>✅ Ho gaya</button>
         <button className="ansp__btn ansp__btn--go" onClick={() => onOpen(rec)}>✍️ Solve</button>
-        <button className="ansp__btn" onClick={askGemini}>{copied === "gem" ? "🖼️ ✓" : "✨ Gemini"}</button>
+        <button className="ansp__btn" onClick={askGemini}>{copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}</button>
         <button className="ansp__btn" onClick={copyPrompt}>{copied === "pr" ? "✓" : "📋 Prompt"}</button>
         <button className="ansp__btn" onClick={openPaste}>📥 Answer paste</button>
         {shownDetail(rec) && <button className="ansp__btn" onClick={openEdit}>✏️ Edit</button>}

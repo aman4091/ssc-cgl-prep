@@ -8,6 +8,7 @@ import { syncOnce, resyncAll, listRescue, restoreRescue, getSyncLog, SETUP_SQL }
 import PyqManager from "@/components/PyqManager";
 import CaRushSetting from "@/components/CaRushSetting";
 import { getTheme, setTheme } from "@/lib/theme";
+import { AI_SITES } from "@/lib/aisites";
 
 
 function mask(key) {
@@ -355,6 +356,28 @@ export default function SettingsPage() {
             <label>Gemini Model</label>
             <input className="input" type="text" value={settings.geminiModel || ""} onChange={(e) => update("geminiModel", e.target.value)} placeholder="gemini-3-pro" disabled={settings.geminiEnabled === false} />
             <p className="hint">Default: gemini-3-pro. If it errors, try the exact model id from Google AI Studio.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ✨ Gemini button — poori site mein ~10 jagah, ab kisi bhi AI site par
+          khul sakta hai. Copy & Ask (neeche) se ALAG hai: wo koi bhi URL le
+          leta hai (%s se pre-fill), ye hamesha ek pura chat-site kholta hai
+          aur image-clipboard wali chaal (Maths/Reasoning ke tasveer wale
+          sawaal) bhi isi ke saath chalti hai. */}
+      <section className="section" style={{ maxWidth: 640 }}>
+        <div className="glass-card">
+          <h3>✨ Gemini button — kaunsi AI site</h3>
+          <p className="muted mt-8" style={{ fontSize: "0.88rem" }}>
+            Poori site mein jahan bhi <strong>✨ Gemini</strong> button hai, wo ab yahan
+            chuni hui site kholega — button ka naam bhi usi ke hisaab se badal jayega.
+          </p>
+          <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
+            {AI_SITES.map((s) => (
+              <button key={s.key} type="button"
+                className={`chip chip--btn ${settings.askAiSite === s.key ? "is-active" : ""}`}
+                onClick={() => update("askAiSite", s.key)}>{s.label}</button>
+            ))}
           </div>
         </div>
       </section>

@@ -8,7 +8,8 @@ import {
   typeIcon, typeLabel, isBookmarked, toggleBookmark,
   setEntryType, TYPES,
 } from "@/lib/vocab";
-import { saveQuiz } from "@/lib/storage";
+import { saveQuiz, getSettings } from "@/lib/storage";
+import { aiSiteUrl } from "@/lib/aisites";
 import { vocabDetail } from "@/lib/client-ai";
 import { getStatByParts } from "@/lib/qstats";
 import WordPopup from "@/components/WordPopup";
@@ -102,7 +103,7 @@ export default function VocabDayType({ day, type }) {
     await copyText(`${base}\n\n${body}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
-    try { window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
+    try { window.open(aiSiteUrl(getSettings().askAiSite), "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
   };
 
   // Swipe the word card: right-to-left for the next word, left-to-right for the

@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { askAI, generateSimilar } from "@/lib/client-ai";
-import { saveQuiz, getQuiz, makeId } from "@/lib/storage";
+import { saveQuiz, getQuiz, makeId, getSettings } from "@/lib/storage";
+import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { setResume } from "@/lib/qprogress";
 import { recordAttempts, keyFor } from "@/lib/qstats";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
@@ -243,9 +244,9 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
           <AskElsewhere
             q={geminiQ}
             subject={subject}
-            url="https://gemini.google.com/app"
-            label="✨ Gemini"
-            title="Question ki image copy karke Gemini kholo — phir answer paste karo"
+            url={aiSiteUrl(getSettings().askAiSite)}
+            label={`✨ ${aiSiteLabel(getSettings().askAiSite)}`}
+            title={`Question ki image copy karke ${aiSiteLabel(getSettings().askAiSite)} kholo — phir answer paste karo`}
             promptKey="geminiPrompt"
             onAsked={openPaste}
           />

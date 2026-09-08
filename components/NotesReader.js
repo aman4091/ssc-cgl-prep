@@ -7,6 +7,8 @@ import { promptFor } from "@/lib/geminiask";
 import { readImageText } from "@/lib/client-ai";
 import { startNotesQuiz } from "@/lib/notesquiz";
 import { hinglishKey, getHinglish, setHinglish, subscribeHinglish } from "@/lib/noteshinglish";
+import { getSettings } from "@/lib/storage";
+import { aiSiteUrl } from "@/lib/aisites";
 import ZoomableImage from "@/components/ZoomableImage";
 import Markdown from "@/components/Markdown";
 
@@ -100,7 +102,7 @@ function GeminiBtn({ text, subject }) {
     await copyText(pre ? `${pre}\n\n${body}` : body);
     setDone(true);
     setTimeout(() => setDone(false), 1500);
-    try { window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
+    try { window.open(aiSiteUrl(getSettings().askAiSite), "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
   };
   return (
     <button
@@ -134,7 +136,7 @@ function ImageGeminiBtn({ src, subject }) {
       await copyText(pre ? `${pre}\n\n${body}` : body);
       setState("✓");
       setTimeout(() => setState(""), 1500);
-      try { window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
+      try { window.open(aiSiteUrl(getSettings().askAiSite), "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
     } catch {
       setState("✕");
       setTimeout(() => setState(""), 1500);

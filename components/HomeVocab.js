@@ -11,7 +11,8 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getDayTypeItems, buildTypeQuiz, typeIcon, typeLabel, getMine, setMine } from "@/lib/vocab";
-import { saveQuiz } from "@/lib/storage";
+import { saveQuiz, getSettings } from "@/lib/storage";
+import { aiSiteUrl } from "@/lib/aisites";
 import { copyText } from "@/lib/notesrender";
 import Markdown from "@/components/Markdown";
 
@@ -54,7 +55,7 @@ export default function HomeVocab({ day, type }) {
     const body = item.def ? `${item.word} — ${item.def}` : item.word;
     await copyText(`${base}\n\n${body}`);
     setCopied(true); setTimeout(() => setCopied(false), 1500);
-    try { window.open("https://gemini.google.com/app", "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
+    try { window.open(aiSiteUrl(getSettings().askAiSite), "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
   };
 
   const savePaste = () => {
