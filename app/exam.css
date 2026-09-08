@@ -1,104 +1,81 @@
 /* ===================================================================
-   SITE THEME — "CGL HQ" dark-glass look (ink + amber/indigo/emerald/rose).
+   SITE THEME — "Fieldnotes" look (arena 9): forest-green + amber, light
+   paper background, dark-green sidebar.
 
-   2026-09-07: owner ne ek doosre folder (ssc-cgl-preparation-hubarena,
-   Tailwind dark-glass build — near-black ink bg, amber-glow accent, mint/
-   rose/violet/sky highlights, glass cards) ka theme+layout+quiz-format
-   maanga. Us build ka apna alag Tailwind/Zustand system tha, isliye yahan
-   sirf uska RANGROOP + quiz-option ka look apne token system mein utaara
-   gaya hai — structure (drill-down menu, per-page layout) waisa hi hai,
-   bas desktop par ab ek permanent sidebar bhi hai (neeche globals.css mein).
+   2026-09-08: owner ne "arena 9" (Downloads\Compressed\arena 9) ka
+   theme + homepage layout maanga — is baar khaas taur par kyunki uska
+   accent AUR sidebar dono asli GREEN hain (baaki reference builds mein
+   green sirf ek status color tha).
 
-   Kaise: site ka poora design token-driven hai (globals.css ka sabse upar
-   wala block). Yahan wahi tokens `.examskin` par dobara likhe gaye hain aur
-   wo class <body> par lagti hai (app/layout.js) — custom properties inherit
-   hoti hain, isliye har component (jo `var(--card)`, `var(--accent)` waghera
-   padhta hai) bina chhue naya rang le leta hai. FullscreenRunner ke inline
-   styles bhi var() hi hain, isliye wo bhi apne aap badal jata hai.
+   Kaise: poora design token-driven hai — is class (`.examskin`, hamesha
+   <body> par) ke andar saare `--tb-*` custom properties hain. Har
+   component inhi ko padhta hai, isliye retheme = sirf yahan rang badalna.
+   Neeche structure wale rules sirf unhi cheezon ke liye hain jo token se
+   nahi ban sakti (option ka pill roop, badge ka chaukor, Answers page
+   (.ansp) jiske rang pehle hardcoded the).
 
-   Neeche structure wale rules sirf un cheezon ke liye hain jo token se nahi
-   ban sakti: option row ka gol-pill roop, badge ka chaukor, palette ke
-   rangeen box, aur Answers page (.ansp) jiske rang hardcoded the.
-
-   Ab din/raat dono isi dark palette par hain — neeche wala [data-theme=dark]
-   block isi wajah se same values dohrata hai, toggle ka koi visual farak
-   nahi (reference build ka bhi koi light mode nahi hai).
-
-   Purane Testbook (safed) roop par wapas jaana ho:
+   Purane roop par wapas jaana ho:
    `git checkout theme-backup-2026-09-07 -- app/exam.css app/globals.css
    app/layout.js app/manifest.js components/Navbar.js components/Footer.js
    components/ThemeToggle.js lib/theme.js lib/nav.js`
-   (ya poora backup: C:\Users\aaman\Downloads\ssc-cgl-theme-backup-2026-09-07)
    =================================================================== */
 
 .examskin {
-  /* ---- CGL HQ palette — AMBER hi asli brand rang hai (reference build ka
-     har primary button/active-nav/CTA amber-glow hai, neela sirf link hai). ---- */
-  --tb-blue: #ffb224;        /* amber-glow — bhara button, active chip, focus */
-  --tb-blue-dark: #ff8a3d;   /* orange — hover / gradient ka doosra stop */
-  --tb-blue-soft: rgba(255, 178, 36, 0.09);   /* chuna hua option, halka wash */
-  --tb-navy: #a5b4fc;        /* neeche wali chhoti headings / bold labels */
-  /* Sawaal ka apna rang — page ke ink se ek darja upar (sabse safed). */
-  --tb-q: #f8fafc;
-  --tb-green: #10b981;       /* ho gaya / sahi jawab / PART-A tab — emerald */
-  --tb-green-soft: #0c2a20;
-  --tb-red: #f43f5e;         /* galat, timer, Report link — rose */
-  --tb-red-soft: #2c1420;
-  --tb-orange: #ffb224;      /* amber-glow — INSTRUCTIONS jaise link */
-  --tb-yellow: #3a2a06;      /* ginti ka highlighter (dark amber tal) */
-  --tb-ink: #e7eaf2;
-  --tb-dim: #8f97ac;
-  --tb-line: rgba(255, 255, 255, 0.1);   /* box ka border */
-  --tb-line-soft: rgba(255, 255, 255, 0.07); /* option ke beech ki lakeer */
-  --tb-head: #10131c;        /* box ka sar (header band) */
-  --tb-page: #0a0c12;
+  /* ---- Fieldnotes palette — forest green hi asli brand rang hai. ---- */
+  --tb-blue: #176b56;         /* forest green — bhara button, active nav, focus */
+  --tb-blue-dark: #105444;    /* hover/pressed */
+  --tb-blue-soft: #e2f1ea;    /* chuna hua option, halka wash */
+  --tb-blue-ink: #105444;     /* link/heading — surface par likhne wala green */
+  --tb-navy: #143d34;         /* sidebar ka gehra green */
+  --tb-q: #19312b;            /* sawaal ka apna rang — sabse gehra ink */
+  --tb-green: #247558;        /* ho gaya / sahi jawab */
+  --tb-green-soft: #e5f3ec;
+  --tb-red: #b4483d;          /* galat, timer */
+  --tb-red-soft: #f9e7e4;
+  --tb-orange: #176b56;       /* eyebrow/instructions jaisa link */
+  --tb-yellow: #fff1d9;       /* ginti ka highlighter (amber wash) */
+  --tb-ink: #19312b;
+  --tb-dim: #61726d;
+  --tb-line: #dfe5df;         /* box ka border */
+  --tb-line-soft: #eef1ee;    /* option ke beech ki lakeer */
+  --tb-head: #f8f9f5;         /* box ka sar (header band) / muted surface */
+  --tb-page: #ffffff;         /* card ka tal */
 
-  /* ---- wo rang jo pehle neeche rules ke ANDAR hardcoded pade the ----
-     Token isliye banaye ki dark theme sirf inhe re-point kare — ek bhi rule
-     chhuna na pade. */
-  --tb-soft: #10131c;         /* halka sa utha hua tal — "ho gaya" card */
-  --tb-tint: #0d1019;         /* answer box / solution ka halka wash */
-  --tb-line-hard: rgba(255, 255, 255, 0.22); /* option ke radio circle ki lakeer */
-  --tb-green-dark: #34d399;   /* Submit ka border aur hover */
-  --tb-ok-ink: #6ee7b7;       /* hare wash ke UPAR likha hua */
-  --tb-bad-ink: #fda4af;      /* laal wash ke upar likha hua */
-  --tb-warn-ink: #ffd98a;     /* peele ke upar likha hua */
-  --tb-warn-ink-2: #ffcf70;   /* ghadi ka chhota "min" wala hissa */
-  --tb-red-ink-soft: #ffd0d6; /* laal ghadi ke andar ka halka text */
-  --tb-rev: #ffb224;          /* Mark for Review ka amber-glow */
-  --tb-rev-hover: #ffc65c;
-  --tb-rev-on: #ffd98a;
-  --tb-rev-line: #cc8a12;
-  --tb-rev-ink: #221503;      /* amber ke UPAR — hamesha gehra ink */
-  --tb-rev-soft: #3a2708;
-  --tb-key-line: #cc8a12;    /* notes ke "key point" block ki sunehri lakeer */
-  --tb-skip: #171b27;         /* chhoda hua question */
-  --tb-skip-ink: #8f97ac;
-  --tb-focus: #ffb224;        /* palette mein abhi wale number ka outline */
-  --tb-code: #a78bfa;         /* `code` ka rang — violet */
-  --tb-bg-2: #05060a;         /* page se zara gehra tal (rail, code plate) */
-  --tb-raised: #171b27;       /* utha hua card ka mazboot roop */
-  --tb-ink-2: #b8bfd2;        /* doosre darje ka text */
-  --tb-amber: #ffb224;        /* warning / Mark-for-Review wala button */
-  /* Link/heading wala neela ALAG token hai us neele se jo bhari hui button ka
-     background banta hai — dark bg par likhne wala halka hai, warna kaale
-     page par link padha hi nahi jata. */
-  --tb-blue-ink: #a5b4fc;
+  --tb-soft: #f8f9f5;          /* halka sa utha hua tal — "ho gaya" card */
+  --tb-tint: #e2f1ea;          /* answer box / solution ka halka wash */
+  --tb-line-hard: #ccd6ce;     /* option ke gol number ki lakeer */
+  --tb-green-dark: #105444;    /* Submit ka border aur hover */
+  --tb-ok-ink: #105444;        /* hare wash ke UPAR likha hua */
+  --tb-bad-ink: #8f342a;       /* laal wash ke upar likha hua */
+  --tb-warn-ink: #8a5a10;      /* peele ke upar likha hua */
+  --tb-warn-ink-2: #6e470c;    /* ghadi ka chhota "min" wala hissa */
+  --tb-red-ink-soft: #fceeee;  /* laal (bhare) ghadi ke andar ka halka text */
+  --tb-rev: #e6a344;           /* Mark for Review ka amber */
+  --tb-rev-hover: #d8933a;
+  --tb-rev-on: #eeb964;
+  --tb-rev-line: #c07f2c;
+  --tb-rev-ink: #382605;       /* amber ke UPAR — hamesha gehra ink */
+  --tb-rev-soft: #fff1d9;
+  --tb-key-line: #c07f2c;      /* notes ke "key point" block ki sunehri lakeer */
+  --tb-skip: #f8f9f5;          /* chhoda hua question */
+  --tb-skip-ink: #8a9994;
+  --tb-focus: #176b56;         /* palette mein abhi wale number ka outline */
+  --tb-code: #426d9a;          /* `code` ka rang */
+  --tb-bg-2: #f3f5ef;          /* page se zara gehra tal (rail, code plate) */
+  --tb-raised: #ffffff;        /* utha hua card ka mazboot roop */
+  --tb-ink-2: #3d5049;         /* doosre darje ka text */
+  --tb-amber: #e6a344;         /* warning / Mark-for-Review wala button */
 
   /* Site pehle se Inter load karti hai (app/layout.js, --font-inter) —
-     reference build bhi Inter hi istemal karta hai. Devanagari fallback
-     zaroori hai — is site ke question mein Hindi line beech mein aa jaati
-     hai, aur bina fallback ke wo tofu-box ban jaati hai. */
+     isi ko istemal karte hain, Devanagari fallback ke saath. */
   --tb-font: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
              Roboto, Arial, "Nirmala UI", "Noto Sans", "Noto Sans Devanagari",
              sans-serif;
-  --nav-hover: color-mix(in srgb, var(--tb-blue-ink) 22%, var(--tb-page));
+  --nav-hover: color-mix(in srgb, var(--tb-blue-ink) 14%, var(--tb-page));
 
-  /* ---- site ke tokens ko naye rang par mod diya ----
-     Har component pehle se inhi ko padhta hai, isliye yahin se poora
-     re-skin ho jata hai. */
+  /* ---- site ke tokens ko naye rang par mod diya ---- */
   --font: var(--tb-font);
-  --bg: var(--tb-page);
+  --bg: var(--tb-bg-2);
   --card: var(--tb-page);
   --line: var(--tb-line);
   --ink: var(--tb-ink);
@@ -108,15 +85,15 @@
   --bad: var(--tb-red);
   --mark: var(--tb-yellow);
 
-  --bg-0: var(--tb-page);
+  --bg-0: var(--tb-bg-2);
   --bg-1: var(--tb-page);
-  --bg-2: var(--tb-bg-2);
+  --bg-2: var(--tb-head);
 
   --glass-bg: var(--tb-page);
-  --glass-bg-strong: var(--tb-raised);
+  --glass-bg-strong: var(--tb-page);
   --glass-border: var(--tb-line);
   --glass-border-strong: var(--tb-line-hard);
-  --glass-shadow: none;
+  --glass-shadow: 0 1px 2px rgba(20, 61, 52, 0.04);
 
   --text-1: var(--tb-ink);
   --text-2: var(--tb-ink-2);
@@ -126,16 +103,14 @@
   --on-accent: #ffffff;
   --accent-2: var(--tb-blue-ink);
   --accent-3: var(--tb-blue-ink);
-  --accent-grad: linear-gradient(135deg, #ffb224, #ff8a3d);
+  --accent-grad: linear-gradient(135deg, #176b56, #105444);
   --accent-glow: none;
 
   --success: var(--tb-green);
   --danger: var(--tb-red);
   --warning: var(--tb-amber);
-  /* Bada heading (## / ###) — safed aur bhaari. */
   --head: var(--tb-q);
   --mauve: var(--tb-blue-ink);
-  /* **bold** ka apna pen — heading ke NEECHE wale chhote sar. */
   --emph: var(--tb-blue-ink);
 
   --ok-wash: var(--tb-green-soft);
@@ -143,57 +118,42 @@
   --accent-wash: var(--tb-blue-soft);
   --accent2-wash: var(--tb-blue-soft);
 
-  /* Reference build ke glass-card jaisa gol radius — 3-4px ka Testbook
-     chaukor ab nahi. */
-  --radius-sm: 12px;
-  --radius: 14px;
+  --radius-sm: 8px;
+  --radius: 13px;
   --radius-lg: 18px;
-  --radius-xl: 20px;
-  --blur: 10px;
+  --radius-xl: 22px;
+  --blur: 0px;
 
-  --scheme: dark;
-  color-scheme: dark;
+  --scheme: light;
+  color-scheme: light;
   font-family: var(--tb-font);
-  /* Reference ka ambient "bg-scene" — amber top-right, violet bottom-left,
-     mint bottom-center, teeno bahut halke, sirf ek atmosphere ki tarah. */
-  background:
-    radial-gradient(55rem 40rem at 85% -10%, rgba(255, 178, 36, 0.10), transparent 60%),
-    radial-gradient(50rem 38rem at -10% 110%, rgba(124, 58, 237, 0.10), transparent 60%),
-    radial-gradient(40rem 30rem at 50% 120%, rgba(52, 211, 153, 0.06), transparent 60%),
-    var(--tb-page);
-  background-attachment: fixed;
+  background: var(--tb-bg-2);
   color: var(--tb-ink);
 }
 
-/* Font sirf wrapper par set hai aur inherit hota hai. Har element par
-   zabardasti font-family lagane ki koshish mat karna — KaTeX apne math glyph
-   .katex ke andar font-family se hi laata hai, aur wo rule tab dab jata hai
-   (formula wale saare question toot jaate hain). */
-
-/* ---- Sar (hero) = exam ka top bar ----
-   Testbook par upar safed patti hoti hai: baayen test ka naam, neeche neeli
-   lakeer. Site ka .hero wahi jagah leta hai. */
+/* ---- Sar (hero) = exam ka top bar ---- */
 .examskin .hero {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)), var(--tb-head);
+  background: var(--tb-page);
   border: 1px solid var(--tb-line);
   border-bottom: 2px solid var(--tb-blue);
-  border-radius: 20px;
+  border-radius: 18px;
   padding: 10px 14px;
   margin-bottom: 14px;
-  backdrop-filter: blur(10px);
 }
 .examskin .hero__eyebrow {
-  color: var(--tb-orange);
-  text-decoration: underline;
-  letter-spacing: 0.04em;
+  color: var(--tb-blue);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
   margin-bottom: 4px;
 }
 .examskin .hero__title {
-  color: var(--tb-ink);
+  color: var(--tb-q);
   font-size: clamp(1.05rem, 2.4vw, 1.35rem) !important;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.35;
-  letter-spacing: 0;
+  letter-spacing: -0.01em;
 }
 .examskin .hero__title .grad,
 .examskin .grad {
@@ -210,62 +170,61 @@
   max-width: none;
 }
 
-/* ---- Buttons — CGL HQ ka amber-gradient pill (reference ka .btn-amber) ---- */
+/* ---- Buttons — Fieldnotes ka solid-green button ---- */
 .examskin .btn {
-  background: var(--accent-grad);
-  color: #221503;
-  border: 1px solid var(--tb-blue-dark);
-  border-radius: 16px;
-  padding: 6px 14px;
+  background: var(--tb-blue);
+  color: #ffffff;
+  border: 1px solid var(--tb-blue);
+  border-radius: 10px;
+  padding: 7px 14px;
   font-size: 13px;
   font-weight: 700;
   box-shadow: none;
   transform: none;
-  transition: filter 0.12s ease;
+  transition: background 0.12s ease;
 }
-.examskin .btn:hover { filter: brightness(1.08); color: #221503; transform: none; box-shadow: none; }
+.examskin .btn:hover { background: var(--tb-blue-dark); border-color: var(--tb-blue-dark); color: #fff; transform: none; box-shadow: none; }
 .examskin .btn:disabled { opacity: 0.45; cursor: default; }
 .examskin .btn--ghost {
-  background: rgba(255, 255, 255, 0.05);
-  color: #dfe4f0;
-  border: 1px solid var(--tb-line);
+  background: var(--tb-page);
+  color: var(--tb-ink-2);
+  border: 1px solid var(--tb-line-hard);
 }
-.examskin .btn--ghost:hover { background: rgba(255, 255, 255, 0.09); border-color: var(--tb-line-hard); color: #fff; }
-.examskin .btn--primary { background: var(--accent-grad); color: #221503; border-color: var(--tb-blue-dark); }
-.examskin .btn--sm { padding: 4px 10px; font-size: 12px; }
+.examskin .btn--ghost:hover { background: var(--tb-head); border-color: var(--tb-blue); color: var(--tb-blue-ink); }
+.examskin .btn--primary { background: var(--tb-blue); color: #fff; border-color: var(--tb-blue); }
+.examskin .btn--sm { padding: 5px 10px; font-size: 12px; }
 .examskin .btn--danger { background: var(--tb-red); color: #fff; border-color: var(--tb-red); }
-.examskin .btn--danger:hover { filter: brightness(1.1); }
+.examskin .btn--danger:hover { background: #97382f; }
 
 .examskin .input,
 .examskin .select,
 .examskin .textarea {
   background: var(--tb-page);
-  border: 1px solid var(--tb-line);
-  border-radius: 16px;
+  border: 1px solid var(--tb-line-hard);
+  border-radius: 10px;
   color: var(--tb-ink);
   font-size: 13px;
 }
 .examskin .input:focus,
 .examskin .select:focus,
-.examskin .textarea:focus { border-color: var(--tb-blue); box-shadow: none; outline: 1px solid var(--tb-blue); }
+.examskin .textarea:focus { border-color: var(--tb-blue); box-shadow: 0 0 0 3px var(--tb-blue-soft); outline: none; }
 
 .examskin .chip {
   background: var(--tb-page);
-  border: 1px solid var(--tb-line);
-  border-radius: 16px;
+  border: 1px solid var(--tb-line-hard);
+  border-radius: 999px;
   color: var(--tb-dim);
   font-weight: 700;
 }
 .examskin .chip--btn:hover { transform: none; filter: none; background: var(--tb-blue-soft); }
-.examskin .chip.is-active { background: var(--tb-blue-soft); border-color: rgba(255, 178, 36, 0.4); color: var(--tb-blue); }
+.examskin .chip.is-active { background: var(--tb-blue-soft); border-color: var(--tb-blue); color: var(--tb-blue-ink); }
 
 .examskin .placeholder,
 .examskin .glass-card {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)), var(--tb-page);
+  background: var(--tb-page);
   border: 1px solid var(--tb-line);
-  border-radius: 20px;
-  box-shadow: none;
-  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(20, 61, 52, 0.04);
   color: var(--tb-ink);
 }
 .examskin .muted, .examskin .hint { color: var(--tb-dim); }
@@ -274,32 +233,30 @@
 .examskin .badge {
   background: var(--tb-head);
   border: 1px solid var(--tb-line);
-  border-radius: 16px;
+  border-radius: 999px;
   color: var(--tb-dim);
   font-weight: 700;
 }
 .examskin .stat {
-  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 16px; box-shadow: none;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 13px; box-shadow: none;
 }
 .examskin .stat__num { color: var(--tb-blue-ink); }
 .examskin .stat__label { color: var(--tb-dim); }
 
 /* =========================================================
-   QUESTION CARD — screenshot ka bada safed box
+   QUESTION CARD
    ========================================================= */
 .examskin .qcard {
   --pad: 0px;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)), var(--tb-page);
+  background: var(--tb-page);
   border: 1px solid var(--tb-line);
-  border-radius: 20px;
+  border-radius: 18px;
   padding: 0;
   overflow: hidden;
-  backdrop-filter: blur(10px);
 }
 .examskin .qcard.is-done { opacity: 1; background: var(--tb-soft); }
 .examskin .qcard.is-done .qcard__h { color: var(--tb-dim); }
 
-/* "Question No. 3" — box ke upar apni patti mein, kaala aur bold. */
 .examskin .qcard__h {
   margin: 0;
   padding: 8px 14px;
@@ -310,19 +267,12 @@
   font-weight: 700;
 }
 .examskin .qcard__qid { color: var(--tb-dim); font-size: 12px; font-weight: 400; }
-/* Sar ke daayen kone wale do button (Gemini, 🎯 20) — chhote, patli patti
-   mein baithne laayak. */
 .examskin .qcard__hacts .btn {
-  padding: 3px 9px; font-size: 11px; border-radius: 16px;
-  background: var(--accent-grad); color: #221503; border: 1px solid var(--tb-blue-dark);
+  padding: 3px 9px; font-size: 11px; border-radius: 999px;
+  background: var(--tb-blue); color: #fff; border: 1px solid var(--tb-blue);
 }
-.examskin .qcard__hacts .btn:hover { filter: brightness(1.08); }
+.examskin .qcard__hacts .btn:hover { background: var(--tb-blue-dark); }
 
-/* Sawaal — gehra neela, jaisa Testbook par hota hai.
-   Sirf rang kaafi nahi tha: pehle question 15px/400 navy tha aur option
-   15px/400 kaala — safed background par dono ek jaise dikhte the aur "kya
-   sawaal hai, kya option hai" pata hi nahi chalta tha. Isliye ab sawaal BADA
-   aur thoda bhaari hai, aur uske neeche poori lakeer hai. */
 .examskin .qcard__stem {
   margin: 0;
   padding: 18px 16px;
@@ -335,24 +285,16 @@
 .examskin .qcard__stem .md,
 .examskin .qcard__stem .md p { color: var(--tb-q); font-weight: 700; }
 .examskin .qcard__stem .q-crop,
-.examskin .qcard__stem img { border-radius: 0; }
+.examskin .qcard__stem img { border-radius: 8px; }
 
-/* Card ka apna padding ab 0 hai (sar, options aur buttons ki patti ko kinare
-   tak jaana tha). Isliye beech mein aane wale baaki tukdon — PasteAnswer,
-   passage, diagram, maths/reasoning ki tasveer, flash/error line — ko yahan
-   se hashiya milta hai. Naya tukda card mein daalo to ye list dekh lena. */
 .examskin .qcard > :is(p, a, form, label),
 .examskin .qcard > div:not(.qcard__stem):not(.qcard__opts):not(.qcard__acts):not(.qcard__answer) {
   margin-left: 16px;
   margin-right: 16px;
 }
-/* Maths/Reasoning ke card mein stem hai hi nahi — sawaal khud tasveer hai aur
-   seedha header ke neeche aata hai, isliye use apni jagah chahiye. */
 .examskin .qcard > .math-img-wrap { margin-top: 14px; }
 
-/* Options — CGL HQ jaisa: ek-ek gol pill row, beech mein gap, baayen ek
-   chaukor A/B/C/D badge (inline, radio-circle/khadi-lakeer wali Testbook
-   column chaal ab nahi). */
+/* Options — pill row, chaukor A/B/C/D badge. */
 .examskin .qcard__opts {
   display: flex;
   flex-direction: column;
@@ -367,9 +309,9 @@
   gap: 12px;
   width: 100%;
   min-height: 0;
-  border: 1px solid var(--tb-line);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--tb-line-hard);
+  border-radius: 12px;
+  background: var(--tb-page);
   color: var(--tb-ink);
   font-size: 15px;
   line-height: 1.55;
@@ -377,9 +319,8 @@
   text-align: left;
 }
 .examskin .qcard__opt::before { content: none; }
-.examskin .qcard__opts .qcard__opt:first-child { border-top: 1px solid var(--tb-line); }
-.examskin .qcard__opt.is-pick:hover { border-color: rgba(255, 255, 255, 0.22); background: rgba(255, 255, 255, 0.06); }
-/* A/B/C/D — ab ek chhota gol-kona chaukor badge, radio-circle nahi. */
+.examskin .qcard__opts .qcard__opt:first-child { border-top: 1px solid var(--tb-line-hard); }
+.examskin .qcard__opt.is-pick:hover { border-color: var(--tb-blue); background: var(--tb-head); }
 .examskin .qcard__opt > b {
   position: static;
   flex: none;
@@ -387,18 +328,17 @@
   margin: 0;
   border: 1px solid var(--tb-line-hard);
   border-radius: 8px;
-  background: var(--tb-page);
+  background: var(--tb-head);
   color: var(--tb-dim);
   font-size: 11px; font-weight: 700; line-height: 24px;
   text-align: center;
   opacity: 1;
 }
-.examskin .qcard__opt.is-right { background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.5); }
+.examskin .qcard__opt.is-right { background: var(--tb-green-soft); border-color: var(--tb-green); }
 .examskin .qcard__opt.is-right b { background: var(--tb-green); border-color: var(--tb-green); color: #fff; }
-.examskin .qcard__opt.is-wrong { background: rgba(244, 63, 94, 0.1); border-color: rgba(244, 63, 94, 0.5); }
+.examskin .qcard__opt.is-wrong { background: var(--tb-red-soft); border-color: var(--tb-red); }
 .examskin .qcard__opt.is-wrong b { background: var(--tb-red); border-color: var(--tb-red); color: #fff; }
 
-/* Buttons ki patti — Testbook ke neeche wale bar jaisi. */
 .examskin .qcard__acts {
   margin: 0;
   padding: 10px 16px;
@@ -409,17 +349,16 @@
 .examskin .qcard__acts .btn,
 .examskin .qcard__acts .btn--ghost,
 .examskin .qcard__acts .btn--sm {
-  background: var(--accent-grad);
-  color: #221503;
-  border: 1px solid var(--tb-blue-dark);
-  border-radius: 16px;
+  background: var(--tb-blue);
+  color: #fff;
+  border: 1px solid var(--tb-blue);
+  border-radius: 999px;
   padding: 5px 12px;
   font-size: 12px;
   font-weight: 700;
 }
-.examskin .qcard__acts .btn:hover { filter: brightness(1.08); border: 1px solid var(--tb-blue-dark); }
+.examskin .qcard__acts .btn:hover { background: var(--tb-blue-dark); }
 
-/* Answer — safed box ke neeche apna hissa, baayen neeli lakeer. */
 .examskin .qcard__answer {
   margin: 0;
   padding: 14px 16px;
@@ -434,14 +373,8 @@
 .examskin .qcard__note { color: var(--tb-red); }
 
 /* =========================================================
-   QUESTION PALETTE — screenshot ki daayin taraf wali numbering
+   QUESTION PALETTE
    ========================================================= */
-/* Testbook par ye patti DAAYIN taraf hoti hai aur ek grid hai — 6 box ki
-   line — patli lambi column nahi. Markup wahi rehta hai: row-reverse se
-   rail daayen chali jaati hai, aur grid se numbers line mein baith jaate
-   hain. Phone ka layout neeche wale media block mein wapas column ho jata
-   hai (globals ka mobile rule is rule se kamzor hai, isliye dobara likhna
-   pada). */
 .examskin .qboard,
 .examskin .ansp { flex-direction: row-reverse; gap: 14px; }
 .examskin .qboard__rail { width: 232px; }
@@ -454,30 +387,27 @@
   align-content: start;
   background: var(--tb-page);
   border: 1px solid var(--tb-line);
-  border-radius: 16px;
+  border-radius: 13px;
   padding: 10px;
   max-height: 62vh;
 }
 .examskin .ansp__side { width: 232px; max-height: 86vh; }
-/* Palette ka default = bina-chhua sawaal: CGL HQ jaisa halka bordered box,
-   koi bhara rang nahi (Testbook ka har number neela box ab nahi). */
 .examskin .qboard__side a,
 .examskin .ansp__side a {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--tb-head);
   border: 1px solid var(--tb-line);
   color: var(--tb-dim);
-  border-radius: 16px;
+  border-radius: 10px;
   font-size: 13px;
   font-weight: 700;
   padding: 7px 0;
   margin: 0;
 }
 .examskin .qboard__side a:hover,
-.examskin .ansp__side a:hover { background: rgba(255, 255, 255, 0.06); }
-/* Ho gaya / jawab diya = mint wash, bilkul reference ke "answered" box jaisa. */
+.examskin .ansp__side a:hover { background: var(--tb-blue-soft); }
 .examskin .qboard__side a.is-done,
 .examskin .ansp__side a.is-done {
-  background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: var(--tb-ok-ink);
+  background: var(--tb-green-soft); border-color: var(--tb-green); color: var(--tb-ok-ink);
 }
 
 @media (max-width: 900px) {
@@ -487,8 +417,6 @@
   .examskin .ansp__side { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 640px) {
-  /* Phone par rail upar ki horizontal patti hi theek hai — 150px ki column
-     content ko nichod deti hai. */
   .examskin .qboard,
   .examskin .ansp { flex-direction: column; align-items: stretch; }
   .examskin .qboard__rail { display: contents; }
@@ -497,16 +425,12 @@
     width: auto; display: flex; gap: 6px; overflow-x: auto;
     max-height: none; padding: 6px;
   }
-  /* Phone par hisaab ek line mein — par lipat sake, teen pill 390px mein nahi
-     samate. */
   .examskin .qboard__tally { flex-direction: row; flex-wrap: wrap; }
-  /* Patti upar chipki rahe — question scroll karte waqt bhi number saamne. */
   .examskin .qboard__side { background: var(--tb-page); }
   .examskin .qboard__side a,
   .examskin .ansp__side a { flex: none; min-width: 34px; }
 }
 
-/* Ginti ki patti = "PART-A Analysis" wali table ki jagah. */
 .examskin .qboard__stats,
 .examskin .ansp__stats {
   justify-content: flex-start;
@@ -515,14 +439,14 @@
   padding: 8px 10px;
   background: var(--tb-head);
   border: 1px solid var(--tb-line);
-  border-radius: 16px;
+  border-radius: 13px;
   font-size: 13px;
 }
 .examskin .qboard__stats span,
 .examskin .ansp__stats span {
   background: var(--tb-page);
   border: 1px solid var(--tb-line);
-  border-radius: 16px;
+  border-radius: 999px;
   padding: 4px 10px;
   color: var(--tb-ink);
 }
@@ -532,14 +456,13 @@
 .examskin .qboard__stats .cnt, .examskin .ansp__stats .cnt { color: var(--tb-blue-ink); }
 .examskin .qboard__stats .cnt button,
 .examskin .ansp__stats .cnt button {
-  background: var(--tb-blue); color: #221503; border-radius: 16px;
+  background: var(--tb-blue); color: #fff; border-radius: 999px;
 }
 .examskin .qboard__stats .cnt button:hover,
 .examskin .ansp__stats .cnt button:hover { background: var(--tb-blue-dark); }
 
-/* ---- Set chunne ka parda ---- */
 .examskin .setcard {
-  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 16px;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 13px;
 }
 .examskin .setcard:hover { border-color: var(--tb-blue); background: var(--tb-blue-soft); }
 .examskin .setcard__n { color: var(--tb-ink); }
@@ -551,40 +474,34 @@
 .examskin .setcard__bar i { background: var(--tb-green); }
 .examskin .setcard__go { color: var(--tb-blue-ink); }
 
-/* ---- Test ka sar aur ghadi ---- */
 .examskin .qboard__top {
-  background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 16px;
+  background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 13px;
   padding: 8px 10px;
 }
 .examskin .qboard__title { color: var(--tb-ink); }
 .examskin .qboard__clock {
-  background: var(--tb-yellow); color: var(--tb-warn-ink); border-radius: 16px;
+  background: var(--tb-yellow); color: var(--tb-warn-ink); border-radius: 999px;
   padding: 3px 12px; font-size: 16px; text-align: center;
 }
 .examskin .qboard__clock em { color: var(--tb-warn-ink-2); }
-/* Aakhri minute — ghadi rose ho jaati hai. */
 .examskin .qboard__clock.is-low { background: var(--tb-red); color: #fff; }
 .examskin .qboard__clock.is-low em { color: var(--tb-red-ink-soft); }
 
-/* ---- Palette ke rang — sab WASH (halka bg + rangeen ink + rangeen border),
-   koi bhara fill nahi: mint = sahi/jawab diya, rose = galat, amber = review,
-   dim border = chhoda hua, amber-outline = abhi isi par ho. ---- */
 .examskin .qboard__side a.is-ans {
-  background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); color: var(--tb-ok-ink);
+  background: var(--tb-green-soft); border-color: var(--tb-green); color: var(--tb-ok-ink);
 }
 .examskin .qboard__side a.is-skip {
-  background: rgba(255, 255, 255, 0.02); border-color: var(--tb-line); color: var(--tb-skip-ink);
+  background: var(--tb-head); border-color: var(--tb-line); color: var(--tb-skip-ink);
 }
 .examskin .qboard__side a.is-right {
-  background: rgba(16, 185, 129, 0.12); border-color: rgba(16, 185, 129, 0.5); color: var(--tb-ok-ink);
+  background: var(--tb-green-soft); border-color: var(--tb-green); color: var(--tb-ok-ink);
 }
 .examskin .qboard__side a.is-wrong {
-  background: rgba(244, 63, 94, 0.1); border-color: rgba(244, 63, 94, 0.5); color: var(--tb-bad-ink);
+  background: var(--tb-red-soft); border-color: var(--tb-red); color: var(--tb-bad-ink);
 }
 .examskin .qboard__side a.is-review {
-  background: rgba(255, 178, 36, 0.1); border-color: rgba(255, 178, 36, 0.35); color: var(--tb-blue);
+  background: var(--tb-rev-soft); border-color: var(--tb-rev); color: #8a5a10;
 }
-/* Abhi jis par ho — amber outline + text, reference ke "current" number jaisa. */
 .examskin .qboard__side a.is-cur {
   outline: 2px solid var(--tb-focus);
   outline-offset: 1px;
@@ -593,19 +510,15 @@
   font-weight: 800;
 }
 
-/* ---- Mark for Review ka peela button ---- */
 .examskin .btn--review {
   background: var(--tb-rev); color: var(--tb-rev-ink); border-color: var(--tb-rev-line);
 }
 .examskin .btn--review:hover { background: var(--tb-rev-hover); color: var(--tb-rev-ink); }
 .examskin .btn--review.is-on { background: var(--tb-rev-on); color: var(--tb-rev-ink); border-color: var(--tb-rev-ink); }
 
-/* ---- Neeche ka hisaab (Testbook ka "PART-A Analysis") ---- */
-/* Hisaab ab palette ke NEECHE hi khade khambhe mein hai, isliye teeno ek ke
-   neeche ek — 232px mein teen pill ek line mein nahi aate. */
 .examskin .qboard__tally {
   flex-direction: column;
-  background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 16px;
+  background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 13px;
   padding: 8px; gap: 6px;
 }
 .examskin .tally {
@@ -613,21 +526,17 @@
 }
 .examskin .tally--bad { background: var(--tb-red-soft); color: var(--tb-bad-ink); }
 
-/* Submit/Finish — CGL HQ ka amber CTA (reference ka Submit/Finish button). */
-.examskin .btn--submit { background: var(--accent-grad); border-color: var(--tb-blue-dark); color: #221503; }
-.examskin .btn--submit:hover { filter: brightness(1.08); }
+.examskin .btn--submit { background: var(--tb-blue); border-color: var(--tb-blue); color: #fff; }
+.examskin .btn--submit:hover { background: var(--tb-blue-dark); }
 
-/* Full screen mein page ka apna safed hi rehna chahiye (skin bahar reh jaati
-   hai kyunki fullscreen element DOM se upar uth jata hai). */
 .examskin .qboard.is-fs { background: var(--tb-page); padding: 14px; }
 
-/* Submit ke baad ka natija — Right / Wrong / Accuracy / Time. */
 .examskin .qboard__result {
   background: var(--tb-head); border: 1px solid var(--tb-line);
-  border-radius: 16px; color: var(--tb-ink);
+  border-radius: 13px; color: var(--tb-ink);
 }
 .examskin .res {
-  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 16px;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 13px;
   color: var(--tb-dim); font-weight: 700;
 }
 .examskin .res--right { background: var(--tb-green-soft); }
@@ -639,49 +548,42 @@
 .examskin .res--nokey b { color: var(--tb-dim); }
 .examskin .res--marks { background: var(--tb-blue-soft); }
 
-/* Dobara-test wala popup. */
 .examskin .setask__box {
-  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 16px;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 13px;
 }
 .examskin .setask__title { color: var(--tb-ink); }
 .examskin .setask__sub { color: var(--tb-dim); }
 
-/* Test ke dauraan chuna hua option — neela, par sahi/galat kuch nahi batata.
-   Submit ke baad hara/laal hi chalta hai, isliye :not() — warna chuna hua
-   option submit ke baad bhi neela hi pada rehta. */
 .examskin .qcard__opt.is-picked:not(.is-right):not(.is-wrong) {
-  border-color: rgba(255, 178, 36, 0.5); background: rgba(255, 178, 36, 0.09);
+  border-color: var(--tb-blue); background: var(--tb-blue-soft);
 }
 .examskin .qcard__opt.is-picked:not(.is-right):not(.is-wrong) > b {
-  background: var(--tb-amber); border-color: var(--tb-amber); color: #221503;
+  background: var(--tb-blue); border-color: var(--tb-blue); color: #fff;
 }
 .examskin .tally {
-  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 16px;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 13px;
   color: var(--tb-dim); font-weight: 700;
 }
 .examskin .tally b { font-size: 15px; }
 .examskin .tally--ans { background: var(--tb-green-soft); color: var(--tb-ok-ink); }
 .examskin .tally--not { color: var(--tb-ink); }
-.examskin .tally--rev { background: var(--tb-rev-soft); color: var(--tb-warn-ink); }
+.examskin .tally--rev { background: var(--tb-rev-soft); color: #8a5a10; }
 
-/* Prev / Save & Next ki patti — screenshot mein yahi neele buttons upar hain. */
 .examskin .qboard__nav {
   background: var(--tb-head);
   border: 1px solid var(--tb-line);
-  border-radius: 16px;
+  border-radius: 13px;
   padding: 8px 10px;
 }
 .examskin .qboard__pos { color: var(--tb-ink); font-size: 13px; }
 .examskin .qboard__pos b { color: var(--tb-blue-ink); font-size: 15px; }
 .examskin .qboard__pos--hint { color: var(--tb-dim); }
-/* Abhi jis number par ho — Testbook par wo box alag dikhta hai. */
-.examskin .qmark { background: var(--tb-green-soft); color: var(--tb-ok-ink); border-radius: 16px; }
+.examskin .qmark { background: var(--tb-green-soft); color: var(--tb-ok-ink); border-radius: 999px; }
 
-/* Subject / chapter ki list (PYQ ka menu) — exam ke bordered rows. */
 .examskin .pyq-row {
   background: var(--tb-page);
   border: 1px solid var(--tb-line);
-  border-radius: 16px;
+  border-radius: 13px;
 }
 .examskin .pyq-row:hover { border-color: var(--tb-blue); background: var(--tb-blue-soft); }
 .examskin .pyq-row__name { color: var(--tb-ink); }
@@ -689,7 +591,7 @@
 .examskin .pyq-row--all { border-left: 3px solid var(--tb-blue); }
 
 .examskin .passage-box {
-  background: var(--tb-tint); border: 1px solid var(--tb-line); border-radius: 16px; color: var(--tb-ink);
+  background: var(--tb-tint); border: 1px solid var(--tb-line); border-radius: 13px; color: var(--tb-ink);
 }
 .examskin .passage-box .md { color: var(--tb-ink); }
 .examskin .answer-box {
@@ -698,27 +600,22 @@
 }
 
 /* =========================================================
-   FULL-SCREEN TEST (FullscreenRunner) — asli exam window.
-   Iske option inline style se bante hain, par wo bhi var() padhte hain,
-   isliye rang upar wale tokens se hi aa gaye. Yahan sirf dhaancha.
+   FULL-SCREEN TEST (FullscreenRunner)
    ========================================================= */
 .examskin .fsr { background: var(--tb-page); color: var(--tb-ink); }
 .examskin .fsr__top,
 .examskin .fsr__bottom { background: var(--tb-head); border-color: var(--tb-line); }
 .examskin .fsr__top { border-bottom: 2px solid var(--tb-blue); }
-/* Markdown apna rang khud rakhta hai (.md), isliye sirf h2 par navy lagane se
-   sawaal kaala hi dikhta tha — andar wale .md ko bhi batana pada. */
 .examskin .fsr__q,
 .examskin .fsr__q .md { color: var(--tb-q); font-size: 1.1rem; font-weight: 700; line-height: 1.6; }
-/* Option ka A/B/C/D — wahi chaukor badge jo card par hai. */
 .examskin .fsr__opt > strong {
   flex: none; width: 22px; height: 22px;
-  border: 1px solid var(--tb-line-hard); border-radius: 7px; background: var(--tb-page);
+  border: 1px solid var(--tb-line-hard); border-radius: 7px; background: var(--tb-head);
   color: var(--tb-dim); font-size: 11px; font-weight: 700; line-height: 20px;
   text-align: center; opacity: 1;
 }
 .examskin .fsr__opt {
-  border-radius: 16px !important;
+  border-radius: 12px !important;
   border-width: 1px !important;
   font-size: 15px !important;
 }
@@ -726,37 +623,31 @@
   background: var(--tb-tint); border: 1px solid var(--tb-line); border-left: 3px solid var(--tb-blue);
   border-radius: 0; color: var(--tb-ink);
 }
-.examskin .fsr__jump { border-radius: 16px; border-color: var(--tb-line); }
+.examskin .fsr__jump { border-radius: 13px; border-color: var(--tb-line); }
 
 /* =========================================================
-   QUIZ (/quizzes/[id]) — attempt aur result.
-   Yahan ke option inline style se bante hain (rang var() se aa gaye), par
-   gol kona aur sawaal ka rang CSS se hi theek ho sakta hai.
+   QUIZ (/quizzes/[id])
    ========================================================= */
-/* .md apna rang khud rakhta hai, isliye h3 ke saath uske andar wale Markdown
-   ko bhi navy batana padta hai — warna sawaal kaala hi rehta hai. */
 .examskin article.glass-card > h3,
 .examskin article.glass-card > h3 .md { color: var(--tb-q); font-weight: 700; font-size: 1.05rem; }
 .examskin article.glass-card > .grid > button {
-  border-radius: 16px !important;
-  border-color: var(--tb-line) !important;
+  border-radius: 12px !important;
+  border-color: var(--tb-line-hard) !important;
 }
 .examskin article.glass-card > .grid > button > span:first-child {
   display: inline-flex; align-items: center; justify-content: center;
   flex: none; width: 22px; height: 22px; margin-right: 12px;
-  border: 1px solid var(--tb-line-hard); border-radius: 7px; background: var(--tb-page);
+  border: 1px solid var(--tb-line-hard); border-radius: 7px; background: var(--tb-head);
   color: var(--tb-dim); font-size: 11px; opacity: 1;
 }
-.examskin .progress { background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 16px; }
-.examskin .progress__bar { background: var(--accent-grad); }
+.examskin .progress { background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 999px; }
+.examskin .progress__bar { background: var(--tb-blue); }
 
 /* =========================================================
-   ANSWERS PAGE (.ansp) — is block ke rang globals.css mein hardcoded
-   Catppuccin hain (wo page theme se azaad tha). Isliye har ek ko yahan
-   naam le kar exam ke rang par lana pada.
+   ANSWERS PAGE (.ansp)
    ========================================================= */
 .examskin .ansp {
-  background: var(--tb-page);
+  background: var(--tb-bg-2);
   color: var(--tb-ink);
   font-family: var(--tb-font);
   border-radius: 0;
@@ -765,15 +656,14 @@
 }
 .examskin .ansp__main h1 { color: var(--tb-ink); font-size: 1.2rem; font-weight: 700; }
 .examskin .ansp__chips a {
-  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 16px; color: var(--tb-dim); font-weight: 700;
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 999px; color: var(--tb-dim); font-weight: 700;
 }
 .examskin .ansp__chips a:hover { background: var(--tb-blue-soft); color: var(--tb-blue-dark); }
-.examskin .ansp__chips a.is-active { background: var(--tb-blue-soft); border-color: rgba(255, 178, 36, 0.4); color: var(--tb-blue); }
+.examskin .ansp__chips a.is-active { background: var(--tb-blue-soft); border-color: var(--tb-blue); color: var(--tb-blue-ink); }
 
 .examskin .ansp__card {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)), var(--tb-page);
-  border: 1px solid var(--tb-line); border-radius: 20px; padding: 0; overflow: hidden;
-  backdrop-filter: blur(10px);
+  background: var(--tb-page);
+  border: 1px solid var(--tb-line); border-radius: 18px; padding: 0; overflow: hidden;
 }
 .examskin .ansp__card.is-done { opacity: 1; background: var(--tb-soft); }
 .examskin .ansp__card.is-done h2 { color: var(--tb-dim); }
@@ -784,7 +674,7 @@
 }
 .examskin .ansp__qid { color: var(--tb-dim); font-size: 12px; }
 .examskin .ansp__card > :is(img, p, div:not(.ansp__answer):not(.ansp__acts)) { margin-left: 14px; margin-right: 14px; }
-.examskin .ansp__card img { border-radius: 0; border: 1px solid var(--tb-line-soft); }
+.examskin .ansp__card img { border-radius: 8px; border: 1px solid var(--tb-line-soft); }
 .examskin .ansp__note { color: var(--tb-red); }
 .examskin .ansp__hint { color: var(--tb-dim); }
 .examskin .ansp__acts {
@@ -793,16 +683,16 @@
 }
 .examskin .ansp__acts--top { background: none; border: 0; padding: 0 0 12px; }
 .examskin .ansp__btn {
-  background: var(--accent-grad); color: #221503; border: 1px solid var(--tb-blue-dark);
-  border-radius: 16px; padding: 5px 12px; font-size: 12px; font-weight: 700;
+  background: var(--tb-blue); color: #fff; border: 1px solid var(--tb-blue);
+  border-radius: 999px; padding: 5px 12px; font-size: 12px; font-weight: 700;
   font-family: var(--tb-font);
 }
-.examskin .ansp__btn:hover { filter: brightness(1.08); }
+.examskin .ansp__btn:hover { background: var(--tb-blue-dark); }
 .examskin .ansp__btn--go {
-  background: rgba(16, 185, 129, 0.14); border-color: rgba(16, 185, 129, 0.3); color: var(--tb-ok-ink);
+  background: var(--tb-green-soft); border-color: var(--tb-green); color: var(--tb-ok-ink);
 }
-.examskin .ansp__btn--go:hover { background: rgba(16, 185, 129, 0.22); }
-.examskin .ansp__mark { background: var(--tb-green-soft); color: var(--tb-ok-ink); border-radius: 16px; }
+.examskin .ansp__btn--go:hover { background: #d3ecdd; }
+.examskin .ansp__mark { background: var(--tb-green-soft); color: var(--tb-ok-ink); border-radius: 999px; }
 .examskin .ansp__mark input { accent-color: var(--tb-green); }
 .examskin .ansp__flash { color: var(--tb-ok-ink); }
 .examskin .ansp__err { color: var(--tb-red); }
@@ -822,23 +712,18 @@
 .examskin .ansp__answer .md :is(h1, h2, h3) { color: var(--head); font-weight: 700; }
 .examskin .ansp__answer .md :is(h4, h5, h6) { color: var(--tb-blue-ink); }
 .examskin .ansp__answer code { background: var(--tb-head); color: var(--tb-code); }
-.examskin .ansp__answer pre { background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 16px; }
+.examskin .ansp__answer pre { background: var(--tb-head); border: 1px solid var(--tb-line); border-radius: 13px; }
 .examskin .ansp__answer blockquote { border-left-color: var(--tb-blue-ink); color: var(--tb-dim); }
 .examskin .ansp__answer hr { border-top-color: var(--tb-line); }
 .examskin .ansp__answer :is(th, td) { border-color: var(--tb-line); }
-.examskin .ansp__answer img { border-radius: 0; }
+.examskin .ansp__answer img { border-radius: 8px; }
 .examskin .ansp__answer .katex { color: var(--tb-ink); }
 .examskin .ansp__paste { background: var(--tb-page); }
-.examskin .ansp__newbar { background: var(--tb-yellow); color: var(--tb-warn-ink); border-radius: 16px; }
+.examskin .ansp__newbar { background: var(--tb-yellow); color: var(--tb-warn-ink); border-radius: 999px; }
 
-/* Markdown (solution/explanation) — exam ke rang, wahi teen pen. */
 .examskin .md { color: var(--tb-ink); }
-/* Bada sar kaala aur bhaari, uske neeche wale chhote sar neele — do star,
-   dono ek nazar mein alag. */
 .examskin .md :is(h1, h2, h3) { color: var(--head); font-weight: 700; }
 .examskin .md :is(h4, h5, h6) { color: var(--tb-blue-ink); }
-/* **bold** ka pen — token se, taaki ek jagah badalne par har
-   solution/notes mein badal jaye. */
 .examskin .md :is(strong, b) { color: var(--emph); }
 .examskin .md a { color: var(--tb-blue-ink); }
 .examskin .md code { background: var(--tb-head); color: var(--tb-code); }
@@ -847,200 +732,260 @@
 .examskin .md :is(th, td) { border-color: var(--tb-line); }
 
 /* ===================================================================
-   RAAT — dark theme.
-
-   Ab base `.examskin` khud hi dark hai (CGL HQ ka reference build ka bhi
-   koi light mode nahi tha), isliye toggle ka koi visual farak nahi — ye
-   block wahi values dohrata hai jo upar base mein hain, taaki koi bhi
-   stored `cgl.theme` preference site ko purane safed roop mein na le jaye.
+   RAAT — dark theme. Reference build ka bhi koi light/dark toggle nahi
+   tha, isliye ye block wahi light values dohrata hai (toggle ka koi
+   visual farak nahi), taaki purani `cgl.theme` preference site ko
+   purane roop mein na le jaye.
    =================================================================== */
 [data-theme="dark"] .examskin {
-  --tb-blue: #ffb224;
-  --tb-blue-dark: #ff8a3d;
-  --tb-blue-ink: #a5b4fc;
-  --tb-blue-soft: rgba(255, 178, 36, 0.09);
-  --tb-navy: #a5b4fc;
-  --tb-q: #f8fafc;
-  --tb-green: #10b981;
-  --tb-green-dark: #34d399;
-  --tb-green-soft: #0c2a20;
-  --tb-ok-ink: #6ee7b7;
-  --tb-red: #f43f5e;
-  --tb-red-soft: #2c1420;
-  --tb-bad-ink: #fda4af;
-  --tb-red-ink-soft: #ffd0d6;
-  --tb-orange: #ffb224;
-  --tb-yellow: #3a2a06;
-  --tb-warn-ink: #ffd98a;
-  --tb-warn-ink-2: #ffcf70;
-  --tb-amber: #ffb224;
-  --tb-rev: #ffb224;
-  --tb-rev-hover: #ffc65c;
-  --tb-rev-on: #ffd98a;
-  --tb-rev-line: #cc8a12;
-  --tb-rev-ink: #221503;
-  --tb-rev-soft: #3a2708;
-  --tb-key-line: #cc8a12;
-  --tb-skip: #171b27;
-  --tb-skip-ink: #8f97ac;
-  --tb-ink: #e7eaf2;
-  --tb-ink-2: #b8bfd2;
-  --tb-dim: #8f97ac;
-  --tb-line: rgba(255, 255, 255, 0.1);
-  --tb-line-soft: rgba(255, 255, 255, 0.07);
-  --tb-line-hard: rgba(255, 255, 255, 0.22);
-  --tb-head: #10131c;
-  --tb-page: #0a0c12;
-  --tb-soft: #10131c;
-  --tb-tint: #0d1019;
-  --tb-bg-2: #05060a;
-  --tb-raised: #171b27;
-  --tb-focus: #ffb224;
-  --tb-code: #a78bfa;
+  --tb-blue: #176b56;
+  --tb-blue-dark: #105444;
+  --tb-blue-ink: #105444;
+  --tb-blue-soft: #e2f1ea;
+  --tb-navy: #143d34;
+  --tb-q: #19312b;
+  --tb-green: #247558;
+  --tb-green-dark: #105444;
+  --tb-green-soft: #e5f3ec;
+  --tb-ok-ink: #105444;
+  --tb-red: #b4483d;
+  --tb-red-soft: #f9e7e4;
+  --tb-bad-ink: #8f342a;
+  --tb-red-ink-soft: #fceeee;
+  --tb-orange: #176b56;
+  --tb-yellow: #fff1d9;
+  --tb-warn-ink: #8a5a10;
+  --tb-warn-ink-2: #6e4a0c;
+  --tb-amber: #e6a344;
+  --tb-rev: #e6a344;
+  --tb-rev-hover: #d8933a;
+  --tb-rev-on: #eeb964;
+  --tb-rev-line: #c07f2c;
+  --tb-rev-ink: #382605;
+  --tb-rev-soft: #fff1d9;
+  --tb-key-line: #c07f2c;
+  --tb-skip: #f8f9f5;
+  --tb-skip-ink: #8a9994;
+  --tb-ink: #19312b;
+  --tb-ink-2: #3d5049;
+  --tb-dim: #61726d;
+  --tb-line: #dfe5df;
+  --tb-line-soft: #eef1ee;
+  --tb-line-hard: #ccd6ce;
+  --tb-head: #f8f9f5;
+  --tb-page: #ffffff;
+  --tb-soft: #f8f9f5;
+  --tb-tint: #e2f1ea;
+  --tb-bg-2: #f3f5ef;
+  --tb-raised: #ffffff;
+  --tb-focus: #176b56;
+  --tb-code: #426d9a;
 
-  --scheme: dark;
-  color-scheme: dark;
-  --nav-hover: color-mix(in srgb, var(--tb-blue-ink) 22%, var(--tb-page));
+  --scheme: light;
+  color-scheme: light;
+  --nav-hover: color-mix(in srgb, var(--tb-blue-ink) 14%, var(--tb-page));
 }
 
-/* Question ki TASVEER (Maths/Reasoning ke crop, Answers ke screenshot) safed
-   background wali image hai — uske peeche kaala daalne se wo aur chubhti hai,
-   aur diagram ki lakeeren image ke andar hi hain, unhe chhedna theek nahi.
-   Isliye tasveer safed hi rehti hai, bas uske kinare narm kar diye taaki wo
-   kaale page par kata hua chaukor na lage. */
-[data-theme="dark"] .examskin :is(.q-crop, .ansp__card img, .inkv__q img, .zoomimg__img) {
-  border: 1px solid var(--tb-line);
-}
-
-
-/* ⬆️ Sabse upar — amber FAB, reference ke floating amber button jaisa. */
+/* ⬆️ Sabse upar — amber FAB. */
 .examskin .ansp__top {
-  background: var(--accent-grad); color: #221503;
-  border: 1px solid var(--tb-line); border-radius: 16px;
-  box-shadow: 0 10px 40px -10px rgba(255, 178, 36, 0.5);
+  background: var(--tb-blue); color: #fff;
+  border: 1px solid var(--tb-blue); border-radius: 999px;
+  box-shadow: 0 8px 24px -8px rgba(23, 107, 86, 0.5);
 }
-.examskin .ansp__top:hover { filter: brightness(1.08); }
+.examskin .ansp__top:hover { background: var(--tb-blue-dark); }
 
-/* Sidebar (.drawer) aur topbar — reference ke glass sidebar
-   (bg-[#0b0e15]/80 backdrop-blur-xl) jaisa halka translucent farak. */
+/* Sidebar (.drawer) aur topbar — reference ke dark-green sidebar jaisa.
+   .drawer__link waghera var(--ink) padhte hain, jo ab gehra hai — dark
+   sidebar par likhna hai to yahan sabko safed/halka rang dena zaroori
+   hai, warna text sidebar mein ghul jata. */
 .examskin .drawer {
-  background: rgba(16, 19, 28, 0.85);
-  backdrop-filter: blur(20px);
+  background: var(--tb-navy);
+  color: #dbe9e4;
+  border-right: 0;
+}
+.examskin .drawer__brand,
+.examskin .drawer__head { color: #ffffff; }
+.examskin .drawer__sub { color: #8fb1a6; }
+.examskin .drawer__x { color: #8fb1a6; }
+.examskin .drawer__x:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.examskin .drawer__grouphd {
+  color: #8fb1a6;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 0;
+}
+.examskin .drawer__grouphd:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+.examskin .drawer__groupname { letter-spacing: 0.1em; text-transform: uppercase; font-size: 11px; }
+.examskin .drawer__chev { color: #8fb1a6; }
+.examskin .drawer__back { color: #dbe9e4; border-bottom-color: rgba(255, 255, 255, 0.12); }
+.examskin .drawer__back:hover { background: rgba(255, 255, 255, 0.06); }
+.examskin .drawer__rule { background: rgba(255, 255, 255, 0.12); }
+.examskin .drawer__link {
+  color: #c5d8d1;
+  border: 0;
+  border-left: 3px solid transparent;
+}
+.examskin .drawer__link:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.examskin .drawer__link.is-active {
+  background: rgba(255, 255, 255, 0.1); color: #fff; border-left-color: var(--tb-amber);
 }
 .examskin .topbar {
-  background: rgba(16, 19, 28, 0.85);
-  backdrop-filter: blur(20px);
+  background: var(--tb-page);
+  border: 1px solid var(--tb-line);
 }
+.examskin .topbar__burger,
+.examskin .topbar__brand { color: var(--tb-ink); }
+.examskin .themetog { color: var(--tb-ink); }
+.examskin .themetog:hover,
+.examskin .topbar__burger:hover { background: var(--tb-head); }
 
 /* =========================================================
-   HOMEPAGE — reference (CGL HQ) ka "greeting + stat cards +
-   action hero + quick stats + shortcuts" composition.
+   HOMEPAGE — arena 9 ("Fieldnotes") ka "page-head + hero-grid
+   (daily-card + dashboard-stack) + lower-grid" composition.
    TodayGate.js isi class-set se apna markup banata hai.
    ========================================================= */
 
-/* Generic bigger glass card — .glass-card se alag isliye ki wo list-row
-   (patli padding) ke liye hai; ye homepage ke bade blocks ke liye. */
-.examskin .glass {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)), var(--tb-page);
-  border: 1px solid var(--tb-line);
-  border-radius: 20px;
-  padding: 20px;
-  backdrop-filter: blur(10px);
+.examskin .hpage { display: flex; flex-direction: column; gap: 24px; }
+
+.examskin .page-head {
+  display: flex; justify-content: space-between; gap: 20px; align-items: flex-end; flex-wrap: wrap;
+}
+.examskin .page-head h1 {
+  font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.15; margin: 4px 0 6px; letter-spacing: -0.02em;
+  color: var(--tb-q); font-weight: 800;
+}
+.examskin .page-head p { color: var(--tb-dim); margin: 0; font-size: 0.9rem; }
+.examskin .eyebrow, .examskin .section-kicker {
+  color: var(--tb-blue); text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.66rem; font-weight: 800;
+}
+.examskin .page-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+.examskin .card-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.examskin .card-title-row h2 { font-size: 1.05rem; margin: 2px 0; color: var(--tb-q); }
+.examskin .card-title-row > a { color: var(--tb-blue-ink); font-size: 0.72rem; font-weight: 700; }
+.examskin .soft-badge {
+  background: var(--tb-blue-soft); color: var(--tb-blue-ink); padding: 4px 12px; border-radius: 999px; font-size: 0.64rem; font-weight: 800;
+}
+.examskin .text-link { display: inline-flex; align-items: center; color: var(--tb-blue-ink); font-weight: 700; gap: 4px; font-size: 0.78rem; }
+
+.examskin .priority-strip, .examskin .resume-banner {
+  width: 100%; border: 1px solid var(--tb-line); background: var(--tb-page); border-radius: 13px;
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px; text-align: left;
+}
+.examskin .priority-strip > span, .examskin .resume-banner > span {
+  display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px;
+  background: var(--tb-yellow); color: #8a5a10; flex: none; font-size: 1.1rem;
+}
+.examskin .priority-strip div, .examskin .resume-banner div { display: flex; flex: 1; flex-direction: column; }
+.examskin .priority-strip small, .examskin .resume-banner small { font-size: 0.66rem; color: var(--tb-dim); }
+.examskin .resume-banner { background: var(--tb-blue-soft); border-color: var(--tb-blue); }
+.examskin .resume-banner > span { background: var(--tb-blue); color: #fff; }
+.examskin .mock-banner {
+  border-color: var(--tb-red); background: var(--tb-red-soft);
+}
+.examskin .mock-banner > span { background: var(--tb-red); color: #fff; }
+
+.examskin .hero-grid { display: grid; grid-template-columns: minmax(20rem, 0.9fr) minmax(20rem, 1.5fr); gap: 18px; }
+@media (max-width: 900px) { .examskin .hero-grid { grid-template-columns: 1fr; } }
+
+.examskin .daily-card {
+  background: var(--tb-navy); color: #fff; padding: 26px; border-radius: 18px;
+  box-shadow: 0 12px 32px -14px rgba(20, 61, 52, 0.5);
+  display: flex; flex-direction: column; gap: 16px;
+}
+.examskin .daily-card .section-kicker { color: #eeb964; }
+.examskin .daily-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.examskin .target-number { display: flex; align-items: baseline; gap: 8px; margin-top: 6px; }
+.examskin .target-number strong { font-size: 2.4rem; font-weight: 800; }
+.examskin .target-number span { color: #dbe9e4; font-size: 0.76rem; }
+.examskin .ring {
+  width: 4.1rem; height: 4.1rem; border: 5px solid rgba(255, 255, 255, 0.18); border-top-color: #eeb964;
+  border-radius: 999px; display: grid; place-items: center; flex: none;
+}
+.examskin .ring span { font-weight: 800; font-size: 0.75rem; }
+.examskin .daily-progress { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.16); overflow: hidden; }
+.examskin .daily-progress > i { display: block; height: 100%; background: #eeb964; border-radius: 999px; }
+
+.examskin .subject-progress { display: grid; gap: 4px; }
+.examskin .subject-row {
+  display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+.examskin .subject-row:last-child { border-bottom: 0; }
+.examskin .subject-icon {
+  width: 32px; height: 32px; display: grid; place-items: center; border-radius: 8px; font-weight: 800; font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.14); color: #fff; flex: none;
+}
+.examskin .subject-row-body { display: flex; flex: 1; flex-direction: column; gap: 2px; min-width: 0; }
+.examskin .subject-row-body strong { font-size: 0.8rem; }
+.examskin .subject-row-body span { font-size: 0.66rem; color: #a9c3bb; }
+.examskin .subject-row-acts { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.examskin .subject-row-acts .btn {
+  background: rgba(255, 255, 255, 0.14); border-color: rgba(255, 255, 255, 0.2); color: #fff;
+}
+.examskin .subject-row-acts .btn:hover { background: rgba(255, 255, 255, 0.24); }
+.examskin .subject-row-acts .btn--primary { background: #eeb964; border-color: #eeb964; color: #382605; }
+.examskin .subject-row-acts .btn--primary:hover { background: #e0a84e; }
+.examskin .card-footnote {
+  display: flex; align-items: center; justify-content: center; gap: 6px; color: #a9c3bb; font-size: 0.66rem; margin: 0;
 }
 
-.examskin .hgreet__kicker {
-  color: var(--tb-blue);
-  font-size: 11px; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase;
+.examskin .dashboard-stack { display: grid; grid-template-rows: auto 1fr; gap: 18px; }
+.examskin .streak-card {
+  border: 1px solid var(--tb-line); background: var(--tb-yellow); padding: 18px; border-radius: 18px;
+  display: flex; align-items: center; gap: 14px;
 }
-.examskin .hgreet__title {
-  color: var(--tb-q); font-weight: 800; letter-spacing: -0.02em;
-  font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.15; margin: 6px 0 0;
+.examskin .streak-icon {
+  width: 3rem; height: 3rem; border-radius: 999px; display: grid; place-items: center; background: var(--tb-amber); color: #382605; flex: none; font-size: 1.3rem;
 }
-.examskin .hgreet__title em {
-  font-style: normal;
-  background: linear-gradient(90deg, var(--tb-blue), var(--tb-blue-dark));
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--tb-blue);
+.examskin .streak-card > div:nth-child(2) { display: grid; flex: 1; }
+.examskin .streak-card span { font-size: 0.68rem; color: var(--tb-dim); }
+.examskin .streak-card strong { font-size: 1.1rem; font-weight: 800; color: var(--tb-q); }
+.examskin .streak-card small { font-size: 0.65rem; color: var(--tb-dim); }
+
+.examskin .summary-card {
+  background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 18px; padding: 22px;
 }
-.examskin .hgreet__sub { color: var(--tb-dim); font-size: 14px; margin: 8px 0 0; }
+.examskin .summary-stats { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 16px; border-top: 1px solid var(--tb-line); }
+.examskin .summary-stats > div { padding: 16px; display: flex; flex-direction: column; border-right: 1px solid var(--tb-line); gap: 4px; }
+.examskin .summary-stats > div:last-child { border: 0; }
+.examskin .summary-stats span { font-size: 0.66rem; color: var(--tb-dim); }
+.examskin .summary-stats strong { font-size: 1.5rem; font-weight: 800; color: var(--tb-q); margin: 4px 0; }
+.examskin .summary-stats a { color: var(--tb-blue-ink); font-size: 0.66rem; font-weight: 700; }
 
-.examskin .hstats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-@media (max-width: 720px) { .examskin .hstats { grid-template-columns: repeat(2, 1fr); } }
-.examskin .hcard.is-done { border-color: rgba(16, 185, 129, 0.35); }
-.examskin .hcard__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-.examskin .hcard__label { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tb-ink-2); }
-.examskin .hcard__frac { font-size: 10px; color: var(--tb-dim); }
-.examskin .hcard__pct { font-size: 1.6rem; font-weight: 800; color: var(--tb-q); }
-.examskin .hcard__pct small { font-size: 0.9rem; color: var(--tb-dim); font-weight: 700; }
-.examskin .hbar { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.06); overflow: hidden; margin: 10px 0 12px; }
-.examskin .hbar > i { display: block; height: 100%; border-radius: 999px; background: var(--accent-grad); transition: width 0.4s ease; }
-.examskin .hcard__acts { display: flex; flex-wrap: wrap; gap: 6px; }
+.examskin .lower-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 18px; }
+@media (max-width: 850px) { .examskin .lower-grid { grid-template-columns: 1fr; } }
+.examskin .panel { background: var(--tb-page); border: 1px solid var(--tb-line); border-radius: 18px; padding: 22px; }
+.examskin .panel.compact { padding: 18px; }
 
-.examskin .hhero { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; }
-@media (max-width: 900px) { .examskin .hhero { grid-template-columns: 1fr; } }
-.examskin .hhero__main { position: relative; overflow: hidden; }
-.examskin .hhero__glow {
-  position: absolute; right: -40px; top: -40px; width: 210px; height: 210px; border-radius: 999px;
-  background: rgba(255, 178, 36, 0.12); filter: blur(50px); pointer-events: none;
+.examskin .empty-state { text-align: center; padding: 30px 16px; display: flex; align-items: center; flex-direction: column; }
+.examskin .empty-icon {
+  width: 3rem; height: 3rem; display: grid; place-items: center; border-radius: 999px; background: var(--tb-blue-soft); color: var(--tb-blue-ink); margin-bottom: 12px; font-size: 1.4rem;
 }
-.examskin .hhero__eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tb-dim); }
-.examskin .hhero__head { color: var(--tb-q); font-weight: 800; font-size: clamp(1.1rem, 2.4vw, 1.4rem); margin: 4px 0 0; }
-.examskin .hhero__note { color: var(--tb-dim); font-size: 13px; margin: 8px 0 0; }
-.examskin .hhero__note b { color: var(--tb-bad-ink); font-weight: 700; }
-.examskin .hhero__acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.examskin .empty-state h3 { font-size: 0.95rem; margin-bottom: 6px; color: var(--tb-q); }
+.examskin .empty-state p { color: var(--tb-dim); font-size: 0.78rem; max-width: 26rem; line-height: 1.6; margin-bottom: 12px; }
 
-.examskin .hquick__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
-.examskin .hquick__label { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--tb-dim); }
-.examskin .hquick { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.examskin .htile {
-  display: block; border-radius: 14px; padding: 12px; border: 1px solid;
-  text-decoration: none; transition: background 0.15s ease;
-}
-.examskin .htile__n { font-size: 1.2rem; font-weight: 800; }
-.examskin .htile__l { font-size: 10px; color: var(--tb-dim); margin-top: 2px; }
-.examskin .htile--rose { background: rgba(244, 63, 94, 0.06); border-color: rgba(244, 63, 94, 0.2); }
-.examskin .htile--rose:hover { background: rgba(244, 63, 94, 0.1); }
-.examskin .htile--rose .htile__n { color: var(--tb-red); }
-.examskin .htile--mint { background: rgba(16, 185, 129, 0.06); border-color: rgba(16, 185, 129, 0.2); }
-.examskin .htile--mint:hover { background: rgba(16, 185, 129, 0.1); }
-.examskin .htile--mint .htile__n { color: var(--tb-green-dark); }
-.examskin .htile--sky { background: rgba(125, 211, 252, 0.06); border-color: rgba(125, 211, 252, 0.2); }
-.examskin .htile--sky:hover { background: rgba(125, 211, 252, 0.1); }
-.examskin .htile--sky .htile__n { color: #7dd3fc; }
-.examskin .htile--violet { background: rgba(167, 139, 250, 0.06); border-color: rgba(167, 139, 250, 0.2); }
-.examskin .htile--violet:hover { background: rgba(167, 139, 250, 0.1); }
-.examskin .htile--violet .htile__n { color: var(--tb-code); }
-
-.examskin .hshort { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-@media (max-width: 720px) { .examskin .hshort { grid-template-columns: repeat(2, 1fr); } }
-.examskin .hshort__card { text-decoration: none; display: block; transition: border-color 0.15s ease, transform 0.15s ease; }
-.examskin .hshort__card:hover { border-color: var(--tb-line-hard); transform: translateY(-2px); }
-.examskin .hshort__ico {
-  width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 10px;
-}
-.examskin .hshort__t { color: var(--tb-q); font-weight: 700; font-size: 14px; }
-.examskin .hshort__s { color: var(--tb-dim); font-size: 12px; margin-top: 2px; }
-
-.examskin .hsection__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
-.examskin .hsection__title { color: var(--tb-q); font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
-
-.examskin .hpage { display: flex; flex-direction: column; gap: 26px; }
-.examskin .hmockbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; color: var(--tb-ink-2); font-size: 13px; }
-.examskin .hmockbar.is-due { border-color: rgba(244, 63, 94, 0.35); }
-.examskin .hmockbar span:first-child { flex: 1; min-width: 220px; }
 .examskin .hedit { display: flex; flex-direction: column; gap: 12px; }
 .examskin .hedit__row { display: flex; align-items: center; gap: 8px; }
 .examskin .hedit__row .input { max-width: 90px; }
 .examskin .hroutine { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; color: var(--tb-ink-2); font-size: 14px; }
+.examskin .hmore {
+  align-self: flex-start; background: none; border: 0; color: var(--tb-blue-ink); font-weight: 700; font-size: 0.8rem; padding: 0;
+}
 
-/* 🔄 "Quiz jahan chhoda tha" — reference ke floating resume chip jaisa. */
+.examskin .quick-links { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* 🔄 "Quiz jahan chhoda tha" — floating resume chip. */
 .examskin .hresume {
   position: fixed; left: 16px; bottom: 16px; z-index: 65;
   display: inline-flex; align-items: center; gap: 8px;
-  background: var(--accent-grad); color: #221503;
+  background: var(--tb-blue); color: #fff;
   border: none; border-radius: 999px; padding: 10px 16px;
   font-size: 13px; font-weight: 800; cursor: pointer;
-  box-shadow: 0 10px 40px -10px rgba(255, 178, 36, 0.6);
+  box-shadow: 0 10px 32px -10px rgba(20, 61, 52, 0.6);
 }
-.examskin .hresume:hover { filter: brightness(1.08); }
+.examskin .hresume:hover { background: var(--tb-blue-dark); }
 .examskin .hresume span { font-size: 11px; opacity: 0.75; font-weight: 700; }
 @media (max-width: 720px) { .examskin .hresume { left: 12px; bottom: 76px; } }
