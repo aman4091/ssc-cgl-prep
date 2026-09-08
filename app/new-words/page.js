@@ -51,9 +51,15 @@ function NewWordsInner() {
   // Word ka apna edit (rename) mode.
   const [renaming, setRenaming] = useState(false);
   const [renameText, setRenameText] = useState("");
+  // 🗑️ apna inline confirm — window.confirm() nahi. App PWA (manifest
+  // display:"standalone") ke roop mein khulti hai, aur us mode mein kai
+  // Android/iOS webview confirm()/alert() ko chupchaap dikhate hi nahi
+  // (turant false lauta dete hain) — delete button "kaam hi nahi karta"
+  // jaisa lagta tha, jabki dabne par confirm() khud hi chhup ke na keh raha tha.
+  const [confirmDel, setConfirmDel] = useState(false);
 
   // New word -> collapse the paste box, clear the draft, rename band.
-  useEffect(() => { setPaste(""); setEditing(false); setRenaming(false); }, [idx]);
+  useEffect(() => { setPaste(""); setEditing(false); setRenaming(false); setConfirmDel(false); }, [idx]);
 
   // Left sidebar (Navbar) se jodta hai: ?day= us din ke words, ?w= wahi card.
   const router = useRouter();
@@ -95,11 +101,12 @@ function NewWordsInner() {
 
   const go = (d) => { const n = idx + d; if (n >= 0 && n < words.length) setIdx(n); };
 
-  // 🗑️ word hatao (meaning samet) — confirm ke baad.
+  // 🗑️ word hatao (meaning samet) — inline confirm ke baad (upar dekho, kyun
+  // window.confirm() nahi).
   const delWord = () => {
     if (!word) return;
-    if (!confirm(`"${word}" ko New Words se hata dein? Iski saved meaning bhi hat jayegi.`)) return;
     removeNewWord(word);
+    setConfirmDel(false);
     setIdx((i) => Math.max(0, Math.min(i, words.length - 2)));
     refresh();
   };
@@ -236,16 +243,26 @@ function NewWordsInner() {
               <span className="muted" style={{ fontSize: "0.85rem" }}>
                 {curAt ? `📅 ${newWordDayLabel(curAt)} · ` : ""}{idx + 1}/{words.length}
               </span>
-              <button
-                className="btn btn--ghost btn--sm"
-                title="Word ka naam/spelling badlo"
-                onClick={() => { setRenameText(word); setRenaming(true); }}
-              >
-                ✏️
-              </button>
-              <button className="btn btn--ghost btn--sm" title="Word delete karo" onClick={delWord}>
-                🗑️
-              </button>
+              {!confirmDel && (
+                <button
+                  className="btn btn--ghost btn--sm"
+                  title="Word ka naam/spelling badlo"
+                  onClick={() => { setRenameText(word); setRenaming(true); }}
+                >
+                  ✏️
+                </button>
+              )}
+              {confirmDel ? (
+                <span className="row" style={{ gap: 4, alignItems: "center" }}>
+                  <span className="muted" style={{ fontSize: "0.78rem" }}>Pakka?</span>
+                  <button className="btn btn--danger btn--sm" onClick={delWord}>✅ Haan</button>
+                  <button className="btn btn--ghost btn--sm" onClick={() => setConfirmDel(false)}>✕</button>
+                </span>
+              ) : (
+                <button className="btn btn--ghost btn--sm" title="Word delete karo" onClick={() => setConfirmDel(true)}>
+                  🗑️
+                </button>
+              )}
             </span>
           </div>
           {def && <p className="muted mt-8" style={{ fontStyle: "italic" }}>{def}</p>}
