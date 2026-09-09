@@ -17,7 +17,7 @@ import { getDoneMap, markDone } from "@/lib/answersdone";
 import { getHardSet } from "@/lib/hardq";
 import { countMark } from "@/lib/qcounter";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
-import { vocabLineList } from "@/lib/vocab";
+import { vocabLineList, vocabStamp } from "@/lib/vocab";
 import { shedOldQuizzes, getSettings } from "@/lib/storage";
 
 // localStorage full hone par purane generated quizzes shed karke retry — wahi
@@ -36,6 +36,8 @@ const PORTS = [5000, 5001, 5002]; // overlay ka pick_port 5000 busy hone par aag
 // chal sakta hai, aur ye band ho to usme kuch nahi badalta.
 const VOCAB_PORTS = [5010, 5011, 5012];
 const POLL_MS = 5000;
+// Vocab ka kaam har poll par nahi — hazaron word ghoomna mehnga hai.
+const VOCAB_EVERY_MS = 30000;
 // Overlay ke panel par ab chaaro subject hain, isliye kram bhi chaaro ka jata
 // hai. Wahi chaar jo wrong-book mein hain — dono taraf ek hi naam chalte hain.
 const PANEL_SUBJECTS = SUBJECTS.map((s) => s.key);
@@ -55,8 +57,10 @@ export default function OverlayInbox() {
   // Jin paste-kiye question ki image is device par mili hi nahi — inhe
   // dobara-dobara nahi aazmate (neeche adopt wala hissa dekho).
   const badImg = useRef(new Set());
-  // Vocab list ka pichla nishaan — badle bina dobara nahi bhejte.
+  // Vocab list ka pichla nishaan aur ginti — badle bina dobara nahi bhejte.
   const vocabSig = useRef("");
+  const vocabCount = useRef(-1);
+  const vocabAt = useRef(0);
 
   useEffect(() => {
     const tick = async () => {
@@ -105,6 +109,9 @@ export default function OverlayInbox() {
           // race se phir bhi ban gaye duplicates turant saaf ho jayen
           if ((items || []).length) await dedupeByQid().catch(() => {});
 
+          // Neeche ke teeno kaam isi ek padhi hui book par chalte hain.
+          const book = getWrongBook();
+
           // ── ab ULTA raasta: site -> overlay ────────────────────────────
           //
           // Overlay ke right-edge panel par wahi list, usi kram mein dikhni
@@ -124,13 +131,18 @@ export default function OverlayInbox() {
           // nahi jaanta, to wo unhe bhi ginta tha aur dono jagah ka "pehla
           // question" alag ho jata tha. Filter wahi hai jo AnswersBoard
           // lagata hai: qid wala record, aur 🔴 Hard nahi.
+          //
+          // Poori wrong-book EK baar padhi jaati hai (upar `book`) — har
+          // subject par getWrongBook() bulane ka matlab tha usi bade store ko
+          // baar-baar parse karna, har 5 second mein barah baar. Site usi se
+          // atak-atak kar chalti thi.
           try {
             const doneMap = getDoneMap();
             const hardSet = getHardSet();
             const subjects = {};
             for (const subject of PANEL_SUBJECTS) {
-              const book = getWrongBook(subject).filter((r) => r.qid);
-              const shown = book.filter((r) => !hardSet.has(r.id));
+              const mine = book.filter((r) => r.subject === subject && r.qid);
+              const shown = mine.filter((r) => !hardSet.has(r.id));
               subjects[subject] = {
                 order: displayOrder(shown, doneMap).map((r) => r.qid),
                 done: shown
@@ -140,7 +152,7 @@ export default function OverlayInbox() {
                 // resend_missing isi se dekhta hai ki kya sach mein site tak
                 // pahuncha hi nahi; warna Hard wale question har 5 second par
                 // dobara-dobara bheje jate.
-                known: book.map((r) => r.qid),
+                known: mine.map((r) => r.qid),
               };
             }
             await fetch(`${base}/site-state`, {
@@ -173,12 +185,10 @@ export default function OverlayInbox() {
                 const have = new Set(qids);
                 const num = (q) => Number(String(q).replace(/^q/, "")) || 0;
                 const top = Math.max(...qids.map(num));
-                for (const subject of PANEL_SUBJECTS) {
-                  for (const r of getWrongBook(subject)) {
-                    if (!r.qid || have.has(r.qid)) continue;
-                    if (num(r.qid) > top) continue; // overlay peeche hai — ruko
-                    await removeWrong(r.id);
-                  }
+                for (const r of book) {
+                  if (!r.qid || have.has(r.qid)) continue;
+                  if (num(r.qid) > top) continue;   // overlay peeche hai — ruko
+                  await removeWrong(r.id);
                 }
               }
             }
@@ -199,8 +209,7 @@ export default function OverlayInbox() {
           // aane par wahi qid lautata hai, isliye adhoora gaya request
           // duplicate nahi banata.
           try {
-            const orphans = PANEL_SUBJECTS
-              .flatMap((s) => getWrongBook(s))
+            const orphans = book
               .filter((r) => !r.qid && imagesOf(r).length && !badImg.current.has(r.id))
               .slice(0, 3);
             for (const r of orphans) {
@@ -321,29 +330,43 @@ export default function OverlayInbox() {
         // bas ise ghumati rehti hai, isliye poori list ek saath jaati hai —
         // par har 5 second nahi: ek sasta nishaan (ginti + aakhri word +
         // pehla matlab) rakh kar tabhi bhejte hain jab sach mein kuch badla ho.
+        //
+        // Ye kaam SASTA rakhna zaroori hai. Poori list banana matlab hazaron
+        // word ghoomna, aur wo har 5 second karne se page hi jam jata hai.
+        // Isliye do taale: 30 second se pehle haath hi nahi lagate, aur uske
+        // baad bhi pehle ek sasta nishaan (teen store ki ginti) dekhte hain —
+        // list tabhi banti hai jab sach mein kuch badla ho, ya us taraf ki
+        // list adhoori ho.
         try {
-          const list = vocabLineList();
-          const sig = `${list.length}|${list[list.length - 1]?.w || ""}|${list[0]?.m || ""}`;
-          for (const port of VOCAB_PORTS) {
-            const base = `http://127.0.0.1:${port}`;
-            let have;
-            try {
-              const ping = await fetch(`${base}/vocab-ping`, { cache: "no-store" });
-              if (!ping.ok) continue;             // yahan vocab app nahi hai
-              have = (await ping.json()).n;
-            } catch { continue; }
-            // Nishaan wahi ho PAR wahan ginti alag ho — matlab uski list
-            // adhoori/purani hai (app naya chala, ya file kharab ho gayi).
-            // Tab bhi bhejo, warna wo hamesha ke liye adhoori padi rehti.
-            if (sig !== vocabSig.current || have !== list.length) {
-              const res = await fetch(`${base}/vocab-list`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ items: list }),
-              });
-              if (res.ok) vocabSig.current = sig;
+          const now = Date.now();
+          if (now - vocabAt.current >= VOCAB_EVERY_MS) {
+            vocabAt.current = now;
+            const stamp = vocabStamp();
+            for (const port of VOCAB_PORTS) {
+              const base = `http://127.0.0.1:${port}`;
+              let have;
+              try {
+                const ping = await fetch(`${base}/vocab-ping`, { cache: "no-store" });
+                if (!ping.ok) continue;           // yahan vocab app nahi hai
+                have = (await ping.json()).n;
+              } catch { continue; }
+              // Nishaan wahi ho PAR wahan ginti alag ho — matlab uski list
+              // adhoori/purani hai (app naya chala, ya file kharab ho gayi).
+              // Tab bhi bhejo, warna wo hamesha ke liye adhoori padi rehti.
+              if (stamp !== vocabSig.current || have !== vocabCount.current) {
+                const list = vocabLineList();
+                const res = await fetch(`${base}/vocab-list`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ items: list }),
+                });
+                if (res.ok) {
+                  vocabSig.current = stamp;
+                  vocabCount.current = list.length;
+                }
+              }
+              break;                              // jis port par mila, wahi kaafi
             }
-            break;                                // jis port par mila, wahi kaafi
           }
         } catch { /* vocab app band — agla poll phir koshish karega */ }
       } finally {
