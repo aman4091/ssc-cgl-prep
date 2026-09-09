@@ -14,7 +14,7 @@ import {
 } from "@/lib/wrongbook";
 import { imageBlob } from "@/lib/imgclip";
 import { getDoneMap, markDone } from "@/lib/answersdone";
-import { getHardSet } from "@/lib/hardq";
+import { getHardSet, isHard, toggleHard } from "@/lib/hardq";
 import { countMark } from "@/lib/qcounter";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { vocabLineList, vocabStamp } from "@/lib/vocab";
@@ -303,6 +303,24 @@ export default function OverlayInbox() {
                   countMark(rec.id, rec.subject, true);
                 }
                 await fetch(`${base}/ack-solve/${qid}`, { method: "POST" });
+              }
+            }
+          } catch { /* ignore */ }
+
+          // 🔴 Hard — overlay ke question page se bhi dabaya ja sakta hai.
+          //
+          // Wahi kaam jo yahan ka 🔴 Hard button karta hai: question aam
+          // shelf se hat kar apni alag shelf mein chala jata hai. Toggle
+          // nahi karte — pehle se Hard ho to chhedte nahi, warna overlay ka
+          // dobara bheja hua use wapas aam list mein le aata.
+          try {
+            const res = await fetch(`${base}/hards`, { cache: "no-store" });
+            if (res.ok) {
+              const { hards } = await res.json();
+              for (const qid of Object.keys(hards || {})) {
+                const rec = findByQid(qid);
+                if (rec && !isHard(rec.id)) withSpace(() => toggleHard(rec.id));
+                await fetch(`${base}/ack-hard/${qid}`, { method: "POST" });
               }
             }
           } catch { /* ignore */ }
