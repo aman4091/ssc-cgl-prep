@@ -18,6 +18,7 @@ import { getHardSet, isHard, toggleHard } from "@/lib/hardq";
 import { countMark } from "@/lib/qcounter";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { vocabLineList, vocabStamp } from "@/lib/vocab";
+import { fillVocabLines } from "@/lib/vocabline";
 import { shedOldQuizzes, getSettings } from "@/lib/storage";
 
 // localStorage full hone par purane generated quizzes shed karke retry — wahi
@@ -359,6 +360,11 @@ export default function OverlayInbox() {
           const now = Date.now();
           if (now - vocabAt.current >= VOCAB_EVERY_MS) {
             vocabAt.current = now;
+            // Jin naye word ka chhota matlab abhi bana hi nahi, unka ek batch
+            // DeepSeek se banwa lo. Wahi khud apna waqt sambhalta hai (ek
+            // minute mein ek batch, key na ho to kuch nahi) — aur jab tak
+            // matlab nahi banta, wo word kisi din mein jata bhi nahi.
+            await fillVocabLines();
             const stamp = vocabStamp();
             for (const port of VOCAB_PORTS) {
               const base = `http://127.0.0.1:${port}`;
