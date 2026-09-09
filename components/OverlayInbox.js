@@ -95,27 +95,16 @@ export default function OverlayInbox() {
           // ka waqt + ✅ ka waqt), overlay ke paas nahi — isliye kram aur
           // marks yahan se wahan bheje jate hain, ulta nahi.
           //
-          // Ek poora External Mock chaar section (Maths/Reasoning/English/GS)
-          // ka mila-jula hota hai, par ye sirf "math" wale wrongbook se order
-          // banata tha — baaki teen section ke sawaal (jyada baar mock ka
-          // BADA hissa) overlay ko kabhi apna sahi kram milta hi nahi tha,
-          // isliye 1st question hamesha site aur overlay mein alag-alag
-          // dikhta. Answers page ka "External Mock" shelf bhi SAARE subject
-          // milakar ek list dikhata hai (rawMock = getWrongBook(), koi subject
-          // filter nahi) — yahan bhi wahi karna hai, taaki dono list hamesha
-          // ek jaisi rahe, kisi bhi section ka mock ho.
-          //
           // Tablet par lagaya hua ✅ bhi isi raaste se overlay tak pahunchta
           // hai: tablet -> Supabase -> is PC ka khula hua site page -> yahan.
           // Yaani overlay tabhi taaza rehta hai jab site is PC par khuli ho —
           // aur wahi to har waqt khuli rehti hai (question yahin se aate hain).
           try {
             const doneMap = getDoneMap();
-            const allWrong = getWrongBook();
-            const order = displayOrder(allWrong, doneMap)
+            const order = displayOrder(getWrongBook("math"), doneMap)
               .map((r) => r.qid)
               .filter(Boolean);
-            const doneQids = allWrong
+            const doneQids = getWrongBook("math")
               .filter((r) => r.qid && doneMap[r.id] !== undefined)
               .map((r) => r.qid);
             await fetch(`${base}/site-state`, {
