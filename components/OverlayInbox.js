@@ -31,6 +31,10 @@ function withSpace(fn) {
 }
 
 const PORTS = [5000, 5001, 5002]; // overlay ka pick_port 5000 busy hone par aage badhta hai
+// 🔤 Vocab overlay apna ALAG app hai (over/vocab_app.py) — apne
+// port par, apni process mein. Mock Test Helper band ho tab bhi wo
+// chal sakta hai, aur ye band ho to usme kuch nahi badalta.
+const VOCAB_PORTS = [5010, 5011, 5012];
 const POLL_MS = 5000;
 // Overlay ke panel par ab chaaro subject hain, isliye kram bhi chaaro ka jata
 // hai. Wahi chaar jo wrong-book mein hain — dono taraf ek hi naam chalte hain.
@@ -264,25 +268,6 @@ export default function OverlayInbox() {
             });
           } catch { /* purana overlay — ye route nahi hai */ }
 
-          // 🔤 Vocab ki patti ke liye poori list.
-          //
-          // Overlay ki chhoti khidki bas ise ghumati rehti hai, isliye list
-          // poori ki poori jaati hai. Har 5 second bhejne ka matlab nahi —
-          // badle tabhi jab sach mein kuch badla ho, isliye ek sasta nishaan
-          // (ginti + aakhri word) rakh kar milate hain.
-          try {
-            const list = vocabLineList();
-            const sig = `${list.length}|${list[list.length - 1]?.w || ""}|${list[0]?.m || ""}`;
-            if (sig !== vocabSig.current) {
-              const res = await fetch(`${base}/vocab-list`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ items: list }),
-              });
-              if (res.ok) vocabSig.current = sig;
-            }
-          } catch { /* purana overlay — ye route nahi hai */ }
-
           // ⏱️ Overlay par 40 second ke andar nipta diya hua question.
           //
           // Pehle iski site par apni alag shelf thi. Ab nahi — wo baaki sabke
@@ -328,6 +313,39 @@ export default function OverlayInbox() {
 
           break; // jis port par overlay mila, wahi kaafi hai
         }
+
+        // 🔤 Vocab overlay — apna alag app, apne port (5010+).
+        //
+        // Mock Test Helper se iska koi lena-dena nahi: wo band ho tab bhi ye
+        // chal sakta hai, isliye uski list alag se bheji jaati hai. Khidki
+        // bas ise ghumati rehti hai, isliye poori list ek saath jaati hai —
+        // par har 5 second nahi: ek sasta nishaan (ginti + aakhri word +
+        // pehla matlab) rakh kar tabhi bhejte hain jab sach mein kuch badla ho.
+        try {
+          const list = vocabLineList();
+          const sig = `${list.length}|${list[list.length - 1]?.w || ""}|${list[0]?.m || ""}`;
+          for (const port of VOCAB_PORTS) {
+            const base = `http://127.0.0.1:${port}`;
+            let have;
+            try {
+              const ping = await fetch(`${base}/vocab-ping`, { cache: "no-store" });
+              if (!ping.ok) continue;             // yahan vocab app nahi hai
+              have = (await ping.json()).n;
+            } catch { continue; }
+            // Nishaan wahi ho PAR wahan ginti alag ho — matlab uski list
+            // adhoori/purani hai (app naya chala, ya file kharab ho gayi).
+            // Tab bhi bhejo, warna wo hamesha ke liye adhoori padi rehti.
+            if (sig !== vocabSig.current || have !== list.length) {
+              const res = await fetch(`${base}/vocab-list`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ items: list }),
+              });
+              if (res.ok) vocabSig.current = sig;
+            }
+            break;                                // jis port par mila, wahi kaafi
+          }
+        } catch { /* vocab app band — agla poll phir koshish karega */ }
       } finally {
         busy.current = false;
       }
