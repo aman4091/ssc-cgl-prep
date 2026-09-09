@@ -19,17 +19,27 @@ Style:
 - Keep the whole thing under 160 characters. Short is the point.
 - Hinglish, Roman script only. No Devanagari. No markdown, no bullets, no quotes.
 
+A term may come with a reference meaning after a "|". That reference is the
+truth — say the same thing in Hinglish, shorter and stickier. Do not invent a
+different meaning, and do not put the "|" part in the key.
+
 Return STRICT JSON only:
-{ "lines": { "<term exactly as given>": "meaning line 1\\nline 2" } }
+{ "lines": { "<the term itself>": "meaning line 1\\nline 2" } }
 
 Every term you were given must appear as a key, spelled exactly as given.`;
 
 export async function POST(req) {
   try {
-    const { words, apiKey, model, baseUrl } = await req.json();
-    const list = (Array.isArray(words) ? words : [])
-      .map((w) => String(w || "").trim())
-      .filter(Boolean)
+    const { words, items, apiKey, model, baseUrl } = await req.json();
+    // Do shakl chalti hain: sirf word ki list, ya {w, hint} — hint us word ki
+    // apni definition hoti hai (OWS/idiom ke paas hoti hai), jisse AI apne
+    // aap se matlab na gadhe.
+    const src = Array.isArray(items) ? items : (Array.isArray(words) ? words : []);
+    const list = src
+      .map((x) => (typeof x === "string"
+        ? { w: x.trim(), hint: "" }
+        : { w: String(x?.w || "").trim(), hint: String(x?.hint || "").trim() }))
+      .filter((x) => x.w)
       .slice(0, 40);
     if (!list.length) return Response.json({ lines: {} });
 
@@ -42,7 +52,10 @@ export async function POST(req) {
       maxTokens: 4000,
       messages: [
         { role: "system", content: PROMPT },
-        { role: "user", content: list.join("\n") },
+        {
+          role: "user",
+          content: list.map((x) => (x.hint ? `${x.w} | ${x.hint}` : x.w)).join("\n"),
+        },
       ],
     });
 
@@ -50,10 +63,20 @@ export async function POST(req) {
 
     const parsed = parseJsonLoose(result.content);
     const raw = parsed?.lines && typeof parsed.lines === "object" ? parsed.lines : {};
+    // Key ko sakhti se nahi milate.
+    //
+    // Maanga to yahi tha ki term hubahu wapas aaye, par model kabhi hint wala
+    // hissa bhi key mein chipka deta hai ("Accede | To agree…"), kabhi case ya
+    // spacing badal deta hai. Sakht milaan par aisa poora batch chupchaap gir
+    // jata — isliye dono taraf ko saada karke milate hain.
+    const norm = (x) => String(x).split("|")[0].trim().toLowerCase().replace(/\s+/g, " ");
+    const byNorm = new Map(list.map((x) => [norm(x.w), x.w]));
     const lines = {};
-    for (const w of list) {
+    for (const [key, val] of Object.entries(raw)) {
+      const w = byNorm.get(norm(key));
+      if (!w) continue;
       // Do line se zyada aaye to baaki chhod do — patti par utni hi jagah hai.
-      const v = String(raw[w] || "").trim();
+      const v = String(val || "").trim();
       if (v) lines[w] = v.split("\n").map((s) => s.trim()).filter(Boolean).slice(0, 2).join("\n");
     }
     return Response.json({ lines });
