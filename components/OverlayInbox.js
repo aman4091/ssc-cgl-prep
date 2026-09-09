@@ -8,7 +8,7 @@
 
 import { useEffect, useRef } from "react";
 import {
-  addWrong, setDetail, storeImages, isSubject, findByQid, dedupeByQid,
+  SUBJECTS, addWrong, setDetail, storeImages, isSubject, findByQid, dedupeByQid,
   getWrongBook, displayOrder, touchWrong, getDeletedQids, removeWrong,
   imagesOf, setQid,
 } from "@/lib/wrongbook";
@@ -30,6 +30,9 @@ function withSpace(fn) {
 
 const PORTS = [5000, 5001, 5002]; // overlay ka pick_port 5000 busy hone par aage badhta hai
 const POLL_MS = 5000;
+// Overlay ke panel par ab chaaro subject hain, isliye kram bhi chaaro ka jata
+// hai. Wahi chaar jo wrong-book mein hain — dono taraf ek hi naam chalte hain.
+const PANEL_SUBJECTS = SUBJECTS.map((s) => s.key);
 const DONE_KEY = "overlayInbox.done"; // qids already added — ack fail par duplicate na bane
 
 const readDone = () => {
@@ -106,33 +109,37 @@ export default function OverlayInbox() {
           // Yaani overlay tabhi taaza rehta hai jab site is PC par khuli ho —
           // aur wahi to har waqt khuli rehti hai (question yahin se aate hain).
           //
-          // `order` mein BILKUL wahi list jaati hai jo Answers page apni
-          // Maths External Mock shelf par DIKHATA hai. Pehle yahan poori
-          // math wrong-book jaati thi — usme 🔴 Hard wale question bhi the,
-          // jo site par is shelf se bahar hain. Panel unhe nahi jaanta, to
-          // wo unhe bhi ginta tha aur dono jagah ka "pehla question" alag ho
-          // jata tha. Filter wahi hai jo AnswersBoard lagata hai: subject
-          // maths, qid wala record, aur 🔴 Hard nahi.
+          // Har subject ka `order` mein BILKUL wahi list jaati hai jo Answers
+          // page apni us subject wali External Mock shelf par DIKHATA hai.
+          // Pehle yahan poori math wrong-book jaati thi — usme 🔴 Hard wale
+          // question bhi the, jo site par shelf se bahar hain. Panel unhe
+          // nahi jaanta, to wo unhe bhi ginta tha aur dono jagah ka "pehla
+          // question" alag ho jata tha. Filter wahi hai jo AnswersBoard
+          // lagata hai: qid wala record, aur 🔴 Hard nahi.
           try {
             const doneMap = getDoneMap();
             const hardSet = getHardSet();
-            const mathBook = getWrongBook("math").filter((r) => r.qid);
-            const shown = mathBook.filter((r) => !hardSet.has(r.id));
-            const order = displayOrder(shown, doneMap).map((r) => r.qid);
-            const doneQids = shown
-              .filter((r) => doneMap[r.id] !== undefined)
-              .map((r) => r.qid);
+            const subjects = {};
+            for (const subject of PANEL_SUBJECTS) {
+              const book = getWrongBook(subject).filter((r) => r.qid);
+              const shown = book.filter((r) => !hardSet.has(r.id));
+              subjects[subject] = {
+                order: displayOrder(shown, doneMap).map((r) => r.qid),
+                done: shown
+                  .filter((r) => doneMap[r.id] !== undefined)
+                  .map((r) => r.qid),
+                // Site ke paas jo bhi qid hai — 🔴 Hard samet. Overlay ka
+                // resend_missing isi se dekhta hai ki kya sach mein site tak
+                // pahuncha hi nahi; warna Hard wale question har 5 second par
+                // dobara-dobara bheje jate.
+                known: book.map((r) => r.qid),
+              };
+            }
             await fetch(`${base}/site-state`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                order,
-                done: doneQids,
-                // Site ke paas jo bhi maths qid hai — 🔴 Hard samet. Overlay
-                // ka resend_missing isi se dekhta hai ki kya sach mein site
-                // tak pahuncha hi nahi; warna Hard wale question har 5
-                // second par dobara-dobara bheje jate.
-                known: mathBook.map((r) => r.qid),
+                subjects,
                 // Site par 🗑️ kiye hue — overlay inki file hata dega aur
                 // dobara kabhi nahi bhejega.
                 deleted: getDeletedQids(),
@@ -158,10 +165,12 @@ export default function OverlayInbox() {
                 const have = new Set(qids);
                 const num = (q) => Number(String(q).replace(/^q/, "")) || 0;
                 const top = Math.max(...qids.map(num));
-                for (const r of getWrongBook("math")) {
-                  if (!r.qid || have.has(r.qid)) continue;
-                  if (num(r.qid) > top) continue;   // overlay peeche hai — ruko
-                  await removeWrong(r.id);
+                for (const subject of PANEL_SUBJECTS) {
+                  for (const r of getWrongBook(subject)) {
+                    if (!r.qid || have.has(r.qid)) continue;
+                    if (num(r.qid) > top) continue; // overlay peeche hai — ruko
+                    await removeWrong(r.id);
+                  }
                 }
               }
             }
@@ -182,7 +191,8 @@ export default function OverlayInbox() {
           // aane par wahi qid lautata hai, isliye adhoora gaya request
           // duplicate nahi banata.
           try {
-            const orphans = getWrongBook("math")
+            const orphans = PANEL_SUBJECTS
+              .flatMap((s) => getWrongBook(s))
               .filter((r) => !r.qid && imagesOf(r).length && !badImg.current.has(r.id))
               .slice(0, 3);
             for (const r of orphans) {
@@ -203,6 +213,7 @@ export default function OverlayInbox() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   rid: r.id,
+                  subject: r.subject,
                   answer: r.detail || r.answer || "",
                   image: btoa(bin),
                 }),
