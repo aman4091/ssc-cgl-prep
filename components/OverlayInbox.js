@@ -13,8 +13,7 @@ import {
   imagesOf, setQid,
 } from "@/lib/wrongbook";
 import { imageBlob } from "@/lib/imgclip";
-import { getDoneMap, isDone, markDone } from "@/lib/answersdone";
-import { getUnder40, setUnder40 } from "@/lib/under40";
+import { getDoneMap, markDone } from "@/lib/answersdone";
 import { getHardSet } from "@/lib/hardq";
 import { countMark } from "@/lib/qcounter";
 import { shedOldQuizzes, getSettings } from "@/lib/storage";
@@ -242,23 +241,23 @@ export default function OverlayInbox() {
           // hai, waise hi overlay par 40 second mein nipta dene par bhi hoti
           // hai — kaam to wahi hua hai.
           //
-          // Ginti sirf NAYE qid par badhti hai: overlay poori list bhejta hai
-          // (31 purane samet), aur pehli baar wali list ko sirf yaad kar lete
-          // hain, gina nahi jata — warna pehle poll par hi ginti mein 31 ka
-          // uchhal aa jata. countMark khud bhi ek record ko ek din mein ek hi
-          // baar ginta hai, isliye do taale ho gaye.
+          // Overlay har solve ki alag KHABAR bhejta hai (/solves), poori
+          // solved-list nahi. Wajah: nipta hua question ghoom kar wapas upar
+          // aata hai aur DOBARA solve ho sakta hai — list se farak nikalte to
+          // dusri baar kuch hota hi nahi, kyunki wo us list mein pehle se
+          // hota hai. Ack ke baad khabar hat jati hai, isliye ek solve ek hi
+          // baar ginta hai.
           try {
-            const res = await fetch(`${base}/under40`, { cache: "no-store" });
+            const res = await fetch(`${base}/solves`, { cache: "no-store" });
             if (res.ok) {
-              const qids = (await res.json()).qids || [];
-              const prev = getUnder40();
-              const seeding = prev.size === 0;
-              setUnder40(qids);
-              for (const qid of qids) {
+              const { solves } = await res.json();
+              for (const qid of Object.keys(solves || {})) {
                 const rec = findByQid(qid);
-                if (!rec || isDone(rec.id)) continue;
-                withSpace(() => markDone(rec.id));
-                if (!seeding && !prev.has(qid)) countMark(rec.id, rec.subject, true);
+                if (rec) {
+                  withSpace(() => markDone(rec.id));
+                  countMark(rec.id, rec.subject, true);
+                }
+                await fetch(`${base}/ack-solve/${qid}`, { method: "POST" });
               }
             }
           } catch { /* ignore */ }
