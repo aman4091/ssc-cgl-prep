@@ -32,7 +32,6 @@ import {
   getTags, setTags, pruneTags, autoOn,
 } from "@/lib/qchapter";
 import { tagChaptersByText } from "@/lib/client-ai";
-import { getUnder40 } from "@/lib/under40";
 import { getHardSet, toggleHard, pruneHard } from "@/lib/hardq";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 
@@ -79,15 +78,15 @@ const ALL_SUBJ = { key: "", label: "Sab", icon: "\u{1F4DA}" };
 
 // Kaunsi shelf dikhani hai.
 //
-// "Under 40" apni alag shelf isliye hai ki wo question rozmarra ki list mein
-// jagah gherte hain aur dete kuch nahi — 40 second ke andar ho chuke hain.
-// Ye mark OVERLAY par lagta hai (40 second ka timer wahi chalata hai); yahan
-// uski sirf nakal aati hai — lib/under40.
+// "Under 40" ki apni shelf hua karti thi. Ab nahi: overlay par 40 second ke
+// andar nipta diya hua question bhi baaki sabke saath External Mock mein hi
+// rehta hai — bas "abhi ho gaya" hone ki wajah se list mein sabse neeche
+// chala jata hai, jaise koi bhi nipta hua question jata hai. Ek hi list,
+// dhoondhne ke liye ek hi jagah.
 const SOURCES = [
   { key: "all", label: "\u{1F4DA} Sab (dono)" },
   { key: "mock", label: "\u{1F5BC}️ External Mock (screenshot)" },
   { key: "pyq", label: "\u{1F4DD} PYQ / Quiz ke galat" },
-  { key: "u40", label: "⏱️ Under 40 (overlay par nipta diye)" },
   // Khud "🔴 Hard" dabaya hua — External Mock ki aam list se hat kar yahan.
   { key: "hard", label: "🔴 Hard" },
 ];
@@ -297,7 +296,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // Chapter ke tag + report ka panel + "sirf is chapter ke" wali chhaanti.
   const [tags, setTagMap] = useState({});
   const [taxReady, setTaxReady] = useState(false);
-  const [u40, setU40] = useState(() => new Set());
   const [hard, setHard] = useState(() => new Set());
   const [report, setReport] = useState(false);
   const [chapter, setChapter] = useState(() => sp.get("ch") || "");
@@ -429,15 +427,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // chapter maana ja hi nahi sakta.
   useEffect(() => { loadTaxonomy().then(() => setTaxReady(true)); }, []);
 
-  // Under 40 ki list — OverlayInbox har poll par overlay se utha kar likhta
-  // hai, isliye badalne par sunte bhi hain.
-  useEffect(() => {
-    const h = () => setU40(getUnder40());
-    h();
-    window.addEventListener("cgl:under40-changed", h);
-    return () => window.removeEventListener("cgl:under40-changed", h);
-  }, []);
-
   // 🔴 Hard — khud is page se dabaya hua, isliye button hi likhta hai (koi
   // overlay poll nahi chahiye), par doosra tab khula ho to bhi sunte hain.
   useEffect(() => {
@@ -515,17 +504,14 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, taxReady, mock, nb]);
 
-  // Under 40 wale aam shelf se BAHAR — wo apni alag shelf mein milte hain.
-  const isU40 = useCallback((r) => r.__src === "mock" && !!r.qid && u40.has(r.qid), [u40]);
-  // 🔴 Hard bhi usi tarah bahar — khud dabaya hua, isliye qid ki zaroorat
+  // 🔴 Hard aam shelf se BAHAR — khud dabaya hua, isliye qid ki zaroorat
   // nahi, record ki apni id se.
   const isHardQ = useCallback((r) => r.__src === "mock" && hard.has(r.id), [hard]);
   const pool = useMemo(() => {
-    if (src === "u40") return mock.filter(isU40);
     if (src === "hard") return mock.filter(isHardQ);
-    const m = mock.filter((r) => !isU40(r) && !isHardQ(r));
+    const m = mock.filter((r) => !isHardQ(r));
     return src === "mock" ? m : src === "pyq" ? nb : [...m, ...nb];
-  }, [mock, nb, src, isU40, isHardQ]);
+  }, [mock, nb, src, isHardQ]);
 
   const rows = useMemo(
     () => pool
@@ -928,11 +914,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               ? "Mock test ke screenshot — tasveer aur uska answer."
               : src === "pyq"
                 ? "Quiz/PYQ mein jo galat ya chhoda — sawaal apne asli card mein."
-                : src === "u40"
-                  ? "Overlay par 40 second ke andar nipta diye gaye — External Mock ki aam list se bahar."
-                  : src === "hard"
-                    ? "Khud 🔴 Hard dabaya hua — External Mock ki aam list se bahar."
-                    : "Dono shelf ek saath — screenshot wale bhi, quiz ke galat bhi."}
+                : src === "hard"
+                  ? "Khud 🔴 Hard dabaya hua — External Mock ki aam list se bahar."
+                  : "Dono shelf ek saath — screenshot wale bhi, quiz ke galat bhi."}
           </span>
 
           {/* Chapter ki chhaanti. Report kholne ki zaroorat nahi — "bas

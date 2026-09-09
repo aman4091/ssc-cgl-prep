@@ -11,9 +11,10 @@ import {
   addWrong, setDetail, storeImages, isSubject, findByQid, dedupeByQid,
   getWrongBook, displayOrder, touchWrong, getDeletedQids, removeWrong,
 } from "@/lib/wrongbook";
-import { getDoneMap } from "@/lib/answersdone";
+import { getDoneMap, isDone, markDone } from "@/lib/answersdone";
 import { getUnder40, setUnder40 } from "@/lib/under40";
 import { getHardSet } from "@/lib/hardq";
+import { countMark } from "@/lib/qcounter";
 import { shedOldQuizzes, getSettings } from "@/lib/storage";
 
 // localStorage full hone par purane generated quizzes shed karke retry — wahi
@@ -106,16 +107,13 @@ export default function OverlayInbox() {
           // math wrong-book jaati thi — usme 🔴 Hard wale question bhi the,
           // jo site par is shelf se bahar hain. Panel unhe nahi jaanta, to
           // wo unhe bhi ginta tha aur dono jagah ka "pehla question" alag ho
-          // jata tha. Filter wahi teen hain jo AnswersBoard lagata hai:
-          // subject maths, qid wala record, aur na Under-40 na 🔴 Hard.
+          // jata tha. Filter wahi hai jo AnswersBoard lagata hai: subject
+          // maths, qid wala record, aur 🔴 Hard nahi.
           try {
             const doneMap = getDoneMap();
-            const u40set = getUnder40();
             const hardSet = getHardSet();
             const mathBook = getWrongBook("math").filter((r) => r.qid);
-            const shown = mathBook.filter(
-              (r) => !u40set.has(r.qid) && !hardSet.has(r.id),
-            );
+            const shown = mathBook.filter((r) => !hardSet.has(r.id));
             const order = displayOrder(shown, doneMap).map((r) => r.qid);
             const doneQids = shown
               .filter((r) => doneMap[r.id] !== undefined)
@@ -126,10 +124,10 @@ export default function OverlayInbox() {
               body: JSON.stringify({
                 order,
                 done: doneQids,
-                // Site ke paas jo bhi maths qid hai — chhupe hue (Hard/U40)
-                // samet. Overlay ka resend_missing isi se dekhta hai ki kya
-                // sach mein site tak pahuncha hi nahi; warna Hard wale
-                // question har 5 second par dobara-dobara bheje jate.
+                // Site ke paas jo bhi maths qid hai — 🔴 Hard samet. Overlay
+                // ka resend_missing isi se dekhta hai ki kya sach mein site
+                // tak pahuncha hi nahi; warna Hard wale question har 5
+                // second par dobara-dobara bheje jate.
                 known: mathBook.map((r) => r.qid),
                 // Site par 🗑️ kiye hue — overlay inki file hata dega aur
                 // dobara kabhi nahi bhejega.
@@ -184,11 +182,34 @@ export default function OverlayInbox() {
             }
           } catch { /* purana overlay — ye route nahi hai */ }
 
-          // ⏱️ Under 40 ki list overlay ke paas hai (wahi timer chalata hai) —
-          // yahan uski nakal, taaki wo question aam list se hat jayein.
+          // ⏱️ Overlay par 40 second ke andar nipta diya hua question.
+          //
+          // Pehle iski site par apni alag shelf thi. Ab nahi — wo baaki sabke
+          // saath External Mock mein hi rehta hai, bas "ho gaya" ban kar list
+          // mein sabse neeche chala jata hai (bilkul waise hi jaise yahan ✅
+          // dabane par jata hai). Aur jaise ✅ dabane par aaj ki ginti +1 hoti
+          // hai, waise hi overlay par 40 second mein nipta dene par bhi hoti
+          // hai — kaam to wahi hua hai.
+          //
+          // Ginti sirf NAYE qid par badhti hai: overlay poori list bhejta hai
+          // (31 purane samet), aur pehli baar wali list ko sirf yaad kar lete
+          // hain, gina nahi jata — warna pehle poll par hi ginti mein 31 ka
+          // uchhal aa jata. countMark khud bhi ek record ko ek din mein ek hi
+          // baar ginta hai, isliye do taale ho gaye.
           try {
             const res = await fetch(`${base}/under40`, { cache: "no-store" });
-            if (res.ok) setUnder40((await res.json()).qids);
+            if (res.ok) {
+              const qids = (await res.json()).qids || [];
+              const prev = getUnder40();
+              const seeding = prev.size === 0;
+              setUnder40(qids);
+              for (const qid of qids) {
+                const rec = findByQid(qid);
+                if (!rec || isDone(rec.id)) continue;
+                withSpace(() => markDone(rec.id));
+                if (!seeding && !prev.has(qid)) countMark(rec.id, rec.subject, true);
+              }
+            }
           } catch { /* ignore */ }
 
           // Overlay par khola gaya par nipta nahi — us question ko yahan
