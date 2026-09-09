@@ -17,6 +17,7 @@ import { getDoneMap, markDone } from "@/lib/answersdone";
 import { getHardSet } from "@/lib/hardq";
 import { countMark } from "@/lib/qcounter";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
+import { vocabLineList } from "@/lib/vocab";
 import { shedOldQuizzes, getSettings } from "@/lib/storage";
 
 // localStorage full hone par purane generated quizzes shed karke retry — wahi
@@ -50,6 +51,8 @@ export default function OverlayInbox() {
   // Jin paste-kiye question ki image is device par mili hi nahi — inhe
   // dobara-dobara nahi aazmate (neeche adopt wala hissa dekho).
   const badImg = useRef(new Set());
+  // Vocab list ka pichla nishaan — badle bina dobara nahi bhejte.
+  const vocabSig = useRef("");
 
   useEffect(() => {
     const tick = async () => {
@@ -259,6 +262,25 @@ export default function OverlayInbox() {
                 url: aiSiteUrl(site), label: aiSiteLabel(site),
               }),
             });
+          } catch { /* purana overlay — ye route nahi hai */ }
+
+          // 🔤 Vocab ki patti ke liye poori list.
+          //
+          // Overlay ki chhoti khidki bas ise ghumati rehti hai, isliye list
+          // poori ki poori jaati hai. Har 5 second bhejne ka matlab nahi —
+          // badle tabhi jab sach mein kuch badla ho, isliye ek sasta nishaan
+          // (ginti + aakhri word) rakh kar milate hain.
+          try {
+            const list = vocabLineList();
+            const sig = `${list.length}|${list[list.length - 1]?.w || ""}|${list[0]?.m || ""}`;
+            if (sig !== vocabSig.current) {
+              const res = await fetch(`${base}/vocab-list`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ items: list }),
+              });
+              if (res.ok) vocabSig.current = sig;
+            }
           } catch { /* purana overlay — ye route nahi hai */ }
 
           // ⏱️ Overlay par 40 second ke andar nipta diya hua question.
