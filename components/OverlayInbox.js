@@ -10,7 +10,9 @@ import { useEffect, useRef } from "react";
 import {
   addWrong, setDetail, storeImages, isSubject, findByQid, dedupeByQid,
   getWrongBook, displayOrder, touchWrong, getDeletedQids, removeWrong,
+  imagesOf, setQid,
 } from "@/lib/wrongbook";
+import { imageBlob } from "@/lib/imgclip";
 import { getDoneMap, isDone, markDone } from "@/lib/answersdone";
 import { getUnder40, setUnder40 } from "@/lib/under40";
 import { getHardSet } from "@/lib/hardq";
@@ -42,6 +44,9 @@ const saveDone = (set) => {
 
 export default function OverlayInbox() {
   const busy = useRef(false);
+  // Jin paste-kiye question ki image is device par mili hi nahi — inhe
+  // dobara-dobara nahi aazmate (neeche adopt wala hissa dekho).
+  const badImg = useRef(new Set());
 
   useEffect(() => {
     const tick = async () => {
@@ -162,6 +167,52 @@ export default function OverlayInbox() {
               }
             }
           } catch { /* overlay band — kuch mat karo */ }
+
+          // Haath se paste kiye hue purane maths question overlay tak pahuncha
+          // do — taaki wahan bhi ho jayen.
+          //
+          // Ye July-August ke wo records hain jo site par seedhe paste hue the,
+          // jab site se overlay ki taraf koi raasta tha hi nahi. Inka qid nahi
+          // hota, isliye panel inhe dikha hi nahi sakta. Abhi ye sab "ho gaya"
+          // hain to neeche pade hain — par list ghoomti hai: ek din inme se
+          // koi sabse upar aayega aur us din site ka pehla question panel ke
+          // pehle se alag ho jayega. Isliye ek baar inhe wahan bhej dete hain.
+          //
+          // Ek poll mein sirf teen — 150 question ~4 minute mein chale jaate
+          // hain aur na network chokta hai na page. /adopt wahi rid dobara
+          // aane par wahi qid lautata hai, isliye adhoora gaya request
+          // duplicate nahi banata.
+          try {
+            const orphans = getWrongBook("math")
+              .filter((r) => !r.qid && imagesOf(r).length && !badImg.current.has(r.id))
+              .slice(0, 3);
+            for (const r of orphans) {
+              let blob;
+              try { blob = await imageBlob(imagesOf(r)[0]); }
+              catch {
+                // Image is device par hai hi nahi (R2 se bhi nahi aayi). Ise
+                // yaad rakh lo, warna ye pehle number par khadi rehti aur
+                // uske peeche wale 148 kabhi apni baari tak pahunchte hi nahi.
+                badImg.current.add(r.id);
+                continue;
+              }
+              const buf = new Uint8Array(await blob.arrayBuffer());
+              let bin = "";
+              for (let i = 0; i < buf.length; i++) bin += String.fromCharCode(buf[i]);
+              const res = await fetch(`${base}/adopt`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  rid: r.id,
+                  answer: r.detail || r.answer || "",
+                  image: btoa(bin),
+                }),
+              });
+              if (!res.ok) break;        // purana overlay ya kuch gadbad — ruko
+              const { qid } = await res.json();
+              if (qid) withSpace(() => setQid(r.id, qid));
+            }
+          } catch { /* overlay band — agla poll phir koshish karega */ }
 
           // Overlay ko Supabase ke kaagaz de do — ek baar.
           //
