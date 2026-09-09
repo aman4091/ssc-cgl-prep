@@ -9,10 +9,11 @@
 import { useEffect, useRef } from "react";
 import {
   addWrong, setDetail, storeImages, isSubject, findByQid, dedupeByQid,
-  getWrongBook, displayOrder, touchWrong,
+  getWrongBook, displayOrder, touchWrong, getDeletedQids, removeWrong,
 } from "@/lib/wrongbook";
 import { getDoneMap } from "@/lib/answersdone";
-import { setUnder40 } from "@/lib/under40";
+import { getUnder40, setUnder40 } from "@/lib/under40";
+import { getHardSet } from "@/lib/hardq";
 import { shedOldQuizzes, getSettings } from "@/lib/storage";
 
 // localStorage full hone par purane generated quizzes shed karke retry — wahi
@@ -99,20 +100,70 @@ export default function OverlayInbox() {
           // hai: tablet -> Supabase -> is PC ka khula hua site page -> yahan.
           // Yaani overlay tabhi taaza rehta hai jab site is PC par khuli ho —
           // aur wahi to har waqt khuli rehti hai (question yahin se aate hain).
+          //
+          // `order` mein BILKUL wahi list jaati hai jo Answers page apni
+          // Maths External Mock shelf par DIKHATA hai. Pehle yahan poori
+          // math wrong-book jaati thi — usme 🔴 Hard wale question bhi the,
+          // jo site par is shelf se bahar hain. Panel unhe nahi jaanta, to
+          // wo unhe bhi ginta tha aur dono jagah ka "pehla question" alag ho
+          // jata tha. Filter wahi teen hain jo AnswersBoard lagata hai:
+          // subject maths, qid wala record, aur na Under-40 na 🔴 Hard.
           try {
             const doneMap = getDoneMap();
-            const order = displayOrder(getWrongBook("math"), doneMap)
-              .map((r) => r.qid)
-              .filter(Boolean);
-            const doneQids = getWrongBook("math")
-              .filter((r) => r.qid && doneMap[r.id] !== undefined)
+            const u40set = getUnder40();
+            const hardSet = getHardSet();
+            const mathBook = getWrongBook("math").filter((r) => r.qid);
+            const shown = mathBook.filter(
+              (r) => !u40set.has(r.qid) && !hardSet.has(r.id),
+            );
+            const order = displayOrder(shown, doneMap).map((r) => r.qid);
+            const doneQids = shown
+              .filter((r) => doneMap[r.id] !== undefined)
               .map((r) => r.qid);
             await fetch(`${base}/site-state`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ order, done: doneQids }),
+              body: JSON.stringify({
+                order,
+                done: doneQids,
+                // Site ke paas jo bhi maths qid hai — chhupe hue (Hard/U40)
+                // samet. Overlay ka resend_missing isi se dekhta hai ki kya
+                // sach mein site tak pahuncha hi nahi; warna Hard wale
+                // question har 5 second par dobara-dobara bheje jate.
+                known: mathBook.map((r) => r.qid),
+                // Site par 🗑️ kiye hue — overlay inki file hata dega aur
+                // dobara kabhi nahi bhejega.
+                deleted: getDeletedQids(),
+              }),
             });
           } catch { /* overlay band — agla poll phir bhej dega */ }
+
+          // Ulta bhi: overlay se question HAT gaya (wahan delete hua) to site
+          // se bhi jaana chahiye — warna site par ek aisa question pada rehta
+          // jo panel mein hai hi nahi, aur ginti hamesha ke liye khisak jati.
+          //
+          // Sirf qid wale (yaani overlay se aaye) record hi is niyam mein
+          // aate hain — haath se paste kiya hua question overlay jaanta hi
+          // nahi, wo kabhi nahi chhua jata. Do aur taale: jawab khali aaya to
+          // kuch nahi karte, aur overlay ka sabse bada qid site ke qid se
+          // chhota ho (yaani overlay ka data purana/restore hua hai) to bhi
+          // haath nahi lagate.
+          try {
+            const res = await fetch(`${base}/known-qids`, { cache: "no-store" });
+            if (res.ok) {
+              const qids = (await res.json()).qids || [];
+              if (qids.length) {
+                const have = new Set(qids);
+                const num = (q) => Number(String(q).replace(/^q/, "")) || 0;
+                const top = Math.max(...qids.map(num));
+                for (const r of getWrongBook("math")) {
+                  if (!r.qid || have.has(r.qid)) continue;
+                  if (num(r.qid) > top) continue;   // overlay peeche hai — ruko
+                  await removeWrong(r.id);
+                }
+              }
+            }
+          } catch { /* overlay band — kuch mat karo */ }
 
           // Overlay ko Supabase ke kaagaz de do — ek baar.
           //
