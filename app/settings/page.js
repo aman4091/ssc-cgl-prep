@@ -8,7 +8,7 @@ import { syncOnce, resyncAll, listRescue, restoreRescue, getSyncLog, SETUP_SQL }
 import PyqManager from "@/components/PyqManager";
 import CaRushSetting from "@/components/CaRushSetting";
 import { getTheme, setTheme } from "@/lib/theme";
-import { AI_SITES } from "@/lib/aisites";
+import { AI_SITES, aiSiteLabel, aiSiteOf } from "@/lib/aisites";
 
 
 function mask(key) {
@@ -379,6 +379,31 @@ export default function SettingsPage() {
                 onClick={() => update("askAiSite", s.key)}>{s.label}</button>
             ))}
           </div>
+
+          {/* Apna link — jaise Gemini ka doosra account (…/u/1/app). Khaali
+              chhodo to upar wali site ka aam link chalta hai. Desktop overlay
+              bhi yahi link uthata hai, isliye dono jagah ek hi khulta hai. */}
+          <label className="mt-16" style={{ display: "block" }}>
+            <span className="muted" style={{ fontSize: "0.85rem" }}>
+              {aiSiteLabel(settings.askAiSite)} ka apna link (khaali = aam link)
+            </span>
+            <input
+              className="input mt-8"
+              type="url"
+              inputMode="url"
+              placeholder={aiSiteOf(settings.askAiSite).url}
+              value={settings.aiSiteUrls?.[settings.askAiSite] || ""}
+              onChange={(e) => update("aiSiteUrls", {
+                ...(settings.aiSiteUrls || {}),
+                [settings.askAiSite]: e.target.value,
+              })}
+            />
+          </label>
+          <p className="muted mt-8" style={{ fontSize: "0.82rem" }}>
+            Doosre account par kholna ho to uska pura link daalo — jaise{" "}
+            <code>https://gemini.google.com/u/1/app</code>. Overlay par bhi
+            wahi khulega.
+          </p>
         </div>
       </section>
 

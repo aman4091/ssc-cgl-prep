@@ -16,6 +16,7 @@ import { imageBlob } from "@/lib/imgclip";
 import { getDoneMap, markDone } from "@/lib/answersdone";
 import { getHardSet } from "@/lib/hardq";
 import { countMark } from "@/lib/qcounter";
+import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { shedOldQuizzes, getSettings } from "@/lib/storage";
 
 // localStorage full hone par purane generated quizzes shed karke retry — wahi
@@ -241,6 +242,23 @@ export default function OverlayInbox() {
                 }),
               });
             }
+          } catch { /* purana overlay — ye route nahi hai */ }
+
+          // ✨ Kaunsi AI site — Settings mein jo chuni hai, wahi overlay par bhi.
+          //
+          // Overlay mein Gemini ka pata seedha likha hua tha, isliye site par
+          // Claude chuno to bhi wahan Gemini hi khulti thi. Ab dono ek hi link
+          // par jate hain — Settings ka apna link bhara ho (jaise Gemini ka
+          // doosra account) to wo, warna us site ka aam link.
+          try {
+            const site = getSettings().askAiSite;
+            await fetch(`${base}/ai-site`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                url: aiSiteUrl(site), label: aiSiteLabel(site),
+              }),
+            });
           } catch { /* purana overlay — ye route nahi hai */ }
 
           // ⏱️ Overlay par 40 second ke andar nipta diya hua question.
