@@ -1160,6 +1160,84 @@ body.modal-open { overflow: hidden; }
 .mm-in { padding: 5px 8px; height: auto; font-size: 0.85rem; }
 .mm-in.mm-num { width: 72px; text-align: center; }
 .mm-table td:first-child .mm-in { width: 100%; min-width: 130px; text-align: left; }
+
+/* 📈 Mock Marks — Graph & Report (components/MockReport.js).
+   Rang validate_palette.js se white card par jaanche: line #2a78d6,
+   sahi #1a8a64, galat #d9573a. Chhoda neutral hai (koi "rang" nahi —
+   bacha hua hissa), isliye legend + tooltip + table uska sahara hain. */
+.mr-root {
+  --mr-series: #2a78d6;
+  --mr-wash: rgba(42, 120, 214, 0.10);
+  --mr-ok: #1a8a64;
+  --mr-bad: #d9573a;
+  --mr-skip: #d3dcd5;
+  --mr-mute-bar: #bcc7c0;
+  --mr-gridc: #e7ece7;
+  --mr-axisc: #c9d3cb;
+  --mr-surface: var(--card, #ffffff);
+}
+.mr-view { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.mr-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+.mr-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.mr-kpi { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px 14px; min-width: 0; }
+.mr-kpi__label { font-size: 0.76rem; color: var(--text-3); }
+.mr-kpi__val { font-size: 1.5rem; font-weight: 700; color: var(--text-1); line-height: 1.2; margin-top: 2px; }
+.mr-kpi__val small { font-size: 0.8rem; color: var(--text-3); font-weight: 500; margin-left: 2px; }
+.mr-kpi__delta { font-size: 0.76rem; margin-top: 3px; color: var(--text-3); }
+.mr-kpi__delta b.up { color: var(--success); }
+.mr-kpi__delta b.down { color: var(--danger); }
+.mr-kpi__note { font-size: 0.74rem; color: var(--text-3); margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mr-h { font-size: 1rem; font-weight: 700; color: var(--text-1); margin: 0; }
+.mr-sub { font-size: 0.78rem; color: var(--text-3); margin: 2px 0 8px; }
+.mr-charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.mr-charts:empty { display: none; }
+.mr-plot { position: relative; width: 100%; }
+.mr-plot svg { display: block; outline: none; touch-action: pan-y; overflow: visible; }
+.mr-plot svg:focus-visible, .mr-col:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mr-gridline { stroke: var(--mr-gridc); stroke-width: 1; shape-rendering: crispEdges; }
+.mr-axisline { stroke: var(--mr-axisc); stroke-width: 1; shape-rendering: crispEdges; }
+.mr-tick { fill: var(--text-3); font-size: 11px; font-variant-numeric: tabular-nums; }
+.mr-line { fill: none; stroke: var(--mr-series); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.mr-area { fill: var(--mr-wash); }
+.mr-dot { fill: var(--mr-series); stroke: var(--mr-surface); stroke-width: 2; }
+.mr-cross { stroke: var(--text-3); stroke-width: 1; opacity: 0.55; }
+.mr-ref { stroke: var(--text-3); stroke-width: 1; opacity: 0.45; }
+.mr-reflabel { fill: var(--text-3); font-size: 11px; }
+.mr-endlabel { fill: var(--text-1); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.mr-ok { fill: var(--mr-ok); background: var(--mr-ok); }
+.mr-bad { fill: var(--mr-bad); background: var(--mr-bad); }
+.mr-skip { fill: var(--mr-skip); background: var(--mr-skip); }
+.mr-col { cursor: default; outline: none; }
+.mr-col.is-hov path { filter: brightness(1.12); }
+.mr-tip {
+  position: absolute; top: 4px; z-index: 3; pointer-events: none;
+  display: flex; flex-direction: column; gap: 2px; max-width: 240px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+  padding: 7px 10px; box-shadow: 0 6px 18px rgba(20, 61, 52, 0.12);
+  font-size: 0.78rem; line-height: 1.35; white-space: nowrap;
+}
+.mr-tip strong { font-size: 0.98rem; color: var(--text-1); font-variant-numeric: tabular-nums; }
+.mr-tip__of { font-size: 0.78rem; color: var(--text-3); font-weight: 500; }
+.mr-tip__sub { color: var(--text-3); overflow: hidden; text-overflow: ellipsis; }
+.mr-tip__name { color: var(--text-2); font-weight: 600; }
+.mr-tip__row { display: flex; align-items: center; gap: 6px; color: var(--text-3); }
+.mr-tip__row b { color: var(--text-1); min-width: 18px; font-variant-numeric: tabular-nums; }
+.mr-key { display: inline-block; width: 12px; height: 2px; border-radius: 1px; }
+.mr-legend { display: flex; gap: 12px; flex-wrap: wrap; font-size: 0.78rem; color: var(--text-2); }
+.mr-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.mr-swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+.mr-hbars { display: grid; gap: 10px; }
+.mr-hbar { display: grid; grid-template-columns: minmax(100px, 160px) 1fr; gap: 10px; align-items: center; }
+.mr-hbar__label { font-size: 0.84rem; color: var(--text-1); min-width: 0; }
+.mr-hbar__label small { display: block; color: var(--text-3); font-size: 0.72rem; }
+.mr-hbar__track { display: flex; align-items: center; min-height: 18px; border-left: 1px solid var(--mr-axisc); }
+.mr-hbar__fill { height: 18px; min-width: 2px; border-radius: 0 4px 4px 0; background: var(--mr-mute-bar); }
+.mr-hbar.is-on .mr-hbar__fill { background: var(--mr-series); }
+.mr-hbar__val { margin-left: 6px; font-size: 0.82rem; font-weight: 600; color: var(--text-1); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.mr-notes { margin: 6px 0 0; padding-left: 0; list-style: none; display: grid; gap: 7px; font-size: 0.9rem; color: var(--text-2); line-height: 1.5; }
+.mr-notes strong { color: var(--text-1); }
+.mr-table td { font-variant-numeric: tabular-nums; }
+.mr-table td:first-child { max-width: 260px; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 780px) {
   .stat-row { grid-template-columns: repeat(2, 1fr); }
   .stat__num { font-size: 1.4rem; }

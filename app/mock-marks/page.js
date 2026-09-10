@@ -7,7 +7,9 @@ import {
   FULL_SECTIONS, CATEGORIES, categoryOf,
   getMocks, addMock, removeMock, mockTotals, sectionStats, percentileOf,
 } from "@/lib/mockmarks";
+import MockReport from "@/components/MockReport";
 
+const VIEW_KEY = "cgl.mockmarks.view";
 const todayStr = () => new Date().toISOString().slice(0, 10);
 const blankSection = () => ({ name: "", correct: "", wrong: "", total: "", timeMin: "" });
 const fmtDate = (d) => { try { return new Date(d + "T00:00:00").toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }); } catch { return d; } };
@@ -19,6 +21,10 @@ function MockMarksInner() {
 
   const [mocks, setMocks] = useState([]);
   const [open, setOpen] = useState(false);
+  // 📋 List ya 📈 Graph & Report — jo aakhri baar chuna tha wahi khule.
+  const [view, setViewState] = useState("list");
+  useEffect(() => { try { if (localStorage.getItem(VIEW_KEY) === "report") setViewState("report"); } catch {} }, []);
+  const setView = (v) => { setViewState(v); try { localStorage.setItem(VIEW_KEY, v); } catch {} };
 
   // form state
   const [name, setName] = useState("");
@@ -79,9 +85,17 @@ function MockMarksInner() {
       </section>
 
       <section className="section" style={{ marginTop: 12 }}>
-        <button className="btn btn--primary btn--sm" onClick={() => (open ? (setOpen(false), resetForm()) : setOpen(true))}>
-          {open ? "✕ Cancel" : `➕ Add ${cat.label} marks`}
-        </button>
+        <div className="row between" style={{ gap: 8, flexWrap: "wrap" }}>
+          <button className="btn btn--primary btn--sm" onClick={() => (open ? (setOpen(false), resetForm()) : setOpen(true))}>
+            {open ? "✕ Cancel" : `➕ Add ${cat.label} marks`}
+          </button>
+          <div className="mr-view" role="group" aria-label="View">
+            <button className={"btn btn--sm " + (view === "list" ? "btn--primary" : "btn--ghost")}
+              aria-pressed={view === "list"} onClick={() => setView("list")}>📋 List</button>
+            <button className={"btn btn--sm " + (view === "report" ? "btn--primary" : "btn--ghost")}
+              aria-pressed={view === "report"} onClick={() => setView("report")}>📈 Graph &amp; Report</button>
+          </div>
+        </div>
 
         {open && (
           <div className="glass-card" style={{ marginTop: 12 }}>
@@ -181,7 +195,9 @@ function MockMarksInner() {
       </section>
 
       <section className="section">
-        {mocks.length === 0 ? (
+        {view === "report" ? (
+          <MockReport cat={cat.key} mocks={mocks} />
+        ) : mocks.length === 0 ? (
           <div className="placeholder">Abhi koi {cat.label} record nahi. Upar “➕ Add {cat.label} marks” se daalo.</div>
         ) : (
           <div style={{ display: "grid", gap: 12 }}>
