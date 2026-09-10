@@ -10,7 +10,7 @@ import { useEffect, useRef } from "react";
 import {
   SUBJECTS, addWrong, setDetail, storeImages, isSubject, findByQid, dedupeByQid,
   getWrongBook, displayOrder, touchWrong, getDeletedQids, removeWrong,
-  imagesOf, setQid,
+  imagesOf, setQid, healQids,
 } from "@/lib/wrongbook";
 import { imageBlob } from "@/lib/imgclip";
 import { getDoneMap, markDone } from "@/lib/answersdone";
@@ -109,6 +109,18 @@ export default function OverlayInbox() {
           }
           // race se phir bhi ban gaye duplicates turant saaf ho jayen
           if ((items || []).length) await dedupeByQid().catch(() => {});
+
+          // Jin records ka qid kho gaya, unhe overlay ki list se wapas jodo —
+          // kram bhejne se PEHLE, warna wo kram mein hote hi nahi aur panel
+          // ka question site par "kahin nahi" milta. (Kaise khota tha:
+          // lib/wrongbook healQids.) Sirf string ka map hai — sasta.
+          try {
+            const res = await fetch(`${base}/adopted`, { cache: "no-store" });
+            if (res.ok) {
+              const { map } = await res.json();
+              withSpace(() => healQids(map));
+            }
+          } catch { /* purana overlay — ye route nahi hai */ }
 
           // Neeche ke teeno kaam isi ek padhi hui book par chalte hain.
           const book = getWrongBook();
