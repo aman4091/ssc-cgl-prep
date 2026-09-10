@@ -65,6 +65,9 @@
   --tb-raised: #ffffff;        /* utha hua card ka mazboot roop */
   --tb-ink-2: #3d5049;         /* doosre darje ka text */
   --tb-amber: #e6a344;         /* warning / Mark-for-Review wala button */
+  --tb-panic: #d33a2c;         /* 🚨 panic button — site ke laal se tez, door se dikhe */
+  --tb-panic-bg: #000000;      /* panic player ka tal — video ke peeche kaala hi */
+  --tb-panic-ink: #ffffff;
 
   /* Site pehle se Inter load karti hai (app/layout.js, --font-inter) —
      isi ko istemal karte hain, Devanagari fallback ke saath. */
@@ -989,3 +992,88 @@
 .examskin .hresume:hover { background: var(--tb-blue-dark); }
 .examskin .hresume span { font-size: 11px; opacity: 0.75; font-weight: 700; }
 @media (max-width: 720px) { .examskin .hresume { left: 12px; bottom: 76px; } }
+
+/* 🚨 Panic button (components/PanicButton). Daayein kone mein Vocab Rush
+   (22px) aur CA Rush (92px) pehle se hain — ye usi 70px ki seedhi mein upar. */
+.examskin .panic-fab {
+  position: fixed; right: 22px; bottom: 162px; z-index: 64;
+  width: 52px; height: 52px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--tb-panic); color: var(--tb-panic-ink);
+  border: none; font-size: 1.35rem; cursor: pointer;
+  box-shadow: 0 10px 28px -8px color-mix(in srgb, var(--tb-panic) 70%, transparent);
+  transition: transform 0.15s ease;
+}
+.examskin .panic-fab:hover { transform: scale(1.08); }
+body.exam-on .panic-fab { display: none; }
+
+/* Panic player (components/PanicPlayer) — poori screen, sab popups ke upar. */
+.examskin .panic {
+  position: fixed; inset: 0; z-index: 5000;
+  display: flex; background: var(--tb-panic-bg); color: var(--tb-panic-ink);
+  overflow: hidden; overscroll-behavior: none;
+}
+.examskin .panic__stage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.examskin .panic__media { width: 100%; height: 100%; object-fit: contain; display: block; }
+.examskin .panic__preload { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.examskin .panic__bars {
+  position: absolute; z-index: 3; left: 12px; right: 60px;
+  top: calc(12px + env(safe-area-inset-top));
+  display: flex; gap: 4px; pointer-events: none;
+}
+.examskin .panic__bar {
+  flex: 1; height: 3px; border-radius: 2px; overflow: hidden;
+  background: color-mix(in srgb, var(--tb-panic-ink) 30%, transparent);
+}
+.examskin .panic__bar > span { display: block; height: 100%; background: var(--tb-panic-ink); }
+.examskin .panic__taps {
+  position: absolute; inset: 0; z-index: 2;
+  display: grid; grid-template-columns: 30% 40% 30%;
+}
+.examskin .panic__tap {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.examskin .panic__tap:focus-visible { outline: none; }
+.examskin .panic__x {
+  position: absolute; z-index: 4; right: 10px; top: calc(4px + env(safe-area-inset-top));
+  width: 42px; height: 42px; border-radius: 50%;
+  background: color-mix(in srgb, var(--tb-panic-bg) 45%, transparent);
+  color: var(--tb-panic-ink); border: 0; font-size: 1.1rem; cursor: pointer;
+}
+.examskin .panic__paused {
+  position: absolute; z-index: 3; inset: 0; display: grid; place-items: center;
+  font-size: 3rem; opacity: 0.8; pointer-events: none;
+}
+.examskin .panic__unmute {
+  position: absolute; z-index: 4; left: 50%; transform: translateX(-50%);
+  bottom: calc(64px + env(safe-area-inset-bottom));
+  background: var(--tb-panic-ink); color: var(--tb-panic-bg);
+  border: 0; border-radius: 999px; padding: 12px 20px;
+  font-size: 0.95rem; font-weight: 800; cursor: pointer; white-space: nowrap;
+}
+.examskin .panic__meta {
+  position: absolute; z-index: 3; left: 14px; right: 14px;
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  display: flex; gap: 10px; align-items: center;
+  font-size: 0.82rem; font-weight: 700; opacity: 0.85; pointer-events: none;
+  text-shadow: 0 1px 3px var(--tb-panic-bg);
+}
+.examskin .panic__center {
+  position: relative; z-index: 1; margin: auto; width: min(440px, 100%);
+  padding: 24px 20px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.examskin .panic__after h2 { margin: 0; font-size: 1.6rem; font-weight: 800; line-height: 1.3; color: var(--tb-panic-ink); }
+.examskin .panic__week { margin: 0; opacity: 0.7; }
+.examskin .panic__choices { display: flex; flex-direction: column; gap: 10px; width: 100%; margin-top: 6px; }
+.examskin .panic__btn {
+  width: 100%; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--tb-blue);
+  background: var(--tb-blue); color: var(--tb-panic-ink);
+  font-size: 1rem; font-weight: 800; cursor: pointer;
+}
+.examskin .panic__btn:hover { background: var(--tb-blue-dark); }
+.examskin .panic__btn--ghost {
+  background: transparent; border-color: color-mix(in srgb, var(--tb-panic-ink) 35%, transparent);
+}
+.examskin .panic__btn--ghost:hover { background: color-mix(in srgb, var(--tb-panic-ink) 10%, transparent); }

@@ -27,6 +27,8 @@ export default function manifest() {
     ],
     shortcuts: [
       { name: "✍️ Solve", url: "/answers" },
+      // App icon ko long-press -> seedha videos.
+      { name: "🚨 Panic", url: "/panic" },
     ],
   };
 }

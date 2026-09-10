@@ -9,7 +9,7 @@
  */
 // V badalte hi purane caches activate par saaf ho jate hain. Jab bhi is file ka
 // vyavhaar badle ya purana cache shaq ke ghere mein aaye, ise badha dena.
-const V = "v72";
+const V = "v73";
 const SHELL = `cgl-shell-${V}`;
 const BLOBS = `cgl-r2-${V}`;
 
@@ -77,6 +77,10 @@ self.addEventListener("fetch", (e) => {
   // cache ho sakti hain — SW opaque response bhi rakh leta hai aur <img> use kar
   // leta hai. Filenames content-addressed hain, isliye cache kabhi stale nahi hoti.
   if (!same) {
+    // 🚨 Panic ki videos (panic/) nahi — <video> Range request bhejta hai jise
+    // cacheFirst poori opaque file se jawab deta aur player atak jata; aur 500MB
+    // reels cache mein bharna waise bhi galat hai. Seedha network.
+    if (url.pathname.startsWith("/panic/")) return;
     if (/\.r2\.dev$/.test(url.hostname)) e.respondWith(cacheFirst(req, BLOBS));
     return;                                             // Supabase, Gemini, baaki sab — network
   }
