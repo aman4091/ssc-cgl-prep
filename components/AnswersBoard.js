@@ -107,9 +107,12 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
   const [pasteText, setPasteText] = useState("");
   const [editing, setEditing] = useState(false);
   const [copied, setCopied] = useState("");
+  // 🤖 DeepSeek ka answer (🌍 GS) — Gemini wale se alag, apne button ke peeche.
+  const [aiOpen, setAiOpen] = useState(false);
 
   const a1 = cleanAnswer(rec.detail || rec.q?.solution || "");
   const a2 = cleanAnswer(rec.detail2 || "");
+  const ai = String(rec.aiNotes || "").trim();
 
   const ping = (k) => { setCopied(k); setTimeout(() => setCopied(""), 1600); };
 
@@ -197,6 +200,15 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
             kuch "laga hua" dikhta bhi nahi. */}
         <button className="ansp__btn ansp__btn--go" onClick={() => onDone(rec)}>✅ Ho gaya</button>
         <button className="ansp__btn ansp__btn--go" onClick={() => onOpen(rec)}>✍️ Solve</button>
+        {ai ? (
+          <button className="ansp__btn ansp__btn--ai" onClick={() => setAiOpen((v) => !v)} aria-expanded={aiOpen}>
+            {aiOpen ? "🤖 DeepSeek ▲" : "🤖 DeepSeek"}
+          </button>
+        ) : rec.aiWant ? (
+          <button className="ansp__btn" disabled title="Overlay par DeepSeek answer likh raha hai — ban-te hi yahan aa jayega">
+            🤖 DeepSeek ⏳
+          </button>
+        ) : null}
         <button className="ansp__btn" onClick={askGemini}>{copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}</button>
         <button className="ansp__btn" onClick={copyPrompt}>{copied === "pr" ? "✓" : "📋 Prompt"}</button>
         <button className="ansp__btn" onClick={openPaste}>📥 Answer paste</button>
@@ -226,6 +238,13 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
         </div>
       )}
 
+      {aiOpen && ai && (
+        <div className="ansp__answer ansp__answer--ai">
+          <div className="ansp__aihead">🤖 DeepSeek ka answer</div>
+          <Markdown>{ai}</Markdown>
+        </div>
+      )}
+
       {/* Dusra answer aane par wahi dikhta hai; pehla mitta nahi — fold mein
           bach jata hai, taaki dono padhe ja sakein. Overlay par bhi aisa hi tha. */}
       {a2 ? (
@@ -238,6 +257,10 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
         </>
       ) : a1 ? (
         <div className="ansp__answer"><Markdown>{a1}</Markdown></div>
+      ) : ai ? (
+        aiOpen ? null : <div className="ansp__answer ansp__answer--empty">Iska answer upar 🤖 DeepSeek button mein hai.</div>
+      ) : rec.aiWant ? (
+        <div className="ansp__answer ansp__answer--empty">⏳ DeepSeek answer ban raha hai — overlay chalu ho to minute bhar mein aa jayega.</div>
       ) : (
         <div className="ansp__answer ansp__answer--empty">Is question ka answer abhi nahi hai.</div>
       )}
@@ -376,7 +399,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     // hara ho jata hai. Hatana ho to 🗑️ hai.
     const rawNb = getReview().filter((r) => r.everWrong);
     const mSig = rawMock
-      .map((r) => `${r.id}~${r.at}~${r.subject}~${(r.detail || "").length}~${(r.detail2 || "").length}`)
+      .map((r) => `${r.id}~${r.at}~${r.subject}~${(r.detail || "").length}~${(r.detail2 || "").length}~${(r.aiNotes || "").length}~${r.aiWant ? 1 : 0}`)
       .join("|");
     const nSig = rawNb.map((r) => `${r.key}~${r.at}~${r.subject}~${r.correct ? 1 : 0}`).join("|");
 

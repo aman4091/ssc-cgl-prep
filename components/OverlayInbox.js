@@ -10,7 +10,7 @@ import { useEffect, useRef } from "react";
 import {
   SUBJECTS, addWrong, setDetail, storeImages, isSubject, findByQid, dedupeByQid,
   getWrongBook, displayOrder, touchWrong, getDeletedQids, removeWrong,
-  imagesOf, setQid, healQids,
+  imagesOf, setQid, healQids, setAiNotes,
 } from "@/lib/wrongbook";
 import { imageBlob } from "@/lib/imgclip";
 import { getDoneMap, markDone } from "@/lib/answersdone";
@@ -98,7 +98,7 @@ export default function OverlayInbox() {
                 // add se theek pehle aakhri baar check (duplicates ki wajah)
                 if (!findByQid(it.qid)) {
                   // qid saath rakho — overlay ke answers page (q093...) se match hota hai
-                  const rec = withSpace(() => addWrong({ subject, q: null, images, note: "", qid: it.qid }));
+                  const rec = withSpace(() => addWrong({ subject, q: null, images, note: "", qid: it.qid, aiWant: !!it.ai }));
                   if (it.answer) withSpace(() => setDetail(rec.id, it.answer));
                 }
                 done.add(it.qid);
@@ -270,6 +270,37 @@ export default function OverlayInbox() {
                   url: st.supabaseUrl, key: st.supabaseAnonKey, code: st.syncCode,
                 }),
               });
+            }
+          } catch { /* purana overlay — ye route nahi hai */ }
+
+          // 🤖 DeepSeek — 🌍 GS ke question ka poora answer overlay khud
+          // likhwata hai (screenshot ka OCR + DeepSeek). Key yahan Settings mein
+          // hai, isliye wahi use de dete hain — sirf 127.0.0.1, isi PC par.
+          try {
+            const st = getSettings();
+            if (st.apiKey) {
+              await fetch(`${base}/deepseek-config`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ key: st.apiKey, model: st.model, baseUrl: st.baseUrl }),
+              });
+            }
+          } catch { /* purana overlay — ye route nahi hai */ }
+
+          // Ban chuke DeepSeek answer record par — apni alag field (aiNotes)
+          // mein, taaki card par unka apna button ho. Record abhi yahan na
+          // pahuncha ho to ack nahi karte; agle poll par phir.
+          try {
+            const res = await fetch(`${base}/pending-notes`, { cache: "no-store" });
+            if (res.ok) {
+              const { items } = await res.json();
+              for (const it of items || []) {
+                const rec = findByQid(it.qid);
+                if (!rec) continue;
+                if (withSpace(() => setAiNotes(rec.id, it.notes))) {
+                  await fetch(`${base}/ack-notes/${it.qid}`, { method: "POST" });
+                }
+              }
             }
           } catch { /* purana overlay — ye route nahi hai */ }
 
