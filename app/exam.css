@@ -993,11 +993,8 @@
 .examskin .todo__chip { border: 1px solid var(--tb-line); background: var(--tb-soft); color: var(--tb-ink-2); border-radius: 999px; padding: 5px 12px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--tb-font); }
 .examskin .todo__chip:hover { border-color: var(--tb-line-hard); }
 .examskin .todo__chip.is-on { background: var(--tb-blue); border-color: var(--tb-blue); color: #fff; }
-.examskin .todo__groups { display: flex; flex-direction: column; gap: 14px; margin-top: 14px; }
-.examskin .todo__group .todo__list { margin-top: 6px; }
-.examskin .todo__ghead { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--tb-q); }
-.examskin .todo__gcount { font-size: 11px; color: var(--tb-dim); background: var(--tb-soft); border: 1px solid var(--tb-line); border-radius: 999px; padding: 0 8px; }
-.examskin .todo__sub { flex: none; }
+.examskin .todo__chipn { margin-left: 6px; font-size: 11px; font-weight: 700; background: var(--tb-rev-soft); color: var(--tb-rev-ink); border-radius: 999px; padding: 0 7px; }
+.examskin .todo__chip.is-on .todo__chipn { background: rgba(255, 255, 255, 0.22); color: #fff; }
 .examskin .todo__add { display: flex; gap: 8px; margin-top: 10px; }
 .examskin .todo__add .input { flex: 1; min-width: 0; }
 .examskin .todo__list { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }

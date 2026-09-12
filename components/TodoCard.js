@@ -1,19 +1,23 @@
 "use client";
 
-// ✅ Homepage ki To-do list — subject-wise. Wahi list PC ke to-do overlay par
-// bhi dikhti hai (D:\over\todo_app.py) — wahan ✅ karo to yahan agli sync par
-// aa jaata hai, isliye card har kuch second list dobara dekh leta hai.
+// 🎯 Homepage ke Weak Topics — subject-wise. Chuna hua subject hi tab hai:
+// list sirf usi ke topic dikhati hai, aur naya topic bhi usi mein judta hai.
+// Wahi list PC ke overlay par bhi dikhti hai (D:\over\todo_app.py) — wahan
+// ✅ karo to yahan agli sync par aa jaata hai, isliye card har kuch second
+// list dobara dekh leta hai.
+//
+// (Andar ka naam "todo" hi hai — store `cgl.todos` — taaki sync aur PC
+// overlay bina badle chalte rahein. Dikhne mein ab ye Weak Topics hai.)
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   getTodos, addTodo, toggleTodo, removeTodo, clearDone, todoSig,
-  TODO_SUBJECTS, groupOpen, subjectOf,
+  TODO_SUBJECTS, subjectOf,
 } from "@/lib/todo";
 
 // Pichhli baar kaunsa subject chuna tha — sirf is device ki suvidha, isliye
 // `cgl.` ke bina (sync nahi hoti).
 const LAST_KEY = "todo.lastSubject";
-const iconOf = (k) => (TODO_SUBJECTS.find((s) => s.key === k) || {}).icon || "📌";
 
 export default function TodoCard() {
   const [list, setList] = useState([]);
@@ -53,15 +57,17 @@ export default function TodoCard() {
     refresh();
   };
 
-  const open = list.filter((t) => !t.done);
-  const done = list.filter((t) => t.done);
-  const groups = groupOpen(list);
+  const openAll = list.filter((t) => !t.done);
+  const left = Object.fromEntries(TODO_SUBJECTS.map((s) => [s.key, openAll.filter((t) => subjectOf(t) === s.key).length]));
+  const mine = list.filter((t) => subjectOf(t) === subject);
+  const open = mine.filter((t) => !t.done);
+  const done = mine.filter((t) => t.done);
+  const cur = TODO_SUBJECTS.find((s) => s.key === subject) || TODO_SUBJECTS[0];
 
   const row = (t, isDone) => (
     <li key={t.id} className={`todo__item${isDone ? " is-done" : ""}`}>
       <label>
         <input type="checkbox" checked={isDone} onChange={() => { toggleTodo(t.id); refresh(); }} />
-        {isDone && <span className="todo__sub" title={subjectOf(t)}>{iconOf(subjectOf(t))}</span>}
         <span>{t.text}</span>
       </label>
       <button className="todo__x" onClick={() => { removeTodo(t.id); refresh(); }} aria-label="Hatao" title="Hatao">✕</button>
@@ -72,21 +78,23 @@ export default function TodoCard() {
     <section className="panel todo">
       <div className="card-title-row">
         <div>
-          <span className="section-kicker">Aaj ke kaam</span>
-          <h2>✅ To-do {open.length > 0 && <span className="todo__count">{open.length} baaki</span>}</h2>
+          <span className="section-kicker">Kamzor jagah</span>
+          <h2>🎯 Weak Topics {openAll.length > 0 && <span className="todo__count">{openAll.length} baaki</span>}</h2>
         </div>
       </div>
 
-      <div className="todo__subjects" role="group" aria-label="Subject">
+      <div className="todo__subjects" role="tablist" aria-label="Subject">
         {TODO_SUBJECTS.map((s) => (
           <button
             key={s.key}
             type="button"
+            role="tab"
             className={`todo__chip${subject === s.key ? " is-on" : ""}`}
-            aria-pressed={subject === s.key}
+            aria-selected={subject === s.key}
             onClick={() => pick(s.key)}
           >
             {s.icon} {s.label}
+            {left[s.key] > 0 && <span className="todo__chipn">{left[s.key]}</span>}
           </button>
         ))}
       </div>
@@ -96,41 +104,35 @@ export default function TodoCard() {
           className="input"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder={`${iconOf(subject)} ${TODO_SUBJECTS.find((s) => s.key === subject)?.label} ka naya kaam… (Enter)`}
+          placeholder={`${cur.icon} ${cur.label} ka weak topic likho… (Enter)`}
           maxLength={300}
         />
         <button className="btn btn--primary btn--sm" type="submit" disabled={!text.trim()}>➕ Jodo</button>
       </form>
 
       {open.length === 0 ? (
-        <p className="todo__empty">{done.length ? "🎉 Sab ho gaya!" : "Abhi koi kaam nahi — upar subject chuno aur likho."}</p>
+        <p className="todo__empty">
+          {done.length
+            ? `🎉 ${cur.label} ke saare weak topics cover ho gaye!`
+            : `${cur.icon} ${cur.label} mein abhi koi weak topic nahi — upar likho.`}
+        </p>
       ) : (
-        <div className="todo__groups">
-          {groups.map((g) => (
-            <div key={g.key} className="todo__group">
-              <div className="todo__ghead">
-                <span>{g.icon} {g.label}</span>
-                <span className="todo__gcount">{g.items.length}</span>
-              </div>
-              <ul className="todo__list">
-                {g.items.map((t) => row(t, false))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        <ul className="todo__list">
+          {open.map((t) => row(t, false))}
+        </ul>
       )}
 
       {done.length > 0 && (
         <div className="todo__donebar">
           <button className="hmore" onClick={() => setShowDone((v) => !v)}>
-            {showDone ? "▲" : "▼"} Ho gaye ({done.length})
+            {showDone ? "▲" : "▼"} Cover ho gaye ({done.length})
           </button>
           {showDone && (
             <>
               <ul className="todo__list todo__list--done">
                 {done.map((t) => row(t, true))}
               </ul>
-              <button className="btn btn--ghost btn--sm" onClick={() => { clearDone(); refresh(); }}>🧹 Ho gaye wale hatao</button>
+              <button className="btn btn--ghost btn--sm" onClick={() => { clearDone(subject); refresh(); }}>🧹 {cur.label} ke cover hue hatao</button>
             </>
           )}
         </div>
