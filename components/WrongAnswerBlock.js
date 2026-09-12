@@ -21,8 +21,12 @@ export default function WrongAnswerBlock({ rec, shown, hideAnswer = false }) {
   // pehle wale ko mitata nahi, wo fold ke peeche bach jata hai. Yahan pehle sirf
   // `detail` (yaani pehla) dikhta tha, isliye tablet par naya answer paste karne
   // ke baad bhi purana hi milta tha. Ab wahi hisaab jo card par hai.
-  const a1 = cleanAnswer(rec.detail || "");
-  const a2 = cleanAnswer(rec.detail2 || "");
+  // 🌍 GS ka answer sirf DeepSeek ka — /answers card jaisa hi (Gemini wala
+  // record mein hai, par GS par dikhta nahi).
+  const isGs = rec.subject === "gs";
+  const a1 = isGs ? "" : cleanAnswer(rec.detail || "");
+  const a2 = isGs ? "" : cleanAnswer(rec.detail2 || "");
+  const ai = isGs ? String(rec.aiNotes || "").trim() : "";
 
   return (
     <>
@@ -78,6 +82,16 @@ export default function WrongAnswerBlock({ rec, shown, hideAnswer = false }) {
               <div style={{ marginTop: 6 }}><Markdown>{a1}</Markdown></div>
             </details>
           )}
+        </div>
+      )}
+
+      {shown && ai && (
+        <div
+          className="mt-8"
+          style={{ fontSize: "0.9rem", borderTop: "1px solid var(--glass-border)", paddingTop: 10 }}
+        >
+          <p className="muted" style={{ fontSize: "0.78rem", marginBottom: 4 }}>🤖 DeepSeek · details</p>
+          <Markdown>{ai}</Markdown>
         </div>
       )}
 

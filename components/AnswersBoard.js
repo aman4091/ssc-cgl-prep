@@ -113,6 +113,11 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
   const a1 = cleanAnswer(rec.detail || rec.q?.solution || "");
   const a2 = cleanAnswer(rec.detail2 || "");
   const ai = String(rec.aiNotes || "").trim();
+  // 🌍 GS: answer SIRF DeepSeek ka — wahi seedha card par. Gemini wala record
+  // mein pada rehta hai (mita nahi), bas dikhta nahi, aur uske buttons
+  // (✨ / 📋 / 📥 / ✏️) bhi GS par nahi. Jinka DeepSeek answer abhi nahi bana,
+  // unka PC ka overlay ek-ek karke bana raha hai.
+  const isGs = rec.subject === "gs";
 
   const ping = (k) => { setCopied(k); setTimeout(() => setCopied(""), 1600); };
 
@@ -200,7 +205,7 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
             kuch "laga hua" dikhta bhi nahi. */}
         <button className="ansp__btn ansp__btn--go" onClick={() => onDone(rec)}>✅ Ho gaya</button>
         <button className="ansp__btn ansp__btn--go" onClick={() => onOpen(rec)}>✍️ Solve</button>
-        {ai ? (
+        {isGs ? null : ai ? (
           <button className="ansp__btn ansp__btn--ai" onClick={() => setAiOpen((v) => !v)} aria-expanded={aiOpen}>
             {aiOpen ? "🤖 DeepSeek ▲" : "🤖 DeepSeek"}
           </button>
@@ -209,10 +214,14 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
             🤖 DeepSeek ⏳
           </button>
         ) : null}
-        <button className="ansp__btn" onClick={askGemini}>{copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}</button>
-        <button className="ansp__btn" onClick={copyPrompt}>{copied === "pr" ? "✓" : "📋 Prompt"}</button>
-        <button className="ansp__btn" onClick={openPaste}>📥 Answer paste</button>
-        {shownDetail(rec) && <button className="ansp__btn" onClick={openEdit}>✏️ Edit</button>}
+        {!isGs && (
+          <>
+            <button className="ansp__btn" onClick={askGemini}>{copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}</button>
+            <button className="ansp__btn" onClick={copyPrompt}>{copied === "pr" ? "✓" : "📋 Prompt"}</button>
+            <button className="ansp__btn" onClick={openPaste}>📥 Answer paste</button>
+            {shownDetail(rec) && <button className="ansp__btn" onClick={openEdit}>✏️ Edit</button>}
+          </>
+        )}
         {/* Dabate hi ye question External Mock ki aam list se hat kar apni
             alag "🔴 Hard" shelf mein chala jata hai (Kahan-se-aaye dropdown). */}
         <button className="ansp__btn" onClick={() => onToggleHard(rec)}>
@@ -238,7 +247,7 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
         </div>
       )}
 
-      {aiOpen && ai && (
+      {!isGs && aiOpen && ai && (
         <div className="ansp__answer ansp__answer--ai">
           <div className="ansp__aihead">🤖 DeepSeek ka answer</div>
           <Markdown>{ai}</Markdown>
@@ -247,7 +256,18 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
 
       {/* Dusra answer aane par wahi dikhta hai; pehla mitta nahi — fold mein
           bach jata hai, taaki dono padhe ja sakein. Overlay par bhi aisa hi tha. */}
-      {a2 ? (
+      {isGs ? (
+        ai ? (
+          <div className="ansp__answer ansp__answer--ai">
+            <div className="ansp__aihead">🤖 DeepSeek</div>
+            <Markdown>{ai}</Markdown>
+          </div>
+        ) : (
+          <div className="ansp__answer ansp__answer--empty">
+            ⏳ DeepSeek answer ban raha hai — PC par overlay chalu ho to apne aap aa jayega.
+          </div>
+        )
+      ) : a2 ? (
         <>
           <div className="ansp__answer"><Markdown>{a2}</Markdown></div>
           <details className="ansp__old">
