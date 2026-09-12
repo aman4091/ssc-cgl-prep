@@ -10,7 +10,8 @@
 
 import { useEffect, useState } from "react";
 import { hydrateStore, storeFlush } from "@/lib/bigstore";
-import { runOneTimeReset, clearOldGeminiPrompt, clearStaleQuizzes } from "@/lib/resetonce";
+import { runOneTimeReset, clearOldGeminiPrompt, clearStaleQuizzes, applyAnswerPrompts } from "@/lib/resetonce";
+import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 
 export default function StoreGate({ children }) {
   const [ready, setReady] = useState(false);
@@ -22,7 +23,7 @@ export default function StoreGate({ children }) {
     // likhte aur IDB se purana data uske baad wapas aa jata. Safety timeout ise
     // nahi chalata — wo sirf UI kholta hai.
     hydrateStore()
-      .then(() => { runOneTimeReset(); clearOldGeminiPrompt(); clearStaleQuizzes(); })
+      .then(() => { runOneTimeReset(); clearOldGeminiPrompt(); clearStaleQuizzes(); applyAnswerPrompts(ANSWER_PROMPTS); })
       .catch(() => {})
       .finally(finish);
     const t = setTimeout(finish, 2000);

@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   SUBJECTS, getWrongBook, isSubject, imagesOf, dayLabel,
   storeImages, addWrong, removeWrong, isPracticeable,
-  setDetail2, setShownDetail, shownDetail, cleanAnswer,
+  setDetail2, setShownDetail, cleanAnswer, newGeminiAnswer, newGemini1, newGemini2,
 } from "@/lib/wrongbook";
 import { getReview, removeReview, fixReviewAnswer } from "@/lib/qreview";
 import { fixCAAnswer } from "@/lib/feed";
@@ -34,6 +34,7 @@ import {
 import { tagChaptersByText } from "@/lib/client-ai";
 import { getHardSet, toggleHard, pruneHard } from "@/lib/hardq";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
+import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 
 // Answers + Mistake Notebook — ab EK page.
 //
@@ -100,24 +101,21 @@ const bucketOf = (r) => (KNOWN.has(r.subject) ? r.subject : "other");
 const labelOf = (k) =>
   k === "other" ? "Other" : (SUBJECTS.find((s) => s.key === k) || ALL_SUBJ).label;
 
-function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard }) {
+function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard, onPopup }) {
   const { urls, missing } = useImageUrls(imagesOf(rec));
   const [lb, setLb] = useState(null);
   const [pasteOpen, setPasteOpen] = useState(false);
   const [pasteText, setPasteText] = useState("");
   const [editing, setEditing] = useState(false);
   const [copied, setCopied] = useState("");
-  // 🤖 DeepSeek ka answer (🌍 GS) — Gemini wale se alag, apne button ke peeche.
-  const [aiOpen, setAiOpen] = useState(false);
 
-  const a1 = cleanAnswer(rec.detail || rec.q?.solution || "");
-  const a2 = cleanAnswer(rec.detail2 || "");
+  // Har subject ka MUKHYA answer ab DeepSeek ka hai (PC ka overlay likhta hai).
+  // Purane Gemini answer record mein pade hain par dikhte nahi; Gemini wala
+  // sirf tab dikhta hai jab NAYA ho — 📥 se paste, ✏️ se sudhara, ya overlay se
+  // copy hokar aaya (`ansAt`, lib/wrongbook). ✨ / 📋 / 📥 buttons pehle jaise.
+  const a1 = cleanAnswer(newGemini1(rec) || rec.q?.solution || "");
+  const a2 = cleanAnswer(newGemini2(rec));
   const ai = String(rec.aiNotes || "").trim();
-  // 🌍 GS: answer SIRF DeepSeek ka — wahi seedha card par. Gemini wala record
-  // mein pada rehta hai (mita nahi), bas dikhta nahi, aur uske buttons
-  // (✨ / 📋 / 📥 / ✏️) bhi GS par nahi. Jinka DeepSeek answer abhi nahi bana,
-  // unka PC ka overlay ek-ek karke bana raha hai.
-  const isGs = rec.subject === "gs";
 
   const ping = (k) => { setCopied(k); setTimeout(() => setCopied(""), 1600); };
 
@@ -135,7 +133,7 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
       const ok = await copyImageToClipboard(() => imageBlob(imgs[0]));
       if (ok) {
         ping("gem");
-        onArm();
+        onArm(prompt);
         onFlash(`🖼️ Image copy ho gayi — ${aiSiteLabel(aiSite)} mein paste karo, phir yahan wapas aao (prompt apne aap copy hoga)`);
       } else {
         onFlash("Is browser mein image copy support nahi — 📋 Prompt se kaam chalao");
@@ -155,7 +153,7 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
   // 📥 = naya DUSRA answer (pehla fold mein bach jata hai). ✏️ = jo abhi dikh
   // raha hai usi ko sudharo.
   const openPaste = () => { setEditing(false); setPasteText(""); setPasteOpen(true); };
-  const openEdit = () => { setEditing(true); setPasteText(shownDetail(rec)); setPasteOpen(true); };
+  const openEdit = () => { setEditing(true); setPasteText(newGeminiAnswer(rec)); setPasteOpen(true); };
   const savePaste = () => {
     const t = pasteText.trim();
     if (!t) return;
@@ -187,6 +185,9 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
         {inkN > 0 && (
           <span className="ansp__ink" title="Is device par is question ki handwriting hai">✍️ {inkN}</span>
         )}
+        {onPopup && (
+          <button className="ansp__pop" onClick={onPopup} title="Popup mein kholo — sirf yahi question, ◀ ▶ se aage-peechhe">⛶</button>
+        )}
       </h2>
 
       {urls.map((u, i) => (
@@ -205,23 +206,10 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
             kuch "laga hua" dikhta bhi nahi. */}
         <button className="ansp__btn ansp__btn--go" onClick={() => onDone(rec)}>✅ Ho gaya</button>
         <button className="ansp__btn ansp__btn--go" onClick={() => onOpen(rec)}>✍️ Solve</button>
-        {isGs ? null : ai ? (
-          <button className="ansp__btn ansp__btn--ai" onClick={() => setAiOpen((v) => !v)} aria-expanded={aiOpen}>
-            {aiOpen ? "🤖 DeepSeek ▲" : "🤖 DeepSeek"}
-          </button>
-        ) : rec.aiWant ? (
-          <button className="ansp__btn" disabled title="Overlay par DeepSeek answer likh raha hai — ban-te hi yahan aa jayega">
-            🤖 DeepSeek ⏳
-          </button>
-        ) : null}
-        {!isGs && (
-          <>
-            <button className="ansp__btn" onClick={askGemini}>{copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}</button>
-            <button className="ansp__btn" onClick={copyPrompt}>{copied === "pr" ? "✓" : "📋 Prompt"}</button>
-            <button className="ansp__btn" onClick={openPaste}>📥 Answer paste</button>
-            {shownDetail(rec) && <button className="ansp__btn" onClick={openEdit}>✏️ Edit</button>}
-          </>
-        )}
+        <button className="ansp__btn" onClick={askGemini}>{copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}</button>
+        <button className="ansp__btn" onClick={copyPrompt}>{copied === "pr" ? "✓" : "📋 Prompt"}</button>
+        <button className="ansp__btn" onClick={openPaste}>📥 Answer paste</button>
+        {newGeminiAnswer(rec) && <button className="ansp__btn" onClick={openEdit}>✏️ Edit</button>}
         {/* Dabate hi ye question External Mock ki aam list se hat kar apni
             alag "🔴 Hard" shelf mein chala jata hai (Kahan-se-aaye dropdown). */}
         <button className="ansp__btn" onClick={() => onToggleHard(rec)}>
@@ -247,43 +235,32 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
         </div>
       )}
 
-      {!isGs && aiOpen && ai && (
-        <div className="ansp__answer ansp__answer--ai">
-          <div className="ansp__aihead">🤖 DeepSeek ka answer</div>
-          <Markdown>{ai}</Markdown>
-        </div>
-      )}
-
-      {/* Dusra answer aane par wahi dikhta hai; pehla mitta nahi — fold mein
-          bach jata hai, taaki dono padhe ja sakein. Overlay par bhi aisa hi tha. */}
-      {isGs ? (
-        ai ? (
-          <div className="ansp__answer ansp__answer--ai">
-            <div className="ansp__aihead">🤖 DeepSeek</div>
-            <Markdown>{ai}</Markdown>
-          </div>
-        ) : (
-          <div className="ansp__answer ansp__answer--empty">
-            ⏳ DeepSeek answer ban raha hai — PC par overlay chalu ho to apne aap aa jayega.
-          </div>
-        )
-      ) : a2 ? (
+      {/* ✨ Naya Gemini answer (agar tumne diya) upar; dusra aaya to wahi, aur
+          pehla fold mein. Uske neeche hamesha DeepSeek ka. */}
+      {a2 ? (
         <>
-          <div className="ansp__answer"><Markdown>{a2}</Markdown></div>
-          <details className="ansp__old">
-            <summary>Pehla answer dekho</summary>
-            <div className="ansp__answer"><Markdown>{a1}</Markdown></div>
-          </details>
+          <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><Markdown>{a2}</Markdown></div>
+          {a1 && (
+            <details className="ansp__old">
+              <summary>Pehla Gemini answer dekho</summary>
+              <div className="ansp__answer"><Markdown>{a1}</Markdown></div>
+            </details>
+          )}
         </>
       ) : a1 ? (
-        <div className="ansp__answer"><Markdown>{a1}</Markdown></div>
-      ) : ai ? (
-        aiOpen ? null : <div className="ansp__answer ansp__answer--empty">Iska answer upar 🤖 DeepSeek button mein hai.</div>
-      ) : rec.aiWant ? (
-        <div className="ansp__answer ansp__answer--empty">⏳ DeepSeek answer ban raha hai — overlay chalu ho to minute bhar mein aa jayega.</div>
-      ) : (
-        <div className="ansp__answer ansp__answer--empty">Is question ka answer abhi nahi hai.</div>
-      )}
+        <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><Markdown>{a1}</Markdown></div>
+      ) : null}
+
+      {ai ? (
+        <div className="ansp__answer ansp__answer--ai">
+          <div className="ansp__aihead">🤖 DeepSeek</div>
+          <Markdown>{ai}</Markdown>
+        </div>
+      ) : !a1 && !a2 ? (
+        <div className="ansp__answer ansp__answer--empty">
+          ⏳ DeepSeek answer ban raha hai — PC par overlay chalu ho to apne aap aa jayega.
+        </div>
+      ) : null}
 
       {lb !== null && urls[lb] && (
         <div className="lightbox" onClick={() => setLb(null)}>
@@ -715,32 +692,93 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // cheez, aur image jaa chuki hai). Overlay wali chaal: Gemini kholte waqt ek
   // nishaan laga do, aur user jab is tab par WAPAS aata hai to prompt apne aap
   // copy kar do — phir wo Gemini mein dobara paste kar deta hai.
-  const armed = useRef(false);
-  const promptText = useMemo(() => {
+  // Nishaan mein prompt ka TEXT hi rakhte hain — "Sab" wali list mein har card
+  // alag subject ka ho sakta hai, aur wapas aane par usi card ka prompt chahiye.
+  const armed = useRef("");
+  const promptFor = useCallback((subj) => {
     const st = getSettings();
-    const perSubject = String((st.shortcutPrompts || {})[subject] || "").trim();
-    return perSubject || String(st.geminiPrompt || "").trim()
-      || "Is question ko solve karke sahi answer aur short steps do. Hinglish mein.";
-  }, [subject]);
+    const perSubject = String((st.shortcutPrompts || {})[subj] || "").trim();
+    return perSubject || ANSWER_PROMPTS[subj] || String(st.geminiPrompt || "").trim()
+      || ANSWER_PROMPTS.gs;
+  }, []);
 
   useEffect(() => {
     const onFocus = async () => {
       if (!armed.current) return;
-      armed.current = false;
+      const text = armed.current;
+      armed.current = "";
       try {
-        await navigator.clipboard.writeText(promptText);
+        await navigator.clipboard.writeText(text);
         setFlash("📋 Prompt copy ho gaya — Gemini mein paste karke bhejo");
         setTimeout(() => setFlash(""), 4000);
       } catch { /* user 📋 Prompt button use kar lega */ }
     };
     window.addEventListener("focus", onFocus);
     return () => window.removeEventListener("focus", onFocus);
-  }, [promptText]);
+  }, []);
+
+  // 🔍 Popup mode — ek waqt mein EK question, poori screen par; ◀ ▶ se
+  // aage-peechhe, upar se subject badlo. Dhyaan sirf sawaal par rahe.
+  // `focus` = `list` mein jagah (null = band). "Ho gaya" dabate hi wo question
+  // list mein neeche chala jata hai — isliye usi jagah par ab AGLA question
+  // hota hai, jagah badalni nahi padti.
+  const [focus, setFocus] = useState(null);
+  const focusBody = useRef(null);
+  const openPopup = (i) => setFocus(Math.max(0, i));
+  const popupOpen = focus !== null;
+  useEffect(() => {
+    if (!popupOpen) return undefined;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e) => {
+      const tag = (e.target && e.target.tagName) || "";
+      if (tag === "TEXTAREA" || tag === "INPUT" || tag === "SELECT") return;
+      if (e.key === "Escape") setFocus(null);
+      else if (e.key === "ArrowRight") setFocus((f) => (f === null ? f : f + 1));
+      else if (e.key === "ArrowLeft") setFocus((f) => (f === null ? f : Math.max(0, f - 1)));
+    };
+    window.addEventListener("keydown", onKey);
+    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = prevOverflow; };
+  }, [popupOpen]);
+  useEffect(() => { focusBody.current?.scrollTo({ top: 0 }); }, [focus, subject]);
 
   const flashNow = useCallback((msg) => {
     setFlash(msg);
     setTimeout(() => setFlash(""), 5000);
   }, []);
+
+  // Ek card — list mein bhi aur 🔍 popup mein bhi wahi (saare button samet).
+  const renderCard = (r, i, inPopup) => (r.__src === "mock" ? (
+    <AnsCard
+      key={r.uid}
+      rec={r}
+      n={i + 1}
+      inkN={inkCounts[r.id] || 0}
+      fresh={freshIds.has(r.id)}
+      onDone={onDone}
+      onDelete={onDelete}
+      onOpen={onOpen}
+      onChange={refresh}
+      prompt={promptFor(r.subject)}
+      onArm={(text) => { armed.current = text; }}
+      onFlash={flashNow}
+      highlight={!inPopup && !!urlQid && r.qid === urlQid}
+      isHardQ={hard.has(r.id)}
+      onToggleHard={onToggleHard}
+      onPopup={inPopup ? null : () => openPopup(i)}
+    />
+  ) : (
+    <NotebookCard
+      key={r.uid}
+      rec={r}
+      n={i + 1}
+      bucket={bucketOf(r)}
+      subjectLabel={labelOf(bucketOf(r))}
+      onDone={() => onDoneNb(r)}
+      onDelete={() => onDeleteNb(r)}
+      onFix={(oi) => onFixNb(r, oi)}
+    />
+  ));
 
   const onDone = (rec) => {
     markDone(rec.id);
@@ -1011,6 +1049,12 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           <span className="ansp__hint">
             {busy ? "⏳ Image save ho rahi hai…" : "📥 Screenshot paste karo (Ctrl+V) — naya question add ho jayega"}
           </span>
+          {list.length > 0 && (
+            <button className="ansp__btn ansp__btn--go" onClick={() => openPopup(0)}
+              title="Ek waqt mein ek question — poori screen par, ◀ ▶ se aage-peechhe">
+              🔍 Popup mode
+            </button>
+          )}
           {practiceable.length > 0 && (
             <button className="ansp__btn" onClick={practice}>🎯 Practice ({practiceable.length})</button>
           )}
@@ -1064,37 +1108,39 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               : "Yaha abhi koi question nahi hai."}
           </p>
         ) : (
-          shown.map((r, i) => (r.__src === "mock" ? (
-            <AnsCard
-              key={r.uid}
-              rec={r}
-              n={i + 1}
-              inkN={inkCounts[r.id] || 0}
-              fresh={freshIds.has(r.id)}
-              onDone={onDone}
-              onDelete={onDelete}
-              onOpen={onOpen}
-              onChange={refresh}
-              prompt={promptText}
-              onArm={() => { armed.current = true; }}
-              onFlash={flashNow}
-              highlight={!!urlQid && r.qid === urlQid}
-              isHardQ={hard.has(r.id)}
-              onToggleHard={onToggleHard}
-            />
-          ) : (
-            <NotebookCard
-              key={r.uid}
-              rec={r}
-              n={i + 1}
-              bucket={bucketOf(r)}
-              subjectLabel={labelOf(bucketOf(r))}
-              onDone={() => onDoneNb(r)}
-              onDelete={() => onDeleteNb(r)}
-              onFix={(oi) => onFixNb(r, oi)}
-            />
-          )))
+          shown.map((r, i) => renderCard(r, i, false))
         )}
+
+        {focus !== null && (() => {
+          const idx = Math.min(focus, Math.max(0, list.length - 1));
+          const r = list[idx];
+          return (
+            <div className="ansfocus" role="dialog" aria-modal="true" aria-label="Question popup"
+              onClick={(e) => { if (e.target === e.currentTarget) setFocus(null); }}>
+              <div className="ansfocus__panel">
+                <div className="ansfocus__bar">
+                  <div className="ansfocus__chips">
+                    {chips.map((c) => (
+                      <button key={c.key || "all"} className={c.key === subject ? "is-on" : ""}
+                        onClick={() => { go({ subject: c.key }); setFocus(0); }}>
+                        {c.icon} {c.label} <span>{chipCounts[c.key] || 0}</span>
+                      </button>
+                    ))}
+                  </div>
+                  <button className="ansfocus__x" onClick={() => setFocus(null)} aria-label="Popup band karo" title="Band karo (Esc)">✕</button>
+                </div>
+                <div className="ansfocus__body" ref={focusBody}>
+                  {r ? renderCard(r, idx, true) : <p className="ansp__empty">Is subject mein abhi koi question nahi.</p>}
+                </div>
+                <div className="ansfocus__nav">
+                  <button className="ansp__btn" disabled={idx <= 0} onClick={() => setFocus(Math.max(0, idx - 1))}>◀ Previous</button>
+                  <span>{list.length ? `Question ${idx + 1} / ${list.length}` : "—"}</span>
+                  <button className="ansp__btn" disabled={idx >= list.length - 1} onClick={() => setFocus(idx + 1)}>Next ▶</button>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
         {showTop && (
           <button className="ansp__top" onClick={toTop} title="Sabse upar — Question 1 par" aria-label="Sabse upar jao">

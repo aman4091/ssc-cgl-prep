@@ -713,6 +713,7 @@
 .examskin .ansp__btn:disabled { opacity: 0.6; cursor: default; }
 .examskin .ansp__answer--ai { background: #fffaf0; border-left-color: var(--tb-rev-line); }
 .examskin .ansp__aihead { font-size: 12px; font-weight: 700; color: var(--tb-warn-ink); margin-bottom: 6px; }
+.examskin .ansp__gemhead { font-size: 12px; font-weight: 700; color: var(--tb-blue-ink); margin-bottom: 6px; }
 .examskin .ansp__answer strong, .examskin .ansp__answer .md strong, .examskin .ansp__answer .md b { color: var(--emph); }
 .examskin .ansp__answer em { color: var(--tb-ink); }
 .examskin .ansp__answer a, .examskin .ansp__answer .md a { color: var(--tb-blue-ink); }
@@ -1106,3 +1107,21 @@ body.exam-on .panic-fab { display: none; }
   background: transparent; border-color: color-mix(in srgb, var(--tb-panic-ink) 35%, transparent);
 }
 .examskin .panic__btn--ghost:hover { background: color-mix(in srgb, var(--tb-panic-ink) 10%, transparent); }
+
+/* 🔍 Answers ka popup mode — ek question, poori screen, ◀ ▶ (AnswersBoard). */
+.examskin .ansp__pop { margin-left: 8px; border: 1px solid var(--tb-line-hard); background: var(--tb-page); color: var(--tb-ink-2); border-radius: 8px; padding: 0 7px; font-size: 13px; cursor: pointer; line-height: 1.6; vertical-align: middle; }
+.examskin .ansp__pop:hover { border-color: var(--tb-blue); color: var(--tb-blue-ink); }
+.examskin .ansfocus { position: fixed; inset: 0; z-index: 1000; background: rgba(12, 28, 23, 0.62); display: flex; justify-content: center; padding: 12px; }
+.examskin .ansfocus__panel { width: min(940px, 100%); height: 100%; background: var(--tb-bg-2); border-radius: 18px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35); }
+.examskin .ansfocus__bar { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--tb-page); border-bottom: 1px solid var(--tb-line); }
+.examskin .ansfocus__chips { display: flex; gap: 6px; flex: 1; overflow-x: auto; }
+.examskin .ansfocus__chips button { flex: none; border: 1px solid var(--tb-line); background: var(--tb-soft); color: var(--tb-ink-2); border-radius: 999px; padding: 5px 12px; font: 600 13px var(--tb-font); cursor: pointer; }
+.examskin .ansfocus__chips button span { opacity: 0.65; margin-left: 2px; }
+.examskin .ansfocus__chips button.is-on { background: var(--tb-blue); border-color: var(--tb-blue); color: #fff; }
+.examskin .ansfocus__x { flex: none; border: 0; background: none; font-size: 18px; color: var(--tb-dim); cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+.examskin .ansfocus__x:hover { background: var(--tb-red-soft); color: var(--tb-red); }
+.examskin .ansfocus__body { flex: 1; overflow-y: auto; padding: 14px 16px; }
+.examskin .ansfocus__body .ansp__card { margin: 0; }
+.examskin .ansfocus__nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; background: var(--tb-page); border-top: 1px solid var(--tb-line); font-size: 14px; font-weight: 700; color: var(--tb-q); }
+.examskin .ansfocus__nav .ansp__btn { font-size: 14px; padding: 8px 18px; }
+.examskin .ansfocus__nav .ansp__btn:disabled { opacity: 0.4; }

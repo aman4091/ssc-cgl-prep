@@ -64,6 +64,14 @@ export default function OverlayInbox() {
   const vocabAt = useRef(0);
 
   useEffect(() => {
+    // Sirf asli site se. localhost / LAN par chal rahi dev copy ke paas asli
+    // data nahi hota — par wo bhi isi PC ke overlay se baat kar leti thi: uski
+    // queue ke question utha kar ack kar deti, apna (nakli) kram overlay ko
+    // bhej deti, aur DeepSeek ke answer apne paas le leti. Sync ka bhi yahi
+    // niyam hai (lib/sync isSyncableOrigin).
+    const h = window.location.hostname || "";
+    if (h === "localhost" || h === "0.0.0.0" || h === "::1" || h.endsWith(".local")
+      || /^(10\.|127\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.)/.test(h)) return undefined;
     const tick = async () => {
       if (busy.current) return;
       busy.current = true;

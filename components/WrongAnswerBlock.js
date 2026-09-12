@@ -1,6 +1,6 @@
 "use client";
 
-import { cleanAnswer } from "@/lib/wrongbook";
+import { cleanAnswer, newGemini1, newGemini2 } from "@/lib/wrongbook";
 import Markdown from "./Markdown";
 
 // Ek Wrong-Question record ka answer / options / details / solution / note.
@@ -21,12 +21,11 @@ export default function WrongAnswerBlock({ rec, shown, hideAnswer = false }) {
   // pehle wale ko mitata nahi, wo fold ke peeche bach jata hai. Yahan pehle sirf
   // `detail` (yaani pehla) dikhta tha, isliye tablet par naya answer paste karne
   // ke baad bhi purana hi milta tha. Ab wahi hisaab jo card par hai.
-  // 🌍 GS ka answer sirf DeepSeek ka — /answers card jaisa hi (Gemini wala
-  // record mein hai, par GS par dikhta nahi).
-  const isGs = rec.subject === "gs";
-  const a1 = isGs ? "" : cleanAnswer(rec.detail || "");
-  const a2 = isGs ? "" : cleanAnswer(rec.detail2 || "");
-  const ai = isGs ? String(rec.aiNotes || "").trim() : "";
+  // /answers card jaisa hi: mukhya answer DeepSeek ka; Gemini wala sirf NAYA
+  // (paste / overlay se aaya — lib/wrongbook newGemini1/2), purana nahi.
+  const a1 = cleanAnswer(newGemini1(rec));
+  const a2 = cleanAnswer(newGemini2(rec));
+  const ai = String(rec.aiNotes || "").trim();
 
   return (
     <>
