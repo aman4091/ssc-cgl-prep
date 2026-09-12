@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import { normalizeMath } from "@/lib/mathdelims";
 
 // Imported quiz figures render as markdown images. Wrap each in a link to the
 // full-size source (opens in a new tab = "zoom"), and lazy-load them so a page
@@ -30,12 +31,18 @@ const BLOCK_COMPONENTS = { img: ImgLink, table: TableWrap };
 // which breaks the whole expression. Map it (and \rupee) to text mode where the
 // KaTeX fonts DO have it, and never throw on an unknown command — show the source
 // in a subtle colour instead of blanking the line.
+//
+// Macro ₹ -> \char"20B9 (₹ ka code), \text{₹} NAHI: us text ke andar phir ₹
+// aata aur macro khud ko bulata rehta ("Maximum call stack size exceeded") —
+// jis formula mein bhi ₹ hota wo poora kachcha LaTeX ban kar dikhta tha.
+const RUPEE = '\\text{\\char"20B9}';
 const KATEX_OPTS = {
   throwOnError: false,
   errorColor: "#fbbf24",
+  strict: "ignore",
   macros: {
-    "₹": "\\text{₹}", // ₹
-    "\\rupee": "\\text{₹}",
+    "₹": RUPEE,
+    "\\rupee": RUPEE,
     "\\Rs": "\\text{Rs.}",
   },
 };
@@ -49,7 +56,7 @@ export default function Markdown({ children, inline = false }) {
         rehypePlugins={[[rehypeKatex, KATEX_OPTS]]}
         components={inline ? INLINE_COMPONENTS : BLOCK_COMPONENTS}
       >
-        {children || ""}
+        {normalizeMath(children || "")}
       </ReactMarkdown>
     </Wrapper>
   );
