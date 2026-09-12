@@ -12,6 +12,7 @@ import {
 import { buildTodaySet, buildAutoPractice } from "@/lib/todayset";
 import { getReviewBucket, getWeakAreas } from "@/lib/qreview";
 import ExtMock from "@/components/ExtMock";
+import TodoCard from "@/components/TodoCard";
 
 // 🎯 Aaj ka kaam — homepage.
 //
@@ -207,6 +208,8 @@ export default function TodayGate({ onStateChange }) {
       )}
 
       {err && <p className="ansp__err">{err}</p>}
+
+      <TodoCard />
 
       <section className="hero-grid">
         <article className="daily-card">
