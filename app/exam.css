@@ -1125,3 +1125,6 @@ body.exam-on .panic-fab { display: none; }
 .examskin .ansfocus__nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; background: var(--tb-page); border-top: 1px solid var(--tb-line); font-size: 14px; font-weight: 700; color: var(--tb-q); }
 .examskin .ansfocus__nav .ansp__btn { font-size: 14px; padding: 8px 18px; }
 .examskin .ansfocus__nav .ansp__btn:disabled { opacity: 0.4; }
+
+/* LazyMarkdown ki jagah — answer banne tak itni jagah, taaki scroll na uchhle. */
+.examskin .md--lazy { min-height: 160px; }

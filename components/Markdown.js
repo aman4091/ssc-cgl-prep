@@ -1,5 +1,6 @@
 "use client";
 
+import { memo, useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
@@ -47,17 +48,47 @@ const KATEX_OPTS = {
   },
 };
 
-export default function Markdown({ children, inline = false }) {
+const REMARK = [remarkGfm, remarkMath];
+const REHYPE = [[rehypeKatex, KATEX_OPTS]];
+
+function MarkdownImpl({ children, inline = false }) {
   const Wrapper = inline ? "span" : "div";
   return (
     <Wrapper className={inline ? "md md--inline" : "md"}>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm, remarkMath]}
-        rehypePlugins={[[rehypeKatex, KATEX_OPTS]]}
+        remarkPlugins={REMARK}
+        rehypePlugins={REHYPE}
         components={inline ? INLINE_COMPONENTS : BLOCK_COMPONENTS}
       >
         {normalizeMath(children || "")}
       </ReactMarkdown>
     </Wrapper>
   );
+}
+
+// memo: text wahi ho to dobara parse + KaTeX nahi. Answers page har kuch second
+// list taaza karta hai (naya question / DeepSeek answer aane par) — bina iske
+// har baar SAARE dikhe hue cards ke saare formule dobara bante the aur page
+// neeche scroll karte waqt atak jata tha.
+const Markdown = memo(MarkdownImpl);
+export default Markdown;
+
+// Sirf tab banao jab screen ke paas aaye. Lambe DeepSeek answer (bahut saare
+// formule) 25-25 cards ek saath bante the aur scroll atakta tha; ab jo card
+// abhi dikhne wala hai sirf wahi banta hai, aur ek baar bana to bana rehta hai.
+export function LazyMarkdown(props) {
+  const ref = useRef(null);
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    if (show) return undefined;
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") { setShow(true); return undefined; }
+    const io = new IntersectionObserver((es) => {
+      if (es.some((e) => e.isIntersecting)) { setShow(true); io.disconnect(); }
+    }, { rootMargin: "1200px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [show]);
+  if (show) return <Markdown {...props} />;
+  return <div ref={ref} className="md md--lazy" aria-busy="true" />;
 }

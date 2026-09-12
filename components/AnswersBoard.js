@@ -23,7 +23,7 @@ import { useImageUrls } from "@/lib/wrongimages";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { saveQuiz, makeId, freeRegenerableSpace, storageUsage } from "@/lib/storage";
 import { precacheShelf } from "@/lib/inkoffline";
-import Markdown from "@/components/Markdown";
+import Markdown, { LazyMarkdown } from "@/components/Markdown";
 import ZoomableImage from "@/components/ZoomableImage";
 import NotebookCard from "@/components/NotebookCard";
 import ChapterReport, { textOf } from "@/components/ChapterReport";
@@ -239,22 +239,22 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
           pehla fold mein. Uske neeche hamesha DeepSeek ka. */}
       {a2 ? (
         <>
-          <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><Markdown>{a2}</Markdown></div>
+          <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><LazyMarkdown>{a2}</LazyMarkdown></div>
           {a1 && (
             <details className="ansp__old">
               <summary>Pehla Gemini answer dekho</summary>
-              <div className="ansp__answer"><Markdown>{a1}</Markdown></div>
+              <div className="ansp__answer"><LazyMarkdown>{a1}</LazyMarkdown></div>
             </details>
           )}
         </>
       ) : a1 ? (
-        <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><Markdown>{a1}</Markdown></div>
+        <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><LazyMarkdown>{a1}</LazyMarkdown></div>
       ) : null}
 
       {ai ? (
         <div className="ansp__answer ansp__answer--ai">
           <div className="ansp__aihead">🤖 DeepSeek</div>
-          <Markdown>{ai}</Markdown>
+          <LazyMarkdown>{ai}</LazyMarkdown>
         </div>
       ) : !a1 && !a2 ? (
         <div className="ansp__answer ansp__answer--empty">
