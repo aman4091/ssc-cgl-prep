@@ -50,12 +50,16 @@ function clusterOf(md) {
   const rest = s.slice(h.index + h[0].length);
   const nx = NEXT_SECTION.exec(rest);
   const body = nx ? rest.slice(0, nx.index) : rest;
-  const lines = body.split("\n")
+  const raw = body.split("\n").filter((l) => /·/.test(l));
+  const lines = raw
     .map((l) => l.replace(/\*\*/g, "").replace(/^\s*(?:[-*•]|\d+[.)])\s+/, "").trim())
-    .filter((l) => l && /·/.test(l));
+    .filter(Boolean);
   if (!lines.length) return null;
-  const topic = (/\*\*Topic:\*\*\s*([^\n]+)/.exec(s) || [])[1] || (lines[0].split(":")[0] || "");
-  return { lines, topic: topic.replace(/\*\*/g, "").trim().slice(0, 60) };
+  // Topic: "**Topic:**" line (v1) → warna pehli line ka bold label (v2:
+  // "**Label** – facts") → warna ":" se pehle ka hissa.
+  const label = (/\*\*([^*]+?)\*\*/.exec(raw[0]) || [])[1];
+  const topic = (/\*\*Topic:\*\*\s*([^\n]+)/.exec(s) || [])[1] || label || (lines[0].split(/:| – /)[0] || "");
+  return { lines, topic: topic.replace(/\*\*|:$/g, "").trim().slice(0, 60) };
 }
 
 // Answers + Mistake Notebook — ab EK page.
