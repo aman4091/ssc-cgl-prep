@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getMocks } from "@/lib/mockmarks";
 import {
   getMission, evaluateCheckpoints, TARGETS, SECTIONS, RULES, setAdapt, sectionStatsIn, checkpointWindows,
+  FLOOR, STRETCH, FLOOR_NOTE, fmtDay,
 } from "@/lib/mission";
 
 // /mission/progress — hafte-wise checkpoint, seedha /mock-marks ke data se.
@@ -59,7 +60,7 @@ export default function MissionProgressPage() {
       <section className="hero" style={{ paddingBottom: 6 }}>
         <span className="hero__eyebrow">🚩 Checkpoints</span>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>
-          Target <span className="grad">155</span> — hafte-wise
+          Floor <span className="grad">{FLOOR.total}</span> · stretch {STRETCH.total}
         </h1>
         <p className="hero__sub">
           Sab /mock-marks ke data se, apne aap. Hara = target mila, laal = nahi. Score / 50 per section; full mock / 200.
@@ -70,11 +71,26 @@ export default function MissionProgressPage() {
       <section className="section" style={{ marginTop: 8 }}>
         <div className="ms-tablewrap">
           <table className="ms-table">
+            <thead><tr><th>Section</th><th>FLOOR (plan ka base — exam hall mein yahi)</th><th>Stretch (ceiling)</th></tr></thead>
+            <tbody>
+              {SECTIONS.map((S) => (
+                <tr key={S.k}><td><strong>{S.icon} {S.label}</strong></td><td><strong>{FLOOR[S.k]}</strong> <span className="hint">· {FLOOR_NOTE[S.k]}</span></td><td>{STRETCH[S.k]}</td></tr>
+              ))}
+              <tr><td><strong>Total</strong></td><td><strong>{FLOOR.total}</strong></td><td>{STRETCH.total}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="hint">Target hi over-attempt karwata hai: "Maths mein 39 chahiye" leke ghuse to 13:00 pe 18 attempt dekh ke panic mein 4 jaldi-jaldi maaroge, 3 galat. Floor le ke jao — stretch paper aasan ho to apne aap.</p>
+      </section>
+
+      <section className="section" style={{ marginTop: 8 }}>
+        <div className="ms-tablewrap">
+          <table className="ms-table">
             <thead>
               <tr>
                 <th>Section</th>
                 {cols.map(([k, t]) => (
-                  <th key={k}>{W[k].label}{t ? <div className="hint">target {t.label}</div> : null}</th>
+                  <th key={k}>{W[k].label}{t ? <div className="hint">target {k === "w3" ? "exam floor" : `checkpoint ${W[k].date ? fmtDay(W[k].date) : t.label}`}</div> : null}</th>
                 ))}
               </tr>
             </thead>
@@ -135,13 +151,13 @@ export default function MissionProgressPage() {
             </div>
           );
         })}
-        <p className="hint">Rule tabhi jagta hai jab checkpoint ka din aa jaye (D7 / D14) aur us hafte ka data ho — isliye roz ke marks /mock-marks mein daalte rehna.</p>
+        <p className="hint">Rule tabhi jagta hai jab checkpoint ka din (🚩) aa jaye aur us hafte ka data ho — isliye roz ke marks /mock-marks mein daalte rehna.</p>
       </section>
 
       <section className="section">
         <h2 className="ms-h2">🧮 Maths speed — attempt har mock mein (mission ke dauraan)</h2>
         {mathTrend.length === 0 ? (
-          <div className="placeholder">Abhi mission ke dauraan koi Maths mock nahi. Target: attempt 19 (19 Sep) → 21 (26 Sep) → 22 (exam).</div>
+          <div className="placeholder">Abhi mission ke dauraan koi Maths mock nahi. Target: attempt 19 (checkpoint 1) → 20 (checkpoint 2) → 20–21 floor (22 stretch).</div>
         ) : (
           <div className="ms-bars">
             {mathTrend.map((x, i) => (

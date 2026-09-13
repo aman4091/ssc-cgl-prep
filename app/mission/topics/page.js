@@ -20,7 +20,7 @@ export default function MissionTopicsPage() {
       </section>
 
       <section className="section" style={{ marginTop: 8 }}>
-        <h2 className="ms-h2">🧮 Maths — target 39 (20C/2W, 22 attempt)</h2>
+        <h2 className="ms-h2">🧮 Maths — floor 34 (20–21 attempt) · stretch 39</h2>
         <div className="ms-tablewrap">
           <table className="ms-table">
             <thead><tr><th>Tier</th><th>Topics</th><th>~Q</th><th>Kyun</th></tr></thead>
@@ -41,7 +41,7 @@ export default function MissionTopicsPage() {
       </section>
 
       <section className="section">
-        <h2 className="ms-h2">🌍 GS — target 30 (17C/5W). PYQ pehle, padhai baad mein</h2>
+        <h2 className="ms-h2">🌍 GS — floor 28 · stretch 32. PYQ pehle, padhai baad mein</h2>
         <div className="ms-tablewrap">
           <table className="ms-table">
             <thead><tr><th>Area</th><th>~Q</th><th>Sirf ye padho</th></tr></thead>
@@ -69,7 +69,7 @@ export default function MissionTopicsPage() {
       </section>
 
       <section className="section">
-        <h2 className="ms-h2">📘 English — target 41 (≤2 galat). Time nahi, ACCURACY</h2>
+        <h2 className="ms-h2">📘 English — floor 38 (23 attempt, ≤3 galat) · stretch 41. Time nahi, ACCURACY</h2>
         <div className="ms-tablewrap">
           <table className="ms-table">
             <thead><tr><th>Area</th><th>~Q</th><th>Invest?</th></tr></thead>
@@ -89,7 +89,7 @@ export default function MissionTopicsPage() {
       </section>
 
       <section className="section">
-        <h2 className="ms-h2">🧠 Reasoning — sirf maintain (43 → 45)</h2>
+        <h2 className="ms-h2">🧠 Reasoning — sirf maintain (floor 41 · stretch 45; full mock mein 31.5 aaya tha)</h2>
         <p className="muted" style={{ fontSize: "0.9rem" }}>
           Rakho: analogy, classification, series, coding-decoding, maths operations, blood relation, direction, ranking, syllogism, Venn,
           mirror/water, paper cut/fold, embedded figure, dice, missing number. Exam mein 2nd round: 6+ log ka seating/puzzle, complex figure
@@ -102,7 +102,7 @@ export default function MissionTopicsPage() {
         <h2 className="ms-h2">Saaf baat — is time mein kya possible NAHI</h2>
         <div className="glass-card" style={{ padding: 14 }}>
           <ul className="ms-list">
-            <li>160+ guarantee — plan 150–157 ka hai, 160 tabhi jab sab click kare.</li>
+            <li>160+ guarantee — plan ka base FLOOR 141 hai, stretch 157. 160 tabhi jab sab click kare.</li>
             <li>GS 40+ — 25 pakka, 30 stretch.</li>
             <li>Parmar ke 121 chapter / 6-pass — 17 Aug se 0 din chala, 18 din mein nahi hoga.</li>
             <li>Maths poora syllabus + advanced geometry/3D.</li>

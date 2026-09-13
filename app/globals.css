@@ -3855,3 +3855,11 @@ body.exam-on .hresume { display: none; }
 .ms-factrow:first-of-type { margin-top: 8px; }
 /* Mission ke form: .input width 100% + padding card se bahar na nikle. */
 .ms-form .input, .ms-form .select, .ms-form .textarea { box-sizing: border-box; }
+
+/* 🌙 Roz raat ka ek metric (MissionToday → MetricCard). */
+.ms-metric { padding: 14px 16px; border: 2px dashed var(--accent); }
+.ms-metric__week { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+.ms-metric__d {
+  display: flex; flex-direction: column; align-items: center; gap: 1px; min-width: 46px;
+  padding: 4px 6px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--card);
+}

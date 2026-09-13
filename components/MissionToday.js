@@ -5,11 +5,13 @@ import { useCallback, useEffect, useState } from "react";
 import MissionDay, { BlockActions } from "./MissionDay";
 import {
   getMission, startMission, saveMission, getDone, toggleDone, currentDayNum, buildTimeline, nowBlock,
-  dayStats, mustComplete, streak, recentActions, pendingRules, RULES, TOTAL_DAYS, DEFAULT_START, SHIFTS,
-  planFor, dateOfDay, fmtDay,
+  dayStats, mustComplete, streak, recentActions, pendingRules, RULES, DEFAULT_START, SHIFTS,
+  planFor, dateOfDay, fmtDay, totalDays, totalMocks, getExam, setExam, examBranch, daysBetween,
+  getMetrics, setMetric, hasGsSectional, FLOOR, STRETCH,
 } from "@/lib/mission";
 import { dueCount } from "@/lib/missionfacts";
 import { getMocks } from "@/lib/mockmarks";
+import { dayKey } from "@/lib/daytime";
 import { daysLeft, setTargets, setOrder, DEFAULT_TARGETS, DEFAULT_ORDER } from "@/lib/daily";
 
 // 🚀 Home ka dil — "abhi kya karna hai".
@@ -17,14 +19,18 @@ import { daysLeft, setTargets, setOrder, DEFAULT_TARGETS, DEFAULT_ORDER } from "
 // Ek hi sawaal ka jawab sabse upar: ABHI kaunsa kaam hai, aur uska button. Uske
 // neeche din ki poori timeline (tick karte jao), pichhle analysis ke action
 // items, aaj ke due facts, aur agar koi checkpoint rule lag gaya ho to uski
-// ghanti. Kal chhoot gaya? Peeche mat jao — bas aaj.
+// ghanti. Sabse neeche roz raat ka EK metric: Maths attempt + GS chhua ya nahi.
+// Kal chhoot gaya? Peeche mat jao — bas aaj.
 
 function Setup({ onDone, initial }) {
   const [date, setDate] = useState(initial?.startDate || DEFAULT_START);
   const [shift, setShift] = useState(initial?.shift || "09:00");
+  const [exam, setExamIn] = useState(getExam());
+  const [conf, setConf] = useState(!!initial?.examConfirmed);
+  const br = examBranch(exam);
   return (
     <div className="glass-card ms-form" style={{ padding: 18 }}>
-      <div className="card-hd">🚀 CGL Mission — 18 din, exam tak</div>
+      <div className="card-hd">🚀 CGL Mission — aaj se exam tak</div>
       <p className="muted" style={{ fontSize: "0.88rem", margin: "0 0 10px" }}>
         Tumhare mock marks se bana plan: <strong>GS</strong> (sabse bada gap) → <strong>Maths speed</strong> (7–8 sawaal chhoot rahe) →
         <strong> English accuracy</strong> (6+ galat) → Reasoning sirf maintain. Din tumhare routine par: 08–10, 11–20:30, 22:30–23:30.
@@ -35,12 +41,24 @@ function Setup({ onDone, initial }) {
           <input type="date" className="input" value={date} onChange={(e) => setDate(e.target.value)} />
         </label>
         <label className="field">
+          <span>Exam date (window 30 Sep – 30 Oct)</span>
+          <input type="date" className="input" value={exam} onChange={(e) => setExamIn(e.target.value)} />
+        </label>
+        <label className="field">
           <span>Exam shift (admit card se; na pata ho to 9:00)</span>
           <select className="select input" value={shift} onChange={(e) => setShift(e.target.value)}>
             {SHIFTS.map((s) => <option key={s.v} value={s.v}>{s.label}</option>)}
           </select>
         </label>
       </div>
+      <label className="row" style={{ gap: 8, marginTop: 10, flexWrap: "nowrap", alignItems: "flex-start", cursor: "pointer" }}>
+        <input type="checkbox" checked={conf} onChange={(e) => setConf(e.target.checked)} style={{ marginTop: 5 }} />
+        <span style={{ fontSize: "0.88rem" }}>
+          <strong>Admit card aa gaya — ye date PAKKI hai.</strong>{" "}
+          <span className="muted">Jab tak tick nahi, aakhri 2 taper din build din rahenge (plan ke beech taper = momentum khatam).</span>
+        </span>
+      </label>
+      <div className="glass-card ms-alert ms-alert--info" style={{ marginTop: 10 }}>{br.t}</div>
       {!initial?.startDate && (
         <p className="hint">
           Shuru karte hi Home ke roz ke question-target bhi naye plan par aa jayenge (GS 100, Maths 60, English 50,
@@ -50,7 +68,7 @@ function Setup({ onDone, initial }) {
       <button
         className="btn btn--primary btn--block mt-16"
         onClick={() => {
-          if (!date) return;
+          if (!date || !exam) return;
           if (initial?.startDate) saveMission({ startDate: date, shift });
           else {
             startMission(date, shift);
@@ -58,6 +76,7 @@ function Setup({ onDone, initial }) {
             // ek baar; ⚙️ Target se baad mein badal sakte ho.
             try { setTargets(DEFAULT_TARGETS); setOrder(DEFAULT_ORDER); } catch { /* ignore */ }
           }
+          setExam(exam, conf);
           onDone();
         }}
       >
@@ -67,20 +86,61 @@ function Setup({ onDone, initial }) {
   );
 }
 
+// 🌙 Roz raat ka ek hi metric — baaki sab iske aas-paas chalta hai.
+function MetricCard({ day, done, m }) {
+  const dk = dayKey();
+  const [all, setAll] = useState(() => getMetrics());
+  const today = all[dk] || {};
+  const d = (done && done[day]) || {};
+  const gsAuto = !!(d.gs || d.gspyq || d.ca);
+  const gsTouched = today.gs != null ? today.gs : gsAuto;
+  const last = Array.from({ length: 7 }, (_, i) => {
+    const dt = new Date(); dt.setDate(dt.getDate() - (6 - i));
+    const k = `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")}`;
+    return { k, v: all[k] };
+  });
+  return (
+    <div className="glass-card ms-metric">
+      <div className="card-hd">🌙 Roz raat ka EK metric</div>
+      <p className="hint" style={{ margin: "0 0 8px" }}>Aaj Maths ka attempt count kya tha (sprint/sectional/mock ka), aur GS ko chhua ya nahi. Baaki sab iske aas-paas chalta hai.</p>
+      <div className="row" style={{ gap: 10 }}>
+        <label className="row" style={{ gap: 6, flexWrap: "nowrap" }}>
+          <span style={{ fontSize: "0.88rem" }}>🧮 Maths attempt (25 mein):</span>
+          <input className="input" type="number" min="0" max="25" style={{ width: 80, padding: "6px 10px" }}
+            value={today.m ?? ""} onChange={(e) => setAll(setMetric(dk, { m: e.target.value === "" ? null : Number(e.target.value) }))} />
+        </label>
+        <button className={"btn btn--sm " + (gsTouched ? "btn--primary" : "btn--ghost")} onClick={() => setAll(setMetric(dk, { gs: !gsTouched }))}>
+          🌍 GS chhua: {gsTouched ? "✓ haan" : "✗ nahi"}
+        </button>
+      </div>
+      <div className="ms-metric__week">
+        {last.map(({ k, v }) => (
+          <span key={k} className="ms-metric__d" title={k}>
+            <span className="hint">{k.slice(8)}/{k.slice(5, 7)}</span>
+            <strong className={v && v.m != null ? (v.m >= 19 ? "ms-ok" : "ms-bad") : "muted"}>{v && v.m != null ? v.m : "–"}</strong>
+            <span>{v && v.gs ? "🌍" : "·"}</span>
+          </span>
+        ))}
+      </div>
+      <p className="hint" style={{ margin: "6px 0 0" }}>Hara = 19+ attempt (Checkpoint 1 ka target). {m && totalMocks(m)} full mock is plan mein.</p>
+    </div>
+  );
+}
+
 export default function MissionToday({ showSetupLink = true }) {
   const [m, setM] = useState(null);
   const [done, setDone] = useState({});
   const [now, setNow] = useState(() => new Date());
-  const [extra, setExtra] = useState({ actions: [], rules: [], due: 0 });
+  const [extra, setExtra] = useState({ actions: [], rules: [], due: 0, gsBase: true });
   const [editing, setEditing] = useState(false);
 
   const refresh = useCallback(() => {
     const mm = getMission();
     setM(mm);
     setDone(getDone());
-    let rules = [];
-    try { rules = pendingRules(getMocks(), mm); } catch { /* ignore */ }
-    setExtra({ actions: recentActions(), rules, due: dueCount() });
+    let rules = [], gsBase = true;
+    try { const mocks = getMocks(); rules = pendingRules(mocks, mm); gsBase = hasGsSectional(mocks); } catch { /* ignore */ }
+    setExtra({ actions: recentActions(), rules, due: dueCount(), gsBase });
   }, []);
 
   useEffect(() => {
@@ -88,11 +148,13 @@ export default function MissionToday({ showSetupLink = true }) {
     const t = setInterval(() => setNow(new Date()), 30000);
     const on = () => refresh();
     window.addEventListener("cgl:mission-changed", on);
+    window.addEventListener("cgl:daily-changed", on);
     window.addEventListener("cgl:sync-applied", on);
     window.addEventListener("storage", on);
     return () => {
       clearInterval(t);
       window.removeEventListener("cgl:mission-changed", on);
+      window.removeEventListener("cgl:daily-changed", on);
       window.removeEventListener("cgl:sync-applied", on);
       window.removeEventListener("storage", on);
     };
@@ -107,32 +169,51 @@ export default function MissionToday({ showSetupLink = true }) {
     );
   }
 
+  const N = totalDays(m);
   const day = currentDayNum(m);
   const left = daysLeft();
 
+  // Mission abhi shuru nahi hua (jaise aaj ka din chhod ke kal se shuru kiya) —
+  // Day 1 ki poori timeline yahin, taaki raat ko hi pata rahe kal kya karna hai.
   if (day < 1) {
     return (
-      <section className="section" style={{ marginTop: 0 }}>
-        <div className="glass-card" style={{ padding: 16 }}>
-          <div className="card-hd">🚀 CGL Mission</div>
-          <p className="muted" style={{ margin: 0 }}>Day 1: <strong>{fmtDay(m.startDate)}</strong>. Tab tak <Link href="/mission/plan">poora plan</Link> dekh lo.</p>
-        </div>
-      </section>
+      <>
+        <section className="section" style={{ marginTop: 0 }}>
+          <div className="glass-card ms-now">
+            <div className="ms-now__label">🚀 CGL MISSION · DAY 1 = {fmtDay(m.startDate).toUpperCase()}</div>
+            <div className="ms-now__title">Aaj ka din chhod diya — koi baat nahi. Kal subah 8 baje se Day 1.</div>
+            <p className="ms-how" style={{ marginTop: 4 }}>
+              Aaj raat bas itna: neeche kal ka din ek baar dekh lo, aur 10 min tables 12–25 (kal ke speed drill ki taiyari). {N} din, {totalMocks(m)} full mock, exam {fmtDay(getExam())}{m.examConfirmed ? "" : " (date pakki nahi)"}.
+            </p>
+            <p className="hint" style={{ margin: "6px 0 0" }}>
+              🎯 Exam hall mein FLOOR: R {FLOOR.R} · GS {FLOOR.GS} · Q {FLOOR.Q} · E {FLOOR.E} = {FLOOR.total} · stretch {STRETCH.total}
+            </p>
+            <div className="row" style={{ gap: 6, marginTop: 8 }}>
+              <Link href="/mission/plan" className="btn btn--sm">📅 Poora plan</Link>
+              {showSetupLink && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)}>⚙️ Exam date / shift</button>}
+            </div>
+          </div>
+        </section>
+        <section className="section" style={{ marginTop: 10 }}>
+          <h2 className="ms-h2">Kal — Day 1 ({fmtDay(m.startDate)})</h2>
+          <MissionDay day={1} mission={m} done={done} onToggle={(id) => setDone(toggleDone(1, id))} nowMin={null} />
+        </section>
+      </>
     );
   }
-  if (day > TOTAL_DAYS) {
+  if (day > N) {
     return (
       <section className="section" style={{ marginTop: 0 }}>
         <div className="glass-card ms-now" style={{ padding: 16 }}>
           <div className="card-hd">🎯 Exam ka din / plan poora</div>
-          <p style={{ margin: "0 0 8px" }}>18 din khatam. Aaj sirf <Link href="/mission/exam">exam-day rules</Link> — naya kuch nahi.</p>
-          <p className="hint" style={{ margin: 0 }}>Guessing rule: kam se kam 1 option kaat sako to tukka, warna chhodo. Maths: kisi Q pe 60 sec se zyada nahi (round 1).</p>
+          <p style={{ margin: "0 0 8px" }}>Aaj sirf <Link href="/mission/exam">exam-day rules</Link> — naya kuch nahi. Exam hall mein FLOOR le ke jao: {FLOOR.total}.</p>
+          <p className="hint" style={{ margin: 0 }}>Soch ke tukka: 1+ option kata ho tabhi. Aakhri 15 sec: bache blank ek hi letter se bhar do. Maths: pehle 40 sec scan, round 1 mein kisi Q pe 60 sec se zyada nahi.</p>
         </div>
       </section>
     );
   }
 
-  const p = planFor(day);
+  const p = planFor(day, m);
   const tl = buildTimeline(day, m);
   const { cur, next, t } = nowBlock(tl, now);
   const stats = dayStats(day, done, m);
@@ -142,6 +223,8 @@ export default function MissionToday({ showSetupLink = true }) {
   const yesterdayMissed = day > 1 && !mustComplete(day - 1, done, m);
   const onToggle = (id) => { setDone(toggleDone(day, id)); };
   const curDone = cur && (done[day] || {})[cur.id];
+  const toExam = daysBetween(dayKey(), getExam());
+  const isSunday = now.getDay() === 0;
 
   return (
     <>
@@ -150,16 +233,20 @@ export default function MissionToday({ showSetupLink = true }) {
           <span className="hero__eyebrow">🚀 CGL Mission · {fmtDay(dateOfDay(m.startDate, day))}</span>
           <span className="row" style={{ gap: 6 }}>
             {st > 1 && <span className="badge">🔥 {st} din</span>}
-            {left != null && <span className="badge">🎯 Exam: {left} din</span>}
+            {left != null && <span className="badge">🎯 Exam: {left} din{m.examConfirmed ? "" : " (?)"}</span>}
           </span>
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)" }}>
-          Day <span className="grad">{day} / {TOTAL_DAYS}</span>
+          Day <span className="grad">{day} / {N}</span>
           <span className="muted" style={{ fontSize: "0.9rem", fontWeight: 500, marginLeft: 10 }}>
-            {p.type === "A" ? `Full mock ${p.fm}/10` : p.type === "B" ? "Build din" : "Taper — halka"}
-            {p.checkpoint ? ` · Checkpoint ${p.checkpoint}` : ""}
+            {p.type === "A" ? `Full mock ${p.fm}/${totalMocks(m)}` : p.type === "B" ? "Build din" : "Taper — halka"}
+            {p.checkpoint ? ` · Checkpoint ${p.checkpoint}` : ""}{p.ext ? " · Extension" : ""}
           </span>
         </h1>
+        <p className="hint" style={{ margin: "4px 0 0" }}>
+          🎯 Exam hall mein <strong>FLOOR</strong>: R {FLOOR.R} · GS {FLOOR.GS} · Q {FLOOR.Q} · E {FLOOR.E} = <strong>{FLOOR.total}</strong>
+          {" "}· stretch {STRETCH.total} (paper aasan ho to apne aap)
+        </p>
       </section>
 
       {/* ---- ABHI ---- */}
@@ -202,6 +289,23 @@ export default function MissionToday({ showSetupLink = true }) {
             <Link href="/mission/progress">Dekho aur lagao →</Link>
           </div>
         )}
+        {!extra.gsBase && (
+          <div className="glass-card ms-alert ms-alert--bad">
+            <strong>🌍 GS ka asli baseline nahi hai.</strong> Ab tak ek bhi GS sectional nahi diya (full mock mein GS 9.5 aaya tha).
+            Aaj ek GS sectional do (Testbook, CGL 2024) — score jo bhi aaye, /mock-marks → GK/GS mein likho. Bina baseline Checkpoint 1 bekaar.
+          </div>
+        )}
+        {!m.examConfirmed && toExam != null && toExam <= 7 && (
+          <div className="glass-card ms-alert ms-alert--bad">
+            📋 Admit card aaya? Exam date confirm karo — tabhi aakhri 2 din taper banenge.{" "}
+            <button className="btn btn--sm btn--primary" onClick={() => setEditing(true)}>⚙️ Date confirm</button>
+          </div>
+        )}
+        {isSunday && (
+          <div className="glass-card ms-alert ms-alert--info">
+            📄 Sunday backup: <Link href="/mock-marks?cat=full">/mock-marks → 📄 Text report</Link> download karke kahin save karo. (Cloud sync bhi chal raha hai — ye extra copy hai.)
+          </div>
+        )}
         {yesterdayMissed && (
           <div className="glass-card ms-alert">
             Kal (Day {day - 1}) poora nahi hua. <strong>Chhod do</strong> — koi backlog nahi. Bas aaj ka din.
@@ -224,11 +328,11 @@ export default function MissionToday({ showSetupLink = true }) {
       <section className="section" style={{ marginTop: 10 }}>
         <div className="row between" style={{ marginBottom: 6 }}>
           <span style={{ fontSize: "0.82rem", fontWeight: 700, color: dayOK ? "var(--ok)" : "var(--accent)" }}>
-            Zaroori: {stats.mustDone}/{stats.mustTotal} · ~{Math.round(stats.mustMin / 60)} ghante
+            Zaroori: {stats.mustDone}/{stats.mustTotal} · realistic ~9–9.5 ghante productive
           </span>
           <span className="row" style={{ gap: 6 }}>
-            <Link href="/mission/plan" className="btn btn--ghost btn--sm">📅 18 din</Link>
-            {showSetupLink && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)}>⚙️ Shift / date</button>}
+            <Link href="/mission/plan" className="btn btn--ghost btn--sm">📅 {N} din</Link>
+            {showSetupLink && <button className="btn btn--ghost btn--sm" onClick={() => setEditing(true)}>⚙️ Exam date / shift</button>}
           </span>
         </div>
         <div className="progress" style={{ marginTop: 0, marginBottom: 12 }}>
@@ -238,6 +342,10 @@ export default function MissionToday({ showSetupLink = true }) {
           <div className="glass-card ms-alert ms-alert--ok">✓ Aaj ka din COUNT ho gaya. Bonus karo ya aaram — dono theek.</div>
         )}
         <MissionDay day={day} mission={m} done={done} onToggle={onToggle} nowMin={t} />
+      </section>
+
+      <section className="section" style={{ marginTop: 14 }}>
+        <MetricCard day={day} done={done} m={m} />
       </section>
     </>
   );

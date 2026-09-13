@@ -5,11 +5,12 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import MissionDay from "@/components/MissionDay";
 import {
-  DAYS, TOTAL_DAYS, getMission, getDone, toggleDone, currentDayNum, mustComplete, dayStats, dateOfDay, fmtDay,
+  getDays, totalDays, totalMocks, getMission, getDone, toggleDone, currentDayNum, mustComplete, dayStats, dateOfDay, fmtDay,
+  getExam, examBranch,
 } from "@/lib/mission";
 
-// /mission/plan — poore 18 din ek grid mein. Tap karo to us din ki timeline
-// (aage ka din dekh ke taiyaar raho; pichhla din tick bhi kar sakte ho).
+// /mission/plan — aaj se exam tak ke saare din ek grid mein. Tap karo to us din
+// ki timeline (aage ka din dekh ke taiyaar raho; pichhla din tick bhi kar sakte ho).
 
 const TYPE_LABEL = { A: "Full mock", B: "Build", C: "Taper" };
 
@@ -25,7 +26,8 @@ function PlanInner() {
     setDone(getDone());
     const q = Number(sp.get("day"));
     const today = currentDayNum(mm);
-    setSel(q >= 1 && q <= TOTAL_DAYS ? q : Math.min(Math.max(today, 1), TOTAL_DAYS));
+    const N = totalDays(mm);
+    setSel(q >= 1 && q <= N ? q : Math.min(Math.max(today, 1), N));
     const on = () => { setM(getMission()); setDone(getDone()); };
     window.addEventListener("cgl:mission-changed", on);
     window.addEventListener("cgl:sync-applied", on);
@@ -41,23 +43,26 @@ function PlanInner() {
     );
   }
   const today = currentDayNum(m);
-  const p = DAYS.find((d) => d.day === sel);
+  const days = getDays(m);
+  const N = days.length;
+  const p = days.find((d) => d.day === sel);
 
   return (
     <>
       <section className="hero" style={{ paddingBottom: 6 }}>
-        <span className="hero__eyebrow">📅 CGL Mission · 18 din</span>
+        <span className="hero__eyebrow">📅 CGL Mission · {N} din</span>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>
-          {fmtDay(dateOfDay(m.startDate, 1))} → <span className="grad">1 Oct exam</span>
+          {fmtDay(dateOfDay(m.startDate, 1))} → <span className="grad">{fmtDay(getExam())} exam{m.examConfirmed ? "" : " (?)"}</span>
         </h1>
         <p className="hero__sub">
-          10 full mock · har din ek Maths topic, ek English rule, ek GS topic, CA ka ek mahina. Checkpoint D7 aur D14 par.
+          {totalMocks(m)} full mock · har din ek Maths topic, ek English rule, ek GS topic, CA ka ek mahina. 🚩 = checkpoint.
         </p>
+        <p className="hint" style={{ margin: "4px 0 0" }}>{examBranch().t}{m.examConfirmed ? "" : " Date pakki nahi — aakhri 2 din tab tak build din."}</p>
       </section>
 
       <section className="section" style={{ marginTop: 8 }}>
         <div className="days-grid ms-days">
-          {DAYS.map((d) => {
+          {days.map((d) => {
             const ok = mustComplete(d.day, done, m);
             const s = dayStats(d.day, done, m);
             return (
@@ -68,7 +73,7 @@ function PlanInner() {
               >
                 <span className="day-cell__n">D{d.day}{d.checkpoint ? " 🚩" : ""}</span>
                 <span className="day-cell__c">{fmtDay(dateOfDay(m.startDate, d.day)).replace(/,.*/, "")}</span>
-                <span className="day-cell__c">{d.fm ? `FM ${d.fm}` : TYPE_LABEL[d.type]}</span>
+                <span className="day-cell__c">{d.fm ? `FM ${d.fm}` : d.unconfTaper ? "Build (taper?)" : TYPE_LABEL[d.type]}{d.ext ? " · ext" : ""}</span>
                 {ok && <span className="day-cell__tick">✓</span>}
               </button>
             );
@@ -82,7 +87,7 @@ function PlanInner() {
             Day {sel} · {fmtDay(dateOfDay(m.startDate, sel))}
             {sel === today ? " (aaj)" : ""}
           </h2>
-          {sel !== today && today >= 1 && today <= TOTAL_DAYS && (
+          {sel !== today && today >= 1 && today <= N && (
             <button className="btn btn--ghost btn--sm" onClick={() => setSel(today)}>Aaj pe wapas</button>
           )}
         </div>

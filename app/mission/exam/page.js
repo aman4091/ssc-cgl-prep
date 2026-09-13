@@ -19,7 +19,7 @@ export default function MissionExamPage() {
       <section className="section" style={{ marginTop: 8 }}>
         <h2 className="ms-h2">1. Tukka kab maarna hai (EXACT rule)</h2>
         <div className="glass-card ms-alert ms-alert--info" style={{ fontSize: "1rem" }}>
-          <strong>Kam se kam 1 option kaat sako → tukka maaro. Ek bhi nahi kata → chhodo.</strong>
+          <strong>Soch ke tukka: kam se kam 1 option kaat sako tabhi. Aakhri 15 sec: bache saare blank EK HI letter (jaise B) se bhar do.</strong>
         </div>
         <div className="ms-tablewrap">
           <table className="ms-table">
@@ -28,11 +28,12 @@ export default function MissionExamPage() {
               <tr><td>Pakka / 80%+</td><td>0.8+</td><td>+1.5</td><td className="ms-ok">✅ Mark</td></tr>
               <tr><td>2 option bache (50-50)</td><td>0.5</td><td>+0.75</td><td className="ms-ok">✅ Hamesha mark</td></tr>
               <tr><td>1 option kata (3 bache)</td><td>0.33</td><td>+0.33</td><td className="ms-ok">✅ Mark</td></tr>
-              <tr><td>Ek bhi nahi kata (blind)</td><td>~0.25, trap option mein &lt;0.2</td><td>~0</td><td className="ms-bad">❌ Chhodo</td></tr>
+              <tr><td>Ek bhi nahi kata — "lagta hai ye" wala</td><td>trap option ki wajah se ~0.2 ya kam</td><td>~0</td><td className="ms-bad">❌ Soch ke mat maaro — time jaata hai</td></tr>
+              <tr><td>Aakhri 15 sec ke bache blank (random, ek hi letter)</td><td>0.25</td><td>+0.125 har Q</td><td className="ms-ok">✅ Bhar do (8 blank ≈ +1 mark muft)</td></tr>
             </tbody>
           </table>
         </div>
-        <p className="hint">Hisaab: 2p − 0.5(1−p). Break-even p = 20%. Blind tukke ka ~+0.1 fayda SSC ke trap options kha jaate hain — aur time bhi jaata hai.</p>
+        <p className="hint">Hisaab: 2p − 0.5(1−p). Break-even p = 20%. Random letter mein trap ka asar nahi (p = 0.25 pakka) — isliye aakhri 15 sec ka blind fill plus hai. "Lagta hai ye" wala soch ka tukka trap mein phasta hai — wo mat karo. Ye chhota fayda hai: iske liye time mat kharcho, sirf aakhri 15 sec.</p>
       </section>
 
       <section className="section">
@@ -41,14 +42,15 @@ export default function MissionExamPage() {
           <table className="ms-table">
             <thead><tr><th>Section</th><th>Round 1</th><th>Round 2</th><th>Aakhri 90 sec</th><th>Attempt</th><th>Checkpoint</th></tr></thead>
             <tbody>
-              <tr><td><strong>🧠 Reasoning</strong></td><td>0–10 min: seating/puzzle/figure-counting chhod ke sab (~20 Q)</td><td>10–13.5: marked Q</td><td>Protocol</td><td>24–25</td><td>10 min pe ≥20</td></tr>
-              <tr><td><strong>🌍 GS</strong></td><td>0–6 min: 5-sec wale (15–17 Q)</td><td>6–13.5: 50-50 / statement wale — har statement alag check</td><td>Protocol</td><td>22–25</td><td>6 min pe ≥15</td></tr>
-              <tr><td><strong>🧮 Maths</strong></td><td>0–9 min: sirf 1-liner. <strong>Kisi Q pe 60 sec se zyada nahi</strong></td><td>9–13.5: marked medium, max 75 sec</td><td>Option-elimination (approx / unit digit / value daalo) se hi</td><td>21–23</td><td><strong>5 min ≥8 · 9 min ≥14 · 13.5 min ≥20</strong></td></tr>
-              <tr><td><strong>📘 English</strong></td><td>0–4 min: vocab + FIB (~10 Q)</td><td>4–9: cloze + RC · 9–13: error / SI / voice / jumble (checklist)</td><td>Protocol</td><td>23–24 (≤2 galat)</td><td>9 min pe ≥18</td></tr>
+              <tr><td><strong>🧠 Reasoning</strong></td><td>0–10 min: seating/puzzle/figure-counting chhod ke sab (~20 Q)</td><td>10–13.5: marked Q</td><td>Protocol</td><td>23 (floor 41) · 24–25 stretch</td><td>10 min pe ≥20</td></tr>
+              <tr><td><strong>🌍 GS</strong></td><td>0–6 min: 5-sec wale (15–17 Q)</td><td>6–13.5: 50-50 / statement wale — har statement alag check</td><td>Protocol</td><td>22 (floor 28)</td><td>6 min pe ≥15</td></tr>
+              <tr><td><strong>🧮 Maths</strong></td><td><strong>0:00–0:40 sirf SCAN</strong> (25 Q scroll, mentally GREEN / YELLOW / RED — solve nahi). 0:40–9:00 sirf GREEN. <strong>Kisi Q pe 60 sec se zyada nahi</strong></td><td>9–13.5: YELLOW, max 75 sec. RED ko haath nahi</td><td>Option-elimination (approx / unit digit / value daalo) + aakhri 15 sec blind fill</td><td>20–21 (floor 34) · 22–23 stretch</td><td><strong>5 min ≥8 · 9 min ≥14 · 13.5 min ≥19</strong></td></tr>
+              <tr><td><strong>📘 English</strong></td><td>0–4 min: vocab + FIB (~10 Q)</td><td>4–9: cloze + RC · 9–13: error / SI / voice / jumble (checklist)</td><td>Protocol</td><td>23, ≤3 galat (floor 38)</td><td>9 min pe ≥18</td></tr>
             </tbody>
           </table>
         </div>
-        <p className="hint">Maths kyun aise: 7–8 sawaal isliye chhootte hain kyunki 2–3 lambe Q pe 2–3 min chale jaate hain. Round-1 ka 60-sec cap yahi rokta hai.</p>
+        <p className="hint">Maths kyun aise: 7–8 sawaal isliye chhootte hain kyunki Q1 se seedhe chalte hue Q3 jaise lambe sawaal pe 2–3 min chale jaate hain. 40 sec ka scan 2 min bachata hai, aur round-1 ka 60-sec cap baaki rokta hai.</p>
+        <div className="glass-card ms-alert ms-alert--bad"><strong>Exam hall mein FLOOR le ke jao (141), 155 nahi.</strong> "Maths mein 39 chahiye" wala dimaag 13:00 pe 18 attempt dekh ke panic mein 4 jaldi-jaldi marwata hai — 3 galat. Floor mile to stretch paper aasan hone par apne aap aata hai.</div>
         <p className="hint"><strong>Error-spotting checklist:</strong> SVA → tense → article → preposition → pronoun → comparison → parallelism → redundancy.</p>
       </section>
 
@@ -60,7 +62,8 @@ export default function MissionExamPage() {
             <li><strong>Koi naya lamba Q shuru mat karo.</strong></li>
             <li>Har marked Q ko 20 sec: option kaato → 1+ kata to best mark, warna chhodo.</li>
             <li>"Answered &amp; Marked for Review" gina jaata hai — par check karo option sach mein select hai.</li>
-            <li>Aakhri 10 sec koi jawab mat badlo.</li>
+            <li><strong>Aakhri 15 sec:</strong> jo blank bache hain unhe ek hi letter (jaise B) se bhar do — soch mat, bas bharo.</li>
+            <li>Uske baad koi jawab mat badlo.</li>
           </ol>
           <p className="hint" style={{ margin: 0 }}>Agar exam mein section lock NAHI nikla (60 min combined): GS 10 → Reasoning 13 → English 13 → Maths 22 + 2 min buffer.</p>
         </div>
@@ -70,12 +73,14 @@ export default function MissionExamPage() {
         <h2 className="ms-h2">4. Aakhri 7 din — kya NAHI karna</h2>
         <div className="glass-card" style={{ padding: 14 }}>
           <ul className="ms-list">
-            <li>❌ 25 Sep ke baad koi naya chapter/topic — ghabrahat badhti hai, yaad nahi rehta.</li>
+            <li>❌ Exam se 6 din pehle ke baad koi naya chapter/topic — ghabrahat badhti hai, yaad nahi rehta.</li>
             <li>❌ Koi naya book / channel / source.</li>
-            <li>❌ Din mein 1 se zyada mock. 30 Sep ko koi mock nahi.</li>
+            <li>❌ Din mein 1 se zyada mock. Exam se ek din pehle koi mock nahi.</li>
+            <li>❌ Exam date pakki hone se pehle taper (halke din) mat lagao — taper sirf exam se 2 din pehle.</li>
             <li>❌ Super-hard mock series — confidence girta hai, fayda nahi.</li>
             <li>❌ Telegram / "expected cutoff" ki behas, rank ka obsession.</li>
-            <li>❌ Neend ka time badalna, raat bhar padhna. 30 Sep: dinner ke baad seedha so jao.</li>
+            <li>❌ Neend ka time badalna, raat bhar padhna. Exam se pehli raat: dinner ke baad seedha so jao.</li>
+            <li>❌ Site mein naye feature jodne baithna — wo "productive dikhne wali" taalne ki aadat hai. Plan bana hua hai, bas chalao.</li>
             <li>❌ Exam mein skip list todna ("bas ye geometry wala kar leta hoon").</li>
           </ul>
         </div>

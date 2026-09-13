@@ -33,8 +33,8 @@ export function BlockActions({ b, compact }) {
   return <div className={"ms-acts" + (compact ? " ms-acts--compact" : "")}>{acts}</div>;
 }
 
-function Revision({ day }) {
-  const rev = revisionFor(day);
+function Revision({ day, mission }) {
+  const rev = revisionFor(day, mission);
   if (!rev.length) return <p className="hint" style={{ margin: "4px 0 0" }}>Pehla din — revise karne ko abhi kuch nahi. Fact log khaali ho to seedha aage badho.</p>;
   return (
     <ul className="ms-rev">
@@ -49,7 +49,7 @@ function Revision({ day }) {
 }
 
 export default function MissionDay({ day, mission, done, onToggle, nowMin = null }) {
-  const p = planFor(day);
+  const p = planFor(day, mission);
   if (!p) return <div className="placeholder">Ye din plan mein nahi hai.</div>;
   const tl = buildTimeline(day, mission);
   const d = (done && done[day]) || {};
@@ -85,7 +85,7 @@ export default function MissionDay({ day, mission, done, onToggle, nowMin = null
                 {isNow && <span className="ms-sec ms-sec--now">ABHI</span>}
               </div>
               {b.how && <p className="ms-how">{b.how}</p>}
-              {b.kind === "revision" && <Revision day={day} />}
+              {b.kind === "revision" && <Revision day={day} mission={mission} />}
               <BlockActions b={b} />
             </div>
           </div>
@@ -96,7 +96,10 @@ export default function MissionDay({ day, mission, done, onToggle, nowMin = null
           Aaj ke time mein fit nahi hua: {tl.skipped.map((b) => b.t).join(" · ")} — chhod do, kal wapas aayega.
         </p>
       )}
-      <p className="hint" style={{ marginTop: 8 }}>{fmtDay(dateOfDay(mission.startDate, day))} · Day {day} · type {p.type === "A" ? "Full mock din" : p.type === "B" ? "Build din" : "Taper (halka)"}</p>
+      <p className="hint" style={{ marginTop: 8 }}>
+        {fmtDay(dateOfDay(mission.startDate, day))} · Day {day} · {p.type === "A" ? "Full mock din" : p.type === "B" ? "Build din" : "Taper (halka)"}
+        {p.ext ? ` · Extension din ${p.ext}` : ""}{p.unconfTaper ? " · (taper tabhi jab exam date confirm ho)" : ""}
+      </p>
     </div>
   );
 }

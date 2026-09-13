@@ -27,7 +27,7 @@ function verdictOf({ x, y, z, calcOk }) {
 const VERDICT = {
   speed: { t: "SPEED", d: "Concept theek hai — sawaal time ki wajah se chhoot rahe hain. Roz calc drill + 1-liner sprint, 45-sec cap, option-first tricks. Maths blocks isi hisaab se chalenge." },
   concept: { t: "CONCEPT", d: "Kuch chapter bina time limit bhi nahi bane. Sirf wahi chapter (agar Tier A/B mein hain) — 30 min formula → 30 PYQ bina timer → 20 timed. Skip list wale chhodo." },
-  both: { t: "DONO", d: "Pehle speed plan (drill + sprint), aur Z wale chapter sirf agar Tier A/B mein hain. 24 Sep ke baad koi naya chapter nahi." },
+  both: { t: "DONO", d: "Pehle speed plan (drill + sprint), aur Z wale chapter sirf agar Tier A/B mein hain. Exam se ek hafta pehle ke baad koi naya chapter nahi." },
 };
 
 export default function MissionDiagnosePage() {
@@ -100,18 +100,18 @@ export default function MissionDiagnosePage() {
               <tr>
                 <td>
                   <ul className="ms-list">
-                    <li>Roz 15 min calc drill: 1–30 squares, 1–15 cubes, 1/2–1/20 ka %.</li>
+                    <li>Roz 15 min calc drill: <strong>tables 12–25 (pehle 3 din top priority)</strong>, 1–30 squares, 1–12 cubes, 1/2–1/20 ka %.</li>
                     <li>Roz 1-liner sprint: 15 Tier-A Q / 9 min.</li>
                     <li>Option-first: value daalo (θ=45°, a=b=1), approx, unit digit, divisibility.</li>
                     <li>15-sec rule: tareeka nahi aaya → mark &amp; next.</li>
-                    <li>Attempt target: 19 (19 Sep) → 21 (26 Sep) → 22–23.</li>
+                    <li>Attempt target: 19 (checkpoint 1) → 20 (checkpoint 2) → 20–21 floor (22–23 stretch).</li>
                   </ul>
                 </td>
                 <td>
                   <ul className="ms-list">
                     <li>Tier A/B mein hai → 30 min formula (Brahmastra) → 30 PYQ bina timer → 20 timed.</li>
                     <li>Skip list mein hai → drop, bina guilt.</li>
-                    <li>24 Sep ke baad koi naya chapter nahi.</li>
+                    <li>Exam se ek hafta pehle ke baad koi naya chapter nahi.</li>
                   </ul>
                 </td>
               </tr>
