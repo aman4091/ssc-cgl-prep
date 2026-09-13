@@ -40,15 +40,21 @@ import { addFact, getFacts } from "@/lib/missionfacts";
 // 🧩 GS answer ka CLUSTER section (lib/answerprompts / overlay ai_prompts) —
 // "poora group ek line mein". Us line(s) ko nikaalo taaki ek click mein CGL
 // Mission ke fact log mein chali jaye (wahan se 1/3/7/14 din baad revision).
+// Dono shakl chalti hain: v1 ("## 🧩 CLUSTER (…)" ke baad "## 📌 …") aur v2
+// ("🧩 CLUSTER" bina ## ke, uske baad "🎯 SSC EXTRA" / "📝 ONE-LINER").
+const NEXT_SECTION = /^[#*\s]*(?:🎯|📝|✅|📌|🔍|📚|🧠)/m;
 function clusterOf(md) {
   const s = String(md || "");
-  const m = /^##\s*🧩?\s*CLUSTER[^\n]*\n([\s\S]*?)(?=^##\s|$(?![\s\S]))/m.exec(s);
-  if (!m) return null;
-  const lines = m[1].split("\n")
-    .map((l) => l.replace(/\*\*/g, "").replace(/^\s*[-*•]\s+/, "").trim())
+  const h = /^[#*\s]*🧩\s*\**\s*CLUSTER[^\n]*\n/m.exec(s);
+  if (!h) return null;
+  const rest = s.slice(h.index + h[0].length);
+  const nx = NEXT_SECTION.exec(rest);
+  const body = nx ? rest.slice(0, nx.index) : rest;
+  const lines = body.split("\n")
+    .map((l) => l.replace(/\*\*/g, "").replace(/^\s*(?:[-*•]|\d+[.)])\s+/, "").trim())
     .filter((l) => l && /·/.test(l));
   if (!lines.length) return null;
-  const topic = (/\*\*Topic:\*\*\s*([^\n]+)/.exec(s) || [])[1] || "";
+  const topic = (/\*\*Topic:\*\*\s*([^\n]+)/.exec(s) || [])[1] || (lines[0].split(":")[0] || "");
   return { lines, topic: topic.replace(/\*\*/g, "").trim().slice(0, 60) };
 }
 
