@@ -151,7 +151,11 @@ export default function MissionProgressPage() {
             </div>
           );
         })}
-        <p className="hint">Rule tabhi jagta hai jab checkpoint ka din (🚩) aa jaye aur us hafte ka data ho — isliye roz ke marks /mock-marks mein daalte rehna.</p>
+        <p className="hint">
+          <strong>Ek mock kabhi plan nahi badalta.</strong> Score = skill + paper ki mushkil + luck (tumhare Maths mein ±9 ka jhool), isliye score wale
+          rule tabhi jab <strong>pichhle 3 mein se 2</strong> mock target se neeche hon. Attempt count sirf tumhara behaviour hai — uspe ek reading kaafi.
+          Attempt roz dekho, score sirf 3-mock trend mein. GS/Maths ke checkpoint rule 🚩 din ke baad hi jaagte hain.
+        </p>
       </section>
 
       <section className="section">

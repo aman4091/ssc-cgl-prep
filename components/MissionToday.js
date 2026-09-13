@@ -181,10 +181,23 @@ export default function MissionToday({ showSetupLink = true }) {
         <section className="section" style={{ marginTop: 0 }}>
           <div className="glass-card ms-now">
             <div className="ms-now__label">🚀 CGL MISSION · DAY 1 = {fmtDay(m.startDate).toUpperCase()}</div>
-            <div className="ms-now__title">Aaj ka din chhod diya — koi baat nahi. Kal subah 8 baje se Day 1.</div>
+            <div className="ms-now__title">Kal subah 8 baje se Day 1 — par "kal se" ki aadat AAJ todni hai.</div>
             <p className="ms-how" style={{ marginTop: 4 }}>
-              Aaj raat bas itna: neeche kal ka din ek baar dekh lo, aur 10 min tables 12–25 (kal ke speed drill ki taiyari). {N} din, {totalMocks(m)} full mock, exam {fmtDay(getExam())}{m.examConfirmed ? "" : " (date pakki nahi)"}.
+              Poora din nahi — sirf ye 2 kaam, kul ~55 min. {N} din, {totalMocks(m)} full mock, exam {fmtDay(getExam())}{m.examConfirmed ? "" : " (date pakki nahi)"}.
             </p>
+            {[
+              { id: "pre-gs", t: "GS BASELINE sectional (Testbook, CGL 2024 GS) — 15 min + marks /mock-marks → GK/GS mein (20 min)", href: "/mock-marks?cat=gk", label: "📊 GS marks" },
+              { id: "pre-tables", t: "Tables 12–25 ka pehla pass — bol ke, 20 random (20 min)", href: "/calculation", label: "🧮 Calculation" },
+            ].map((x) => {
+              const ok = !!((done[0] || {})[x.id]);
+              return (
+                <div key={x.id} className="row" style={{ gap: 8, marginTop: 8, flexWrap: "nowrap", alignItems: "flex-start" }}>
+                  <button className={"chk__box" + (ok ? " is-on" : "")} onClick={() => setDone(toggleDone(0, x.id))} aria-label="tick">{ok ? "✓" : ""}</button>
+                  <span style={{ flex: 1, fontSize: "0.9rem", textDecoration: ok ? "line-through" : "none" }}>{x.t}</span>
+                  <Link href={x.href} className="btn btn--sm">{x.label}</Link>
+                </div>
+              );
+            })}
             <p className="hint" style={{ margin: "6px 0 0" }}>
               🎯 Exam hall mein FLOOR: R {FLOOR.R} · GS {FLOOR.GS} · Q {FLOOR.Q} · E {FLOOR.E} = {FLOOR.total} · stretch {STRETCH.total}
             </p>
@@ -207,7 +220,7 @@ export default function MissionToday({ showSetupLink = true }) {
         <div className="glass-card ms-now" style={{ padding: 16 }}>
           <div className="card-hd">🎯 Exam ka din / plan poora</div>
           <p style={{ margin: "0 0 8px" }}>Aaj sirf <Link href="/mission/exam">exam-day rules</Link> — naya kuch nahi. Exam hall mein FLOOR le ke jao: {FLOOR.total}.</p>
-          <p className="hint" style={{ margin: 0 }}>Soch ke tukka: 1+ option kata ho tabhi. Aakhri 15 sec: bache blank ek hi letter se bhar do. Maths: pehle 40 sec scan, round 1 mein kisi Q pe 60 sec se zyada nahi.</p>
+          <p className="hint" style={{ margin: 0 }}>Soch ke tukka: 1+ option kata ho tabhi. Har section ke aakhri 40 sec: bache blank ek hi letter se bhar do. English: error/SI 2nd number par. Maths: pehle 40 sec scan, round 1 mein kisi Q pe 60 sec se zyada nahi.</p>
         </div>
       </section>
     );
@@ -295,9 +308,10 @@ export default function MissionToday({ showSetupLink = true }) {
             Aaj ek GS sectional do (Testbook, CGL 2024) — score jo bhi aaye, /mock-marks → GK/GS mein likho. Bina baseline Checkpoint 1 bekaar.
           </div>
         )}
-        {!m.examConfirmed && toExam != null && toExam <= 7 && (
+        {!m.examConfirmed && ((toExam != null && toExam <= 7) || day >= 7) && (
           <div className="glass-card ms-alert ms-alert--bad">
-            📋 Admit card aaya? Exam date confirm karo — tabhi aakhri 2 din taper banenge.{" "}
+            📋 Admit card check (2 min, 8 baje se pehle): SSC / regional site par status dekho. Date + shift aate hi yahan daalo — aakhri din ka poora plan usi pe khada hai.{" "}
+            <a href="https://ssc.gov.in" target="_blank" rel="noreferrer" className="btn btn--sm">ssc.gov.in ↗</a>{" "}
             <button className="btn btn--sm btn--primary" onClick={() => setEditing(true)}>⚙️ Date confirm</button>
           </div>
         )}
@@ -338,6 +352,7 @@ export default function MissionToday({ showSetupLink = true }) {
         <div className="progress" style={{ marginTop: 0, marginBottom: 12 }}>
           <div className="progress__bar" style={{ width: pct + "%" }} />
         </div>
+        <p className="hint" style={{ margin: "0 0 8px" }}>Block ka ✓ MASTER hai. Neeche wali question ginti (Aaj ka kaam) sirf guide — dono takrayein to block jeetega.</p>
         {dayOK && (
           <div className="glass-card ms-alert ms-alert--ok">✓ Aaj ka din COUNT ho gaya. Bonus karo ya aaram — dono theek.</div>
         )}

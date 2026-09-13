@@ -3786,6 +3786,7 @@ body.exam-on .hresume { display: none; }
 .ms-row[data-sec="english"] { border-left-color: var(--mauve); }
 .ms-row[data-sec="rev"] { border-left-color: var(--head); }
 .ms-row[data-sec="mock"] { border-left-color: var(--bad); }
+.ms-row[data-sec="reasoning"] { border-left-color: var(--warning); }
 .ms-row.is-bonus { opacity: 0.85; }
 .ms-row.is-done { background: var(--ok-wash); }
 .ms-row.is-done .ms-title { text-decoration: line-through; opacity: 0.7; }

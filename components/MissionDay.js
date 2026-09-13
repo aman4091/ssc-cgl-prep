@@ -9,7 +9,7 @@ import { buildTimeline, tickable, revisionFor, planFor, dateOfDay, fmtDay } from
 // kaam ka button (quiz / page / marks). Life wale (walk, nashta, dinner) dhundhle
 // dikhte hain — wo bhi timeline ka hissa hain taaki "abhi" hamesha sahi bataye.
 
-const SEC_LABEL = { maths: "Maths", gs: "GS", english: "English", rev: "Revision", mock: "Mock", life: "", break: "" };
+const SEC_LABEL = { maths: "Maths", gs: "GS", english: "English", reasoning: "Reasoning", rev: "Revision", mock: "Mock", life: "", break: "" };
 const SECT_CAT = { Q: ["maths", "🧮 Maths"], GS: ["gk", "🌍 GS"], E: ["english", "📘 English"], R: ["reasoning", "🧠 Reasoning"] };
 
 export function BlockActions({ b, compact }) {
