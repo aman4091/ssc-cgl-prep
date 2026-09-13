@@ -98,6 +98,8 @@
   --bad-wash: color-mix(in srgb, var(--bad) 15%, var(--bg));
   --accent-wash: color-mix(in srgb, var(--accent) 15%, var(--bg));
   --accent2-wash: color-mix(in srgb, var(--accent2) 15%, var(--bg));
+  --warn-wash: color-mix(in srgb, var(--warning) 15%, var(--bg));
+  --mauve-wash: color-mix(in srgb, var(--mauve) 15%, var(--bg));
 
   /* Geometry — Answers page ki tarah: button 6, card 10, bada block 12–14. */
   --radius-sm: 6px;
@@ -3755,3 +3757,101 @@ body.exam-on .mkt__go { display: none; }
 /* "Quiz jahan chhoda tha" resume chip bhi kisi bhi active test ke dauraan
    nahi — us waqt to isi mein ho sakta hai jo wo dikha raha hai. */
 body.exam-on .hresume { display: none; }
+
+/* ===== 🚀 CGL Mission (lib/mission.js, components/MissionToday + MissionDay,
+   app/mission/*) — 18 din ka system. Sirf theme tokens; naya rang chahiye to
+   upar :root mein token jodo. ===== */
+.ms-now {
+  padding: 16px 18px;
+  border: 2px solid var(--accent);
+  background: var(--accent-wash);
+}
+.ms-now__label { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; color: var(--accent); }
+.ms-now__title { font-size: 1.15rem; font-weight: 700; line-height: 1.35; margin-top: 2px; }
+.ms-now__time { font-size: 0.8rem; font-weight: 500; color: var(--text-3); margin-left: 8px; white-space: nowrap; }
+
+.ms-alert { padding: 10px 14px; margin-bottom: 8px; font-size: 0.88rem; line-height: 1.5; }
+.ms-alert--bad { border-color: var(--bad); background: var(--bad-wash); }
+.ms-alert--ok { border-color: var(--ok); background: var(--ok-wash); color: var(--ok); font-weight: 700; }
+.ms-alert--info { border-color: var(--accent2); background: var(--accent2-wash); }
+
+.ms-tl { display: grid; gap: 6px; }
+.ms-row {
+  display: grid; grid-template-columns: 92px 1fr; gap: 10px; align-items: start;
+  padding: 10px 12px; border: 1px solid var(--line); border-left: 4px solid var(--line);
+  border-radius: var(--radius); background: var(--card);
+}
+.ms-row[data-sec="maths"] { border-left-color: var(--accent); }
+.ms-row[data-sec="gs"] { border-left-color: var(--ok); }
+.ms-row[data-sec="english"] { border-left-color: var(--mauve); }
+.ms-row[data-sec="rev"] { border-left-color: var(--head); }
+.ms-row[data-sec="mock"] { border-left-color: var(--bad); }
+.ms-row.is-bonus { opacity: 0.85; }
+.ms-row.is-done { background: var(--ok-wash); }
+.ms-row.is-done .ms-title { text-decoration: line-through; opacity: 0.7; }
+.ms-row.is-now { outline: 2px solid var(--accent); outline-offset: 1px; }
+.ms-row--life {
+  grid-template-columns: 92px 1fr auto; padding: 5px 12px; background: transparent;
+  border-style: dashed; border-left-width: 1px; color: var(--text-3); font-size: 0.84rem;
+}
+.ms-row--life.is-now { color: var(--text-1); }
+.ms-row.is-past:not(.is-now) { opacity: 0.55; }
+.ms-time { font-size: 0.78rem; font-variant-numeric: tabular-nums; color: var(--text-2); padding-top: 3px; white-space: nowrap; }
+.ms-life { min-width: 0; }
+.ms-lifelink { font-size: 0.78rem; }
+.ms-body { min-width: 0; }
+.ms-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ms-head .chk__box { flex-shrink: 0; }
+.ms-title { font-weight: 600; font-size: 0.93rem; line-height: 1.4; flex: 1 1 200px; min-width: 0; }
+.ms-sec {
+  font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 1px 7px; border-radius: 999px; background: var(--glass-bg-strong); color: var(--text-2);
+}
+.ms-sec--bonus { background: var(--warn-wash); color: var(--warning); }
+.ms-sec--now { background: var(--accent); color: var(--on-accent); }
+.ms-how { font-size: 0.8rem; color: var(--text-2); margin: 4px 0 0; line-height: 1.5; }
+.ms-acts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+.ms-acts--compact { margin-top: 0; }
+.ms-rev { margin: 6px 0 0; padding-left: 18px; font-size: 0.82rem; line-height: 1.55; }
+.ms-rev li { margin-bottom: 2px; }
+@media (max-width: 560px) {
+  .ms-row, .ms-row--life { grid-template-columns: 1fr; gap: 2px; }
+}
+
+.ms-days { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); }
+.ms-days .day-cell { cursor: pointer; font: inherit; text-align: left; }
+.ms-days .day-cell.is-sel { outline: 2px solid var(--accent); }
+.ms-days .day-cell.is-today { border-color: var(--accent); }
+
+.ms-h2 { font-size: 1.05rem; margin: 0 0 8px; }
+.ms-tablewrap { overflow-x: auto; margin-bottom: 10px; }
+.ms-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+.ms-table th, .ms-table td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.ms-table th { font-size: 0.78rem; color: var(--text-2); background: var(--bg-2); }
+.ms-table tr:last-child td { border-bottom: none; }
+.ms-table .ms-tgt td { background: var(--bg-2); }
+.ms-ok { color: var(--ok); }
+.ms-bad { color: var(--bad); }
+.ms-list { margin: 0 0 8px; padding-left: 20px; font-size: 0.9rem; line-height: 1.6; }
+
+.ms-types { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; margin-bottom: 8px; }
+.ms-type { padding: 10px 12px; font-size: 0.88rem; }
+
+.ms-rule { padding: 10px 14px; margin-bottom: 8px; }
+.ms-rule.is-on { border-color: var(--bad); background: var(--bad-wash); }
+.ms-rule.is-applied { border-color: var(--ok); }
+
+.ms-bars { display: flex; gap: 6px; align-items: flex-end; height: 150px; padding: 10px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; }
+.ms-bar { position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; width: 34px; flex-shrink: 0; height: 100%; }
+.ms-bar__fill { width: 100%; border-radius: 4px 4px 0 0; background: var(--bad); min-height: 4px; }
+.ms-bar__fill[data-ok="1"] { background: var(--ok); }
+.ms-bar__v { font-size: 0.72rem; font-weight: 700; }
+.ms-bar__d { font-size: 0.66rem; color: var(--text-3); }
+
+.ms-fact { padding: 12px 14px; }
+.ms-group { padding: 10px 14px; margin-bottom: 8px; }
+.ms-group summary { cursor: pointer; }
+.ms-factrow { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-top: 1px solid var(--line); font-size: 0.88rem; }
+.ms-factrow:first-of-type { margin-top: 8px; }
+/* Mission ke form: .input width 100% + padding card se bahar na nikle. */
+.ms-form .input, .ms-form .select, .ms-form .textarea { box-sizing: border-box; }

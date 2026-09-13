@@ -8,6 +8,34 @@ import {
   getMocks, addMock, removeMock, mockTotals, sectionStats, percentileOf,
 } from "@/lib/mockmarks";
 import MockReport from "@/components/MockReport";
+import { buildMockTextReport } from "@/lib/mockreporttext";
+import { storeGet } from "@/lib/bigstore";
+
+// 📄 Saare mocks (sab category) + mistake-book ke chapter counts → .txt download.
+function downloadTextReport() {
+  let wrongChapters = null;
+  try {
+    const wb = JSON.parse(storeGet("cgl.wrongbook") || "[]");
+    const qc = JSON.parse(storeGet("cgl.qchapter") || "{}");
+    wrongChapters = {};
+    for (const e of Array.isArray(wb) ? wb : []) {
+      const t = qc["mock:" + e.id] || qc[e.qid] || qc[e.id];
+      const ch = (t && t.ch) || "untagged";
+      const s = (wrongChapters[e.subject] = wrongChapters[e.subject] || {});
+      s[ch] = (s[ch] || 0) + 1;
+    }
+  } catch { wrongChapters = null; }
+  const txt = buildMockTextReport(getMocks(), { wrongChapters });
+  const blob = new Blob(["﻿" + txt.replace(/\n/g, "\r\n")], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `MOCK-MARKS-REPORT-${new Date().toISOString().slice(0, 10)}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
 
 const VIEW_KEY = "cgl.mockmarks.view";
 const todayStr = () => new Date().toISOString().slice(0, 10);
@@ -36,6 +64,8 @@ function MockMarksInner() {
   const [rank, setRank] = useState("");
   const [outOf, setOutOf] = useState("");
   const [err, setErr] = useState("");
+  // Abhi-abhi save hua mock — uske analysis ka banner dikhane ke liye.
+  const [justSaved, setJustSaved] = useState(null);
 
   const refresh = () => setMocks(getMocks(cat.key));
 
@@ -48,7 +78,7 @@ function MockMarksInner() {
 
   const resetForm = () => { setName(""); setDate(todayStr()); setSections(freshSections()); setRank(""); setOutOf(""); setErr(""); };
 
-  useEffect(() => { refresh(); setOpen(false); resetForm(); /* eslint-disable-next-line */ }, [cat.key]);
+  useEffect(() => { refresh(); setOpen(false); resetForm(); setJustSaved(null); /* eslint-disable-next-line */ }, [cat.key]);
 
   const setSec = (i, k, v) => setSections((rows) => rows.map((r, idx) => (idx === i ? { ...r, [k]: v } : r)));
   const addRow = () => setSections((r) => [...r, blankSection()]);
@@ -58,7 +88,8 @@ function MockMarksInner() {
     const has = sections.some((s) => Number(s.correct) || Number(s.wrong) || Number(s.total));
     if (!has) { setErr("Marks daalo (correct / wrong / total)."); return; }
     if (!name.trim()) { setErr("Mock ka naam daalo."); return; }
-    addMock({ name, cat: cat.key, date, sections, rank, outOf });
+    const rec = addMock({ name, cat: cat.key, date, sections, rank, outOf });
+    setJustSaved(rec);
     setOpen(false); resetForm(); refresh();
   };
 
@@ -94,8 +125,18 @@ function MockMarksInner() {
               aria-pressed={view === "list"} onClick={() => setView("list")}>📋 List</button>
             <button className={"btn btn--sm " + (view === "report" ? "btn--primary" : "btn--ghost")}
               aria-pressed={view === "report"} onClick={() => setView("report")}>📈 Graph &amp; Report</button>
+            <button className="btn btn--sm btn--ghost" onClick={downloadTextReport}
+              title="Saare mocks (sab category) ki poori report .txt file mein">📄 Text report</button>
           </div>
         </div>
+
+        {justSaved && (
+          <div className="glass-card ms-alert ms-alert--info" style={{ marginTop: 12 }}>
+            ✓ <strong>{justSaved.name}</strong> save ho gaya. Ab <strong>analysis</strong> — marks wahin se badhte hain.{" "}
+            <Link href={`/mission/analysis?mock=${justSaved.id}`} className="btn btn--primary btn--sm" style={{ marginLeft: 6 }}>🔍 Ab analysis karo →</Link>{" "}
+            <Link href="/mission/progress" className="btn btn--ghost btn--sm">🚩 Checkpoint</Link>
+          </div>
+        )}
 
         {open && (
           <div className="glass-card" style={{ marginTop: 12 }}>

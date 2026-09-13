@@ -8,10 +8,9 @@ import { startNotesQuiz } from "@/lib/notesquiz";
 import { pageText } from "@/components/NotesReader";
 
 // One notes CHAPTER as a row of per-page 📝 quiz buttons plus a link to the
-// chapter itself. Shared by /today (RBE GK items -> matching Parmar chapter) and
-// /gs30 (the six-pass GS sweep), so both hit the same quiz engine and the same
-// cross-click dedup key — a page quizzed from one page won't repeat its
-// questions when opened from the other.
+// chapter itself. Used by /today (RBE GK items -> matching Parmar chapter). It
+// goes through the shared notes-quiz engine and its dedup key, so a page quizzed
+// here won't repeat its questions when quizzed from the notes reader.
 //
 // The book is fetched only when the row is expanded: these pages carry a lot of
 // chapters, and eagerly loading nine notes books would be a wall of JSON for

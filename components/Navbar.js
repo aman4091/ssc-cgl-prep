@@ -159,9 +159,11 @@ export default function Navbar() {
   // once. A row with a query must match that query as well; a row flagged
   // `isDefault` also matches when the query is absent, because that is the tab
   // its page opens on.
-  const isActive = ({ href, isDefault }) => {
+  // `exact` rows (like /mission, whose sub-pages are their own rows) light up
+  // only on their own path, not on every page beneath it.
+  const isActive = ({ href, isDefault, exact }) => {
     const [p, q] = String(href).split("?");
-    if (!(pathname === p || pathname.startsWith(p + "/"))) return false;
+    if (exact ? pathname !== p : !(pathname === p || pathname.startsWith(p + "/"))) return false;
     if (!q) return true;
     for (const [k, v] of new URLSearchParams(q)) {
       const cur = params.get(k);

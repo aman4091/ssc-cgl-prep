@@ -120,6 +120,8 @@
   --bad-wash: var(--tb-red-soft);
   --accent-wash: var(--tb-blue-soft);
   --accent2-wash: var(--tb-blue-soft);
+  --warn-wash: var(--tb-rev-soft);
+  --mauve-wash: var(--tb-blue-soft);
 
   --radius-sm: 8px;
   --radius: 13px;

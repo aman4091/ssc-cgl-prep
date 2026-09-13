@@ -26,13 +26,15 @@ import TodoCard from "@/components/TodoCard";
 // (turant asli aankde), phir neeche routine + quick-links panel. Kaam wahi
 // hai jo pehle tha, bas ab isi card/grid bhasha mein.
 
+// Tips CGL Mission ke ROI ke hisaab se (mock marks se nikla): GS sabse bada gap,
+// Maths mein SPEED, English mein ACCURACY, Reasoning sirf maintain.
 const TIPS = {
-  reasoning: "45 min. Sabse sasta faayda — yahan mehnat seedha marks banti hai.",
-  vocab: "30 min. Ek din ka quiz poora karo, ring bhar jayegi.",
-  english: "45 min. Error spotting, improvement, cloze.",
-  ca: "20 min. Sirf pichhle 6 mahine.",
-  math: "15 min timer par, phir 45 min review. ⚡ Skip 10s on rakho.",
-  gs: "45 min. Pehle PYQ, phir SIRF galat wale ka note.",
+  gs: "Sabse bada gap (~15 → 30). Pehle PYQ, fir har galat ka 1-line fact → 🧠 Fact log.",
+  math: "Dikkat SPEED ki hai (7–8 Q chhoot rahe). 1-liner sprint + 45-sec cap, option-first.",
+  english: "Dikkat ACCURACY ki hai (6+ galat). 1 bhi option nahi kata to chhodo.",
+  vocab: "PYQ words repeat hote hain — sabse sasta mark. Bhoola word → bookmark.",
+  ca: "Latest mahine pehle (Sep → Mar 2026).",
+  reasoning: "Sirf maintain — 43 pe ho. 15 Q kaafi; zyada time GS/Maths ko.",
 };
 
 function SubjectRow({ row, busy, onStart, onExt }) {

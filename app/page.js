@@ -1,14 +1,22 @@
+import MissionToday from "@/components/MissionToday";
 import TodayGate from "@/components/TodayGate";
 
-// Homepage ab sirf "Aaj ka kaam" hai.
+// Homepage = "abhi kya karna hai".
 //
-// Pehle yahan notes/vocab ka feed tha — homepage kholte hi padhne ki cheez
-// saamne. Exam sar par hai aur wahi feed sabse bada risaav nikla: page khulta
-// tha, notes khul jaate the, aur din bina ek bhi question kiye nikal jata tha.
+// Sabse upar CGL Mission (18 din, exam tak): clock ke hisaab se ABHI ka kaam,
+// uska seedha button, aur din ki poori timeline. Neeche pehle wala "Aaj ka
+// kaam" (TodayGate) — roz ke question ki ginti aur Weak Topics — jaisa tha.
 //
-// Notes kahin gaye nahi — menu ke 📚 Notes group mein pehle jaise hain, aur
-// vocab /vocab par. Bas ab wo homepage par saamne nahi aate; homepage sirf
-// itna poochta hai ki aaj ke question hue ya nahi.
+// Notes/vocab ka feed ab bhi yahan nahi aata: homepage kholte hi padhne ki
+// cheez saamne ho to din bina ek bhi question kiye nikal jata tha. Notes menu
+// ke 📚 Notes group mein hain, vocab /vocab par.
 export default function Home() {
-  return <TodayGate />;
+  return (
+    <>
+      <MissionToday />
+      <div className="section" style={{ marginTop: 28 }}>
+        <TodayGate />
+      </div>
+    </>
+  );
 }

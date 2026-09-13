@@ -109,7 +109,9 @@ async function buildSet(auto) {
   }
   writeServed(served);
 
-  const secs = Math.max(...perSpec.map((s) => s.secs));
+  // auto.secs: block apna per-question time maang sakta hai (CGL Mission ka
+  // 1-liner sprint = 15 Q / 9 min = 36 sec), warna bank ka default.
+  const secs = Number(auto.secs) > 0 ? Number(auto.secs) : Math.max(...perSpec.map((s) => s.secs));
   return {
     questions: picked.map((p) => p.q),
     subject: perSpec[0].subject,
