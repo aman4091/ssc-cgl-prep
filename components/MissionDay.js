@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import PlanPractice from "./PlanPractice";
-import { buildTimeline, tickable, revisionFor, planFor, dateOfDay, fmtDay } from "@/lib/mission";
+import { buildTimeline, tickable, revisionFor, planFor, dateOfDay, fmtDay, yellowDue } from "@/lib/mission";
 
 // Ek din ki poori timeline — home (aaj), /mission/plan (koi bhi din) dono yahi
 // dikhate hain. Har block: time, ✓, kya karna hai, kyun/kaise, aur seedha us
@@ -35,9 +35,16 @@ export function BlockActions({ b, compact }) {
 
 function Revision({ day, mission }) {
   const rev = revisionFor(day, mission);
-  if (!rev.length) return <p className="hint" style={{ margin: "4px 0 0" }}>Pehla din — revise karne ko abhi kuch nahi. Fact log khaali ho to seedha aage badho.</p>;
+  const yellow = yellowDue(dateOfDay(mission.startDate, day));
+  if (!rev.length && !yellow.length) return <p className="hint" style={{ margin: "4px 0 0" }}>Pehla din — revise karne ko abhi kuch nahi. Fact log khaali ho to seedha aage badho.</p>;
   return (
     <ul className="ms-rev">
+      {yellow.length > 0 && (
+        <li>
+          <strong>🟡 Yellow Q (3 din pehle ke analysis se) — dobara TIMED, target &lt;40 sec:</strong>{" "}
+          {yellow.map((y) => y.t).join(" · ")}
+        </li>
+      )}
       {rev.map((r) => (
         <li key={String(r.gap)}>
           <strong>{r.gap === "final" ? "Final skim" : `D${r.day} (${r.gap} din pehle)`}:</strong>{" "}

@@ -23,6 +23,8 @@ function AnalysisInner() {
   const [steps, setSteps] = useState({});
   const [actions, setActions] = useState(["", "", ""]);
   const [note, setNote] = useState("");
+  const [buckets, setBuckets] = useState({ g: 0, y: 0, r: 0 });
+  const [yellow, setYellow] = useState("");
   const [saved, setSaved] = useState("");
   const [all, setAll] = useState([]);
 
@@ -41,6 +43,8 @@ function AnalysisInner() {
     setSteps(a?.steps || {});
     setActions(a?.actions?.length ? [...a.actions, "", "", ""].slice(0, 3) : ["", "", ""]);
     setNote(a?.note || "");
+    setBuckets(a?.buckets || { g: 0, y: 0, r: 0 });
+    setYellow((a?.yellow || []).join("\n"));
     setSaved("");
   }, [sel]);
 
@@ -59,9 +63,10 @@ function AnalysisInner() {
 
   const save = () => {
     if (!mock) return;
-    const next = saveAnalysis({ id: mock.id, name: mock.name, date: mock.date, types, steps, actions: actions.map((s) => s.trim()).filter(Boolean), note });
+    const yl = yellow.split("\n").map((s) => s.trim()).filter(Boolean);
+    const next = saveAnalysis({ id: mock.id, name: mock.name, date: mock.date, types, steps, buckets, yellow: yl, actions: actions.map((s) => s.trim()).filter(Boolean), note });
     setAll(next);
-    setSaved("✓ Save ho gaya — action items agle 2 din Home par dikhenge.");
+    setSaved(`✓ Save ho gaya — action items agle 2 din Home par${yl.length ? `, aur ${yl.length} yellow Q 3 din baad revision mein (timed)` : ""}.`);
   };
 
   return (
@@ -133,6 +138,42 @@ function AnalysisInner() {
               ))}
             </div>
             <p className="hint">Galat question ka screenshot + answer: <Link href="/answers?subject=all&src=mock">Answers & Mistakes → External Mock</Link>. Wahan chapter tag lagta hai, aur chapter-wise report banti hai.</p>
+          </section>
+
+          <section className="section">
+            <h2 className="ms-h2">🧮 Maths re-solve — stopwatch ke saath</h2>
+            <div className="glass-card ms-form" style={{ padding: 14 }}>
+              <p className="hint" style={{ margin: "0 0 8px" }}>
+                Section 900 sec ka hai: 20 attempt = <strong>45 sec/Q</strong>. "90 sec mein ho gaya" ka exam mein matlab "nahi hua".
+                16 → 20 attempt ka raasta naye sawaal seekhna nahi — <strong>YELLOW ko GREEN banana</strong> hai.
+              </p>
+              <div className="ms-types">
+                {[
+                  ["g", "🟢 GREEN · <40 sec", "Exam-ready — yahi asli attempts hain. Kuch nahi karna."],
+                  ["y", "🟡 YELLOW · 40–75 sec", "Aata hai, method lamba. SHORT METHOD likho (neeche) — 3 din baad timed."],
+                  ["r", "🔴 RED · >75 sec", "Sahi ho gaya ho tab bhi exam mein SKIP. Ispe 1 min bhi mat kharcho."],
+                ].map(([k, t, tip]) => (
+                  <div key={k} className="glass-card ms-type">
+                    <div className="row between" style={{ flexWrap: "nowrap" }}>
+                      <strong>{t}</strong>
+                      <span className="row" style={{ gap: 4, flexWrap: "nowrap" }}>
+                        <button className="btn btn--ghost btn--sm" onClick={() => setBuckets((b) => ({ ...b, [k]: Math.max(0, (b[k] || 0) - 1) }))}>−</button>
+                        <strong style={{ minWidth: 22, textAlign: "center" }}>{buckets[k] || 0}</strong>
+                        <button className="btn btn--ghost btn--sm" onClick={() => setBuckets((b) => ({ ...b, [k]: (b[k] || 0) + 1 }))}>+</button>
+                      </span>
+                    </div>
+                    <p className="hint" style={{ margin: "4px 0 0" }}>{tip}</p>
+                  </div>
+                ))}
+              </div>
+              <textarea className="textarea input" rows={4} value={yellow} onChange={(e) => setYellow(e.target.value)}
+                placeholder={"Har YELLOW Q ek line mein — Q# · chapter · kitne sec · short method\ne.g. Q7 · P&L · 62s · MP:CP = (100+p):(100−d)"} />
+              {buckets.y > 0 && (
+                <p className="hint" style={{ margin: "6px 0 0" }}>
+                  Kaam: {buckets.y} yellow mein se ~{Math.ceil(buckets.y * 0.66)} ko green banana. Green abhi {buckets.g} → exam-ready attempt ~{buckets.g + Math.ceil(buckets.y * 0.66)}.
+                </p>
+              )}
+            </div>
           </section>
 
           <section className="section">

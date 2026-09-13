@@ -260,6 +260,9 @@ export default function MissionToday({ showSetupLink = true }) {
           🎯 Exam hall mein <strong>FLOOR</strong>: R {FLOOR.R} · GS {FLOOR.GS} · Q {FLOOR.Q} · E {FLOOR.E} = <strong>{FLOOR.total}</strong>
           {" "}· stretch {STRETCH.total} (paper aasan ho to apne aap)
         </p>
+        <p className="hint" style={{ margin: "2px 0 0" }}>
+          ⚖️ Maths roz 2.5 ghante se <strong>zyada nahi</strong>, GS 2.5 ghante se <strong>kam nahi</strong> — Maths +7 deta hai, GS +18. Comfortable subject ke peeche mat bhaago.
+        </p>
       </section>
 
       {/* ---- ABHI ---- */}
