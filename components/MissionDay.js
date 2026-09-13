@@ -2,7 +2,21 @@
 
 import Link from "next/link";
 import PlanPractice from "./PlanPractice";
-import { buildTimeline, tickable, revisionFor, planFor, dateOfDay, fmtDay, yellowDue } from "@/lib/mission";
+import { buildTimeline, tickable, revisionFor, planFor, dateOfDay, fmtDay, yellowDue, latestYellow } from "@/lib/mission";
+
+// Maths block ka 20-min yellow slot — sabse naye analysis ke 40–75 sec wale Q.
+function YellowList() {
+  const y = latestYellow();
+  if (!y) {
+    return <p className="hint" style={{ margin: "4px 0 0" }}>🟡 Abhi koi yellow list nahi — mock ke baad <a href="/mission/analysis">analysis</a> mein stopwatch se 🟢/🟡/🔴 karo, yellow Q wahan likho.</p>;
+  }
+  return (
+    <ul className="ms-rev">
+      <li><strong>🟡 Yellow ({y.from.slice(0, 40)}) — short method + timed re-do, target &lt;40 sec:</strong></li>
+      {y.items.slice(0, 8).map((t, i) => <li key={i}>{t}</li>)}
+    </ul>
+  );
+}
 
 // Ek din ki poori timeline — home (aaj), /mission/plan (koi bhi din) dono yahi
 // dikhate hain. Har block: time, ✓, kya karna hai, kyun/kaise, aur seedha us
@@ -93,6 +107,7 @@ export default function MissionDay({ day, mission, done, onToggle, nowMin = null
               </div>
               {b.how && <p className="ms-how">{b.how}</p>}
               {b.kind === "revision" && <Revision day={day} mission={mission} />}
+              {b.yellowList && <YellowList />}
               <BlockActions b={b} />
             </div>
           </div>
