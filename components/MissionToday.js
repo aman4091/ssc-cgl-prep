@@ -9,7 +9,7 @@ import {
   planFor, dateOfDay, fmtDay, totalDays, totalMocks, getExam, setExam, examBranch, daysBetween,
   getMetrics, setMetric, hasGsSectional, FLOOR, STRETCH,
 } from "@/lib/mission";
-import { dueCount } from "@/lib/missionfacts";
+import { dueCount, getFacts } from "@/lib/missionfacts";
 import { getMocks } from "@/lib/mockmarks";
 import { dayKey } from "@/lib/daytime";
 import { daysLeft, setTargets, setOrder, DEFAULT_TARGETS, DEFAULT_ORDER } from "@/lib/daily";
@@ -92,8 +92,11 @@ function MetricCard({ day, done, m }) {
   const [all, setAll] = useState(() => getMetrics());
   const today = all[dk] || {};
   const d = (done && done[day]) || {};
-  const gsAuto = !!(d.gs || d.gspyq || d.ca);
+  const gsAuto = !!(d.gs || d.gspyq || d.gsx || d.gsrev || d.ca);
   const gsTouched = today.gs != null ? today.gs : gsAuto;
+  // Naye cluster = aaj fact log mein jude GS/CA facts (apne aap ginti).
+  let clusters = 0;
+  try { clusters = getFacts().filter((f) => f.day === dk && (f.sec === "gs" || f.sec === "ca")).length; } catch { /* ignore */ }
   const last = Array.from({ length: 7 }, (_, i) => {
     const dt = new Date(); dt.setDate(dt.getDate() - (6 - i));
     const k = `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")}`;
@@ -101,14 +104,17 @@ function MetricCard({ day, done, m }) {
   });
   return (
     <div className="glass-card ms-metric">
-      <div className="card-hd">🌙 Roz raat ka EK metric</div>
-      <p className="hint" style={{ margin: "0 0 8px" }}>Aaj Maths ka attempt count kya tha (sprint/sectional/mock ka), aur GS ko chhua ya nahi. Baaki sab iske aas-paas chalta hai.</p>
+      <div className="card-hd">🌙 Roz raat ke 3 number</div>
+      <p className="hint" style={{ margin: "0 0 8px" }}>Maths attempt count (sprint/sectional/mock ka) · aaj ke naye GS cluster · GS chhua ya nahi. Baaki sab iske aas-paas chalta hai.</p>
       <div className="row" style={{ gap: 10 }}>
         <label className="row" style={{ gap: 6, flexWrap: "nowrap" }}>
           <span style={{ fontSize: "0.88rem" }}>🧮 Maths attempt (25 mein):</span>
           <input className="input" type="number" min="0" max="25" style={{ width: 80, padding: "6px 10px" }}
             value={today.m ?? ""} onChange={(e) => setAll(setMetric(dk, { m: e.target.value === "" ? null : Number(e.target.value) }))} />
         </label>
+        <Link href="/mission/facts" className={"btn btn--sm " + (clusters >= 25 ? "btn--primary" : "btn--ghost")}>
+          🧩 Naye cluster: <strong style={{ marginLeft: 4 }}>{clusters}</strong>/25
+        </Link>
         <button className={"btn btn--sm " + (gsTouched ? "btn--primary" : "btn--ghost")} onClick={() => setAll(setMetric(dk, { gs: !gsTouched }))}>
           🌍 GS chhua: {gsTouched ? "✓ haan" : "✗ nahi"}
         </button>
@@ -183,11 +189,13 @@ export default function MissionToday({ showSetupLink = true }) {
             <div className="ms-now__label">🚀 CGL MISSION · DAY 1 = {fmtDay(m.startDate).toUpperCase()}</div>
             <div className="ms-now__title">Kal subah 8 baje se Day 1 — par "kal se" ki aadat AAJ todni hai.</div>
             <p className="ms-how" style={{ marginTop: 4 }}>
-              Poora din nahi — sirf ye 2 kaam, kul ~55 min. {N} din, {totalMocks(m)} full mock, exam {fmtDay(getExam())}{m.examConfirmed ? "" : " (date pakki nahi)"}.
+              Poora din nahi — sirf ye kaam, kul ~75 min. Sabse zaroori: GS cluster. {N} din, {totalMocks(m)} full mock, exam {fmtDay(getExam())}{m.examConfirmed ? "" : " (date pakki nahi)"}.
             </p>
             {[
-              { id: "pre-gs", t: "GS BASELINE sectional (Testbook, CGL 2024 GS) — 15 min + marks /mock-marks → GK/GS mein (20 min)", href: "/mock-marks?cat=gk", label: "📊 GS marks" },
-              { id: "pre-tables", t: "Tables 12–25 ka pehla pass — bol ke, 20 random (20 min)", href: "/calculation", label: "🧮 Calculation" },
+              { id: "pre-gs", t: "GS BASELINE sectional + marks /mock-marks → GK/GS mein (hua: 9 sahi / 16 galat = 10)", href: "/mock-marks?cat=gk", label: "📊 GS marks" },
+              { id: "pre-cluster", t: "GS mock ke 16 galat Q ka CLUSTER → Fact log (~120 facts) — pehla cluster session (40 min)", href: "/mission/facts", label: "🧠 Fact log" },
+              { id: "pre-buckets", t: "Maths mock ke 24 solvable Q stopwatch se 🟢/🟡/🔴 + yellow ka short method (20 min)", href: "/mission/analysis", label: "🔍 Analysis" },
+              { id: "pre-tables", t: "Tables 12–25 ka pehla pass — bol ke, 20 random (15 min)", href: "/calculation", label: "🧮 Calculation" },
             ].map((x) => {
               const ok = !!((done[0] || {})[x.id]);
               return (
@@ -261,7 +269,7 @@ export default function MissionToday({ showSetupLink = true }) {
           {" "}· stretch {STRETCH.total} (paper aasan ho to apne aap)
         </p>
         <p className="hint" style={{ margin: "2px 0 0" }}>
-          ⚖️ Maths roz 2.5 ghante se <strong>zyada nahi</strong>, GS 2.5 ghante se <strong>kam nahi</strong> — Maths +7 deta hai, GS +18. Comfortable subject ke peeche mat bhaago.
+          ⚖️ Maths roz 2.5 ghante se <strong>zyada nahi</strong>, GS ~4 ghante (PYQ + cluster) — Maths +7 deta hai, GS 10 → 22 = +12. Comfortable subject ke peeche mat bhaago.
         </p>
       </section>
 

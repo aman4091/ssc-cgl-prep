@@ -35,6 +35,22 @@ import { tagChaptersByText } from "@/lib/client-ai";
 import { getHardSet, toggleHard, pruneHard } from "@/lib/hardq";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
+import { addFact, getFacts } from "@/lib/missionfacts";
+
+// 🧩 GS answer ka CLUSTER section (lib/answerprompts / overlay ai_prompts) —
+// "poora group ek line mein". Us line(s) ko nikaalo taaki ek click mein CGL
+// Mission ke fact log mein chali jaye (wahan se 1/3/7/14 din baad revision).
+function clusterOf(md) {
+  const s = String(md || "");
+  const m = /^##\s*🧩?\s*CLUSTER[^\n]*\n([\s\S]*?)(?=^##\s|$(?![\s\S]))/m.exec(s);
+  if (!m) return null;
+  const lines = m[1].split("\n")
+    .map((l) => l.replace(/\*\*/g, "").replace(/^\s*[-*•]\s+/, "").trim())
+    .filter((l) => l && /·/.test(l));
+  if (!lines.length) return null;
+  const topic = (/\*\*Topic:\*\*\s*([^\n]+)/.exec(s) || [])[1] || "";
+  return { lines, topic: topic.replace(/\*\*/g, "").trim().slice(0, 60) };
+}
 
 // Answers + Mistake Notebook — ab EK page.
 //
@@ -100,6 +116,30 @@ const KNOWN = new Set(SUBJECTS.map((s) => s.key));
 const bucketOf = (r) => (KNOWN.has(r.subject) ? r.subject : "other");
 const labelOf = (k) =>
   k === "other" ? "Other" : (SUBJECTS.find((s) => s.key === k) || ALL_SUBJ).label;
+
+// Ek click: answer ka CLUSTER → fact log. Pehle se pada ho to "✓ fact log mein".
+function ClusterButton({ md, onFlash }) {
+  const cl = useMemo(() => clusterOf(md), [md]);
+  const [added, setAdded] = useState(() => {
+    if (!cl) return false;
+    try { const have = new Set(getFacts().map((f) => f.text)); return cl.lines.every((l) => have.has(l)); } catch { return false; }
+  });
+  if (!cl) return null;
+  return (
+    <button
+      className={"btn btn--sm " + (added ? "btn--ghost" : "btn--primary")}
+      style={{ margin: "4px 0 8px" }}
+      disabled={added}
+      onClick={() => {
+        for (const l of cl.lines) addFact({ sec: "gs", topic: cl.topic, text: l });
+        setAdded(true);
+        onFlash && onFlash(`🧩 ${cl.lines.length} cluster fact log mein — 1/3/7/14 din baad revision`);
+      }}
+    >
+      {added ? "✓ Cluster fact log mein" : `🧩 Cluster → Fact log${cl.lines.length > 1 ? ` (${cl.lines.length})` : ""}`}
+    </button>
+  );
+}
 
 function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard, onPopup }) {
   const { urls, missing } = useImageUrls(imagesOf(rec));
@@ -239,7 +279,7 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
           pehla fold mein. Uske neeche hamesha DeepSeek ka. */}
       {a2 ? (
         <>
-          <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><LazyMarkdown>{a2}</LazyMarkdown></div>
+          <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><ClusterButton md={a2} onFlash={onFlash} /><LazyMarkdown>{a2}</LazyMarkdown></div>
           {a1 && (
             <details className="ansp__old">
               <summary>Pehla Gemini answer dekho</summary>
@@ -248,12 +288,13 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
           )}
         </>
       ) : a1 ? (
-        <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><LazyMarkdown>{a1}</LazyMarkdown></div>
+        <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><ClusterButton md={a1} onFlash={onFlash} /><LazyMarkdown>{a1}</LazyMarkdown></div>
       ) : null}
 
       {ai ? (
         <div className="ansp__answer ansp__answer--ai">
           <div className="ansp__aihead">🤖 DeepSeek</div>
+          <ClusterButton md={ai} onFlash={onFlash} />
           <LazyMarkdown>{ai}</LazyMarkdown>
         </div>
       ) : !a1 && !a2 ? (

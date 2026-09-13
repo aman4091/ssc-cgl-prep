@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { getMocks } from "@/lib/mockmarks";
 import {
   getMission, evaluateCheckpoints, TARGETS, SECTIONS, RULES, setAdapt, sectionStatsIn, checkpointWindows,
-  FLOOR, STRETCH, FLOOR_NOTE, fmtDay,
+  FLOOR, STRETCH, FLOOR_NOTE, fmtDay, gsTrack,
 } from "@/lib/mission";
 
 // /mission/progress — hafte-wise checkpoint, seedha /mock-marks ke data se.
@@ -82,6 +82,31 @@ export default function MissionProgressPage() {
         </div>
         <p className="hint">Target hi over-attempt karwata hai: "Maths mein 39 chahiye" leke ghuse to 13:00 pe 18 attempt dekh ke panic mein 4 jaldi-jaldi maaroge, 3 galat. Floor le ke jao — stretch paper aasan ho to apne aap.</p>
       </section>
+
+      {(() => {
+        const g = gsTrack(mocks, m);
+        return (
+          <section className="section">
+            <h2 className="ms-h2">🌍 GS track — baseline {g.base ? `${Math.round(g.base.score * 10) / 10} (${fmtDay(g.base.date)})` : "abhi nahi"}</h2>
+            <div className="ms-tablewrap">
+              <table className="ms-table">
+                <thead><tr><th>Din</th><th>Target (GS sectional)</th><th>Aaya</th><th>Nahi mila to</th></tr></thead>
+                <tbody>
+                  {g.rows.map((r) => (
+                    <tr key={r.day}>
+                      <td>{fmtDay(r.date)} (D{r.day})</td>
+                      <td><strong>{r.score}</strong></td>
+                      <td>{r.got ? <strong className={r.got.score >= r.score ? "ms-ok" : "ms-bad"}>{Math.round(r.got.score * 10) / 10}</strong> : <span className="muted">{r.reached ? "GS sectional do!" : "–"}</span>}</td>
+                      <td className="hint">{r.miss}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="hint">GS mein effort aur marks ka rishta seedha hai: roz 25–30 naye cluster + 40–50 purane revise. Har ~3 din ek GS sectional (CGL 2024 / CHSL 2025) /mock-marks → GK/GS mein.</p>
+          </section>
+        );
+      })()}
 
       <section className="section" style={{ marginTop: 8 }}>
         <div className="ms-tablewrap">

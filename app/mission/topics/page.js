@@ -41,21 +41,23 @@ export default function MissionTopicsPage() {
       </section>
 
       <section className="section">
-        <h2 className="ms-h2">🌍 GS — floor 28 · stretch 32. PYQ pehle, padhai baad mein</h2>
+        <h2 className="ms-h2">🌍 GS — baseline 10 · floor 22 · stretch 28. PYQ → CLUSTER → REPEAT (notes band)</h2>
+        <div className="glass-card ms-alert ms-alert--info">
+          <strong>Method:</strong> (1) PYQ solve — har Q max 10 sec, nahi pata → agla. (2) Har galat/unsure ka <strong>CLUSTER</strong> — sirf answer nahi,
+          poora group EK line mein (8–15 facts), jaise <em>"AP: Kuchipudi · TN: Bharatanatyam · Kerala: Kathakali, Mohiniyattam · Odisha: Odissi · UP: Kathak · Manipur: Manipuri · Assam: Sattriya"</em>.
+          DeepSeek answer ka 🧩 CLUSTER section seedha copy. (3) Fact log D+1 / D+3 / D+7. Roz 100 PYQ, 25–30 naye cluster, 40–50 purane revise.
+        </div>
         <div className="ms-tablewrap">
           <table className="ms-table">
-            <thead><tr><th>Area</th><th>~Q</th><th>Sirf ye padho</th></tr></thead>
+            <thead><tr><th>#</th><th>Area (is kram mein — list pehle, samajh baad mein)</th><th>~Q</th><th>Cluster kya banana hai</th></tr></thead>
             <tbody>
-              <tr><td><strong>Polity</strong></td><td>3–4</td><td>Articles (12–32, 51A, 72, 110, 112, 123, 280, 324, 352/356/360, 368), Parts, Schedules, Sources, amendments (42, 44, 61, 73, 74, 86, 101, 103, 106), FR/DPSP/FD, bodies. <em>Tumhari GS galtiyon mein sabse zyada (21).</em></td></tr>
-              <tr><td><strong>Biology</strong></td><td>2–3</td><td>Human body, vitamins &amp; deficiency, bimariyan (pathogen), cell, plant basics</td></tr>
-              <tr><td><strong>Chemistry</strong></td><td>1–2</td><td>Common names/formulae, pH, metals &amp; alloys, periodic table basics</td></tr>
-              <tr><td><strong>Physics</strong></td><td>1–2</td><td>SI units, instruments, inventions — numerical nahi</td></tr>
-              <tr><td><strong>Modern History</strong></td><td>2</td><td>1857→1947, Congress sessions, GG/Viceroys, newspapers/organisations</td></tr>
-              <tr><td><strong>Art &amp; Culture + Static</strong></td><td>4–6</td><td>Dance → state, instruments → artists, festivals, awards, books, sports, days, HQ</td></tr>
-              <tr><td><strong>Indian Geography</strong></td><td>2–3</td><td>Rivers/dams, NP, passes, soils, crops, Census 2011</td></tr>
-              <tr><td><strong>Ancient + Medieval</strong></td><td>1–2</td><td>Harappan sites, Buddhism/Jainism, Maurya/Gupta, Sultanate/Mughal rulers</td></tr>
-              <tr><td><strong>Economy</strong></td><td>1–2</td><td>FYPs, RBI/banking/budget terms, GDP/inflation, schemes</td></tr>
-              <tr><td><strong>Current Affairs</strong></td><td>3–5</td><td>Mar → Sep 2026 (latest pehle); Jan–Feb sirf sports/awards/appointments</td></tr>
+              <tr><td>1</td><td><strong>Static GK</strong></td><td>4–6</td><td>8 classical dances + folk → state, festivals → state, instruments → artists, awards, sports cups + terms, books → authors, important days, first-in-India, HQ, stadiums</td></tr>
+              <tr><td>2</td><td><strong>Polity</strong> <em>(21 galtiyan)</em></td><td>3–4</td><td>Articles 14, 19, 21, 21A, 32, 44, 51A, 72, 112, 123, 280, 324, 352/356/360, 368 · 12 Schedules · Parts · Amendments 42, 44, 52, 61, 73, 74, 86, 101, 103 · FR/DPSP/FD · bodies</td></tr>
+              <tr><td>3</td><td><strong>Science facts</strong></td><td>5–6</td><td>Bio: vitamins, diseases + pathogen, body, blood, cell · Chem: formulas, common names, alloys, pH, gases · Physics: SI units, instruments, inventors (numerical nahi)</td></tr>
+              <tr><td>4</td><td><strong>Geography India</strong></td><td>2–3</td><td>Rivers + tributaries, dams, passes, national parks, soils, crops, Census 2011</td></tr>
+              <tr><td>5</td><td><strong>Modern History</strong></td><td>2</td><td>1857→1947 timeline, Congress sessions, Viceroys, movements + years</td></tr>
+              <tr><td>6</td><td><strong>Current Affairs</strong> (roz 30 min)</td><td>2–4</td><td>Mar–Sep 2026: schemes, appointments, awards, sports, summits, books, reports</td></tr>
+              <tr><td>7</td><td><strong>Economy + Ancient/Medieval</strong></td><td>2–3</td><td>SIRF PYQ — padhna nahi</td></tr>
             </tbody>
           </table>
         </div>
@@ -64,7 +66,7 @@ export default function MissionTopicsPage() {
         </div>
         <p className="hint">15 min ka fayda: 25 Q ~9 min mein ho jaate hain — bache 6 min statement/match wale Q pe har statement alag check karke options kaato. Jawab sirf concrete wajah ho tabhi badlo.</p>
         <div className="row" style={{ gap: 6 }}>
-          <L href="/pyq/war">WAR bank (GS PYQ)</L><L href="/notes/parmar-polity">Parmar Polity</L><L href="/current-affairs?tab=monthly">📰 CA</L><L href="/mission/facts">🧠 Fact log</L>
+          <L href="/pyq/war/static-gk">WAR: Static GK</L><L href="/pyq/war/polity">WAR: Polity</L><L href="/pyq/war">WAR bank (sab)</L><L href="/current-affairs?tab=monthly">📰 CA</L><L href="/mission/facts">🧠 Fact log</L>
         </div>
       </section>
 
@@ -102,8 +104,8 @@ export default function MissionTopicsPage() {
         <h2 className="ms-h2">Saaf baat — is time mein kya possible NAHI</h2>
         <div className="glass-card" style={{ padding: 14 }}>
           <ul className="ms-list">
-            <li>160+ guarantee — plan ka base FLOOR 141 hai, stretch 157. 160 tabhi jab sab click kare.</li>
-            <li>GS 40+ — 25 pakka, 30 stretch.</li>
+            <li>160+ guarantee — plan ka base FLOOR 135 hai, stretch 153. Exam der se ho (15 Oct+) to 155–165 reach mein.</li>
+            <li>GS 40+ — baseline 10 se floor 22, stretch 28.</li>
             <li>Parmar ke 121 chapter / 6-pass — 17 Aug se 0 din chala, 18 din mein nahi hoga.</li>
             <li>Maths poora syllabus + advanced geometry/3D.</li>
             <li>Poore saal ka CA gehrai se.</li>
