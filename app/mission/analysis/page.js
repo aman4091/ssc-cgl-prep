@@ -147,6 +147,11 @@ function AnalysisInner() {
                 Section 900 sec ka hai: 20 attempt = <strong>45 sec/Q</strong>. "90 sec mein ho gaya" ka exam mein matlab "nahi hua".
                 16 → 20 attempt ka raasta naye sawaal seekhna nahi — <strong>YELLOW ko GREEN banana</strong> hai.
               </p>
+              <p className="hint" style={{ margin: "0 0 8px" }}>
+                ⚠️ <strong>Solution dekhne se PEHLE</strong> re-solve karo — answer pata ho to time jhootha (kam) aata hai.
+                Attempt kiye Q ka time Testbook analysis mein har Q ka dikhta hai (wo asli hai). Solution pehle dekh liya? To jo Q
+                sirf isliye jaldi hua kyunki answer yaad tha, use 🟡 hi maano, 🟢 nahi.
+              </p>
               <div className="ms-types">
                 {[
                   ["g", "🟢 GREEN · <40 sec", "Exam-ready — yahi asli attempts hain. Kuch nahi karna."],
