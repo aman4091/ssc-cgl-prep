@@ -4,13 +4,20 @@
 // Ek angoothe se, khade-khade: saare button neeche, bade, aur answer aane par
 // kuch bhi apni jagah se nahi hilta (answer ki jagah pehle se khali rakhi hai).
 // Desktop par: Space = answer, 1 = Nahi aata, 2 = Aata hai, S = star.
+//
+// Fact log (/mission/facts) bhi isi ko use karta hai, apne schedule ke saath:
+// `onRate(card, good)` diya ho to CA ka SRS nahi chhua jata, star band hota
+// hai, aur card.meta (upar ki chhoti line) apni hoti hai.
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { rate, toggleStar, getStars } from "@/lib/carevision/progress";
 
 const AGAIN_AFTER = 5;   // galat card itne card baad isi session mein phir
 
-export default function Recall({ queue: initial, today, onExit }) {
+const DEFAULT_LABELS = { bad: "Nahi aata", good: "Aata hai", show: "Answer dikhao" };
+
+export default function Recall({ queue: initial, today, onExit, onRate, labels = DEFAULT_LABELS }) {
+  const withStar = !onRate;
   const [queue, setQueue] = useState(initial);
   const [pos, setPos] = useState(0);
   const [shown, setShown] = useState(false);
@@ -25,7 +32,8 @@ export default function Recall({ queue: initial, today, onExit }) {
     if (!card || !shown) return;
     const retry = again.current.has(card.id) && card.__retry;
     if (!retry) {
-      rate(card.id, good, today);
+      if (onRate) onRate(card, good);
+      else rate(card.id, good, today);
       setTally((t) => (good ? { ...t, good: t.good + 1 } : { ...t, bad: t.bad + 1 }));
     }
     if (!good && !again.current.has(card.id)) {
@@ -38,13 +46,13 @@ export default function Recall({ queue: initial, today, onExit }) {
     }
     setShown(false);
     setPos((p) => p + 1);
-  }, [card, shown, today, pos]);
+  }, [card, shown, today, pos, onRate]);
 
   const star = useCallback(() => {
-    if (!card) return;
+    if (!card || !withStar) return;
     const on = toggleStar(card.id);
     setStars((s) => ({ ...s, [card.id]: on ? 1 : 0 }));
-  }, [card]);
+  }, [card, withStar]);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -67,7 +75,7 @@ export default function Recall({ queue: initial, today, onExit }) {
       <div className="carev-recall">
         <div className="carev-done">
           <div className="carev-done-big">Ho gaya ✓</div>
-          <p>{total} card · <b>{tally.good}</b> aata hai · <b>{tally.bad}</b> nahi aata</p>
+          <p>{total} card · <b>{tally.good}</b> {labels.good.toLowerCase()} · <b>{tally.bad}</b> {labels.bad.toLowerCase()}</p>
           <p className="carev-dim">Jo nahi aaye wo kal phir aayenge.</p>
           <button className="carev-btn carev-btn-primary" onClick={onExit}>Wapas</button>
         </div>
@@ -81,12 +89,14 @@ export default function Recall({ queue: initial, today, onExit }) {
       <div className="carev-bar">
         <button className="carev-link" onClick={onExit} aria-label="Wapas">← Wapas</button>
         <span className="carev-count">{pos + 1} / {queue.length}</span>
-        <button
-          className={`carev-star${starred ? " on" : ""}`}
-          onClick={star}
-          aria-pressed={starred}
-          aria-label={starred ? "Star hatao" : "Star karo"}
-        >{starred ? "★" : "☆"}</button>
+        {withStar ? (
+          <button
+            className={`carev-star${starred ? " on" : ""}`}
+            onClick={star}
+            aria-pressed={starred}
+            aria-label={starred ? "Star hatao" : "Star karo"}
+          >{starred ? "★" : "☆"}</button>
+        ) : <span />}
       </div>
       <div className="carev-progress" aria-hidden="true">
         <div style={{ width: `${(pos / queue.length) * 100}%` }} />
@@ -94,7 +104,7 @@ export default function Recall({ queue: initial, today, onExit }) {
 
       <div className="carev-card" onClick={() => !shown && setShown(true)}>
         <div className="carev-meta">
-          <span>Part {card.part}</span> · <span>{card.section}</span>
+          {card.meta ? <span>{card.meta}</span> : <><span>Part {card.part}</span> · <span>{card.section}</span></>}
           {card.__retry ? <span className="carev-again"> · phir se</span> : null}
         </div>
         <div className="carev-trigger">{card.trigger}</div>
@@ -103,7 +113,7 @@ export default function Recall({ queue: initial, today, onExit }) {
             <>
               <div className="carev-answer-text">{card.answer}</div>
               {card.extra ? <div className="carev-extra">{card.extra}</div> : null}
-              <div className="carev-src">PDF p.{card.pdfPage}</div>
+              {card.pdfPage ? <div className="carev-src">PDF p.{card.pdfPage}</div> : null}
             </>
           ) : (
             <div className="carev-hint">Socho… phir tap karo</div>
@@ -115,15 +125,15 @@ export default function Recall({ queue: initial, today, onExit }) {
         {shown ? (
           <>
             <button className="carev-btn carev-btn-bad" onClick={() => answer(false)}>
-              Nahi aata <kbd>1</kbd>
+              {labels.bad} <kbd>1</kbd>
             </button>
             <button className="carev-btn carev-btn-good" onClick={() => answer(true)}>
-              Aata hai <kbd>2</kbd>
+              {labels.good} <kbd>2</kbd>
             </button>
           </>
         ) : (
           <button className="carev-btn carev-btn-primary carev-wide" onClick={() => setShown(true)}>
-            Answer dikhao <kbd>Space</kbd>
+            {labels.show} <kbd>Space</kbd>
           </button>
         )}
       </div>

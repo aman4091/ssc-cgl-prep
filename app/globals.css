@@ -3852,7 +3852,8 @@ body.exam-on .hresume { display: none; }
 .ms-fact { padding: 12px 14px; }
 .ms-group { padding: 10px 14px; margin-bottom: 8px; }
 .ms-group summary { cursor: pointer; }
-.ms-factrow { display: flex; justify-content: space-between; gap: 10px; padding: 6px 0; border-top: 1px solid var(--line); font-size: 0.88rem; }
+.ms-factrow { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); font-size: 1rem; line-height: 1.5; }
+.ms-revise-go { width: 100%; min-height: 52px; font-size: 1.05rem; margin-bottom: 10px; }
 .ms-factrow:first-of-type { margin-top: 8px; }
 /* Mission ke form: .input width 100% + padding card se bahar na nikle. */
 .ms-form .input, .ms-form .select, .ms-form .textarea { box-sizing: border-box; }

@@ -1,8 +1,30 @@
 "use client";
 
+import "@/app/ca-revision/carev.css";
 import { useEffect, useMemo, useState } from "react";
 import { FACT_SECS, GAPS, getFacts, addFact, removeFact, dueFacts, reviewFact, topicsInUse } from "@/lib/missionfacts";
 import { getMission, currentDayNum, planFor } from "@/lib/mission";
+import Recall from "@/components/carevision/Recall";
+
+// Bade card mein revise (CA Revision wala Recall): "Kerala dance: Kathakali,
+// Mohiniyattam…" — ':' / '—' / '=' / '→' se pehle wala hissa sawaal, baad
+// wala jawab. Alag karne wala na ho to topic sawaal hai, poora fact jawab.
+// Schedule fact log ka apna hi rehta hai (1/3/7/14 din) — reviewFact.
+const SPLIT = /^(.{3,90}?)\s*(?::|—|–|=|→|\s-\s)\s*([\s\S]{2,})$/;
+const FACT_LABELS = { bad: "Bhool gaya", good: "Yaad tha", show: "Dikhao" };
+
+function toCard(f) {
+  const sec = FACT_SECS.find((x) => x.k === f.sec);
+  const m = SPLIT.exec(f.text.trim());
+  return {
+    id: f.id,
+    trigger: m ? m[1] : (f.topic || `${sec?.label || "Fact"} — yaad karo`),
+    answer: m ? m[2] : f.text,
+    extra: null,
+    pdfPage: null,
+    meta: `${sec?.icon || ""} ${sec?.label || ""}${f.topic ? ` · ${f.topic}` : ""} · padaav ${f.step + 1}/${GAPS.length}`,
+  };
+}
 
 // /mission/facts — GS / CA / English / Maths ka ek-line fact log.
 //
@@ -19,6 +41,7 @@ export default function MissionFactsPage() {
   const [text, setText] = useState("");
   const [q, setQ] = useState("");
   const [suggest, setSuggest] = useState([]);
+  const [revising, setRevising] = useState(null);
 
   const load = () => { setFacts(getFacts()); setDue(dueFacts()); };
   useEffect(() => {
@@ -52,6 +75,17 @@ export default function MissionFactsPage() {
     return Object.entries(g).sort((a, b) => b[1].length - a[1].length);
   }, [facts, q]);
 
+  if (revising) {
+    return (
+      <Recall
+        queue={revising}
+        labels={FACT_LABELS}
+        onRate={(c, good) => reviewFact(c.id, good)}
+        onExit={() => { setRevising(null); load(); window.scrollTo(0, 0); }}
+      />
+    );
+  }
+
   return (
     <>
       <section className="hero" style={{ paddingBottom: 6 }}>
@@ -67,6 +101,11 @@ export default function MissionFactsPage() {
 
       <section className="section" style={{ marginTop: 8 }}>
         <h2 className="ms-h2">Aaj revise karo ({due.length})</h2>
+        {due.length > 0 && (
+          <button className="btn btn--primary ms-revise-go" onClick={() => setRevising(due.map(toCard))}>
+            ▶ Bade card mein revise karo · {due.length}
+          </button>
+        )}
         {due.length === 0 ? (
           <div className="placeholder">Aaj ke liye kuch due nahi. 👍</div>
         ) : (
@@ -81,7 +120,7 @@ export default function MissionFactsPage() {
                 </div>
                 {open[f.id] ? (
                   <>
-                    <p style={{ margin: "6px 0 8px", fontSize: "0.95rem" }}>{f.text}</p>
+                    <p style={{ margin: "6px 0 8px", fontSize: "1.1rem", lineHeight: 1.5 }}>{f.text}</p>
                     <div className="row" style={{ gap: 8 }}>
                       <button className="btn btn--primary btn--sm" onClick={() => { reviewFact(f.id, true); load(); }}>✓ Yaad tha</button>
                       <button className="btn btn--ghost btn--sm" onClick={() => { reviewFact(f.id, false); load(); }}>✗ Bhool gaya (kal phir)</button>
