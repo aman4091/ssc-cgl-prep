@@ -18,6 +18,8 @@ const copy = (name) => {
 };
 const { review, intervalCap, daysUntil, addDays, isDue, EXAM_DAY } = await import(copy("srs"));
 const { todayPlan, planDays, passOf, sortForStudy, dayState } = await import(copy("plan"));
+const { buildIndex, distractors, makeQuestion, buildTest, kindOf } = await import(copy("mcq"));
+const { galtiAnswer } = await import(copy("galti"));
 
 let passed = 0;
 function test(name, fn) {
@@ -172,6 +174,13 @@ test("pass 3: no new cards; due + starred only", () => {
   assert.deepEqual(p.queue.map((c) => c.id), ["p1-0", "p1-1", "p2-0"]);
 });
 
+test("pass 3 also brings the Galtiyan deck every day", () => {
+  const cards = deck(3, 0);
+  const galti = { "p1-2": { on: 1, s: 1 }, "p1-0": { on: 0, s: 2 } };
+  const p = todayPlan({ cards, srs: {}, stars: {}, galti, log: {}, today: "2026-09-29", start: START });
+  assert.deepEqual(p.queue.map((c) => c.id), ["p1-2"]);
+});
+
 test("Read locks at 4 days left", () => {
   const at = (today) => todayPlan({ cards: [], srs: {}, stars: {}, log: {}, today, start: START }).readLocked;
   assert.equal(at("2026-09-26"), false);   // 5 left
@@ -187,6 +196,106 @@ test("dayState: done only when the new-card target was met", () => {
   assert.equal(dayState(undefined), "empty");
   assert.equal(dayState({ r: 30, nw: 20, tg: 40 }), "partial");
   assert.equal(dayState({ r: 60, nw: 40, tg: 40 }), "done");
+});
+
+// ------------------------------------------------------------------ MCQ
+
+const mk = (id, section, part, answer, kind, tags = []) =>
+  ({ id, section, part, trigger: `Q ${id}`, answer, tags: [...tags, `ans:${kind}`] });
+
+test("distractors come from same-shape siblings, same section first", () => {
+  const cards = [
+    mk("g1", "GI", "I", "Assam", "state", ["gi-tag"]),
+    mk("g2", "GI", "I", "Goa", "state", ["gi-tag"]),
+    mk("g3", "GI", "I", "Kerala", "state", ["gi-tag"]),
+    mk("g4", "GI", "I", "Bihar", "state", ["gi-tag"]),
+    mk("n1", "GI", "I", "42", "number", ["gi-tag"]),
+    mk("o1", "Awards", "D", "Soap Ltd", "organisation", ["award"]),
+  ];
+  const d = distractors(cards[0], buildIndex(cards), "s");
+  assert.equal(d.length, 3);
+  assert.ok(d.every((a) => ["Goa", "Kerala", "Bihar"].includes(a)));
+});
+
+test("a card without 3 clean siblings is left out of the test", () => {
+  const cards = [
+    mk("a", "S", "I", "Assam", "state"),
+    mk("b", "S", "I", "Goa", "state"),
+    mk("c", "S", "I", "Assam and Goa", "state"),   // clashes with both
+    mk("x", "T", "D", "Kerala", "state"),           // other part, no shared tag
+  ];
+  assert.equal(distractors(cards[0], buildIndex(cards), "s"), null);
+  assert.equal(buildTest(cards, cards, 10, "s").length, 0);
+});
+
+test("never another category's answer, never the answer itself", () => {
+  const cards = [
+    mk("r1", "Index", "H", "44 (2026)", "rank", ["ranking"]),
+    mk("r2", "Index", "H", "131 (2025)", "rank", ["ranking"]),
+    mk("r3", "Index", "H", "4th (2026)", "rank", ["ranking"]),
+    mk("r4", "Index", "H", "116th (2026)", "rank", ["ranking"]),
+    mk("r5", "Index", "H", "44 (2026)", "rank", ["ranking"]),     // same as r1
+    mk("b1", "Index", "H", "World Economic Forum", "organisation", ["ranking"]),
+  ];
+  const q = makeQuestion(cards[0], buildIndex(cards), "seed");
+  assert.equal(q.options.length, 4);
+  assert.equal(new Set(q.options).size, 4);
+  assert.equal(q.options[q.correct], "44 (2026)");
+  assert.ok(!q.options.includes("World Economic Forum"));
+  assert.ok(q.options.every((o) => kindOf(cards.find((c) => c.answer === o)) === "ans:rank"));
+});
+
+test("one person under two titles is never two options", () => {
+  const cards = [
+    mk("f1", "Day", "C", "Prime Minister Narendra Modi", "person", ["flag"]),
+    mk("f2", "Day", "C", "PM Narendra Modi", "person", ["flag"]),
+    mk("f3", "Day", "C", "Modi Narendra", "person", ["flag"]),
+    mk("f4", "Day", "C", "Ghanshyam Tiwari", "person", ["flag"]),
+    mk("f5", "Day", "C", "Shri Om Birla", "person", ["flag"]),
+    mk("f6", "Day", "C", "Droupadi Murmu", "person", ["flag"]),
+  ];
+  const d = distractors(cards[0], buildIndex(cards), "q");
+  assert.ok(d && !d.some((a) => /modi/i.test(a)), JSON.stringify(d));
+});
+
+test("names already in the cue are not offered as options", () => {
+  const cards = [
+    { ...mk("p1", "Padma", "D", "A Person", "person"), trigger: "Padma 2026 — Art (other than B Person)" },
+    mk("p2", "Padma", "D", "B Person", "person"),
+    mk("p3", "Padma", "D", "C Person", "person"),
+    mk("p4", "Padma", "D", "D Person", "person"),
+    mk("p5", "Padma", "D", "E Person", "person"),
+  ];
+  const d = distractors(cards[0], buildIndex(cards), "z");
+  assert.ok(!d.includes("B Person"));
+});
+
+test("the same seed gives the same test", () => {
+  const cards = Array.from({ length: 12 }, (_, i) => mk(`s${i}`, "S", "I", `State ${i}`, "state"));
+  const a = buildTest(cards, cards, 5, "t1").map((q) => [q.card.id, q.options.join("|")]);
+  const b = buildTest(cards, cards, 5, "t1").map((q) => [q.card.id, q.options.join("|")]);
+  assert.deepEqual(a, b);
+  assert.equal(a.length, 5);
+});
+
+// -------------------------------------------------------------- Galtiyan
+
+test("Galtiyan: wrong adds, only two right IN A ROW clears", () => {
+  const g = {};
+  galtiAnswer(g, "c", false, "2026-09-15");
+  assert.deepEqual(g.c, { on: 1, s: 0, at: "2026-09-15" });
+  galtiAnswer(g, "c", true, "2026-09-16");
+  assert.equal(g.c.on, 1);
+  galtiAnswer(g, "c", false, "2026-09-16");          // streak broken
+  assert.equal(g.c.s, 0);
+  assert.equal(g.c.at, "2026-09-15");                 // still the day it first went in
+  galtiAnswer(g, "c", true, "2026-09-17");
+  galtiAnswer(g, "c", true, "2026-09-18");
+  assert.equal(g.c.on, 0);
+  galtiAnswer(g, "c", true, "2026-09-19");            // out stays out
+  assert.equal(g.c.on, 0);
+  galtiAnswer(g, "d", true, "2026-09-19");            // right answer never adds
+  assert.equal(g.d, undefined);
 });
 
 console.log(`${passed} passed${process.exitCode ? ", some FAILED" : ""}`);

@@ -5,22 +5,27 @@
 // banta.
 //
 // Ghar = Daily plan (lib/carevision/plan.js): countdown, aaj ka target, ek
-// button. Wahi button Recall kholta hai aaj ki queue ke saath. Test/Galtiyan,
-// Read aur Export isi route par aage judenge.
+// button jo Recall kholta hai aaj ki queue ke saath. Neeche Test (MCQ),
+// Galtiyan, Read (4 din baaki hone par band) aur progress ka Export/Import.
 
 import "./carev.css";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { loadCore, loadAll, loadIndex, isHiddenByDefault } from "@/lib/carevision/deck";
-import { getSrs, getStars, getLog, getPrefs, setPrefs, getPlanStart, noteDayTarget } from "@/lib/carevision/progress";
+import {
+  getSrs, getStars, getLog, getGalti, getPrefs, setPrefs, getPlanStart, noteDayTarget,
+  exportProgress, importProgress,
+} from "@/lib/carevision/progress";
 import { todayPlan, planDays, dayState, PASS1_LAST, PASS2_LAST } from "@/lib/carevision/plan";
 import { dayKey } from "@/lib/daytime";
 import Recall from "@/components/carevision/Recall";
+import TestMode from "@/components/carevision/TestMode";
+import ReadMode from "@/components/carevision/ReadMode";
 
 const PASS_TEXT = {
   1: "Pass 1 — priority-1 ke naye cards",
   2: "Pass 2 — priority-2 ke naye cards + Pass 1 ka recall",
-  3: "Pass 3 — koi naya card nahi: star + due",
+  3: "Pass 3 — koi naya card nahi: star + Galtiyan + due",
 };
 
 const shortDate = (key) => {
@@ -33,7 +38,9 @@ export default function CaRevisionPage() {
   const [prefs, setPrefsState] = useState(null);
   const [showAll, setShowAll] = useState(false);
   const [cards, setCards] = useState(null);
-  const [counts, setCounts] = useState(null);
+  const [index, setIndex] = useState(null);
+  const [mode, setMode] = useState("home");     // home | test | read  (Recall = session)
+  const [backupMsg, setBackupMsg] = useState("");
   const [error, setError] = useState("");
   const [session, setSession] = useState(null);
   const [tick, setTick] = useState(0);        // progress badli (sync / session) -> plan dobara
@@ -41,7 +48,7 @@ export default function CaRevisionPage() {
   useEffect(() => {
     setToday(dayKey());
     setPrefsState(getPrefs());
-    loadIndex().then((idx) => setCounts(idx.files)).catch(() => {});
+    loadIndex().then(setIndex).catch(() => {});
   }, []);
 
   // Deck: Core = sirf core.json. Sab = core + har part ka extended (lazy).
@@ -75,14 +82,17 @@ export default function CaRevisionPage() {
     const stars = getStars();
     const log = getLog();
     const start = getPlanStart(today);
-    const plan = todayPlan({ cards: visible, srs, stars, log, today, start });
+    const galti = getGalti();
+    const plan = todayPlan({ cards: visible, srs, stars, log, today, start, galti });
     let seen = 0, starred = 0;
     for (const c of visible) {
       if (srs[c.id]) seen += 1;
       if (stars[c.id]) starred += 1;
     }
     const starCards = visible.filter((c) => stars[c.id]);
-    return { plan, log, start, seen, starred, starCards, days: planDays(start) };
+    const galtiCards = visible.filter((c) => galti[c.id]?.on);
+    const parts = [...new Set(visible.map((c) => c.part))].sort();
+    return { plan, log, start, seen, starred, starCards, galtiCards, parts, days: planDays(start) };
   }, [today, cards, visible, tick]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Aaj ka naya target din ke log mein — timeline "poora hua" isi se dikhati hai.
@@ -93,7 +103,48 @@ export default function CaRevisionPage() {
   const updatePrefs = (patch) => { setPrefs(patch); setPrefsState(getPrefs()); };
   const exit = useCallback(() => { setSession(null); setTick((t) => t + 1); }, []);
 
+  const home = () => { setMode("home"); setTick((t) => t + 1); window.scrollTo(0, 0); };
+
   if (session) return <Recall queue={session} today={today} onExit={exit} />;
+  if (mode === "test" && view) {
+    return (
+      <TestMode
+        cards={visible}
+        parts={view.parts}
+        today={today}
+        onExit={home}
+        onGaltiyan={() => { setMode("home"); setSession(visible.filter((c) => getGalti()[c.id]?.on)); }}
+      />
+    );
+  }
+  if (mode === "read" && view && !view.plan.readLocked) {
+    return <ReadMode cards={visible} parts={view.parts} partTitles={index?.parts || {}} onExit={home} />;
+  }
+
+  const doExport = () => {
+    const blob = new Blob([JSON.stringify(exportProgress(), null, 1)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `ca-revision-progress-${today}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+    setBackupMsg("Backup file download ho gayi.");
+  };
+  const doImport = async (e) => {
+    const f = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if (!f) return;
+    try {
+      const n = importProgress(JSON.parse(await f.text()));
+      setBackupMsg(`${n} records mila diye (kuch hataya nahi).`);
+      setTick((t) => t + 1);
+    } catch (err) {
+      setBackupMsg(`Import nahi hua: ${err.message || err}`);
+    }
+  };
 
   const p = view?.plan;
   const left = p?.daysLeft;
@@ -128,7 +179,7 @@ export default function CaRevisionPage() {
           </div>
         ) : null}
         {p && p.pass === 3 && p.starExtra.length ? (
-          <div className="carev-target carev-dim">+ {p.starExtra.length} star kiye hue (Pass 3 mein roz)</div>
+          <div className="carev-target carev-dim">+ {p.starExtra.length} star + Galtiyan (Pass 3 mein roz)</div>
         ) : null}
 
         <button
@@ -144,6 +195,25 @@ export default function CaRevisionPage() {
           </button>
         ) : null}
         {error ? <p className="carev-error">{error}</p> : null}
+        {view ? (
+          <div className="carev-modes">
+            <button className="carev-btn" onClick={() => setMode("test")}>Test</button>
+            <button
+              className="carev-btn"
+              disabled={!view.galtiCards.length}
+              onClick={() => setSession(view.galtiCards)}
+            >Galtiyan · {view.galtiCards.length}</button>
+            <button
+              className="carev-btn"
+              disabled={p.readLocked}
+              onClick={() => { setMode("read"); window.scrollTo(0, 0); }}
+              title={p.readLocked ? "Aakhri 4 din: sirf Recall, Galtiyan aur Test" : undefined}
+            >{p.readLocked ? "🔒 Read" : "Read"}</button>
+          </div>
+        ) : null}
+        {p && p.readLocked && p.daysLeft > 0 ? (
+          <div className="carev-dim carev-small">Aakhri {p.daysLeft} din: Read band — sirf Recall, Galtiyan, Test.</div>
+        ) : null}
       </section>
 
       {view && view.days.length ? (
@@ -183,7 +253,7 @@ export default function CaRevisionPage() {
           <button
             className={`carev-chip${prefs?.scope !== "all" ? " on" : ""}`}
             onClick={() => updatePrefs({ scope: "core" })}
-          >Core · {counts?.core?.cards ?? 800}</button>
+          >Core · {index?.files?.core?.cards ?? 800}</button>
           <button
             className={`carev-chip${prefs?.scope === "all" ? " on" : ""}`}
             onClick={() => updatePrefs({ scope: "all" })}
@@ -200,6 +270,21 @@ export default function CaRevisionPage() {
             Dekhe: {view.seen} / {visible.length} · Star: {view.starred}
           </div>
         ) : null}
+      </section>
+
+      <section className="carev-box">
+        <div className="carev-label">Progress backup</div>
+        <div className="carev-dim carev-small">
+          Progress phone aur PC par sync hoti hai. Phir bhi browser saaf ho jaye to — file mein rakh lo.
+        </div>
+        <div className="carev-modes carev-modes-2">
+          <button className="carev-btn" onClick={doExport} disabled={!today}>Export</button>
+          <label className="carev-btn carev-file">
+            Import
+            <input type="file" accept="application/json,.json" onChange={doImport} />
+          </label>
+        </div>
+        {backupMsg ? <div className="carev-small" role="status">{backupMsg}</div> : null}
       </section>
 
       <p className="carev-dim carev-small carev-foot">

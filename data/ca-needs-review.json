@@ -104,7 +104,7 @@
  {
   "pdfPage": 25,
   "section": "2026 State-Wise Schemes",
-  "why": "DeepSeek: Sentence is cut off at the page edge after 'where', so the remaining detail cannot be read.",
+  "why": "DeepSeek: The sentence is cut off at the page edge ('practice where' with no continuation), so the fact that follows cannot be read.",
   "text": "aimed at eradicating the \"Sarpanch Pati\" (proxy leadership) practice where"
  },
  {
@@ -116,127 +116,71 @@
  {
   "pdfPage": 28,
   "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: The State column entry for the Jyothi row is cut off at the top of the page, so the state that launched the scheme cannot be determined.",
-  "text": "Jyothi May 2025 — To enroll children of migrant workers into anganwadis and public schools, ensuring inclusive education, health support, and social integration."
- },
- {
-  "pdfPage": 28,
-  "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: This is the tail of an objective whose scheme name and state row were cut off at the page edge; no unambiguous cue-answer pair can be formed.",
+  "why": "DeepSeek: Objective fragment cut off at the top of the page; no scheme name is attached to it, so which scheme/state it belongs to cannot be sure.",
   "text": "strategy through the Women & Child Development Department."
- },
- {
-  "pdfPage": 28,
-  "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: The scheme sits above the 'Assam' state label and no state name is printed for it on this page (VIEW 1 even drops the scheme name), so which state launched Lakshmi Yojana cannot be decided, and its eligibility lines cannot be tied to a state.",
-  "text": "Lakshmi Yojana | Women must be 23 years or above. Annual family income ≤ ₹1 lakh (verified via Family Information Database Repository - FIDR)."
- },
- {
-  "pdfPage": 28,
-  "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: Cut off at the page edge (ends mid-sentence with a comma), so the objective/number for Thalliki Vandanam Scheme is incomplete and no extra was attached.",
-  "text": "To provide ₹15,000 annual financial aid to mothers of school-going children (Classes 1-12) from poor families,"
- },
- {
-  "pdfPage": 28,
-  "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: The scheme name and its state are cut off at the top of the page; the objective appears above the 'Andhra Pradesh' state cell and cannot be reliably tied to any scheme name given on the page.",
-  "text": "To provide ₹15,000 annual financial aid to mothers of school-going children (Classes 1-12) from poor families, ensuring continued education through Direct Benefit Transfer (DBT)."
  },
  {
   "pdfPage": 29,
   "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: A stray bullet printed at the end of the page with no stated link to any scheme or list, so it cannot be tied to a testable cue.",
+  "why": "DeepSeek: Dangling bullet at the page edge; no scheme or column heading is shown that it belongs to, so the cue cannot be tied to an answer.",
   "text": "• University of Patanjali, Haridwar (Uttarakhand)."
  },
  {
   "pdfPage": 30,
   "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: This bullet is the tail of a scheme whose name is cut off at the top of the page, so it is not clear which scheme or entity is recognised as India's first Yoga & Ayurveda Cluster Center.",
+  "why": "DeepSeek: This 'Recognition' bullet has no scheme name or state row on this page (it belongs to a scheme carried over from the previous page), so the fact cannot be attributed to a scheme.",
   "text": "• Recognition: Declared as India's first Yoga & Ayurveda Cluster Center under the Gyan Bharatam Mission."
+ },
+ {
+  "pdfPage": 30,
+  "section": "Ministry-wise Major Schemes",
+  "why": "DeepSeek: The sentence is cut off at the page edge, so the purpose of National Health Mission (NHM) is incomplete and cannot be stated as a fact.",
+  "text": "• Financial and technical support is provided to States/Union Territories (UTs) for improving infrastructure"
+ },
+ {
+  "pdfPage": 30,
+  "section": "2025 State-wise Schemes",
+  "why": "trigger contains the answer",
+  "trigger": "Which state launched Meghalaya Green Deposit Scheme?",
+  "answer": "Meghalaya"
  },
  {
   "pdfPage": 32,
   "section": "Ministry-wise Major Schemes",
-  "why": "DeepSeek: The scheme name this bullet belongs to is cut off at the top of the page, so the fact cannot be tied to any scheme named on the page.",
-  "text": "•  To enable willing donors to contribute towards the family of a braveheart who sacrificed his/her life in line of duty."
- },
- {
-  "pdfPage": 33,
-  "section": "Ministry-wise Major Schemes",
-  "why": "DeepSeek: The line is cut off at the top of the page — the 'projects' it speaks of are not named here, so the cue (which scheme the World Bank loan belongs to) cannot be built unambiguously from this page.",
-  "text": "• External assistance: World Bank is funding the projects through loan approved for a period of 5 years up to 2026."
+  "why": "DeepSeek: This purpose bullet is cut off at the top of the page — the name of the scheme it belongs to is not on this page, so no cue-answer pair can be formed.",
+  "text": "• To enable willing donors to contribute towards the family of a braveheart who sacrificed his/her life in line of duty."
  },
  {
   "pdfPage": 33,
   "section": "Ministry-wise Major Schemes",
   "why": "trigger contains the answer",
-  "trigger": "PM Vishwakarma Scheme enables recognition of artisans and craftspeople as",
+  "trigger": "Under PM Vishwakarma Scheme, artisans and craftspeople are recognised as what?",
   "answer": "Vishwakarmas"
  },
  {
   "pdfPage": 34,
   "section": "Ministry-wise Major Schemes",
-  "why": "DeepSeek: The scheme name for this block is cut off at the page edge (its heading is on the previous page), so no trigger can say unambiguously which scheme the tenure, objectives, NITI Aayog tag and beneficiaries belong to.",
+  "why": "DeepSeek: This bullet block begins at the top of the page but the name of the scheme it belongs to is not printed on this page (it presumably ended on the earlier page), so no scheme-name trigger can be built for its tenure, purpose, NITI Aayog tag or beneficiaries.",
   "text": "• Tenure: 2021-22 to 2025-26 • To develop infrastructure projects, provide basic amenities and reducing imbalances and development deficit in the identified Minority Concentration Areas. • Scheme is identified by NITI Aayog as Core of the Core Scheme under the National Development Agenda. • Beneficiaries: Minority communities notified under the National Commission for Minorities Act, 1992 i.e., Muslims, Christians, Buddhists, Sikhs, Jains, and Parsis."
  },
  {
-  "pdfPage": 34,
-  "section": "Ministry-wise Major Schemes",
-  "why": "trigger words not on the page: eligibility, category, living, forests",
-  "trigger": "PMUY 2.0 eligibility: which category of people living in forests is covered?",
-  "answer": "Forest dwellers"
- },
- {
   "pdfPage": 35,
   "section": "Ministry-wise Major Schemes",
-  "why": "DeepSeek: Heading only — the list of national waterways is cut off at the page edge, so no answer can be attached to it.",
-  "text": "National Waterways:"
- },
- {
-  "pdfPage": 35,
-  "section": "Ministry-wise Major Schemes",
-  "why": "DeepSeek: SATAT appears above the 'Ministry of Agriculture & Farmers Welfare' header in the written order and before it in the physical layout, so the ministry it belongs to is not clearly stated on this page.",
+  "why": "DeepSeek: The purpose bullet runs into a second bullet whose words ('A New Revolution in Transportation Fuel Compressed Bio-Gas') may be a wrapped continuation or a separate fact, so it is unclear what the exact purpose phrase and the fuel name are.",
   "text": "SATAT initiative • To extract economic value from bio-mass waste in the form of • A New Revolution in Transportation Fuel Compressed Bio-Gas"
  },
  {
   "pdfPage": 35,
   "section": "Ministry-wise Major Schemes",
-  "why": "trigger contains the answer",
-  "trigger": "PM Fasal Bima Yojana (PM-FBY) Portal",
-  "answer": "PM-FBY Portal"
- },
- {
-  "pdfPage": 35,
-  "section": "Ministry-wise Major Schemes",
   "why": "trigger words not on the page: length, harnessed",
-  "trigger": "Sagarmala objective — length of India's coastline harnessed",
+  "trigger": "Length of India's coastline harnessed under Sagarmala?",
   "answer": "7,500 km"
  },
  {
   "pdfPage": 36,
   "section": "Ministry-wise Major Schemes",
-  "why": "DeepSeek: The ministry heading for the National Waterways block is not printed on this page (it falls at the page edge/previous page), so no scheme-to-ministry card can be made for these waterways; only the route, length and states served facts were carded.",
-  "text": "• NW - 1 Ganga: Haldia to Allahabad, Dhubri to Sadiya - 1620 km (and the rest of the NW - 1 to NW - 6 block)"
- },
- {
-  "pdfPage": 36,
-  "section": "Ministry-wise Major Schemes",
-  "why": "DeepSeek: It is only a heading with no phases or details printed on the page, so no fact can be tested from it.",
+  "why": "DeepSeek: This is a heading at the very end of the page with no phases listed; the content is cut off at the page edge, so no fact can be framed.",
   "text": "• Phases of PMGSY"
- },
- {
-  "pdfPage": 38,
-  "section": "Viksit Bharat-Guarantee for Rozgar and Ajeevika Mission (VB-G RAM-G) Act, 2025",
-  "why": "DeepSeek: The page prints only the section heading with no scheme name, ministry, objective or headline number, so no fact can be built for it.",
-  "text": "Viksit Bharat-Guarantee for Rozgar and Ajeevika Mission (VB-G RAM-G) Act, 2025"
- },
- {
-  "pdfPage": 38,
-  "section": "Ministry-wise Major Schemes",
-  "why": "trigger words not on the page: initiative, body",
-  "trigger": "Vision 2035 is an initiative of which body?",
-  "answer": "NITI Aayog"
  },
  {
   "pdfPage": 42,
@@ -924,5 +868,33 @@
   "section": "List of RAMSAR Sites in India",
   "why": "DeepSeek: This line appears as a cut-off numbered list item; the numbering ('101th') and the phrase 'state first wetland' are incomplete, so it is not clear whether the card should be the site's number or the state's first wetland.",
   "text": "5. 101th - Glaw Lake, Arunachal Pradesh - state first wetland"
+ },
+ {
+  "pdfPage": 131,
+  "section": "Important GI Tags",
+  "why": "magazine gives this one question two different answers",
+  "trigger": "The GI tag 'Chokuwa Rice' belongs to which state?",
+  "answer": "Assam"
+ },
+ {
+  "pdfPage": 131,
+  "section": "Important GI Tags",
+  "why": "magazine gives this one question two different answers",
+  "trigger": "The GI tag 'Chokuwa rice' belongs to which state?",
+  "answer": "Mizoram"
+ },
+ {
+  "pdfPage": 148,
+  "section": "November 2025",
+  "why": "magazine gives this one question two different answers",
+  "trigger": "In November 2025, which country's airport became the first in the world to deploy Wi-Fi 7 technology?",
+  "answer": "Oman"
+ },
+ {
+  "pdfPage": 148,
+  "section": "November 2025",
+  "why": "magazine gives this one question two different answers",
+  "trigger": "In November 2025, which country's airport became the first in the world to deploy Wi-Fi 7 technology?",
+  "answer": "Uttar Pradesh"
  }
 ]

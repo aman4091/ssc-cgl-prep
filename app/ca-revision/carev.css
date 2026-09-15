@@ -198,3 +198,67 @@
 .carev-done { margin: auto 0; text-align: center; padding: 32px 8px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
 .carev-done-big { font-size: 28px; font-weight: 700; color: var(--tb-ok-ink); }
 .carev-done .carev-btn { min-width: 180px; }
+
+/* modes row: Test / Galtiyan / Read */
+.carev-modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.carev-modes-2 { grid-template-columns: 1fr 1fr; margin-top: 10px; }
+.carev-modes .carev-btn { min-height: 48px; font-size: 15px; padding: 0 8px; }
+.carev-file { display: inline-flex; align-items: center; justify-content: center; }
+.carev-file input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.carev-file:focus-within { outline: 2px solid var(--tb-focus); outline-offset: 2px; }
+.carev-h2 { font-size: 24px; margin: 10px 0 12px; }
+
+/* test */
+.carev-card-test { cursor: default; }
+.carev-options { display: flex; flex-direction: column; gap: 8px; }
+.carev-option {
+  display: flex; align-items: center; gap: 10px;
+  min-height: 52px; padding: 10px 12px;
+  border-radius: 10px; border: 1px solid var(--tb-line-hard);
+  background: var(--tb-page); color: var(--tb-ink);
+  font: inherit; font-size: 16px; text-align: left; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.carev-option.on { border-color: var(--tb-blue); background: var(--tb-blue-soft); color: var(--tb-blue-ink); font-weight: 600; }
+.carev-option-n {
+  flex: none; width: 26px; height: 26px; border-radius: 50%;
+  border: 1px solid currentColor; display: inline-flex; align-items: center; justify-content: center;
+  font-size: 13px; opacity: 0.75;
+}
+.carev-score { text-align: center; margin: 8px 0 14px; }
+.carev-score-big { font-size: 40px; font-weight: 700; color: var(--tb-blue-ink); font-variant-numeric: tabular-nums; }
+.carev-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.carev-table th, .carev-table td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--tb-line-soft); }
+.carev-table th:not(:first-child), .carev-table td:not(:first-child) { text-align: right; width: 3.5em; font-variant-numeric: tabular-nums; }
+.carev-wrong { margin: 0 0 12px; padding-left: 20px; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+.carev-wrong-q { font-weight: 600; }
+.carev-wrong-a { color: var(--tb-ok-ink); }
+.carev-wrong-p { color: var(--tb-bad-ink); }
+
+/* read */
+.carev-sticky {
+  position: sticky; top: 0; z-index: 2;
+  background: var(--tb-bg-2, var(--tb-page));
+  padding: 6px 0 8px; margin: -6px 0 6px;
+}
+.carev-chips-tight { gap: 6px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 2px; }
+.carev-chips-tight .carev-chip { min-height: 36px; padding: 0 12px; flex: none; }
+.carev-read-sec { margin: 16px 0 8px; }
+.carev-read-h { font-size: 15px; margin: 0 0 8px; }
+.carev-read-card {
+  border: 1px solid var(--tb-line); border-radius: 10px; background: var(--tb-page);
+  padding: 10px 12px; margin-bottom: 8px;
+  content-visibility: auto; contain-intrinsic-size: auto 110px;
+}
+.carev-read-card.known { background: var(--tb-soft); }
+.carev-read-t { font-size: 15px; line-height: 1.4; color: var(--tb-q); }
+.carev-read-a { font-size: 16px; font-weight: 700; color: var(--tb-blue-ink); margin-top: 4px; overflow-wrap: anywhere; }
+.carev-read-foot { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.carev-read-foot .carev-dim { margin-right: auto; }
+.carev-mini {
+  min-height: 36px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--tb-line-hard); background: var(--tb-page); color: var(--tb-ink);
+  font: inherit; font-size: 14px; cursor: pointer;
+}
+.carev-mini.on { background: var(--tb-green-soft); border-color: var(--tb-green); color: var(--tb-ok-ink); font-weight: 600; }
+.carev-star-sm { width: 36px; height: 36px; font-size: 18px; }

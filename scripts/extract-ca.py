@@ -263,6 +263,11 @@ for _s in ("2026 State-Wise Schemes", "2025 State-wise Schemes", "Ministry-wise 
 # schemes under it (Delhi: Lakhpati Didi, ANMOL, Lakshmi Yojana). The first
 # pass paired only 5 of ~15 schemes with their state — the pairing is the
 # card SSC asks, so it is spelled out.
+RULES["Ministry-wise Major Schemes"] = (
+    "The Ministry column is printed once per ministry (its name may wrap over 2-4 short lines — join them), and "
+    "every scheme below it, until the next ministry, belongs to that ministry. For EVERY scheme make a card: "
+    "trigger = 'Which ministry runs <scheme name>?', answer = that ministry's full name as printed. Then, only if "
+    "the page states them: scheme -> purpose (short phrase copied), scheme -> launch year / headline number.")
 for _s in ("2026 State-Wise Schemes", "2025 State-wise Schemes"):
     RULES[_s] = (
         "The table's State column is printed once per state, and every scheme below it (until the next state) "
@@ -513,6 +518,10 @@ def ask(cfg, system, user, max_tokens=16000):
                 data = json.loads(r.read().decode("utf-8"))
             choice = (data.get("choices") or [{}])[0]
             if choice.get("finish_reason") == "length":
+                # cached too: the page is re-asked in halves, and asking the
+                # whole page again next run would only pay for another cut reply
+                with open(path, "w", encoding="utf-8") as f:
+                    json.dump({"_cut": True}, f)
                 return {"_cut": True}
             out = json.loads((choice.get("message") or {}).get("content") or "{}")
             with open(path, "w", encoding="utf-8") as f:
@@ -528,7 +537,7 @@ def ask(cfg, system, user, max_tokens=16000):
     raise RuntimeError("DeepSeek failed: " + str(last))
 
 
-def page_prompt(page, secs, ro, tb):
+def page_prompt(page, secs, ro, tb, carry=None):
     part = secs[0][0]
     names = [s for _, s in secs]
     rules = []
@@ -542,6 +551,11 @@ def page_prompt(page, secs, ro, tb):
         *["- " + s for s in names],
         "Section rules:" if rules else "",
         *rules,
+        # only on headed pages — every other page's prompt must stay byte-for-
+        # byte what it was, or the reply cache misses and card ids change
+        *(["GROUP HEADING IN FORCE at the top of this page (printed on an earlier page): '%s'. Every scheme "
+            "before the first heading on this page belongs to it — use this heading, exactly, as its answer."
+            % carry] if carry else []),
         "",
         "VIEW 1 - written order:", "<<<", ro, ">>>",
         "",
@@ -555,15 +569,15 @@ def halves(text):
     return "\n".join(lines[:mid]), "\n".join(lines[mid:])
 
 
-def extract_page(cfg, page, secs, ro, tb, depth=0):
-    out = ask(cfg, SYSTEM, page_prompt(page, secs, ro, tb))
+def extract_page(cfg, page, secs, ro, tb, depth=0, carry=None):
+    out = ask(cfg, SYSTEM, page_prompt(page, secs, ro, tb, carry))
     if out.get("_cut"):
         if depth >= 2:
             return {"cards": [], "unclear": [{"section": secs[0][1], "text": ro[:300],
                                               "why": "page too dense for one reply"}]}
         (ro1, ro2), (tb1, tb2) = halves(ro), halves(tb)
-        a = extract_page(cfg, page, secs, ro1, tb1, depth + 1)
-        b = extract_page(cfg, page, secs, ro2, tb2, depth + 1)
+        a = extract_page(cfg, page, secs, ro1, tb1, depth + 1, carry)
+        b = extract_page(cfg, page, secs, ro2, tb2, depth + 1, carry)
         return {"cards": a.get("cards", []) + b.get("cards", []),
                 "unclear": a.get("unclear", []) + b.get("unclear", [])}
     return out
@@ -639,12 +653,86 @@ def tag_part_j(cfg, cards, jobs):
         list(ex.map(run, batches))
 
 
+# ------------------------------------------------------- group headings
+
+# The state-wise and ministry-wise tables print the group (a state, a
+# ministry) ONCE, and every scheme below it — often onto the next page —
+# belongs to it. Page by page, DeepSeek can't see a heading printed on the
+# previous page, so the heading in force at the top of each page is worked
+# out here and handed to it, and verification accepts it as the answer.
+HEADED_PAGES = (24, 39)   # 2026/2025 state-wise + ministry-wise (Initiatives name theirs inline)
+STATE_TABLES_END = 30     # first page where the ministry table starts
+STATES = {norm(s) for s in """Andhra Pradesh|Arunachal Pradesh|Assam|Bihar|Chhattisgarh|Goa|Gujarat|Haryana|
+Himachal Pradesh|Jharkhand|Karnataka|Kerala|Madhya Pradesh|Maharashtra|Manipur|Meghalaya|Mizoram|Nagaland|
+Odisha|Punjab|Rajasthan|Sikkim|Tamil Nadu|Telangana|Tripura|Uttar Pradesh|Uttarakhand|West Bengal|Delhi|
+Jammu & Kashmir|Jammu and Kashmir|Ladakh|Puducherry|Chandigarh|Lakshadweep|Andaman and Nicobar Islands|
+Dadra and Nagar Haveli and Daman and Diu|Central""".replace("\n", "").split("|")}
+# words a wrapped ministry name continues with ("Ministry of" / "Housing and" /
+# "Urban Affairs"); a scheme name ("Sagarmala", "MGNREGA 2005") has others
+MINISTRY_WORDS = set("""of and & affairs welfare family health home housing urban labour employment micro small
+medium enterprises minority new renewable energy petroleum natural gas agriculture farmers shipping waterways
+power road transport highways rural development railways food processing industries finance education social
+justice empowerment (msje) earth sciences women child chemicals fertilizers defence jal shakti panchyati
+panchayati raj commerce industry external culture tourism textiles steel coal mines ayush electronics
+information technology science environment forest climate change consumer public distribution tribal youth
+sports north eastern region""".split())
+_STATE_PREFIX = re.compile(r"(%s)\b" % "|".join(
+    re.escape(s) for s in sorted((s for s in STATES if s != "central"), key=len, reverse=True)), re.I)
+
+
+def _ministry_heading(lines, i):
+    """'Ministry of' + its wrapped continuation lines, joined."""
+    parts = [lines[i].strip()]
+    for nxt in lines[i + 1:i + 5]:
+        words = nxt.strip().lower().split()
+        if words and all(w in MINISTRY_WORDS for w in words):
+            parts.append(nxt.strip())
+        else:
+            break
+    return re.sub(r"\s+", " ", " ".join(parts))
+
+
+def page_headings(raw_pages):
+    """-> ({page: heading in force at the top}, {page: every heading on it})"""
+    carry, on_page, current = {}, collections.defaultdict(set), None
+    ministries = False       # the state tables end where the ministry table starts
+    for p in range(HEADED_PAGES[0], HEADED_PAGES[1] + 1):
+        # 'Central' is not carried into the state-wise pages: the schemes under
+        # it name their ministry in the objective and the rule asks for that —
+        # carrying 'Central' made DeepSeek answer "Central" instead. Page 30's
+        # two carried schemes print no ministry at all, so there it stays.
+        carry[p] = None if current and norm(current) == "central" and p < STATE_TABLES_END else current
+        lines = raw_pages[p - 1].splitlines()
+        for i, line in enumerate(lines):
+            t = line.strip()
+            h = None
+            if re.match(r"(Ministry|Department) of\b", t):
+                h = _ministry_heading(lines, i)
+                ministries = True
+            elif ministries:
+                pass
+            elif norm(t) in STATES:
+                h = t
+            elif i + 1 < len(lines) and norm(t + " " + lines[i + 1].strip()) in STATES:
+                h = t + " " + lines[i + 1].strip()          # "Uttar" / "Pradesh"
+            elif _STATE_PREFIX.match(t):
+                h = _STATE_PREFIX.match(t).group(1)         # "Kerala Priyadarshini Scheme June 2026"
+            if h:
+                current = h
+                on_page[p].add(h)
+        if carry[p]:
+            on_page[p].add(carry[p])
+    return carry, on_page
+
+
 # -------------------------------------------------------------- verification
 
-def verify(card, views, section, own_words=False):
+def verify(card, views, section, own_words=False, headings=()):
     """-> None if the card is backed by the page text, else the reason.
     own_words: the trigger is the magazine's own question (Part J), so it may
-    legitimately mention the answer."""
+    legitimately mention the answer. headings: the page's group headings
+    (a state / ministry printed once over its schemes) — an answer that IS one
+    needn't sit near the scheme, and may come from the previous page."""
     ans = card.get("answer")
     trig = card.get("trigger")
     if not isinstance(ans, str) or not ans.strip() or not isinstance(trig, str) or not trig.strip():
@@ -652,6 +740,9 @@ def verify(card, views, section, own_words=False):
     a = squash(ans)
     if len(a) < 1:
         return "empty answer"
+    heads = {squash(h) for h in headings}
+    if a in heads:
+        views = list(views) + [a]
     hits = [(v, m.start()) for v in views for m in re.finditer(re.escape(a), v)]
     if not hits:
         return "answer not found verbatim on the page"
@@ -665,7 +756,7 @@ def verify(card, views, section, own_words=False):
         if len(present) / len(keys) < 0.6:
             return "trigger words not on the page: " + ", ".join(k for k in keys if k not in page)
         own = [k for k in present if k not in sec_keys and k not in a]
-        if own:
+        if own and a not in heads:
             # wide enough for a state heading followed by its list of items
             near = any(k in v[max(0, i - NEAR): i + len(a) + NEAR] for v, i in hits for k in own)
             if not near:
@@ -699,6 +790,7 @@ def main():
     ro, tb = got["-raw"], got["-table"]
     COMMON_WORDS.update(w for t in got["-raw"] for w in re.findall(r"(?<![A-Za-z])[a-z]{3,}(?![A-Za-z])", t))
     squashed = [[squash(got[m][i]) for m in got] for i in range(len(ro))]
+    carry, heads_on = page_headings(ro)
 
     cfg = deepseek_cfg()
     pages = list(range(1, LAST_CONTENT_PAGE + 1))
@@ -712,7 +804,8 @@ def main():
     print("DeepSeek: %d pages ..." % len(todo))
     raw = {}
     with cf.ThreadPoolExecutor(args.jobs) as ex:
-        futs = {ex.submit(extract_page, cfg, p, secs, ro[p - 1], tb[p - 1]): (p, secs) for p, secs in todo}
+        futs = {ex.submit(extract_page, cfg, p, secs, ro[p - 1], tb[p - 1], 0, carry.get(p)): (p, secs)
+                for p, secs in todo}
         for k, f in enumerate(cf.as_completed(futs), 1):
             p, secs = futs[f]
             raw[p] = f.result()
@@ -732,11 +825,12 @@ def main():
                 continue
             sec = byname.get(norm(c.get("section") or "")) or names[0]
             views = list(squashed[p - 1])
-            why = verify(c, views, sec)
+            hs = heads_on.get(p, ())
+            why = verify(c, views, sec, headings=hs)
             if why == "answer not found verbatim on the page":
                 # a fact can wrap onto the next page
                 nb = [v for q in (p - 1, p + 1) if 1 <= q <= len(squashed) for v in squashed[q - 1]]
-                if verify(c, views + nb, sec) is None:
+                if verify(c, views + nb, sec, headings=hs) is None:
                     why = None
             if why:
                 review.append({"pdfPage": p, "section": sec, "why": why,
@@ -782,17 +876,18 @@ def main():
 # gets tier "core" or "extended" (nothing is deleted). Core = 800:
 #   groups below  740  (their caps already give up the 60 slots the pins take;
 #                       Part B fills 104 of 110 — the 2026 state-wise table has
-#                       only 16 scheme->state/ministry facts — so Part J holds
-#                       123 instead of 125 to land on 800 exactly)
+#                       only 16 scheme->state/ministry facts and the others are
+#                       capped — which the Part J figure absorbs)
 #   pinned items   60  (year-defining 2025 events that rule 1 left at zero)
+# GI Tags: 25 -> 50, paid for by Padma 60 -> 45 and Part J 123 -> 113.
 PINNED_SECTIONS = {"Nobel Prize Winners 2025", "Operation Sindoor 2025", "National Sports Awards 2025",
                    "Men's T20 Asia Cup 2025", "ICC Women's Cricket World Cup 2025", "Bharat Ratna 2024"}
 CORE_GROUPS = [
-    ("Part I (GI/Ramsar/UNESCO/Nat.Parks)", 111, lambda s, p: p == "I"),
-    ("Part D (Awards)", 112, lambda s, p: p == "D"),
+    ("Part I (GI/Ramsar/UNESCO/Nat.Parks)", 136, lambda s, p: p == "I"),
+    ("Part D (Awards)", 97, lambda s, p: p == "D"),
     ("Part B (Schemes)", 110, lambda s, p: p == "B"),
     ("Part F (Sports)", 100, lambda s, p: p == "F"),
-    ("Part J one-liners (Jan-Aug 2026)", 123, lambda s, p: p == "J" and parse_date(s)[0] == 2026),
+    ("Part J one-liners (Jan-Aug 2026)", 112, lambda s, p: p == "J" and parse_date(s)[0] == 2026),
     ("First in India", 50, lambda s, p: s == "First in India 2025-26 (Key-Milestone)"),
     ("Index & Rankings", 50, lambda s, p: s == "Index & Rankings (2024-26)"),
     ("Defence exercises", 40, lambda s, p: s == "Important Military Exercises"),
@@ -805,8 +900,33 @@ SECTION_CAPS = {
     "Project Cheetah (Cheetah Translocation)": 6,
     "Ministry-wise Major Schemes": 48,
     "Popular Awards of The Year 2024-26": 52,
+    "Padma Awards 2026": 45,        # PDF order: counts, Vibhushan, Bhushan, then Shri
     "2025 State-wise Schemes": 9,
 }
+
+
+def _gi_pick(pool):
+    """GI Tags' 50: product -> state pairs only (not 'state with the most GI
+    tags'); 2026-dated first (the magazine prints no award dates, so today
+    none); then one product per state in turn, PDF order within a state —
+    straight PDF order would give Assam 19 of the 50."""
+    pairs = [c for c in pool if kind_of(c) == "state" and re.search(r"\bgi\b", c["trigger"], re.I)
+             and not re.search(r"highest|most|number of", c["trigger"], re.I)]
+    dated = [c for c in pairs if c.get("_year") == 2026]
+    by_state = collections.OrderedDict()
+    for c in pairs:
+        if c not in dated:
+            by_state.setdefault(norm(c["answer"]), []).append(c)
+    out, queues = list(dated), [list(q) for q in by_state.values()]
+    while any(queues):
+        for q in queues:
+            if q:
+                out.append(q.pop(0))
+    return out
+
+
+# A section filled by its own rule before the group's round-robin runs.
+SECTION_QUOTAS = {"Important GI Tags": (50, _gi_pick)}
 WINDOW_RANK = {"primary": 0, "secondary": 1, "stale": 2}
 
 
@@ -911,8 +1031,14 @@ def pick_core(deck):
             lvl = (WINDOW_RANK[c["window"]], yr)
             levels[lvl].setdefault(c["section"], []).append(c)
         take = forced[:cap]
+        quota_caps = {}
+        for s, (n, select) in SECTION_QUOTAS.items():
+            if any(c["section"] == s for c in pool):
+                got = [c for c in select([c for c in pool if c["section"] == s]) if c not in take][:n]
+                take += got
+                quota_caps[s] = 0          # nothing more from it in the round-robin
         per = collections.Counter(c["section"] for c in take)
-        room = lambda s: per[s] < SECTION_CAPS.get(s, 10 ** 6)  # noqa: E731
+        room = lambda s: (s not in quota_caps) and per[s] < SECTION_CAPS.get(s, 10 ** 6)  # noqa: E731
         for lvl in sorted(levels):
             queues = [list(q) for q in levels[lvl].values()]
             while len(take) < cap and any(q and room(q[0]["section"]) for q in queues):
@@ -935,30 +1061,60 @@ def pick_core(deck):
 
 # ------------------------------------------------- one cue, several answers
 
+def _same_fact_key(answer):
+    """One person / place however it is printed: 'Shri Kinjarapu Rammohan
+    Naidu' and 'Ram Mohan Naidu Kinjarapu' share their letters."""
+    a = re.sub(r"\b(shri|smt|dr|ms|mr|mrs|prof|sri)\b\.?", " ", norm(answer))
+    return "".join(sorted(ch for ch in a if ch.isalnum()))
+
+
+_QUESTION = re.compile(r"\b(which|who|whom|what|where|when|how)\b|\?\s*$|belongs? to", re.I)
+
+
 def disambiguate(final):
-    """A list printed under one heading ('Padma Awards 2026 — Art, Maharashtra'
-    has four names) came out as several cards with the same trigger, and a
-    recall cue with four right answers can't be graded. Up to four: each cue
-    names the others ('... (other than A, B, C)', the magazine's own Nobel
-    style). Bigger lists stay as they are, tagged and kept out of core."""
+    """Cards that share one trigger but differ in answer.
+
+    - Same fact printed twice (spelling / honorific / word order): one card
+      is kept, the rest dropped.
+    - The trigger ASKS for one thing ('... belongs to which state', every
+      Part J question) yet the magazine gives two answers: that is a clash in
+      the source, not a list — all of them go to needs_review.
+    - A list under one heading ('Padma Awards 2026 — Art, Maharashtra' has
+      four names): up to four, each cue names the others ('(other than A, B)',
+      the magazine's own Nobel style); five or more stay, tagged, out of core.
+    -> (rewritten, kept_out, dropped_ids, clashes)"""
     groups = collections.defaultdict(list)
     for c in final:
         groups[(c["section"], norm(c["trigger"]))].append(c)
     fixed = kept = 0
+    dropped, clashes = set(), []
     for cs in groups.values():
-        answers = list(dict.fromkeys(c["answer"] for c in cs))
-        if len(answers) < 2:
+        if len({c["answer"] for c in cs}) < 2:
             continue
+        seen, uniq = set(), []
+        for c in cs:
+            k = _same_fact_key(c["answer"])
+            if k in seen:
+                dropped.add(c["id"])
+            else:
+                seen.add(k)
+                uniq.append(c)
+        if len(uniq) < 2:
+            continue
+        if uniq[0]["part"] == "J" or _QUESTION.search(uniq[0]["trigger"]):
+            clashes.extend(uniq)
+            continue
+        answers = [c["answer"] for c in uniq]
         if len(answers) <= 4:
-            for c in cs:
+            for c in uniq:
                 others = [a for a in answers if a != c["answer"]]
                 c["trigger"] = "%s (other than %s)" % (c["trigger"].rstrip(" ?:"), ", ".join(others))
                 fixed += 1
         else:
-            for c in cs:
+            for c in uniq:
                 c["tags"].append("ambiguous")
                 kept += 1
-    return fixed, kept
+    return fixed, kept, dropped, clashes
 
 
 # ------------------------------------------------------ giveaway triggers
@@ -1113,7 +1269,13 @@ def finish(cards, review):
         card["_year"] = y
         final.append(card)
 
-    multi_fixed, multi_kept = disambiguate(final)
+    multi_fixed, multi_kept, dup_ids, clashes = disambiguate(final)
+    clash_ids = {c["id"] for c in clashes}
+    for c in clashes:
+        review.append({"pdfPage": c["pdfPage"], "section": c["section"],
+                       "why": "magazine gives this one question two different answers",
+                       "trigger": c["trigger"], "answer": c["answer"]})
+    final = [c for c in final if c["id"] not in dup_ids and c["id"] not in clash_ids]
 
     # Cards whose trigger gives the answer away — a class, so the whole deck
     # is scanned; the fix blanks the answer out of the trigger ("____").
@@ -1152,8 +1314,9 @@ def finish(cards, review):
     print("giveaway triggers: %d (whole answer in trigger: %d, first word: %d; Part J: %d)"
           % (len(flagged), by["full"], by["word"], sum(1 for c, _ in flagged if c["part"] == "J")))
     print("   fixed by blanking: %d   left + kept out of core: %d" % (fixed, unfixable))
-    print("same trigger, several answers: %d cards got '(other than ...)', %d (lists of 5+) kept out of core"
-          % (multi_fixed, multi_kept))
+    print("same trigger, several answers: %d cards got '(other than ...)', %d (lists of 5+) kept out of core,"
+          " %d duplicates of one fact dropped, %d clashes -> needs_review"
+          % (multi_fixed, multi_kept, len(dup_ids), len(clash_ids)))
     print("\ncore deck by group / section:")
     for name, cap, take in shape:
         print("  %-38s %3d / %d" % (name, len(take), cap))

@@ -1,38 +1,31 @@
 [
  {
-  "id": "a-ministry-of-micro-small-and-medium-enterprises-f3a343",
-  "how": "full",
-  "before": "Ministry of Micro, Small and Medium Enterprises (other than Shri Jitan Ram Manjhi)",
-  "after": "Ministry of Micro, Small and Medium Enterprises (other than Shri ____)",
-  "answer": "Jitan Ram Manjhi"
- },
- {
-  "id": "b-the-sintered-rareearth-magnet-scheme-repm-aims-t-497acc",
+  "id": "b-the-amrut-mission-has-been-subsumed-under-which-06e625",
   "how": "word",
-  "before": "The Sintered Rare-Earth Magnet Scheme (REPM) aims to promote what?",
-  "after": "The Sintered Rare-Earth Magnet Scheme (____) aims to promote what?",
-  "answer": "domestic manufacturing of REPM"
- },
- {
-  "id": "b-the-amrut-mission-has-been-subsumed-under-eb060a",
-  "how": "word",
-  "before": "The AMRUT Mission has been subsumed under",
-  "after": "The ____ Mission has been subsumed under",
+  "before": "The AMRUT Mission has been subsumed under which mission?",
+  "after": "The ____ Mission has been subsumed under which mission?",
   "answer": "AMRUT 2.0"
  },
  {
-  "id": "b-app-of-pmkisan-pm-kisan-samman-nidhi-896acc",
+  "id": "b-portal-of-pm-fasal-bima-yojana-pmfby-1768e9",
   "how": "word",
-  "before": "App of PM-KISAN (PM Kisan Samman Nidhi)",
-  "after": "App of PM-____ (PM ____ Samman Nidhi)",
+  "before": "Portal of PM Fasal Bima Yojana (PM-FBY)?",
+  "after": null,
+  "answer": "PM-FBY Portal"
+ },
+ {
+  "id": "b-app-for-pmkisan-pm-kisan-samman-nidhi-08e0a0",
+  "how": "word",
+  "before": "App for PM-KISAN (PM Kisan Samman Nidhi)?",
+  "after": "App for PM-____ (PM ____ Samman Nidhi)?",
   "answer": "PM KISAN Mobile App"
  },
  {
-  "id": "b-which-ministry-has-launched-the-osop-scheme-over-315ee7",
+  "id": "b-under-pmmy-which-category-is-designed-specifical-ec9503",
   "how": "word",
-  "before": "Which ministry has launched the OSOP scheme over Indian Railways?",
-  "after": "Which ministry has launched the OSOP scheme over Indian ____?",
-  "answer": "Ministry of Railways"
+  "before": "Under PMMY, which category is designed specifically for those who have previously availed and successfully repaid loans under the Tarun category?",
+  "after": "Under PMMY, which category is designed specifically for those who have previously availed and successfully repaid loans under the ____ category?",
+  "answer": "Tarun Plus"
  },
  {
   "id": "b-the-fishwale-app-is-described-as-which-first-efi-13886f",
