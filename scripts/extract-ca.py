@@ -878,6 +878,16 @@ def main():
                           "kind": c.get("kind") if c.get("kind") in KINDS else "phrase",
                           "tags": [t.lower() for t in (c.get("tags") or []) if isinstance(t, str)][:5]})
 
+    # Padma Vibhushan / Bhushan: name -> field and name -> state, straight from
+    # the table rows (no DeepSeek)
+    for c in padma_table_cards(ro):
+        why = verify(c, squashed[c["pdfPage"] - 1], c["section"])
+        if why:
+            review.append({"pdfPage": c["pdfPage"], "section": c["section"], "why": why,
+                           "trigger": c["trigger"], "answer": c["answer"]})
+        else:
+            cards.append(c)
+
     # Part J — parsed, not generated; DeepSeek only labels kind/tags
     if not args.pages or any(p >= min(a for pt, _, a, _ in SPANS if pt == "J") for p in pages):
         jc, jr = part_j(ro)
@@ -959,8 +969,69 @@ def _gi_pick(pool):
     return out
 
 
+# ------------------------------------------------------------- Padma
+
+PADMA_PAGES = (59, 63)
+PADMA_FIELDS = ["Science and Engineering", "Literature and Education", "Lit. and Education", "Trade and Industry",
+                "Public Affairs", "Social Work", "Civil Service", "Medicine", "Sports", "Others", "Art"]
+_PADMA_ROW = re.compile(r"^(\d{1,3}) ((?:Shri|Ms\.|Smt\.|Dr\.|Prof\.|Late)\s.+?) (%s) (.+)$"
+                        % "|".join(re.escape(f) for f in PADMA_FIELDS))
+
+
+def padma_table_cards(raw_pages):
+    """Rows 1-5 of the table are Padma Vibhushan, 6-18 Padma Bhushan (the
+    magazine's headings: 5 and 13). Each gives two cards: name -> field and
+    name -> state, words copied from the row."""
+    out = []
+    for p in range(PADMA_PAGES[0], PADMA_PAGES[1] + 1):
+        for line in raw_pages[p - 1].splitlines():
+            m = _PADMA_ROW.match(line.strip())
+            if not m or int(m.group(1)) > 18:
+                continue
+            n, name, field, state = int(m.group(1)), m.group(2).strip(), m.group(3), m.group(4).strip()
+            award = "Padma Vibhushan" if n <= 5 else "Padma Bhushan"
+            tag = "vibhushan" if n <= 5 else "bhushan"
+            for what, ans, kind in (("field", field, "field"), ("state", state, "state")):
+                out.append({"part": "D", "section": "Padma Awards 2026", "pdfPage": p,
+                            "trigger": "%s 2026 — %s of %s" % (award, what, name), "answer": ans,
+                            "extra": None, "date": None, "kind": kind,
+                            "tags": ["padma", tag, "award", "2026", "padma-row"]})
+    return out
+
+
+def padma_notable(final):
+    """Padma Bhushan names that the magazine mentions somewhere else too —
+    the publicly notable ones. Full name, honorific and '(Posthumous)' off."""
+    other = " ".join(squash(c["trigger"] + " " + c["answer"] + " " + (c.get("extra") or ""))
+                     for c in final if c["section"] != "Padma Awards 2026")
+    names = set()
+    for c in final:
+        if "padma-row" in c["tags"] and "bhushan" in c["tags"]:
+            name = re.sub(r"^.* of (?:Shri|Ms\.|Smt\.|Dr\.|Prof\.|Late)\s*", "", c["trigger"])
+            name = re.sub(r"\(.*?\)", "", name).strip()
+            if squash(name) and squash(name) in other:
+                names.add(name)
+    return names
+
+
+def _padma_pick(pool):
+    """Padma's core: every Padma Vibhushan (name -> field / state, and the
+    unambiguous 'Vibhushan — field, state -> name' cards), Padma Bhushan only
+    for names found elsewhere in the magazine, and the headline counts."""
+    rows = [c for c in pool if "padma-row" in c["tags"]]
+    vib = [c for c in rows if "vibhushan" in c["tags"]]
+    vib_named = [c for c in pool if c["trigger"].startswith("Padma Vibhushan 2026 —")
+                 and "padma-row" not in c["tags"] and "(other than" not in c["trigger"]]
+    bhu = [c for c in rows if "notable" in c["tags"]]
+    # the headline block on the section's first page: totals, 5/13/113,
+    # women / foreigners / posthumous, first year (no superlatives are printed)
+    counts = [c for c in pool if "padma-row" not in c["tags"] and c["pdfPage"] == PADMA_PAGES[0]
+              and kind_of(c) in ("number", "date")]
+    return vib + vib_named + bhu + counts
+
+
 # A section filled by its own rule before the group's round-robin runs.
-SECTION_QUOTAS = {"Important GI Tags": (50, _gi_pick)}
+SECTION_QUOTAS = {"Important GI Tags": (50, _gi_pick), "Padma Awards 2026": (45, _padma_pick)}
 WINDOW_RANK = {"primary": 0, "secondary": 1, "stale": 2}
 
 
@@ -1102,6 +1173,7 @@ def _same_fact_key(answer):
     return "".join(sorted(ch for ch in a if ch.isalnum()))
 
 
+OTHER_THAN_OK = re.compile(r"bharat ratna|fields medal", re.I)
 _QUESTION = re.compile(r"\b(which|who|whom|what|where|when|how)\b|\?\s*$|belongs? to", re.I)
 
 
@@ -1139,7 +1211,13 @@ def disambiguate(final):
             clashes.extend(uniq)
             continue
         answers = [c["answer"] for c in uniq]
-        if len(answers) <= 4:
+        if not OTHER_THAN_OK.search(uniq[0]["trigger"]):
+            # a "4th Art awardee from Maharashtra" cue isn't asked in SSC;
+            # only short, askable lists keep the "(other than ...)" form
+            for c in uniq:
+                c["tags"].append("ambiguous")
+                kept += 1
+        elif len(answers) <= 4:
             for c in uniq:
                 others = [a for a in answers if a != c["answer"]]
                 c["trigger"] = "%s (other than %s)" % (c["trigger"].rstrip(" ?:"), ", ".join(others))
@@ -1328,10 +1406,15 @@ def finish(cards, review):
     with open(os.path.join(ROOT, "data", "ca-giveaway.json"), "w", encoding="utf-8") as f:
         json.dump(audit, f, ensure_ascii=False, indent=1)
 
+    notable = padma_notable(final)
+    for c in final:
+        if "padma-row" in c["tags"] and "bhushan" in c["tags"] and any(n in c["trigger"] for n in notable):
+            c["tags"].append("notable")
+    print("Padma Bhushan names found elsewhere in the magazine:", sorted(notable))
     chosen, shape = pick_core([c for c in final if "giveaway" not in c["tags"] and "ambiguous" not in c["tags"]])
     for c in final:
         c["tier"] = "core" if c["id"] in chosen else "extended"
-        c["tags"] = [t for t in c["tags"] if t != "core-pin"]
+        c["tags"] = [t for t in c["tags"] if t not in ("core-pin", "padma-row")]
         del c["_year"]
 
     write_bundles(final)
