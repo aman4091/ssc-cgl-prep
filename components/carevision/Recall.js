@@ -9,8 +9,9 @@
 // `onRate(card, good)` diya ho to CA ka SRS nahi chhua jata, star band hota
 // hai, aur card.meta (upar ki chhoti line) apni hoti hai.
 //   open  — jawab shuru se khula (padho aur batao aata tha ya nahi)
-//   loop  — "nahi aata" wala card isi round mein baar-baar aata hai, jab tak
-//           "aata tha" na dabe; har jawab onRate tak jata hai
+//   loop  — "nahi aata" wala card isi round mein baar-baar aata hai, har baar
+//           thoda aur door (3, 4, 5 … card baad), jab tak "aata tha" na dabe;
+//           phir round ke aakhir mein ek pakki jaanch. Har jawab onRate tak.
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { rate, toggleStar, getStars } from "@/lib/carevision/progress";
@@ -30,24 +31,43 @@ export default function Recall({
   const [stars, setStars] = useState(() => getStars());
   const [tally, setTally] = useState({ good: 0, bad: 0 });
   const again = useRef(new Set());       // jo card pehle se dobara lagaya ja chuka
+  const misses = useRef(new Map());      // loop mode: card id -> is round mein kitni baar galat
 
   const card = queue[pos];
   const done = pos >= queue.length;
 
   const answer = useCallback((good) => {
     if (!card || !shown) return;
-    const retry = again.current.has(card.id) && card.__retry;
+    const retry = !!card.__retry;          // dobara aaya card — tally pehli baar ka hi
     if (loop || !retry) {
       if (onRate) onRate(card, good);
       else rate(card.id, good, today);
     }
     if (!retry) setTally((t) => (good ? { ...t, good: t.good + 1 } : { ...t, bad: t.bad + 1 }));
-    if (!good && (loop || !again.current.has(card.id))) {
+    if (loop) {
+      // Har galti par gap badhta hai (3, 4, 5, …) — 3 card baad wapas aaya
+      // card "aata hai" lagta hai, par wo abhi-abhi dekha hua hota hai.
+      // Jo card ek baar bhi galat hua, uska pehla "aata tha" kaafi nahi: wo
+      // round ke aakhir mein ek baar aur aata hai (pakki jaanch).
+      const miss = misses.current;
+      if (!good) {
+        miss.set(card.id, (miss.get(card.id) || 0) + 1);
+        const gap = LOOP_AFTER + miss.get(card.id) - 1;
+        setQueue((q) => {
+          const next = [...q];
+          next.splice(Math.min(pos + 1 + gap, next.length), 0, { ...card, __retry: true, __check: false });
+          return next;
+        });
+      } else if (miss.get(card.id) && !card.__check) {
+        // aakhir mein tabhi, jab beech mein kam se kam LOOP_AFTER aur card
+        // hon — warna wo turant dobara aata, jaanch ka koi matlab nahi
+        setQueue((q) => (q.length - (pos + 1) >= LOOP_AFTER ? [...q, { ...card, __retry: true, __check: true }] : q));
+      }
+    } else if (!good && !again.current.has(card.id)) {
       again.current.add(card.id);
       setQueue((q) => {
         const next = [...q];
-        const gap = loop ? LOOP_AFTER : AGAIN_AFTER;
-        next.splice(Math.min(pos + 1 + gap, next.length), 0, { ...card, __retry: true });
+        next.splice(Math.min(pos + 1 + AGAIN_AFTER, next.length), 0, { ...card, __retry: true });
         return next;
       });
     }
@@ -112,7 +132,7 @@ export default function Recall({
       <div className="carev-card" onClick={() => !shown && setShown(true)}>
         <div className="carev-meta">
           {card.meta ? <span>{card.meta}</span> : <><span>Part {card.part}</span> · <span>{card.section}</span></>}
-          {card.__retry ? <span className="carev-again"> · phir se</span> : null}
+          {card.__retry ? <span className="carev-again"> · {card.__check ? "pakki jaanch" : "phir se"}</span> : null}
         </div>
         <div className="carev-trigger">{card.trigger}</div>
         <div className={`carev-answer${shown ? " shown" : ""}`} aria-live="polite">
