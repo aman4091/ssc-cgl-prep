@@ -870,6 +870,34 @@
   "text": "5. 101th - Glaw Lake, Arunachal Pradesh - state first wetland"
  },
  {
+  "pdfPage": 23,
+  "section": "Union Budget 2026-27",
+  "why": "cue refers to 'the page', not to a fact",
+  "trigger": "What does the page say about any constitutional provision for an interim budget?",
+  "answer": "There is no constitutional provision for an interim budget"
+ },
+ {
+  "pdfPage": 33,
+  "section": "Ministry-wise Major Schemes",
+  "why": "cue refers to 'the page', not to a fact",
+  "trigger": "Which Act is listed under Honey Mission on this page?",
+  "answer": "Forest Rights Act"
+ },
+ {
+  "pdfPage": 36,
+  "section": "Ministry-wise Major Schemes",
+  "why": "cue refers to 'the page', not to a fact",
+  "trigger": "What is one more significance of MAHIR listed on the page?",
+  "answer": "Help in meeting growing energy demand"
+ },
+ {
+  "pdfPage": 90,
+  "section": "Important Military Exercises",
+  "why": "cue refers to 'the page', not to a fact",
+  "trigger": "Which dates does the page give for Poorvi Prahar 2024?",
+  "answer": "November 10-18, 2024"
+ },
+ {
   "pdfPage": 131,
   "section": "Important GI Tags",
   "why": "magazine gives this one question two different answers",

@@ -1,5 +1,5 @@
 {
- "version": "563b50ebcc",
+ "version": "b1e697d489",
  "exam": "2026-10-01",
  "parts": {
   "A": "Polity, Government & Constitution",
@@ -306,18 +306,18 @@
  "files": {
   "core": {
    "file": "core.json",
-   "cards": 782,
-   "bytes": 270389
+   "cards": 800,
+   "bytes": 277203
   },
   "ext-A": {
    "file": "ext-A.json",
-   "cards": 337,
-   "bytes": 111703
+   "cards": 336,
+   "bytes": 111351
   },
   "ext-B": {
    "file": "ext-B.json",
-   "cards": 890,
-   "bytes": 339870
+   "cards": 888,
+   "bytes": 339174
   },
   "ext-C": {
    "file": "ext-C.json",
@@ -327,7 +327,7 @@
   "ext-D": {
    "file": "ext-D.json",
    "cards": 397,
-   "bytes": 134702
+   "bytes": 134703
   },
   "ext-E": {
    "file": "ext-E.json",
@@ -341,8 +341,8 @@
   },
   "ext-G": {
    "file": "ext-G.json",
-   "cards": 1009,
-   "bytes": 364510
+   "cards": 1008,
+   "bytes": 364176
   },
   "ext-H": {
    "file": "ext-H.json",
@@ -356,8 +356,8 @@
   },
   "ext-J": {
    "file": "ext-J.json",
-   "cards": 1159,
-   "bytes": 420117
+   "cards": 1141,
+   "bytes": 413185
   }
  }
 }

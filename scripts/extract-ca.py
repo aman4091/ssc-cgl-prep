@@ -931,7 +931,7 @@ CORE_GROUPS = [
     ("Part D (Awards)", 97, lambda s, p: p == "D"),
     ("Part B (Schemes)", 110, lambda s, p: p == "B"),
     ("Part F (Sports)", 100, lambda s, p: p == "F"),
-    ("Part J one-liners (Jan-Aug 2026)", 112, lambda s, p: p == "J" and parse_date(s)[0] == 2026),
+    ("Part J one-liners (Jan-Aug 2026)", 130, lambda s, p: p == "J" and parse_date(s)[0] == 2026),
     ("First in India", 50, lambda s, p: s == "First in India 2025-26 (Key-Milestone)"),
     ("Index & Rankings", 50, lambda s, p: s == "Index & Rankings (2024-26)"),
     ("Defence exercises", 40, lambda s, p: s == "Important Military Exercises"),
@@ -1174,6 +1174,47 @@ def _same_fact_key(answer):
 
 
 OTHER_THAN_OK = re.compile(r"bharat ratna|fields medal", re.I)
+
+# The magazine spells some people two ways. The exam uses one spelling, so
+# these are normalised in every trigger / answer / extra. They are applied
+# AFTER verification — a whitelist, so the verbatim check (which ran on the
+# magazine's own text) never reverts them. Card ids stay as they were.
+#   owner-confirmed:  Draupadi, Smriti, Viswanathan Anand, Sitharaman,
+#                     Jasprit, N. Rangasamy
+#   by count in the PDF: Shanta (2-1), V. Narayanan (3-2), Suparna (2-1);
+#   ties 1-1 go to the spelling on the earlier page: Chaudhary (p.72),
+#   Raahul (p.69), Mukerjee (p.65), Sukhwinder (p.12)
+SPELLING_FIXES = [
+    (r"\bDroupadi\b", "Draupadi"),
+    (r"\bSmiriti\b", "Smriti"),
+    (r"\bVishwanath Anand\b", "Viswanathan Anand"),
+    (r"\bSitaraman\b", "Sitharaman"),
+    (r"\bJaspirt\b", "Jasprit"),
+    (r"\b(N\.?\s?)Rangaswamy\b", r"\1Rangasamy"),
+    (r"\bShantha Rangaswamy\b", "Shanta Rangaswamy"),
+    (r"\bV\. Narayana\b", "V. Narayanan"),
+    (r"\bSuvarna Sharma\b", "Suparna Sharma"),
+    (r"\bAbhishek Choudhary\b", "Abhishek Chaudhary"),
+    (r"\bRahul VS\b", "Raahul VS"),
+    (r"\bRani Mukerji\b", "Rani Mukerjee"),
+    (r"\bSukhvinder Singh Sukhu\b", "Sukhwinder Singh Sukhu"),
+]
+
+
+def fix_spellings(final):
+    n = collections.Counter()
+    for c in final:
+        for field in ("trigger", "answer", "extra"):
+            v = c.get(field)
+            if not v:
+                continue
+            for pat, good in SPELLING_FIXES:
+                v2, k = re.subn(pat, good, v)
+                if k:
+                    n[good.replace("\\1", "N. ")] += k
+                    v = v2
+            c[field] = v
+    return n
 _QUESTION = re.compile(r"\b(which|who|whom|what|where|when|how)\b|\?\s*$|belongs? to", re.I)
 
 
@@ -1381,6 +1422,12 @@ def finish(cards, review):
         card["_year"] = y
         final.append(card)
 
+    # a cue that points at "the page" instead of a fact can't be revised from
+    for c in [c for c in final if re.search(r"\b(the|this) page\b", c["trigger"], re.I)]:
+        review.append({"pdfPage": c["pdfPage"], "section": c["section"],
+                       "why": "cue refers to 'the page', not to a fact", "trigger": c["trigger"], "answer": c["answer"]})
+        final.remove(c)
+
     multi_fixed, multi_kept, dup_ids, clashes = disambiguate(final)
     clash_ids = {c["id"] for c in clashes}
     for c in clashes:
@@ -1417,6 +1464,8 @@ def finish(cards, review):
         c["tags"] = [t for t in c["tags"] if t not in ("core-pin", "padma-row")]
         del c["_year"]
 
+    spelled = fix_spellings(final)
+    print("spelling normalised:", dict(spelled))
     write_bundles(final)
     os.makedirs(os.path.dirname(OUT_REVIEW), exist_ok=True)
     with open(OUT_REVIEW, "w", encoding="utf-8") as f:
