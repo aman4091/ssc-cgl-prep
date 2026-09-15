@@ -2,7 +2,7 @@
 
 import "@/app/ca-revision/carev.css";
 import { useEffect, useMemo, useState } from "react";
-import { FACT_SECS, getFacts, addFact, removeFact, dueFacts, reviewFact, markLearned, topicsInUse } from "@/lib/missionfacts";
+import { FACT_SECS, getFacts, addFact, removeFact, dueFacts, reviewFact, topicsInUse } from "@/lib/missionfacts";
 import { getMission, currentDayNum, planFor } from "@/lib/mission";
 import Recall from "@/components/carevision/Recall";
 
@@ -10,10 +10,21 @@ import Recall from "@/components/carevision/Recall";
 // neeche uske baare mein — seedha dikhta hai, chhupa nahi. "Kerala dance:
 // Kathakali, Mohiniyattam…" — ':' / '—' / '=' / '→' se pehle wala hissa
 // naam, baad wala baaki. Alag karne wala na ho to topic naam hai.
-// Aata tha -> pakka, phir kabhi nahi (markLearned). Nahi aata tha -> isi
-// round mein baar-baar, jab tak "aata tha" na dabe; beech mein chhoda to kal.
+// Har baar SAARE facts (naye kram mein). Aata tha -> sirf is round se bahar;
+// Nahi aata tha -> isi round mein baar-baar, jab tak "aata tha" na dabe.
+// Kuch save nahi hota — agli baar revise karo to sab phir aate hain. (1/3/7/14
+// din wala schedule neeche ki "Aaj revise karo" list ka hai, alag.)
 const SPLIT = /^(.{3,90}?)\s*(?::|—|–|=|→|\s-\s)\s*([\s\S]{2,})$/;
 const FACT_LABELS = { bad: "Nahi aata tha", good: "Aata tha", show: "Dikhao" };
+
+function shuffle(list) {
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 function toCard(f) {
   const sec = FACT_SECS.find((x) => x.k === f.sec);
@@ -84,7 +95,7 @@ export default function MissionFactsPage() {
         labels={FACT_LABELS}
         open
         loop
-        onRate={(c, good) => (good ? markLearned(c.id) : reviewFact(c.id, false))}
+        onRate={() => {}}
         onExit={() => { setRevising(null); load(); window.scrollTo(0, 0); }}
       />
     );
@@ -99,18 +110,18 @@ export default function MissionFactsPage() {
         </h1>
         <p className="hero__sub">
           Har galat/unsure GS ya CA sawaal → 1 line. Kerala ka dance pucha? Kerala ke saare dance ek line mein — SSC agli baar
-          usi cluster ka doosra fact poochta hai. Likhne ke agle din se fact aata hai; "Aata tha" dabao to pakka — phir
-          nahi aata. "Nahi aata tha" dabao to tab tak aata rahega jab tak aane na lage.
+          usi cluster ka doosra fact poochta hai. Har fact 1, 3, 7, 14 din baad khud wapas aata hai. "Saare facts revise
+          karo" mein har baar sab aate hain — jo aata hai wo us round se hat jata hai, jo nahi aata wo baar-baar aata hai.
         </p>
       </section>
 
       <section className="section" style={{ marginTop: 8 }}>
-        <h2 className="ms-h2">Aaj revise karo ({due.length})</h2>
-        {due.length > 0 && (
-          <button className="btn btn--primary ms-revise-go" onClick={() => setRevising(due.map(toCard))}>
-            ▶ Bade card mein revise karo · {due.length}
+        {facts.length > 0 && (
+          <button className="btn btn--primary ms-revise-go" onClick={() => setRevising(shuffle(facts).map(toCard))}>
+            ▶ Saare facts revise karo · {facts.length}
           </button>
         )}
+        <h2 className="ms-h2">Aaj revise karo ({due.length})</h2>
         {due.length === 0 ? (
           <div className="placeholder">Aaj ke liye kuch due nahi. 👍</div>
         ) : (
@@ -127,7 +138,7 @@ export default function MissionFactsPage() {
                   <>
                     <p style={{ margin: "6px 0 8px", fontSize: "1.1rem", lineHeight: 1.5 }}>{f.text}</p>
                     <div className="row" style={{ gap: 8 }}>
-                      <button className="btn btn--primary btn--sm" onClick={() => { markLearned(f.id); load(); }}>✓ Aata tha</button>
+                      <button className="btn btn--primary btn--sm" onClick={() => { reviewFact(f.id, true); load(); }}>✓ Aata tha</button>
                       <button className="btn btn--ghost btn--sm" onClick={() => { reviewFact(f.id, false); load(); }}>✗ Nahi aata tha (kal phir)</button>
                     </div>
                   </>
