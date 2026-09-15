@@ -45,6 +45,7 @@ import re
 import shutil
 import subprocess
 import sys
+import threading
 import time
 import unicodedata
 import urllib.error
@@ -494,13 +495,31 @@ def deepseek_cfg():
     return cfg
 
 
+# DeepSeek costs money (the owner pays). By default a run is CACHE-ONLY: any
+# reply not already in scripts/.ca-cache/ stops the run before a single call
+# is made, and it lists what would be asked. `--allow-api N` lets at most N
+# calls through — pass it only after checking N with the owner.
+API_BUDGET = 0
+_api_used = 0
+_api_lock = threading.Lock()
+
+
+class ApiBlocked(RuntimeError):
+    pass
+
+
 def ask(cfg, system, user, max_tokens=16000):
     """One DeepSeek call, cached on disk by its exact input."""
+    global _api_used
     os.makedirs(CACHE, exist_ok=True)
     h = hashlib.sha1((cfg.get("model", "") + "\0" + system + "\0" + user).encode("utf-8")).hexdigest()
     path = os.path.join(CACHE, h + ".json")
     if os.path.exists(path):
         return json.load(open(path, encoding="utf-8"))
+    with _api_lock:
+        if _api_used >= API_BUDGET:
+            raise ApiBlocked(user.splitlines()[0][:80])
+        _api_used += 1
     body = json.dumps({
         "model": cfg.get("model") or "deepseek-chat",
         "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}],
@@ -780,7 +799,11 @@ def main():
     ap.add_argument("--pdf", default=os.path.join(ROOT, "ca", "rbe-ca-sept-2026.pdf"))
     ap.add_argument("--jobs", type=int, default=6)
     ap.add_argument("--pages", help="only these PDF pages, e.g. 8-12 (for trying the prompt)")
+    ap.add_argument("--allow-api", type=int, default=0, metavar="N",
+                    help="let at most N paid DeepSeek calls through (default 0: cache only — ask the owner first)")
     args = ap.parse_args()
+    global API_BUDGET
+    API_BUDGET = max(0, args.allow_api)
 
     print("reading PDF ...")
     got = {m: [clean(p, i + 1) for i, p in enumerate(pdf_pages(args.pdf, m))]
@@ -801,15 +824,22 @@ def main():
             pages += range(int(a), int(b or a) + 1)
 
     todo = [(p, sections_on(p)) for p in pages if sections_on(p)]
-    print("DeepSeek: %d pages ..." % len(todo))
-    raw = {}
+    print("DeepSeek: %d pages (paid calls allowed: %d) ..." % (len(todo), API_BUDGET))
+    raw, blocked = {}, []
     with cf.ThreadPoolExecutor(args.jobs) as ex:
         futs = {ex.submit(extract_page, cfg, p, secs, ro[p - 1], tb[p - 1], 0, carry.get(p)): (p, secs)
                 for p, secs in todo}
         for k, f in enumerate(cf.as_completed(futs), 1):
             p, secs = futs[f]
-            raw[p] = f.result()
+            try:
+                raw[p] = f.result()
+            except ApiBlocked:
+                blocked.append(p)
+                continue
             print("  page %3d  %3d cards  (%d/%d)" % (p, len(raw[p].get("cards", [])), k, len(todo)), flush=True)
+    if blocked:
+        sys.exit("STOPPED, nothing written: %d page(s) are not in the cache and would need paid DeepSeek "
+                 "calls: %s\nAsk the owner, then rerun with --allow-api N." % (len(blocked), sorted(blocked)))
 
     cards, review = [], []
     for p, secs in todo:
@@ -853,7 +883,11 @@ def main():
         jc, jr = part_j(ro)
         jc = [c for c in jc if c["pdfPage"] in pages]
         print("Part J: %d one-liners parsed, tagging ..." % len(jc))
-        tag_part_j(cfg, jc, args.jobs)
+        try:
+            tag_part_j(cfg, jc, args.jobs)
+        except ApiBlocked:
+            sys.exit("STOPPED, nothing written: Part J tags are not in the cache and would need paid "
+                     "DeepSeek calls. Ask the owner, then rerun with --allow-api N.")
         for c in jc:
             why = verify(c, squashed[c["pdfPage"] - 1] + [v for q in (c["pdfPage"] + 1,)
                                                           if q <= len(squashed) for v in squashed[q - 1]],
