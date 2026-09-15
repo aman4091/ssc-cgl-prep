@@ -1,0 +1,205 @@
+[
+ {
+  "id": "b-the-amrut-mission-has-been-subsumed-under-eb060a",
+  "how": "word",
+  "before": "The AMRUT Mission has been subsumed under",
+  "after": "The ____ Mission has been subsumed under",
+  "answer": "AMRUT 2.0"
+ },
+ {
+  "id": "b-app-of-pmkisan-pm-kisan-samman-nidhi-896acc",
+  "how": "word",
+  "before": "App of PM-KISAN (PM Kisan Samman Nidhi)",
+  "after": "App of PM-____ (PM ____ Samman Nidhi)",
+  "answer": "PM KISAN Mobile App"
+ },
+ {
+  "id": "b-which-ministry-has-launched-the-osop-scheme-over-315ee7",
+  "how": "word",
+  "before": "Which ministry has launched the OSOP scheme over Indian Railways?",
+  "after": "Which ministry has launched the OSOP scheme over Indian ____?",
+  "answer": "Ministry of Railways"
+ },
+ {
+  "id": "b-the-fishwale-app-is-described-as-which-first-efi-13886f",
+  "how": "word",
+  "before": "The Fishwale App is described as which first e-fish market app?",
+  "after": null,
+  "answer": "India's first e-fish market app"
+ },
+ {
+  "id": "b-rbidata-portal-was-launched-by-which-institution-011f52",
+  "how": "full",
+  "before": "RBIDATA Portal was launched by which institution?",
+  "after": null,
+  "answer": "RBI"
+ },
+ {
+  "id": "c-18th-pravasi-bharatiya-diwas-2025-special-initia-753012",
+  "how": "word",
+  "before": "18th Pravasi Bharatiya Diwas 2025 special initiative",
+  "after": "18th ____ Bharatiya Diwas 2025 special initiative",
+  "answer": "Launch of the Pravasi Bharatiya Express"
+ },
+ {
+  "id": "d-golden-from-kpop-demon-hunters-is-the-59f149",
+  "how": "word",
+  "before": "Golden from KPop Demon Hunters is the",
+  "after": "Golden from ____ Demon Hunters is the",
+  "answer": "first K-Pop song to win"
+ },
+ {
+  "id": "g-8th-garuda-2025-was-which-edition-0d7638",
+  "how": "full",
+  "before": "8th Garuda 2025 was which edition",
+  "after": "____ Garuda 2025 was which edition",
+  "answer": "8th"
+ },
+ {
+  "id": "g-which-rivers-did-pakistan-get-majority-rights-ov-88e564",
+  "how": "word",
+  "before": "Which rivers did Pakistan get majority rights over under the Indus Waters Treaty?",
+  "after": "Which rivers did Pakistan get majority rights over under the ____ Waters Treaty?",
+  "answer": "Indus, Jhelum, Chenab"
+ },
+ {
+  "id": "g-number-of-pakistani-pows-repatriated-as-per-the-292906",
+  "how": "word",
+  "before": "Number of Pakistani POWs repatriated as per the Shimla Agreement",
+  "after": "Number of ____ POWs repatriated as per the Shimla Agreement",
+  "answer": "93,000 Pakistani POWs"
+ },
+ {
+  "id": "g-operation-urja-suraksha-2026-ensures-safe-passag-9b21fb",
+  "how": "word",
+  "before": "Operation Urja Suraksha (2026) ensures safe passage of India-bound energy shipments through which strait?",
+  "after": "Operation Urja Suraksha (2026) ensures safe passage of India-bound energy shipments through which ____?",
+  "answer": "Strait of Hormuz"
+ },
+ {
+  "id": "g-operator-of-axiom-mission-4-ax4-3c8e74",
+  "how": "word",
+  "before": "Operator of Axiom Mission 4 (Ax-4)",
+  "after": "Operator of ____ Mission 4 (Ax-4)",
+  "answer": "Axiom Space"
+ },
+ {
+  "id": "g-xspect-complements-global-missions-like-which-na-68dc0c",
+  "how": "word",
+  "before": "XSPECT complements global missions like which NASA mission?",
+  "after": "XSPECT complements global missions like which ____ mission?",
+  "answer": "NASA's IXPE"
+ },
+ {
+  "id": "g-soft-xray-telescope-sxt-on-astrosat-studies-whic-8048a8",
+  "how": "word",
+  "before": "Soft X-ray Telescope (SXT) on AstroSat studies which emissions?",
+  "after": null,
+  "answer": "soft X-ray emissions"
+ },
+ {
+  "id": "g-which-kind-of-multiband-observation-from-a-singl-ea5a53",
+  "how": "word",
+  "before": "Which kind of multi-band observation from a single satellite is described as rare among global observatories for AstroSat?",
+  "after": null,
+  "answer": "Simultaneous multi-band observation"
+ },
+ {
+  "id": "g-what-did-the-mars-colour-camera-mcc-capture-d0d1ef",
+  "how": "word",
+  "before": "What did the Mars Colour Camera (MCC) capture?",
+  "after": "What did the ____ Colour Camera (MCC) capture?",
+  "answer": "stunning images of Mars"
+ },
+ {
+  "id": "g-hubble-advanced-instrument-cosmic-origins-spectr-05edcb",
+  "how": "full",
+  "before": "Hubble advanced instrument: Cosmic Origins Spectrograph",
+  "after": null,
+  "answer": "COS"
+ },
+ {
+  "id": "g-the-two-spacecraft-of-nasa-s-voyager-mission-are-238a61",
+  "how": "word",
+  "before": "The two spacecraft of NASA's Voyager mission are",
+  "after": "The two spacecraft of NASA's ____ mission are",
+  "answer": "Voyager 1 and Voyager 2"
+ },
+ {
+  "id": "g-which-luna-missions-were-sample-return-missions-304840",
+  "how": "word",
+  "before": "Which Luna missions were sample return missions that brought lunar soil back to Earth?",
+  "after": "Which ____ missions were sample return missions that brought lunar soil back to Earth?",
+  "answer": "Luna 16, 20, 24"
+ },
+ {
+  "id": "g-ironwood-delivers-how-many-exaflops-1132fd",
+  "how": "word",
+  "before": "Ironwood delivers how many Exaflops?",
+  "after": "Ironwood delivers how many ____?",
+  "answer": "42.5 Exaflops"
+ },
+ {
+  "id": "g-how-many-rafalem-jets-will-india-get-under-the-d-408ea3",
+  "how": "word",
+  "before": "How many Rafale-M jets will India get under the deal with France?",
+  "after": null,
+  "answer": "26 Rafale-M jets"
+ },
+ {
+  "id": "h-henley-passport-index-2026-issued-by-2e0ce2",
+  "how": "word",
+  "before": "Henley passport index 2026 issued by",
+  "after": "____ passport index 2026 issued by",
+  "answer": "Henley and partners"
+ },
+ {
+  "id": "i-the-gi-tag-arunachal-orange-belongs-to-which-sta-f82cf3",
+  "how": "word",
+  "before": "The GI tag 'Arunachal Orange' belongs to which state?",
+  "after": "The GI tag '____ Orange' belongs to which state?",
+  "answer": "Arunachal Pradesh"
+ },
+ {
+  "id": "i-which-unesco-world-heritage-site-was-inscribed-i-20425f",
+  "how": "word",
+  "before": "Which UNESCO World Heritage Site was inscribed in 2025 (Maratha Military Landscapes)?",
+  "after": "Which UNESCO World Heritage Site was inscribed in 2025 (____ Military Landscapes)?",
+  "answer": "Maratha Military Landscapes of India"
+ },
+ {
+  "id": "i-wildlife-sanctuary-in-kannur-district-kerala-tha-0be81c",
+  "how": "word",
+  "before": "Wildlife Sanctuary in Kannur district, Kerala that was renamed as the Aralam Butterfly Sanctuary",
+  "after": "Wildlife Sanctuary in Kannur district, Kerala that was renamed as the ____ Butterfly Sanctuary",
+  "answer": "Aralam Wildlife Sanctuary"
+ },
+ {
+  "id": "j-the-famous-lord-jagannath-rath-yatra-started-on-abf78c",
+  "how": "word",
+  "before": "The famous Lord Jagannath Rath Yatra started on June 27, to whom is the Rath Yatra festival dedicated?",
+  "after": "The famous Lord ____ Rath Yatra started on June 27, to whom is the Rath Yatra festival dedicated?",
+  "answer": "Jagannath, Balabhadra, Subhadra"
+ },
+ {
+  "id": "j-in-november-2025-which-country-launched-its-firs-7402b5",
+  "how": "full",
+  "before": "In November 2025, which country launched its first satellite named OmanSat-1?",
+  "after": null,
+  "answer": "Oman"
+ },
+ {
+  "id": "j-trishakti-corps-of-the-indian-army-inaugurated-t-2849ae",
+  "how": "word",
+  "before": "Trishakti Corps of the Indian Army inaugurated the first community radio station in a border village of Sikkim under what name?",
+  "after": "Trishakti Corps of the Indian Army inaugurated the first community radio station in a border village of ____ under what name?",
+  "answer": "Sikkim Sundari"
+ },
+ {
+  "id": "j-which-fintech-company-launched-india-s-first-aip-ab9ce7",
+  "how": "full",
+  "before": "Which fintech company launched India's first AI-powered payment foundation model, 'Razorpay Vulcan', in August 2026?",
+  "after": "Which fintech company launched India's first AI-powered payment foundation model, '____ Vulcan', in August 2026?",
+  "answer": "Razorpay"
+ }
+]

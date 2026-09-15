@@ -35,3 +35,7 @@ ca/
 
 # Personal mock-marks report (lib/mockreporttext) — apne marks, repo mein nahi
 MOCK-MARKS-REPORT*.txt
+
+# extract-ca.py DeepSeek reply cache
+scripts/.ca-cache/
+scripts/__pycache__/

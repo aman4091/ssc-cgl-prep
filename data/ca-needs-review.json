@@ -1,0 +1,949 @@
+[
+ {
+  "pdfPage": 10,
+  "section": "Key Office Bearers of India 2025-26",
+  "why": "DeepSeek: Fragment cut off at the page edge; no post or name is given, so the fact cannot be reconstructed.",
+  "text": "a. (first woman to hold the positions)"
+ },
+ {
+  "pdfPage": 10,
+  "section": "Council Of Ministers Of 18th Lok Sabha",
+  "why": "DeepSeek: Only the heading survives; the actual list of cabinet ministers is cut off at the page edge.",
+  "text": "Cabinet Ministers"
+ },
+ {
+  "pdfPage": 13,
+  "section": "New Major Bills & Act 2025-26",
+  "why": "DeepSeek: This block opens the page with no bill/act title printed above it (the title is cut off), so the bill name needed for a one-card-per-bill trigger is missing.",
+  "text": "• Judges increased - 33 → 37 (excluding CJI) • Total Sanctioned Strength - 38 (37 Judges + Chief Justice of India) • Increase - 4 additional Judges • Introduced in Lok Sabha - 20 July 2026 • Passed by Lok Sabha - 3 August 2026 • Passed by Parliament - 5 August 2026"
+ },
+ {
+  "pdfPage": 13,
+  "section": "New Major Bills & Act 2025-26",
+  "why": "DeepSeek: Only the title and the heading '1. Basic Overview' are printed; the description is cut off at the page edge, so no phrase stating what the Act does can be copied.",
+  "text": "Finance Act, 2026 / 1. Basic Overview"
+ },
+ {
+  "pdfPage": 15,
+  "section": "New Major Bills & Act 2025-26",
+  "why": "DeepSeek: The bill/act name for this insurance-related content is not printed on the page; cannot make a card with the bill/act name as trigger.",
+  "text": "Benefits: capital augmentation, advanced technology adoption, global best practices, employment generation ... Objectives of the Bill ... IRDAI powers enhanced: Can disgorge wrongful gains from insurers/intermediaries"
+ },
+ {
+  "pdfPage": 17,
+  "section": "New Major Bills & Act 2025-26",
+  "why": "DeepSeek: The heading naming this bill/act (and the start of its description, including the 'Promotes Ease of Living...' bullet) is cut off at the page edge, so the bill/act name cannot be taken from the page text; it is also unclear whether the item is the DPDP Act or the DPDP Rules.",
+  "text": "o Promotes Ease of Living and Ease of Doing Business ... These Rules activate the DPDP Act, making it enforceable"
+ },
+ {
+  "pdfPage": 18,
+  "section": "New Major Bills & Act 2025-26",
+  "why": "DeepSeek: This is a continuation of a bill/act whose name is not printed on this page (the heading is cut off at the page top), so no trigger name can be built from the page text.",
+  "text": "Education and Protection Fund (IEPF) • Audit Reform: o PSBs can now decide auditor remuneration, improving audit quality • Streamlined Reporting to RBI: o Reporting now aligned with fortnightly/monthly/quarterly cycles instead of weekly"
+ },
+ {
+  "pdfPage": 18,
+  "section": "New Major Laws 2024-25",
+  "why": "DeepSeek: Cut off at the page edge — the description and punishment for this provision are not printed on the page.",
+  "text": "o Section 117(4) - Group Grievous Hurt Based on Identity"
+ },
+ {
+  "pdfPage": 20,
+  "section": "New Major Laws 2024-25",
+  "why": "DeepSeek: The law name for this list of reforms is not present on the page, so the required trigger (law's name) cannot be built without adding information.",
+  "text": "Procedural & Legal Reforms ... Why It Matters • Replaces a 50-year-old criminal procedure law with a modern, digital system."
+ },
+ {
+  "pdfPage": 22,
+  "section": "New Major Laws 2024-25",
+  "why": "DeepSeek: The block is about a labour law, but the law's name is not printed anywhere on this page (appears cut off/continued from a previous page), and the New Major Laws 2024-25 section rule requires the trigger to be the law's name; the Impact/Objectives bullets are clauses/details for which that section allows no extra cards, and no other listed section fits.",
+  "text": "o Women permitted in night shifts with mandatory safety provisions. ^ _ ' a b 6 7 8 9 : ; Impact • Employment increased from 47.5 crore (2017-18) to 64.33 crore (2023-24) → net addition of 16.83 crore jobs. • Aligns India's labour ecosystem with global standards. • Supports Aatmanirbhar Bharat by creating a future-ready workforce. Objectives • Simplify and rationalise labour laws..."
+ },
+ {
+  "pdfPage": 24,
+  "section": "Union Budget 2026-27",
+  "why": "trigger words not on the page: ratio",
+  "trigger": "Debt-GDP ratio",
+  "answer": "55.6%"
+ },
+ {
+  "pdfPage": 25,
+  "section": "2026 State-Wise Schemes",
+  "why": "DeepSeek: The table row and the paragraph print two different names for the same Delhi scheme (Lakhpati Didi Yojana vs Delhi Lakhpati Beti Yojana), so the scheme name itself cannot be carded unambiguously.",
+  "text": "Lakhpati Didi Yojana 2 Mar 2026 / Under the Delhi Lakhpati Beti Yojana"
+ },
+ {
+  "pdfPage": 25,
+  "section": "2026 State-Wise Schemes",
+  "why": "DeepSeek: The sentence is cut off at the page edge after \"practice where\"; the remaining fact is not on the page.",
+  "text": "aimed at eradicating the \"Sarpanch Pati\" (proxy leadership) practice where"
+ },
+ {
+  "pdfPage": 26,
+  "section": "2026 State-Wise Schemes",
+  "why": "DeepSeek: Sentence fragment cut off at the page edge; no scheme, cue or answer can be identified from the given page text.",
+  "text": "male relatives act on behalf of elected women."
+ },
+ {
+  "pdfPage": 28,
+  "section": "2025 State-wise Schemes",
+  "why": "DeepSeek: The scheme name is cut off at the page edge ('Jyothi' is only the tail of the name) and the state column for this row is not printed on this page, so the scheme cannot be identified or tied to a state.",
+  "text": "strategy through the Women & Child Development Department. Jyothi May 2025 To enroll children of migrant workers into anganwadis and public schools, ensuring inclusive education, health support, and social integration."
+ },
+ {
+  "pdfPage": 29,
+  "section": "2025 State-wise Schemes",
+  "why": "DeepSeek: Standalone bullet at the page edge with no scheme name attached, so it cannot be tied to a testable fact or a cue.",
+  "text": "• University of Patanjali, Haridwar (Uttarakhand)."
+ },
+ {
+  "pdfPage": 29,
+  "section": "2025 State-wise Schemes",
+  "why": "DeepSeek: The state label column is ambiguous here: VIEW 2 places 'Karnataka' on the same physical line as the LEAP Programme row, while VIEW 1 attaches Karnataka to Kusum-C Project, so no state can be safely assigned to LEAP Programme.",
+  "text": "LEAP Programme Sep 2025"
+ },
+ {
+  "pdfPage": 30,
+  "section": "2025 State-wise Schemes",
+  "why": "DeepSeek: This bullet is the tail of a scheme card whose scheme name is cut off at the page edge; no scheme name is printed on this page, so the fact cannot be tied to a cue.",
+  "text": "• Recognition: Declared as India's first Yoga & Ayurveda Cluster Center under the Gyan Bharatam Mission."
+ },
+ {
+  "pdfPage": 30,
+  "section": "2025 State-wise Schemes",
+  "why": "DeepSeek: No state name is printed alongside this scheme on the page (unlike the Meghalaya Green Deposit Scheme), so no scheme-to-state card could be made.",
+  "text": "Sintered Rare-Earth Magnet Scheme (REPM) Dec 2025"
+ },
+ {
+  "pdfPage": 32,
+  "section": "Ministry-wise Major Schemes",
+  "why": "DeepSeek: The scheme name this bullet belongs to is cut off at the top of the page, so the fact cannot be tied to any scheme named on the page.",
+  "text": "•  To enable willing donors to contribute towards the family of a braveheart who sacrificed his/her life in line of duty."
+ },
+ {
+  "pdfPage": 33,
+  "section": "Ministry-wise Major Schemes",
+  "why": "DeepSeek: The line is cut off at the top of the page — the 'projects' it speaks of are not named here, so the cue (which scheme the World Bank loan belongs to) cannot be built unambiguously from this page.",
+  "text": "• External assistance: World Bank is funding the projects through loan approved for a period of 5 years up to 2026."
+ },
+ {
+  "pdfPage": 33,
+  "section": "Ministry-wise Major Schemes",
+  "why": "trigger contains the answer",
+  "trigger": "PM Vishwakarma Scheme enables recognition of artisans and craftspeople as",
+  "answer": "Vishwakarmas"
+ },
+ {
+  "pdfPage": 34,
+  "section": "Ministry-wise Major Schemes",
+  "why": "DeepSeek: The scheme name for this block is cut off at the page edge (its heading is on the previous page), so no trigger can say unambiguously which scheme the tenure, objectives, NITI Aayog tag and beneficiaries belong to.",
+  "text": "• Tenure: 2021-22 to 2025-26 • To develop infrastructure projects, provide basic amenities and reducing imbalances and development deficit in the identified Minority Concentration Areas. • Scheme is identified by NITI Aayog as Core of the Core Scheme under the National Development Agenda. • Beneficiaries: Minority communities notified under the National Commission for Minorities Act, 1992 i.e., Muslims, Christians, Buddhists, Sikhs, Jains, and Parsis."
+ },
+ {
+  "pdfPage": 34,
+  "section": "Ministry-wise Major Schemes",
+  "why": "trigger words not on the page: eligibility, category, living, forests",
+  "trigger": "PMUY 2.0 eligibility: which category of people living in forests is covered?",
+  "answer": "Forest dwellers"
+ },
+ {
+  "pdfPage": 35,
+  "section": "Ministry-wise Major Schemes",
+  "why": "DeepSeek: Heading only — the list of national waterways is cut off at the page edge, so no answer can be attached to it.",
+  "text": "National Waterways:"
+ },
+ {
+  "pdfPage": 35,
+  "section": "Ministry-wise Major Schemes",
+  "why": "DeepSeek: SATAT appears above the 'Ministry of Agriculture & Farmers Welfare' header in the written order and before it in the physical layout, so the ministry it belongs to is not clearly stated on this page.",
+  "text": "SATAT initiative • To extract economic value from bio-mass waste in the form of • A New Revolution in Transportation Fuel Compressed Bio-Gas"
+ },
+ {
+  "pdfPage": 35,
+  "section": "Ministry-wise Major Schemes",
+  "why": "trigger contains the answer",
+  "trigger": "PM Fasal Bima Yojana (PM-FBY) Portal",
+  "answer": "PM-FBY Portal"
+ },
+ {
+  "pdfPage": 35,
+  "section": "Ministry-wise Major Schemes",
+  "why": "trigger words not on the page: length, harnessed",
+  "trigger": "Sagarmala objective — length of India's coastline harnessed",
+  "answer": "7,500 km"
+ },
+ {
+  "pdfPage": 36,
+  "section": "Ministry-wise Major Schemes",
+  "why": "DeepSeek: The ministry heading for the National Waterways block is not printed on this page (it falls at the page edge/previous page), so no scheme-to-ministry card can be made for these waterways; only the route, length and states served facts were carded.",
+  "text": "• NW - 1 Ganga: Haldia to Allahabad, Dhubri to Sadiya - 1620 km (and the rest of the NW - 1 to NW - 6 block)"
+ },
+ {
+  "pdfPage": 36,
+  "section": "Ministry-wise Major Schemes",
+  "why": "DeepSeek: It is only a heading with no phases or details printed on the page, so no fact can be tested from it.",
+  "text": "• Phases of PMGSY"
+ },
+ {
+  "pdfPage": 38,
+  "section": "Viksit Bharat-Guarantee for Rozgar and Ajeevika Mission (VB-G RAM-G) Act, 2025",
+  "why": "DeepSeek: The page prints only the section heading with no scheme name, ministry, objective or headline number, so no fact can be built for it.",
+  "text": "Viksit Bharat-Guarantee for Rozgar and Ajeevika Mission (VB-G RAM-G) Act, 2025"
+ },
+ {
+  "pdfPage": 38,
+  "section": "Ministry-wise Major Schemes",
+  "why": "trigger words not on the page: initiative, body",
+  "trigger": "Vision 2035 is an initiative of which body?",
+  "answer": "NITI Aayog"
+ },
+ {
+  "pdfPage": 42,
+  "section": "Major Initiatives Launched (2021-26)",
+  "why": "DeepSeek: Only the scheme name appears; the page ends here, so no launch body, purpose or number is printed for it.",
+  "text": "• Stree Ride Initiative"
+ },
+ {
+  "pdfPage": 43,
+  "section": "Major Initiatives Launched (2021-26)",
+  "why": "DeepSeek: The name of the scheme appears at the top of the page and is cut off at the page edge - the line begins with 'launched by', so no scheme-to-state card can be made.",
+  "text": "• launched by the Telangana Women's Safety Wing in Hyderabad"
+ },
+ {
+  "pdfPage": 43,
+  "section": "Mobile Apps launched by Government",
+  "why": "DeepSeek: The purpose line for the SUVAS App is cut off at the bottom page edge, so only the launcher fact could be carded.",
+  "text": "• SUVAS App • Launched by Supreme Court of India"
+ },
+ {
+  "pdfPage": 44,
+  "section": "Mobile Apps launched by Government",
+  "why": "DeepSeek: This purpose line sits above the Digi Yatra entry but no app name is printed with it, so the app it belongs to cannot be identified from this page.",
+  "text": "• To promote regional languages in judicial procedure."
+ },
+ {
+  "pdfPage": 44,
+  "section": "Mobile Apps launched by Government",
+  "why": "DeepSeek: The page is cut off after the app name; no launcher or purpose is given on this page, so no fact can be built.",
+  "text": "• Prahari App"
+ },
+ {
+  "pdfPage": 45,
+  "section": "Mobile Apps launched by Government",
+  "why": "DeepSeek: The app name for this entry is missing/garbled, so the launcher (BSF & Home Ministry) and purpose (For Proactive Goverance Facility) cannot be tied to a named app.",
+  "text": "• BSF & Home Ministry • For Proactive Goverance Facility"
+ },
+ {
+  "pdfPage": 46,
+  "section": "Mobile Apps launched by Government",
+  "why": "DeepSeek: The page opens mid-item: the name of the app this bullet describes is cut off at the page edge, so no trigger–answer pair can be formed.",
+  "text": "an Artificial Intelligence-driven platform, to provide digital study materials in Indian languages."
+ },
+ {
+  "pdfPage": 48,
+  "section": "Government Web Portals",
+  "why": "DeepSeek: This line sits above the 'Rojgar Sarathi Job portal' entry, but the portal it describes is not named on this page (it appears cut off from the previous page), so it cannot be paired with a cue.",
+  "text": "• School dropouts can acquire skills through laptops, mobiles etc."
+ },
+ {
+  "pdfPage": 50,
+  "section": "Government Web Portals",
+  "why": "DeepSeek: The bullet names no scheme, portal or organisation on this page, so the cue for these facts is missing; the subject is cut off.",
+  "text": "To accelerate manufacturing-led economic development and ease of doing business by establishing 100 world-class, plug-and-play industrial parks across India over the next 6 years."
+ },
+ {
+  "pdfPage": 52,
+  "section": "Major International Days & Themes 2025-26",
+  "why": "DeepSeek: This section heading appears at the page edge with no day names, dates or themes printed under it on this page, so no cards can be made from the given text.",
+  "text": "Major International Days & Themes 2025-26"
+ },
+ {
+  "pdfPage": 53,
+  "section": "Major International Days & Themes 2025-26",
+  "why": "DeepSeek: The entry is cut off at the page edge: no date and no theme are printed for it, so no testable fact can be formed.",
+  "text": "International Girl Child Day"
+ },
+ {
+  "pdfPage": 54,
+  "section": "Major International Days & Themes 2025-26",
+  "why": "DeepSeek: The name of the day observed on 11 October 2025 is not printed with this entry (the list starts at the date), so no day→date card can be made; only the date→theme pairing is complete.",
+  "text": "• 11 October 2025 • \"The girl I am, the change I lead: Girls on the frontlines of crisis.\""
+ },
+ {
+  "pdfPage": 59,
+  "section": "Bharat Ratna 2024",
+  "why": "DeepSeek: Fragment cut off at the page edge — the bullet has no award heading or context on this page, so it cannot be tied to a testable fact without guessing.",
+  "text": "o Chaudhary Charan Singh"
+ },
+ {
+  "pdfPage": 61,
+  "section": "Padma Awards 2026",
+  "why": "DeepSeek: the page text given contains only awardee rows 61–95; no total number of awardees and no per-award counts appear in either view, so no count card can be made",
+  "text": "headline counts (total awardees, each award's count)"
+ },
+ {
+  "pdfPage": 64,
+  "section": "Popular Awards of The Year 2024-26",
+  "why": "DeepSeek: Only the award heading is printed; the winner is not given on this page (fact continues beyond the page edge), so no cue-answer pair can be formed.",
+  "text": "• FIFA PLAYER OF THE YEAR 2025"
+ },
+ {
+  "pdfPage": 64,
+  "section": "Popular Awards of The Year 2024-26",
+  "why": "DeepSeek: The winner line is printed before the 'Gandhi Peace Prize' heading it appears to belong to, so the award-to-winner link is not fully certain; the card was made but flagged.",
+  "text": "• 2024 winner: Antonio Luis Santos da Costa, Portugal"
+ },
+ {
+  "pdfPage": 68,
+  "section": "Awards & Honours Conferred to PM Narendra Modi (2024-2026)",
+  "why": "trigger contains the answer",
+  "trigger": "Star of the Republic of Indonesia conferred on PM Narendra Modi in 2026 was from",
+  "answer": "Indonesia"
+ },
+ {
+  "pdfPage": 68,
+  "section": "Awards & Honours Conferred to PM Narendra Modi (2024-2026)",
+  "why": "trigger contains the answer",
+  "trigger": "Order of Oman conferred on PM Narendra Modi in 2025 was from",
+  "answer": "Oman"
+ },
+ {
+  "pdfPage": 68,
+  "section": "Awards & Honours Conferred to PM Narendra Modi (2024-2026)",
+  "why": "trigger contains the answer",
+  "trigger": "Great Honour Nishan of Ethiopia conferred on PM Narendra Modi in 2025 was from",
+  "answer": "Ethiopia"
+ },
+ {
+  "pdfPage": 68,
+  "section": "Awards & Honours Conferred to PM Narendra Modi (2024-2026)",
+  "why": "trigger contains the answer",
+  "trigger": "Officer of the Order of the Star of Ghana conferred on PM Narendra Modi in 2025 was from",
+  "answer": "Ghana"
+ },
+ {
+  "pdfPage": 68,
+  "section": "Awards & Honours Conferred to PM Narendra Modi (2024-2026)",
+  "why": "trigger contains the answer",
+  "trigger": "Order of the Republic of Trinidad and Tobago conferred on PM Narendra Modi in 2025 was from",
+  "answer": "Trinidad and Tobago"
+ },
+ {
+  "pdfPage": 68,
+  "section": "Awards & Honours Conferred to PM Narendra Modi (2024-2026)",
+  "why": "trigger contains the answer",
+  "trigger": "Dominica Award of Honour conferred on PM Narendra Modi in 2024 was from",
+  "answer": "Dominica"
+ },
+ {
+  "pdfPage": 68,
+  "section": "Awards & Honours Conferred to PM Narendra Modi (2024-2026)",
+  "why": "trigger contains the answer",
+  "trigger": "Honorary Order of Freedom of Barbados conferred on PM Narendra Modi in 2024 was from",
+  "answer": "Barbados"
+ },
+ {
+  "pdfPage": 70,
+  "section": "Month-Wise Books & Authors",
+  "why": "answer not found verbatim on the page",
+  "trigger": "Sanskritir Ratna Bhandar: Bhaowaiyar Itibritto",
+  "answer": "Dr. Jayanta Kumar Roy and Ms. Sangita Roy"
+ },
+ {
+  "pdfPage": 72,
+  "section": "Month-Wise Books & Authors",
+  "why": "DeepSeek: These two entries stand above the 'July 2025' heading while every later entry follows it, so the month they are printed under is not certain on this page; cards were made but their date field is left null.",
+  "text": "• The Chola Tigers: The Avengers of Somnath in Chennai = Amish Tripathi  /  • The Diary of a Cricketer's Wife (A memoir) = Puja Pujara ... July 2025"
+ },
+ {
+  "pdfPage": 72,
+  "section": "Award Winning Books & Authors 2025-26",
+  "why": "DeepSeek: Sub-entries give the winner and work but the parent award name with the matching year (e.g. 'Pulitzer Prize (Fiction) 2025') is never printed, so a book-to-award card could not be built without guessing; only author cards were made.",
+  "text": "a. 2025 = Percival Everett for his Novel James  /  a. 2024 Winner: Percival Everett for James"
+ },
+ {
+  "pdfPage": 74,
+  "section": "Notable Indian Obituaries (2025-2026)",
+  "why": "DeepSeek: The name of the author these award bullets belong to is cut off at the top of the page, so no cue (person's name) exists for these facts.",
+  "text": "o 59th Jnanpith Award (2024) (First Chhattisgarhi & 12th Hindi writer to receive this honour) / o Sahitya Akademi Award (1999), for his novel \"Deewar Mein Ek Khidki Rehti Thi\" / o PEN/Nabokov Award (2023) (first Indian author to receive this Award) / o His famous works include Naukar Ki Kameez and Deewar Mein Ek Khidki Rahti Thi."
+ },
+ {
+  "pdfPage": 75,
+  "section": "Major Achievements by Indian Women (2025-26)",
+  "why": "DeepSeek: Isolated year fragment (watermark/table remnant) with no linked fact, so it cannot be tied to a cue.",
+  "text": " 2025"
+ },
+ {
+  "pdfPage": 78,
+  "section": "First Khelo India Tribal Games 2026",
+  "why": "DeepSeek: The medal-tally header carries garbled watermark/symbol characters, so no card was made from the header row; the team rows below it were readable.",
+  "text": "Rank Team • - ̃ TM Gold • - š › œ Silver • ž Ÿ ¡ Bronze ¢ £ ¤ ¥ ¦ • ̈ © a « Total"
+ },
+ {
+  "pdfPage": 78,
+  "section": "6th Khelo India Winter Games 2026",
+  "why": "DeepSeek: This heading sits between the two sections without a bullet or section label, so it was attached to the 6th Khelo India Winter Games 2026 section that precedes it; only the clearly numbered (6) disciplines list was used.",
+  "text": " Sports Disciplines (6)"
+ },
+ {
+  "pdfPage": 79,
+  "section": "2nd Khelo India Beach Games 2026",
+  "why": "answer not found verbatim on the page",
+  "trigger": "Medal sports at the 2nd Khelo India Beach Games 2026",
+  "answer": "Beach Volleyball, Beach Soccer, Beach Kabaddi, Open Water Swimming, Pencak Silat, Sepaktakraw"
+ },
+ {
+  "pdfPage": 81,
+  "section": "Grand Slam of the year 2026",
+  "why": "trigger words not on the page: city",
+  "trigger": "Wimbledon is held in which city?",
+  "answer": "London"
+ },
+ {
+  "pdfPage": 81,
+  "section": "Grand Slam of the year 2026",
+  "why": "trigger words not on the page: city",
+  "trigger": "US Open is held in which city?",
+  "answer": "Newyork"
+ },
+ {
+  "pdfPage": 82,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: This content belongs to a Cricket / Other Trophy & Cups section, but the only section name allowed for this page is 'Grand Slam of the year 2026', so no card could be created for it.",
+  "text": "Other Trophy & Cups / Cricket: 18th Syed Mushtaq Ali Trophy 2025-26 - Winner: Jharkhand (1st title); Runner-up: Haryana; Final Venue: Indore; Player of the series: Anukul Roy (Jharkhand); Most Runs: Ishan Kishan (Jharkhand)- 517 runs"
+ },
+ {
+  "pdfPage": 82,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: This content belongs to a Cricket / Other Trophy & Cups section, but the only section name allowed for this page is 'Grand Slam of the year 2026', so no card could be created for it.",
+  "text": "62nd Irani Trophy 2025-26 - Winner: Vidarbha (3rd title); Runner-up: Rest of India; Venue: Vidarbha Cricket Association Stadium, Nagpur; Player of the Match: Atharva Taide (Vidarbha)"
+ },
+ {
+  "pdfPage": 82,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: This content belongs to a Cricket / Other Trophy & Cups section, but the only section name allowed for this page is 'Grand Slam of the year 2026', so no card could be created for it.",
+  "text": "62nd Duleep Trophy 2025-26 - Winner: Central Zone (7th title); Runner Up: South Zone; Player of the series: Saransh Jain (central zone); Most runs: Rajat Patidar (382); Most wickets: Saransh Jain (16)"
+ },
+ {
+  "pdfPage": 82,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: This content belongs to a Cricket / Other Trophy & Cups section, but the only section name allowed for this page is 'Grand Slam of the year 2026', so no card could be created for it.",
+  "text": "9th ICC Champions Trophy 2025 - Winner: India (3rd title) - 2025, 2013, 2002 - First team to win 3 titles; Runner Up: New Zealand; Hosts: Pakistan & UAE; Player of the series & Most runs: Rachin Ravindra (263); Most wickets: Matt Henry (10)"
+ },
+ {
+  "pdfPage": 82,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: This content belongs to a Cricket / Other Trophy & Cups section, but the only section name allowed for this page is 'Grand Slam of the year 2026', so no card could be created for it.",
+  "text": "Vijay Hazare Trophy 2025-26 - Winner: Vidarbha (first-ever title); Runner-up: Saurashtra by 38 runs; Player of the series: Aman Mokhade (Vidarbha); Most runs: Aman Mokhade (814) (Vidarbha); Most Wickets: Ankur Panwar (25) (Saurashtra); Final Held in Bengaluru, Karnataka"
+ },
+ {
+  "pdfPage": 82,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: This content belongs to a Cricket / Other Trophy & Cups section, but the only section name allowed for this page is 'Grand Slam of the year 2026', so no card could be created for it.",
+  "text": "4th WPL 2026 - Winner: RCB (2nd title), 2025- Mumbai Indians (2nd title); Runner-up: Delhi Capitals (2026 & 2025); Player of the series: Sophie Devine (Gujarat Giants); Orange Cap (Most runs): Smriti Mandhana (RCB) 377 runs; Purple Cap (Most Wickets): Sophie Devine (Gujarat Giants) 17 Wickets; Final held in Vadodara"
+ },
+ {
+  "pdfPage": 82,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: This content belongs to a Cricket / Other Trophy & Cups section, but the only section name allowed for this page is 'Grand Slam of the year 2026', so no card could be created for it.",
+  "text": "91th Ranji Trophy 2025-26 - Winner: Jammu & Kashmir (First Title), 2025 Winner: Vidarbha (3rd title); Runner-up: Karnataka, 2025 - Kerala; Final held in Rajnagar, Hubballi; Player of the series: Auqib Nabi (Jammu & Kashmir)"
+ },
+ {
+  "pdfPage": 82,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: This content belongs to a Cricket / Other Trophy & Cups section, but the only section name allowed for this page is 'Grand Slam of the year 2026', so no card could be created for it.",
+  "text": "IPL 2026 - Winner: Royal Challengers Bengaluru (RCB) (2nd title); Becoming only the third team in IPL history (after CSK and MI) to win back-to-back championships; Runner-up: Gujarat Titans; Final held in Narendra Modi Stadium in Ahmedabad"
+ },
+ {
+  "pdfPage": 82,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: Only the heading 'Kabaddi:' appears; the Kabaddi content is cut off at the page edge so no fact can be tied to a cue.",
+  "text": "Kabaddi:"
+ },
+ {
+  "pdfPage": 83,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: Second winner entry is garbled ('Wet Bengal') and the year label is cut, so it is unclear which title/year the 33rd title belongs to.",
+  "text": "• Winner: Services (8th title), 2025- (Wet Bengal (33rd title)"
+ },
+ {
+  "pdfPage": 83,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: The year label for Robi Hansda (12 goals) is cut to '2025-', so the edition he belongs to cannot be confirmed.",
+  "text": "• Top Goal Scorer: Himanshu Jangra (9 goals), 2025-Robi Hansda (12 goals)"
+ },
+ {
+  "pdfPage": 83,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: Extra entry '2025-Shrachi Rarh Bengal Tigers' is garbled and its edition/role cannot be determined.",
+  "text": "• Winner: Kalinga Lancers (2nd title), 2025-Shrachi Rarh Bengal Tigers"
+ },
+ {
+  "pdfPage": 83,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: Extra entry '2025-Hyderabad Toofans' has a cut year label and cannot be reliably attributed.",
+  "text": "• Runner-up: Ranchi Royals, 2025-Hyderabad Toofans"
+ },
+ {
+  "pdfPage": 84,
+  "section": "Grand Slam of the year 2026",
+  "why": "DeepSeek: Line is cut off at the top of the page; no event name or sport is given, so the fact and its cue cannot be determined unambiguously.",
+  "text": "• Abhimanyu Mandwal (Men's 79 kg)"
+ },
+ {
+  "pdfPage": 86,
+  "section": "First Khelo India Water Sports Festival 2025",
+  "why": "answer not found verbatim on the page",
+  "trigger": "Demonstration events at the First Khelo India Water Sports Festival 2025",
+  "answer": "Shikara Race, Dragon Boat Race, Water Skiing"
+ },
+ {
+  "pdfPage": 87,
+  "section": "Important Military Exercises",
+  "why": "DeepSeek: The entry ends at the page edge; participating countries and venue for this exercise are not printed, so no card is made for them.",
+  "text": "EX Khaan Quest Exercise 2026 (23rd)"
+ },
+ {
+  "pdfPage": 87,
+  "section": "Important Military Exercises",
+  "why": "trigger words not on the page: given, page",
+  "trigger": "Who is the COAS of the Army as given on this page?",
+  "answer": "General Dhiraj Seth"
+ },
+ {
+  "pdfPage": 87,
+  "section": "Important Military Exercises",
+  "why": "trigger words not on the page: countries, participate",
+  "trigger": "Which two countries participate in FRINJEX-23?",
+  "answer": "India & France"
+ },
+ {
+  "pdfPage": 87,
+  "section": "Important Military Exercises",
+  "why": "trigger words not on the page: forces, participate",
+  "trigger": "Which two forces participate in Nomadic Elephant-25?",
+  "answer": "India-Mongol"
+ },
+ {
+  "pdfPage": 87,
+  "section": "Important Military Exercises",
+  "why": "trigger words not on the page: countries, participate",
+  "trigger": "Which two countries participate in AL-NAJAH V 2024?",
+  "answer": "India and Oman"
+ },
+ {
+  "pdfPage": 87,
+  "section": "Important Military Exercises",
+  "why": "trigger words not on the page: countries, participate",
+  "trigger": "Which two countries participate in Vinbax-2025?",
+  "answer": "India and Vietnam"
+ },
+ {
+  "pdfPage": 87,
+  "section": "Important Military Exercises",
+  "why": "trigger words not on the page: countries, participate",
+  "trigger": "Which two countries participate in EX Samprati-X 2023?",
+  "answer": "India and Bangladesh"
+ },
+ {
+  "pdfPage": 88,
+  "section": "Important Military Exercises",
+  "why": "DeepSeek: This is a sub-heading giving the Chief of the Naval Staff; it is not an exercise fact and the page's listed section (Important Military Exercises) does not cover appointment facts, so no card was made.",
+  "text": "NAVY (CNS: Admiral Krishna Swaminathan)"
+ },
+ {
+  "pdfPage": 88,
+  "section": "Important Military Exercises",
+  "why": "trigger words not on the page: special",
+  "trigger": "What was special about LAMITIYE-2026?",
+  "answer": "First-ever Tri-service editon involving Indian Army, Navy & Air Force."
+ },
+ {
+  "pdfPage": 89,
+  "section": "Important Military Exercises",
+  "why": "DeepSeek: States the Chief of Air Staff, which is not an exercise, and the page lists no section other than 'Important Military Exercises' to hold it.",
+  "text": "AIR FORCE (CAS: Amar Preet Singh)"
+ },
+ {
+  "pdfPage": 90,
+  "section": "Important Military Exercises",
+  "why": "DeepSeek: No exercise name is given for this block, so the location cannot be tied to a named exercise.",
+  "text": "• Location: High-altitude terrain of Arunachal Pradesh, near the India-China border"
+ },
+ {
+  "pdfPage": 90,
+  "section": "Important Military Exercises",
+  "why": "DeepSeek: The exercise name for this block is missing from the extraction, so the location and conducting forces cannot be matched to a named exercise.",
+  "text": "• Location: Forward areas of Arunachal Pradesh • Conducted by: Indian Army, Navy, and Air Force"
+ },
+ {
+  "pdfPage": 90,
+  "section": "Operation Sindoor 2025",
+  "why": "trigger words not on the page: outfit, carried, out",
+  "trigger": "Which terror outfit carried out the Pahalgam terror attack?",
+  "answer": "The Resistance Front (TRF)"
+ },
+ {
+  "pdfPage": 91,
+  "section": "Operation Sindoor 2025",
+  "why": "DeepSeek: The heading and subject of these bullets are cut off at the top of the page, so it is not clear which treaty or action (only 'The suspension') the flow-stoppage and Attari border closure belong to.",
+  "text": "• Stopped flow from Western Rivers to Pakistan • Closed Attari border and expelled Pakistani nationals The suspension marked a major diplomatic escalation, signaling India's intent to leverage water as a strategic tool."
+ },
+ {
+  "pdfPage": 91,
+  "section": "Operation Sindoor 2025",
+  "why": "trigger words not on the page: step, took, along, suspending",
+  "trigger": "Step Pakistan took along with suspending the Shimla Agreement in 2025",
+  "answer": "Closed airspace and trade routes with India"
+ },
+ {
+  "pdfPage": 92,
+  "section": "Indian Military & Government Operations (2025-26)",
+  "why": "trigger words not on the page: word, language",
+  "trigger": "The word 'Amistad' means friendship in which language?",
+  "answer": "Spanish"
+ },
+ {
+  "pdfPage": 93,
+  "section": "Indian Military & Government Operations (2025-26)",
+  "why": "DeepSeek: This opening line names forces but the operation it belongs to is not given on the page (the operation name above it is cut off), so the fact cannot be tied to a cue.",
+  "text": "A joint effort by the Jharkhand Police, the Central Reserve Police Force (CRPF), and its elite CoBRA (Commando Battalion for Resolute Action) units."
+ },
+ {
+  "pdfPage": 93,
+  "section": "Indian Military & Government Operations (2025-26)",
+  "why": "DeepSeek: No operation name is printed with these forces, so it is unclear which mission this joint effort belongs to.",
+  "text": "o A joint effort by the Jharkhand Police, the Central Reserve Police Force (CRPF), and its elite CoBRA (Commando Battalion for Resolute Action) units."
+ },
+ {
+  "pdfPage": 94,
+  "section": "ISRO & Space Missions",
+  "why": "DeepSeek: Line is scrambled by overlapping watermark letters, so the ASLV row details ('Augmented Satellite Launch Vehicle', 'Improved version of SLV') were taken from VIEW 1 instead of this garbled row.",
+  "text": "@RBAESRLeVvolutionbyAEudgumcaetinotned Satel@litreL_asusncch Vehi@clReBE_ISmproved ve@rsRioBnEloefaSrnLiVng"
+ },
+ {
+  "pdfPage": 96,
+  "section": "ISRO & Space Missions",
+  "why": "DeepSeek: The RLV-LEX3 Outcome bullet is cut off at the page edge, so the outcome detail cannot be read.",
+  "text": "Objectives & Achievements • Outcome:"
+ },
+ {
+  "pdfPage": 96,
+  "section": "ISRO & Space Missions",
+  "why": "DeepSeek: Garbled watermark/letters at the page edge; no readable fact.",
+  "text": "@•RBEORuetvcoolmutieo:nbyEducation"
+ },
+ {
+  "pdfPage": 96,
+  "section": "ISRO & Space Missions",
+  "why": "trigger words not on the page: significant",
+  "trigger": "NISAR is significant as",
+  "answer": "world's most powerful radar satellite"
+ },
+ {
+  "pdfPage": 96,
+  "section": "ISRO & Space Missions",
+  "why": "trigger words not on the page: covered, distance",
+  "trigger": "Ax-4 covered a distance of",
+  "answer": "8.4 million miles"
+ },
+ {
+  "pdfPage": 99,
+  "section": "ISRO & Space Missions",
+  "why": "DeepSeek: This bullet is the tail of an objectives list whose heading is cut off at the top of the page; the page does not name which mission or observatory these objectives belong to, so the fact cannot be tied to a confirmed cue.",
+  "text": "• To investigate stellar evolution, star formation regions, and high-energy processes in the universe."
+ },
+ {
+  "pdfPage": 99,
+  "section": "ISRO & Space Missions",
+  "why": "trigger words not on the page: described",
+  "trigger": "What is Aditya-L1 described as?",
+  "answer": "India's First Solar Mission"
+ },
+ {
+  "pdfPage": 102,
+  "section": "ISRO & Space Missions",
+  "why": "DeepSeek: Mission heading is missing; fact belongs to an unnamed mission, cannot link cue to mission.",
+  "text": "• Launch Strategy: Dual LVM3 rockets with docking in lunar orbit"
+ },
+ {
+  "pdfPage": 102,
+  "section": "ISRO & Space Missions",
+  "why": "DeepSeek: Mission heading is missing; fact belongs to an unnamed mission, cannot link cue to mission.",
+  "text": "• Landing Site: Near Shiv Shakti Point"
+ },
+ {
+  "pdfPage": 102,
+  "section": "ISRO & Space Missions",
+  "why": "DeepSeek: Mission heading is missing; fact belongs to an unnamed mission, cannot link cue to mission.",
+  "text": "• Significance: India joins elite group (USA, Russia, China) in sample return capability"
+ },
+ {
+  "pdfPage": 103,
+  "section": "ISRO & Space Missions",
+  "why": "trigger words not on the page: whose, took, place",
+  "trigger": "NASA mission whose historic moonwalk took place",
+  "answer": "Apollo 11"
+ },
+ {
+  "pdfPage": 104,
+  "section": "ISRO & Space Missions",
+  "why": "DeepSeek: Duplicate/contradictory launch date for Artemis II; cannot assign unambiguously alongside 'Launch Date: 1 April 2026'.",
+  "text": "Launch Date: Scheduled between February and April 2026"
+ },
+ {
+  "pdfPage": 105,
+  "section": "ISRO & Space Missions",
+  "why": "DeepSeek: Garbled watermark letters with interleaved characters; cannot tell which words belong to which fact, so no card made from this line.",
+  "text": "@•RBEInRveevsotluigtiaotnebdyaErdkucmaatitotner, dark@enrbeer_gsys,cand cosm@iRcBeEvo_Slution"
+ },
+ {
+  "pdfPage": 106,
+  "section": "ISRO & Space Missions",
+  "why": "trigger words not on the page: layers",
+  "trigger": "Sunshield: how many layers",
+  "answer": "5-layer"
+ },
+ {
+  "pdfPage": 106,
+  "section": "ISRO & Space Missions",
+  "why": "trigger words not on the page: described",
+  "trigger": "The heliosphere is described as",
+  "answer": "the Sun's protective bubble"
+ },
+ {
+  "pdfPage": 108,
+  "section": "ISRO & Space Missions",
+  "why": "DeepSeek: These Scientific Goals bullets begin at the very top of the page with no mission heading above them, so it is not clear which mission they belong to.",
+  "text": "• Scientific Goals: o Understand the formation and evolution of asteroids o Investigate early solar system materials o Explore cometary activity and structure"
+ },
+ {
+  "pdfPage": 108,
+  "section": "ISRO & Space Missions",
+  "why": "answer not found verbatim on the page",
+  "trigger": "Proba-3, a groundbreaking solar mission, belongs to which space agency?",
+  "answer": "European Space Agency (ESA)"
+ },
+ {
+  "pdfPage": 110,
+  "section": "2025-2026 Science & Technology Highlights",
+  "why": "DeepSeek: The MIGM sentence is cut off at the page edge, so the completed fact cannot be copied exactly.",
+  "text": "It enhances India's naval defence against"
+ },
+ {
+  "pdfPage": 111,
+  "section": "2025-2026 Science & Technology Highlights",
+  "why": "DeepSeek: Fragment cut off at the top of the page; belongs to an item whose cue and subject are not on this page, so no complete testable fact can be formed.",
+  "text": "stealth submarines and unmanned underwater threats."
+ },
+ {
+  "pdfPage": 112,
+  "section": "2025-2026 Science & Technology Highlights",
+  "why": "trigger words not on the page: joined, countries, testing",
+  "trigger": "India joined which countries in testing a laser guided weapon system?",
+  "answer": "US, Russia, and China"
+ },
+ {
+  "pdfPage": 112,
+  "section": "2025-2026 Science & Technology Highlights",
+  "why": "answer not found verbatim on the page",
+  "trigger": "ISRO and SCL unveiled which India's first indigenous 32-bit space-grade microprocessors?",
+  "answer": "Vikram 3201 and Kalpana 3201"
+ },
+ {
+  "pdfPage": 113,
+  "section": "2025-2026 Science & Technology Highlights",
+  "why": "DeepSeek: The line is cut off at the page edge after '1 lakh' and the ministry name appears garbled ('Intel'), so the ministry and the training target cannot be stated reliably.",
+  "text": "The Ministry of Skill Development and Intel launched a program to train 1 lakh"
+ },
+ {
+  "pdfPage": 114,
+  "section": "2025-2026 Science & Technology Highlights",
+  "why": "DeepSeek: Fragment of a preceding item cut off at the page edge; the parent fact (what the certification belongs to) is missing.",
+  "text": "youth in AI and entrepreneurial thinking, with certification from NSDC and Intel."
+ },
+ {
+  "pdfPage": 114,
+  "section": "2025-2026 Science & Technology Highlights",
+  "why": "DeepSeek: Description of the 'Sanjay' system is cut off at the page edge, so the full detail cannot be captured.",
+  "text": "an AI-powered battlefield"
+ },
+ {
+  "pdfPage": 115,
+  "section": "2025-2026 Science & Technology Highlights",
+  "why": "DeepSeek: Fragment of a bullet cut off at the top of the page; the subject of the surveillance system is missing, so no testable fact can be formed.",
+  "text": "surveillance system integrating drones, sensors, and analytics."
+ },
+ {
+  "pdfPage": 116,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: The summit line is garbled watermark text with two overlapping strings; no host city/venue is readable and the theme cannot be reliably separated, so neither card can be made.",
+  "text": "BIMSTEC Summit 2025 / BI@MRSBTEREeCvoSluutimonbmyEidtu2ca0t2io5n"
+ },
+ {
+  "pdfPage": 116,
+  "section": "2025-2026 Science & Technology Highlights",
+  "why": "DeepSeek: Fragment cut off at the page edge — the system's name and the rest of the sentence are missing, so the cue cannot be matched to an answer.",
+  "text": "an indigenous multi-layer air-defence system."
+ },
+ {
+  "pdfPage": 120,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: The summit/conference heading is cut off; no host city or theme is printed on this page for this section, so no card can be made under the section rules.",
+  "text": "• Opposition to rising global militarization • Call for development-focused approaches to climate and poverty challenges India's Role Prime Minister Narendra Modi attended in person and: • Called for reform of global institutions to reflect today's realities • Proposed a BRICS Science & Research Repository to support the Global South • Advocated for responsible AI governance and critical mineral supply chain resilience • Reaffirmed India's commitment to inclusive development and climate justice"
+ },
+ {
+  "pdfPage": 122,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: Top of the page is cut off: the hydrogen summit's name and heading are not printed, so no host-city/theme card can be reliably built for that summit.",
+  "text": "• Investment strategies and policy frameworks • Hydrogen certification and trade mechanisms • H2 Tech Series and World Hydrogen Awards • Site visits to hydrogen projects in the Port of Rotterdam"
+ },
+ {
+  "pdfPage": 122,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: Section rule for International Conferences & Summits 2025-2026 allows only host city/venue and theme cards, so these India/hydrogen facts could not be carded here.",
+  "text": "India made a strong impression at the summit through its delegation led by Santosh Kumar Sarangi, Secretary, Ministry of New & Renewable Energy (MNRE) ... National Green Hydrogen Mission, launched in 2023 with a $2.4 billion allocation ... Target: 5 million metric tonnes of green hydrogen production by 2030 ... Green Hydrogen Certification Scheme (GHCS) ... Green Hydrogen Hubs at Kandla, Paradip, and Tuticorin ports"
+ },
+ {
+  "pdfPage": 122,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: No theme is printed for COP 30, and the section rule allows only host city/venue and theme cards, so these outcome facts are not carded.",
+  "text": "5 Major Outcomes: Belém Package (29 decisions) ... Global Mutirão Agreement ... Global Goal on Adaptation (GGA) → 59 indicators ... Tropical Forests Forever Facility (TFFF) → $125B forest protection fund ... Belém 4x Pledge"
+ },
+ {
+  "pdfPage": 122,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: Garbled watermark letters mixed with text: characters are scrambled (reads as 'Adaptation Focus → Equal importance to adaptation + support for vulnerable nations'), so no reliable cue-answer pair can be extracted.",
+  "text": "@•RBEARdeavpotluattiioonnbyFEoducsa→tioEnqual im@porbrtea_nscsecto adap@taRtiBoEn_+S support for@vRuBlnEeleraarbnliengnations"
+ },
+ {
+  "pdfPage": 123,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: Not a summit/conference with a printed venue or theme, so no card is allowed under this section's rules.",
+  "text": "Adaptation Gap Highlighted → Funding needs far higher than current levels"
+ },
+ {
+  "pdfPage": 123,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: A report/claim, not a summit/conference with a printed venue or theme, so no card is allowed under this section's rules.",
+  "text": "India claim to have met by July 2025: 50% of installed power generation capacity from non-fossil sources."
+ },
+ {
+  "pdfPage": 123,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: A report finding, not a summit/conference venue or theme, so no card is allowed under this section's rules.",
+  "text": "The Germanwatch Climate Risk Index 2026 report, presented at COP30 in Belém, Brazil, ranks India as the 9th most affected country by extreme weather events (EWEs) over the past three decades (1995-2024)."
+ },
+ {
+  "pdfPage": 123,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: No venue or theme is printed for this meeting, so neither permitted card type can be made.",
+  "text": "2nd India-Arab Foreign Ministers' Meeting 2026"
+ },
+ {
+  "pdfPage": 123,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: Only the edition is given; no venue or theme is printed, so neither permitted card type can be made.",
+  "text": "World health assembly 2026 o 79th edition"
+ },
+ {
+  "pdfPage": 124,
+  "section": "International Conferences & Summits 2025-2026",
+  "why": "DeepSeek: No summit/conference name or theme on page to associate this venue with; appears to be leftover from the previous section.",
+  "text": "o Venue - Geneva, Switzerland"
+ },
+ {
+  "pdfPage": 125,
+  "section": "Index & Rankings (2024-26)",
+  "why": "DeepSeek: The index/report is not named on this page; no India rank, rank-1 country or issuing body can be identified.",
+  "text": "• Most Dengerous Region: The Middle East and North Africa (MENA) • For the first time in the Index's history, more than half of the 180 countries assessed (52.2%) are categorised as having a \"difficult\" or \"very serious\" situation for journalism."
+ },
+ {
+  "pdfPage": 125,
+  "section": "Index & Rankings (2024-26)",
+  "why": "trigger contains the answer",
+  "trigger": "Global Firepower Index 2026 issued by",
+  "answer": "Global Firepower"
+ },
+ {
+  "pdfPage": 126,
+  "section": "Index & Rankings (2024-26)",
+  "why": "DeepSeek: Report heading missing; cannot tell which index/report these ranks belong to.",
+  "text": "• First rank - Switzerland (15th Consecutive year), Sweden (2nd), USA (3rd), South Korea (4th) & Singapore (5th)\n• India's rank - 38th (2025), 39 (2024), 40 (2023)"
+ },
+ {
+  "pdfPage": 132,
+  "section": "Important GI Tags",
+  "why": "DeepSeek: cut off at page edge; item is incomplete so cannot make a card",
+  "text": "Laxman"
+ },
+ {
+  "pdfPage": 132,
+  "section": "Important GI Tags",
+  "why": "trigger contains the answer",
+  "trigger": "Kathputlis of Rajasthan is a GI-tagged product of which state?",
+  "answer": "Rajasthan"
+ },
+ {
+  "pdfPage": 132,
+  "section": "Important GI Tags",
+  "why": "trigger words not on the page: gitagged",
+  "trigger": "Aipan is a GI-tagged product of which state?",
+  "answer": "Uttarakhand"
+ },
+ {
+  "pdfPage": 132,
+  "section": "Important GI Tags",
+  "why": "trigger words not on the page: gitagged",
+  "trigger": "Jeeraphool is a GI-tagged product of which state?",
+  "answer": "Chhattisgarh"
+ },
+ {
+  "pdfPage": 132,
+  "section": "Important GI Tags",
+  "why": "trigger contains the answer",
+  "trigger": "Jharkhand Dokra Craft is a GI-tagged product of which state?",
+  "answer": "Jharkhand"
+ },
+ {
+  "pdfPage": 132,
+  "section": "Important GI Tags",
+  "why": "trigger contains the answer",
+  "trigger": "Tribal Jewellery of Jharkhand is a GI-tagged product of which state?",
+  "answer": "Jharkhand"
+ },
+ {
+  "pdfPage": 132,
+  "section": "Important GI Tags",
+  "why": "trigger contains the answer",
+  "trigger": "Bamboo Crafts of Jharkhand is a GI-tagged product of which state?",
+  "answer": "Jharkhand"
+ },
+ {
+  "pdfPage": 132,
+  "section": "Important GI Tags",
+  "why": "trigger contains the answer",
+  "trigger": "Tussar Silk Sarees & Fabrics of Jharkhand is a GI-tagged product of which state?",
+  "answer": "Jharkhand"
+ },
+ {
+  "pdfPage": 132,
+  "section": "Important GI Tags",
+  "why": "trigger contains the answer",
+  "trigger": "Jharkhand Jadupatua Paintings is a GI-tagged product of which state?",
+  "answer": "Jharkhand"
+ },
+ {
+  "pdfPage": 132,
+  "section": "Important GI Tags",
+  "why": "trigger contains the answer",
+  "trigger": "Jharkhand Panchi Parhan/Panchi Saree and Fabrics is a GI-tagged product of which state?",
+  "answer": "Jharkhand"
+ },
+ {
+  "pdfPage": 134,
+  "section": "List of RAMSAR Sites in India",
+  "why": "DeepSeek: This line appears as a cut-off numbered list item; the numbering ('101th') and the phrase 'state first wetland' are incomplete, so it is not clear whether the card should be the site's number or the state's first wetland.",
+  "text": "5. 101th - Glaw Lake, Arunachal Pradesh - state first wetland"
+ }
+]

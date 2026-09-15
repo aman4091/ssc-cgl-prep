@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test:sync": "node scripts/test-sync.mjs",
+    "test:ca": "node scripts/test-ca-srs.mjs",
     "panic:upload": "node scripts/panic-upload.mjs"
   },
   "dependencies": {

@@ -1,0 +1,159 @@
+/* CA Revision (/ca-revision) — sirf is route ki classes (carev-*). Rang sab
+   --tb-* tokens se, isliye raat wala roop apne aap. Pehle 380px phone,
+   angootha neeche: saare action button screen ke tale par. */
+
+.carev,
+.carev-recall {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 16px 14px 24px;
+  color: var(--tb-ink);
+  font-family: var(--tb-font);
+}
+
+.carev-head { margin: 4px 0 16px; }
+.carev-eyebrow { font-size: 12px; letter-spacing: 0.02em; color: var(--tb-dim); text-transform: uppercase; }
+.carev-title { font-size: 30px; line-height: 1.15; margin: 4px 0 2px; font-weight: 600; }
+.carev-title b { color: var(--tb-blue-ink); font-weight: 700; font-variant-numeric: tabular-nums; }
+.carev-dim { color: var(--tb-dim); }
+.carev-small { font-size: 13px; }
+.carev-error { color: var(--tb-bad-ink); font-size: 14px; }
+
+.carev-today { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+.carev-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.carev-tile {
+  border: 1px solid var(--tb-line);
+  border-radius: 10px;
+  background: var(--tb-page);
+  padding: 10px 8px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--tb-dim);
+}
+.carev-num { font-size: 26px; font-weight: 700; color: var(--tb-ink); font-variant-numeric: tabular-nums; line-height: 1.1; }
+
+.carev-box {
+  border: 1px solid var(--tb-line);
+  border-radius: 12px;
+  background: var(--tb-page);
+  padding: 12px 14px 14px;
+  margin-bottom: 14px;
+}
+.carev-label { font-size: 13px; font-weight: 600; margin: 6px 0 8px; }
+.carev-label:not(:first-child) { margin-top: 14px; }
+.carev-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.carev-chip {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--tb-line-hard);
+  background: var(--tb-page);
+  color: var(--tb-ink);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+.carev-chip.on { background: var(--tb-blue-soft); border-color: var(--tb-blue); color: var(--tb-blue-ink); font-weight: 600; }
+.carev-check { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 14px; }
+.carev-check input { width: 18px; height: 18px; }
+.carev-foot { margin-top: 18px; }
+
+/* buttons */
+.carev-btn {
+  min-height: 52px;
+  border-radius: 12px;
+  border: 1px solid var(--tb-line-hard);
+  background: var(--tb-page);
+  color: var(--tb-ink);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+.carev-btn:disabled { opacity: 0.55; cursor: default; }
+.carev-btn-primary { background: var(--tb-blue); border-color: var(--tb-blue); color: #fff; }
+.carev-btn-primary:not(:disabled):active { background: var(--tb-blue-dark); }
+.carev-btn-good { background: var(--tb-green-soft); border-color: var(--tb-green); color: var(--tb-ok-ink); }
+.carev-btn-bad { background: var(--tb-red-soft); border-color: var(--tb-red); color: var(--tb-bad-ink); }
+.carev-wide { width: 100%; }
+.carev-go { min-height: 58px; font-size: 17px; }
+.carev-btn kbd {
+  display: none;
+  margin-left: 8px;
+  font: 12px/1 var(--tb-font);
+  padding: 3px 6px;
+  border-radius: 5px;
+  border: 1px solid currentColor;
+  opacity: 0.6;
+}
+@media (hover: hover) and (pointer: fine) { .carev-btn kbd { display: inline-block; } }
+.carev-link { background: none; border: 0; color: var(--tb-blue-ink); font: inherit; font-size: 15px; cursor: pointer; padding: 8px 0; }
+
+/* recall */
+.carev-recall { min-height: calc(100dvh - 60px); display: flex; flex-direction: column; padding-bottom: 0; }
+.carev-bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.carev-count { font-variant-numeric: tabular-nums; color: var(--tb-dim); font-size: 14px; }
+.carev-star {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--tb-line);
+  background: var(--tb-page);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--tb-dim);
+  cursor: pointer;
+}
+.carev-star.on { color: var(--tb-rev-line); border-color: var(--tb-rev); background: var(--tb-rev-soft); }
+.carev-progress { height: 4px; border-radius: 4px; background: var(--tb-line-soft); margin: 8px 0 14px; overflow: hidden; }
+.carev-progress > div { height: 100%; background: var(--tb-blue); transition: width 0.2s ease; }
+
+/* Card apni lambai ka; neeche ki khaali jagah card aur buttons ke beech —
+   buttons hamesha screen ke tale par. */
+.carev-card {
+  margin-bottom: auto;
+  border: 1px solid var(--tb-line);
+  border-radius: 14px;
+  background: var(--tb-page);
+  padding: 16px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+}
+.carev-meta { font-size: 12px; color: var(--tb-dim); }
+.carev-again { color: var(--tb-warn-ink); font-weight: 600; }
+.carev-card + .carev-actions { margin-top: 14px; }
+.carev-trigger { font-size: 20px; line-height: 1.4; font-weight: 600; color: var(--tb-q); overflow-wrap: anywhere; }
+/* Answer ki jagah pehle se — reveal par trigger aur buttons apni jagah rahein. */
+.carev-answer {
+  min-height: 7.5rem;
+  border-radius: 10px;
+  border: 1px dashed var(--tb-line-hard);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.carev-answer.shown { border-style: solid; border-color: var(--tb-blue); background: var(--tb-tint); cursor: default; }
+.carev-hint { color: var(--tb-dim); font-size: 14px; text-align: center; }
+.carev-answer-text { font-size: 20px; line-height: 1.35; font-weight: 700; color: var(--tb-blue-ink); overflow-wrap: anywhere; }
+.carev-extra { font-size: 14px; line-height: 1.45; margin-top: 8px; color: var(--tb-ink); }
+.carev-src { font-size: 12px; color: var(--tb-dim); margin-top: 8px; }
+
+.carev-actions {
+  position: sticky;
+  bottom: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 12px 0 calc(12px + env(safe-area-inset-bottom));
+  background: var(--tb-bg-2, var(--tb-page));
+}
+.carev-actions .carev-btn { min-height: 60px; font-size: 17px; }
+.carev-actions .carev-wide { grid-column: 1 / -1; }
+
+.carev-done { margin: auto 0; text-align: center; padding: 32px 8px; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.carev-done-big { font-size: 28px; font-weight: 700; color: var(--tb-ok-ink); }
+.carev-done .carev-btn { min-width: 180px; }
