@@ -1,23 +1,30 @@
-// CA Revision scheduler ke tests — interval ki chhat wahi jagah hai jahan
-// galti chupke se hoti hai, isliye use har din ke liye jaancha jata hai.
+// CA Revision scheduler + daily plan ke tests — interval ki chhat aur roz ka
+// target wahi jagah hain jahan galti chupke se hoti hai.
 //   node scripts/test-ca-srs.mjs
-// lib/carevision/srs.js ek ESM .js hai aur package.json "type" nahi batata,
-// isliye test-sync.mjs ki tarah use temp .mjs mein copy karke import karte hain.
+// lib/carevision/*.js ESM .js hain aur package.json "type" nahi batata, isliye
+// test-sync.mjs ki tarah temp .mjs mein copy karke import karte hain.
 import { readFileSync, writeFileSync, mkdtempSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { pathToFileURL } from "node:url";
 import assert from "node:assert/strict";
 
-const src = readFileSync(new URL("../lib/carevision/srs.js", import.meta.url), "utf8");
-const tmp = join(mkdtempSync(join(tmpdir(), "casrs-")), "srs.mjs");
-writeFileSync(tmp, src);
-const { review, intervalCap, daysUntil, addDays, isDue, EXAM_DAY } = await import(pathToFileURL(tmp).href);
+const dir = mkdtempSync(join(tmpdir(), "casrs-"));
+const copy = (name) => {
+  const src = readFileSync(new URL(`../lib/carevision/${name}.js`, import.meta.url), "utf8")
+    .replace(/from "\.\/(\w+)"/g, 'from "./$1.mjs"');
+  writeFileSync(join(dir, `${name}.mjs`), src);
+  return pathToFileURL(join(dir, `${name}.mjs`)).href;
+};
+const { review, intervalCap, daysUntil, addDays, isDue, EXAM_DAY } = await import(copy("srs"));
+const { todayPlan, planDays, passOf, sortForStudy, dayState } = await import(copy("plan"));
 
 let passed = 0;
 function test(name, fn) {
   try { fn(); passed += 1; } catch (e) { console.error("FAIL", name, "\n ", e.message); process.exitCode = 1; }
 }
+
+// ------------------------------------------------------------------ SRS
 
 test("daysUntil counts calendar days to the exam", () => {
   assert.equal(daysUntil("2026-09-14"), 17);
@@ -91,7 +98,6 @@ test("no card is ever scheduled after the exam (every day, every history)", () =
 });
 
 test("as the exam nears the whole deck collapses into daily review", () => {
-  // Pakka card jo roz sahi aata hai: 4 din baaki hone ke baad har din aata hai.
   let s = { e: 280, i: 20, n: 8, l: 0 };
   let today = "2026-09-20";
   const gaps = [];
@@ -108,6 +114,79 @@ test("isDue compares day keys", () => {
   assert.equal(isDue(null, "2026-09-14"), false);
   assert.equal(isDue({ d: "2026-09-14" }, "2026-09-14"), true);
   assert.equal(isDue({ d: "2026-09-15" }, "2026-09-14"), false);
+});
+
+// ----------------------------------------------------------------- plan
+
+const deck = (n1, n2) => [
+  ...Array.from({ length: n1 }, (_, i) => ({ id: `p1-${i}`, priority: 1, part: "I", section: `S${i % 3}` })),
+  ...Array.from({ length: n2 }, (_, i) => ({ id: `p2-${i}`, priority: 2, part: "D", section: "T" })),
+];
+const START = "2026-09-15";
+
+test("plan runs from day 1 to the day before the exam; passes at 7 / 13", () => {
+  const days = planDays(START);
+  assert.equal(days.length, 16);
+  assert.equal(days[0].key, START);
+  assert.equal(days.at(-1).key, "2026-09-30");
+  assert.deepEqual([passOf(1), passOf(7), passOf(8), passOf(13), passOf(14), passOf(16)], [1, 1, 2, 2, 3, 3]);
+});
+
+test("pass 1 spreads priority-1 over the 7 days", () => {
+  const p = todayPlan({ cards: deck(700, 100), srs: {}, stars: {}, log: {}, today: START, start: START });
+  assert.equal(p.pass, 1);
+  assert.equal(p.newTarget, 100);
+  assert.equal(p.fresh.length, 100);
+  assert.ok(p.fresh.every((c) => c.priority === 1));
+});
+
+test("the target stays put through the day as cards are seen", () => {
+  const cards = deck(700, 0);
+  const srs = {};
+  for (const c of cards.slice(0, 40)) srs[c.id] = { d: "2026-09-16", t: START };
+  const p = todayPlan({ cards, srs, stars: {}, log: { [START]: { r: 40, g: 30, nw: 40 } }, today: START, start: START });
+  assert.equal(p.newTarget, 100);
+  assert.equal(p.newLeft, 60);
+});
+
+test("a missed day spreads over the days left in the pass", () => {
+  const p = todayPlan({ cards: deck(700, 0), srs: {}, stars: {}, log: {}, today: "2026-09-17", start: START });
+  assert.equal(p.dayNo, 3);
+  assert.equal(p.newTarget, 140);    // 700 / 5
+});
+
+test("pass 2 serves leftover priority-1 before priority-2", () => {
+  const p = todayPlan({ cards: deck(10, 60), srs: {}, stars: {}, log: {}, today: "2026-09-22", start: START });
+  assert.equal(p.pass, 2);
+  assert.equal(p.newTarget, 12);     // 70 / 6
+  assert.ok(p.fresh.slice(0, 10).every((c) => c.priority === 1));
+});
+
+test("pass 3: no new cards; due + starred only", () => {
+  const cards = deck(5, 5);
+  const srs = { "p1-0": { d: "2026-09-28", t: "2026-09-27" }, "p1-1": { d: "2026-09-30", t: "2026-09-27" } };
+  const stars = { "p1-1": 1, "p2-0": 1 };
+  const p = todayPlan({ cards, srs, stars, log: {}, today: "2026-09-28", start: START });
+  assert.equal(p.pass, 3);
+  assert.equal(p.newTarget, 0);
+  assert.deepEqual(p.queue.map((c) => c.id), ["p1-0", "p1-1", "p2-0"]);
+});
+
+test("Read locks at 4 days left", () => {
+  const at = (today) => todayPlan({ cards: [], srs: {}, stars: {}, log: {}, today, start: START }).readLocked;
+  assert.equal(at("2026-09-26"), false);   // 5 left
+  assert.equal(at("2026-09-27"), true);    // 4 left
+});
+
+test("study order never repeats a section back to back when others remain", () => {
+  const q = sortForStudy(deck(9, 0));
+  for (let i = 1; i < q.length; i++) assert.notEqual(q[i].section, q[i - 1].section);
+});
+
+test("dayState: done only when the new-card target was met", () => {
+  assert.equal(dayState(undefined), "empty");
+  assert.equal(dayState({ r: 30, nw: 20, tg: 40 }), "partial");
+  assert.equal(dayState({ r: 60, nw: 40, tg: 40 }), "done");
 });
 
 console.log(`${passed} passed${process.exitCode ? ", some FAILED" : ""}`);

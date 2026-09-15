@@ -1,5 +1,19 @@
 [
  {
+  "id": "a-ministry-of-micro-small-and-medium-enterprises-f3a343",
+  "how": "full",
+  "before": "Ministry of Micro, Small and Medium Enterprises (other than Shri Jitan Ram Manjhi)",
+  "after": "Ministry of Micro, Small and Medium Enterprises (other than Shri ____)",
+  "answer": "Jitan Ram Manjhi"
+ },
+ {
+  "id": "b-the-sintered-rareearth-magnet-scheme-repm-aims-t-497acc",
+  "how": "word",
+  "before": "The Sintered Rare-Earth Magnet Scheme (REPM) aims to promote what?",
+  "after": "The Sintered Rare-Earth Magnet Scheme (____) aims to promote what?",
+  "answer": "domestic manufacturing of REPM"
+ },
+ {
   "id": "b-the-amrut-mission-has-been-subsumed-under-eb060a",
   "how": "word",
   "before": "The AMRUT Mission has been subsumed under",
@@ -159,13 +173,6 @@
   "before": "The GI tag 'Arunachal Orange' belongs to which state?",
   "after": "The GI tag '____ Orange' belongs to which state?",
   "answer": "Arunachal Pradesh"
- },
- {
-  "id": "i-which-unesco-world-heritage-site-was-inscribed-i-20425f",
-  "how": "word",
-  "before": "Which UNESCO World Heritage Site was inscribed in 2025 (Maratha Military Landscapes)?",
-  "after": "Which UNESCO World Heritage Site was inscribed in 2025 (____ Military Landscapes)?",
-  "answer": "Maratha Military Landscapes of India"
  },
  {
   "id": "i-wildlife-sanctuary-in-kannur-district-kerala-tha-0be81c",

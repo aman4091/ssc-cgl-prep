@@ -4,29 +4,29 @@
 // scripts/extract-ca.py se bane. Har fact PDF se hai; yahan kuch naya nahi
 // banta.
 //
-// Abhi: ghar (countdown, aaj ka due, deck chunna) + Recall mode. Daily plan,
-// Test/Galtiyan, Read aur Export isi route par aage judenge.
+// Ghar = Daily plan (lib/carevision/plan.js): countdown, aaj ka target, ek
+// button. Wahi button Recall kholta hai aaj ki queue ke saath. Test/Galtiyan,
+// Read aur Export isi route par aage judenge.
 
 import "./carev.css";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { loadCore, loadAll, loadIndex, isHiddenByDefault } from "@/lib/carevision/deck";
-import { getSrs, getStars, getLog, getPrefs, setPrefs } from "@/lib/carevision/progress";
-import { daysUntil, isDue } from "@/lib/carevision/srs";
-import { sortForStudy } from "@/lib/carevision/plan";
+import { getSrs, getStars, getLog, getPrefs, setPrefs, getPlanStart, noteDayTarget } from "@/lib/carevision/progress";
+import { todayPlan, planDays, dayState, PASS1_LAST, PASS2_LAST } from "@/lib/carevision/plan";
 import { dayKey } from "@/lib/daytime";
 import Recall from "@/components/carevision/Recall";
 
-const NEW_CHOICES = [20, 40, 60, 80];
+const PASS_TEXT = {
+  1: "Pass 1 — priority-1 ke naye cards",
+  2: "Pass 2 — priority-2 ke naye cards + Pass 1 ka recall",
+  3: "Pass 3 — koi naya card nahi: star + due",
+};
 
-function buildQueue(cards, srs, today, newLeft, onlyStar, stars) {
-  const pool = onlyStar ? cards.filter((c) => stars[c.id]) : cards;
-  const due = pool
-    .filter((c) => isDue(srs[c.id], today))
-    .sort((a, b) => (srs[a.id].d < srs[b.id].d ? -1 : srs[a.id].d > srs[b.id].d ? 1 : a.priority - b.priority));
-  const fresh = onlyStar ? [] : sortForStudy(pool.filter((c) => !srs[c.id])).slice(0, Math.max(0, newLeft));
-  return [...due, ...fresh];
-}
+const shortDate = (key) => {
+  const [, m, d] = key.split("-").map(Number);
+  return `${d} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][m - 1]}`;
+};
 
 export default function CaRevisionPage() {
   const [today, setToday] = useState(null);
@@ -36,7 +36,7 @@ export default function CaRevisionPage() {
   const [counts, setCounts] = useState(null);
   const [error, setError] = useState("");
   const [session, setSession] = useState(null);
-  const [tick, setTick] = useState(0);        // progress badli (sync / session) -> ginti dobara
+  const [tick, setTick] = useState(0);        // progress badli (sync / session) -> plan dobara
 
   useEffect(() => {
     setToday(dayKey());
@@ -46,7 +46,7 @@ export default function CaRevisionPage() {
 
   // Deck: Core = sirf core.json. Sab = core + har part ka extended (lazy).
   useEffect(() => {
-    if (!prefs) return;
+    if (!prefs) return undefined;
     let alive = true;
     setCards(null);
     setError("");
@@ -56,7 +56,7 @@ export default function CaRevisionPage() {
     return () => { alive = false; };
   }, [prefs]);
 
-  // Doosre device se sync aaye to ginti taaza — tab par wapas aate hi.
+  // Doosre device se sync aaye / raat ko din badle — tab par wapas aate hi.
   useEffect(() => {
     const onVis = () => { if (!document.hidden) { setToday(dayKey()); setTick((t) => t + 1); } };
     document.addEventListener("visibilitychange", onVis);
@@ -69,36 +69,35 @@ export default function CaRevisionPage() {
     return cards.filter((c) => !isHiddenByDefault(c));
   }, [cards, prefs, showAll]);
 
-  const stats = useMemo(() => {
+  const view = useMemo(() => {
     if (!today || !cards) return null;
     const srs = getSrs();
     const stars = getStars();
-    const day = getLog()[today] || { r: 0, g: 0, nw: 0 };
-    let due = 0, seen = 0, starred = 0;
+    const log = getLog();
+    const start = getPlanStart(today);
+    const plan = todayPlan({ cards: visible, srs, stars, log, today, start });
+    let seen = 0, starred = 0;
     for (const c of visible) {
-      const s = srs[c.id];
-      if (s) seen += 1;
-      if (isDue(s, today)) due += 1;
+      if (srs[c.id]) seen += 1;
       if (stars[c.id]) starred += 1;
     }
-    const newLeft = Math.max(0, (prefs?.newPerDay || 40) - day.nw);
-    const unseen = visible.length - seen;
-    return { srs, stars, day, due, seen, starred, newLeft, newToday: Math.min(newLeft, unseen), total: visible.length };
-    // tick: session ke baad / sync ke baad dobara gino
-  }, [today, cards, visible, prefs, tick]); // eslint-disable-line react-hooks/exhaustive-deps
+    const starCards = visible.filter((c) => stars[c.id]);
+    return { plan, log, start, seen, starred, starCards, days: planDays(start) };
+  }, [today, cards, visible, tick]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Aaj ka naya target din ke log mein — timeline "poora hua" isi se dikhati hai.
+  useEffect(() => {
+    if (view && today && view.plan.daysLeft >= 1) noteDayTarget(today, view.plan.newTarget);
+  }, [view, today]);
 
   const updatePrefs = (patch) => { setPrefs(patch); setPrefsState(getPrefs()); };
-
-  const start = (onlyStar = false) => {
-    const q = buildQueue(visible, stats.srs, today, stats.newLeft, onlyStar, stats.stars);
-    if (q.length) setSession(q);
-  };
   const exit = useCallback(() => { setSession(null); setTick((t) => t + 1); }, []);
 
   if (session) return <Recall queue={session} today={today} onExit={exit} />;
 
-  const left = today ? daysUntil(today) : null;
-  const todayCount = stats ? stats.due + stats.newToday : 0;
+  const p = view?.plan;
+  const left = p?.daysLeft;
+  const todayCount = p ? p.queue.length : 0;
 
   return (
     <div className="carev">
@@ -107,29 +106,76 @@ export default function CaRevisionPage() {
         <h1 className="carev-title">
           {left == null ? "…" : left > 0 ? <><b>{left}</b> din baaki</> : left === 0 ? "Aaj exam hai" : "Exam ho gaya"}
         </h1>
-        <div className="carev-dim">SSC CGL Tier 1 · 1 Oct 2026</div>
+        <div className="carev-dim">
+          {p && left > 0 ? <>Din {p.dayNo} / {view.days.length} · {PASS_TEXT[p.pass]}</> : "SSC CGL Tier 1 · 1 Oct 2026"}
+        </div>
       </header>
 
-      <section className="carev-today">
+      <section className="carev-today" aria-label="Aaj ka target">
         <div className="carev-tiles">
-          <div className="carev-tile"><div className="carev-num">{stats ? stats.due : "–"}</div><div>Due aaj</div></div>
-          <div className="carev-tile"><div className="carev-num">{stats ? stats.newToday : "–"}</div><div>Naye</div></div>
-          <div className="carev-tile"><div className="carev-num">{stats ? stats.day.r : "–"}</div><div>Aaj ho gaye</div></div>
+          <div className="carev-tile"><div className="carev-num">{p ? p.due.length : "–"}</div><div>Due aaj</div></div>
+          <div className="carev-tile">
+            <div className="carev-num">{p ? p.newLeft : "–"}</div>
+            <div>Naye{p && p.newTarget ? ` / ${p.newTarget}` : ""}</div>
+          </div>
+          <div className="carev-tile"><div className="carev-num">{p ? p.day.r : "–"}</div><div>Aaj ho gaye</div></div>
         </div>
+
+        {p && p.freshSections.length ? (
+          <div className="carev-target">
+            <span className="carev-dim">Aaj ke naye:</span>{" "}
+            {p.freshSections.map(([s, n]) => <span key={s} className="carev-sec">{s} · {n}</span>)}
+          </div>
+        ) : null}
+        {p && p.pass === 3 && p.starExtra.length ? (
+          <div className="carev-target carev-dim">+ {p.starExtra.length} star kiye hue (Pass 3 mein roz)</div>
+        ) : null}
+
         <button
           className="carev-btn carev-btn-primary carev-wide carev-go"
-          disabled={!stats || todayCount === 0}
-          onClick={() => start(false)}
+          disabled={!p || todayCount === 0}
+          onClick={() => setSession(p.queue)}
         >
-          {!stats ? "Load ho raha hai…" : todayCount ? `Aaj ka revision shuru karo · ${todayCount}` : "Aaj ka sab ho gaya ✓"}
+          {!p ? "Load ho raha hai…" : todayCount ? `Aaj ka revision shuru karo · ${todayCount}` : "Aaj ka sab ho gaya ✓"}
         </button>
-        {stats && stats.starred > 0 ? (
-          <button className="carev-btn carev-wide" onClick={() => start(true)}>
-            Star kiye hue · {stats.starred}
+        {view && view.starred > 0 ? (
+          <button className="carev-btn carev-wide" onClick={() => setSession(view.starCards)}>
+            Star kiye hue · {view.starred}
           </button>
         ) : null}
         {error ? <p className="carev-error">{error}</p> : null}
       </section>
+
+      {view && view.days.length ? (
+        <section className="carev-box" aria-label="Plan">
+          <div className="carev-label">Plan · {shortDate(view.start)} se 30 Sep</div>
+          <ol className="carev-days">
+            {view.days.map((d) => {
+              const st = d.key < today ? dayState(view.log[d.key]) : d.key === today ? "today" : "later";
+              return (
+                <li
+                  key={d.key}
+                  className={`carev-day p${d.pass} ${st}`}
+                  title={`Din ${d.dayNo} · ${shortDate(d.key)} · Pass ${d.pass}`}
+                  aria-current={d.key === today ? "date" : undefined}
+                >
+                  <span className="carev-day-n">{d.dayNo}</span>
+                  <span className="carev-day-m">{st === "done" ? "✓" : st === "partial" ? "½" : `P${d.pass}`}</span>
+                </li>
+              );
+            })}
+          </ol>
+          <ul className="carev-legend carev-small">
+            <li><b>P1</b> Din 1–{PASS1_LAST}: naye priority-1</li>
+            <li><b>P2</b> Din {PASS1_LAST + 1}–{PASS2_LAST}: priority-2 + recall</li>
+            <li><b>P3</b> Din {PASS2_LAST + 1}+: sirf revision</li>
+            <li><b>✓</b> target poora · <b>½</b> adhoora</li>
+          </ul>
+          {p && p.pass < 3 ? (
+            <div className="carev-dim carev-small">Is pass mein bache naye: {p.passRemaining}</div>
+          ) : null}
+        </section>
+      ) : null}
 
       <section className="carev-box">
         <div className="carev-label">Deck</div>
@@ -149,20 +195,9 @@ export default function CaRevisionPage() {
             Sab dikhao (priority 3 + purane bhi)
           </label>
         ) : null}
-
-        <div className="carev-label">Naye cards / din</div>
-        <div className="carev-chips" role="group" aria-label="Naye cards per din">
-          {NEW_CHOICES.map((n) => (
-            <button
-              key={n}
-              className={`carev-chip${prefs?.newPerDay === n ? " on" : ""}`}
-              onClick={() => updatePrefs({ newPerDay: n })}
-            >{n}</button>
-          ))}
-        </div>
-        {stats ? (
+        {view ? (
           <div className="carev-dim carev-small">
-            Dekhe: {stats.seen} / {stats.total} · Star: {stats.starred}
+            Dekhe: {view.seen} / {visible.length} · Star: {view.starred}
           </div>
         ) : null}
       </section>

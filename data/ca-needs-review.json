@@ -62,57 +62,98 @@
  {
   "pdfPage": 24,
   "section": "Union Budget 2026-27",
+  "why": "trigger words not on the page: relief, given, class",
+  "trigger": "Under Strategic Incentives, what duty relief has been given for a class of minerals?",
+  "answer": "Critical minerals duty exemption"
+ },
+ {
+  "pdfPage": 24,
+  "section": "Union Budget 2026-27",
   "why": "trigger words not on the page: ratio",
-  "trigger": "Debt-GDP ratio",
+  "trigger": "What is the Debt-GDP ratio?",
   "answer": "55.6%"
  },
  {
-  "pdfPage": 25,
-  "section": "2026 State-Wise Schemes",
-  "why": "DeepSeek: The table row and the paragraph print two different names for the same Delhi scheme (Lakhpati Didi Yojana vs Delhi Lakhpati Beti Yojana), so the scheme name itself cannot be carded unambiguously.",
-  "text": "Lakhpati Didi Yojana 2 Mar 2026 / Under the Delhi Lakhpati Beti Yojana"
+  "pdfPage": 24,
+  "section": "Union Budget 2026-27",
+  "why": "trigger words not on the page: putting, plans, practice",
+  "trigger": "Which challenge is listed about putting plans into practice?",
+  "answer": "Implementation challenges"
+ },
+ {
+  "pdfPage": 24,
+  "section": "Union Budget 2026-27",
+  "why": "trigger words not on the page: without, jobs",
+  "trigger": "Which concern is listed about growth without jobs?",
+  "answer": "Jobless growth risk"
+ },
+ {
+  "pdfPage": 24,
+  "section": "Union Budget 2026-27",
+  "why": "trigger words not on the page: calls, higher, research",
+  "trigger": "Which suggested measure calls for higher spending on research and development?",
+  "answer": "Increase R&D spending"
+ },
+ {
+  "pdfPage": 24,
+  "section": "Union Budget 2026-27",
+  "why": "trigger words not on the page: dutyrelated, distortion, corrected",
+  "trigger": "Which duty-related distortion is to be corrected as a suggested measure?",
+  "answer": "Correct inverted duty structures"
  },
  {
   "pdfPage": 25,
   "section": "2026 State-Wise Schemes",
-  "why": "DeepSeek: The sentence is cut off at the page edge after \"practice where\"; the remaining fact is not on the page.",
+  "why": "DeepSeek: Sentence is cut off at the page edge after 'where', so the remaining detail cannot be read.",
   "text": "aimed at eradicating the \"Sarpanch Pati\" (proxy leadership) practice where"
  },
  {
   "pdfPage": 26,
   "section": "2026 State-Wise Schemes",
-  "why": "DeepSeek: Sentence fragment cut off at the page edge; no scheme, cue or answer can be identified from the given page text.",
+  "why": "DeepSeek: Fragment starting mid-sentence, continues a topic from before the scheme list; no complete fact and no scheme/state attribution on this page.",
   "text": "male relatives act on behalf of elected women."
  },
  {
   "pdfPage": 28,
   "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: The scheme name is cut off at the page edge ('Jyothi' is only the tail of the name) and the state column for this row is not printed on this page, so the scheme cannot be identified or tied to a state.",
-  "text": "strategy through the Women & Child Development Department. Jyothi May 2025 To enroll children of migrant workers into anganwadis and public schools, ensuring inclusive education, health support, and social integration."
+  "why": "DeepSeek: The State column entry for the Jyothi row is cut off at the top of the page, so the state that launched the scheme cannot be determined.",
+  "text": "Jyothi May 2025 — To enroll children of migrant workers into anganwadis and public schools, ensuring inclusive education, health support, and social integration."
+ },
+ {
+  "pdfPage": 28,
+  "section": "2025 State-wise Schemes",
+  "why": "DeepSeek: This is the tail of an objective whose scheme name and state row were cut off at the page edge; no unambiguous cue-answer pair can be formed.",
+  "text": "strategy through the Women & Child Development Department."
+ },
+ {
+  "pdfPage": 28,
+  "section": "2025 State-wise Schemes",
+  "why": "DeepSeek: The scheme sits above the 'Assam' state label and no state name is printed for it on this page (VIEW 1 even drops the scheme name), so which state launched Lakshmi Yojana cannot be decided, and its eligibility lines cannot be tied to a state.",
+  "text": "Lakshmi Yojana | Women must be 23 years or above. Annual family income ≤ ₹1 lakh (verified via Family Information Database Repository - FIDR)."
+ },
+ {
+  "pdfPage": 28,
+  "section": "2025 State-wise Schemes",
+  "why": "DeepSeek: Cut off at the page edge (ends mid-sentence with a comma), so the objective/number for Thalliki Vandanam Scheme is incomplete and no extra was attached.",
+  "text": "To provide ₹15,000 annual financial aid to mothers of school-going children (Classes 1-12) from poor families,"
+ },
+ {
+  "pdfPage": 28,
+  "section": "2025 State-wise Schemes",
+  "why": "DeepSeek: The scheme name and its state are cut off at the top of the page; the objective appears above the 'Andhra Pradesh' state cell and cannot be reliably tied to any scheme name given on the page.",
+  "text": "To provide ₹15,000 annual financial aid to mothers of school-going children (Classes 1-12) from poor families, ensuring continued education through Direct Benefit Transfer (DBT)."
  },
  {
   "pdfPage": 29,
   "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: Standalone bullet at the page edge with no scheme name attached, so it cannot be tied to a testable fact or a cue.",
+  "why": "DeepSeek: A stray bullet printed at the end of the page with no stated link to any scheme or list, so it cannot be tied to a testable cue.",
   "text": "• University of Patanjali, Haridwar (Uttarakhand)."
  },
  {
-  "pdfPage": 29,
-  "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: The state label column is ambiguous here: VIEW 2 places 'Karnataka' on the same physical line as the LEAP Programme row, while VIEW 1 attaches Karnataka to Kusum-C Project, so no state can be safely assigned to LEAP Programme.",
-  "text": "LEAP Programme Sep 2025"
- },
- {
   "pdfPage": 30,
   "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: This bullet is the tail of a scheme card whose scheme name is cut off at the page edge; no scheme name is printed on this page, so the fact cannot be tied to a cue.",
+  "why": "DeepSeek: This bullet is the tail of a scheme whose name is cut off at the top of the page, so it is not clear which scheme or entity is recognised as India's first Yoga & Ayurveda Cluster Center.",
   "text": "• Recognition: Declared as India's first Yoga & Ayurveda Cluster Center under the Gyan Bharatam Mission."
- },
- {
-  "pdfPage": 30,
-  "section": "2025 State-wise Schemes",
-  "why": "DeepSeek: No state name is printed alongside this scheme on the page (unlike the Meghalaya Green Deposit Scheme), so no scheme-to-state card could be made.",
-  "text": "Sintered Rare-Earth Magnet Scheme (REPM) Dec 2025"
  },
  {
   "pdfPage": 32,
@@ -874,71 +915,9 @@
  {
   "pdfPage": 132,
   "section": "Important GI Tags",
-  "why": "DeepSeek: cut off at page edge; item is incomplete so cannot make a card",
-  "text": "Laxman"
- },
- {
-  "pdfPage": 132,
-  "section": "Important GI Tags",
   "why": "trigger contains the answer",
-  "trigger": "Kathputlis of Rajasthan is a GI-tagged product of which state?",
+  "trigger": "GI tag: Kathputlis of Rajasthan",
   "answer": "Rajasthan"
- },
- {
-  "pdfPage": 132,
-  "section": "Important GI Tags",
-  "why": "trigger words not on the page: gitagged",
-  "trigger": "Aipan is a GI-tagged product of which state?",
-  "answer": "Uttarakhand"
- },
- {
-  "pdfPage": 132,
-  "section": "Important GI Tags",
-  "why": "trigger words not on the page: gitagged",
-  "trigger": "Jeeraphool is a GI-tagged product of which state?",
-  "answer": "Chhattisgarh"
- },
- {
-  "pdfPage": 132,
-  "section": "Important GI Tags",
-  "why": "trigger contains the answer",
-  "trigger": "Jharkhand Dokra Craft is a GI-tagged product of which state?",
-  "answer": "Jharkhand"
- },
- {
-  "pdfPage": 132,
-  "section": "Important GI Tags",
-  "why": "trigger contains the answer",
-  "trigger": "Tribal Jewellery of Jharkhand is a GI-tagged product of which state?",
-  "answer": "Jharkhand"
- },
- {
-  "pdfPage": 132,
-  "section": "Important GI Tags",
-  "why": "trigger contains the answer",
-  "trigger": "Bamboo Crafts of Jharkhand is a GI-tagged product of which state?",
-  "answer": "Jharkhand"
- },
- {
-  "pdfPage": 132,
-  "section": "Important GI Tags",
-  "why": "trigger contains the answer",
-  "trigger": "Tussar Silk Sarees & Fabrics of Jharkhand is a GI-tagged product of which state?",
-  "answer": "Jharkhand"
- },
- {
-  "pdfPage": 132,
-  "section": "Important GI Tags",
-  "why": "trigger contains the answer",
-  "trigger": "Jharkhand Jadupatua Paintings is a GI-tagged product of which state?",
-  "answer": "Jharkhand"
- },
- {
-  "pdfPage": 132,
-  "section": "Important GI Tags",
-  "why": "trigger contains the answer",
-  "trigger": "Jharkhand Panchi Parhan/Panchi Saree and Fabrics is a GI-tagged product of which state?",
-  "answer": "Jharkhand"
  },
  {
   "pdfPage": 134,

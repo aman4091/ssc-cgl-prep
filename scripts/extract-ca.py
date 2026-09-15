@@ -3,18 +3,22 @@
     python scripts/extract-ca.py [--pdf ca/rbe-ca-sept-2026.pdf] [--jobs 6]
 
 Pipeline
-  1. Text layer. pdftotext is run three ways and each page is cleaned:
-       - reading order (xpdf default mode): detects the two columns and reads
-         each column top to bottom, so prose pages come out in the right order;
-       - -table: keeps every table row on one line;
-       - -layout: the physical page, used only as a third view for checking.
+  1. Text layer. pdftotext is run four ways and each page is cleaned:
+       - -raw (content order): the order the text was written in — each column
+         complete before the next, table rows in sequence, and the watermark
+         kept apart instead of interleaved letter by letter;
+       - -table: keeps every table row on one physical line;
+       - reading order (xpdf default) and -layout: extra views for checking.
      Cleaning repairs the broken fi/fl ligatures (scripts/ca-ligatures.json,
      built by scripts/ca_ligatures.py), unifies quotes, dashes and bullets,
      and drops footers, social handles and icon-font garbage.
   2. Part J (monthly one-liners, "Q12. question --> answer") is parsed
-     directly from the text; DeepSeek only assigns tags there.
-  3. Every other page goes to DeepSeek with both the reading-order and the
-     table view and returns cards whose answers are copied from the page.
+     directly from the -raw text; DeepSeek only assigns tags there.
+  3. Every other page goes to DeepSeek with the -raw and the -table view and
+     returns cards whose answers are copied from the page.
+  5. Tiering: every card is core or extended (CORE_GROUPS, SECTION_CAPS,
+     PINS); cues that give the answer away are blanked, and one cue with
+     several answers names the others.
   4. Verification, on normalised text on both sides (case-folded, quotes and
      dashes unified, hyphens and whitespace collapsed): the answer must occur
      in one of the page's views, most trigger keywords must occur on the page,
@@ -255,6 +259,18 @@ for _s in ("2026 State-Wise Schemes", "2025 State-wise Schemes", "Ministry-wise 
            "Viksit Bharat-Guarantee for Rozgar and Ajeevika Mission (VB-G RAM-G) Act, 2025",
            "Major Initiatives Launched (2021-26)"):
     RULES[_s] = RULES["_scheme"]
+# The state-wise tables print the state ONCE, as a row heading, with several
+# schemes under it (Delhi: Lakhpati Didi, ANMOL, Lakshmi Yojana). The first
+# pass paired only 5 of ~15 schemes with their state — the pairing is the
+# card SSC asks, so it is spelled out.
+for _s in ("2026 State-Wise Schemes", "2025 State-wise Schemes"):
+    RULES[_s] = (
+        "The table's State column is printed once per state, and every scheme below it (until the next state) "
+        "belongs to that state; schemes under 'Central' belong to the central government, with the ministry "
+        "named in the objective. For EVERY scheme make a card: trigger = 'Which state launched <scheme name>?', "
+        "answer = the state name as printed (for central schemes: the ministry, trigger 'Which ministry ...'). "
+        "Then, only if the page states them: scheme -> purpose (short phrase copied), scheme -> headline number. "
+        "Put the launch date in `date`.")
 RULES["Important Military Exercises"] = (
     "Separate cards per exercise: exercise -> participating countries/forces; exercise -> venue; "
     "exercise -> edition number. Only what the page states.")
@@ -763,20 +779,90 @@ def main():
 # ------------------------------------------------------------- core deck
 
 # Hard budget: ~70 min/day for 17 days can't carry 2900 cards, so every card
-# gets tier "core" or "extended" (nothing is deleted). Caps per group:
+# gets tier "core" or "extended" (nothing is deleted). Core = 800:
+#   groups below  740  (their caps already give up the 60 slots the pins take;
+#                       Part B fills 104 of 110 — the 2026 state-wise table has
+#                       only 16 scheme->state/ministry facts — so Part J holds
+#                       123 instead of 125 to land on 800 exactly)
+#   pinned items   60  (year-defining 2025 events that rule 1 left at zero)
+PINNED_SECTIONS = {"Nobel Prize Winners 2025", "Operation Sindoor 2025", "National Sports Awards 2025",
+                   "Men's T20 Asia Cup 2025", "ICC Women's Cricket World Cup 2025", "Bharat Ratna 2024"}
 CORE_GROUPS = [
-    ("Part I (GI/Ramsar/UNESCO/Nat.Parks)", 120, lambda s, p: p == "I"),
-    ("Part D (Awards)", 120, lambda s, p: p == "D"),
-    ("Part B (Schemes)", 120, lambda s, p: p == "B"),
+    ("Part I (GI/Ramsar/UNESCO/Nat.Parks)", 111, lambda s, p: p == "I"),
+    ("Part D (Awards)", 112, lambda s, p: p == "D"),
+    ("Part B (Schemes)", 110, lambda s, p: p == "B"),
     ("Part F (Sports)", 100, lambda s, p: p == "F"),
-    ("Part J one-liners (Jan-Aug 2026)", 150, lambda s, p: p == "J" and parse_date(s)[0] == 2026),
+    ("Part J one-liners (Jan-Aug 2026)", 123, lambda s, p: p == "J" and parse_date(s)[0] == 2026),
     ("First in India", 50, lambda s, p: s == "First in India 2025-26 (Key-Milestone)"),
     ("Index & Rankings", 50, lambda s, p: s == "Index & Rankings (2024-26)"),
-    ("Defence exercises + Op Sindoor", 40, lambda s, p: s in ("Important Military Exercises", "Operation Sindoor 2025")),
+    ("Defence exercises", 40, lambda s, p: s == "Important Military Exercises"),
     ("Office bearers + Budget 2026-27", 30, lambda s, p: s in ("Key Office Bearers of India 2025-26", "Union Budget 2026-27")),
     ("Republic Day 2026 + misc C", 20, lambda s, p: p == "C" and s != "First in India 2025-26 (Key-Milestone)"),
 ]
+# Section ceilings inside a group — where the pins' 60 slots come from, and
+# the Part B fix (2026 state-wise is the higher-yield set, so 2025 is held to 9).
+SECTION_CAPS = {
+    "Project Cheetah (Cheetah Translocation)": 6,
+    "Ministry-wise Major Schemes": 48,
+    "Popular Awards of The Year 2024-26": 52,
+    "2025 State-wise Schemes": 9,
+}
 WINDOW_RANK = {"primary": 0, "secondary": 1, "stale": 2}
+
+
+def _first_matching(patterns):
+    """Selector: for each regex (on the trigger) the first card that matches,
+    in PDF order, never the same card twice."""
+    def pick(pool):
+        out = []
+        for pat in patterns:
+            c = next((c for c in pool if c not in out and re.search(pat, c["trigger"], re.I)), None)
+            if c:
+                out.append(c)
+        return out
+    return pick
+
+
+def _round_robin(key, first=None):
+    """Selector: cards grouped by key(card), one from each group in turn."""
+    def pick(pool):
+        head = [c for c in pool if first and re.search(first, c["trigger"], re.I)]
+        groups = collections.OrderedDict()
+        for c in pool:
+            k = key(c)
+            if c not in head and k:
+                groups.setdefault(k, []).append(c)
+        out, queues = list(head), [list(q) for q in groups.values()]
+        while any(queues):
+            for q in queues:
+                if q:
+                    out.append(q.pop(0))
+        return out
+    return pick
+
+
+_NOBEL_CAT = r"physics|chemistry|literature|peace|economics|medicine|physiology"
+PINS = [
+    ("Nobel 2025 (category -> winner)", "Nobel Prize Winners 2025", 12,
+     _round_robin(lambda c: (re.search(_NOBEL_CAT, c["trigger"], re.I) or [None])[0])),
+    ("Operation Sindoor", "Operation Sindoor 2025", 12, _first_matching([
+        r"when did india carry out", r"response to which attack", r"when did the pahalgam",
+        r"where did the pahalgam", r"confirmed terror camps", r"locations in pakistan", r"locations in pok",
+        r"trf.*proxy", r"which treaty did india suspend", r"which border did india close",
+        r"air defence system", r"brahmos"])),
+    ("National Sports Awards 2025 (Khel Ratna + Arjuna)", "National Sports Awards 2025", 12,
+     _round_robin(lambda c: (re.search(r"arjuna award 2025 recipient in ([a-z -]+)", c["trigger"], re.I) or [None, None])[1],
+                  first=r"khel ratna award 2024 winner")),
+    ("Asia Cup 2025", "Men's T20 Asia Cup 2025", 8, _first_matching([
+        r"^winner", r"^runner-up", r"venue of the final", r"player of the tournament",
+        r"host nation\(s\) of the men", r"^edition", r"player of the final", r"most wickets"])),
+    ("Women's World Cup 2025", "ICC Women's Cricket World Cup 2025", 8, _first_matching([
+        r"^winner", r"^runner-up", r"final venue", r"player of the tournament",
+        r"^host nations", r"^edition", r"player of the final", r"top run-scorer"])),
+    ("Bharat Ratna", "Bharat Ratna 2024", 8, _first_matching([
+        r"awardees 2024", r"awardees 2024", r"awardees 2024", r"awardees 2024",
+        r"first bharat ratna was awarded", r"first sportsperson", r"established on", r"symbol"])),
+]
 
 
 def kind_of(c):
@@ -809,10 +895,12 @@ def rank_card(t):
 def pick_core(deck):
     """Within each group: window primary > secondary > stale, then 2026 > undated
     > 2025 > older, then round-robin across the group's sections in PDF order
-    (so GI Tags can't eat Ramsar's share), cards in PDF order inside a section."""
+    (so GI Tags can't eat Ramsar's share), cards in PDF order inside a section,
+    no section past its SECTION_CAPS ceiling. Then the pinned items."""
     chosen, shape = set(), []
     for name, cap, member in CORE_GROUPS:
-        pool = [c for c in deck if member(c["section"], c["part"]) and c["priority"] <= 2 and core_eligible(c)]
+        pool = [c for c in deck if member(c["section"], c["part"]) and c["section"] not in PINNED_SECTIONS
+                and c["priority"] <= 2 and core_eligible(c)]
         forced = [c for c in pool if "core-pin" in c["tags"]]
         levels = collections.defaultdict(lambda: collections.OrderedDict())
         for c in pool:
@@ -823,17 +911,54 @@ def pick_core(deck):
             lvl = (WINDOW_RANK[c["window"]], yr)
             levels[lvl].setdefault(c["section"], []).append(c)
         take = forced[:cap]
+        per = collections.Counter(c["section"] for c in take)
+        room = lambda s: per[s] < SECTION_CAPS.get(s, 10 ** 6)  # noqa: E731
         for lvl in sorted(levels):
             queues = [list(q) for q in levels[lvl].values()]
-            while len(take) < cap and any(queues):
+            while len(take) < cap and any(q and room(q[0]["section"]) for q in queues):
                 for q in queues:
-                    if q and len(take) < cap:
-                        take.append(q.pop(0))
+                    if q and len(take) < cap and room(q[0]["section"]):
+                        c = q.pop(0)
+                        take.append(c)
+                        per[c["section"]] += 1
             if len(take) >= cap:
                 break
         chosen.update(c["id"] for c in take)
         shape.append((name, cap, take))
+    for name, section, cap, select in PINS:
+        pool = [c for c in deck if c["section"] == section]
+        take = select(pool)[:cap]
+        chosen.update(c["id"] for c in take)
+        shape.append(("PIN " + name, cap, take))
     return chosen, shape
+
+
+# ------------------------------------------------- one cue, several answers
+
+def disambiguate(final):
+    """A list printed under one heading ('Padma Awards 2026 — Art, Maharashtra'
+    has four names) came out as several cards with the same trigger, and a
+    recall cue with four right answers can't be graded. Up to four: each cue
+    names the others ('... (other than A, B, C)', the magazine's own Nobel
+    style). Bigger lists stay as they are, tagged and kept out of core."""
+    groups = collections.defaultdict(list)
+    for c in final:
+        groups[(c["section"], norm(c["trigger"]))].append(c)
+    fixed = kept = 0
+    for cs in groups.values():
+        answers = list(dict.fromkeys(c["answer"] for c in cs))
+        if len(answers) < 2:
+            continue
+        if len(answers) <= 4:
+            for c in cs:
+                others = [a for a in answers if a != c["answer"]]
+                c["trigger"] = "%s (other than %s)" % (c["trigger"].rstrip(" ?:"), ", ".join(others))
+                fixed += 1
+        else:
+            for c in cs:
+                c["tags"].append("ambiguous")
+                kept += 1
+    return fixed, kept
 
 
 # ------------------------------------------------------ giveaway triggers
@@ -988,6 +1113,8 @@ def finish(cards, review):
         card["_year"] = y
         final.append(card)
 
+    multi_fixed, multi_kept = disambiguate(final)
+
     # Cards whose trigger gives the answer away — a class, so the whole deck
     # is scanned; the fix blanks the answer out of the trigger ("____").
     flagged = [(c, giveaway(c)) for c in final]
@@ -1005,7 +1132,7 @@ def finish(cards, review):
     with open(os.path.join(ROOT, "data", "ca-giveaway.json"), "w", encoding="utf-8") as f:
         json.dump(audit, f, ensure_ascii=False, indent=1)
 
-    chosen, shape = pick_core([c for c in final if "giveaway" not in c["tags"]])
+    chosen, shape = pick_core([c for c in final if "giveaway" not in c["tags"] and "ambiguous" not in c["tags"]])
     for c in final:
         c["tier"] = "core" if c["id"] in chosen else "extended"
         c["tags"] = [t for t in c["tags"] if t != "core-pin"]
@@ -1025,6 +1152,8 @@ def finish(cards, review):
     print("giveaway triggers: %d (whole answer in trigger: %d, first word: %d; Part J: %d)"
           % (len(flagged), by["full"], by["word"], sum(1 for c, _ in flagged if c["part"] == "J")))
     print("   fixed by blanking: %d   left + kept out of core: %d" % (fixed, unfixable))
+    print("same trigger, several answers: %d cards got '(other than ...)', %d (lists of 5+) kept out of core"
+          % (multi_fixed, multi_kept))
     print("\ncore deck by group / section:")
     for name, cap, take in shape:
         print("  %-38s %3d / %d" % (name, len(take), cap))

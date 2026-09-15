@@ -32,6 +32,47 @@
 }
 .carev-num { font-size: 26px; font-weight: 700; color: var(--tb-ink); font-variant-numeric: tabular-nums; line-height: 1.1; }
 
+.carev-target { font-size: 13px; line-height: 1.9; }
+.carev-sec {
+  display: inline-block;
+  margin: 0 6px 0 0;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--tb-head);
+  border: 1px solid var(--tb-line-soft);
+  line-height: 22px;
+  white-space: nowrap;
+}
+
+/* plan timeline — har din ek khaana; pass ka naam likha hua (sirf rang nahi) */
+.carev-days {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 5px;
+}
+.carev-day {
+  border-radius: 8px;
+  border: 1px solid var(--tb-line);
+  padding: 4px 0 3px;
+  text-align: center;
+  line-height: 1.2;
+  background: var(--tb-page);
+}
+.carev-day-n { display: block; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.carev-day-m { display: block; font-size: 10px; color: var(--tb-dim); }
+.carev-day.p1 { background: var(--tb-blue-soft); }
+.carev-day.p2 { background: var(--tb-rev-soft); }
+.carev-day.p3 { background: var(--tb-head); }
+.carev-day.done { background: var(--tb-green); border-color: var(--tb-green); color: #fff; }
+.carev-day.done .carev-day-m { color: #fff; }
+.carev-day.partial .carev-day-m { color: var(--tb-warn-ink); font-weight: 700; }
+.carev-day.empty { opacity: 0.55; }
+.carev-day.today { outline: 2px solid var(--tb-focus); outline-offset: 1px; }
+.carev-legend { list-style: none; margin: 0 0 6px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 12px; color: var(--tb-dim); }
+
 .carev-box {
   border: 1px solid var(--tb-line);
   border-radius: 12px;

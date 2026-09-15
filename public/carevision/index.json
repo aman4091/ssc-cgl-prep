@@ -1,5 +1,5 @@
 {
- "version": "78af90410c",
+ "version": "2ca7fc7b55",
  "exam": "2026-10-01",
  "parts": {
   "A": "Polity, Government & Constitution",
@@ -307,17 +307,17 @@
   "core": {
    "file": "core.json",
    "cards": 800,
-   "bytes": 277452
+   "bytes": 279949
   },
   "ext-A": {
    "file": "ext-A.json",
-   "cards": 332,
-   "bytes": 108835
+   "cards": 339,
+   "bytes": 112586
   },
   "ext-B": {
    "file": "ext-B.json",
-   "cards": 852,
-   "bytes": 322717
+   "cards": 855,
+   "bytes": 322594
   },
   "ext-C": {
    "file": "ext-C.json",
@@ -326,8 +326,8 @@
   },
   "ext-D": {
    "file": "ext-D.json",
-   "cards": 352,
-   "bytes": 121660
+   "cards": 328,
+   "bytes": 113441
   },
   "ext-E": {
    "file": "ext-E.json",
@@ -336,13 +336,13 @@
   },
   "ext-F": {
    "file": "ext-F.json",
-   "cards": 345,
-   "bytes": 126318
+   "cards": 329,
+   "bytes": 120590
   },
   "ext-G": {
    "file": "ext-G.json",
-   "cards": 1021,
-   "bytes": 368876
+   "cards": 1009,
+   "bytes": 364510
   },
   "ext-H": {
    "file": "ext-H.json",
@@ -351,13 +351,13 @@
   },
   "ext-I": {
    "file": "ext-I.json",
-   "cards": 380,
-   "bytes": 118571
+   "cards": 398,
+   "bytes": 122446
   },
   "ext-J": {
    "file": "ext-J.json",
-   "cards": 1123,
-   "bytes": 406729
+   "cards": 1150,
+   "bytes": 416670
   }
  }
 }
