@@ -8,19 +8,25 @@
 // Fact log (/mission/facts) bhi isi ko use karta hai, apne schedule ke saath:
 // `onRate(card, good)` diya ho to CA ka SRS nahi chhua jata, star band hota
 // hai, aur card.meta (upar ki chhoti line) apni hoti hai.
+//   open  — jawab shuru se khula (padho aur batao aata tha ya nahi)
+//   loop  — "nahi aata" wala card isi round mein baar-baar aata hai, jab tak
+//           "aata tha" na dabe; har jawab onRate tak jata hai
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { rate, toggleStar, getStars } from "@/lib/carevision/progress";
 
 const AGAIN_AFTER = 5;   // galat card itne card baad isi session mein phir
+const LOOP_AFTER = 3;    // loop mode: jaldi wapas, jab tak aa na jaye
 
 const DEFAULT_LABELS = { bad: "Nahi aata", good: "Aata hai", show: "Answer dikhao" };
 
-export default function Recall({ queue: initial, today, onExit, onRate, labels = DEFAULT_LABELS }) {
+export default function Recall({
+  queue: initial, today, onExit, onRate, labels = DEFAULT_LABELS, open = false, loop = false,
+}) {
   const withStar = !onRate;
   const [queue, setQueue] = useState(initial);
   const [pos, setPos] = useState(0);
-  const [shown, setShown] = useState(false);
+  const [shown, setShown] = useState(open);
   const [stars, setStars] = useState(() => getStars());
   const [tally, setTally] = useState({ good: 0, bad: 0 });
   const again = useRef(new Set());       // jo card pehle se dobara lagaya ja chuka
@@ -31,22 +37,23 @@ export default function Recall({ queue: initial, today, onExit, onRate, labels =
   const answer = useCallback((good) => {
     if (!card || !shown) return;
     const retry = again.current.has(card.id) && card.__retry;
-    if (!retry) {
+    if (loop || !retry) {
       if (onRate) onRate(card, good);
       else rate(card.id, good, today);
-      setTally((t) => (good ? { ...t, good: t.good + 1 } : { ...t, bad: t.bad + 1 }));
     }
-    if (!good && !again.current.has(card.id)) {
+    if (!retry) setTally((t) => (good ? { ...t, good: t.good + 1 } : { ...t, bad: t.bad + 1 }));
+    if (!good && (loop || !again.current.has(card.id))) {
       again.current.add(card.id);
       setQueue((q) => {
         const next = [...q];
-        next.splice(Math.min(pos + 1 + AGAIN_AFTER, next.length), 0, { ...card, __retry: true });
+        const gap = loop ? LOOP_AFTER : AGAIN_AFTER;
+        next.splice(Math.min(pos + 1 + gap, next.length), 0, { ...card, __retry: true });
         return next;
       });
     }
-    setShown(false);
+    setShown(open);
     setPos((p) => p + 1);
-  }, [card, shown, today, pos, onRate]);
+  }, [card, shown, today, pos, onRate, loop, open]);
 
   const star = useCallback(() => {
     if (!card || !withStar) return;
@@ -74,9 +81,9 @@ export default function Recall({ queue: initial, today, onExit, onRate, labels =
     return (
       <div className="carev-recall">
         <div className="carev-done">
-          <div className="carev-done-big">Ho gaya ✓</div>
+          <div className="carev-done-big">{loop ? "Sab aa gaye ✓" : "Ho gaya ✓"}</div>
           <p>{total} card · <b>{tally.good}</b> {labels.good.toLowerCase()} · <b>{tally.bad}</b> {labels.bad.toLowerCase()}</p>
-          <p className="carev-dim">Jo nahi aaye wo kal phir aayenge.</p>
+          <p className="carev-dim">{loop ? "Jo pehli baar nahi aaye the, wo bhi ab ho gaye." : "Jo nahi aaye wo kal phir aayenge."}</p>
           <button className="carev-btn carev-btn-primary" onClick={onExit}>Wapas</button>
         </div>
       </div>

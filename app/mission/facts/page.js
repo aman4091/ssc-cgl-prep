@@ -2,16 +2,18 @@
 
 import "@/app/ca-revision/carev.css";
 import { useEffect, useMemo, useState } from "react";
-import { FACT_SECS, GAPS, getFacts, addFact, removeFact, dueFacts, reviewFact, topicsInUse } from "@/lib/missionfacts";
+import { FACT_SECS, getFacts, addFact, removeFact, dueFacts, reviewFact, markLearned, topicsInUse } from "@/lib/missionfacts";
 import { getMission, currentDayNum, planFor } from "@/lib/mission";
 import Recall from "@/components/carevision/Recall";
 
-// Bade card mein revise (CA Revision wala Recall): "Kerala dance: Kathakali,
-// Mohiniyattam…" — ':' / '—' / '=' / '→' se pehle wala hissa sawaal, baad
-// wala jawab. Alag karne wala na ho to topic sawaal hai, poora fact jawab.
-// Schedule fact log ka apna hi rehta hai (1/3/7/14 din) — reviewFact.
+// Bade card mein revise (CA Revision wala Recall, khula roop): upar naam,
+// neeche uske baare mein — seedha dikhta hai, chhupa nahi. "Kerala dance:
+// Kathakali, Mohiniyattam…" — ':' / '—' / '=' / '→' se pehle wala hissa
+// naam, baad wala baaki. Alag karne wala na ho to topic naam hai.
+// Aata tha -> pakka, phir kabhi nahi (markLearned). Nahi aata tha -> isi
+// round mein baar-baar, jab tak "aata tha" na dabe; beech mein chhoda to kal.
 const SPLIT = /^(.{3,90}?)\s*(?::|—|–|=|→|\s-\s)\s*([\s\S]{2,})$/;
-const FACT_LABELS = { bad: "Bhool gaya", good: "Yaad tha", show: "Dikhao" };
+const FACT_LABELS = { bad: "Nahi aata tha", good: "Aata tha", show: "Dikhao" };
 
 function toCard(f) {
   const sec = FACT_SECS.find((x) => x.k === f.sec);
@@ -22,7 +24,7 @@ function toCard(f) {
     answer: m ? m[2] : f.text,
     extra: null,
     pdfPage: null,
-    meta: `${sec?.icon || ""} ${sec?.label || ""}${f.topic ? ` · ${f.topic}` : ""} · padaav ${f.step + 1}/${GAPS.length}`,
+    meta: `${sec?.icon || ""} ${sec?.label || ""}${f.topic ? ` · ${f.topic}` : ""}`,
   };
 }
 
@@ -80,7 +82,9 @@ export default function MissionFactsPage() {
       <Recall
         queue={revising}
         labels={FACT_LABELS}
-        onRate={(c, good) => reviewFact(c.id, good)}
+        open
+        loop
+        onRate={(c, good) => (good ? markLearned(c.id) : reviewFact(c.id, false))}
         onExit={() => { setRevising(null); load(); window.scrollTo(0, 0); }}
       />
     );
@@ -95,7 +99,8 @@ export default function MissionFactsPage() {
         </h1>
         <p className="hero__sub">
           Har galat/unsure GS ya CA sawaal → 1 line. Kerala ka dance pucha? Kerala ke saare dance ek line mein — SSC agli baar
-          usi cluster ka doosra fact poochta hai. Har fact {GAPS.join(", ")} din baad khud wapas aata hai.
+          usi cluster ka doosra fact poochta hai. Likhne ke agle din se fact aata hai; "Aata tha" dabao to pakka — phir
+          nahi aata. "Nahi aata tha" dabao to tab tak aata rahega jab tak aane na lage.
         </p>
       </section>
 
@@ -114,7 +119,7 @@ export default function MissionFactsPage() {
               <div key={f.id} className="glass-card ms-fact">
                 <div className="row between" style={{ flexWrap: "nowrap", gap: 8 }}>
                   <span className="muted" style={{ fontSize: "0.78rem" }}>
-                    {FACT_SECS.find((s) => s.k === f.sec)?.icon} {f.topic || "—"} · padaav {f.step + 1}/{GAPS.length}
+                    {FACT_SECS.find((s) => s.k === f.sec)?.icon} {f.topic || "—"}
                   </span>
                   {!open[f.id] && <button className="btn btn--sm" onClick={() => setOpen((o) => ({ ...o, [f.id]: true }))}>👁 Dikhao</button>}
                 </div>
@@ -122,8 +127,8 @@ export default function MissionFactsPage() {
                   <>
                     <p style={{ margin: "6px 0 8px", fontSize: "1.1rem", lineHeight: 1.5 }}>{f.text}</p>
                     <div className="row" style={{ gap: 8 }}>
-                      <button className="btn btn--primary btn--sm" onClick={() => { reviewFact(f.id, true); load(); }}>✓ Yaad tha</button>
-                      <button className="btn btn--ghost btn--sm" onClick={() => { reviewFact(f.id, false); load(); }}>✗ Bhool gaya (kal phir)</button>
+                      <button className="btn btn--primary btn--sm" onClick={() => { markLearned(f.id); load(); }}>✓ Aata tha</button>
+                      <button className="btn btn--ghost btn--sm" onClick={() => { reviewFact(f.id, false); load(); }}>✗ Nahi aata tha (kal phir)</button>
                     </div>
                   </>
                 ) : (
