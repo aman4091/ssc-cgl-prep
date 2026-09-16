@@ -9,6 +9,13 @@
 //
 // Ye REVISION hai: koi Read mode / 3-pass nahi. Recall hi darwaza hai, aur
 // pehli baar dikhta card bhi seedha SRS mein jata hai.
+//
+// Card Fact log jaisa chalta hai (owner ka niyam): raasta upar, jawab neeche
+// — seedha khula, "socho phir tap karo" nahi. Neeche sirf "Aata tha / Nahi
+// aata tha". Nahi aata tha wala card usi round mein phir aata hai, har baar
+// thoda aur door (3, 4, 5 … card baad), aur ek baar bhi galat hua card round
+// ke aakhir mein "pakki jaanch" ke liye aata hai. SRS mein us din ka pehla
+// jawab hi ginta hai (lib/mindmap/progress.js).
 
 import "@/app/ca-revision/carev.css";
 import "./mm.css";
@@ -22,6 +29,7 @@ import Recall from "@/components/carevision/Recall";
 import TestMode from "@/components/carevision/TestMode";
 
 const TIERS = [["all", "Sab"], ["A", "A"], ["B", "B"], ["C", "C"]];
+const LABELS = { bad: "Nahi aata tha", good: "Aata tha", show: "Dikhao" };
 const NEW_CHOICES = [20, 40, 60, 80];
 
 export default function MindMapPage() {
@@ -100,7 +108,19 @@ export default function MindMapPage() {
   const onRate = useCallback((card, good) => rate(card.id, good, today, exam), [today, exam]);
   const dress = (list) => list.map((c) => ({ ...c, meta: cardMeta(c), extra: c.flagged ? `⚠ ${c.flagged}` : null }));
 
-  if (session) return <Recall queue={dress(session)} today={today} onExit={exit} onRate={onRate} />;
+  if (session) {
+    return (
+      <Recall
+        queue={dress(session)}
+        today={today}
+        onExit={exit}
+        onRate={onRate}
+        labels={LABELS}
+        open
+        loop
+      />
+    );
+  }
 
   if (mode === "test" && view) {
     return (
