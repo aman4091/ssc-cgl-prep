@@ -5,6 +5,10 @@
 // mcq.js); jiske 3 saaf siblings nahi, wo card test mein aata hi nahi.
 // Submit ke baad: score, part-wise hisaab, aur har galat jawab apne aap
 // Galtiyan deck mein. Desktop: 1-4 = option, Enter = agla.
+//
+// Mind Map (/mindmap) bhi isi ko use karta hai, apne store ke saath: record,
+// stars, expand (distractor ke liye aur cards) aur groupKey/groupLabel
+// (CA mein "part", Mind Map mein "subject") props se aate hain.
 
 import { useEffect, useMemo, useState } from "react";
 import { buildTest } from "@/lib/carevision/mcq";
@@ -14,7 +18,10 @@ import { recordTest, getStars } from "@/lib/carevision/progress";
 const COUNTS = [10, 25, 50];
 const PRIORITIES = [["all", "Sab"], ["1", "P1"], ["2", "P2"], ["3", "P3"]];
 
-export default function TestMode({ cards, parts, today, onExit, onGaltiyan }) {
+export default function TestMode({
+  cards, parts, today, onExit, onGaltiyan,
+  record = recordTest, stars: starsIn = null, expand = null, groupKey = "part", groupLabel = "Part",
+}) {
   const [count, setCount] = useState(10);
   const [part, setPart] = useState("all");
   const [pri, setPri] = useState("all");
@@ -25,9 +32,9 @@ export default function TestMode({ cards, parts, today, onExit, onGaltiyan }) {
   const [done, setDone] = useState(false);
   const [busy, setBusy] = useState(false);
 
-  const stars = useMemo(() => getStars(), []);
+  const stars = useMemo(() => starsIn || getStars(), [starsIn]);
   const pool = useMemo(() => cards.filter((c) =>
-    (part === "all" || c.part === part)
+    (part === "all" || c[groupKey] === part)
     && (pri === "all" || String(c.priority) === pri)
     && (!onlyStar || stars[c.id])), [cards, part, pri, onlyStar, stars]);
 
@@ -36,8 +43,9 @@ export default function TestMode({ cards, parts, today, onExit, onGaltiyan }) {
     // Distractor ke liye poora part (extended bhi) — offline ho to jo hai usi se.
     let all = cards;
     try {
-      const want = [...new Set(pool.map((c) => c.part))];
-      const more = await Promise.race([loadAll(want), new Promise((_, no) => setTimeout(() => no(new Error("slow")), 8000))]);
+      const want = [...new Set(pool.map((c) => c[groupKey]))];
+      const load = expand ? expand(want) : loadAll(want);
+      const more = await Promise.race([load, new Promise((_, no) => setTimeout(() => no(new Error("slow")), 8000))]);
       const seen = new Set(cards.map((c) => c.id));
       all = [...cards, ...more.filter((c) => !seen.has(c.id))];
     } catch { /* offline — core se hi */ }
@@ -52,7 +60,7 @@ export default function TestMode({ cards, parts, today, onExit, onGaltiyan }) {
 
   const submit = () => {
     const results = test.map((q, i) => ({ id: q.card.id, good: picks[i] === q.correct }));
-    recordTest(results, today);
+    record(results, today);
     setDone(true);
     window.scrollTo(0, 0);
   };
@@ -84,19 +92,23 @@ export default function TestMode({ cards, parts, today, onExit, onGaltiyan }) {
               <button key={n} className={`carev-chip${count === n ? " on" : ""}`} onClick={() => setCount(n)}>{n}</button>
             ))}
           </div>
-          <div className="carev-label">Part</div>
+          <div className="carev-label">{groupLabel}</div>
           <div className="carev-chips">
             <button className={`carev-chip${part === "all" ? " on" : ""}`} onClick={() => setPart("all")}>Sab</button>
             {parts.map((p) => (
               <button key={p} className={`carev-chip${part === p ? " on" : ""}`} onClick={() => setPart(p)}>{p}</button>
             ))}
           </div>
-          <div className="carev-label">Priority</div>
-          <div className="carev-chips">
-            {PRIORITIES.map(([v, l]) => (
-              <button key={v} className={`carev-chip${pri === v ? " on" : ""}`} onClick={() => setPri(v)}>{l}</button>
-            ))}
-          </div>
+          {cards.some((c) => c.priority) ? (
+            <>
+              <div className="carev-label">Priority</div>
+              <div className="carev-chips">
+                {PRIORITIES.map(([v, l]) => (
+                  <button key={v} className={`carev-chip${pri === v ? " on" : ""}`} onClick={() => setPri(v)}>{l}</button>
+                ))}
+              </div>
+            </>
+          ) : null}
           <label className="carev-check">
             <input type="checkbox" checked={onlyStar} onChange={(e) => setOnlyStar(e.target.checked)} />
             Sirf star kiye hue
@@ -124,8 +136,8 @@ export default function TestMode({ cards, parts, today, onExit, onGaltiyan }) {
     const right = test.filter((q, i) => picks[i] === q.correct).length;
     const byPart = {};
     test.forEach((q, i) => {
-      const p = q.card.part;
-      byPart[p] = byPart[p] || { right: 0, total: 0, title: q.card.partTitle };
+      const p = q.card[groupKey];
+      byPart[p] = byPart[p] || { right: 0, total: 0, title: q.card.partTitle || "" };
       byPart[p].total += 1;
       if (picks[i] === q.correct) byPart[p].right += 1;
     });
@@ -138,12 +150,12 @@ export default function TestMode({ cards, parts, today, onExit, onGaltiyan }) {
           <div className="carev-dim">{Math.round((right / test.length) * 100)}% sahi</div>
         </div>
         <section className="carev-box">
-          <div className="carev-label">Part-wise</div>
+          <div className="carev-label">{groupLabel}-wise</div>
           <table className="carev-table">
-            <thead><tr><th>Part</th><th>Sahi</th><th>Kul</th></tr></thead>
+            <thead><tr><th>{groupLabel}</th><th>Sahi</th><th>Kul</th></tr></thead>
             <tbody>
               {Object.entries(byPart).sort().map(([p, v]) => (
-                <tr key={p}><td><b>{p}</b> <span className="carev-dim">{v.title}</span></td><td>{v.right}</td><td>{v.total}</td></tr>
+                <tr key={p}><td><b>{p}</b> <span className="carev-dim">{v.title || ""}</span></td><td>{v.right}</td><td>{v.total}</td></tr>
               ))}
             </tbody>
           </table>
@@ -180,7 +192,7 @@ export default function TestMode({ cards, parts, today, onExit, onGaltiyan }) {
       </div>
       <div className="carev-progress" aria-hidden="true"><div style={{ width: `${(answered / test.length) * 100}%` }} /></div>
       <div className="carev-card carev-card-test">
-        <div className="carev-meta"><span>Part {q.card.part}</span> · <span>{q.card.section}</span></div>
+        <div className="carev-meta"><span>{groupLabel} {q.card[groupKey]}</span> · <span>{q.card.section || q.card.mapTitle}</span></div>
         <div className="carev-trigger">{q.card.trigger}</div>
         <div className="carev-options" role="radiogroup">
           {q.options.map((o, i) => (

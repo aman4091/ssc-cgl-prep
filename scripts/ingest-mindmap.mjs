@@ -153,10 +153,154 @@ export function buildTree(nodes, links) {
   return { root, orphans: nodes.filter((n) => !seen.has(n.i)) };
 }
 
+// Kuch patte bina khinchi line ke chhapte hain (khaas kar bhare hue maps
+// mein). Unhe girne nahi dete: sabse paas ka wo node dhoondo jo CENTRE ki
+// taraf inse aage hai (yaani unka sambhavit parent), thodi si doori ke andar.
+// Baar-baar chalate hain, kyunki ek juda hua orphan doosre ka parent ho
+// sakta hai. Jo phir bhi na jude, unka card banta hai par "orphan" flag ke
+// saath — adhoora raasta bhi gayab fact se behtar hai.
+export const ORPHAN_DX = 150;    // centre ki taraf itni doori tak parent dhoondo
+export const ORPHAN_DY = 34;     // aam taur par is oonchai ke andar
+export const ORPHAN_DY_FAN = 90; // …par parent bilkul bagal mein ho to bachche
+export const ORPHAN_DX_FAN = 70; //    uske upar-neeche failte hain
+export const ORPHAN_STEP = 30;   // parent ka andar wala kinara itna aage ho, warna ek
+                                 // hi column ke naam aapas mein hi jud jate hain
+
+export function attachOrphans(root, nodes, orphans) {
+  const cx = root.x + root.w / 2;
+  const side = (n) => (n.x + n.w / 2 >= cx ? "r" : "l");
+  // centre se doori: chhoti = centre ke zyada paas (dono taraf ke liye ek jaisi)
+  const centreDist = (n) => (side(n) === "r" ? n.x - cx : cx - (n.x + n.w));
+  const gapOf = (a, b) => [
+    Math.max(b[0] - a[2], a[0] - b[2], 0),
+    Math.max(b[1] - a[3], a[1] - b[3], 0),
+  ];
+  const bestFor = (o) => {
+    let best = null;
+    let bestCost = Infinity;
+    for (const n of nodes) {
+      if (n === o || n === root) continue;
+      if (side(n) !== side(o)) continue;                // parent usi taraf ka
+      // Parent ya to chhota sa shreni-naam hota hai ("Leaders", "Sites") ya
+      // uske pehle se bachche hain. Lamba fact-node kisi ka parent nahi.
+      if (!(n.kids && n.kids.length) && n.text.split(/\s+/).length > 4) continue;
+      if (centreDist(o) - centreDist(n) < ORPHAN_STEP) continue;  // aur centre ki taraf itna aage
+      const [dx, dy] = gapOf(o.box, n.box);
+      const ok = (dx <= ORPHAN_DX && dy <= ORPHAN_DY) || (dx <= ORPHAN_DX_FAN && dy <= ORPHAN_DY_FAN);
+      if (!ok) continue;
+      const cost = dx + dy * 5;   // ek hi line mein hona sabse bada sanket hai
+      if (cost < bestCost) { bestCost = cost; best = n; }
+    }
+    return best;
+  };
+
+  const join = (o, parent, how) => {
+    o.parent = parent;
+    o.depth = parent.depth + 1;
+    o.attached = how;
+    (parent.kids = parent.kids || []).push(o);
+  };
+
+  let left = [...orphans];
+  const rootJoined = [];
+  for (let round = 0; round < 60 && left.length; round++) {
+    // 1) jo saaf taur par kisi jude hue node ke bagal mein hain
+    for (let pass = 0; pass < 6 && left.length; pass++) {
+      const still = [];
+      for (const o of left) {
+        const best = bestFor(o);
+        // Sabse achha ummeedvaar khud orphan hai -> pehle usko jodne do, warna
+        // bachcha galat parent (jo bas paas khada tha) ke neeche chipak jata hai.
+        if (!best || best.depth === undefined) { still.push(o); continue; }
+        join(o, best, "paas se joda");
+      }
+      if (still.length === left.length) { left = still; break; }
+      left = still;
+    }
+    if (!left.length) break;
+    // 2) ab bhi koi nahi mila: centre ke sabse paas wala orphan map ki apni
+    // branch hai (uski line chhapi hi nahi) — use centre se jodo aur flag
+    // karo; uske bachche agle round mein khud uske neeche aa jayenge.
+    left.sort((a, b) => centreDist(a) - centreDist(b));
+    const head = left.shift();
+    join(head, root, "centre se joda (line nahi thi)");
+    head.flag = "orphan — path incomplete";
+    rootJoined.push(head);
+  }
+  const mid = (n) => (n.y + n.yLow) / 2;
+  for (const n of nodes) if (n.kids) n.kids.sort((a, b) => mid(b) - mid(a));
+  return left;
+}
+
 export function printTree(node, depth = 0, out = []) {
   out.push(`${"   ".repeat(depth)}${depth ? "› " : "# "}${node.text}`);
   for (const k of node.kids || []) printTree(k, depth + 1, out);
   return out;
+}
+
+// ------------------------------------------------------------- emit
+
+import { mkdirSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+
+export const SUBJECT_BUDGET = {
+  polity: 260, geography: 240, history: 240, static: 220,
+  biology: 180, economics: 160, physics: 160, chemistry: 140,
+};
+export const TIER_SHARE = { A: 0.45, B: 0.35, C: 0.20 };
+export const OUT_DIR = "public/mindmap";
+
+const slug = (s) => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 48);
+
+// Ek subject ki poori PDF -> cards (deck: core/extended, flags ke saath).
+export async function ingestSubject(file, subject) {
+  const doc = await openPdf(file);
+  const tiers = MAP_TIERS[subject] || {};
+  const tierOf = (page) => (tiers.A?.includes(page) ? "A" : tiers.B?.includes(page) ? "B" : "C");
+  const maps = [];
+  for (let page = 1; page <= doc.numPages; page++) {
+    const { root, orphans, attached } = await readMap(doc, page);
+    const mapTitle = clean(root.text);
+    const cards = [];
+    for (const leaf of leavesOf(root)) {
+      const c = cardFromLeaf(leaf);
+      const flags = [];
+      // raasta anuman: is shaakha ki line PDF mein chhapi hi nahi thi
+      for (let n = leaf; n; n = n.parent) if (n.attached && n.attached.startsWith("centre")) flags.push("path anuman — PDF mein is shaakha ki line nahi thi");
+      const fixedA = applyFixes(c.answer, mapTitle, c.path);
+      const fixedP = c.path.map((p) => applyFixes(p, mapTitle, c.path));
+      const notes = [...new Set([...flags, ...fixedA.notes, ...fixedP.flatMap((f) => f.notes)])];
+      const path = fixedP.map((f) => f.text);
+      const answer = fixedA.text;
+      const id = `${subject}-${slug(path[path.length - 1] || mapTitle)}-${createHash("sha1").update(`${subject}|${path.join(">")}|${answer}`).digest("hex").slice(0, 6)}`;
+      cards.push({
+        id, subject, mapTitle, page, tier: tierOf(page), path, trigger: breadcrumb(path),
+        answer, depth: path.length, pdfPage: page, keep: cardTier(c) === "core",
+        ...(notes.length ? { flagged: notes.join(" · ") } : {}),
+      });
+    }
+    maps.push({ page, mapTitle, tier: tierOf(page), cards, orphans: orphans.length, attached });
+  }
+  return maps;
+}
+
+// Budget: tier ke hisse, aur tier ke andar maps baari-baari (taaki ek hi map
+// apne tier ka saara hissa na kha jaye).
+export function allocate(maps, budget) {
+  const chosen = new Set();
+  for (const [tier, share] of Object.entries(TIER_SHARE)) {
+    const cap = Math.round(budget * share);
+    const queues = maps.filter((m) => m.tier === tier).map((m) => m.cards.filter((c) => c.keep));
+    let taken = 0;
+    while (taken < cap && queues.some((q) => q.length)) {
+      for (const q of queues) {
+        if (taken >= cap) break;
+        const c = q.shift();
+        if (c) { chosen.add(c.id); taken += 1; }
+      }
+    }
+  }
+  return chosen;
 }
 
 const args = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, arr) => {
@@ -225,11 +369,51 @@ export function cardTier(c) {
 
 export const breadcrumb = (path) => path.join(" › ");
 
+// ------------------------------------------------------- tiers & fixes
+
+// Har subject ke maps ka tier (exam mein kitna poocha jata hai). Page number
+// se, kyunki ek page = ek map. A 45% / B 35% / C 20% budget ka.
+export const MAP_TIERS = {
+  history: {
+    A: [21, 22, 23, 25, 26, 27],                    // 1857, Socio-Religious, INC, Gandhi, CDM, Quit India
+    B: [2, 3, 4, 5, 7, 10, 17, 18, 24],             // IVC, Vedic, Jain, Buddh, Maurya, Gupta, Mughal x2, Bengal Partition
+    C: [1, 6, 8, 9, 11, 12, 13, 14, 15, 16, 19, 20, 28],
+  },
+};
+
+// Maps ki apni factual galtiyan — sirf ye paanch, owner ne ginwayi hain.
+// Baaki kuch bhi chupke se nahi badalta: shak ho to card flag hota hai.
+export const FACT_FIXES = [
+  { map: /plassey/i, from: /Shuja-?ud-?(Daulah|Aullah)/gi, to: "Siraj-ud-Daulah",
+    note: "PDF: Shuja-ud-Daulah" },
+  { map: /navratna|akbar/i, from: /(Varahamihira[^,;]{0,20}?)Grammarian/gi, to: "$1Astronomer",
+    note: "PDF: Varahamihira = Grammarian" },
+  { map: /navratna|akbar/i, from: /(Vararuchi[^,;]{0,20}?)Magician/gi, to: "$1Grammarian",
+    note: "PDF: Vararuchi = Magician" },
+  { map: /qutub|delhi sultanate/i, from: /later in 12th century/gi, to: "later in 13th century",
+    note: "PDF: 12th century" },
+  { map: /sambhaji|maratha/i, from: /Akbar II/g, to: "Prince Akbar",
+    note: "PDF: Akbar II" },
+];
+
+export function applyFixes(text, mapTitle, path) {
+  let out = text;
+  const notes = [];
+  const where = `${mapTitle} ${path.join(" ")}`;
+  for (const f of FACT_FIXES) {
+    if (!f.map.test(where) && !f.map.test(out)) continue;
+    const next = out.replace(f.from, f.to);
+    if (next !== out) { notes.push(f.note); out = next; }
+  }
+  return { text: out, notes };
+}
+
 export async function readMap(doc, pageNo) {
   const { items, links, width } = await readPage(doc, pageNo);
   const nodes = buildNodes(items);
   const { root, orphans } = buildTree(nodes, links);
-  return { root, nodes, orphans, links, width, pageNo };
+  const loose = attachOrphans(root, nodes, orphans);
+  return { root, nodes, orphans: loose, attached: orphans.length - loose.length, links, width, pageNo };
 }
 
 // Har page ka centre node = us map ka naam.
@@ -262,10 +446,58 @@ Q: ${breadcrumb(c.path)} → ?`);
 if (args.pdf && args.tree) {
   const doc = await openPdf(args.pdf);
   const pageNo = Number(args.page || 1);
-  const { items, links, width } = await readPage(doc, pageNo);
-  const nodes = buildNodes(items);
-  const { root, orphans } = buildTree(nodes, links);
-  console.log(`page ${pageNo}/${doc.numPages} · width ${Math.round(width)} · items ${items.length} · nodes ${nodes.length} · links ${links.length}`);
-  console.log(printTree(root).join("\n"));
-  if (orphans.length) console.log(`\n! kisi line se nahi jude (${orphans.length}):\n` + orphans.map((n) => "  - " + n.text).join("\n"));
+  const { root, nodes, orphans, attached, links, width } = await readMap(doc, pageNo);
+  console.log(`page ${pageNo}/${doc.numPages} · width ${Math.round(width)} · items ${nodes.length} nodes · links ${links.length} · paas se jode ${attached} · bache orphan ${orphans.length}`);
+  const only = args.branch ? String(args.branch).toLowerCase() : null;
+  const start = only
+    ? (root.kids || []).filter((k) => k.text.toLowerCase().includes(only))
+    : [root];
+  for (const n of start) console.log(printTree(n).join("\n"));
+  if (orphans.length) console.log(`\n! ab bhi bina raaste ke (${orphans.length}):\n` + orphans.map((n) => "  - " + n.text).join("\n"));
+}
+
+// Poori PDF ingest karo: node scripts/ingest-mindmap.mjs --pdf … --subject history [--budget 240]
+if (args.pdf && args.subject && !args.tree && !args.titles && !args.cards) {
+  const subject = String(args.subject);
+  const budget = Number(args.budget || SUBJECT_BUDGET[subject] || 200);
+  const maps = await ingestSubject(args.pdf, subject);
+  const all = maps.flatMap((m) => m.cards);
+  const chosen = allocate(maps, budget);
+  for (const c of all) { c.deck = chosen.has(c.id) ? "core" : "extended"; delete c.keep; }
+
+  mkdirSync(OUT_DIR, { recursive: true });
+  const core = all.filter((c) => c.deck === "core");
+  const ext = all.filter((c) => c.deck === "extended");
+  const wr = (name, rows) => {
+    const body = JSON.stringify(rows);
+    writeFileSync(`${OUT_DIR}/${name}`, body);
+    return Math.round(body.length / 1024);
+  };
+  const kbCore = wr(`${subject}-core.json`, core);
+  const kbExt = wr(`${subject}-ext.json`, ext);
+
+  let index = {};
+  try { index = JSON.parse(readFileSync(`${OUT_DIR}/index.json`, "utf8")); } catch { index = { subjects: {} }; }
+  index.subjects = index.subjects || {};
+  index.subjects[subject] = {
+    budget, core: core.length, extended: ext.length,
+    maps: maps.map((m) => ({ page: m.page, title: m.mapTitle, tier: m.tier, cards: m.cards.length })),
+  };
+  index.version = createHash("sha1").update(JSON.stringify(index.subjects)).digest("hex").slice(0, 10);
+  writeFileSync(`${OUT_DIR}/index.json`, JSON.stringify(index, null, 1));
+
+  console.log(`${subject}: ${all.length} cards · core ${core.length} (budget ${budget}) · extended ${ext.length}`);
+  console.log(`files: ${subject}-core.json ${kbCore} KB · ${subject}-ext.json ${kbExt} KB`);
+  for (const t of ["A", "B", "C"]) {
+    const inTier = maps.filter((m) => m.tier === t);
+    const c = inTier.reduce((n, m) => n + m.cards.filter((x) => x.deck === "core").length, 0);
+    console.log(`  tier ${t}: ${inTier.length} maps · core ${c} · total ${inTier.reduce((n, m) => n + m.cards.length, 0)}`);
+  }
+  const flagged = all.filter((c) => c.flagged);
+  console.log(`flagged: ${flagged.length} (core mein ${flagged.filter((c) => c.deck === "core").length})`);
+  const byNote = {};
+  for (const c of flagged) byNote[c.flagged.split(" · ")[0]] = (byNote[c.flagged.split(" · ")[0]] || 0) + 1;
+  for (const [k, v] of Object.entries(byNote)) console.log(`   ${String(v).padStart(4)}  ${k}`);
+  const orph = maps.filter((m) => m.orphans);
+  console.log(orph.length ? `bina raaste ke nodes: ${orph.map((m) => `p${m.page}:${m.orphans}`).join(" ")}` : "bina raaste ke nodes: 0");
 }
