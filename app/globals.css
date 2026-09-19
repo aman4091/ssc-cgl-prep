@@ -3399,6 +3399,14 @@ body.exam-on .pyq-filters { display: none; }
 .qcard__answer .md { font-size: 15px; }
 /* Jawab kiska hai — paste kiya hua (Gemini/AI site) ya 🐋 DeepSeek. */
 .qcard__ansrc { font-size: 12px; color: var(--text-3); font-weight: 600; margin-bottom: 6px; }
+
+/* Homepage ka sabse upar wala Fact log button */
+.factop { margin-top: 10px; margin-bottom: -6px; }
+.factop__btn {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; font-size: 1rem; padding: 14px 16px;
+}
+.factop__n { font-size: 0.8rem; opacity: 0.85; font-weight: 600; white-space: nowrap; }
 .qcard__note { color: var(--warning); font-size: 13px; margin-top: 8px; }
 
 /* ⏱️ Solve page ka per-question timer */

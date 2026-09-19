@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { addFact, getFacts } from "@/lib/missionfacts";
 
 // 🧩 GS answer ka CLUSTER section (lib/answerprompts / overlay ai_prompts) —
@@ -30,26 +30,52 @@ function clusterOf(md) {
 
 export { clusterOf };
 
-// Ek click: answer ka CLUSTER → fact log. Pehle se pada ho to "✓ fact log mein".
+// Ek click: answer ka CLUSTER → fact log.
+//
+// Ja chuka hai ya nahi, ye har baar naye sire se dekha jata hai — wahi
+// question dobara saamne aaye (PYQ drill mein aata hi hai) to button khud
+// bata deta hai ki ye cluster pehle hi fact log mein chala gaya tha. Fact
+// log badalte hi (yahan se, ya doosre device se sync hokar) line badal
+// jati hai.
 export default function ClusterButton({ md, onFlash }) {
   const cl = useMemo(() => clusterOf(md), [md]);
-  const [added, setAdded] = useState(() => {
-    if (!cl) return false;
-    try { const have = new Set(getFacts().map((f) => f.text)); return cl.lines.every((l) => have.has(l)); } catch { return false; }
-  });
+  const [have, setHave] = useState(() => new Set());
+
+  useEffect(() => {
+    const load = () => {
+      try { setHave(new Set(getFacts().map((f) => f.text))); }
+      catch { setHave(new Set()); }
+    };
+    load();
+    window.addEventListener("cgl:mission-changed", load);
+    window.addEventListener("cgl:sync-applied", load);
+    return () => {
+      window.removeEventListener("cgl:mission-changed", load);
+      window.removeEventListener("cgl:sync-applied", load);
+    };
+  }, []);
+
   if (!cl) return null;
+  // Sirf wahi line jodni hai jo pehle se nahi hai — warna ek hi cluster do
+  // baar fact log mein chadh jata.
+  const left = cl.lines.filter((l) => !have.has(l));
+  const done = left.length === 0;
+
   return (
     <button
-      className={"btn btn--sm " + (added ? "btn--ghost" : "btn--primary")}
+      className={"btn btn--sm " + (done ? "btn--ghost" : "btn--primary")}
       style={{ margin: "4px 0 8px" }}
-      disabled={added}
+      disabled={done}
+      title={done ? "Ye cluster pehle hi fact log mein ja chuka hai" : "Cluster ki har line fact log mein"}
       onClick={() => {
-        for (const l of cl.lines) addFact({ sec: "gs", topic: cl.topic, text: l });
-        setAdded(true);
-        onFlash && onFlash(`🧩 ${cl.lines.length} cluster fact log mein — 1/3/7/14 din baad revision`);
+        for (const l of left) addFact({ sec: "gs", topic: cl.topic, text: l });
+        setHave((h) => new Set([...h, ...left]));
+        onFlash && onFlash(`🧩 ${left.length} cluster fact log mein — 1/3/7/14 din baad revision`);
       }}
     >
-      {added ? "✓ Cluster fact log mein" : `🧩 Cluster → Fact log${cl.lines.length > 1 ? ` (${cl.lines.length})` : ""}`}
+      {done
+        ? `✓ Cluster fact log mein hai${cl.lines.length > 1 ? ` (${cl.lines.length})` : ""}`
+        : `🧩 Cluster → Fact log${left.length > 1 ? ` (${left.length})` : ""}${left.length < cl.lines.length ? " — baaki" : ""}`}
     </button>
   );
 }

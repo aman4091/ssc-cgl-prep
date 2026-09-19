@@ -1,7 +1,7 @@
 "use client";
 
 import "@/app/ca-revision/carev.css";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FACT_SECS, getFacts, addFact, removeFact, clearFacts, dueFacts, reviewFact, topicsInUse } from "@/lib/missionfacts";
 import { getMission, currentDayNum, planFor } from "@/lib/mission";
 import Recall from "@/components/carevision/Recall";
@@ -55,8 +55,20 @@ export default function MissionFactsPage() {
   const [q, setQ] = useState("");
   const [suggest, setSuggest] = useState([]);
   const [revising, setRevising] = useState(null);
+  const autoStarted = useRef(false);
 
   const load = () => { setFacts(getFacts()); setDue(dueFacts()); };
+
+  // Page kholte hi seedha revision — owner ka niyam. Fact log padhne ki
+  // list nahi, dohrane ki cheez hai: upar naam, neeche uske baare mein, aur
+  // "Aata tha / Nahi aata tha". Bahar nikalte hi neeche wali list mil jati
+  // hai (naya fact jodna, dhoondhna, hatana). Ek baar hi — list par wapas
+  // aane ke baad koi load() ise dobara shuru nahi karta.
+  useEffect(() => {
+    if (autoStarted.current || !facts.length) return;
+    autoStarted.current = true;
+    setRevising(shuffle(facts).map(toCard));
+  }, [facts]);
   useEffect(() => {
     load();
     // Aaj ka GS topic sabse pehla sujhaav — usi ke facts sabse zyada banenge.
@@ -118,7 +130,7 @@ export default function MissionFactsPage() {
       <section className="section" style={{ marginTop: 8 }}>
         {facts.length > 0 && (
           <button className="btn btn--primary ms-revise-go" onClick={() => setRevising(shuffle(facts).map(toCard))}>
-            ▶ Saare facts revise karo · {facts.length}
+            ▶ Phir se revise karo · {facts.length}
           </button>
         )}
         <h2 className="ms-h2">Aaj revise karo ({due.length})</h2>

@@ -1,3 +1,4 @@
+import FactLogTop from "@/components/FactLogTop";
 import MissionToday from "@/components/MissionToday";
 import TodayGate from "@/components/TodayGate";
 
@@ -13,6 +14,9 @@ import TodayGate from "@/components/TodayGate";
 export default function Home() {
   return (
     <>
+      {/* Sabse upar Fact log ka button — owner ka niyam: roz chalne wali cheez
+          ek tap door ho, menu ke andar nahi. */}
+      <FactLogTop />
       <MissionToday />
       <div className="section" style={{ marginTop: 28 }}>
         <TodayGate />

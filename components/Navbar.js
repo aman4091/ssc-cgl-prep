@@ -296,6 +296,17 @@ export default function Navbar() {
         ) : (
           /* ---- level 1: names only ---- */
           <>
+            {NAV_DIRECT.filter((d) => d.pin).map((d) => (
+              <Link
+                key={d.href}
+                href={d.href}
+                className={`drawer__link drawer__link--top ${isActive(d) ? "is-active" : ""}`}
+              >
+                <span className="drawer__ico">{d.icon}</span>
+                {d.label}
+              </Link>
+            ))}
+
             {rows.map((g) => (
               <button key={g.key} className="drawer__grouphd" onClick={() => setTrail([g.key])}>
                 <span className="drawer__ico">{g.icon}</span>
@@ -304,7 +315,7 @@ export default function Navbar() {
               </button>
             ))}
 
-            {NAV_DIRECT.map((d) => (
+            {NAV_DIRECT.filter((d) => !d.pin).map((d) => (
               <Link
                 key={d.href}
                 href={d.href}
