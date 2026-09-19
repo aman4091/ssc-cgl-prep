@@ -190,6 +190,7 @@ export default function VocabPage() {
           <span className="hero__eyebrow">📚 English · Vocab</span>
           <div className="row" style={{ gap: 8 }}>
             <button className="btn btn--primary btn--sm" onClick={() => setShowAdd((v) => !v)}>{showAdd ? "✕ Close" : "➕ Add words"}</button>
+            <Link href="/new-words" className="btn btn--ghost btn--sm">🆕 New Words</Link>
             <Link href="/vocab/bookmarks" className="btn btn--ghost btn--sm">⭐ Bookmarks</Link>
             <Link href="/" className="btn btn--ghost btn--sm">← Home</Link>
           </div>
