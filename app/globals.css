@@ -3414,7 +3414,8 @@ body.exam-on .pyq-filters { display: none; }
   font-size: 15px; line-height: 1.6; overflow-x: auto;
 }
 .vcard__mean--empty { color: var(--text-3); font-style: italic; }
-.vcard__acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.vcard__top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.vcard__hacts { margin-left: auto; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
 
 /* 📰 Current Affairs ka sar — mahine ka dropdown aur import button. */
 .ca-top { margin-top: 12px; }
