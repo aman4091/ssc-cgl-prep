@@ -14,7 +14,7 @@
 //   tumhara apna (paste kiya hua) > 🐋 DeepSeek > word ki apni angrezi def.
 
 import { useEffect, useState } from "react";
-import { getMine, setMine } from "@/lib/vocab";
+import { getMine, setMine, removeWordEverywhere } from "@/lib/vocab";
 import { getSettings } from "@/lib/storage";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { useDeepSeek, dsLabel, dsTitle } from "@/lib/usedeepseek";
@@ -24,10 +24,11 @@ const PROMPT = "Is word/idiom ko aasaan Hinglish mein detail se samjhao. "
   + "Kuch example sentences bhi do jisme ye sahi tarah use hua ho. "
   + "Aur aisa tarika ya trick batao ki ye hamesha ke liye yaad rah jaaye:";
 
-export default function VocabCard({ item }) {
+export default function VocabCard({ item, onDelete }) {
   const [mine, setMineState] = useState("");
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
+  const [sure, setSure] = useState(false);   // 🗑️ ka apna confirm
 
   // DeepSeek ko wahi shakl chahiye jis se baaki store chalte hain.
   const q = { question: item?.word || "", options: [], answer: null };
@@ -37,6 +38,7 @@ export default function VocabCard({ item }) {
     setMineState(item ? getMine(item.word) : "");
     setOpen(false);
     setText("");
+    setSure(false);
   }, [item?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!item) return null;
@@ -71,6 +73,17 @@ export default function VocabCard({ item }) {
           <button className="btn btn--sm btn--ghost" onClick={dsq.ask} disabled={dsq.loading} title={dsTitle(dsq)}>
             {dsLabel(dsq)}
           </button>
+          {/* 🗑️ word hamesha ke liye — din wali list se bhi aur New Words se
+              bhi. Apna confirm, window.confirm() nahi: PWA mode mein kai
+              webview use chupchaap nigal jate hain. */}
+          {sure ? (
+            <>
+              <button className="btn btn--sm btn--primary" onClick={() => { removeWordEverywhere(item.word); setSure(false); onDelete && onDelete(item); }}>Haan, hatao</button>
+              <button className="btn btn--sm btn--ghost" onClick={() => setSure(false)}>Nahi</button>
+            </>
+          ) : (
+            <button className="btn btn--sm btn--ghost" onClick={() => setSure(true)} title="Ye word hamesha ke liye hata do">🗑️</button>
+          )}
         </span>
       </div>
 

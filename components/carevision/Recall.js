@@ -47,6 +47,7 @@ export function answerPoints(text) {
 
 export default function Recall({
   queue: initial, today, onExit, onRate, labels = DEFAULT_LABELS, open = false, loop = false,
+  onDelete,
 }) {
   const withStar = !onRate;
   const [queue, setQueue] = useState(initial);
@@ -99,6 +100,16 @@ export default function Recall({
     setPos((p) => p + 1);
   }, [card, shown, today, pos, onRate, loop, open]);
 
+  // 🗑️ Is card ko hamesha ke liye hatao (fact log / Zaroori baatein).
+  // Card qataar se nikal jata hai — uski dobara-aane wali copy bhi — aur
+  // agla card wahin aa jata hai, isliye pos wahi rehta hai.
+  const del = useCallback(() => {
+    if (!card || !onDelete) return;
+    onDelete(card);
+    setQueue((q) => q.filter((c) => c.id !== card.id));
+    setShown(open);
+  }, [card, onDelete, open]);
+
   const star = useCallback(() => {
     if (!card || !withStar) return;
     const on = toggleStar(card.id);
@@ -140,6 +151,9 @@ export default function Recall({
       <div className="carev-bar">
         <button className="carev-link" onClick={onExit} aria-label="Wapas">← Wapas</button>
         <span className="carev-count">{pos + 1} / {queue.length}</span>
+        {onDelete ? (
+          <button className="carev-del" onClick={del} aria-label="Ye hata do" title="Ye hamesha ke liye hata do">🗑️</button>
+        ) : null}
         {withStar ? (
           <button
             className={`carev-star${starred ? " on" : ""}`}

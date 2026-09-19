@@ -51,7 +51,7 @@ export default function VocabPage() {
           resumeKey="vocab:all"
           unit="Word"
           shuffleFirst
-          renderCard={(item) => <VocabCard key={item.id} item={item} />}
+          renderCard={(item) => <VocabCard key={item.id} item={item} onDelete={() => setPool(vocabPool())} />}
         />
       )}
     </>

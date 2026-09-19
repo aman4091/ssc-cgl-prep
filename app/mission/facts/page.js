@@ -108,6 +108,7 @@ export default function MissionFactsPage() {
         open
         loop
         onRate={() => {}}
+        onDelete={(c) => { removeFact(c.id); load(); }}
         onExit={() => { setRevising(null); load(); window.scrollTo(0, 0); }}
       />
     );

@@ -81,6 +81,7 @@ export default function SscPointsPage() {
         open
         loop
         onRate={() => {}}
+        onDelete={(c) => { removePoint(c.id); load(); }}
         onExit={() => { setRevising(null); load(); window.scrollTo(0, 0); }}
       />
     );
