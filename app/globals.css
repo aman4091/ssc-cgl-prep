@@ -3400,9 +3400,17 @@ body.exam-on .pyq-filters { display: none; }
 /* Jawab kiska hai — paste kiya hua (Gemini/AI site) ya 🐋 DeepSeek. */
 .qcard__ansrc { font-size: 12px; color: var(--text-3); font-weight: 600; margin-bottom: 6px; }
 
+/* 📰 Current Affairs ka sar — mahine ka dropdown aur import button. */
+.ca-top { margin-top: 12px; }
+.ca-eyebrow { font-size: 0.8rem; font-weight: 700; color: var(--text-3); letter-spacing: 0.02em; }
+.ca-month { box-sizing: border-box; width: auto; max-width: 100%; padding: 6px 10px; font-size: 0.9rem; }
+
 /* Homepage ka sabse upar wala Fact log button */
 .factop { margin-top: 10px; margin-bottom: -6px; }
 .factop__btn {
+  /* box-sizing yahan zaroori hai: is page par default content-box hai, isliye
+     width:100% + padding wala button patti se bahar nikal jata tha. */
+  box-sizing: border-box; max-width: 100%;
   width: 100%; display: flex; align-items: center; justify-content: space-between;
   gap: 10px; font-size: 1rem; padding: 14px 16px;
 }

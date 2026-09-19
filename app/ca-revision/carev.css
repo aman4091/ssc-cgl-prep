@@ -180,6 +180,14 @@
 .carev-answer.shown { border-style: solid; border-color: var(--tb-blue); background: var(--tb-tint); cursor: default; }
 .carev-hint { color: var(--tb-dim); font-size: 14px; text-align: center; }
 .carev-answer-text { font-size: 20px; line-height: 1.35; font-weight: 700; color: var(--tb-blue-ink); overflow-wrap: anywhere; }
+/* Lamba jawab: ek-ek point apni line par, aam mota-pan mein — bade bold
+   block se padhna mushkil tha (fact log ke cluster khaas kar). */
+.carev-points { margin: 0; padding-left: 18px; display: grid; gap: 7px; }
+.carev-points li {
+  font-size: 16px; line-height: 1.45; font-weight: 400;
+  color: var(--tb-ink); overflow-wrap: anywhere;
+}
+.carev-points li b { font-weight: 700; color: var(--tb-blue-ink); }
 .carev-extra { font-size: 14px; line-height: 1.45; margin-top: 8px; color: var(--tb-ink); }
 .carev-src { font-size: 12px; color: var(--tb-dim); margin-top: 8px; }
 

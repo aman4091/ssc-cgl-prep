@@ -21,6 +21,30 @@ const LOOP_AFTER = 3;    // loop mode: jaldi wapas, jab tak aa na jaye
 
 const DEFAULT_LABELS = { bad: "Nahi aata", good: "Aata hai", show: "Answer dikhao" };
 
+// Lamba jawab (khaas kar fact log ka CLUSTER) ek hi saans mein likha hota
+// hai: "Publisher – GlobalFirepower.com · Score ka naam – Power Index · …".
+// Ek bade bold block mein wo deewar jaisa lagta hai aur padha hi nahi jata.
+//
+// Isliye yahan wahi line tod di jati hai: " · " (ya nayi line) par ek-ek
+// point, aur point ke andar "naam – baaki" ho to naam bold. Koi AI nahi —
+// ye bantwara PDF/prompt ne pehle hi kar rakha hai, bas dikhaya nahi ja raha
+// tha. Chhota jawab (ek hi tukda) jaisa tha waisa hi rehta hai — CA Revision
+// ke cards ka jawab ek hi naam hota hai aur wo bada dikhna chahiye.
+const HEAD = /^(.{2,60}?)\s*(?:–|—|\s-\s|:)\s*([\s\S]+)$/;
+
+export function answerPoints(text) {
+  const raw = String(text || "");
+  const parts = raw
+    .split(/\n+|\s+·\s+|\s+•\s+/)
+    .map((x) => x.trim())
+    .filter(Boolean);
+  if (parts.length < 2) return null;
+  return parts.map((p) => {
+    const m = HEAD.exec(p);
+    return m ? { head: m[1].trim(), rest: m[2].trim() } : { head: "", rest: p };
+  });
+}
+
 export default function Recall({
   queue: initial, today, onExit, onRate, labels = DEFAULT_LABELS, open = false, loop = false,
 }) {
@@ -138,7 +162,21 @@ export default function Recall({
         <div className={`carev-answer${shown ? " shown" : ""}`} aria-live="polite">
           {shown ? (
             <>
-              <div className="carev-answer-text">{card.answer}</div>
+              {(() => {
+                const pts = answerPoints(card.answer);
+                if (!pts) return <div className="carev-answer-text">{card.answer}</div>;
+                return (
+                  <ul className="carev-points">
+                    {pts.map((p, i) => (
+                      <li key={i}>
+                        {p.head ? <b>{p.head}</b> : null}
+                        {p.head ? " — " : ""}
+                        {p.rest}
+                      </li>
+                    ))}
+                  </ul>
+                );
+              })()}
               {card.extra ? <div className="carev-extra">{card.extra}</div> : null}
               {card.pdfPage ? <div className="carev-src">PDF p.{card.pdfPage}</div> : null}
             </>

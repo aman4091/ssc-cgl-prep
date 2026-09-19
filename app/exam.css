@@ -884,6 +884,9 @@
 .examskin .text-link { display: inline-flex; align-items: center; color: var(--tb-blue-ink); font-weight: 700; gap: 4px; font-size: 0.78rem; }
 
 .examskin .priority-strip, .examskin .resume-banner {
+  /* box-sizing ke bina width:100% + 16px padding patti ko page se bahar
+     nikal deta tha (phone par page daayen-baayen khisakta tha). */
+  box-sizing: border-box; max-width: 100%;
   width: 100%; border: 1px solid var(--tb-line); background: var(--tb-page); border-radius: 13px;
   display: flex; align-items: center; gap: 12px; padding: 12px 16px; text-align: left;
 }

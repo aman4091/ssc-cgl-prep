@@ -66,7 +66,7 @@ export default function MissionTopicsPage() {
         </div>
         <p className="hint">15 min ka fayda: 25 Q ~9 min mein ho jaate hain — bache 6 min statement/match wale Q pe har statement alag check karke options kaato. Jawab sirf concrete wajah ho tabhi badlo.</p>
         <div className="row" style={{ gap: 6 }}>
-          <L href="/pyq/war/static-gk">WAR: Static GK</L><L href="/pyq/war/polity">WAR: Polity</L><L href="/pyq/war">WAR bank (sab)</L><L href="/current-affairs?tab=monthly">📰 CA</L><L href="/mission/facts">🧠 Fact log</L>
+          <L href="/pyq/war/static-gk">WAR: Static GK</L><L href="/pyq/war/polity">WAR: Polity</L><L href="/pyq/war">WAR bank (sab)</L><L href="/current-affairs">📰 CA</L><L href="/mission/facts">🧠 Fact log</L>
         </div>
       </section>
 
