@@ -31,7 +31,7 @@ export default function VocabDayPage() {
       <section className="section" style={{ marginTop: 24 }}>
         <div className="glass-card center">
           <h2>Galat day</h2>
-          <Link href="/vocab" className="btn btn--primary mt-16">← Vocab</Link>
+          <Link href="/vocab/manage" className="btn btn--primary mt-16">← Vocab</Link>
         </div>
       </section>
     );
@@ -44,7 +44,7 @@ export default function VocabDayPage() {
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">📚 Vocab · Day {dayNum}</span>
-          <Link href="/vocab" className="btn btn--ghost btn--sm">← All days</Link>
+          <Link href="/vocab/manage" className="btn btn--ghost btn--sm">← All days</Link>
         </div>
         <div className="row between mt-8">
           <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>Day {dayNum} · {total} words</h1>

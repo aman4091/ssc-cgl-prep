@@ -14,6 +14,7 @@ import Markdown from "./Markdown";
 import AskElsewhere from "./AskElsewhere";
 import PasteAnswer from "./PasteAnswer";
 import ClusterButton from "./ClusterButton";
+import PointsButton from "./PointsButton";
 import { isDone } from "@/lib/qdone";
 import { useExamMode } from "./ExamMode";
 import { useDeepSeek, dsLabel, dsTitle } from "@/lib/usedeepseek";
@@ -335,6 +336,7 @@ Options: ${opts}
           {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
           {/* Jawab ka 🧩 CLUSTER seedha Fact log mein — Answers page wala button. */}
           <ClusterButton md={solution} onFlash={setFlash} />
+          <PointsButton md={solution} src={chapterName} onFlash={setFlash} />
           {/* A pasted Gemini answer replaces the book's solution image outright,
               rather than being stacked under it. */}
           {solution ? (

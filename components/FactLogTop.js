@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getFacts, dueFacts } from "@/lib/missionfacts";
+import { getPoints } from "@/lib/sscpoints";
 
-// Homepage ka sabse upar wala button — seedha Fact log ke revision mein.
+// Homepage ki sabse upar wali do patti — seedha revision mein: Fact log
+// (cluster) aur Zaroori baatein (jawabon se uthayi ek-line baatein).
 //
 // Kyun sabse upar: har galat sawaal ka cluster yahin aata hai aur yahin se
 // baar-baar dohrana hota hai. Menu khol kar dhoondhna ek kadam zyada tha, aur
@@ -12,14 +14,17 @@ import { getFacts, dueFacts } from "@/lib/missionfacts";
 export default function FactLogTop() {
   const [n, setN] = useState(null);
   const [due, setDue] = useState(0);
+  const [pts, setPts] = useState(0);
 
   useEffect(() => {
-    const load = () => { setN(getFacts().length); setDue(dueFacts().length); };
+    const load = () => { setN(getFacts().length); setDue(dueFacts().length); setPts(getPoints().length); };
     load();
     window.addEventListener("cgl:mission-changed", load);
+    window.addEventListener("cgl:points-changed", load);
     window.addEventListener("cgl:sync-applied", load);
     return () => {
       window.removeEventListener("cgl:mission-changed", load);
+      window.removeEventListener("cgl:points-changed", load);
       window.removeEventListener("cgl:sync-applied", load);
     };
   }, []);
@@ -31,6 +36,10 @@ export default function FactLogTop() {
         <span className="factop__n">
           {n == null ? "…" : `${n} fact${due ? ` · ${due} due` : ""}`}
         </span>
+      </Link>
+      <Link href="/mission/points" className="btn btn--ghost factop__btn factop__btn--2">
+        <span>🎯 Zaroori baatein</span>
+        <span className="factop__n">{pts} baat</span>
       </Link>
     </div>
   );

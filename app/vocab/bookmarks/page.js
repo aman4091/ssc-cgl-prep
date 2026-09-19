@@ -19,7 +19,7 @@ export default function BookmarksPage() {
       <section className="hero" style={{ paddingBottom: 8 }}>
         <div className="row between">
           <span className="hero__eyebrow">⭐ Bookmarks</span>
-          <Link href="/vocab" className="btn btn--ghost btn--sm">← Vocab</Link>
+          <Link href="/vocab/manage" className="btn btn--ghost btn--sm">← Vocab</Link>
         </div>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)" }}>
           Saved <span className="grad">Words</span>

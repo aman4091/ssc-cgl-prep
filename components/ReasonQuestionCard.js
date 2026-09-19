@@ -13,6 +13,7 @@ import Markdown from "./Markdown";
 import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
 import ClusterButton from "./ClusterButton";
+import PointsButton from "./PointsButton";
 import { isDone } from "@/lib/qdone";
 import { useExamMode } from "./ExamMode";
 import { useDeepSeek, dsLabel, dsTitle } from "@/lib/usedeepseek";
@@ -267,6 +268,7 @@ Options: ${opts}
           {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
           {/* Jawab ka 🧩 CLUSTER seedha Fact log mein — Answers page wala button. */}
           <ClusterButton md={solution} onFlash={setFlash} />
+          <PointsButton md={solution} src={chapterName} onFlash={setFlash} />
           {solution ? (
             <Markdown>{solution}</Markdown>
           ) : q.solImg ? (

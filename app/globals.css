@@ -3400,6 +3400,22 @@ body.exam-on .pyq-filters { display: none; }
 /* Jawab kiska hai — paste kiya hua (Gemini/AI site) ya 🐋 DeepSeek. */
 .qcard__ansrc { font-size: 12px; color: var(--text-3); font-weight: 600; margin-bottom: 6px; }
 
+/* 🔤 Vocab ka card — fact log jaisa: upar word, neeche matlab. */
+.vocab-top { margin-top: 12px; }
+.vcard {
+  box-sizing: border-box; max-width: 100%;
+  background: var(--card); border: 1px solid var(--glass-border);
+  border-radius: 14px; padding: 16px;
+}
+.vcard__meta { font-size: 12px; color: var(--text-3); font-weight: 600; }
+.vcard__word { font-size: 1.6rem; line-height: 1.25; margin: 6px 0 12px; overflow-wrap: anywhere; }
+.vcard__mean {
+  background: var(--bg); border-radius: 10px; padding: 12px 14px;
+  font-size: 15px; line-height: 1.6; overflow-x: auto;
+}
+.vcard__mean--empty { color: var(--text-3); font-style: italic; }
+.vcard__acts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+
 /* 📰 Current Affairs ka sar — mahine ka dropdown aur import button. */
 .ca-top { margin-top: 12px; }
 .ca-eyebrow { font-size: 0.8rem; font-weight: 700; color: var(--text-3); letter-spacing: 0.02em; }
@@ -3415,6 +3431,7 @@ body.exam-on .pyq-filters { display: none; }
   gap: 10px; font-size: 1rem; padding: 14px 16px;
 }
 .factop__n { font-size: 0.8rem; opacity: 0.85; font-weight: 600; white-space: nowrap; }
+.factop__btn--2 { margin-top: 8px; }
 .qcard__note { color: var(--warning); font-size: 13px; margin-top: 8px; }
 
 /* ⏱️ Solve page ka per-question timer */

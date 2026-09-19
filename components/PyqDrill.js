@@ -20,7 +20,16 @@ import { cloneElement, useCallback, useEffect, useMemo, useRef, useState } from 
 import "@/app/ca-revision/carev.css";
 import { getDrill, getOrder, saveOrder, markDrill, qKeyOf, KNOWN_GAP, missGap } from "@/lib/pyqdrill";
 
-export default function PyqDrill({ title, list, resumeKey, renderCard }) {
+function shuffled(list) {
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+export default function PyqDrill({ title, list, resumeKey, renderCard, shuffleFirst = false, unit = "Q" }) {
   const chapter = resumeKey || title || "pyq";
   const [queue, setQueue] = useState(() => [...list]);
   const [pos, setPos] = useState(0);
@@ -40,7 +49,13 @@ export default function PyqDrill({ title, list, resumeKey, renderCard }) {
   // baaki list ke apne kram mein peechhe — koi question gum na ho.
   useEffect(() => {
     const saved = getOrder(chapter, list.length);
-    if (!saved) { setQueue([...list]); setPos(0); return; }
+    if (!saved) {
+      // Pehli baar: vocab jaisi jagah par kram RANDOM chahiye (owner:
+      // "koisa bhi aaye"), question bank mein kitaab ka apna kram.
+      setQueue(shuffleFirst ? shuffled(list) : [...list]);
+      setPos(0);
+      return;
+    }
     const seen = new Set();
     const q = [];
     for (const i of saved) {
@@ -50,7 +65,7 @@ export default function PyqDrill({ title, list, resumeKey, renderCard }) {
     list.forEach((item, i) => { if (!seen.has(i)) q.push(item); });
     setQueue(q);
     setPos(0);
-  }, [list, chapter]);
+  }, [list, chapter, shuffleFirst]);
 
   const known = useMemo(() => {
     const s = stats.current || {};
@@ -92,7 +107,7 @@ export default function PyqDrill({ title, list, resumeKey, renderCard }) {
   return (
     <div className="pyqd">
       <div className="pyqd-bar">
-        <span className="carev-count">Q {(idxOf.get(qKeyOf(q)) ?? 0) + 1}/{list.length}</span>
+        <span className="carev-count">{unit} {(idxOf.get(qKeyOf(q)) ?? 0) + 1}/{list.length}</span>
         <span className="carev-dim carev-small">
           {known}/{list.length} aata hai
           {st.m ? ` · ye ${st.m} baar galat` : ""}
