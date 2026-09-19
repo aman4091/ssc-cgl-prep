@@ -3,6 +3,7 @@
 import "@/app/ca-revision/carev.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FACT_SECS, getFacts, addFact, removeFact, clearFacts, dueFacts, reviewFact, topicsInUse } from "@/lib/missionfacts";
+import { clearSession } from "@/lib/recallsession";
 import { getMission, currentDayNum, planFor } from "@/lib/mission";
 import Recall from "@/components/carevision/Recall";
 
@@ -109,6 +110,7 @@ export default function MissionFactsPage() {
         loop
         onRate={() => {}}
         onDelete={(c) => { removeFact(c.id); load(); }}
+        resumeKey="facts"
         onExit={() => { setRevising(null); load(); window.scrollTo(0, 0); }}
       />
     );
@@ -130,8 +132,11 @@ export default function MissionFactsPage() {
 
       <section className="section" style={{ marginTop: 8 }}>
         {facts.length > 0 && (
-          <button className="btn btn--primary ms-revise-go" onClick={() => setRevising(shuffle(facts).map(toCard))}>
-            ▶ Phir se revise karo · {facts.length}
+          <button
+            className="btn btn--primary ms-revise-go"
+            onClick={() => { clearSession("facts"); setRevising(shuffle(facts).map(toCard)); }}
+          >
+            ▶ Naya round shuru karo · {facts.length}
           </button>
         )}
         <h2 className="ms-h2">Aaj revise karo ({due.length})</h2>

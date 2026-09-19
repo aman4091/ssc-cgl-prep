@@ -13,8 +13,9 @@
 //           thoda aur door (3, 4, 5 … card baad), jab tak "aata tha" na dabe;
 //           phir round ke aakhir mein ek pakki jaanch. Har jawab onRate tak.
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { rate, toggleStar, getStars } from "@/lib/carevision/progress";
+import { getSession, saveSession, clearSession } from "@/lib/recallsession";
 
 const AGAIN_AFTER = 5;   // galat card itne card baad isi session mein phir
 const LOOP_AFTER = 3;    // loop mode: jaldi wapas, jab tak aa na jaye
@@ -47,19 +48,51 @@ export function answerPoints(text) {
 
 export default function Recall({
   queue: initial, today, onExit, onRate, labels = DEFAULT_LABELS, open = false, loop = false,
-  onDelete,
+  onDelete, resumeKey,
 }) {
   const withStar = !onRate;
-  const [queue, setQueue] = useState(initial);
-  const [pos, setPos] = useState(0);
+  // Adhoora round wapas (lib/recallsession): qataar ka kram — dobara-aane
+  // wali copy samet — kahan tak pahunche the, aur kis card par is round mein
+  // kitni galti ho chuki (agla gap usi se banta hai).
+  const saved = useMemo(() => (resumeKey ? getSession(resumeKey) : null), [resumeKey]);
+  const [queue, setQueue] = useState(() => {
+    if (!saved) return initial;
+    const byId = new Map(initial.map((c) => [c.id, c]));
+    const q = [];
+    const used = new Set();
+    for (const e of saved.ids) {
+      const c = byId.get(e.id);
+      if (!c) continue;                     // card beech mein hata diya gaya
+      used.add(e.id);
+      q.push(e.r ? { ...c, __retry: true, __check: !!e.c } : c);
+    }
+    // Jo card is beech naya juda wo aakhir mein — round se bahar na reh jaye.
+    for (const c of initial) if (!used.has(c.id)) q.push(c);
+    return q.length ? q : initial;
+  });
+  const [pos, setPos] = useState(() => (saved ? Math.max(0, saved.pos || 0) : 0));
   const [shown, setShown] = useState(open);
   const [stars, setStars] = useState(() => getStars());
-  const [tally, setTally] = useState({ good: 0, bad: 0 });
+  const [tally, setTally] = useState(() => (saved?.tally ? { ...saved.tally } : { good: 0, bad: 0 }));
   const again = useRef(new Set());       // jo card pehle se dobara lagaya ja chuka
-  const misses = useRef(new Map());      // loop mode: card id -> is round mein kitni baar galat
+  const misses = useRef(new Map(Object.entries(saved?.miss || {})));  // loop: card id -> is round ki galtiyan
 
   const card = queue[pos];
   const done = pos >= queue.length;
+
+  // Har badlav par round likh do — tab band ho jaye, phone rakh do, kuch bhi
+  // ho, agli baar wahi card saamne hota hai aur gap wahi se aage badhta hai.
+  // Round poora hote hi khabar saaf: agli baar SAB card phir se aate hain.
+  useEffect(() => {
+    if (!resumeKey) return;
+    if (done) { clearSession(resumeKey); return; }
+    saveSession(resumeKey, {
+      ids: queue.map((c) => (c.__retry ? { id: c.id, r: 1, ...(c.__check ? { c: 1 } : {}) } : { id: c.id })),
+      pos,
+      miss: Object.fromEntries(misses.current),
+      tally,
+    });
+  }, [resumeKey, queue, pos, done, tally]);
 
   const answer = useCallback((good) => {
     if (!card || !shown) return;

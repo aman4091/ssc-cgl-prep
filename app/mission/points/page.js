@@ -14,6 +14,7 @@
 import "@/app/ca-revision/carev.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { getPoints, removePoint, clearPoints } from "@/lib/sscpoints";
+import { clearSession } from "@/lib/recallsession";
 import Recall from "@/components/carevision/Recall";
 
 const LABELS = { bad: "Nahi aata tha", good: "Aata tha", show: "Dikhao" };
@@ -82,6 +83,7 @@ export default function SscPointsPage() {
         loop
         onRate={() => {}}
         onDelete={(c) => { removePoint(c.id); load(); }}
+        resumeKey="points"
         onExit={() => { setRevising(null); load(); window.scrollTo(0, 0); }}
       />
     );
@@ -103,8 +105,11 @@ export default function SscPointsPage() {
 
       <section className="section" style={{ marginTop: 8 }}>
         {points.length > 0 && (
-          <button className="btn btn--primary ms-revise-go" onClick={() => setRevising(shuffle(points).map(toCard))}>
-            ▶ Phir se revise karo · {points.length}
+          <button
+            className="btn btn--primary ms-revise-go"
+            onClick={() => { clearSession("points"); setRevising(shuffle(points).map(toCard)); }}
+          >
+            ▶ Naya round shuru karo · {points.length}
           </button>
         )}
         <div className="row between ms-form" style={{ marginBottom: 8, marginTop: 12 }}>
