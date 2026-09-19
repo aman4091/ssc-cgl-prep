@@ -8,22 +8,15 @@ import {
   storeImages, addWrong, removeWrong,
   setDetail2, setShownDetail, cleanAnswer, newGeminiAnswer, newGemini1, newGemini2,
 } from "@/lib/wrongbook";
-import { getReview, removeReview, fixReviewAnswer } from "@/lib/qreview";
-import { fixCAAnswer } from "@/lib/feed";
 import { copyImageToClipboard, imageBlob } from "@/lib/imgclip";
 import { getSettings } from "@/lib/storage";
 import { markDone, pruneDone, getDoneMap } from "@/lib/answersdone";
-import {
-  getDoneSet as getNbDone, getDoneMap as getNbDoneMap,
-  markDone as markNbDone, pruneDone as pruneNbDone,
-} from "@/lib/mistakesdone";
 import { getCounts, bumpCount, countMark } from "@/lib/qcounter";
 import { useImageUrls } from "@/lib/wrongimages";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { storageUsage } from "@/lib/storage";
 import Markdown, { LazyMarkdown } from "@/components/Markdown";
 import ZoomableImage from "@/components/ZoomableImage";
-import NotebookCard from "@/components/NotebookCard";
 import PyqDrill from "@/components/PyqDrill";
 import ChapterReport, { textOf } from "@/components/ChapterReport";
 import {
@@ -36,24 +29,23 @@ import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
 
-// Answers + Mistake Notebook — ab EK page.
+// Answers — mock test ke screenshot, aur unke jawab.
 //
-// Pehle do the, aur dono ek hi kaam karte the: "jo question mujhse nahi bana wo
-// dobara saamne aaye." Farq sirf itna tha ki question aaya kahan se —
-//   * External Mock : mock test ka screenshot, wrong book mein (lib/wrongbook)
-//     — tasveer + Gemini ka answer.
-//   * PYQ / Quiz    : app ke andar quiz mein galat ya chhoda hua (lib/qreview)
-//     — sawaal apne asli card mein khulta hai.
-// Do page rakhne ka matlab tha do jagah dekhna aur dono jagah alag aadat. Ab
-// upar ek dropdown hai: Sab / External Mock / PYQ-Quiz.
+// "Jo question mujhse nahi bana wo dobara saamne aaye." Yahan sirf SCREENSHOT
+// wale question hain (lib/wrongbook): overlay se aayi tasveer aur uska
+// Gemini/DeepSeek answer.
 //
-// Question YAHAN se andar nahi aate — na pehle aate the. Screenshot paste karo
-// to wo wrong book mein jata hai, aur quiz ka galat question qreview khud
-// bharta hai. Wo dono raaste bilkul waise ke waise hain.
+// PYQ/quiz ke galat question pehle isi page par doosri shelf mein aate the.
+// Owner ne wo hata diya — unka apna ghar unka chapter hai (PYQ bank ka drill,
+// jahan galat question waise bhi laut kar aata hai), aur yahan do alag shakl
+// ke card ek hi qataar mein milane ka koi fayda nahi tha. lib/qreview ka
+// record wahi ka wahi banta rehta hai (weak-area report usi se banti hai).
 //
-// "Ho gaya" ke do alag store jaan-boojh kar bache hain (answersdone aur
-// mistakesdone): dono ki pehchaan alag hai — mock record ki `id`, notebook ki
-// `key` — aur purane mark waise ke waise chalte rehne chahiye.
+// Question YAHAN se andar nahi aate — na pehle aate the. Screenshot paste
+// karo to wo wrong book mein jata hai, overlay se bhi wahi raasta hai.
+//
+// Ek waqt par ek question (components/PyqDrill), wahi "Nahi aata hai / Aata
+// hai" jo PYQ bank mein hai.
 
 const POLL_MS = 5000; // overlay ka naya question khuli hui page par bhi dikhe
 
@@ -268,12 +260,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   });
 
   const [mock, setMock] = useState([]);      // wrong book (screenshot wale)
-  const [nb, setNb] = useState([]);          // quiz/PYQ ke galat
   const [done, setDone] = useState(() => new Set());     // mock ke id
-  const [nbDone, setNbDone] = useState(() => new Set()); // notebook ke key
   // Wahi mark, par waqt ke saath — kram inhi se banta hai.
   const [doneMap, setDoneMap] = useState({});
-  const [nbDoneMap, setNbDoneMap] = useState({});
   // Aaj kis subject ke kitne question hue (raat 3 baje reset) — mark karte hi
   // apne aap badhta hai, overlay ke counter jaisa hi hisaab.
   const [counts, setCounts] = useState({});
@@ -311,7 +300,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // "Aakhri baar kab kuch hua" do jagah se aata hai, jo bhi baad ka ho:
   //   • record ka apna waqt — mock ke liye `at` (banne ka waqt); PYQ/notebook
   //     ke liye `firstAt` (PEHLI baar galat hua tha tab ka waqt), `at` nahi.
-  //   • ✅ "Ho gaya" ka waqt — lib/answersdone / lib/mistakesdone
+  //   • ✅ "Ho gaya" ka waqt — lib/answersdone
   //
   // Pehle yahan nb ke liye `at` istemal hota tha, jo har attempt par naya ho
   // jata hai — is board ke andar hi option chunte hi (PyqQuestionCard ka
@@ -324,12 +313,8 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // dheron mein bantti thi (pehle baaki, phir ho gaye). Usme naya question
   // hamesha nipte hue question ke UPAR aa jata tha — jo ghoomti katar nahi,
   // do alag list thi.
-  const doneAt = useCallback(
-    (r) => (r.__src === "mock" ? (doneMap[r.id] || "") : (nbDoneMap[r.key] || "")),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [doneMap, nbDoneMap],
-  );
-  const baseAt = (r) => String((r.__src === "mock" ? r.at : (r.firstAt || r.at)) || "");
+  const doneAt = useCallback((r) => doneMap[r.id] || "", [doneMap]);
+  const baseAt = (r) => String(r.at || "");
   const sortAt = useCallback((r) => {
     const a = baseAt(r);
     const d = doneAt(r);
@@ -360,11 +345,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     // Gemini se answer laa kar wapas aane par to aur bura. Ab sahi hone par wo
     // sirf sabse NEECHE chala jata hai aur kinare wali list mein uska number
     // hara ho jata hai. Hatana ho to 🗑️ hai.
-    const rawNb = getReview().filter((r) => r.everWrong);
     const mSig = rawMock
       .map((r) => `${r.id}~${r.at}~${r.subject}~${(r.detail || "").length}~${(r.detail2 || "").length}~${(r.aiNotes || "").length}~${r.aiWant ? 1 : 0}`)
       .join("|");
-    const nSig = rawNb.map((r) => `${r.key}~${r.at}~${r.subject}~${r.correct ? 1 : 0}`).join("|");
 
     const ids = new Set(rawMock.map((r) => r.id));
     if (sigRef.current.mock !== undefined && sigRef.current.mock !== mSig && seenIds.current) {
@@ -374,20 +357,12 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     seenIds.current = ids;
 
     const mChanged = put("mock", mSig, rawMock.map((r) => ({ ...r, __src: "mock", uid: `mock:${r.id}` })), setMock);
-    const nChanged = put("nb", nSig, rawNb.map((r) => ({ ...r, __src: "pyq", uid: `pyq:${r.key}` })), setNb);
 
     // List badli tabhi — delete ho chuke record ke chapter-tag saaf kar do.
-    if (mChanged || nChanged) {
-      pruneTags(new Set([
-        ...rawMock.map((r) => `mock:${r.id}`),
-        ...rawNb.map((r) => `pyq:${r.key}`),
-      ]));
-    }
+    if (mChanged) pruneTags(new Set(rawMock.map((r) => `mock:${r.id}`)));
 
     const d = pruneDone(ids);
     if (put("done", [...d].sort().join("|"), d, setDone)) setDoneMap(getDoneMap());
-    const nd = pruneNbDone(new Set(rawNb.map((r) => r.key)));
-    if (put("nbDone", [...nd].sort().join("|"), nd, setNbDone)) setNbDoneMap(getNbDoneMap());
     const hd = pruneHard(ids);
     put("hard", [...hd].sort().join("|"), hd, setHard);
 
@@ -459,7 +434,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     if (!autoOn()) return;
     const s = getSettings();
     if (!s.apiKey && !s.geminiApiKey) return;
-    const todo = [...mock, ...nb].filter((r) => !tags[r.uid] && !categoryChapter(bucketOf(r), r.category) && textOf(r));
+    const todo = mock.filter((r) => !tags[r.uid] && !categoryChapter(bucketOf(r), r.category) && textOf(r));
     if (!todo.length) return;
     autoRan.current = true;
     (async () => {
@@ -486,16 +461,15 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, taxReady, mock, nb]);
+  }, [ready, taxReady, mock]);
 
   // 🔴 Hard aam shelf se BAHAR — khud dabaya hua, isliye qid ki zaroorat
   // nahi, record ki apni id se.
-  const isHardQ = useCallback((r) => r.__src === "mock" && hard.has(r.id), [hard]);
+  const isHardQ = useCallback((r) => hard.has(r.id), [hard]);
   const pool = useMemo(() => {
     if (src === "hard") return mock.filter(isHardQ);
-    const m = mock.filter((r) => !isHardQ(r));
-    return src === "mock" ? m : src === "pyq" ? nb : [...m, ...nb];
-  }, [mock, nb, src, isHardQ]);
+    return mock.filter((r) => !isHardQ(r));
+  }, [mock, src, isHardQ]);
 
   const rows = useMemo(
     () => pool
@@ -667,7 +641,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   }, []);
 
   // Ek card — list mein bhi aur 🔍 popup mein bhi wahi (saare button samet).
-  const renderCard = (r, i, inPopup) => (r.__src === "mock" ? (
+  const renderCard = (r, i, inPopup) => (
     <AnsCard
       key={r.uid}
       rec={r}
@@ -683,16 +657,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       isHardQ={hard.has(r.id)}
       onToggleHard={onToggleHard}
     />
-  ) : (
-    <NotebookCard
-      key={r.uid}
-      rec={r}
-      n={i + 1}
-      bucket={bucketOf(r)}
-      onDone={() => onDoneNb(r)}
-      onDelete={() => onDeleteNb(r)}
-    />
-  ));
+  );
 
   const onDone = (rec) => {
     markDone(rec.id);
@@ -722,37 +687,11 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   };
 
   // Notebook ka nishaan alag store mein — par kaam wahi: neeche bhej do.
-  const onDoneNb = (rec) => {
-    markNbDone(rec.key);
-    const next = getNbDone();
-    sigRef.current.nbDone = [...next].sort().join("|");
-    setNbDone(next);
-    setNbDoneMap(getNbDoneMap());
-    const c = countMark(rec.key, bucketOf(rec), true);
-    sigRef.current.counts = JSON.stringify(c);
-    setCounts(c);
-  };
-
-  const nudge = (delta) => {
-    if (!subject || subject === "other") return;
-    setCounts({ ...counts, [subject]: bumpCount(subject, delta) });
-  };
-
   const onDelete = async (rec) => {
     if (!confirm("Ye question hata du? Iski writing aur image bhi jayegi.")) return;
     await removeWrong(rec.id);
     refresh();
   };
-
-  const onDeleteNb = (rec) => {
-    if (!confirm("Ye question notebook se hata du?")) return;
-    removeReview(rec.key);
-    refresh();
-  };
-
-  // Galat sanjoya hua answer theek karo: notebook ka record AUR jahan se aaya
-  // (Current Affairs entry) dono.
-  const onFixNb = (rec, oi) => { fixReviewAnswer(rec.key, oi); fixCAAnswer(rec.q, oi); refresh(); };
 
   // `d` (date filter) jaan-boojh kar NAHI bhej rahe.
   //
