@@ -1,6 +1,14 @@
-// PDF text -> cabank month JSON. lib/caparse.js ka regex poore 100 KB par
-// backtrack karta hai, isliye yahan block-by-block: split par Q.N), phir
-// har block mein options/answer. Safai wahi (cleanDetail) jo site karti hai.
+// Mahine ki current-affairs PDF -> public/cabank/<period>.json
+//
+//   pdftotext -enc UTF-8 -raw "August 2026.pdf" aug.txt
+//   node scripts/import-ca-month.mjs aug.txt 2026-08 public/cabank/2026-08.json
+//   (phir public/cabank/index.json mein us mahine ki line jodo)
+//
+// Shakl wahi jo lib/caparse.js padhta hai (Q.N / a-d / Correct Answer), par
+// block-by-block: wahi ek bada regex poore 100 KB par chalane mein minton
+// tak backtrack karta hai. Safai (cleanDetail) lib/caparse.js ki hi copy hai
+// — site par import karo ya yahan se, dono ka natija ek jaisa.
+
 import { readFileSync, writeFileSync } from "node:fs";
 
 const clean = (s) => String(s || "").replace(/\s+/g, " ").trim();
