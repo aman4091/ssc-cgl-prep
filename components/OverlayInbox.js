@@ -17,8 +17,6 @@ import { getDoneMap, markDone } from "@/lib/answersdone";
 import { getHardSet, isHard, toggleHard } from "@/lib/hardq";
 import { countMark } from "@/lib/qcounter";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
-import { vocabLineList, vocabStamp } from "@/lib/vocab";
-import { fillVocabLines } from "@/lib/vocabline";
 import { shedOldQuizzes, getSettings } from "@/lib/storage";
 
 // localStorage full hone par purane generated quizzes shed karke retry — wahi
@@ -32,13 +30,7 @@ function withSpace(fn) {
 }
 
 const PORTS = [5000, 5001, 5002]; // overlay ka pick_port 5000 busy hone par aage badhta hai
-// 🔤 Vocab overlay apna ALAG app hai (over/vocab_app.py) — apne
-// port par, apni process mein. Mock Test Helper band ho tab bhi wo
-// chal sakta hai, aur ye band ho to usme kuch nahi badalta.
-const VOCAB_PORTS = [5010, 5011, 5012];
 const POLL_MS = 5000;
-// Vocab ka kaam har poll par nahi — hazaron word ghoomna mehnga hai.
-const VOCAB_EVERY_MS = 30000;
 // Overlay ke panel par ab chaaro subject hain, isliye kram bhi chaaro ka jata
 // hai. Wahi chaar jo wrong-book mein hain — dono taraf ek hi naam chalte hain.
 const PANEL_SUBJECTS = SUBJECTS.map((s) => s.key);
@@ -59,9 +51,6 @@ export default function OverlayInbox() {
   // dobara-dobara nahi aazmate (neeche adopt wala hissa dekho).
   const badImg = useRef(new Set());
   // Vocab list ka pichla nishaan aur ginti — badle bina dobara nahi bhejte.
-  const vocabSig = useRef("");
-  const vocabCount = useRef(-1);
-  const vocabAt = useRef(0);
 
   useEffect(() => {
     // Sirf asli site se. localhost / LAN par chal rahi dev copy ke paas asli
@@ -393,57 +382,6 @@ export default function OverlayInbox() {
           break; // jis port par overlay mila, wahi kaafi hai
         }
 
-        // 🔤 Vocab overlay — apna alag app, apne port (5010+).
-        //
-        // Mock Test Helper se iska koi lena-dena nahi: wo band ho tab bhi ye
-        // chal sakta hai, isliye uski list alag se bheji jaati hai. Khidki
-        // bas ise ghumati rehti hai, isliye poori list ek saath jaati hai —
-        // par har 5 second nahi: ek sasta nishaan (ginti + aakhri word +
-        // pehla matlab) rakh kar tabhi bhejte hain jab sach mein kuch badla ho.
-        //
-        // Ye kaam SASTA rakhna zaroori hai. Poori list banana matlab hazaron
-        // word ghoomna, aur wo har 5 second karne se page hi jam jata hai.
-        // Isliye do taale: 30 second se pehle haath hi nahi lagate, aur uske
-        // baad bhi pehle ek sasta nishaan (teen store ki ginti) dekhte hain —
-        // list tabhi banti hai jab sach mein kuch badla ho, ya us taraf ki
-        // list adhoori ho.
-        try {
-          const now = Date.now();
-          if (now - vocabAt.current >= VOCAB_EVERY_MS) {
-            vocabAt.current = now;
-            // Jin naye word ka chhota matlab abhi bana hi nahi, unka ek batch
-            // DeepSeek se banwa lo. Wahi khud apna waqt sambhalta hai (ek
-            // minute mein ek batch, key na ho to kuch nahi) — aur jab tak
-            // matlab nahi banta, wo word kisi din mein jata bhi nahi.
-            await fillVocabLines();
-            const stamp = vocabStamp();
-            for (const port of VOCAB_PORTS) {
-              const base = `http://127.0.0.1:${port}`;
-              let have;
-              try {
-                const ping = await fetch(`${base}/vocab-ping`, { cache: "no-store" });
-                if (!ping.ok) continue;           // yahan vocab app nahi hai
-                have = (await ping.json()).n;
-              } catch { continue; }
-              // Nishaan wahi ho PAR wahan ginti alag ho — matlab uski list
-              // adhoori/purani hai (app naya chala, ya file kharab ho gayi).
-              // Tab bhi bhejo, warna wo hamesha ke liye adhoori padi rehti.
-              if (stamp !== vocabSig.current || have !== vocabCount.current) {
-                const list = vocabLineList();
-                const res = await fetch(`${base}/vocab-list`, {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ items: list }),
-                });
-                if (res.ok) {
-                  vocabSig.current = stamp;
-                  vocabCount.current = list.length;
-                }
-              }
-              break;                              // jis port par mila, wahi kaafi
-            }
-          }
-        } catch { /* vocab app band — agla poll phir koshish karega */ }
       } finally {
         busy.current = false;
       }
