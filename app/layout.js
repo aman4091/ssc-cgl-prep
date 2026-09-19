@@ -12,7 +12,6 @@ import SyncManager from "@/components/SyncManager";
 import Toast from "@/components/Toast";
 import OverlayInbox from "@/components/OverlayInbox";
 import VocabFeeder from "@/components/VocabFeeder";
-import ResumeQuiz from "@/components/ResumeQuiz";
 import StoreGate from "@/components/StoreGate";
 import SWRegister from "@/components/SWRegister";
 import PathMemo from "@/components/PathMemo";
@@ -113,7 +112,6 @@ export default function RootLayout({ children }) {
           <OverlayInbox />
           <VocabFeeder />
           {/* Beech mein chhoda hua quiz — floating "jahan chhoda tha" chip. */}
-          <ResumeQuiz />
           {/* 🚨 Har page par — motivation gayi to ek tap, videos shuru. */}
           <PanicButton />
           {/* Quiz ka Exit "jahan se aaye the" wahin lauta sake — lib/backto */}

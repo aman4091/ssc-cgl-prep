@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   SUBJECTS, getWrongBook, isSubject, imagesOf, dayLabel,
-  storeImages, addWrong, removeWrong, isPracticeable,
+  storeImages, addWrong, removeWrong,
   setDetail2, setShownDetail, cleanAnswer, newGeminiAnswer, newGemini1, newGemini2,
 } from "@/lib/wrongbook";
 import { getReview, removeReview, fixReviewAnswer } from "@/lib/qreview";
@@ -21,8 +21,7 @@ import {
 import { getCounts, bumpCount, countMark } from "@/lib/qcounter";
 import { useImageUrls } from "@/lib/wrongimages";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
-import { saveQuiz, makeId, freeRegenerableSpace, storageUsage } from "@/lib/storage";
-import { precacheShelf } from "@/lib/inkoffline";
+import { storageUsage } from "@/lib/storage";
 import Markdown, { LazyMarkdown } from "@/components/Markdown";
 import ZoomableImage from "@/components/ZoomableImage";
 import NotebookCard from "@/components/NotebookCard";
@@ -79,10 +78,10 @@ const ALL_SUBJ = { key: "", label: "Sab", icon: "\u{1F4DA}" };
 // chala jata hai, jaise koi bhi nipta hua question jata hai. Ek hi list,
 // dhoondhne ke liye ek hi jagah.
 const SOURCES = [
-  { key: "all", label: "\u{1F4DA} Sab (dono)" },
-  { key: "mock", label: "\u{1F5BC}️ External Mock (screenshot)" },
-  { key: "pyq", label: "\u{1F4DD} PYQ / Quiz ke galat" },
-  // Khud "🔴 Hard" dabaya hua — External Mock ki aam list se hat kar yahan.
+  { key: "all", label: "📚 Sab" },
+  // "External Mock (screenshot)" aur "PYQ / Quiz ke galat" wali chhaanti
+  // owner ne hata di — dono ek hi list hain aur alag-alag chhaantne ka
+  // kaam nahi pad raha tha. Record dono jagah se waise hi aate rahenge.
   { key: "hard", label: "🔴 Hard" },
 ];
 const isSource = (k) => SOURCES.some((s) => s.key === k);
@@ -585,11 +584,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   // ⬆️ Sabse upar.
   //
-  // Kinare wali list apne andar scroll hoti hai (88vh se lambi ho jati hai),
-  // isliye neeche pahunchte-pahunchte 1 se 5 uske apne scroll mein chhup jate
-  // hain — Question 1 par jaane ke liye pehle poora page upar laana padta tha.
-  // Ye button dono ko ek saath upar le aata hai: page bhi, aur list bhi.
-  const railRef = useRef(null);
+  // ⬆️ Sabse upar — lamba card padh kar wapas sar par.
   const [showTop, setShowTop] = useState(false);
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 400);
@@ -599,16 +594,8 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   }, []);
   const toTop = () => {
     try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch { window.scrollTo(0, 0); }
-    const el = railRef.current;
-    if (!el) return;
-    try { el.scrollTo({ top: 0, behavior: "smooth" }); } catch { el.scrollTop = 0; }
   };
 
-  // Rail ka number ab us question ka popup kholta hai.
-  //
-  // Pehle ye us card tak scroll karta tha, par ab list ek-ek karke chalti
-  // hai (PyqDrill) — page par doosra card maujood hi nahi hota. Popup wahi
-  // ek question apne Prev/Next ke saath dikha deta hai.
   // Chips par ginti — chuni hui shelf ki, taaki "Maths (12)" ka matlab wahi ho
   // jo neeche dikhega.
   const chipCounts = useMemo(() => {
@@ -616,12 +603,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     for (const r of pool) c[bucketOf(r)] = (c[bucketOf(r)] || 0) + 1;
     return c;
   }, [pool]);
-
-  const gotoFresh = () => {
-    const first = list.find((r) => r.__src === "mock" && freshIds.has(r.id));
-    if (first) document.getElementById(`ans-${first.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" });
-    setFreshIds(new Set());
-  };
 
   // Subject ya shelf badli to nayi list ke saare records "naye" nahi hain —
   // ginti shuru se karo.
@@ -692,29 +673,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   // 🔍 Popup mode — ek waqt mein EK question, poori screen par; ◀ ▶ se
   // aage-peechhe, upar se subject badlo. Dhyaan sirf sawaal par rahe.
-  // `focus` = `list` mein jagah (null = band). "Ho gaya" dabate hi wo question
-  // list mein neeche chala jata hai — isliye usi jagah par ab AGLA question
-  // hota hai, jagah badalni nahi padti.
-  const [focus, setFocus] = useState(null);
-  const focusBody = useRef(null);
-  const openPopup = (i) => setFocus(Math.max(0, i));
-  const popupOpen = focus !== null;
-  useEffect(() => {
-    if (!popupOpen) return undefined;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKey = (e) => {
-      const tag = (e.target && e.target.tagName) || "";
-      if (tag === "TEXTAREA" || tag === "INPUT" || tag === "SELECT") return;
-      if (e.key === "Escape") setFocus(null);
-      else if (e.key === "ArrowRight") setFocus((f) => (f === null ? f : f + 1));
-      else if (e.key === "ArrowLeft") setFocus((f) => (f === null ? f : Math.max(0, f - 1)));
-    };
-    window.addEventListener("keydown", onKey);
-    return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = prevOverflow; };
-  }, [popupOpen]);
-  useEffect(() => { focusBody.current?.scrollTo({ top: 0 }); }, [focus, subject]);
-
   const flashNow = useCallback((msg) => {
     setFlash(msg);
     setTimeout(() => setFlash(""), 5000);
@@ -738,7 +696,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       highlight={!inPopup && !!urlQid && r.qid === urlQid}
       isHardQ={hard.has(r.id)}
       onToggleHard={onToggleHard}
-      onPopup={inPopup ? null : () => openPopup(i)}
     />
   ) : (
     <NotebookCard
@@ -868,84 +825,11 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     return () => window.removeEventListener("paste", onPaste);
   }, [takeFiles]);
 
-  // Is shelf ko tablet par utaar lo — images service worker ke cache mein,
-  // handwriting IndexedDB mein. Sirf mock records ke paas image hai, isliye
-  // ginti bhi unhi ki.
-  const shelf = useMemo(() => list.filter((r) => r.__src === "mock"), [list]);
-  const [dl, setDl] = useState("");
-  const downloadOffline = async () => {
-    if (!shelf.length) return;
-    setDl("⬇️ 0%");
-    try {
-      const res = await precacheShelf(shelf, (n, total) => setDl(`⬇️ ${Math.round((n / total) * 100)}%`));
-      setDl("");
-      setFlash(
-        res.images
-          ? `✅ ${shelf.length} question offline ke liye tayar (${res.ink} par writing bhi).`
-          : "✅ Writing utar gayi. Images offline tabhi chalengi jab app HTTPS par khuli ho."
-      );
-      setTimeout(() => setFlash(""), 6000);
-    } catch {
-      setDl("");
-      setErr("Offline download nahi ho paya.");
-    }
-  };
-
-  // 🎯 Practice sirf mock shelf ka — quiz player ko poore options chahiye, aur
-  // notebook ke tasveer-wale question (image bank) usme theek se khulte nahi.
-  // Unke liye already quiz ka apna raasta hai.
-  const practiceable = shelf.filter(isPracticeable);
-  const practice = () => {
-    if (!practiceable.length) return;
-    const quiz = {
-      id: makeId(),
-      title: `${active.icon} ${active.label} · Answers`,
-      source: "wrongbook",
-      createdAt: new Date().toISOString(),
-      questions: practiceable.map((r) => r.q),
-    };
-    saveQuiz(quiz);
-    router.push(`/quizzes/${quiz.id}`);
-  };
-
   const chips = [ALL_SUBJ, ...SUBJECTS];
 
   return (
     <div className="ansp">
-      {list.length > 0 && (
-        <nav className="ansp__side" ref={railRef}>
-          {list.map((r, i) => (
-            <a
-              key={r.uid}
-              href="#"
-              onClick={(e) => { e.preventDefault(); openPopup(i); }}
-            >
-              {i + 1}
-            </a>
-          ))}
-        </nav>
-      )}
-
       <div className="ansp__main">
-        <div className="ansp__stats">
-          {/* Aaj ka counter — mark karne se apne aap badhta hai, aur haath se
-              bhi (mock ke question jo yahan nahi hain, wo bhi gin lo). */}
-          <span className="cnt" title="Aaj is subject ke kitne question hue (raat 3 baje reset)">
-            🔢 {active.label} aaj: {subject && subject !== "other"
-              ? (counts[subject] || 0)
-              : SUBJECTS.reduce((n, s) => n + (counts[s.key] || 0), 0)}
-            {subject && subject !== "other" && (
-              <>
-                <button type="button" onClick={() => nudge(-1)} aria-label="ek kam">−</button>
-                <button type="button" onClick={() => nudge(1)} aria-label="ek zyada">+</button>
-              </>
-            )}
-          </span>
-          <span className="tot">📊 Total: {list.length}</span>
-        </div>
-
-        <h1>{active.icon} {active.label} Questions</h1>
-
         {/* Kaunsi shelf — screenshot wale mock, quiz ke galat, ya dono. */}
         <div className="ansp__acts ansp__acts--top">
           <label className="ansp__hint" htmlFor="ansp-src">Kahan se aaye:</label>
@@ -1016,35 +900,8 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
         </div>
 
         <div className="ansp__acts ansp__acts--top">
-          <span className="ansp__hint">
-            {busy ? "⏳ Image save ho rahi hai…" : "📥 Screenshot paste karo (Ctrl+V) — naya question add ho jayega"}
-          </span>
-          {list.length > 0 && (
-            <button className="ansp__btn ansp__btn--go" onClick={() => openPopup(0)}
-              title="Ek waqt mein ek question — poori screen par, ◀ ▶ se aage-peechhe">
-              🔍 Popup mode
-            </button>
-          )}
-          {practiceable.length > 0 && (
-            <button className="ansp__btn" onClick={practice}>🎯 Practice ({practiceable.length})</button>
-          )}
-          {shelf.length > 0 && (
-            <button className="ansp__btn" onClick={downloadOffline} disabled={!!dl}
-              title="In questions ki images aur writing tablet par utaar lo">
-              {dl || `⬇️ Offline (${shelf.length})`}
-            </button>
-          )}
-          <button
-            className="ansp__btn"
-            onClick={() => {
-              const bytes = freeRegenerableSpace();
-              refresh();
-              flashNow(bytes > 0 ? `🧹 ${(bytes / 1024).toFixed(0)} KB saf ho gayi` : "🧹 Abhi koi safai nahi hui");
-            }}
-            title="Purane quizzes aur feed caches hatao — save ke liye jagah banao"
-          >
-            🧹 Free space
-          </button>
+          {/* Upar ab bas yahi — owner ne baaki sab hata diya. Question ke
+              apne button (✨ Gemini, 🐋 DeepSeek, 🎯 20) card par hi hain. */}
           <button
             className="ansp__btn"
             onClick={() => setReport(true)}
@@ -1052,17 +909,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           >
             📊 Chapter report
           </button>
-          {/* Baaki do shelf jo abhi alag hain — dono ek hi aadat ke hisse hain:
-              kya galat hua, aur kya mehnga pada. */}
         </div>
-
-        {/* Naya question list ke ANT mein judta hai, isliye wo screen se bahar
-            ho sakta hai — ye patti batati hai ki aaya hai aur wahan le jaati hai. */}
-        {freshIds.size > 0 && (
-          <button className="ansp__newbar" onClick={gotoFresh}>
-            ➕ {freshIds.size} naya question aaya — neeche dekho ↓
-          </button>
-        )}
 
         {flash && <p className="ansp__flash">{flash}</p>}
         {err && <p className="ansp__err">{err}</p>}
@@ -1087,37 +934,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
             renderCard={(r, i) => renderCard(r, i, false)}
           />
         )}
-
-        {focus !== null && (() => {
-          const idx = Math.min(focus, Math.max(0, list.length - 1));
-          const r = list[idx];
-          return (
-            <div className="ansfocus" role="dialog" aria-modal="true" aria-label="Question popup"
-              onClick={(e) => { if (e.target === e.currentTarget) setFocus(null); }}>
-              <div className="ansfocus__panel">
-                <div className="ansfocus__bar">
-                  <div className="ansfocus__chips">
-                    {chips.map((c) => (
-                      <button key={c.key || "all"} className={c.key === subject ? "is-on" : ""}
-                        onClick={() => { go({ subject: c.key }); setFocus(0); }}>
-                        {c.icon} {c.label} <span>{chipCounts[c.key] || 0}</span>
-                      </button>
-                    ))}
-                  </div>
-                  <button className="ansfocus__x" onClick={() => setFocus(null)} aria-label="Popup band karo" title="Band karo (Esc)">✕</button>
-                </div>
-                <div className="ansfocus__body" ref={focusBody}>
-                  {r ? renderCard(r, idx, true) : <p className="ansp__empty">Is subject mein abhi koi question nahi.</p>}
-                </div>
-                <div className="ansfocus__nav">
-                  <button className="ansp__btn" disabled={idx <= 0} onClick={() => setFocus(Math.max(0, idx - 1))}>◀ Previous</button>
-                  <span>{list.length ? `Question ${idx + 1} / ${list.length}` : "—"}</span>
-                  <button className="ansp__btn" disabled={idx >= list.length - 1} onClick={() => setFocus(idx + 1)}>Next ▶</button>
-                </div>
-              </div>
-            </div>
-          );
-        })()}
 
         {showTop && (
           <button className="ansp__top" onClick={toTop} title="Sabse upar — Question 1 par" aria-label="Sabse upar jao">

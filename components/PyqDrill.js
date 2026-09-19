@@ -19,6 +19,7 @@
 import { cloneElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "@/app/ca-revision/carev.css";
 import { getDrill, getOrder, saveOrder, markDrill, qKeyOf, KNOWN_GAP, missGap } from "@/lib/pyqdrill";
+import { hashStr } from "@/lib/syncitems";
 
 function shuffled(list) {
   const a = [...list];
@@ -38,6 +39,8 @@ export default function PyqDrill({
   // quiz ka galat question) jahan `id` takra sakta hai, isliye wahan se
   // apna `uid` bheja jata hai.
   const keyFor = keyOf || qKeyOf;
+  // Kram isi chhoti pehchaan se bachta hai (lib/pyqdrill dekho).
+  const hashOf = useCallback((q) => hashStr(keyFor(q)), [keyFor]);
   const [queue, setQueue] = useState(() => [...list]);
   const [pos, setPos] = useState(0);
   // Question -> chapter ki asli list mein uska number. Kram isi shakl mein
@@ -46,7 +49,7 @@ export default function PyqDrill({
     const m = new Map();
     list.forEach((q, i) => m.set(keyFor(q), i));
     return m;
-  }, [list]);
+  }, [list, keyFor]);
   const [done, setDone] = useState({ good: 0, bad: 0 });
   const stats = useRef({});
 
@@ -63,16 +66,35 @@ export default function PyqDrill({
       setPos(0);
       return;
     }
+    const byHash = new Map();
+    list.forEach((item) => { const h = hashOf(item); if (!byHash.has(h)) byHash.set(h, item); });
     const seen = new Set();
     const q = [];
-    for (const i of saved) {
-      const item = list[i];
-      if (item && !seen.has(i)) { seen.add(i); q.push(item); }
+    for (const h of saved) {
+      const item = byHash.get(h);
+      if (item && !seen.has(h)) { seen.add(h); q.push(item); }
     }
-    list.forEach((item, i) => { if (!seen.has(i)) q.push(item); });
+    // Beech mein juda NAYA question (overlay se aaya, ya quiz ka taza galat)
+    // qataar ke ANT mein nahi jata — 400 question ki list mein uska matlab
+    // hota "mahine bhar baad". Wo bhi lagbhag 100 question aage lagta hai,
+    // yaani ek-do din mein saamne.
+    //
+    // THEEK 100 par nahi: "Aata hai" wala card khud KNOWN_GAP-1 (99) par
+    // wapas ghusta hai, isliye 99 ya uske aage baitha card har jawab par ek
+    // kadam aage khisak kar wahin ka wahin reh jata hai — kabhi saamne aata
+    // hi nahi. Us lakeer se thoda pehle rakhne par wo har jawab ke saath ek
+    // kadam paas aata hai.
+    //
+    // Ek se zyada naye hon to line mein: pehla sabse pehle, uske baad wala
+    // uske peechhe — koi kisi ki jagah nahi leta.
+    const fresh = list.filter((item) => !seen.has(hashOf(item)));
+    if (fresh.length) {
+      const at = Math.max(0, Math.min(q.length, KNOWN_GAP - 2 - (fresh.length - 1)));
+      q.splice(at, 0, ...fresh);
+    }
     setQueue(q);
     setPos(0);
-  }, [list, chapter, shuffleFirst]);
+  }, [list, chapter, shuffleFirst, hashOf]);
 
   const known = useMemo(() => {
     const s = stats.current || {};
@@ -90,10 +112,10 @@ export default function PyqDrill({
     next.splice(Math.min(pos + gap - 1, next.length), 0, q);
     setQueue(next);
     // Naya kram wahin likh do — tab ab band ho jaye to bhi yahi se chalega.
-    saveOrder(chapter, next.map((x) => idxOf.get(keyFor(x))).filter((i) => i != null), list.length);
+    saveOrder(chapter, next.map(hashOf), list.length);
     setDone((d) => (good ? { ...d, good: d.good + 1 } : { ...d, bad: d.bad + 1 }));
     window.scrollTo(0, 0);
-  }, [queue, pos, chapter, idxOf, list.length, keyFor]);
+  }, [queue, pos, chapter, list.length, keyFor, hashOf]);
 
   useEffect(() => {
     const onKey = (e) => {
