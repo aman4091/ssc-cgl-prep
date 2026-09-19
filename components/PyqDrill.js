@@ -11,22 +11,46 @@
 //   Nahi aata hai -> 3re sawaal baad phir aata hai; agli baar 4the, phir
 //                    5ve … jab tak "Aata hai" na lage (gap har baar +1)
 //
-// Ginti lib/pyqdrill.js mein rehti hai, isliye chapter dobara kholne par
-// gap wahin se aage badhta hai.
+// Ginti AUR qataar ka kram, dono lib/pyqdrill.js mein bachte hain. Isliye
+// site band karke kholne par wahi se shuru hota hai jahan chhoda tha —
+// question 5 par "nahi aata" dabaya to agli baar 6 se shuru, aur 5 apne
+// 3/4/5… wale gap ke baad wahin wapas.
 
 import { cloneElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "@/app/ca-revision/carev.css";
-import { getDrill, markDrill, qKeyOf, KNOWN_GAP, missGap } from "@/lib/pyqdrill";
+import { getDrill, getOrder, saveOrder, markDrill, qKeyOf, KNOWN_GAP, missGap } from "@/lib/pyqdrill";
 
 export default function PyqDrill({ title, list, resumeKey, renderCard }) {
   const chapter = resumeKey || title || "pyq";
   const [queue, setQueue] = useState(() => [...list]);
   const [pos, setPos] = useState(0);
+  // Question -> chapter ki asli list mein uska number. Kram isi shakl mein
+  // bachta hai, aur card ke sar par "Q 5/387" bhi yahi se aata hai.
+  const idxOf = useMemo(() => {
+    const m = new Map();
+    list.forEach((q, i) => m.set(qKeyOf(q), i));
+    return m;
+  }, [list]);
   const [done, setDone] = useState({ good: 0, bad: 0 });
   const stats = useRef({});
 
   useEffect(() => { stats.current = getDrill(chapter); }, [chapter]);
-  useEffect(() => { setQueue([...list]); setPos(0); }, [list]);
+
+  // Pichhli baar ka kram wapas. Adhoora ya purana ho to jo mila wo aage,
+  // baaki list ke apne kram mein peechhe — koi question gum na ho.
+  useEffect(() => {
+    const saved = getOrder(chapter, list.length);
+    if (!saved) { setQueue([...list]); setPos(0); return; }
+    const seen = new Set();
+    const q = [];
+    for (const i of saved) {
+      const item = list[i];
+      if (item && !seen.has(i)) { seen.add(i); q.push(item); }
+    }
+    list.forEach((item, i) => { if (!seen.has(i)) q.push(item); });
+    setQueue(q);
+    setPos(0);
+  }, [list, chapter]);
 
   const known = useMemo(() => {
     const s = stats.current || {};
@@ -39,15 +63,15 @@ export default function PyqDrill({ title, list, resumeKey, renderCard }) {
     const st = markDrill(chapter, q, good);
     stats.current = { ...stats.current, [qKeyOf(q)]: st };
     const gap = good ? KNOWN_GAP : missGap(st.m || 1);
-    setQueue((old) => {
-      const next = [...old];
-      next.splice(pos, 1);
-      next.splice(Math.min(pos + gap - 1, next.length), 0, q);
-      return next;
-    });
+    const next = [...queue];
+    next.splice(pos, 1);
+    next.splice(Math.min(pos + gap - 1, next.length), 0, q);
+    setQueue(next);
+    // Naya kram wahin likh do — tab ab band ho jaye to bhi yahi se chalega.
+    saveOrder(chapter, next.map((x) => idxOf.get(qKeyOf(x))).filter((i) => i != null), list.length);
     setDone((d) => (good ? { ...d, good: d.good + 1 } : { ...d, bad: d.bad + 1 }));
     window.scrollTo(0, 0);
-  }, [queue, pos, chapter]);
+  }, [queue, pos, chapter, idxOf, list.length]);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -68,7 +92,7 @@ export default function PyqDrill({ title, list, resumeKey, renderCard }) {
   return (
     <div className="pyqd">
       <div className="pyqd-bar">
-        <span className="carev-count">Sawaal {pos + 1}</span>
+        <span className="carev-count">Q {(idxOf.get(qKeyOf(q)) ?? 0) + 1}/{list.length}</span>
         <span className="carev-dim carev-small">
           {known}/{list.length} aata hai
           {st.m ? ` · ye ${st.m} baar galat` : ""}
