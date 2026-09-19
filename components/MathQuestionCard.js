@@ -13,8 +13,10 @@ import { mathTq } from "@/lib/imgq";
 import Markdown from "./Markdown";
 import AskElsewhere from "./AskElsewhere";
 import PasteAnswer from "./PasteAnswer";
+import ClusterButton from "./ClusterButton";
 import { isDone } from "@/lib/qdone";
 import { useExamMode } from "./ExamMode";
+import { useDeepSeek, dsLabel, dsTitle } from "@/lib/usedeepseek";
 
 // A maths question is IMAGES — the stem, four options and the solution are PNG→
 // WebP crops on the R2 CDN, because maths does not survive being flattened to
@@ -89,6 +91,9 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   // the stats/bookmark/shortcut key unique and stable even when two questions'
   // lossy text collides or is empty.
   const alt = q.qText || `Maths ${q.id}`;
+  // Option-text nikla hi nahi = sawaal poori tarah tasveer hai. Aise
+  // question ka text AI ko bhejna bekaar hai (✨ wala tasveer bhejta hai).
+  const aiUseful = Array.isArray(q.optText) && q.optText.filter(Boolean).length === 4;
   // Notebook/stats wala text-roop ab lib/imgq mein hai — stylus wale parde ko
   // bhi bilkul yahi chahiye, aur do jagah do formula rakhne se ek hi question
   // do alag pehchaan se notebook mein chala jata tha.
@@ -199,6 +204,20 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
   // reply under the load. So generate a first small batch, open the quiz right
   // away, then keep topping it up to the target in the background — the quiz
   // player listens for cgl:quiz-appended and shows new questions as they land.
+  // 🐋 DeepSeek — paste kiye hue Gemini answer se alag store mein
+  // (lib/usedeepseek), prompt wahi jo ✨ wala button copy karta hai.
+  //
+  // Tasveer wale question par jab tak option-text nikla hi nahi, AI ko
+  // bhejne layak kuch nahi hota — tab button dikhta hi nahi.
+  const dsq = useDeepSeek(tq, subject, () => {
+    const opts = tq.options.map((o, i) => `${String.fromCharCode(65 + i)}) ${o}`).join("   ");
+    return `${q.qText || ""}
+Options: ${opts}
+` + `Correct answer (already verified): ${String.fromCharCode(65 + q.answer)}) ${tq.options[q.answer]}
+`;
+  });
+  const askDeepSeek = async () => { await dsq.ask(); setPeek(true); };
+
   const make20 = async () => {
     setSimLoading(true); setErr("");
     try {
@@ -223,7 +242,9 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
 
   // A pasted Gemini answer is the solution from then on — the book's own
   // solution image is dropped rather than shown underneath it.
-  const solution = shortcut || q.solution || q.explanation || "";
+  const dsUp = dsq.shown && dsq.ds;
+  const solution = dsUp ? dsq.ds : (shortcut || dsq.ds || q.solution || q.explanation || "");
+  const solSrc = dsUp ? "🐋 DeepSeek" : shortcut ? "✨ paste kiya hua" : dsq.ds ? "🐋 DeepSeek" : "";
   // Timer chalte waqt kuch nahi khulta; Submit ke baad sab khulta hai —
   // chhode hue question bhi.
   const shown = !locked && (!!exam?.revealAll || revealed || peek);
@@ -251,6 +272,11 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
             onAsked={openPaste}
           />
         </span>
+          {aiUseful && (
+            <button className="btn btn--sm q-act--keep" onClick={askDeepSeek} disabled={dsq.loading} title={dsTitle(dsq)}>
+              {dsLabel(dsq)}
+            </button>
+          )}
           <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
         </span>
       </h2>
@@ -298,7 +324,7 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
       </div>
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
-      {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}
+      {(err || dsq.err) && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err || dsq.err}</p>}
 
       {/* ANSWER — Answers page wala alag block, sabse neeche. */}
       {shown ? (
@@ -306,6 +332,9 @@ export default function MathQuestionCard({ q, index, subject = "math", resumeKey
           <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
             ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
           </p>
+          {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
+          {/* Jawab ka 🧩 CLUSTER seedha Fact log mein — Answers page wala button. */}
+          <ClusterButton md={solution} onFlash={setFlash} />
           {/* A pasted Gemini answer replaces the book's solution image outright,
               rather than being stacked under it. */}
           {solution ? (

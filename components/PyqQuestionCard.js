@@ -7,7 +7,7 @@ import { saveQuiz, makeId } from "@/lib/storage";
 import { setResume } from "@/lib/qprogress";
 import { recordAttempts, keyFor } from "@/lib/qstats";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
-import { getDsAnswer, saveDsAnswer } from "@/lib/dsanswers";
+import { useDeepSeek, dsLabel, dsTitle } from "@/lib/usedeepseek";
 import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
 import Diagram from "./Diagram";
@@ -50,19 +50,10 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   const [recorded, setRecorded] = useState(false);
   const [flash, setFlash] = useState("");
   const [editing, setEditing] = useState(false);
-  const [ds, setDs] = useState("");          // DeepSeek ka jawab (apna store)
-  const [dsShown, setDsShown] = useState(false);  // 🐋 dabaya — Gemini ho tab bhi DeepSeek dikhao
-  const [dsLoading, setDsLoading] = useState(false);
   const [peek, setPeek] = useState(false);   // 👁️ — bina attempt kiye answer
   const [done, setDone] = useState(false);   // sirf dikhawe ke liye (dhundhla card)
   const archiveTimer = useRef(null);
   useEffect(() => { setShortcut(getSavedShortcut(q)); }, [q]);
-  useEffect(() => { setDs(getDsAnswer(q)); setDsShown(false); }, [q]);
-  useEffect(() => {
-    const h = (e) => { if (!e.detail?.key || e.detail.key === keyFor(q)) setDs(getDsAnswer(q)); };
-    window.addEventListener("cgl:ds-saved", h);
-    return () => window.removeEventListener("cgl:ds-saved", h);
-  }, [q]);
   // Paste kiya hua Gemini answer sabse upar hai: save hote hi card usse utha leta
   // hai aur answer block khol deta hai — book ka apna solution/explanation
   // (ya solution image) tab dikhta hi nahi. Reload ka intezaar nahi.
@@ -140,26 +131,17 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   const regenShortcut = () => { clearSavedShortcut(q); setShortcut(""); fetchShortcut(); };
 
 
-  // 🐋 DeepSeek — mode "explain" (mode "shortcut" Settings mein Gemini key
-  // hone par Gemini API par chala jata hai; wo kabhi nahi chahiye). Jawab
-  // apne store mein save hota hai, isliye dobara dabane par muft mein wahi
-  // wapas aata hai; naya chahiye to 🔄 se.
-  const askDeepSeek = async () => {
-    if (ds) { setDsShown((v) => !v); setPeek(true); return; }
-    setDsLoading(true); setErr("");
-    try {
-      const opts = (q.options || []).map((o, i) => `${String.fromCharCode(65 + i)}) ${o}`).join("   ");
-      const text = `${q.question}
+  // 🐋 DeepSeek — apna jawab, paste kiye hue Gemini answer se alag store
+  // mein (lib/usedeepseek). Prompt wahi jo ✨ wala button copy karta hai.
+  const dsq = useDeepSeek(q, subject, () => {
+    const opts = (q.options || []).map((o, i) => `${String.fromCharCode(65 + i)}) ${o}`).join("   ");
+    return `${q.question}
 Options: ${opts}
 `
-        + (q.answer != null ? `Correct answer (already verified): ${String.fromCharCode(65 + q.answer)}) ${q.options[q.answer]}
+      + (q.answer != null ? `Correct answer (already verified): ${String.fromCharCode(65 + q.answer)}) ${q.options[q.answer]}
 ` : "");
-      const { answer } = await askAI({ question: text, mode: "explain", subject });
-      saveDsAnswer(q, answer);
-      setDs(answer); setDsShown(true); setPeek(true);
-    } catch (e) { setErr(e.message); } finally { setDsLoading(false); }
-  };
-  const regenDeepSeek = async () => { setDs(""); setDsShown(false); await askDeepSeek(); };
+  });
+  const askDeepSeek = async () => { await dsq.ask(); setPeek(true); };
 
   const make20 = async () => {
     setSimLoading(true); setErr("");
@@ -174,8 +156,9 @@ Options: ${opts}
   // Kaunsa jawab dikhega — owner ka kram: paste kiya hua Gemini sabse upar,
   // phir DeepSeek, phir book ka apna solution/explanation. 🐋 dabane par
   // DeepSeek wala upar aa jata hai (Gemini maujood ho tab bhi).
-  const solution = (dsShown && ds) ? ds : (shortcut || ds || q.solution || q.explanation || "");
-  const solSrc = (dsShown && ds) ? "🐋 DeepSeek" : shortcut ? "✨ paste kiya hua" : ds ? "🐋 DeepSeek" : "";
+  const dsUp = dsq.shown && dsq.ds;
+  const solution = dsUp ? dsq.ds : (shortcut || dsq.ds || q.solution || q.explanation || "");
+  const solSrc = dsUp ? "🐋 DeepSeek" : shortcut ? "✨ paste kiya hua" : dsq.ds ? "🐋 DeepSeek" : "";
   // Answer block khula hai ya nahi. 👁️ (peek) sirf dikhata hai — attempt,
   // timer aur wrong-book usse nahi chhedte.
   // Timer chalte waqt kuch nahi khulta; Submit ke baad sab khulta hai —
@@ -202,10 +185,10 @@ Options: ${opts}
           <button
             className="btn btn--sm q-act--keep"
             onClick={askDeepSeek}
-            disabled={dsLoading}
-            title={ds ? (dsShown ? "DeepSeek ka jawab chhupao" : "DeepSeek ka saved jawab dikhao") : "DeepSeek se is question ka jawab laao"}
+            disabled={dsq.loading}
+            title={dsTitle(dsq)}
           >
-            {dsLoading ? "…" : ds ? (dsShown ? "🐋 ✓" : "🐋") : "🐋 DeepSeek"}
+            {dsLabel(dsq)}
           </button>
           <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
         </span>
@@ -296,7 +279,7 @@ Options: ${opts}
       )}
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
-      {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}
+      {(err || dsq.err) && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err || dsq.err}</p>}
 
       {/* ANSWER — Answers page ki tarah apne block mein, sabse neeche. Block
           hamesha maujood hai; khaali ho to wahi batata hai aur khol deta hai. */}
@@ -317,11 +300,11 @@ Options: ${opts}
               Is question ka explanation abhi nahi hai — ✨ Gemini se laa kar paste kar do.
             </span>
           )}
-          {dsShown && ds && (
-            <button className="btn btn--ghost btn--sm mt-12" onClick={regenDeepSeek} disabled={dsLoading}>
-              {dsLoading ? "Soch raha hai…" : "🔄 Naya DeepSeek jawab"}
+          {dsUp ? (
+            <button className="btn btn--ghost btn--sm mt-12" onClick={dsq.regen} disabled={dsq.loading}>
+              {dsq.loading ? "Soch raha hai…" : "🔄 Naya DeepSeek jawab"}
             </button>
-          )}
+          ) : null}
           {scShown && shortcut && (
             <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
               {scLoading ? "Thinking…" : "🔄 New shortcut"}

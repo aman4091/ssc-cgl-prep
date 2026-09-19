@@ -12,8 +12,10 @@ import { reasonTq } from "@/lib/imgq";
 import Markdown from "./Markdown";
 import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
+import ClusterButton from "./ClusterButton";
 import { isDone } from "@/lib/qdone";
 import { useExamMode } from "./ExamMode";
+import { useDeepSeek, dsLabel, dsTitle } from "@/lib/usedeepseek";
 
 // A reasoning question is IMAGES — MathQuestionCard's twin (same answer/reveal/
 // archive/bookmark machinery, same shortcut / 20-similar / ask buttons), with
@@ -135,6 +137,21 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
   const regenShortcut = () => { clearSavedShortcut(tq); setShortcut(""); fetchShortcut(); };
 
 
+  // 🐋 DeepSeek — paste kiye hue Gemini answer se alag store mein
+  // (lib/usedeepseek), prompt wahi jo ✨ wala button copy karta hai.
+  // Non-verbal (poori tasveer wale) question par bhejne layak text hi nahi
+  // hota — wahan button dikhta hi nahi (aiUseful).
+  const dsq = useDeepSeek(tq, subject, () => {
+    const opts = tq.options.map((o, i) => `${String.fromCharCode(65 + i)}) ${o}`).join("   ");
+    return `${q.instruction ? `${q.instruction}
+` : ""}${q.qText || ""}
+Options: ${opts}
+`
+      + `Correct answer (already verified): ${String.fromCharCode(65 + q.answer)}) ${tq.options[q.answer]}
+`;
+  });
+  const askDeepSeek = async () => { await dsq.ask(); setPeek(true); };
+
   const make20 = async () => {
     setSimLoading(true); setErr("");
     try {
@@ -148,7 +165,9 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
 
   // A pasted Gemini answer is the solution from then on — the book's own
   // solution image is dropped rather than shown underneath it.
-  const solution = shortcut || q.solution || q.explanation || "";
+  const dsUp = dsq.shown && dsq.ds;
+  const solution = dsUp ? dsq.ds : (shortcut || dsq.ds || q.solution || q.explanation || "");
+  const solSrc = dsUp ? "🐋 DeepSeek" : shortcut ? "✨ paste kiya hua" : dsq.ds ? "🐋 DeepSeek" : "";
   // Timer chalte waqt kuch nahi khulta; Submit ke baad sab khulta hai —
   // chhode hue question bhi.
   const shown = !locked && (!!exam?.revealAll || revealed || peek);
@@ -166,6 +185,11 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
             kaam ki hain — sawaal ke saath hi. */}
         <span className="qcard__hacts">
           <span className="q-act--keep"><AskButtons q={tq} subject={subject} /></span>
+          {aiUseful && (
+            <button className="btn btn--sm q-act--keep" onClick={askDeepSeek} disabled={dsq.loading} title={dsTitle(dsq)}>
+              {dsLabel(dsq)}
+            </button>
+          )}
           <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
         </span>
       </h2>
@@ -226,7 +250,7 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
       </div>
 
       {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
-      {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err}</p>}
+      {(err || dsq.err) && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err || dsq.err}</p>}
       {!aiUseful && (
         <p className="qcard__note">
           🖼️ Figure question — ismein bhejne layak TEXT nahi hai, isliye ✨ Gemini question ki
@@ -240,6 +264,9 @@ export default function ReasonQuestionCard({ q, index, subject = "reasoning", re
           <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
             ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
           </p>
+          {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
+          {/* Jawab ka 🧩 CLUSTER seedha Fact log mein — Answers page wala button. */}
+          <ClusterButton md={solution} onFlash={setFlash} />
           {solution ? (
             <Markdown>{solution}</Markdown>
           ) : q.solImg ? (
