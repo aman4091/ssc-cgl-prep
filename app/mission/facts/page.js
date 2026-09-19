@@ -2,7 +2,7 @@
 
 import "@/app/ca-revision/carev.css";
 import { useEffect, useMemo, useState } from "react";
-import { FACT_SECS, getFacts, addFact, removeFact, dueFacts, reviewFact, topicsInUse } from "@/lib/missionfacts";
+import { FACT_SECS, getFacts, addFact, removeFact, clearFacts, dueFacts, reviewFact, topicsInUse } from "@/lib/missionfacts";
 import { getMission, currentDayNum, planFor } from "@/lib/mission";
 import Recall from "@/components/carevision/Recall";
 
@@ -174,6 +174,14 @@ export default function MissionFactsPage() {
       <section className="section">
         <div className="row between ms-form" style={{ marginBottom: 8 }}>
           <h2 className="ms-h2" style={{ margin: 0 }}>Saare facts ({facts.length})</h2>
+          {facts.length > 0 && (
+            <button
+              className="btn btn--ghost btn--sm"
+              onClick={() => {
+                if (confirm(`Saare ${facts.length} facts hamesha ke liye hat jayenge. Pakka?`)) { clearFacts(); load(); }
+              }}
+            >🗑️ Sab hatao</button>
+          )}
           <input className="input" style={{ maxWidth: 220 }} value={q} onChange={(e) => setQ(e.target.value)} placeholder="🔎 dhoondo" />
         </div>
         {groups.length === 0 ? (

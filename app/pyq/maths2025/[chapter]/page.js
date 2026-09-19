@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadSscMathsChapter, sscMathsChapterMeta } from "@/lib/sscmaths";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
-import QBoard from "@/components/QBoard";
+import PyqDrill from "@/components/PyqDrill";
 
 // One chapter's questions, full width.
 //
@@ -51,7 +51,7 @@ export default function SscMathsChapterPage() {
     );
   }
 
-  // Rail, aaj ka counter, ho-gaye-neeche aur "Show more" — sab QBoard ke paas.
+  // Ek-ek sawaal (components/PyqDrill.js): answer khula, neeche "Aata hai / Nahi aata hai".
   const resumeKey = `maths2025:${chapter}`;
 
   return (
@@ -79,7 +79,7 @@ export default function SscMathsChapterPage() {
         ) : filtered.length === 0 ? (
           <div className="placeholder">{query ? "Kuch nahi mila." : "Is chapter mein koi question nahi."}</div>
         ) : (
-          <QBoard
+          <PyqDrill
             title={`Maths 2025 · ${meta?.label || ""}`}
             list={filtered}
             subject="math"

@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadWarSubject, warSubjectMeta } from "@/lib/warbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
-import QBoard from "@/components/QBoard";
+import PyqDrill from "@/components/PyqDrill";
 
 
 export default function WarSubjectPage() {
@@ -27,7 +27,7 @@ export default function WarSubjectPage() {
   }, [subject]);
 
   // useMemo zaroori hai: bina iske har render par nayi array banti hai, aur
-  // QBoard use "nayi list" samajh kar apna slice/rail har baar reset kar deta.
+  // Nayi list milte hi drill shuru se chalti hai.
   const filtered = useMemo(
     () => (chapter === "" ? qs : qs.filter((q) => q.chapter === chapter)),
     [qs, chapter]
@@ -43,7 +43,7 @@ export default function WarSubjectPage() {
     );
   }
 
-  // Rail, aaj ka counter, ho-gaye-neeche aur "Show more" — sab QBoard ke paas.
+  // Ek-ek sawaal (components/PyqDrill.js): answer khula, neeche "Aata hai / Nahi aata hai".
   const resumeKey = `war:${subject}`;
 
   return (
@@ -91,7 +91,7 @@ export default function WarSubjectPage() {
         ) : filtered.length === 0 ? (
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
-          <QBoard
+          <PyqDrill
             title={`WAR · ${meta?.label || ""}`}
             list={filtered}
             subject="gs"

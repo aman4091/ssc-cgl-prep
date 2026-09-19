@@ -24,7 +24,7 @@ import { useExamMode } from "./ExamMode";
 // quiz nahi hai), yahan question attempt karne ki cheez hai — isliye answer ka
 // block hamesha maujood hai par option chunne tak (ya 👁️ dabane tak) andar
 // "Answer dekho" likha rehta hai. 👁️ se koi attempt record nahi hota.
-export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter }) {
+export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, alwaysAnswer }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -146,7 +146,9 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   // timer aur wrong-book usse nahi chhedte.
   // Timer chalte waqt kuch nahi khulta; Submit ke baad sab khulta hai —
   // chhode hue question bhi.
-  const shown = !locked && (!!exam?.revealAll || revealed || peek);
+  // Drill mode (components/PyqDrill.js) mein answer hamesha khula rehta hai —
+  // wahan attempt nahi hota, padho aur batao "aata hai ya nahi".
+  const shown = !locked && (!!exam?.revealAll || revealed || peek || !!alwaysAnswer);
 
 
   return (

@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { loadGkIndex, loadGkTopic } from "@/lib/gkbank";
 import { isUserTopicId, getUserTopic, getUserBook, getUserTopicQuestions } from "@/lib/userpyq";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
-import QBoard from "@/components/QBoard";
+import PyqDrill from "@/components/PyqDrill";
 
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are
@@ -67,7 +67,7 @@ export default function GkTopicPage() {
     );
   }
 
-  // Rail, aaj ka counter, ho-gaye-neeche aur "Show more" — sab QBoard ke paas.
+  // Ek-ek sawaal (components/PyqDrill.js): answer khula, neeche "Aata hai / Nahi aata hai".
   const resumeKey = `gk:${slug}`;
 
   return (
@@ -93,7 +93,7 @@ export default function GkTopicPage() {
         ) : qs.length === 0 ? (
           <div className="placeholder">Is topic mein koi question nahi. 🤔</div>
         ) : (
-          <QBoard
+          <PyqDrill
             title={topic?.chapter || topic?.label || "Test"}
             list={qs}
             subject={topic?.subject || "gs"}

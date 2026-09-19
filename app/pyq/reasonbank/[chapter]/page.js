@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadReasonChapter, reasonChapterMeta } from "@/lib/reasonbank";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
-import QBoard from "@/components/QBoard";
+import PyqDrill from "@/components/PyqDrill";
 
 
 export default function ReasonbankChapterPage() {
@@ -35,7 +35,7 @@ export default function ReasonbankChapterPage() {
     );
   }
 
-  // Rail, aaj ka counter, ho-gaye-neeche aur "Show more" — sab QBoard ke paas.
+  // Ek-ek sawaal (components/PyqDrill.js): answer khula, neeche "Aata hai / Nahi aata hai".
   const resumeKey = `reasonbank:${chapter}`;
 
   return (
@@ -60,7 +60,7 @@ export default function ReasonbankChapterPage() {
         ) : qs.length === 0 ? (
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
-          <QBoard
+          <PyqDrill
             title={`Pinnacle Reasoning · ${meta?.label || ""}`}
             list={qs}
             subject="reasoning"

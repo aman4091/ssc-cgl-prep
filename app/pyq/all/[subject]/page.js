@@ -7,7 +7,7 @@ import { allSubjectMeta, loadAllSubject } from "@/lib/allbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import MathQuestionCard from "@/components/MathQuestionCard";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
-import QBoard from "@/components/QBoard";
+import PyqDrill from "@/components/PyqDrill";
 import { seededShuffle } from "@/lib/shuffle";
 
 // Ek subject ke SAARE question — har bank, har chapter, ek list mein.
@@ -66,7 +66,7 @@ export default function AllSubjectPage() {
   const filterKey = `all:${meta?.slug || ""}|${src}|${chapter}|${query.trim().toLowerCase()}`;
 
   // useMemo zaroori hai: bina iske har render par nayi array banti hai aur
-  // QBoard use "nayi list" samajh kar apna slice shuru se kar deta hai.
+  // Nayi list milte hi drill shuru se chalti hai.
   const filtered = useMemo(() => {
     const t = query.trim().toLowerCase();
     const hit = qs.filter((q) => {
@@ -157,7 +157,7 @@ export default function AllSubjectPage() {
             Saare chapter khul rahe hain… 📚 {prog.total ? `${prog.done}/${prog.total} (${pct}%)` : ""}
           </div>
         ) : (
-          <QBoard
+          <PyqDrill
             title={`All · ${meta.label}`}
             list={filtered}
             subject={meta.subject}

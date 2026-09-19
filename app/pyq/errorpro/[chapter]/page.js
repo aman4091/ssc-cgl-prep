@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadErrorProChapter, errorProChapterMeta } from "@/lib/errorprobank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
-import QBoard from "@/components/QBoard";
+import PyqDrill from "@/components/PyqDrill";
 
 export default function ErrorProChapterPage() {
   const { chapter } = useParams();
@@ -24,7 +24,7 @@ export default function ErrorProChapterPage() {
     return () => { alive = false; };
   }, [chapter]);
 
-  // Rail, aaj ka counter, ho-gaye-neeche aur "Show more" — sab QBoard ke paas.
+  // Ek-ek sawaal (components/PyqDrill.js): answer khula, neeche "Aata hai / Nahi aata hai".
   const resumeKey = `errorpro:${chapter}`;
 
   if (ready && !meta) {
@@ -55,7 +55,7 @@ export default function ErrorProChapterPage() {
         ) : qs.length === 0 ? (
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
-          <QBoard
+          <PyqDrill
             title={`Error Pro · ${meta?.label || ""}`}
             list={qs}
             subject="english"
