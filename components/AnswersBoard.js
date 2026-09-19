@@ -85,7 +85,7 @@ const bucketOf = (r) => (KNOWN.has(r.subject) ? r.subject : "other");
 const labelOf = (k) =>
   k === "other" ? "Other" : (SUBJECTS.find((s) => s.key === k) || ALL_SUBJ).label;
 
-function AnsCard({ rec, n, fresh, onDone, onDelete, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard }) {
+function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard }) {
   const { urls, missing } = useImageUrls(imagesOf(rec));
   const [lb, setLb] = useState(null);
   const [pasteOpen, setPasteOpen] = useState(false);
@@ -158,6 +158,7 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onChange, prompt, onArm, onF
             ✨ paste ka dabba bhi khol deta hai, isliye uska alag button nahi. */}
         <span className="ansp__hacts">
           <button className="ansp__btn ansp__btn--go" onClick={() => onDone(rec)} title="Ho gaya — ye question sabse neeche">✅</button>
+          <button className="ansp__btn ansp__btn--go" onClick={() => onOpen(rec)} title="Writing tablet par solve karo">✍️</button>
           <button className="ansp__btn" onClick={askGemini} title={`Image copy karke ${aiSiteLabel(aiSite)} kholo, phir answer paste karo`}>
             {copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}
           </button>
@@ -652,6 +653,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       onChange={refresh}
       prompt={promptFor(r.subject)}
       onArm={(text) => { armed.current = text; }}
+      onOpen={onOpen}
       onFlash={flashNow}
       highlight={!inPopup && !!urlQid && r.qid === urlQid}
       isHardQ={hard.has(r.id)}
@@ -696,6 +698,17 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // `d` (date filter) jaan-boojh kar NAHI bhej rahe.
   //
   // Wo purane /wrong page ka hissa tha. Yahan koi date filter hai hi nahi, par
+  // ✍️ Solve — writing tablet wala page.
+  //
+  // `d` (date filter) jaan-boojh kar NAHI bhej rahe. Wo purane /wrong page ka
+  // hissa tha; link us question ki date bhejta to solve page ki list sirf USI
+  // din tak sikud jati (har baar "1/1", aur timer khatam hone par agla
+  // question hota hi nahi). Bina `d` ke wahi poori shelf milti hai jo yahan
+  // dikh rahi hai.
+  const onOpen = (rec) => {
+    router.push(`/wrong/solve?subject=${rec.subject}&id=${rec.id}`);
+  };
+
   // Paste = question add. Wahi flow jo pehle /wrong par tha — overlay band ho to
   // bhi haath se question daala ja sake. Ye hamesha wrong book (mock shelf) mein
   // jata hai, chahe screen par kaunsi bhi shelf khuli ho.
