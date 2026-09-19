@@ -1086,8 +1086,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           </button>
           {/* Baaki do shelf jo abhi alag hain — dono ek hi aadat ke hisse hain:
               kya galat hua, aur kya mehnga pada. */}
-          <Link href="/slow" className="ansp__btn">⏱️ Slow Questions</Link>
-          <Link href="/gemini" className="ansp__btn">✨ Gemini Answers</Link>
         </div>
 
         {/* Naya question list ke ANT mein judta hai, isliye wo screen se bahar

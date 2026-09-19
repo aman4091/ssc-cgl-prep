@@ -12,7 +12,6 @@ import {
 import { buildTodaySet, buildAutoPractice } from "@/lib/todayset";
 import { getReviewBucket, getWeakAreas } from "@/lib/qreview";
 import ExtMock from "@/components/ExtMock";
-import TodoCard from "@/components/TodoCard";
 
 // 🎯 Aaj ka kaam — homepage.
 //
@@ -211,7 +210,6 @@ export default function TodayGate({ onStateChange }) {
 
       {err && <p className="ansp__err">{err}</p>}
 
-      <TodoCard />
 
       <section className="hero-grid">
         <article className="daily-card">
@@ -302,7 +300,6 @@ export default function TodayGate({ onStateChange }) {
           <div className="quick-links" style={{ marginTop: 14 }}>
             <Link href="/make-test" className="btn btn--ghost btn--sm">🧪 Apna test banao</Link>
             <Link href="/answers?subject=all&src=all" className="btn btn--ghost btn--sm">📖 Galat questions</Link>
-            <Link href="/slow" className="btn btn--ghost btn--sm">⏱️ Slow (skip list)</Link>
             <Link href="/mock-marks?cat=full" className="btn btn--ghost btn--sm">📊 Mock marks</Link>
           </div>
         </article>

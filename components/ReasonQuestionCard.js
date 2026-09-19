@@ -205,7 +205,7 @@ Options: ${opts}
       {/* Paste box HAR question par — figure (non-verbal) par bhi. ✨ Gemini ab
           tasveer copy karta hai, to answer wahan se aata hai; usse rakhne ki jagah
           na hone se wo mehnat bekaar ja rahi thi. */}
-      <PasteAnswer q={tq} subject={subject} category={chapterName} kind="reason" />
+      <PasteAnswer q={tq} />
 
       <div className="qcard__opts" style={{ gridTemplateColumns: "minmax(0, 1fr)" }}>
         {q.optImgs.map((src, oi) => {

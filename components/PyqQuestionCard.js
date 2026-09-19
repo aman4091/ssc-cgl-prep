@@ -205,7 +205,7 @@ Options: ${opts}
         )}
       </div>
 
-      <PasteAnswer q={q} subject={subject} category={chapterName} kind="text" />
+      <PasteAnswer q={q} />
 
       {markControl && <div className="pyq-mark mt-8">{markControl}</div>}
 

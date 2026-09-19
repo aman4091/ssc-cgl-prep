@@ -6,7 +6,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { doneKeyFor, getDoneSet, markDoneMany } from "@/lib/qdone";
 import { getCounts, countMark, COUNTER_SUBJECTS } from "@/lib/qcounter";
 import { recordQuizAttempts } from "@/lib/qreview";
-import { recordSlow } from "@/lib/qslow";
 import { recordAttempts } from "@/lib/qstats";
 import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import { saveQuiz, deleteQuiz, getQuiz } from "@/lib/storage";
@@ -573,19 +572,6 @@ export default function QBoard({
       sec: times[i] || 0,
       onlyExisting: retryRef.current,
       fromPyq: fromPyq == null ? !single : !!fromPyq,
-    })));
-    // ⏱️ Time khaane wale — Maths/Reasoning ka jo question 60 second se zyada
-    // le gaya wo /slow par chala jata hai. Yahan `rows` NAHI, poora `setQs`:
-    // rows sirf key wale question rakhta hai aur usme sahi/galat ki chhantayi
-    // hoti hai, jabki raftaar ka maamla teeno par barabar lagta hai — sahi,
-    // galat, aur dekh kar chhoda hua. Subject na mile to lib/qslow khud hi
-    // chhod deta hai, isliye yahan shart lagane ki zaroorat nahi.
-    recordSlow(setQs.map((qq, i) => ({
-      q: regRef.current[i] || qq,
-      subject: qq?._subject || subject,
-      category: qq?._chapter || title,
-      sec: times[i] || 0,
-      outcome: picks[i] ? (picks[i].correct ? "right" : "wrong") : "skip",
     })));
     // "🔢 Aaj" ki ginti — ek question aaj ek hi baar ginta hai, isliye set
     // dobara dene par dobara nahi chadhta.

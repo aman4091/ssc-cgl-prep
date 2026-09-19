@@ -288,7 +288,7 @@ Options: ${opts}
         <img src={q.qImg} alt={alt} loading="lazy" className="math-img" />
       </div>
 
-      <PasteAnswer q={tq} subject={subject} category={chapterName} kind="math" />
+      <PasteAnswer q={tq} />
 
       <div className="qcard__opts" style={{ gridTemplateColumns: "minmax(0, 1fr)" }}>
         {q.optImgs.map((src, oi) => {

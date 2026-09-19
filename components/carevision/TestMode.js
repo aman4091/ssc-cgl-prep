@@ -6,9 +6,9 @@
 // Submit ke baad: score, part-wise hisaab, aur har galat jawab apne aap
 // Galtiyan deck mein. Desktop: 1-4 = option, Enter = agla.
 //
-// Mind Map (/mindmap) bhi isi ko use karta hai, apne store ke saath: record,
-// stars, expand (distractor ke liye aur cards) aur groupKey/groupLabel
-// (CA mein "part", Mind Map mein "subject") props se aate hain.
+// Board apne store se bandha nahi hai: record, stars, expand (distractor ke
+// liye aur cards) aur groupKey/groupLabel props se aate hain — abhi sirf CA
+// deck ise use karta hai ("part" wale group ke saath).
 
 import { useEffect, useMemo, useState } from "react";
 import { buildTest } from "@/lib/carevision/mcq";
