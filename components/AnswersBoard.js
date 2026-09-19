@@ -26,6 +26,7 @@ import { precacheShelf } from "@/lib/inkoffline";
 import Markdown, { LazyMarkdown } from "@/components/Markdown";
 import ZoomableImage from "@/components/ZoomableImage";
 import NotebookCard from "@/components/NotebookCard";
+import PyqDrill from "@/components/PyqDrill";
 import ChapterReport, { textOf } from "@/components/ChapterReport";
 import {
   loadTaxonomy, chaptersFor, categoryChapter, chapterLabel,
@@ -57,14 +58,6 @@ import ClusterButton from "./ClusterButton";
 // `key` — aur purane mark waise ke waise chalte rehne chahiye.
 
 const POLL_MS = 5000; // overlay ka naya question khuli hui page par bhi dikhe
-
-// Ek baar mein kitne card banayein.
-//
-// Shelf 469 question ki ho sakti hai, aur har mock card apni image IndexedDB
-// se padhta hai (lib/wrongimages). Sab ek saath banane par page seconds ke
-// liye jam jata tha — chip dabao to kuch hota hi nahi lagta tha. Ab pehle
-// itne bante hain, aur neeche pahunchte hi apne aap aur jud jaate hain.
-const PAGE = 25;
 
 // Bina poochhe ek page-visit mein itne se zyada question AI ko nahi bhejte.
 const AUTO_CAP = 20;
@@ -590,24 +583,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     return [...rows].sort(cmp);
   }, [rows, sortAt]);
 
-  // Kitne card abhi bane hue hain. Chhaanti badalte hi shuru se.
-  const [visible, setVisible] = useState(PAGE);
-  useEffect(() => { setVisible(PAGE); }, [subject, src]);
-  const shown = useMemo(() => list.slice(0, visible), [list, visible]);
-
-  // Neeche pahunchte hi agla jattha apne aap. Button bhi hai — jinke browser
-  // mein observer na chale unke liye.
-  const tail = useRef(null);
-  useEffect(() => {
-    const el = tail.current;
-    if (!el || typeof IntersectionObserver === "undefined") return undefined;
-    const io = new IntersectionObserver((es) => {
-      if (es.some((e) => e.isIntersecting)) setVisible((v) => Math.min(v + PAGE, list.length));
-    }, { rootMargin: "600px" });
-    io.observe(el);
-    return () => io.disconnect();
-  }, [list.length]);
-
   // ⬆️ Sabse upar.
   //
   // Kinare wali list apne andar scroll hoti hai (88vh se lambi ho jati hai),
@@ -629,15 +604,11 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     try { el.scrollTo({ top: 0, behavior: "smooth" }); } catch { el.scrollTop = 0; }
   };
 
-  // Rail ka number us card par le jata hai — chahe wo abhi bana hi na ho.
-  // Isliye pehle utne card khol do, phir agle frame mein scroll.
-  const jumpTo = (i, id) => {
-    if (i >= visible) setVisible(Math.min(i + PAGE, list.length));
-    setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, i >= visible ? 120 : 0);
-  };
-
+  // Rail ka number ab us question ka popup kholta hai.
+  //
+  // Pehle ye us card tak scroll karta tha, par ab list ek-ek karke chalti
+  // hai (PyqDrill) — page par doosra card maujood hi nahi hota. Popup wahi
+  // ek question apne Prev/Next ke saath dikha deta hai.
   // Chips par ginti — chuni hui shelf ki, taaki "Maths (12)" ka matlab wahi ho
   // jo neeche dikhega.
   const chipCounts = useMemo(() => {
@@ -943,18 +914,15 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     <div className="ansp">
       {list.length > 0 && (
         <nav className="ansp__side" ref={railRef}>
-          {list.map((r, i) => {
-            const id = r.__src === "mock" ? `ans-${r.id}` : `mq-${i + 1}`;
-            return (
-              <a
-                key={r.uid}
-                href={`#${id}`}
-                onClick={(e) => { e.preventDefault(); jumpTo(i, id); }}
-              >
-                {i + 1}
-              </a>
-            );
-          })}
+          {list.map((r, i) => (
+            <a
+              key={r.uid}
+              href="#"
+              onClick={(e) => { e.preventDefault(); openPopup(i); }}
+            >
+              {i + 1}
+            </a>
+          ))}
         </nav>
       )}
 
@@ -1108,7 +1076,16 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               : "Yaha abhi koi question nahi hai."}
           </p>
         ) : (
-          shown.map((r, i) => renderCard(r, i, false))
+          /* PYQ bank jaisa hi: ek waqt par EK question, aur neeche wahi do
+             button (Aata hai -> 100 aage, Nahi aata hai -> 3re, 4the, 5ve …).
+             Kram aur ginti har chhaanti ki apni (cgl.pyqdrill), isliye
+             subject/chapter badalne par uska apna hisaab chalta hai. */
+          <PyqDrill
+            list={list}
+            resumeKey={`answers:${src}:${subject || "all"}:${chapter || "all"}`}
+            keyOf={(r) => r.uid}
+            renderCard={(r, i) => renderCard(r, i, false)}
+          />
         )}
 
         {focus !== null && (() => {
@@ -1158,14 +1135,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           />
         )}
 
-        {/* Aur card — neeche pahunchte hi apne aap khul jate hain. */}
-        {ready && visible < list.length && (
-          <div ref={tail} className="ansp__acts">
-            <button className="ansp__btn" onClick={() => setVisible((v) => Math.min(v + PAGE, list.length))}>
-              ⬇️ Aur {Math.min(PAGE, list.length - visible)} dikhao ({visible}/{list.length})
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

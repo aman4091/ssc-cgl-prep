@@ -29,15 +29,22 @@ function shuffled(list) {
   return a;
 }
 
-export default function PyqDrill({ title, list, resumeKey, renderCard, shuffleFirst = false, unit = "Q" }) {
+export default function PyqDrill({
+  title, list, resumeKey, renderCard, shuffleFirst = false, unit = "Q", keyOf,
+}) {
   const chapter = resumeKey || title || "pyq";
+  // Har item ki pehchaan. Bank ke question ka apna id hota hai; Answers
+  // board ke record do alag duniya se aate hain (mock screenshot aur
+  // quiz ka galat question) jahan `id` takra sakta hai, isliye wahan se
+  // apna `uid` bheja jata hai.
+  const keyFor = keyOf || qKeyOf;
   const [queue, setQueue] = useState(() => [...list]);
   const [pos, setPos] = useState(0);
   // Question -> chapter ki asli list mein uska number. Kram isi shakl mein
   // bachta hai, aur card ke sar par "Q 5/387" bhi yahi se aata hai.
   const idxOf = useMemo(() => {
     const m = new Map();
-    list.forEach((q, i) => m.set(qKeyOf(q), i));
+    list.forEach((q, i) => m.set(keyFor(q), i));
     return m;
   }, [list]);
   const [done, setDone] = useState({ good: 0, bad: 0 });
@@ -69,24 +76,24 @@ export default function PyqDrill({ title, list, resumeKey, renderCard, shuffleFi
 
   const known = useMemo(() => {
     const s = stats.current || {};
-    return list.filter((q) => (s[qKeyOf(q)]?.k || 0) > 0).length;
+    return list.filter((q) => (s[keyFor(q)]?.k || 0) > 0).length;
   }, [list, done]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const answer = useCallback((good) => {
     const q = queue[pos];
     if (!q) return;
-    const st = markDrill(chapter, q, good);
-    stats.current = { ...stats.current, [qKeyOf(q)]: st };
+    const st = markDrill(chapter, { id: keyFor(q) }, good);
+    stats.current = { ...stats.current, [keyFor(q)]: st };
     const gap = good ? KNOWN_GAP : missGap(st.m || 1);
     const next = [...queue];
     next.splice(pos, 1);
     next.splice(Math.min(pos + gap - 1, next.length), 0, q);
     setQueue(next);
     // Naya kram wahin likh do — tab ab band ho jaye to bhi yahi se chalega.
-    saveOrder(chapter, next.map((x) => idxOf.get(qKeyOf(x))).filter((i) => i != null), list.length);
+    saveOrder(chapter, next.map((x) => idxOf.get(keyFor(x))).filter((i) => i != null), list.length);
     setDone((d) => (good ? { ...d, good: d.good + 1 } : { ...d, bad: d.bad + 1 }));
     window.scrollTo(0, 0);
-  }, [queue, pos, chapter, idxOf, list.length]);
+  }, [queue, pos, chapter, idxOf, list.length, keyFor]);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -101,13 +108,13 @@ export default function PyqDrill({ title, list, resumeKey, renderCard, shuffleFi
   if (!queue.length) return <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>;
 
   const q = queue[pos % queue.length];
-  const st = stats.current?.[qKeyOf(q)] || {};
+  const st = stats.current?.[keyFor(q)] || {};
   const card = renderCard(q, pos, queue);
 
   return (
     <div className="pyqd">
       <div className="pyqd-bar">
-        <span className="carev-count">{unit} {(idxOf.get(qKeyOf(q)) ?? 0) + 1}/{list.length}</span>
+        <span className="carev-count">{unit} {(idxOf.get(keyFor(q)) ?? 0) + 1}/{list.length}</span>
         <span className="carev-dim carev-small">
           {known}/{list.length} aata hai
           {st.m ? ` · ye ${st.m} baar galat` : ""}
@@ -117,7 +124,7 @@ export default function PyqDrill({ title, list, resumeKey, renderCard, shuffleFi
 
       {/* key badalne par card naya bana hai — pichhla chuna hua option saaf,
           taaki wahi question dobara aaye to phir se khud attempt ho. */}
-      {cloneElement(card, { key: `${qKeyOf(q)}:${pos}` })}
+      {cloneElement(card, { key: `${keyFor(q)}:${pos}` })}
 
       <div className="carev-actions pyqd-actions">
         <button className="carev-btn carev-btn-bad" onClick={() => answer(false)}>
