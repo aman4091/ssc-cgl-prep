@@ -676,6 +676,15 @@
 .examskin .ansp__card h2 {
   margin: 0; padding: 8px 14px; font-size: 14px; font-weight: 700;
   background: var(--tb-head); border-bottom: 1px solid var(--tb-line); color: var(--tb-ink);
+  /* Sar ke daayen card ke saare button — phone par wo neeche ki line mein
+     lipat jate hain, tablet/desktop par usi line mein rehte hain. */
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.examskin .ansp__hacts { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+.examskin .ansp__hacts .ansp__btn { padding: 5px 10px; }
+@media (max-width: 520px) {
+  .examskin .ansp__hacts { margin-left: 0; width: 100%; }
+  .examskin .ansp__hacts .ansp__btn { flex: 0 1 auto; white-space: nowrap; }
 }
 .examskin .ansp__qid { color: var(--tb-dim); font-size: 12px; }
 .examskin .ansp__card > :is(img, p, div:not(.ansp__answer):not(.ansp__acts)) { margin-left: 14px; margin-right: 14px; }

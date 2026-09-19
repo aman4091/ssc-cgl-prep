@@ -9,20 +9,18 @@ import AnswersBoard from "@/components/AnswersBoard";
 // board kholta hai (bas dropdown pehle se "PYQ / Quiz" par). Do URL, ek page —
 // purane link, bookmark aur menu sab jaise the waise chalte rehte hain.
 //
-// Yahan bina kisi param ke aane par: 🧮 Maths shelf, aur dropdown "External
-// Mock (screenshot)" par — yaani sirf wrong book, "Sab" nahi. Wajah: overlay
-// (Mock Test Helper) ka right-edge panel isi wrong book se apna kram leta hai,
-// PYQ/quiz ke galat question use pata hi nahi chalte (unki koi image/qid nahi
-// hoti). "Sab" default hone par is page ka Question 1 aksar koi purana quiz-
-// mistake hota, jo overlay ke Question 1 se kabhi match nahi karta — dropdown
-// se "Sab" chun kar wo dono ab bhi ek saath dekhe ja sakte hain.
+// Bina kisi param ke: 🧮 Maths, aur SAB (screenshot wale bhi, quiz ke
+// galat bhi). Pehle yahan default "External Mock" tha — us alag shelf ke
+// saath. Wo chhaanti hata di gayi, aur default uske saath reh gaya to menu
+// se koi bhi subject dabane par page khali khulta tha (us subject ka koi
+// screenshot na ho to kuch dikhta hi nahi).
 
 export default function AnswersPage() {
   // useSearchParams ko Suspense chahiye, warna poora route static rendering se
   // bahar ho jata hai.
   return (
     <Suspense fallback={<div className="ansp"><div className="ansp__main" /></div>}>
-      <AnswersBoard defaultSrc="mock" defaultSubject="math" />
+      <AnswersBoard defaultSrc="all" defaultSubject="math" />
     </Suspense>
   );
 }

@@ -37,7 +37,7 @@ import { useDeepSeek, dsLabel, dsTitle } from "@/lib/usedeepseek";
 // copy would go out as "A) a  B) b  C) c  D) d" and any answer that came back
 // would be invented. So the AI helpers are hidden on those 640 questions rather
 // than shipped as a button that reliably lies.
-export default function ReasonQuestionCard({ q, index, subject = "reasoning", resumeKey, chapterName }) {
+export default function ReasonQuestionCard({ q, index, extraActions, subject = "reasoning", resumeKey, chapterName }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -192,6 +192,9 @@ Options: ${opts}
             </button>
           )}
           <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
+          {/* Bahar se aaye button (Answers board ka ✅ Ho gaya, 🗑️) —
+              wo bhi isi line mein, taaki card par ek hi patti rahe. */}
+          {extraActions}
         </span>
       </h2>
 

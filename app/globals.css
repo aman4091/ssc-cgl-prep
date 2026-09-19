@@ -3308,6 +3308,16 @@ body.exam-on .pyq-filters { display: none; }
 
 /* Gemini aur "🎯 20" sar mein, sabse daayen. */
 .qcard__hacts { margin-left: auto; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+/* Phone par sar ke button apni line mein. Chaudai BAANTNA nahi (flex:1 se
+   "✨ Gemini" aur "🐋 DeepSeek" ek doosre par chadh jate the) — button apne
+   naap ke rehte hain, jagah kam ho to AI site ka naam chhup jata hai aur
+   sirf ✨ bachta hai. */
+@media (max-width: 520px) {
+  .qcard__hacts { margin-left: 0; width: 100%; }
+  .qcard__hacts > * { flex: 0 1 auto; min-width: 0; }
+  .qcard__hacts .btn { white-space: nowrap; }
+  .qcard__hacts .ask__word { display: none; }
+}
 
 /* Timer, ⛶ aur "Ho gaya" nikalne ke baad ye patti khaali bhi ho sakti hai
    (submit ke baad to hamesha) — khaali patti sirf ek bhoora feeta dikhti hai. */

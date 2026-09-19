@@ -17,7 +17,7 @@ import AnswersBoard from "@/components/AnswersBoard";
 export default function MistakesPage() {
   return (
     <Suspense fallback={<div className="ansp"><div className="ansp__main" /></div>}>
-      <AnswersBoard defaultSrc="pyq" defaultSubject="all" />
+      <AnswersBoard defaultSrc="all" defaultSubject="all" />
     </Suspense>
   );
 }

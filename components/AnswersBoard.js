@@ -11,7 +11,6 @@ import {
 import { getReview, removeReview, fixReviewAnswer } from "@/lib/qreview";
 import { fixCAAnswer } from "@/lib/feed";
 import { copyImageToClipboard, imageBlob } from "@/lib/imgclip";
-import { localInkCounts } from "@/lib/ink";
 import { getSettings } from "@/lib/storage";
 import { markDone, pruneDone, getDoneMap } from "@/lib/answersdone";
 import {
@@ -94,7 +93,7 @@ const bucketOf = (r) => (KNOWN.has(r.subject) ? r.subject : "other");
 const labelOf = (k) =>
   k === "other" ? "Other" : (SUBJECTS.find((s) => s.key === k) || ALL_SUBJ).label;
 
-function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard, onPopup }) {
+function AnsCard({ rec, n, fresh, onDone, onDelete, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard }) {
   const { urls, missing } = useImageUrls(imagesOf(rec));
   const [lb, setLb] = useState(null);
   const [pasteOpen, setPasteOpen] = useState(false);
@@ -138,15 +137,6 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
     setPasteOpen(true);
   };
 
-  const copyPrompt = async () => {
-    try { await navigator.clipboard.writeText(prompt); ping("pr"); }
-    catch { onFlash("Copy nahi hua — dobara try karo"); }
-  };
-
-  // 📥 = naya DUSRA answer (pehla fold mein bach jata hai). ✏️ = jo abhi dikh
-  // raha hai usi ko sudharo.
-  const openPaste = () => { setEditing(false); setPasteText(""); setPasteOpen(true); };
-  const openEdit = () => { setEditing(true); setPasteText(newGeminiAnswer(rec)); setPasteOpen(true); };
   const savePaste = () => {
     const t = pasteText.trim();
     if (!t) return;
@@ -172,15 +162,18 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
     >
       <h2>
         {fresh ? "🆕 " : ""}Question {n}
-        <span className="ansp__qid">
-          {" · "}🖼️ {rec.qid || "—"}{rec.at ? ` · ${dayLabel(rec.at)}` : ""}
+        {/* Card ke saare button yahin, sar ke daayen — owner ka niyam.
+            ✨ paste ka dabba bhi khol deta hai, isliye uska alag button nahi. */}
+        <span className="ansp__hacts">
+          <button className="ansp__btn ansp__btn--go" onClick={() => onDone(rec)} title="Ho gaya — ye question sabse neeche">✅</button>
+          <button className="ansp__btn" onClick={askGemini} title={`Image copy karke ${aiSiteLabel(aiSite)} kholo, phir answer paste karo`}>
+            {copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}
+          </button>
+          <button className="ansp__btn" onClick={() => onToggleHard(rec)} title={isHardQ ? "Hard se hatao" : "Hard mein daalo"}>
+            {isHardQ ? "✅🔴" : "🔴"}
+          </button>
+          <button className="ansp__btn" onClick={() => onDelete(rec)} title="Hatao">🗑️</button>
         </span>
-        {inkN > 0 && (
-          <span className="ansp__ink" title="Is device par is question ki handwriting hai">✍️ {inkN}</span>
-        )}
-        {onPopup && (
-          <button className="ansp__pop" onClick={onPopup} title="Popup mein kholo — sirf yahi question, ◀ ▶ se aage-peechhe">⛶</button>
-        )}
       </h2>
 
       {urls.map((u, i) => (
@@ -192,24 +185,6 @@ function AnsCard({ rec, n, inkN, fresh, onDone, onDelete, onOpen, onChange, prom
           📷 {missing} image is device par nahi hai — R2 par upload nahi hui thi.
         </p>
       )}
-
-      <div className="ansp__acts">
-        {/* Nishaan nahi, KAAM: dabate hi ye question sabse neeche chala
-            jata hai. Dobara upar aayega to bina kisi tick ke — isliye yahan
-            kuch "laga hua" dikhta bhi nahi. */}
-        <button className="ansp__btn ansp__btn--go" onClick={() => onDone(rec)}>✅ Ho gaya</button>
-        <button className="ansp__btn ansp__btn--go" onClick={() => onOpen(rec)}>✍️ Solve</button>
-        <button className="ansp__btn" onClick={askGemini}>{copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}</button>
-        <button className="ansp__btn" onClick={copyPrompt}>{copied === "pr" ? "✓" : "📋 Prompt"}</button>
-        <button className="ansp__btn" onClick={openPaste}>📥 Answer paste</button>
-        {newGeminiAnswer(rec) && <button className="ansp__btn" onClick={openEdit}>✏️ Edit</button>}
-        {/* Dabate hi ye question External Mock ki aam list se hat kar apni
-            alag "🔴 Hard" shelf mein chala jata hai (Kahan-se-aaye dropdown). */}
-        <button className="ansp__btn" onClick={() => onToggleHard(rec)}>
-          {isHardQ ? "✅ Hard se hatao" : "🔴 Hard"}
-        </button>
-        <button className="ansp__btn" onClick={() => onDelete(rec)}>🗑️ Delete</button>
-      </div>
 
       {pasteOpen && (
         <div className="ansp__paste">
@@ -302,9 +277,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // Aaj kis subject ke kitne question hue (raat 3 baje reset) — mark karte hi
   // apne aap badhta hai, overlay ke counter jaisa hi hisaab.
   const [counts, setCounts] = useState({});
-  // Ink badge — is DEVICE par kis question ki handwriting hai. Ink cloud par
-  // nahi jati (lib/ink.js ka CLOUD switch), isliye ginti bhi device-local hai.
-  const [inkCounts, setInkCounts] = useState({});
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
   // Chapter ke tag + report ka panel + "sirf is chapter ke" wali chhaanti.
@@ -422,8 +394,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     // 5s poll — 3 baje din badla to yahin pata chal jata hai
     const c = getCounts();
     put("counts", JSON.stringify(c), c, setCounts);
-    const ink = localInkCounts();
-    put("ink", JSON.stringify(ink), ink, setInkCounts);
 
     setReady(true);
   }, []);
@@ -611,6 +581,24 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // Chhaanti badlo: state turant, URL chupchaap peechhe. replaceState Next ko
   // dobara render karne par majboor nahi karta — isliye ye ek frame ka kaam
   // hai, poore route ka nahi.
+  // Menu se subject dabane par URL badalta hai par route wahi (/answers) —
+  // component dobara nahi banta, isliye pehle kuch hota hi nahi tha: state
+  // sirf pehli baar URL se padhi jati thi. Ab URL badle to chhaanti badalti
+  // hai. Jo URL humne KHUD likha (go() ka replaceState) use chhod dete hain,
+  // warna wahi state dobara set hoti rehti.
+  const selfUrl = useRef("");
+  useEffect(() => {
+    const q = sp.toString();
+    if (q === selfUrl.current) return;
+    const u = sp.get("subject");
+    const nextSubject = isSubject(u) ? u : u === "all" ? "" : u === "other" ? "other" : null;
+    if (nextSubject !== null) setSubject(nextSubject);
+    const v = sp.get("src");
+    if (isSource(v)) setSrc(v);
+    setChapter(sp.get("ch") || "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sp]);
+
   const go = (next) => {
     const s = next.subject !== undefined ? next.subject : subject;
     const v = next.src !== undefined ? next.src : src;
@@ -625,9 +613,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       // Pathname wahi rehta hai jispar ho (/answers ya /mistakes) — Next ko
       // uske neeche se route nahi badalna chahiye, sirf query.
       const base = window.location.pathname;
-      window.history.replaceState(
-        null, "", `${base}?subject=${s || "all"}&src=${v}${c ? `&ch=${encodeURIComponent(c)}` : ""}`,
-      );
+      const q = `subject=${s || "all"}&src=${v}${c ? `&ch=${encodeURIComponent(c)}` : ""}`;
+      selfUrl.current = q;
+      window.history.replaceState(null, "", `${base}?${q}`);
     } catch { /* purana browser — chhaanti phir bhi chal rahi hai */ }
   };
 
@@ -684,11 +672,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       key={r.uid}
       rec={r}
       n={i + 1}
-      inkN={inkCounts[r.id] || 0}
       fresh={freshIds.has(r.id)}
       onDone={onDone}
       onDelete={onDelete}
-      onOpen={onOpen}
       onChange={refresh}
       prompt={promptFor(r.subject)}
       onArm={(text) => { armed.current = text; }}
@@ -703,10 +689,8 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       rec={r}
       n={i + 1}
       bucket={bucketOf(r)}
-      subjectLabel={labelOf(bucketOf(r))}
       onDone={() => onDoneNb(r)}
       onDelete={() => onDeleteNb(r)}
-      onFix={(oi) => onFixNb(r, oi)}
     />
   ));
 
@@ -773,16 +757,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // `d` (date filter) jaan-boojh kar NAHI bhej rahe.
   //
   // Wo purane /wrong page ka hissa tha. Yahan koi date filter hai hi nahi, par
-  // link us question ki date bhej raha tha — jisse solve page ki list sirf USI
-  // din tak sikud jati thi. Har question alag din ka ho to har baar "1/1", aur
-  // timer khatam hone par agla question hota hi nahi tha.
-  //
-  // Bina `d` ke solve page poori shelf leta hai — wahi list, wahi kram jo yahan
-  // dikh raha hai.
-  const onOpen = (rec) => {
-    router.push(`/wrong/solve?subject=${rec.subject}&id=${rec.id}`);
-  };
-
   // Paste = question add. Wahi flow jo pehle /wrong par tha — overlay band ho to
   // bhi haath se question daala ja sake. Ye hamesha wrong book (mock shelf) mein
   // jata hai, chahe screen par kaunsi bhi shelf khuli ho.
@@ -830,75 +804,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   return (
     <div className="ansp">
       <div className="ansp__main">
-        {/* Kaunsi shelf — screenshot wale mock, quiz ke galat, ya dono. */}
-        <div className="ansp__acts ansp__acts--top">
-          <label className="ansp__hint" htmlFor="ansp-src">Kahan se aaye:</label>
-          <select
-            id="ansp-src"
-            className="input"
-            style={{ maxWidth: 280 }}
-            value={src}
-            onChange={(e) => go({ src: e.target.value })}
-          >
-            {SOURCES.map((s) => (
-              <option key={s.key} value={s.key}>{s.label}</option>
-            ))}
-          </select>
-          <span className="ansp__hint">
-            {src === "mock"
-              ? "Mock test ke screenshot — tasveer aur uska answer."
-              : src === "pyq"
-                ? "Quiz/PYQ mein jo galat ya chhoda — sawaal apne asli card mein."
-                : src === "hard"
-                  ? "Khud 🔴 Hard dabaya hua — External Mock ki aam list se bahar."
-                  : "Dono shelf ek saath — screenshot wale bhi, quiz ke galat bhi."}
-          </span>
-
-          {/* Chapter ki chhaanti. Report kholne ki zaroorat nahi — "bas
-              geometry ke saare question dekhne hain" seedha yahan se. Report
-              se kisi chapter par tap karo to yahi dropdown uspar aa jata hai. */}
-          <label className="ansp__hint" htmlFor="ansp-ch">Chapter:</label>
-          <select
-            id="ansp-ch"
-            className="input"
-            style={{ maxWidth: 260 }}
-            value={chapter}
-            onChange={(e) => go({ chapter: e.target.value })}
-          >
-            <option value="">📕 Sab chapter ({reportRows.length})</option>
-            {chapterOpts.list.map((c) => (
-              <option key={c.ch} value={c.ch}>{c.label} ({c.n})</option>
-            ))}
-            {chapterOpts.none > 0 && (
-              <option value={NO_CHAPTER}>❓ Chapter pata nahi ({chapterOpts.none})</option>
-            )}
-          </select>
-        </div>
-
-        <div className="ansp__chips">
-          {chips.map((s) => (
-            <a
-              key={s.key || "all"}
-              href="#"
-              onClick={(e) => { e.preventDefault(); go({ subject: s.key }); }}
-              className={s.key === subject ? "is-active" : ""}
-            >
-              {s.icon} {s.label} ({chipCounts[s.key] || 0})
-            </a>
-          ))}
-          {/* Sirf notebook mein aisa hota hai — jis question ka subject darj hi
-              nahi hua. Chip tabhi dikhta hai jab aisa koi ho. */}
-          {chipCounts.other > 0 && (
-            <a
-              href="#"
-              onClick={(e) => { e.preventDefault(); go({ subject: "other" }); }}
-              className={subject === "other" ? "is-active" : ""}
-            >
-              📝 Other ({chipCounts.other})
-            </a>
-          )}
-        </div>
-
         <div className="ansp__acts ansp__acts--top">
           {/* Upar ab bas yahi — owner ne baaki sab hata diya. Question ke
               apne button (✨ Gemini, 🐋 DeepSeek, 🎯 20) card par hi hain. */}

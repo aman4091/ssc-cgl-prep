@@ -27,7 +27,7 @@ import { useExamMode } from "./ExamMode";
 // quiz nahi hai), yahan question attempt karne ki cheez hai — isliye answer ka
 // block hamesha maujood hai par option chunne tak (ya 👁️ dabane tak) andar
 // "Answer dekho" likha rehta hai. 👁️ se koi attempt record nahi hota.
-export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter }) {
+export default function PyqQuestionCard({ q, index, extraActions, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -192,6 +192,9 @@ Options: ${opts}
             {dsLabel(dsq)}
           </button>
           <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
+          {/* Bahar se aaye button (Answers board ka ✅ Ho gaya, 🗑️) —
+              wo bhi isi line mein, taaki card par ek hi patti rahe. */}
+          {extraActions}
         </span>
       </h2>
 
