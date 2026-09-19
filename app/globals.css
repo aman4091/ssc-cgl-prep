@@ -3397,6 +3397,8 @@ body.exam-on .pyq-filters { display: none; }
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
 }
 .qcard__answer .md { font-size: 15px; }
+/* Jawab kiska hai — paste kiya hua (Gemini/AI site) ya 🐋 DeepSeek. */
+.qcard__ansrc { font-size: 12px; color: var(--text-3); font-weight: 600; margin-bottom: 6px; }
 .qcard__note { color: var(--warning); font-size: 13px; margin-top: 8px; }
 
 /* ⏱️ Solve page ka per-question timer */

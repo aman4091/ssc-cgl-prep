@@ -7,12 +7,14 @@ import { saveQuiz, makeId } from "@/lib/storage";
 import { setResume } from "@/lib/qprogress";
 import { recordAttempts, keyFor } from "@/lib/qstats";
 import { getSavedShortcut, saveShortcutFor, clearSavedShortcut } from "@/lib/shortcuts";
+import { getDsAnswer, saveDsAnswer } from "@/lib/dsanswers";
 import { addReview } from "@/lib/qreview";
 import Markdown from "./Markdown";
 import Diagram from "./Diagram";
 import QuestionEditor from "./QuestionEditor";
 import AskButtons from "./AskButtons";
 import PasteAnswer from "./PasteAnswer";
+import ClusterButton from "./ClusterButton";
 import { isDone } from "@/lib/qdone";
 import { useExamMode } from "./ExamMode";
 
@@ -24,7 +26,7 @@ import { useExamMode } from "./ExamMode";
 // quiz nahi hai), yahan question attempt karne ki cheez hai — isliye answer ka
 // block hamesha maujood hai par option chunne tak (ya 👁️ dabane tak) andar
 // "Answer dekho" likha rehta hai. 👁️ se koi attempt record nahi hota.
-export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, alwaysAnswer }) {
+export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -48,10 +50,19 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   const [recorded, setRecorded] = useState(false);
   const [flash, setFlash] = useState("");
   const [editing, setEditing] = useState(false);
+  const [ds, setDs] = useState("");          // DeepSeek ka jawab (apna store)
+  const [dsShown, setDsShown] = useState(false);  // 🐋 dabaya — Gemini ho tab bhi DeepSeek dikhao
+  const [dsLoading, setDsLoading] = useState(false);
   const [peek, setPeek] = useState(false);   // 👁️ — bina attempt kiye answer
   const [done, setDone] = useState(false);   // sirf dikhawe ke liye (dhundhla card)
   const archiveTimer = useRef(null);
   useEffect(() => { setShortcut(getSavedShortcut(q)); }, [q]);
+  useEffect(() => { setDs(getDsAnswer(q)); setDsShown(false); }, [q]);
+  useEffect(() => {
+    const h = (e) => { if (!e.detail?.key || e.detail.key === keyFor(q)) setDs(getDsAnswer(q)); };
+    window.addEventListener("cgl:ds-saved", h);
+    return () => window.removeEventListener("cgl:ds-saved", h);
+  }, [q]);
   // Paste kiya hua Gemini answer sabse upar hai: save hote hi card usse utha leta
   // hai aur answer block khol deta hai — book ka apna solution/explanation
   // (ya solution image) tab dikhta hi nahi. Reload ka intezaar nahi.
@@ -129,6 +140,27 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
   const regenShortcut = () => { clearSavedShortcut(q); setShortcut(""); fetchShortcut(); };
 
 
+  // 🐋 DeepSeek — mode "explain" (mode "shortcut" Settings mein Gemini key
+  // hone par Gemini API par chala jata hai; wo kabhi nahi chahiye). Jawab
+  // apne store mein save hota hai, isliye dobara dabane par muft mein wahi
+  // wapas aata hai; naya chahiye to 🔄 se.
+  const askDeepSeek = async () => {
+    if (ds) { setDsShown((v) => !v); setPeek(true); return; }
+    setDsLoading(true); setErr("");
+    try {
+      const opts = (q.options || []).map((o, i) => `${String.fromCharCode(65 + i)}) ${o}`).join("   ");
+      const text = `${q.question}
+Options: ${opts}
+`
+        + (q.answer != null ? `Correct answer (already verified): ${String.fromCharCode(65 + q.answer)}) ${q.options[q.answer]}
+` : "");
+      const { answer } = await askAI({ question: text, mode: "explain", subject });
+      saveDsAnswer(q, answer);
+      setDs(answer); setDsShown(true); setPeek(true);
+    } catch (e) { setErr(e.message); } finally { setDsLoading(false); }
+  };
+  const regenDeepSeek = async () => { setDs(""); setDsShown(false); await askDeepSeek(); };
+
   const make20 = async () => {
     setSimLoading(true); setErr("");
     try {
@@ -139,16 +171,16 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
     } catch (e) { setErr(e.message); setSimLoading(false); }
   };
 
-  // A pasted Gemini answer is the solution from then on — the book's own
-  // explanation is dropped rather than shown underneath it.
-  const solution = shortcut || q.solution || q.explanation || "";
+  // Kaunsa jawab dikhega — owner ka kram: paste kiya hua Gemini sabse upar,
+  // phir DeepSeek, phir book ka apna solution/explanation. 🐋 dabane par
+  // DeepSeek wala upar aa jata hai (Gemini maujood ho tab bhi).
+  const solution = (dsShown && ds) ? ds : (shortcut || ds || q.solution || q.explanation || "");
+  const solSrc = (dsShown && ds) ? "🐋 DeepSeek" : shortcut ? "✨ paste kiya hua" : ds ? "🐋 DeepSeek" : "";
   // Answer block khula hai ya nahi. 👁️ (peek) sirf dikhata hai — attempt,
   // timer aur wrong-book usse nahi chhedte.
   // Timer chalte waqt kuch nahi khulta; Submit ke baad sab khulta hai —
   // chhode hue question bhi.
-  // Drill mode (components/PyqDrill.js) mein answer hamesha khula rehta hai —
-  // wahan attempt nahi hota, padho aur batao "aata hai ya nahi".
-  const shown = !locked && (!!exam?.revealAll || revealed || peek || !!alwaysAnswer);
+  const shown = !locked && (!!exam?.revealAll || revealed || peek);
 
 
   return (
@@ -165,6 +197,16 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
             kaam ki hain — sawaal ke saath hi. */}
         <span className="qcard__hacts">
           <span className="q-act--keep"><AskButtons q={q} subject={subject} /></span>
+          {/* 🐋 DeepSeek — apna jawab, Gemini wale se alag store mein. Ek baar
+              laaya hua save rehta hai; dobara dabane par sirf chhupta/dikhta hai. */}
+          <button
+            className="btn btn--sm q-act--keep"
+            onClick={askDeepSeek}
+            disabled={dsLoading}
+            title={ds ? (dsShown ? "DeepSeek ka jawab chhupao" : "DeepSeek ka saved jawab dikhao") : "DeepSeek se is question ka jawab laao"}
+          >
+            {dsLoading ? "…" : ds ? (dsShown ? "🐋 ✓" : "🐋") : "🐋 DeepSeek"}
+          </button>
           <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
         </span>
       </h2>
@@ -266,10 +308,19 @@ export default function PyqQuestionCard({ q, index, subject, resumeKey, chapterN
               {!q.img && q.options[q.answer] ? ` — ${q.options[q.answer]}` : ""}
             </p>
           )}
+          {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
+          {/* Answers page wala button — jawab ka 🧩 CLUSTER seedha Fact log mein.
+              Cluster section na ho to button dikhta hi nahi. */}
+          <ClusterButton md={solution} onFlash={setFlash} />
           {solution ? <Markdown>{solution}</Markdown> : (
             <span style={{ color: "var(--text-3)", fontStyle: "italic" }}>
               Is question ka explanation abhi nahi hai — ✨ Gemini se laa kar paste kar do.
             </span>
+          )}
+          {dsShown && ds && (
+            <button className="btn btn--ghost btn--sm mt-12" onClick={regenDeepSeek} disabled={dsLoading}>
+              {dsLoading ? "Soch raha hai…" : "🔄 Naya DeepSeek jawab"}
+            </button>
           )}
           {scShown && shortcut && (
             <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>

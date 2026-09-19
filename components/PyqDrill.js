@@ -2,8 +2,9 @@
 
 // PYQ bank ka naya roop — test/sets nahi, ek-ek sawaal.
 //
-// Ek waqt par ek question: sawaal, options, neeche uska answer (khula hi),
-// aur wahi purane buttons (✨ Gemini, 📥 paste…). Sabse neeche do button:
+// Ek waqt par ek question: sawaal aur options. Answer CHHUPA rehta hai —
+// pehle option chuno (ya 👁️ dabao), tab khulta hai. Upar wahi buttons:
+// ✨ Gemini, 🐋 DeepSeek, 📥 paste. Sabse neeche do button:
 //
 //   Aata hai      -> ye question 100 sawaal aage chala jata hai (1st par
 //                    laga to 101ve number par phir aayega)
@@ -75,7 +76,9 @@ export default function PyqDrill({ title, list, resumeKey, renderCard }) {
         </span>
       </div>
 
-      {cloneElement(card, { alwaysAnswer: true, key: `${qKeyOf(q)}:${pos}` })}
+      {/* key badalne par card naya bana hai — pichhla chuna hua option saaf,
+          taaki wahi question dobara aaye to phir se khud attempt ho. */}
+      {cloneElement(card, { key: `${qKeyOf(q)}:${pos}` })}
 
       <div className="carev-actions pyqd-actions">
         <button className="carev-btn carev-btn-bad" onClick={() => answer(false)}>
