@@ -40,6 +40,11 @@ export default function AiRunPage() {
   const [viaOverlay, setViaOverlay] = useState(null);  // null = abhi pata nahi
   const win = useRef(null);
   const poll = useRef(null);
+  // Har question ka apna number. ⏭ Chhodo dabate hi agla question chala
+  // jata hai, par pichhle ka jawab tab bhi aa sakta hai — number se pata
+  // chal jata hai ki wo jawab kiska tha, aur galat question par nahi lagta.
+  const jobIdOf = (job) => `${job.id}`;
+  const waitingFor = useRef("");
 
   // Overlay chal raha hai? Uske saath poora loop apne aap chalta hai: wo
   // clipboard, tab aur Ctrl+W sambhalta hai aur jawab yahan bhej deta hai.
@@ -88,7 +93,10 @@ export default function AiRunPage() {
       }
       const hasImg = !!(imageUrl || imageB64);
       const text = hasImg ? prompt : [prompt, job.text].filter(Boolean).join("\n\n");
-      const sent = await overlayAsk({ text, imageB64, imageUrl, subject: job.subject });
+      waitingFor.current = jobIdOf(job);
+      const sent = await overlayAsk({
+        text, imageB64, imageUrl, subject: job.subject, jobId: jobIdOf(job),
+      });
       if (sent) return;
       setViaOverlay(false);          // overlay beech mein band ho gaya
     }
@@ -164,8 +172,11 @@ export default function AiRunPage() {
     if (!run || !viaOverlay || i >= run.jobs.length) return undefined;
     let alive = true;
     poll.current = setInterval(async () => {
-      const { ready, text } = await overlayAnswer();
-      if (alive && ready && text) await next(text);
+      const { ready, text, job } = await overlayAnswer();
+      if (!alive || !ready || !text) return;
+      // Chhode hue question ka purana jawab agle par nahi lagna chahiye.
+      if (job && waitingFor.current && job !== waitingFor.current) return;
+      await next(text);
     }, 1200);
     return () => { alive = false; clearInterval(poll.current); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -231,7 +242,11 @@ export default function AiRunPage() {
               <button className="btn btn--primary" onClick={() => next(answer.trim())} disabled={!answer.trim()}>
                 💾 Save aur agla
               </button>
-              <button className="btn btn--ghost" onClick={() => next("")}>⏭ Chhodo</button>
+              <button
+                className="btn btn--ghost"
+                onClick={() => next("")}
+                title="Ye question chhod kar agla kholo (jawab save nahi hoga)"
+              >⏭ Chhodo</button>
               <button className="btn btn--ghost" onClick={() => send(job)}>🔁 Phir se kholo</button>
             </div>
           </>
