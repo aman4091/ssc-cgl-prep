@@ -28,6 +28,7 @@ import { getHardSet, toggleHard, pruneHard } from "@/lib/hardq";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
+import PointsButton from "./PointsButton";
 
 // Answers — mock test ke screenshot, aur unke jawab.
 //
@@ -97,9 +98,27 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
   // Purane Gemini answer record mein pade hain par dikhte nahi; Gemini wala
   // sirf tab dikhta hai jab NAYA ho — 📥 se paste, ✏️ se sudhara, ya overlay se
   // copy hokar aaya (`ansAt`, lib/wrongbook). ✨ / 📋 / 📥 buttons pehle jaise.
-  const a1 = cleanAnswer(newGemini1(rec) || rec.q?.solution || "");
-  const a2 = cleanAnswer(newGemini2(rec));
+  // Kaunsa jawab dikhega — owner ka kram, wahi jo baaki har card par hai:
+  //   paste kiya hua (✨) > 🐋 DeepSeek > jo pehle se record mein tha.
+  // Pehle Gemini aur DeepSeek dono ek saath neeche-upar dikhte the; ek hi
+  // question ke do lambe jawab padhne mein sirf uljhan thi. Ab ek dikhta hai
+  // aur baaki fold mein baithe rehte hain.
+  const g2 = cleanAnswer(newGemini2(rec));
+  const g1 = cleanAnswer(newGemini1(rec));
+  // "Jo pehle se hai": record ka apna solution, ya wo purana jawab jo bina
+  // ✨ ke aaya tha (ans1At nahi hai — DeepSeek ke daur ka `detail`).
+  const legacy = cleanAnswer(!rec?.ans1At ? rec.detail || "" : "");
+  const own = cleanAnswer(rec.q?.solution || "") || legacy;
   const ai = String(rec.aiNotes || "").trim();
+  const gem = g2 || g1;
+  const main = gem || ai || own;
+  const mainSrc = gem ? "✨ paste kiya hua" : ai ? "🐋 DeepSeek" : own ? "📘 record ka apna" : "";
+  // Jo dikh nahi raha par maujood hai — fold mein.
+  const folds = [
+    gem && g2 && g1 ? { key: "g1", label: "Pehla Gemini answer dekho", md: g1 } : null,
+    gem && ai ? { key: "ai", label: "🐋 DeepSeek ka answer dekho", md: ai } : null,
+    main !== own && own ? { key: "own", label: "Record ka apna answer dekho", md: own } : null,
+  ].filter(Boolean);
 
   const ping = (k) => { setCopied(k); setTimeout(() => setCopied(""), 1600); };
 
@@ -196,33 +215,26 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
         </div>
       )}
 
-      {/* ✨ Naya Gemini answer (agar tumne diya) upar; dusra aaya to wahi, aur
-          pehla fold mein. Uske neeche hamesha DeepSeek ka. */}
-      {a2 ? (
+      {main ? (
         <>
-          <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><ClusterButton md={a2} onFlash={onFlash} /><LazyMarkdown>{a2}</LazyMarkdown></div>
-          {a1 && (
-            <details className="ansp__old">
-              <summary>Pehla Gemini answer dekho</summary>
-              <div className="ansp__answer"><LazyMarkdown>{a1}</LazyMarkdown></div>
+          <div className="ansp__answer">
+            <div className="ansp__gemhead">{mainSrc}</div>
+            <ClusterButton md={main} onFlash={onFlash} />
+            <PointsButton md={main} src={rec.subject} onFlash={onFlash} />
+            <LazyMarkdown>{main}</LazyMarkdown>
+          </div>
+          {folds.map((f) => (
+            <details key={f.key} className="ansp__old">
+              <summary>{f.label}</summary>
+              <div className="ansp__answer"><LazyMarkdown>{f.md}</LazyMarkdown></div>
             </details>
-          )}
+          ))}
         </>
-      ) : a1 ? (
-        <div className="ansp__answer"><div className="ansp__gemhead">✨ Gemini</div><ClusterButton md={a1} onFlash={onFlash} /><LazyMarkdown>{a1}</LazyMarkdown></div>
-      ) : null}
-
-      {ai ? (
-        <div className="ansp__answer ansp__answer--ai">
-          <div className="ansp__aihead">🤖 DeepSeek</div>
-          <ClusterButton md={ai} onFlash={onFlash} />
-          <LazyMarkdown>{ai}</LazyMarkdown>
-        </div>
-      ) : !a1 && !a2 ? (
+      ) : (
         <div className="ansp__answer ansp__answer--empty">
-          ⏳ DeepSeek answer ban raha hai — PC par overlay chalu ho to apne aap aa jayega.
+          ⏳ Abhi koi answer nahi — ✨ se laa kar paste karo.
         </div>
-      ) : null}
+      )}
 
       {lb !== null && urls[lb] && (
         <div className="lightbox" onClick={() => setLb(null)}>
