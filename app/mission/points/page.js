@@ -19,9 +19,9 @@ import Recall from "@/components/carevision/Recall";
 import TrickButtons from "@/components/TrickButtons";
 
 const LABELS = { bad: "Nahi aata tha", good: "Aata tha", show: "Dikhao" };
-// "naam — baaki" ki shakl: ':' / '—' / '–' / '=' / '→' / ' - ' se pehle ka
-// hissa upar, baad wala neeche. Na mile to topic hi sar hai.
-const SPLIT = /^(.{3,90}?)\s*(?::|—|–|=|→|\s-\s)\s*([\s\S]{2,})$/;
+// Ek card = ek jawab ki saari baatein (ek record). Sar par uska topic, aur
+// neeche ek-ek baat apni line par — Recall wahi " · " / nayi line wali
+// list bana deta hai.
 
 function shuffle(list) {
   const a = [...list];
@@ -33,14 +33,13 @@ function shuffle(list) {
 }
 
 function toCard(p) {
-  const m = SPLIT.exec(String(p.text).trim());
   return {
     id: p.id,
-    trigger: m ? m[1] : (p.topic || "Zaroori baat"),
-    answer: m ? m[2] : p.text,
+    trigger: p.topic || p.src || "Zaroori baatein",
+    answer: p.lines.join("\n"),
     extra: null,
     pdfPage: null,
-    meta: `🎯 ${p.topic || "SSC"}${p.src ? ` · ${p.src}` : ""}`,
+    meta: `🎯 ${p.topic || "SSC"}${p.src ? ` · ${p.src}` : ""}${p.lines.length > 1 ? ` · ${p.lines.length} baat` : ""}`,
   };
 }
 
@@ -72,7 +71,7 @@ export default function SscPointsPage() {
 
   const shown = useMemo(() => {
     const t = q.trim().toLowerCase();
-    return t ? points.filter((p) => `${p.topic} ${p.text}`.toLowerCase().includes(t)) : points;
+    return t ? points.filter((p) => `${p.topic} ${p.lines.join(" ")}`.toLowerCase().includes(t)) : points;
   }, [points, q]);
 
   if (revising) {
@@ -115,11 +114,13 @@ export default function SscPointsPage() {
           </button>
         )}
         <div className="row between ms-form" style={{ marginBottom: 8, marginTop: 12 }}>
-          <h2 className="ms-h2" style={{ margin: 0 }}>Saari baatein ({points.length})</h2>
+          <h2 className="ms-h2" style={{ margin: 0 }}>
+            Saari baatein ({points.reduce((n, p) => n + p.lines.length, 0)})
+          </h2>
           {points.length > 0 && (
             <button
               className="btn btn--ghost btn--sm"
-              onClick={() => { if (confirm(`Saari ${points.length} baatein hat jayengi. Pakka?`)) { clearPoints(); load(); } }}
+              onClick={() => { if (confirm("Saari baatein hat jayengi. Pakka?")) { clearPoints(); load(); } }}
             >🗑️ Sab hatao</button>
           )}
           <input className="input" style={{ maxWidth: 220 }} value={q} onChange={(e) => setQ(e.target.value)} placeholder="🔎 dhoondo" />
@@ -132,12 +133,19 @@ export default function SscPointsPage() {
         ) : (
           <div style={{ display: "grid", gap: 8 }}>
             {shown.map((p) => (
-              <div key={p.id} className="ms-factrow">
-                <span>🎯 {p.text}</span>
-                <span className="row" style={{ gap: 6, flexWrap: "nowrap" }}>
-                  <span className="hint">{p.src || p.topic || ""}</span>
+              <div key={p.id} className="glass-card ms-group">
+                <div className="row between" style={{ gap: 8, flexWrap: "nowrap" }}>
+                  <strong style={{ fontSize: "0.9rem" }}>
+                    🎯 {p.topic || p.src || "Zaroori baatein"}
+                    <span className="muted"> · {p.lines.length}</span>
+                  </strong>
                   <button className="btn btn--ghost btn--sm" onClick={() => { removePoint(p.id); load(); }}>🗑️</button>
-                </span>
+                </div>
+                <ul style={{ margin: "6px 0 0", paddingLeft: 18, display: "grid", gap: 5 }}>
+                  {p.lines.map((l, i) => (
+                    <li key={i} style={{ fontSize: "0.92rem", lineHeight: 1.5 }}>{l}</li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>

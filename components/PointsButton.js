@@ -11,7 +11,7 @@
 // khud bata deta hai, aur adhoori list ho to sirf bachi hui line jodta hai.
 
 import { useEffect, useMemo, useState } from "react";
-import { addPoint, getPoints, pointsOf } from "@/lib/sscpoints";
+import { addPoints, havePointLines, pointsOf } from "@/lib/sscpoints";
 
 export default function PointsButton({ md, src = "", onFlash }) {
   const got = useMemo(() => pointsOf(md), [md]);
@@ -19,7 +19,7 @@ export default function PointsButton({ md, src = "", onFlash }) {
 
   useEffect(() => {
     const load = () => {
-      try { setHave(new Set(getPoints().map((p) => p.text))); }
+      try { setHave(havePointLines()); }
       catch { setHave(new Set()); }
     };
     load();
@@ -42,7 +42,9 @@ export default function PointsButton({ md, src = "", onFlash }) {
       disabled={done}
       title={done ? "Ye baatein pehle hi Zaroori baatein mein hain" : "Jawab ki SSC wali ek-line baatein ek jagah"}
       onClick={() => {
-        for (const l of left) addPoint({ text: l, topic: got.topic, src });
+        // Ek jawab ki saari baatein EK record mein — revise karte waqt wo
+        // ek saath aati hain, kat kar nahi.
+        addPoints({ lines: left, topic: got.topic, src });
         setHave((h) => new Set([...h, ...left]));
         onFlash && onFlash(`🎯 ${left.length} baat Zaroori baatein mein`);
       }}
