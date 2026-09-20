@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { getSettings } from "@/lib/storage";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { useDeepSeek, dsLabel, dsTitle } from "@/lib/usedeepseek";
-import { getTrick, saveTrick, clearTrick, trickPromptFor, TRICK_PROMPT } from "@/lib/tricks";
+import { getTrick, saveTrick, clearTrick, trickPromptFor, tidyTrick } from "@/lib/tricks";
 import Markdown from "./Markdown";
 
 export default function TrickButtons({ card, subject = "gs" }) {
@@ -76,7 +76,7 @@ export default function TrickButtons({ card, subject = "gs" }) {
       {trick ? (
         <div className="carev-trick-box">
           <div className="carev-trick-src">🪄 {mine ? "trick (tumhari)" : "trick · 🐋 DeepSeek"}</div>
-          <Markdown>{trick}</Markdown>
+          <Markdown>{tidyTrick(trick)}</Markdown>
         </div>
       ) : null}
 
