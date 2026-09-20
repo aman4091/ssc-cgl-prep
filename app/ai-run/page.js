@@ -127,7 +127,7 @@ export default function AiRunPage() {
     setBusy(`${src.key}:${item.slug}`);
     try {
       const { jobs, total, pending } = await loadJobs(src, item.slug, count, item);
-      if (!jobs.length) { setErr("Yahan har question ka jawab pehle se hai."); return; }
+      if (!jobs.length) { setErr("Yahan koi question hi nahi hai."); return; }
       setRun({ name: `${src.icon} ${src.name} · ${item.label}`, jobs, total, pending });
       setI(0);
       await send(jobs[0]);
@@ -194,7 +194,9 @@ export default function AiRunPage() {
           <>
             <div className="airun__bar">
               <span>Question {i + 1} / {run.jobs.length}</span>
-              <span className="muted">{run.pending} baaki the</span>
+              <span className="muted">
+                {job?.done ? "✨ pehle se jawab hai — naya isi ke upar" : `${run.pending} is list mein`}
+              </span>
             </div>
             <div className="airun__q">{job.title}</div>
 
@@ -252,7 +254,9 @@ export default function AiRunPage() {
         </label>
       </div>
       <p className="hint mt-8">
-        Jagah chuno — utne question ek-ek karke {label} par khulenge. Jinka jawab pehle se hai wo chhoot jayenge.
+        Jagah chuno — utne question ek-ek karke {label} par khulenge, usi kram mein jo us page par hai
+        (jahan tum pahunche ho wahin se). Jis par pehle se jawab hai wo bhi aata hai — naya jawab
+        purane ki jagah le leta hai.
       </p>
       {err && <p className="ansp__err mt-8">{err}</p>}
 
