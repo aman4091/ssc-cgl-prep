@@ -766,7 +766,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   // ⏱ 15 minute ka stretch — sirf Maths/Reasoning par. Pehle jawab se
   // chalu, poore hone par ek popup: us stretch mein kitne question hue.
-  const timed = subject === "math" || subject === "reasoning";
+  // Ghadi tabhi jab is chhaanti mein question hon — khali list par chalti
+  // ghadi ka koi matlab nahi.
+  const timed = (subject === "math" || subject === "reasoning") && rows.length > 0;
   const timer = useDrillTimer(15, timed);
 
   const chips = [ALL_SUBJ, ...SUBJECTS];
