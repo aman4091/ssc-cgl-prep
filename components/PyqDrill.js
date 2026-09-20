@@ -66,13 +66,19 @@ export default function PyqDrill({
       setPos(0);
       return;
     }
+    // Do shakl: naya kram hash ka hai, purana list ke number ka (wo tabhi
+    // aata hai jab list ki lambai wahi ho — lib/pyqdrill dekh leta hai).
     const byHash = new Map();
     list.forEach((item) => { const h = hashOf(item); if (!byHash.has(h)) byHash.set(h, item); });
     const seen = new Set();
     const q = [];
-    for (const h of saved) {
-      const item = byHash.get(h);
-      if (item && !seen.has(h)) { seen.add(h); q.push(item); }
+    for (const e of saved) {
+      const item = typeof e === "number" ? list[e] : byHash.get(e);
+      if (!item) continue;
+      const h = hashOf(item);
+      if (seen.has(h)) continue;
+      seen.add(h);
+      q.push(item);
     }
     // Beech mein juda NAYA question (overlay se aaya, ya quiz ka taza galat)
     // qataar ke ANT mein nahi jata — 400 question ki list mein uska matlab

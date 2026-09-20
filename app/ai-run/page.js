@@ -126,7 +126,7 @@ export default function AiRunPage() {
     setErr("");
     setBusy(`${src.key}:${item.slug}`);
     try {
-      const { jobs, total, pending } = await loadJobs(src, item.slug, count);
+      const { jobs, total, pending } = await loadJobs(src, item.slug, count, item);
       if (!jobs.length) { setErr("Yahan har question ka jawab pehle se hai."); return; }
       setRun({ name: `${src.icon} ${src.name} · ${item.label}`, jobs, total, pending });
       setI(0);
