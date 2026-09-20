@@ -48,7 +48,7 @@ export function answerPoints(text) {
 
 export default function Recall({
   queue: initial, today, onExit, onRate, labels = DEFAULT_LABELS, open = false, loop = false,
-  onDelete, resumeKey,
+  onDelete, resumeKey, tools,
 }) {
   const withStar = !onRate;
   // Adhoora round wapas (lib/recallsession): qataar ka kram — dobara-aane
@@ -226,6 +226,9 @@ export default function Recall({
               })()}
               {card.extra ? <div className="carev-extra">{card.extra}</div> : null}
               {card.pdfPage ? <div className="carev-src">PDF p.{card.pdfPage}</div> : null}
+              {/* Card ke apne auzaar — fact log / Zaroori baatein yahan
+                  "iski trick bana do" wale button dete hain. */}
+              {tools ? tools(card) : null}
             </>
           ) : (
             <div className="carev-hint">Socho… phir tap karo</div>

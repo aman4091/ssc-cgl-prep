@@ -6,6 +6,7 @@ import { FACT_SECS, getFacts, addFact, removeFact, clearFacts, dueFacts, reviewF
 import { clearSession } from "@/lib/recallsession";
 import { getMission, currentDayNum, planFor } from "@/lib/mission";
 import Recall from "@/components/carevision/Recall";
+import TrickButtons from "@/components/TrickButtons";
 
 // Bade card mein revise (CA Revision wala Recall, khula roop): upar naam,
 // neeche uske baare mein — seedha dikhta hai, chhupa nahi. "Kerala dance:
@@ -109,6 +110,7 @@ export default function MissionFactsPage() {
         open
         loop
         onRate={() => {}}
+        tools={(c) => <TrickButtons card={c} subject="gs" />}
         onDelete={(c) => { removeFact(c.id); load(); }}
         resumeKey="facts"
         onExit={() => { setRevising(null); load(); window.scrollTo(0, 0); }}

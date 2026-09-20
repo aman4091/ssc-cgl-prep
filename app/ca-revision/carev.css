@@ -195,6 +195,15 @@
 .carev-points li b { font-weight: 700; color: var(--tb-blue-ink); }
 .carev-extra { font-size: 14px; line-height: 1.45; margin-top: 8px; color: var(--tb-ink); }
 .carev-src { font-size: 12px; color: var(--tb-dim); margin-top: 8px; }
+/* 🪄 Trick — fact log / Zaroori baatein ke card par. */
+.carev-trick { margin-top: 12px; border-top: 1px dashed var(--tb-line); padding-top: 10px; }
+.carev-trick-acts { display: flex; gap: 6px; flex-wrap: wrap; }
+.carev-trick-box {
+  margin-top: 8px; background: var(--tb-page); border: 1px solid var(--tb-line);
+  border-radius: 10px; padding: 10px 12px; font-size: 15px; line-height: 1.5;
+}
+.carev-trick-src { font-size: 12px; color: var(--tb-dim); font-weight: 700; margin-bottom: 4px; }
+
 
 .carev-actions {
   position: sticky;

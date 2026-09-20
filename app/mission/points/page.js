@@ -16,6 +16,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { getPoints, removePoint, clearPoints } from "@/lib/sscpoints";
 import { clearSession } from "@/lib/recallsession";
 import Recall from "@/components/carevision/Recall";
+import TrickButtons from "@/components/TrickButtons";
 
 const LABELS = { bad: "Nahi aata tha", good: "Aata tha", show: "Dikhao" };
 // "naam — baaki" ki shakl: ':' / '—' / '–' / '=' / '→' / ' - ' se pehle ka
@@ -82,6 +83,7 @@ export default function SscPointsPage() {
         open
         loop
         onRate={() => {}}
+        tools={(c) => <TrickButtons card={c} subject="gs" />}
         onDelete={(c) => { removePoint(c.id); load(); }}
         resumeKey="points"
         onExit={() => { setRevising(null); load(); window.scrollTo(0, 0); }}
