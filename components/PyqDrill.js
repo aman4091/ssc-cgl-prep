@@ -52,8 +52,11 @@ export default function PyqDrill({
   }, [list, keyFor]);
   const [done, setDone] = useState({ good: 0, bad: 0 });
   const stats = useRef({});
+  // Ginti aane par sar ki line ("12/72 aata hai") bhi taza ho jaye —
+  // warna wo chapter khulte hi 0 dikhata rehta tha.
+  const [statsTick, setStatsTick] = useState(0);
 
-  useEffect(() => { stats.current = getDrill(chapter); }, [chapter]);
+  useEffect(() => { stats.current = getDrill(chapter); setStatsTick((t) => t + 1); }, [chapter]);
 
   // Pichhli baar ka kram wapas. Adhoora ya purana ho to jo mila wo aage,
   // baaki list ke apne kram mein peechhe — koi question gum na ho.
@@ -62,7 +65,20 @@ export default function PyqDrill({
     if (!saved) {
       // Pehli baar: vocab jaisi jagah par kram RANDOM chahiye (owner:
       // "koisa bhi aaye"), question bank mein kitaab ka apna kram.
-      setQueue(shuffleFirst ? shuffled(list) : [...list]);
+      let base = shuffleFirst ? shuffled(list) : [...list];
+      // Kram to nahi bacha par GINTI bachi hai — to jahan tak pahunche the
+      // wahin se shuru karo: jin par "Aata hai" laga tha wo peechhe chale
+      // jaate hain, baaki apne kram mein aage. (Ye tab kaam aata hai jab
+      // kram kisi wajah se gir gaya ho — warna ginti khali hoti hai aur
+      // kuch badalta hi nahi.)
+      const st = getDrill(chapter);
+      if (st && Object.keys(st).length) {
+        const known = (q) => ((st[keyFor(q)] || {}).k || 0) > 0;
+        base = base.map((q, idx) => ({ q, idx }))
+          .sort((x, y) => (known(x.q) ? 1 : 0) - (known(y.q) ? 1 : 0) || x.idx - y.idx)
+          .map((x) => x.q);
+      }
+      setQueue(base);
       setPos(0);
       return;
     }
@@ -100,12 +116,12 @@ export default function PyqDrill({
     }
     setQueue(q);
     setPos(0);
-  }, [list, chapter, shuffleFirst, hashOf]);
+  }, [list, chapter, shuffleFirst, hashOf, keyFor]);
 
   const known = useMemo(() => {
     const s = stats.current || {};
     return list.filter((q) => (s[keyFor(q)]?.k || 0) > 0).length;
-  }, [list, done]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [list, done, statsTick]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const answer = useCallback((good) => {
     const q = queue[pos];
