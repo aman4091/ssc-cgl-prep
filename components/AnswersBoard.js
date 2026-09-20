@@ -29,6 +29,7 @@ import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
 import PointsButton from "./PointsButton";
+import { useDrillTimer, fmtLeft } from "@/lib/usedrilltimer";
 
 // Answers — mock test ke screenshot, aur unke jawab.
 //
@@ -763,6 +764,11 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     return () => window.removeEventListener("paste", onPaste);
   }, [takeFiles]);
 
+  // ⏱ 15 minute ka stretch — sirf Maths/Reasoning par. Pehle jawab se
+  // chalu, poore hone par ek popup: us stretch mein kitne question hue.
+  const timed = subject === "math" || subject === "reasoning";
+  const timer = useDrillTimer(15, timed);
+
   const chips = [ALL_SUBJ, ...SUBJECTS];
 
   return (
@@ -778,6 +784,12 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           >
             📊 Chapter report
           </button>
+          {timed && (
+            <span className={`ansp__timer${timer.running ? " is-on" : ""}`}
+              title={timer.running ? "15 minute poore hone par ginti dikhegi" : "Pehla jawab dete hi ghadi chalu"}>
+              ⏱ {fmtLeft(timer.left)}
+            </span>
+          )}
         </div>
 
         {flash && <p className="ansp__flash">{flash}</p>}
@@ -800,8 +812,25 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
             list={list}
             resumeKey={`answers:${src}:${subject || "all"}:${chapter || "all"}`}
             keyOf={(r) => r.uid}
+            onAnswer={timer.mark}
             renderCard={(r, i) => renderCard(r, i, false)}
           />
+        )}
+
+        {timer.report && (
+          <div className="drillpop" role="dialog" aria-modal="true"
+            onClick={(e) => { if (e.target === e.currentTarget) timer.close(); }}>
+            <div className="drillpop__box">
+              <div className="drillpop__t">⏱ 15 minute poore</div>
+              <div className="drillpop__big">{timer.report.good + timer.report.bad}</div>
+              <div className="drillpop__sub">question hue</div>
+              <div className="drillpop__row">
+                <span>✅ Aata hai <b>{timer.report.good}</b></span>
+                <span>❌ Nahi aata <b>{timer.report.bad}</b></span>
+              </div>
+              <button className="ansp__btn ansp__btn--go" onClick={timer.close}>Theek hai — agla 15 min</button>
+            </div>
+          </div>
         )}
 
         {showTop && (

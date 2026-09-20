@@ -1142,3 +1142,27 @@ body.exam-on .panic-fab { display: none; }
 
 /* LazyMarkdown ki jagah — answer banne tak itni jagah, taaki scroll na uchhle. */
 .examskin .md--lazy { min-height: 160px; }
+
+/* ⏱ Answers page ka 15-minute stretch (Maths/Reasoning) */
+.examskin .ansp__timer {
+  margin-left: auto; font-variant-numeric: tabular-nums; font-weight: 800;
+  font-size: 13px; color: var(--tb-dim); border: 1px solid var(--tb-line);
+  border-radius: 999px; padding: 5px 12px; background: var(--tb-page);
+}
+.examskin .ansp__timer.is-on { color: var(--tb-blue-ink); border-color: var(--tb-blue); }
+.examskin .drillpop {
+  position: fixed; inset: 0; z-index: 90; display: grid; place-items: center;
+  background: rgba(15, 23, 42, 0.45); padding: 20px;
+}
+.examskin .drillpop__box {
+  box-sizing: border-box; width: min(340px, 100%); text-align: center;
+  background: var(--tb-page); border: 1px solid var(--tb-line);
+  border-radius: 18px; padding: 22px 20px;
+}
+.examskin .drillpop__t { font-size: 14px; font-weight: 800; color: var(--tb-dim); }
+.examskin .drillpop__big { font-size: 46px; font-weight: 800; line-height: 1.1; color: var(--tb-ink); }
+.examskin .drillpop__sub { font-size: 13px; color: var(--tb-dim); margin-bottom: 14px; }
+.examskin .drillpop__row {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  font-size: 14px; color: var(--tb-ink); margin-bottom: 16px;
+}

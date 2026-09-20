@@ -31,7 +31,7 @@ function shuffled(list) {
 }
 
 export default function PyqDrill({
-  title, list, resumeKey, renderCard, shuffleFirst = false, unit = "Q", keyOf,
+  title, list, resumeKey, renderCard, shuffleFirst = false, unit = "Q", keyOf, onAnswer,
 }) {
   const chapter = resumeKey || title || "pyq";
   // Har item ki pehchaan. Bank ke question ka apna id hota hai; Answers
@@ -114,8 +114,11 @@ export default function PyqDrill({
     // Naya kram wahin likh do — tab ab band ho jaye to bhi yahi se chalega.
     saveOrder(chapter, next.map(hashOf), list.length);
     setDone((d) => (good ? { ...d, good: d.good + 1 } : { ...d, bad: d.bad + 1 }));
+    // Bahar wale ko khabar — Answers page ki 15-minute wali ghadi isi se
+    // chalu hoti hai aur ginti rakhti hai.
+    if (onAnswer) onAnswer(good);
     window.scrollTo(0, 0);
-  }, [queue, pos, chapter, list.length, keyFor, hashOf]);
+  }, [queue, pos, chapter, list.length, keyFor, hashOf, onAnswer]);
 
   useEffect(() => {
     const onKey = (e) => {
