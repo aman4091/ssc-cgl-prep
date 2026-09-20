@@ -16,7 +16,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AI_SOURCES, loadList, loadJobs } from "@/lib/airun";
+import { AI_SOURCES, loadList, loadJobs, markRunDone } from "@/lib/airun";
 import { copyImageToClipboard } from "@/lib/imgclip";
 import { promptFor, armPrompt } from "@/lib/geminiask";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
@@ -150,7 +150,11 @@ export default function AiRunPage() {
   const next = async (saveText) => {
     const job = run.jobs[i];
     if (saveText) {
-      try { job.save(saveText); } catch { setErr("Save nahi hua (jagah kam?)."); }
+      try {
+        job.save(saveText);
+        // Nishaan: ye question run se ban gaya — dobara run mein nahi aayega.
+        markRunDone(job.dkey);
+      } catch { setErr("Save nahi hua (jagah kam?)."); }
     }
     const n = i + 1;
     setI(n);
@@ -206,7 +210,7 @@ export default function AiRunPage() {
             <div className="airun__bar">
               <span>Question {i + 1} / {run.jobs.length}</span>
               <span className="muted">
-                {job?.done ? "✨ pehle se jawab hai — naya isi ke upar" : `${run.pending} is list mein`}
+                {job?.done ? "✨ pehle se jawab hai — naya isi ke upar" : `${run.pending} baaki`}
               </span>
             </div>
             <div className="airun__q">{job.title}</div>
