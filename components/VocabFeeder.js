@@ -12,13 +12,13 @@
 //    cgl.vocab.mine mein save karo (homepage par turant dikhti hain) aur
 //    /ack-vocab bhejo.
 // 3. One-liner lena: /pending-oneliners se overlay ke 📝 button wali line
-//    Fact log mein us subject ke khaane mein daal do, phir /ack-oneliner.
+//    apne 📝 One-liners page (/oneliners) mein daal do, phir /ack-oneliner.
 //
 // Overlay band ho to fetch chupchaap fail — no UI.
 
 import { useEffect, useRef } from "react";
 import { TYPES, nextUp, totalDays, getDayTypeItems, getDayProgress, getMine, setMine, addNewWord } from "@/lib/vocab";
-import { addFact } from "@/lib/missionfacts";
+import { addOneLiner } from "@/lib/oneliners";
 import { shedOldQuizzes } from "@/lib/storage";
 
 // localStorage full → purane generated quizzes shed karke retry (OverlayInbox
@@ -29,10 +29,6 @@ function withSpace(fn) {
     catch (e) { if (!shedOldQuizzes()) throw e; }
   }
 }
-
-// Overlay ke 📝 1-liner button se aayi line kis khaane mein rakhni hai.
-// Reasoning ki apni jagah nahi hai — uski trick Maths trick ke saath rehti hai.
-const ONELINER_SEC = { gs: "gs", english: "english", math: "maths", reasoning: "maths" };
 
 const PORTS = [5000, 5001, 5002];
 const POLL_MS = 5000;
@@ -86,19 +82,15 @@ export default function VocabFeeder() {
               });
             }
 
-            // 3. 📝 One-liner: subject ka answer copy karne ke baad overlay se
-            //    aayi ek-line, seedhe Fact log ke us khaane mein (wahin se
-            //    1-3-7-14 din wala revision khud chalu ho jata hai).
+            // 3. 📝 One-liner: subject ka answer copy karne ke baad overlay
+            //    se aayi ek-line, seedhe /oneliners ki list mein (apna alag
+            //    page — fact log ka revision isse nahi bharta).
             const ol = await fetch(`${base}/pending-oneliners`, { cache: "no-store" });
             if (ol.ok) {
               for (const it of (await ol.json()) || []) {
                 if (!it.id) continue;
                 if (it.text) {
-                  withSpace(() => addFact({
-                    sec: ONELINER_SEC[it.subject] || "gs",
-                    topic: "One-liner",
-                    text: it.text,
-                  }));
+                  withSpace(() => addOneLiner({ subject: it.subject, text: it.text }));
                 }
                 await fetch(`${base}/ack-oneliner`, {
                   method: "POST",
