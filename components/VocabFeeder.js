@@ -1,7 +1,7 @@
 "use client";
 
 // Desktop ke Mock Test Helper overlay (F:\over) ke 📚 Vocab auto-loop ka
-// site-side hissa. Do kaam, dono OverlayInbox jaise 5s poll par:
+// site-side hissa. Teen kaam, teeno OverlayInbox jaise 5s poll par:
 //
 // 1. Overlay ko words dena: /vocab-need bole "active hoon, words chahiye" to
 //    homepage wale day (nextUp) se shuru karke pehla aisa day dhundo jisme
@@ -11,11 +11,14 @@
 // 2. Meanings lena: /pending-vocab se copy hui Gemini meanings utha kar
 //    cgl.vocab.mine mein save karo (homepage par turant dikhti hain) aur
 //    /ack-vocab bhejo.
+// 3. One-liner lena: /pending-oneliners se overlay ke 📝 button wali line
+//    Fact log mein us subject ke khaane mein daal do, phir /ack-oneliner.
 //
 // Overlay band ho to fetch chupchaap fail — no UI.
 
 import { useEffect, useRef } from "react";
 import { TYPES, nextUp, totalDays, getDayTypeItems, getDayProgress, getMine, setMine, addNewWord } from "@/lib/vocab";
+import { addFact } from "@/lib/missionfacts";
 import { shedOldQuizzes } from "@/lib/storage";
 
 // localStorage full → purane generated quizzes shed karke retry (OverlayInbox
@@ -26,6 +29,10 @@ function withSpace(fn) {
     catch (e) { if (!shedOldQuizzes()) throw e; }
   }
 }
+
+// Overlay ke 📝 1-liner button se aayi line kis khaane mein rakhni hai.
+// Reasoning ki apni jagah nahi hai — uski trick Maths trick ke saath rehti hai.
+const ONELINER_SEC = { gs: "gs", english: "english", math: "maths", reasoning: "maths" };
 
 const PORTS = [5000, 5001, 5002];
 const POLL_MS = 5000;
@@ -77,6 +84,28 @@ export default function VocabFeeder() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
               });
+            }
+
+            // 3. 📝 One-liner: subject ka answer copy karne ke baad overlay se
+            //    aayi ek-line, seedhe Fact log ke us khaane mein (wahin se
+            //    1-3-7-14 din wala revision khud chalu ho jata hai).
+            const ol = await fetch(`${base}/pending-oneliners`, { cache: "no-store" });
+            if (ol.ok) {
+              for (const it of (await ol.json()) || []) {
+                if (!it.id) continue;
+                if (it.text) {
+                  withSpace(() => addFact({
+                    sec: ONELINER_SEC[it.subject] || "gs",
+                    topic: "One-liner",
+                    text: it.text,
+                  }));
+                }
+                await fetch(`${base}/ack-oneliner`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ id: it.id }),
+                });
+              }
             }
 
             const res = await fetch(`${base}/pending-vocab`, { cache: "no-store" });
