@@ -5,7 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   SUBJECTS, getWrongBook, isSubject, imagesOf, dayLabel,
-  storeImages, addWrong, removeWrong,
+  storeImages, addWrong, removeWrong, isPracticeable,
   setDetail2, setShownDetail, cleanAnswer, newGeminiAnswer, newGemini1, newGemini2,
 } from "@/lib/wrongbook";
 import { copyImageToClipboard, imageBlob } from "@/lib/imgclip";
@@ -14,7 +14,7 @@ import { markDone, pruneDone, getDoneMap } from "@/lib/answersdone";
 import { getCounts, bumpCount, countMark } from "@/lib/qcounter";
 import { useImageUrls } from "@/lib/wrongimages";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
-import { storageUsage } from "@/lib/storage";
+import { saveQuiz, makeId, storageUsage } from "@/lib/storage";
 import Markdown, { LazyMarkdown } from "@/components/Markdown";
 import ZoomableImage from "@/components/ZoomableImage";
 import PyqDrill from "@/components/PyqDrill";
@@ -23,7 +23,7 @@ import {
   loadTaxonomy, chaptersFor, categoryChapter, chapterLabel,
   getTags, setTags, pruneTags, autoOn,
 } from "@/lib/qchapter";
-import { tagChaptersByText } from "@/lib/client-ai";
+import { generateSimilar, tagChaptersByText } from "@/lib/client-ai";
 import { getHardSet, toggleHard, pruneHard } from "@/lib/hardq";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
@@ -88,6 +88,7 @@ const labelOf = (k) =>
   k === "other" ? "Other" : (SUBJECTS.find((s) => s.key === k) || ALL_SUBJ).label;
 
 function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard }) {
+  const router = useRouter();
   const { urls, missing } = useImageUrls(imagesOf(rec));
   const [lb, setLb] = useState(null);
   const [pasteOpen, setPasteOpen] = useState(false);
@@ -130,6 +131,30 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
   // hain. Prompt saath mein nahi ja sakta (clipboard par ek waqt mein ek hi
   // cheez), isliye overlay wali chaal: yahan wapas aate hi prompt apne aap copy
   // ho jata hai — phir wahin dobara paste kar do.
+  // 🎯 20 — isi type ke 20 naye question (wahi jo PYQ card par hai).
+  // Sirf un record par jinke paas asli options hain; screenshot-only wale
+  // ko quiz player khol hi nahi sakta.
+  const [simLoading, setSimLoading] = useState(false);
+  const canMake20 = isPracticeable(rec);
+  const make20 = async () => {
+    setSimLoading(true);
+    try {
+      const data = await generateSimilar({ question: rec.q.question, options: rec.q.options }, 20, rec.subject);
+      const quiz = {
+        id: makeId(),
+        title: data.title || "Similar (20)",
+        source: "similar",
+        createdAt: new Date().toISOString(),
+        questions: data.questions,
+      };
+      saveQuiz(quiz);
+      router.push(`/quizzes/${quiz.id}`);
+    } catch (e) {
+      onFlash(`❌ 20 nahi bane — ${e.message}`);
+      setSimLoading(false);
+    }
+  };
+
   const aiSite = getSettings().askAiSite;
   const askGemini = async () => {
     const imgs = imagesOf(rec);
@@ -182,6 +207,12 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
           <button className="ansp__btn" onClick={askGemini} title={`Image copy karke ${aiSiteLabel(aiSite)} kholo, phir answer paste karo`}>
             {copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}
           </button>
+          {canMake20 && (
+            <button className="ansp__btn" onClick={make20} disabled={simLoading}
+              title="Isi type ke 20 naye questions generate karo">
+              {simLoading ? "…" : "🎯 20"}
+            </button>
+          )}
           <button className="ansp__btn" onClick={() => onToggleHard(rec)} title={isHardQ ? "Hard se hatao" : "Hard mein daalo"}>
             {isHardQ ? "✅🔴" : "🔴"}
           </button>
