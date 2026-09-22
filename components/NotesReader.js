@@ -11,6 +11,7 @@ import { getSettings } from "@/lib/storage";
 import { aiSiteUrl } from "@/lib/aisites";
 import ZoomableImage from "@/components/ZoomableImage";
 import Markdown from "@/components/Markdown";
+import NotesFactsBtn from "@/components/NotesFactsBtn";
 
 // Plain text of a page's blocks — what the ✨ Gemini button sends. Strips the
 // transcription markup (**bold**, __underline__, [?…] unsure marks) to words.
@@ -508,6 +509,7 @@ export default function NotesReader({ book }) {
                   )}
                   <PageQuizBtn page={p} book={book} />
                   <GeminiBtn text={pageText(p)} subject={book.subject} />
+                  <NotesFactsBtn book={book} page={p} text={pageText(p)} />
                   <span className="nt-meta">page {p.book_page}</span>
                 </span>
               </div>
