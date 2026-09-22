@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { getTrick, makeTrick, makeFull, prefetch } from "@/lib/quicktrick";
 import Markdown from "./Markdown";
 
-export default function QuickTrick({ rec, list, idx }) {
+export default function QuickTrick({ rec, list, idx, openByDefault = false }) {
   const [trick, setTrick] = useState("");
   const [full, setFull] = useState("");
   const [showFull, setShowFull] = useState(false);
@@ -26,6 +26,8 @@ export default function QuickTrick({ rec, list, idx }) {
   useEffect(() => {
     let dead = false;
     setFull(""); setShowFull(false); setErr("");
+    // "👁 Answer hamesha" ON hai to poora answer bhi bina dabaye khule.
+    if (openByDefault) setShowFull(true);
     if (!rec) { setTrick(""); return undefined; }
     const have = getTrick(rec.id);
     setTrick(have);
@@ -39,7 +41,7 @@ export default function QuickTrick({ rec, list, idx }) {
     // Aur peeche se aage ke 5 taiyar karo.
     prefetch(list, idx);
     return () => { dead = true; };
-  }, [rec, list, idx]);
+  }, [rec, list, idx, openByDefault]);
 
   // Doosre device par bani trick (sync) — aate hi dikh jaye.
   useEffect(() => {
@@ -53,15 +55,16 @@ export default function QuickTrick({ rec, list, idx }) {
     };
   }, [rec]);
 
-  const openFull = async () => {
-    if (showFull) { setShowFull(false); return; }
-    setShowFull(true);
-    if (full) return;
-    setBusy("full"); setErr("");
-    try { setFull(await makeFull(rec)); }
-    catch (e) { setErr(e.message); }
-    finally { setBusy(""); }
-  };
+  useEffect(() => {
+    if (!showFull || full || busy === "full" || !rec) return;
+    setBusy("full");
+    makeFull(rec)
+      .then(setFull)
+      .catch((e) => setErr(e.message))
+      .finally(() => setBusy(""));
+  }, [showFull, full, busy, rec]);
+
+  const openFull = () => setShowFull((v) => !v);
 
   const again = async () => {
     setBusy("trick"); setErr("");

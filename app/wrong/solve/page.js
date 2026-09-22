@@ -56,6 +56,10 @@ const TIMER_PRESETS = [36, 45, 60, 90];
 // Device-local preference — `cgl.` prefix nahi, kyunki ye setting is device ki
 // hai aur sync par bhejne layak nahi (aur wo localStorage waise bhi bhari hai).
 const TIMER_KEY = "ink.timer";
+// 👁 "Answer hamesha saamne" — is DEVICE ki apni pasand (sync nahi hoti).
+// Owner: "mereko button dba ke hide nahi khelna, saamne answer chahiye jab
+// solve kar raha hu". Ek baar ON karo, har question par answer khula milega.
+const SHOWANS_KEY = "ink.showans";
 const mmss = (s) => `${Math.floor(Math.max(0, s) / 60)}:${String(Math.max(0, s) % 60).padStart(2, "0")}`;
 
 // Quiz ke questions ko wrongbook-record ki shakl do.
@@ -186,12 +190,18 @@ function SolveInner() {
     return undefined;
   }, [subject, d, quizId]);
 
+  useEffect(() => {
+    try { setAlways(localStorage.getItem(SHOWANS_KEY) === "1"); } catch { /* ignore */ }
+  }, []);
+
   const found = list.findIndex((r) => r.id === id);
   const idx = Math.max(0, found);
   const rec = list[idx] || null;
 
   const [doc, setDoc] = useState(null);       // InkCanvas ko diya jane wala initial doc
   const [loading, setLoading] = useState(true);
+  // Answer reveal. `always` ON ho to har naye question par apne aap khula.
+  const [always, setAlways] = useState(false);
   const [shown, setShown] = useState(false);  // answer reveal
   const [slim, setSlim] = useState(false);    // question pane collapse
   const [conflict, setConflict] = useState(null);
@@ -248,7 +258,9 @@ function SolveInner() {
     if (!rec) { setLoading(false); return undefined; }
     let alive = true;
     setLoading(true);
-    setShown(false);
+    // Naya question: answer wapas chhup jata hai — chhod kar tab, jab tumne
+    // "👁 Answer hamesha" ON kar rakha ho.
+    setShown(always);
     setConflict(null);
     (async () => {
       const r = await openInk(rec).catch(() => null);
@@ -261,7 +273,7 @@ function SolveInner() {
     })();
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rec?.id]);
+  }, [rec?.id, always]);
 
   // ── saving ────────────────────────────────────────────────────────────────
 
@@ -891,7 +903,7 @@ function SolveInner() {
               se solve karte waqt baayen aankh yahi padhti hai. Aage ke 5 ki
               trick peeche se ban chuki hoti hai. */}
           {!slim && (rec?.subject === "math" || rec?.subject === "reasoning") && (
-            <QuickTrick rec={rec} list={list} idx={idx} />
+            <QuickTrick rec={rec} list={list} idx={idx} openByDefault={always} />
           )}
           <div className="row" style={{ gap: 6, marginBottom: slim ? 0 : 8 }}>
             <button className="btn btn--ghost btn--sm" onClick={() => setSlim((v) => !v)}>
@@ -902,6 +914,22 @@ function SolveInner() {
             {!slim && !quizId && (
               <button className="btn btn--ghost btn--sm" onClick={() => setShown((v) => !v)}>
                 {shown ? "🙈 Hide" : "👁️ Check karo"}
+              </button>
+            )}
+            {/* Ek baar daba do — phir har question par answer saamne. Button
+                dabane ka chakkar hi khatam. */}
+            {!slim && !quizId && (
+              <button
+                className={`btn btn--sm ${always ? "btn--primary" : "btn--ghost"}`}
+                title="Answer hamesha khula rahe — har question par"
+                onClick={() => {
+                  const v = !always;
+                  setAlways(v);
+                  setShown(v);
+                  try { localStorage.setItem(SHOWANS_KEY, v ? "1" : "0"); } catch { /* ignore */ }
+                }}
+              >
+                {always ? "👁 Answer ON" : "👁 Answer hamesha"}
               </button>
             )}
             {!slim && quizId && !submitted && !prior && (
