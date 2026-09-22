@@ -20,9 +20,13 @@ import {
 import { addFact, getFacts } from "@/lib/missionfacts";
 import Markdown from "./Markdown";
 
-// Popup ka sar par wala button: saare facts → fact log. Jo line pehle se
-// wahan hai wo dobara nahi jati (wahi page dobara kholo to button khud bata
-// deta hai ki ja chuke hain).
+// Popup ka sar par wala button: is page ke saare facts → fact log, EK HI
+// CARD par (owner: "ek answer ke fact ek hi jagah"). Alag-alag card banate
+// to ek page ki baatein revision mein ek doosre se kat kar, bina sandarbh
+// ke aati. Card par har line apni line par dikhti hai.
+//
+// Ja chuka hai ya nahi — poore card ke text se dekha jata hai, isliye wahi
+// page dobara kholne par button khud bata deta hai.
 function ToFactLog({ parsed, sec, onFlash }) {
   const [have, setHave] = useState(() => new Set());
 
@@ -42,23 +46,25 @@ function ToFactLog({ parsed, sec, onFlash }) {
 
   const lines = factLines(parsed);
   if (!lines.length) return null;
-  const left = lines.filter((l) => !have.has(l));
-  const done = left.length === 0;
+  const card = lines.join("\n");          // ek card, har baat apni line par
+  const done = have.has(card);
 
   return (
     <button
       className={"btn btn--sm " + (done ? "btn--ghost" : "btn--primary")}
       disabled={done}
-      title={done ? "Ye facts pehle hi fact log mein ja chuke hain" : "Har fact alag line, fact log mein"}
+      title={done
+        ? "Ye page pehle hi fact log mein ja chuka hai"
+        : "Is page ki saari baatein ek card par, fact log mein"}
       onClick={() => {
-        for (const l of left) addFact({ sec, topic: parsed.topic, text: l });
-        setHave((h) => new Set([...h, ...left]));
-        onFlash && onFlash(`🧩 ${left.length} fact log mein — 1/3/7/14 din baad revision`);
+        addFact({ sec, topic: parsed.topic, text: card });
+        setHave((h) => new Set([...h, card]));
+        onFlash && onFlash(`🧩 ${lines.length} baatein ek card par fact log mein — 1/3/7/14 din baad revision`);
       }}
     >
       {done
-        ? `✓ Fact log mein hain (${lines.length})`
-        : `🧩 Fact log → ${left.length}${left.length < lines.length ? " baaki" : ""}`}
+        ? `✓ Fact log mein hai (${lines.length})`
+        : `🧩 Fact log → ek card (${lines.length})`}
     </button>
   );
 }
