@@ -3941,3 +3941,26 @@ body.exam-on .hresume { display: none; }
 }
 .airun__done { text-align: center; padding: 28px 10px; }
 .airun__big { font-size: 48px; font-weight: 800; line-height: 1.1; }
+
+/* ⚡ Stylus page ki 40-second trick — question ke upar, apne dabbe mein.
+   Daayen haath likh raha hota hai, isliye ye hissa chhota aur saaf: trick
+   badi line spacing mein, poora answer fold ke peeche. */
+.qtrick {
+  background: var(--accent-wash);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+.qtrick__t { color: var(--accent-2); font-size: 0.92rem; }
+.qtrick__body { margin-top: 6px; font-size: 0.98rem; line-height: 1.6; }
+.qtrick__body p { margin: 6px 0; }
+.qtrick__body ul, .qtrick__body ol { margin: 6px 0; padding-left: 20px; }
+.qtrick__full {
+  margin-top: 10px;
+  border-top: 1px dashed var(--glass-border-strong);
+  padding-top: 8px;
+  font-size: 0.94rem;
+  max-height: 42vh;
+  overflow-y: auto;
+}

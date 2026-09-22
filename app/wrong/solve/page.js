@@ -26,6 +26,7 @@ import { readImageText } from "@/lib/client-ai";
 import { imageBlob } from "@/lib/imgclip";
 import InkCanvas, { PALETTE, PEN_SIZES } from "@/components/InkCanvas";
 import WrongAnswerBlock from "@/components/WrongAnswerBlock";
+import QuickTrick from "@/components/QuickTrick";
 import Markdown from "@/components/Markdown";
 import { backTo } from "@/lib/backto";
 
@@ -886,6 +887,12 @@ function SolveInner() {
           </nav>
         )}
         <div className={`inkv__q${slim ? " inkv__q--slim" : ""}`}>
+          {/* ⚡ Sabse upar is question ki 40-second wali trick — daayen haath
+              se solve karte waqt baayen aankh yahi padhti hai. Aage ke 5 ki
+              trick peeche se ban chuki hoti hai. */}
+          {!slim && (rec?.subject === "math" || rec?.subject === "reasoning") && (
+            <QuickTrick rec={rec} list={list} idx={idx} />
+          )}
           <div className="row" style={{ gap: 6, marginBottom: slim ? 0 : 8 }}>
             <button className="btn btn--ghost btn--sm" onClick={() => setSlim((v) => !v)}>
               {slim ? "▼ Question" : "▲ Chhupao"}
