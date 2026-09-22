@@ -2814,21 +2814,15 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .inkv__swatch[aria-pressed="true"] { border-color: var(--accent); transform: scale(1.12); }
 .inkv .btn[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
 
-/* Tablet (seedha ya letaya hua, dono): BAAYEN poori oonchai ka khaana —
-   upar se neeche tak trick + question — aur DAAYEN sirf likhne ki jagah.
-   Pehle ye sirf landscape mein hota tha, isliye tablet ko seedha pakdo to
-   question upar aa jata tha aur likhne ki jagah aadhi bach jati thi
-   (owner: "left mein poore mein neeche se upar tak ... right side mein
-   mein khud karunga"). */
-@media (min-width: 700px) {
+/* Landscape / bada tablet: question baayen, likhne ki jagah dayen. Right-hand
+   writer ka haath surface par baithta hai, question uske neeche nahi aata. */
+@media (orientation: landscape) and (min-width: 820px) {
   .inkv__body { flex-direction: row; }
   .inkv__q {
-    max-height: none; height: 100%; width: 36%; min-width: 300px; max-width: 480px;
+    max-height: none; width: 38%; min-width: 280px; max-width: 520px;
     border-bottom: none; border-right: 1px solid var(--glass-border);
   }
   .inkv__q--slim { width: 46px; max-height: none; padding: 10px 6px; }
-  /* Poora answer ka apna cap yahan nahi chahiye — khaana khud scroll hota hai. */
-  .qtrick__full { max-height: none; }
 }
 
 /* Kaagaz. Theme ke saath badalta hai taaki raat mein aankh na chubhe, aur ink
@@ -3958,7 +3952,7 @@ body.exam-on .hresume { display: none; }
   padding: 10px 12px;
   margin-bottom: 10px;
 }
-.qtrick__t { color: var(--accent-2); font-size: 0.92rem; white-space: nowrap; }
+.qtrick__t { color: var(--accent-2); font-size: 0.92rem; }
 .qtrick__body { margin-top: 6px; font-size: 0.98rem; line-height: 1.6; }
 .qtrick__body p { margin: 6px 0; }
 .qtrick__body ul, .qtrick__body ol { margin: 6px 0; padding-left: 20px; }
