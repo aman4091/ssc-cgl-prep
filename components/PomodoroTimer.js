@@ -7,9 +7,14 @@ import {
   addFocusSeconds, completeSession,
   getTodaySeconds, getTodaySessions, getTotalSeconds, getWeekSeconds, fmtDuration,
 } from "@/lib/pomodoro";
+import { focusStart, focusStop, focusState } from "@/lib/overlaylink";
 
 const STATE_KEY = "cgl.pomodoro.state";
 const FOCUS_OPTS = [15, 25, 50];
+// 🔒 PC lock — timer ke saath PC par sirf apni site/overlay chale (baaki
+// khidkiyaan chhoti ho jaati hain, over/focus.py). Ye is DEVICE ki pasand
+// hai, isliye `cgl.` wali key nahi.
+const LOCK_KEY = "pomo.lock";
 
 function mmss(sec) {
   const s = Math.max(0, Math.round(sec));
@@ -33,6 +38,9 @@ export default function PomodoroTimer() {
   const [taskDone, setTaskDone] = useState(null); // { label, targetId } when a task finishes
 
   const tickRef = useRef(null);
+  const isBreakRef = useRef(false);
+  const [lockWanted, setLockWanted] = useState(false);  // pasand (is device ki)
+  const [lockOn, setLockOn] = useState(false);          // PC par abhi chalu hai?
   const lastTsRef = useRef(0);
   const unflushedRef = useRef(0);
   const remainingRef = useRef(remaining);
@@ -237,6 +245,28 @@ export default function PomodoroTimer() {
     return () => window.removeEventListener("cgl:start-task-timer", onStart);
   }, []);
 
+  // 🔒 Lock: pasand yaad rakhna, aur overlay se poochte rehna ki chalu hai
+  // ya nahi (overlay band ho to button bas "overlay chalu karo" batata hai).
+  useEffect(() => {
+    try { setLockWanted(localStorage.getItem(LOCK_KEY) === "1"); } catch { /* ignore */ }
+    let dead = false;
+    const ask = async () => {
+      const st = await focusState();
+      if (!dead) setLockOn(!!(st && st.on));
+    };
+    ask();
+    const t = setInterval(ask, 5000);
+    return () => { dead = true; clearInterval(t); };
+  }, []);
+
+  // Timer chale to lock chalu, ruke/khatam ho to lock band — dono saath.
+  useEffect(() => {
+    if (!lockWanted) return;
+    if (running && !isBreakRef.current) focusStart(Math.round(remainingRef.current / 60) || focusMin);
+    else focusStop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [running, lockWanted]);
+
   // Flush + persist on unload / unmount so nothing is lost.
   useEffect(() => {
     const onHide = () => { flush(); persist(modeRef.current, remainingRef.current); };
@@ -250,6 +280,7 @@ export default function PomodoroTimer() {
   }, []);
 
   const isBreak = mode === "break";
+  isBreakRef.current = isBreak;
 
   return (
     <div className="pomo">
@@ -290,6 +321,26 @@ export default function PomodoroTimer() {
               </button>
               <button className="btn btn--ghost btn--sm" onClick={reset}>{taskMode ? "⏹ Stop task" : "⏹ Reset"}</button>
               {!taskMode && <button className="btn btn--ghost btn--sm" onClick={skip}>⏭ Skip</button>}
+            </div>
+
+            {/* 🔒 PC lock — sirf tab kaam ka hai jab PC par overlay chal
+                raha ho. Timer ke saath chalu/band hota hai. */}
+            <div className="pomo__lens">
+              <button
+                className={`chip chip--btn chip--sm ${lockWanted ? "is-active" : ""}`}
+                title="Timer ke saath PC lock: sirf apni site aur overlay khulenge"
+                onClick={async () => {
+                  const v = !lockWanted;
+                  setLockWanted(v);
+                  try { localStorage.setItem(LOCK_KEY, v ? "1" : "0"); } catch { /* ignore */ }
+                  const st = v && running && !isBreak
+                    ? await focusStart(Math.round(remainingRef.current / 60) || focusMin)
+                    : await focusStop();
+                  setLockOn(!!(st && st.on));
+                }}
+              >
+                {lockWanted ? (lockOn ? "🔒 PC lock ON" : "🔒 PC lock (overlay band hai)") : "🔓 PC lock"}
+              </button>
             </div>
 
             {!isBreak && !taskMode && (
