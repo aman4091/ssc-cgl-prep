@@ -3964,3 +3964,49 @@ body.exam-on .hresume { display: none; }
   max-height: 42vh;
   overflow-y: auto;
 }
+
+/* 🔒 Focus lock — top patti ka pill aur uska chhota panel. Ghadi chalti ho
+   to pill laal-sa ho jata hai, taaki nazar bina dhoondhe pad jaye. */
+/* 🌗 wale button ki tarah ye bhi patti ke DAAYEN sire par — margin-left:auto
+   naam ko baayen chipkaye rakhta hai, aur panel (right:0) screen ke andar
+   khulta hai. Themetog iske baad aata hai, isliye wo apna auto chhod deta
+   hai — dono ek saath dayein baithte hain. */
+.flock { position: relative; display: flex; align-items: center; flex: 0 0 auto; margin-left: auto; }
+.flock + .themetog { margin-left: 0; }
+.flock__pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 12px; border-radius: 999px;
+  background: var(--bg); border: 1.5px solid var(--glass-border);
+  color: var(--text-2); font-weight: 800; font-size: 0.95rem;
+  font-variant-numeric: tabular-nums; cursor: pointer; line-height: 1;
+}
+.flock__pill:hover { border-color: var(--accent); color: var(--text-1); }
+.flock__pill.is-on {
+  background: var(--bad-wash); border-color: var(--danger); color: var(--danger);
+}
+.flock__panel {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 80;
+  width: 268px; padding: 14px;
+  background: var(--glass-bg-strong); border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg); box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
+  text-align: center;
+}
+.flock__panel .row.between { text-align: left; }
+.flock__big {
+  font-size: 2.1rem; font-weight: 800; font-variant-numeric: tabular-nums;
+  margin: 8px 0 10px; color: var(--text-1);
+}
+.flock__stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+  margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--glass-border);
+}
+.flock__stats strong { display: block; font-size: 0.95rem; }
+.flock__stats span { font-size: 0.7rem; color: var(--text-3); }
+.flock__list { list-style: none; margin: 10px 0 0; padding: 0; text-align: left; }
+.flock__list li {
+  display: flex; justify-content: space-between; gap: 8px;
+  font-size: 0.76rem; color: var(--text-3); padding: 2px 0;
+}
+@media (max-width: 640px) {
+  .flock__panel { right: -8px; width: min(268px, 90vw); }
+}
