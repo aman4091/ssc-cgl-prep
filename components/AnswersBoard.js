@@ -17,7 +17,7 @@ import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { saveQuiz, makeId, storageUsage } from "@/lib/storage";
 import Markdown, { LazyMarkdown } from "@/components/Markdown";
 import ZoomableImage from "@/components/ZoomableImage";
-import PyqDrill from "@/components/PyqDrill";
+import SharedDrill from "@/components/SharedDrill";
 import ChapterReport, { textOf } from "@/components/ChapterReport";
 import {
   loadTaxonomy, chaptersFor, categoryChapter, chapterLabel,
@@ -837,15 +837,17 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               : "Yaha abhi koi question nahi hai."}
           </p>
         ) : (
-          /* PYQ bank jaisa hi: ek waqt par EK question, aur neeche wahi do
-             button (Aata hai -> 100 aage, Nahi aata hai -> 3re, 4the, 5ve …).
-             Kram aur ginti har chhaanti ki apni (cgl.pyqdrill), isliye
-             subject/chapter badalne par uska apna hisaab chalta hai. */
-          <PyqDrill
+          /* Ek waqt par EK question, aur neeche wahi do button. Kram ab
+             PC ke overlay ke saath SAAJHA hai (lib/answerdrill): jo yahan
+             #1 hai wahi wahan bhi #1. Nahi aata -> 15 baad, Aata hai ->
+             100 baad — dono jagah wahi niyam, wahi ginti.
+             Pehchaan `qid` hai (overlay bhi wahi jaanta hai); quiz se aaye
+             record ka qid nahi hota, wo apne uid par chalte hain. */
+          <SharedDrill
+            sub={subject || "all"}
             list={list}
-            resumeKey={`answers:${src}:${subject || "all"}:${chapter || "all"}`}
-            keyOf={(r) => r.uid}
-            onAnswer={timer.mark}
+            keyOf={(r) => r.qid || r.uid}
+            onAnswer={(ok) => timer.mark(ok)}
             renderCard={(r, i) => renderCard(r, i, false)}
           />
         )}
