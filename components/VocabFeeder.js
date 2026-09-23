@@ -30,6 +30,28 @@ function withSpace(fn) {
   }
 }
 
+// Overlay ke 📝 single-tap ko ye pata hona chahiye ki site par abhi kaunsa
+// subject khula hai — warna site par bani one-liner galat khaane mein chali
+// jaye. URL se hi pata chal jata hai, isliye koi naya hook/state nahi.
+function subjectHere() {
+  if (typeof window === "undefined") return "";
+  const p = window.location.pathname;
+  const q = new URLSearchParams(window.location.search);
+  if (p.startsWith("/answers") || p.startsWith("/mistakes")) {
+    const s = q.get("subject");
+    return s && s !== "all" ? s : "math";
+  }
+  if (p.startsWith("/current-affairs") || p.startsWith("/ca-revision")) return "ca";
+  if (p.startsWith("/vocab") || p.startsWith("/new-words")) return "english";
+  if (p.startsWith("/pyq/all/")) return p.split("/")[3] || "";
+  if (p.startsWith("/pyq/mathbank") || p.startsWith("/pyq/maths2025")) return "math";
+  if (p.startsWith("/pyq/reasonbank")) return "reasoning";
+  if (p.startsWith("/pyq/pinnacle") || p.startsWith("/pyq/errorpro") || p.startsWith("/pyq/mirror")) return "english";
+  if (p.startsWith("/pyq/war") || p.startsWith("/pyq/gk")) return "gs";
+  if (p.startsWith("/notes") || p.startsWith("/static-gk") || p.startsWith("/mission")) return "gs";
+  return "";
+}
+
 const PORTS = [5000, 5001, 5002];
 const POLL_MS = 5000;
 
@@ -79,6 +101,17 @@ export default function VocabFeeder() {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
+              });
+            }
+
+            // Site par abhi kya khula hai — overlay ka 📝 single-tap isi se
+            // sahi khaane mein line daalta hai.
+            const here = subjectHere();
+            if (here) {
+              await fetch(`${base}/site-here`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ subject: here }),
               });
             }
 
