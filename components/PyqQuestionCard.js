@@ -144,6 +144,28 @@ Options: ${opts}
   });
   const askDeepSeek = async () => { await dsq.ask(); setPeek(true); };
 
+  // ✍️ Stylus — yahi ek question tablet ke pen wale parde par
+  // (/wrong/solve). Maths aur Reasoning kaagaz ke bina hote hi nahi, aur
+  // Maths 2025 jaise bank isi text-card se chalte hain — wahan ye button
+  // hai hi nahi tha (owner: "jitne bhi pyq hai maths ke reasoning ke unpe
+  // stylus button bhi aana chahiye").
+  const openStylus = () => {
+    const id = `ink_${String(q.id || "q").replace(/[^A-Za-z0-9]+/g, "_")}`;
+    try {
+      saveQuiz({
+        id,
+        title: chapterName || "Solve",
+        subject,
+        source: "stylus",
+        createdAt: new Date().toISOString(),
+        questions: [q],
+      });
+    } catch { /* quota — phir bhi khol kar dekh lete hain */ }
+    const back = typeof window !== "undefined"
+      ? encodeURIComponent(window.location.pathname + window.location.search) : "";
+    router.push(`/wrong/solve?quiz=${encodeURIComponent(id)}${back ? `&back=${back}` : ""}`);
+  };
+
   const make20 = async () => {
     setSimLoading(true); setErr("");
     try {
@@ -191,6 +213,9 @@ Options: ${opts}
           >
             {dsLabel(dsq)}
           </button>
+          {(subject === "math" || subject === "maths" || subject === "reasoning") && (
+            <button className="btn btn--sm q-act--keep" onClick={openStylus} title="Tablet par pen se solve karo">✍️</button>
+          )}
           <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
           {/* Bahar se aaye button (Answers board ka ✅ Ho gaya, 🗑️) —
               wo bhi isi line mein, taaki card par ek hi patti rahe. */}

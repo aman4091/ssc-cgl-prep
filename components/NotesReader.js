@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
-import { promptFor } from "@/lib/geminiask";
+import { ONELINER_PROMPT } from "@/lib/oneliners";
 import { readImageText } from "@/lib/client-ai";
 import { startNotesQuiz } from "@/lib/notesquiz";
 import { hinglishKey, getHinglish, setHinglish, subscribeHinglish } from "@/lib/noteshinglish";
@@ -92,15 +92,19 @@ async function copyText(text) {
   } catch { return false; }
 }
 
-// ✨ per-page Gemini button: copies the GS prompt + this page's text and opens
-// Gemini — the same gesture the question cards use, for a notes page.
+// ✨ per-page Gemini button: is page ka text + ONE-LINER wala prompt copy
+// karke AI site kholta hai.
+//
+// Pehle yahan subject ka prompt jata tha (Parmar notes ka subject "gs" hai),
+// yaani wahi question wala GS prompt jisme likha hai "kahani/background mat
+// likho" — notes ke page ke liye bekaar. Ab wahi prompt jo PC overlay ke 📝
+// button par hai: page ke har zaroori point ki ek line.
 function GeminiBtn({ text, subject }) {
   const [done, setDone] = useState(false);
   const go = async () => {
     const body = String(text || "").trim();
     if (!body) return;
-    const pre = promptFor(subject);
-    await copyText(pre ? `${pre}\n\n${body}` : body);
+    await copyText(`${ONELINER_PROMPT}\n\n${body}`);
     setDone(true);
     setTimeout(() => setDone(false), 1500);
     try { window.open(aiSiteUrl(getSettings().askAiSite), "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
@@ -109,7 +113,7 @@ function GeminiBtn({ text, subject }) {
     <button
       className="nt-gemini"
       onClick={go}
-      title="Is page ka text + GS prompt copy karke Gemini kholo"
+      title="Is page ka text + one-liner wala prompt copy karke AI site kholo"
     >
       {done ? "✓" : "✨"}
     </button>
@@ -133,7 +137,7 @@ function ImageGeminiBtn({ src, subject }) {
       const { text } = await readImageText(blob, (pr) => setState(`${Math.round(pr * 100)}%`));
       const body = String(text || "").trim();
       if (!body) { setState("✕"); setTimeout(() => setState(""), 1500); return; }
-      const pre = promptFor(subject);
+      const pre = ONELINER_PROMPT;
       await copyText(pre ? `${pre}\n\n${body}` : body);
       setState("✓");
       setTimeout(() => setState(""), 1500);
