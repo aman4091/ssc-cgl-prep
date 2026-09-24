@@ -64,6 +64,9 @@ function MockMarksInner() {
   const [rank, setRank] = useState("");
   const [outOf, setOutOf] = useState("");
   const [err, setErr] = useState("");
+  // ⚠️ Save ke waqt ki do tambih — percentile khaali, aur English ka 25 attempt.
+  // Pehli baar rokti hain, dubara dabane par save ho jaata hai (ack).
+  const [ack, setAck] = useState(false);
   // Abhi-abhi save hua mock — uske analysis ka banner dikhane ke liye.
   const [justSaved, setJustSaved] = useState(null);
 
@@ -76,7 +79,7 @@ function MockMarksInner() {
       ? FULL_SECTIONS.map((n) => ({ ...blankSection(), name: n }))
       : [{ ...blankSection(), name: cat.subject }];
 
-  const resetForm = () => { setName(""); setDate(todayStr()); setSections(freshSections()); setRank(""); setOutOf(""); setErr(""); };
+  const resetForm = () => { setName(""); setDate(todayStr()); setSections(freshSections()); setRank(""); setOutOf(""); setErr(""); setAck(false); };
 
   useEffect(() => { refresh(); setOpen(false); resetForm(); setJustSaved(null); /* eslint-disable-next-line */ }, [cat.key]);
 
@@ -84,10 +87,26 @@ function MockMarksInner() {
   const addRow = () => setSections((r) => [...r, blankSection()]);
   const delRow = (i) => setSections((r) => r.filter((_, idx) => idx !== i));
 
+  // 📘 English mein kitne attempt (full mock ka English row, ya English page).
+  const engAttempt = (() => {
+    const row = isFull ? sections.find((s) => /english/i.test(s.name || "")) : (cat.key === "english" ? sections[0] : null);
+    if (!row) return 0;
+    return (Number(row.correct) || 0) + (Number(row.wrong) || 0);
+  })();
+
   const save = () => {
     const has = sections.some((s) => Number(s.correct) || Number(s.wrong) || Number(s.total));
     if (!has) { setErr("Marks daalo (correct / wrong / total)."); return; }
     if (!name.trim()) { setErr("Mock ka naam daalo."); return; }
+    // Do tambih — ek baar rokti hain, dubara dabane par save.
+    const warns = [];
+    if (isFull && !(Number(rank) > 0 && Number(outOf) > 0)) {
+      warns.push("📈 Rank aur 'kitne mein se' khaali hai — MASTER METRIC percentile hai, score nahi. Testbook/RBE ke result page par dono saamne likhe hote hain.");
+    }
+    if (engAttempt >= 25) {
+      warns.push("📘 English 25 attempt = 32 marks @74%. 23 attempt @88% = 38.5 marks. 2 unknown vocab Q CHHODO — 23 par ruko.");
+    }
+    if (warns.length && !ack) { setErr(warns.join("  ·  ")); setAck(true); return; }
     const rec = addMock({ name, cat: cat.key, date, sections, rank, outOf });
     setJustSaved(rec);
     setOpen(false); resetForm(); refresh();
@@ -227,8 +246,11 @@ function MockMarksInner() {
             )}
 
             {err && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 10 }}>{err}</p>}
+            {engAttempt > 0 && engAttempt < 25 && (
+              <p className="hint" style={{ marginTop: 6 }}>📘 English attempt {engAttempt} — rule: 23 attempt, 88% accuracy. 25 pe mat jao.</p>
+            )}
             <div className="row mt-16" style={{ gap: 8 }}>
-              <button className="btn btn--primary btn--sm" onClick={save}>💾 Save</button>
+              <button className="btn btn--primary btn--sm" onClick={save}>{ack && err ? "💾 Phir bhi save karo" : "💾 Save"}</button>
               <button className="btn btn--ghost btn--sm" onClick={() => { setOpen(false); resetForm(); }}>Cancel</button>
             </div>
           </div>

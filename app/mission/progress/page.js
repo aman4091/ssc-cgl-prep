@@ -4,18 +4,73 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { getMocks } from "@/lib/mockmarks";
 import {
-  getMission, evaluateCheckpoints, TARGETS, SECTIONS, RULES, setAdapt, sectionStatsIn, checkpointWindows,
-  FLOOR, STRETCH, FLOOR_NOTE, fmtDay, gsTrack,
+  getMission, evaluateCheckpoints, TARGETS, CP_KEYS, SECTIONS, RULES, setAdapt, sectionStatsIn, checkpointWindows,
+  FLOOR, TARGET, FLOOR_NOTE, PCT_NOW, PCT_TARGET, fmtDay, gsTrack,
 } from "@/lib/mission";
 
-// /mission/progress — hafte-wise checkpoint, seedha /mock-marks ke data se.
+// /mission/progress — checkpoints, seedha /mock-marks ke data se.
 //
-// Har section ka avg score, attempt aur galat — "mission se pehle", hafta 1,
-// hafta 2, aakhri — aur har checkpoint ka target saath mein. Target se kam
-// raha to "agar nahi badha to kya badlo" wala rule yahan dikhta hai, aur
-// "Ye badlav lagao" dabate hi aage ke din ki timeline us hisaab se badal jaati hai.
+// MASTER METRIC = PERCENTILE. Score paper ki mushkil se hilta hai (ek hi
+// tayari par 138 bhi aaya aur 112 bhi), par percentile sabke saath naapta hai.
+// Isliye sabse upar percentile ka graph, uske baad hi score ki table.
+//
+// Har section ka avg score, attempt aur galat — "mission se pehle", CP1, CP2,
+// CP3, aakhri — aur har checkpoint ka target saath mein. Target se kam raha to
+// "agar nahi badha to kya badlo" wala rule yahan dikhta hai, aur "Ye badlav
+// lagao" dabate hi aage ke din ki timeline us hisaab se badal jaati hai.
 
 const f1 = (x) => (x == null || !Number.isFinite(x) ? "–" : String(Math.round(x * 10) / 10));
+
+// 📈 Percentile ka safar — har full mock ek bindu, upar target ki lakeer.
+function PctGraph({ list }) {
+  const pts = list.filter((x) => x.pct != null).sort((a, b) => (a.date || "").localeCompare(b.date || ""));
+  if (pts.length < 2) {
+    return (
+      <div className="placeholder">
+        Percentile ka graph 2 mock ke baad banega. Har full mock ke saath <strong>rank</strong> aur <strong>kitne mein se</strong> zaroor daalo —{" "}
+        <Link href="/mock-marks?cat=full">/mock-marks</Link>. Score se percentile nahi banta.
+      </div>
+    );
+  }
+  const W = 640, H = 220, L = 34, R = 12, T = 12, B = 26;
+  const x = (i) => L + (i * (W - L - R)) / (pts.length - 1);
+  const y = (v) => T + ((100 - v) * (H - T - B)) / 100;
+  const d = pts.map((p, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(p.pct).toFixed(1)}`).join(" ");
+  const last = pts[pts.length - 1];
+  return (
+    <div className="ms-graphwrap">
+      <svg viewBox={`0 0 ${W} ${H}`} className="ms-graph" role="img" aria-label="Percentile trend">
+        {[0, 25, 50, 75, 100].map((g) => (
+          <g key={g}>
+            <line x1={L} x2={W - R} y1={y(g)} y2={y(g)} stroke="var(--line)" strokeWidth="1" />
+            <text x={4} y={y(g) + 4} fontSize="10" fill="var(--muted)">{g}</text>
+          </g>
+        ))}
+        {/* target ki lakeer */}
+        <line x1={L} x2={W - R} y1={y(PCT_TARGET)} y2={y(PCT_TARGET)} stroke="var(--ok, #40a02b)" strokeWidth="2" strokeDasharray="6 4" />
+        <text x={W - R} y={y(PCT_TARGET) - 5} fontSize="10" textAnchor="end" fill="var(--ok, #40a02b)">target {PCT_TARGET}</text>
+        <path d={d} fill="none" stroke="var(--accent)" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+        {pts.map((p, i) => (
+          <g key={i}>
+            <circle cx={x(i)} cy={y(p.pct)} r="4" fill="var(--accent)" stroke="var(--card)" strokeWidth="2">
+              <title>{`${p.name || "mock"} · ${p.date} · ${Math.round(p.pct * 10) / 10} %ile · score ${Math.round(p.score * 10) / 10}`}</title>
+            </circle>
+            {(i === 0 || i === pts.length - 1) && (
+              <text x={x(i)} y={y(p.pct) - 10} fontSize="11" textAnchor={i ? "end" : "start"} fill="var(--text)" fontWeight="700">
+                {Math.round(p.pct * 10) / 10}
+              </text>
+            )}
+            <text x={x(i)} y={H - 8} fontSize="9" textAnchor="middle" fill="var(--muted)">{String(p.date || "").slice(5).replace("-", "/")}</text>
+          </g>
+        ))}
+      </svg>
+      <p className="hint">
+        Aakhri: <strong>{Math.round(last.pct * 10) / 10}</strong> %ile (score {Math.round(last.score * 10) / 10}) · target <strong>{PCT_TARGET}</strong>.
+        Score badhe par percentile na badhe = tum aasan shift chun rahe ho. Ek easy, ek tough — alternate karo.
+      </p>
+    </div>
+  );
+}
 
 function Cell({ st, tgt, k }) {
   if (!st || !st.n) return <td className="muted">–</td>;
@@ -35,7 +90,7 @@ function Cell({ st, tgt, k }) {
   );
 }
 
-const tgtText = (t, k) => (k === "E" ? `${t.score} / ≤${t.wrongMax} galat` : `${t.score} / ${t.att} att`);
+const tgtText = (t, k) => (k === "E" ? `${t.score} / ≤${t.wrongMax} galat` : k === "GS" ? `${t.score} / ${t.acc}% acc` : `${t.score} / ${t.att} att`);
 
 export default function MissionProgressPage() {
   const [m, setM] = useState(null);
@@ -52,35 +107,74 @@ export default function MissionProgressPage() {
   if (!m) return <div className="placeholder">…</div>;
   const ev = evaluateCheckpoints(mocks, m);
   const W = checkpointWindows(m);
-  const cols = [["before", null], ["w1", TARGETS.cp1], ["w2", TARGETS.cp2], ["w3", TARGETS.exam]];
+  const cols = [["before", null], ["w1", TARGETS.cp1], ["w2", TARGETS.cp2], ["w3", TARGETS.cp3], ["w4", TARGETS.exam]];
+  const allFull = sectionStatsIn(mocks, null, null).full.list;
   const mathTrend = sectionStatsIn(mocks, W.w1.from, null).Q.list.sort((a, b) => a.date.localeCompare(b.date));
+  const curLabel = { w1: "CP1 tak", w2: "CP2 tak", w3: "CP3 tak", w4: "Aakhri daur" }[ev.current] || "";
 
   return (
     <>
       <section className="hero" style={{ paddingBottom: 6 }}>
         <span className="hero__eyebrow">🚩 Checkpoints</span>
         <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>
-          Floor <span className="grad">{FLOOR.total}</span> · stretch {STRETCH.total}
+          Percentile <span className="grad">{PCT_NOW} → {PCT_TARGET}</span>
         </h1>
         <p className="hero__sub">
-          Sab /mock-marks ke data se, apne aap. Hara = target mila, laal = nahi. Score / 50 per section; full mock / 200.
-          Abhi: <strong>{ev.current === "w1" ? "Hafta 1" : ev.current === "w2" ? "Hafta 2" : "Aakhri"}</strong> (Day {ev.day}).
+          Master metric <strong>percentile</strong> hai, score nahi. Score sirf ye batata hai ki aaj ka paper kaisa tha; percentile batata hai
+          ki baaki sab ke saamne kahan khade ho. Target {TARGET.total} · floor {FLOOR.total}.
+          Abhi: <strong>{curLabel}</strong> (Day {ev.day}).
         </p>
+      </section>
+
+      <section className="section" style={{ marginTop: 8 }}>
+        <h2 className="ms-h2">📈 Percentile — asli metric</h2>
+        <PctGraph list={allFull} />
+        <div className="ms-tablewrap" style={{ marginTop: 10 }}>
+          <table className="ms-table">
+            <thead><tr><th>Checkpoint</th><th>Din</th><th>Percentile target</th><th>Score target</th></tr></thead>
+            <tbody>
+              {CP_KEYS.map((k) => {
+                const t = TARGETS[k];
+                // Sirf mission ke andar ke mock — mission se pehle wale har
+                // checkpoint mein ghus jaate the aur teeno mein ek hi number dikhta tha.
+                const win = W[{ cp1: "w1", cp2: "w2", cp3: "w3" }[k]];
+                const got = allFull.filter((f) => f.pct != null && win && f.date >= W.w1.from && f.date <= win.to);
+                const last = got[got.length - 1];
+                return (
+                  <tr key={k}>
+                    <td><strong>{t.label}</strong></td>
+                    <td>D{t.day}</td>
+                    <td>
+                      <strong>{t.pct}</strong>
+                      {last ? <span className={last.pct >= t.pct ? " ms-ok" : " ms-bad"}> · aaya {Math.round(last.pct * 10) / 10}</span> : <span className="muted"> · –</span>}
+                    </td>
+                    <td>{t.full}</td>
+                  </tr>
+                );
+              })}
+              <tr><td><strong>{TARGETS.exam.label}</strong></td><td>—</td><td><strong>{TARGETS.exam.pct}</strong></td><td><strong>{TARGETS.exam.full}</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section className="section" style={{ marginTop: 8 }}>
         <div className="ms-tablewrap">
           <table className="ms-table">
-            <thead><tr><th>Section</th><th>FLOOR (plan ka base — exam hall mein yahi)</th><th>Stretch (ceiling)</th></tr></thead>
+            <thead><tr><th>Section</th><th>TARGET (jahan pahunchna hai)</th><th>FLOOR (isse neeche nahi)</th></tr></thead>
             <tbody>
               {SECTIONS.map((S) => (
-                <tr key={S.k}><td><strong>{S.icon} {S.label}</strong></td><td><strong>{FLOOR[S.k]}</strong> <span className="hint">· {FLOOR_NOTE[S.k]}</span></td><td>{STRETCH[S.k]}</td></tr>
+                <tr key={S.k}>
+                  <td><strong>{S.icon} {S.label}</strong></td>
+                  <td><strong>{TARGET[S.k]}</strong></td>
+                  <td>{FLOOR[S.k]} <span className="hint">· {FLOOR_NOTE[S.k]}</span></td>
+                </tr>
               ))}
-              <tr><td><strong>Total</strong></td><td><strong>{FLOOR.total}</strong></td><td>{STRETCH.total}</td></tr>
+              <tr><td><strong>Total</strong></td><td><strong>{TARGET.total}</strong></td><td>{FLOOR.total}</td></tr>
             </tbody>
           </table>
         </div>
-        <p className="hint">Target hi over-attempt karwata hai: "Maths mein 39 chahiye" leke ghuse to 13:00 pe 18 attempt dekh ke panic mein 4 jaldi-jaldi maaroge, 3 galat. Floor le ke jao — stretch paper aasan ho to apne aap.</p>
+        <p className="hint">Exam hall mein FLOOR le ke ghuso, TARGET nahi. "Maths mein 38 chahiye" leke baithoge to 13:00 pe 18 attempt dekh ke panic mein 4 jaldi-jaldi maaroge, 3 galat. Floor mile to target paper aasan hone par apne aap aa jaata hai.</p>
       </section>
 
       {(() => {
@@ -103,19 +197,20 @@ export default function MissionProgressPage() {
                 </tbody>
               </table>
             </div>
-            <p className="hint">GS mein effort aur marks ka rishta seedha hai: roz 25–30 naye cluster + 40–50 purane revise. Har ~3 din ek GS sectional (CGL 2024 / CHSL 2025) /mock-marks → GK/GS mein.</p>
+            <p className="hint">GS mein effort aur marks ka rishta seedha hai: roz 100–125 PYQ + 28–35 naye cluster + purane revise. Har ~3 din ek GS sectional (Testbook = PYQ) /mock-marks → GK/GS mein. 21.9 → 30 = +8 marks, poore plan ka sabse bada hissa.</p>
           </section>
         );
       })()}
 
       <section className="section" style={{ marginTop: 8 }}>
+        <h2 className="ms-h2">Section-wise — checkpoint ke hisaab se</h2>
         <div className="ms-tablewrap">
           <table className="ms-table">
             <thead>
               <tr>
                 <th>Section</th>
                 {cols.map(([k, t]) => (
-                  <th key={k}>{W[k].label}{t ? <div className="hint">target {k === "w3" ? "exam floor" : `checkpoint ${W[k].date ? fmtDay(W[k].date) : t.label}`}</div> : null}</th>
+                  <th key={k}>{W[k].label}{t ? <div className="hint">target {W[k].date ? fmtDay(W[k].date) : t.label}</div> : null}</th>
                 ))}
               </tr>
             </thead>
@@ -140,12 +235,24 @@ export default function MissionProgressPage() {
                   );
                 })}
               </tr>
+              <tr>
+                <td><strong>📈 Percentile</strong></td>
+                {cols.map(([k, t]) => {
+                  const st = ev.stats[k].full;
+                  return (
+                    <td key={k}>
+                      {st.pct != null ? <strong className={t ? (st.pct >= t.pct ? "ms-ok" : "ms-bad") : ""}>{f1(st.pct)}</strong> : <span className="muted">–</span>}
+                      {t ? <div className="hint">target {t.pct}</div> : null}
+                    </td>
+                  );
+                })}
+              </tr>
               <tr className="ms-tgt">
                 <td>Target</td>
                 <td className="muted">—</td>
-                {[TARGETS.cp1, TARGETS.cp2, TARGETS.exam].map((t, i) => (
+                {[TARGETS.cp1, TARGETS.cp2, TARGETS.cp3, TARGETS.exam].map((t, i) => (
                   <td key={i} className="hint">
-                    R {tgtText(t.R, "R")}<br />GS {tgtText(t.GS, "GS")}<br />Q {tgtText(t.Q, "Q")}<br />E {tgtText(t.E, "E")}<br />Full {t.full}
+                    R {tgtText(t.R, "R")}<br />GS {tgtText(t.GS, "GS")}<br />Q {tgtText(t.Q, "Q")}<br />E {tgtText(t.E, "E")}<br />Full {t.full} · %ile {t.pct}
                   </td>
                 ))}
               </tr>
@@ -155,7 +262,7 @@ export default function MissionProgressPage() {
       </section>
 
       <section className="section">
-        <h2 className="ms-h2">Agar nahi badha to — ye badlo</h2>
+        <h2 className="ms-h2">Ye badlav lagao — agar nahi badha to</h2>
         {Object.entries(RULES).map(([id, r]) => {
           const on = ev.triggered.includes(id);
           const applied = !!(m.adapt || {})[id];
@@ -177,28 +284,28 @@ export default function MissionProgressPage() {
           );
         })}
         <p className="hint">
-          <strong>Ek mock kabhi plan nahi badalta.</strong> Score = skill + paper ki mushkil + luck (tumhare Maths mein ±9 ka jhool), isliye score wale
-          rule tabhi jab <strong>pichhle 3 mein se 2</strong> mock target se neeche hon. Attempt count sirf tumhara behaviour hai — uspe ek reading kaafi.
-          Attempt roz dekho, score sirf 3-mock trend mein. GS/Maths ke checkpoint rule 🚩 din ke baad hi jaagte hain.
+          <strong>Ek mock kabhi plan nahi badalta.</strong> Score = skill + paper ki mushkil + luck (tumhare full mock mein 93 se 138.5 tak ka
+          jhool), isliye rule tabhi jab <strong>pichhle 3 mein se 2</strong> mock target se neeche hon. Attempt count sirf tumhara behaviour hai —
+          uspe ek reading kaafi. Checkpoint rule 🚩 din ke baad hi jaagte hain.
         </p>
       </section>
 
       <section className="section">
         <h2 className="ms-h2">🧮 Maths speed — attempt har mock mein (mission ke dauraan)</h2>
         {mathTrend.length === 0 ? (
-          <div className="placeholder">Abhi mission ke dauraan koi Maths mock nahi. Target: attempt 19 (checkpoint 1) → 20 (checkpoint 2) → 20–21 floor (22 stretch).</div>
+          <div className="placeholder">Abhi mission ke dauraan koi Maths mock nahi. Target: attempt 19 (CP1) → 20 (CP2) → 21 (CP3) → 22 exam.</div>
         ) : (
           <div className="ms-bars">
             {mathTrend.map((x, i) => (
               <div key={i} className="ms-bar" title={`${x.name} · ${x.c}C ${x.w}W`}>
-                <div className="ms-bar__fill" style={{ height: `${Math.round(((x.c + x.w) / 25) * 100)}%` }} data-ok={x.c + x.w >= 19 ? "1" : "0"} />
+                <div className="ms-bar__fill" style={{ height: `${Math.round(((x.c + x.w) / 25) * 100)}%` }} data-ok={x.c + x.w >= 21 ? "1" : "0"} />
                 <span className="ms-bar__v">{x.c + x.w}</span>
                 <span className="ms-bar__d">{x.date.slice(8)}/{x.date.slice(5, 7)}</span>
               </div>
             ))}
           </div>
         )}
-        <p className="hint">Bar = attempt (25 mein). Hara = 19+. <Link href="/mock-marks?cat=maths">Maths marks →</Link></p>
+        <p className="hint">Bar = attempt (25 mein). Hara = 21+. <Link href="/mock-marks?cat=maths">Maths marks →</Link></p>
       </section>
     </>
   );

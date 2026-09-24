@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 // /mission/topics — kya padhna hai aur kya BINA GUILT chhodna hai.
-// Skip list utni hi zaroori hai jitni study list: 18 din mein sab nahi hota,
+// Skip list utni hi zaroori hai jitni study list: 32 din mein sab nahi hota,
 // aur jo slow + kam aane wala hai wo time bhi khaata hai aur negative bhi deta hai.
 
 export const metadata = { title: "Topics & Skip list · CGL Mission" };
@@ -104,10 +104,10 @@ export default function MissionTopicsPage() {
         <h2 className="ms-h2">Saaf baat — is time mein kya possible NAHI</h2>
         <div className="glass-card" style={{ padding: 14 }}>
           <ul className="ms-list">
-            <li>160+ guarantee — plan ka base FLOOR 135 hai, stretch 153. Exam der se ho (15 Oct+) to 155–165 reach mein.</li>
-            <li>GS 40+ — baseline 10 se floor 22, stretch 28.</li>
-            <li>Parmar ke 121 chapter / 6-pass — 17 Aug se 0 din chala, 18 din mein nahi hoga.</li>
-            <li>Maths poora syllabus + advanced geometry/3D.</li>
+            <li>160+ guarantee — plan ka FLOOR 142 hai, TARGET 152 (percentile 85). Usse upar paper aasan hone par hi jaata hai.</li>
+            <li>GS 40+ — abhi 21.9 hai; 32 din mein floor 27, target 30. Yahi sabse bada +8 hai.</li>
+            <li>Parmar ke 121 chapter / 6-pass — 32 din mein nahi hoga. GS ab PYQ + cluster se chalega, notes se nahi.</li>
+            <li>Maths ka poora syllabus — phase 2 mein sirf wo chapter FULL honge jo mistake book mein sabse zyada hain (geometry, 3D, CI, H&amp;D, coordinate).</li>
             <li>Poore saal ka CA gehrai se.</li>
             <li>Reasoning mein consistent 50/50 — koshish ke laayak bhi nahi.</li>
           </ul>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import PlanPractice from "./PlanPractice";
-import { buildTimeline, tickable, revisionFor, planFor, dateOfDay, fmtDay, yellowDue, latestYellow } from "@/lib/mission";
+import { buildTimeline, tickable, revisionFor, planFor, dateOfDay, fmtDay, yellowDue, latestYellow, phaseOf } from "@/lib/mission";
 
 // Maths block ka 20-min yellow slot — sabse naye analysis ke 40–75 sec wale Q.
 function YellowList() {
@@ -101,6 +101,7 @@ export default function MissionDay({ day, mission, done, onToggle, nowMin = null
                   </button>
                 )}
                 <span className="ms-title">{b.t}</span>
+                {b.core && <span className="ms-sec ms-sec--core">CORE{b.gate ? " 🔒" : ""}</span>}
                 {SEC_LABEL[b.sec] && <span className="ms-sec">{SEC_LABEL[b.sec]}</span>}
                 {!b.must && <span className="ms-sec ms-sec--bonus">bonus</span>}
                 {isNow && <span className="ms-sec ms-sec--now">ABHI</span>}
@@ -119,8 +120,9 @@ export default function MissionDay({ day, mission, done, onToggle, nowMin = null
         </p>
       )}
       <p className="hint" style={{ marginTop: 8 }}>
-        {fmtDay(dateOfDay(mission.startDate, day))} · Day {day} · {p.type === "A" ? "Full mock din" : p.type === "B" ? "Build din" : "Taper (halka)"}
-        {p.ext ? ` · Extension din ${p.ext}` : ""}{p.unconfTaper ? " · (taper tabhi jab exam date confirm ho)" : ""}
+        {fmtDay(dateOfDay(mission.startDate, day))} · Day {day} · Phase {phaseOf(day).k} ({phaseOf(day).name}) · {p.type === "A" ? "Full mock din" : p.type === "B" ? "Build din" : "Taper (halka)"}
+        {p.ext ? ` · Extension din ${p.ext}` : ""}
+        {" "}· 🔒 wale block chhoote to din count nahi hota.
       </p>
     </div>
   );

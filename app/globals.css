@@ -3805,7 +3805,7 @@ body.exam-on .mkt__go { display: none; }
 body.exam-on .hresume { display: none; }
 
 /* ===== 🚀 CGL Mission (lib/mission.js, components/MissionToday + MissionDay,
-   app/mission/*) — 18 din ka system. Sirf theme tokens; naya rang chahiye to
+   app/mission/*) — 32 din ka system. Sirf theme tokens; naya rang chahiye to
    upar :root mein token jodo. ===== */
 .ms-now {
   padding: 16px 18px;
@@ -3856,6 +3856,7 @@ body.exam-on .hresume { display: none; }
 }
 .ms-sec--bonus { background: var(--warn-wash); color: var(--warning); }
 .ms-sec--now { background: var(--accent); color: var(--on-accent); }
+.ms-sec--core { background: var(--accent); color: var(--on-accent); font-weight: 800; }
 .ms-how { font-size: 0.8rem; color: var(--text-2); margin: 4px 0 0; line-height: 1.5; }
 .ms-acts { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 .ms-acts--compact { margin-top: 0; }
@@ -3903,6 +3904,15 @@ body.exam-on .hresume { display: none; }
 .ms-factrow:first-of-type { margin-top: 8px; }
 /* Mission ke form: .input width 100% + padding card se bahar na nikle. */
 .ms-form .input, .ms-form .select, .ms-form .textarea { box-sizing: border-box; }
+
+/* 📈 Percentile ka graph (/mission/progress). */
+.ms-graphwrap { overflow-x: auto; }
+.ms-graph { width: 100%; min-width: 420px; height: auto; display: block; }
+
+/* 🔒 CORE 5 — jinse din "count" hota hai (MissionToday → CoreFive). */
+.ms-core { padding: 14px 16px; border: 2px solid var(--accent); margin-bottom: 10px; }
+.ms-core.is-done { border-color: var(--ok, var(--success)); }
+.ms-core .card-hd { font-size: 0.92rem; }
 
 /* 🌙 Roz raat ka ek metric (MissionToday → MetricCard). */
 .ms-metric { padding: 14px 16px; border: 2px dashed var(--accent); }

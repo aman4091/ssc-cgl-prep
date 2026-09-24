@@ -4,7 +4,7 @@ import TodayGate from "@/components/TodayGate";
 
 // Homepage = "abhi kya karna hai".
 //
-// Sabse upar CGL Mission (18 din, exam tak): clock ke hisaab se ABHI ka kaam,
+// Sabse upar CGL Mission (32 din, exam tak): clock ke hisaab se ABHI ka kaam,
 // uska seedha button, aur din ki poori timeline. Neeche pehle wala "Aaj ka
 // kaam" (TodayGate) — roz ke question ki ginti aur Weak Topics — jaisa tha.
 //

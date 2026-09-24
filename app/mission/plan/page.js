@@ -6,11 +6,12 @@ import { useSearchParams } from "next/navigation";
 import MissionDay from "@/components/MissionDay";
 import {
   getDays, totalDays, totalMocks, getMission, getDone, toggleDone, currentDayNum, mustComplete, dayStats, dateOfDay, fmtDay,
-  getExam, examBranch,
+  getExam, examBranch, PHASES, phaseOf, TARGET, PCT_TARGET,
 } from "@/lib/mission";
 
-// /mission/plan — aaj se exam tak ke saare din ek grid mein. Tap karo to us din
-// ki timeline (aage ka din dekh ke taiyaar raho; pichhla din tick bhi kar sakte ho).
+// /mission/plan — 25 Sep se 26 Oct tak ke saare din ek grid mein, teen phase ke
+// rang ke saath. Tap karo to us din ki timeline (aage ka din dekh ke taiyaar
+// raho; pichhla din tick bhi kar sakte ho). 🚩 = checkpoint, FM = full mock.
 
 const TYPE_LABEL = { A: "Full mock", B: "Build", C: "Taper" };
 
@@ -55,9 +56,18 @@ function PlanInner() {
           {fmtDay(dateOfDay(m.startDate, 1))} → <span className="grad">{fmtDay(getExam())} exam{m.examConfirmed ? "" : " (?)"}</span>
         </h1>
         <p className="hero__sub">
-          {totalMocks(m)} full mock · har din ek Maths topic, ek English rule, ek GS topic, CA ka ek mahina. 🚩 = checkpoint.
+          {totalMocks(m)} full mock · har din ek Maths topic, ek English rule, ek GS topic, CA ka ek mahina.
+          🚩 = checkpoint · FM = full mock · target {TARGET.total} / percentile {PCT_TARGET}.
         </p>
         <p className="hint" style={{ margin: "4px 0 0" }}>{examBranch().t}{m.examConfirmed ? "" : " Date pakki nahi — aakhri 2 din tab tak build din."}</p>
+        <div className="row" style={{ gap: 6, marginTop: 8, flexWrap: "wrap" }}>
+          {PHASES.map((ph) => (
+            <span key={ph.k} className="chip" style={{ borderColor: ph.color, color: ph.color }}>
+              <strong>P{ph.k} {ph.name}</strong> · D{ph.from}–D{ph.to}
+            </span>
+          ))}
+        </div>
+        <p className="hint" style={{ margin: "6px 0 0" }}>{PHASES.map((ph) => `P${ph.k}: ${ph.t}`).join(" ")}</p>
       </section>
 
       <section className="section" style={{ marginTop: 8 }}>
@@ -65,10 +75,13 @@ function PlanInner() {
           {days.map((d) => {
             const ok = mustComplete(d.day, done, m);
             const s = dayStats(d.day, done, m);
+            const ph = phaseOf(d.day);
             return (
               <button
                 key={d.day}
                 className={"day-cell glass-card" + (ok ? " is-done" : s.doneCount > 0 ? " is-part" : "") + (d.day === sel ? " is-sel" : "") + (d.day === today ? " is-today" : "")}
+                style={{ borderLeft: `4px solid ${ph.color}` }}
+                title={`Phase ${ph.k} — ${ph.name}`}
                 onClick={() => setSel(d.day)}
               >
                 <span className="day-cell__n">D{d.day}{d.checkpoint ? " 🚩" : ""}</span>
@@ -91,9 +104,13 @@ function PlanInner() {
             <button className="btn btn--ghost btn--sm" onClick={() => setSel(today)}>Aaj pe wapas</button>
           )}
         </div>
+        <div className="glass-card ms-alert" style={{ marginBottom: 10, borderColor: phaseOf(sel).color }}>
+          <strong style={{ color: phaseOf(sel).color }}>PHASE {phaseOf(sel).k} · {phaseOf(sel).name}</strong>{" "}
+          <span className="hint">{phaseOf(sel).t}</span>
+        </div>
         {p && p.m && (
           <div className="glass-card ms-alert ms-alert--info" style={{ marginBottom: 10 }}>
-            <strong>Maths:</strong> {p.m.t} · <strong>English:</strong> {p.e.t} · <strong>GS:</strong> {p.g.t}
+            <strong>GS:</strong> {p.g.t} · <strong>Maths:</strong> {p.m.t} · <strong>English:</strong> {p.e.t}
           </div>
         )}
         <MissionDay day={sel} mission={m} done={done} onToggle={(id) => setDone(toggleDone(sel, id))} nowMin={sel === today ? new Date().getHours() * 60 + new Date().getMinutes() : null} />
