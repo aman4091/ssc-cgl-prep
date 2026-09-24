@@ -17,7 +17,6 @@ import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { saveQuiz, makeId, storageUsage } from "@/lib/storage";
 import Markdown, { LazyMarkdown } from "@/components/Markdown";
 import ZoomableImage from "@/components/ZoomableImage";
-import SharedDrill from "@/components/SharedDrill";
 import ChapterReport, { textOf } from "@/components/ChapterReport";
 import {
   loadTaxonomy, chaptersFor, categoryChapter, chapterLabel,
@@ -29,7 +28,6 @@ import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
 import PointsButton from "./PointsButton";
-import { useDrillTimer, fmtLeft } from "@/lib/usedrilltimer";
 
 // Answers — mock test ke screenshot, aur unke jawab.
 //
@@ -46,10 +44,21 @@ import { useDrillTimer, fmtLeft } from "@/lib/usedrilltimer";
 // Question YAHAN se andar nahi aate — na pehle aate the. Screenshot paste
 // karo to wo wrong book mein jata hai, overlay se bhi wahi raasta hai.
 //
-// Ek waqt par ek question (components/PyqDrill), wahi "Nahi aata hai / Aata
-// hai" jo PYQ bank mein hai.
+// Layout wahi purana hai: neeche tak card ki list, 25 ek saath aur neeche
+// pahunchte hi aur jud jaate hain. Beech mein kuch din ye page ek-ek question
+// wala drill ban gaya tha ("Nahi aata hai / Aata hai" ke saath) — owner ne
+// wapas list maangi. Drill ki jagah PYQ bank aur PC overlay ka /q page hai;
+// yahan ye shelf padhne ki cheez hai, na ki practice ki qataar.
 
 const POLL_MS = 5000; // overlay ka naya question khuli hui page par bhi dikhe
+
+// Ek baar mein kitne card banayein.
+//
+// Shelf 469 question ki ho sakti hai, aur har mock card apni image IndexedDB
+// se padhta hai (lib/wrongimages). Sab ek saath banane par page seconds ke
+// liye jam jata tha — chip dabao to kuch hota hi nahi lagta tha. Ab pehle
+// itne bante hain, aur neeche pahunchte hi apne aap aur jud jaate hain.
+const PAGE = 25;
 
 // Bina poochhe ek page-visit mein itne se zyada question AI ko nahi bhejte.
 const AUTO_CAP = 20;
@@ -571,8 +580,24 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     return [...rows].sort(cmp);
   }, [rows, sortAt]);
 
-  // ⬆️ Sabse upar.
-  //
+  // Kitne card abhi bane hue hain. Chhaanti badalte hi shuru se.
+  const [visible, setVisible] = useState(PAGE);
+  useEffect(() => { setVisible(PAGE); }, [subject, src]);
+  const shown = useMemo(() => list.slice(0, visible), [list, visible]);
+
+  // Neeche pahunchte hi agla jattha apne aap. Button bhi hai — jinke browser
+  // mein observer na chale unke liye.
+  const tail = useRef(null);
+  useEffect(() => {
+    const el = tail.current;
+    if (!el || typeof IntersectionObserver === "undefined") return undefined;
+    const io = new IntersectionObserver((es) => {
+      if (es.some((e) => e.isIntersecting)) setVisible((v) => Math.min(v + PAGE, list.length));
+    }, { rootMargin: "600px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [list.length]);
+
   // ⬆️ Sabse upar — lamba card padh kar wapas sar par.
   const [showTop, setShowTop] = useState(false);
   useEffect(() => {
@@ -795,13 +820,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     return () => window.removeEventListener("paste", onPaste);
   }, [takeFiles]);
 
-  // ⏱ 15 minute ka stretch — sirf Maths/Reasoning par. Pehle jawab se
-  // chalu, poore hone par ek popup: us stretch mein kitne question hue.
-  // Ghadi tabhi jab is chhaanti mein question hon — khali list par chalti
-  // ghadi ka koi matlab nahi.
-  const timed = (subject === "math" || subject === "reasoning") && rows.length > 0;
-  const timer = useDrillTimer(15, timed);
-
   const chips = [ALL_SUBJ, ...SUBJECTS];
 
   return (
@@ -817,12 +835,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           >
             📊 Chapter report
           </button>
-          {timed && (
-            <span className={`ansp__timer${timer.running ? " is-on" : ""}`}
-              title={timer.running ? "15 minute poore hone par ginti dikhegi" : "Pehla jawab dete hi ghadi chalu"}>
-              ⏱ {fmtLeft(timer.left)}
-            </span>
-          )}
         </div>
 
         {flash && <p className="ansp__flash">{flash}</p>}
@@ -837,34 +849,15 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               : "Yaha abhi koi question nahi hai."}
           </p>
         ) : (
-          /* Ek waqt par EK question, aur neeche wahi do button. Kram ab
-             PC ke overlay ke saath SAAJHA hai (lib/answerdrill): jo yahan
-             #1 hai wahi wahan bhi #1. Nahi aata -> 15 baad, Aata hai ->
-             100 baad — dono jagah wahi niyam, wahi ginti.
-             Pehchaan `qid` hai (overlay bhi wahi jaanta hai); quiz se aaye
-             record ka qid nahi hota, wo apne uid par chalte hain. */
-          <SharedDrill
-            sub={subject || "all"}
-            list={list}
-            keyOf={(r) => r.qid || r.uid}
-            onAnswer={(ok) => timer.mark(ok)}
-            renderCard={(r, i) => renderCard(r, i, false)}
-          />
+          shown.map((r, i) => renderCard(r, i, false))
         )}
 
-        {timer.report && (
-          <div className="drillpop" role="dialog" aria-modal="true"
-            onClick={(e) => { if (e.target === e.currentTarget) timer.close(); }}>
-            <div className="drillpop__box">
-              <div className="drillpop__t">⏱ 15 minute poore</div>
-              <div className="drillpop__big">{timer.report.good + timer.report.bad}</div>
-              <div className="drillpop__sub">question hue</div>
-              <div className="drillpop__row">
-                <span>✅ Aata hai <b>{timer.report.good}</b></span>
-                <span>❌ Nahi aata <b>{timer.report.bad}</b></span>
-              </div>
-              <button className="ansp__btn ansp__btn--go" onClick={timer.close}>Theek hai — agla 15 min</button>
-            </div>
+        {/* Aur card — neeche pahunchte hi apne aap khul jate hain. */}
+        {ready && visible < list.length && (
+          <div ref={tail} className="ansp__acts">
+            <button className="ansp__btn" onClick={() => setVisible((v) => Math.min(v + PAGE, list.length))}>
+              ⬇️ Aur {Math.min(PAGE, list.length - visible)} dikhao ({visible}/{list.length})
+            </button>
           </div>
         )}
 
