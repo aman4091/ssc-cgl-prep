@@ -44,8 +44,9 @@ import PointsButton from "./PointsButton";
 // Question YAHAN se andar nahi aate — na pehle aate the. Screenshot paste
 // karo to wo wrong book mein jata hai, overlay se bhi wahi raasta hai.
 //
-// Layout wahi purana hai: neeche tak card ki list, 25 ek saath aur neeche
-// pahunchte hi aur jud jaate hain. Beech mein kuch din ye page ek-ek question
+// Layout wahi purana hai: daayen kinare saare question ki ginti, aur beech
+// mein neeche tak card ki list — 25 ek saath, neeche pahunchte hi aur jud
+// jaate hain. Beech mein kuch din ye page ek-ek question
 // wala drill ban gaya tha ("Nahi aata hai / Aata hai" ke saath) — owner ne
 // wapas list maangi. Drill ki jagah PYQ bank aur PC overlay ka /q page hai;
 // yahan ye shelf padhne ki cheez hai, na ki practice ki qataar.
@@ -598,7 +599,13 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     return () => io.disconnect();
   }, [list.length]);
 
-  // ⬆️ Sabse upar — lamba card padh kar wapas sar par.
+  // ⬆️ Sabse upar.
+  //
+  // Kinare wali list apne andar scroll hoti hai (86vh se lambi ho jati hai),
+  // isliye neeche pahunchte-pahunchte 1 se 5 uske apne scroll mein chhup jate
+  // hain — Question 1 par jaane ke liye pehle poora page upar laana padta tha.
+  // Ye button dono ko ek saath upar le aata hai: page bhi, aur list bhi.
+  const railRef = useRef(null);
   const [showTop, setShowTop] = useState(false);
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 400);
@@ -608,6 +615,22 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   }, []);
   const toTop = () => {
     try { window.scrollTo({ top: 0, behavior: "smooth" }); } catch { window.scrollTo(0, 0); }
+    const el = railRef.current;
+    if (!el) return;
+    try { el.scrollTo({ top: 0, behavior: "smooth" }); } catch { el.scrollTop = 0; }
+  };
+
+  // Rail ka number us card par le jata hai — chahe wo abhi bana hi na ho.
+  // Isliye pehle utne card khol do, phir agle frame mein scroll.
+  const jumpTo = (i, id) => {
+    const needsMore = i >= visible;
+    if (needsMore) setVisible(Math.min(i + PAGE, list.length));
+    const go = () => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(go, needsMore ? 120 : 0);
+    // Naye card banne mein oonchai badalti rehti hai (answer ka markdown baad
+    // mein khulta hai), isliye ek baar aur — warna nishaana 3-4 card aage
+    // reh jata hai.
+    if (needsMore) setTimeout(go, 500);
   };
 
   // Chips par ginti — chuni hui shelf ki, taaki "Maths (12)" ka matlab wahi ho
@@ -824,6 +847,26 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   return (
     <div className="ansp">
+      {/* Daayen kinare poori list — har question ka number. Tap karo to wahi
+          card saamne. Card abhi bana na ho (25-25 karke bante hain) to pehle
+          utne khul jate hain, phir scroll. */}
+      {list.length > 0 && (
+        <nav className="ansp__side" ref={railRef}>
+          {list.map((r, i) => {
+            const id = `ans-${r.id}`;
+            return (
+              <a
+                key={r.uid}
+                href={`#${id}`}
+                onClick={(e) => { e.preventDefault(); jumpTo(i, id); }}
+              >
+                {i + 1}
+              </a>
+            );
+          })}
+        </nav>
+      )}
+
       <div className="ansp__main">
         <div className="ansp__acts ansp__acts--top">
           {/* Upar ab bas yahi — owner ne baaki sab hata diya. Question ke
