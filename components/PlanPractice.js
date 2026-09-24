@@ -119,7 +119,8 @@ async function buildSet(auto) {
   };
 }
 
-export default function PlanPractice({ auto, title }) {
+// big = Home ke ABHI card ka poora-chaudai wala ▶ SHURU button.
+export default function PlanPractice({ auto, title, big }) {
   const [busy, setBusy] = useState(false);
   const [run, setRun] = useState(null);
 
@@ -136,8 +137,8 @@ export default function PlanPractice({ auto, title }) {
 
   return (
     <>
-      <button className="btn btn--primary btn--sm" onClick={start} disabled={busy}>
-        {busy ? "…" : `▶ ${auto.n} Q shuru`}
+      <button className={big ? "fc__btn fc__btn--go" : "btn btn--primary btn--sm"} onClick={start} disabled={busy}>
+        {busy ? "…" : big ? `▶ SHURU · ${auto.n} Q` : `▶ ${auto.n} Q shuru`}
       </button>
       {run && (
         <FullscreenRunner

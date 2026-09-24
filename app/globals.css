@@ -3432,17 +3432,6 @@ body.exam-on .pyq-filters { display: none; }
 .ca-eyebrow { font-size: 0.8rem; font-weight: 700; color: var(--text-3); letter-spacing: 0.02em; }
 .ca-month { box-sizing: border-box; width: auto; max-width: 100%; padding: 6px 10px; font-size: 0.9rem; }
 
-/* Homepage ka sabse upar wala Fact log button */
-.factop { margin-top: 10px; margin-bottom: -6px; }
-.factop__btn {
-  /* box-sizing yahan zaroori hai: is page par default content-box hai, isliye
-     width:100% + padding wala button patti se bahar nikal jata tha. */
-  box-sizing: border-box; max-width: 100%;
-  width: 100%; display: flex; align-items: center; justify-content: space-between;
-  gap: 10px; font-size: 1rem; padding: 14px 16px;
-}
-.factop__n { font-size: 0.8rem; opacity: 0.85; font-weight: 600; white-space: nowrap; }
-.factop__btn--2 { margin-top: 8px; }
 .qcard__note { color: var(--warning); font-size: 13px; margin-top: 8px; }
 
 /* ⏱️ Solve page ka per-question timer */
@@ -3908,6 +3897,69 @@ body.exam-on .hresume { display: none; }
 /* 📈 Percentile ka graph (/mission/progress). */
 .ms-graphwrap { overflow-x: auto; }
 .ms-graph { width: 100%; min-width: 420px; height: auto; display: block; }
+
+/* 🚀 Home ka FOCUS view (components/MissionToday.js) — ek screen, ek kaam. */
+
+/* Upar ki patli line: Day X/32 · CORE n/5 · Exam N din. Bas itna. */
+.fcline {
+  margin: 0; padding: 10px 16px 0; font-size: 0.82rem; color: var(--muted);
+  letter-spacing: 0.02em; text-align: center;
+}
+.fcline strong { color: var(--text); font-weight: 800; }
+.fcline__sep { margin: 0 8px; opacity: 0.5; }
+
+/* ABHI ka block — poori screen gherta hua. */
+.fc {
+  background: var(--card); border: 2px solid var(--accent); border-radius: var(--radius-lg, 18px);
+  padding: 22px 20px 18px; box-shadow: var(--shadow-md, 0 6px 24px rgba(0, 0, 0, 0.08));
+  min-height: 40vh; display: flex; flex-direction: column;
+}
+.fc--life { border-color: var(--line); background: var(--bg-soft, var(--card)); min-height: 30vh; }
+.fc--idle { border-style: dashed; border-color: var(--line); min-height: 26vh; }
+.fc--done { border-color: var(--ok, var(--success)); }
+.fc__top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.fc__time { font-size: 1.15rem; font-weight: 800; color: var(--accent); letter-spacing: 0.01em; }
+.fc--life .fc__time, .fc--done .fc__time { color: var(--muted); }
+.fc__left { font-size: 0.9rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.fc__title {
+  font-size: clamp(1.5rem, 5.5vw, 2.3rem); font-weight: 800; line-height: 1.2;
+  margin: 10px 0 0; overflow-wrap: anywhere;
+}
+.fc__topic { margin: 8px 0 0; font-size: 1.02rem; line-height: 1.45; color: var(--text); overflow-wrap: anywhere; }
+.fc__target { margin: 6px 0 0; font-size: 0.95rem; color: var(--muted); }
+.fc__btns { display: flex; gap: 10px; margin-top: auto; padding-top: 18px; flex-wrap: wrap; }
+.fc__btn {
+  flex: 1 1 160px; min-height: 60px; display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-md, 12px); border: 2px solid transparent; cursor: pointer;
+  font-size: 1.02rem; font-weight: 800; letter-spacing: 0.03em; text-decoration: none;
+}
+.fc__btn--go { background: var(--accent); color: var(--on-accent); }
+.fc__btn--ok { background: transparent; color: var(--text); border-color: var(--accent); }
+.fc__btn--undo { background: transparent; color: var(--muted); border-color: var(--line); }
+.fc__btn:disabled { opacity: 0.6; }
+.fc__next { margin: 14px 0 0; font-size: 0.84rem; color: var(--muted); }
+
+/* Ek waqt mein EK alert — patli line, bada card nahi. */
+.fc__alert {
+  margin: 10px 2px 0; font-size: 0.85rem; line-height: 1.45; color: var(--muted);
+  border-left: 3px solid var(--warning, var(--accent)); padding-left: 10px;
+}
+.fc__alert a { font-weight: 700; white-space: nowrap; }
+
+/* ⌄ Aaj ka din — band rehta hai. */
+.fold { border: 1px solid var(--line); border-radius: var(--radius-md, 12px); background: var(--card); }
+.fold__hd {
+  width: 100%; background: none; border: 0; cursor: pointer; text-align: left;
+  padding: 12px 14px; font-size: 0.9rem; font-weight: 700; color: var(--text);
+}
+.fold__body { padding: 0 14px 14px; }
+.fold summary.fold__hd { list-style: none; }
+.fold summary.fold__hd::-webkit-details-marker { display: none; }
+.fold[open] summary.fold__hd::before { content: "▴  "; }
+.fold:not([open]) summary.fold__hd::before { content: "▾  "; }
+
+/* Link jaisa dikhne wala button (⚙️ Date / shift). */
+.linklike { background: none; border: 0; padding: 0; cursor: pointer; color: var(--accent); font: inherit; }
 
 /* 🔒 CORE 5 — jinse din "count" hota hai (MissionToday → CoreFive). */
 .ms-core { padding: 14px 16px; border: 2px solid var(--accent); margin-bottom: 10px; }
