@@ -2,7 +2,7 @@
 
 import "@/app/ca-revision/carev.css";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FACT_SECS, getFacts, addFact, removeFact, clearFacts, dueFacts, reviewFact, topicsInUse } from "@/lib/missionfacts";
+import { FACT_SECS, GAPS, DAILY_CAP, REV_NOTE, getFacts, addFact, removeFact, clearFacts, dueFacts, dueTotal, dueByGap, reviewFact, topicsInUse } from "@/lib/missionfacts";
 import { clearSession } from "@/lib/recallsession";
 import { getMission, currentDayNum, planFor } from "@/lib/mission";
 import Recall from "@/components/carevision/Recall";
@@ -50,6 +50,7 @@ function toCard(f) {
 export default function MissionFactsPage() {
   const [facts, setFacts] = useState([]);
   const [due, setDue] = useState([]);
+  const [dueAll, setDueAll] = useState({ total: 0, byGap: {} });
   const [open, setOpen] = useState({});
   const [sec, setSec] = useState("gs");
   const [topic, setTopic] = useState("");
@@ -59,7 +60,7 @@ export default function MissionFactsPage() {
   const [revising, setRevising] = useState(null);
   const autoStarted = useRef(false);
 
-  const load = () => { setFacts(getFacts()); setDue(dueFacts()); };
+  const load = () => { setFacts(getFacts()); setDue(dueFacts()); setDueAll({ total: dueTotal(), byGap: dueByGap() }); };
 
   // Page kholte hi seedha revision — owner ka niyam. Fact log padhne ki
   // list nahi, dohrane ki cheez hai: upar naam, neeche uske baare mein, aur
@@ -142,6 +143,17 @@ export default function MissionFactsPage() {
           </button>
         )}
         <h2 className="ms-h2">Aaj revise karo ({due.length})</h2>
+        <p className="hint" style={{ margin: "0 0 8px" }}>
+          <strong>{REV_NOTE}</strong> Kram wahi hai — D+3 pehle, fir D+7, fir D+1, sabse aakhir mein D+14.
+          {dueAll.total > due.length
+            ? ` Aaj ki hadd ${DAILY_CAP} hai (kul ${dueAll.total} due hain) — bache hue kal khud aa jayenge, koi backlog nahi.`
+            : ""}
+        </p>
+        {due.length > 0 && (
+          <div className="row" style={{ gap: 6, marginBottom: 8 }}>
+            {GAPS.map((g) => (dueAll.byGap[g] ? <span key={g} className="chip">D+{g}: <strong>{dueAll.byGap[g]}</strong></span> : null))}
+          </div>
+        )}
         {due.length === 0 ? (
           <div className="placeholder">Aaj ke liye kuch due nahi. 👍</div>
         ) : (

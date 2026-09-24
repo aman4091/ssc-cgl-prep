@@ -197,7 +197,7 @@ export default function MissionProgressPage() {
                 </tbody>
               </table>
             </div>
-            <p className="hint">GS mein effort aur marks ka rishta seedha hai: roz 100–125 PYQ + 28–35 naye cluster + purane revise. Har ~3 din ek GS sectional (Testbook = PYQ) /mock-marks → GK/GS mein. 21.9 → 30 = +8 marks, poore plan ka sabse bada hissa.</p>
+            <p className="hint">GS mein effort aur marks ka rishta seedha hai: roz 100–125 PYQ + 28–35 naye cluster + purane revise. Har ~3 din ek GS sectional (Testbook = PYQ) /mock-marks → GK/GS mein. 16.7 → 30 = +13 marks, poore plan ka sabse bada hissa.</p>
           </section>
         );
       })()}

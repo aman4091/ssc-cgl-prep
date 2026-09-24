@@ -32,14 +32,14 @@ export default function MissionExamPage() {
               <tr><td>2 option bache (50-50)</td><td>0.5</td><td>+0.75</td><td className="ms-ok">✅ Hamesha mark</td></tr>
               <tr><td>1 option kata (3 bache)</td><td>0.33</td><td>+0.33</td><td className="ms-ok">✅ Mark</td></tr>
               <tr><td>English / Reasoning: ek bhi nahi kata — "lagta hai ye" wala</td><td>trap option ki wajah se ~0.2 ya kam</td><td>~0</td><td className="ms-bad">❌ Soch ke mat maaro — time jaata hai</td></tr>
-              <tr><td><strong>🌍 GS</strong>: pata nahi, par gut feeling hai</td><td>tumhara GS gut abhi 55% par hai (target 62%)</td><td>+0.85 har Q</td><td className="ms-ok">✅ GS mein SAARE 25 attempt karo</td></tr>
+              <tr><td><strong>🌍 GS</strong>: pata nahi, par gut feeling hai</td><td>tumhara GS gut abhi ~47% par hai (target 62%)</td><td>+0.65 har Q</td><td className="ms-ok">✅ GS mein SAARE 25 attempt karo</td></tr>
               <tr><td><strong>📘 English</strong>: 2 unknown vocab Q</td><td>—</td><td>25 att @74% = 32 · <strong>23 att @88% = 38.5</strong></td><td className="ms-bad">❌ Chhodo — 23 attempt par ruko</td></tr>
               <tr><td>Aakhri 40 sec ke bache blank (random, ek hi letter)</td><td>0.25</td><td>+0.125 har Q</td><td className="ms-ok">✅ Bhar do (8 blank ≈ +1 mark muft)</td></tr>
             </tbody>
           </table>
         </div>
         <p className="hint">Hisaab: 2p − 0.5(1−p). Break-even p = 20%. Random letter mein trap ka asar nahi (p = 0.25 pakka) — isliye blind fill plus hai. English/Reasoning mein "lagta hai ye" wala tukka trap mein phasta hai — wo mat karo.</p>
-        <p className="hint"><strong>GS alag kyun:</strong> tumhara GS abhi 25 attempt par 55% accuracy deta hai — break-even (20%) se bahut upar. Isliye GS mein 25/25 hi bharo, bas pehle pakke wale. <strong>English ulta hai:</strong> wahan 25 attempt accuracy 74% par le aata hai (32 marks), jabki 23 attempt 88% par 38.5 deta hai — 2 Q chhodna +6.5 marks hai.</p>
+        <p className="hint"><strong>GS alag kyun:</strong> tumhara GS abhi 25 attempt par ~47% accuracy deta hai — break-even (20%) se bahut upar. Isliye GS mein 25/25 hi bharo, bas pehle pakke wale. <strong>English ulta hai:</strong> wahan 25 attempt accuracy 74% par le aata hai (32 marks), jabki 23 attempt 88% par 38.5 deta hai — 2 Q chhodna +6.5 marks hai.</p>
         <p className="hint"><strong>40 sec kyun, 15 nahi:</strong> CBT mein har blank = navigate + click + next ≈ 5–6 sec. Reasoning/GS mein 2–4 blank, Maths mein 4–5. Pehle full mock mein ek section mein jaan-boojh ke 6 blank chhodo aur time karo kitne sec lage. Ek hi letter isliye ki soch-vichar ka kaam na bane (answer key mein options lagbhag barabar baante hote hain — koi bhi letter chalega).</p>
       </section>
 

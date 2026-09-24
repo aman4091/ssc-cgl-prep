@@ -8,7 +8,7 @@ import {
   dayStats, mustComplete, streak, recentActions, pendingRules, RULES, DEFAULT_START, SHIFTS,
   planFor, dateOfDay, fmtDay, totalDays, totalMocks, getExam, setExam, examBranch, daysBetween,
   getMetrics, setMetric, hasGsSectional, FLOOR, TARGET, PCT_NOW, PCT_TARGET,
-  CLUSTER_TARGET, phaseOf,
+  CLUSTER_TARGET, phaseOf, mathGate, MATH_GATE_DAY, MATH_GATE_ATT, MATH_GATE_DAYS,
 } from "@/lib/mission";
 import { dueCount, getFacts } from "@/lib/missionfacts";
 import { getMocks } from "@/lib/mockmarks";
@@ -195,16 +195,21 @@ export default function MissionToday({ showSetupLink = true }) {
   const [m, setM] = useState(null);
   const [done, setDone] = useState({});
   const [now, setNow] = useState(() => new Date());
-  const [extra, setExtra] = useState({ actions: [], rules: [], due: 0, gsBase: true });
+  const [extra, setExtra] = useState({ actions: [], rules: [], due: 0, gsBase: true, gate: null });
   const [editing, setEditing] = useState(false);
 
   const refresh = useCallback(() => {
     const mm = getMission();
     setM(mm);
     setDone(getDone());
-    let rules = [], gsBase = true;
-    try { const mocks = getMocks(); rules = pendingRules(mocks, mm); gsBase = hasGsSectional(mocks); } catch { /* ignore */ }
-    setExtra({ actions: recentActions(), rules, due: dueCount(), gsBase });
+    let rules = [], gsBase = true, gate = null;
+    try {
+      const mocks = getMocks();
+      rules = pendingRules(mocks, mm);
+      gsBase = hasGsSectional(mocks);
+      gate = mathGate(mocks);
+    } catch { /* ignore */ }
+    setExtra({ actions: recentActions(), rules, due: dueCount(), gsBase, gate });
   }, []);
 
   useEffect(() => {
@@ -365,6 +370,22 @@ export default function MissionToday({ showSetupLink = true }) {
 
       {/* ---- ghantiyan ---- */}
       <section className="section" style={{ marginTop: 10 }}>
+        {extra.gate && day >= MATH_GATE_DAY && day <= MATH_GATE_DAYS[1] && (
+          <div className={"glass-card ms-alert " + (extra.gate.open ? "ms-alert--ok" : "ms-alert--bad")}>
+            <strong>🚪 Phase 2 ka Maths gate{day === MATH_GATE_DAY ? " — aaj ka faisla" : ""}:</strong>{" "}
+            Maths attempt{" "}
+            <strong>{extra.gate.att == null ? "abhi koi data nahi" : Math.round(extra.gate.att * 10) / 10}</strong>
+            {extra.gate.att == null ? "" : ` hai (chahiye ${MATH_GATE_ATT})`} →{" "}
+            {extra.gate.open
+              ? <strong>naye chapter KHUL GAYE</strong>
+              : <strong>naye chapter BAND — sirf sprint</strong>}.
+            <p className="hint" style={{ margin: "4px 0 0" }}>
+              {extra.gate.open
+                ? `D15–D22 mein geometry, 3D, CI advanced, TSD advanced, algebra + coordinate, H&D aur trigonometry advanced chalenge. Pichhle ${extra.gate.n || 0} Maths section ka ausat.`
+                : `D15–D22 ke Maths block ab mixed sprint + mistake-book ke weak chapter honge. Attempt 20 se neeche naya chapter seekhne se attempt nahi badhta — pehle haath chalna chahiye. Ek achha Maths sectional do, gate khud khul jayega.`}
+            </p>
+          </div>
+        )}
         {extra.rules.length > 0 && (
           <div className="glass-card ms-alert ms-alert--bad">
             <strong>⚠️ Checkpoint rule lag gaya:</strong>{" "}
@@ -374,7 +395,7 @@ export default function MissionToday({ showSetupLink = true }) {
         )}
         {!extra.gsBase && (
           <div className="glass-card ms-alert ms-alert--bad">
-            <strong>🌍 GS ka asli baseline nahi hai.</strong> Ab tak ek bhi GS sectional nahi diya (full mock mein GS abhi 21.9 par hai, accuracy 55%).
+            <strong>🌍 GS ka asli baseline nahi hai.</strong> Ab tak ek bhi GS sectional nahi diya (GS abhi 16.7 par hai, accuracy ~47%).
             Aaj ek GS sectional do (Testbook = PYQ) — score jo bhi aaye, /mock-marks → GK/GS mein likho. Bina baseline CP1 bekaar.
           </div>
         )}

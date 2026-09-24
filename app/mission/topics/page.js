@@ -105,7 +105,7 @@ export default function MissionTopicsPage() {
         <div className="glass-card" style={{ padding: 14 }}>
           <ul className="ms-list">
             <li>160+ guarantee — plan ka FLOOR 142 hai, TARGET 152 (percentile 85). Usse upar paper aasan hone par hi jaata hai.</li>
-            <li>GS 40+ — abhi 21.9 hai; 32 din mein floor 27, target 30. Yahi sabse bada +8 hai.</li>
+            <li>GS 40+ — abhi 16.7 hai; 32 din mein floor 27, target 30. Yahi sabse bada +13 hai.</li>
             <li>Parmar ke 121 chapter / 6-pass — 32 din mein nahi hoga. GS ab PYQ + cluster se chalega, notes se nahi.</li>
             <li>Maths ka poora syllabus — phase 2 mein sirf wo chapter FULL honge jo mistake book mein sabse zyada hain (geometry, 3D, CI, H&amp;D, coordinate).</li>
             <li>Poore saal ka CA gehrai se.</li>
