@@ -6,8 +6,14 @@
 // mt bhej .. alag page bna"). Yahan revision ka chakkar nahi chalta — sirf
 // ginti wali list hai: kisi bhi line par click karo, wo popup mein poori
 // khulti hai, aur wahin se ← pichli / agli → chalti rehti hai.
+//
+// Har line ab markdown se banti hai (components/Markdown) — wahi renderer jo
+// answers page par hai. AI ka jawab bold aur LaTeX ke saath aata hai; pehle
+// yahan wo kachcha dikhta tha ("Neither of the two boys **is** guilty"),
+// yaani jis shabd par zor dena tha wahi taaron mein dab jata tha.
 
 import { useEffect, useMemo, useState } from "react";
+import Markdown from "@/components/Markdown";
 import {
   getOneLiners, removeOneLiner, clearOneLiners, olLines, olTitle, isTrickLine, subOf, OL_SUBS,
 } from "@/lib/oneliners";
@@ -64,14 +70,14 @@ function OneLinerPopup({ item, position, hasPrev, hasNext, onPrev, onNext, onClo
             <ul style={{ margin: 0, paddingLeft: 18, display: "grid", gap: 8 }}>
               {lines.filter((l) => !isTrickLine(l)).map((l, i) => (
                 <li key={i} style={{ fontSize: "1.02rem", lineHeight: 1.6 }}>
-                  {l.replace(/^\d+[.)]\s*/, "")}
+                  <Markdown inline>{l.replace(/^\d+[.)]\s*/, "")}</Markdown>
                 </li>
               ))}
             </ul>
           </div>
           {lines.filter(isTrickLine).map((l, i) => (
             <div key={i} className="answer-box mt-8" style={{ borderColor: "var(--accent)" }}>
-              <span style={{ fontSize: "1.02rem", lineHeight: 1.6 }}>{l}</span>
+              <span style={{ fontSize: "1.02rem", lineHeight: 1.6 }}><Markdown inline>{l}</Markdown></span>
             </div>
           ))}
         </div>
@@ -178,7 +184,7 @@ export default function OneLinersPage() {
                   >
                     <span className="muted" style={{ fontSize: "0.85rem", minWidth: 24 }}>{i + 1}.</span>
                     <span style={{ minWidth: 0 }}>
-                      {s.icon} {olTitle(o)}
+                      {s.icon} <Markdown inline>{olTitle(o)}</Markdown>
                       {n > 1 && <span className="muted" style={{ fontSize: "0.8rem" }}> · {n} line</span>}
                     </span>
                   </button>
