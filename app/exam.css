@@ -1143,3 +1143,131 @@ body.exam-on .panic-fab { display: none; }
 /* LazyMarkdown ki jagah — answer banne tak itni jagah, taaki scroll na uchhle. */
 .examskin .md--lazy { min-height: 160px; }
 
+
+/* ═══════════════════════════════════════════════════════════════════════
+   🌑 GEMINI SKIN — sirf ek page par (abhi: /pyq/war/mediaeval-history)
+   ═══════════════════════════════════════════════════════════════════════
+   Owner ne Gemini ke chat wala parda dikha kar kaha "ek page bilkul aisa
+   kar do — rang, font, sab". Poora skin `--tb-*` tokens par khada hai
+   (upar .examskin), isliye yahan sirf wahi tokens dobara likhe hain: page,
+   card, sidebar, button — sab apne aap us rang mein aa jaate hain.
+
+   Class <body> par lagti hai (page apne mount par lagata aur hatata hai),
+   isliye topbar aur kinare ki patti bhi saath badalti hain — screenshot
+   mein bhi wo dono kaale hi hain.
+
+   Rang seedha Gemini ke parde se: page #131314, utha hua #1e1f20, lakeer
+   #2d2f31, likhawat #e3e3e3, halki #9aa0a6, link/accent #8ab4f8. */
+.examskin.gemskin {
+  --tb-page: #1e1f20;
+  --tb-bg-2: #131314;
+  --tb-raised: #1e1f20;
+  --tb-soft: #1b1c1d;
+  --tb-head: #1b1c1d;
+  --tb-tint: #1e1f20;
+  --tb-skip: #1b1c1d;
+
+  --tb-ink: #e3e3e3;
+  --tb-ink-2: #c4c7c5;
+  --tb-dim: #9aa0a6;
+  --tb-q: #ffffff;
+  --tb-skip-ink: #9aa0a6;
+
+  --tb-line: #2d2f31;
+  --tb-line-soft: #242527;
+  --tb-line-hard: #3c4043;
+
+  --tb-blue: #8ab4f8;
+  --tb-blue-dark: #a8c7fa;
+  --tb-blue-ink: #8ab4f8;
+  --tb-blue-soft: #263041;
+  --tb-navy: #1b1c1d;
+  --tb-orange: #8ab4f8;
+  --tb-focus: #8ab4f8;
+  --tb-code: #8ab4f8;
+
+  --tb-green: #81c995;
+  --tb-green-soft: #1f2a22;
+  --tb-green-dark: #81c995;
+  --tb-ok-ink: #81c995;
+  --tb-red: #f28b82;
+  --tb-red-soft: #2a1e1e;
+  --tb-bad-ink: #f28b82;
+  --tb-yellow: #2a2519;
+  --tb-warn-ink: #fdd663;
+  --tb-warn-ink-2: #fdd663;
+  --tb-rev-ink: #1b1c1d;
+  --tb-rev-soft: #2a2519;
+  --tb-key-line: #fdd663;
+
+  /* Google Sans khula font nahi hai — machine par ho to wahi, warna Roboto
+     (usi parivaar ka), warna system. */
+  --tb-font: "Google Sans", "Google Sans Text", "Product Sans",
+             var(--font-gsans), Roboto, -apple-system, "Segoe UI",
+             "Noto Sans Devanagari", sans-serif;
+
+  background: #131314;
+  color: #e3e3e3;
+}
+
+/* Halki rangeen gend — kaale parde par dhabbe jaise lagti hain. */
+.examskin.gemskin .bg-orbs { display: none; }
+
+/* Gemini ka jawab: line ki oonchai khuli hui, bold safed, baaki halka. */
+.examskin.gemskin .md,
+.examskin.gemskin .qcard__stem,
+.examskin.gemskin .ansp__answer { font-size: 15px; line-height: 1.75; color: #e3e3e3; }
+.examskin.gemskin .md strong,
+.examskin.gemskin .qcard__stem strong { color: #ffffff; font-weight: 500; }
+.examskin.gemskin .md h1,
+.examskin.gemskin .md h2,
+.examskin.gemskin .md h3 { color: #ffffff; font-weight: 400; letter-spacing: 0; }
+
+/* Bullet: bhara hua nahi, khokhla gol — jaisa Gemini mein hai. */
+.examskin.gemskin .md ul { list-style: none; padding-left: 26px; }
+.examskin.gemskin .md ul > li { position: relative; margin: 10px 0; }
+.examskin.gemskin .md ul > li::before {
+  content: ""; position: absolute; left: -18px; top: 0.62em;
+  width: 6px; height: 6px; border-radius: 50%;
+  border: 1px solid #9aa0a6;
+}
+.examskin.gemskin .md ol { padding-left: 26px; }
+.examskin.gemskin .md ol > li { margin: 10px 0; }
+
+/* "Testbook" jaisa chhota hawala-chip. */
+.examskin.gemskin .chip,
+.examskin.gemskin .qcard__qid {
+  background: #2d2f31; border-color: #2d2f31; color: #9aa0a6;
+  border-radius: 8px; font-weight: 400;
+}
+
+/* Card ki lakeer halki, kone bade — Gemini ka dabba aisa hi hai. */
+.examskin.gemskin .qcard,
+.examskin.gemskin .glass-card,
+.examskin.gemskin .placeholder {
+  background: #1e1f20; border-color: #2d2f31; border-radius: 16px;
+  box-shadow: none;
+}
+.examskin.gemskin .hero { background: transparent; }
+.examskin.gemskin .hero__title,
+.examskin.gemskin .qcard__h { color: #ffffff; font-weight: 400; }
+.examskin.gemskin .grad {
+  background: linear-gradient(90deg, #8ab4f8, #c58af9);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* Button: bhara hua neela nahi — Gemini ke gol, halke button. */
+.examskin.gemskin .btn,
+.examskin.gemskin .ansp__btn {
+  border-radius: 999px; border-color: #3c4043; background: #1e1f20; color: #e3e3e3;
+}
+.examskin.gemskin .btn--primary,
+.examskin.gemskin .btn--go { background: #8ab4f8; color: #131314; border-color: #8ab4f8; }
+.examskin.gemskin .btn:hover { background: #2d2f31; }
+.examskin.gemskin .btn--primary:hover { background: #a8c7fa; }
+.examskin.gemskin .input,
+.examskin.gemskin .select { background: #1e1f20; border-color: #3c4043; color: #e3e3e3; border-radius: 12px; }
+
+/* Kinare ki patti aur upar ki patti bhi kaali — screenshot jaisi. */
+.examskin.gemskin .drawer { background: #1b1c1d; border-color: #2d2f31; }
+.examskin.gemskin .topbar { background: #1b1c1d; border-color: #2d2f31; }

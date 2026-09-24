@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Inter } from "next/font/google";
+import { Inter, Roboto } from "next/font/google";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 import "./exam.css";
@@ -17,6 +17,10 @@ import PathMemo from "@/components/PathMemo";
 import PanicButton from "@/components/PanicButton";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+// Gemini wali skin (app/exam.css ka .gemskin) ke liye. Google Sans khula font
+// nahi hai; Roboto usi parivaar ka hai aur shakl sabse paas ki hai — agar
+// machine par Google Sans pada ho to CSS pehle wahi uthata hai.
+const gsans = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-gsans" });
 
 export const metadata = {
   title: "SSC CGL Pre — Prep Hub",
@@ -77,7 +81,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className={`${inter.variable} examskin`}>
+      <body className={`${inter.variable} ${gsans.variable} examskin`}>
         <div className="bg-orbs" aria-hidden="true">
           <span className="orb orb--1" />
           <span className="orb orb--2" />

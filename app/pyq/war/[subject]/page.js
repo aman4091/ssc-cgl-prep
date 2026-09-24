@@ -8,8 +8,21 @@ import PyqQuestionCard from "@/components/PyqQuestionCard";
 import PyqDrill from "@/components/PyqDrill";
 
 
+// 🌑 Ek page Gemini ke parde jaisa — owner ne screenshot dikha kar kaha tha
+// "rang, font, theme — bilkul aisa". Skin ki poori CSS app/exam.css ke
+// .gemskin mein hai; class <body> par lagti hai taaki upar ki patti aur
+// kinare ki patti bhi saath kaali ho jayein (screenshot mein wo bhi kaali
+// hain). Page chhodte hi class hat jaati hai — baaki site jaisi thi waisi.
+const GEM_SUBJECTS = new Set(["mediaeval-history"]);
+
 export default function WarSubjectPage() {
   const { subject } = useParams();
+
+  useEffect(() => {
+    if (!GEM_SUBJECTS.has(String(subject))) return undefined;
+    document.body.classList.add("gemskin");
+    return () => document.body.classList.remove("gemskin");
+  }, [subject]);
   const [meta, setMeta] = useState(null);
   const [qs, setQs] = useState([]);
   const [ready, setReady] = useState(false);
