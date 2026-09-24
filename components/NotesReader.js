@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
-import { ONELINER_PROMPT } from "@/lib/oneliners";
+import { NOTES_PROMPT } from "@/lib/notesprompt";
 import { readImageText } from "@/lib/client-ai";
 import { startNotesQuiz } from "@/lib/notesquiz";
 import { hinglishKey, getHinglish, setHinglish, subscribeHinglish } from "@/lib/noteshinglish";
@@ -104,7 +104,7 @@ function GeminiBtn({ text, subject }) {
   const go = async () => {
     const body = String(text || "").trim();
     if (!body) return;
-    await copyText(`${ONELINER_PROMPT}\n\n${body}`);
+    await copyText(`${NOTES_PROMPT}\n\n${body}`);
     setDone(true);
     setTimeout(() => setDone(false), 1500);
     try { window.open(aiSiteUrl(getSettings().askAiSite), "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
@@ -137,7 +137,7 @@ function ImageGeminiBtn({ src, subject }) {
       const { text } = await readImageText(blob, (pr) => setState(`${Math.round(pr * 100)}%`));
       const body = String(text || "").trim();
       if (!body) { setState("✕"); setTimeout(() => setState(""), 1500); return; }
-      const pre = ONELINER_PROMPT;
+      const pre = NOTES_PROMPT;
       await copyText(pre ? `${pre}\n\n${body}` : body);
       setState("✓");
       setTimeout(() => setState(""), 1500);
