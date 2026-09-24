@@ -13,6 +13,7 @@ import Markdown from "./Markdown";
 import Diagram from "./Diagram";
 import QuestionEditor from "./QuestionEditor";
 import AskButtons from "./AskButtons";
+import OneLinerBtn from "./OneLinerBtn";
 import PasteAnswer from "./PasteAnswer";
 import ClusterButton from "./ClusterButton";
 import PointsButton from "./PointsButton";
@@ -203,6 +204,8 @@ Options: ${opts}
             kaam ki hain — sawaal ke saath hi. */}
         <span className="qcard__hacts">
           <span className="q-act--keep"><AskButtons q={q} subject={subject} /></span>
+          {/* 📝 One-liner — wahi sawaal, par ek line mein (overlay wala prompt). */}
+          <OneLinerBtn q={q} subject={subject} />
           {/* 🐋 DeepSeek — apna jawab, Gemini wale se alag store mein. Ek baar
               laaya hua save rehta hai; dobara dabane par sirf chhupta/dikhta hai. */}
           <button

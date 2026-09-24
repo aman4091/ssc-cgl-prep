@@ -11,6 +11,7 @@ import { addReview } from "@/lib/qreview";
 import { reasonTq } from "@/lib/imgq";
 import Markdown from "./Markdown";
 import AskButtons from "./AskButtons";
+import OneLinerBtn from "./OneLinerBtn";
 import PasteAnswer from "./PasteAnswer";
 import ClusterButton from "./ClusterButton";
 import PointsButton from "./PointsButton";
@@ -210,6 +211,8 @@ Options: ${opts}
             kaam ki hain — sawaal ke saath hi. */}
         <span className="qcard__hacts">
           <span className="q-act--keep"><AskButtons q={tq} subject={subject} /></span>
+          {/* 📝 One-liner — wahi sawaal, par ek line mein (overlay wala prompt). */}
+          <OneLinerBtn q={tq} subject={subject} />
           {aiUseful && (
             <button className="btn btn--sm q-act--keep" onClick={askDeepSeek} disabled={dsq.loading} title={dsTitle(dsq)}>
               {dsLabel(dsq)}

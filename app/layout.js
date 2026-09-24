@@ -7,7 +7,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
 import FocusEnforcer from "@/components/FocusEnforcer";
-import VocabPrefetch from "@/components/VocabPrefetch";
 import SyncManager from "@/components/SyncManager";
 import Toast from "@/components/Toast";
 import OverlayInbox from "@/components/OverlayInbox";
@@ -105,7 +104,6 @@ export default function RootLayout({ children }) {
           <Footer />
           <CurrentAffairsRush />
           <FocusEnforcer />
-          <VocabPrefetch />
           <SyncManager />
           <Toast />
           <SWRegister />

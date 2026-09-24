@@ -12,7 +12,8 @@
 // yahan wo kachcha dikhta tha ("Neither of the two boys **is** guilty"),
 // yaani jis shabd par zor dena tha wahi taaron mein dab jata tha.
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Markdown from "@/components/Markdown";
 import {
   getOneLiners, removeOneLiner, clearOneLiners, olLines, olTitle, isTrickLine, subOf, OL_SUBS,
@@ -86,11 +87,16 @@ function OneLinerPopup({ item, position, hasPrev, hasNext, onPrev, onNext, onClo
   );
 }
 
-export default function OneLinersPage() {
+// Menu se seedha subject: /oneliners?sub=gs. Chips wahi ke wahi hain — ye
+// sirf shuruaat tay karta hai, taaki menu mein "GS" dabane par GS hi khule.
+function OneLinersInner() {
+  const sp = useSearchParams();
+  const qSub = OL_SUBS.some((s) => s.k === sp.get("sub")) ? sp.get("sub") : "all";
   const [all, setAll] = useState([]);
-  const [sub, setSub] = useState("all");
+  const [sub, setSub] = useState(qSub);
   const [q, setQ] = useState("");
   const [at, setAt] = useState(-1);      // popup mein kaunsi line khuli hai
+  useEffect(() => { setSub(qSub); setAt(-1); }, [qSub]);
 
   const load = () => setAll(getOneLiners());
   useEffect(() => {
@@ -129,9 +135,10 @@ export default function OneLinersPage() {
           Ek question, <span className="grad">ek line</span>
         </h1>
         <p className="hero__sub">
-          Overlay par answer copy karne ke baad 📝 dabate ho — usi chat se nikli chhoti line
-          yahan aa jati hai. Kisi bhi line par click karo: poori popup mein khulegi, aur wahin
-          se ← → karke saari padh sakte ho.
+          Overlay par (ya kisi bhi PYQ card par) 📝 dabate ho — prompt aur sawaal copy ho jaate
+          hain, aur jo chhoti line aati hai wo yahan. Kisi bhi line par click karo: poori popup
+          mein khulegi, aur wahin se ← → karke saari padh sakte ho. Menu mein har subject ka
+          apna naam hai.
         </p>
       </section>
 
@@ -213,5 +220,13 @@ export default function OneLinersPage() {
         />
       )}
     </>
+  );
+}
+
+export default function OneLinersPage() {
+  return (
+    <Suspense fallback={<div className="placeholder">…</div>}>
+      <OneLinersInner />
+    </Suspense>
   );
 }

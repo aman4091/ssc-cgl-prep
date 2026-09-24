@@ -12,6 +12,7 @@ import { addReview } from "@/lib/qreview";
 import { mathTq } from "@/lib/imgq";
 import Markdown from "./Markdown";
 import AskElsewhere from "./AskElsewhere";
+import OneLinerBtn from "./OneLinerBtn";
 import PasteAnswer from "./PasteAnswer";
 import ClusterButton from "./ClusterButton";
 import PointsButton from "./PointsButton";
@@ -297,6 +298,8 @@ Options: ${opts}
             onAsked={openPaste}
           />
         </span>
+          {/* 📝 One-liner — wahi sawaal, par ek line mein (overlay wala prompt). */}
+          <OneLinerBtn q={geminiQ} subject={subject} />
           {aiUseful && (
             <button className="btn btn--sm q-act--keep" onClick={askDeepSeek} disabled={dsq.loading} title={dsTitle(dsq)}>
               {dsLabel(dsq)}

@@ -58,7 +58,7 @@ export default function ChapterReport({ records, chapterOf, subjectOf, onClose, 
   const [prog, setProg] = useState(null); // { done, total }
   const [err, setErr] = useState("");
   const [note, setNote] = useState("");
-  const [auto, setAuto] = useState(true);
+  const [auto, setAuto] = useState(false);
   const stop = useRef(false);
 
   useEffect(() => { loadTaxonomy().then(() => setTax(true)); }, []);
@@ -209,7 +209,7 @@ export default function ChapterReport({ records, chapterOf, subjectOf, onClose, 
                   checked={auto}
                   onChange={(e) => { setAuto(e.target.checked); setAutoOn(e.target.checked); }}
                 />
-                Naye question apne aap tag karo
+                Naye question apne aap tag karo <span className="muted">(DeepSeek — paise lagte hain)</span>
               </label>
             </div>
 

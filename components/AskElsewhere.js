@@ -34,7 +34,10 @@ function LabelParts({ label }) {
   );
 }
 
-export default function AskElsewhere({ q, subject, className = "btn btn--ghost btn--sm", url, label, title, promptKey, onAsked }) {
+// `prompt` = seedha ek tay-shuda prompt (📝 one-liner wala). Jab ye diya ho
+// to Settings ka per-subject/generic prompt nahi padha jata — wo prompt sawaal
+// ka JAWAB maangta hai, aur one-liner ka kaam ulta hai: ek line.
+export default function AskElsewhere({ q, subject, className = "btn btn--ghost btn--sm", url, label, title, promptKey, prompt, onAsked }) {
   const [done, setDone] = useState(false);
   const go = async () => {
     const ping = () => { setDone(true); setTimeout(() => setDone(false), 1500); };
@@ -52,7 +55,7 @@ export default function AskElsewhere({ q, subject, className = "btn btn--ghost b
       const ok = await copyQuestionImage(q);
       if (ok) {
         // Prompt hamesha Settings se: pehle is subject ka apna, warna generic.
-        armPrompt(promptFor(subject, promptKey || "geminiPrompt"));
+        armPrompt(prompt || promptFor(subject, promptKey || "geminiPrompt"));
         toast("🖼️ Image copy ho gayi — Gemini mein paste karo; yahan wapas aate hi prompt apne aap copy ho jayega");
         ping();
         open();
@@ -63,7 +66,11 @@ export default function AskElsewhere({ q, subject, className = "btn btn--ghost b
     }
 
     let text = questionText(q);
-    if (promptKey) {
+    if (prompt) {
+      text = `${prompt}
+
+${text}`;
+    } else if (promptKey) {
       // Settings holds a prompt PER SUBJECT (shortcutPrompts) as well as the
       // generic one. A maths question must carry the maths instructions — those
       // per-subject boxes used to be read only by the ⚡ Shortcut button, which
