@@ -153,3 +153,44 @@
   .sp-col + .sp-col { border-left: 0; border-top: 1px solid var(--line); }
   .sp-col { padding: 12px; }
 }
+
+/* ── shuru karne wali screen ka chunaav ────────────────────────────────── */
+/* Purane .chip ka "chuna hua" roop halki hari jhalak tha — screen par pata
+   hi nahi chalta tha ki kaunsa chuna hua hai. Ab chuna hua button bhara
+   hua hai, baaki khaali. */
+.sp-picks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.sp-pick {
+  border: 2px solid var(--line);
+  background: var(--glass-bg);
+  color: var(--text-2);
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.12s ease;
+}
+.sp-pick:hover { transform: translateY(-2px); border-color: var(--glass-border-strong); }
+.sp-pick.is-on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.sp-pick__sub { opacity: 0.75; font-weight: 400; font-size: 0.85em; }
+
+.sp-selects { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.sp-sel { display: flex; flex-direction: column; gap: 4px; min-width: 240px; flex: 1; }
+.sp-sel > span { font-size: 0.78rem; color: var(--text-3); }
+.sp-sel select {
+  border: 1px solid var(--line);
+  background: var(--glass-bg);
+  color: var(--text-1);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  max-width: 100%;
+}
+.sp-sel select:disabled { opacity: 0.5; cursor: not-allowed; }

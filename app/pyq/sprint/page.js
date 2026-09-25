@@ -18,7 +18,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./sprint.css";
-import { ALL_SUBJECTS, loadAllSubject } from "@/lib/allbank";
+import { ALL_SUBJECTS, loadAllSubject, loadOnePart, partsOf, sourcesFor } from "@/lib/allbank";
 import { sprintAnswer } from "@/lib/client-ai";
 import SprintCard from "@/components/SprintCard";
 import SprintAnswer from "@/components/SprintAnswer";
@@ -62,6 +62,11 @@ export default function SprintPage() {
   // setup → loading → prep (pehle 10 ban rahe) → run → done
   const [phase, setPhase] = useState("setup");
   const [slug, setSlug] = useState("gs");
+  // Book aur chapter — khali = us subject ka SAB kuch. ("sirf GKTricks ka
+  // Statics karna hai" wali baat.)
+  const [book, setBook] = useState("");
+  const [chap, setChap] = useState("");
+  const [parts, setParts] = useState([]);
   const [count, setCount] = useState(100);
   const [note, setNote] = useState("");
   const [batch, setBatch] = useState([]);
@@ -81,6 +86,19 @@ export default function SprintPage() {
   useEffect(() => () => { alive.current = false; }, []);
 
   useEffect(() => { setDoneN(doneCount()); setMarkN(getMarks().length); }, []);
+
+  // Subject badla to book/chapter dono khali. Book chuni to uske chapter
+  // (ginti ke saath) list mein — question abhi bhi fetch nahi hote, sirf
+  // index padha jata hai.
+  const books = useMemo(() => (slug === "mix" ? [] : sourcesFor(slug)), [slug]);
+  useEffect(() => { setBook(""); setChap(""); setParts([]); }, [slug]);
+  useEffect(() => {
+    let ok = true;
+    setChap("");
+    if (!book) { setParts([]); return undefined; }
+    partsOf(slug, book).then((ps) => { if (ok) setParts(ps.filter((p) => (p.count || 0) > 0)); });
+    return () => { ok = false; };
+  }, [slug, book]);
 
   // ── "ho gaya" ka hisaab ────────────────────────────────────────────────
   // Har question par poora store dobara likhna bhaari hai (30,000 tak keys),
@@ -132,7 +150,14 @@ export default function SprintPage() {
     setNote("Questions load ho rahe hain…");
     let list;
     try {
-      if (slug === "mix") list = await loadMix(setNote);
+      if (book) {
+        const b = books.find((x) => x.id === book);
+        const c = parts.find((x) => x.slug === chap);
+        setNote(`${b ? b.label : ""}${c ? " · " + c.name : ""} load ho raha hai…`);
+        const qs = await loadOnePart(slug, book, chap);
+        const meta = ALL_SUBJECTS.find((x) => x.slug === slug);
+        list = qs.map((q) => ({ ...q, _subj: meta ? meta.label : "" }));
+      } else if (slug === "mix") list = await loadMix(setNote);
       else {
         const meta = ALL_SUBJECTS.find((s) => s.slug === slug);
         const qs = await loadAllSubject(slug, (d, t) => setNote(`${meta.label} — ${d}/${t} chapter`));
@@ -146,7 +171,7 @@ export default function SprintPage() {
     const pick = pickNext(list, count);
     if (!pick.length) {
       setPhase("setup");
-      setNote("Is subject ke saare question sprint mein aa chuke. Neeche se hisaab saaf kar sakte ho.");
+      setNote("Yahan ke saare question sprint mein aa chuke. Neeche se hisaab saaf kar sakte ho, ya doosra chapter chuno.");
       return;
     }
     setBatch(pick);
@@ -158,7 +183,7 @@ export default function SprintPage() {
     setPhase("prep");
     setNote("");
     fetchAll(pick);
-  }, [slug, count, fetchAll]);
+  }, [slug, book, chap, books, parts, count, fetchAll]);
 
   const cur = batch[pos] || null;
   const curH = cur ? sHash(cur) : "";
@@ -358,13 +383,13 @@ export default function SprintPage() {
       </section>
 
       <section className="section">
-        <h3>Subject</h3>
-        <div className="chips mt-8">
+        <h3>1. Subject</h3>
+        <div className="sp-picks">
           {[...ALL_SUBJECTS, { slug: "mix", label: "Mix — sab subject", icon: "🎲" }].map((s) => (
             <button
               key={s.slug}
               type="button"
-              className={`chip chip--btn chip--lg${slug === s.slug ? " chip--syn" : ""}`}
+              className={`sp-pick${slug === s.slug ? " is-on" : ""}`}
               onClick={() => setSlug(s.slug)}
             >
               {s.icon} {s.label}
@@ -372,16 +397,41 @@ export default function SprintPage() {
           ))}
         </div>
 
-        <h3 className="mt-16">Kitne question</h3>
-        <div className="chips mt-8">
+        {/* Poora subject bhi ho sakta hai aur "sirf GKTricks ka Statics" bhi.
+            Question yahan fetch nahi hote — sirf har bank ka index padha
+            jata hai, isliye ye list turant bhar jati hai. */}
+        {slug !== "mix" ? (
+          <>
+            <h3 className="mt-16">2. Kahan se <span className="hint">(na chuno to poora subject)</span></h3>
+            <div className="sp-selects">
+              <label className="sp-sel">
+                <span>Book</span>
+                <select value={book} onChange={(e) => setBook(e.target.value)}>
+                  <option value="">— Poora {ALL_SUBJECTS.find((x) => x.slug === slug)?.label} —</option>
+                  {books.map((b) => <option key={b.id} value={b.id}>{b.icon} {b.label}</option>)}
+                </select>
+              </label>
+              <label className="sp-sel">
+                <span>Chapter</span>
+                <select value={chap} onChange={(e) => setChap(e.target.value)} disabled={!book}>
+                  <option value="">{book ? "— Is book ke saare chapter —" : "— pehle book chuno —"}</option>
+                  {parts.map((p) => <option key={p.slug} value={p.slug}>{p.name} ({p.count})</option>)}
+                </select>
+              </label>
+            </div>
+          </>
+        ) : null}
+
+        <h3 className="mt-16">{slug === "mix" ? "2" : "3"}. Kitne question</h3>
+        <div className="sp-picks">
           {COUNTS.map((c) => (
             <button
               key={c}
               type="button"
-              className={`chip chip--btn chip--lg${count === c ? " chip--syn" : ""}`}
+              className={`sp-pick${count === c ? " is-on" : ""}`}
               onClick={() => setCount(c)}
             >
-              {c} <span className="sp-top__dim">· {Math.round((c * SECS) / 60)} min</span>
+              {c} <span className="sp-pick__sub">· {Math.round((c * SECS) / 60)} min</span>
             </button>
           ))}
         </div>
@@ -402,7 +452,7 @@ export default function SprintPage() {
 
         <p className="hint mt-16">
           Ab tak <b>{doneN}</b> question ho chuke. · {count} question = {count} chhote DeepSeek call
-          (har jawab teen line ka, sabse saste model se) — lagbhag ₹3–4 ka kharcha.
+          (har jawab teen line ka, sabse saste model se) — lagbhag ₹{Math.max(2, Math.round(count * 0.04))} ka kharcha.
           {doneN > 0 ? (
             <>
               {" "}
