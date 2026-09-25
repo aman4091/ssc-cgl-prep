@@ -7,6 +7,7 @@ import { clearSession } from "@/lib/recallsession";
 import { getMission, currentDayNum, planFor } from "@/lib/mission";
 import Recall from "@/components/carevision/Recall";
 import TrickButtons from "@/components/TrickButtons";
+import FactTidyBtn from "@/components/FactTidyBtn";
 
 // Bade card mein revise (CA Revision wala Recall, khula roop): upar naam,
 // neeche uske baare mein — seedha dikhta hai, chhupa nahi. "Kerala dance:
@@ -34,7 +35,12 @@ function shuffle(list) {
 function toCard(f) {
   const sec = FACT_SECS.find((x) => x.k === f.sec);
   const v = factView(f);
-  const m = SPLIT.exec(String(v.main).trim());
+  // "Naam – baat" ko sar aur jawab mein todna sirf EK line wale fact par.
+  // Saaf ki hui shakl (🧹) kai line ki hoti hai — wahan pehli line ka naam
+  // sar bana kar baaki facts ko usse alag kar dena galat hai; sar topic hi
+  // rehna chahiye.
+  const oneLine = String(v.main).trim().indexOf(String.fromCharCode(10)) < 0;
+  const m = oneLine ? SPLIT.exec(String(v.main).trim()) : null;
   return {
     id: f.id,
     trigger: m ? m[1] : (f.topic || `${sec?.label || "Fact"} — yaad karo`),
@@ -63,6 +69,10 @@ export default function MissionFactsPage() {
   const [q, setQ] = useState("");
   const [suggest, setSuggest] = useState([]);
   const [revising, setRevising] = useState(null);
+  // Recall apni qataar andar copy kar leta hai, isliye card ka text badalne
+  // par prop se kuch nahi hota — remount karna padta hai. resumeKey ki wajah
+  // se wo wahin se uthta hai jahan tha, isliye jhatka nahi lagta.
+  const [rev, setRev] = useState(0);
   const autoStarted = useRef(false);
 
   const load = () => { setFacts(getFacts()); setDue(dueFacts()); setDueAll({ total: dueTotal(), byGap: dueByGap() }); };
@@ -111,12 +121,31 @@ export default function MissionFactsPage() {
   if (revising) {
     return (
       <Recall
+        key={`facts-${rev}`}
         queue={revising}
         labels={FACT_LABELS}
         open
         loop
         onRate={() => {}}
-        tools={(c) => <TrickButtons card={c} subject="gs" />}
+        tools={(c) => (
+          <>
+            {/* 🧹 Chipka hua cluster padhne layak — DeepSeek sirf shakl ke
+                liye, fact ek bhi nahi badalta. Ek baar, phir save. */}
+            <FactTidyBtn
+              id={c.id}
+              onDone={() => {
+                load();
+                const now = getFacts();
+                setRevising((q) => (q ? q.map((x) => {
+                  const f = now.find((y) => y.id === x.id);
+                  return f ? toCard(f) : x;
+                }) : q));
+                setRev((n) => n + 1);
+              }}
+            />
+            <TrickButtons card={c} subject="gs" />
+          </>
+        )}
         onDelete={(c) => { removeFact(c.id); load(); }}
         resumeKey="facts"
         onExit={() => { setRevising(null); load(); window.scrollTo(0, 0); }}
@@ -182,6 +211,7 @@ export default function MissionFactsPage() {
                     )}
                     <div className="row" style={{ gap: 8 }}>
                       <button className="btn btn--primary btn--sm" onClick={() => { reviewFact(f.id, true); load(); }}>✓ Aata tha</button>
+                      <FactTidyBtn id={f.id} onDone={load} />
                       <button className="btn btn--ghost btn--sm" onClick={() => { reviewFact(f.id, false); load(); }}>✗ Nahi aata tha (kal phir)</button>
                     </div>
                   </>
