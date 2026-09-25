@@ -326,7 +326,7 @@ Options: ${opts}
           {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
           {/* Answers page wala button — jawab ka 🧩 CLUSTER seedha Fact log mein.
               Cluster section na ho to button dikhta hi nahi. */}
-          <ClusterButton md={solution} onFlash={setFlash} />
+          <ClusterButton md={solution} subject={subject} onFlash={setFlash} />
           <PointsButton md={solution} src={chapterName} onFlash={setFlash} />
           {solution ? <Markdown>{solution}</Markdown> : (
             <span style={{ color: "var(--text-3)", fontStyle: "italic" }}>

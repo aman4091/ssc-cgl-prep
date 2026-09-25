@@ -366,7 +366,7 @@ Options: ${opts}
           </p>
           {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
           {/* Jawab ka 🧩 CLUSTER seedha Fact log mein — Answers page wala button. */}
-          <ClusterButton md={solution} onFlash={setFlash} />
+          <ClusterButton md={solution} subject={subject} onFlash={setFlash} />
           <PointsButton md={solution} src={chapterName} onFlash={setFlash} />
           {/* A pasted Gemini answer replaces the book's solution image outright,
               rather than being stacked under it. */}

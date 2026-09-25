@@ -15,8 +15,13 @@ import { clustersOf, factOf, clusterKey } from "@/lib/clusterparse";
 // Purane format ke saved answers bhi chalte hain (lib/clusterparse dono
 // padhta hai) — wahan prose hota hi nahi tha, sirf ⚡ jaisi ek line.
 
-export default function ClusterButton({ md, onFlash }) {
-  const list = useMemo(() => clustersOf(md), [md]);
+export default function ClusterButton({ md, subject, onFlash }) {
+  // GS ke jawab par bina "🧩" wale paragraph bhi cluster maane jaate hain —
+  // AI aksar format bhool jata hai, aur tab tak button hi nahi aata tha.
+  // Maths/Reasoning/English ke jawab par ye nahi: wahan poora solution hota
+  // hai, cluster nahi.
+  const gs = !subject || String(subject).toLowerCase() === "gs";
+  const list = useMemo(() => clustersOf(md, { prose: gs }), [md, gs]);
   const [have, setHave] = useState(() => new Set());
 
   useEffect(() => {

@@ -261,7 +261,7 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
         <>
           <div className="ansp__answer">
             <div className="ansp__gemhead">{mainSrc}</div>
-            <ClusterButton md={main} onFlash={onFlash} />
+            <ClusterButton md={main} subject={rec.subject} onFlash={onFlash} />
             <PointsButton md={main} src={rec.subject} onFlash={onFlash} />
             <LazyMarkdown>{main}</LazyMarkdown>
           </div>
