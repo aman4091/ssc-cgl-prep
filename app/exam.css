@@ -1200,11 +1200,13 @@ body.exam-on .panic-fab { display: none; }
   --tb-rev-soft: #2a2519;
   --tb-key-line: #fdd663;
 
-  /* Google Sans khula font nahi hai — machine par ho to wahi, warna Roboto
-     (usi parivaar ka), warna system. */
-  --tb-font: "Google Sans", "Google Sans Text", "Product Sans",
-             var(--font-gsans), Roboto, -apple-system, "Segoe UI",
-             "Noto Sans Devanagari", sans-serif;
+  /* Google Sans khula font nahi hai. Pehle wo (machine par pada ho to),
+     phir Roboto — par sirf agar wo INSTALLED ho. next/font se Roboto
+     mangwana chhod diya: Vercel ka build usi par toot raha tha
+     ("next/font/google queries have exactly one entry"), aur ek page ke
+     font ke liye poori site ka deploy rukna theek nahi. */
+  --tb-font: "Google Sans", "Google Sans Text", "Product Sans", Roboto,
+             -apple-system, "Segoe UI", "Noto Sans Devanagari", sans-serif;
 
   background: #131314;
   color: #e3e3e3;
