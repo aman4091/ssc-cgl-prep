@@ -33,6 +33,17 @@ const DEFAULT_LABELS = { bad: "Nahi aata", good: "Aata hai", show: "Answer dikha
 // ke cards ka jawab ek hi naam hota hai aur wo bada dikhna chahiye.
 const HEAD = /^(.{2,60}?)\s*(?:–|—|\s-\s|:)\s*([\s\S]+)$/;
 
+// Chhoti line ke neeche chhupa hua poora prose.
+function MoreLine({ text }) {
+  const [open, setOpen] = useState(false);
+  if (open) return <div className="carev-more is-open">{text}</div>;
+  return (
+    <button className="carev-more" onClick={(e) => { e.stopPropagation(); setOpen(true); }}>
+      ⌄ poora padho
+    </button>
+  );
+}
+
 export function answerPoints(text) {
   const raw = String(text || "");
   const parts = raw
@@ -224,6 +235,10 @@ export default function Recall({
                   </ul>
                 );
               })()}
+              {/* ⌄ poora padho — D+3 se aage card par sirf "⚡" wali chhoti
+                  line hoti hai (120 cluster 15 min mein nikalne ke liye).
+                  Poora prose yahin ek tap door rehta hai. */}
+              {card.more ? <MoreLine text={card.more} /> : null}
               {card.extra ? <div className="carev-extra">{card.extra}</div> : null}
               {card.pdfPage ? <div className="carev-src">PDF p.{card.pdfPage}</div> : null}
               {/* Card ke apne auzaar — fact log / Zaroori baatein yahan

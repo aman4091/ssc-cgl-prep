@@ -2,49 +2,30 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { addFact, getFacts } from "@/lib/missionfacts";
+import { clustersOf, factOf, clusterKey } from "@/lib/clusterparse";
 
-// 🧩 GS answer ka CLUSTER section (lib/answerprompts / overlay ai_prompts) —
-// "poora group ek line mein". Us line(s) ko nikaalo taaki ek click mein CGL
-// Mission ke fact log mein chali jaye (wahan se 1/3/7/14 din baad revision).
-// Dono shakl chalti hain: v1 ("## 🧩 CLUSTER (…)" ke baad "## 📌 …") aur v2
-// ("🧩 CLUSTER" bina ## ke, uske baad "🎯 SSC EXTRA" / "📝 ONE-LINER").
-const NEXT_SECTION = /^[#*\s]*(?:🎯|📝|✅|📌|🔍|📚|🧠)/m;
-function clusterOf(md) {
-  const s = String(md || "");
-  const h = /^[#*\s]*🧩\s*\**\s*CLUSTER[^\n]*\n/m.exec(s);
-  if (!h) return null;
-  const rest = s.slice(h.index + h[0].length);
-  const nx = NEXT_SECTION.exec(rest);
-  const body = nx ? rest.slice(0, nx.index) : rest;
-  const raw = body.split("\n").filter((l) => /·/.test(l));
-  const lines = raw
-    .map((l) => l.replace(/\*\*/g, "").replace(/^\s*(?:[-*•]|\d+[.)])\s+/, "").trim())
-    .filter(Boolean);
-  if (!lines.length) return null;
-  // Topic: "**Topic:**" line (v1) → warna pehli line ka bold label (v2:
-  // "**Label** – facts") → warna ":" se pehle ka hissa.
-  const label = (/\*\*([^*]+?)\*\*/.exec(raw[0]) || [])[1];
-  const topic = (/\*\*Topic:\*\*\s*([^\n]+)/.exec(s) || [])[1] || label || (lines[0].split(/:| – /)[0] || "");
-  return { lines, topic: topic.replace(/\*\*|:$/g, "").trim().slice(0, 60) };
-}
-
-export { clusterOf };
-
-// Ek click: answer ka CLUSTER → fact log.
+// 🧩 GS answer ke CLUSTER → fact log.
 //
-// Ja chuka hai ya nahi, ye har baar naye sire se dekha jata hai — wahi
-// question dobara saamne aaye (PYQ drill mein aata hi hai) to button khud
-// bata deta hai ki ye cluster pehle hi fact log mein chala gaya tha. Fact
-// log badalte hi (yahan se, ya doosre device se sync hokar) line badal
-// jati hai.
+// Naya GS prompt ek jawab mein KAI cluster deta hai, har ek do hisson ka:
+// naam + prose (seekhne ke liye) + "⚡" line (revision ke liye). Isliye ab
+// har cluster ka APNA button hai — pehle ek hi button tha jo sab ek saath
+// (aur ek hi entry mein) thons deta tha. Do se zyada hon to upar "sab" ka
+// ek button bhi, par tab bhi har cluster ALAG entry banta hai.
+//
+// Purane format ke saved answers bhi chalte hain (lib/clusterparse dono
+// padhta hai) — wahan prose hota hi nahi tha, sirf ⚡ jaisi ek line.
+
 export default function ClusterButton({ md, onFlash }) {
-  const cl = useMemo(() => clusterOf(md), [md]);
+  const list = useMemo(() => clustersOf(md), [md]);
   const [have, setHave] = useState(() => new Set());
 
   useEffect(() => {
     const load = () => {
-      try { setHave(new Set(getFacts().map((f) => f.text))); }
-      catch { setHave(new Set()); }
+      try {
+        // Ja chuka hai ya nahi — har baar naye sire se. Wahi question dobara
+        // saamne aaye (drill mein aata hi hai) to button khud bata deta hai.
+        setHave(new Set(getFacts().map((f) => clusterKey({ title: f.topic, zap: f.zap, prose: f.text }))));
+      } catch { setHave(new Set()); }
     };
     load();
     window.addEventListener("cgl:mission-changed", load);
@@ -55,27 +36,49 @@ export default function ClusterButton({ md, onFlash }) {
     };
   }, []);
 
-  if (!cl) return null;
-  // Sirf wahi line jodni hai jo pehle se nahi hai — warna ek hi cluster do
-  // baar fact log mein chadh jata.
-  const left = cl.lines.filter((l) => !have.has(l));
-  const done = left.length === 0;
+  if (!list.length) return null;
+
+  const add = (arr) => {
+    const fresh = arr.filter((c) => !have.has(clusterKey(c)));
+    if (!fresh.length) return;
+    for (const c of fresh) addFact(factOf(c));
+    setHave((h) => new Set([...h, ...fresh.map(clusterKey)]));
+    onFlash && onFlash(
+      fresh.length === 1
+        ? `🧩 "${fresh[0].title || "cluster"}" fact log mein — D+1, 3, 7, 14 par wapas`
+        : `🧩 ${fresh.length} cluster fact log mein — har ek apni alag entry`,
+    );
+  };
+
+  const left = list.filter((c) => !have.has(clusterKey(c)));
 
   return (
-    <button
-      className={"btn btn--sm " + (done ? "btn--ghost" : "btn--primary")}
-      style={{ margin: "4px 0 8px" }}
-      disabled={done}
-      title={done ? "Ye cluster pehle hi fact log mein ja chuka hai" : "Cluster ki har line fact log mein"}
-      onClick={() => {
-        for (const l of left) addFact({ sec: "gs", topic: cl.topic, text: l });
-        setHave((h) => new Set([...h, ...left]));
-        onFlash && onFlash(`🧩 ${left.length} cluster fact log mein — 1/3/7/14 din baad revision`);
-      }}
-    >
-      {done
-        ? `✓ Cluster fact log mein hai${cl.lines.length > 1 ? ` (${cl.lines.length})` : ""}`
-        : `🧩 Cluster → Fact log${left.length > 1 ? ` (${left.length})` : ""}${left.length < cl.lines.length ? " — baaki" : ""}`}
-    </button>
+    <div className="clbtns">
+      {list.length > 1 && (
+        <button
+          className={"btn btn--sm " + (left.length ? "btn--primary" : "btn--ghost")}
+          disabled={!left.length}
+          title={left.length ? "Saare cluster fact log mein — har ek alag entry" : "Saare cluster pehle hi ja chuke hain"}
+          onClick={() => add(list)}
+        >
+          {left.length ? `🧩 Saare ${left.length} cluster → Fact log` : `✓ Saare ${list.length} cluster fact log mein`}
+        </button>
+      )}
+      {list.map((c, i) => {
+        const done = have.has(clusterKey(c));
+        const name = (c.title || `Cluster ${i + 1}`).slice(0, 34);
+        return (
+          <button
+            key={clusterKey(c) + i}
+            className={"btn btn--sm " + (done ? "btn--ghost" : list.length > 1 ? "" : "btn--primary")}
+            disabled={done}
+            title={done ? "Ye cluster pehle hi fact log mein hai" : `"${c.title}" fact log mein daalo`}
+            onClick={() => add([c])}
+          >
+            {done ? `✓ ${name}` : `🧩 ${name} → Fact log`}
+          </button>
+        );
+      })}
+    </div>
   );
 }

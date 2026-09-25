@@ -10,7 +10,7 @@
 
 import { useEffect, useState } from "react";
 import { hydrateStore, storeFlush } from "@/lib/bigstore";
-import { runOneTimeReset, clearOldGeminiPrompt, clearStaleQuizzes, applyAnswerPrompts, applyGsClusterPrompt, applyGsPromptV2, fixMisfiledEnglishMocks, fixMissionStart, clearOldMissionDone } from "@/lib/resetonce";
+import { runOneTimeReset, clearOldGeminiPrompt, clearStaleQuizzes, applyAnswerPrompts, applyGsClusterPrompt, applyGsPromptV2, fixMisfiledEnglishMocks, fixMissionStart, clearOldMissionDone, applyGsPromptV7 } from "@/lib/resetonce";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import { DEFAULT_START } from "@/lib/mission";
 
@@ -24,7 +24,7 @@ export default function StoreGate({ children }) {
     // likhte aur IDB se purana data uske baad wapas aa jata. Safety timeout ise
     // nahi chalata — wo sirf UI kholta hai.
     hydrateStore()
-      .then(() => { runOneTimeReset(); clearOldGeminiPrompt(); clearStaleQuizzes(); applyAnswerPrompts(ANSWER_PROMPTS); applyGsClusterPrompt(ANSWER_PROMPTS.gs); applyGsPromptV2(ANSWER_PROMPTS.gs); fixMisfiledEnglishMocks(); fixMissionStart(DEFAULT_START); clearOldMissionDone(); })
+      .then(() => { runOneTimeReset(); clearOldGeminiPrompt(); clearStaleQuizzes(); applyAnswerPrompts(ANSWER_PROMPTS); applyGsClusterPrompt(ANSWER_PROMPTS.gs); applyGsPromptV2(ANSWER_PROMPTS.gs); fixMisfiledEnglishMocks(); fixMissionStart(DEFAULT_START); clearOldMissionDone(); applyGsPromptV7(ANSWER_PROMPTS.gs); })
       .catch(() => {})
       .finally(finish);
     const t = setTimeout(finish, 2000);

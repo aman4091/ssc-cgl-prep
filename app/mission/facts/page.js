@@ -2,7 +2,7 @@
 
 import "@/app/ca-revision/carev.css";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FACT_SECS, GAPS, DAILY_CAP, REV_NOTE, getFacts, addFact, removeFact, clearFacts, dueFacts, dueTotal, dueByGap, reviewFact, topicsInUse } from "@/lib/missionfacts";
+import { FACT_SECS, GAPS, DAILY_CAP, REV_NOTE, factView, getFacts, addFact, removeFact, clearFacts, dueFacts, dueTotal, dueByGap, reviewFact, topicsInUse } from "@/lib/missionfacts";
 import { clearSession } from "@/lib/recallsession";
 import { getMission, currentDayNum, planFor } from "@/lib/mission";
 import Recall from "@/components/carevision/Recall";
@@ -28,13 +28,18 @@ function shuffle(list) {
   return a;
 }
 
+// Card par kya dikhega — padaav ke hisaab se (lib/missionfacts factView):
+// D+1 par poora prose, D+3 / D+7 / D+14 par sirf "⚡" wali line aur neeche
+// "⌄ poora padho".
 function toCard(f) {
   const sec = FACT_SECS.find((x) => x.k === f.sec);
-  const m = SPLIT.exec(f.text.trim());
+  const v = factView(f);
+  const m = SPLIT.exec(String(v.main).trim());
   return {
     id: f.id,
     trigger: m ? m[1] : (f.topic || `${sec?.label || "Fact"} — yaad karo`),
-    answer: m ? m[2] : f.text,
+    answer: m ? m[2] : v.main,
+    more: v.more,
     extra: null,
     pdfPage: null,
     meta: `${sec?.icon || ""} ${sec?.label || ""}${f.topic ? ` · ${f.topic}` : ""}`,
@@ -168,7 +173,13 @@ export default function MissionFactsPage() {
                 </div>
                 {open[f.id] ? (
                   <>
-                    <p style={{ margin: "6px 0 8px", fontSize: "1.1rem", lineHeight: 1.5 }}>{f.text}</p>
+                    <p style={{ margin: "6px 0 8px", fontSize: "1.1rem", lineHeight: 1.5 }}>{factView(f).main}</p>
+                    {factView(f).more && (
+                      <details style={{ margin: "0 0 8px" }}>
+                        <summary className="hint" style={{ cursor: "pointer" }}>⌄ poora padho</summary>
+                        <p style={{ margin: "6px 0 0", fontSize: "1rem", lineHeight: 1.6 }}>{factView(f).more}</p>
+                      </details>
+                    )}
                     <div className="row" style={{ gap: 8 }}>
                       <button className="btn btn--primary btn--sm" onClick={() => { reviewFact(f.id, true); load(); }}>✓ Aata tha</button>
                       <button className="btn btn--ghost btn--sm" onClick={() => { reviewFact(f.id, false); load(); }}>✗ Nahi aata tha (kal phir)</button>

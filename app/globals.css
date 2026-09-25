@@ -3898,6 +3898,9 @@ body.exam-on .hresume { display: none; }
 .ms-graphwrap { overflow-x: auto; }
 .ms-graph { width: 100%; min-width: 420px; height: auto; display: block; }
 
+/* 🧩 Cluster ke button — ek jawab mein kai cluster ho sakte hain. */
+.clbtns { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; }
+
 /* 🚀 Home ka FOCUS view (components/MissionToday.js) — ek screen, ek kaam. */
 
 /* Upar ki patli line: Day X/32 · CORE n/5 · Exam N din. Bas itna. */
@@ -4071,4 +4074,15 @@ body.exam-on .hresume { display: none; }
 }
 @media (max-width: 640px) {
   .flock__panel { right: -8px; width: min(268px, 90vw); }
+}
+
+/* ⌄ poora padho — revision card par chhupa hua prose (components/carevision/Recall). */
+.carev-more {
+  display: inline-block; margin-top: 10px; padding: 0; border: 0; background: none;
+  color: var(--dim, #6b7280); font: inherit; font-size: 0.85rem; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.carev-more.is-open {
+  display: block; margin-top: 12px; padding-top: 10px; cursor: default;
+  border-top: 1px solid var(--line); text-decoration: none; font-size: 0.95rem; line-height: 1.6;
 }
