@@ -101,6 +101,7 @@ export default function CurrentAffairsMonth() {
         <div className="placeholder">Is mahine mein koi question nahi.</div>
       ) : (
         <PyqDrill
+            timer={0}   /* yahan ghadi nahi — ye padhne ki jagah hai, exam ki nahi */
           title={heading}
           list={list}
           resumeKey={`ca:${id}`}

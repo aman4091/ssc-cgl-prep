@@ -3898,6 +3898,14 @@ body.exam-on .hresume { display: none; }
 .ms-graphwrap { overflow-x: auto; }
 .ms-graph { width: 100%; min-width: 420px; height: auto; display: block; }
 
+/* ⏱ PYQ drill ki 40-second ghadi (components/PyqDrill). */
+.pyqd-clock {
+  font-weight: 800; font-size: 1rem; font-variant-numeric: tabular-nums;
+  color: var(--dim, #6b7280); letter-spacing: 0.02em;
+}
+.pyqd-clock.is-warn { color: var(--warning, #d08700); }
+.pyqd-clock.is-over { color: var(--danger, #c0392b); font-size: 0.85rem; }
+
 /* 🧩 Cluster ke button — ek jawab mein kai cluster ho sakte hain. */
 .clbtns { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px; }
 

@@ -46,6 +46,7 @@ export default function VocabPage() {
         </div>
       ) : (
         <PyqDrill
+            timer={0}   /* yahan ghadi nahi — ye padhne ki jagah hai, exam ki nahi */
           title="Vocab"
           list={pool}
           resumeKey="vocab:all"

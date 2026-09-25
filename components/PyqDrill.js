@@ -32,6 +32,9 @@ function shuffled(list) {
 
 export default function PyqDrill({
   title, list, resumeKey, renderCard, shuffleFirst = false, unit = "Q", keyOf, onAnswer,
+  // ⏱ Har question par itne second. 0 = ghadi band (vocab, CA jaisi
+  // jagah par ise nahi chahiye — wahan padhne ka kaam hai, exam ka nahi).
+  timer = 40,
 }) {
   const chapter = resumeKey || title || "pyq";
   // Har item ki pehchaan. Bank ke question ka apna id hota hai; Answers
@@ -152,6 +155,24 @@ export default function PyqDrill({
     return () => window.removeEventListener("keydown", onKey);
   }, [answer]);
 
+  // ⏱ 40 second — har question par, har baar naye sire se.
+  //
+  // Exam mein Maths ka ek question 43 second ka hai; "90 second mein ho gaya"
+  // ka matlab hall mein "nahi hua". Isliye ghadi khud batati hai ki waqt
+  // nikal gaya: 0 par ANSWER khud khul jata hai (card ko `forceAnswer`
+  // milta hai) aur page wahin ruka rehta hai — aage badhna tumhare haath.
+  // Agla question aate hi ghadi phir se poori.
+  const cur = queue.length ? queue[pos % queue.length] : null;
+  const curKey = cur ? `${keyFor(cur)}:${pos}` : "";
+  const [left, setLeft] = useState(timer);
+  useEffect(() => { setLeft(timer); }, [curKey, timer]);
+  useEffect(() => {
+    if (!timer || left <= 0) return undefined;
+    const t = setTimeout(() => setLeft((s) => s - 1), 1000);
+    return () => clearTimeout(t);
+  }, [left, timer, curKey]);
+  const timeUp = !!timer && left <= 0;
+
   if (!queue.length) return <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>;
 
   const q = queue[pos % queue.length];
@@ -162,6 +183,11 @@ export default function PyqDrill({
     <div className="pyqd">
       <div className="pyqd-bar">
         <span className="carev-count">{unit} {(idxOf.get(keyFor(q)) ?? 0) + 1}/{list.length}</span>
+        {!!timer && (
+          <span className={"pyqd-clock" + (timeUp ? " is-over" : left <= 10 ? " is-warn" : "")}>
+            {timeUp ? `⏰ ${timer} sec khatam` : `0:${String(left).padStart(2, "0")}`}
+          </span>
+        )}
         <span className="carev-dim carev-small">
           {known}/{list.length} aata hai
           {st.m ? ` · ye ${st.m} baar galat` : ""}
@@ -171,7 +197,7 @@ export default function PyqDrill({
 
       {/* key badalne par card naya bana hai — pichhla chuna hua option saaf,
           taaki wahi question dobara aaye to phir se khud attempt ho. */}
-      {cloneElement(card, { key: `${keyFor(q)}:${pos}` })}
+      {cloneElement(card, { key: `${keyFor(q)}:${pos}`, forceAnswer: timeUp })}
 
       <div className="carev-actions pyqd-actions">
         <button className="carev-btn carev-btn-bad" onClick={() => answer(false)}>

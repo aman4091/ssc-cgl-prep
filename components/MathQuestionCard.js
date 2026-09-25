@@ -69,7 +69,7 @@ async function streamSimilar(sample, subject, quizId) {
   if (quiz && quiz.streaming) { quiz.streaming = false; saveQuiz(quiz); dispatchAppend(quizId, quiz.questions.length, true); }
 }
 
-export default function MathQuestionCard({ q, index, extraActions, subject = "math", resumeKey, chapterName }) {
+export default function MathQuestionCard({ q, index, extraActions, subject = "math", resumeKey, chapterName, forceAnswer }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -273,7 +273,8 @@ Options: ${opts}
   const solSrc = dsUp ? "🐋 DeepSeek" : shortcut ? "✨ paste kiya hua" : dsq.ds ? "🐋 DeepSeek" : "";
   // Timer chalte waqt kuch nahi khulta; Submit ke baad sab khulta hai —
   // chhode hue question bhi.
-  const shown = !locked && (!!exam?.revealAll || revealed || peek);
+  // forceAnswer = drill ki 40-second ghadi khatam (components/PyqDrill).
+  const shown = !locked && (forceAnswer || !!exam?.revealAll || revealed || peek);
 
 
   return (
