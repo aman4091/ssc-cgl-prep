@@ -32,6 +32,10 @@ export default function PyqPage() {
           Galat answer seedha Mistake Notebook mein chala jaata hai.
         </p>
         <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
+          {/* ⚡ Sprint — 100 question poori screen par, 30 second har ek, aur
+              har question ka DeepSeek jawab peechhe se pehle hi bana hua.
+              Neeche ke bank se iska koi lena-dena nahi: uska apna hisaab hai. */}
+          <Link href="/pyq/sprint" className="btn btn--primary btn--sm">⚡ Sprint — 100 Q, 1 ghanta</Link>
           <Link href="/answers?subject=all&src=pyq" className="btn btn--ghost btn--sm">🔴 Mistake Notebook</Link>
         </div>
       </section>
