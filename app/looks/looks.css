@@ -4,7 +4,7 @@
      0 = purana forest-green (sirf app/exam.css)
      1 = Midnight  (app/looks/midnight.css)
      2 = Bento     (app/looks/bento.css)
-     3 = Akhbaar   (app/looks/akhbaar.css)
+     3 = Aurora    (app/looks/aurora.css)
    Kaunsa chal raha hai: <html data-look="…"> — lib/look.js aur layout.js
    ka <head> script lagata hai; upar ki patti ka switcher badalta hai.
    Yahan sirf wo cheezein hain jo HAR roop mein chahiye: countdown ka chip
