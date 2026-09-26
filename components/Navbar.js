@@ -9,6 +9,7 @@ import { getUserTopics } from "@/lib/userpyq";
 import ThemeToggle from "./ThemeToggle";
 import FocusLock from "./FocusLock";
 import TopbarInfo from "./TopbarInfo";
+import LookSwitch from "./LookSwitch";
 
 // Nav group key -> user "shelf book" id (Settings → PYQ Manager): jab bank ka
 // menu khule to user ke apne topics bhi uske chapters ke saath dikhein.
@@ -213,6 +214,8 @@ export default function Navbar() {
             padta, aur wahi ek pal sabse chubhta hai. */}
         {/* 🔒 PC lock — patti ke dayein, din/raat ke bagal. Yahi ek jagah
             hai jo har page par rehti hai. */}
+        {/* 🎨 Purana / 1 / 2 — options compare karne ke liye. */}
+        <LookSwitch />
         <FocusLock />
         <ThemeToggle />
       </header>

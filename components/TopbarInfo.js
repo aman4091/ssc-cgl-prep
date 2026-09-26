@@ -29,7 +29,7 @@ export default function TopbarInfo() {
       <span className="topinfo__date">{info.today}</span>
       {Number.isFinite(info.left) && info.left >= 0 && (
         <span className="topinfo__count" title={`CGL exam — ${info.examLabel}`}>
-          <b>{info.left}</b> din baaki · CGL {info.examLabel}
+          <b>{info.left}</b> din baaki<span className="topinfo__exam"> · CGL {info.examLabel}</span>
         </span>
       )}
     </div>

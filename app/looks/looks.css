@@ -1,0 +1,51 @@
+/* ===================================================================
+   LOOKS — sab options ke saajhe tukde
+   Site ke kai roop ek saath rakhe hain taaki compare ho sake:
+     0 = purana forest-green (sirf app/exam.css)
+     1 = Midnight  (app/looks/midnight.css)
+     2 = Bento     (app/looks/bento.css)
+   Kaunsa chal raha hai: <html data-look="…"> — lib/look.js aur layout.js
+   ka <head> script lagata hai; upar ki patti ka switcher badalta hai.
+   Yahan sirf wo cheezein hain jo HAR roop mein chahiye: countdown ka chip
+   (TopbarInfo) aur switcher khud. Rang tokens se, taaki har roop mein jame.
+   =================================================================== */
+
+.topinfo { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 0 1 auto; overflow: hidden; margin-right: auto; }
+.topinfo__date { color: var(--tb-dim); font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
+.topinfo__count {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 11px; border-radius: 999px;
+  background: var(--tb-rev-soft);
+  border: 1px solid color-mix(in srgb, var(--tb-rev-line) 55%, transparent);
+  color: var(--tb-warn-ink); font-size: 0.76rem; font-weight: 600; white-space: nowrap;
+  min-width: 0; overflow: hidden; text-overflow: ellipsis;
+}
+.topinfo__count b { color: var(--tb-warn-ink); font-size: 0.9rem; font-weight: 800; }
+/* Phone par patti mein ☰ + naam pehle se hai — sirf countdown ka chip. */
+@media (max-width: 1023px) {
+  .topinfo { margin-left: auto; margin-right: 0; }
+  .topinfo__date { display: none; }
+}
+@media (max-width: 600px) {
+  .topinfo__exam { display: none; }
+}
+@media (max-width: 420px) {
+  .topbar__brand strong { display: none; }
+}
+
+
+/* ---- Roop badalne ka switcher (LookSwitch) ---- */
+.lookswitch {
+  display: inline-flex; align-items: center; gap: 2px; flex: none;
+  padding: 3px; border-radius: 999px;
+  background: var(--tb-head); border: 1px solid var(--tb-line);
+}
+.lookswitch__lbl { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tb-dim); padding: 0 6px 0 8px; }
+.lookswitch__opt {
+  border: 0; background: transparent; cursor: pointer;
+  min-width: 28px; height: 26px; padding: 0 9px; border-radius: 999px;
+  font: inherit; font-size: 0.74rem; font-weight: 700; color: var(--tb-dim);
+}
+.lookswitch__opt:hover { color: var(--tb-ink); }
+.lookswitch__opt.is-on { background: var(--tb-blue); color: #fff; }
+@media (max-width: 600px) { .lookswitch__lbl { display: none; } }

@@ -1,0 +1,384 @@
+/* ===================================================================
+   🍱 OPTION 2 — "Bento" (kaala + electric blue + neon lime)
+   Midnight (option 1) se ALAG soch: chikna glass nahi, mote kinare aur
+   sakht (hard) parchhai — "neo-brutal" bento boxes.
+
+   Layout mein bade badlav:
+     • Sidebar ek PATLI ICON RAIL (desktop) — sirf icons; mouse le jao to
+       naam ke saath khul jaati hai. Kisi group ke andar jao to rail apne
+       aap chaudi ho jaati hai aur page khisak kar jagah deta hai.
+     • Page ka parda graph-paper jaisa jaal, kone mein neeli roshni.
+     • Patti mein countdown ek neon chip; patti ka dabba nahi, khula.
+     • Hero: bahut bada, bhaari title; eyebrow ek lime tag; kone mein ✦.
+     • Card: 2px kinare, hover par upar-baayen uthte hain aur lime ki
+       sakht parchhai aati hai.
+     • PYQ aur Quiz Bank: bento tiles — har tile ka apna rang-kinara, desktop
+       par 3 column.
+     • Button: chaukor-gol, sakht parchhai, dabane par "press" hote hain.
+     • Ginti (Q count, stats) monospace mein.
+
+   Sirf html[data-look="2"] par (lib/look.js). :where() se specificity
+   .examskin:not(.gemskin) jitni hi rehti hai.
+   =================================================================== */
+
+:where(html[data-look="2"]) .examskin:not(.gemskin) {
+  --lime: #c8ff2e;
+  --lime-ink: #0b0f00;
+
+  --tb-blue: #3b6cff;
+  --tb-blue-dark: #5a84ff;
+  --tb-blue-soft: #121a33;
+  --tb-blue-ink: #93b0ff;
+  --tb-navy: #0d0d0d;
+  --tb-q: #ffffff;
+  --tb-green: #1f9d57;
+  --tb-green-dark: #29b867;
+  --tb-green-soft: #0f2418;
+  --tb-ok-ink: #7ee2a8;
+  --tb-red: #e5484d;
+  --tb-red-soft: #2b1213;
+  --tb-bad-ink: #ff9b9b;
+  --tb-red-ink-soft: #ffe5e5;
+  --tb-orange: #93b0ff;
+  --tb-yellow: #29220a;
+  --tb-warn-ink: #ffd05a;
+  --tb-warn-ink-2: #f2bf3e;
+  --tb-amber: #ffb020;
+  --tb-rev: #ffb020;
+  --tb-rev-hover: #ffc04a;
+  --tb-rev-on: #ffc04a;
+  --tb-rev-line: #d18d10;
+  --tb-rev-ink: #1f1500;
+  --tb-rev-soft: #29220a;
+  --tb-key-line: #c8ff2e;
+  --tb-skip: #171717;
+  --tb-skip-ink: #7a7a74;
+  --tb-ink: #f4f4f0;
+  --tb-ink-2: #cfcfc8;
+  --tb-dim: #8f8f88;
+  --tb-line: #292929;
+  --tb-line-soft: #1f1f1f;
+  --tb-line-hard: #3a3a3a;
+  --tb-head: #1a1a1a;
+  --tb-page: #131313;
+  --tb-soft: #171717;
+  --tb-tint: #141b2e;
+  --tb-bg-2: #0a0a0a;
+  --tb-raised: #1c1c1c;
+  --tb-focus: #c8ff2e;
+  --tb-code: #c8ff2e;
+
+  --on-accent: #ffffff;
+  --accent-grad: linear-gradient(135deg, #3b6cff, #2a55e8);
+  --glass-shadow: none;
+  --nav-hover: rgba(255, 255, 255, 0.06);
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+
+  --scheme: dark;
+  color-scheme: dark;
+  background: var(--tb-bg-2);
+  color: var(--tb-ink);
+}
+
+/* ---- Graph-paper parda + kone ki roshni ---- */
+:where(html[data-look="2"]) .examskin:not(.gemskin) .bg-orbs {
+  background:
+    radial-gradient(700px 500px at 0% 100%, rgba(59, 108, 255, 0.16), transparent 65%),
+    radial-gradient(500px 360px at 100% 0%, rgba(200, 255, 46, 0.06), transparent 65%),
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 44px 44px,
+    var(--tb-bg-2);
+}
+
+/* =========================================================
+   SIDEBAR — phone par wahi drawer, desktop par ICON RAIL
+   ========================================================= */
+:where(html[data-look="2"]) .examskin:not(.gemskin) .drawer {
+  background: #0f0f0f;
+  color: #e6e6e0;
+  border-right: 2px solid var(--tb-line);
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .drawer__head { border-bottom: 2px solid var(--tb-line); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .drawer__brand .brand__text strong { font-weight: 900; letter-spacing: -0.02em; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) :is(.drawer__sub, .drawer__x, .drawer__chev) { color: #7a7a74; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .drawer__nav { gap: 6px; padding: 12px 10px; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .drawer__grouphd { color: #9a9a92; border-radius: 12px; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .drawer__grouphd:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .drawer__back { color: var(--lime); border-bottom: 2px solid var(--tb-line); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .drawer__rule { background: var(--tb-line); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .drawer__link {
+  color: #c4c4bc; border: 2px solid transparent; border-radius: 12px;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .drawer__link:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .drawer__link.is-active {
+  background: rgba(200, 255, 46, 0.1); color: var(--lime);
+  border-color: var(--lime);
+  box-shadow: 3px 3px 0 var(--lime);
+}
+
+@media (min-width: 1024px) {
+  /* Rail ki chaudai — page utna hi khiskta hai. */
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .shell { padding-left: 112px; transition: padding-left 0.22s ease; }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .drawer {
+    top: 14px; left: 14px; bottom: 14px;
+    width: 80px;
+    border: 2px solid var(--tb-line);
+    border-radius: 24px;
+    box-shadow: 5px 5px 0 #000;
+    overflow-x: hidden;
+    transition: width 0.22s ease, box-shadow 0.22s ease;
+  }
+  /* Level 1 (sirf icons wali list) — rail. Naam chhupe: seedhe text node ko
+     font-size 0 se, span ko display none se. */
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):not(:hover):not(:focus-within) :is(.brand__text, .drawer__groupname, .drawer__grouphd .drawer__chev) { display: none; }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):not(:hover):not(:focus-within) .drawer__head { justify-content: center; padding-inline: 0; }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):not(:hover):not(:focus-within) .drawer__nav { padding-inline: 12px; }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):not(:hover):not(:focus-within) :is(.drawer__link--top, .drawer__grouphd) {
+    font-size: 0; justify-content: center; padding: 0; height: 48px; min-height: 0; margin: 0; box-sizing: border-box;
+  }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):not(:hover):not(:focus-within) .drawer__ico { font-size: 1.25rem; width: auto; }
+  /* Hover par rail naam ke saath khulti hai — page ke UPAR, khiskaaye bina. */
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):is(:hover, :focus-within) {
+    width: 272px;
+    box-shadow: 5px 5px 0 #000, 24px 0 60px -20px rgba(0, 0, 0, 0.9);
+  }
+  /* Group ke andar (level 2) — rail chaudi, aur page khisak kar jagah deta.
+     Level 1 mein nav ke bachche sirf --top link aur group-heading hote hain;
+     koi aur bachcha = hum level 2 (ya new-words) mein hain. (:has ke andar
+     :has nahi chalta, isliye ye tareeka.) */
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .drawer:has(.drawer__nav > :not(.drawer__link--top, .drawer__grouphd)) { width: 272px; }
+  :where(html[data-look="2"]) body.examskin:not(.gemskin):has(.drawer__nav > :not(.drawer__link--top, .drawer__grouphd)) .shell { padding-left: 304px; }
+  :where(html[data-look="2"]) body.examskin:not(.gemskin):has(.drawer__nav > :not(.drawer__link--top, .drawer__grouphd)) .footer { margin-left: 304px; }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .footer { margin-left: 112px; }
+}
+
+@media (min-width: 1024px) {
+  :where(html[data-look="2"]) .examskin:not(.gemskin) main.container { max-width: 1320px; }
+}
+
+/* =========================================================
+   TOPBAR — dabba nahi, khuli patti
+   ========================================================= */
+:where(html[data-look="2"]) .examskin:not(.gemskin) .topbar {
+  background: rgba(10, 10, 10, 0.8);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 0;
+  border-bottom: 2px dashed var(--tb-line);
+  border-radius: 0;
+  margin: 0 12px 22px;
+  padding: 12px 4px;
+  top: 0;
+}
+@media (min-width: 1024px) {
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .topbar { justify-content: flex-start; margin: 0 24px 26px; padding: 16px 4px; }
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) :is(.topbar__burger, .topbar__brand) { color: var(--tb-ink); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) :is(.themetog, .settings-theme) { display: none; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .topinfo__date {
+  font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.74rem; color: #8f8f88;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .topinfo__count {
+  background: var(--lime); color: var(--lime-ink);
+  border: 2px solid var(--lime); border-radius: 10px;
+  box-shadow: 3px 3px 0 #3b6cff;
+  font-weight: 800; padding: 4px 10px;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .topinfo { padding: 2px 5px 5px 2px; } /* chip ki sakht parchhai na kate */
+:where(html[data-look="2"]) .examskin:not(.gemskin) .topinfo__count b { color: var(--lime-ink); font-family: var(--mono); font-size: 0.95rem; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .lookswitch { border: 2px solid var(--tb-line); border-radius: 12px; background: #111; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .lookswitch__opt { border-radius: 8px; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .lookswitch__opt.is-on { background: var(--lime); color: var(--lime-ink); }
+
+/* =========================================================
+   HERO — bhaari title, lime tag, kone mein ✦
+   ========================================================= */
+:where(html[data-look="2"]) .examskin:not(.gemskin) .hero {
+  position: relative; overflow: hidden;
+  background: #131313;
+  border: 2px solid var(--tb-line-hard);
+  border-radius: 22px;
+  box-shadow: 6px 6px 0 #3b6cff;
+  padding: 24px 26px;
+  margin: 0 6px 26px 0;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .hero::after {
+  content: "✦"; position: absolute; right: 22px; top: 6px;
+  font-size: 4.2rem; line-height: 1; color: var(--lime); opacity: 0.9;
+  pointer-events: none;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .hero__eyebrow {
+  display: inline-block;
+  background: var(--lime); color: var(--lime-ink);
+  padding: 4px 10px; border-radius: 8px;
+  font-family: var(--mono); font-size: 0.7rem; font-weight: 800;
+  margin-bottom: 12px;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .hero__title {
+  color: #fff;
+  font-size: clamp(1.8rem, 4.6vw, 3rem) !important;
+  font-weight: 900; letter-spacing: -0.035em; line-height: 1.02;
+  padding-right: 70px;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .hero .grad {
+  -webkit-text-fill-color: #3b6cff; color: #3b6cff;
+  text-decoration: underline; text-decoration-color: var(--lime);
+  text-decoration-thickness: 5px; text-underline-offset: 6px;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .hero__sub { color: #a3a39b; max-width: 68ch; }
+
+/* =========================================================
+   CARDS — mote kinare, sakht parchhai
+   ========================================================= */
+:where(html[data-look="2"]) .examskin:not(.gemskin) :is(.placeholder, .glass-card, .qcard, .stat, .home-acc__item, .pyq-row) {
+  background: #131313;
+  border: 2px solid var(--tb-line);
+  border-radius: 18px;
+  box-shadow: none;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) :is(.glass-card, .stat, .home-acc__item, .pyq-row) {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+@media (hover: hover) {
+  :where(html[data-look="2"]) .examskin:not(.gemskin) :is(.stat, .home-acc__item:not(.is-open), .pyq-row):hover {
+    transform: translate(-3px, -3px);
+    border-color: var(--lime);
+    box-shadow: 6px 6px 0 var(--lime);
+    background: #151515;
+  }
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .stat__num { font-family: var(--mono); color: var(--lime); }
+
+/* ---- PYQ bento tiles ---- */
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-list { gap: 16px; }
+@media (min-width: 1100px) {
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* Pehla tile bada — bento ki pehchaan. */
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:first-child { grid-row: span 2; justify-content: flex-end; }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:first-child .pyq-row__ico { width: 76px; height: 76px; border-radius: 18px; font-size: 2.4rem; margin-bottom: auto; }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:first-child .pyq-row__name { font-size: 1.4rem; }
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-row { padding: 18px; min-height: 140px; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-row__ico {
+  display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px;
+  background: #1c1c1c; border: 2px solid var(--tb-line-hard); font-size: 1.4rem;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-row__name { font-size: 1.08rem; font-weight: 800; letter-spacing: -0.01em; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-row__meta {
+  font-family: var(--mono); color: var(--lime);
+  background: rgba(200, 255, 46, 0.08); border: 1px solid rgba(200, 255, 46, 0.3);
+  padding: 2px 8px; border-radius: 8px;
+}
+/* Har teesra tile apne rang ka kinara — bento mein thoda rang. */
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:nth-child(3n+2) .pyq-row__ico { border-color: #3b6cff; background: #121a33; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:nth-child(3n) .pyq-row__ico { border-color: #ffb020; background: #29220a; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-row--all {
+  background: #3b6cff; border-color: #3b6cff; box-shadow: 6px 6px 0 var(--lime);
+  flex-direction: row; align-items: center; gap: 16px; min-height: 0;
+  margin-bottom: 10px;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-row--all :is(.pyq-row__name, .pyq-row__sub) { color: #fff; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-row--all .pyq-row__sub { opacity: 0.85; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-row--all .pyq-row__ico { background: rgba(0, 0, 0, 0.2); border-color: rgba(255, 255, 255, 0.35); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-row--all .pyq-row__meta { margin: 0 0 0 auto; align-self: center; background: var(--lime); color: var(--lime-ink); border-color: var(--lime); font-size: 0.9rem; padding: 6px 12px; }
+@media (hover: hover) {
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .pyq-row--all:hover { background: #4a78ff; border-color: #4a78ff; }
+}
+
+/* ---- Quiz Bank / accordion — 3 column tiles, khula tile poori chaudai ---- */
+:where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc-wrap { max-width: none; }
+@media (min-width: 760px) {
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+}
+@media (min-width: 1200px) {
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc__item.is-open {
+  grid-column: 1 / -1; border-color: var(--lime); box-shadow: 6px 6px 0 var(--lime);
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc__row { padding: 18px; font-weight: 800; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc__row:hover { background: transparent; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc__ico {
+  display: grid; place-items: center; width: 42px; height: 42px; flex: none;
+  border-radius: 12px; background: #1c1c1c; border: 2px solid var(--tb-line-hard);
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc__count {
+  font-family: var(--mono); background: rgba(200, 255, 46, 0.1); color: var(--lime);
+  border: 1px solid rgba(200, 255, 46, 0.3); border-radius: 8px;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc__panel { border-top: 2px dashed var(--tb-line); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc__link { border-bottom-color: var(--tb-line-soft); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc__link:hover { background: rgba(59, 108, 255, 0.12); color: #fff; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .qbank-count { font-family: var(--mono); }
+@media (min-width: 900px) {
+  /* Khule tile ke andar ke quiz bhi grid mein — lambi list nahi. */
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc__panel {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; padding: 14px;
+  }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc__link {
+    border: 2px solid var(--tb-line); border-radius: 12px; background: #161616;
+  }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .home-acc__link:last-child { border-bottom: 2px solid var(--tb-line); }
+}
+
+/* =========================================================
+   BUTTONS / INPUTS / CHIPS — sakht parchhai, dabne wale
+   :where() — .examskin .btn jitni specificity, taaki qcard/subject-row
+   jaise apne-context wale button rules ab bhi jeetein.
+   ========================================================= */
+:where(html[data-look="2"]) .examskin:not(.gemskin) .btn {
+  border-radius: 12px; font-weight: 800; border-width: 2px;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)) {
+  background: #3b6cff; border-color: #3b6cff; color: #fff;
+  box-shadow: 3px 3px 0 var(--lime);
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)):hover {
+  background: #4a78ff; border-color: #4a78ff;
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .btn:active { transform: translate(3px, 3px); box-shadow: none; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .btn--ghost { background: transparent; border-color: var(--tb-line-hard); color: var(--tb-ink-2); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .btn--ghost:hover { border-color: var(--lime); color: var(--lime); background: rgba(200, 255, 46, 0.06); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .btn--danger:hover { background: #f05a5f; }
+
+:where(html[data-look="2"]) .examskin:not(.gemskin) :is(.input, .select, .textarea) {
+  box-sizing: border-box; max-width: 100%;
+  background: #0d0d0d; border: 2px solid var(--tb-line-hard); border-radius: 12px; color: var(--tb-ink);
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) :is(.input, .select, .textarea):focus {
+  border-color: var(--lime); box-shadow: 3px 3px 0 var(--lime);
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) :is(.input, .textarea)::placeholder { color: #66665f; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .chip { background: transparent; border-width: 2px; border-radius: 10px; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .chip.is-active { background: var(--lime); border-color: var(--lime); color: var(--lime-ink); }
+
+/* ---- Test page ki ginti monospace mein ---- */
+:where(html[data-look="2"]) .examskin:not(.gemskin) :is(.time-pill, .paper-tag, .badge) { font-family: var(--mono); border-radius: 8px; }
+
+/* ---- Home ka daily card ---- */
+:where(html[data-look="2"]) .examskin:not(.gemskin) .daily-card {
+  background: #3b6cff; border: 2px solid #3b6cff; box-shadow: 6px 6px 0 var(--lime);
+}
+:where(html[data-look="2"]) .examskin:not(.gemskin) .daily-card .section-kicker { color: var(--lime); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .ring { border-top-color: var(--lime); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .daily-progress > i { background: var(--lime); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .target-number strong { font-family: var(--mono); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .target-number span { color: #e6ecff; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) :is(.subject-row-body span, .card-footnote) { color: #c9d6ff; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .subject-row-acts .btn--primary { background: var(--lime); border-color: var(--lime); color: var(--lime-ink); box-shadow: none; }
+
+/* ---- Footer, tairte button, scrollbar ---- */
+:where(html[data-look="2"]) .examskin:not(.gemskin) .footer { background: transparent; border-top: 2px dashed var(--tb-line); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .ansp__top { box-shadow: 3px 3px 0 var(--lime); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) .hresume { box-shadow: 3px 3px 0 var(--lime); }
+:where(html[data-look="2"]) .examskin:not(.gemskin) ::-webkit-scrollbar { width: 10px; height: 10px; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) ::-webkit-scrollbar-track { background: transparent; }
+:where(html[data-look="2"]) .examskin:not(.gemskin) ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 999px; border: 2px solid #0a0a0a; }
+
+@media (max-width: 600px) {
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .hero { padding: 18px 16px; box-shadow: 4px 4px 0 #3b6cff; }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .hero::after { font-size: 2.6rem; right: 12px; }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .hero__title { padding-right: 36px; }
+  :where(html[data-look="2"]) .examskin:not(.gemskin) .topbar__brand strong { display: none; }
+}

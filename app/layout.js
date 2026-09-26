@@ -3,7 +3,9 @@ import { Inter } from "next/font/google";
 import "katex/dist/katex.min.css";
 import "./globals.css";
 import "./exam.css";
-import "./theme-option.css";
+import "./looks/looks.css";
+import "./looks/midnight.css";
+import "./looks/bento.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
@@ -37,8 +39,8 @@ export const viewport = {
   // haath se bhi badal deta hai, kyunki `data-theme` prefers-color-scheme se
   // nahi bandha — wo user ki apni chuni hui cheez hai.
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#08080a" },
-    { media: "(prefers-color-scheme: dark)", color: "#08080a" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#141922" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -69,13 +71,16 @@ export default function RootLayout({ children }) {
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var t=localStorage.getItem('cgl.theme');" +
-              "if(t==='dark')document.documentElement.setAttribute('data-theme','dark');" +
+              "try{var d=document.documentElement,t=localStorage.getItem('cgl.theme');" +
+              "if(t==='dark')d.setAttribute('data-theme','dark');" +
+              // 🎨 Roop (lib/look.js) — koi chuna nahi to naya wala ("2").
+              "var l=localStorage.getItem('cgl.look')||'2';d.setAttribute('data-look',l);" +
+              "var b={'1':'#08080a','2':'#0a0a0a'}[l];" +
               // Address bar ka rang bhi yahin — bina-media wala meta sabse aage,
               // taaki wo upar wali do (OS ki pasand wali) se pehle mile.
-              "if(t){var m=document.createElement('meta');m.id='tc-user';" +
-              "m.name='theme-color';m.content='#08080a';" +
-              "document.head.prepend(m)}}catch(e){}",
+              "if(t||b){var m=document.createElement('meta');m.id='tc-user';" +
+              "m.name='theme-color';m.content=b||(t==='dark'?'#141922':'#ffffff');" +
+              "document.head.prepend(m)}}catch(e){d.setAttribute('data-look','2')}",
           }}
         />
       </head>

@@ -11,16 +11,16 @@
      • Quiz Bank jaisi lambi list desktop par do column ka grid
 
    Kaise: app/exam.css ka skin `--tb-*` tokens par khada hai — rang yahan
-   tokens badal kar aate hain. `.examskin:not(.gemskin)` ki specificity
+   tokens badal kar aate hain. `:where(html[data-look="1"]) .examskin:not(.gemskin)` ki specificity
    [data-theme="dark"] .examskin ke barabar hai aur ye file baad mein load
    hoti hai, isliye din/raat dono par yahi chalti hai. Gemini wala page apne
    roop mein rehta hai.
 
-   Purane forest-green par wapas: app/layout.js se is file ka import hata do
-   (aur Navbar se <TopbarInfo />, agar countdown bhi nahi chahiye).
+   Ye OPTION 1 hai — html[data-look="1"] par hi lagti hai (lib/look.js,
+   upar ki patti ka switcher). :where() se specificity nahi badhti.
    =================================================================== */
 
-.examskin:not(.gemskin) {
+:where(html[data-look="1"]) .examskin:not(.gemskin) {
   --tb-blue: #7c5cff;          /* violet — bhara button, active, focus */
   --tb-blue-dark: #9277ff;     /* kaale par hover mein ROSHAN hota hai */
   --tb-blue-soft: #1f1a36;
@@ -80,7 +80,7 @@
 
 /* ---- Peeche ki roshni + bindiyon ka jaal (blur filter nahi — tablet par
    sasta rahe, sirf gradient) ---- */
-.examskin:not(.gemskin) .bg-orbs {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .bg-orbs {
   background:
     radial-gradient(900px 520px at 12% -8%, rgba(124, 92, 255, 0.18), transparent 60%),
     radial-gradient(700px 480px at 100% 100%, rgba(245, 181, 68, 0.08), transparent 60%),
@@ -91,52 +91,52 @@
 /* =========================================================
    SIDEBAR — tairta hua panel
    ========================================================= */
-.examskin:not(.gemskin) .drawer {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .drawer {
   background: linear-gradient(180deg, #121217, #0c0c10);
   color: #d9d9e3;
   border-right: 1px solid var(--tb-line);
 }
-.examskin:not(.gemskin) .drawer__head { border-bottom-color: var(--tb-line); padding: 18px 14px 14px; }
-.examskin:not(.gemskin) .drawer__brand .brand__text strong {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .drawer__head { border-bottom-color: var(--tb-line); padding: 18px 14px 14px; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .drawer__brand .brand__text strong {
   font-size: 1rem; letter-spacing: -0.01em;
   background: linear-gradient(90deg, #ffffff, #c9bbff);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-.examskin:not(.gemskin) :is(.drawer__sub, .drawer__x, .drawer__chev) { color: #7d7d8a; }
-.examskin:not(.gemskin) .drawer__nav { gap: 4px; padding: 12px 10px; }
-.examskin:not(.gemskin) .drawer__grouphd { color: #7d7d8a; border-radius: 12px; }
-.examskin:not(.gemskin) .drawer__grouphd:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
-.examskin:not(.gemskin) .drawer__back { color: #d9d9e3; border-bottom-color: var(--tb-line); }
-.examskin:not(.gemskin) .drawer__rule { background: var(--tb-line); }
-.examskin:not(.gemskin) .drawer__link {
+:where(html[data-look="1"]) .examskin:not(.gemskin) :is(.drawer__sub, .drawer__x, .drawer__chev) { color: #7d7d8a; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .drawer__nav { gap: 4px; padding: 12px 10px; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .drawer__grouphd { color: #7d7d8a; border-radius: 12px; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .drawer__grouphd:hover { color: #fff; background: rgba(255, 255, 255, 0.05); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .drawer__back { color: #d9d9e3; border-bottom-color: var(--tb-line); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .drawer__rule { background: var(--tb-line); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .drawer__link {
   color: #b9b9c6;
   border-left: 0;
   border-radius: 12px;
   transition: background 0.15s ease, color 0.15s ease;
 }
-.examskin:not(.gemskin) .drawer__link:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
-.examskin:not(.gemskin) .drawer__link.is-active {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .drawer__link:hover { background: rgba(255, 255, 255, 0.05); color: #fff; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .drawer__link.is-active {
   background: linear-gradient(135deg, rgba(139, 108, 255, 0.28), rgba(106, 69, 245, 0.14));
   color: #fff;
   box-shadow: inset 0 0 0 1px rgba(139, 108, 255, 0.45), 0 6px 20px -10px rgba(124, 92, 255, 0.8);
 }
 
 @media (min-width: 1024px) {
-  .examskin:not(.gemskin) .shell { padding-left: 288px; }
-  .examskin:not(.gemskin) .drawer {
+  :where(html[data-look="1"]) .examskin:not(.gemskin) .shell { padding-left: 288px; }
+  :where(html[data-look="1"]) .examskin:not(.gemskin) .drawer {
     top: 12px; left: 12px; bottom: 12px;
     width: 262px;
     border: 1px solid var(--tb-line);
     border-radius: 22px;
     box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.9);
   }
-  .examskin:not(.gemskin) main.container { max-width: min(var(--container, 1200px), 1240px); }
+  :where(html[data-look="1"]) .examskin:not(.gemskin) main.container { max-width: min(var(--container, 1200px), 1240px); }
 }
 
 /* =========================================================
    TOPBAR — sheeshe jaisi, countdown ke saath
    ========================================================= */
-.examskin:not(.gemskin) .topbar {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .topbar {
   background: rgba(18, 18, 22, 0.72);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   backdrop-filter: blur(14px) saturate(140%);
@@ -145,37 +145,18 @@
   padding: 7px 10px 7px 14px;
 }
 @media (min-width: 1024px) {
-  .examskin:not(.gemskin) .topbar { justify-content: flex-start; margin: 12px 24px 18px; }
+  :where(html[data-look="1"]) .examskin:not(.gemskin) .topbar { justify-content: flex-start; margin: 12px 24px 18px; }
 }
-.examskin:not(.gemskin) :is(.topbar__burger, .topbar__brand) { color: var(--tb-ink); }
-.examskin:not(.gemskin) .topbar__burger:hover { background: rgba(255, 255, 255, 0.06); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) :is(.topbar__burger, .topbar__brand) { color: var(--tb-ink); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .topbar__burger:hover { background: rgba(255, 255, 255, 0.06); }
 /* Din/raat ab ek hi roop hai — khaali button aur Settings ka Theme card
    nahi dikhana. */
-.examskin:not(.gemskin) :is(.themetog, .settings-theme) { display: none; }
-
-.topinfo { display: flex; align-items: center; gap: 10px; min-width: 0; margin-right: auto; }
-.topinfo__date { color: var(--tb-dim); font-size: 0.8rem; font-weight: 600; white-space: nowrap; }
-.topinfo__count {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 4px 11px; border-radius: 999px;
-  background: rgba(245, 181, 68, 0.1);
-  border: 1px solid rgba(245, 181, 68, 0.3);
-  color: #f8d48c; font-size: 0.76rem; font-weight: 600; white-space: nowrap;
-}
-.topinfo__count b { color: #f5b544; font-size: 0.9rem; font-weight: 800; }
-/* Phone par patti mein ☰ + naam pehle se hai — sirf countdown ka chip. */
-@media (max-width: 1023px) {
-  .topinfo { margin-left: auto; margin-right: 0; }
-  .topinfo__date { display: none; }
-}
-@media (max-width: 420px) {
-  .topbar__brand strong { display: none; }
-}
+:where(html[data-look="1"]) .examskin:not(.gemskin) :is(.themetog, .settings-theme) { display: none; }
 
 /* =========================================================
    HERO — bada title, gradient, eyebrow ek chip
    ========================================================= */
-.examskin:not(.gemskin) .hero {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .hero {
   position: relative;
   overflow: hidden;
   background:
@@ -186,90 +167,90 @@
   padding: 22px 24px;
   margin-bottom: 18px;
 }
-.examskin:not(.gemskin) .hero::after {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .hero::after {
   content: ""; position: absolute; left: 24px; right: 24px; top: 0; height: 1px;
   background: linear-gradient(90deg, transparent, rgba(179, 161, 255, 0.6), transparent);
 }
-.examskin:not(.gemskin) .hero__eyebrow {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .hero__eyebrow {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 4px 11px; border-radius: 999px;
   background: rgba(124, 92, 255, 0.14);
   border: 1px solid rgba(124, 92, 255, 0.35);
   color: #c9bbff; font-size: 0.7rem; margin-bottom: 10px;
 }
-.examskin:not(.gemskin) .hero__title {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .hero__title {
   font-size: clamp(1.5rem, 3.4vw, 2.2rem) !important;
   letter-spacing: -0.02em;
   line-height: 1.15;
   /* Gradient-text nahi: title mein emoji ho to wo bhi rang mein ghul jata. */
   color: #ffffff;
 }
-.examskin:not(.gemskin) .hero__sub { color: var(--tb-dim); max-width: 70ch; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .hero__sub { color: var(--tb-dim); max-width: 70ch; }
 
 /* =========================================================
    CARDS — bade kone, upar patli chamak, hover par uthna
    ========================================================= */
-.examskin:not(.gemskin) :is(.placeholder, .glass-card, .qcard, .stat, .home-acc__item) {
+:where(html[data-look="1"]) .examskin:not(.gemskin) :is(.placeholder, .glass-card, .qcard, .stat, .home-acc__item) {
   background: linear-gradient(180deg, #15151a, #111115);
   border: 1px solid var(--tb-line);
   border-radius: 20px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
-.examskin:not(.gemskin) :is(.glass-card, .stat, .home-acc__item) {
+:where(html[data-look="1"]) .examskin:not(.gemskin) :is(.glass-card, .stat, .home-acc__item) {
   transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 @media (hover: hover) {
-  .examskin:not(.gemskin) :is(.glass-card, .stat, .home-acc__item):hover {
+  :where(html[data-look="1"]) .examskin:not(.gemskin) :is(.glass-card, .stat, .home-acc__item):hover {
     border-color: #3a3550;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 14px 30px -18px rgba(124, 92, 255, 0.55);
   }
-  .examskin:not(.gemskin) .stat:hover { transform: translateY(-2px); }
+  :where(html[data-look="1"]) .examskin:not(.gemskin) .stat:hover { transform: translateY(-2px); }
 }
-.examskin:not(.gemskin) .stat__num {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .stat__num {
   background: linear-gradient(90deg, #ffffff, #b3a1ff);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 
 /* Quiz Bank / accordion list — desktop par do column; jo khula ho wo poori
    chaudai le leta hai. */
-.examskin:not(.gemskin) .home-acc-wrap { max-width: none; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .home-acc-wrap { max-width: none; }
 @media (min-width: 900px) {
-  .examskin:not(.gemskin) .home-acc { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .examskin:not(.gemskin) .home-acc__item.is-open { grid-column: 1 / -1; }
+  :where(html[data-look="1"]) .examskin:not(.gemskin) .home-acc { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  :where(html[data-look="1"]) .examskin:not(.gemskin) .home-acc__item.is-open { grid-column: 1 / -1; }
 }
-.examskin:not(.gemskin) .home-acc__item.is-open { border-color: rgba(124, 92, 255, 0.5); }
-.examskin:not(.gemskin) .home-acc__row { padding: 18px 20px; }
-.examskin:not(.gemskin) .home-acc__row:hover { background: rgba(255, 255, 255, 0.02); }
-.examskin:not(.gemskin) .home-acc__ico {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .home-acc__item.is-open { border-color: rgba(124, 92, 255, 0.5); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .home-acc__row { padding: 18px 20px; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .home-acc__row:hover { background: rgba(255, 255, 255, 0.02); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .home-acc__ico {
   display: grid; place-items: center; width: 38px; height: 38px; flex: none;
   border-radius: 12px; font-size: 1.1rem;
   background: rgba(124, 92, 255, 0.12); border: 1px solid rgba(124, 92, 255, 0.25);
 }
-.examskin:not(.gemskin) .home-acc__count {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .home-acc__count {
   background: rgba(124, 92, 255, 0.14); color: #c9bbff; padding: 3px 10px;
 }
-.examskin:not(.gemskin) .home-acc__link:hover { background: rgba(124, 92, 255, 0.1); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .home-acc__link:hover { background: rgba(124, 92, 255, 0.1); }
 
 /* =========================================================
    BUTTONS / INPUTS / CHIPS
    :where() — specificity .examskin .btn jitni hi, taaki qcard/subject-row
    jaise apne-context wale button rules ab bhi jeetein.
    ========================================================= */
-.examskin:not(.gemskin) .btn { border-radius: 999px; font-weight: 700; padding-inline: 18px; }
-.examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)) {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .btn { border-radius: 999px; font-weight: 700; padding-inline: 18px; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)) {
   background: linear-gradient(135deg, #8b6cff, #6a45f5);
   border-color: transparent;
   box-shadow: 0 8px 22px -10px rgba(124, 92, 255, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
-.examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)):hover {
+:where(html[data-look="1"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)):hover {
   background: linear-gradient(135deg, #9a80ff, #7a58ff);
   border-color: transparent;
 }
-.examskin:not(.gemskin) .btn--ghost { background: rgba(255, 255, 255, 0.03); border-color: var(--tb-line-hard); color: var(--tb-ink-2); }
-.examskin:not(.gemskin) .btn--ghost:hover { background: rgba(124, 92, 255, 0.1); border-color: #7c5cff; color: #fff; }
-.examskin:not(.gemskin) .btn--danger:hover { background: #f0595e; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .btn--ghost { background: rgba(255, 255, 255, 0.03); border-color: var(--tb-line-hard); color: var(--tb-ink-2); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .btn--ghost:hover { background: rgba(124, 92, 255, 0.1); border-color: #7c5cff; color: #fff; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .btn--danger:hover { background: #f0595e; }
 
-.examskin:not(.gemskin) :is(.input, .select, .textarea) {
+:where(html[data-look="1"]) .examskin:not(.gemskin) :is(.input, .select, .textarea) {
   box-sizing: border-box;
   max-width: 100%;
   background: #0d0d11;
@@ -277,45 +258,45 @@
   border-radius: 12px;
   color: var(--tb-ink);
 }
-.examskin:not(.gemskin) :is(.input, .select, .textarea):focus {
+:where(html[data-look="1"]) .examskin:not(.gemskin) :is(.input, .select, .textarea):focus {
   border-color: #7c5cff; box-shadow: 0 0 0 3px rgba(124, 92, 255, 0.22);
 }
-.examskin:not(.gemskin) :is(.input, .textarea)::placeholder { color: #6b6b78; }
-.examskin:not(.gemskin) .chip { background: rgba(255, 255, 255, 0.03); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) :is(.input, .textarea)::placeholder { color: #6b6b78; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .chip { background: rgba(255, 255, 255, 0.03); }
 
 /* Footer — tairte sidebar ke peeche na chhupe */
-.examskin:not(.gemskin) .footer { background: transparent; border-top-color: var(--tb-line); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .footer { background: transparent; border-top-color: var(--tb-line); }
 @media (min-width: 1024px) {
-  .examskin:not(.gemskin) .footer { margin-left: 288px; }
+  :where(html[data-look="1"]) .examskin:not(.gemskin) .footer { margin-left: 288px; }
 }
 
 /* ---- Home ka daily card — kesariya progress (kaale par) ---- */
-.examskin:not(.gemskin) .daily-card {
+:where(html[data-look="1"]) .examskin:not(.gemskin) .daily-card {
   background:
     radial-gradient(500px 240px at 100% 0%, rgba(124, 92, 255, 0.28), transparent 70%),
     linear-gradient(160deg, #1a1630, #0f0f14);
   border: 1px solid #2c2748;
   box-shadow: 0 18px 40px -20px rgba(124, 92, 255, 0.55);
 }
-.examskin:not(.gemskin) .daily-card .section-kicker { color: #f8c362; }
-.examskin:not(.gemskin) .ring { border-top-color: #f5b544; }
-.examskin:not(.gemskin) .daily-progress > i { background: linear-gradient(90deg, #f5b544, #ffd98a); }
-.examskin:not(.gemskin) .target-number span { color: #d9d9e3; }
-.examskin:not(.gemskin) :is(.subject-row-body span, .card-footnote) { color: #9a9ab0; }
-.examskin:not(.gemskin) .subject-row-acts .btn--primary { background: #f5b544; border-color: #f5b544; color: #231703; box-shadow: none; }
-.examskin:not(.gemskin) .subject-row-acts .btn--primary:hover { background: #f8c362; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .daily-card .section-kicker { color: #f8c362; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .ring { border-top-color: #f5b544; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .daily-progress > i { background: linear-gradient(90deg, #f5b544, #ffd98a); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .target-number span { color: #d9d9e3; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) :is(.subject-row-body span, .card-footnote) { color: #9a9ab0; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .subject-row-acts .btn--primary { background: #f5b544; border-color: #f5b544; color: #231703; box-shadow: none; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .subject-row-acts .btn--primary:hover { background: #f8c362; }
 
 /* ---- Tairte button ---- */
-.examskin:not(.gemskin) .ansp__top { box-shadow: 0 8px 24px -8px rgba(124, 92, 255, 0.6); }
-.examskin:not(.gemskin) .hresume { box-shadow: 0 10px 32px -10px rgba(124, 92, 255, 0.7); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .ansp__top { box-shadow: 0 8px 24px -8px rgba(124, 92, 255, 0.6); }
+:where(html[data-look="1"]) .examskin:not(.gemskin) .hresume { box-shadow: 0 10px 32px -10px rgba(124, 92, 255, 0.7); }
 
 /* Scrollbar bhi kaala */
-.examskin:not(.gemskin) ::-webkit-scrollbar { width: 10px; height: 10px; }
-.examskin:not(.gemskin) ::-webkit-scrollbar-track { background: transparent; }
-.examskin:not(.gemskin) ::-webkit-scrollbar-thumb { background: #26262e; border-radius: 999px; border: 2px solid #08080a; }
-.examskin:not(.gemskin) ::-webkit-scrollbar-thumb:hover { background: #34343f; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) ::-webkit-scrollbar { width: 10px; height: 10px; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) ::-webkit-scrollbar-track { background: transparent; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) ::-webkit-scrollbar-thumb { background: #26262e; border-radius: 999px; border: 2px solid #08080a; }
+:where(html[data-look="1"]) .examskin:not(.gemskin) ::-webkit-scrollbar-thumb:hover { background: #34343f; }
 
 /* Phone par hero thoda kasa hua — jagah kam hai. */
 @media (max-width: 600px) {
-  .examskin:not(.gemskin) .hero { padding: 18px 16px; border-radius: 20px; }
+  :where(html[data-look="1"]) .examskin:not(.gemskin) .hero { padding: 18px 16px; border-radius: 20px; }
 }
