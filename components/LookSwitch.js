@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { LOOKS, DEFAULT_LOOK, getLook, setLook } from "@/lib/look";
 
 // 🎨 Roop badlo — upar ki patti mein. Owner options compare kar raha hai,
-// isliye har roop ek tap ki doori par (lib/look.js).
+// isliye har roop ek chunaav ki doori par (lib/look.js). Roop bahut ho gaye
+// to buttons ki jagah ek chhota dropdown.
 //
 // Pehli render DEFAULT maanti hai, asli haal mount ke baad — ThemeToggle jaisi
 // hi wajah (server aur client ka HTML ek jaisa rahe).
@@ -13,20 +14,20 @@ export default function LookSwitch() {
   useEffect(() => { setLookState(getLook()); }, []);
 
   return (
-    <div className="lookswitch" role="group" aria-label="Site ka roop">
-      <span className="lookswitch__lbl">Look</span>
-      {LOOKS.map((l) => (
-        <button
-          key={l.id}
-          type="button"
-          className={`lookswitch__opt ${look === l.id ? "is-on" : ""}`}
-          aria-pressed={look === l.id}
-          title={l.name}
-          onClick={() => setLookState(setLook(l.id))}
-        >
-          {l.short}
-        </button>
-      ))}
-    </div>
+    <label className="lookswitch" title="Site ka roop">
+      <span className="lookswitch__lbl">🎨 Look</span>
+      <select
+        className="lookswitch__sel"
+        value={look}
+        onChange={(e) => setLookState(setLook(e.target.value))}
+        aria-label="Site ka roop"
+      >
+        {LOOKS.map((l) => (
+          <option key={l.id} value={l.id}>
+            {l.id === "0" ? "Old" : `${l.id} · ${l.name}`}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }

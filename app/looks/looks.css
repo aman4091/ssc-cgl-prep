@@ -6,6 +6,9 @@
      2 = Bento     (app/looks/bento.css)
      3 = Aurora    (app/looks/aurora.css)
      4 = Terminal  (app/looks/terminal.css)
+     5 = Sky Tabs  (app/looks/sky.css)     — light
+     6 = Candy     (app/looks/candy.css)   — light
+     7 = Notion    (app/looks/notion.css)  — light
    Kaunsa chal raha hai: <html data-look="…"> — lib/look.js aur layout.js
    ka <head> script lagata hai; upar ki patti ka switcher badalta hai.
    Yahan sirf wo cheezein hain jo HAR roop mein chahiye: countdown ka chip
@@ -54,3 +57,18 @@
   .lookswitch__lbl { display: none; }
   .lookswitch__opt { min-width: 24px; padding: 0 6px; }
 }
+
+/* Roop 8 ho gaye — button ki qatar lambi ho jaati, ab chhota dropdown. */
+.lookswitch__sel {
+  appearance: none; -webkit-appearance: none;
+  border: 0; background: transparent; cursor: pointer;
+  font: inherit; font-size: 0.76rem; font-weight: 700; color: var(--tb-ink);
+  padding: 4px 22px 4px 8px; border-radius: 999px;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 11px) 55%, calc(100% - 7px) 55%;
+  background-size: 4px 4px, 4px 4px; background-repeat: no-repeat;
+}
+.lookswitch__sel:focus-visible { outline: 2px solid var(--tb-focus); outline-offset: 1px; }
+.lookswitch__sel option { color: #111; background: #fff; }
+.lookswitch__sel { max-width: 170px; text-overflow: ellipsis; }
+@media (max-width: 600px) { .lookswitch__sel { max-width: 74px; } }
