@@ -1,0 +1,390 @@
+/* ===================================================================
+   📰 OPTION 3 — "Akhbaar" (kaala kaagaz, magazine jaisa)
+   Option 1 (chikna glass) aur 2 (mote bento dabbe) dono se alag: dabbe
+   lagbhag gayab, jagah patli lakeeron aur typography ne li hai.
+
+   Layout mein bade badlav:
+     • Sidebar ek akhbaar ki "vishay-soochi" — koi panel/rang nahi, emoji
+       icon nahi, har line ke aage 01, 02, 03… aur serif naam. Chuna hua
+       page coral rang mein, aage ek dash.
+     • Upar ki patti: dabba nahi, sirf neeche ek lakeer; tareekh small-caps
+       mein, countdown bada serif number.
+     • Hero: bahut bada serif title (magazine ka cover), subtitle italic,
+       eyebrow ek lakeer ke saath — koi dabba nahi.
+     • PYQ aur Quiz Bank: card grid ki jagah do column ka INDEX — har line
+       numbered, naam serif, ginti daayen, hover par coral patti.
+     • Card: bina gol kone, halka tal, patli lakeer.
+     • Button: sidhe kone, chhote CAPITAL akshar; primary coral.
+     • Parda: garam kaala, halka kaagaz jaisa daana (grain).
+
+   Sirf html[data-look="3"] par (lib/look.js). :where() se specificity
+   .examskin:not(.gemskin) jitni hi rehti hai.
+   =================================================================== */
+
+:where(html[data-look="3"]) .examskin:not(.gemskin) {
+  --coral: #ff6a3d;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua",
+           "Noto Serif", "Noto Serif Devanagari", Georgia, serif;
+
+  --tb-blue: #ff6a3d;
+  --tb-blue-dark: #ff8559;
+  --tb-blue-soft: #2a1710;
+  --tb-blue-ink: #ff9a76;
+  --tb-navy: #0c0b0a;
+  --tb-q: #fff8ee;
+  --tb-green: #2f9e6e;
+  --tb-green-dark: #3ab47f;
+  --tb-green-soft: #11231a;
+  --tb-ok-ink: #7fdcae;
+  --tb-red: #e5484d;
+  --tb-red-soft: #2a1414;
+  --tb-bad-ink: #ff9d97;
+  --tb-red-ink-soft: #ffe6e3;
+  --tb-orange: #ff9a76;
+  --tb-yellow: #29210f;
+  --tb-warn-ink: #f2c46b;
+  --tb-warn-ink-2: #e2b154;
+  --tb-amber: #e8b04a;
+  --tb-rev: #e8b04a;
+  --tb-rev-hover: #efbf63;
+  --tb-rev-on: #efbf63;
+  --tb-rev-line: #c18d2b;
+  --tb-rev-ink: #1f1604;
+  --tb-rev-soft: #29210f;
+  --tb-key-line: #ff6a3d;
+  --tb-skip: #161512;
+  --tb-skip-ink: #7d766b;
+  --tb-ink: #efe9df;
+  --tb-ink-2: #cfc7ba;
+  --tb-dim: #8f877b;
+  --tb-line: #2b2926;
+  --tb-line-soft: #1f1d1b;
+  --tb-line-hard: #3a3733;
+  --tb-head: #181715;
+  --tb-page: #12110f;
+  --tb-soft: #161513;
+  --tb-tint: #1f1510;
+  --tb-bg-2: #0c0b0a;
+  --tb-raised: #191816;
+  --tb-focus: #ff6a3d;
+  --tb-code: #ffb38f;
+
+  --on-accent: #ffffff;
+  --accent-grad: linear-gradient(#ff6a3d, #ff6a3d);
+  --glass-shadow: none;
+  --nav-hover: rgba(255, 255, 255, 0.04);
+  --radius-sm: 2px;
+  --radius: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+
+  --scheme: dark;
+  color-scheme: dark;
+  background: var(--tb-bg-2);
+  color: var(--tb-ink);
+}
+
+/* ---- Garam kaala parda + kaagaz ka daana (chhota SVG noise, ek baar) ---- */
+:where(html[data-look="3"]) .examskin:not(.gemskin) .bg-orbs {
+  background:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    radial-gradient(900px 600px at 85% -10%, rgba(255, 106, 61, 0.07), transparent 60%),
+    var(--tb-bg-2);
+}
+
+/* =========================================================
+   SIDEBAR — vishay-soochi (table of contents)
+   ========================================================= */
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer {
+  background: var(--tb-bg-2);
+  color: var(--tb-ink);
+  border-right: 1px solid var(--tb-line);
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__head {
+  border-bottom: 0; padding: 26px 22px 8px;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__brand .brand__text strong {
+  font-family: var(--serif); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; color: #fff8ee;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__sub {
+  color: var(--coral); font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.drawer__x, .drawer__chev) { color: #6f685e; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__nav {
+  counter-reset: toc; gap: 0; padding: 14px 22px 24px;
+}
+/* Emoji icon nahi — sirf number aur naam. */
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__nav .drawer__ico { display: none; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.drawer__link, .drawer__grouphd) {
+  display: flex; align-items: baseline; gap: 12px;
+  padding: 11px 0; margin: 0;
+  border: 0; border-bottom: 1px solid var(--tb-line-soft); border-radius: 0;
+  background: transparent;
+  font-family: var(--serif); font-size: 1.02rem; font-weight: 400;
+  color: #cfc7ba; letter-spacing: 0; text-transform: none;
+  box-shadow: none;
+  transition: color 0.15s ease, padding-left 0.15s ease;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.drawer__link, .drawer__grouphd)::before {
+  counter-increment: toc;
+  content: counter(toc, decimal-leading-zero);
+  font-family: ui-monospace, "SF Mono", Consolas, monospace;
+  font-size: 0.68rem; color: #5f594f; min-width: 20px;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__groupname {
+  font-family: var(--serif); font-size: 1.02rem; letter-spacing: 0; text-transform: none; font-weight: 400;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.drawer__link, .drawer__grouphd):hover {
+  background: transparent; color: #fff8ee; padding-left: 6px;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__link.is-active {
+  background: transparent; color: var(--coral); border-left: 0; font-style: italic;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__link.is-active::after {
+  content: ""; flex: 1; align-self: center; height: 1px; margin-left: 8px;
+  background: linear-gradient(90deg, var(--coral), transparent);
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__link.is-active::before { color: var(--coral); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__back {
+  color: var(--coral); border-bottom: 1px solid var(--tb-line);
+  padding: 8px 0 12px; margin-bottom: 6px; background: transparent;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__back .drawer__groupname {
+  font-style: italic; font-size: 1.15rem;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .drawer__rule { background: var(--tb-line); }
+
+@media (min-width: 1024px) {
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .shell { padding-left: 290px; }
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .drawer { width: 290px; }
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .footer { margin-left: 290px; }
+  :where(html[data-look="3"]) .examskin:not(.gemskin) main.container { max-width: 1180px; padding-inline: 48px; }
+}
+
+/* =========================================================
+   TOPBAR — sirf ek lakeer
+   ========================================================= */
+:where(html[data-look="3"]) .examskin:not(.gemskin) .topbar {
+  background: rgba(12, 11, 10, 0.85);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 0; border-bottom: 1px solid var(--tb-line); border-radius: 0;
+  margin: 0 0 30px; padding: 12px 20px; top: 0;
+}
+@media (min-width: 1024px) {
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .topbar { justify-content: flex-start; padding: 14px 48px; }
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.topbar__burger, .topbar__brand) { color: var(--tb-ink); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .topbar__brand strong { font-family: var(--serif); font-size: 1.05rem; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.themetog, .settings-theme) { display: none; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .topinfo { gap: 18px; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .topinfo__date {
+  font-variant: small-caps; letter-spacing: 0.12em; font-size: 0.82rem; color: #8f877b; font-weight: 600;
+  text-transform: lowercase;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .topinfo__count {
+  background: transparent; border: 0; padding: 0; border-radius: 0;
+  font-family: var(--serif); font-style: italic; font-size: 0.9rem; color: #cfc7ba; font-weight: 400;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .topinfo__count b {
+  font-style: normal; font-size: 1.35rem; color: var(--coral); font-weight: 700; margin-right: 2px;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .lookswitch { background: transparent; border: 1px solid var(--tb-line); border-radius: 2px; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .lookswitch__opt { border-radius: 0; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .lookswitch__opt.is-on { background: var(--coral); color: #fff; }
+
+/* =========================================================
+   HERO — magazine ka cover: bada serif, koi dabba nahi
+   ========================================================= */
+:where(html[data-look="3"]) .examskin:not(.gemskin) .hero {
+  background: transparent;
+  border: 0; border-bottom: 1px solid var(--tb-line); border-radius: 0;
+  box-shadow: none;
+  padding: 8px 0 30px;
+  margin-bottom: 34px;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .hero__eyebrow {
+  display: flex; align-items: center; gap: 12px;
+  color: var(--coral); font-size: 0.7rem; letter-spacing: 0.2em; font-weight: 700;
+  margin-bottom: 18px;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .hero__eyebrow::after {
+  content: ""; flex: 0 1 120px; height: 1px; background: var(--coral); opacity: 0.6;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .hero__title {
+  font-family: var(--serif);
+  font-size: clamp(2.3rem, 5.6vw, 4.2rem) !important;
+  font-weight: 700; line-height: 1.02; letter-spacing: -0.025em;
+  color: #fff8ee;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .hero .grad {
+  -webkit-text-fill-color: var(--coral); color: var(--coral); font-style: italic; font-weight: 400;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .hero__sub {
+  font-family: var(--serif); font-style: italic; font-size: 1.08rem; line-height: 1.6;
+  color: #a79f92; max-width: 60ch; margin-top: 14px;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .hero__sub b,
+:where(html[data-look="3"]) .examskin:not(.gemskin) .hero__sub strong { font-style: normal; color: #efe9df; }
+
+/* =========================================================
+   CARDS — sidhe kone, halka tal, patli lakeer
+   ========================================================= */
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.placeholder, .glass-card, .qcard, .stat) {
+  background: var(--tb-page);
+  border: 1px solid var(--tb-line);
+  border-radius: 4px;
+  box-shadow: none;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .glass-card { border-top: 2px solid var(--coral); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .stat__num { font-family: var(--serif); color: #fff8ee; font-weight: 700; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.qcard__stem, .md) { line-height: 1.7; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .md :is(h1, h2, h3) { font-family: var(--serif); letter-spacing: -0.01em; }
+
+/* ---- PYQ: do column ka numbered INDEX ---- */
+:where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-list {
+  counter-reset: idx;
+  grid-template-columns: 1fr; gap: 0;
+  border-top: 1px solid var(--tb-line);
+}
+@media (min-width: 1000px) {
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row {
+  position: relative;
+  flex-direction: row; align-items: baseline; gap: 16px;
+  padding: 18px 4px 18px 0; min-height: 0;
+  background: transparent; border: 0; border-bottom: 1px solid var(--tb-line); border-radius: 0;
+  transition: padding-left 0.18s ease, background 0.18s ease;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-list > .pyq-row::before {
+  counter-increment: idx; content: counter(idx, decimal-leading-zero);
+  font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: 0.72rem; color: var(--coral);
+  min-width: 22px;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row__ico { display: none; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row__name { flex: 1; font-family: var(--serif); font-size: 1.28rem; font-weight: 700; color: #fff8ee; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row__sub { font-family: var(--tb-font); font-size: 0.8rem; color: #8f877b; margin-top: 4px; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row__meta {
+  margin: 0; align-self: baseline;
+  font-family: var(--serif); font-style: italic; font-size: 0.95rem; color: #cfc7ba;
+}
+@media (hover: hover) {
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row:hover { background: linear-gradient(90deg, rgba(255, 106, 61, 0.08), transparent 70%); padding-left: 10px; border-color: var(--tb-line); }
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row:hover .pyq-row__name { color: var(--coral); }
+}
+/* "All" — akhbaar ki sabse badi khabar: poori chaudai, bada naam. */
+:where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row--all {
+  border: 0; border-top: 3px double var(--tb-line-hard); border-bottom: 3px double var(--tb-line-hard);
+  padding: 26px 0; margin-bottom: 28px; background: transparent;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row--all .pyq-row__name { font-size: clamp(1.6rem, 3.4vw, 2.3rem); font-style: italic; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row--all .pyq-row__sub { font-family: var(--serif); font-size: 1rem; font-style: italic; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row--all .pyq-row__meta { font-size: 1.6rem; font-style: normal; font-weight: 700; color: var(--coral); }
+
+/* ---- Quiz Bank / accordion: index ki lines, dabbe nahi ---- */
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc-wrap { max-width: none; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc { counter-reset: acc; gap: 0; }
+@media (min-width: 1000px) {
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; }
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__item.is-open { grid-column: 1 / -1; }
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__item {
+  background: transparent; border: 0; border-bottom: 1px solid var(--tb-line); border-radius: 0; box-shadow: none;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__item.is-open { border-bottom-color: var(--coral); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__row { padding: 18px 0; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__row:hover { background: transparent; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__row:hover .home-acc__name { color: var(--coral); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__name {
+  font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: #fff8ee; align-items: baseline; transition: color 0.15s ease;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__name::before {
+  counter-increment: acc; content: counter(acc, decimal-leading-zero);
+  font-family: ui-monospace, "SF Mono", Consolas, monospace; font-size: 0.72rem; font-weight: 400; color: var(--coral);
+  min-width: 22px;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__ico { display: none; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__count {
+  background: transparent; padding: 0; font-family: var(--serif); font-style: italic; font-size: 0.9rem; font-weight: 400; color: #8f877b;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__panel { border-top: 0; padding: 0 0 18px 34px; }
+@media (min-width: 900px) {
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__panel { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; }
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__link {
+  border-radius: 0; border-bottom: 1px dotted var(--tb-line-hard); padding: 11px 0;
+  font-family: var(--serif); font-size: 1rem; color: #cfc7ba;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__link:last-child { border-bottom: 1px dotted var(--tb-line-hard); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__link:hover { background: transparent; color: var(--coral); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .qbank-count {
+  background: transparent; color: #8f877b; font-style: italic; font-family: var(--serif); padding: 0;
+  border: 0; box-shadow: none;
+}
+
+/* =========================================================
+   BUTTONS / INPUTS / CHIPS — sidhe kone, chhote CAPITAL
+   :where() — .examskin .btn jitni specificity, taaki qcard/subject-row
+   jaise apne-context wale button rules ab bhi jeetein.
+   ========================================================= */
+:where(html[data-look="3"]) .examskin:not(.gemskin) .btn {
+  border-radius: 2px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.72rem;
+  padding: 9px 16px;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)) {
+  background: var(--coral); border-color: var(--coral); color: #fff; box-shadow: none;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)):hover {
+  background: #ff8559; border-color: #ff8559;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .btn--ghost {
+  background: transparent; border-color: var(--tb-line-hard); color: var(--tb-ink-2);
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .btn--ghost:hover { border-color: var(--coral); color: var(--coral); background: transparent; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .btn--danger:hover { background: #f05a5f; }
+
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.input, .select, .textarea) {
+  box-sizing: border-box; max-width: 100%;
+  background: transparent; color: var(--tb-ink);
+  border: 0; border-bottom: 1px solid var(--tb-line-hard); border-radius: 0;
+  padding-left: 2px; font-size: 0.95rem;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.input, .select, .textarea):focus {
+  border-bottom-color: var(--coral); box-shadow: 0 1px 0 var(--coral);
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .textarea { border: 1px solid var(--tb-line-hard); padding: 10px; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .select option { background: #12110f; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.input, .textarea)::placeholder { color: #6a645a; font-style: italic; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .chip { background: transparent; border-radius: 2px; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .chip.is-active { background: var(--coral); border-color: var(--coral); color: #fff; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.time-pill, .paper-tag, .badge) { border-radius: 2px; }
+
+/* ---- Home ka daily card ---- */
+:where(html[data-look="3"]) .examskin:not(.gemskin) .daily-card {
+  background: #16120f; border: 1px solid var(--tb-line); border-top: 3px solid var(--coral); border-radius: 4px; box-shadow: none;
+}
+:where(html[data-look="3"]) .examskin:not(.gemskin) .daily-card .section-kicker { color: var(--coral); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .ring { border-top-color: var(--coral); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .daily-progress > i { background: var(--coral); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .target-number strong { font-family: var(--serif); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .target-number span { color: #cfc7ba; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) :is(.subject-row-body span, .card-footnote) { color: #8f877b; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .subject-row-acts .btn--primary { background: var(--coral); border-color: var(--coral); color: #fff; }
+
+/* ---- Footer, tairte button, scrollbar ---- */
+:where(html[data-look="3"]) .examskin:not(.gemskin) .footer { background: transparent; border-top: 3px double var(--tb-line-hard); }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .footer p { font-family: var(--serif); font-style: italic; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .ansp__top { border-radius: 2px; box-shadow: none; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) .hresume { border-radius: 2px; box-shadow: none; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) ::-webkit-scrollbar { width: 8px; height: 8px; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) ::-webkit-scrollbar-track { background: transparent; }
+:where(html[data-look="3"]) .examskin:not(.gemskin) ::-webkit-scrollbar-thumb { background: #2b2926; }
+
+@media (max-width: 600px) {
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .topbar { padding: 10px 14px; margin-bottom: 20px; }
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .topbar__brand strong { display: none; }
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .hero { padding-bottom: 22px; margin-bottom: 24px; }
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .pyq-row__name { font-size: 1.12rem; }
+  :where(html[data-look="3"]) .examskin:not(.gemskin) .home-acc__panel { padding-left: 0; }
+}
