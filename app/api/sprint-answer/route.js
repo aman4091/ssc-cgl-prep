@@ -25,6 +25,7 @@ Niyam:
 - MAATHS/REASONING: "Kyun" mein sabse tez tareeka do — lambi calculation nahi, bas wo kadam jisse seconds mein ho jaye.
 - ENGLISH: "Kyun" ki pehli line mein grammar RULE ka naam do (subject-verb agreement, article, preposition, tense…), phir ye option kyun sahi hai.
 - GS: "Kyun" mein sahi jawab ke saath ek aisi baat jo exam mein isi topic se poochhi ja sakti hai.
+- Har hissa ALAG LINE par, aur do hisson ke beech ek KHALI line chhodo.
 - 120 shabd se zyada mat likho. Koi bullet list nahi, koi bhoomika nahi.
 - Tumhe sahi option bata diya gaya hai — usi ko sahi maan kar samjhao. Agar wo saaf galat lage, tabhi "⚠️ book ka answer shak wala lagta hai" ek line mein likh dena.`;
 
@@ -37,9 +38,12 @@ Bilkul is dhaanche mein likho, isse zyada kuch nahi:
 **✅ Matlab:** <Hinglish mein ek line>
 **🧠 Yaad kaise rakhein:** <ek line — root, sound-alike, ya koi pakki trick>
 **✍️ Example:** <ek chhota English sentence>
-**🔁 Milte-julte:** <2-3 synonym> | **↔️ Ulta:** <1-2 antonym>
+**🔁 Milte-julte:** <2-3 synonym>
+
+**↔️ Ulta:** <1-2 antonym>
 
 Niyam:
+- Har hissa ALAG LINE par, aur do hisson ke beech ek KHALI line chhodo.
 - Hinglish (roman script), seedhi baat, 90 shabd se zyada nahi.
 - Book ka diya hua matlab hi sahi maano.
 - Koi bhoomika nahi, koi extra line nahi.`;

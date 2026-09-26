@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import "../sprint.css";
 import Markdown from "@/components/Markdown";
-import { getMarks, removeMark, clearMarks, getAns } from "@/lib/sprint";
+import { getMarks, removeMark, clearMarks, getAns, answerMd } from "@/lib/sprint";
 
 const LETTER = ["A", "B", "C", "D", "E"];
 
@@ -51,7 +51,7 @@ function MarkRow({ m, onDel }) {
 
       {open ? (
         <div className="sp-ans mt-8">
-          {ds ? <Markdown>{ds}</Markdown> : <div className="sp-wait">DeepSeek ka jawab is question ke liye save nahi hai.</div>}
+          {ds ? <Markdown>{answerMd(ds)}</Markdown> : <div className="sp-wait">DeepSeek ka jawab is question ke liye save nahi hai.</div>}
           {m.solImg ? <img src={m.solImg} alt="solution" className="sp-img" /> : null}
           {m.explanation ? <><h4 className="mt-8">📖 Asli</h4><Markdown>{m.explanation}</Markdown></> : null}
         </div>

@@ -230,3 +230,12 @@
   cursor: pointer;
 }
 .sp-set__del:hover { border-color: var(--danger); }
+
+/* Subject ke button par uski ginti — "kitne ho gaye / kitne hain". */
+.sp-pick__n {
+  display: block;
+  font-size: 0.74em;
+  font-weight: 400;
+  opacity: 0.75;
+  margin-top: 1px;
+}

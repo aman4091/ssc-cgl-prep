@@ -18,15 +18,16 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./sprint.css";
-import { ALL_SUBJECTS, loadAllSubject, loadOnePart, partsOf, sourcesFor } from "@/lib/allbank";
+import { ALL_SUBJECTS, loadAllSubject, loadOnePart, partsOf, sourcesFor, countsFor } from "@/lib/allbank";
 import { vocabPool } from "@/lib/vocabpool";
+import { TYPES as VOCAB_TYPES } from "@/lib/vocab";
 import { sprintAnswer } from "@/lib/client-ai";
 import SprintCard from "@/components/SprintCard";
 import SprintAnswer from "@/components/SprintAnswer";
 import {
   pickNext, markDone, doneCount, getAns, putAns, getMarks,
   qText, qOpts, qCorrect, sHash, toggleMark, clearDone, isVocab,
-  getSets, saveSet, removeSet, newSetId, byHashes,
+  getSets, saveSet, removeSet, newSetId, byHashes, doneBySlug,
 } from "@/lib/sprint";
 
 const SECS = 30;      // ek question par itne second
@@ -39,6 +40,18 @@ const COUNTS = [50, 100, 120];
 const VOCAB = { slug: "vocab", label: "Vocab", icon: "🔤" };
 const PICKS = [...ALL_SUBJECTS, VOCAB, { slug: "mix", label: "Mix — sab subject", icon: "🎲" }];
 const NO_BOOKS = new Set(["mix", "vocab"]);
+
+// Vocab ki "book" uska TYPE hai — OWS / Idiom / Vocab. Khali = teeno mila-jula.
+const VOCAB_KINDS = [{ key: "", label: "— Sab mila-jula —" }, ...VOCAB_TYPES.map((t) => ({ key: t.key, label: `${t.icon} ${t.label}` }))];
+
+function shuffled(list) {
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 function labelOf(slug) { return (PICKS.find((x) => x.slug === slug) || {}).label || slug; }
 
@@ -56,7 +69,7 @@ async function loadMix(onStep) {
     let moved = false;
     for (let i = 0; i < lists.length; i++) {
       const q = lists[i].qs[at[i]++];
-      if (q) { out.push({ ...q, _subj: lists[i].meta.label }); moved = true; }
+      if (q) { out.push({ ...q, _slug: lists[i].meta.slug, _subj: lists[i].meta.label }); moved = true; }
     }
     if (!moved) break;
   }
@@ -93,11 +106,28 @@ export default function SprintPage() {
   const [doneN, setDoneN] = useState(0);
   const [markN, setMarkN] = useState(0);
   const [sets, setSets] = useState([]);
+  // Har subject ke kitne question hain aur kitne ho chuke. Total index.json se
+  // aata hai (question fetch kiye bina), aur "ho gaye" apne hisaab se.
+  const [totals, setTotals] = useState({});
+  const [doneMap, setDoneMap] = useState({});
 
   const alive = useRef(true);
   useEffect(() => () => { alive.current = false; }, []);
 
   useEffect(() => { setDoneN(doneCount()); setMarkN(getMarks().length); setSets(getSets()); }, []);
+  useEffect(() => { setDoneMap(doneBySlug()); }, [doneN]);
+  useEffect(() => {
+    let ok = true;
+    (async () => {
+      for (const x of ALL_SUBJECTS) {
+        const c = await countsFor(x.slug).catch(() => null);
+        if (!ok) return;
+        if (c) setTotals((t) => ({ ...t, [x.slug]: c.total }));
+      }
+      if (ok) setTotals((t) => ({ ...t, vocab: vocabPool().length }));
+    })();
+    return () => { ok = false; };
+  }, []);
 
   // Subject badla to book/chapter dono khali. Book chuni to uske chapter
   // (ginti ke saath) list mein — question abhi bhi fetch nahi hote, sirf
@@ -162,17 +192,25 @@ export default function SprintPage() {
   // sambhala hua set dono isi raaste se chalein.
   const loadList = useCallback(async (s, b, c) => {
     if (s === "vocab") {
-      return vocabPool().map((v) => ({ ...v, _kind: "vocab", _subj: "Vocab", _srcLabel: "Vocab", _chapter: v.label || "" }));
+      // `b` yahan type hai (ows / idiom / vocab), khali = teeno.
+      const all = vocabPool().filter((v) => !b || v.type === b);
+      // Vocab pool alphabet ke kram mein aata hai — isliye pehle 100 mein ek
+      // hi tarah ke word aa jaate the ("sirf idiom hi aa rahe hain"). Kram
+      // random rakhne se har set mila-jula banta hai.
+      return shuffled(all).map((v) => ({
+        ...v, _kind: "vocab", _slug: "vocab", _subj: "Vocab",
+        _srcLabel: "Vocab", _chapter: v.label || "",
+      }));
     }
     if (b) {
       const qs = await loadOnePart(s, b, c);
       const meta = ALL_SUBJECTS.find((x) => x.slug === s);
-      return qs.map((q) => ({ ...q, _subj: meta ? meta.label : "" }));
+      return qs.map((q) => ({ ...q, _slug: s, _subj: meta ? meta.label : "" }));
     }
     if (s === "mix") return loadMix(setNote);
     const meta = ALL_SUBJECTS.find((x) => x.slug === s);
     const qs = await loadAllSubject(s, (d, t) => setNote(`${meta.label} — ${d}/${t} chapter`));
-    return qs.map((q) => ({ ...q, _subj: meta.label }));
+    return qs.map((q) => ({ ...q, _slug: s, _subj: meta.label }));
   }, []);
 
   // `set` diya ho to wahi purana set dobara — warna agle `count` naye.
@@ -200,7 +238,11 @@ export default function SprintPage() {
     }
     if (!set) {
       // Naya set sambhal lo — taaki yahi 100 baad mein dobara chal sakein.
-      const bookLabel = b ? (books.find((x) => x.id === b) || {}).label : "";
+      const bookLabel = b
+        ? (s === "vocab"
+          ? (VOCAB_KINDS.find((x) => x.key === b) || {}).label
+          : (books.find((x) => x.id === b) || {}).label)
+        : "";
       const chapName = c ? (parts.find((x) => x.slug === c) || {}).name : "";
       const when = new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short" });
       saveSet({
@@ -430,6 +472,13 @@ export default function SprintPage() {
               onClick={() => setSlug(s.slug)}
             >
               {s.icon} {s.label}
+              {s.slug !== "mix" && (
+                <span className="sp-pick__n">
+                  {totals[s.slug] == null
+                    ? "…"
+                    : `${(doneMap[s.slug] || 0).toLocaleString("en-IN")} / ${totals[s.slug].toLocaleString("en-IN")}`}
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -437,6 +486,21 @@ export default function SprintPage() {
         {/* Poora subject bhi ho sakta hai aur "sirf GKTricks ka Statics" bhi.
             Question yahan fetch nahi hote — sirf har bank ka index padha
             jata hai, isliye ye list turant bhar jati hai. */}
+        {slug === "vocab" ? (
+          <>
+            <h3 className="mt-16">2. Kis tarah ke word</h3>
+            <div className="sp-selects">
+              <label className="sp-sel">
+                <span>Type</span>
+                <select value={book} onChange={(e) => setBook(e.target.value)}>
+                  {VOCAB_KINDS.map((k) => <option key={k.key} value={k.key}>{k.label}</option>)}
+                </select>
+              </label>
+            </div>
+            <p className="hint mt-8">Kram hamesha random rehta hai — ek hi tarah ke word ek saath nahi aayenge.</p>
+          </>
+        ) : null}
+
         {!NO_BOOKS.has(slug) ? (
           <>
             <h3 className="mt-16">2. Kahan se <span className="hint">(na chuno to poora subject)</span></h3>
@@ -459,7 +523,7 @@ export default function SprintPage() {
           </>
         ) : null}
 
-        <h3 className="mt-16">{NO_BOOKS.has(slug) ? "2" : "3"}. Kitne question</h3>
+        <h3 className="mt-16">{slug === "mix" ? "2" : "3"}. Kitne question</h3>
         <div className="sp-picks">
           {COUNTS.map((c) => (
             <button

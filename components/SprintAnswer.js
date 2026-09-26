@@ -7,6 +7,7 @@
 
 import { useEffect, useState } from "react";
 import Markdown from "./Markdown";
+import { answerMd } from "@/lib/sprint";
 
 export default function SprintAnswer({ qKey, ds, original, solImg, loading, err }) {
   const [tab, setTab] = useState("ds");
@@ -34,7 +35,7 @@ export default function SprintAnswer({ qKey, ds, original, solImg, loading, err 
       </div>
 
       {tab === "ds" ? (
-        ds ? <div className="sp-ans"><Markdown>{ds}</Markdown></div>
+        ds ? <div className="sp-ans"><Markdown>{answerMd(ds)}</Markdown></div>
         : err ? <div className="sp-wait">⚠️ {err}</div>
         : <div className="sp-wait">{loading ? "🐋 ban raha hai…" : "🐋 line mein hai — thodi der mein aa jayega."}</div>
       ) : (

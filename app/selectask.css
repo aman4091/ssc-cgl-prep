@@ -262,3 +262,7 @@
   box-shadow: -4px 0 14px rgba(0, 0, 0, 0.16);
 }
 .sa-reopen:hover { background: var(--glass-bg-strong); }
+
+/* ⚡ Sprint poori screen leta hai — us daud ke beech ye button raaste mein
+   aata hai. Sprint khatam hote hi apne aap wapas. */
+body:has(.sp-wrap) .sa-reopen { display: none; }
