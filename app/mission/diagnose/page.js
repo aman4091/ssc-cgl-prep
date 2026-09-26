@@ -66,7 +66,7 @@ export default function MissionDiagnosePage() {
             </li>
             <li><strong>Round B — turant, bina time limit:</strong> jo chhoote the unhe solve karo, stopwatch se har Q ka time likho.</li>
             <li><strong>Gino:</strong> X = chhoote jo ≤90 sec mein sahi bane (speed loss) · Y = sahi bane par &gt;90 sec (method lamba) · Z = bina limit bhi nahi bane (concept gap).</li>
-            <li><strong>Calc sub-test — 5 min, 20 calculation</strong> (<Link href="/calculation">/calculation</Link>): 2-digit × 2-digit, 30 tak squares, fraction ↔ %, 3-digit ÷ 1-digit, approx %.</li>
+            <li><strong>Calc sub-test — 5 min, 20 calculation</strong> (khud kaagaz par): 2-digit × 2-digit, 30 tak squares, fraction ↔ %, 3-digit ÷ 1-digit, approx %.</li>
           </ol>
         </div>
       </section>

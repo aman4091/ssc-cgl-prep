@@ -11,7 +11,7 @@
 // aati hai, har baar thoda aur door (3, 4, 5 … card baad). Bahar nikalte hi
 // poori list — dhoondo, hatao, saaf karo.
 
-import "@/app/ca-revision/carev.css";
+import "@/app/carev.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { getPoints, removePoint, clearPoints } from "@/lib/sscpoints";
 import { clearSession } from "@/lib/recallsession";

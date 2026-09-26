@@ -4094,3 +4094,23 @@ body.exam-on .hresume { display: none; }
   display: block; margin-top: 12px; padding-top: 10px; cursor: default;
   border-top: 1px solid var(--line); text-decoration: none; font-size: 0.95rem; line-height: 1.6;
 }
+
+/* 📝 Notes ke page ka paste-box — ✨ dabate hi wahin khul jata hai. Jo yahan
+   sambhalta hai wo /notes/paste par book · chapter · page ke naam se jama
+   hota hai. */
+.nt-paste {
+  border: 1px solid var(--accent);
+  background: var(--accent-wash);
+  border-radius: 12px;
+  padding: 12px;
+  margin: 12px 0;
+}
+.nt-paste__hd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+.nt-paste__hd .nt-meta { margin-left: auto; }
+.nt-paste textarea { width: 100%; resize: vertical; line-height: 1.6; }

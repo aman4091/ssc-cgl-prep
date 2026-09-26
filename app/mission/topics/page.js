@@ -36,7 +36,7 @@ export default function MissionTopicsPage() {
           <div className="hint" style={{ marginTop: 4 }}>Kyun: tumhari mistake-book mein Mensuration-3D 53 aur Geometry 53 galtiyan — ye time bhi khaate hain, negative bhi dete hain.</div>
         </div>
         <div className="row" style={{ gap: 6 }}>
-          <L href="/pyq/maths2025">Maths 2025 bank</L><L href="/notes/brahmastra">📐 Brahmastra formulas</L><L href="/calculation">🧮 Calc drill</L><L href="/mission/diagnose">🩺 Speed ya concept?</L>
+          <L href="/pyq/maths2025">Maths 2025 bank</L><L href="/notes/brahmastra">📐 Brahmastra formulas</L><L href="/mission/diagnose">🩺 Speed ya concept?</L>
         </div>
       </section>
 

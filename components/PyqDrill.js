@@ -17,7 +17,7 @@
 // 3/4/5… wale gap ke baad wahin wapas.
 
 import { cloneElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import "@/app/ca-revision/carev.css";
+import "@/app/carev.css";
 import { getDrill, getOrder, saveOrder, markDrill, qKeyOf, KNOWN_GAP, missGap } from "@/lib/pyqdrill";
 import { hashStr } from "@/lib/syncitems";
 

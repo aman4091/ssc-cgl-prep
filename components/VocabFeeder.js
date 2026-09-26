@@ -41,7 +41,7 @@ function subjectHere() {
     const s = q.get("subject");
     return s && s !== "all" ? s : "math";
   }
-  if (p.startsWith("/current-affairs") || p.startsWith("/ca-revision")) return "ca";
+  if (p.startsWith("/current-affairs")) return "ca";
   if (p.startsWith("/vocab") || p.startsWith("/new-words")) return "english";
   if (p.startsWith("/pyq/all/")) return p.split("/")[3] || "";
   if (p.startsWith("/pyq/mathbank") || p.startsWith("/pyq/maths2025")) return "math";

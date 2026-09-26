@@ -1,6 +1,6 @@
 "use client";
 
-import "@/app/ca-revision/carev.css";
+import "@/app/carev.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FACT_SECS, GAPS, DAILY_CAP, REV_NOTE, factView, getFacts, addFact, removeFact, clearFacts, dueFacts, dueTotal, dueByGap, reviewFact, topicsInUse } from "@/lib/missionfacts";
 import { clearSession } from "@/lib/recallsession";

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
 import { NOTES_PROMPT } from "@/lib/notesprompt";
-import { setLastSource } from "@/lib/pastednotes";
+import { setLastSource, getNote, saveNote } from "@/lib/pastednotes";
 import { readImageText } from "@/lib/client-ai";
 import { startNotesQuiz } from "@/lib/notesquiz";
 import { hinglishKey, getHinglish, setHinglish, subscribeHinglish } from "@/lib/noteshinglish";
@@ -100,7 +100,7 @@ async function copyText(text) {
 // yaani wahi question wala GS prompt jisme likha hai "kahani/background mat
 // likho" — notes ke page ke liye bekaar. Ab wahi prompt jo PC overlay ke 📝
 // button par hai: page ke har zaroori point ki ek line.
-function GeminiBtn({ text, subject, src }) {
+function GeminiBtn({ text, subject, src, onAfter }) {
   const [done, setDone] = useState(false);
   const go = async () => {
     const body = String(text || "").trim();
@@ -112,6 +112,8 @@ function GeminiBtn({ text, subject, src }) {
     setDone(true);
     setTimeout(() => setDone(false), 1500);
     try { window.open(aiSiteUrl(getSettings().askAiSite), "_blank", "noopener,noreferrer"); } catch { /* ignore */ }
+    // AI se laut kar yahin paste karna hai — isliye box abhi se khol do.
+    if (onAfter) onAfter();
   };
   return (
     <button
@@ -121,6 +123,41 @@ function GeminiBtn({ text, subject, src }) {
     >
       {done ? "✓" : "✨"}
     </button>
+  );
+}
+
+// 📝 Is page ka paste-box — wahin, page ke neeche. Jo yahan sambhalta hai
+// wo "📝 Mere one-liner" (/notes/paste) par book · chapter · page ke naam
+// se ek jagah jama hota rehta hai.
+function PasteBox({ src, onClose }) {
+  const [text, setText] = useState(() => (getNote(src)?.text || ""));
+  const [saved, setSaved] = useState(false);
+  return (
+    <div className="nt-paste">
+      <div className="nt-paste__hd">
+        <b>📝 One-liner yahan paste karo</b>
+        <span className="nt-meta">{src.topic} · page {src.page}</span>
+        <button className="nt-gemini" onClick={onClose} aria-label="Band karo">✕</button>
+      </div>
+      <textarea
+        className="input"
+        rows={7}
+        value={text}
+        onChange={(e) => { setText(e.target.value); setSaved(false); }}
+        placeholder="AI se aaye one-liner yahan paste karo…"
+      />
+      <div className="row mt-8" style={{ gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+        <button
+          className="btn btn--primary btn--sm"
+          onClick={() => { saveNote(src, text); setSaved(true); }}
+          disabled={!text.trim()}
+        >💾 Sambhalo</button>
+        {saved && <span className="nt-meta" style={{ color: "var(--success)" }}>✓ sambhal liya</span>}
+        <a href="/notes/paste" className="btn btn--ghost btn--sm" style={{ marginLeft: "auto" }}>
+          📝 Saare one-liner
+        </a>
+      </div>
+    </div>
   );
 }
 
@@ -382,6 +419,8 @@ export default function NotesReader({ book }) {
   // — `slug.startsWith("parmar-")` — isliye koi nayi book jodne par button
   // chupchaap gayab rehta tha.
   const hasHinglish = !!book?.hinglish;
+  // 📝 Kis page ka paste-box khula hai (✨ dabane par apne aap khulta hai).
+  const [pnPage, setPnPage] = useState(null);
   const [hxPage, setHxPage] = useState(null);
   const [hxEdit, setHxEdit] = useState(false);
   const [hxText, setHxText] = useState("");
@@ -520,7 +559,16 @@ export default function NotesReader({ book }) {
                     text={pageText(p)}
                     subject={book.subject}
                     src={{ book: book.slug, bookTitle: book.title, eyebrow: book.eyebrow, topic: p.topic, page: p.book_page }}
+                    onAfter={() => setPnPage(p.book_page)}
                   />
+                  {/* ✨ ke bina bhi box kholne ke liye. Icon 📥 hai, 📝 nahi —
+                      📝 pehle se quiz wala button hai, do ek jaise nishaan bhram
+                      paida karte hain. */}
+                  <button
+                    className="nt-gemini"
+                    onClick={() => setPnPage((x) => (x === p.book_page ? null : p.book_page))}
+                    title="Is page ke one-liner paste karo"
+                  >📥</button>
                   <NotesFactsBtn book={book} page={p} text={pageText(p)} />
                   <span className="nt-meta">page {p.book_page}</span>
                 </span>
@@ -529,6 +577,12 @@ export default function NotesReader({ book }) {
                 <div className="nt-cont">… pichhle page se aage</div>
               )}
               <div dangerouslySetInnerHTML={{ __html: renderBlocks(p.blocks, hashHierarchy) }} />
+              {pnPage === p.book_page && (
+                <PasteBox
+                  src={{ book: book.slug, bookTitle: book.title, eyebrow: book.eyebrow, topic: p.topic, page: p.book_page }}
+                  onClose={() => setPnPage(null)}
+                />
+              )}
               {p.continues_to_next && (
                 <div className="nt-cont">agle page pe jaari …</div>
               )}
