@@ -164,3 +164,66 @@
     border-radius: 16px 16px 0 0;
   }
 }
+
+/* ── tasveer ───────────────────────────────────────────────────────────── */
+.sa-imgrow {
+  display: flex;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.sa-imgbtn {
+  border: 1px solid var(--line);
+  background: var(--glass-bg);
+  color: var(--text-1);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.sa-imgbtn:hover { background: var(--glass-bg-strong); }
+.sa-imgbtn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* Ek line mein, baayein-dayein khisak kar — panel ki lambai photo nahi khati. */
+.sa-imgs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-2);
+}
+.sa-imgs a { flex: 0 0 auto; }
+.sa-imgs img {
+  height: 104px;
+  width: auto;
+  max-width: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: #fff;
+  display: block;
+}
+
+/* Chhupe hue panel ko wapas bulane wala chhota button — dayein kinare par. */
+.sa-reopen {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 425;
+  border: 1px solid var(--line);
+  border-right: 0;
+  background: var(--bg-1);
+  color: var(--text-1);
+  border-radius: 12px 0 0 12px;
+  padding: 12px 10px;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: -4px 0 14px rgba(0, 0, 0, 0.16);
+}
+.sa-reopen:hover { background: var(--glass-bg-strong); }

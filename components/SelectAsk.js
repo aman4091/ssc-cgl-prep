@@ -3,8 +3,12 @@
 // 💬 Site par kahin bhi text select karo — teen cheezein saamne aa jaati hain:
 //
 //   💬 Poochho   — dayein taraf panel khulta hai, usi text par baatcheet
+//   🖼 Tasveer   — Wikipedia/Commons se photo, usi panel mein (muft, bina key)
 //   🔍 Google    — nayi tab mein google.com par wahi text
 //   📋 Copy      — clipboard mein
+//
+// AI ke paas tasveer nahi hoti — wo sirf likhta hai. Isliye photo Wikipedia
+// se aati hai; wahan ka API muft hai aur browser se seedha chalta hai.
 //
 // Subject apne aap page ke pate se aa jata hai (Pinnacle Maths khula hai to
 // Maths), par panel ke sar par uska chhota dropdown bhi hai — galat lage to
@@ -15,12 +19,19 @@
 //     ke BAAD kholte to browser use popup maan kar chup-chaap rok deta.
 //   • Patti selection ke upar tairti hai (fixed), aur scroll karte hi gayab —
 //     warna wo apni purani jagah par chipki reh jati thi.
+//   • Panel ke BAHAR click karne par wo chhup jata hai, par baatcheet mitti
+//     nahi — dayein kinare par 💬 wala chhota button use wapas le aata hai.
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import "@/app/selectask.css";
 import Markdown from "./Markdown";
 import { askSelection } from "@/lib/client-ai";
+import { searchImages } from "@/lib/webimages";
+
+// 💬 Poochho dabate hi yahi sawaal apne aap chala jata hai — pehle kuch
+// likhna nahi padta. Uske baad jo poochhna ho, wahi panel mein poochho.
+const AUTO_Q = "Isko samjhao — seedha, chhota aur kaam ka.";
 
 const SUBJECTS = [
   { v: "", label: "Apne aap" },
@@ -63,6 +74,13 @@ export default function SelectAsk() {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState("");
   const [full, setFull] = useState(false);   // quote khula hai ya kata hua
+  const [imgs, setImgs] = useState(null);    // null = abhi maange nahi
+  const [imgBusy, setImgBusy] = useState(false);
+  const [imgErr, setImgErr] = useState("");
+  // 🖼 button se panel khula ho to tasveer apne aap maang lete hain —
+  // openPanel state reset karta hai, isliye kaam uske BAAD hona chahiye.
+  const [imgWanted, setImgWanted] = useState("");
+  const [autoQ, setAutoQ] = useState("");
   const msgsRef = useRef(null);
   const boxRef = useRef(null);
 
@@ -97,29 +115,65 @@ export default function SelectAsk() {
     };
   }, [read]);
 
+  // Panel ke bahar click → chhup jao. Patti khud alag hai (uspar click karke
+  // hi panel khulta hai), isliye use chhoda hua hai. `mousedown` isliye ki
+  // text select karte waqt bhi panel raaste se hat jaye.
+  useEffect(() => {
+    if (!open) return undefined;
+    const onDown = (e) => { if (!insideOwn(e.target)) setOpen(false); };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("touchstart", onDown);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("touchstart", onDown);
+    };
+  }, [open]);
+
   // Naya jawab aaya → neeche tak scroll.
   useEffect(() => {
     if (msgsRef.current) msgsRef.current.scrollTop = msgsRef.current.scrollHeight;
   }, [msgs, busy]);
 
-  const openPanel = useCallback((text) => {
+  const openPanel = useCallback((text, auto) => {
     setSel(text);
     setSubject(subjectFromPath(path));
     setMsgs([]);
     setErr("");
     setQ("");
     setFull(false);
+    setImgs(null);
+    setImgErr("");
+    setAutoQ(auto ? AUTO_Q : "");
     setOpen(true);
     setBar(null);
     setTimeout(() => boxRef.current?.focus(), 60);
   }, [path]);
 
-  const send = useCallback(async () => {
-    const text = q.trim();
+  const loadImgs = useCallback(async () => {
+    if (imgBusy) return;
+    setImgBusy(true);
+    setImgErr("");
+    try {
+      const list = await searchImages(sel);
+      setImgs(list);
+      if (!list.length) setImgErr("Is naam par Wikipedia par koi tasveer nahi mili. 🔍 Google dabao.");
+    } catch (e) {
+      setImgs([]);
+      setImgErr(e.message);
+    } finally { setImgBusy(false); }
+  }, [sel, imgBusy]);
+
+  // 🖼 button se aaye ho to panel khulte hi tasveer maang lo.
+  useEffect(() => {
+    if (!open || !imgWanted || imgWanted !== sel) return;
+    setImgWanted("");
+    loadImgs();
+  }, [open, imgWanted, sel, loadImgs]);
+
+  const runAsk = useCallback(async (text) => {
     if (!text || busy) return;
     const history = msgs;
     setMsgs((m) => [...m, { role: "user", text }]);
-    setQ("");
     setErr("");
     setBusy(true);
     try {
@@ -130,7 +184,22 @@ export default function SelectAsk() {
     } finally {
       setBusy(false);
     }
-  }, [q, busy, msgs, sel, subject]);
+  }, [busy, msgs, sel, subject]);
+
+  const send = useCallback(() => {
+    const text = q.trim();
+    if (!text) return;
+    setQ("");
+    runAsk(text);
+  }, [q, runAsk]);
+
+  // Panel 💬 se khula ho to pehla sawaal apne aap chala jata hai.
+  useEffect(() => {
+    if (!open || !autoQ) return;
+    const t = autoQ;
+    setAutoQ("");
+    runAsk(t);
+  }, [open, autoQ, runAsk]);
 
   return (
     <>
@@ -142,7 +211,11 @@ export default function SelectAsk() {
           // pehle hi default roko, warna `bar.text` khaali ho jata.
           onMouseDown={(e) => e.preventDefault()}
         >
-          <button type="button" onClick={() => openPanel(bar.text)}>💬 Poochho</button>
+          <button type="button" onClick={() => openPanel(bar.text, true)}>💬 Poochho</button>
+          {/* Panel wahi khulta hai — bas tasveer bhi maang leta hai. */}
+          {/* Sirf tasveer chahiye to AI ko bulane ki zaroorat nahi — isliye
+              yahan wo apne aap wala sawaal nahi jata. */}
+          <button type="button" onClick={() => { openPanel(bar.text, false); setImgWanted(bar.text); }}>🖼 Tasveer</button>
           <button
             type="button"
             onClick={() => {
@@ -162,6 +235,16 @@ export default function SelectAsk() {
         </div>
       ) : null}
 
+      {/* Chhupa hua panel — baatcheet waise ki waise pari hai. */}
+      {!open && sel ? (
+        <button
+          type="button"
+          className="sa-reopen"
+          onClick={() => setOpen(true)}
+          title="Poochho wala panel wapas kholo"
+        >💬</button>
+      ) : null}
+
       {open ? (
         <aside className="sa-panel">
           <div className="sa-head">
@@ -179,6 +262,31 @@ export default function SelectAsk() {
           >
             {sel}
           </div>
+
+          <div className="sa-imgrow">
+            <button type="button" className="sa-imgbtn" onClick={loadImgs} disabled={imgBusy}>
+              {imgBusy ? "🖼 dhoondh raha hai…" : imgs ? "🖼 dobara dhoondho" : "🖼 Tasveer dikhao"}
+            </button>
+            {/* AI ke paas tasveer nahi hoti; Wikipedia par na mile to Google
+                Images hi aakhri raasta hai. */}
+            <button
+              type="button"
+              className="sa-imgbtn"
+              onClick={() => window.open("https://www.google.com/search?tbm=isch&q=" + encodeURIComponent(sel), "_blank", "noopener")}
+            >🔍 Google Images</button>
+          </div>
+
+          {imgErr ? <div className="sa-err" style={{ padding: "0 12px 8px" }}>{imgErr}</div> : null}
+
+          {imgs && imgs.length ? (
+            <div className="sa-imgs">
+              {imgs.map((im) => (
+                <a key={im.full} href={im.page || im.full} target="_blank" rel="noreferrer" title={im.title}>
+                  <img src={im.thumb} alt={im.title} loading="lazy" />
+                </a>
+              ))}
+            </div>
+          ) : null}
 
           <div className="sa-msgs" ref={msgsRef}>
             {msgs.length === 0 && !busy ? (
