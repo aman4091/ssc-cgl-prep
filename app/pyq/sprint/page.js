@@ -19,17 +19,28 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./sprint.css";
 import { ALL_SUBJECTS, loadAllSubject, loadOnePart, partsOf, sourcesFor } from "@/lib/allbank";
+import { vocabPool } from "@/lib/vocabpool";
 import { sprintAnswer } from "@/lib/client-ai";
 import SprintCard from "@/components/SprintCard";
 import SprintAnswer from "@/components/SprintAnswer";
 import {
   pickNext, markDone, doneCount, getAns, putAns, getMarks,
-  qText, qOpts, qCorrect, sHash, toggleMark, clearDone,
+  qText, qOpts, qCorrect, sHash, toggleMark, clearDone, isVocab,
+  getSets, saveSet, removeSet, newSetId, byHashes,
 } from "@/lib/sprint";
 
 const SECS = 30;      // ek question par itne second
 const WARM = 10;      // itne jawab banne ke baad daud shuru
 const COUNTS = [50, 100, 120];
+
+// 🔤 Vocab bank ke bahar hai (lib/vocabpool) — wahan sawaal-jawab nahi, ek
+// word aur uska matlab hota hai. Isliye uski apni entry, aur uske liye
+// book/chapter ka koi matlab nahi.
+const VOCAB = { slug: "vocab", label: "Vocab", icon: "🔤" };
+const PICKS = [...ALL_SUBJECTS, VOCAB, { slug: "mix", label: "Mix — sab subject", icon: "🎲" }];
+const NO_BOOKS = new Set(["mix", "vocab"]);
+
+function labelOf(slug) { return (PICKS.find((x) => x.slug === slug) || {}).label || slug; }
 
 // "Mix" = chaaron subject ek ke baad ek, asli paper jaisa. Round-robin isliye
 // ki 100 mein se 90 ek hi subject ke na ho jayein.
@@ -81,16 +92,17 @@ export default function SprintPage() {
   const [tally, setTally] = useState({ right: 0, wrong: 0 });
   const [doneN, setDoneN] = useState(0);
   const [markN, setMarkN] = useState(0);
+  const [sets, setSets] = useState([]);
 
   const alive = useRef(true);
   useEffect(() => () => { alive.current = false; }, []);
 
-  useEffect(() => { setDoneN(doneCount()); setMarkN(getMarks().length); }, []);
+  useEffect(() => { setDoneN(doneCount()); setMarkN(getMarks().length); setSets(getSets()); }, []);
 
   // Subject badla to book/chapter dono khali. Book chuni to uske chapter
   // (ginti ke saath) list mein — question abhi bhi fetch nahi hote, sirf
   // index padha jata hai.
-  const books = useMemo(() => (slug === "mix" ? [] : sourcesFor(slug)), [slug]);
+  const books = useMemo(() => (NO_BOOKS.has(slug) ? [] : sourcesFor(slug)), [slug]);
   useEffect(() => { setBook(""); setChap(""); setParts([]); }, [slug]);
   useEffect(() => {
     let ok = true;
@@ -132,6 +144,7 @@ export default function SprintPage() {
           options: qOpts(q),
           correct: qCorrect(q),
           subject: q._subj || "",
+          kind: isVocab(q) ? "vocab" : "",
         });
         if (!alive.current) return;
         putAns(q, answer);
@@ -145,34 +158,58 @@ export default function SprintPage() {
     }
   }, []);
 
-  const start = useCallback(async () => {
+  // Kahan se question laane hain — ek hi jagah, taaki naya sprint aur
+  // sambhala hua set dono isi raaste se chalein.
+  const loadList = useCallback(async (s, b, c) => {
+    if (s === "vocab") {
+      return vocabPool().map((v) => ({ ...v, _kind: "vocab", _subj: "Vocab", _srcLabel: "Vocab", _chapter: v.label || "" }));
+    }
+    if (b) {
+      const qs = await loadOnePart(s, b, c);
+      const meta = ALL_SUBJECTS.find((x) => x.slug === s);
+      return qs.map((q) => ({ ...q, _subj: meta ? meta.label : "" }));
+    }
+    if (s === "mix") return loadMix(setNote);
+    const meta = ALL_SUBJECTS.find((x) => x.slug === s);
+    const qs = await loadAllSubject(s, (d, t) => setNote(`${meta.label} — ${d}/${t} chapter`));
+    return qs.map((q) => ({ ...q, _subj: meta.label }));
+  }, []);
+
+  // `set` diya ho to wahi purana set dobara — warna agle `count` naye.
+  const start = useCallback(async (set) => {
+    const s = set ? set.slug : slug;
+    const b = set ? (set.book || "") : book;
+    const c = set ? (set.chap || "") : chap;
     setPhase("loading");
-    setNote("Questions load ho rahe hain…");
+    setNote(set ? `"${set.label}" wapas laa rahe hain…` : "Questions load ho rahe hain…");
     let list;
     try {
-      if (book) {
-        const b = books.find((x) => x.id === book);
-        const c = parts.find((x) => x.slug === chap);
-        setNote(`${b ? b.label : ""}${c ? " · " + c.name : ""} load ho raha hai…`);
-        const qs = await loadOnePart(slug, book, chap);
-        const meta = ALL_SUBJECTS.find((x) => x.slug === slug);
-        list = qs.map((q) => ({ ...q, _subj: meta ? meta.label : "" }));
-      } else if (slug === "mix") list = await loadMix(setNote);
-      else {
-        const meta = ALL_SUBJECTS.find((s) => s.slug === slug);
-        const qs = await loadAllSubject(slug, (d, t) => setNote(`${meta.label} — ${d}/${t} chapter`));
-        list = qs.map((q) => ({ ...q, _subj: meta.label }));
-      }
+      list = await loadList(s, b, c);
     } catch (e) {
       setPhase("setup");
       setNote("Load nahi hue: " + e.message);
       return;
     }
-    const pick = pickNext(list, count);
+    const pick = set ? byHashes(list, set.hashes) : pickNext(list, count);
     if (!pick.length) {
       setPhase("setup");
-      setNote("Yahan ke saare question sprint mein aa chuke. Neeche se hisaab saaf kar sakte ho, ya doosra chapter chuno.");
+      setNote(set
+        ? "Is set ke question ab bank mein nahi mile."
+        : "Yahan ke saare question sprint mein aa chuke. Neeche se hisaab saaf kar sakte ho, ya doosra chapter chuno.");
       return;
+    }
+    if (!set) {
+      // Naya set sambhal lo — taaki yahi 100 baad mein dobara chal sakein.
+      const bookLabel = b ? (books.find((x) => x.id === b) || {}).label : "";
+      const chapName = c ? (parts.find((x) => x.slug === c) || {}).name : "";
+      const when = new Date().toLocaleDateString("en-IN", { day: "numeric", month: "short" });
+      saveSet({
+        id: newSetId(),
+        label: [labelOf(s), bookLabel, chapName].filter(Boolean).join(" · ") + ` · ${pick.length} Q · ${when}`,
+        slug: s, book: b, chap: c,
+        hashes: pick.map(sHash),
+      });
+      setSets(getSets());
     }
     setBatch(pick);
     setAns({});
@@ -183,7 +220,7 @@ export default function SprintPage() {
     setPhase("prep");
     setNote("");
     fetchAll(pick);
-  }, [slug, book, chap, books, parts, count, fetchAll]);
+  }, [slug, book, chap, books, parts, count, fetchAll, loadList]);
 
   const cur = batch[pos] || null;
   const curH = cur ? sHash(cur) : "";
@@ -305,7 +342,7 @@ export default function SprintPage() {
               ds={ans[curH] || ""}
               err={errs[curH] || ""}
               loading={busy === curH}
-              original={cur.explanation || cur.solution || ""}
+              original={isVocab(cur) ? (cur.meaning || cur.def || "") : (cur.explanation || cur.solution || "")}
               solImg={cur.solImg || ""}
             />
           </div>
@@ -385,7 +422,7 @@ export default function SprintPage() {
       <section className="section">
         <h3>1. Subject</h3>
         <div className="sp-picks">
-          {[...ALL_SUBJECTS, { slug: "mix", label: "Mix — sab subject", icon: "🎲" }].map((s) => (
+          {PICKS.map((s) => (
             <button
               key={s.slug}
               type="button"
@@ -400,14 +437,14 @@ export default function SprintPage() {
         {/* Poora subject bhi ho sakta hai aur "sirf GKTricks ka Statics" bhi.
             Question yahan fetch nahi hote — sirf har bank ka index padha
             jata hai, isliye ye list turant bhar jati hai. */}
-        {slug !== "mix" ? (
+        {!NO_BOOKS.has(slug) ? (
           <>
             <h3 className="mt-16">2. Kahan se <span className="hint">(na chuno to poora subject)</span></h3>
             <div className="sp-selects">
               <label className="sp-sel">
                 <span>Book</span>
                 <select value={book} onChange={(e) => setBook(e.target.value)}>
-                  <option value="">— Poora {ALL_SUBJECTS.find((x) => x.slug === slug)?.label} —</option>
+                  <option value="">— Poora {labelOf(slug)} —</option>
                   {books.map((b) => <option key={b.id} value={b.id}>{b.icon} {b.label}</option>)}
                 </select>
               </label>
@@ -422,7 +459,7 @@ export default function SprintPage() {
           </>
         ) : null}
 
-        <h3 className="mt-16">{slug === "mix" ? "2" : "3"}. Kitne question</h3>
+        <h3 className="mt-16">{NO_BOOKS.has(slug) ? "2" : "3"}. Kitne question</h3>
         <div className="sp-picks">
           {COUNTS.map((c) => (
             <button
@@ -442,13 +479,37 @@ export default function SprintPage() {
           <button
             type="button"
             className="btn btn--primary"
-            onClick={start}
+            onClick={() => start()}
             disabled={phase === "loading"}
           >
             {phase === "loading" ? "…" : `⚡ Shuru karo — ${count} question`}
           </button>
           <Link href="/pyq/sprint/marks" className="btn btn--ghost btn--sm">★ Bookmarks ({markN})</Link>
         </div>
+
+        {sets.length > 0 && (
+          <>
+            {/* 💾 Har daud ka set bach jata hai — wahi 100 question dobara
+                chalane ke liye. Unke jawab pehle se bane pade hain, isliye
+                dobara chalane mein paisa nahi lagta. */}
+            <h3 className="mt-16">💾 Purane set</h3>
+            <div className="sp-sets">
+              {sets.map((st) => (
+                <div key={st.id} className="sp-set">
+                  <button type="button" className="sp-set__go" onClick={() => start(st)} disabled={phase === "loading"}>
+                    ▶ {st.label}
+                  </button>
+                  <button
+                    type="button"
+                    className="sp-set__del"
+                    title="Ye set hatao"
+                    onClick={() => { removeSet(st.id); setSets(getSets()); }}
+                  >🗑️</button>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
 
         <p className="hint mt-16">
           Ab tak <b>{doneN}</b> question ho chuke. · {count} question = {count} chhote DeepSeek call

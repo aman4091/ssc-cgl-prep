@@ -9,7 +9,7 @@
 // koi kaam nahi.
 
 import Markdown from "./Markdown";
-import { qText, qOpts } from "@/lib/sprint";
+import { qText, qOpts, isVocab } from "@/lib/sprint";
 
 const LETTER = ["A", "B", "C", "D", "E"];
 
@@ -27,9 +27,10 @@ export default function SprintCard({ q, n, total, picked, onPick }) {
         {q.source || q.paper ? ` · ${q.source || q.paper}` : ""}
       </div>
 
-      <div className="sp-q">
+      <div className={isVocab(q) ? "sp-word" : "sp-q"}>
         {q.qImg
           ? <img src={q.qImg} alt={qText(q) || "question"} className="sp-img" />
+          : isVocab(q) ? qText(q)
           : <Markdown>{qText(q)}</Markdown>}
       </div>
 
