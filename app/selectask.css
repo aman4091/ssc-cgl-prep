@@ -266,3 +266,19 @@
 /* ⚡ Sprint poori screen leta hai — us daud ke beech ye button raaste mein
    aata hai. Sprint khatam hote hi apne aap wapas. */
 body:has(.sp-wrap) .sa-reopen { display: none; }
+
+/* ⭐ "Is question ka jawab bana do" — sprint chalte waqt har jawab ke neeche. */
+.sa-setdef {
+  align-self: flex-start;
+  margin-top: -4px;
+  border: 1px solid var(--line);
+  background: var(--glass-bg);
+  color: var(--text-2);
+  border-radius: 999px;
+  padding: 4px 11px;
+  font-family: inherit;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.sa-setdef:hover { border-color: var(--accent); color: var(--accent); }

@@ -18,6 +18,9 @@
 //   • Sar par ‹ › se purani baatcheet wapas (lib/asklog mein sambhali hui).
 //     Purani dekhne par koi naya call nahi hota, isliye paisa nahi lagta.
 //   • ➕ se topic se hatt kar kuch bhi poochho.
+//   • ⚡ Sprint chal raha ho to har jawab ke neeche "⭐ Is question ka jawab
+//     bana do" — wo jawab usi question ka pakka jawab ban jata hai (sprint
+//     ka parda usi pal badal jata hai, aur baad mein bhi wahi dikhta hai).
 //
 // Do baatein jaan-boojh kar aisi hain:
 //   • Google wala button CLICK ke andar hi window.open karta hai. Kisi await
@@ -33,6 +36,7 @@ import { termsOf } from "@/lib/terms";
 import { askSelection } from "@/lib/client-ai";
 import { searchImages } from "@/lib/webimages";
 import { getThreads, saveThread, newThreadId } from "@/lib/asklog";
+import { putAns, qText as sprintQText } from "@/lib/sprint";
 
 // 💬 Poochho dabate hi yahi sawaal apne aap chala jata hai — pehle kuch
 // likhna nahi padta.
@@ -123,6 +127,9 @@ export default function SelectAsk() {
   const [light, setLight] = useState(null);  // { list, at }
   const [old, setOld] = useState([]);        // sambhale hue thread
   const [at, setAt] = useState(-1);          // -1 = chalu, 0.. = purana
+  // ⚡ Sprint mein abhi jo question saamne hai (wahi page khabar bhejta hai).
+  const [sq, setSq] = useState(null);
+  const [setAsDef, setSetAsDef] = useState(-1);   // kis sandesh par "✓ lag gaya"
 
   const msgsRef = useRef(null);
   const boxRef = useRef(null);
@@ -176,6 +183,11 @@ export default function SelectAsk() {
   }, [msgs, busy]);
 
   useEffect(() => { setOld(getThreads()); }, []);
+  useEffect(() => {
+    const h = (e) => { setSq((e && e.detail && e.detail.q) || null); setSetAsDef(-1); };
+    window.addEventListener("cgl:sprint-q", h);
+    return () => window.removeEventListener("cgl:sprint-q", h);
+  }, []);
 
   // Baatcheet badalte hi sambhal jati hai — band karke kholne par wahi milti.
   useEffect(() => {
@@ -387,6 +399,16 @@ export default function SelectAsk() {
                 <div key={i}>
                   {m.role === "assistant" ? (
                     <div className="sa-msg sa-msg--ai"><Markdown>{m.text}</Markdown></div>
+                  ) : null}
+                  {m.role === "assistant" && sq ? (
+                    <button
+                      type="button"
+                      className="sa-setdef"
+                      title={`Sprint ke is question par lag jayega: ${sprintQText(sq).slice(0, 80)}`}
+                      onClick={() => { putAns(sq, m.text); setSetAsDef(i); }}
+                    >
+                      {setAsDef === i ? "✓ Is question ka jawab ban gaya" : "⭐ Is question ka jawab bana do"}
+                    </button>
                   ) : null}
                   <Strip m={m} onOpen={openLight} />
                 </div>

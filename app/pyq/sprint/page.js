@@ -296,6 +296,28 @@ export default function SprintPage() {
   const cur = batch[pos] || null;
   const curH = cur ? sHash(cur) : "";
 
+  // 💬 Poochho panel ko batao ki abhi kaun sa question saamne hai — wahan
+  // se "is question ka jawab bana do" isi par lagta hai.
+  useEffect(() => {
+    const q = phase === "run" ? cur : null;
+    try { window.dispatchEvent(new CustomEvent("cgl:sprint-q", { detail: { q } })); } catch { /* ignore */ }
+  }, [phase, cur]);
+  useEffect(() => () => {
+    try { window.dispatchEvent(new CustomEvent("cgl:sprint-q", { detail: { q: null } })); } catch { /* ignore */ }
+  }, []);
+
+  // Panel se naya jawab laga — parda bina reload ke usi pal badal jaye.
+  useEffect(() => {
+    const h = (e) => {
+      const d = (e && e.detail) || {};
+      if (!d.h) return;
+      setAns((x) => ({ ...x, [d.h]: d.text }));
+      setErrs((x) => { const n = { ...x }; delete n[d.h]; return n; });
+    };
+    window.addEventListener("cgl:sprint-ans", h);
+    return () => window.removeEventListener("cgl:sprint-ans", h);
+  }, []);
+
   // Pehle WARM jawab ban gaye → daud shuru.
   const readyN = useMemo(
     () => batch.slice(0, WARM).filter((q) => ans[sHash(q)] || errs[sHash(q)]).length,
