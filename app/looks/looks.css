@@ -14,6 +14,8 @@
     10 = Timeline  (app/looks/timeline.css) — dark, zig-zag timeline
     11 = Masonry   (app/looks/masonry.css)  — dark, dropdown menu + deewar
     12 = HUD       (app/looks/hud.css)      — dark, 3 hisse
+    13-22 = window, kanban, landing, folder, mosaic, orbit, pocket, sheet,
+            bands, chat (app/looks/*.css) — dark, har ek ka apna dhaancha
    Kaunsa chal raha hai: <html data-look="…"> — lib/look.js aur layout.js
    ka <head> script lagata hai; upar ki patti ka switcher badalta hai.
    Yahan sirf wo cheezein hain jo HAR roop mein chahiye: countdown ka chip
