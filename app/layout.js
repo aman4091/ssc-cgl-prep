@@ -11,6 +11,11 @@ import "./looks/terminal.css";
 import "./looks/sky.css";
 import "./looks/candy.css";
 import "./looks/notion.css";
+import "./looks/cinema.css";
+import "./looks/split.css";
+import "./looks/timeline.css";
+import "./looks/masonry.css";
+import "./looks/hud.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
@@ -78,14 +83,14 @@ export default function RootLayout({ children }) {
             __html:
               "try{var d=document.documentElement,t=localStorage.getItem('cgl.theme');" +
               "if(t==='dark')d.setAttribute('data-theme','dark');" +
-              // 🎨 Roop (lib/look.js) — koi chuna nahi to naya wala ("5").
-              "var l=localStorage.getItem('cgl.look')||'5';d.setAttribute('data-look',l);" +
-              "var b={'1':'#08080a','2':'#0a0a0a','3':'#070a12','4':'#0b0c0a','5':'#ffffff','6':'#fff6f1','7':'#ffffff'}[l];" +
+              // 🎨 Roop (lib/look.js) — koi chuna nahi to naya wala ("8").
+              "var l=localStorage.getItem('cgl.look')||'8';d.setAttribute('data-look',l);" +
+              "var b={'1':'#08080a','2':'#0a0a0a','3':'#070a12','4':'#0b0c0a','5':'#ffffff','6':'#fff6f1','7':'#ffffff','8':'#050505','9':'#07100d','10':'#0a0d1a','11':'#141216','12':'#03080b'}[l];" +
               // Address bar ka rang bhi yahin — bina-media wala meta sabse aage,
               // taaki wo upar wali do (OS ki pasand wali) se pehle mile.
               "if(t||b){var m=document.createElement('meta');m.id='tc-user';" +
               "m.name='theme-color';m.content=b||(t==='dark'?'#141922':'#ffffff');" +
-              "document.head.prepend(m)}}catch(e){d.setAttribute('data-look','5')}",
+              "document.head.prepend(m)}}catch(e){d.setAttribute('data-look','8')}",
           }}
         />
       </head>

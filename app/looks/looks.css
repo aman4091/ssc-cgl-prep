@@ -9,6 +9,11 @@
      5 = Sky Tabs  (app/looks/sky.css)     — light
      6 = Candy     (app/looks/candy.css)   — light
      7 = Notion    (app/looks/notion.css)  — light
+     8 = Cinema    (app/looks/cinema.css)   — dark, menu poori-screen overlay
+     9 = Split     (app/looks/split.css)    — dark, hero baayen chipka
+    10 = Timeline  (app/looks/timeline.css) — dark, zig-zag timeline
+    11 = Masonry   (app/looks/masonry.css)  — dark, dropdown menu + deewar
+    12 = HUD       (app/looks/hud.css)      — dark, 3 hisse
    Kaunsa chal raha hai: <html data-look="…"> — lib/look.js aur layout.js
    ka <head> script lagata hai; upar ki patti ka switcher badalta hai.
    Yahan sirf wo cheezein hain jo HAR roop mein chahiye: countdown ka chip

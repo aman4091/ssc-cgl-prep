@@ -1,0 +1,241 @@
+/* ===================================================================
+   🛰️ OPTION 12 — "HUD Console" (lagbhag kaala + cyan, sci-fi screen)
+
+   Poora dhaancha — TEEN hisse (desktop):
+     • Baayen: patli compact menu-list (bade akshar, chhote font), chuna
+       hua page cyan patti + chamak.
+     • Beech: content.
+     • Daayen: STATUS PANEL — upar ki patti hi ab ek khadi (vertical) patti
+       hai: logo, aaj ki tareekh, BAHUT BADA countdown number, aur neeche
+       look/lock.
+     • Har card ke chaaron kone par HUD jaise cyan "brackets".
+     • PYQ "data panels" 3 column, ginti badi mono number.
+     • Parda: halka cyan grid.
+   Phone: normal patti upar, menu slide-drawer.
+   Sirf html[data-look="12"] par.
+   =================================================================== */
+
+:where(html[data-look="12"]) .examskin:not(.gemskin) {
+  --A: #22e5ff; --A2: #7df0ff; --on-A: #001317;
+  --panel: #041017; --field: #030b10;
+  --tb-blue: #0891b2;
+  --tb-blue-dark: #06a3c4;
+  --tb-blue-soft: color-mix(in srgb, #22e5ff 14%, #07121a);
+  --tb-blue-ink: #22e5ff;
+  --tb-navy: #041017;
+  --tb-q: #ffffff;
+  --tb-green: #1f9d57; --tb-green-dark: #29b867; --tb-green-soft: #0f2418; --tb-ok-ink: #7ee2a8;
+  --tb-red: #e5484d; --tb-red-soft: #2b1213; --tb-bad-ink: #ff9b9b; --tb-red-ink-soft: #ffe5e5;
+  --tb-orange: #22e5ff;
+  --tb-yellow: #29220a; --tb-warn-ink: #ffd05a; --tb-warn-ink-2: #f2bf3e;
+  --tb-amber: #ffb020; --tb-rev: #ffb020; --tb-rev-hover: #ffc04a; --tb-rev-on: #ffc04a;
+  --tb-rev-line: #d18d10; --tb-rev-ink: #1f1500; --tb-rev-soft: #29220a;
+  --tb-key-line: #22e5ff;
+  --tb-skip: #0a1822; --tb-skip-ink: #5f93a3;
+  --tb-ink: #d9f7ff; --tb-ink-2: #a9dbe6; --tb-dim: #5f93a3;
+  --tb-line: #0f2a38; --tb-line-soft: #0a1822; --tb-line-hard: #174052;
+  --tb-head: #0a1822; --tb-page: #07121a; --tb-soft: #0a1822;
+  --tb-tint: color-mix(in srgb, #22e5ff 10%, #07121a);
+  --tb-bg-2: #03080b; --tb-raised: #0a1822;
+  --tb-focus: #22e5ff; --tb-code: #22e5ff;
+  --on-accent: #ffffff;
+  --accent-grad: linear-gradient(#22e5ff, #22e5ff);
+  --glass-shadow: none;
+  --nav-hover: rgba(255, 255, 255, 0.06);
+  --scheme: dark;
+  color-scheme: dark;
+  background: #03080b;
+  color: #d9f7ff;
+}
+:where(html[data-look="12"]) .examskin:not(.gemskin) .bg-orbs { background: #03080b; }
+
+/* ---- Menu ke rang (exam.css ke hare-tint wale rang hatane ke liye) ---- */
+:where(html[data-look="12"]) .examskin:not(.gemskin) .drawer { background: var(--panel); color: var(--tb-ink); border-color: var(--tb-line); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__head { border-bottom-color: var(--tb-line); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) :is(.drawer__brand, .drawer__head) { color: var(--tb-ink); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) :is(.drawer__sub, .drawer__x, .drawer__chev) { color: var(--tb-dim); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__grouphd { color: var(--tb-ink-2); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__grouphd:hover { background: var(--nav-hover); color: #fff; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__back { color: var(--A); border-bottom-color: var(--tb-line); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__back:hover { background: var(--nav-hover); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__rule { background: var(--tb-line); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__link { color: var(--tb-ink-2); border-left: 0; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__link:hover { background: var(--nav-hover); color: #fff; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__link.is-active { background: var(--A); color: var(--on-A); box-shadow: none; }
+
+/* ---- Upar ki patti ---- */
+:where(html[data-look="12"]) .examskin:not(.gemskin) .topbar { background: var(--panel); border-color: var(--tb-line); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) :is(.topbar__burger, .topbar__brand) { color: var(--tb-ink); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) :is(.themetog, .settings-theme) { display: none; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .topinfo__date { color: var(--tb-dim); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .topinfo__count {
+  background: color-mix(in srgb, var(--A) 12%, transparent);
+  border-color: color-mix(in srgb, var(--A) 40%, transparent);
+  color: var(--tb-ink);
+}
+:where(html[data-look="12"]) .examskin:not(.gemskin) .topinfo__count b { color: var(--A); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .lookswitch { background: rgba(255, 255, 255, 0.04); border-color: var(--tb-line); }
+
+/* ---- Card / hero ke rang ---- */
+:where(html[data-look="12"]) .examskin:not(.gemskin) :is(.placeholder, .glass-card, .qcard, .stat, .home-acc__item, .pyq-row) {
+  background: var(--tb-page); border-color: var(--tb-line); box-shadow: none;
+}
+:where(html[data-look="12"]) .examskin:not(.gemskin) .hero { background: var(--tb-page); border-color: var(--tb-line); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .hero__eyebrow { color: var(--A); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .hero__title { color: #ffffff; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .hero .grad { -webkit-text-fill-color: var(--A); color: var(--A); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .hero__sub { color: var(--tb-dim); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-row__name { color: #fff; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-row__meta { color: var(--A); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .stat__num { color: var(--A); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .home-acc-wrap { max-width: none; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .home-acc__row:hover { background: var(--nav-hover); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .home-acc__count { background: color-mix(in srgb, var(--A) 14%, transparent); color: var(--A); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .home-acc__link:hover { background: color-mix(in srgb, var(--A) 10%, transparent); color: #fff; }
+
+/* ---- Buttons / inputs ---- */
+:where(html[data-look="12"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)) {
+  background: var(--A); border-color: var(--A); color: var(--on-A); box-shadow: none;
+}
+:where(html[data-look="12"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)):hover {
+  background: var(--A2); border-color: var(--A2); color: var(--on-A);
+}
+:where(html[data-look="12"]) .examskin:not(.gemskin) .btn--ghost { background: transparent; border-color: var(--tb-line-hard); color: var(--tb-ink-2); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .btn--ghost:hover { background: color-mix(in srgb, var(--A) 10%, transparent); border-color: var(--A); color: var(--A); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .btn--danger:hover { background: #f05a5f; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) :is(.input, .select, .textarea) {
+  box-sizing: border-box; max-width: 100%;
+  background: var(--field); border-color: var(--tb-line-hard); color: var(--tb-ink);
+}
+:where(html[data-look="12"]) .examskin:not(.gemskin) :is(.input, .select, .textarea):focus { border-color: var(--A); box-shadow: 0 0 0 3px color-mix(in srgb, var(--A) 22%, transparent); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) :is(.input, .textarea)::placeholder { color: var(--tb-dim); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .chip { background: transparent; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .chip.is-active { background: var(--A); border-color: var(--A); color: var(--on-A); }
+
+/* ---- Home ka daily card ---- */
+:where(html[data-look="12"]) .examskin:not(.gemskin) .daily-card { background: var(--tb-page); border: 1px solid var(--tb-line); box-shadow: none; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .daily-card .section-kicker { color: var(--A); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .ring { border-top-color: var(--A); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .daily-progress > i { background: var(--A); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .target-number span { color: var(--tb-ink-2); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) :is(.subject-row-body span, .card-footnote) { color: var(--tb-dim); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .subject-row-acts .btn--primary { background: var(--A); border-color: var(--A); color: var(--on-A); box-shadow: none; }
+
+:where(html[data-look="12"]) .examskin:not(.gemskin) .footer { background: transparent; border-top-color: var(--tb-line); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) ::-webkit-scrollbar { width: 10px; height: 10px; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) ::-webkit-scrollbar-track { background: transparent; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) ::-webkit-scrollbar-thumb { background: var(--tb-line-hard); border-radius: 999px; border: 2px solid #03080b; }
+
+/* =================== LAYOUT =================== */
+:where(html[data-look="12"]) .examskin:not(.gemskin) {
+  --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", "SF Mono", Consolas, monospace;
+  --brk:
+    linear-gradient(var(--A), var(--A)) top left / 14px 2px no-repeat,
+    linear-gradient(var(--A), var(--A)) top left / 2px 14px no-repeat,
+    linear-gradient(var(--A), var(--A)) top right / 14px 2px no-repeat,
+    linear-gradient(var(--A), var(--A)) top right / 2px 14px no-repeat,
+    linear-gradient(var(--A), var(--A)) bottom left / 14px 2px no-repeat,
+    linear-gradient(var(--A), var(--A)) bottom left / 2px 14px no-repeat,
+    linear-gradient(var(--A), var(--A)) bottom right / 14px 2px no-repeat,
+    linear-gradient(var(--A), var(--A)) bottom right / 2px 14px no-repeat;
+}
+:where(html[data-look="12"]) .examskin:not(.gemskin) .bg-orbs {
+  background:
+    linear-gradient(rgba(34, 229, 255, 0.05) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(90deg, rgba(34, 229, 255, 0.05) 1px, transparent 1px) 0 0 / 40px 40px,
+    radial-gradient(900px 600px at 50% 40%, rgba(34, 229, 255, 0.07), transparent 65%),
+    #03080b;
+}
+
+/* ---- HUD brackets ---- */
+:where(html[data-look="12"]) .examskin:not(.gemskin) :is(.hero, .glass-card, .pyq-row, .home-acc__item, .stat, .placeholder) {
+  background: var(--brk), rgba(7, 18, 26, 0.88);
+  border: 1px solid var(--tb-line); border-radius: 2px;
+}
+:where(html[data-look="12"]) .examskin:not(.gemskin) .qcard { border-radius: 2px; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .hero { padding: 26px 28px; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .hero__eyebrow { font-family: var(--mono); letter-spacing: 0.2em; font-size: 0.7rem; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .hero__eyebrow::before { content: "// "; opacity: 0.6; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .hero__title { font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.04em; font-weight: 800; font-size: clamp(1.6rem, 3.4vw, 2.4rem) !important; text-shadow: 0 0 18px rgba(34, 229, 255, 0.35); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .hero .grad { text-shadow: 0 0 18px rgba(34, 229, 255, 0.8); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .btn { border-radius: 2px; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem; font-weight: 800; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)) { box-shadow: 0 0 16px -4px rgba(34, 229, 255, 0.8); }
+:where(html[data-look="12"]) .examskin:not(.gemskin) :is(.input, .select, .textarea) { border-radius: 2px; font-family: var(--mono); }
+
+@media (min-width: 1100px) {
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .shell { padding-left: 232px; padding-right: 292px; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .footer { margin-left: 232px; margin-right: 292px; }
+  /* Test ke dauraan status panel chhupta hai (body.exam-on) — jagah bhi wapas. */
+  :where(html[data-look="12"]) body.exam-on.examskin:not(.gemskin) .shell { padding-right: 20px; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) main.container { max-width: none; padding-inline: 28px; padding-top: 24px; }
+
+  /* ---- Baayen compact menu ---- */
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .drawer { width: 220px; border-right: 1px solid var(--tb-line); background: linear-gradient(180deg, #041017, #02070a); font-family: var(--mono); }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__head { padding: 18px 14px 12px; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__brand .brand__text strong { font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--A); }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__nav { gap: 0; padding: 8px 0; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) :is(.drawer__link, .drawer__grouphd, .drawer__back) {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+    border-radius: 0; padding: 9px 16px; min-height: 0; border-left: 2px solid transparent;
+  }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__groupname { font-size: 0.7rem; letter-spacing: 0.1em; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__ico { font-size: 0.8rem; opacity: 0.8; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .drawer__link.is-active {
+    background: linear-gradient(90deg, rgba(34, 229, 255, 0.18), transparent); color: var(--A);
+    border-left-color: var(--A); text-shadow: 0 0 10px rgba(34, 229, 255, 0.7);
+  }
+
+  /* ---- Daayen status panel (upar ki patti) ---- */
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .topbar {
+    position: fixed; top: 0; right: 0; bottom: 0; width: 272px; margin: 0;
+    flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 18px;
+    padding: 22px 20px; border: 0; border-left: 1px solid var(--tb-line); border-radius: 0;
+    background: linear-gradient(180deg, #041017, #02070a); z-index: 60;
+    font-family: var(--mono);
+  }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .topbar__brand { display: flex; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .topbar__brand strong { font-family: var(--mono); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--tb-ink-2); }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .topinfo { flex-direction: column; align-items: stretch; gap: 14px; margin: 0; overflow: visible; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .topinfo__date {
+    display: block; font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.72rem; color: var(--tb-dim);
+    padding-bottom: 12px; border-bottom: 1px dashed var(--tb-line-hard);
+  }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .topinfo__date::before { content: "DATE // "; color: var(--A); opacity: 0.7; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .topinfo__count {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 2px; white-space: normal;
+    padding: 18px 16px; border-radius: 2px; border: 1px solid var(--tb-line-hard);
+    background: var(--brk), rgba(34, 229, 255, 0.05);
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tb-ink-2);
+  }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .topinfo__count::before { content: "T-MINUS"; color: var(--A); opacity: 0.7; font-size: 0.66rem; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .topinfo__count b { font-size: 4.6rem; line-height: 1; font-weight: 800; color: var(--A); text-shadow: 0 0 24px rgba(34, 229, 255, 0.7); letter-spacing: -0.04em; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .topinfo__exam { display: block; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .lookswitch { margin-top: auto; justify-content: space-between; border-radius: 2px; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .focuslock, :where(html[data-look="12"]) .examskin:not(.gemskin) .topbar > :last-child { align-self: flex-start; }
+}
+
+/* ---- PYQ: data panels ---- */
+:where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-list { gap: 14px; }
+@media (min-width: 1100px) { :where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-list { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-row { padding: 18px; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-row__name { font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.9rem; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-row__meta { font-family: var(--mono); font-size: 1.3rem; font-weight: 800; text-shadow: 0 0 12px rgba(34, 229, 255, 0.5); }
+@media (hover: hover) { :where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-row:hover { border-color: var(--A); box-shadow: inset 0 0 30px rgba(34, 229, 255, 0.08), 0 0 20px -6px rgba(34, 229, 255, 0.6); } }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-row--all { flex-direction: row; align-items: center; gap: 16px; margin-bottom: 4px; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-row--all .pyq-row__meta { margin: 0 0 0 auto; align-self: center; font-size: 1.8rem; }
+
+/* ---- Quiz Bank ---- */
+@media (min-width: 900px) {
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .home-acc { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .home-acc__item.is-open { grid-column: 1 / -1; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .home-acc__panel { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 6px; padding: 12px; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .home-acc__link { border: 1px solid var(--tb-line); border-radius: 2px; font-family: var(--mono); font-size: 0.8rem; }
+}
+:where(html[data-look="12"]) .examskin:not(.gemskin) .home-acc__row { font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.85rem; }
+:where(html[data-look="12"]) .examskin:not(.gemskin) .home-acc__item.is-open { border-color: var(--A); }
+
+@media (max-width: 600px) {
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-row--all { flex-direction: column; align-items: flex-start; gap: 8px; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-row--all .pyq-row__name { font-size: 1.15rem; }
+  :where(html[data-look="12"]) .examskin:not(.gemskin) .pyq-row--all .pyq-row__meta { margin: 4px 0 0; align-self: flex-start; }
+}

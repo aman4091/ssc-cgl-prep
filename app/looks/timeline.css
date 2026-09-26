@@ -1,0 +1,239 @@
+/* ===================================================================
+   ⏳ OPTION 10 — "Timeline" (raat ka neela + sona)
+
+   Poora dhaancha — sab kuch ek SAMAY-REKHA (timeline) par:
+     • Page ke baayen ek sunehri lakeer; har hissa (hero, har section) us
+       lakeer par ek chamakta "stop" (gol bindu) hai.
+     • PYQ ki books ZIG-ZAG: beech mein lakeer, ek book baayen, agli daayen,
+       har ek lakeer se ek patli dandi se judi.
+     • Quiz Bank ki categories bhi lakeer par ek ke neeche ek.
+     • Menu: baayen beech mein TAIRTI chhoti goli (sirf icons); mouse le jao
+       to naam ke saath khulti hai. Group ke andar khuli rehti hai.
+     • Patti bina dabbe ki; hero bina dabbe ka, bada title + sunehri rekha.
+   Phone: zig-zag ek taraf, menu wahi slide-drawer.
+   Sirf html[data-look="10"] par.
+   =================================================================== */
+
+:where(html[data-look="10"]) .examskin:not(.gemskin) {
+  --A: #f5c451; --A2: #fcd97a; --on-A: #1b1403;
+  --panel: #0d1122; --field: #0b0f1f;
+  --tb-blue: #a16207;
+  --tb-blue-dark: #b8770b;
+  --tb-blue-soft: color-mix(in srgb, #f5c451 14%, #111629);
+  --tb-blue-ink: #f5c451;
+  --tb-navy: #0d1122;
+  --tb-q: #ffffff;
+  --tb-green: #1f9d57; --tb-green-dark: #29b867; --tb-green-soft: #0f2418; --tb-ok-ink: #7ee2a8;
+  --tb-red: #e5484d; --tb-red-soft: #2b1213; --tb-bad-ink: #ff9b9b; --tb-red-ink-soft: #ffe5e5;
+  --tb-orange: #f5c451;
+  --tb-yellow: #29220a; --tb-warn-ink: #ffd05a; --tb-warn-ink-2: #f2bf3e;
+  --tb-amber: #ffb020; --tb-rev: #ffb020; --tb-rev-hover: #ffc04a; --tb-rev-on: #ffc04a;
+  --tb-rev-line: #d18d10; --tb-rev-ink: #1f1500; --tb-rev-soft: #29220a;
+  --tb-key-line: #f5c451;
+  --tb-skip: #151b33; --tb-skip-ink: #8a91b4;
+  --tb-ink: #e8eaf6; --tb-ink-2: #c3c8e4; --tb-dim: #8a91b4;
+  --tb-line: #232b4a; --tb-line-soft: #151b33; --tb-line-hard: #313b63;
+  --tb-head: #151b33; --tb-page: #111629; --tb-soft: #151b33;
+  --tb-tint: color-mix(in srgb, #f5c451 10%, #111629);
+  --tb-bg-2: #0a0d1a; --tb-raised: #151b33;
+  --tb-focus: #f5c451; --tb-code: #f5c451;
+  --on-accent: #ffffff;
+  --accent-grad: linear-gradient(#f5c451, #f5c451);
+  --glass-shadow: none;
+  --nav-hover: rgba(255, 255, 255, 0.06);
+  --scheme: dark;
+  color-scheme: dark;
+  background: #0a0d1a;
+  color: #e8eaf6;
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .bg-orbs { background: #0a0d1a; }
+
+/* ---- Menu ke rang (exam.css ke hare-tint wale rang hatane ke liye) ---- */
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer { background: var(--panel); color: var(--tb-ink); border-color: var(--tb-line); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__head { border-bottom-color: var(--tb-line); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.drawer__brand, .drawer__head) { color: var(--tb-ink); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.drawer__sub, .drawer__x, .drawer__chev) { color: var(--tb-dim); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__grouphd { color: var(--tb-ink-2); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__grouphd:hover { background: var(--nav-hover); color: #fff; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__back { color: var(--A); border-bottom-color: var(--tb-line); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__back:hover { background: var(--nav-hover); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__rule { background: var(--tb-line); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__link { color: var(--tb-ink-2); border-left: 0; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__link:hover { background: var(--nav-hover); color: #fff; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__link.is-active { background: var(--A); color: var(--on-A); box-shadow: none; }
+
+/* ---- Upar ki patti ---- */
+:where(html[data-look="10"]) .examskin:not(.gemskin) .topbar { background: var(--panel); border-color: var(--tb-line); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.topbar__burger, .topbar__brand) { color: var(--tb-ink); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.themetog, .settings-theme) { display: none; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .topinfo__date { color: var(--tb-dim); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .topinfo__count {
+  background: color-mix(in srgb, var(--A) 12%, transparent);
+  border-color: color-mix(in srgb, var(--A) 40%, transparent);
+  color: var(--tb-ink);
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .topinfo__count b { color: var(--A); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .lookswitch { background: rgba(255, 255, 255, 0.04); border-color: var(--tb-line); }
+
+/* ---- Card / hero ke rang ---- */
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.placeholder, .glass-card, .qcard, .stat, .home-acc__item, .pyq-row) {
+  background: var(--tb-page); border-color: var(--tb-line); box-shadow: none;
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .hero { background: var(--tb-page); border-color: var(--tb-line); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .hero__eyebrow { color: var(--A); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .hero__title { color: #ffffff; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .hero .grad { -webkit-text-fill-color: var(--A); color: var(--A); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .hero__sub { color: var(--tb-dim); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-row__name { color: #fff; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-row__meta { color: var(--A); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .stat__num { color: var(--A); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc-wrap { max-width: none; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc__row:hover { background: var(--nav-hover); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc__count { background: color-mix(in srgb, var(--A) 14%, transparent); color: var(--A); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc__link:hover { background: color-mix(in srgb, var(--A) 10%, transparent); color: #fff; }
+
+/* ---- Buttons / inputs ---- */
+:where(html[data-look="10"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)) {
+  background: var(--A); border-color: var(--A); color: var(--on-A); box-shadow: none;
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)):hover {
+  background: var(--A2); border-color: var(--A2); color: var(--on-A);
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .btn--ghost { background: transparent; border-color: var(--tb-line-hard); color: var(--tb-ink-2); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .btn--ghost:hover { background: color-mix(in srgb, var(--A) 10%, transparent); border-color: var(--A); color: var(--A); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .btn--danger:hover { background: #f05a5f; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.input, .select, .textarea) {
+  box-sizing: border-box; max-width: 100%;
+  background: var(--field); border-color: var(--tb-line-hard); color: var(--tb-ink);
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.input, .select, .textarea):focus { border-color: var(--A); box-shadow: 0 0 0 3px color-mix(in srgb, var(--A) 22%, transparent); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.input, .textarea)::placeholder { color: var(--tb-dim); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .chip { background: transparent; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .chip.is-active { background: var(--A); border-color: var(--A); color: var(--on-A); }
+
+/* ---- Home ka daily card ---- */
+:where(html[data-look="10"]) .examskin:not(.gemskin) .daily-card { background: var(--tb-page); border: 1px solid var(--tb-line); box-shadow: none; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .daily-card .section-kicker { color: var(--A); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .ring { border-top-color: var(--A); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .daily-progress > i { background: var(--A); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .target-number span { color: var(--tb-ink-2); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.subject-row-body span, .card-footnote) { color: var(--tb-dim); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .subject-row-acts .btn--primary { background: var(--A); border-color: var(--A); color: var(--on-A); box-shadow: none; }
+
+:where(html[data-look="10"]) .examskin:not(.gemskin) .footer { background: transparent; border-top-color: var(--tb-line); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) ::-webkit-scrollbar { width: 10px; height: 10px; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) ::-webkit-scrollbar-track { background: transparent; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) ::-webkit-scrollbar-thumb { background: var(--tb-line-hard); border-radius: 999px; border: 2px solid #0a0d1a; }
+
+/* =================== LAYOUT =================== */
+:where(html[data-look="10"]) .examskin:not(.gemskin) .bg-orbs {
+  background:
+    radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.5), transparent 2px) 0 0 / 180px 180px,
+    radial-gradient(1px 1px at 70% 80%, rgba(255, 255, 255, 0.35), transparent 2px) 0 0 / 240px 240px,
+    radial-gradient(900px 500px at 50% -10%, rgba(245, 196, 81, 0.1), transparent 60%),
+    #0a0d1a;
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .topbar { background: transparent; border: 0; border-radius: 0; border-bottom: 1px solid var(--tb-line); margin: 0 12px 26px; padding: 14px 8px; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .topinfo__count { border-radius: 999px; }
+
+/* ---- Hero: bina dabbe ---- */
+:where(html[data-look="10"]) .examskin:not(.gemskin) .hero { background: transparent; border: 0; border-radius: 0; padding: 4px 0 8px; margin-bottom: 30px; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .hero__eyebrow {
+  display: inline-block; padding: 4px 12px; border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--A) 50%, transparent); font-size: 0.7rem; letter-spacing: 0.14em;
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .hero__title { font-size: clamp(2rem, 4.8vw, 3.3rem) !important; font-weight: 800; letter-spacing: -0.03em; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .hero__title::after { content: ""; display: block; width: 90px; height: 3px; margin-top: 14px; background: linear-gradient(90deg, var(--A), transparent); border-radius: 2px; }
+
+/* ---- Samay-rekha: main ke baayen ---- */
+@media (min-width: 700px) {
+  :where(html[data-look="10"]) .examskin:not(.gemskin) main.container { position: relative; padding-left: 72px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) main.container::before {
+    content: ""; position: absolute; left: 34px; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(180deg, var(--A), color-mix(in srgb, var(--A) 30%, transparent) 60%, transparent);
+  }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) main.container > :is(.hero, .section) { position: relative; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) main.container > :is(.hero, .section)::after {
+    content: ""; position: absolute; left: -45px; top: 12px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--tb-bg-2); border: 3px solid var(--A);
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--A) 18%, transparent), 0 0 18px color-mix(in srgb, var(--A) 60%, transparent);
+  }
+}
+
+/* ---- Menu: baayen beech mein tairti goli ---- */
+@media (min-width: 1024px) {
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .shell { padding-left: 96px; transition: padding-left 0.2s ease; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .footer { margin-left: 96px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) main.container { max-width: 1180px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .topbar { justify-content: flex-start; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .topbar__brand { display: flex; margin-right: 16px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer {
+    top: 50%; bottom: auto; left: 18px; width: 60px; max-height: 92vh;
+    transform: translateY(-50%) !important;
+    border: 1px solid var(--tb-line-hard); border-radius: 32px;
+    background: rgba(13, 17, 34, 0.92); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(245, 196, 81, 0.06);
+    overflow-x: hidden; transition: width 0.2s ease;
+  }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__head { display: none; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__nav { padding: 10px 8px; gap: 2px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):not(:hover):not(:focus-within) :is(.drawer__groupname, .drawer__grouphd .drawer__chev) { display: none; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):not(:hover):not(:focus-within) :is(.drawer__link--top, .drawer__grouphd) {
+    font-size: 0; justify-content: center; padding: 0; height: 42px; box-sizing: border-box; border-radius: 50%;
+  }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top) .drawer__ico { font-size: 1.15rem; width: auto; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):is(:hover, :focus-within) { width: 250px; border-radius: 22px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer:has(.drawer__nav > :not(.drawer__link--top, .drawer__grouphd)) { width: 250px; border-radius: 22px; }
+  :where(html[data-look="10"]) body.examskin:not(.gemskin):has(.drawer__nav > :not(.drawer__link--top, .drawer__grouphd)) .shell { padding-left: 290px; }
+  :where(html[data-look="10"]) body.examskin:not(.gemskin):has(.drawer__nav > :not(.drawer__link--top, .drawer__grouphd)) .footer { margin-left: 290px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) :is(.drawer__link, .drawer__grouphd) { border-radius: 14px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__link.is-active { box-shadow: 0 0 16px color-mix(in srgb, var(--A) 60%, transparent); }
+}
+
+/* ---- PYQ: zig-zag timeline ---- */
+:where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list { display: flex; flex-direction: column; gap: 18px; position: relative; padding: 8px 0; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-row { position: relative; border-radius: 16px; padding: 18px 20px; min-height: 0; background: linear-gradient(160deg, #151b33, #0f1428); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-row__ico { font-size: 1.6rem; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-row__name { font-size: 1.1rem; font-weight: 800; }
+@media (min-width: 900px) {
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-1px); background: linear-gradient(180deg, transparent, var(--A) 8%, var(--A) 92%, transparent); opacity: 0.6; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list > .pyq-row { width: calc(50% - 44px); box-sizing: border-box; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:nth-child(odd) { align-self: flex-start; text-align: right; align-items: flex-end; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:nth-child(even) { align-self: flex-end; margin-top: -60px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:nth-child(odd) .pyq-row__meta { align-self: flex-start; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list > .pyq-row::before {
+    content: ""; position: absolute; top: 28px; width: 44px; height: 2px; background: color-mix(in srgb, var(--A) 60%, transparent);
+  }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list > .pyq-row::after {
+    content: ""; position: absolute; top: 21px; width: 12px; height: 12px; border-radius: 50%;
+    background: var(--A); box-shadow: 0 0 12px var(--A);
+  }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:nth-child(odd)::before { right: -44px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:nth-child(odd)::after { right: -51px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:nth-child(even)::before { left: -44px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:nth-child(even)::after { left: -51px; }
+}
+@media (hover: hover) { :where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-list > .pyq-row:hover { border-color: var(--A); box-shadow: 0 0 24px -8px color-mix(in srgb, var(--A) 70%, transparent); } }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-row--all {
+  flex-direction: row; align-items: center; gap: 16px; margin-bottom: 22px;
+  background: linear-gradient(90deg, rgba(245, 196, 81, 0.18), rgba(245, 196, 81, 0.04)); border: 1px solid color-mix(in srgb, var(--A) 50%, transparent);
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .pyq-row--all .pyq-row__meta { margin: 0 0 0 auto; align-self: center; font-size: 1.1rem; }
+
+/* ---- Quiz Bank: lakeer par ek ke neeche ek ---- */
+:where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc { gap: 14px; position: relative; padding-left: 30px; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc::before { content: ""; position: absolute; left: 8px; top: 10px; bottom: 10px; width: 2px; background: color-mix(in srgb, var(--A) 45%, transparent); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc__item { position: relative; overflow: visible; border-radius: 14px; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc__item::before {
+  content: ""; position: absolute; left: -28px; top: 22px; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--tb-bg-2); border: 2px solid var(--A);
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc__item.is-open { border-color: var(--A); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc__item.is-open::before { background: var(--A); box-shadow: 0 0 12px var(--A); }
+@media (min-width: 900px) {
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc__panel { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; padding: 12px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .home-acc__link { border: 1px solid var(--tb-line); border-radius: 10px; }
+}
+
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.placeholder, .glass-card, .qcard, .stat) { border-radius: 16px; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .btn { border-radius: 999px; font-weight: 700; }
