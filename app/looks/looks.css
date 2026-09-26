@@ -5,6 +5,7 @@
      1 = Midnight  (app/looks/midnight.css)
      2 = Bento     (app/looks/bento.css)
      3 = Aurora    (app/looks/aurora.css)
+     4 = Terminal  (app/looks/terminal.css)
    Kaunsa chal raha hai: <html data-look="…"> — lib/look.js aur layout.js
    ka <head> script lagata hai; upar ki patti ka switcher badalta hai.
    Yahan sirf wo cheezein hain jo HAR roop mein chahiye: countdown ka chip
@@ -49,4 +50,7 @@
 }
 .lookswitch__opt:hover { color: var(--tb-ink); }
 .lookswitch__opt.is-on { background: var(--tb-blue); color: #fff; }
-@media (max-width: 600px) { .lookswitch__lbl { display: none; } }
+@media (max-width: 600px) {
+  .lookswitch__lbl { display: none; }
+  .lookswitch__opt { min-width: 24px; padding: 0 6px; }
+}
