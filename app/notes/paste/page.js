@@ -1,45 +1,55 @@
 "use client";
 
-// 📝 Mere one-liner — notes ke page par ✨ dabane ke baad jo AI se banta hai,
-// wo yahan paste karo.
+// 📝 Mere one-liner — sirf PADHNE ki jagah.
 //
-// Kaam ka kram:
-//   1. Notes ki kisi book ke page par ✨ dabao — prompt + us page ka text
-//      copy hota hai aur AI site khul jati hai.
-//   2. Jo aaya wo copy karke yahan aao. Upar wahi page ka naam pehle se
-//      likha milega (📜 History · Parmar — Stone Age · page 12), neeche
-//      paste karo, "Sambhalo" dabao.
-//   3. Neeche book-wise list: har book ke andar page ke kram mein.
+// Paste karna notes ke page par hi hota hai (wahan ✨ / 📥 dabane par box
+// khulta hai), isliye yahan koi paste-box nahi. Yahan wo notes hain, khule
+// hue, ek ke baad ek — book ke naam ki ek patli patti se chhaante ja sakte
+// hain. Pehle har book ek band dropdown thi aur har note bhi band — padhne
+// se pehle do-do click lagte the.
 //
-// Ek page ka ek hi note rehta hai — dobara paste karne par purana badal
-// jata hai, do copy nahi banti.
+// 🐋 Bold karo — us note ke zaroori shabd (Art number, saal, naam, sankhya)
+// **bold** karwa deta hai. Sirf shakl badalti hai, ek bhi baat nahi.
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "./paste.css";
 import OneLinerNotes from "@/components/OneLinerNotes";
 import { countOneLiner } from "@/lib/onelinerfmt";
-import { listNotesBooks } from "@/lib/notesbank";
-import {
-  getLastSource, getNote, saveNote, removeNote, notesByBook, noteKey,
-} from "@/lib/pastednotes";
+import { formatOneLiner } from "@/lib/client-ai";
+import { saveNote, removeNote, notesByBook } from "@/lib/pastednotes";
 
-const srcLabel = (s) =>
-  !s ? "" : [s.eyebrow || s.bookTitle, s.topic, s.page ? `page ${s.page}` : ""].filter(Boolean).join(" · ");
-
-function NoteCard({ n, onGone }) {
-  const [open, setOpen] = useState(false);
+function Note({ n, onGone }) {
   const [edit, setEdit] = useState(false);
   const [draft, setDraft] = useState(n.text);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
   useEffect(() => { setDraft(n.text); }, [n.text]);
 
+  const c = countOneLiner(n.text);
+
+  const bold = async () => {
+    if (busy) return;
+    setBusy(true); setErr("");
+    try {
+      const { text } = await formatOneLiner(n.text);
+      saveNote(n, text);
+      onGone();
+    } catch (e) { setErr(e.message); }
+    finally { setBusy(false); }
+  };
+
   return (
-    <div className="pn-note">
+    <article className="pn-note">
       <div className="pn-note__hd">
-        <button type="button" className="pn-note__t" onClick={() => setOpen((v) => !v)}>
-          {open ? "⌃" : "⌄"} {n.topic || "—"} <span className="pn-dim">· page {n.page} · {countOneLiner(n.text).n} point{countOneLiner(n.text).star ? ` · ⭐ ${countOneLiner(n.text).star}` : ""}</span>
+        <h3 className="pn-note__t">
+          {n.topic || "—"}
+          <span className="pn-dim"> · page {n.page} · {c.n} point{c.star ? ` · ⭐ ${c.star}` : ""}</span>
+        </h3>
+        <button type="button" className="pn-x" onClick={bold} disabled={busy} title="Zaroori shabd bold karwao (DeepSeek)">
+          {busy ? "…" : "🐋 Bold"}
         </button>
-        <button type="button" className="pn-x" onClick={() => setEdit((v) => !v)} title="Badlo">✏️</button>
+        <button type="button" className="pn-x" onClick={() => setEdit((v) => !v)} title="Khud badlo">✏️</button>
         <button
           type="button"
           className="pn-x"
@@ -47,164 +57,92 @@ function NoteCard({ n, onGone }) {
           onClick={() => { if (window.confirm("Ye note hata dein?")) { removeNote(n.k); onGone(); } }}
         >🗑️</button>
       </div>
+
+      {err ? <div className="pn-err">⚠️ {err}</div> : null}
+
       {edit ? (
         <div className="pn-edit">
-          <textarea rows={10} value={draft} onChange={(e) => setDraft(e.target.value)} />
+          <textarea rows={12} value={draft} onChange={(e) => setDraft(e.target.value)} />
           <div className="row" style={{ gap: 8 }}>
-            <button
-              type="button"
-              className="btn btn--primary btn--sm"
-              onClick={() => { saveNote(n, draft); setEdit(false); onGone(); }}
-            >Sambhalo</button>
+            <button type="button" className="btn btn--primary btn--sm" onClick={() => { saveNote(n, draft); setEdit(false); onGone(); }}>
+              Sambhalo
+            </button>
             <button type="button" className="btn btn--ghost btn--sm" onClick={() => { setDraft(n.text); setEdit(false); }}>
               Rehne do
             </button>
           </div>
         </div>
-      ) : open ? (
-        <div className="pn-body"><OneLinerNotes text={n.text} /></div>
-      ) : null}
-    </div>
+      ) : (
+        <OneLinerNotes text={n.text} />
+      )}
+    </article>
   );
 }
 
 export default function PasteNotesPage() {
-  const [src, setSrc] = useState(null);
-  const [text, setText] = useState("");
   const [groups, setGroups] = useState([]);
-  const [flash, setFlash] = useState("");
-  // Haath se chunne ke liye (✨ dabaye bina bhi paste kar sako).
-  const books = useMemo(() => listNotesBooks(), []);
-  const [mBook, setMBook] = useState("");
-  const [mTopic, setMTopic] = useState("");
-  const [mPage, setMPage] = useState("");
+  const [book, setBook] = useState("");   // khali = saari books
 
   const reload = useCallback(() => setGroups(notesByBook()), []);
-
   useEffect(() => {
-    setSrc(getLastSource());
     reload();
     const h = () => reload();
-    const hs = (e) => setSrc((e && e.detail) || getLastSource());
     window.addEventListener("cgl:pastednotes", h);
-    window.addEventListener("cgl:pastednotes-src", hs);
-    return () => {
-      window.removeEventListener("cgl:pastednotes", h);
-      window.removeEventListener("cgl:pastednotes-src", hs);
-    };
+    return () => window.removeEventListener("cgl:pastednotes", h);
   }, [reload]);
 
-  // ✨ wala page badla to purana note dikha do — dobara paste karne par wahi
-  // badlega, naya nahi banega.
-  useEffect(() => {
-    if (!src) return;
-    const had = getNote(src);
-    setText(had ? had.text : "");
-  }, [src && noteKey(src)]); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Haath se bhara hua source — tabhi jab ✨ wala na ho ya user khud bhare.
-  const manual = mBook
-    ? {
-      book: mBook,
-      bookTitle: (books.find((b) => b.slug === mBook) || {}).title || mBook,
-      eyebrow: (books.find((b) => b.slug === mBook) || {}).eyebrow || "",
-      topic: mTopic.trim(),
-      page: mPage.trim(),
+  const shown = useMemo(() => (book ? groups.filter((g) => g.book === book) : groups), [groups, book]);
+  const tally = useMemo(() => {
+    let pages = 0, pts = 0, star = 0;
+    for (const g of shown) for (const n of g.items) {
+      pages += 1;
+      const c = countOneLiner(n.text);
+      pts += c.n; star += c.star;
     }
-    : null;
-  const target = manual && manual.page ? manual : src;
+    return { pages, pts, star };
+  }, [shown]);
 
-  const save = () => {
-    if (!target || !text.trim()) return;
-    saveNote(target, text);
-    setText("");
-    setFlash("✓ Sambhal liya");
-    setTimeout(() => setFlash(""), 1800);
-    reload();
-  };
-
-  const total = groups.reduce((a, g) => a + g.items.length, 0);
+  if (!groups.length) {
+    return (
+      <section className="section" style={{ marginTop: 24 }}>
+        <div className="placeholder">
+          Abhi kuch paste nahi kiya. Notes ke kisi page par <b>✨</b> ya <b>📥</b> dabao — wahin
+          box khulta hai, aur jo paste karoge wo yahan aa jayega. 📝
+        </div>
+        <div className="row mt-16"><Link href="/notes/parmar-polity" className="btn btn--ghost btn--sm">📔 Notes kholo</Link></div>
+      </section>
+    );
+  }
 
   return (
-    <>
-      <section className="hero" style={{ paddingBottom: 8 }}>
-        <div className="row between">
-          <span className="hero__eyebrow">📝 Mere one-liner</span>
-          <Link href="/notes/parmar-history" className="btn btn--ghost btn--sm">📔 Notes</Link>
-        </div>
-        <h1 className="hero__title" style={{ fontSize: "clamp(1.6rem, 4vw, 2.4rem)" }}>
-          Notes ke <span className="grad">one-liner</span>
-        </h1>
-        <p className="hero__sub">
-          Notes ke kisi page par <b>✨</b> dabao — prompt copy hoke AI site khul jati hai. Jo jawab aaye
-          wo yahan paste karo; wo usi book, chapter aur page ke naam se sambhal jayega.
-          {total ? <> Abhi <b>{total}</b> page ke one-liner hain.</> : null}
-        </p>
-      </section>
-
-      <section className="section">
-        <div className="pn-box">
-          <div className="pn-src">
-            {target ? (
-              <>Kahan ka: <b>{srcLabel(target)}</b></>
-            ) : (
-              <>Abhi kisi page par ✨ nahi dabaya. Neeche se khud chun lo, ya notes kholkar ✨ dabao.</>
-            )}
-          </div>
-
-          <textarea
-            className="pn-ta"
-            rows={9}
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            placeholder="AI se aaye one-liner yahan paste karo…"
-          />
-
-          <div className="row" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>
-            <button type="button" className="btn btn--primary" onClick={save} disabled={!target || !text.trim()}>
-              💾 Sambhalo
-            </button>
-            {flash ? <span className="hint" style={{ color: "var(--success)" }}>{flash}</span> : null}
-          </div>
-
-          {/* Khud chunna — ✨ dabaye bina bhi kuch paste karna ho to. */}
-          <details className="pn-manual">
-            <summary className="hint">⌄ Khud chuno (✨ dabaye bina)</summary>
-            <div className="sp-selects mt-8">
-              <label className="sp-sel">
-                <span>Book</span>
-                <select value={mBook} onChange={(e) => setMBook(e.target.value)}>
-                  <option value="">— chuno —</option>
-                  {books.map((b) => <option key={b.slug} value={b.slug}>{b.eyebrow || b.title}</option>)}
-                </select>
-              </label>
-              <label className="sp-sel">
-                <span>Chapter</span>
-                <input className="input" value={mTopic} onChange={(e) => setMTopic(e.target.value)} placeholder="jaise Stone Age" />
-              </label>
-              <label className="sp-sel">
-                <span>Page</span>
-                <input className="input" value={mPage} onChange={(e) => setMPage(e.target.value)} placeholder="jaise 12" />
-              </label>
-            </div>
-          </details>
-        </div>
-      </section>
-
-      <section className="section">
-        {groups.length === 0 ? (
-          <div className="placeholder">Abhi kuch paste nahi kiya. Notes kholo, ✨ dabao, aur jawab yahan le aao. 📝</div>
-        ) : (
-          groups.map((g) => (
-            <details key={g.book} className="glass-card pn-group" open>
-              <summary>
-                <strong>{g.eyebrow || g.title}</strong> <span className="pn-dim">· {g.items.length} page</span>
-              </summary>
-              {g.items.map((n) => <NoteCard key={n.k} n={n} onGone={reload} />)}
-            </details>
-          ))
+    <section className="section" style={{ marginTop: 16 }}>
+      {/* Ek patli patti — ginti aur book ki chhaanti. Isse zyada kuch nahi:
+          ye padhne ki jagah hai. */}
+      <div className="pn-bar">
+        <span className="pn-count">
+          📝 {tally.pages} page · {tally.pts} point{tally.star ? ` · ⭐ ${tally.star}` : ""}
+        </span>
+        {groups.length > 1 && (
+          <span className="pn-books">
+            <button type="button" className={`pn-b${book ? "" : " is-on"}`} onClick={() => setBook("")}>Sab</button>
+            {groups.map((g) => (
+              <button
+                key={g.book}
+                type="button"
+                className={`pn-b${book === g.book ? " is-on" : ""}`}
+                onClick={() => setBook(g.book)}
+              >{g.eyebrow || g.title}</button>
+            ))}
+          </span>
         )}
-      </section>
-    </>
+      </div>
+
+      {shown.map((g) => (
+        <div key={g.book}>
+          {!book && groups.length > 1 && <h2 className="pn-bookt">{g.eyebrow || g.title}</h2>}
+          {g.items.map((n) => <Note key={n.k} n={n} onGone={reload} />)}
+        </div>
+      ))}
+    </section>
   );
 }

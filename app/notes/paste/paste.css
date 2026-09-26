@@ -1,69 +1,72 @@
-/* 📝 Mere one-liner — notes ke page ka ✨ jawab yahan paste hota hai. */
+/* 📝 Mere one-liner — padhne ki jagah. Paste notes ke page par hota hai,
+   isliye yahan sirf notes hain: khule hue, ek ke baad ek. */
 
-.pn-box {
-  border: 1px solid var(--line);
-  background: var(--glass-bg);
-  border-radius: 14px;
-  padding: 14px;
-  display: grid;
+/* Upar ki patli patti — ginti aur book ki chhaanti. */
+.pn-bar {
+  display: flex;
+  align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 4px;
 }
-.pn-src {
-  font-size: 0.9rem;
-  color: var(--text-2);
-  padding: 8px 12px;
-  border-radius: 10px;
-  background: var(--accent-wash);
-}
-.pn-ta {
-  width: 100%;
-  resize: vertical;
+.pn-count { font-size: 0.85rem; color: var(--text-2); font-weight: 600; }
+.pn-books { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+.pn-b {
   border: 1px solid var(--line);
-  background: var(--bg-1);
-  color: var(--text-1);
-  border-radius: 10px;
-  padding: 10px 12px;
+  background: transparent;
+  color: var(--text-2);
+  border-radius: 999px;
+  padding: 4px 11px;
   font-family: inherit;
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.78rem;
+  cursor: pointer;
 }
-.pn-manual summary { cursor: pointer; }
+.pn-b:hover { border-color: var(--glass-border-strong); }
+.pn-b.is-on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 
-.pn-group { padding: 12px 14px; margin-top: 12px; }
-.pn-group > summary { cursor: pointer; }
-.pn-dim { color: var(--text-3); font-weight: 400; }
+.pn-bookt {
+  font-size: 1rem;
+  margin: 22px 0 2px;
+  color: var(--text-3);
+  font-weight: 600;
+}
 
 .pn-note {
   border-top: 1px solid var(--line);
-  padding: 8px 0 2px;
+  padding: 14px 0 6px;
 }
-.pn-note__hd { display: flex; gap: 6px; align-items: center; }
+.pn-note__hd {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
 .pn-note__t {
   flex: 1;
-  text-align: left;
-  border: 0;
-  background: none;
-  color: var(--text-1);
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  padding: 4px 0;
-  cursor: pointer;
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
 }
-.pn-note__t:hover { color: var(--accent); }
+.pn-dim { color: var(--text-3); font-weight: 400; font-size: 0.82rem; }
 .pn-x {
   border: 1px solid var(--line);
   background: var(--glass-bg);
+  color: var(--text-1);
   border-radius: 8px;
   padding: 3px 9px;
   font-family: inherit;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
   cursor: pointer;
 }
-.pn-x:hover { border-color: var(--accent); }
+.pn-x:hover { border-color: var(--accent); color: var(--accent); }
+.pn-x:disabled { opacity: 0.55; cursor: not-allowed; }
 
-.pn-body { font-size: 0.95rem; line-height: 1.7; padding: 4px 0 8px; }
-.pn-edit { display: grid; gap: 8px; padding: 6px 0 10px; }
+.pn-err { color: var(--danger); font-size: 0.85rem; margin-bottom: 8px; }
+
+.pn-edit { display: grid; gap: 8px; padding: 2px 0 8px; }
 .pn-edit textarea {
   width: 100%;
   resize: vertical;
