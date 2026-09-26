@@ -1,0 +1,195 @@
+/* ===================================================================
+   📱 OPTION 19 — "Pocket" (kaala + coral, phone app)
+
+   Poora dhaancha — desktop par bhi SAARI SITE EK PHONE KE ANDAR:
+     • Beech mein ek patla (≈440px) gol-kone wala "phone"; site usi ke
+       andar chalti hai — app jaisi.
+     • Menu phone ke NEECHE app ka TAB-BAR: icon upar, naam neeche, side
+       mein scroll; group kholo to wahi bar us group ke tabs.
+     • Phone ke baahar ke parde par bahut bade halke akshar "SSC CGL".
+     • Andar sab ek column: cards, lists — app ki screen jaise.
+   Asli phone par: poori screen yahi app.
+   Sirf html[data-look="19"] par.
+   =================================================================== */
+
+:where(html[data-look="19"]) .examskin:not(.gemskin) {
+  --A: #fb7185; --A2: #fda4af; --on-A: #ffffff;
+  --panel: #0e0e0e; --field: #0c0c0c;
+  --tb-blue: #e11d48;
+  --tb-blue-dark: #f43f5e;
+  --tb-blue-soft: color-mix(in srgb, #fb7185 14%, #141414);
+  --tb-blue-ink: #fb7185;
+  --tb-navy: #0e0e0e;
+  --tb-q: #ffffff;
+  --tb-green: #1f9d57; --tb-green-dark: #29b867; --tb-green-soft: #0f2418; --tb-ok-ink: #7ee2a8;
+  --tb-red: #e5484d; --tb-red-soft: #2b1213; --tb-bad-ink: #ff9b9b; --tb-red-ink-soft: #ffe5e5;
+  --tb-orange: #fb7185;
+  --tb-yellow: #29220a; --tb-warn-ink: #ffd05a; --tb-warn-ink-2: #f2bf3e;
+  --tb-amber: #ffb020; --tb-rev: #ffb020; --tb-rev-hover: #ffc04a; --tb-rev-on: #ffc04a;
+  --tb-rev-line: #d18d10; --tb-rev-ink: #1f1500; --tb-rev-soft: #29220a;
+  --tb-key-line: #fb7185;
+  --tb-skip: #1b1b1b; --tb-skip-ink: #8f8f8f;
+  --tb-ink: #f5f5f5; --tb-ink-2: #d4d4d4; --tb-dim: #8f8f8f;
+  --tb-line: #262626; --tb-line-soft: #1b1b1b; --tb-line-hard: #363636;
+  --tb-head: #1b1b1b; --tb-page: #141414; --tb-soft: #1b1b1b;
+  --tb-tint: color-mix(in srgb, #fb7185 10%, #141414);
+  --tb-bg-2: #050505; --tb-raised: #1b1b1b;
+  --tb-focus: #fb7185; --tb-code: #fb7185;
+  --on-accent: #ffffff;
+  --accent-grad: linear-gradient(#fb7185, #fb7185);
+  --glass-shadow: none;
+  --nav-hover: rgba(255, 255, 255, 0.06);
+  --scheme: dark;
+  color-scheme: dark;
+  background: #050505;
+  color: #f5f5f5;
+}
+:where(html[data-look="19"]) .examskin:not(.gemskin) .bg-orbs { background: #050505; }
+
+/* ---- Menu ke rang (exam.css ke hare-tint wale rang hatane ke liye) ---- */
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer { background: var(--panel); color: var(--tb-ink); border-color: var(--tb-line); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__head { border-bottom-color: var(--tb-line); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.drawer__brand, .drawer__head) { color: var(--tb-ink); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.drawer__sub, .drawer__x, .drawer__chev) { color: var(--tb-dim); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__grouphd { color: var(--tb-ink-2); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__grouphd:hover { background: var(--nav-hover); color: #fff; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__back { color: var(--A); border-bottom-color: var(--tb-line); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__back:hover { background: var(--nav-hover); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__rule { background: var(--tb-line); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__link { color: var(--tb-ink-2); border-left: 0; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__link:hover { background: var(--nav-hover); color: #fff; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__link.is-active { background: var(--A); color: var(--on-A); box-shadow: none; }
+
+/* ---- Upar ki patti ---- */
+:where(html[data-look="19"]) .examskin:not(.gemskin) .topbar { background: var(--panel); border-color: var(--tb-line); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.topbar__burger, .topbar__brand) { color: var(--tb-ink); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.themetog, .settings-theme) { display: none; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .topinfo__date { color: var(--tb-dim); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .topinfo__count {
+  background: color-mix(in srgb, var(--A) 12%, transparent);
+  border-color: color-mix(in srgb, var(--A) 40%, transparent);
+  color: var(--tb-ink);
+}
+:where(html[data-look="19"]) .examskin:not(.gemskin) .topinfo__count b { color: var(--A); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .lookswitch { background: rgba(255, 255, 255, 0.04); border-color: var(--tb-line); }
+
+/* ---- Card / hero ke rang ---- */
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.placeholder, .glass-card, .qcard, .stat, .home-acc__item, .pyq-row) {
+  background: var(--tb-page); border-color: var(--tb-line); box-shadow: none;
+}
+:where(html[data-look="19"]) .examskin:not(.gemskin) .hero { background: var(--tb-page); border-color: var(--tb-line); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .hero__eyebrow { color: var(--A); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .hero__title { color: #ffffff; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .hero .grad { -webkit-text-fill-color: var(--A); color: var(--A); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .hero__sub { color: var(--tb-dim); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .pyq-row__name { color: #fff; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .pyq-row__meta { color: var(--A); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .stat__num { color: var(--A); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .home-acc-wrap { max-width: none; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .home-acc__row:hover { background: var(--nav-hover); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .home-acc__count { background: color-mix(in srgb, var(--A) 14%, transparent); color: var(--A); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .home-acc__link:hover { background: color-mix(in srgb, var(--A) 10%, transparent); color: #fff; }
+
+/* ---- Buttons / inputs ---- */
+:where(html[data-look="19"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)) {
+  background: var(--A); border-color: var(--A); color: var(--on-A); box-shadow: none;
+}
+:where(html[data-look="19"]) .examskin:not(.gemskin) :where(.btn:not(.btn--ghost, .btn--danger, .btn--review, .btn--ca, .btn--ask, .btn--calc)):hover {
+  background: var(--A2); border-color: var(--A2); color: var(--on-A);
+}
+:where(html[data-look="19"]) .examskin:not(.gemskin) .btn--ghost { background: transparent; border-color: var(--tb-line-hard); color: var(--tb-ink-2); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .btn--ghost:hover { background: color-mix(in srgb, var(--A) 10%, transparent); border-color: var(--A); color: var(--A); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .btn--danger:hover { background: #f05a5f; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.input, .select, .textarea) {
+  box-sizing: border-box; max-width: 100%;
+  background: var(--field); border-color: var(--tb-line-hard); color: var(--tb-ink);
+}
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.input, .select, .textarea):focus { border-color: var(--A); box-shadow: 0 0 0 3px color-mix(in srgb, var(--A) 22%, transparent); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.input, .textarea)::placeholder { color: var(--tb-dim); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .chip { background: transparent; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .chip.is-active { background: var(--A); border-color: var(--A); color: var(--on-A); }
+
+/* ---- Home ka daily card ---- */
+:where(html[data-look="19"]) .examskin:not(.gemskin) .daily-card { background: var(--tb-page); border: 1px solid var(--tb-line); box-shadow: none; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .daily-card .section-kicker { color: var(--A); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .ring { border-top-color: var(--A); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .daily-progress > i { background: var(--A); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .target-number span { color: var(--tb-ink-2); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.subject-row-body span, .card-footnote) { color: var(--tb-dim); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .subject-row-acts .btn--primary { background: var(--A); border-color: var(--A); color: var(--on-A); box-shadow: none; }
+
+:where(html[data-look="19"]) .examskin:not(.gemskin) .footer { background: transparent; border-top-color: var(--tb-line); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) ::-webkit-scrollbar { width: 10px; height: 10px; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) ::-webkit-scrollbar-track { background: transparent; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) ::-webkit-scrollbar-thumb { background: var(--tb-line-hard); border-radius: 999px; border: 2px solid #050505; }
+
+/* =================== LAYOUT =================== */
+:where(html[data-look="19"]) .examskin:not(.gemskin) .bg-orbs {
+  background: radial-gradient(600px 600px at 50% 50%, rgba(251, 113, 133, 0.12), transparent 70%), #050505;
+}
+:where(html[data-look="19"]) .examskin:not(.gemskin) .bg-orbs::before, :where(html[data-look="19"]) .examskin:not(.gemskin) .bg-orbs::after {
+  position: absolute; font-weight: 900; letter-spacing: -0.06em; color: rgba(255, 255, 255, 0.035); line-height: 0.8; white-space: nowrap;
+}
+:where(html[data-look="19"]) .examskin:not(.gemskin) .bg-orbs::before { content: "SSC"; font-size: 34vw; left: -3vw; top: 4vh; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .bg-orbs::after { content: "CGL"; font-size: 34vw; right: -3vw; bottom: 0; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .shell { padding-left: 0 !important; padding-bottom: 86px; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .footer { display: none; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .topbar { margin: 0; border-radius: 0; border: 0; border-bottom: 1px solid var(--tb-line); position: sticky; top: 0; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .topinfo__date { display: none; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) main.container { padding-inline: 16px; }
+
+/* ---- Neeche tab-bar (har chaudai par) ---- */
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer {
+  top: auto; bottom: 0; left: 0; right: 0; width: auto; height: 74px;
+  transform: none !important; flex-direction: row; align-items: stretch;
+  background: rgba(14, 14, 14, 0.96); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 0; border-top: 1px solid var(--tb-line); overflow: hidden; z-index: 63;
+}
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__backdrop { display: none !important; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .topbar__burger { display: none !important; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .topbar__brand { display: flex !important; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__head { display: none; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__nav { flex-direction: row; gap: 0; padding: 0 6px; overflow-x: auto; scrollbar-width: none; width: 100%; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__nav::-webkit-scrollbar { display: none; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__nav > * { flex: none; width: auto; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__rule { display: none; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.drawer__link, .drawer__grouphd, .drawer__back) {
+  flex-direction: column; justify-content: center; align-items: center; gap: 3px;
+  min-width: 74px; max-width: 96px; height: 74px; padding: 6px 4px; margin: 0; box-sizing: border-box;
+  border-radius: 0; background: transparent; text-align: center; white-space: normal;
+  font-size: 0.62rem; font-weight: 600; line-height: 1.15; letter-spacing: 0; text-transform: none; color: #9a9a9a;
+}
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__groupname { font-size: 0.62rem; letter-spacing: 0; text-transform: none; flex: none; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__grouphd .drawer__chev { display: none; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__ico { font-size: 1.35rem; width: auto; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.drawer__link, .drawer__grouphd):hover { background: transparent; color: #fff; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__link.is-active { background: transparent; color: var(--A); box-shadow: inset 0 3px 0 var(--A); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .drawer__back { color: var(--A); font-weight: 800; }
+
+@media (min-width: 700px) {
+  /* Phone ka dhaancha */
+  :where(html[data-look="19"]) .examskin:not(.gemskin) .shell {
+    max-width: 440px; margin: 22px auto 0; min-height: calc(100vh - 44px); box-sizing: border-box;
+    background: #0a0a0a; border: 10px solid #1c1c1c; border-radius: 44px; overflow: clip;
+    box-shadow: 0 0 0 1px #333, 0 40px 100px rgba(0, 0, 0, 0.9), 0 0 120px -30px rgba(251, 113, 133, 0.35);
+    position: relative;
+  }
+  :where(html[data-look="19"]) .examskin:not(.gemskin) .topbar { border-radius: 34px 34px 0 0; padding-top: 16px; }
+  :where(html[data-look="19"]) .examskin:not(.gemskin) .drawer { left: 50%; right: auto; width: 420px; bottom: 32px; transform: translateX(-50%) !important; border-radius: 0 0 34px 34px; }
+}
+:where(html[data-look="19"]) .examskin:not(.gemskin) .hero { border-radius: 22px; padding: 22px 20px !important; background: linear-gradient(160deg, #2a0c14, #141414 70%); }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .hero__title { font-size: 1.8rem !important; font-weight: 800; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .pyq-list { grid-template-columns: 1fr 1fr; gap: 10px; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .pyq-row { border-radius: 18px; padding: 14px; min-height: 0; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .pyq-row__ico { font-size: 1.6rem; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .pyq-row__name { font-size: 0.9rem; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .pyq-row__sub { display: none; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .pyq-row--all { grid-column: 1 / -1; flex-direction: row; align-items: center; gap: 12px; background: linear-gradient(90deg, #e11d48, #fb7185); border: 0; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .pyq-row--all :is(.pyq-row__name, .pyq-row__meta) { color: #fff; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .pyq-row--all .pyq-row__meta { margin: 0 0 0 auto; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .home-acc { grid-template-columns: 1fr; gap: 8px; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .home-acc__item { border-radius: 16px; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .home-acc__panel { grid-template-columns: 1fr; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) :is(.placeholder, .glass-card, .qcard, .stat) { border-radius: 18px; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .btn { border-radius: 12px; }
+:where(html[data-look="19"]) .examskin:not(.gemskin) .topbar__brand strong { display: none; }
