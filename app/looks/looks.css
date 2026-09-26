@@ -1,25 +1,10 @@
 /* ===================================================================
-   LOOKS — sab options ke saajhe tukde
-   Site ke kai roop ek saath rakhe hain taaki compare ho sake:
-     0 = purana forest-green (sirf app/exam.css)
-     1 = Midnight  (app/looks/midnight.css)
-     2 = Bento     (app/looks/bento.css)
-     3 = Aurora    (app/looks/aurora.css)
-     4 = Terminal  (app/looks/terminal.css)
-     5 = Sky Tabs  (app/looks/sky.css)     — light
-     6 = Candy     (app/looks/candy.css)   — light
-     7 = Notion    (app/looks/notion.css)  — light
-     8 = Cinema    (app/looks/cinema.css)   — dark, menu poori-screen overlay
-     9 = Split     (app/looks/split.css)    — dark, hero baayen chipka
-    10 = Timeline  (app/looks/timeline.css) — dark, zig-zag timeline
-    11 = Masonry   (app/looks/masonry.css)  — dark, dropdown menu + deewar
-    12 = HUD       (app/looks/hud.css)      — dark, 3 hisse
-    13-22 = window, kanban, landing, folder, mosaic, orbit, pocket, sheet,
-            bands, chat (app/looks/*.css) — dark, har ek ka apna dhaancha
-   Kaunsa chal raha hai: <html data-look="…"> — lib/look.js aur layout.js
-   ka <head> script lagata hai; upar ki patti ka switcher badalta hai.
-   Yahan sirf wo cheezein hain jo HAR roop mein chahiye: countdown ka chip
-   (TopbarInfo) aur switcher khud. Rang tokens se, taaki har roop mein jame.
+   Upar ki patti ke saajhe tukde — tareekh aur "31 din baaki" wala chip
+   (components/TopbarInfo.js). Rang tokens se aate hain.
+
+   Pehle yahan roop badalne wala switcher bhi tha: site ke bees roop ek
+   saath pade the taaki compare ho sake. Owner ne Timeline chun liya,
+   isliye baaki unnees aur switcher dono hata diye gaye.
    =================================================================== */
 
 .topinfo { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 0 1 auto; overflow: hidden; margin-right: auto; }
@@ -44,38 +29,3 @@
 @media (max-width: 420px) {
   .topbar__brand strong { display: none; }
 }
-
-
-/* ---- Roop badalne ka switcher (LookSwitch) ---- */
-.lookswitch {
-  display: inline-flex; align-items: center; gap: 2px; flex: none;
-  padding: 3px; border-radius: 999px;
-  background: var(--tb-head); border: 1px solid var(--tb-line);
-}
-.lookswitch__lbl { font-size: 0.66rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tb-dim); padding: 0 6px 0 8px; }
-.lookswitch__opt {
-  border: 0; background: transparent; cursor: pointer;
-  min-width: 28px; height: 26px; padding: 0 9px; border-radius: 999px;
-  font: inherit; font-size: 0.74rem; font-weight: 700; color: var(--tb-dim);
-}
-.lookswitch__opt:hover { color: var(--tb-ink); }
-.lookswitch__opt.is-on { background: var(--tb-blue); color: #fff; }
-@media (max-width: 600px) {
-  .lookswitch__lbl { display: none; }
-  .lookswitch__opt { min-width: 24px; padding: 0 6px; }
-}
-
-/* Roop 8 ho gaye — button ki qatar lambi ho jaati, ab chhota dropdown. */
-.lookswitch__sel {
-  appearance: none; -webkit-appearance: none;
-  border: 0; background: transparent; cursor: pointer;
-  font: inherit; font-size: 0.76rem; font-weight: 700; color: var(--tb-ink);
-  padding: 4px 22px 4px 8px; border-radius: 999px;
-  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
-  background-position: calc(100% - 11px) 55%, calc(100% - 7px) 55%;
-  background-size: 4px 4px, 4px 4px; background-repeat: no-repeat;
-}
-.lookswitch__sel:focus-visible { outline: 2px solid var(--tb-focus); outline-offset: 1px; }
-.lookswitch__sel option { color: #111; background: #fff; }
-.lookswitch__sel { max-width: 170px; text-overflow: ellipsis; }
-@media (max-width: 600px) { .lookswitch__sel { max-width: 74px; } }
