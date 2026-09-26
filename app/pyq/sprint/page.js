@@ -27,7 +27,7 @@ import SprintAnswer from "@/components/SprintAnswer";
 import {
   pickNext, markDone, doneCount, getAns, putAns, getMarks,
   qText, qOpts, qCorrect, sHash, toggleMark, clearDone, isVocab,
-  getSets, saveSet, removeSet, newSetId, byHashes, doneBySlug,
+  getSets, saveSet, removeSet, newSetId, byHashes, doneBySlug, pickDone,
 } from "@/lib/sprint";
 
 const SECS = 30;      // ek question par itne second
@@ -111,6 +111,10 @@ export default function SprintPage() {
   // Daud khatam hone par ye bhar jata hai — aur screen wapas shuru wale
   // page par, uske upar ek patti mein hisaab.
   const [summary, setSummary] = useState(null);
+  // 📝 Test: wahi parda, par jawab tab tak chhupa rehta hai jab tak option
+  // na chuno, aur waqt khatam hone par apne aap agla question NAHI aata —
+  // exam mein bhi page apne aap nahi palatta.
+  const [test, setTest] = useState(false);
   // Browser ka apna poora-screen (F11 jaisa). Hamara parda to pehle hi poori
   // window leta hai; ye browser ki patti bhi hata deta hai.
   const [fs, setFs] = useState(false);
@@ -232,13 +236,14 @@ export default function SprintPage() {
     return qs.map((q) => ({ ...q, _slug: s, _subj: meta.label }));
   }, []);
 
-  // `set` diya ho to wahi purana set dobara — warna agle `count` naye.
-  const start = useCallback(async (set) => {
+  // `set` diya ho to wahi purana set dobara; `asTest` ho to jo ho CHUKE hain
+  // unhi ka test — warna agle `count` naye.
+  const start = useCallback(async (set, asTest) => {
     const s = set ? set.slug : slug;
     const b = set ? (set.book || "") : book;
     const c = set ? (set.chap || "") : chap;
     setPhase("loading");
-    setNote(set ? `"${set.label}" wapas laa rahe hain…` : "Questions load ho rahe hain…");
+    setNote(asTest ? "Test taiyaar ho raha hai…" : set ? `"${set.label}" wapas laa rahe hain…` : "Questions load ho rahe hain…");
     let list;
     try {
       list = await loadList(s, b, c);
@@ -247,15 +252,18 @@ export default function SprintPage() {
       setNote("Load nahi hue: " + e.message);
       return;
     }
-    const pick = set ? byHashes(list, set.hashes) : pickNext(list, count);
+    const pick = set ? byHashes(list, set.hashes)
+      : asTest ? pickDone(list, count)
+      : pickNext(list, count);
     if (!pick.length) {
       setPhase("setup");
-      setNote(set
-        ? "Is set ke question ab bank mein nahi mile."
+      setNote(set ? "Is set ke question ab bank mein nahi mile."
+        : asTest ? "Yahan abhi koi question hua hi nahi — pehle ek sprint chala lo."
         : "Yahan ke saare question sprint mein aa chuke. Neeche se hisaab saaf kar sakte ho, ya doosra chapter chuno.");
       return;
     }
-    if (!set) {
+    setTest(!!asTest);
+    if (!set && !asTest) {
       // Naya set sambhal lo — taaki yahi 100 baad mein dobara chal sakein.
       const bookLabel = b
         ? (s === "vocab"
@@ -320,13 +328,13 @@ export default function SprintPage() {
   // do, aur shuru wale page par wapas.
   const finish = useCallback(() => {
     flush();
-    setSummary({ seen: Math.min(pos + 1, batch.length), right: tally.right, wrong: tally.wrong });
+    setSummary({ seen: Math.min(pos + 1, batch.length), right: tally.right, wrong: tally.wrong, test });
     try { if (document.fullscreenElement) document.exitFullscreen(); } catch { /* ignore */ }
     setPhase("setup");
     setNote("");
     setSets(getSets());
     window.scrollTo(0, 0);
-  }, [flush, pos, batch.length, tally]);
+  }, [flush, pos, batch.length, tally, test]);
 
   useEffect(() => {
     if (phase === "run" && batch.length && pos >= batch.length) finish();
@@ -334,10 +342,12 @@ export default function SprintPage() {
   // Ghadi.
   useEffect(() => {
     if (phase !== "run" || paused) return undefined;
-    if (left <= 0) { next(); return undefined; }
+    // Test mein waqt khatam hone par bas jawab khul jata hai; aage khud
+    // badhna hota hai.
+    if (left <= 0) { if (!test) next(); return undefined; }
     const t = setTimeout(() => setLeft((s) => s - 1), 1000);
     return () => clearTimeout(t);
-  }, [left, paused, phase, next]);
+  }, [left, paused, phase, next, test]);
 
   // Daud ke dauraan page ke peechhe ka scroll band — warna fixed parde ke
   // peechhe poora PYQ page scroll hota rehta hai aur dayein ek bekaar patti
@@ -359,7 +369,10 @@ export default function SprintPage() {
   const choose = useCallback((i) => {
     if (picked != null || !cur) return;
     setPicked(i);
-    setTally((t) => (i === cur.answer ? { ...t, right: t.right + 1 } : { ...t, wrong: t.wrong + 1 }));
+    // Vocab mein sahi option jaisa kuch nahi — wahan "✓ Yaad tha" khud sahi
+    // maana jata hai aur "✗" galat (choose(-1)).
+    const right = isVocab(cur) ? i >= 0 : i === cur.answer;
+    setTally((t) => (right ? { ...t, right: t.right + 1 } : { ...t, wrong: t.wrong + 1 }));
   }, [picked, cur]);
 
   // Keyboard: space = ruko/chalo, ← → question, M = bookmark.
@@ -385,12 +398,13 @@ export default function SprintPage() {
     return (
       <div className="sp-wrap">
         <div className="sp-top">
-          <span className="sp-top__n">⚡ {pos + 1}/{batch.length}</span>
+          <span className="sp-top__n">{test ? "📝" : "⚡"} {pos + 1}/{batch.length}</span>
           <span className={`sp-clock${paused ? " is-pause" : left <= 10 ? " is-warn" : ""}`}>
             {paused ? "⏸ ruka hua" : `0:${String(left).padStart(2, "0")}`}
           </span>
           <span className="sp-top__dim">
-            ✓ {tally.right} · ✗ {tally.wrong} · 🐋 {madeN}/{batch.length} taiyaar
+            ✓ {tally.right} · ✗ {tally.wrong}
+            {test ? "" : ` · 🐋 ${madeN}/${batch.length} taiyaar`}
           </span>
           <span className="sp-top__sp" />
           <button type="button" className={`sp-ibtn${marked ? " is-on" : ""}`} onClick={mark} title="Bookmark (M)">
@@ -411,6 +425,9 @@ export default function SprintPage() {
             <SprintCard q={cur} n={pos + 1} total={batch.length} picked={picked} onPick={choose} />
           </div>
           <div className="sp-col">
+            {test && picked == null && left > 0 ? (
+              <div className="sp-wait">🤫 Pehle apna jawab chuno — uske baad hi khulega.{isVocab(cur) ? " (Neeche ke do button se.)" : ""}</div>
+            ) : (
             <SprintAnswer
               qKey={curH}
               ds={ans[curH] || ""}
@@ -419,10 +436,19 @@ export default function SprintPage() {
               original={isVocab(cur) ? (cur.meaning || cur.def || "") : (cur.explanation || cur.solution || "")}
               solImg={cur.solImg || ""}
             />
+            )}
           </div>
         </div>
 
         <div className="sp-foot">
+          {/* Vocab mein option hote hi nahi, isliye test ke liye ye do button
+              hi "jawab" hain. */}
+          {test && isVocab(cur) && picked == null && (
+            <>
+              <button type="button" className="sp-ibtn" onClick={() => choose(-1)}>✗ Nahi aata tha</button>
+              <button type="button" className="sp-ibtn" onClick={() => choose(cur.answer ?? 0)}>✓ Yaad tha</button>
+            </>
+          )}
           <button type="button" className="sp-ibtn" onClick={prev} disabled={pos === 0}>← pichhla</button>
           <button type="button" className="sp-ibtn" onClick={next}>aage →</button>
           <span className="sp-keys">Space = ruko · ← → = question · M = bookmark</span>
@@ -479,9 +505,21 @@ export default function SprintPage() {
         {/* Daud khatam — hisaab yahin, taaki agla sprint turant shuru ho sake. */}
         {summary && (
           <div className="sp-done">
-            <b>⚡ Sprint khatam</b> — {summary.seen} question dekhe · ✓ {summary.right} sahi · ✗ {summary.wrong} galat
-            {markN ? ` · ★ ${markN} bookmark` : ""}.
-            {" "}Ab tak kul <b>{doneN}</b> ho chuke — agli baar inke AGLE aayenge.
+            {summary.test ? (
+              <>
+                <b>📝 Test khatam</b> — {summary.seen} mein se{" "}
+                <b>{summary.right} sahi</b> · {summary.wrong} galat
+                {summary.right + summary.wrong
+                  ? ` · ${Math.round((summary.right * 100) / (summary.right + summary.wrong))}%`
+                  : ""}.
+              </>
+            ) : (
+              <>
+                <b>⚡ Sprint khatam</b> — {summary.seen} question dekhe · ✓ {summary.right} sahi · ✗ {summary.wrong} galat
+                {markN ? ` · ★ ${markN} bookmark` : ""}.
+                {" "}Ab tak kul <b>{doneN}</b> ho chuke — agli baar inke AGLE aayenge.
+              </>
+            )}
             <button type="button" className="linklike" onClick={() => setSummary(null)}> ✕</button>
           </div>
         )}
@@ -572,6 +610,25 @@ export default function SprintPage() {
             {phase === "loading" ? "…" : `⚡ Shuru karo — ${count} question`}
           </button>
           <Link href="/pyq/sprint/marks" className="btn btn--ghost btn--sm">★ Bookmarks ({markN})</Link>
+        </div>
+
+        {/* 📝 Jo ho chuke unhi ka test — jawab pehle se save pade hain,
+            isliye ismein ek bhi naya DeepSeek call nahi hota. */}
+        <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>
+          <button
+            type="button"
+            className="btn btn--ghost btn--sm"
+            onClick={() => start(null, true)}
+            disabled={phase === "loading" || !(doneMap[slug] || 0)}
+            title={(doneMap[slug] || 0) ? "" : "Pehle is subject ka ek sprint chala lo"}
+          >
+            📝 Test do — ho gaye question par
+          </button>
+          <span className="hint">
+            {(doneMap[slug] || 0)
+              ? `${labelOf(slug)} ke ${(doneMap[slug] || 0).toLocaleString("en-IN")} ho chuke hain — unmein se ${count} random. Jawab tab khulega jab tum apna chun loge.`
+              : `${labelOf(slug)} ka abhi koi question hua nahi.`}
+          </span>
         </div>
 
         {sets.length > 0 && (
