@@ -17,7 +17,8 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "./paste.css";
-import Markdown from "@/components/Markdown";
+import OneLinerNotes from "@/components/OneLinerNotes";
+import { countOneLiner } from "@/lib/onelinerfmt";
 import { listNotesBooks } from "@/lib/notesbank";
 import {
   getLastSource, getNote, saveNote, removeNote, notesByBook, noteKey,
@@ -36,7 +37,7 @@ function NoteCard({ n, onGone }) {
     <div className="pn-note">
       <div className="pn-note__hd">
         <button type="button" className="pn-note__t" onClick={() => setOpen((v) => !v)}>
-          {open ? "⌃" : "⌄"} {n.topic || "—"} <span className="pn-dim">· page {n.page}</span>
+          {open ? "⌃" : "⌄"} {n.topic || "—"} <span className="pn-dim">· page {n.page} · {countOneLiner(n.text).n} point{countOneLiner(n.text).star ? ` · ⭐ ${countOneLiner(n.text).star}` : ""}</span>
         </button>
         <button type="button" className="pn-x" onClick={() => setEdit((v) => !v)} title="Badlo">✏️</button>
         <button
@@ -61,7 +62,7 @@ function NoteCard({ n, onGone }) {
           </div>
         </div>
       ) : open ? (
-        <div className="pn-body"><Markdown>{n.text}</Markdown></div>
+        <div className="pn-body"><OneLinerNotes text={n.text} /></div>
       ) : null}
     </div>
   );

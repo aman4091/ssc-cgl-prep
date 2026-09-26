@@ -4114,3 +4114,57 @@ body.exam-on .hresume { display: none; }
 }
 .nt-paste__hd .nt-meta { margin-left: auto; }
 .nt-paste textarea { width: 100%; resize: vertical; line-height: 1.6; }
+
+/* ── one-liner ka roop ─────────────────────────────────────────────────── */
+/* Topic ka naam, uske neeche numbered point, aur ⚠️ Confusion ka apna
+   khaana. ⭐ wale point (jo SSC mein aa chuke) saaf alag dikhein. */
+.ol { display: grid; gap: 14px; }
+.ol-sec { }
+.ol-t {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--head);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 4px;
+}
+.ol-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.ol-p {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding: 5px 8px;
+  border-radius: 8px;
+  font-size: 0.94rem;
+  line-height: 1.6;
+}
+.ol-p.is-star {
+  background: var(--mark);
+  color: #2a2000;
+}
+.ol-p.is-star::before { content: "⭐"; font-size: 0.85em; }
+.ol-n {
+  min-width: 1.5em;
+  text-align: right;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85em;
+  padding-top: 1px;
+}
+.ol-p.is-star .ol-n { color: #6b5600; }
+.ol-x { flex: 1; min-width: 0; }
+
+.ol-sec--warn {
+  border: 1px solid var(--warning);
+  background: color-mix(in srgb, var(--warning) 12%, transparent);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.ol-sec--warn .ol-t { color: var(--warning); border-bottom: 0; }
+
+/* Paste-box ke andar ki jhalak — paste karte hi shakl dikh jaye. */
+.nt-paste__pre {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}

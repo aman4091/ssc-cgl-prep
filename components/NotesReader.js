@@ -5,6 +5,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
 import { NOTES_PROMPT } from "@/lib/notesprompt";
 import { setLastSource, getNote, saveNote } from "@/lib/pastednotes";
+import OneLinerNotes from "@/components/OneLinerNotes";
 import { readImageText } from "@/lib/client-ai";
 import { startNotesQuiz } from "@/lib/notesquiz";
 import { hinglishKey, getHinglish, setHinglish, subscribeHinglish } from "@/lib/noteshinglish";
@@ -157,6 +158,11 @@ function PasteBox({ src, onClose }) {
           📝 Saare one-liner
         </a>
       </div>
+      {/* Paste karte hi dikh jaye ki kaisa lagega — topic, numbered point,
+          ⭐ wale alag, aur ⚠️ Confusion apne khaane mein. */}
+      {text.trim() ? (
+        <div className="nt-paste__pre"><OneLinerNotes text={text} /></div>
+      ) : null}
     </div>
   );
 }
@@ -573,16 +579,18 @@ export default function NotesReader({ book }) {
                   <span className="nt-meta">page {p.book_page}</span>
                 </span>
               </div>
-              {p.continues_from_prev && (
-                <div className="nt-cont">… pichhle page se aage</div>
-              )}
-              <div dangerouslySetInnerHTML={{ __html: renderBlocks(p.blocks, hashHierarchy) }} />
+              {/* Box page ke SAR ke theek neeche — pehle ye page ke aakhir mein
+                  tha aur lambe page par dikhta hi nahi tha. */}
               {pnPage === p.book_page && (
                 <PasteBox
                   src={{ book: book.slug, bookTitle: book.title, eyebrow: book.eyebrow, topic: p.topic, page: p.book_page }}
                   onClose={() => setPnPage(null)}
                 />
               )}
+              {p.continues_from_prev && (
+                <div className="nt-cont">… pichhle page se aage</div>
+              )}
+              <div dangerouslySetInnerHTML={{ __html: renderBlocks(p.blocks, hashHierarchy) }} />
               {p.continues_to_next && (
                 <div className="nt-cont">agle page pe jaari …</div>
               )}
