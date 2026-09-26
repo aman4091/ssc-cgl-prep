@@ -23,6 +23,7 @@ import { vocabPool } from "@/lib/vocabpool";
 import { TYPES as VOCAB_TYPES } from "@/lib/vocab";
 import { loadCaBankIndex, loadCaBankMonth } from "@/lib/cabank";
 import { getCurrentAffairsQuestions } from "@/lib/feed";
+import { SUBJECTS as WB_SUBJECTS, getWrongBook, isPracticeable } from "@/lib/wrongbook";
 import { sprintAnswer } from "@/lib/client-ai";
 import SprintCard from "@/components/SprintCard";
 import SprintAnswer from "@/components/SprintAnswer";
@@ -43,8 +44,13 @@ const VOCAB = { slug: "vocab", label: "Vocab", icon: "🔤" };
 // 📰 Current Affairs bhi bank ke bahar hai: mahine-wise ready-made bank
 // (public/cabank) + jo tumne khud import kiya (feed).
 const CA = { slug: "ca", label: "Current Affairs", icon: "📰" };
-const PICKS = [...ALL_SUBJECTS, VOCAB, CA, { slug: "mix", label: "Mix — sab subject", icon: "🎲" }];
-const NO_BOOKS = new Set(["mix", "vocab", "ca"]);
+// 🔴 Answers page (Mistake Notebook) — jo galat hue ya chhode, wahi.
+const WB = { slug: "wrong", label: "Mistake Notebook", icon: "🔴" };
+const PICKS = [...ALL_SUBJECTS, VOCAB, CA, WB, { slug: "mix", label: "Mix — sab subject", icon: "🎲" }];
+const NO_BOOKS = new Set(["mix", "vocab", "ca", "wrong"]);
+
+// Notebook ki "book" wahi subject hai jo Answers page par chip banta hai.
+const WB_KINDS = [{ key: "", label: "— Saare subject —" }, ...WB_SUBJECTS.map((x) => ({ key: x.key, label: `${x.icon} ${x.label}` }))];
 
 // Vocab ki "book" uska TYPE hai — OWS / Idiom / Vocab. Khali = teeno mila-jula.
 const VOCAB_KINDS = [{ key: "", label: "— Sab mila-jula —" }, ...VOCAB_TYPES.map((t) => ({ key: t.key, label: `${t.icon} ${t.label}` }))];
@@ -180,7 +186,11 @@ export default function SprintPage() {
       if (!ok) return;
       const mine = (() => { try { return getCurrentAffairsQuestions().length; } catch { return 0; } })();
       setCaMonths((idx && idx.months) || []);
-      setTotals((t) => ({ ...t, ca: ((idx && idx.total) || 0) + mine }));
+      setTotals((t) => ({
+        ...t,
+        ca: ((idx && idx.total) || 0) + mine,
+        wrong: (() => { try { return getWrongBook("").filter(isPracticeable).length; } catch { return 0; } })(),
+      }));
     })();
     return () => { ok = false; };
   }, []);
@@ -219,6 +229,10 @@ export default function SprintPage() {
   const fetchAll = useCallback(async (list) => {
     for (const q of list) {
       if (!alive.current) return;
+      // 📰 Current Affairs par DeepSeek ko bulana hi nahi: uski jaankari
+      // purani hai, aur source ka apna jawab pehle se saath aata hai. Paisa
+      // bhi bachta hai.
+      if (q._slug === "ca") continue;
       const h = sHash(q);
       // Pichhli baar bana hua jawab pada ho to dobara paisa nahi lagta.
       const old = getAns(q);
@@ -257,6 +271,19 @@ export default function SprintPage() {
         ...v, _kind: "vocab", _slug: "vocab", _subj: "Vocab",
         _srcLabel: "Vocab", _chapter: v.label || "",
       }));
+    }
+    if (s === "wrong") {
+      // `b` = subject ("math"/"gs"/…), khali = saare. Sirf wahi record jinke
+      // paas asli options hain — sirf-tasveer wale card yahan nahi chalte.
+      return getWrongBook(b || "")
+        .filter(isPracticeable)
+        .map((r) => ({
+          ...r.q,
+          _slug: "wrong", _subj: (WB_SUBJECTS.find((x) => x.key === r.subject) || {}).label || "Mistake",
+          _srcLabel: "Mistake Notebook",
+          _chapter: r.category || r.source || "",
+          explanation: r.q.explanation || r.answer || "",
+        }));
     }
     if (s === "ca") {
       // `b` yahan mahina hai ("2026-07"), khali = saare mahine.
@@ -315,6 +342,7 @@ export default function SprintPage() {
       const bookLabel = b
         ? (s === "vocab" ? (VOCAB_KINDS.find((x) => x.key === b) || {}).label
           : s === "ca" ? (caMonths.find((x) => x.period === b) || {}).label
+          : s === "wrong" ? (WB_KINDS.find((x) => x.key === b) || {}).label
           : (books.find((x) => x.id === b) || {}).label)
         : "";
       const chapName = c ? (parts.find((x) => x.slug === c) || {}).name : "";
@@ -368,10 +396,13 @@ export default function SprintPage() {
     () => batch.slice(0, WARM).filter((q) => ans[sHash(q)] || errs[sHash(q)]).length,
     [batch, ans, errs],
   );
+  // CA ke batch mein koi AI call hoti hi nahi, isliye wahan taiyaari ka
+  // intezaar bekaar hai — seedha daud.
+  const noAi = batch.length > 0 && batch.every((q) => q._slug === "ca");
   useEffect(() => {
     if (phase !== "prep") return;
-    if (readyN >= Math.min(WARM, batch.length)) setPhase("run");
-  }, [phase, readyN, batch.length]);
+    if (noAi || readyN >= Math.min(WARM, batch.length)) setPhase("run");
+  }, [phase, readyN, batch.length, noAi]);
 
   // Naya question saamne aaya: ghadi poori, chuna hua option saaf, aur ye
   // question "ho gaya" wali list mein.
@@ -473,7 +504,7 @@ export default function SprintPage() {
           </span>
           <span className="sp-top__dim">
             ✓ {tally.right} · ✗ {tally.wrong}
-            {test ? "" : ` · 🐋 ${madeN}/${batch.length} taiyaar`}
+            {test || noAi ? "" : ` · 🐋 ${madeN}/${batch.length} taiyaar`}
           </span>
           <span className="sp-top__sp" />
           <button type="button" className={`sp-ibtn${marked ? " is-on" : ""}`} onClick={mark} title="Bookmark (M)">
@@ -504,6 +535,9 @@ export default function SprintPage() {
               loading={busy === curH}
               original={isVocab(cur) ? (cur.meaning || cur.def || "") : (cur.explanation || cur.solution || "")}
               solImg={cur.solImg || ""}
+              // 📰 CA par sirf source ka apna jawab — koi tab nahi, koi
+              // DeepSeek nahi.
+              onlyOrig={cur._slug === "ca"}
             />
             )}
           </div>
@@ -616,6 +650,21 @@ export default function SprintPage() {
         {/* Poora subject bhi ho sakta hai aur "sirf GKTricks ka Statics" bhi.
             Question yahan fetch nahi hote — sirf har bank ka index padha
             jata hai, isliye ye list turant bhar jati hai. */}
+        {slug === "wrong" ? (
+          <>
+            <h3 className="mt-16">2. Kaun sa subject</h3>
+            <div className="sp-selects">
+              <label className="sp-sel">
+                <span>Subject</span>
+                <select value={book} onChange={(e) => setBook(e.target.value)}>
+                  {WB_KINDS.map((k) => <option key={k.key} value={k.key}>{k.label}</option>)}
+                </select>
+              </label>
+            </div>
+            <p className="hint mt-8">Wahi question jo Answers page par pade hain — jo galat hue ya chhode.</p>
+          </>
+        ) : null}
+
         {slug === "ca" ? (
           <>
             <h3 className="mt-16">2. Kaun sa mahina</h3>

@@ -4,18 +4,31 @@
 //
 // Do tab: 🐋 DeepSeek (shuru mein yahi khula rehta hai) aur 📖 Asli, yaani
 // book ka apna solution/explanation — wo khud daba kar dekhna hota hai.
+//
+// 📰 Current Affairs is niyam ka apwaad hai (onlyOrig): wahan DeepSeek ko
+// bulaya hi nahi jata — uski jaankari purani hai aur naye current affairs par
+// wo galat bata sakta hai. Source ka apna jawab hi sahi hai, wahi dikhta hai.
 
 import { useEffect, useState } from "react";
 import Markdown from "./Markdown";
 import { answerMd } from "@/lib/sprint";
 
-export default function SprintAnswer({ qKey, ds, original, solImg, loading, err }) {
+export default function SprintAnswer({ qKey, ds, original, solImg, loading, err, onlyOrig = false }) {
   const [tab, setTab] = useState("ds");
   // Agla question aaya to wapas DeepSeek par — har baar khud badalna padta to
   // 30 second wali daud mein wahi ek kaam reh jata.
   useEffect(() => { setTab("ds"); }, [qKey]);
 
   const hasOrig = !!(original || solImg);
+
+  if (onlyOrig) {
+    return (
+      <div className="sp-ans">
+        {solImg ? <img src={solImg} alt="solution" className="sp-img" /> : null}
+        {original ? <Markdown>{original}</Markdown> : <div className="sp-wait">Is question ke saath jawab nahi aaya.</div>}
+      </div>
+    );
+  }
 
   return (
     <>
