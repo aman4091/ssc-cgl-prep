@@ -37,8 +37,8 @@ export const viewport = {
   // haath se bhi badal deta hai, kyunki `data-theme` prefers-color-scheme se
   // nahi bandha — wo user ki apni chuni hui cheez hai.
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#141922" },
+    { media: "(prefers-color-scheme: light)", color: "#08080a" },
+    { media: "(prefers-color-scheme: dark)", color: "#08080a" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -74,7 +74,7 @@ export default function RootLayout({ children }) {
               // Address bar ka rang bhi yahin — bina-media wala meta sabse aage,
               // taaki wo upar wali do (OS ki pasand wali) se pehle mile.
               "if(t){var m=document.createElement('meta');m.id='tc-user';" +
-              "m.name='theme-color';m.content=t==='dark'?'#141922':'#ffffff';" +
+              "m.name='theme-color';m.content='#08080a';" +
               "document.head.prepend(m)}}catch(e){}",
           }}
         />

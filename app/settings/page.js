@@ -208,7 +208,7 @@ export default function SettingsPage() {
         </p>
       </section>
 
-      <section className="section" style={{ marginTop: 16, maxWidth: 640 }}>
+      <section className="section settings-theme" style={{ marginTop: 16, maxWidth: 640 }}>
         <div className="glass-card">
           <div className="field">
             <label>🌗 Theme</label>

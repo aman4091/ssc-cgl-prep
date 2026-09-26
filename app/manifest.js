@@ -15,8 +15,8 @@ export default function manifest() {
     scope: "/",
     display: "standalone",
     orientation: "any", // tablet ko portrait aur landscape dono chahiye
-    background_color: "#ffffff",
-    theme_color: "#ffffff",
+    background_color: "#08080a",
+    theme_color: "#08080a",
     // PNG 192 aur 512 dono chahiye — Chrome inhi ko dekh kar "Install app"
     // offer karta hai. Purana icon.svg hata diya: ab asli logo (public/logo.png
     // se banaye gaye PNG) hi har jagah chalta hai.
