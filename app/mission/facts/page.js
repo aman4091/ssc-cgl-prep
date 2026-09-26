@@ -6,6 +6,7 @@ import { FACT_SECS, GAPS, DAILY_CAP, REV_NOTE, factView, getFacts, addFact, remo
 import { clearSession } from "@/lib/recallsession";
 import { getMission, currentDayNum, planFor } from "@/lib/mission";
 import Recall from "@/components/carevision/Recall";
+import AskWords from "@/components/AskWords";
 import TrickButtons from "@/components/TrickButtons";
 import FactTidyBtn from "@/components/FactTidyBtn";
 
@@ -121,6 +122,7 @@ export default function MissionFactsPage() {
   if (revising) {
     return (
       <Recall
+        askWords
         key={`facts-${rev}`}
         queue={revising}
         labels={FACT_LABELS}
@@ -178,6 +180,9 @@ export default function MissionFactsPage() {
         )}
         <h2 className="ms-h2">Aaj revise karo ({due.length})</h2>
         <p className="hint" style={{ margin: "0 0 8px" }}>
+          💡 Fact ke andar kisi bhi <b>naam</b> par click karo — dayein taraf uska matlab aur tasveer aa jayegi.{" "}
+        </p>
+        <p className="hint" style={{ margin: "0 0 8px" }}>
           <strong>{REV_NOTE}</strong> Kram wahi hai — D+3 pehle, fir D+7, fir D+1, sabse aakhir mein D+14.
           {dueAll.total > due.length
             ? ` Aaj ki hadd ${DAILY_CAP} hai (kul ${dueAll.total} due hain) — bache hue kal khud aa jayenge, koi backlog nahi.`
@@ -202,11 +207,12 @@ export default function MissionFactsPage() {
                 </div>
                 {open[f.id] ? (
                   <>
-                    <p style={{ margin: "6px 0 8px", fontSize: "1.1rem", lineHeight: 1.5 }}>{factView(f).main}</p>
+                    {/* Naam par click → dayein taraf uska poora parichay + tasveer. */}
+                    <p style={{ margin: "6px 0 8px", fontSize: "1.1rem", lineHeight: 1.5 }}><AskWords>{factView(f).main}</AskWords></p>
                     {factView(f).more && (
                       <details style={{ margin: "0 0 8px" }}>
                         <summary className="hint" style={{ cursor: "pointer" }}>⌄ poora padho</summary>
-                        <p style={{ margin: "6px 0 0", fontSize: "1rem", lineHeight: 1.6 }}>{factView(f).more}</p>
+                        <p style={{ margin: "6px 0 0", fontSize: "1rem", lineHeight: 1.6 }}><AskWords>{factView(f).more}</AskWords></p>
                       </details>
                     )}
                     <div className="row" style={{ gap: 8 }}>
@@ -264,7 +270,7 @@ export default function MissionFactsPage() {
             <summary><strong>{t}</strong> <span className="muted">· {list.length}</span></summary>
             {list.map((f) => (
               <div key={f.id} className="ms-factrow">
-                <span>{FACT_SECS.find((s) => s.k === f.sec)?.icon} {f.text}</span>
+                <span>{FACT_SECS.find((s) => s.k === f.sec)?.icon} <AskWords>{f.text}</AskWords></span>
                 <span className="row" style={{ gap: 6, flexWrap: "nowrap" }}>
                   <span className="hint">{f.due ? `agla ${f.due.slice(8)}/${f.due.slice(5, 7)}` : "pakka ✓"}</span>
                   <button className="btn btn--ghost btn--sm" onClick={() => { if (confirm("Ye fact hata dein?")) { removeFact(f.id); load(); } }}>🗑️</button>

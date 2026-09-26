@@ -48,7 +48,8 @@
   padding: 10px 12px;
   border-bottom: 1px solid var(--line);
 }
-.sa-head__t { font-weight: 700; font-size: 0.95rem; flex: 1; }
+.sa-head__t { font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
+.sa-head .sa-x { padding: 4px 8px; }
 .sa-head select {
   border: 1px solid var(--line);
   background: var(--glass-bg);
@@ -165,47 +166,81 @@
   }
 }
 
-/* ── tasveer ───────────────────────────────────────────────────────────── */
-.sa-imgrow {
-  display: flex;
-  gap: 6px;
-  padding: 8px 12px;
-  border-bottom: 1px solid var(--line);
-  flex-wrap: wrap;
-}
-.sa-imgbtn {
-  border: 1px solid var(--line);
-  background: var(--glass-bg);
-  color: var(--text-1);
-  border-radius: 999px;
-  padding: 5px 12px;
-  font-family: inherit;
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-.sa-imgbtn:hover { background: var(--glass-bg-strong); }
-.sa-imgbtn:disabled { opacity: 0.6; cursor: not-allowed; }
-
-/* Ek line mein, baayein-dayein khisak kar — panel ki lambai photo nahi khati. */
+/* ── tasveer ────────────────────────────────────────────── */
+/* Har jawab ke NEECHE uski apni patti — ek line mein, baayein-dayein
+   khisak kar, taaki panel ki lambai photo na kha jaye. */
 .sa-imgs {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--line);
-  background: var(--bg-2);
+  padding: 8px 0 2px;
 }
-.sa-imgs a { flex: 0 0 auto; }
+.sa-imgs button {
+  flex: 0 0 auto;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: zoom-in;
+}
 .sa-imgs img {
-  height: 104px;
+  height: 96px;
   width: auto;
-  max-width: 180px;
+  max-width: 170px;
   object-fit: cover;
   border-radius: 8px;
   border: 1px solid var(--line);
   background: #fff;
   display: block;
+}
+.sa-wait--pad { padding: 6px 0; }
+
+/* Badi tasveer — wahin, poori screen par. */
+.sa-light {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.88);
+}
+.sa-light > img {
+  max-width: 94vw;
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #fff;
+}
+.sa-light__bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sa-light__bar button,
+.sa-light__bar a {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-family: inherit;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.sa-light__bar button:hover,
+.sa-light__bar a:hover { background: rgba(255, 255, 255, 0.22); }
+.sa-light__bar button:disabled { opacity: 0.35; cursor: not-allowed; }
+.sa-light__n { color: #fff; font-variant-numeric: tabular-nums; min-width: 52px; text-align: center; }
+.sa-light__t {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.85rem;
+  max-width: 90vw;
+  text-align: center;
+  word-break: break-word;
 }
 
 /* Chhupe hue panel ko wapas bulane wala chhota button — dayein kinare par. */
@@ -227,3 +262,24 @@
   box-shadow: -4px 0 14px rgba(0, 0, 0, 0.16);
 }
 .sa-reopen:hover { background: var(--glass-bg-strong); }
+
+/* 🔎 AskWords — text ke andar ke naam, click karne layak. Link jaise nahi
+   dikhne chahiye (poora fact neela ho jata), isliye sirf ek halki dotted
+   lakeer — aur hover par saaf. */
+.askword {
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-bottom: 1px dotted var(--text-3);
+  line-height: inherit;
+}
+.askword:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background: var(--accent-wash);
+  border-radius: 3px;
+}
