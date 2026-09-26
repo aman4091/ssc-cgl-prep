@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
 import { NOTES_PROMPT } from "@/lib/notesprompt";
+import { setLastSource } from "@/lib/pastednotes";
 import { readImageText } from "@/lib/client-ai";
 import { startNotesQuiz } from "@/lib/notesquiz";
 import { hinglishKey, getHinglish, setHinglish, subscribeHinglish } from "@/lib/noteshinglish";
@@ -99,11 +100,14 @@ async function copyText(text) {
 // yaani wahi question wala GS prompt jisme likha hai "kahani/background mat
 // likho" — notes ke page ke liye bekaar. Ab wahi prompt jo PC overlay ke 📝
 // button par hai: page ke har zaroori point ki ek line.
-function GeminiBtn({ text, subject }) {
+function GeminiBtn({ text, subject, src }) {
   const [done, setDone] = useState(false);
   const go = async () => {
     const body = String(text || "").trim();
     if (!body) return;
+    // Yaad rakho ki KIS page par dabaya — /notes/paste wahi naam upar dikha
+    // kar paste karne ka box khol deta hai.
+    if (src) setLastSource(src);
     await copyText(`${NOTES_PROMPT}\n\n${body}`);
     setDone(true);
     setTimeout(() => setDone(false), 1500);
@@ -512,7 +516,11 @@ export default function NotesReader({ book }) {
                     </button>
                   )}
                   <PageQuizBtn page={p} book={book} />
-                  <GeminiBtn text={pageText(p)} subject={book.subject} />
+                  <GeminiBtn
+                    text={pageText(p)}
+                    subject={book.subject}
+                    src={{ book: book.slug, bookTitle: book.title, eyebrow: book.eyebrow, topic: p.topic, page: p.book_page }}
+                  />
                   <NotesFactsBtn book={book} page={p} text={pageText(p)} />
                   <span className="nt-meta">page {p.book_page}</span>
                 </span>

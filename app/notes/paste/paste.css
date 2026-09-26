@@ -1,0 +1,78 @@
+/* 📝 Mere one-liner — notes ke page ka ✨ jawab yahan paste hota hai. */
+
+.pn-box {
+  border: 1px solid var(--line);
+  background: var(--glass-bg);
+  border-radius: 14px;
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+}
+.pn-src {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--accent-wash);
+}
+.pn-ta {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--line);
+  background: var(--bg-1);
+  color: var(--text-1);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.pn-manual summary { cursor: pointer; }
+
+.pn-group { padding: 12px 14px; margin-top: 12px; }
+.pn-group > summary { cursor: pointer; }
+.pn-dim { color: var(--text-3); font-weight: 400; }
+
+.pn-note {
+  border-top: 1px solid var(--line);
+  padding: 8px 0 2px;
+}
+.pn-note__hd { display: flex; gap: 6px; align-items: center; }
+.pn-note__t {
+  flex: 1;
+  text-align: left;
+  border: 0;
+  background: none;
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 4px 0;
+  cursor: pointer;
+}
+.pn-note__t:hover { color: var(--accent); }
+.pn-x {
+  border: 1px solid var(--line);
+  background: var(--glass-bg);
+  border-radius: 8px;
+  padding: 3px 9px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.pn-x:hover { border-color: var(--accent); }
+
+.pn-body { font-size: 0.95rem; line-height: 1.7; padding: 4px 0 8px; }
+.pn-edit { display: grid; gap: 8px; padding: 6px 0 10px; }
+.pn-edit textarea {
+  width: 100%;
+  resize: vertical;
+  border: 1px solid var(--line);
+  background: var(--bg-1);
+  color: var(--text-1);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
