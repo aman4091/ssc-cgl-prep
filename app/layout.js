@@ -11,6 +11,9 @@ import "./looks/terminal.css";
 import "./looks/sky.css";
 import "./looks/candy.css";
 import "./looks/notion.css";
+// Sabse AAKHIR mein: ye 2/3/4 par Candy wala tile-menu lagati hai, isliye
+// unke apne menu-rule ke BAAD aani chahiye.
+import "./looks/tilenav.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
