@@ -79,13 +79,13 @@ export default function RootLayout({ children }) {
               "try{var d=document.documentElement,t=localStorage.getItem('cgl.theme');" +
               "if(t==='dark')d.setAttribute('data-theme','dark');" +
               // 🎨 Roop (lib/look.js) — koi chuna nahi to naya wala ("5").
-              "var l=localStorage.getItem('cgl.look')||'5';d.setAttribute('data-look',l);" +
+              "var l=localStorage.getItem('cgl.look')||'0';d.setAttribute('data-look',l);" +
               "var b={'1':'#08080a','2':'#0a0a0a','3':'#070a12','4':'#0b0c0a','5':'#ffffff','6':'#fff6f1','7':'#ffffff'}[l];" +
               // Address bar ka rang bhi yahin — bina-media wala meta sabse aage,
               // taaki wo upar wali do (OS ki pasand wali) se pehle mile.
               "if(t||b){var m=document.createElement('meta');m.id='tc-user';" +
               "m.name='theme-color';m.content=b||(t==='dark'?'#141922':'#ffffff');" +
-              "document.head.prepend(m)}}catch(e){d.setAttribute('data-look','5')}",
+              "document.head.prepend(m)}}catch(e){d.setAttribute('data-look','0')}",
           }}
         />
       </head>
