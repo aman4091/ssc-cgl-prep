@@ -252,7 +252,9 @@ export default function SprintPage() {
       setNote("Load nahi hue: " + e.message);
       return;
     }
-    const pick = set ? byHashes(list, set.hashes)
+    // Set ka test dete waqt kram badal dete hain — warna har test mein wahi
+    // question usi jagah aate aur ratt jate.
+    const pick = set ? (asTest ? shuffled(byHashes(list, set.hashes)) : byHashes(list, set.hashes))
       : asTest ? pickDone(list, count)
       : pickNext(list, count);
     if (!pick.length) {
@@ -612,37 +614,28 @@ export default function SprintPage() {
           <Link href="/pyq/sprint/marks" className="btn btn--ghost btn--sm">★ Bookmarks ({markN})</Link>
         </div>
 
-        {/* 📝 Jo ho chuke unhi ka test — jawab pehle se save pade hain,
-            isliye ismein ek bhi naya DeepSeek call nahi hota. */}
-        <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap", alignItems: "center" }}>
-          <button
-            type="button"
-            className="btn btn--ghost btn--sm"
-            onClick={() => start(null, true)}
-            disabled={phase === "loading" || !(doneMap[slug] || 0)}
-            title={(doneMap[slug] || 0) ? "" : "Pehle is subject ka ek sprint chala lo"}
-          >
-            📝 Test do — ho gaye question par
-          </button>
-          <span className="hint">
-            {(doneMap[slug] || 0)
-              ? `${labelOf(slug)} ke ${(doneMap[slug] || 0).toLocaleString("en-IN")} ho chuke hain — unmein se ${count} random. Jawab tab khulega jab tum apna chun loge.`
-              : `${labelOf(slug)} ka abhi koi question hua nahi.`}
-          </span>
-        </div>
-
         {sets.length > 0 && (
           <>
             {/* 💾 Har daud ka set bach jata hai — wahi 100 question dobara
                 chalane ke liye. Unke jawab pehle se bane pade hain, isliye
                 dobara chalane mein paisa nahi lagta. */}
             <h3 className="mt-16">💾 Purane set</h3>
+            <p className="hint">▶ se wahi set dobara padho · 📝 se usi set ka test do (jawab chhupa rehta hai)</p>
             <div className="sp-sets">
               {sets.map((st) => (
                 <div key={st.id} className="sp-set">
                   <button type="button" className="sp-set__go" onClick={() => start(st)} disabled={phase === "loading"}>
                     ▶ {st.label}
                   </button>
+                  {/* Isi set ka test — jawab save pade hain, isliye ek bhi naya
+                      DeepSeek call nahi hota. */}
+                  <button
+                    type="button"
+                    className="sp-set__del"
+                    title="Is set ka test do"
+                    onClick={() => start(st, true)}
+                    disabled={phase === "loading"}
+                  >📝</button>
                   <button
                     type="button"
                     className="sp-set__del"
