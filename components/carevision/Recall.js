@@ -16,7 +16,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { rate, toggleStar, getStars } from "@/lib/carevision/progress";
 import { getSession, saveSession, clearSession } from "@/lib/recallsession";
-import AskWords from "../AskWords";
 
 const AGAIN_AFTER = 5;   // galat card itne card baad isi session mein phir
 const LOOP_AFTER = 3;    // loop mode: jaldi wapas, jab tak aa na jaye
@@ -35,12 +34,9 @@ const DEFAULT_LABELS = { bad: "Nahi aata", good: "Aata hai", show: "Answer dikha
 const HEAD = /^(.{2,60}?)\s*(?:–|—|\s-\s|:)\s*([\s\S]+)$/;
 
 // Chhoti line ke neeche chhupa hua poora prose.
-// Jahan askWords chalu nahi, wahan text waise ka waisa.
-const Plain = ({ children }) => <>{children}</>;
-
-function MoreLine({ text, T = Plain }) {
+function MoreLine({ text }) {
   const [open, setOpen] = useState(false);
-  if (open) return <div className="carev-more is-open"><T>{text}</T></div>;
+  if (open) return <div className="carev-more is-open">{text}</div>;
   return (
     <button className="carev-more" onClick={(e) => { e.stopPropagation(); setOpen(true); }}>
       ⌄ poora padho
@@ -64,11 +60,7 @@ export function answerPoints(text) {
 export default function Recall({
   queue: initial, today, onExit, onRate, labels = DEFAULT_LABELS, open = false, loop = false,
   onDelete, resumeKey, tools,
-  // 🔎 Naam par click karke "iske baare mein batao" — abhi sirf fact log
-  // ise chalu karta hai. Baaki jagah card pehle jaisa hi rehta hai.
-  askWords = false,
 }) {
-  const T = askWords ? AskWords : Plain;
   const withStar = !onRate;
   // Adhoora round wapas (lib/recallsession): qataar ka kram — dobara-aane
   // wali copy samet — kahan tak pahunche the, aur kis card par is round mein
@@ -224,20 +216,20 @@ export default function Recall({
           {card.meta ? <span>{card.meta}</span> : <><span>Part {card.part}</span> · <span>{card.section}</span></>}
           {card.__retry ? <span className="carev-again"> · {card.__check ? "pakki jaanch" : "phir se"}</span> : null}
         </div>
-        <div className="carev-trigger"><T>{card.trigger}</T></div>
+        <div className="carev-trigger">{card.trigger}</div>
         <div className={`carev-answer${shown ? " shown" : ""}`} aria-live="polite">
           {shown ? (
             <>
               {(() => {
                 const pts = answerPoints(card.answer);
-                if (!pts) return <div className="carev-answer-text"><T>{card.answer}</T></div>;
+                if (!pts) return <div className="carev-answer-text">{card.answer}</div>;
                 return (
                   <ul className="carev-points">
                     {pts.map((p, i) => (
                       <li key={i}>
-                        {p.head ? <b><T>{p.head}</T></b> : null}
+                        {p.head ? <b>{p.head}</b> : null}
                         {p.head ? " — " : ""}
-                        <T>{p.rest}</T>
+                        {p.rest}
                       </li>
                     ))}
                   </ul>
@@ -246,7 +238,7 @@ export default function Recall({
               {/* ⌄ poora padho — D+3 se aage card par sirf "⚡" wali chhoti
                   line hoti hai (120 cluster 15 min mein nikalne ke liye).
                   Poora prose yahin ek tap door rehta hai. */}
-              {card.more ? <MoreLine text={card.more} T={T} /> : null}
+              {card.more ? <MoreLine text={card.more} /> : null}
               {card.extra ? <div className="carev-extra">{card.extra}</div> : null}
               {card.pdfPage ? <div className="carev-src">PDF p.{card.pdfPage}</div> : null}
               {/* Card ke apne auzaar — fact log / Zaroori baatein yahan

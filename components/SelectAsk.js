@@ -29,7 +29,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import "@/app/selectask.css";
 import Markdown from "./Markdown";
-import { termsOf } from "./AskWords";
+import { termsOf } from "@/lib/terms";
 import { askSelection } from "@/lib/client-ai";
 import { searchImages } from "@/lib/webimages";
 import { getThreads, saveThread, newThreadId } from "@/lib/asklog";
@@ -199,17 +199,6 @@ export default function SelectAsk() {
     setBar(null);
     setTimeout(() => boxRef.current?.focus(), 60);
   }, [path]);
-
-  // 🔎 AskWords: kisi naam par click → wahi panel, jawab bhi aur tasveer bhi.
-  useEffect(() => {
-    const h = (e) => {
-      const text = String((e.detail && e.detail.text) || "").trim();
-      if (!text) return;
-      openPanel(text, true);
-    };
-    window.addEventListener("cgl:ask-term", h);
-    return () => window.removeEventListener("cgl:ask-term", h);
-  }, [openPanel]);
 
   // ── tasveer ────────────────────────────────────────────────────────────
   // `i` = kis sandesh ke neeche lagani hai. Isi se purane sandesh ki

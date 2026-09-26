@@ -262,24 +262,3 @@
   box-shadow: -4px 0 14px rgba(0, 0, 0, 0.16);
 }
 .sa-reopen:hover { background: var(--glass-bg-strong); }
-
-/* 🔎 AskWords — text ke andar ke naam, click karne layak. Link jaise nahi
-   dikhne chahiye (poora fact neela ho jata), isliye sirf ek halki dotted
-   lakeer — aur hover par saaf. */
-.askword {
-  border: 0;
-  background: none;
-  padding: 0;
-  margin: 0;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  border-bottom: 1px dotted var(--text-3);
-  line-height: inherit;
-}
-.askword:hover {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-  background: var(--accent-wash);
-  border-radius: 3px;
-}
