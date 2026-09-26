@@ -108,6 +108,12 @@ export default function SprintPage() {
   const [sets, setSets] = useState([]);
   // Har subject ke kitne question hain aur kitne ho chuke. Total index.json se
   // aata hai (question fetch kiye bina), aur "ho gaye" apne hisaab se.
+  // Daud khatam hone par ye bhar jata hai — aur screen wapas shuru wale
+  // page par, uske upar ek patti mein hisaab.
+  const [summary, setSummary] = useState(null);
+  // Browser ka apna poora-screen (F11 jaisa). Hamara parda to pehle hi poori
+  // window leta hai; ye browser ki patti bhi hata deta hai.
+  const [fs, setFs] = useState(false);
   const [totals, setTotals] = useState({});
   const [doneMap, setDoneMap] = useState({});
 
@@ -116,6 +122,19 @@ export default function SprintPage() {
 
   useEffect(() => { setDoneN(doneCount()); setMarkN(getMarks().length); setSets(getSets()); }, []);
   useEffect(() => { setDoneMap(doneBySlug()); }, [doneN]);
+  useEffect(() => {
+    const h = () => setFs(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", h);
+    return () => document.removeEventListener("fullscreenchange", h);
+  }, []);
+  // Dono taraf try/catch — kuch browser mana kar dete hain, aur wo mana
+  // karna daud rok dene layak baat nahi hai.
+  const toggleFs = useCallback(() => {
+    try {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen();
+    } catch { /* ignore */ }
+  }, []);
   useEffect(() => {
     let ok = true;
     (async () => {
@@ -297,11 +316,21 @@ export default function SprintPage() {
   const next = useCallback(() => setPos((p) => Math.min(p + 1, lenRef.current)), []);
   const prev = useCallback(() => setPos((p) => Math.max(0, p - 1)), []);
 
-  useEffect(() => {
-    if (phase === "run" && batch.length && pos >= batch.length) setPhase("done");
-  }, [phase, pos, batch.length]);
-  useEffect(() => { if (phase === "done") flush(); }, [phase, flush]);
+  // Daud khatam — ek hi jagah: hisaab bhar do, browser ka poora-screen chhod
+  // do, aur shuru wale page par wapas.
+  const finish = useCallback(() => {
+    flush();
+    setSummary({ seen: Math.min(pos + 1, batch.length), right: tally.right, wrong: tally.wrong });
+    try { if (document.fullscreenElement) document.exitFullscreen(); } catch { /* ignore */ }
+    setPhase("setup");
+    setNote("");
+    setSets(getSets());
+    window.scrollTo(0, 0);
+  }, [flush, pos, batch.length, tally]);
 
+  useEffect(() => {
+    if (phase === "run" && batch.length && pos >= batch.length) finish();
+  }, [phase, pos, batch.length, finish]);
   // Ghadi.
   useEffect(() => {
     if (phase !== "run" || paused) return undefined;
@@ -350,7 +379,7 @@ export default function SprintPage() {
   // ── daud ───────────────────────────────────────────────────────────────
   if (phase === "run") {
     // Aakhri question ke baad ek pal ke liye cur khali hota hai — upar wala
-    // effect usi pal mein "khatam" wali screen par le jata hai.
+    // effect usi pal mein finish() chala deta hai.
     if (!cur) return null;
     const madeN = Object.keys(ans).length;
     return (
@@ -370,7 +399,10 @@ export default function SprintPage() {
           <button type="button" className="sp-ibtn" onClick={() => setPaused((p) => !p)} title="Space">
             {paused ? "▶" : "⏸"}
           </button>
-          <button type="button" className="sp-ibtn" onClick={() => { flush(); setPhase("done"); }}>✕</button>
+          <button type="button" className="sp-ibtn" onClick={toggleFs} title="Poori screen">
+            {fs ? "⤡" : "⛶"}
+          </button>
+          <button type="button" className="sp-ibtn" onClick={finish} title="Sprint band karo">✕</button>
         </div>
         <div className="sp-bar"><div className="sp-bar__fill" style={{ width: `${((pos + 1) / batch.length) * 100}%` }} /></div>
 
@@ -425,24 +457,6 @@ export default function SprintPage() {
     );
   }
 
-  // ── daud khatam ────────────────────────────────────────────────────────
-  if (phase === "done") {
-    return (
-      <section className="section" style={{ marginTop: 24 }}>
-        <h2>⚡ Sprint khatam</h2>
-        <p className="hint">
-          {Math.min(pos + 1, batch.length)} question dekhe · ✓ {tally.right} sahi · ✗ {tally.wrong} galat · ★ {markN} bookmark.
-          Ab tak kul <b>{doneN}</b> question ho chuke — agli baar inke AGLE aayenge.
-        </p>
-        <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
-          <button type="button" className="btn btn--primary btn--sm" onClick={() => setPhase("setup")}>⚡ Naya sprint</button>
-          <Link href="/pyq/sprint/marks" className="btn btn--ghost btn--sm">★ Bookmarks ({markN})</Link>
-          <Link href="/pyq" className="btn btn--ghost btn--sm">← PYQ</Link>
-        </div>
-      </section>
-    );
-  }
-
   // ── shuru karne wali screen ────────────────────────────────────────────
   return (
     <>
@@ -462,6 +476,15 @@ export default function SprintPage() {
       </section>
 
       <section className="section">
+        {/* Daud khatam — hisaab yahin, taaki agla sprint turant shuru ho sake. */}
+        {summary && (
+          <div className="sp-done">
+            <b>⚡ Sprint khatam</b> — {summary.seen} question dekhe · ✓ {summary.right} sahi · ✗ {summary.wrong} galat
+            {markN ? ` · ★ ${markN} bookmark` : ""}.
+            {" "}Ab tak kul <b>{doneN}</b> ho chuke — agli baar inke AGLE aayenge.
+            <button type="button" className="linklike" onClick={() => setSummary(null)}> ✕</button>
+          </div>
+        )}
         <h3>1. Subject</h3>
         <div className="sp-picks">
           {PICKS.map((s) => (
