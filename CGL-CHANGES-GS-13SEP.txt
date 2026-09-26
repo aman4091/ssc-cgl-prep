@@ -1,0 +1,225 @@
+================================================================================
+  CGL MISSION — ABHI KE BADLAV (13 Sep raat, GS sectional ke baad)
+  Site par live: ssc-cgl-prep-ten.vercel.app
+================================================================================
+
+--------------------------------------------------------------------------------
+ KYUN
+--------------------------------------------------------------------------------
+  GS sectional (CGL 2024 PYQ): 25 attempt, 9 sahi, 16 galat = 10/50.
+  Accuracy 36% (random 25%). Full mock mein bhi 9.5 tha — data sach bol raha hai.
+  Dikkat ek hi: facts nahi hain. GS abhi bhi sabse bada jump (10 → 22 = +12),
+  Maths se zyada (+7). Isliye GS pe aur zor.
+
+--------------------------------------------------------------------------------
+ 1. TARGET BADLE
+--------------------------------------------------------------------------------
+  GS floor 28 → 22 · GS stretch 32 → 28
+  TOTAL floor 141 → 135 · stretch 157 → 153
+  GS checkpoint: 20 Sep 18 → 16 · 26 Sep 23 → 21 · exam 22 (25 attempt, ~58%)
+
+  GS ka alag track (Checkpoints page par):
+  17 Sep: 14  → nahi mila: fact log ki entries cluster hain ya single fact?
+  20 Sep: 16  → nahi mila: Static GK + Polity pe wapas
+  23 Sep: 19  → nahi mila: walk + 08:00 mein due cluster pehle
+  26 Sep: 21  → nahi mila: 22 ke aas-paas accept, bacha time Maths ko
+
+--------------------------------------------------------------------------------
+ 2. GS KA TAREEKA: PYQ → CLUSTER → REPEAT  (static reading / notes BAND)
+--------------------------------------------------------------------------------
+  1. PYQ solve — har Q max 10 sec, nahi pata → agla. Score matter nahi.
+  2. Har galat/unsure ka CLUSTER — sirf answer nahi, poora group EK line mein
+     (8–15 facts). Jaise:
+       Classical dances: Kuchipudi – AP · Bharatanatyam – TN · Kathakali,
+       Mohiniyattam – Kerala · Odissi – Odisha · Kathak – UP · Manipuri –
+       Manipur · Sattriya – Assam
+       Vitamin ki kami: A – ratondhi · B1 – beriberi · B3 – pellagra ·
+       B12 – anaemia · C – scurvy · D – rickets · K – clotting
+  3. Fact log D+1 / D+3 / D+7 revision ("bhool gaya" dabane mein sharam nahi).
+
+  Roz ka volume: 100 GS PYQ · 25–30 naye cluster · 40–50 purane revise · CA 30 min.
+
+--------------------------------------------------------------------------------
+ 3. GS TOPIC ORDER BADLA (list wale pehle, samajh wale baad mein)
+--------------------------------------------------------------------------------
+  D1  14 Sep  Static GK-1: 8 classical dances + folk, festivals, instruments, stadiums
+  D2  15 Sep  Static GK-2: awards, sports cups + terms, books, important days, first-in-India, HQ
+  D3  16 Sep  Polity-1: Articles (14, 19, 21, 21A, 32, 44, 51A, 72, 112, 123, 280,
+              324, 352/356/360, 368), 12 Schedules, Parts
+  D4  17 Sep  Polity-2: Amendments (42, 44, 52, 61, 73, 74, 86, 101, 103), FR/DPSP/FD, bodies
+  D5  18 Sep  Biology: vitamins, diseases + pathogen, body, blood, cell
+  D6  19 Sep  Chemistry: formulas, common names, alloys, pH, gases
+  D7  20 Sep  Physics: SI units, instruments, inventors (numerical nahi)
+  D8  21 Sep  Geography-1: rivers + tributaries, dams, passes, national parks
+  D9  22 Sep  Geography-2: soils, crops, Census 2011 + physical basics
+  D10 23 Sep  Modern History: 1857 → 1947, Congress sessions, Viceroys, movements
+  D11 24 Sep  Economy — sirf PYQ (aakhri naya topic)
+  D12 25 Sep  Ancient + Medieval — sirf PYQ
+  D13 26 Sep  Mixed PYQ recall (Static + Polity + Science + Geography)
+  Har GS block ka button ab WAR PYQ bank ka seedha chapter kholta hai (notes nahi).
+
+--------------------------------------------------------------------------------
+ 4. GS KO ROZ ~4 GHANTE (pehle ~2.5)
+--------------------------------------------------------------------------------
+  14:15–15:45  GS PYQ + CLUSTER (50 Q) — notes 0
+  16:45–17:30  D7 se: vocab sirf 20 min + GS PYQ set #3 (25 Q) 40 min
+               (D1–D6 grammar 60 / vocab 30 waisa hi)
+  17:30–18:30  GS PYQ mixed: 2 set × 25 Q + cluster
+  18:45–19:15  CA (waisa hi)
+  19:55–20:30  Maths mistake-book bonus → GS CLUSTER REVISION (must, 40–50 cluster)
+  06:00–07:30  Walk: CA audio → fact log self-quiz, BOL KE (30–40 cluster)
+  Maths ke blocks (12:00 topic + speed drill) aur English grammar — bilkul nahi chhede.
+
+--------------------------------------------------------------------------------
+ 5. DEEPSEEK / GEMINI ANSWER MEIN 🧩 CLUSTER
+--------------------------------------------------------------------------------
+  - Overlay ka GS prompt (D:\over\ai_prompts.py) — "Sahi answer" ke theek baad
+    naya section "🧩 CLUSTER": is question ka poora group EK line mein, 8–15
+    facts, "A – x · B – y" format, sirf pakke facts (shak ho to "(verify)").
+  - Wahi prompt overlay ke prompts.json (✨ Gemini copy) aur site ki copy
+    (lib/answerprompts.js) mein bhi. Site ki Settings mein purana DEFAULT GS
+    prompt tha — ek baar naye se badal diya (tumhara khud likha hota to nahi chhedta).
+  - Answers page par DeepSeek / Gemini answer ke upar button:
+    "🧩 Cluster → Fact log" — ek click mein cluster line fact log mein
+    (topic ke saath), fir 1/3/7/14 din baad revision.
+  - ⚠️ Overlay ek baar BAND karke dobara chalao — tabhi naya prompt lagega.
+  - Purane GS answers (bina cluster) chahiye to overlay mein 🔄 Dobara banao
+    (DeepSeek ka kharcha lagega — zaroori wale hi).
+
+--------------------------------------------------------------------------------
+ 6. EXAM MEIN GS KA TUKKA
+--------------------------------------------------------------------------------
+  GS mein SAARE 25 attempt karo. Tumhara GS gut 36% sahi aaya (zyadatar tukke
+  the) — break-even 20% se kaafi upar, EV +0.40 har Q. Pakke wale pehle, fir baaki.
+  English / Reasoning mein "lagta hai ye" wala tukka (bina koi option kaate)
+  ab bhi mana — wahan trap options hote hain.
+  (Review ke section 7 mein ek taraf "GS mein lagta-hai mana" aur doosri taraf
+  "abhi sab attempt karo" likha tha — tumhare data ke hisaab se "sab attempt" sahi hai.)
+
+--------------------------------------------------------------------------------
+ 7. HOME PAR
+--------------------------------------------------------------------------------
+  - Roz raat ke 3 number: Maths attempt · 🧩 naye cluster (fact log se apne aap
+    gine, target 25) · GS chhua.
+  - Line: "Maths roz 2.5 ghante se zyada nahi, GS ~4 ghante — Maths +7, GS +12".
+  - Aaj raat ke kaam (tick hone wale):
+      [✓] GS baseline sectional + marks (10) — ho gaya
+      [ ] GS mock ke 16 galat Q ka CLUSTER → Fact log (~120 facts) — 40 min  ← SABSE ZAROORI
+      [ ] Maths mock ke 24 Q stopwatch se 🟢/🟡/🔴 + yellow ka short method — 20 min
+      [ ] Tables 12–25 pehla pass — 15 min
+
+--------------------------------------------------------------------------------
+ 8. EK AUR CHHOTI BAAT
+--------------------------------------------------------------------------------
+  Tumhare GS mock ka naam "SSC CGL 2024 - General Knowledge" hai — site ab
+  "General Knowledge" naam ko bhi GS maanti hai (pehle bhi category se sahi
+  aa raha tha, ab naam se bhi pakka).
+
+--------------------------------------------------------------------------------
+ 9. FIX: MATHS KA YELLOW → GREEN KAAM WAPAS (Maths block ke andar)
+--------------------------------------------------------------------------------
+  19:55 wala mistake-book block GS revision ko gaya, to Maths ka short-method
+  wala kaam kahin nahi bacha tha. Ab wo Maths block ke andar — Maths ka total
+  time wahi:
+    Full mock din  12:00–13:30 (90 min): 70 min topic → 20 min 🟡 YELLOW list
+    Build din      11:40–13:30 (110 min): 70 min topic → 20 min sprint #2 →
+                   20 min 🟡 YELLOW list
+  YELLOW = pichhle mock ke 40–75 sec wale Q: short method likho/padho, fir
+  stopwatch ke saath dobara — target <40 sec.
+  Maths block mein ab sabse naye analysis ki yellow list khud dikhti hai
+  (+ "🟡 Yellow list" button). 3 din baad wahi Q revision block mein bhi aate hain.
+
+--------------------------------------------------------------------------------
+ 10. FIX: "DeepSeek answer taiyar" par site par "ban raha hai" (q831)
+--------------------------------------------------------------------------------
+  Kya hua: overlay ne answer 22:40 par bana diya, ek site tab ne use utha kar
+  "le liya" bol diya, par record par wo tika nahi (overlay ke code mein ye
+  jaani-pehchani race likhi hai: purane code wali / dusri site tab apni purani
+  copy wapas likh deti hai — aaj site kai baar deploy hui aur mera test tab bhi
+  khula tha). Overlay ka "heal" 10 min baad khud dobara bhejta hai — 22:51 par
+  answer site par aa gaya (CLUSTER ke saath).
+  Badlav: heal 10 min → 3 min (D:\over\cloud.py, HEAL_AFTER). Dobara bhejna safe.
+  Tum kya karo:
+  - Site ki tab ek baar REFRESH karo (naya code) — aur site ki ek hi tab rakho.
+  - Overlay agli baar band-chalu karoge tab 3 min wala heal lagega.
+  - Answers page par q831 (Lata Mangeshkar) ke upar "🧩 Cluster → Fact log (2)"
+    button — dabao, dono cluster fact log mein.
+
+--------------------------------------------------------------------------------
+ 11. GS PROMPT v2 — TUMHARA APNA CHHOTA PROMPT
+--------------------------------------------------------------------------------
+  Naya GS prompt (DeepSeek + Gemini + site, teeno jagah):
+    - 200 shabd se kam · sirf SSC wale facts · background / kahani nahi ·
+      har number 100% pakka warna (verify) · option-wise explanation nahi
+    - Format:  ✅ ANSWER (max 2 line)
+               🧩 CLUSTER (2–3 line: main item ka group · category ka group ·
+                           ek aur juda group — har line 6–12 facts + label)
+               🎯 SSC EXTRA (max 5 bullet)
+               📝 ONE-LINER
+  Purana prompt (v1 cluster wala) ka BACKUP — D:\over mein:
+    ai_prompts.backup-gs-v1-cluster.py · prompts.backup-gs-v1-cluster.json ·
+    answerprompts.backup-gs-v1-cluster.js
+  Site ki Settings mein purana default GS prompt tha to naye se badal jayega
+  (tumhara khud likha hota to nahi chhedta).
+  "🧩 Cluster → Fact log" button naye aur purane dono format padh leta hai.
+  ⚠️ Overlay BAND karke dobara chalao — tabhi DeepSeek naya prompt use karega.
+
+--------------------------------------------------------------------------------
+ 12. GS PROMPT MEIN 2 NIYAM AUR
+--------------------------------------------------------------------------------
+  - CLUSTER Line 2 = question ki EXACT CATEGORY — generic list nahi.
+    Sangeetkaar ka question → sirf sangeet wale · khiladi ka → sirf khiladi
+    wale · vaigyanik ka → sirf vaigyanik wale. "Saare recipients" wali list mana.
+  - SSC EXTRA mein CLUSTER (aur ANSWER) wala fact DOBARA nahi — sirf naye facts.
+    5 naye facts nahi hain to 3 hi likho — repeat karne se bekaar hai.
+    (commit bb058a4)
+  - CLUSTER mein sirf wo jo SSC poochh sakta hai — naam, saal, sthan,
+    sangathan, "pehla/pehli". Janm, asli naam, background kahani — BILKUL NAHI.
+    Question andolan/ghatna ka ho → CLUSTER mein us category ke saare andolan,
+    saal + neta ke saath. (commit 3180d1e)
+  - CLUSTER: exactly 2 line (3 nahi), dono bilkul alag; teesri sirf jab sach
+    mein naye facts ho.
+    FORMATTING (sakht): har line ALAG, beech mein blank line ·
+    **Label** – facts · items ke beech " · " · item aur matlab ke beech " – ".
+    Jaise: **Lata ke samman** – Padma Bhushan – 1969 · Phalke – 1989 · Bharat Ratna – 2001
+    Site ka "🧩 Cluster → Fact log" button bold label ko topic banata hai.
+    (commit 2e7ffcc)
+  Teeno jagah lagaya (DeepSeek, Gemini copy, site); site Settings ka purana
+  default (v2 bhi) ek baar naye se badlega. ⚠️ Overlay restart ke baad lagega.
+
+--------------------------------------------------------------------------------
+ 13. SAARE GS ANSWERS NAYE PROMPT SE DOBARA (14 Sep subah)
+--------------------------------------------------------------------------------
+  - Overlay (Mock Test Helper) subah chal nahi raha tha — naye prompt ke saath
+    start kiya (meri badli files se koi dikkat nahi thi, imports theek).
+  - Answers page ke saare 88 GS question overlay ke 🔄 (/ai-regen) se DeepSeek
+    ko dobara bheje — purana answer hata, naya likha. 07:46–07:51, 0 error.
+  - Site par check: 88/88 GS records mein naya format (ANSWER / 2 CLUSTER line /
+    SSC EXTRA / ONE-LINER). Gemini wale answers nahi chhede.
+  - DeepSeek hamesha 100% niyam nahi maanta: kabhi SSC EXTRA mein cluster ka ek
+    fact dohra deta hai, kabhi ek ghatna ke do alag saal likhta hai (jaise
+    Bhimsen Joshi ka Bharat Ratna — 2008 mein announce hua, 2009 mein mila).
+    Jahan (verify) likha ho ya shak ho, wo fact confirm karke hi fact log mein daalo.
+
+--------------------------------------------------------------------------------
+ 14. MATHS RE-SOLVE: SOLUTION DEKHNE SE PEHLE (commit 401b657)
+--------------------------------------------------------------------------------
+  Answer pata ho to stopwatch jhootha (kam) time deta hai — yellow bhi green
+  dikhta hai. Naya kram (Mock analysis page par):
+    1. Marks daalo
+    2. SOLUTION DEKHE BINA: chhoote + shak wale Maths Q stopwatch se dobara
+       (🟢 <40 · 🟡 40–75 · 🔴 >75). Attempt kiye Q ka time Testbook ke
+       analysis mein har Q ka milta hai — wahi bucket.
+    3. Ab solution kholo → galat/chhode ko type (W1–W4 / S1 / S2 / T1)
+    4. 🟡 ka short method solution se likho · GS/English → fact log
+    5. Time audit   6. 3 action item
+  Kal wale mock (solution dekh chuke): attempt kiye Q → Testbook ka time; chhoote
+  Q → sab 🟡 (short method seekho), jo sach mein lambe/mushkil the → 🔴.
+
+  Commits: 555e03b (GS cluster system) · 7a5511f (General Knowledge = GS) ·
+           e8f3ac3 (Maths yellow slot) · 9eff33a (GS prompt v2) ·
+           e8ef747 (Line 2 exact category + SSC EXTRA no repeat)
+
+================================================================================
+  Aaj raat: 16 galat GS Q ka cluster (40 min). Kal 8 baje Day 1 = Static GK-1.
+================================================================================

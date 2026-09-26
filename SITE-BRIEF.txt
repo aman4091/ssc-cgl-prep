@@ -1,0 +1,322 @@
+================================================================================
+SSC CGL PRE — POORI SITE KA BRIEF
+Site: https://ssc-cgl-prep-ten.vercel.app   |   Code: D:\New folder
+Likha gaya: 22 Sep 2026
+================================================================================
+
+0. EK LINE MEIN
+   Ek hi banda (owner) ke SSC CGL Tier-1 ki tayari ka poora system: PYQ bank,
+   notes, current affairs, vocab, mock marks, galtiyon ki notebook, aur 18-din
+   ka mission plan — sab ek site par, sab offline-first, aur PC wale overlay
+   (D:\over) se juda hua.
+
+   Tech: Next.js 16 (App Router, JavaScript), custom CSS (koi UI library nahi),
+   data localStorage + IndexedDB mein, do device ke beech Supabase se sync.
+   PWA hai (manifest + service worker), phone/tablet par install ho jati hai.
+
+
+================================================================================
+1. RANG, FONT, SHAKL (design)
+================================================================================
+
+DO CSS FILE:
+  app/globals.css  — site ke saare token aur aam component (Catppuccin palette)
+  app/exam.css     — `.examskin` — asli jo dikhta hai wahi. <body> par ye class
+                     lagti hai, aur iske --tb-* token upar wale token ko dobara
+                     point kar dete hain. Yaani asli rang YAHI hain.
+
+ASLI THEME (.examskin) — "kagaz + gehra hara" (exam board jaisa):
+  --tb-page      #ffffff   card/box ka tal (safed)
+  --tb-bg-2      #f3f5ef   page ka tal (halka kagazi)
+  --tb-soft      #f8f9f5   halka utha hua tal ("ho gaya" card)
+  --tb-head      #f8f9f5   box ka sar (header band)
+  --tb-blue      #176b56   FOREST GREEN — bhara hua button, active nav, focus
+  --tb-blue-dark #105444   hover / dabaya hua
+  --tb-blue-ink  #105444   link aur heading ka hara
+  --tb-blue-soft #e2f1ea   chuna hua option / halka wash
+  --tb-navy      #143d34   sidebar ka gehra hara
+  --tb-green     #247558   ho gaya / sahi jawab
+  --tb-green-soft#e5f3ec
+  --tb-red       #b4483d   galat, timer
+  --tb-red-soft  #f9e7e4
+  --tb-rev       #e6a344   "Mark for Review" ka amber
+  --tb-yellow    #fff1d9   ginti ka highlighter
+  --tb-ink       #19312b   sabse gehra text (sawaal)
+  --tb-ink-2     #3d5049   doosre darje ka text
+  --tb-dim       #61726d   halka text
+  --tb-line      #dfe5df   border | --tb-line-soft #eef1ee | --tb-line-hard #ccd6ce
+
+  DARK MODE: toggle (🌙) hai, par `[data-theme="dark"] .examskin` wahi light
+  value dohrata hai — yaani abhi din/raat ka koi farak nahi dikhta (jaan-boojh
+  kar, taaki purani dark preference site ka roop na badal de).
+
+globals.css ke token (Catppuccin — Latte din, Mocha raat) aur TEEN PEN ka niyam:
+  --head   peela (#df8e1d)  -> headings
+  --emph   hara  (#40a02b)  -> **bold**
+  --accent2 neela (#1e66f5) -> link / example / underline
+  --mauve  (#8839ef) counter | --ok #40a02b | --bad #d20f39 | --warning #df8e1d
+  Wash: --ok-wash / --bad-wash / --accent-wash … = us rang ka 15% page ke tal mein.
+
+SHAKL:
+  radius: button 6px (--radius-sm), card 8px (--radius), bada block 12-14px
+  container: 1120px | blur: 0 | shadow: none (sab FLAT hai, koi glass nahi)
+  Font: system stack — "Segoe UI", system-ui, "Nirmala UI", Noto Sans
+        Devanagari… (Hindi inline aati hai, isliye Devanagari fallback zaroori)
+  Body: 16px / 1.65 line-height (ghanton padhne ke liye, tight mat karo)
+
+
+================================================================================
+2. MENU KA POORA NAKSHA  (lib/nav.js — ye hi ek jagah hai jahan menu bana hai)
+================================================================================
+
+Menu DRILL-DOWN hai (accordion nahi): group kholo to list us group se badal
+jati hai + "wapas" ki line.
+
+PIN (sabse upar, ek tap):
+  🧠 Fact log · revise        /mission/facts
+  📰 Current Affairs · monthly /current-affairs
+  🎯 Zaroori baatein          /mission/points
+  📝 One-liners               /oneliners
+
+GROUPS:
+  🚀 CGL Mission · 18 din
+       🎯 Aaj kya karna hai /mission · 📅 18-din plan /mission/plan
+       🔍 Mock analysis /mission/analysis · 🚩 Checkpoints /mission/progress
+       📋 Topics & Skip list /mission/topics · ⏱️ Exam-day rules /mission/exam
+       🩺 Maths self-test /mission/diagnose
+  🎯 PYQ Bank  (teesra level: bank -> uske chapter)
+       🗂️ All — subject-wise: Maths / Reasoning / English / GS  (/pyq/all/…)
+       WAR · Pinnacle English · Error Pro · Pinnacle Maths · Maths 2025 ·
+       Pinnacle Reasoning · GKTricks · Mirror of Common Errors
+  📔 Notes  (har book ke chapter menu mein hi khulte hain)
+       Golden Rules (English) · English (Aman Vashishth) · Polity (SIMPLICRACK) ·
+       Static GK (Rojgar) · Maths Formulas (Brahmastra) · History (handwritten) ·
+       English Grammar (handwritten) · English Formulas (Gopal Verma) ·
+       Parmar Notes (9 subject: History, Polity, Geography, Economy, Physics,
+       Chemistry, Biology, Environment, Static GK)
+       + Pocket Rules /english/pocket · Static GK topics /static-gk
+  📝 Practice & Tests
+       🧪 Apna test banao /make-test · Quiz Bank /quiz-bank · Mock Tests /mock-tests
+  📊 Mock Marks — Full / Reasoning / Maths / English / GK  (/mock-marks?cat=…)
+  📖 Answers & Mistakes — 📚 Sab / 🧮 Maths / 🧠 Reasoning / 🌍 GS / 📘 English
+       (/answers?subject=…; /mistakes bhi yahi board kholta hai)
+
+BAAKI EK-TAP LINE:
+  🚨 Panic Button /panic · 🗞️ CA Revision /ca-revision · 🎯 RBE 50-Day Plan /today
+  📝 Notes Quiz /notes/quiz · 🔤 Vocab · OWS /vocab · 🧮 Calculation /calculation
+  ⚙️ Settings /settings
+
+
+================================================================================
+3. HAR PAGE — KYA HAI
+================================================================================
+
+--- GHAR -----------------------------------------------------------------------
+/  Homepage = "abhi kya karna hai".
+   Upar CGL Mission (clock ke hisaab se abhi ka block + button + poori timeline),
+   neeche TodayGate (aaj ke question ki ginti), Fact log ka chhota card,
+   vocab/feed ke card. Notes ka feed yahan jaan-boojh kar NAHI hai (warna din
+   bina question kiye nikal jata tha).
+
+--- MISSION (18 din ka system, lib/mission.js) ----------------------------------
+/mission            Aaj ke block: time-wise kaam, har block ka apna button
+/mission/plan       Aaj se exam tak ke saare din ek grid mein, tap karo -> us din ki timeline
+/mission/analysis   Mock ke baad ka 60 min (sectional 20): 6 step, galti type-wise
+                    (W1-W4 / S1 / S2 / T1), 3 action item jo 2 din Home par dikhte hain
+/mission/progress   Hafte-wise checkpoint — /mock-marks ke data se avg, target se kam/zyada
+/mission/topics     Kya padhna hai aur kya BINA GUILT chhodna hai (skip list)
+/mission/exam       Exam din ka poora protocol (mock mein bhi yahi)
+/mission/diagnose   Maths ki dikkat speed hai ya concept — 45 min ka self-test
+/mission/facts      🧠 FACT LOG — ek-line fact / cluster. Khaane: GS, CA, English,
+                    Maths trick. Spaced revision 1-3-7-14 din. Card par ✨ Gemini /
+                    🐋 DeepSeek (trick banao), 🗑️. Upar "Aaj revise karo", neeche
+                    topic-wise poori list + dhoondo.
+/mission/points     🎯 ZAROORI BAATEIN — jawab ki ek-line baatein, ek jawab ki saari
+                    lines EK card par. Page kholte hi revision (Aata tha / Nahi aata
+                    tha; nahi aata tha wali 3, 4, 5 … card baad phir aati hai).
+
+--- PYQ BANK -------------------------------------------------------------------
+/pyq                 saare shelf
+/pyq/all/[subject]   ek subject ke SAARE bank ke saare question ek list mein
+/pyq/war/[subject]   WAR — 3,152 question, 12 subject
+/pyq/pinnacle/[ch]   Pinnacle English — 7,585 q, 15 chapter
+/pyq/errorpro/[ch]   Error Pro (Aman Sir) — 2,830 q, 19 chapter
+/pyq/mathbank/[ch]   Pinnacle Maths — 6,420 q, 27 chapter (SAB TASVEER, R2 CDN se)
+/pyq/maths2025/[ch]  Maths 2025 — 5,498 q, 29 chapter
+/pyq/reasonbank/[ch] Pinnacle Reasoning — 3,543 q, 32 chapter (tasveer)
+/pyq/gk/[slug]       GKTricks (Polity 1077, Ancient History 600) aur Mirror
+                     (English Noun 51) — dono ka ek hi page
+/pyq/my/[bookId]     Apni banayi book (Settings -> PYQ Manager) ke topic
+   Har question card par: options, sahi jawab, solution, ✨ Gemini / 🐋 DeepSeek /
+   📥 answer paste / ✏️ edit, 🧩 Cluster (fact log mein bhejo), 🎯 Zaroori baatein,
+   ★ bookmark, ✅ ho gaya, stats.
+
+--- ANSWERS & MISTAKES ---------------------------------------------------------
+/answers , /mistakes   ek hi board (components/AnswersBoard.js)
+   Sirf SCREENSHOT wale question (overlay se aaye). Drill format: ek waqt ek
+   question. Card ke sar par: ✅ (ho gaya) · ✍️ Solve (stylus) · ✨ Gemini ·
+   🐋 DeepSeek · 🎯 20 similar · 🔴 Hard · 🗑️. Upar sirf 📊 Chapter report.
+   Jawab ka kram: ✨ Gemini > 🐋 DeepSeek > jo pehle se tha.
+   Maths/Reasoning par 15-minute ka timer (page khulte hi chalu; popup batata
+   hai kitne hue, band karte hi phir se 1 se).
+/wrong/solve   stylus se solution likhne wala canvas (vector ink, lib/ink.js)
+/wrong/pen     pen test — browser tumhare stylus ka kya padh raha hai
+
+--- CURRENT AFFAIRS ------------------------------------------------------------
+/current-affairs        seedha sabse naye MAHINE par bhej deta hai
+/current-affairs/[id]   Ek waqt par EK question (PyqDrill), upar mahine ka dropdown.
+                        Aata hai -> 100 sawaal aage; Nahi aata -> 3, 4, 5 … baad.
+                        627 question, 8 mahine (Jan-Aug 2026), source crazygktrick.
+/ca-revision            RBE CA magazine ke atomic card + SRS (Recall engine),
+                        daily plan, test, galtiyan, export/import
+
+--- NOTES ----------------------------------------------------------------------
+/notes/[book]   17 notes book ek hi reader mein (chapter ?topic= se)
+/notes/quiz     har book ka quiz ek jagah
+/static-gk      Static GK topic-wise
+/english/pocket Pocket Rules (English) — rule popup mein ← → se chalte raho
+
+--- VOCAB ----------------------------------------------------------------------
+/vocab          ek hi thaili: din wale words (OWS / Idiom / Vocab) + khud pakde
+                hue New Words, kram random, fact-log wale do button
+                (Aata hai -> 100 aage, Nahi aata -> 3, 4, 5 …). Card ke UPAR
+                ✨ Gemini aur 🐋 DeepSeek.
+/vocab/[day]/[type] , /vocab/bookmarks , /vocab/manage (din-wise list, naam badlo)
+/new-words      overlay ke 📋 button se pakde gaye words
+
+/oneliners      📝 ONE-LINERS — overlay ke 📝 button se aayi ek-line notes.
+                Ginti wali list (subject ke chip: GS / English / Maths /
+                Reasoning, dhoondo, 🗑️). Kisi line par click -> popup mein poori,
+                ← pichli / agli → (arrow key bhi), "🧠 trick" apne khaane mein.
+
+--- PRACTICE / TEST ------------------------------------------------------------
+/make-test      apna test: chapter khud chuno + ginti khud (do alag chapter ek hi paper mein)
+/quiz-bank      topic-wise bana-banaya quiz bank
+/quizzes/[id]   quiz dene ka page (submit hote hi quiz delete, galat -> Mistakes)
+/mock-tests     imported mock paper
+/mock-marks     har mock ke marks (section-wise correct/wrong/time), score aur
+                accuracy khud banta hai; ?cat= se section chunte ho; .txt export
+/calculation    speed maths drill — bina AI, khud banta hai (calcbank + generator)
+/today          RBE 50-day plan
+/study/[subject]/[chapterId]  apne chapter/notes/pdf
+
+--- AUR --------------------------------------------------------------------
+/panic          🚨 motivation khatam -> reels ek-ke-baad-ek (R2 se, /api/panic)
+/ai-run         🤖 AI run — overlay ke button se khulta hai: source (PYQ chapter /
+                Answers subject / Vocab) + ginti (5/10/15…), phir ek-ek question
+                overlay ke through AI se, jawab apne aap save
+/settings       Gemini on/off aur uska prompt, DeepSeek key/model, Supabase URL +
+                anon key + sync code, auto-sync, theme, PYQ Manager (apni book/
+                topic/question), backup export/import, device id
+
+
+================================================================================
+4. JO CHEEZEIN POORI SITE MEIN EK JAISI HAIN
+================================================================================
+
+DRILL (PyqDrill + lib/pyqdrill.js) — PYQ, CA, Vocab, Answers sab yahi chalate hain:
+   "Aata hai"      -> wo question 100 sawaal aage (KNOWN_GAP = 100)
+   "Nahi aata hai" -> 3, 4, 5, 6 … baad phir (miss ke hisaab se gap badhta hai)
+   Naye question ~101ve par lagte hain (end mein nahi).
+   Har chapter ka apna kram + jagah save hoti hai -> jahan chhoda wahin se.
+
+RECALL (components/carevision/Recall.js) — Fact log, Zaroori baatein, CA Revision:
+   card, "Dikhao", Aata tha / Nahi aata tha, loop, resume, 🗑️, aur card ke apne
+   button (trick banao).
+
+JAWAB KA KRAM (har jagah ek hi): ✨ Gemini (paste kiya hua) > 🐋 DeepSeek > book
+   ka apna solution/explanation.
+
+CARD KE BUTTON: ✨ Gemini (prompt + question clipboard par, Gemini khulta hai) ·
+   🐋 DeepSeek (site ki key se) · 📥 Answer paste · ✏️ Edit · 🧩 Cluster (fact log
+   mein) · 🎯 Zaroori baatein (points) · 🎯 20 similar · ★ Bookmark · 🔴 Hard ·
+   ✅ Ho gaya · 🗑️
+
+AUR: Pomodoro timer, counter ("aaj kitne hue"), chapter report, focus mode,
+   fullscreen exam mode, toast, theme toggle, service worker (offline).
+
+
+================================================================================
+5. DATA
+================================================================================
+
+PUBLIC (site ke saath aati JSON — read-only):
+  PYQ: warbank 3152 · engbank 7585 · errorprobank 2830 · mathbank 6420 (R2 image)
+       · sscmaths2025 5498 · reasonbank 3543 (R2 image) · gkbank 1728
+  CA: cabank 627 (8 mahine) | CA Revision: carevision/*.json
+  Notes: 17 folder (*_notes/notes.json) | Pocket: pocketbank | Calc: calcbank
+  Quiz: quizbank | Maths/Reasoning ki tasveerein: Cloudflare R2 CDN
+
+BROWSER MEIN (sab `cgl.` se shuru, sab sync hote hain):
+  Question ka kaam: cgl.wrongbook · cgl.qstats · cgl.qtime · cgl.qchapter ·
+    cgl.qdone · cgl.qresume · cgl.qreview · cgl.pyqdrill · cgl.hardq ·
+    cgl.answersDone · cgl.mistakesDone · cgl.shortcuts (Gemini ke jawab) ·
+    cgl.dsanswers (DeepSeek ke jawab) · cgl.savedanswers · cgl.ink.queue (stylus)
+  Padhne ka: cgl.mission.facts (Fact log) · cgl.ssc.points (Zaroori baatein) ·
+    cgl.oneliners (One-liners) · cgl.tricks · cgl.carev.* (CA Revision) ·
+    cgl.notesquiz.asked · cgl.study.*
+  Vocab: cgl.vocab.ows / .details / .mine / .newwords / .bookmarks / .done / .cycle
+  Test: cgl.quizzes · cgl.settests · cgl.mixtest · cgl.mockmarks · cgl.calc.pool
+  Mission: cgl.mission · cgl.mission.done · cgl.mission.analysis · cgl.planner ·
+    cgl.targets · cgl.examDate · cgl.dailytask
+  Apna bank: cgl.userpyq.books / .topics / .questions
+  Settings/aur: cgl.settings · cgl.theme · cgl.sync.device · cgl.counter ·
+    cgl.pomodoro · cgl.panic.log · cgl.airun.done · cgl.backto · cgl.recall.session
+
+KAHAN RAKHA JATA HAI (lib/bigstore.js):
+  Bade store (quizzes, wrongbook, vocab, qstats …) IndexedDB `cgl-big` mein,
+  baaki chhoti key localStorage mein. IDB na chale to sab localStorage par.
+
+SYNC (lib/syncitems.js + components/SyncManager.js):
+  Supabase table `sync_items`. Har store RECORD-wise tootta hai (list ka har
+  element apna record), isliye do device alag-alag jodein to dono bach jate hain
+  — koi device doosre ka data uda nahi sakta. Settings mein URL + anon key +
+  sync code. Device ka apna data (theme, pomodoro) sync nahi hota.
+
+
+================================================================================
+6. PC OVERLAY (D:\over) SE JUDAAV — site ka doosra aadha hissa
+================================================================================
+
+Overlay ek Tk window hai jo hamesha upar rehta hai + apna Flask server
+(127.0.0.1:5000-5002). Site usse localhost par baat karti hai.
+
+  OverlayInbox   overlay se aaye screenshot question site ke wrong book mein
+  VocabFeeder    (a) overlay ko vocab ke words deta hai, (b) copy hui meaning
+                 leta hai (New Words), (c) 📝 one-liner leke /oneliners mein
+  /ai-run        overlay ka 🤖 Run — question ek-ek karke AI se, jawab save
+  Overlay ke page: /q/<qid> (ek question + baayen numbers ki list + 🎯 20 similar),
+                 aur 📚 Padho (panel ke button se) — Fact log, Zaroori baatein,
+                 One-liners, Current Affairs aur PYQ bank ek hi page par,
+                 "Agla" dabao -> hara nishan + 50 card baad phir se, upar
+                 "kitne hare / kitne baaki", aur 🐋 DeepSeek ka apna button.
+
+NIYAM (kabhi mat todna):
+  • Gemini API kabhi use nahi hoti (paise lagte hain). Gemini sirf wahi chalta
+    hai jo user khud browser mein kholta hai (✨ button clipboard par prompt
+    daal kar page khol deta hai).
+  • DeepSeek user ki apni key se — automatic/bulk call nahi, sirf button par.
+  • OCR muft wala local (RapidOCR / Windows OCR), overlay mein.
+
+
+================================================================================
+7. API ROUTES (app/api/…)
+================================================================================
+  ask · generate-quiz · generate-similar · verify-quiz · notes-quiz ·
+  rule-detail · rule-quiz · chapter-tag · extract-notes · extract-ows ·
+  extract-rules · gk-to-mcq · gk-image · ca-import · ca-hinglish ·
+  vocab-detail · vocab-lines · vision-ocr · r2 · r2/image · panic ·
+  test-connection
+  (sab DeepSeek ya site ke apne data par chalte hain; vision-ocr/gemini wale
+   raaste band hain — dekho niyam upar.)
+
+
+================================================================================
+8. COMMANDS
+================================================================================
+  npm run dev        chalao (localhost:3000)
+  npm run build      build
+  npm run test:sync  sync ke test (54)
+  npm run test:ca    CA SRS ke test (27)
+  Overlay:  python app.py   |  test:  python test_sync.py
+================================================================================

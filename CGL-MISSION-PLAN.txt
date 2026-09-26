@@ -1,0 +1,542 @@
+================================================================================
+  SSC CGL TIER-1 — POORA PLAN + SAARE BADLAV
+  Day 1: Mon 14 Sep 2026  ·  Exam: 1 Oct maana hai (admit card se pakki karni hai)
+  Site: ssc-cgl-prep-ten.vercel.app → Home → 🚀 CGL Mission
+================================================================================
+
+  Is file mein:
+    PART A — PLAN (jo ab karna hai)             ← roz yahi follow karna hai
+    PART B — Site par kya bana, kahan kya hai
+    PART C — Saare badlav, round-wise (v1 → v2 → v3), har ek ka kyun
+    PART D — Review ke points: kya lagaya, kahan farak rakha
+    PART E — Data jahan se liya + technical details (files, commits)
+
+  Saath wali file: MOCK-MARKS-REPORT.txt — saare mocks ki poori report.
+
+
+################################################################################
+  PART A — PLAN (jo ab karna hai)
+################################################################################
+
+--------------------------------------------------------------------------------
+ AAJ RAAT (13 Sep) — sirf 55 min, poora din nahi
+--------------------------------------------------------------------------------
+  [✓] Aaj ka Maths mock /mock-marks mein (14C 2W, 16 attempt = 27) — daal diya hai
+  [ ] Us mock ke 24 solvable Q ko stopwatch se 🟢/🟡/🔴 mein baanto, yellow ka
+      short method likho (/mission/analysis) — 20 min
+  [ ] GS BASELINE sectional (Testbook, CGL 2024 GS) — 15 min
+      + marks /mock-marks → GK/GS mein — 20 min
+  [ ] Tables 12–25 ka pehla pass — bol ke, 20 random — 15 min
+  Kyun aaj: "kal se" wali aadat aaj todni hai. Site ke Home par tick hote hain.
+
+  Aaj ke mock ka matlab: 27 = tumhara normal (aakhri 5 ka avg 28.9). 24/25 ban
+  gaye → concept theek hai (Z≈1), self-test (SPEED) confirm. Dikkat time ki hai:
+  16 attempt = 56 sec/Q, 20 attempt ke liye 45 sec/Q chahiye → har Q pe sirf
+  11 sec bachane hain: tables/fraction (4–5 sec) + short method (4–5 sec) +
+  kam rough work + 40-sec scan (2–3 sec).
+
+--------------------------------------------------------------------------------
+ 1. KYUN AISA PLAN (tumhare mocks se)
+--------------------------------------------------------------------------------
+  - Maths = SPEED ki dikkat: accuracy 88%, par har mock mein 7–8 sawaal chhoot'te
+    (self-test verdict bhi SPEED).
+  - English = ACCURACY ki dikkat: 25/25 attempt, par 6+ galat; 60% galtiyan
+    error spotting + sentence improvement.
+  - GS = sabse bada gap (full mock mein 9.5; GS sectional abhi tak 0).
+  - Reasoning ~43 = strong → sirf maintain.
+  - Priority: GS → Maths → English → Reasoning.
+
+--------------------------------------------------------------------------------
+ 2. TARGET — exam hall mein FLOOR le ke jao
+--------------------------------------------------------------------------------
+  Section   | FLOOR | Kaise                     | STRETCH
+  Reasoning |  41   | 23 attempt, ~91%          |  45
+  GS        |  28   | 22 attempt, ~73%          |  32
+  Maths     |  34   | 20–21 attempt, ~86%       |  39
+  English   |  38   | 23 attempt, ≤3 galat      |  41
+  TOTAL     | 141   |                           | 157
+  Stretch paper aasan ho to apne aap aata hai. Target ke peeche bhaagna =
+  over-attempt = galtiyan.
+
+--------------------------------------------------------------------------------
+ 3. EXAM DATE (admit card aate hi site mein daalo + "date pakki" tick)
+--------------------------------------------------------------------------------
+  30 Sep–5 Oct : plan jaisa hai. Aakhri 4 din exam ke theek pehle.
+  6–18 Oct     : 26 Sep ke baad extension — Mensuration-3D, Geometry, CI,
+                 boats/races, Algebra, H&D FULL; GS pass-2; har 3rd din full mock.
+  19–30 Oct    : extension ke pehle 10 din saare adhoore chapter FULL, uske baad
+                 roz 1 ghanta Tier-2. Stretch 165. Har 3rd din full mock.
+  Taper (halke din) SIRF jab date pakki tick ho — tab tak normal padhai.
+  20 Sep se roz 2 min: SSC / regional site par admit card status.
+
+--------------------------------------------------------------------------------
+ 4. ROZ KA DIN (tumhare routine par — site "ABHI" card mein khud dikhati hai)
+--------------------------------------------------------------------------------
+  FULL MOCK DIN                                  BUILD DIN (sectional)
+  08:00–08:45 Spaced revision                    08:00–08:45 Spaced revision
+  08:45–09:00 Calc warm-up                       08:45–09:00 Calc warm-up
+  09:00–10:00 FULL MOCK                          09:00–10:00 Sectionals (Q + GS + E/R)
+  10:00–11:00 Nahana + nashta                    10:00–11:00 Nahana + nashta
+  11:00–12:00 Mock analysis                      11:00–11:40 Sectional analysis
+  12:00–13:30 Maths topic                        11:40–13:30 Maths topic + sprint #2
+  13:30–14:15 Lunch + 20 min nap (alarm)         13:30–14:15 Lunch + 20 min nap
+  14:15–15:45 GS static (45 notes → 50 PYQ)      14:15–15:45 GS static
+  15:45–16:00 Break                              15:45–16:00 Break
+  16:00–      English grammar  (D1–D6: 60 min / D7 se: 30 min)
+  –17:30      PYQ vocab        (D1–D6: 30 min / D7 se: 60 min)
+  17:30–18:30 GS PYQ shift (25 Q) + fact log     (same)
+  18:45–19:15 Current affairs                    (same)
+  19:15–19:45 Maths SPEED drill                  (same)
+  19:45–19:55 Reasoning: 10 series Q             (same)
+  19:55–20:30 (bonus) Mistake-book + slow list   (same)
+  20:30–22:30 Dinner                             Dinner
+  22:30–23:00 Night recall + 🌙 metric           22:30–23:15 Night recall + 🌙 metric
+  23:15 sona                                     23:30 sona
+
+  - Realistic ~9–9.5 ghante productive. 9 achhe > 11 bikhre.
+  - Maths roz 2.5 ghante se ZYADA nahi, GS 2.5 ghante se KAM nahi. Maths 27→34
+    = +7, GS 9.5→28 = +18.5. Maths comfortable lagega — usi ke peeche bhaagna
+    wahi trap hai jisne 23 Reasoning mock karwaye the.
+  - Block ka ✓ MASTER hai; Home ki question-ginti sirf guide.
+  - Kabhi mat kaato: mock, analysis, 12:00 Maths block, speed drill, GS static,
+    night recall. Kaatna pade to pehle: bonus block → GS PYQ 2nd shift → CA 20 min.
+  - Kal chhoot gaya? Chhod do — koi backlog nahi, bas aaj.
+
+  🌙 ROZ RAAT KA EK METRIC (Home ke neeche): aaj Maths ka attempt count +
+  GS chhua ya nahi. Yahi do number badhne chahiye.
+
+--------------------------------------------------------------------------------
+ 5. DIN-WISE (exam 1 Oct maan ke — 17 din, 7 full mock)
+--------------------------------------------------------------------------------
+  Din | Date   | 9 AM                          | Maths                               | English                  | GS                                 | CA
+  D1  | 14 Mon | GS + Maths sectional          | P&L + Discount (MP:CP ratio)        | Subject-Verb Agreement   | Polity-1: Articles/Parts/Schedules | Sep
+  D2  | 15 Tue | FULL MOCK 1                   | Simplification + Number System      | Tenses + Conditionals    | Polity-2: FR/DPSP/FD, Amendments   | Aug
+  D3  | 16 Wed | Q + GS + R sectional          | Ratio, Partnership, Average         | Articles + Nouns         | Biology                            | Aug
+  D4  | 17 Thu | FULL MOCK 2                   | SI/CI + Alligation                  | Pronoun + Degree         | Chemistry                          | Jul
+  D5  | 18 Fri | Q + GS + E sectional          | Algebra identities                  | Prepositions + Conj.     | Physics facts                      | Jul
+  D6  | 19 Sat | FULL MOCK 3                   | Trigonometry                        | Parallelism + Redundancy | Modern History                     | Jun
+  D7  | 20 Sun | Q + GS + R → 🚩 CHECKPOINT 1  | Time & Work + TSD                   | Voice + Narration        | Art & Culture                      | Jun
+  D8  | 21 Mon | FULL MOCK 4                   | Mensuration 2D                      | Sentence improvement     | Indian Geography                   | May
+  D9  | 22 Tue | Q + GS sectional              | Mixed sprints + 3D 6 formula (40m)  | Cloze method             | Ancient + Medieval (PYQ)           | May
+  D10 | 23 Wed | Q + GS + E sectional          | Geometry 70 min + DI + sprint       | RC + Para-jumble         | Economy + Census 2011              | Apr
+  D11 | 24 Thu | FULL MOCK 5                   | DI sets + Stats basic               | Mixed error set          | Static GK (AAKHRI naya topic)      | Apr
+  D12 | 25 Fri | Q + GS sectional              | Mistake-book ke 2 weak chapter      | Weak rules               | Polity + Science PYQ revision      | Mar
+  D13 | 26 Sat | FULL MOCK 6 → 🚩 CHECKPOINT 2 | Formula sheet final + Tier-A        | Rules one-pager          | Mixed PYQ recall                   | Jan–Feb (sports/awards)
+  D14 | 27 Sun | Q + GS sectional (revision)   | Revision: formula + weak chapters   | Rules revision           | Fact log: Polity + Science         | CA log
+  D15 | 28 Mon | FULL MOCK 7 (aakhri)          | Revision: formula sheet             | Rules + bookmarked vocab | Fact log: History/Culture/Geog     | CA log
+  D16 | 29 Tue | Halka GS + English sectional* | Formula sheet                       | Rules                    | Fact log pass-2                    | CA log
+  D17 | 30 Wed | Mock NAHI*                    | 10 min drill                        | Bookmarked vocab         | Fact log skim                      | CA skim
+  EXAM| 1 Oct
+  * D16/D17 taper sirf date pakki hone par; warna Maths + GS sectional + mixed sprints.
+  Exam alag date par nikla to site grid apne aap bana degi.
+
+--------------------------------------------------------------------------------
+ 6. TOPICS + SKIP
+--------------------------------------------------------------------------------
+  MATHS  Round 1: Percentage, P&L + Discount, SI/CI, Ratio/Partnership, Average,
+         Simplification, Number System, Trigonometry, Algebra identities, DI.
+         Round 2: T&W, TSD/trains, Alligation, Mensuration 2D, Mensuration 3D
+         (sirf 6 formula: cube, cuboid, cylinder, cone, sphere, hemisphere),
+         Geometry (sirf 4 circle theorem, triangle centres, BPT/similarity), Stats.
+         SKIP: Coordinate geometry · H&D 2 observer · 3D frustum / melting ·
+         2+ circles / tangent-chain · variance/SD · 3-pipe + leak · boats multi-stage.
+         Exam mein dekhte hi skip: 2+ circle figure · DI 5+ calc · degree ≥3
+         expansion · badi power remainder · 3-stage TSD.
+  ENGLISH  Top 12 rules: SVA · tense (since/for, perfect, If+had) · articles ·
+         uncountable/collective nouns · pronoun case · comparison · fixed
+         prepositions · "one of the + plural" · no sooner–than / hardly–when /
+         lest–should · parallelism · redundancy · question tags.
+         Vocab sirf PYQ. SKIP: Wren & Martin poori, Norman Lewis, etymology.
+  GS     Polity (sabse zyada) · Bio/Chem/Physics facts · Modern History ·
+         Art & Culture · Indian Geography · Static GK · Economy · CA Mar–Sep 2026.
+         SKIP: World history · Sangam/post-Maurya · Vijayanagara/Bahmani ·
+         world geography detail · environment detail · economy theory · physics
+         numericals · organic chem · Computer · purana CA · Lucent poori.
+  REASONING  Naya kuch nahi. Roz 10 series Q + Home ka 15 Q target.
+
+--------------------------------------------------------------------------------
+ 7. MOCK + ANALYSIS
+--------------------------------------------------------------------------------
+  - Full mock: CGL 2025 ke jo shift nahi diye (21 Sep 2025 ke baad) ya Testbook
+    fresh. Maths sect.: CGL 2025 agla shift (19 Sep S3 → …) fir 2024.
+    GS sect.: CGL 2024 + CHSL 2025. English sect.: CGL 2025 (15 Sep S1 → …).
+  - Pehle full mock mein: ek section mein jaan-boojh ke 6 blank chhodo aur time
+    karo ki bharne mein kitne sec lage.
+  - Har mock ke baad /mock-marks mein marks → "Ab analysis karo" (site):
+    1. Marks + rank daalo
+    2. Har galat/chhoda Q ko type: W1 concept · W2 silly/calc · W3 galat padha ·
+       W4 tukka galat · S1 chhoda par ≤60 sec mein banta · S2 sahi chhoda ·
+       T1 90 sec+ laga
+    3. Dobara solve STOPWATCH ke saath (S1 → W2 → W3 → W1), har Maths Q ka bucket:
+       🟢 GREEN  <40 sec  — exam-ready, kuch nahi
+       🟡 YELLOW 40–75    — aata hai, method lamba → SHORT METHOD likho;
+                            3 din baad site revision block mein timed (<40 target)
+       🔴 RED    >75      — sahi ho tab bhi exam mein SKIP, 1 min bhi mat do
+       16 → 20 attempt = yellow ko green banana (naye sawaal seekhna nahi).
+    4. GS/English galat → Fact log (1 line, cluster ke saath)
+    5. Time audit: Maths 9 min tak kitne? scan kiya?
+    6. 3 action item (agle 2 din Home par dikhenge)
+  - Ek chapter/rule mein 3 baar galti → agle din 30 min ka slot.
+
+--------------------------------------------------------------------------------
+ 8. SECTION-WISE KAAM
+--------------------------------------------------------------------------------
+  GS      PYQ pehle, padhai baad mein. Roz 90 min static + 25 Q shift + 30 min CA.
+          Har galat/unsure → Fact log (Kerala dance pucha → saare Kerala dance).
+  MATHS   Roz 15 min calc: TABLES 12–25 sabse pehle (pehle 3 din top priority),
+          squares 1–30, cubes 1–12, fraction ↔ %. Roz 15 Q / 9 min sprint.
+          Option-first: value daalo (θ=45°, a=b=1), approx, unit digit.
+          15-sec rule: tareeka nahi aaya → next.
+          Attempt: 19 (20 Sep) → 20 (26 Sep) → 20–21 exam.
+          Roadmap (tumhare numbers se): aaj 16 att/27 → CP1 19 att/~31 →
+          CP2 20 att/~33 → exam 20–21 att/34 floor; sab chala to 22–23 att/38.
+          17 din mein 45+ Maths realistic nahi (24 att @ 92% = 2–3 mahine ka kaam).
+  ENGLISH D1–D6: grammar 60 min (1 rule + 35 Q), vocab 30 min.
+          D7 se: grammar 30 min (weak rules + mixed), vocab 60 min.
+          Checklist: SVA → tense → article → preposition → pronoun → comparison
+          → parallelism → redundancy.
+
+--------------------------------------------------------------------------------
+ 9. EXAM HALL (har mock mein bhi yahi)
+--------------------------------------------------------------------------------
+  Order R → GS → Q → E, har section 15 min.
+  Reasoning: 0–10 sab (seating/puzzle chhod ke) · 10–13.5 marked · aakhri 40 sec
+             blank fill · 23 attempt
+  GS:        0–6 five-sec wale · 6–13.5 50-50/statement (har statement alag
+             check) · aakhri 40 sec blank fill · 22 attempt
+  Maths:     0:00–0:40 SIRF SCAN (GREEN/YELLOW/RED) · 0:40–9:00 GREEN, kisi Q pe
+             60 sec se zyada nahi · 9–13.5 YELLOW (max 75 sec) · RED ko haath
+             nahi · 13.5–14:20 option-elimination · 14:20–15:00 blank fill ·
+             5 min ≥8, 9 min ≥14, 13.5 min ≥19 · 20–21 attempt
+  English:   0:00–3:30 vocab + FIB · 3:30–8:00 ERROR + SENTENCE IMPROVEMENT +
+             voice/narration (checklist, fresh dimaag) · 8:00–11:30 cloze ·
+             11:30–14:00 RC (tough ho to 2 Q chhodo) · 14:00–15:00 review +
+             blank fill · 23 attempt, ≤3 galat
+
+  TUKKA:
+    2 option bache           → HAMESHA mark
+    1 option kata            → mark
+    0 kata, "lagta hai ye"   → mat maaro (trap)
+    Aakhri 40 sec ke blank   → EK HI letter se bhar do (+0.125 har Q) — soch mat
+  Aakhri 2 min: palette dekho → naya lamba Q nahi → marked Q 20 sec each →
+  aakhri 40 sec blank fill → uske baad kuch mat badlo.
+  Section lock na nikla (60 min combined): GS 10 → R 13 → E 13 → Q 22 + 2.
+
+--------------------------------------------------------------------------------
+ 10. REVISION (site 08:00 block mein khud list dikhati hai)
+--------------------------------------------------------------------------------
+  Jo din X ko padha → raat ko + X+1, X+3, X+7, X+14.
+  D1 14 → 15, 17, 21, 28   D2 15 → 16, 18, 22, 29   D3 16 → 17, 19, 23, 30
+  D4 17 → 18, 20, 24        D5 18 → 19, 21, 25        D6 19 → 20, 22, 26
+  D7 20 → 21, 23, 27        D8 21 → 22, 24, 28        D9 22 → 23, 25, 29
+  D10 23 → 24, 26, 30       D11 24 → 25, 27           D12 25 → 26, 28
+  D13 26 → 27, 29
+  29–30 Sep: poora fact log + CA log + formula sheet + rules one-pager.
+  Fact log: har fact 1/3/7/14 din baad; "yaad tha" → aage, "bhool gaya" → kal.
+
+--------------------------------------------------------------------------------
+ 11. CHECKPOINTS (site /mission/progress apne aap dikhati hai)
+--------------------------------------------------------------------------------
+  Metric                | 20 Sep (CP1) | 26 Sep (CP2) | Exam FLOOR
+  Reasoning score / att | 41 / 23      | 41 / 23      | 41 / 23
+  GS score / att        | 18 / 20      | 23 / 22      | 28 / 22
+  Maths score / att     | 31 / 19      | 33 / 20      | 34 / 20
+  English score / galat | 36 / ≤5      | 37 / ≤4      | 38 / ≤3
+  Full mock             | 125          | 135          | 141
+
+  RULE: ek mock kabhi plan nahi badalta. Score wala badlav tabhi jab PICHHLE 3
+  MEIN SE 2 mock target se neeche. Attempt count pe ek reading kaafi (wo tumhare
+  haath mein hai). Attempt roz dekho, score sirf 3-mock trend mein.
+
+  Laal + rule dikhe → site par "Ye badlav lagao":
+  - Maths attempt <19 (CP1)  → concept topics hatao, sprints, speed +20 min
+  - Maths acc <80% (2 of 3)  → har Q +5 sec padho, option cross-check
+  - GS <18 (CP1, 2 of 3)     → static reading band, sirf PYQ + fact log
+  - GS <23 (CP2, 2 of 3)     → GS 22–25 maan lo, aadha GS PYQ time Maths ko
+  - English 5+ galat (2 of 3)→ soch ka tukka band, roz 30 error Q
+  - Reasoning <40 (2 of 3)   → roz 1 sectional, bas
+  - Full mock sectionals se 10+ kam → exam time, 0 break, 10 sec saans
+
+--------------------------------------------------------------------------------
+ 12. RESOURCES
+--------------------------------------------------------------------------------
+  Maths: Testbook CGL PYQ sectionals · site Maths 2025 bank, Brahmastra, Calc drill
+  English: site Error Pro, Pinnacle English, Vocab
+  GS: Testbook GS PYQ (CGL 2024, CHSL 2025) · site WAR bank, Parmar notes
+  CA: site Current Affairs + ek monthly MCQ compilation
+  Reasoning: Testbook PYQ sectionals
+
+--------------------------------------------------------------------------------
+ 13. AAKHRI DIN (exam 1 Oct maan ke)
+--------------------------------------------------------------------------------
+  24 Sep: aakhri naya topic.  26 Sep: Checkpoint 2 + formula sheet / rules final.
+  28 Sep: aakhri full mock (analysis 45 min).
+  29 Sep*: halka GS + English, formula, rules, CA log, admit card print + route.
+  30 Sep*: 3–4 ghante skim + 10 min calc. Raat ka block nahi — dinner ke baad so jao.
+  1 Oct: 20 min halki revision, 10 min calc warm-up, centre jaldi. FLOOR le ke jao.
+  * sirf date pakki ho to. Exam der se ho to ye din exam ke saath khisakte hain.
+
+--------------------------------------------------------------------------------
+ BILKUL NAHI
+--------------------------------------------------------------------------------
+  x Exam se 6 din pehle ke baad naya chapter
+  x Naya book / channel / source
+  x Din mein 1 se zyada mock; exam se ek din pehle mock
+  x Date pakki hone se pehle taper
+  x Ek mock ke score pe mood ya plan badalna (2-of-3 rule)
+  x Question-ginti ko block-tick se upar rakhna
+  x Super-hard mock series · Telegram / expected-cutoff ki behas
+  x Neend ka time badalna
+  x Exam mein skip list todna
+  x Site mein kuch naya jodna ya plan ka naya version banana — plan khatam,
+    ab sirf execution
+
+  Aaj raat: GS baseline + tables (55 min).  Kal 8 baje: Day 1.
+
+
+################################################################################
+  PART B — SITE PAR KYA BANA, KAHAN KYA HAI
+################################################################################
+
+  Menu mein sabse upar: 🚀 CGL Mission. Uske andar:
+
+  /mission (aur Home ka upar wala hissa) — "Aaj kya karna hai"
+    - ABHI card: ghadi ke hisaab se abhi ka block + seedha button (sahi chapter
+      ka quiz / notes / calculation / marks daalna / analysis) + "✓ Ho gaya".
+    - Din ki poori timeline tumhare routine par (08–10, 11–20:30, 22:30–23:30).
+      Walk, nashta, lunch + nap, dinner bhi dikhte hain.
+    - Ghantiyan: checkpoint rule laga · GS baseline nahi · admit card check
+      (20 Sep se) · Sunday backup · kal chhoota ("chhod do, backlog nahi") ·
+      pichhle analysis ke action items · aaj ke due facts.
+    - Header: Day X / N, exam countdown, 🔥 streak, FLOOR/STRETCH line.
+    - Neeche 🌙 roz raat ka metric: Maths attempt + GS chhua (7 din ki line).
+    - "⚙️ Exam date / shift": start date, exam date, shift, "date pakki" tick.
+    - Mission shuru hone se pehle (jaise aaj): aaj raat ke 2 kaam + kal ki
+      poori timeline.
+    - Neeche purana "Aaj ka kaam" (question ginti + Weak Topics) waisa hi.
+
+  /mission/plan — saare din ek grid mein (FM = full mock, 🚩 = checkpoint,
+    ext = extension din, "taper?" = date pakki hone ka intezaar). Koi bhi din
+    kholo, uski timeline dekho / tick karo.
+
+  /mission/analysis — mock chuno → 6 step tick → galtiyon ki ginti type-wise
+    (W1–W4 / S1 / S2 / T1) → 3 action item → save. Action items agle 2 din
+    Home par. Neeche ab tak ke saare analysis ka jod + error log format.
+
+  /mission/progress — Checkpoints. FLOOR/STRETCH table, hafte-wise table
+    (mission se pehle / hafta 1 / hafta 2 / aakhri) seedha /mock-marks se,
+    hara/laal. "Agar nahi badha to" rules + "Ye badlav lagao" button (dabate hi
+    aage ke din ki timeline badal jaati hai). Maths attempt ka bar-graph.
+
+  /mission/facts — Fact log. Naya fact (GS / CA / English / Maths trick +
+    topic), aaj ke due (pehle khud yaad karo → "Dikhao" → yaad tha / bhool
+    gaya), topic-wise poori list + search.
+
+  /mission/topics — high-yield + SKIP list, har section ke bank ke links.
+  /mission/exam — exam hall ka minute plan, tukka table, aakhri 2 min,
+    aakhri din kya nahi karna, exam ki subah.
+  /mission/diagnose — Maths self-test (speed ya concept). Tumhara verdict
+    save hai: SPEED (X=8, Y=1, Z=0).
+
+  /mock-marks — "📄 Text report" button (saare mocks ki .txt) + marks save
+    karte hi "🔍 Ab analysis karo →" banner.
+
+  Hata diya: "GS · 121 chapter × 6" (GS30) — menu, page, code, aur uska
+  bacha data.
+
+  Home ke roz ke question-target: GS 100, Maths 60, English 50, Vocab 100,
+  CA 30, Reasoning 15 (order GS → Maths → English → Vocab → CA → Reasoning).
+  ⚙️ Target se kabhi bhi badal sakte ho.
+
+  Sab kuch cloud sync hota hai (tumhara sync ON hai) — phone/laptop same.
+
+
+################################################################################
+  PART C — SAARE BADLAV, ROUND-WISE
+################################################################################
+
+--------------------------------------------------------------------------------
+ v1 — PEHLA PLAN + SITE PAR SYSTEM  (commit 34a6fc2, 13 Sep)
+--------------------------------------------------------------------------------
+  Plan (text):
+  - Mock marks se diagnosis: Maths speed, English accuracy, GS gap, Reasoning
+    strong. Priority GS → Maths → English → Reasoning.
+  - Target 155 (R 45, Q 39, E 41, GS 30). 18 din (13 Sep → 1 Oct), 10 full mock.
+  - Timetable pehle 06:00 wake par tha → tumne apna routine bataya → us par
+    badla (08–10, 11–20:30, 22:30–23:30, 23:30 sona).
+  - Topics + skip list, mock analysis 6 step, error types W1–W4/S1/S2/T1,
+    GS PYQ-first plan, Maths self-test, English plan, tukka rule, spaced
+    revision table, weekly checkpoints + "nahi badha to" rules, resources,
+    aakhri 7 din.
+
+  Site:
+  - MOCK-MARKS-REPORT.txt + /mock-marks par "📄 Text report" button.
+  - 🚀 CGL Mission menu group + 8 pages (Aaj, plan, analysis, progress,
+    facts, topics, exam, diagnose). Home par sabse upar.
+  - Har block ka button seedha site ke bank ke sahi chapter ka quiz kholta hai.
+  - Checkpoints /mock-marks se apne aap; rule lage to "Ye badlav lagao".
+  - Mock save karte hi "Ab analysis karo" banner.
+  - GS30 poora hataya.
+  - Home ke question-target aur order naye ROI par; purana tip "Reasoning
+    sabse sasta faayda" hataya.
+  - Ek galti pakdi: 11 Sep ka "English 14 Sep Shift 3" (20C/5W) record galti
+    se GS mein save hai — plan ise English maanta hai.
+
+--------------------------------------------------------------------------------
+ v2 — PEHLE REVIEW KE BAAD  (commit d454612, 13 Sep)
+--------------------------------------------------------------------------------
+  Badlav                                        | Kyun
+  ----------------------------------------------|-----------------------------------------------
+  Plan ki lambai EXAM DATE se (core + extension | Exam window 30 Sep–30 Oct hai; 18 Oct nikla to
+  + aakhri 4 din). Setup mein exam date +       | 28 Sep ke baad 20 din ka koi plan nahi hota.
+  "date pakki" tick.                            |
+  3 branch: 30 Sep–5 Oct / 6–18 Oct (adhoore    | Jitna time, utna plan — extra time mein
+  chapter FULL) / 19–30 Oct (Tier-2 bhi).       | Mensuration-3D + Geometry (106 galtiyan) FULL.
+  Taper sirf date pakki hone par.               | Plan ke beech taper = momentum khatam.
+  Full mock 10 → 8 (21 & 24 Sep build din).     | Mock skill naapta hai, banata nahi; GS bharna hai.
+  Mensuration-3D 40 min, Geometry 70 min.       | Exam mein dono milke 3–4 Q; skip-list wale.
+  24 Sep GS: Physical geog → Polity + Science.  | Environment 0–1 Q; Polity mein 21 galtiyan.
+  Target → FLOOR 141 / STRETCH 157.             | 45/39/41 ceiling the, base nahi; target hi
+                                                | over-attempt karwata hai.
+  Exam: Maths pehle 40 sec SCAN.                | Q1 se seedhe chalne par lambe Q pe 2 min jaate.
+  Blind random fill (+0.125/Q).                 | Random letter mein trap ka asar nahi.
+  Tables 12–25 calc drill mein, cubes 1–12.     | Tables har arithmetic sawaal mein lagte hain.
+  Lunch mein 20 min nap; mock din raat 30 min.  | ~5h 45m neend; working memory pehle girti hai.
+  English target ≤3 galat, 23 attempt.          | 6 → 2 ek cycle mein nahi hota.
+  GS baseline ghanti, Sunday backup, "9–9.5     | Baseline bina checkpoint bekaar; realistic ghante.
+  ghante realistic", "feature mat jodo".        |
+  Roz raat ka EK metric card.                   | Maths attempt + GS — yahi do number asli hain.
+  Mission start 13 → 14 Sep.                    | Tumne kaha aaj ka din gaya; site par set kiya.
+  Din kam pade to sabse kam zaroori din hate    | 14 Sep se 17 din bachte; checkpoint din nahi hatte.
+  (checkpoint din kabhi nahi).                  |
+  Maths self-test ho chuka → D1 par dobara      | Tumne 13 Sep ko hi de diya (SPEED).
+  nahi, seedha GS + Maths sectional.            |
+
+--------------------------------------------------------------------------------
+ v3 — DOOSRE REVIEW KE BAAD  (commit 0eced19, 13 Sep)
+--------------------------------------------------------------------------------
+  Badlav                                        | Kyun
+  ----------------------------------------------|-----------------------------------------------
+  Checkpoint rule: score wala badlav tabhi jab  | Maths mein ±9 ka jhool; ek tough paper se
+  pichhle 3 mein se 2 mock target se neeche.    | concept topics hat jaate jabki kuch galat nahi.
+  Attempt count pe ek reading kaafi.            | Attempt = behaviour, score = paper + luck bhi.
+  English exam order: error/SI 2nd number par   | 60% galtiyan wahin — fresh dimaag + checklist.
+  (vocab → error/SI → cloze → RC → review).     | RC sabse "park-able" hai.
+  Blank fill 15 → 40 sec; pehle mock mein 6     | CBT mein har blank ~5–6 sec (navigate+click).
+  blank chhod ke time karo.                     |
+  English: D1–D6 grammar 60 / vocab 30,         | 12 rules finite hain, pehle khatam; fir volume.
+  D7 se grammar 30 / vocab 60.                  |
+  Checkpoint 2 (26 Sep) full mock ke saath,     | Lagatar 2 full mock = doosre ka analysis aadha.
+  27 Sep revision din. FM: 15,17,19,21,24,26,28.|
+  Roz 10 series Q (Reasoning, 10 min).          | Reasoning ki sabse zyada galtiyan series mein.
+  Mistake-book bonus 45 → 35 min.               | Reasoning block ki jagah.
+  Home: aaj raat ke 2 kaam (GS baseline +       | "Kal se" wali aadat aaj todni hai.
+  tables) tick hone wale.                       |
+  20 Sep se roz admit card check ghanti.        | Aakhri din ka poora plan date pe khada hai.
+  "Block ka ✓ master, question-ginti guide".    | Dono takrayein to block jeete.
+
+--------------------------------------------------------------------------------
+ v3.1 — AAJ KE MATHS MOCK KE BAAD  (commit f9bea25, 13 Sep) — naya version nahi,
+        bas ek column
+--------------------------------------------------------------------------------
+  Badlav                                        | Kyun
+  ----------------------------------------------|-----------------------------------------------
+  Analysis step 3: stopwatch + 🟢 <40 /         | "90 sec mein ho gaya" = exam mein "nahi hua";
+  🟡 40–75 / 🔴 >75 buckets, yellow list.       | 20 attempt = 45 sec/Q.
+  Yellow Q 3 din baad revision block mein       | Yellow → green hi 16 → 20 attempt ka raasta.
+  (timed, target <40 sec).                      |
+  Home: Maths ≤2.5 ghante, GS ≥2.5 ghante.      | Maths +7 deta hai, GS +18.5.
+  Site ki slow list mein time pehle se tha      | Testbook mock ke Q wahan nahi aate — isliye
+  (sirf site ke quizzes) — use chheda nahi.     | yellow list analysis page par.
+
+--------------------------------------------------------------------------------
+ TARGET KA SAFAR
+--------------------------------------------------------------------------------
+  v1: 155 (R 45, GS 30, Q 39, E 41) — ek hi number
+  v2+: FLOOR 141 (R 41, GS 28, Q 34, E 38) · STRETCH 157 (R 45, GS 32, Q 39, E 41)
+  Checkpoint v1: 19 Sep R43/Q33/E37/GS20/Full130 · 26 Sep R44/Q36/E39/GS25/Full145
+  Checkpoint v2+: CP1 R41/Q31(19 att)/E36(≤5)/GS18/Full125 ·
+                  CP2 R41/Q33(20 att)/E37(≤4)/GS23/Full135 · Exam = floor
+
+--------------------------------------------------------------------------------
+ FULL MOCK KA SAFAR
+--------------------------------------------------------------------------------
+  v1: 10 mock — 14, 16, 18, 20, 21, 23, 24, 25, 27, 28 Sep
+  v2: 8 mock  — 21 & 24 Sep build din (13 Sep chhodne se 7 bache)
+  v3: 7 mock  — 15, 17, 19, 21, 24, 26, 28 Sep (koi do lagatar nahi)
+  Exam der se ho to extension mein har 3rd din aur (12 Oct par ~10, 25 Oct par ~15).
+
+
+################################################################################
+  PART D — REVIEW KE POINTS: KYA LAGAYA, KAHAN FARAK
+################################################################################
+
+  Pehla review (4 critical + 6 orange + yellow)
+  ✓ C1 exam date branches          ✓ C2 full mock kam       ✓ C3 floor/stretch
+  ✓ C4 3D/Geometry chhote          ✓ tables 12–25           ✓ blind fill
+  ✓ nap + raat 30 min              ✓ Maths 40 sec scan      ✓ D12 Polity+Science
+  ✓ English ≤3 galat               ✓ GS baseline ghanti     ✓ Sunday backup
+  ✓ "feature mat jodo"             ✓ 9–9.5 ghante           ✓ 12:00 Maths block mat kaato
+
+  Doosra review
+  ✓ 2-of-3 checkpoint rule         ✓ English error/SI 2nd   ✓ blank fill 40 sec
+  ✓ grammar pehle 6 din            ✓ FM6/FM7 lagatar nahi   ✓ roz 10 series Q
+  ✓ admit card check (20 Sep se)   ✓ aaj raat 55 min        ✓ block tick master
+
+  Teesra review (aaj ke mock ke baad)
+  ✓ 🟢/🟡/🔴 stopwatch buckets     ✓ yellow → 3 din baad timed
+  ✓ Maths ≤2.5h / GS ≥2.5h         ✓ attempt roadmap 16 → 19 → 20 → 20–21
+  (Slow list mein time column pehle se tha — sirf site ke quizzes ke liye.)
+
+  Kahan farak rakha:
+  1. Mensuration-3D / Geometry ko v1 mein "poore din" nahi mile the — sirf us
+     din ka 90 min Maths block tha. Phir bhi dono chhote kiye (40 / 70 min).
+  2. Backup: cloud sync pehle se ON hai, cache clear se data nahi jaata.
+     Sunday ka text report bas extra copy hai.
+  3. Tukka: blind random fill (ek letter, aakhri 40 sec) = haan. "Lagta hai
+     ye wala" soch ka tukka bina koi option kaate = ab bhi nahi (trap).
+
+  Dono review ki aakhri baat jo maani:
+  - Plan khatam. Ab na site mein naya feature, na plan ka naya version.
+  - Roz raat sirf do sawaal: aaj Maths ka attempt count kya tha, aur GS chhua ya nahi.
+
+
+################################################################################
+  PART E — DATA + TECHNICAL
+################################################################################
+
+  Data kahan se: live site ka browser storage (sirf padha, badla sirf mission
+  ki start date — tumhare kehne par).
+  - cgl.mockmarks: 41 records (report 40 par bani thi; 41va = aaj ka Maths 14C 2W)
+  - cgl.wrongbook: 751 galtiyan (Maths 490, Reasoning 98, GS 82, English 81)
+  - cgl.qchapter: chapter tags · cgl.examDate: 2026-10-01 · sync: ON
+
+  Mission ka data (sab sync hota hai):
+  - cgl.mission — start date, shift, exam pakki?, self-test verdict, lage rules
+  - cgl.mission.done — din-wise ticks
+  - cgl.mission.analysis — mock analysis
+  - cgl.mission.facts — fact log
+  - cgl.mission.metric — roz raat ka metric
+
+  Files (D:\New folder):
+  - lib/mission.js — plan ka dimaag (din, timeline, checkpoints, rules)
+  - lib/missionfacts.js — fact log + spaced revision
+  - lib/mockreporttext.js — text report
+  - components/MissionToday.js, components/MissionDay.js — Home + timeline
+  - app/mission/* — 8 pages
+  - lib/nav.js (menu), app/page.js (Home), app/mock-marks/page.js,
+    lib/daily.js + components/TodayGate.js (targets), app/globals.css +
+    app/exam.css (styles), components/PlanPractice.js (sprint timer)
+  - Hataye: app/gs30/page.js, lib/gs30.js
+
+  Commits (main → Vercel live):
+  - 34a6fc2  CGL Mission system (v1)
+  - d454612  exam date se plan, floor/stretch (v2)
+  - 0eced19  2-of-3 rule, grammar pehle, FM spacing (v3)
+  - f9bea25  Maths re-solve green/yellow/red + Maths/GS time rule (v3.1)
+
+  Ye dono text files (plan + marks report) GitHub par nahi hain — personal.
+
+================================================================================
+  Aaj raat: GS baseline + tables (55 min).  Kal 8 baje: Day 1.
+================================================================================

@@ -71,7 +71,19 @@
       "Bash(python -c \"import json;d=json.load\\(open\\('public/mathbank/index.json'\\)\\);print\\(d.get\\('base'\\)\\);print\\([\\(c['slug'],c['count']\\) for c in d['chapters']][:5]\\)\")",
       "Bash(grep -oE \"#[0-9a-fA-F]{3,8}\")",
       "Bash(netstat -ano)",
-      "Bash(curl -s http://localhost:3000/cabank/index.json)"
+      "Bash(curl -s http://localhost:3000/cabank/index.json)",
+      "Bash(sed -i 's#\"pdfjs-dist/legacy/build/pdf.mjs\"#\"file:///F:/New folder/node_modules/pdfjs-dist/legacy/build/pdf.mjs\"#' \"C:/Users/aaman/AppData/Local/Temp/claude/F--New-folder/32598a5b-62be-41f9-8032-06ea8ff2f48b/scratchpad/pdftext.mjs\")",
+      "Bash(node __TRACKED_VAR__/pdftext.mjs 'ca/17 July 2026.pdf' __TRACKED_VAR__/ca17.txt)",
+      "Bash(node __TRACKED_VAR__/pdftext.mjs 'ca/18 July 2026.pdf' __TRACKED_VAR__/ca18.txt)",
+      "Bash(node __TRACKED_VAR__/pdftext.mjs 'ca/20 July .pdf' __TRACKED_VAR__/ca20.txt)",
+      "Bash(node __TRACKED_VAR__/pdftext.mjs 'ca/21 July 2026.pdf' __TRACKED_VAR__/ca21.txt)",
+      "Bash(node *)",
+      "Bash(python -c \"import json; d=json.load\\(open\\('errorpro.json',encoding='utf-8'\\)\\); print\\(json.dumps\\(d['meta'],ensure_ascii=False,indent=1\\)\\); print\\('---FIRST Q---'\\); print\\(json.dumps\\(d['questions'][0],ensure_ascii=False,indent=1\\)\\); print\\('TOTAL Qs in array:',len\\(d['questions']\\)\\)\")",
+      "Bash(git revert *)",
+      "Bash(git commit *)",
+      "Bash(rm -f \"C:/Users/aaman/.claude/projects/F--New-folder/memory/math-shorts-tool.md\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3111/pyq)",
+      "Bash(npx next *)"
     ]
   }
 }
