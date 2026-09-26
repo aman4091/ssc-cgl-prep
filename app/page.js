@@ -1,3 +1,4 @@
+import Link from "next/link";
 import MissionToday from "@/components/MissionToday";
 import TodayGate from "@/components/TodayGate";
 
@@ -22,6 +23,12 @@ export default function Home() {
   return (
     <>
       <MissionToday />
+      {/* ⚡ Sprint — ek hi button, kyunki Home par ek waqt ek hi cheez.
+          Jab din ka kaam poora ho jaye ya sirf question peelne ho, ye ek tap
+          door hai (owner ne kaha "iska button homepage par bhi de do"). */}
+      <div className="section" style={{ marginTop: 14 }}>
+        <Link href="/pyq/sprint" className="btn btn--primary">⚡ Sprint — 100 Q, 1 ghanta</Link>
+      </div>
       <div className="section" style={{ marginTop: 18 }}>
         <details className="fold">
           <summary className="fold__hd">Aaj ka kaam — question ki ginti</summary>

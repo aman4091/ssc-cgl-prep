@@ -21,6 +21,8 @@ import "./sprint.css";
 import { ALL_SUBJECTS, loadAllSubject, loadOnePart, partsOf, sourcesFor, countsFor } from "@/lib/allbank";
 import { vocabPool } from "@/lib/vocabpool";
 import { TYPES as VOCAB_TYPES } from "@/lib/vocab";
+import { loadCaBankIndex, loadCaBankMonth } from "@/lib/cabank";
+import { getCurrentAffairsQuestions } from "@/lib/feed";
 import { sprintAnswer } from "@/lib/client-ai";
 import SprintCard from "@/components/SprintCard";
 import SprintAnswer from "@/components/SprintAnswer";
@@ -38,11 +40,35 @@ const COUNTS = [50, 100, 120];
 // word aur uska matlab hota hai. Isliye uski apni entry, aur uske liye
 // book/chapter ka koi matlab nahi.
 const VOCAB = { slug: "vocab", label: "Vocab", icon: "🔤" };
-const PICKS = [...ALL_SUBJECTS, VOCAB, { slug: "mix", label: "Mix — sab subject", icon: "🎲" }];
-const NO_BOOKS = new Set(["mix", "vocab"]);
+// 📰 Current Affairs bhi bank ke bahar hai: mahine-wise ready-made bank
+// (public/cabank) + jo tumne khud import kiya (feed).
+const CA = { slug: "ca", label: "Current Affairs", icon: "📰" };
+const PICKS = [...ALL_SUBJECTS, VOCAB, CA, { slug: "mix", label: "Mix — sab subject", icon: "🎲" }];
+const NO_BOOKS = new Set(["mix", "vocab", "ca"]);
 
 // Vocab ki "book" uska TYPE hai — OWS / Idiom / Vocab. Khali = teeno mila-jula.
 const VOCAB_KINDS = [{ key: "", label: "— Sab mila-jula —" }, ...VOCAB_TYPES.map((t) => ({ key: t.key, label: `${t.icon} ${t.label}` }))];
+
+// CA ke saare question: pehle ready-made mahine, phir tumhare apne import
+// kiye hue. `month` ho to sirf wahi mahina. Ek hi sawaal do baar na aaye.
+async function loadCa(month) {
+  const out = [];
+  try {
+    const idx = await loadCaBankIndex();
+    const months = (idx.months || []).filter((m) => !month || m.period === month);
+    for (const m of months) {
+      const qs = await loadCaBankMonth(m.period);
+      for (const q of qs) out.push({ ...q, _chapter: m.label || m.period });
+    }
+  } catch { /* bank na mile to apne wale hi sahi */ }
+  // Apne import kiye hue ek hi thaili mein hain, mahine-wise nahi — isliye wo
+  // tabhi jab koi ek mahina na chuna ho.
+  if (!month) {
+    try { for (const q of getCurrentAffairsQuestions()) out.push({ ...q, _chapter: "Mere import kiye" }); }
+    catch { /* ignore */ }
+  }
+  return out;
+}
 
 function shuffled(list) {
   const a = [...list];
@@ -119,6 +145,7 @@ export default function SprintPage() {
   // window leta hai; ye browser ki patti bhi hata deta hai.
   const [fs, setFs] = useState(false);
   const [totals, setTotals] = useState({});
+  const [caMonths, setCaMonths] = useState([]);
   const [doneMap, setDoneMap] = useState({});
 
   const alive = useRef(true);
@@ -148,6 +175,12 @@ export default function SprintPage() {
         if (c) setTotals((t) => ({ ...t, [x.slug]: c.total }));
       }
       if (ok) setTotals((t) => ({ ...t, vocab: vocabPool().length }));
+      // CA ki ginti bhi sirf index se — question fetch kiye bina.
+      const idx = await loadCaBankIndex().catch(() => null);
+      if (!ok) return;
+      const mine = (() => { try { return getCurrentAffairsQuestions().length; } catch { return 0; } })();
+      setCaMonths((idx && idx.months) || []);
+      setTotals((t) => ({ ...t, ca: ((idx && idx.total) || 0) + mine }));
     })();
     return () => { ok = false; };
   }, []);
@@ -225,6 +258,18 @@ export default function SprintPage() {
         _srcLabel: "Vocab", _chapter: v.label || "",
       }));
     }
+    if (s === "ca") {
+      // `b` yahan mahina hai ("2026-07"), khali = saare mahine.
+      const all = await loadCa(b);
+      const seen = new Set();
+      return all
+        .filter((q) => { const k = String(q.question || "").trim().toLowerCase(); if (!k || seen.has(k)) return false; seen.add(k); return true; })
+        .map((q) => ({
+          ...q, _slug: "ca", _subj: "Current Affairs", _srcLabel: "Current Affairs",
+          // CA ka jawab `detail` mein hai — card `explanation` padhta hai.
+          explanation: q.explanation || q.detail || "",
+        }));
+    }
     if (b) {
       const qs = await loadOnePart(s, b, c);
       const meta = ALL_SUBJECTS.find((x) => x.slug === s);
@@ -268,8 +313,8 @@ export default function SprintPage() {
     if (!set && !asTest) {
       // Naya set sambhal lo — taaki yahi 100 baad mein dobara chal sakein.
       const bookLabel = b
-        ? (s === "vocab"
-          ? (VOCAB_KINDS.find((x) => x.key === b) || {}).label
+        ? (s === "vocab" ? (VOCAB_KINDS.find((x) => x.key === b) || {}).label
+          : s === "ca" ? (caMonths.find((x) => x.period === b) || {}).label
           : (books.find((x) => x.id === b) || {}).label)
         : "";
       const chapName = c ? (parts.find((x) => x.slug === c) || {}).name : "";
@@ -291,7 +336,7 @@ export default function SprintPage() {
     setPhase("prep");
     setNote("");
     fetchAll(pick);
-  }, [slug, book, chap, books, parts, count, fetchAll, loadList]);
+  }, [slug, book, chap, books, parts, caMonths, count, fetchAll, loadList]);
 
   const cur = batch[pos] || null;
   const curH = cur ? sHash(cur) : "";
@@ -571,6 +616,23 @@ export default function SprintPage() {
         {/* Poora subject bhi ho sakta hai aur "sirf GKTricks ka Statics" bhi.
             Question yahan fetch nahi hote — sirf har bank ka index padha
             jata hai, isliye ye list turant bhar jati hai. */}
+        {slug === "ca" ? (
+          <>
+            <h3 className="mt-16">2. Kaun sa mahina</h3>
+            <div className="sp-selects">
+              <label className="sp-sel">
+                <span>Mahina</span>
+                <select value={book} onChange={(e) => setBook(e.target.value)}>
+                  <option value="">— Saare mahine + mere import kiye —</option>
+                  {caMonths.map((m) => (
+                    <option key={m.period} value={m.period}>{m.label || m.period} ({m.count})</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+          </>
+        ) : null}
+
         {slug === "vocab" ? (
           <>
             <h3 className="mt-16">2. Kis tarah ke word</h3>
