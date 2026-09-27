@@ -26,15 +26,6 @@
 .hE-sec__bar em { position: absolute; top: -4px; width: 3px; height: 16px; background: var(--tb-green); border-radius: 2px; }
 .hE-sec__n { font-size: 0.72rem; color: var(--tb-dim); }
 .hE-sec__n b { color: var(--tb-ink); }
-.hE-fix { padding: 14px 16px; border-radius: 16px; background: var(--tb-page); border: 1px solid var(--tb-line); }
-.hE-fix h3 { margin: 0 0 8px; font-size: 0.95rem; }
-.hE-row { display: grid; grid-template-columns: 56px minmax(0, 1fr) 90px 26px; gap: 10px; align-items: center; padding: 8px 6px; border-top: 1px solid var(--tb-line-soft); border-left: 3px solid var(--sc); }
-.hE-row__t { font-family: ui-monospace, Consolas, monospace; font-size: 0.82rem; color: var(--tb-dim); }
-.hE-row__n { font-weight: 600; font-size: 0.9rem; }
-.hE-row__s { font-size: 0.66rem; font-weight: 900; letter-spacing: 0.1em; color: var(--tb-dim); text-align: right; }
-.hE-row.is-now { background: color-mix(in srgb, var(--sc) 14%, transparent); }
-.hE-row.is-now .hE-row__s { color: #e5484d; }
-.hE-row.is-ok .hE-row__s { color: var(--tb-green); }
 .hE-go { text-align: center; }
 @media (max-width: 800px) {
   .hE-board { grid-template-columns: 1fr 1fr; }
