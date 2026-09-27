@@ -33,7 +33,12 @@ import {
   getSets, saveSet, removeSet, newSetId, byHashes, doneBySlug, pickDone,
 } from "@/lib/sprint";
 
-const SECS = 30;      // ek question par itne second
+const SECS = 30;      // ek question par itne second — default; owner chun sakta hai
+// ⏱️ Har question ka waqt — chunne ke options. Pasand is device par yaad
+// rehti hai (cgl.sprint.secs), sync nahi — ghadi device ki aadat hai.
+const SEC_OPTS = [10, 20, 30, 45, 60];
+const SECS_KEY = "cgl.sprint.secs";
+const clock = (n) => `${Math.floor(n / 60)}:${String(n % 60).padStart(2, "0")}`;
 const WARM = 10;      // itne jawab banne ke baad daud shuru
 const COUNTS = [50, 100, 120];
 
@@ -130,6 +135,11 @@ export default function SprintPage() {
   const [errs, setErrs] = useState({});   // hash -> gadbad ka message
   const [busy, setBusy] = useState("");   // abhi kis hash par kaam ho raha
   const [pos, setPos] = useState(0);
+  const [secs, setSecsState] = useState(SECS);
+  useEffect(() => {
+    try { const v = Number(localStorage.getItem(SECS_KEY)); if (SEC_OPTS.includes(v)) setSecsState(v); } catch { /* ignore */ }
+  }, []);
+  const setSecs = (v) => { setSecsState(v); try { localStorage.setItem(SECS_KEY, String(v)); } catch { /* ignore */ } };
   const [left, setLeft] = useState(SECS);
   const [paused, setPaused] = useState(false);
   const [picked, setPicked] = useState(null);
@@ -408,11 +418,12 @@ export default function SprintPage() {
   // question "ho gaya" wali list mein.
   useEffect(() => {
     if (phase !== "run" || !cur) return;
-    setLeft(SECS);
+    setLeft(secs);
     setPicked(null);
     setMarked(false);
     seen.current.push(cur);
     if (seen.current.length >= 10) flush();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pos, phase, cur, flush]);
 
   // pos list se EK aage ja sakta hai — wahi "khatam" ka ishaara hai. Aise
@@ -499,8 +510,8 @@ export default function SprintPage() {
       <div className="sp-wrap">
         <div className="sp-top">
           <span className="sp-top__n">{test ? "📝" : "⚡"} {pos + 1}/{batch.length}</span>
-          <span className={`sp-clock${paused ? " is-pause" : left <= 10 ? " is-warn" : ""}`}>
-            {paused ? "⏸ ruka hua" : `0:${String(left).padStart(2, "0")}`}
+          <span className={`sp-clock${paused ? " is-pause" : left <= Math.min(10, Math.ceil(secs / 3)) ? " is-warn" : ""}`}>
+            {paused ? "⏸ ruka hua" : clock(left)}
           </span>
           <span className="sp-top__dim">
             ✓ {tally.right} · ✗ {tally.wrong}
@@ -598,7 +609,7 @@ export default function SprintPage() {
           100 question, <span className="grad">ek ghanta</span>
         </h1>
         <p className="hero__sub">
-          Har question par <b>30 second</b>, phir apne aap agla. Dayein taraf DeepSeek ka chhota jawab
+          Har question par <b>{secs} second</b> (neeche badal sakte ho), phir apne aap agla. Dayein taraf DeepSeek ka chhota jawab
           pehle se bana hua milega — book ka apna solution 📖 Asli tab mein. Jo question aa gaya wo
           agli baar nahi aayega.
         </p>
@@ -719,7 +730,21 @@ export default function SprintPage() {
           </>
         ) : null}
 
-        <h3 className="mt-16">{slug === "mix" ? "2" : "3"}. Kitne question</h3>
+        <h3 className="mt-16">{slug === "mix" ? "2" : "3"}. Har question ka waqt</h3>
+        <div className="sp-picks">
+          {SEC_OPTS.map((v) => (
+            <button
+              key={v}
+              type="button"
+              className={`sp-pick${secs === v ? " is-on" : ""}`}
+              onClick={() => setSecs(v)}
+            >
+              ⏱️ {v} sec
+            </button>
+          ))}
+        </div>
+
+        <h3 className="mt-16">{slug === "mix" ? "3" : "4"}. Kitne question</h3>
         <div className="sp-picks">
           {COUNTS.map((c) => (
             <button
@@ -728,7 +753,7 @@ export default function SprintPage() {
               className={`sp-pick${count === c ? " is-on" : ""}`}
               onClick={() => setCount(c)}
             >
-              {c} <span className="sp-pick__sub">· {Math.round((c * SECS) / 60)} min</span>
+              {c} <span className="sp-pick__sub">· {Math.round((c * secs) / 60)} min</span>
             </button>
           ))}
         </div>
