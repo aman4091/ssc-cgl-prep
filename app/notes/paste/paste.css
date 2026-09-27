@@ -80,11 +80,10 @@
   line-height: 1.6;
 }
 
-/* Menu se seedha is note par aaye — do pal ke liye kinare par nishaan, taaki
-   lambi list mein pata chale kaunsa note khula hai. */
-.pn-note.is-focus {
-  border-left: 3px solid var(--accent);
-  padding-left: 12px;
-  background: color-mix(in srgb, var(--accent) 7%, transparent);
-  border-radius: 0 10px 10px 0;
+/* Menu se ek hi page khola ho to sirf wahi dikhta hai — ye daba poori book
+   par wapas le jata hai. */
+.pn-b--back {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
 }

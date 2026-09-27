@@ -130,7 +130,7 @@ export default function Navbar() {
           name: `${label} (${g.items.length})`,
           icon: bookIcon(g),
           links: [
-            { href: `/notes/paste?${q}`, label: `📚 Poora ${label}` },
+            { href: `/notes/paste?${q}`, label: `📚 Poora ${label}`, off: ["n"] },
             ...g.items.map((n) => ({
               href: `/notes/paste?${q}&n=${encodeURIComponent(n.k)}`,
               label: `p.${n.page} · ${n.topic || "—"}`,
@@ -225,9 +225,13 @@ export default function Navbar() {
   // its page opens on.
   // `exact` rows (like /mission, whose sub-pages are their own rows) light up
   // only on their own path, not on every page beneath it.
-  const isActive = ({ href, isDefault, exact }) => {
+  // `off` un query-naamon ki list hai jo MAUJOOD nahi hone chahiye: "📚 Poora
+  // Polity" tabhi jagta hai jab koi ek page (?n=) chuna hua na ho, warna wo
+  // aur us page ki line, dono ek saath jagti thi.
+  const isActive = ({ href, isDefault, exact, off }) => {
     const [p, q] = String(href).split("?");
     if (exact ? pathname !== p : !(pathname === p || pathname.startsWith(p + "/"))) return false;
+    for (const k of off || []) if (params.get(k)) return false;
     if (!q) return true;
     for (const [k, v] of new URLSearchParams(q)) {
       const cur = params.get(k);
