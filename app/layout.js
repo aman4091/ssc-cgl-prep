@@ -7,6 +7,7 @@ import "./looks/looks.css";
 import "./looks/timeline.css";
 // Menu ka roop — timeline.css ke BAAD, warna uske apne menu-rule jeet jate.
 import "./looks/tilenav.css";
+import "./looks/menus.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
@@ -74,6 +75,9 @@ export default function RootLayout({ children }) {
             __html:
               "try{var d=document.documentElement,t=localStorage.getItem('cgl.theme');" +
               "if(t==='dark')d.setAttribute('data-theme','dark');" +
+              // 🎨 Menu ka chuna hua roop (components/Navbar) — pehle paint se
+              // pehle, taaki page purane sidebar ki jagah chhod kar na uchhle.
+              "var mn=localStorage.getItem('cgl.menulayout');if(mn&&mn!=='0')d.setAttribute('data-menu',mn);" +
               // Roop ab ek hi hai (Timeline) aur wo <html data-look=\"10\"> par
               // seedha likha hai — script ko use lagane ki zaroorat nahi.
               // Address bar ka rang: bina-media wala meta sabse aage, taaki wo

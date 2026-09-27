@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { NAV_GROUPS, NAV_DIRECT, trailForPath, nodeAt } from "@/lib/nav";
 import { getNewWordEntries, newWordDayKey, newWordDayLabel } from "@/lib/vocab";
 import { getUserTopics } from "@/lib/userpyq";
@@ -10,6 +10,16 @@ import { notesByBook, bookIcon, bookLabel } from "@/lib/pastednotes";
 import ThemeToggle from "./ThemeToggle";
 import FocusLock from "./FocusLock";
 import TopbarInfo from "./TopbarInfo";
+import MenuVariants, { MENU_LAYOUTS } from "./MenuVariants";
+
+// 🎨 Menu ka roop — owner 15 mein se ek chunega (upar patti ka dropdown).
+// "0" = purana tile wala sidebar. Chunaav is device par `cgl.menulayout`
+// mein; <html data-menu="N"> par lagta hai taaki CSS (app/looks/menus.css)
+// page ki jagah (sidebar / neeche ki patti) usi hisaab se chhod de.
+const MENU_KEY = "cgl.menulayout";
+const readMenu = () => {
+  try { const v = localStorage.getItem(MENU_KEY); return v && MENU_LAYOUTS.some((l) => l.id === v) ? v : "0"; } catch { return "0"; }
+};
 
 // Nav group key -> user "shelf book" id (Settings → PYQ Manager): jab bank ka
 // menu khule to user ke apne topics bhi uske chapters ke saath dikhein.
@@ -59,6 +69,14 @@ export default function Navbar() {
   const [bankLinks, setBankLinks] = useState({});
   // Phones only: the rail is off-canvas until the hamburger asks for it.
   const [open, setOpen] = useState(false);
+  // StoreGate ke andar mount hota hai (hydrate ke baad), isliye localStorage
+  // seedha padh sakte hain.
+  const [menuLay, setMenuLay] = useState(readMenu);
+  useEffect(() => {
+    const d = document.documentElement;
+    if (menuLay === "0") d.removeAttribute("data-menu"); else d.setAttribute("data-menu", menuLay);
+  }, [menuLay]);
+  const pickMenu = (v) => { setMenuLay(v); setOpen(false); try { localStorage.setItem(MENU_KEY, v); } catch { /* private */ } };
 
   useEffect(() => { setTrail(seedTrail(pathname)); }, [pathname]);
   // Page badla to menu apne aap band — parda page ke upar hai, khula chhodne
@@ -154,14 +172,18 @@ export default function Navbar() {
   // A group can describe a BANK instead of listing links: which index to read,
   // which array in it holds the chapters, and what those rows link to. Fetched
   // the first time the group is opened, then kept.
-  useEffect(() => {
-    const g = nodeAt(trail);
-    if (!g?.bank || bankLinks[g.key]) return;
-    let alive = true;
+  // Ek bank ka chapter-list laao (pehli baar), phir yaad. Naye roop kai
+  // khaane ek saath dikhate hain (mega menu, columns), isliye ye sirf chalu
+  // trail tak simit nahi — `need(trail)` se koi bhi khaana maang sakta hai.
+  const loading = useRef(new Set());
+  const loadBank = useCallback((g) => {
+    if (!g?.bank || bankLinks[g.key] || loading.current.has(g.key)) return;
+    loading.current.add(g.key);
     fetch(g.bank.url)
       .then((r) => (r.ok ? r.json() : null))
       .then((idx) => {
-        if (!alive || !idx) return;
+        loading.current.delete(g.key);
+        if (!idx) return;
         // `list` may be a dotted path: a notes book keeps its chapters at
         // meta.topics, not at the top level.
         let rows =
@@ -196,9 +218,9 @@ export default function Navbar() {
         }
         setBankLinks((prev) => ({ ...prev, [g.key]: links }));
       })
-      .catch(() => {});
-    return () => { alive = false; };
-  }, [trail, bankLinks]);
+      .catch(() => { loading.current.delete(g.key); });
+  }, [bankLinks]);
+  useEffect(() => { loadBank(nodeAt(trail)); }, [trail, loadBank]);
   // Navigating means you are done with the menu — and on a phone it sits over
   // the page you just opened.
   // params bhi: /new-words par word chunne se sirf query badalti hai. Lekin
@@ -251,6 +273,47 @@ export default function Navbar() {
     : NAV_GROUPS;
   const rows = rowsAll;
 
+  // ── Naye roop ke liye saajha model ──
+  // Har khaana ek hi shakl mein: { id, icon, label, href } (seedha link) ya
+  // { id, icon, label, trail } (andar ek aur level). `level(trail)` kisi bhi
+  // khaane ke andar ki list deta hai; `need(trail)` bank ho to use mangwa
+  // leta hai. /new-words par upar ka level us page ki dates/words hain.
+  const nodeFor = (t) => (t[0] === OL_KEY ? olAt(t) : nodeAt(t));
+  // "⚡ Shuru karo" jaisi line ka emoji naam se alag, icon ki jagah.
+  const splitIcon = (label) => {
+    const m = /^([^\p{L}\p{N}\s]+)\s+(.+)$/u.exec(String(label));
+    return m ? [m[1], m[2]] : ["", label];
+  };
+  const toItem = (l, t) => (l.href
+    ? (() => { const [ic, lb] = l.icon ? [l.icon, l.label] : splitIcon(l.label); return { id: l.href, icon: ic, label: lb, href: l.href, active: isActive(l) }; })()
+    : { id: l.key, icon: l.icon || "", label: l.name, trail: [...t, l.key] });
+  const pathTrail = seedTrail(pathname);
+  const direct = (d) => (d.oneliner && olNode
+    ? { id: d.href, icon: d.icon, label: d.label, trail: [OL_KEY], active: pathTrail[0] === OL_KEY }
+    : { id: d.href, icon: d.icon, label: d.label, href: d.href, active: isActive(d) });
+  const topItems = onNewWords
+    ? (nwDay
+      ? [{ id: "nw-back", icon: "←", label: "Saari dates", href: "/new-words" },
+        ...nwDayWords.map((w, i) => ({ id: w, icon: `${i + 1}.`, label: w, href: `/new-words?day=${encodeURIComponent(nwDay)}&w=${encodeURIComponent(w)}`, active: (params.get("w") || nwDayWords[0]) === w }))]
+      : nwGroups.map((g) => ({ id: g.key, icon: "📅", label: `${g.label} (${g.words.length})`, href: `/new-words?day=${encodeURIComponent(g.key)}` })))
+    : [
+      ...NAV_DIRECT.filter((d) => d.pin).map(direct),
+      ...NAV_GROUPS.map((g) => ({ id: g.key, icon: g.icon, label: g.name, trail: [g.key], active: pathTrail[0] === g.key })),
+      ...NAV_DIRECT.filter((d) => !d.pin).map(direct),
+    ];
+  const menu = {
+    top: topItems,
+    pathTrail,
+    level: (t) => {
+      if (!t || !t.length) return { title: "Menu", icon: "☰", items: topItems };
+      const node = nodeFor(t);
+      if (!node) return null;
+      const raw = node.bank ? bankLinks[node.key] || [] : [...(node.children || []), ...(node.links || [])];
+      return { title: node.name, icon: node.icon, items: raw.map((l) => toItem(l, t)), loading: !!node.bank && !bankLinks[node.key] };
+    },
+    need: (t) => { if (t && t.length && t[0] !== OL_KEY) loadBank(nodeAt(t)); },
+  };
+
   // Asli logo (public/logo.png). Pehle yahan ek inline SVG mark tha jo theme ke
   // rang le leta tha; ab site ka apna logo hai.
   const mark = <img className="brand__mark" src="/logo.png" alt="" />;
@@ -280,10 +343,20 @@ export default function Navbar() {
         {/* 🔒 PC lock — patti ke dayein, din/raat ke bagal. Yahi ek jagah
             hai jo har page par rehti hai. */}
         {/* 🎨 Purana / 1 / 2 — options compare karne ke liye. */}
+        <label className="mnu-pick" title="Menu ka roop">
+          <select value={menuLay} onChange={(e) => pickMenu(e.target.value)} aria-label="Menu ka roop">
+            <option value="0">🎨 0 · Purana (tiles)</option>
+            {MENU_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id} · {l.name}</option>)}
+          </select>
+        </label>
         <FocusLock />
         <ThemeToggle />
       </header>
 
+      {menuLay !== "0" ? (
+        <MenuVariants lay={menuLay} menu={menu} trail={trail} setTrail={setTrail} open={open} setOpen={setOpen} mark={mark} />
+      ) : (
+      <>
       {open && <div className="drawer__backdrop" onClick={() => setOpen(false)} />}
     <aside className={`drawer ${open ? "is-open" : ""}`}>
       <div className="drawer__head">
@@ -413,6 +486,8 @@ export default function Navbar() {
         )}
       </nav>
     </aside>
+      </>
+      )}
     </>
   );
 }
