@@ -6,13 +6,23 @@ import { useEffect, useMemo, useState } from "react";
 import { NAV_GROUPS, NAV_DIRECT, trailForPath, nodeAt } from "@/lib/nav";
 import { getNewWordEntries, newWordDayKey, newWordDayLabel } from "@/lib/vocab";
 import { getUserTopics } from "@/lib/userpyq";
-import { notesByBook, bookIcon, bookLabel } from "@/lib/pastednotes";
+import { notesByBook, bookIcon, bookLabel, isSelNote } from "@/lib/pastednotes";
 import ThemeToggle from "./ThemeToggle";
 import FocusLock from "./FocusLock";
 import TopbarInfo from "./TopbarInfo";
 
 // Nav group key -> user "shelf book" id (Settings → PYQ Manager): jab bank ka
 // menu khule to user ke apne topics bhi uske chapters ke saath dikhein.
+const SHELF_BY_NAVKEY = {
+  warbank: "shelf_war",
+  pinnacle: "shelf_pinnacle",
+  errorpro: "shelf_errorpro",
+  pinmaths: "shelf_mathbank",
+  pinreason: "shelf_reasonbank",
+  gktricks: "shelf_gktricks",
+  mirror: "shelf_mirror",
+};
+
 // 📝 "Mere one-liner" ka khaana (NAV_DIRECT mein `oneliner: true` wali line).
 // Iske andar ki list likhi hui nahi hai — jis book se notes paste hue hain
 // wahi naam aate hain (Parmar Polity se banaye to "Polity"), aur us naam ke
@@ -24,16 +34,6 @@ const OL_KEY = "oneliner";
 // (Query badalne par ye nahi chalta, sirf path badalne par — isliye book ke
 // andar ka level khula rehta hai.)
 const seedTrail = (p) => (p && p.startsWith("/notes/paste") ? [OL_KEY] : trailForPath(p));
-
-const SHELF_BY_NAVKEY = {
-  warbank: "shelf_war",
-  pinnacle: "shelf_pinnacle",
-  errorpro: "shelf_errorpro",
-  pinmaths: "shelf_mathbank",
-  pinreason: "shelf_reasonbank",
-  gktricks: "shelf_gktricks",
-  mirror: "shelf_mirror",
-};
 
 // The menu, and only the menu.
 //
@@ -133,7 +133,7 @@ export default function Navbar() {
             { href: `/notes/paste?${q}`, label: `📚 Poora ${label}`, off: ["n"] },
             ...g.items.map((n) => ({
               href: `/notes/paste?${q}&n=${encodeURIComponent(n.k)}`,
-              label: `p.${n.page} · ${n.topic || "—"}`,
+              label: isSelNote(n) ? `✂️ ${n.topic || "chuna hua"}` : `p.${n.page} · ${n.topic || "—"}`,
             })),
           ],
         };

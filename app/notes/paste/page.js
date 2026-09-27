@@ -29,7 +29,7 @@ import "./paste.css";
 import OneLinerNotes from "@/components/OneLinerNotes";
 import { countOneLiner } from "@/lib/onelinerfmt";
 import { formatOneLiner } from "@/lib/client-ai";
-import { saveNote, removeNote, notesByBook, bookLabel } from "@/lib/pastednotes";
+import { saveNote, removeNote, notesByBook, bookLabel, pageLabel } from "@/lib/pastednotes";
 
 function Note({ n, onGone }) {
   const [edit, setEdit] = useState(false);
@@ -56,7 +56,7 @@ function Note({ n, onGone }) {
       <div className="pn-note__hd">
         <h3 className="pn-note__t">
           {n.topic || "—"}
-          <span className="pn-dim"> · page {n.page} · {c.n} point{c.star ? ` · ⭐ ${c.star}` : ""}</span>
+          <span className="pn-dim"> · {pageLabel(n)} · {c.n} point{c.star ? ` · ⭐ ${c.star}` : ""}</span>
         </h3>
         <button type="button" className="pn-x" onClick={bold} disabled={busy} title="Zaroori shabd bold karwao (DeepSeek)">
           {busy ? "…" : "🐋 Bold"}

@@ -282,3 +282,72 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
   cursor: pointer;
 }
 .sa-setdef:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── 📝 "Kis subject ka one-liner?" ────────────────────────────────────── */
+/* Select karke 📝 dabao to yahi saamne aata hai — ek sawaal, ek click. */
+.sa-olm {
+  position: fixed;
+  inset: 0;
+  z-index: 460;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.45);
+}
+.sa-olm__box {
+  width: min(460px, 100%);
+  max-height: 80vh;
+  overflow: auto;
+  padding: 16px 18px 18px;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border-strong);
+  background: var(--bg-1);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4);
+}
+.sa-olm__hd { display: flex; align-items: center; gap: 10px; font-size: 1rem; }
+.sa-olm__hd button {
+  margin-left: auto;
+  border: 0;
+  background: transparent;
+  color: var(--text-3);
+  font-size: 1rem;
+  cursor: pointer;
+}
+/* Jo tukda chuna hai — do line ki jhalak, taaki pata rahe kya ja raha hai. */
+.sa-olm__q {
+  margin: 8px 0 12px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  background: var(--accent-wash);
+  color: var(--text-2);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  max-height: 4.6em;
+  overflow: hidden;
+}
+.sa-olm__books { display: flex; flex-wrap: wrap; gap: 6px; }
+.sa-olm__books button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border-strong);
+  background: transparent;
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.sa-olm__books button:hover { border-color: var(--accent); background: var(--accent-wash); color: var(--accent); }
+/* Jitne one-liner us subject mein pehle se hain. */
+.sa-olm__books em {
+  font-style: normal;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-3);
+}
+.sa-olm__ok { margin: 0; font-size: 0.95rem; line-height: 1.6; }
+.sa-olm__ok a { color: var(--accent); font-weight: 700; }
