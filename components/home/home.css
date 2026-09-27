@@ -1,9 +1,9 @@
-/* 🏠 Homepage ke roopon ke SAAJHE tukde — tick ka dabba, block ka naam,
-   aur upar wali "🏠 Home roop" chunne ki patti. Rang site ke tokens se.
+/* 🏠 Homepage ke chhote saajhe tukde — tick ka dabba aur block ka naam.
+   Rang site ke tokens se.
 
-   Pehle yahan roop A–D ki poori CSS bhi thi; owner ne wo chaaron hata diye
-   (sirf E, I, L bache), isliye wo hissa bhi gaya — 200+ line jo kisi component
-   ki thi hi nahi. */
+   Yahan kabhi chaudah roop (A–N) ki CSS thi aur "🏠 Home roop" chunne wali
+   patti bhi. Owner ne Scoreboard final kar diya, isliye baaki sab hata diya
+   gaya — lagbhag 280 line jo ab kisi ki nahi thi. */
 
 .hx-tick {
   flex: none; width: 24px; height: 24px; border-radius: 7px; cursor: pointer;
@@ -13,16 +13,3 @@
 .hx-tick.is-on { background: var(--tb-green); border-color: var(--tb-green); }
 .hx-bname { font-weight: 800; }
 .hx-btopic { display: block; font-weight: 500; font-size: 0.86em; color: var(--tb-dim); margin-top: 2px; }
-
-/* ---- Home roop chunne ki patti ---- */
-.hx-pick {
-  display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin: 4px 0 14px;
-  padding: 5px 8px; border-radius: 12px; border: 1px dashed var(--tb-line-hard); font-size: 0.78rem;
-}
-.hx-pick__l { font-weight: 800; color: var(--tb-dim); margin-right: 6px; }
-.hx-pick button {
-  min-width: 30px; height: 26px; padding: 0 8px; border-radius: 8px; cursor: pointer; font: inherit; font-weight: 700;
-  border: 1px solid var(--tb-line); background: var(--tb-page); color: var(--tb-ink-2);
-}
-.hx-pick button.is-on { background: var(--tb-blue); border-color: var(--tb-blue); color: #fff; }
-.hx-pick__n { margin-left: 6px; color: var(--tb-dim); font-weight: 600; }
