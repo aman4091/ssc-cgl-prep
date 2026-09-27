@@ -896,12 +896,10 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           </button>
           <span className="al-pick">
             <span className="al-pick__l">📅 Layout</span>
-            <button type="button" className={lay === "0" ? "is-on" : ""} onClick={() => pickLay("0")}>Purana</button>
-            {ANS_LAYOUTS.map((l) => (
-              <button key={l.id} type="button" className={lay === l.id ? "is-on" : ""} onClick={() => pickLay(l.id)} title={l.name}>
-                {l.id} · {l.name}
-              </button>
-            ))}
+            <select className="al-pick__sel" value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Layout">
+              <option value="0">Purana (list)</option>
+              {ANS_LAYOUTS.map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
+            </select>
           </span>
         </div>
 
