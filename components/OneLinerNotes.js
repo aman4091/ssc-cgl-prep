@@ -15,9 +15,11 @@ export default function OneLinerNotes({ text }) {
   return (
     <div className="ol">
       {secs.map((s, i) => (
-        <section key={i} className={`ol-sec${s.kind === "warn" ? " ol-sec--warn" : ""}`}>
+        <section key={i} className={`ol-sec${s.kind === "warn" ? " ol-sec--warn" : s.kind === "tip" ? " ol-sec--tip" : ""}`}>
           {s.title ? (
-            <h4 className="ol-t">{s.kind === "warn" ? "⚠️ " : ""}{s.title}</h4>
+            <h4 className="ol-t">
+              {s.kind === "warn" ? "⚠️ " : s.kind === "tip" ? "🧠 " : ""}{s.title}
+            </h4>
           ) : null}
           <ol className="ol-list">
             {s.points.map((p, j) => (

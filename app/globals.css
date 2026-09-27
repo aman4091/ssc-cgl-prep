@@ -4168,3 +4168,12 @@ body.exam-on .hresume { display: none; }
   padding-top: 10px;
   border-top: 1px dashed var(--line);
 }
+
+/* 🧠 "Yaad rakhne ki trick" ka khaana — ⚠️ Confusion jaisa, par hara. */
+.ol-sec--tip {
+  border: 1px solid var(--success);
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.ol-sec--tip .ol-t { color: var(--success); border-bottom: 0; }

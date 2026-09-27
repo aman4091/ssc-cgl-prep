@@ -1,0 +1,148 @@
+/* ===================================================================
+   🧩 TILE NAV — menu ka roop: baayen 2-column ki rangeen tiles.
+   ===================================================================
+   Ye menu pehle "Candy" naam ke ek light option mein tha. Owner ko uska
+   MENU jacha par rang nahi, isliye menu yahan alag file mein nikaal kar
+   Timeline ke rangon ke saath laga diya gaya.
+
+   Timeline ka apna menu baayen beech mein ek tairti GOLI thi (sirf
+   icons, mouse le jao to khulti). Uske rule ".drawer:has(…):not(:hover)"
+   wale hain — un se bhaari koi aam selector nahi hota, isliye yahan wahi
+   shakl dohrani padi hai. Ye file layout.js mein timeline.css ke BAAD
+   aati hai, to barabar bhaari-pan par ye jeet jaati hai.
+
+   Neeche teesra hissa upar ki PATTI ka hai — wo shakl option 18 "Orbit"
+   se li gayi hai (goli jaisi patti, aage ek gol rangeen button), par
+   rang Timeline ke apne.
+   ================================================================= */
+
+/* ── 1. goli wala menu hata kar seedhi sidebar ───────────────────── */
+@media (min-width: 1024px) {
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer {
+    position: fixed;
+    top: 0; bottom: auto; left: 0; right: auto;
+    width: 280px; max-width: none; max-height: none; height: 100dvh;
+    transform: none !important;
+    flex-direction: column; align-items: stretch;
+    overflow: auto; overflow-x: visible;
+    border: 0; border-right: 1px solid var(--tb-line); border-radius: 0;
+    background: var(--panel);
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    box-shadow: none;
+  }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .shell {
+    padding-left: 280px; padding-right: 0; padding-bottom: 0;
+  }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .footer {
+    margin-left: 280px; padding-bottom: 0;
+  }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__head { display: flex; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__nav {
+    flex-direction: column; align-items: stretch; overflow: visible;
+  }
+  /* Goli wali haalat naam ko font-size:0 se gaayab kar deti thi. */
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):not(:hover):not(:focus-within) :is(.drawer__groupname, .drawer__grouphd .drawer__chev) {
+    display: revert;
+  }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):not(:hover):not(:focus-within) .drawer__grouphd .drawer__chev { display: none; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):not(:hover):not(:focus-within) :is(.drawer__link--top, .drawer__grouphd) {
+    font-size: 0.74rem; justify-content: center; padding: 10px 6px;
+    height: auto; min-height: 74px; border-radius: 18px;
+  }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top) .drawer__ico { font-size: 1.25rem; width: 36px; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer:has(.drawer__link--top):is(:hover, :focus-within) { width: 280px; border-radius: 0; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .drawer:has(.drawer__nav > :not(.drawer__link--top, .drawer__grouphd)) { width: 280px; border-radius: 0; }
+  :where(html[data-look="10"]) body.examskin:not(.gemskin):has(.drawer__nav > :not(.drawer__link--top, .drawer__grouphd)) .shell { padding-left: 280px; }
+  :where(html[data-look="10"]) body.examskin:not(.gemskin):has(.drawer__nav > :not(.drawer__link--top, .drawer__grouphd)) .footer { margin-left: 280px; }
+}
+
+/* ── 2. tile-grid ────────────────────────────────────────────────── */
+/* Level 1 (top ke naam aur group) — do column ki tiles. */
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__nav:has(> .drawer__link--top) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 10px 14px 16px;
+  overflow: visible;
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.drawer__link--top, .drawer__grouphd) {
+  /* --t = tile ka parda, --ti = uspar ki likhaai, --tline = kinara. */
+  --t: color-mix(in srgb, var(--A) 12%, transparent);
+  --ti: var(--A2);
+  --tline: color-mix(in srgb, var(--A) 26%, transparent);
+  flex: none;
+  box-sizing: border-box;
+  width: auto; height: auto; min-width: 0;
+  flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  gap: 5px; min-height: 74px; padding: 10px 6px; margin: 0;
+  background: var(--t); color: var(--ti);
+  border: 1px solid var(--tline);
+  border-radius: 18px;
+  font-size: 0.74rem; font-weight: 700; line-height: 1.2;
+  letter-spacing: 0; text-transform: none;
+  box-shadow: none;
+  transition: transform 0.16s cubic-bezier(.3, 1.5, .5, 1), background 0.15s ease;
+}
+/* Teen rangon ka chakkar — sona, safed, neela. */
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__nav > :nth-child(3n+2):is(.drawer__link--top, .drawer__grouphd) { --t: rgba(255, 255, 255, 0.05); --ti: #dfe5f5; --tline: rgba(255, 255, 255, 0.14); }
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__nav > :nth-child(3n):is(.drawer__link--top, .drawer__grouphd) { --t: rgba(96, 130, 255, 0.10); --ti: #aebdf5; --tline: rgba(96, 130, 255, 0.24); }
+
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.drawer__link--top, .drawer__grouphd) .drawer__ico {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  font-size: 1.25rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 13px;
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__grouphd .drawer__groupname {
+  display: block; flex: none;
+  font-size: 0.74rem; letter-spacing: 0; text-transform: none;
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__grouphd .drawer__chev { display: none; }
+:where(html[data-look="10"]) .examskin:not(.gemskin) :is(.drawer__link--top, .drawer__grouphd):hover {
+  transform: translateY(-3px) scale(1.03);
+  background: var(--t); color: var(--ti);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--A) 40%, transparent);
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__link--top.is-active {
+  --t: var(--A); --ti: var(--on-A); --tline: var(--A);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--A) 60%, transparent);
+}
+
+/* Level 2 (kisi group ke andar) — saadi list, tiles nahi. */
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__nav:not(:has(> .drawer__link--top)) {
+  display: flex; flex-direction: column; gap: 4px; padding: 10px 12px 16px;
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .drawer__back {
+  border-radius: 12px; font-size: 0.85rem;
+}
+
+/* ── 3. upar ki patti — Orbit wali shakl ─────────────────────────── */
+/* Owner ko option 18 "Orbit" ki patti jachi: ek GOLI (pill) jisme aage ek
+   gol rangeen button, uske baad naam aur countdown, kone mein taala.
+   Yahan sirf SHAKL li gayi hai — rang Timeline ke apne (sona). */
+:where(html[data-look="10"]) .examskin:not(.gemskin) .topbar {
+  background: var(--panel);
+  border: 1px solid var(--tb-line);
+  border-radius: 999px;
+  margin: 12px;
+  padding: 8px 14px;
+}
+:where(html[data-look="10"]) .examskin:not(.gemskin) .topbar__burger {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: conic-gradient(from 0deg, var(--A), #fcd97a, #f5a623, var(--A));
+  color: var(--on-A); font-weight: 900;
+  box-shadow: 0 0 20px color-mix(in srgb, var(--A) 55%, transparent);
+}
+@media (min-width: 1024px) {
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .topbar {
+    margin: 14px 24px 26px;
+    justify-content: flex-start;
+  }
+  /* Sidebar hamesha saamne hai, isliye desktop par ☰ ka koi kaam nahi —
+     gol button sirf phone par, jahan wo sach mein menu kholta hai. */
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .topbar__burger { display: none; }
+  :where(html[data-look="10"]) .examskin:not(.gemskin) .topbar__brand { display: flex; margin: 0 16px 0 4px; }
+}
