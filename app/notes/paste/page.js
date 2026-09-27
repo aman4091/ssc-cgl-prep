@@ -1,6 +1,6 @@
 "use client";
 
-// 📝 Mere one-liner — sirf PADHNE ki jagah.
+// 📝 Notesliner — sirf PADHNE ki jagah.
 //
 // Paste karna notes ke page par hi hota hai (wahan ✨ / 📥 dabane par box
 // khulta hai), isliye yahan koi paste-box nahi. Yahan wo notes hain, khule

@@ -23,7 +23,7 @@ const SHELF_BY_NAVKEY = {
   mirror: "shelf_mirror",
 };
 
-// 📝 "Mere one-liner" ka khaana (NAV_DIRECT mein `oneliner: true` wali line).
+// 📝 "Notesliner" ka khaana (NAV_DIRECT mein `oneliner: true` wali line).
 // Iske andar ki list likhi hui nahi hai — jis book se notes paste hue hain
 // wahi naam aate hain (Parmar Polity se banaye to "Polity"), aur us naam ke
 // andar us book ke page. Isliye ye NAV_GROUPS ka hissa nahi ban sakta; yahan
@@ -102,7 +102,7 @@ export default function Navbar() {
     ? (nwGroups.find((g) => g.key === nwDay) || {}).words || []
     : [];
 
-  // 📝 Mere one-liner — paste kiye hue notes, book ke hisaab se. Ye store
+  // 📝 Notesliner — paste kiye hue notes, book ke hisaab se. Ye store
   // (IndexedDB) se aata hai, isliye render ke waqt nahi, effect mein padha
   // jata hai — aur naya note paste hote hi menu apne aap badal jaye.
   const [olBooks, setOlBooks] = useState([]);
@@ -120,7 +120,7 @@ export default function Navbar() {
     if (!olBooks.length) return null;
     return {
       key: OL_KEY,
-      name: "📝 Mere one-liner",
+      name: "📝 Notesliner",
       icon: "📝",
       children: olBooks.map((g) => {
         const label = bookLabel(g);
@@ -371,7 +371,7 @@ export default function Navbar() {
           /* ---- level 1: names only ---- */
           <>
             {NAV_DIRECT.filter((d) => d.pin).map((d) =>
-              /* 📝 Mere one-liner: notes paste ho chuke hain to ye seedha link
+              /* 📝 Notesliner: notes paste ho chuke hain to ye seedha link
                  nahi, ek khulne wala khaana hai — andar book ke naam. */
               d.oneliner && olNode ? (
                 <button key={d.href} className="drawer__grouphd" onClick={() => setTrail([OL_KEY])}>

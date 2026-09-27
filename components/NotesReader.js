@@ -128,7 +128,7 @@ function GeminiBtn({ text, subject, src, onAfter }) {
 }
 
 // 📝 Is page ka paste-box — wahin, page ke neeche. Jo yahan sambhalta hai
-// wo "📝 Mere one-liner" (/notes/paste) par book · chapter · page ke naam
+// wo "📝 Notesliner" (/notes/paste) par book · chapter · page ke naam
 // se ek jagah jama hota rehta hai.
 function PasteBox({ src, onClose }) {
   const [text, setText] = useState(() => (getNote(src)?.text || ""));
@@ -155,7 +155,7 @@ function PasteBox({ src, onClose }) {
         >💾 Sambhalo</button>
         {saved && <span className="nt-meta" style={{ color: "var(--success)" }}>✓ sambhal liya</span>}
         <a href="/notes/paste" className="btn btn--ghost btn--sm" style={{ marginLeft: "auto" }}>
-          📝 Saare one-liner
+          📝 Notesliner
         </a>
       </div>
       {/* Paste karte hi dikh jaye ki kaisa lagega — topic, numbered point,

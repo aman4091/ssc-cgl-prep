@@ -5,7 +5,7 @@
 //   💬 Poochho   — dayein taraf panel khulta hai, usi text par baatcheet
 //   🖼 Tasveer   — Wikipedia/Commons se photo, usi panel mein (muft, bina key)
 //   🔍 Google    — nayi tab mein google.com par wahi text
-//   📝 One-liner — chuna hua text seedha "Mere one-liner" mein (kis subject
+//   📝 Notesliner  — chuna hua text seedha "Notesliner" page par (kis subject
 //                  ka hai, ye pehle poochha jata hai — wahi ek click)
 //   📋 Copy      — clipboard mein
 //
@@ -110,7 +110,7 @@ function Strip({ m, onOpen }) {
   );
 }
 
-// 📝 "Kis subject ka one-liner?" — chuna hua text seedha Mere one-liner mein.
+// 📝 "Notesliner — kis subject mein?" — chuna hua text seedha us page par.
 //
 // Yahan SIRF wahi subject dikhte hain jo one-liner page par pehle se hain.
 // Pehle yahan notes ki saari books (sattrah!) aa jati thi — us list mein se
@@ -156,13 +156,13 @@ function OlPick({ text, onClose }) {
       <div className="sa-olm__box" onClick={(e) => e.stopPropagation()}>
         {saved ? (
           <p className="sa-olm__ok">
-            ✅ <b>{bookLabel(saved)}</b> ke one-liner mein daal diya.{" "}
+            ✅ <b>{bookLabel(saved)}</b> ke Notesliner mein daal diya.{" "}
             <a href={`/notes/paste?book=${encodeURIComponent(saved.book)}`}>Kholo →</a>
           </p>
         ) : (
           <>
             <div className="sa-olm__hd">
-              <b>📝 Kis subject ka one-liner?</b>
+              <b>📝 Notesliner — kis subject mein?</b>
               <button type="button" onClick={onClose} aria-label="Band karo">✕</button>
             </div>
             <p className="sa-olm__q">{text.slice(0, 220)}{text.length > 220 ? "…" : ""}</p>
@@ -438,9 +438,9 @@ export default function SelectAsk() {
               setBar(null);
             }}
           >🔍 Google</button>
-          {/* 📝 Seedha Mere one-liner mein — subject ek click mein poochhte
+          {/* 📝 Seedha Notesliner mein — subject ek click mein poochhte
               hain, phir note apni jagah chala jata hai. */}
-          <button type="button" onClick={() => { setOlText(bar.text); setBar(null); }}>📝 One-liner</button>
+          <button type="button" onClick={() => { setOlText(bar.text); setBar(null); }}>📝 Notesliner</button>
           <button
             type="button"
             onClick={() => {
