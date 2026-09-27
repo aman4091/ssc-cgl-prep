@@ -351,3 +351,29 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 }
 .sa-olm__ok { margin: 0; font-size: 0.95rem; line-height: 1.6; }
 .sa-olm__ok a { color: var(--accent); font-weight: 700; }
+.sa-olm__books .is-add { border-style: dashed; color: var(--text-2); }
+.sa-olm__new { display: flex; gap: 6px; margin-top: 10px; }
+.sa-olm__new input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border-strong);
+  background: var(--bg-2);
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 0.86rem;
+}
+.sa-olm__new button {
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.sa-olm__new button:disabled { opacity: 0.5; cursor: default; }
+.sa-olm__hint { margin: 10px 0 0; font-size: 0.82rem; color: var(--text-3); }

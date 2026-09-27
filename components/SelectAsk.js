@@ -40,7 +40,6 @@ import { searchImages } from "@/lib/webimages";
 import { getThreads, saveThread, newThreadId } from "@/lib/asklog";
 import { putAns, qText as sprintQText } from "@/lib/sprint";
 import { saveNote, notesByBook, bookLabel, bookIcon, selPage } from "@/lib/pastednotes";
-import { listNotesBooks } from "@/lib/notesbank";
 
 // 💬 Poochho dabate hi yahi sawaal apne aap chala jata hai — pehle kuch
 // likhna nahi padta.
@@ -113,37 +112,19 @@ function Strip({ m, onOpen }) {
 
 // 📝 "Kis subject ka one-liner?" — chuna hua text seedha Mere one-liner mein.
 //
-// Subject wahi hain jo notes ki books hain. Jin books ke one-liner pehle se
-// hain wo sabse upar (apni ginti ke saath), taaki roz wala subject pehli hi
-// line mein mile; baaki books uske baad — naya subject bhi ek click mein
-// shuru ho jata hai.
+// Yahan SIRF wahi subject dikhte hain jo one-liner page par pehle se hain.
+// Pehle yahan notes ki saari books (sattrah!) aa jati thi — us list mein se
+// galat naam daba dena aasan tha, aur note ek aisi book mein chala jata tha
+// jo us page par thi hi nahi. Naya subject shuru karna ho to ➕ — naam khud
+// likho, wahi menu mein aur page par aa jayega.
 //
-// Yahan koi AI nahi chalta: text jaisa hai waisa jata hai (shakl sudharne ka
+// Koi AI nahi chalta: text jaisa hai waisa jata hai (shakl sudharne ka
 // 🐋 Bold us page par pehle se hai). Isliye ye button muft hai.
 function OlPick({ text, onClose }) {
   const [saved, setSaved] = useState(null);
-  const books = useMemo(() => {
-    const mine = notesByBook();
-    const seen = new Set(mine.map((g) => g.book));
-    const rest = listNotesBooks()
-      .filter((b) => !seen.has(b.slug))
-      .map((b) => ({ book: b.slug, title: b.title, eyebrow: b.eyebrow, items: [] }));
-    return [...mine, ...rest];
-  }, []);
-
-  // Do books ka chhota naam ek jaisa ho sakta hai ("Static GK" Parmar ka bhi
-  // aur alag book ka bhi) — aise mein poora naam dikhate hain, warna pata hi
-  // na chale kis par daba rahe ho.
-  const nameOf = useMemo(() => {
-    const seen = new Map();
-    for (const g of books) { const l = bookLabel(g); seen.set(l, (seen.get(l) || 0) + 1); }
-    return (g) => {
-      const l = bookLabel(g);
-      if ((seen.get(l) || 0) < 2) return l;
-      const full = String(g.eyebrow || "").trim().replace(/^[^\p{L}\p{N}]+/u, "").trim();
-      return full || g.title || l;
-    };
-  }, [books]);
+  const [adding, setAdding] = useState(false);
+  const [naya, setNaya] = useState("");
+  const books = useMemo(() => notesByBook(), []);
 
   const put = (g) => {
     const first = String(text).trim().split(String.fromCharCode(10))[0].replace(/[*#]/g, "").trim();
@@ -159,6 +140,15 @@ function OlPick({ text, onClose }) {
     );
     setSaved(g);
     setTimeout(onClose, 2200);
+  };
+
+  // ➕ se bana subject: naam se hi uska slug banta hai, taaki dobara wahi naam
+  // likhne par note usi jagah jaye (nayi book na ban jaye).
+  const putNaya = () => {
+    const name = naya.trim();
+    if (!name) return;
+    const slug = "mera-" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    put({ book: slug || "mera", title: name, eyebrow: `📝 ${name}`, items: [] });
   };
 
   return (
@@ -180,11 +170,29 @@ function OlPick({ text, onClose }) {
               {books.map((g) => (
                 <button key={g.book} type="button" onClick={() => put(g)}>
                   <span>{bookIcon(g)}</span>
-                  {nameOf(g)}
-                  {g.items.length ? <em>{g.items.length}</em> : null}
+                  {bookLabel(g)}
+                  <em>{g.items.length}</em>
                 </button>
               ))}
+              {!adding && (
+                <button type="button" className="is-add" onClick={() => setAdding(true)}>➕ Naya subject</button>
+              )}
             </div>
+            {adding && (
+              <div className="sa-olm__new">
+                <input
+                  autoFocus
+                  value={naya}
+                  onChange={(e) => setNaya(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === "Enter") putNaya(); }}
+                  placeholder="Subject ka naam — jaise Polity"
+                />
+                <button type="button" onClick={putNaya} disabled={!naya.trim()}>Daal do</button>
+              </div>
+            )}
+            {!books.length && !adding && (
+              <p className="sa-olm__hint">Abhi koi subject nahi — ➕ se naam likh kar shuru karo.</p>
+            )}
           </>
         )}
       </div>
