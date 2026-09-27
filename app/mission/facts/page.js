@@ -8,6 +8,15 @@ import { getMission, currentDayNum, planFor } from "@/lib/mission";
 import Recall from "@/components/carevision/Recall";
 import TrickButtons from "@/components/TrickButtons";
 import FactTidyBtn from "@/components/FactTidyBtn";
+import FactLayouts, { FL_LAYOUTS } from "@/components/FactLayouts";
+import "./layouts.css";
+
+// 🎨 Padhne ka roop — owner 15 mein se ek chunega. "0" = purana (khulte hi
+// revise card, neeche list). Chuna hua roop is device par yaad rehta hai.
+const LAY_KEY = "cgl.factlayout";
+const savedLay = () => {
+  try { const v = localStorage.getItem(LAY_KEY); return v && FL_LAYOUTS.some((l) => l.id === v) ? v : "0"; } catch { return "0"; }
+};
 
 // Bade card mein revise (CA Revision wala Recall, khula roop): upar naam,
 // neeche uske baare mein — seedha dikhta hai, chhupa nahi. "Kerala dance:
@@ -74,6 +83,9 @@ export default function MissionFactsPage() {
   // se wo wahin se uthta hai jahan tha, isliye jhatka nahi lagta.
   const [rev, setRev] = useState(0);
   const autoStarted = useRef(false);
+  const [lay, setLay] = useState("0");
+  useEffect(() => { setLay(savedLay()); }, []);
+  const pickLay = (v) => { setLay(v); try { localStorage.setItem(LAY_KEY, v); } catch { /* private */ } };
 
   const load = () => { setFacts(getFacts()); setDue(dueFacts()); setDueAll({ total: dueTotal(), byGap: dueByGap() }); };
 
@@ -85,6 +97,7 @@ export default function MissionFactsPage() {
   useEffect(() => {
     if (autoStarted.current || !facts.length) return;
     autoStarted.current = true;
+    if (savedLay() !== "0") return;   // naya roop chuna hai — seedha wahi dikhe
     setRevising(shuffle(facts).map(toCard));
   }, [facts]);
   useEffect(() => {
@@ -167,6 +180,24 @@ export default function MissionFactsPage() {
         </p>
       </section>
 
+      <div className="fl-bar">
+        <label className="fl-pick">
+          <span>🎨 Roop</span>
+          <select value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Fact log ka roop">
+            <option value="0">Purana (revise card + list)</option>
+            {FL_LAYOUTS.map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
+          </select>
+        </label>
+        {lay !== "0" && facts.length > 0 && (
+          <button className="btn btn--ghost btn--sm" onClick={() => { clearSession("facts"); setRevising(shuffle(facts).map(toCard)); }}>
+            ▶ Revise card · {facts.length}
+          </button>
+        )}
+      </div>
+
+      {lay !== "0" && <FactLayouts lay={lay} facts={facts} onChange={load} />}
+
+      {lay === "0" && (
       <section className="section" style={{ marginTop: 8 }}>
         {facts.length > 0 && (
           <button
@@ -223,6 +254,7 @@ export default function MissionFactsPage() {
           </div>
         )}
       </section>
+      )}
 
       <section className="section">
         <h2 className="ms-h2">Naya fact jodo</h2>
@@ -244,6 +276,7 @@ export default function MissionFactsPage() {
         </div>
       </section>
 
+      {lay === "0" && (
       <section className="section">
         <div className="row between ms-form" style={{ marginBottom: 8 }}>
           <h2 className="ms-h2" style={{ margin: 0 }}>Saare facts ({facts.length})</h2>
@@ -274,6 +307,7 @@ export default function MissionFactsPage() {
           </details>
         ))}
       </section>
+      )}
     </>
   );
 }
