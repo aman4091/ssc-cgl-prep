@@ -9,7 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import {
   getMission, getDone, toggleDone, currentDayNum, totalDays, totalMocks, planFor, buildTimeline,
   nowBlock, dayStats, mustComplete, streak, phaseOf, PHASES, getExam, daysBetween, dateOfDay,
-  FLOOR, TARGET, PCT_NOW, PCT_TARGET, CLUSTER_TARGET, getMetrics, tickable,
+  FLOOR, TARGET, PCT_NOW, PCT_TARGET, CLUSTER_TARGET, getMetrics, tickable, TARGETS, SECTIONS, checkpointDays,
 } from "@/lib/mission";
 import { dueCount, dueTotal, getFacts } from "@/lib/missionfacts";
 import { getMocks, mockTotals, mockPercentile } from "@/lib/mockmarks";
@@ -87,6 +87,7 @@ export default function useMissionHome() {
     return {
       n, date: dateOfDay(m.startDate, n), phase: phaseOf(n).k, mock: p && p.type === "A",
       ok: n < day ? mustComplete(n, st.done, m) : null, today: n === day, topic: p && p.g ? p.g.t.split(":")[0] : "",
+      gT: p && p.g ? p.g.t : "", mT: p && p.m ? p.m.t : "", eT: p && p.e ? p.e.t : "", fm: p && p.fm,
     };
   });
   const last = st.mocks[0] || null;
@@ -99,6 +100,7 @@ export default function useMissionHome() {
     mocks: st.mocks.slice(0, 6).map((r) => ({ id: r.id, date: r.date, name: r.name, score: mockTotals(r).score, pct: mockPercentile(r) })),
     lastScore: lastTot ? lastTot.score : null, lastPct: last ? mockPercentile(last) : null,
     FLOOR, TARGET, PCT_NOW, PCT_TARGET, CLUSTER_TARGET, clusters: st.clusters, due: st.due,
+    TARGETS, SECTIONS, cps: checkpointDays(m), mocksDone: st.mocks.length,
     toggle: (id) => { toggleDone(dd, id); load(); },
   };
 }
