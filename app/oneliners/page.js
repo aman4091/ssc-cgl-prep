@@ -18,6 +18,10 @@ import Markdown from "@/components/Markdown";
 import {
   getOneLiners, removeOneLiner, clearOneLiners, olLines, olTitle, isTrickLine, subOf, OL_SUBS,
 } from "@/lib/oneliners";
+import OneLinersRoop, { OLR_LAYOUTS } from "@/components/OneLinersRoop";
+import "./roop.css";
+
+const ROOP_KEY = "cgl.olroop";   // is device par chuna hua roop
 
 function when(at) {
   if (!at) return "";
@@ -97,6 +101,9 @@ function OneLinersInner() {
   const [q, setQ] = useState("");
   const [at, setAt] = useState(-1);      // popup mein kaunsi line khuli hai
   useEffect(() => { setSub(qSub); setAt(-1); }, [qSub]);
+  const [lay, setLay] = useState("0");
+  useEffect(() => { try { const v = localStorage.getItem(ROOP_KEY); if (v && OLR_LAYOUTS.some((l) => l.id === v)) setLay(v); } catch { /* private */ } }, []);
+  const pickLay = (v) => { setLay(v); try { localStorage.setItem(ROOP_KEY, v); } catch { /* private */ } };
 
   const load = () => setAll(getOneLiners());
   useEffect(() => {
@@ -160,6 +167,13 @@ function OneLinersInner() {
 
         <div className="row between ms-form" style={{ marginBottom: 8 }}>
           <h2 className="ms-h2" style={{ margin: 0 }}>Saari lines ({shown.length})</h2>
+          <label className="olr-pick">
+            <span>🎨 Roop</span>
+            <select value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="One-liners ka roop">
+              <option value="0">Purana (list)</option>
+              {OLR_LAYOUTS.map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
+            </select>
+          </label>
           {all.length > 0 && (
             <button
               className="btn btn--ghost btn--sm"
@@ -175,6 +189,8 @@ function OneLinersInner() {
               ? "Abhi koi one-liner nahi. Overlay par subject ka answer copy karne ke baad 📝 dabao."
               : "Is chhaan-been mein kuch nahi mila."}
           </div>
+        ) : lay !== "0" ? (
+          <OneLinersRoop lay={lay} items={shown} onOpen={setAt} onDelete={(id) => drop(id, false)} />
         ) : (
           <div style={{ display: "grid", gap: 6 }}>
             {shown.map((o, i) => {
