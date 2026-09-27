@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NAV_GROUPS, NAV_DIRECT, trailForPath, nodeAt } from "@/lib/nav";
 import { getNewWordEntries, newWordDayKey, newWordDayLabel } from "@/lib/vocab";
 import { getUserTopics } from "@/lib/userpyq";
+import { notesByBook, bookIcon, bookLabel, isSelNote } from "@/lib/pastednotes";
 import ThemeToggle from "./ThemeToggle";
 import FocusLock from "./FocusLock";
 import TopbarInfo from "./TopbarInfo";
@@ -21,6 +22,18 @@ const SHELF_BY_NAVKEY = {
   gktricks: "shelf_gktricks",
   mirror: "shelf_mirror",
 };
+
+// 📝 "Mere one-liner" ka khaana (NAV_DIRECT mein `oneliner: true` wali line).
+// Iske andar ki list likhi hui nahi hai — jis book se notes paste hue hain
+// wahi naam aate hain (Parmar Polity se banaye to "Polity"), aur us naam ke
+// andar us book ke page. Isliye ye NAV_GROUPS ka hissa nahi ban sakta; yahan
+// har baar lib/pastednotes se bana liya jata hai.
+const OL_KEY = "oneliner";
+// /notes/paste par menu khulte hi seedha isi khaane ke andar — wahan pahunche
+// ho to agla kaam doosri book ya doosra page chunna hi hota hai.
+// (Query badalne par ye nahi chalta, sirf path badalne par — isliye book ke
+// andar ka level khula rehta hai.)
+const seedTrail = (p) => (p && p.startsWith("/notes/paste") ? [OL_KEY] : trailForPath(p));
 
 // The menu, and only the menu.
 //
@@ -39,7 +52,7 @@ export default function Navbar() {
   // that group, rather than flashing the top level first.
   // A TRAIL, not one key — the menu is three deep: PYQ Bank -> a bank -> its
   // chapters. Back pops one level rather than jumping to the top.
-  const [trail, setTrail] = useState(() => trailForPath(pathname));
+  const [trail, setTrail] = useState(() => seedTrail(pathname));
   // A group can name a BANK instead of listing links — its rows are that bank's
   // chapters, fetched the first time the group is opened and then memoised by
   // the loader itself.
@@ -47,7 +60,7 @@ export default function Navbar() {
   // Phones only: the rail is off-canvas until the hamburger asks for it.
   const [open, setOpen] = useState(false);
 
-  useEffect(() => { setTrail(trailForPath(pathname)); }, [pathname]);
+  useEffect(() => { setTrail(seedTrail(pathname)); }, [pathname]);
   // Page badla to menu apne aap band — parda page ke upar hai, khula chhodne
   // par jis page par gaye ho wahi dikhta hi nahi.
   useEffect(() => { setOpen(false); }, [pathname, params]);
@@ -88,6 +101,55 @@ export default function Navbar() {
   const nwDayWords = nwDay
     ? (nwGroups.find((g) => g.key === nwDay) || {}).words || []
     : [];
+
+  // 📝 Mere one-liner — paste kiye hue notes, book ke hisaab se. Ye store
+  // (IndexedDB) se aata hai, isliye render ke waqt nahi, effect mein padha
+  // jata hai — aur naya note paste hote hi menu apne aap badal jaye.
+  const [olBooks, setOlBooks] = useState([]);
+  useEffect(() => {
+    const load = () => setOlBooks(notesByBook());
+    load();
+    window.addEventListener("cgl:pastednotes", load);
+    // Bada store (IndexedDB) thodi der mein khulta hai — pehli baar khali
+    // mil sakta hai, isliye ek baar baad mein phir dekh lete hain.
+    const t = setTimeout(load, 1200);
+    return () => { window.removeEventListener("cgl:pastednotes", load); clearTimeout(t); };
+  }, []);
+  // Khaana: pehla level book ke naam, uske andar us book ke page.
+  const olNode = useMemo(() => {
+    if (!olBooks.length) return null;
+    return {
+      key: OL_KEY,
+      name: "📝 Mere one-liner",
+      icon: "📝",
+      children: olBooks.map((g) => {
+        const label = bookLabel(g);
+        const q = `book=${encodeURIComponent(g.book)}`;
+        return {
+          key: `ol:${g.book}`,
+          name: `${label} (${g.items.length})`,
+          icon: bookIcon(g),
+          links: [
+            { href: `/notes/paste?${q}`, label: `📚 Poora ${label}`, off: ["n"] },
+            ...g.items.map((n) => ({
+              href: `/notes/paste?${q}&n=${encodeURIComponent(n.k)}`,
+              label: isSelNote(n) ? `✂️ ${n.topic || "chuna hua"}` : `p.${n.page} · ${n.topic || "—"}`,
+            })),
+          ],
+        };
+      }),
+    };
+  }, [olBooks]);
+  // Trail ko is khaane ke andar khud hal karte hain — nodeAt sirf NAV_GROUPS
+  // dekhta hai, aur ye khaana wahan likha hua nahi hai.
+  const olAt = (t) => {
+    let node = olNode;
+    for (const k of t.slice(1)) {
+      node = ((node && node.children) || []).find((n) => n.key === k) || null;
+      if (!node) return null;
+    }
+    return node;
+  };
 
   // A group can describe a BANK instead of listing links: which index to read,
   // which array in it holds the chapters, and what those rows link to. Fetched
@@ -163,9 +225,13 @@ export default function Navbar() {
   // its page opens on.
   // `exact` rows (like /mission, whose sub-pages are their own rows) light up
   // only on their own path, not on every page beneath it.
-  const isActive = ({ href, isDefault, exact }) => {
+  // `off` un query-naamon ki list hai jo MAUJOOD nahi hone chahiye: "📚 Poora
+  // Polity" tabhi jagta hai jab koi ek page (?n=) chuna hua na ho, warna wo
+  // aur us page ki line, dono ek saath jagti thi.
+  const isActive = ({ href, isDefault, exact, off }) => {
     const [p, q] = String(href).split("?");
     if (exact ? pathname !== p : !(pathname === p || pathname.startsWith(p + "/"))) return false;
+    for (const k of off || []) if (params.get(k)) return false;
     if (!q) return true;
     for (const [k, v] of new URLSearchParams(q)) {
       const cur = params.get(k);
@@ -173,7 +239,7 @@ export default function Navbar() {
     }
     return true;
   };
-  const current = nodeAt(trail);
+  const current = trail[0] === OL_KEY ? olAt(trail) : nodeAt(trail);
   // What this level shows: sub-groups, a bank's fetched chapters, or plain links.
   // A group may have BOTH sub-groups and plain links — Notes has three books to
   // drill into and two ordinary rows — so these concatenate rather than one
@@ -304,16 +370,26 @@ export default function Navbar() {
         ) : (
           /* ---- level 1: names only ---- */
           <>
-            {NAV_DIRECT.filter((d) => d.pin).map((d) => (
-              <Link
-                key={d.href}
-                href={d.href}
-                className={`drawer__link drawer__link--top ${isActive(d) ? "is-active" : ""}`}
-              >
-                <span className="drawer__ico">{d.icon}</span>
-                {d.label}
-              </Link>
-            ))}
+            {NAV_DIRECT.filter((d) => d.pin).map((d) =>
+              /* 📝 Mere one-liner: notes paste ho chuke hain to ye seedha link
+                 nahi, ek khulne wala khaana hai — andar book ke naam. */
+              d.oneliner && olNode ? (
+                <button key={d.href} className="drawer__grouphd" onClick={() => setTrail([OL_KEY])}>
+                  <span className="drawer__ico">{d.icon}</span>
+                  <span className="drawer__groupname">{d.label}</span>
+                  <span className="drawer__chev">›</span>
+                </button>
+              ) : (
+                <Link
+                  key={d.href}
+                  href={d.href}
+                  className={`drawer__link drawer__link--top ${isActive(d) ? "is-active" : ""}`}
+                >
+                  <span className="drawer__ico">{d.icon}</span>
+                  {d.label}
+                </Link>
+              )
+            )}
 
             {rows.map((g) => (
               <button key={g.key} className="drawer__grouphd" onClick={() => setTrail([g.key])}>

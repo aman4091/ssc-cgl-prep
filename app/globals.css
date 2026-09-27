@@ -4115,44 +4115,57 @@ body.exam-on .hresume { display: none; }
 .nt-paste__hd .nt-meta { margin-left: auto; }
 .nt-paste textarea { width: 100%; resize: vertical; line-height: 1.6; }
 
-/* ── one-liner ka roop ─────────────────────────────────────────────────── */
-/* Topic ka naam, uske neeche numbered point, aur ⚠️ Confusion ka apna
-   khaana. ⭐ wale point (jo SSC mein aa chuke) saaf alag dikhein. */
-.ol { display: grid; gap: 14px; }
-.ol-sec { }
+/* ── one-liner ka roop — TIMELINE ──────────────────────────────────────── */
+/* Roop 8 "Timeline" owner ne final kiya (pandrah roop compare karne ke baad).
+   Topic ka naam, uske neeche ek khadi lakeer, aur us lakeer par har point ka
+   apna bindu. ⭐ wale point (jo SSC mein aa chuke) ka bindu SONE ka —
+   poori list mein wahi pehle nazar aata hai. */
+.ol { display: grid; gap: 22px; }
 .ol-t {
-  margin: 0 0 6px;
-  font-size: 0.95rem;
+  margin: 0 0 8px;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: var(--head);
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 4px;
+  color: var(--accent);
 }
-.ol-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.ol-line { display: grid; }
 .ol-p {
-  display: flex;
-  gap: 8px;
-  align-items: flex-start;
-  padding: 5px 8px;
-  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 12px;
+  position: relative;
+  padding-bottom: 14px;
   font-size: 0.94rem;
   line-height: 1.6;
 }
-.ol-p.is-star {
-  background: var(--mark);
-  color: #2a2000;
+/* Ek bindu se doosre tak ki lakeer. Aakhri point ke neeche kuch nahi. */
+.ol-p::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 14px;
+  bottom: -2px;
+  width: 2px;
+  background: var(--line);
 }
-.ol-p.is-star::before { content: "⭐"; font-size: 0.85em; }
-.ol-n {
-  min-width: 1.5em;
-  text-align: right;
-  color: var(--text-3);
-  font-variant-numeric: tabular-nums;
-  font-size: 0.85em;
-  padding-top: 1px;
+.ol-p:last-child::before { display: none; }
+.ol-p:last-child { padding-bottom: 0; }
+.ol-dot {
+  width: 14px;
+  height: 14px;
+  margin-top: 5px;
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  background: var(--card);
+  position: relative;
+  z-index: 1;
 }
-.ol-p.is-star .ol-n { color: #6b5600; }
-.ol-x { flex: 1; min-width: 0; }
+.ol-p.is-star .ol-dot {
+  background: #f5b544;
+  border-color: #f5b544;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #f5b544 22%, transparent);
+}
+.ol-p.is-star .ol-x { font-weight: 600; }
+.ol-x { min-width: 0; }
 
 .ol-sec--warn {
   border: 1px solid var(--warning);
@@ -4177,3 +4190,5 @@ body.exam-on .hresume { display: none; }
   padding: 10px 12px;
 }
 .ol-sec--tip .ol-t { color: var(--success); border-bottom: 0; }
+.ol-sec--warn .ol-p .ol-dot { border-color: var(--warning); }
+.ol-sec--tip .ol-p .ol-dot { border-color: var(--success); }

@@ -30,26 +30,45 @@
 .rv-btn.is-on { background: var(--tb-green); color: #fff; }
 
 /* ─── Do-pane ─── */
-.al14 { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 16px; align-items: start; }
+/* Baayen ki list ab sirf question ka NUMBER dikhati hai, isliye patli — jo
+   jagah bachti hai wo poori daayen wali window ko milti hai, jahan asli
+   question hai. Pehle list 320px thi aur question ki tasveer chhoti padti
+   thi. */
+.al14 { display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 14px; align-items: start; }
+
+/* Is page ko poori chaudai — 1120px ke dabbe mein question ki tasveer chhoti
+   reh jati thi. Sirf wahan jahan do-pane hai. */
+/* (Timeline look apna main.container 1180px par baandhta hai — isliye yahan
+   utni hi bhaari line chahiye, warna ye rule haar jata hai.) */
+body.examskin:has(.al14) main.container { max-width: 1560px; }
+/* Aur andar ka khaana bhi — .ansp__main 900px par bandha tha, jo poori
+   chaudai milne ke baad bhi question ko chhota rakhta. */
+.ansp__main:has(.al14) { max-width: none; }
 .al14-list { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; border-radius: 14px; border: 1px solid var(--tb-line); background: var(--tb-page); }
-.al14-f { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 4px; padding: 8px; background: var(--tb-page); border-bottom: 1px solid var(--tb-line); }
+/* Chhaanti ab patli list ke andar nahi — wahan chaar chip teen line kha
+   jate the. Ab poori chaudai ki apni patti, list ke upar. */
+.al14-f { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
 .al14-f button {
-  height: 26px; padding: 0 9px; border-radius: 999px; cursor: pointer; font: inherit; font-size: 0.72rem; font-weight: 700;
+  height: 26px; padding: 0 11px; border-radius: 999px; cursor: pointer; font: inherit; font-size: 0.74rem; font-weight: 700;
   border: 1px solid var(--tb-line-hard); background: transparent; color: var(--tb-ink-2);
 }
 .al14-f button.is-on { background: var(--tb-blue); border-color: var(--tb-blue); color: #fff; }
 .al14-empty { padding: 16px; color: var(--tb-dim); font-size: 0.85rem; margin: 0; }
-.al14-day { position: sticky; top: 43px; z-index: 1; padding: 6px 12px; font-size: 0.7rem; font-weight: 800; color: var(--tb-dim); background: var(--tb-head); text-transform: uppercase; }
+.al14-day { position: sticky; top: 0; z-index: 1; padding: 5px 9px; font-size: 0.62rem; font-weight: 800; color: var(--tb-dim); background: var(--tb-head); text-transform: uppercase; }
 .al14-it {
-  width: 100%; display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 9px 12px;
+  width: 100%; display: grid; grid-template-columns: 7px minmax(0, 1fr) auto; gap: 6px; align-items: center; padding: 8px 9px;
   border: 0; border-bottom: 1px solid var(--tb-line-soft); background: transparent; color: var(--tb-ink); font: inherit; font-size: 0.82rem; text-align: left; cursor: pointer;
 }
-.al14-it i { width: 8px; height: 8px; border-radius: 50%; }
+.al14-it span { font-variant-numeric: tabular-nums; font-weight: 700; }
+.al14-it i { width: 7px; height: 7px; border-radius: 50%; }
 .al14-it span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.al14-it em { font-style: normal; font-size: 0.7rem; font-weight: 800; white-space: nowrap; }
+.al14-it em { font-style: normal; font-size: 0.62rem; font-weight: 800; white-space: nowrap; }
 .al14-it.is-on { background: color-mix(in srgb, var(--tb-blue) 18%, transparent); }
 .al14-dim { color: var(--tb-dim); font-weight: 600; }
 .al14-main { min-width: 0; display: grid; gap: 12px; scroll-margin-top: 80px; }
+/* Question ki tasveer poori window bhar le — OCR wali screenshot apne aap
+   mein chhoti hoti hai, aur "max-width: 100%" use bada nahi karta tha. */
+.al14-main .ansp__card > img { width: 100%; }   /* > taaki lightbox ki tasveer na chhue */
 .al14-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.9rem; }
 .al14-tl { display: grid; grid-template-columns: repeat(5, 1fr); position: relative; padding: 10px 0; border-radius: 14px; background: var(--tb-page); border: 1px solid var(--tb-line); }
 .al14-tl::before { content: ""; position: absolute; left: 10%; right: 10%; top: 19px; height: 3px; background: var(--tb-line-hard); }

@@ -22,14 +22,20 @@ const SUB = {
 const subOf = (k) => SUB[k] || SUB.other;
 const shortD = (dk) => new Date(dk + "T00:00:00").toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 const wk = (dk) => new Date(dk + "T00:00:00").toLocaleDateString("en-IN", { weekday: "short" });
-const snip = (r) => String(r.q?.question || r.ocrText || r.note || "").replace(/\s+/g, " ").trim();
+// List mein sirf question ka NUMBER — "Question q1153" poori chaudai kha
+// jata tha aur daayen wali window (jahan asli question dikhta hai) chhoti
+// pad jati thi. Ab "1153", bas.
+const qNum = (r, i) => {
+  const d = String(r.qid || "").replace(/[^0-9]/g, "");
+  return d || String(r.qid || "").trim() || String(i + 1);
+};
 
 // List ki chhaanti.
 const FILTERS = [
   { k: "all", l: "Sab" },
-  { k: "due", l: "🔁 Aaj dohrane" },
-  { k: "new", l: "🆕 Shuru nahi" },
-  { k: "done", l: "🏁 Pakke" },
+  { k: "due", l: "🔁 Aaj", t: "Aaj dohrane" },
+  { k: "new", l: "🆕 Naye", t: "Shuru nahi" },
+  { k: "done", l: "🏁 Pakke", t: "Pakke ho gaye" },
 ];
 const pass = (f, p) =>
   f === "all" ? true
@@ -105,13 +111,14 @@ export default function AnswersDoPane({ list, renderCard, bucketOf, jumpId }) {
   return (
     <>
       <RevSummary list={list} plan={plan} />
+      {/* Chhaanti list ke UPAR — list ab sirf number ki patli patti hai. */}
+      <div className="al14-f">
+        {FILTERS.map((x) => (
+          <button key={x.k} type="button" title={x.t || x.l} className={f === x.k ? "is-on" : ""} onClick={() => setF(x.k)}>{x.l}</button>
+        ))}
+      </div>
       <div className="al14">
         <nav className="al14-list">
-          <div className="al14-f">
-            {FILTERS.map((x) => (
-              <button key={x.k} type="button" className={f === x.k ? "is-on" : ""} onClick={() => setF(x.k)}>{x.l}</button>
-            ))}
-          </div>
           {!rows.length && <p className="al14-empty">Is chhaanti mein kuch nahi.</p>}
           {rows.map((r, i) => {
             const dk = dayKey(r.at); const hd = dk !== lastDay; lastDay = dk; const q = plan(r);
@@ -121,7 +128,7 @@ export default function AnswersDoPane({ list, renderCard, bucketOf, jumpId }) {
                 {hd && <div className="al14-day">{shortD(dk)} · {wk(dk)}</div>}
                 <button type="button" className={`al14-it${cur && r.id === cur.id ? " is-on" : ""}`} onClick={() => pick(r.id)}>
                   <i style={{ background: subOf(bucketOf(r)).c }} />
-                  <span>{snip(r) || `Question ${r.qid || i + 1}`}</span>
+                  <span>{qNum(r, i)}</span>
                   <em className={tag[1]}>{tag[0]}</em>
                 </button>
               </div>
