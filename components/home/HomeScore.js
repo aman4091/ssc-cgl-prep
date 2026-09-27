@@ -5,11 +5,13 @@
 // Data components/home/useMissionHome se aata hai (wahi mission, wahi din,
 // wahi CORE 5 — koi naya hisaab nahi).
 
-import { Go, SubjectBoxes } from "./parts";
+import { Go, Tick, splitTitle, secOf } from "./parts";
 
-// 🅴 Scoreboard — stadium ka LED board: exam tak ke din/ghante, aaj ka score
-// (CORE), har section ka TARGET vs FLOOR, aur neeche subject ke chaar khaane
-// (wahi jo Subject Hub mein hain — components/home/parts SubjectBoxes).
+const isDone = (d, b) => !!(b && d.doneToday[b.id]);
+
+// Stadium ka LED board: exam tak ke din/ghante, aaj ka score (CORE), har
+// section ka TARGET vs FLOOR, aur neeche aaj ke kaam "fixtures" ki tarah —
+// jo chal raha hai wo LIVE, jo ho gaya wo JEETA, jo nikal gaya wo CHHOOTA.
 export default function HomeScore({ d }) {
   const hrs = d.toExam != null ? d.toExam * 24 - Math.floor(d.nowMin / 60) : null;
   return (
@@ -39,9 +41,20 @@ export default function HomeScore({ d }) {
         })}
       </section>
 
-      {/* Neeche pehle "🏟️ Aaj ke match" ki ek lambi qatar thi. Owner ne kaha
-          uski jagah Subject Hub wale chaar khaane chahiye — wahi ab yahan. */}
-      <SubjectBoxes d={d} />
+      <section className="hE-fix">
+        <h3>🏟️ Aaj ke match</h3>
+        {d.work.map((b) => {
+          const now = d.cur && d.cur.id === b.id;
+          return (
+            <div key={b.id} className={`hE-row${now ? " is-now" : ""}${isDone(d, b) ? " is-ok" : ""}`} style={{ "--sc": secOf(b).c }}>
+              <span className="hE-row__t">{b.start}</span>
+              <span className="hE-row__n">{splitTitle(b)[0]}</span>
+              <span className="hE-row__s">{isDone(d, b) ? "JEETA ✓" : now ? "LIVE ●" : b.e <= d.nowMin ? "CHHOOTA" : "AAGE"}</span>
+              <Tick ok={isDone(d, b)} onClick={() => d.toggle(b.id)} />
+            </div>
+          );
+        })}
+      </section>
       {d.cur && !d.cur.life ? <div className="hE-go"><Go b={d.cur} /></div> : null}
     </div>
   );

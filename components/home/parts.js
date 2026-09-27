@@ -33,59 +33,6 @@ export function subjectsOf(d) {
   ].filter(Boolean);
 }
 
-// 🗂️ Chaar subject ke khaane — GS, Maths, English, Mock+Revision. Har
-// khaane mein aaj ka topic, us subject ke aaj ke saare block (tick ke saath),
-// aur do kaam ke link.
-//
-// Ye pehle sirf "Subject Hub" (roop I) ke andar tha. Owner ne kaha ki roop E
-// mein neeche "Aaj ke match" ki jagah yahi chaar box chahiye, isliye yahan
-// nikaal liya — ek hi jagah, dono roop wahi dikhate hain.
-const SUBJECT_BOXES = [
-  { k: "gs", icon: "🌍", t: "GS", c: "#2f9e6e", secs: ["gs"], links: [["/pyq/war", "🎯 PYQ"], ["/mission/facts", "🧠 Fact log"]] },
-  { k: "maths", icon: "🧮", t: "Maths", c: "#3b6cff", secs: ["maths"], links: [["/notes/brahmastra", "📐 Formula"], ["/pyq/sprint", "⚡ Sprint"]] },
-  { k: "english", icon: "📘", t: "English", c: "#a855f7", secs: ["english", "reasoning"], links: [["/notes/goldenrules", "🏅 Rules"], ["/vocab", "🔤 Vocab"]] },
-  { k: "mock", icon: "📝", t: "Mock + Revision", c: "#e5484d", secs: ["mock", "rev"], links: [["/mock-marks", "📊 Marks"], ["/mission/analysis", "🔍 Analysis"]] },
-];
-
-export function SubjectBoxes({ d }) {
-  const subs = subjectsOf(d);
-  const topic = {
-    gs: subs.find((s) => s.k === "gs"),
-    maths: subs.find((s) => s.k === "maths"),
-    english: subs.find((s) => s.k === "english"),
-  };
-  const isDone = (b) => !!(b && d.doneToday[b.id]);
-  return (
-    <div className="hI-grid">
-      {SUBJECT_BOXES.map((q) => {
-        const bl = d.work.filter((b) => q.secs.includes(b.sec));
-        const tp = topic[q.k];
-        return (
-          <section key={q.k} className="hI-q" style={{ "--sc": q.c }}>
-            <header>
-              <span className="hI-q__ic">{q.icon}</span>
-              <h2>{q.t}</h2>
-              <span className="hI-q__n">{bl.filter(isDone).length}/{bl.length}</span>
-            </header>
-            {tp ? <p className="hI-q__tp">{tp.t}</p> : null}
-            <ul>
-              {bl.map((b) => (
-                <li key={b.id} className={`${isDone(b) ? "is-ok" : ""}${d.cur && d.cur.id === b.id ? " is-now" : ""}`}>
-                  <Tick ok={isDone(b)} onClick={() => d.toggle(b.id)} />
-                  <span className="hI-time">{b.start}</span>
-                  <span className="hI-t">{splitTitle(b)[0]}</span>
-                  {d.cur && d.cur.id === b.id ? <Go b={b} /> : null}
-                </li>
-              ))}
-            </ul>
-            <div className="hI-links">{q.links.map(([h, l]) => <Link key={h} href={h}>{l}</Link>)}</div>
-          </section>
-        );
-      })}
-    </div>
-  );
-}
-
 export function BlockName({ b }) {
   const [name, topic] = splitTitle(b);
   return (
