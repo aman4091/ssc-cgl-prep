@@ -1,6 +1,7 @@
 import Link from "next/link";
 import MissionToday from "@/components/MissionToday";
 import TodayGate from "@/components/TodayGate";
+import HomePreview from "@/components/home/HomePreview";
 
 // Homepage = "abhi kya karna hai".
 //
@@ -21,7 +22,7 @@ import TodayGate from "@/components/TodayGate";
 // ke 📚 Notes group mein hain, vocab /vocab par.
 export default function Home() {
   return (
-    <>
+    <HomePreview>
       <MissionToday />
       {/* ⚡ Sprint — ek hi button, kyunki Home par ek waqt ek hi cheez.
           Jab din ka kaam poora ho jaye ya sirf question peelne ho, ye ek tap
@@ -35,6 +36,6 @@ export default function Home() {
           <div className="fold__body"><TodayGate /></div>
         </details>
       </div>
-    </>
+    </HomePreview>
   );
 }
