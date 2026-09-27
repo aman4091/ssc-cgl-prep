@@ -28,7 +28,8 @@ import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
 import PointsButton from "./PointsButton";
-import AnswersLayouts, { ANS_LAYOUTS } from "./AnswersLayouts";
+import AnswersDoPane from "./AnswersLayouts";
+import { markDoneRev } from "@/lib/ansrev";
 import "./answers-layouts.css";
 
 // Answers — mock test ke screenshot, aur unke jawab.
@@ -757,6 +758,8 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   const onDone = (rec) => {
     markDone(rec.id);
+    // 🔁 Revision: pehli baar ✅ = D0 (aaj), baad mein = aaj ka revise.
+    markDoneRev(rec.id);
     const next = new Set(done).add(rec.id);
     // Nishaan bhi saath mein — warna agla poll wahi set dobara bana kar poori
     // list ko bekaar mein dobara render kara deta.
@@ -847,26 +850,14 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   const chips = [ALL_SUBJ, ...SUBJECTS];
 
-  // 📅 Layout — "0" purani list; 1–5 tareekh wale naye roop (AnswersLayouts).
-  // URL ka ?lay= ya is device par aakhri chuna hua.
-  const [lay, setLay] = useState("0");
-  useEffect(() => {
-    let v = sp.get("lay") || "";
-    try { if (!v) v = localStorage.getItem("cgl.anslayout") || ""; } catch { /* ignore */ }
-    if (ANS_LAYOUTS.some((l) => l.id === v)) setLay(v);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const pickLay = (v) => {
-    setLay(v);
-    try { localStorage.setItem("cgl.anslayout", v); } catch { /* ignore */ }
-  };
+
 
   return (
     <div className="ansp">
       {/* Daayen kinare poori list — har question ka number. Tap karo to wahi
           card saamne. Card abhi bana na ho (25-25 karke bante hain) to pehle
           utne khul jate hain, phir scroll. */}
-      {list.length > 0 && lay === "0" && (
+      {false && list.length > 0 && (
         <nav className="ansp__side" ref={railRef}>
           {list.map((r, i) => {
             const id = `ans-${r.id}`;
@@ -894,13 +885,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           >
             📊 Chapter report
           </button>
-          <span className="al-pick">
-            <span className="al-pick__l">📅 Layout</span>
-            <select className="al-pick__sel" value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Layout">
-              <option value="0">Purana (list)</option>
-              {ANS_LAYOUTS.map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
-            </select>
-          </span>
         </div>
 
         {flash && <p className="ansp__flash">{flash}</p>}
@@ -914,14 +898,18 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               ? "Is chhaanti mein koi galti nahi. Koi quiz do — galat ya chhoda hua question apne aap yahan aa jayega."
               : "Yaha abhi koi question nahi hai."}
           </p>
-        ) : lay !== "0" ? (
-          <AnswersLayouts lay={lay} list={list} renderCard={renderCard} doneMap={doneMap} bucketOf={bucketOf} chapterOf={chapterOf} />
         ) : (
-          shown.map((r, i) => renderCard(r, i, false))
+          // 📖 Do-pane — owner ka chuna hua ek hi roop (components/AnswersLayouts).
+          <AnswersDoPane
+            list={list}
+            renderCard={renderCard}
+            bucketOf={bucketOf}
+            jumpId={urlQid ? (list.find((r) => r.qid === urlQid) || {}).id : ""}
+          />
         )}
 
         {/* Aur card — neeche pahunchte hi apne aap khul jate hain. */}
-        {ready && lay === "0" && visible < list.length && (
+        {false && ready && visible < list.length && (
           <div ref={tail} className="ansp__acts">
             <button className="ansp__btn" onClick={() => setVisible((v) => Math.min(v + PAGE, list.length))}>
               ⬇️ Aur {Math.min(PAGE, list.length - visible)} dikhao ({visible}/{list.length})
