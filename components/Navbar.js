@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { NAV_GROUPS, NAV_DIRECT, trailForPath, nodeAt } from "@/lib/nav";
 import { getNewWordEntries, newWordDayKey, newWordDayLabel } from "@/lib/vocab";
 import { getUserTopics } from "@/lib/userpyq";
-import { notesByBook, bookIcon, bookLabel, isSelNote } from "@/lib/pastednotes";
+import { notesByBook, bookIcon, bookLabel } from "@/lib/pastednotes";
 import ThemeToggle from "./ThemeToggle";
 import FocusLock from "./FocusLock";
 import TopbarInfo from "./TopbarInfo";
@@ -133,7 +133,7 @@ export default function Navbar() {
             { href: `/notes/paste?${q}`, label: `📚 Poora ${label}`, off: ["n"] },
             ...g.items.map((n) => ({
               href: `/notes/paste?${q}&n=${encodeURIComponent(n.k)}`,
-              label: isSelNote(n) ? `✂️ ${n.topic || "chuna hua"}` : `p.${n.page} · ${n.topic || "—"}`,
+              label: `p.${n.page} · ${n.topic || "—"}`,
             })),
           ],
         };

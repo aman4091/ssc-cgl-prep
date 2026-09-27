@@ -5,8 +5,8 @@
 //   💬 Poochho   — dayein taraf panel khulta hai, usi text par baatcheet
 //   🖼 Tasveer   — Wikipedia/Commons se photo, usi panel mein (muft, bina key)
 //   🔍 Google    — nayi tab mein google.com par wahi text
-//   📝 Notesliner  — chuna hua text seedha "Notesliner" page par (kis subject
-//                  ka hai, ye pehle poochha jata hai — wahi ek click)
+//   📝 One-liner  — chuni hui line seedha One-liners page par (kis subject
+//                  ki hai, wahi ek baar poochha jata hai)
 //   📋 Copy      — clipboard mein
 //
 // Panel ke andar:
@@ -30,7 +30,7 @@
 //   • Panel ke BAHAR click karne par wo chhup jata hai, par baatcheet mitti
 //     nahi — dayein kinare par 💬 wala chhota button use wapas le aata hai.
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import "@/app/selectask.css";
 import Markdown from "./Markdown";
@@ -39,7 +39,7 @@ import { askSelection } from "@/lib/client-ai";
 import { searchImages } from "@/lib/webimages";
 import { getThreads, saveThread, newThreadId } from "@/lib/asklog";
 import { putAns, qText as sprintQText } from "@/lib/sprint";
-import { saveNote, notesByBook, bookLabel, bookIcon, selPage } from "@/lib/pastednotes";
+import { addOneLiner, OL_SUBS } from "@/lib/oneliners";
 
 // 💬 Poochho dabate hi yahi sawaal apne aap chala jata hai — pehle kuch
 // likhna nahi padta.
@@ -110,45 +110,17 @@ function Strip({ m, onOpen }) {
   );
 }
 
-// 📝 "Notesliner — kis subject mein?" — chuna hua text seedha us page par.
+// 📝 "Kis subject ki one-liner?" — chuna hua text seedha One-liners page par
+// (/oneliners), wahi chaar subject jo us page par hain: GS · English · Maths ·
+// Reasoning (lib/oneliners ka OL_SUBS).
 //
-// Yahan SIRF wahi subject dikhte hain jo one-liner page par pehle se hain.
-// Pehle yahan notes ki saari books (sattrah!) aa jati thi — us list mein se
-// galat naam daba dena aasan tha, aur note ek aisi book mein chala jata tha
-// jo us page par thi hi nahi. Naya subject shuru karna ho to ➕ — naam khud
-// likho, wahi menu mein aur page par aa jayega.
-//
-// Koi AI nahi chalta: text jaisa hai waisa jata hai (shakl sudharne ka
-// 🐋 Bold us page par pehle se hai). Isliye ye button muft hai.
+// Koi AI nahi chalta: line jaisi hai waisi jati hai. Isliye ye button muft hai.
 function OlPick({ text, onClose }) {
   const [saved, setSaved] = useState(null);
-  const [adding, setAdding] = useState(false);
-  const [naya, setNaya] = useState("");
-  const books = useMemo(() => notesByBook(), []);
-
-  const put = (g) => {
-    const first = String(text).trim().split(String.fromCharCode(10))[0].replace(/[*#]/g, "").trim();
-    saveNote(
-      {
-        book: g.book,
-        bookTitle: g.title || g.bookTitle || g.book,
-        eyebrow: g.eyebrow || "",
-        topic: first.slice(0, 44) || "Chuna hua",
-        page: selPage(),
-      },
-      text,
-    );
-    setSaved(g);
+  const put = (sub) => {
+    addOneLiner({ subject: sub.k, text });
+    setSaved(sub);
     setTimeout(onClose, 2200);
-  };
-
-  // ➕ se bana subject: naam se hi uska slug banta hai, taaki dobara wahi naam
-  // likhne par note usi jagah jaye (nayi book na ban jaye).
-  const putNaya = () => {
-    const name = naya.trim();
-    if (!name) return;
-    const slug = "mera-" + name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-    put({ book: slug || "mera", title: name, eyebrow: `📝 ${name}`, items: [] });
   };
 
   return (
@@ -156,43 +128,24 @@ function OlPick({ text, onClose }) {
       <div className="sa-olm__box" onClick={(e) => e.stopPropagation()}>
         {saved ? (
           <p className="sa-olm__ok">
-            ✅ <b>{bookLabel(saved)}</b> ke Notesliner mein daal diya.{" "}
-            <a href={`/notes/paste?book=${encodeURIComponent(saved.book)}`}>Kholo →</a>
+            ✅ <b>{saved.label}</b> ki one-liner ban gayi.{" "}
+            <a href={`/oneliners?sub=${saved.k}`}>Kholo →</a>
           </p>
         ) : (
           <>
             <div className="sa-olm__hd">
-              <b>📝 Notesliner — kis subject mein?</b>
+              <b>📝 Kis subject ki one-liner?</b>
               <button type="button" onClick={onClose} aria-label="Band karo">✕</button>
             </div>
             <p className="sa-olm__q">{text.slice(0, 220)}{text.length > 220 ? "…" : ""}</p>
             <div className="sa-olm__books">
-              {books.map((g) => (
-                <button key={g.book} type="button" onClick={() => put(g)}>
-                  <span>{bookIcon(g)}</span>
-                  {bookLabel(g)}
-                  <em>{g.items.length}</em>
+              {OL_SUBS.map((sub) => (
+                <button key={sub.k} type="button" onClick={() => put(sub)}>
+                  <span>{sub.icon}</span>
+                  {sub.label}
                 </button>
               ))}
-              {!adding && (
-                <button type="button" className="is-add" onClick={() => setAdding(true)}>➕ Naya subject</button>
-              )}
             </div>
-            {adding && (
-              <div className="sa-olm__new">
-                <input
-                  autoFocus
-                  value={naya}
-                  onChange={(e) => setNaya(e.target.value)}
-                  onKeyDown={(e) => { if (e.key === "Enter") putNaya(); }}
-                  placeholder="Subject ka naam — jaise Polity"
-                />
-                <button type="button" onClick={putNaya} disabled={!naya.trim()}>Daal do</button>
-              </div>
-            )}
-            {!books.length && !adding && (
-              <p className="sa-olm__hint">Abhi koi subject nahi — ➕ se naam likh kar shuru karo.</p>
-            )}
           </>
         )}
       </div>
@@ -438,9 +391,9 @@ export default function SelectAsk() {
               setBar(null);
             }}
           >🔍 Google</button>
-          {/* 📝 Seedha Notesliner mein — subject ek click mein poochhte
-              hain, phir note apni jagah chala jata hai. */}
-          <button type="button" onClick={() => { setOlText(bar.text); setBar(null); }}>📝 Notesliner</button>
+          {/* 📝 Seedha One-liners page par — subject ek click mein poochhte
+              hain, phir line apni jagah chali jati hai. */}
+          <button type="button" onClick={() => { setOlText(bar.text); setBar(null); }}>📝 One-liner</button>
           <button
             type="button"
             onClick={() => {
