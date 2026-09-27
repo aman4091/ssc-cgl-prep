@@ -15,6 +15,8 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "./paste.css";
 import OneLinerNotes from "@/components/OneLinerNotes";
+import OneLinerLayouts, { OL_LAYOUTS } from "@/components/OneLinerLayouts";
+import "./layouts.css";
 import { countOneLiner } from "@/lib/onelinerfmt";
 import { formatOneLiner } from "@/lib/client-ai";
 import { saveNote, removeNote, notesByBook } from "@/lib/pastednotes";
@@ -82,6 +84,13 @@ function Note({ n, onGone }) {
 export default function PasteNotesPage() {
   const [groups, setGroups] = useState([]);
   const [book, setBook] = useState("");   // khali = saari books
+  // 🎨 Padhne ka roop — "0" purana (edit/bold yahin), 1–15 components/OneLinerLayouts.
+  // Is device par yaad rehta hai.
+  const [lay, setLay] = useState("0");
+  useEffect(() => {
+    try { const v = localStorage.getItem("cgl.ollayout"); if (v && OL_LAYOUTS.some((l) => l.id === v)) setLay(v); } catch { /* ignore */ }
+  }, []);
+  const pickLay = (v) => { setLay(v); try { localStorage.setItem("cgl.ollayout", v); } catch { /* ignore */ } };
 
   const reload = useCallback(() => setGroups(notesByBook()), []);
   useEffect(() => {
@@ -122,6 +131,13 @@ export default function PasteNotesPage() {
         <span className="pn-count">
           📝 {tally.pages} page · {tally.pts} point{tally.star ? ` · ⭐ ${tally.star}` : ""}
         </span>
+        <label className="pn-lay">
+          <span>🎨 Roop</span>
+          <select value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Padhne ka roop">
+            <option value="0">Purana (edit / bold yahin)</option>
+            {OL_LAYOUTS.map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
+          </select>
+        </label>
         {groups.length > 1 && (
           <span className="pn-books">
             <button type="button" className={`pn-b${book ? "" : " is-on"}`} onClick={() => setBook("")}>Sab</button>
@@ -137,7 +153,7 @@ export default function PasteNotesPage() {
         )}
       </div>
 
-      {shown.map((g) => (
+      {lay !== "0" ? <OneLinerLayouts lay={lay} groups={shown} /> : shown.map((g) => (
         <div key={g.book}>
           {!book && groups.length > 1 && <h2 className="pn-bookt">{g.eyebrow || g.title}</h2>}
           {g.items.map((n) => <Note key={n.k} n={n} onGone={reload} />)}
