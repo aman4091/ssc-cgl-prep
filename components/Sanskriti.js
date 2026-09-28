@@ -72,18 +72,23 @@ function basePairs(k) {
 }
 
 // 5 jodiyan — galti wali pehle; daayen ke jawab alag-alag hone chahiye.
-function pickSet(all) {
+// `extra` = owner ki apni jodiyan (✍️) — baaki sets mein beech
+// beech mein 1-2 aa jaati hain (galti wali ho to zaroor).
+function pickSet(all, extra = []) {
   const g = readGalti();
-  const pool = [...shuffle(all.filter((x) => g[x.id])), ...shuffle(all.filter((x) => !g[x.id]))];
+  // Galti wali apni jodi ho to pakka 1; warna 70% baar 1 (kabhi-kabhi 2).
+  const ownSorted = shuffle(extra).sort((a, b) => (g[b.id] ? 1 : 0) - (g[a.id] ? 1 : 0));
+  const k = !extra.length ? 0 : g[ownSorted[0].id] ? 1 : Math.random() < 0.7 ? (Math.random() < 0.3 ? 2 : 1) : 0;
+  const own = ownSorted.slice(0, k);
+  const pool = [...own, ...shuffle(all.filter((x) => g[x.id])), ...shuffle(all.filter((x) => !g[x.id]))];
   const out = []; const usedR = new Set(); const usedL = new Set();
   for (const x of pool) {
     if (usedR.has(norm(x.r)) || usedL.has(norm(x.l))) continue;
     out.push(x); usedR.add(norm(x.r)); usedL.add(norm(x.l));
     if (out.length === 5) break;
   }
-  return out;
+  return shuffle(out);
 }
-
 // ✏️ Jodi milne ke baad — dono taraf ka text aur explanation badlo.
 function EditPair({ x, onDone }) {
   const [f, setF] = useState({ l: x.l, r: x.r, note: x.note || "" });
@@ -132,8 +137,9 @@ function MineList() {
 
 function Match({ setK }) {
   const all = useMemo(() => pairsOf(setK), [setK]);
+  const extra = useMemo(() => (setK === "mine" ? [] : pairsOf("mine")), [setK]);
   const [round, setRound] = useState(0);
-  const set = useMemo(() => pickSet(all), [all, round]); // eslint-disable-line react-hooks/exhaustive-deps
+  const set = useMemo(() => pickSet(all, extra), [all, round]); // eslint-disable-line react-hooks/exhaustive-deps
   const right = useMemo(() => shuffle(set), [set]);
   const [sel, setSel] = useState(null);
   const [done, setDone] = useState([]);
@@ -171,7 +177,7 @@ function Match({ setK }) {
             const x = { ...x0, ...(patched[x0.id] || {}) };
             return (
               <li key={x.id} className={missed.has(x.id) ? "is-miss" : ""}>
-                <b>{x.l}</b> = <b>{x.r}</b>{x.note ? <span> — {x.note}</span> : null}
+                {x.mine ? <em className="sk-own" title="Tumhari apni jodi">✍️</em> : null}<b>{x.l}</b> = <b>{x.r}</b>{x.note ? <span> — {x.note}</span> : null}
                 {edit === x.id
                   ? <EditPair x={x} onDone={(p) => { if (p !== undefined) setPatched((o) => ({ ...o, [x.id]: p })); setEdit(null); }} />
                   : <button type="button" className="sk-edbtn" onClick={() => setEdit(x.id)}>✏️ Edit</button>}
@@ -190,7 +196,8 @@ export default function Sanskriti() {
   const [tick, setTick] = useState(0);
   useEffect(() => {
     // Select menu se "Kholo →" → /culture?set=mine; apni jodi ho to wahi pehle.
-    const q = new URLSearchParams(window.location.search).get("set");
+    const sp = new URLSearchParams(window.location.search);
+    const q = sp.get("set");
     if (q && SETS.some((x) => x.k === q)) setK(q);
     else if (readPairs().length) setK("mine");
     const on = () => setTick((t) => t + 1);

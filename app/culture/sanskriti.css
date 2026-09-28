@@ -32,3 +32,4 @@
 .sk-edit .sk-del { margin-left: auto; color: var(--vn) !important; border-color: var(--vn); }
 .sk-mine { max-width: 900px; margin: 22px auto 0; }
 .sk-mine summary { cursor: pointer; font-weight: 800; }
+.sk-own { font-style: normal; margin-right: 4px; }

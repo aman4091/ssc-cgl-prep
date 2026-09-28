@@ -3,7 +3,7 @@
 /* ── select karte hi upar aane wali patti ──────────────────────────────── */
 .sa-bar {
   position: fixed;
-  z-index: 420;
+  z-index: 440;   /* panel (430) ke upar — panel ke andar bhi select hota hai */
   display: flex;
   gap: 4px;
   padding: 4px;

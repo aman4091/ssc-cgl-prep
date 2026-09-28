@@ -14,6 +14,8 @@ import { aiSiteUrl } from "@/lib/aisites";
 import ZoomableImage from "@/components/ZoomableImage";
 import Markdown from "@/components/Markdown";
 import NotesFactsBtn from "@/components/NotesFactsBtn";
+import NotesPairsBtn from "@/components/NotesPairsBtn";
+import { pageKey as notesPageKey } from "@/lib/notesfacts";
 
 // Plain text of a page's blocks — what the ✨ Gemini button sends. Strips the
 // transcription markup (**bold**, __underline__, [?…] unsure marks) to words.
@@ -576,6 +578,8 @@ export default function NotesReader({ book }) {
                     title="Is page ke one-liner paste karo"
                   >📥</button>
                   <NotesFactsBtn book={book} page={p} text={pageText(p)} />
+                  {/* 🧩 Poora page → jodi milao ke sets (Bharat Sanskriti page par). */}
+                  <NotesPairsBtn pageKey={notesPageKey(book, p)} title={`${book.title} · ${p.topic || ""}`} page={p.book_page} text={pageText(p)} />
                   <span className="nt-meta">page {p.book_page}</span>
                 </span>
               </div>

@@ -77,6 +77,20 @@ function insideOwn(node) {
   return false;
 }
 
+// Selection ki patti kahan NAHI aani chahiye: patti / badi tasveer ke andar,
+// aur panel ke likhne wale dabbe mein. DeepSeek ke jawab (panel) mein
+// select karna ab chalta hai — owner wahan se bhi one-liner / jodi banata hai.
+function noBarFor(node) {
+  let el = node && (node.nodeType === 1 ? node : node.parentElement);
+  while (el) {
+    const c = el.classList;
+    if (c && (c.contains("sa-bar") || c.contains("sa-light"))) return true;
+    if (/^(INPUT|TEXTAREA)$/.test(el.tagName)) return true;
+    el = el.parentElement;
+  }
+  return false;
+}
+
 // Is sawaal ki tasveer kis cheez ki dhoondhein. Sawaal mein koi NAAM ho to
 // wahi ("Konark Temple kab bana?" → Konark Temple), warna jo select kiya tha.
 function imageQueryFor(question, sel) {
@@ -232,7 +246,7 @@ export default function SelectAsk() {
   const read = useCallback(() => {
     const s = typeof window !== "undefined" ? window.getSelection() : null;
     const text = s ? String(s).trim() : "";
-    if (!s || !text || text.length < 2 || s.rangeCount === 0 || insideOwn(s.anchorNode)) { setBar(null); return; }
+    if (!s || !text || text.length < 2 || s.rangeCount === 0 || noBarFor(s.anchorNode)) { setBar(null); return; }
     const r = s.getRangeAt(0).getBoundingClientRect();
     if (!r || (!r.width && !r.height)) { setBar(null); return; }
     setBar({
