@@ -1,0 +1,187 @@
+/* 🇮🇳 States GK — pandrah tarike, ek hi roop. */
+
+.stg-top { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.stg-h1 { margin: 0; font-size: 1.45rem; font-weight: 800; }
+.stg-pick { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-3); }
+.stg-pick select {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+.stg-sub { margin: 4px 0 16px; font-size: 0.85rem; color: var(--text-3); }
+.stg-dim { color: var(--text-3); }
+.stg-ok { color: var(--success); }
+.stg-no { color: var(--warning); }
+
+/* kis cheez ka test — nritya / tyohar / janjati / devta / kyun */
+.stg-kinds { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.stg-kinds button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-2);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.stg-kinds button.is-on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+
+.stg-sel, .stg-find {
+  width: 100%;
+  max-width: 360px;
+  margin-bottom: 14px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+/* ── dekhne wale roop ───────────────────────────────────────────────────── */
+.stg-page { padding: 16px 18px; border-radius: 16px; border: 1px solid var(--line); background: var(--card); }
+.stg-page h3 { margin: 0 0 10px; font-size: 1.2rem; }
+.stg-page h4 { margin: 14px 0 4px; font-size: 0.9rem; color: var(--accent); }
+.stg-page p { margin: 0; line-height: 1.7; }
+.stg-fl { margin: 0; padding-left: 18px; display: grid; gap: 6px; line-height: 1.6; }
+.stg-god { color: var(--text-3); }
+
+.stg-two { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; align-items: start; }
+.stg-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  font-size: 0.88rem;
+}
+.stg-row b { color: var(--accent); white-space: nowrap; }
+.stg-card { padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--card); }
+.stg-card h4 { margin: 0 0 6px; font-size: 0.95rem; color: var(--accent); }
+.stg-card p { margin: 3px 0; font-size: 0.85rem; line-height: 1.6; }
+.stg-card ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 0.85rem; line-height: 1.5; }
+.stg-trick p { color: var(--text-2); }
+
+.stg-tw { overflow-x: auto; }
+.stg-t { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.stg-t th, .stg-t td { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+.stg-t th { color: var(--accent); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.stg-t tr:hover td { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+
+/* ── test wale roop ─────────────────────────────────────────────────────── */
+.stg-score { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; font-size: 0.9rem; font-weight: 700; }
+.stg-reset {
+  margin-left: auto;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-2);
+  font-family: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.stg-q {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  max-width: 640px;
+}
+.stg-q small { color: var(--text-3); font-size: 0.8rem; }
+.stg-q > b { font-size: 1.4rem; line-height: 1.4; }
+.stg-q.is-ok { border-color: var(--success); }
+.stg-q.is-no { border-color: var(--warning); }
+.stg-opts { display: grid; gap: 8px; }
+.stg-opts button, .stg-tf button, .stg-nav button, .stg-match button {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 0.92rem;
+  text-align: left;
+  cursor: pointer;
+}
+.stg-opts button:hover { border-color: var(--accent); }
+.stg-opts button.is-ok, .stg-match button.is-done { border-color: var(--success); background: color-mix(in srgb, var(--success) 15%, transparent); }
+.stg-opts button.is-no, .stg-match button.is-no { border-color: var(--warning); background: color-mix(in srgb, var(--warning) 15%, transparent); }
+.stg-ans { margin: 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.92rem; }
+.stg-ans button {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.stg-form { display: flex; gap: 8px; }
+.stg-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 1rem;
+}
+.stg-tf { display: flex; gap: 8px; }
+.stg-tf button { flex: 1; text-align: center; font-weight: 700; }
+
+/* flashcard */
+.stg-flash {
+  display: grid;
+  gap: 8px;
+  place-items: center;
+  text-align: center;
+  min-height: 200px;
+  align-content: center;
+  padding: 24px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  cursor: pointer;
+  max-width: 640px;
+}
+.stg-flash b { font-size: 1.7rem; line-height: 1.35; }
+.stg-flash em { color: var(--text-2); font-style: normal; font-size: 0.9rem; }
+.stg-flash.is-open { border-color: var(--accent); }
+.stg-nav { display: flex; align-items: center; gap: 12px; margin-top: 12px; max-width: 640px; }
+.stg-nav button { flex: none; text-align: center; }
+.stg-nav .stg-dim { margin: 0 auto; }
+
+/* jodi milao */
+.stg-match { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 720px; }
+.stg-match > div { display: grid; gap: 8px; align-content: start; }
+.stg-match button.is-pick { border-color: var(--accent); background: var(--accent-wash); }
+.stg-match button:disabled { opacity: 0.55; cursor: default; }
+
+/* Leitner ke dabbe */
+.stg-boxes { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px; font-size: 0.8rem; color: var(--text-3); }
+.stg-boxes span { display: flex; gap: 6px; align-items: baseline; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); }
+.stg-boxes b { color: var(--text-1); font-size: 0.95rem; }
+
+@media (max-width: 600px) {
+  .stg-pick { margin-left: 0; width: 100%; }
+  .stg-pick select { flex: 1; }
+  .stg-q > b { font-size: 1.2rem; }
+  .stg-match { grid-template-columns: 1fr; }
+}
