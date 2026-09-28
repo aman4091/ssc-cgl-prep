@@ -1,0 +1,207 @@
+/* 🔤 Vocab yaad karne ke 15 tareeke (components/VocabLayouts.js). */
+
+.vl-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 10px 0 14px; }
+.vl-pick select {
+  height: 34px; padding: 0 12px; border-radius: 999px; cursor: pointer; font: inherit; font-size: 0.82rem; font-weight: 700;
+  border: 1px solid var(--accent); background: var(--card); color: var(--text-1);
+}
+.vl-types { display: flex; flex-wrap: wrap; gap: 6px; }
+.vl-types button { height: 30px; padding: 0 12px; border-radius: 999px; cursor: pointer; font: inherit; font-size: 0.76rem; font-weight: 700; border: 1px solid var(--line); background: transparent; color: var(--text-2); }
+.vl-types button.is-on { background: var(--accent); border-color: var(--accent); color: #1a1200; }
+
+.vlx { --vy: #22c55e; --vn: #ef4444; margin-bottom: 30px; }
+.vlx button { font: inherit; color: inherit; }
+.vlx-dim { color: var(--text-3); font-size: 0.82rem; margin: 6px 0; }
+.vlx-badge { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.68rem; font-weight: 800; vertical-align: middle; background: rgba(148, 163, 184, 0.16); color: #cbd5e1; white-space: nowrap; }
+.vlx-badge.is-ows { background: rgba(59, 130, 246, 0.18); color: #93c5fd; }
+.vlx-badge.is-idiom { background: rgba(168, 85, 247, 0.18); color: #d8b4fe; }
+.vlx-badge.is-vocab { background: rgba(16, 185, 129, 0.18); color: #6ee7b7; }
+.vlx-badge.is-new { background: rgba(245, 158, 11, 0.18); color: #fcd34d; }
+.vlx-score { display: flex; gap: 14px; justify-content: center; font-size: 0.8rem; font-weight: 700; color: var(--text-3); margin-bottom: 10px; }
+.vlx-score span:first-child { color: var(--vy); } .vlx-score span:nth-child(2) { color: var(--vn); }
+.vlx-rate { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.vlx-rate button { height: 50px; border-radius: 14px; border: 0; cursor: pointer; font-weight: 900; font-size: 1rem; color: #fff !important; }
+.vlx-rate .is-n { background: var(--vn); } .vlx-rate .is-y { background: var(--vy); }
+.vlx-big { display: block; margin: 14px auto 0; padding: 12px 24px; border-radius: 999px; border: 0; cursor: pointer; font-weight: 900; background: var(--accent); color: #1a1200 !important; }
+.vlx-ghost { display: block; margin: 12px auto 0; padding: 8px 16px; border-radius: 999px; cursor: pointer; border: 1px solid var(--line); background: transparent; font-weight: 700; }
+.vlx-done { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; padding: 30px; border-radius: 18px; border: 1px dashed var(--line); text-align: center; }
+.vlx-done b { font-size: 1.2rem; width: 100%; }
+.vlx-done button { padding: 8px 16px; border-radius: 999px; cursor: pointer; border: 1px solid var(--accent); background: transparent; font-weight: 700; }
+
+/* 1 · Flip */
+.vl1 { max-width: 600px; margin: 0 auto; }
+.vl1-card { perspective: 1200px; height: 340px; cursor: pointer; }
+.vl1-in { position: relative; height: 100%; transition: transform 0.55s; transform-style: preserve-3d; }
+.vl1-card.is-f .vl1-in { transform: rotateY(180deg); }
+.vl1-front, .vl1-back { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 24px; padding: 22px; display: flex; flex-direction: column; gap: 10px; box-sizing: border-box; }
+.vl1-front { align-items: center; justify-content: center; text-align: center; background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 22%, var(--card)), var(--card)); border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.vl1-front h2 { margin: 0; font-size: clamp(1.3rem, 4vw, 2rem); line-height: 1.3; }
+.vl1-front small { color: var(--text-3); }
+.vl1-back { transform: rotateY(180deg); background: var(--card); border: 2px solid var(--accent); overflow-y: auto; }
+.vl1-back h3 { margin: 0; font-size: 1.4rem; color: var(--accent); }
+.vl1-full { font-size: 0.95rem; }
+
+/* 2 · Ulta */
+.vl2 { max-width: 620px; margin: 0 auto; text-align: center; }
+.vl2-bubble { position: relative; padding: 20px; border-radius: 20px 20px 20px 4px; background: var(--card); border: 1px solid var(--line); text-align: left; }
+.vl2-bubble p { margin: 8px 0 0; font-size: 1.15rem; line-height: 1.5; }
+.vl2-q { font-size: 4rem; font-weight: 900; line-height: 1.1; color: var(--accent); opacity: 0.5; margin-top: 8px; }
+.vl2-ans { margin-top: 10px; padding: 14px; border-radius: 16px; border: 2px dashed var(--accent); font-size: 1.4rem; }
+
+/* 3 · MCQ */
+.vl3 { max-width: 720px; margin: 0 auto; }
+.vl3-q { text-align: center; padding: 20px; border-radius: 18px; background: var(--card); border: 1px solid var(--line); }
+.vl3-q h2 { margin: 8px 0 4px; font-size: clamp(1.2rem, 3.4vw, 1.7rem); line-height: 1.35; }
+.vl3-q small { color: var(--text-3); }
+.vl3-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.vl3-opts button { display: flex; gap: 10px; align-items: flex-start; padding: 14px; border-radius: 14px; cursor: pointer; text-align: left; border: 1px solid var(--line); background: var(--card); line-height: 1.45; transition: transform 0.1s; }
+.vl3-opts button:hover { border-color: var(--accent); }
+.vl3-opts b { flex: none; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; background: var(--bg-2); font-size: 0.8rem; }
+.vl3-opts .is-y { border-color: var(--vy); background: color-mix(in srgb, var(--vy) 20%, var(--card)); }
+.vl3-opts .is-n { border-color: var(--vn); background: color-mix(in srgb, var(--vn) 20%, var(--card)); }
+.vl3-opts .is-dim { opacity: 0.45; }
+@media (max-width: 640px) { .vl3-opts { grid-template-columns: 1fr; } }
+
+/* 4 · Type karo */
+.vl4, .vl8, .vl13 { max-width: 640px; margin: 0 auto; text-align: center; }
+.vl4-hint { padding: 16px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); text-align: left; }
+.vl4-hint p { margin: 8px 0 0; font-size: 1.05rem; line-height: 1.5; }
+.vl4-slots, .vl8-built, .vl13-word { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; margin: 16px 0; }
+.vl4-slots i, .vl8-built i, .vl13-word i { width: 26px; height: 34px; display: grid; place-items: center; font-style: normal; font-weight: 800; font-size: 1.1rem; text-transform: uppercase; border-bottom: 3px solid var(--accent); }
+.vl4-slots i.is-sp, .vl13-word i.is-sp { width: 14px; border: 0; }
+.vl4-in { width: 100%; box-sizing: border-box; height: 52px; padding: 0 16px; border-radius: 14px; font: inherit; font-size: 1.15rem; text-align: center; background: var(--bg-2); color: var(--text-1); border: 2px solid var(--line); }
+.vl4-in:focus { outline: 0; border-color: var(--accent); }
+.vl4-acts { display: flex; justify-content: center; gap: 10px; margin-top: 12px; }
+.vl4-acts button { padding: 9px 18px; border-radius: 999px; cursor: pointer; border: 1px solid var(--line); background: var(--card); font-weight: 700; }
+.vl4-acts .is-go { background: var(--accent); border-color: var(--accent); color: #1a1200 !important; }
+.vl4-res { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 14px; padding: 14px; border-radius: 14px; font-weight: 800; }
+.vl4-res.is-y { background: color-mix(in srgb, var(--vy) 18%, transparent); color: var(--vy); }
+.vl4-res.is-n { background: color-mix(in srgb, var(--vn) 18%, transparent); color: var(--vn); }
+.vl4-res b { color: var(--text-1); }
+.vl4-res button { padding: 7px 16px; border-radius: 999px; border: 0; cursor: pointer; background: var(--accent); color: #1a1200 !important; font-weight: 800; }
+
+/* 5 · Leitner */
+.vl5 { max-width: 720px; margin: 0 auto; }
+.vl5-boxes { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; align-items: end; height: 150px; }
+.vl5-b { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 2px; padding-bottom: 6px; border-radius: 12px; border: 1px solid var(--line); overflow: hidden; }
+.vl5-b i { position: absolute; left: 0; right: 0; bottom: 0; height: var(--h); background: linear-gradient(0deg, color-mix(in srgb, var(--accent) 45%, transparent), color-mix(in srgb, var(--accent) 10%, transparent)); }
+.vl5-b > :not(i) { position: relative; }
+.vl5-b b { font-size: 1.3rem; } .vl5-b small { font-size: 0.7rem; font-weight: 700; } .vl5-b em { font-style: normal; font-size: 0.62rem; color: var(--text-3); }
+.vl5-b.is-cur { border: 2px solid var(--accent); box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 40%, transparent); }
+.vl5-card { margin-top: 12px; padding: 22px; border-radius: 20px; text-align: center; background: var(--card); border: 1px solid var(--line); }
+.vl5-card h2 { margin: 10px 0; font-size: clamp(1.2rem, 3.4vw, 1.7rem); line-height: 1.35; }
+.vl5-a { font-size: 1.15rem; color: var(--accent); font-weight: 700; }
+
+/* 6 · Jodi milao */
+.vl6 { max-width: 860px; margin: 0 auto; }
+.vl6-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.vl6-cols > div { display: grid; gap: 8px; align-content: start; }
+.vl6-cols button { min-height: 52px; padding: 10px 14px; border-radius: 12px; cursor: pointer; text-align: left; line-height: 1.4; font-size: 0.9rem; border: 1px solid var(--line); background: var(--card); transition: all 0.15s; }
+.vl6-cols button.is-sel { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 18%, var(--card)); }
+.vl6-cols button.is-ok { opacity: 0.35; border-color: var(--vy); pointer-events: none; }
+.vl6-cols button.is-bad { border-color: var(--vn); animation: vl-shake 0.35s; }
+@keyframes vl-shake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+/* 7 · Memory */
+.vl7 { max-width: 760px; margin: 0 auto; text-align: center; }
+.vl7-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.vl7-t { aspect-ratio: 4 / 3; border-radius: 14px; cursor: pointer; border: 1px solid var(--line); background: linear-gradient(145deg, color-mix(in srgb, var(--accent) 28%, var(--card)), var(--card)); display: grid; place-items: center; padding: 6px; font-size: 0.78rem; line-height: 1.3; transition: transform 0.25s; }
+.vl7-t span { overflow: hidden; }
+.vl7-t:not(.is-open) span { font-size: 1.8rem; font-weight: 900; color: var(--accent); }
+.vl7-t.is-open { background: var(--card); transform: rotateY(360deg); }
+.vl7-t.is-open.is-q { border-color: #60a5fa; } .vl7-t.is-open.is-a { border-color: #c084fc; }
+.vl7-t.is-got { border-color: var(--vy); background: color-mix(in srgb, var(--vy) 16%, var(--card)); }
+@media (max-width: 560px) { .vl7-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* 8 · Akshar jodo */
+.vl8-built i.is-y { border-color: var(--vy); color: var(--vy); } .vl8-built i.is-n { border-color: var(--vn); color: var(--vn); }
+.vl8-tiles { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.vl8-tiles button { width: 44px; height: 48px; border-radius: 10px; cursor: pointer; font-weight: 900; font-size: 1.1rem; border: 1px solid var(--line); border-bottom-width: 4px; background: var(--card); }
+.vl8-tiles button:disabled { opacity: 0.15; cursor: default; }
+
+/* 9 · Speed */
+.vl9 { max-width: 600px; margin: 0 auto; text-align: center; padding: 22px; border-radius: 22px; background: var(--card); border: 2px solid var(--accent); }
+.vl9 h2 { margin: 10px 0; font-size: clamp(1.3rem, 4vw, 1.9rem); line-height: 1.3; }
+.vl9-start { padding: 40px 22px; }
+.vl9-bar { height: 6px; border-radius: 6px; background: var(--line); overflow: hidden; }
+.vl9-bar i { display: block; height: 100%; background: var(--accent); transition: width 1s linear; }
+.vl9-clock { font-size: 3rem; font-weight: 900; color: var(--accent); line-height: 1.1; margin-top: 6px; }
+.vl9-a { font-size: 1.15rem; font-weight: 700; color: var(--accent); }
+
+/* 10 · Sach / Jhooth */
+.vl10 { max-width: 620px; margin: 0 auto; }
+.vl10-top { display: flex; justify-content: space-between; font-weight: 800; font-size: 0.9rem; margin-bottom: 10px; }
+.vl10-card { padding: 26px 22px; border-radius: 22px; text-align: center; background: var(--card); border: 2px solid var(--line); transition: background 0.2s, border-color 0.2s; }
+.vl10-card h2 { margin: 10px 0 0; font-size: clamp(1.4rem, 4.5vw, 2.1rem); }
+.vl10-eq { display: block; font-size: 1.6rem; color: var(--text-3); }
+.vl10-card p { margin: 0; font-size: 1.1rem; line-height: 1.5; }
+.vl10-card small { display: block; margin-top: 10px; color: var(--text-2); }
+.vl10-card.is-y { border-color: var(--vy); background: color-mix(in srgb, var(--vy) 14%, var(--card)); }
+.vl10-card.is-n { border-color: var(--vn); background: color-mix(in srgb, var(--vn) 14%, var(--card)); }
+.vl10-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+.vl10-btns button { height: 60px; border-radius: 16px; border: 0; cursor: pointer; font-weight: 900; font-size: 1.1rem; color: #fff !important; }
+.vl10-btns .is-n { background: var(--vn); } .vl10-btns .is-y { background: var(--vy); }
+.vl10-btns button:disabled { opacity: 0.5; }
+
+/* 11 · Cover */
+.vl11-bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; font-size: 0.82rem; font-weight: 700; }
+.vl11-bar button { padding: 5px 12px; border-radius: 999px; cursor: pointer; border: 1px solid var(--line); background: transparent; }
+.vl11-bar button.is-on { background: var(--accent); border-color: var(--accent); color: #1a1200 !important; }
+.vl11 table { width: 100%; border-collapse: collapse; font-size: 0.92rem; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); }
+.vl11 th { text-align: left; padding: 8px 12px; background: var(--bg-2); font-size: 0.72rem; text-transform: uppercase; color: var(--text-3); }
+.vl11 td { padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: top; line-height: 1.45; cursor: pointer; }
+.vl11 td:first-child { width: 30px; color: var(--text-3); }
+.vl11 td:nth-child(2) { width: 34%; }
+.vl11 td.is-cov { color: transparent; background: repeating-linear-gradient(135deg, var(--bg-2) 0 8px, color-mix(in srgb, var(--accent) 12%, var(--bg-2)) 8px 16px); }
+.vl11 td.is-cov * { visibility: hidden; }
+
+/* 12 · 7 ka jhund */
+.vl12 { max-width: 760px; margin: 0 auto; }
+.vl12-top { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.vl12-top span { color: var(--accent); font-weight: 700; font-size: 0.88rem; }
+.vl12-list { margin: 0; padding: 0; list-style: none; counter-reset: c; display: grid; gap: 8px; }
+.vl12-list li { counter-increment: c; position: relative; padding: 12px 14px 12px 50px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); }
+.vl12-list li::before { content: counter(c); position: absolute; left: 12px; top: 12px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 900; background: color-mix(in srgb, var(--accent) 25%, transparent); color: var(--accent); }
+.vl12-list li p { margin: 6px 0 0; color: var(--text-2); line-height: 1.5; }
+.vl12-list li > button { margin-top: 6px; padding: 4px 12px; border-radius: 999px; cursor: pointer; border: 1px dashed var(--accent); background: transparent; font-size: 0.8rem; }
+.vl12-list li.is-y { border-color: var(--vy); } .vl12-list li.is-n { border-color: var(--vn); }
+.vl12-m { display: inline-flex; gap: 6px; margin-top: 8px; }
+.vl12-m button { width: 40px; height: 32px; border-radius: 8px; border: 0; cursor: pointer; font-weight: 900; color: #fff !important; }
+.vl12-m .is-y { background: var(--vy); } .vl12-m .is-n { background: var(--vn); }
+.vl12 .vlx-done { margin-top: 12px; }
+
+/* 13 · Hangman */
+.vl13-top { display: grid; gap: 10px; }
+.vl13-life { display: flex; justify-content: center; gap: 4px; font-size: 1.3rem; }
+.vl13-life i { font-style: normal; transition: opacity 0.2s, filter 0.2s; }
+.vl13-life i.is-gone { opacity: 0.2; filter: grayscale(1); }
+.vl13-keys { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; max-width: 480px; margin: 0 auto; }
+.vl13-keys button { height: 42px; border-radius: 8px; cursor: pointer; font-weight: 800; text-transform: uppercase; border: 1px solid var(--line); background: var(--card); }
+.vl13-keys button.is-y { background: var(--vy); color: #fff !important; border-color: var(--vy); }
+.vl13-keys button.is-n { opacity: 0.25; }
+
+/* 14 · A–Z */
+.vl14-az { position: sticky; top: 70px; z-index: 5; display: flex; flex-wrap: wrap; gap: 3px; padding: 8px; margin-bottom: 12px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); }
+.vl14-az a { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 6px; font-weight: 800; font-size: 0.8rem; color: var(--text-2); text-decoration: none; }
+.vl14-az a:hover { background: var(--accent); color: #1a1200; }
+.vl14 section { scroll-margin-top: 130px; }
+.vl14 h3 { margin: 18px 0 8px; font-size: 1.8rem; font-family: Georgia, serif; color: var(--accent); border-bottom: 2px solid var(--line); }
+.vl14 h3 small { font-size: 0.8rem; color: var(--text-3); font-family: inherit; }
+.vl14-e { padding: 8px 4px; border-bottom: 1px dotted var(--line); cursor: pointer; }
+.vl14-e b { font-family: Georgia, serif; font-size: 1.05rem; }
+.vl14-e p { margin: 2px 0 0; color: var(--text-2); font-size: 0.9rem; line-height: 1.45; }
+.vl14-e.is-open { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+.vl14-full { margin-top: 8px; padding: 10px 12px; border-radius: 10px; background: var(--card); font-size: 0.9rem; cursor: auto; }
+
+/* 15 · Reel */
+.vl15 { height: calc(100dvh - 210px); min-height: 460px; overflow-y: auto; scroll-snap-type: y mandatory; border-radius: 24px; border: 1px solid var(--line); }
+.vl15-s { height: 100%; scroll-snap-align: start; box-sizing: border-box; padding: 28px clamp(18px, 6vw, 60px); display: flex; flex-direction: column; justify-content: center; gap: 12px; overflow: hidden; background: radial-gradient(120% 80% at 10% 0%, rgba(96, 165, 250, 0.2), transparent 60%), var(--card); }
+.vl15-s.is-idiom { background: radial-gradient(120% 80% at 10% 0%, rgba(192, 132, 252, 0.22), transparent 60%), var(--card); }
+.vl15-s.is-vocab { background: radial-gradient(120% 80% at 10% 0%, rgba(52, 211, 153, 0.2), transparent 60%), var(--card); }
+.vl15-s.is-new { background: radial-gradient(120% 80% at 10% 0%, rgba(251, 191, 36, 0.2), transparent 60%), var(--card); }
+.vl15-s small { color: var(--text-3); }
+.vl15-s .vlx-badge { align-self: flex-start; }
+.vl15-s h2 { margin: 0; font-size: clamp(2rem, 7vw, 3.6rem); line-height: 1.1; letter-spacing: -0.02em; }
+.vl15-m { max-height: 45%; overflow-y: auto; font-size: 1.05rem; color: var(--text-2); }
+.vl15-s em { font-style: normal; color: var(--text-3); font-size: 0.8rem; text-align: center; }
+.vl1-back .vlx-badge, .vl1-front .vlx-badge { align-self: center; } .vl1-back .vlx-badge { align-self: flex-start; }
