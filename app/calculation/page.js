@@ -6,8 +6,8 @@
 //   1. Topic ka apna dropdown — kaunsa hissa (table 11–20, square 30–40…).
 //   2. 📖 Dekho — poora table/list saamne.
 //   3. ▶️ Test — usi hisse ke sawaal ek ke baad ek, jab tak khud na roko.
-//      Ginti wale jawab TYPE karne hote hain (yahi asli practice hai),
-//      formula wale chaar mein se chunne hote hain.
+//      Har jawab chaar option mein se chunna hai — pehle ginti wale type
+//      karne hote the, owner ne "likhne ki jagah options" maange.
 //
 // Topic kabhi mix nahi hote — test hamesha usi deck ka rehta hai jo chuna
 // hai (owner: "sabko mix mat kario alag alag hi rakhio").
@@ -18,10 +18,11 @@
 // (components/CalcLayouts) — owner dekh kar ek chunega. "0" = yahi purana
 // (topic ki tiles). Chunaav is device par `cgl.calclayout` mein.
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./calc.css";
-import { GROUPS, groupOf, buildDeck, shuffled, optionsFor, isRight } from "@/lib/calcdecks";
+import { GROUPS, groupOf, buildDeck, shuffled, optionsFor } from "@/lib/calcdecks";
 import CalcLayouts, { CL_LAYOUTS } from "@/components/CalcLayouts";
+import { numOpts } from "@/lib/calcskills";
 import "./layouts.css";
 
 const LAY_KEY = "cgl.calclayout";
@@ -68,16 +69,21 @@ function Test({ deck, onStop, onScore }) {
   const [best, setBest] = useState(0);
   const [t0, setT0] = useState(() => Date.now());
   const [secs, setSecs] = useState(0);
-  const box = useRef(null);
 
   const item = queue[at] || null;
-  const opts = useMemo(() => (deck.kind === "mcq" && item ? optionsFor(item, deck.items) : []), [deck, item]);
+  // Likhna nahi, chunna (owner: "likhne ki jagah options de"). Ginti wale deck
+  // ke galat option numOpts se — asli jaise; ginti na ho to deck se.
+  const opts = useMemo(() => {
+    if (!item) return [];
+    if (deck.kind === "mcq") return optionsFor(item, deck.items);
+    const o = numOpts(item.a);
+    return o.length >= 4 ? o : optionsFor(item, deck.items);
+  }, [deck, item]);
 
   useEffect(() => {
     const id = setInterval(() => setSecs(Math.round((Date.now() - t0) / 1000)), 500);
     return () => clearInterval(id);
   }, [t0]);
-  useEffect(() => { if (deck.kind === "num") box.current?.focus(); }, [at, deck.kind]);
 
   const next = () => {
     setTyped(""); setMark(null); setT0(Date.now()); setSecs(0);
@@ -101,13 +107,6 @@ function Test({ deck, onStop, onScore }) {
     }
   };
 
-  const submit = (e) => {
-    e.preventDefault();
-    if (!item || mark === "ok") return;
-    if (mark === "no") { next(); return; }   // galat ke baad Enter = agla
-    settle(isRight(item, typed));
-  };
-
   const pick = (o) => {
     if (!item || mark) return;
     setTyped(o);
@@ -129,20 +128,7 @@ function Test({ deck, onStop, onScore }) {
 
       <div className={`cal-q${mark === "ok" ? " is-ok" : mark === "no" ? " is-no" : ""}`}>
         <b>{item.q}</b>
-        {deck.kind === "num" ? (
-          <form onSubmit={submit}>
-            <input
-              ref={box}
-              value={typed}
-              onChange={(e) => { setTyped(e.target.value); if (mark === "no") setMark(null); }}
-              inputMode="decimal"
-              autoComplete="off"
-              placeholder="jawab…"
-            />
-            <button type="submit" className="btn btn--primary btn--sm">{mark === "no" ? "Agla →" : "Check"}</button>
-          </form>
-        ) : (
-          <div className="cal-opts">
+        <div className="cal-opts">
             {opts.map((o) => (
               <button
                 key={o}
@@ -151,14 +137,13 @@ function Test({ deck, onStop, onScore }) {
                 onClick={() => pick(o)}
               >{o}</button>
             ))}
-          </div>
-        )}
+        </div>
       </div>
 
       {mark === "no" && (
         <p className="cal-ans">
           Sahi jawab: <b>{item.a}</b>
-          {deck.kind === "mcq" ? <button type="button" className="btn btn--ghost btn--sm" onClick={next}>Agla →</button> : null}
+          <button type="button" className="btn btn--ghost btn--sm" onClick={next}>Agla →</button>
         </p>
       )}
     </div>
