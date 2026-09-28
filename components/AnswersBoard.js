@@ -15,7 +15,7 @@ import { getCounts, bumpCount, countMark } from "@/lib/qcounter";
 import { useImageUrls } from "@/lib/wrongimages";
 // qchapter bhi getTags/setTags deta hai (wo CHAPTER ke tag hain), isliye
 // yahan alag naam.
-import { TAGS as QTAGS, getTag as getQTag, getTags as getQTags, setTag as setQTag, tagMeta as qTagMeta } from "@/lib/qtags";
+import { TAGS as QTAGS, getTag as getQTag, getTags as getQTags, setTag as setQTag, tagMeta as qTagMeta, tagIn as qTagIn } from "@/lib/qtags";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { saveQuiz, makeId, storageUsage } from "@/lib/storage";
 import Markdown, { LazyMarkdown } from "@/components/Markdown";
@@ -109,9 +109,9 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
   const { urls, missing } = useImageUrls(imagesOf(rec));
   // 🏷️ tag (lib/qtags) — card khulte hi store se, aur badalte hi wahin wapas.
   const [tag, setTagV] = useState("");
-  useEffect(() => { setTagV(getQTag(rec.id)); }, [rec.id]);
+  useEffect(() => { setTagV(getQTag(rec)); }, [rec]);
   useEffect(() => {
-    const on = () => setTagV(getQTag(rec.id));
+    const on = () => setTagV(getQTag(rec));
     // "cgl:qtags" isi device ka badlav hai; "cgl:sync-applied" doosre device
     // se aaya hua (tablet par tag lagaya, computer par dikhna chahiye).
     window.addEventListener("cgl:qtags", on);
@@ -120,7 +120,7 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
       window.removeEventListener("cgl:qtags", on);
       window.removeEventListener("cgl:sync-applied", on);
     };
-  }, [rec.id]);
+  }, [rec]);
   const [lb, setLb] = useState(null);
   const [pasteOpen, setPasteOpen] = useState(false);
   const [pasteText, setPasteText] = useState("");
@@ -238,7 +238,7 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
           <select
             className="ansp__tag"
             value={tag}
-            onChange={(e) => { setQTag(rec.id, e.target.value); setTagV(e.target.value); }}
+            onChange={(e) => { setQTag(rec, e.target.value); setTagV(e.target.value); }}
             title="Ye question mere liye kaisa hai"
             style={qTagMeta(tag) ? { borderColor: qTagMeta(tag).c, color: qTagMeta(tag).c } : undefined}
           >
@@ -565,12 +565,16 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     if (!hard.size) return;
     const all = getQTags();
     let n = 0;
-    for (const id of hard) if (!all[id]) { setQTag(id, "hardok", { by: "auto" }); n += 1; }
+    for (const r of mock) {
+      if (!hard.has(r.id) || qTagIn(all, r)) continue;
+      setQTag(r, "hardok", { by: "auto" });
+      n += 1;
+    }
     if (n) setQtagMap(getQTags());
-  }, [hard]);
+  }, [hard, mock]);
   const pool = useMemo(() => {
-    if (src === "untag") return mock.filter((r) => !qtagMap[r.id]);
-    if (src.startsWith("tag:")) { const k = src.slice(4); return mock.filter((r) => (qtagMap[r.id] || {}).t === k); }
+    if (src === "untag") return mock.filter((r) => !qTagIn(qtagMap, r));
+    if (src.startsWith("tag:")) { const k = src.slice(4); return mock.filter((r) => qTagIn(qtagMap, r) === k); }
     return mock;
   }, [mock, src, qtagMap]);
 
@@ -940,8 +944,8 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           <span className="ansp__tags">
             {SOURCES.map((x) => {
               const n = x.key === "all" ? mock.length
-                : x.key === "untag" ? mock.filter((r) => !qtagMap[r.id]).length
-                  : mock.filter((r) => (qtagMap[r.id] || {}).t === x.key.slice(4)).length;
+                : x.key === "untag" ? mock.filter((r) => !qTagIn(qtagMap, r)).length
+                  : mock.filter((r) => qTagIn(qtagMap, r) === x.key.slice(4)).length;
               return (
                 <button
                   key={x.key}

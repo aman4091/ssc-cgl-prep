@@ -678,14 +678,14 @@ function SolveInner() {
   const [spent, setSpent] = useState(0);
   const [paused, setPaused] = useState(false);
   // acc = ab tak jama waqt, t0 = chalu daur kab se. Ruki hui ghadi mein t0 = 0.
-  const clockRef = useRef({ id: null, t0: 0, acc: 0 });
+  const clockRef = useRef({ rec: null, t0: 0, acc: 0 });
   const spentOf = () => {
     const c = clockRef.current;
     return c.acc + (c.t0 ? (Date.now() - c.t0) / 1000 : 0);
   };
 
   useEffect(() => {
-    const on = () => setTagV(rec && !rec._quiz ? getTag(rec.id) : "");
+    const on = () => setTagV(rec && !rec._quiz ? getTag(rec) : "");
     on();
     // Doosre device (site) par tag badla ho to yahan bhi wahi dikhe.
     window.addEventListener("cgl:qtags", on);
@@ -704,14 +704,14 @@ function SolveInner() {
   // hui ghadi ka waqt tag ke hisaab mein bhi nahi jata.
   useEffect(() => {
     if (!rec || rec._quiz) return undefined;
-    clockRef.current = { id: rec.id, t0: Date.now(), acc: 0 };
+    clockRef.current = { rec, t0: Date.now(), acc: 0 };
     setSpent(0);
     setPaused(false);
     const tick = setInterval(() => setSpent(Math.round(spentOf())), 500);
     return () => {
       clearInterval(tick);
-      const { id } = clockRef.current;
-      if (id) autoTagBySecs(id, spentOf());
+      const { rec: r0 } = clockRef.current;
+      if (r0) autoTagBySecs(r0, spentOf());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rec?.id]);
@@ -726,16 +726,16 @@ function SolveInner() {
 
   const putTag = (k) => {
     if (!rec) return;
-    setTag(rec.id, k, { secs: spent });
+    setTag(rec, k, { secs: spent });
     setTagV(k);
   };
 
   // ⏭ Skip — "ise permanent skip mein daal do" aur agla question.
   const skipNow = () => {
     if (!rec) return;
-    setTag(rec.id, "skip", { secs: spent });
+    setTag(rec, "skip", { secs: spent });
     setTagV("skip");
-    clockRef.current = { id: null, t0: 0 };   // ghadi ka faisla ab na lage
+    clockRef.current = { rec: null, t0: 0, acc: 0 };   // ghadi ka faisla ab na lage
     if (idx < list.length - 1) go(idx + 1);
   };
 

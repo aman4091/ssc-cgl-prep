@@ -11,7 +11,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { dayKey } from "@/lib/wrongbook";
 import { getRevMap, markDoneRev, unmarkToday, revPlan, addDaysKey } from "@/lib/ansrev";
-import { getTags, tagMeta } from "@/lib/qtags";
+import { getTags, tagMeta, tagIn } from "@/lib/qtags";
 
 const SUB = {
   math: { icon: "🧮", label: "Maths", c: "#3b6cff" },
@@ -143,8 +143,8 @@ export default function AnswersDoPane({ list, renderCard, bucketOf, jumpId }) {
                 {hd && <div className="al14-day">{shortD(dk)} · {wk(dk)}</div>}
                 <button type="button" className={`al14-it${cur && r.id === cur.id ? " is-on" : ""}`} onClick={() => pick(r.id)}>
                   {/* Bindu ka rang: tag hai to tag ka, warna subject ka. */}
-                  <i style={{ background: (tagMeta((tags[r.id] || {}).t) || subOf(bucketOf(r))).c }}
-                    title={(tagMeta((tags[r.id] || {}).t) || {}).label || ""} />
+                  <i style={{ background: (tagMeta(tagIn(tags, r)) || subOf(bucketOf(r))).c }}
+                    title={(tagMeta(tagIn(tags, r)) || {}).label || ""} />
                   <span>{qNum(r, i)}</span>
                   <em className={tag[1]}>{tag[0]}</em>
                 </button>
