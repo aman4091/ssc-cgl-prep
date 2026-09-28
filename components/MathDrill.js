@@ -294,10 +294,10 @@ function Col({ d, kind, onRun }) {
   );
 }
 
-export default function MathDrill({ onExit }) {
-  const [d, setD] = useState(() => getCur());
+export default function MathDrill({ init, onExit }) {
+  const [d, setD] = useState(() => init || getCur());
   const [phase, setPhase] = useState(() => {
-    const c = getCur();
+    const c = init || getCur();
     return c && c.qs.some((q) => !c.marks[q.h]) ? "sort" : "lists";
   });
   const [kind, setKind] = useState("go");
@@ -311,7 +311,14 @@ export default function MathDrill({ onExit }) {
   }, [phase]);
 
   const toLists = useCallback(() => { setPhase("lists"); window.scrollTo(0, 0); }, []);
-  if (!d) return null;
+  if (!d) {
+    return (
+      <section className="section" style={{ marginTop: 16 }}>
+        <p>Drill nahi mila — Sprint par wapas jaakar 🎯 Skip drill dobara shuru karo.</p>
+        <button type="button" className="btn btn--ghost btn--sm" onClick={onExit}>← Sprint</button>
+      </section>
+    );
+  }
   if (phase === "sort") return <Sort d={d} upd={upd} onDone={toLists} onExit={onExit} />;
   if (phase === "solve") return <Solve key={kind} d={d} upd={upd} kind={kind} onDone={toLists} />;
 

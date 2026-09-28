@@ -170,6 +170,12 @@ export default function SprintPage() {
   const [drill, setDrill] = useState(false);
   const [hasDrill, setHasDrill] = useState(false);
   const [dueN, setDueN] = useState(0);
+  const [drillObj, setDrillObj] = useState(null);
+  // 🎯 ON ho to upar wala "Shuru karo" hi drill chalata hai — do alag button
+  // mein galti se normal sprint chal jaata tha.
+  const [drillMode, setDrillModeState] = useState(false);
+  useEffect(() => { try { setDrillModeState(localStorage.getItem("cgl.sprint.drillmode") === "1"); } catch { /* ignore */ } }, []);
+  const setDrillMode = (v) => { setDrillModeState(v); try { localStorage.setItem("cgl.sprint.drillmode", v ? "1" : "0"); } catch { /* ignore */ } };
   useEffect(() => { setHasDrill(!!getDrill()); setDueN(getDrillDue().length); }, [drill]);
 
   const alive = useRef(true);
@@ -400,7 +406,7 @@ export default function SprintPage() {
         return;
       }
       setNote("");
-      newDrill(pick, secs);
+      setDrillObj(newDrill(pick, secs));
       setHasDrill(true);
       setDrill(true);
       window.scrollTo(0, 0);
@@ -534,9 +540,9 @@ export default function SprintPage() {
     return () => window.removeEventListener("keydown", onKey);
   }, [phase, next, prev, mark]);
 
-  const exitDrill = () => { setDrill(false); window.scrollTo(0, 0); };
+  const exitDrill = () => { setDrill(false); setDrillObj(null); window.scrollTo(0, 0); };
   if (drill === "review") return <DrillReview onExit={exitDrill} />;
-  if (drill) return <MathDrill onExit={exitDrill} />;
+  if (drill) return <MathDrill init={drillObj} onExit={exitDrill} />;
 
   // ── daud ───────────────────────────────────────────────────────────────
   if (phase === "run") {
@@ -799,14 +805,20 @@ export default function SprintPage() {
         {note ? <p className="hint mt-16">{note}</p> : null}
 
         <div className="row mt-16" style={{ gap: 8, flexWrap: "wrap" }}>
-          <button
-            type="button"
-            className="btn btn--primary"
-            onClick={() => start()}
-            disabled={phase === "loading"}
-          >
-            {phase === "loading" ? "…" : `⚡ Shuru karo — ${count} question`}
-          </button>
+          {slug === "maths" && drillMode ? (
+            <button type="button" className="btn btn--primary" onClick={startDrill} disabled={phase === "loading"}>
+              {phase === "loading" ? "…" : `🎯 Skip drill shuru — ${count} question · ${secs} sec`}
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn btn--primary"
+              onClick={() => start()}
+              disabled={phase === "loading"}
+            >
+              {phase === "loading" ? "…" : `⚡ Shuru karo — ${count} question`}
+            </button>
+          )}
           <Link href="/pyq/sprint/marks" className="btn btn--ghost btn--sm">★ Bookmarks ({markN})</Link>
         </div>
 
@@ -815,8 +827,13 @@ export default function SprintPage() {
         {slug === "maths" && (
           <div className="dr-launch mt-16">
             <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
-              <button type="button" className="btn btn--primary" onClick={startDrill} disabled={phase === "loading"}>
-                🎯 Skip drill — {count} question · {secs} sec
+              <button
+                type="button"
+                className={`btn btn--sm ${drillMode ? "btn--primary" : "btn--ghost"}`}
+                onClick={() => setDrillMode(!drillMode)}
+                title="ON = upar ka button Skip drill chalayega (✅ Ho jayega / ⏭ Skip)"
+              >
+                🎯 Skip drill: {drillMode ? "ON ✓" : "OFF"}
               </button>
               {hasDrill && (
                 <button type="button" className="btn btn--ghost btn--sm" onClick={() => { setDrill(true); window.scrollTo(0, 0); }}>
