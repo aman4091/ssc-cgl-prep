@@ -116,6 +116,10 @@ export default function Navbar() {
     return {
       key: OL_KEY,
       name: "📝 Notesliner",
+      // Andar jaate hi "wapas" wali line par bhi "Notesliner" hi likha aata
+      // tha — wahi naam jo abhi dabaya tha, to lagta tha ek hi cheez do baar
+      // hai. Isliye wahan ka naam alag.
+      backLabel: "Saara menu",
       icon: "📝",
       children: olBooks.map((g) => {
         const label = bookLabel(g);
@@ -274,7 +278,7 @@ export default function Navbar() {
       const node = nodeFor(t);
       if (!node) return null;
       const raw = node.bank ? bankLinks[node.key] || [] : [...(node.children || []), ...(node.links || [])];
-      return { title: node.name, icon: node.icon, items: raw.map((l) => toItem(l, t)), loading: !!node.bank && !bankLinks[node.key] };
+      return { title: node.backLabel || node.name, icon: node.icon, items: raw.map((l) => toItem(l, t)), loading: !!node.bank && !bankLinks[node.key] };
     },
     need: (t) => { if (t && t.length && t[0] !== OL_KEY) loadBank(nodeAt(t)); },
   };

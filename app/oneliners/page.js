@@ -53,16 +53,11 @@ function OneLinersInner() {
 
   return (
     <>
-      <section className="hero" style={{ paddingBottom: 6 }}>
-        <span className="hero__eyebrow">📝 One-liners</span>
-        <h1 className="hero__title" style={{ fontSize: "clamp(1.5rem, 4vw, 2.2rem)" }}>
-          Ek question, <span className="grad">ek line</span>
-        </h1>
-        <p className="hero__sub">
-          Overlay par (ya kisi bhi PYQ card par) 📝 dabate ho — prompt aur sawaal copy ho jaate
-          hain, aur jo chhoti line aati hai wo yahan. Baayen list se line chuno, daayen poori
-          khulegi; ↑ ↓ se saari padh sakte ho. Menu mein har subject ka apna naam hai.
-        </p>
+      {/* Upar bas naam. Pehle yahan ek poora hero tha — badi "Ek question, ek
+          line" aur do line ka bayaan — jo har baar aadhi screen kha jata tha;
+          owner ne hata diya. */}
+      <section className="section" style={{ marginTop: 16, marginBottom: 0 }}>
+        <h1 className="ol-h1">📝 One-liners</h1>
       </section>
 
       <section className="section" style={{ marginTop: 8 }}>
@@ -99,7 +94,7 @@ function OneLinersInner() {
               : "Is chhaan-been mein kuch nahi mila."}
           </div>
         ) : (
-          <OneLinersInbox key={`${sub}|${q}`} items={shown} onDelete={drop} />
+          <OneLinersInbox key={`${sub}|${q}`} items={shown} onDelete={drop} onChange={load} />
         )}
       </section>
     </>

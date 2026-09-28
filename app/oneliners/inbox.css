@@ -23,7 +23,18 @@
 .olx-nav { margin-left: auto; display: flex; gap: 6px; }
 .olx-nav button { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-2); cursor: pointer; text-align: center; }
 .olx-nav button:disabled { opacity: 0.35; }
-.olx-lines { margin: 0; padding-left: 22px; display: grid; gap: 12px; font-size: 1.15rem; line-height: 1.7; }
+/* Lines apni ginti khud laati hain (AI ki di hui). Pehle yahan <ol> tha jo
+   HAR line ko number de deta tha — example aur ✓/✗ wali line bhi. */
+.olx-lines { margin: 0; display: grid; gap: 12px; font-size: 1.15rem; line-height: 1.7; }
+.olx-lines p { margin: 0; }
+/* Jis line par AI ne number diya — number apne khaane mein, text uske aage
+   seedha. Bina number wali line (example, ✓/✗) usi ke neeche thodi andar. */
+.olx-num { display: grid; grid-template-columns: 1.6em minmax(0, 1fr); }
+.olx-num > b { color: var(--accent); font-weight: 800; }
+.olx-sub { padding-left: 1.6em; }
+/* Jo shabd AI ne **bold** kiya — wahi nazar mein pehle aaye. */
+.olx-lines strong { color: var(--head); font-weight: 800; }
+.olx-err { margin: 0 0 10px; color: #e5484d; font-size: 0.9rem; }
 .olx-trick { margin-top: 14px; padding: 10px 12px; border-radius: 10px; border: 1px dashed var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); font-size: 0.95rem; }
 
 @media (max-width: 860px) {
@@ -32,3 +43,6 @@
   .olx-read { min-height: 0; padding: 16px; }
   .olx-lines { font-size: 1.05rem; }
 }
+
+/* Page ka naam — hero ki jagah bas itna. */
+.ol-h1 { margin: 0; font-size: 1.35rem; font-weight: 800; }

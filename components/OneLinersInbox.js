@@ -8,24 +8,51 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Markdown from "@/components/Markdown";
-import { olLines, olTitle, isTrickLine, subOf } from "@/lib/oneliners";
+import { olLines, olTitle, isTrickLine, subOf, updateOneLiner } from "@/lib/oneliners";
+import { formatOneLiner } from "@/lib/client-ai";
 
 const COL = { gs: "#10b981", english: "#a855f7", math: "#3b82f6", reasoning: "#f59e0b" };
 const M = ({ t }) => <Markdown inline>{t}</Markdown>;
 const pad = (n) => String(n).padStart(2, "0");
 const dmy = (at) => { const d = new Date(at); return Number.isNaN(d.getTime()) ? "" : `${pad(d.getDate())}/${pad(d.getMonth() + 1)}`; };
 
-export default function OneLinersInbox({ items, onDelete }) {
+export default function OneLinersInbox({ items, onDelete, onChange }) {
   const rows = useMemo(() => items.map((o, i) => {
     const all = olLines(o.text);
     return {
       o, i, s: subOf(o.subject), c: COL[o.subject] || "#94a3b8", title: olTitle(o),
-      lines: all.filter((l) => !isTrickLine(l)).map((l) => l.replace(/^\d+[.)]\s*/, "")),
+      // Ginti wahi jo AI ne di — aur wo bhi HUM likhte hain, markdown nahi.
+      //
+      // Do galtiyan thi: (1) poori list <ol> mein thi, to har line number le
+      // leti thi — example aur ✓/✗ wali bhi; (2) seedha "1. …" markdown ko
+      // dene par wo use list maan kar apni ginti bana leta hai aur asli
+      // number gayab ho jata hai. Isliye number alag nikaal kar text alag
+      // dikhate hain: jis line par AI ne number diya wahi ginti jati hai,
+      // baaki (example, ✓/✗) uske neeche bina number ke.
+      lines: all.filter((l) => !isTrickLine(l)).map((l) => {
+        const m = /^(\d{1,3})[.)]\s*/.exec(l);
+        return { n: m ? m[1] : "", t: m ? l.slice(m[0].length) : l };
+      }),
       trick: all.filter(isTrickLine),
     };
   }), [items]);
 
   const [k, setK] = useState(0);
+  // 🐋 Bold: purani lines bina bold ke aayi thi (prompt mein kaha hi nahi gaya
+  // tha). Ye button usi line ke zaroori shabd **bold** karwa deta hai — ek
+  // line, ek chhota call.
+  const [busy, setBusy] = useState("");
+  const [err, setErr] = useState("");
+  const bold = async (o) => {
+    if (busy) return;
+    setBusy(o.id); setErr("");
+    try {
+      const { text } = await formatOneLiner(o.text);
+      updateOneLiner(o.id, text);
+      if (onChange) onChange();
+    } catch (e) { setErr(e.message); }
+    finally { setBusy(""); }
+  };
   const n = rows.length;
   const cur = Math.min(k, Math.max(0, n - 1));
   const go = (d) => setK(Math.min(n - 1, Math.max(0, cur + d)));
@@ -63,10 +90,21 @@ export default function OneLinersInbox({ items, onDelete }) {
             <span className="olx-nav">
               <button type="button" onClick={() => go(-1)} disabled={cur === 0} title="Pichli (↑)">↑</button>
               <button type="button" onClick={() => go(1)} disabled={cur === n - 1} title="Agli (↓)">↓</button>
+              <button type="button" onClick={() => bold(r.o)} disabled={busy === r.o.id} title="Zaroori shabd bold karwao (DeepSeek)">
+                {busy === r.o.id ? "…" : "🐋"}
+              </button>
               <button type="button" onClick={() => onDelete(r.o.id)} title="Hata do">🗑️</button>
             </span>
           </header>
-          <ol className="olx-lines">{r.lines.map((l, j) => <li key={j}><M t={l} /></li>)}</ol>
+          {err ? <p className="olx-err">⚠️ {err}</p> : null}
+          <div className="olx-lines">
+            {r.lines.map((l, j) => (
+              <p key={j} className={l.n ? "olx-num" : "olx-sub"}>
+                {l.n ? <b>{l.n}.</b> : null}
+                <M t={l.t} />
+              </p>
+            ))}
+          </div>
           {r.trick.map((l, j) => <div key={j} className="olx-trick"><M t={l} /></div>)}
         </article>
       )}
