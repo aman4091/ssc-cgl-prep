@@ -4209,6 +4209,8 @@ body.exam-on .hresume { display: none; }
 
 /* ⏱️ Solve (stylus) page — har question ka waqt aur uska tag. */
 .inkv__spent {
+  background: transparent;
+  cursor: pointer;
   padding: 3px 10px;
   border-radius: 999px;
   border: 1px solid var(--line);
@@ -4246,3 +4248,10 @@ body.exam-on .hresume { display: none; }
 }
 .ansp__tagchip:hover { border-color: #89b4fa; }
 .ansp__tagchip.is-on { background: #89b4fa; border-color: #89b4fa; color: #11111b; }
+
+/* Ruki hui ghadi saaf dikhni chahiye — warna pata hi na chale ki waqt gin
+   nahi raha. */
+.inkv__spent.is-paused {
+  border-color: #f5a524;
+  color: #f5a524;
+}

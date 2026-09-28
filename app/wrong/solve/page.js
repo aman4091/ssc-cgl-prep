@@ -676,7 +676,13 @@ function SolveInner() {
   // Haath se lagaya hua tag pakka hai — ghadi use kabhi nahi badalti.
   const [tag, setTagV] = useState("");
   const [spent, setSpent] = useState(0);
-  const clockRef = useRef({ id: null, t0: 0 });
+  const [paused, setPaused] = useState(false);
+  // acc = ab tak jama waqt, t0 = chalu daur kab se. Ruki hui ghadi mein t0 = 0.
+  const clockRef = useRef({ id: null, t0: 0, acc: 0 });
+  const spentOf = () => {
+    const c = clockRef.current;
+    return c.acc + (c.t0 ? (Date.now() - c.t0) / 1000 : 0);
+  };
 
   useEffect(() => {
     setTagV(rec && !rec._quiz ? getTag(rec.id) : "");
@@ -684,18 +690,31 @@ function SolveInner() {
   }, [rec?.id]);
 
   // Ghadi: question khulte hi shuru, chhodte hi faisla.
+  //
+  // Beech mein ROKI ja sakti hai — jab sahi jawab hi na pata ho aur sochne
+  // ke bajay dekh kar chunna ho, tab wo waqt is question ka nahi hai. Ruki
+  // hui ghadi ka waqt tag ke hisaab mein bhi nahi jata.
   useEffect(() => {
     if (!rec || rec._quiz) return undefined;
-    clockRef.current = { id: rec.id, t0: Date.now() };
+    clockRef.current = { id: rec.id, t0: Date.now(), acc: 0 };
     setSpent(0);
-    const tick = setInterval(() => setSpent(Math.round((Date.now() - clockRef.current.t0) / 1000)), 1000);
+    setPaused(false);
+    const tick = setInterval(() => setSpent(Math.round(spentOf())), 500);
     return () => {
       clearInterval(tick);
-      const { id, t0 } = clockRef.current;
-      if (id && t0) autoTagBySecs(id, (Date.now() - t0) / 1000);
+      const { id } = clockRef.current;
+      if (id) autoTagBySecs(id, spentOf());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rec?.id]);
+
+  // ⏸ / ▶️ — ghadi rok kar jawab dekh lo, phir wahin se chalu.
+  const togglePause = () => {
+    const c = clockRef.current;
+    if (c.t0) { c.acc += (Date.now() - c.t0) / 1000; c.t0 = 0; setPaused(true); }
+    else { c.t0 = Date.now(); setPaused(false); }
+    setSpent(Math.round(spentOf()));
+  };
 
   const putTag = (k) => {
     if (!rec) return;
@@ -970,9 +989,14 @@ function SolveInner() {
                 ghadi aur tag ka koi matlab nahi. */}
             {!quizId && (
               <>
-                <span className="inkv__spent" style={{ marginLeft: "auto" }} title="Is question par kitna waqt">
-                  ⏱ {spent < 45 ? "⚡" : spent <= 90 ? "🟢" : "🟡"} {spent}s
-                </span>
+                <button
+                  className={`inkv__spent${paused ? " is-paused" : ""}`}
+                  style={{ marginLeft: "auto" }}
+                  onClick={togglePause}
+                  title={paused ? "Ghadi chalu karo" : "Ghadi roko — jawab dekhne ka waqt is question ka nahi"}
+                >
+                  {paused ? "▶️" : "⏸"} {spent < 45 ? "⚡" : spent <= 90 ? "🟢" : "🟡"} {spent}s
+                </button>
                 <select
                   className="inkv__tag"
                   value={tag}
