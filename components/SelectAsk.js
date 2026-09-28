@@ -30,7 +30,7 @@
 //   • Panel ke BAHAR click karne par wo chhup jata hai, par baatcheet mitti
 //     nahi — dayein kinare par 💬 wala chhota button use wapas le aata hai.
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import "@/app/selectask.css";
 import Markdown from "./Markdown";
@@ -241,6 +241,7 @@ export default function SelectAsk() {
 
   const msgsRef = useRef(null);
   const boxRef = useRef(null);
+  const barRef = useRef(null);
 
   // ── selection ki patti ─────────────────────────────────────────────────
   const read = useCallback(() => {
@@ -255,6 +256,20 @@ export default function SelectAsk() {
       y: r.top,
     });
   }, []);
+
+  // Patti ki asli chaudai naap kar screen ke andar rakho — kinaare par
+  // (baayen/dayein) select karne se aadhi patti bahar kat jaati thi.
+  useLayoutEffect(() => {
+    const el = barRef.current;
+    if (!bar || !el) return;
+    // Pehle baayen kinaare par rakh kar naapo — dayein kinaare par patti
+    // sikud kar galat chaudai deti hai.
+    el.style.left = "0px";
+    el.style.transform = "none";
+    const w = el.offsetWidth, vw = document.documentElement.clientWidth || window.innerWidth;
+    el.style.left = Math.max(8, Math.min(bar.x - w / 2, vw - w - 8)) + "px";
+    el.style.transform = "none";
+  }, [bar]);
 
   useEffect(() => {
     const later = () => setTimeout(read, 10);
@@ -432,8 +447,9 @@ export default function SelectAsk() {
     <>
       {bar ? (
         <div
+          ref={barRef}
           className="sa-bar"
-          style={{ left: bar.x, top: Math.max(8, bar.y - 46), transform: "translateX(-50%)" }}
+          style={{ left: bar.x, top: Math.max(8, bar.y - 46), transform: "translateX(-50%)", maxWidth: "calc(100vw - 16px)", boxSizing: "border-box", flexWrap: "wrap" }}
           // mousedown par selection gir jati hai — isliye button ke click se
           // pehle hi default roko, warna `bar.text` khaali ho jata.
           onMouseDown={(e) => e.preventDefault()}

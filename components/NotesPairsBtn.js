@@ -12,6 +12,18 @@ import { readNoteSets, saveNoteSet } from "@/lib/culturepairs";
 import "./jodi.css";
 
 const shuffle = (a) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+// Text ko line ke kinaare se ~max akshar ke tukdon mein.
+function chunks(t, max) {
+  const out = [];
+  let cur = "";
+  for (const line of t.split(/\n/)) {
+    if (cur && cur.length + line.length > max) { out.push(cur); cur = ""; }
+    if (line.length > max) { for (let i = 0; i < line.length; i += max) out.push(line.slice(i, i + max)); continue; }
+    cur += (cur ? "\n" : "") + line;
+  }
+  if (cur.trim()) out.push(cur);
+  return out.length ? out : [t];
+}
 const norm = (s) => String(s || "").toLowerCase().replace(/[^a-z0-9ऀ-ॿ]/g, "");
 
 function EditPair({ x, onSave, onDel, onCancel }) {
@@ -104,14 +116,38 @@ export default function NotesPairsBtn({ pageKey, title, page, text }) {
     return () => window.removeEventListener("keydown", k);
   }, [open]);
   const n = rec?.pairs?.length || 0;
+  // Poora page ek saath nahi banta to thoda-thoda: page ~2500 akshar ke
+  // tukdon mein, har tukde ki jodiyan bante hi save. Koi tukda fail ho to
+  // use aadha karke dobara; phir bhi na bane to chhod kar aage.
   const make = async () => {
     if (busy) return;
     setBusy(true); setErr("");
-    try {
-      const d = await notesPairs(String(text || ""), title || "");
-      const r = { title: title || "Notes", page, pairs: d.pairs };
-      saveNoteSet(pageKey, r); setRec(r); setOpen(true);
-    } catch (e) { setErr(e.message); } finally { setBusy(false); }
+    let queue = chunks(String(text || ""), 2500);
+    const total = queue.length;
+    let got = [], done = 0, lastErr = "";
+    const seen = new Set();
+    while (queue.length) {
+      const part = queue.shift();
+      setBusy(`${Math.min(done + 1, total)}/${total}`);
+      try {
+        const d = await notesPairs(part, title || "");
+        for (const p of d.pairs || []) {
+          const k = String(p.l).toLowerCase();
+          if (!seen.has(k)) { seen.add(k); got.push(p); }
+        }
+        done++;
+        const r = { title: title || "Notes", page, pairs: got };
+        saveNoteSet(pageKey, r); setRec(r);
+      } catch (e) {
+        lastErr = e.message;
+        if (/key|401|402|balance/i.test(lastErr)) break;
+        if (part.length > 700) queue = [...chunks(part, Math.ceil(part.length / 2)), ...queue];
+        else done++;
+      }
+    }
+    setBusy(false);
+    if (got.length) setOpen(true);
+    else setErr(lastErr || "Jodiyan nahi bani — dobara dabao.");
   };
   const change = (pairs) => { const r = { ...rec, pairs }; saveNoteSet(pageKey, r); setRec(r); };
   return (
@@ -122,7 +158,7 @@ export default function NotesPairsBtn({ pageKey, title, page, text }) {
         onClick={() => (n ? setOpen(true) : make())}
         title={err || (n ? `Is page ki ${n} jodiyan — ${Math.ceil(n / 5)} set (Jodi milao)` : "Is page se DeepSeek Jodi milao ke set banaye (5-5 ke)")}
       >
-        {busy ? "⏳" : n ? `🧩${Math.ceil(n / 5)}` : "🧩"}
+        {busy ? `⏳${typeof busy === "string" ? busy : ""}` : n ? `🧩${Math.ceil(n / 5)}` : "🧩"}
       </button>
       {err && !open ? <span className="nt-meta" style={{ color: "var(--danger)" }}>{err}</span> : null}
       {open && rec && (
@@ -131,7 +167,7 @@ export default function NotesPairsBtn({ pageKey, title, page, text }) {
             <div className="jd-hd">
               <div><span className="hero__eyebrow">🧩 Jodi milao · page {page}</span><h2>{title}</h2></div>
               <div className="jd-hdb">
-                <button type="button" disabled={busy} onClick={make} title="DeepSeek se naye sire se">{busy ? "⏳" : "🔄 naya"}</button>
+                <button type="button" disabled={busy} onClick={make} title="DeepSeek se naye sire se">{busy ? `⏳ ${typeof busy === "string" ? busy : ""}` : "🔄 naya"}</button>
                 <button type="button" onClick={() => setOpen(false)} title="Band (Esc)">✕</button>
               </div>
             </div>
