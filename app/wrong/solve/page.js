@@ -14,6 +14,7 @@ import {
 } from "@/lib/ink";
 import { useImageUrls } from "@/lib/wrongimages";
 import { setSyncPaused } from "@/lib/sync";
+import { storeFlush } from "@/lib/bigstore";
 import { getQuiz, deleteQuiz } from "@/lib/storage";
 import { recordAttempts } from "@/lib/qstats";
 import { recordQuizAttempts } from "@/lib/qreview";
@@ -240,7 +241,19 @@ function SolveInner() {
   // hai. Bahar niklte hi wapas chalu — tab wo pointer bhi le jayega.
   useEffect(() => {
     setSyncPaused(true);
-    return () => setSyncPaused(false);
+    return () => {
+      setSyncPaused(false);
+      // Yahan ghadi ne jo tag lagaye hain wo abhi tak sirf is device par hain
+      // (sync poore waqt ruka hua tha). Nikalte hi: pehle pending writes IDB
+      // mein, phir sync ko ek dhakka — warna wo agle 45 second ke chakkar ka
+      // intezaar karta, aur tab tak tablet band ho chuki hoti.
+      // Ek pal ruk kar — is page ke baaki cleanup (jinme ghadi ka aakhri tag
+      // lagta hai) pehle chal jayein, tabhi bhejne ka matlab hai.
+      setTimeout(() => {
+        storeFlush().catch(() => {});
+        try { window.dispatchEvent(new CustomEvent("cgl:sync-kick")); } catch { /* SSR */ }
+      }, 0);
+    };
   }, []);
 
   // Ruki hui uploads — khulte hi aur online wapas aate hi.

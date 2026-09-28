@@ -42,13 +42,24 @@ export default function SyncManager() {
     };
 
     // App band/background hone par ek aakhri sync (mobile: app switch / lock).
+    //
+    // Yahan `isSyncPaused` ko jaan-boojh kar ANDEKHA karte hain. Pause sirf
+    // isliye hai ki likhte waqt (stylus wala page) sync nib na rok de — par
+    // page ab ja hi raha hai, likhna khatam. Pehle yahan bhi pause dekha jata
+    // tha, aur nateeja ye tha ki solve page par apne aap lage hue tag (ghadi
+    // wale) kabhi upar chadhte hi nahi the — doosre device par dikhte hi nahi.
     const syncOnLeave = async () => {
-      if (!active() || busy.current) return;
+      if (busy.current || !getSettings().syncAuto || !syncReady()) return;
       if (localHash() === (getSettings().syncPushedHash || "")) return;
       busy.current = true;
       try { await syncOnce(); } catch { /* ignore */ } finally { busy.current = false; }
     };
     const onVis = () => { if (document.hidden) syncOnLeave(); else cycle(); };
+
+    // Koi screen keh sakti hai "ab chala lo" — jaise stylus wala page, jahan
+    // se nikalte hi ruke hue tag bhejne hote hain.
+    const kick = () => { cycle(); };
+    window.addEventListener("cgl:sync-kick", kick);
 
     cycle();
     const iv = setInterval(cycle, 45000);
@@ -59,6 +70,7 @@ export default function SyncManager() {
       clearInterval(iv);
       document.removeEventListener("visibilitychange", onVis);
       window.removeEventListener("pagehide", syncOnLeave);
+      window.removeEventListener("cgl:sync-kick", kick);
     };
   }, []);
 
