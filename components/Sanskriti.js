@@ -11,7 +11,7 @@
 // Galat jodi `cgl.culture.galti` mein — agle set mein pehle wahi.
 
 import { useEffect, useMemo, useState } from "react";
-import { STATE_NAME, CLASSICAL, EXTRA, allItems, norm, readGalti, markGalti, readSeen, bumpSeen, SEEN_GOAL } from "@/lib/sanskriti";
+import { STATE_NAME, CLASSICAL, EXTRA, allItems, norm, readGalti, markGalti, readSeen, bumpSeen } from "@/lib/sanskriti";
 import { readPairs, updatePair, removePair, readEdits, saveEdit } from "@/lib/culturepairs";
 
 const shuffle = (a) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
@@ -173,13 +173,10 @@ function Match({ setK }) {
     }
   };
   if (setK === "mine" && !all.length) return <div className="sk-done">Abhi koi apni jodi nahi. Kisi bhi page par shabd select karo → 📝 One-liner → 🪔 Statics — jodi-daar likho ya select karo.</div>;
-  const seenMap = readSeen();
-  const full = all.filter((x) => (seenMap[x.id] || 0) >= SEEN_GOAL).length;
   if (set.length < 2) return <div className="sk-done">Is set mein kam se kam 2 jodi chahiye (abhi {all.length}).</div>;
   return (
     <div className="sk-match">
-      <p className="sk-dim">Baayen se chuno, phir daayen uska jodi-daar. {done.length}/{set.length} · ✓ {sc.y} · ✗ {sc.n}
-        <span className="sk-goal" title={`Har jodi kam se kam ${SEEN_GOAL} baar aayegi — kam aayi hui pehle`}> · 🔁 {full}/{all.length} jodi {SEEN_GOAL} baar poori</span></p>
+      <p className="sk-dim">Baayen se chuno, phir daayen uska jodi-daar. {done.length}/{set.length} · ✓ {sc.y} · ✗ {sc.n}</p>
       <div className="sk-cols">
         <div>{set.map((m) => <button key={m.id} type="button" className={done.includes(m.id) ? "is-ok" : sel === m.id ? "is-sel" : ""} onClick={() => !done.includes(m.id) && setSel(m.id)}>{m.l}</button>)}</div>
         <div>{right.map((m) => <button key={m.id} type="button" className={done.includes(m.id) ? "is-ok" : bad === m.id ? "is-bad" : ""} onClick={() => tryR(m)}>{m.r}</button>)}</div>
@@ -192,7 +189,6 @@ function Match({ setK }) {
             return (
               <li key={x.id} className={missed.has(x.id) ? "is-miss" : ""}>
                 {x.mine ? <em className="sk-own" title="Tumhari apni jodi">✍️</em> : null}<b>{x.l}</b> = <b>{x.r}</b>{x.note ? <span> — {x.note}</span> : null}
-                <em className="sk-cnt">{Math.min(seenMap[x.id] || 0, 999)}/{SEEN_GOAL}</em>
                 {edit === x.id
                   ? <EditPair x={x} onDone={(p) => { if (p !== undefined) setPatched((o) => ({ ...o, [x.id]: p })); setEdit(null); }} />
                   : <button type="button" className="sk-edbtn" onClick={() => setEdit(x.id)}>✏️ Edit</button>}
