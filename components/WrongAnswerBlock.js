@@ -1,6 +1,6 @@
 "use client";
 
-import { cleanAnswer, newGemini1, newGemini2 } from "@/lib/wrongbook";
+import { cleanAnswer } from "@/lib/wrongbook";
 import Markdown from "./Markdown";
 
 // Ek Wrong-Question record ka answer / options / details / solution / note.
@@ -21,11 +21,11 @@ export default function WrongAnswerBlock({ rec, shown, hideAnswer = false }) {
   // pehle wale ko mitata nahi, wo fold ke peeche bach jata hai. Yahan pehle sirf
   // `detail` (yaani pehla) dikhta tha, isliye tablet par naya answer paste karne
   // ke baad bhi purana hi milta tha. Ab wahi hisaab jo card par hai.
-  // /answers card jaisa hi: mukhya answer DeepSeek ka; Gemini wala sirf NAYA
-  // (paste / overlay se aaya — lib/wrongbook newGemini1/2), purana nahi.
-  const a1 = cleanAnswer(newGemini1(rec));
-  const a2 = cleanAnswer(newGemini2(rec));
-  const ai = String(rec.aiNotes || "").trim();
+  // /answers card jaisa hi: ✨ Gemini ka answer hi mukhya — naya ho ya purana
+  // (pehle "purane Gemini" chhupe rehte the). DeepSeek (aiNotes) record par
+  // pada rehta hai par dikhta nahi.
+  const a1 = cleanAnswer(rec.detail || "");
+  const a2 = cleanAnswer(rec.detail2 || "");
 
   return (
     <>
@@ -81,16 +81,6 @@ export default function WrongAnswerBlock({ rec, shown, hideAnswer = false }) {
               <div style={{ marginTop: 6 }}><Markdown>{a1}</Markdown></div>
             </details>
           )}
-        </div>
-      )}
-
-      {shown && ai && (
-        <div
-          className="mt-8"
-          style={{ fontSize: "0.9rem", borderTop: "1px solid var(--glass-border)", paddingTop: 10 }}
-        >
-          <p className="muted" style={{ fontSize: "0.78rem", marginBottom: 4 }}>🤖 DeepSeek · details</p>
-          <Markdown>{ai}</Markdown>
         </div>
       )}
 

@@ -131,25 +131,23 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
   // Purane Gemini answer record mein pade hain par dikhte nahi; Gemini wala
   // sirf tab dikhta hai jab NAYA ho — 📥 se paste, ✏️ se sudhara, ya overlay se
   // copy hokar aaya (`ansAt`, lib/wrongbook). ✨ / 📋 / 📥 buttons pehle jaise.
-  // Kaunsa jawab dikhega — owner ka kram, wahi jo baaki har card par hai:
-  //   paste kiya hua (✨) > 🐋 DeepSeek > jo pehle se record mein tha.
-  // Pehle Gemini aur DeepSeek dono ek saath neeche-upar dikhte the; ek hi
-  // question ke do lambe jawab padhne mein sirf uljhan thi. Ab ek dikhta hai
-  // aur baaki fold mein baithe rehte hain.
-  const g2 = cleanAnswer(newGemini2(rec));
-  const g1 = cleanAnswer(newGemini1(rec));
-  // "Jo pehle se hai": record ka apna solution, ya wo purana jawab jo bina
-  // ✨ ke aaya tha (ans1At nahi hai — DeepSeek ke daur ka `detail`).
-  const legacy = cleanAnswer(!rec?.ans1At ? rec.detail || "" : "");
-  const own = cleanAnswer(rec.q?.solution || "") || legacy;
-  const ai = String(rec.aiNotes || "").trim();
+  // Kaunsa jawab dikhega: ✨ Gemini > jo pehle se record mein tha.
+  const g2 = cleanAnswer(rec.detail2 || "");
+  const g1 = cleanAnswer(rec.detail || "");
+  const own = cleanAnswer(rec.q?.solution || "");
+  // ✨ Gemini ka answer hi mukhya hai — naya ho ya purana.
+  //
+  // 12 Sept 2026 se mukhya answer DeepSeek ka tha (rec.aiNotes), aur us din se
+  // pehle ke Gemini answer sirf CHHUP gaye the: dikhne ke liye `ans1At`/
+  // `ans2At` ka nishaan zaroori tha. Owner ne wapas Gemini maanga, isliye ab
+  // nishaan ki koi shart nahi — jo `detail`/`detail2` par pada hai wahi dikhta
+  // hai. DeepSeek wala record par pada rehta hai (mita nahi), bas dikhta nahi.
   const gem = g2 || g1;
-  const main = gem || ai || own;
-  const mainSrc = gem ? "✨ paste kiya hua" : ai ? "🐋 DeepSeek" : own ? "📘 record ka apna" : "";
+  const main = gem || own;
+  const mainSrc = gem ? "✨ Gemini" : own ? "📘 record ka apna" : "";
   // Jo dikh nahi raha par maujood hai — fold mein.
   const folds = [
     gem && g2 && g1 ? { key: "g1", label: "Pehla Gemini answer dekho", md: g1 } : null,
-    gem && ai ? { key: "ai", label: "🐋 DeepSeek ka answer dekho", md: ai } : null,
     main !== own && own ? { key: "own", label: "Record ka apna answer dekho", md: own } : null,
   ].filter(Boolean);
 
