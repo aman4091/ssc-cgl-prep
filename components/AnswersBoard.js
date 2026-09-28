@@ -112,8 +112,14 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
   useEffect(() => { setTagV(getQTag(rec.id)); }, [rec.id]);
   useEffect(() => {
     const on = () => setTagV(getQTag(rec.id));
+    // "cgl:qtags" isi device ka badlav hai; "cgl:sync-applied" doosre device
+    // se aaya hua (tablet par tag lagaya, computer par dikhna chahiye).
     window.addEventListener("cgl:qtags", on);
-    return () => window.removeEventListener("cgl:qtags", on);
+    window.addEventListener("cgl:sync-applied", on);
+    return () => {
+      window.removeEventListener("cgl:qtags", on);
+      window.removeEventListener("cgl:sync-applied", on);
+    };
   }, [rec.id]);
   const [lb, setLb] = useState(null);
   const [pasteOpen, setPasteOpen] = useState(false);

@@ -685,7 +685,15 @@ function SolveInner() {
   };
 
   useEffect(() => {
-    setTagV(rec && !rec._quiz ? getTag(rec.id) : "");
+    const on = () => setTagV(rec && !rec._quiz ? getTag(rec.id) : "");
+    on();
+    // Doosre device (site) par tag badla ho to yahan bhi wahi dikhe.
+    window.addEventListener("cgl:qtags", on);
+    window.addEventListener("cgl:sync-applied", on);
+    return () => {
+      window.removeEventListener("cgl:qtags", on);
+      window.removeEventListener("cgl:sync-applied", on);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rec?.id]);
 

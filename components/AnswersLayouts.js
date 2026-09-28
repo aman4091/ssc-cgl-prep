@@ -90,7 +90,11 @@ export default function AnswersDoPane({ list, renderCard, bucketOf, jumpId }) {
     const on = () => setTags(getTags());
     on();
     window.addEventListener("cgl:qtags", on);
-    return () => window.removeEventListener("cgl:qtags", on);
+    window.addEventListener("cgl:sync-applied", on);   // doosre device se aaya tag
+    return () => {
+      window.removeEventListener("cgl:qtags", on);
+      window.removeEventListener("cgl:sync-applied", on);
+    };
   }, []);
   useEffect(() => {
     setRev(getRevMap());
