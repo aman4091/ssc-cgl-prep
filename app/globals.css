@@ -4192,3 +4192,57 @@ body.exam-on .hresume { display: none; }
 .ol-sec--tip .ol-t { color: var(--success); border-bottom: 0; }
 .ol-sec--warn .ol-p .ol-dot { border-color: var(--warning); }
 .ol-sec--tip .ol-p .ol-dot { border-color: var(--success); }
+
+/* 🏷️ Answers card ka tag — ✅ "ho gaya" aur 🔴 "hard" ki jagah ek dropdown. */
+.ansp__tag {
+  max-width: 150px;
+  padding: 3px 6px;
+  border-radius: 8px;
+  border: 1px solid #45475a;
+  background: #1e1e2e;
+  color: #cdd6f4;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ⏱️ Solve (stylus) page — har question ka waqt aur uska tag. */
+.inkv__spent {
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.inkv__tag {
+  max-width: 170px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  color: var(--text-1);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* 🏷️ Answers page ki tag-chhaanti — upar ki patti mein. */
+.ansp__tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.ansp__tagchip {
+  padding: 4px 11px;
+  border-radius: 999px;
+  border: 1px solid #45475a;
+  background: transparent;
+  color: #cdd6f4;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.ansp__tagchip:hover { border-color: #89b4fa; }
+.ansp__tagchip.is-on { background: #89b4fa; border-color: #89b4fa; color: #11111b; }

@@ -7,7 +7,7 @@ import {
   subjectLabel, setInk, setOcrText,
   displayOrder,
 } from "@/lib/wrongbook";
-import { getDoneSet, isDone, toggleDone } from "@/lib/answersdone";
+import { TAGS, getTag, setTag, autoTagBySecs, tagMeta } from "@/lib/qtags";
 import {
   openInk, saveLocalInk, pushInk, emptyDoc, flushInkQueue, dropLocalInk,
   getConflictInk, clearConflictInk,
@@ -179,12 +179,11 @@ function SolveInner() {
     }
     const all = getWrongBook(subject);
     const shelf = d === "all" ? all : all.filter((r) => dayKey(r.at) === d);
-    // WAHI kram jo /answers par dikhta hai (purana upar, naya neeche, ✅ neeche).
-    // Pehle yahan getWrongBook ka apna newest-first kram chalta tha, aur nateeja
-    // ye tha ki /answers ka pehla question yahan AAKHRI baithta — timer khatam
-    // hone par "agla" hota hi nahi tha. Ek hi displayOrder dono jagah, taaki
-    // dobara aisa na ho.
-    setList(displayOrder(shelf, getDoneSet()));
+    // WAHI kram jo /answers par dikhta hai: purana upar, aaj wala neeche.
+    // (Pehle ✅ "ho gaya" wale neeche chale jate the — wo nishaan hi hata diya
+    // gaya, ab kram sirf tareekh ka hai.) Ek hi kram dono jagah, warna
+    // /answers ka pehla question yahan aakhri baithta aur "agla" tootta.
+    setList(displayOrder(shelf, {}));
     setReady(true);
     return undefined;
   }, [subject, d, quizId]);
@@ -664,24 +663,53 @@ function SolveInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rec?.id]);
 
-  // ── ✅ Ho gaya ────────────────────────────────────────────────────────────
-  // Wahi mark jo /answers ke card par hai (lib/answersdone.js), taaki tablet par
-  // solve karte-karte hi nishaan lag jaye aur wo question wahan sabse neeche
-  // chala jaye.
+  // ── ⏱️ Har question ki apni ghadi + 🏷️ tag ──────────────────────────────
+  // Pehle yahan ✅ "Ho gaya" tha. Wo hata diya gaya: us nishaan se ye pata
+  // hi nahi chalta tha ki sawaal AATA hai ya nahi, bas itna ki chhua tha.
   //
-  // Mark lagne par yahan ki list ko DOBARA sort NAHI karte, jaan-boojh kar: kram
-  // page khulte waqt ek baar tay hota hai, aur beech mein badal dene se `idx`
-  // khisak jata — ✅ dabate hi kisi aur question par pahunch jaate. Naya kram
-  // agli baar khulne par.
-  const [doneNow, setDoneNow] = useState(false);
+  // Ab har question par ghadi chalti hai, aur question chhodte hi uska tag
+  // khud lag jata hai (lib/qtags):
+  //     45 second ke neeche      → ⚡ t45
+  //     45 – 90 second           → 🟢 easy90
+  //     90 se upar               → kuch nahi (owner khud tag karega)
+  //     ⏭ Skip dabaya            → ⛔ permanent skip
+  // Haath se lagaya hua tag pakka hai — ghadi use kabhi nahi badalti.
+  const [tag, setTagV] = useState("");
+  const [spent, setSpent] = useState(0);
+  const clockRef = useRef({ id: null, t0: 0 });
+
   useEffect(() => {
-    setDoneNow(rec && !rec._quiz ? isDone(rec.id) : false);
+    setTagV(rec && !rec._quiz ? getTag(rec.id) : "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rec?.id]);
 
-  const markDone = () => {
+  // Ghadi: question khulte hi shuru, chhodte hi faisla.
+  useEffect(() => {
+    if (!rec || rec._quiz) return undefined;
+    clockRef.current = { id: rec.id, t0: Date.now() };
+    setSpent(0);
+    const tick = setInterval(() => setSpent(Math.round((Date.now() - clockRef.current.t0) / 1000)), 1000);
+    return () => {
+      clearInterval(tick);
+      const { id, t0 } = clockRef.current;
+      if (id && t0) autoTagBySecs(id, (Date.now() - t0) / 1000);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rec?.id]);
+
+  const putTag = (k) => {
     if (!rec) return;
-    try { setDoneNow(toggleDone(rec.id)); } catch { /* localStorage bhara — mark chhod do */ }
+    setTag(rec.id, k, { secs: spent });
+    setTagV(k);
+  };
+
+  // ⏭ Skip — "ise permanent skip mein daal do" aur agla question.
+  const skipNow = () => {
+    if (!rec) return;
+    setTag(rec.id, "skip", { secs: spent });
+    setTagV("skip");
+    clockRef.current = { id: null, t0: 0 };   // ghadi ka faisla ab na lage
+    if (idx < list.length - 1) go(idx + 1);
   };
 
   // Eraser toggle karte waqt wapas usi tool par jaana hai jispar tha (pen ya
@@ -938,18 +966,27 @@ function SolveInner() {
                 {hideAns ? "👁️ Answers dikhao" : "🙈 Answers chhupao"}
               </button>
             )}
-            {/* Quiz ke pseudo-records wrong book mein hain hi nahi — unhe mark
-                karne se sirf `cgl.answersDone` mein bekaar ids jama hoti. */}
+            {/* Quiz ke pseudo-record wrong book mein hain hi nahi — unpar
+                ghadi aur tag ka koi matlab nahi. */}
             {!quizId && (
-              <button
-                className="btn btn--ghost btn--sm"
-                aria-pressed={doneNow}
-                onClick={markDone}
-                title="Answers page par ye question sabse neeche chala jayega"
-                style={{ marginLeft: "auto" }}
-              >
-                {doneNow ? "✅ Ho gaya" : "☑️ Ho gaya"}
-              </button>
+              <>
+                <span className="inkv__spent" style={{ marginLeft: "auto" }} title="Is question par kitna waqt">
+                  ⏱ {spent < 45 ? "⚡" : spent <= 90 ? "🟢" : "🟡"} {spent}s
+                </span>
+                <select
+                  className="inkv__tag"
+                  value={tag}
+                  onChange={(e) => putTag(e.target.value)}
+                  title="Ye question mere liye kaisa hai"
+                  style={tagMeta(tag) ? { borderColor: tagMeta(tag).c, color: tagMeta(tag).c } : undefined}
+                >
+                  <option value="">🏷️ tag</option>
+                  {TAGS.map((t) => <option key={t.k} value={t.k}>{t.label}</option>)}
+                </select>
+                <button className="btn btn--ghost btn--sm" onClick={skipNow} title="Permanent skip — aage badho">
+                  ⏭ Skip
+                </button>
+              </>
             )}
           </div>
 

@@ -13,6 +13,9 @@ import { getSettings } from "@/lib/storage";
 import { markDone, pruneDone, getDoneMap } from "@/lib/answersdone";
 import { getCounts, bumpCount, countMark } from "@/lib/qcounter";
 import { useImageUrls } from "@/lib/wrongimages";
+// qchapter bhi getTags/setTags deta hai (wo CHAPTER ke tag hain), isliye
+// yahan alag naam.
+import { TAGS as QTAGS, getTag as getQTag, getTags as getQTags, setTag as setQTag, tagMeta as qTagMeta } from "@/lib/qtags";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { saveQuiz, makeId, storageUsage } from "@/lib/storage";
 import Markdown, { LazyMarkdown } from "@/components/Markdown";
@@ -83,12 +86,13 @@ const ALL_SUBJ = { key: "", label: "Sab", icon: "\u{1F4DA}" };
 // rehta hai — bas "abhi ho gaya" hone ki wajah se list mein sabse neeche
 // chala jata hai, jaise koi bhi nipta hua question jata hai. Ek hi list,
 // dhoondhne ke liye ek hi jagah.
+// Chhaanti ab TAG se hoti hai. Pehle yahan "🔴 Hard" tha — wo button hi hata
+// diya gaya (uski jagah har card par tag ka dropdown hai), aur purane 🔴 wale
+// question ek baar mein "🟠 Hard hai par ho jayega" tag le lete hain.
 const SOURCES = [
   { key: "all", label: "📚 Sab" },
-  // "External Mock (screenshot)" aur "PYQ / Quiz ke galat" wali chhaanti
-  // owner ne hata di — dono ek hi list hain aur alag-alag chhaantne ka
-  // kaam nahi pad raha tha. Record dono jagah se waise hi aate rahenge.
-  { key: "hard", label: "🔴 Hard" },
+  { key: "untag", label: "🏷️ Bina tag" },
+  ...QTAGS.map((t) => ({ key: `tag:${t.k}`, label: t.short })),
 ];
 const isSource = (k) => SOURCES.some((s) => s.key === k);
 
@@ -103,6 +107,14 @@ const labelOf = (k) =>
 function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard }) {
   const router = useRouter();
   const { urls, missing } = useImageUrls(imagesOf(rec));
+  // 🏷️ tag (lib/qtags) — card khulte hi store se, aur badalte hi wahin wapas.
+  const [tag, setTagV] = useState("");
+  useEffect(() => { setTagV(getQTag(rec.id)); }, [rec.id]);
+  useEffect(() => {
+    const on = () => setTagV(getQTag(rec.id));
+    window.addEventListener("cgl:qtags", on);
+    return () => window.removeEventListener("cgl:qtags", on);
+  }, [rec.id]);
   const [lb, setLb] = useState(null);
   const [pasteOpen, setPasteOpen] = useState(false);
   const [pasteText, setPasteText] = useState("");
@@ -215,7 +227,18 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
         {/* Card ke saare button yahin, sar ke daayen — owner ka niyam.
             ✨ paste ka dabba bhi khol deta hai, isliye uska alag button nahi. */}
         <span className="ansp__hacts">
-          <button className="ansp__btn ansp__btn--go" onClick={() => onDone(rec)} title="Ho gaya — ye question sabse neeche">✅</button>
+          {/* 🏷️ Is question ka tag — ✅ "ho gaya" aur 🔴 "hard" ki jagah.
+              Solve page par ghadi khud lagati hai; yahan haath se badal lo. */}
+          <select
+            className="ansp__tag"
+            value={tag}
+            onChange={(e) => { setQTag(rec.id, e.target.value); setTagV(e.target.value); }}
+            title="Ye question mere liye kaisa hai"
+            style={qTagMeta(tag) ? { borderColor: qTagMeta(tag).c, color: qTagMeta(tag).c } : undefined}
+          >
+            <option value="">🏷️ tag</option>
+            {QTAGS.map((t) => <option key={t.k} value={t.k}>{t.label}</option>)}
+          </select>
           <button className="ansp__btn ansp__btn--go" onClick={() => onOpen(rec)} title="Writing tablet par solve karo">✍️</button>
           <button className="ansp__btn" onClick={askGemini} title={`Image copy karke ${aiSiteLabel(aiSite)} kholo, phir answer paste karo`}>
             {copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}
@@ -226,9 +249,6 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
               {simLoading ? "…" : "🎯 20"}
             </button>
           )}
-          <button className="ansp__btn" onClick={() => onToggleHard(rec)} title={isHardQ ? "Hard se hatao" : "Hard mein daalo"}>
-            {isHardQ ? "✅🔴" : "🔴"}
-          </button>
           <button className="ansp__btn" onClick={() => onDelete(rec)} title="Hatao">🗑️</button>
         </span>
       </h2>
@@ -521,13 +541,32 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, taxReady, mock]);
 
-  // 🔴 Hard aam shelf se BAHAR — khud dabaya hua, isliye qid ki zaroorat
-  // nahi, record ki apni id se.
+  // Ab koi question list se BAHAR nahi hota — chhaanti sirf tag se. (Pehle
+  // 🔴 hard wale chhup jate the; button hatne ke baad unhe wapas laane ka
+  // koi raasta hi na bachta.)
   const isHardQ = useCallback((r) => hard.has(r.id), [hard]);
+  const [qtagMap, setQtagMap] = useState({});
+  useEffect(() => {
+    const on = () => setQtagMap(getQTags());
+    on();
+    window.addEventListener("cgl:qtags", on);
+    window.addEventListener("cgl:sync-applied", on);
+    return () => { window.removeEventListener("cgl:qtags", on); window.removeEventListener("cgl:sync-applied", on); };
+  }, []);
+  // Purane 🔴 hard — ek baar tag mein badal do, warna wo nishaan bekaar pada
+  // reh jata (button ab hai hi nahi).
+  useEffect(() => {
+    if (!hard.size) return;
+    const all = getQTags();
+    let n = 0;
+    for (const id of hard) if (!all[id]) { setQTag(id, "hardok", { by: "auto" }); n += 1; }
+    if (n) setQtagMap(getQTags());
+  }, [hard]);
   const pool = useMemo(() => {
-    if (src === "hard") return mock.filter(isHardQ);
-    return mock.filter((r) => !isHardQ(r));
-  }, [mock, src, isHardQ]);
+    if (src === "untag") return mock.filter((r) => !qtagMap[r.id]);
+    if (src.startsWith("tag:")) { const k = src.slice(4); return mock.filter((r) => (qtagMap[r.id] || {}).t === k); }
+    return mock;
+  }, [mock, src, qtagMap]);
 
   const rows = useMemo(
     () => pool
@@ -575,14 +614,18 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       const m = /^q(\d+)$/.exec(r.qid || "");
       return m ? Number(m[1]) : 0;
     };
+    // Seedha kram: PURANA sabse upar, aaj wala sabse neeche (owner ka kehna).
+    // Pehle yahan "nipta hua" question neeche chala jata tha (doneAt), par ✅
+    // wala button hi hata diya gaya — ab jagah kabhi khiskti nahi, aur list
+    // wahi rehti hai jahan chhodi thi.
     const cmp = (a, b) => {
-      const ta = sortAt(a);
-      const tb = sortAt(b);
+      const ta = baseAt(a);
+      const tb = baseAt(b);
       if (ta !== tb) return ta < tb ? -1 : 1;
       return qnum(a) - qnum(b);
     };
     return [...rows].sort(cmp);
-  }, [rows, sortAt]);
+  }, [rows]);
 
   // Kitne card abhi bane hue hain. Chhaanti badalte hi shuru se.
   const [visible, setVisible] = useState(PAGE);
@@ -885,6 +928,24 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           >
             📊 Chapter report
           </button>
+          {/* 🏷️ Tag ki chhaanti — "permanent skip" wale ek jagah, "hard par ho
+              jayega" wale alag. Ginti bhi saath, taaki pata rahe kitne pade
+              hain. */}
+          <span className="ansp__tags">
+            {SOURCES.map((x) => {
+              const n = x.key === "all" ? mock.length
+                : x.key === "untag" ? mock.filter((r) => !qtagMap[r.id]).length
+                  : mock.filter((r) => (qtagMap[r.id] || {}).t === x.key.slice(4)).length;
+              return (
+                <button
+                  key={x.key}
+                  type="button"
+                  className={`ansp__tagchip${src === x.key ? " is-on" : ""}`}
+                  onClick={() => setSrc(x.key)}
+                >{x.label} · {n}</button>
+              );
+            })}
+          </span>
         </div>
 
         {flash && <p className="ansp__flash">{flash}</p>}
