@@ -7,6 +7,7 @@
 // button seedha popup kholta hai. Jodi milne ke baad ✏️ Edit; 🔄 = naya.
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { notesPairs } from "@/lib/client-ai";
 import { readNoteSets, saveNoteSet } from "@/lib/culturepairs";
 import "./jodi.css";
@@ -113,7 +114,10 @@ export default function NotesPairsBtn({ pageKey, title, page, text }) {
     if (!open) return undefined;
     const k = (e) => { if (e.key === "Escape") setOpen(false); };
     window.addEventListener("keydown", k);
-    return () => window.removeEventListener("keydown", k);
+    // Popup khula ho to peeche ka notes page na khiske — scroll popup ko mile.
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", k); document.body.style.overflow = prev; };
   }, [open]);
   const n = rec?.pairs?.length || 0;
   // Poora page ek saath nahi banta to thoda-thoda: page ~1500 akshar ke
@@ -166,8 +170,8 @@ export default function NotesPairsBtn({ pageKey, title, page, text }) {
         {busy ? `⏳${typeof busy === "string" ? busy : ""}` : n ? `🧩${Math.ceil(n / 5)}` : "🧩"}
       </button>
       {err && !open ? <span className="nt-meta" style={{ color: "var(--danger)" }}>{err}</span> : null}
-      {open && rec && (
-        <div className="modal-overlay" onClick={() => setOpen(false)} style={{ zIndex: 500 }}>
+      {open && rec && createPortal(
+        <div className="modal-overlay" onClick={() => setOpen(false)} style={{ zIndex: 500, padding: "16px 10px", overscrollBehavior: "contain" }}>
           <div className="modal glass jd-modal" onClick={(e) => e.stopPropagation()}>
             <div className="jd-hd">
               <div><span className="hero__eyebrow">🧩 Jodi milao · page {page}</span><h2>{title}</h2></div>
@@ -180,7 +184,7 @@ export default function NotesPairsBtn({ pageKey, title, page, text }) {
             {n ? <Play pairs={rec.pairs} onChange={change} /> : <p>Saari jodiyan hata di — 🔄 naya dabao.</p>}
           </div>
         </div>
-      )}
+      , document.body)}
     </>
   );
 }
