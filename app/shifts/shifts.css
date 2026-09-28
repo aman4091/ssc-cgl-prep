@@ -1,0 +1,44 @@
+/* 📋 SSC 2025 shift tracker */
+.sh-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.sh-tab {
+  padding: 9px 16px; border-radius: 999px; border: 1px solid var(--line); background: transparent;
+  color: var(--text-1); font: inherit; font-weight: 700; cursor: pointer;
+}
+.sh-tab small { margin-left: 4px; font-weight: 600; color: var(--text-3); }
+.sh-tab.is-on { background: var(--accent); border-color: var(--accent); color: var(--on-accent, #1a1200); }
+.sh-tab.is-on small { color: inherit; opacity: 0.75; }
+.sh-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.sh-chips button {
+  padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent;
+  color: var(--text-2); font: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer;
+}
+.sh-chips button.is-on { border-color: var(--accent); color: var(--accent); }
+.sh-group { margin-top: 18px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.sh-group__hd {
+  width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 12px 14px; border: 0; background: var(--card, transparent); color: var(--text-1); font: inherit; cursor: pointer; text-align: left;
+}
+.sh-group__hd em { font-style: normal; color: var(--text-3); font-size: 0.82rem; margin-left: 6px; }
+.sh-group__n { font-size: 0.82rem; color: var(--text-2); font-weight: 700; }
+.sh-bar { height: 3px; background: var(--line); }
+.sh-bar > div { height: 100%; background: var(--accent); transition: width 0.2s; }
+.sh-list { list-style: none; margin: 0; padding: 0; }
+.sh-list li {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  padding: 8px 14px; border-top: 1px solid var(--line); font-size: 0.9rem;
+}
+.sh-list li.is-some { background: color-mix(in srgb, #22c55e 7%, transparent); }
+.sh-list li.is-full { background: color-mix(in srgb, #22c55e 15%, transparent); }
+.sh-name { min-width: 0; }
+.sh-boxes { display: flex; gap: 5px; }
+.sh-boxes label {
+  display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px;
+  border-radius: 8px; border: 1px solid var(--line); cursor: pointer; font-weight: 800; font-size: 0.85rem;
+  color: var(--text-3); user-select: none;
+}
+.sh-boxes label.is-on { background: #22c55e; border-color: #22c55e; color: #fff; }
+.sh-boxes input { position: absolute; opacity: 0; pointer-events: none; }
+@media (max-width: 520px) {
+  .sh-list li { padding: 8px 10px; }
+  .sh-boxes label { width: 30px; height: 30px; }
+}
