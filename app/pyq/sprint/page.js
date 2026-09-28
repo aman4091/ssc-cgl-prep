@@ -27,20 +27,22 @@ import { SUBJECTS as WB_SUBJECTS, getWrongBook, isPracticeable } from "@/lib/wro
 import { sprintAnswer } from "@/lib/client-ai";
 import SprintCard from "@/components/SprintCard";
 import SprintAnswer from "@/components/SprintAnswer";
+import MathDrill, { Review as DrillReview } from "@/components/MathDrill";
+import { newDrill, pickSpread, getSeen, getCur as getDrill, clearSeen, getDue as getDrillDue, weakChapters } from "@/lib/mathdrill";
 import {
   pickNext, markDone, doneCount, getAns, putAns, getMarks,
   qText, qOpts, qCorrect, sHash, toggleMark, clearDone, isVocab,
-  getSets, saveSet, removeSet, newSetId, byHashes, doneBySlug, pickDone,
+  getSets, saveSet, removeSet, newSetId, byHashes, doneBySlug, pickDone, getDone,
 } from "@/lib/sprint";
 
 const SECS = 30;      // ek question par itne second — default; owner chun sakta hai
 // ⏱️ Har question ka waqt — chunne ke options. Pasand is device par yaad
 // rehti hai (cgl.sprint.secs), sync nahi — ghadi device ki aadat hai.
-const SEC_OPTS = [10, 20, 30, 45, 60];
+const SEC_OPTS = [5, 10, 20, 30, 45, 60];
 const SECS_KEY = "cgl.sprint.secs";
 const clock = (n) => `${Math.floor(n / 60)}:${String(n % 60).padStart(2, "0")}`;
 const WARM = 10;      // itne jawab banne ke baad daud shuru
-const COUNTS = [50, 100, 120];
+const COUNTS = [25, 50, 100, 120];
 
 // 🔤 Vocab bank ke bahar hai (lib/vocabpool) — wahan sawaal-jawab nahi, ek
 // word aur uska matlab hota hai. Isliye uski apni entry, aur uske liye
@@ -163,6 +165,12 @@ export default function SprintPage() {
   const [totals, setTotals] = useState({});
   const [caMonths, setCaMonths] = useState([]);
   const [doneMap, setDoneMap] = useState({});
+  // 🎯 Maths Skip drill (components/MathDrill) — khula hai ya nahi, aur koi
+  // pichhla drill pada hai ya nahi.
+  const [drill, setDrill] = useState(false);
+  const [hasDrill, setHasDrill] = useState(false);
+  const [dueN, setDueN] = useState(0);
+  useEffect(() => { setHasDrill(!!getDrill()); setDueN(getDrillDue().length); }, [drill]);
 
   const alive = useRef(true);
   useEffect(() => () => { alive.current = false; }, []);
@@ -338,6 +346,9 @@ export default function SprintPage() {
     // question usi jagah aate aur ratt jate.
     const pick = set ? (asTest ? shuffled(byHashes(list, set.hashes)) : byHashes(list, set.hashes))
       : asTest ? pickDone(list, count)
+      // Maths: random, aur zyada se zyada chapter (ek chapter chuna ho to
+      // bas usi ke andar random).
+      : s === "maths" ? pickSpread(list, count, getDone())
       : pickNext(list, count);
     if (!pick.length) {
       setPhase("setup");
@@ -375,6 +386,29 @@ export default function SprintPage() {
     setNote("");
     fetchAll(pick);
   }, [slug, book, chap, books, parts, caMonths, count, fetchAll, loadList]);
+
+  // 🎯 Skip drill shuru: chapter-chapter random, jo drill mein aa chuke wo nahi.
+  const startDrill = useCallback(async () => {
+    setPhase("loading");
+    setNote("Maths ke question load ho rahe hain…");
+    try {
+      const list = await loadList("maths", book, chap);
+      const pick = pickSpread(list, count, getSeen(), weakChapters());
+      setPhase("setup");
+      if (!pick.length) {
+        setNote("Yahan ke saare question drill mein aa chuke. Neeche se drill ka hisaab saaf kar sakte ho.");
+        return;
+      }
+      setNote("");
+      newDrill(pick, secs);
+      setHasDrill(true);
+      setDrill(true);
+      window.scrollTo(0, 0);
+    } catch (e) {
+      setPhase("setup");
+      setNote("Load nahi hue: " + e.message);
+    }
+  }, [book, chap, count, secs, loadList]);
 
   const cur = batch[pos] || null;
   const curH = cur ? sHash(cur) : "";
@@ -499,6 +533,10 @@ export default function SprintPage() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [phase, next, prev, mark]);
+
+  const exitDrill = () => { setDrill(false); window.scrollTo(0, 0); };
+  if (drill === "review") return <DrillReview onExit={exitDrill} />;
+  if (drill) return <MathDrill onExit={exitDrill} />;
 
   // ── daud ───────────────────────────────────────────────────────────────
   if (phase === "run") {
@@ -771,6 +809,41 @@ export default function SprintPage() {
           </button>
           <Link href="/pyq/sprint/marks" className="btn btn--ghost btn--sm">★ Bookmarks ({markN})</Link>
         </div>
+
+        {/* 🎯 Sirf Maths: pehle tez chhanti (Ho jayega / Skip), phir dono list
+            40 sec har question par — paper mein kya chhodna hai ki aadat. */}
+        {slug === "maths" && (
+          <div className="dr-launch mt-16">
+            <div className="row" style={{ gap: 8, flexWrap: "wrap" }}>
+              <button type="button" className="btn btn--primary" onClick={startDrill} disabled={phase === "loading"}>
+                🎯 Skip drill — {count} question · {secs} sec
+              </button>
+              {hasDrill && (
+                <button type="button" className="btn btn--ghost btn--sm" onClick={() => { setDrill(true); window.scrollTo(0, 0); }}>
+                  📋 Pichhla drill kholo
+                </button>
+              )}
+              <button
+                type="button"
+                className={`btn btn--sm ${dueN ? "btn--primary" : "btn--ghost"}`}
+                onClick={() => { setDrill("review"); window.scrollTo(0, 0); }}
+                title="40 se upar wale — 1, 3, 5, 7 din baad wapas"
+              >
+                🔁 Aaj ke dohrane ({dueN})
+              </button>
+              <Link href="/pyq/sprint/under40" className="btn btn--ghost btn--sm">⏱️ Under 40 / 🐢 40+</Link>
+            </div>
+            <p className="hint mt-8">
+              Har question par {secs} sec — sirf faisla: ✅ Ho jayega ya ⏭ Skip (waqt khatam = Skip). Phir dono list
+              40 sec har question par chalao — 40 ke andar sahi hua to ⏱️ Under 40, warna 🐢 40 se upar. Question
+              har chapter se random aate hain (jin chapter mein 40+ gaye, unke zyada). 40 se upar wale 🔁 D+1, D+3,
+              D+5, D+7 par wapas aate hain — chaaron baar 40 ke andar hue to pakke.{" "}
+              <button type="button" className="linklike" onClick={() => { if (window.confirm("Drill mein aa chuke question ka hisaab saaf kar dein?")) { clearSeen(); setNote("Drill ka hisaab saaf."); } }}>
+                drill hisaab saaf karo
+              </button>
+            </p>
+          </div>
+        )}
 
         {sets.length > 0 && (
           <>
