@@ -33,3 +33,6 @@
 .sk-mine { max-width: 900px; margin: 22px auto 0; }
 .sk-mine summary { cursor: pointer; font-weight: 800; }
 .sk-own { font-style: normal; margin-right: 4px; }
+
+.sk-goal { white-space: nowrap; }
+.sk-cnt { font-style: normal; font-size: 0.72rem; font-weight: 800; color: var(--text-3); margin-left: 6px; }

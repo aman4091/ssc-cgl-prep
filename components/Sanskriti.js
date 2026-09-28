@@ -11,7 +11,7 @@
 // Galat jodi `cgl.culture.galti` mein — agle set mein pehle wahi.
 
 import { useEffect, useMemo, useState } from "react";
-import { STATE_NAME, CLASSICAL, EXTRA, allItems, norm, readGalti, markGalti } from "@/lib/sanskriti";
+import { STATE_NAME, CLASSICAL, EXTRA, allItems, norm, readGalti, markGalti, readSeen, bumpSeen, SEEN_GOAL } from "@/lib/sanskriti";
 import { readPairs, updatePair, removePair, readEdits, saveEdit } from "@/lib/culturepairs";
 
 const shuffle = (a) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
@@ -82,7 +82,15 @@ function pickSet(all, extra = []) {
   const ownSorted = shuffle(extra).sort((a, b) => (g[b.id] ? 1 : 0) - (g[a.id] ? 1 : 0));
   const k = !extra.length ? 0 : Math.random() < (g[ownSorted[0].id] ? 0.45 : 0.3) ? 1 : 0;
   const own = ownSorted.slice(0, k);
-  const pool = [...own, ...shuffle(all.filter((x) => g[x.id])), ...shuffle(all.filter((x) => !g[x.id]))];
+  // Baaki: jo kam baar aayi wo pehle (har jodi kam se kam 50 baar aaye),
+  // par thodi random chhoot ke saath — taaki kram ratta na bane.
+  const seen = readSeen();
+  const byLow = (list) => list.map((x) => ({ x, k: (seen[x.id] || 0) + Math.random() * 4 })).sort((a, b) => a.k - b.k).map((o) => o.x);
+  // Galti wali har set mein zyada se zyada 2 — warna wahi ghoomti rehti aur
+  // baaki jodiyan kabhi 50 tak na pahunchti.
+  const bad = byLow(all.filter((x) => g[x.id])).slice(0, 2);
+  const badIds = new Set(bad.map((x) => x.id));
+  const pool = [...own, ...bad, ...byLow(all.filter((x) => !badIds.has(x.id)))];
   const out = []; const usedR = new Set(); const usedL = new Set();
   for (const x of pool) {
     if (usedR.has(norm(x.r)) || usedL.has(norm(x.l))) continue;
@@ -155,6 +163,7 @@ function Match({ setK }) {
     if (!sel || done.includes(m.id)) return;
     if (norm(m.r) === norm(set.find((x) => x.id === sel).r)) {
       markGalti(sel, !missed.has(sel));
+      bumpSeen(sel);
       setDone((d) => [...d, sel]); setSel(null); setSc((s) => ({ ...s, y: s.y + 1 }));
     } else {
       markGalti(sel, false);
@@ -164,10 +173,13 @@ function Match({ setK }) {
     }
   };
   if (setK === "mine" && !all.length) return <div className="sk-done">Abhi koi apni jodi nahi. Kisi bhi page par shabd select karo → 📝 One-liner → 🪔 Statics — jodi-daar likho ya select karo.</div>;
+  const seenMap = readSeen();
+  const full = all.filter((x) => (seenMap[x.id] || 0) >= SEEN_GOAL).length;
   if (set.length < 2) return <div className="sk-done">Is set mein kam se kam 2 jodi chahiye (abhi {all.length}).</div>;
   return (
     <div className="sk-match">
-      <p className="sk-dim">Baayen se chuno, phir daayen uska jodi-daar. {done.length}/{set.length} · ✓ {sc.y} · ✗ {sc.n}</p>
+      <p className="sk-dim">Baayen se chuno, phir daayen uska jodi-daar. {done.length}/{set.length} · ✓ {sc.y} · ✗ {sc.n}
+        <span className="sk-goal" title={`Har jodi kam se kam ${SEEN_GOAL} baar aayegi — kam aayi hui pehle`}> · 🔁 {full}/{all.length} jodi {SEEN_GOAL} baar poori</span></p>
       <div className="sk-cols">
         <div>{set.map((m) => <button key={m.id} type="button" className={done.includes(m.id) ? "is-ok" : sel === m.id ? "is-sel" : ""} onClick={() => !done.includes(m.id) && setSel(m.id)}>{m.l}</button>)}</div>
         <div>{right.map((m) => <button key={m.id} type="button" className={done.includes(m.id) ? "is-ok" : bad === m.id ? "is-bad" : ""} onClick={() => tryR(m)}>{m.r}</button>)}</div>
@@ -180,6 +192,7 @@ function Match({ setK }) {
             return (
               <li key={x.id} className={missed.has(x.id) ? "is-miss" : ""}>
                 {x.mine ? <em className="sk-own" title="Tumhari apni jodi">✍️</em> : null}<b>{x.l}</b> = <b>{x.r}</b>{x.note ? <span> — {x.note}</span> : null}
+                <em className="sk-cnt">{Math.min(seenMap[x.id] || 0, 999)}/{SEEN_GOAL}</em>
                 {edit === x.id
                   ? <EditPair x={x} onDone={(p) => { if (p !== undefined) setPatched((o) => ({ ...o, [x.id]: p })); setEdit(null); }} />
                   : <button type="button" className="sk-edbtn" onClick={() => setEdit(x.id)}>✏️ Edit</button>}
