@@ -13,8 +13,9 @@
 //
 // Purana wala page (import, din, quiz) /vocab/manage par hai.
 //
-// 🎨 Upar dropdown se yaad karne ke 15 aur tareeke (components/VocabLayouts)
-// — owner dekh kar ek chunega. "0" = yahi purana drill. Chunaav is device
+// 🎨 Upar dropdown se yaad karne ke 4 aur tareeke (components/VocabLayouts)
+// — 15 mein se owner ne MCQ, Jodi milao, Memory tiles, Cover method rakhe.
+// "0" = yahi purana drill. Chunaav is device
 // par `cgl.vocablayout` mein; type ki chhaanti (OWS / Idiom / Vocab / New)
 // naye tareekon ke liye.
 

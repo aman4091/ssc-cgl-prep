@@ -13,10 +13,18 @@
 // hai (owner: "sabko mix mat kario alag alag hi rakhio").
 //
 // Sab kuch is device par banta hai — koi API, koi paisa nahi.
+//
+// 🎨 Upar dropdown se calculation sudhaarne ke 15 aur tareeke
+// (components/CalcLayouts) — owner dekh kar ek chunega. "0" = yahi purana
+// (topic ki tiles). Chunaav is device par `cgl.calclayout` mein.
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./calc.css";
 import { GROUPS, groupOf, buildDeck, shuffled, optionsFor, isRight } from "@/lib/calcdecks";
+import CalcLayouts, { CL_LAYOUTS } from "@/components/CalcLayouts";
+import "./layouts.css";
+
+const LAY_KEY = "cgl.calclayout";
 
 const KEY = "cgl.calc.best";   // { "tables|11-20": { best, done } }
 
@@ -168,6 +176,17 @@ export default function CalculationPage() {
   const [open, setOpen] = useState(null);        // { g, v, mode: "show" | "test" }
   const [best, setBest] = useState({});
   useEffect(() => { setBest(readBest()); }, []);
+  const [lay, setLay] = useState("0");
+  useEffect(() => { try { const v = localStorage.getItem(LAY_KEY); if (v && CL_LAYOUTS.some((l) => l.id === v)) setLay(v); } catch { /* private */ } }, []);
+  const pickLay = (v) => { setLay(v); setOpen(null); try { localStorage.setItem(LAY_KEY, v); } catch { /* private */ } };
+  const bar = (
+    <div className="cl-bar">
+      <select value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Practice ka tareeka">
+        <option value="0">🎨 0 · Purana (topic: Dekho → Test)</option>
+        {CL_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id} · {l.name}</option>)}
+      </select>
+    </div>
+  );
 
   const deck = useMemo(() => (open ? buildDeck(open.g, open.v) : null), [open]);
   const g = open ? groupOf(open.g) : null;
@@ -180,6 +199,16 @@ export default function CalculationPage() {
     all[id] = { best: Math.max(old.best, b), right: old.right + right, wrong: old.wrong + wrong };
     writeBest(all); setBest(all);
   };
+
+  if (lay !== "0") {
+    return (
+      <section className="section cal">
+        <h1 className="cal-h1">🧮 Calculation</h1>
+        {bar}
+        <CalcLayouts lay={lay} />
+      </section>
+    );
+  }
 
   if (open && deck) {
     return (
@@ -202,6 +231,7 @@ export default function CalculationPage() {
   return (
     <section className="section cal">
       <h1 className="cal-h1">🧮 Calculation</h1>
+      {bar}
       <p className="cal-dim cal-sub">
         Har topic ka apna hissa chuno — pehle <b>📖 Dekho</b>, phir <b>▶️ Test</b>. Test tab tak chalta
         hai jab tak tum <b>⏹ Roko</b> na dabao, aur hamesha usi topic ka rehta hai.
