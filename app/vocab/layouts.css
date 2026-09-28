@@ -34,3 +34,27 @@
 .vl6-cols button.is-bad { border-color: var(--vn); animation: vl-shake 0.35s; }
 @keyframes vl-shake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
+
+/* Har sawaal ke aage chaar bindu — kitni baar sahi ho chuka. */
+.vl6-dots {
+  display: block;
+  margin-top: 4px;
+  font-style: normal;
+  font-size: 0.62rem;
+  letter-spacing: 2px;
+  color: var(--accent);
+  opacity: 0.75;
+}
+/* "✅ 4 ho gaye" ka apna khaana — baaki chipon se alag dikhe. */
+.vl-done {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--success);
+  background: transparent;
+  color: var(--success);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.vl-done.is-on { background: var(--success); color: #06210f; }

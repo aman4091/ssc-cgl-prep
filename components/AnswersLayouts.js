@@ -11,6 +11,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { dayKey } from "@/lib/wrongbook";
 import { getRevMap, markDoneRev, unmarkToday, revPlan, addDaysKey } from "@/lib/ansrev";
+import { getTags, tagMeta, tagIn } from "@/lib/qtags";
 
 const SUB = {
   math: { icon: "🧮", label: "Maths", c: "#3b6cff" },
@@ -83,6 +84,18 @@ function RevSummary({ list, plan }) {
 
 export default function AnswersDoPane({ list, renderCard, bucketOf, jumpId }) {
   const [rev, setRev] = useState({});
+  // 🏷️ tag — list mein har number ke aage uska rang.
+  const [tags, setTags] = useState({});
+  useEffect(() => {
+    const on = () => setTags(getTags());
+    on();
+    window.addEventListener("cgl:qtags", on);
+    window.addEventListener("cgl:sync-applied", on);   // doosre device se aaya tag
+    return () => {
+      window.removeEventListener("cgl:qtags", on);
+      window.removeEventListener("cgl:sync-applied", on);
+    };
+  }, []);
   useEffect(() => {
     setRev(getRevMap());
     const on = () => setRev(getRevMap());
@@ -97,8 +110,10 @@ export default function AnswersDoPane({ list, renderCard, bucketOf, jumpId }) {
   }, [rev, today]);
 
   const [f, setF] = useState("all");
+  // Kram: PURANA sabse upar, aaj wala sabse neeche (owner ka kehna). Pehle
+  // ulta tha — naya upar.
   const rows = useMemo(
-    () => [...list].sort((a, b) => String(b.at).localeCompare(String(a.at))).filter((r) => pass(f, plan(r))),
+    () => [...list].sort((a, b) => String(a.at).localeCompare(String(b.at))).filter((r) => pass(f, plan(r))),
     [list, f, plan],
   );
   const [id, setId] = useState("");
@@ -127,7 +142,9 @@ export default function AnswersDoPane({ list, renderCard, bucketOf, jumpId }) {
               <div key={r.uid}>
                 {hd && <div className="al14-day">{shortD(dk)} · {wk(dk)}</div>}
                 <button type="button" className={`al14-it${cur && r.id === cur.id ? " is-on" : ""}`} onClick={() => pick(r.id)}>
-                  <i style={{ background: subOf(bucketOf(r)).c }} />
+                  {/* Bindu ka rang: tag hai to tag ka, warna subject ka. */}
+                  <i style={{ background: (tagMeta(tagIn(tags, r)) || subOf(bucketOf(r))).c }}
+                    title={(tagMeta(tagIn(tags, r)) || {}).label || ""} />
                   <span>{qNum(r, i)}</span>
                   <em className={tag[1]}>{tag[0]}</em>
                 </button>
