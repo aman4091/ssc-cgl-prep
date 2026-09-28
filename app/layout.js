@@ -7,6 +7,7 @@ import "./looks/looks.css";
 import "./looks/timeline.css";
 // Menu ka roop — timeline.css ke BAAD, warna uske apne menu-rule jeet jate.
 import "./looks/tilenav.css";
+// Menu: Icon rail (components/MenuRail) — <html data-menu="4">.
 import "./looks/menus.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -68,16 +69,13 @@ export default function RootLayout({ children }) {
   return (
     /* Script <html> ka apna attribute badalta hai, isliye server ka HTML aur
        client ka HTML yahan alag honge — ye ISI element par expected hai. */
-    <html lang="en" data-look="10" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" data-look="10" data-menu="4" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html:
               "try{var d=document.documentElement,t=localStorage.getItem('cgl.theme');" +
               "if(t==='dark')d.setAttribute('data-theme','dark');" +
-              // 🎨 Menu ka chuna hua roop (components/Navbar) — pehle paint se
-              // pehle, taaki page purane sidebar ki jagah chhod kar na uchhle.
-              "var mn=localStorage.getItem('cgl.menulayout');if(mn&&mn!=='0')d.setAttribute('data-menu',mn);" +
               // Roop ab ek hi hai (Timeline) aur wo <html data-look=\"10\"> par
               // seedha likha hai — script ko use lagane ki zaroorat nahi.
               // Address bar ka rang: bina-media wala meta sabse aage, taaki wo
@@ -107,7 +105,7 @@ export default function RootLayout({ children }) {
             {/* Navbar reads the query string to tell rows apart that share a path
                 (the Current Affairs tabs), and useSearchParams needs a Suspense
                 boundary or every page opts out of static rendering. */}
-            <Suspense fallback={<aside className="drawer" />}>
+            <Suspense fallback={<nav className="mnu mnu4" />}>
               <Navbar />
             </Suspense>
             <main className="container">{children}</main>

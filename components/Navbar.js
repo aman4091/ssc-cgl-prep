@@ -10,16 +10,7 @@ import { notesByBook, bookIcon, bookLabel } from "@/lib/pastednotes";
 import ThemeToggle from "./ThemeToggle";
 import FocusLock from "./FocusLock";
 import TopbarInfo from "./TopbarInfo";
-import MenuVariants, { MENU_LAYOUTS } from "./MenuVariants";
-
-// 🎨 Menu ka roop — owner 15 mein se ek chunega (upar patti ka dropdown).
-// "0" = purana tile wala sidebar. Chunaav is device par `cgl.menulayout`
-// mein; <html data-menu="N"> par lagta hai taaki CSS (app/looks/menus.css)
-// page ki jagah (sidebar / neeche ki patti) usi hisaab se chhod de.
-const MENU_KEY = "cgl.menulayout";
-const readMenu = () => {
-  try { const v = localStorage.getItem(MENU_KEY); return v && MENU_LAYOUTS.some((l) => l.id === v) ? v : "0"; } catch { return "0"; }
-};
+import MenuRail from "./MenuRail";
 
 // Nav group key -> user "shelf book" id (Settings → PYQ Manager): jab bank ka
 // menu khule to user ke apne topics bhi uske chapters ke saath dikhein.
@@ -47,38 +38,24 @@ const seedTrail = (p) => (p && p.startsWith("/notes/paste") ? [OL_KEY] : trailFo
 
 // The menu, and only the menu.
 //
-// A DRILL-DOWN, not a dropdown: the top level is names only. Tapping one
-// replaces the list in place with that group's items and a "← back" row, rather
-// than expanding underneath and pushing the rest of the menu down.
+// Roop: ICON RAIL (components/MenuRail) — baayen patli patti mein har khaane
+// ka icon + chhota naam; group dabane par bagal mein flyout khulta hai jisme
+// andar ke level (bank ke chapter tak) drill-down se. Owner ne 15 roop mein
+// se yahi chuna — pehle ka 2-column tile sidebar aur roop wala dropdown hata
+// diye. Phone par rail ☰ se khulti hai.
 //
-// Ab ye har chaudai par PARDE ke peeche hai: upar ek patli patti (☰ + naam),
-// aur ☰ dabate hi menu baayen se phisal kar page ke UPAR aata hai. Pehle ye
-// desktop par hamesha khada rehta tha aur 210px chaura khaana kha jata tha —
-// jabki menu se kaam ek baar hota hai, padhai poore page par.
+// Ye file menu ka DATA banati hai (groups, bank ke chapter, Notesliner ki
+// books, /new-words ki dates) aur use ek model (`menu`) mein deti hai.
 export default function Navbar() {
   const pathname = usePathname();
   const params = useSearchParams();
-  // Seeded from the URL during render so landing deep in the app already shows
-  // that group, rather than flashing the top level first.
-  // A TRAIL, not one key — the menu is three deep: PYQ Bank -> a bank -> its
-  // chapters. Back pops one level rather than jumping to the top.
-  const [trail, setTrail] = useState(() => seedTrail(pathname));
   // A group can name a BANK instead of listing links — its rows are that bank's
   // chapters, fetched the first time the group is opened and then memoised by
   // the loader itself.
   const [bankLinks, setBankLinks] = useState({});
   // Phones only: the rail is off-canvas until the hamburger asks for it.
   const [open, setOpen] = useState(false);
-  // StoreGate ke andar mount hota hai (hydrate ke baad), isliye localStorage
-  // seedha padh sakte hain.
-  const [menuLay, setMenuLay] = useState(readMenu);
-  useEffect(() => {
-    const d = document.documentElement;
-    if (menuLay === "0") d.removeAttribute("data-menu"); else d.setAttribute("data-menu", menuLay);
-  }, [menuLay]);
-  const pickMenu = (v) => { setMenuLay(v); setOpen(false); try { localStorage.setItem(MENU_KEY, v); } catch { /* private */ } };
 
-  useEffect(() => { setTrail(seedTrail(pathname)); }, [pathname]);
   // Page badla to menu apne aap band — parda page ke upar hai, khula chhodne
   // par jis page par gaye ho wahi dikhta hi nahi.
   useEffect(() => { setOpen(false); }, [pathname, params]);
@@ -220,7 +197,6 @@ export default function Navbar() {
       })
       .catch(() => { loading.current.delete(g.key); });
   }, [bankLinks]);
-  useEffect(() => { loadBank(nodeAt(trail)); }, [trail, loadBank]);
   // Navigating means you are done with the menu — and on a phone it sits over
   // the page you just opened.
   // params bhi: /new-words par word chunne se sirf query badalti hai. Lekin
@@ -261,17 +237,6 @@ export default function Navbar() {
     }
     return true;
   };
-  const current = trail[0] === OL_KEY ? olAt(trail) : nodeAt(trail);
-  // What this level shows: sub-groups, a bank's fetched chapters, or plain links.
-  // A group may have BOTH sub-groups and plain links — Notes has three books to
-  // drill into and two ordinary rows — so these concatenate rather than one
-  // shadowing the other. `rows.map` already renders each shape.
-  const rowsAll = current
-    ? current.bank
-      ? bankLinks[current.key] || []
-      : [...(current.children || []), ...(current.links || [])]
-    : NAV_GROUPS;
-  const rows = rowsAll;
 
   // ── Naye roop ke liye saajha model ──
   // Har khaana ek hi shakl mein: { id, icon, label, href } (seedha link) ya
@@ -342,152 +307,11 @@ export default function Navbar() {
             padta, aur wahi ek pal sabse chubhta hai. */}
         {/* 🔒 PC lock — patti ke dayein, din/raat ke bagal. Yahi ek jagah
             hai jo har page par rehti hai. */}
-        {/* 🎨 Purana / 1 / 2 — options compare karne ke liye. */}
-        <label className="mnu-pick" title="Menu ka roop">
-          <select value={menuLay} onChange={(e) => pickMenu(e.target.value)} aria-label="Menu ka roop">
-            <option value="0">🎨 0 · Purana (tiles)</option>
-            {MENU_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id} · {l.name}</option>)}
-          </select>
-        </label>
         <FocusLock />
         <ThemeToggle />
       </header>
 
-      {menuLay !== "0" ? (
-        <MenuVariants lay={menuLay} menu={menu} trail={trail} setTrail={setTrail} open={open} setOpen={setOpen} mark={mark} />
-      ) : (
-      <>
-      {open && <div className="drawer__backdrop" onClick={() => setOpen(false)} />}
-    <aside className={`drawer ${open ? "is-open" : ""}`}>
-      <div className="drawer__head">
-        <Link href="/" className="drawer__brand">
-          {mark}
-          <span className="brand__text">
-            <strong>SSC CGL Pre</strong>
-            <span className="drawer__sub">Prep Hub · Prelims</span>
-          </span>
-        </Link>
-        <button className="drawer__x" aria-label="Band karo" onClick={() => setOpen(false)}>✕</button>
-      </div>
-
-
-      <nav className="drawer__nav">
-        {onNewWords ? (
-          /* ---- /new-words: pehle dates, date ke andar us din ke words ---- */
-          nwDay ? (
-            <>
-              <Link href="/new-words" className="drawer__link">
-                <span className="drawer__chev">←</span> Saari dates
-              </Link>
-              {nwDayWords.map((w, i) => (
-                <Link
-                  key={w}
-                  href={`/new-words?day=${encodeURIComponent(nwDay)}&w=${encodeURIComponent(w)}`}
-                  className={`drawer__link ${(params.get("w") || nwDayWords[0]) === w ? "is-active" : ""}`}
-                >
-                  <span className="drawer__ico">{i + 1}.</span>
-                  {w}
-                </Link>
-              ))}
-              {!nwDayWords.length && (
-                <span className="drawer__link" style={{ color: "var(--dim)" }}>Is date par kuch nahi</span>
-              )}
-            </>
-          ) : nwGroups.length ? (
-            nwGroups.map((g) => (
-              <Link
-                key={g.key}
-                href={`/new-words?day=${encodeURIComponent(g.key)}`}
-                className="drawer__link"
-              >
-                <span className="drawer__ico">📅</span>
-                {g.label} ({g.words.length})
-              </Link>
-            ))
-          ) : (
-            <span className="drawer__link" style={{ color: "var(--dim)" }}>Abhi koi word nahi</span>
-          )
-        ) : current ? (
-          /* ---- level 2: one group, in place of the list ---- */
-          <>
-            <button className="drawer__back" onClick={() => setTrail((t) => t.slice(0, -1))}>
-              <span className="drawer__chev">←</span>
-              <span className="drawer__groupname">{current.name}</span>
-            </button>
-
-            {rows.map((l) =>
-              l.href ? (
-                <Link
-                  key={l.href}
-                  href={l.href}
-                  className={`drawer__link ${isActive(l) ? "is-active" : ""}`}
-                >
-                  {l.label}
-                </Link>
-              ) : (
-                <button
-                  key={l.key}
-                  className="drawer__grouphd"
-                  onClick={() => setTrail((t) => [...t, l.key])}
-                >
-                  <span className="drawer__ico">{l.icon}</span>
-                  <span className="drawer__groupname">{l.name}</span>
-                  <span className="drawer__chev">›</span>
-                </button>
-              )
-            )}
-            {current.bank && !bankLinks[current.key] && (
-              <span className="drawer__link" style={{ color: "var(--dim)" }}>Loading…</span>
-            )}
-          </>
-        ) : (
-          /* ---- level 1: names only ---- */
-          <>
-            {NAV_DIRECT.filter((d) => d.pin).map((d) =>
-              /* 📝 Notesliner: notes paste ho chuke hain to ye seedha link
-                 nahi, ek khulne wala khaana hai — andar book ke naam. */
-              d.oneliner && olNode ? (
-                <button key={d.href} className="drawer__grouphd" onClick={() => setTrail([OL_KEY])}>
-                  <span className="drawer__ico">{d.icon}</span>
-                  <span className="drawer__groupname">{d.label}</span>
-                  <span className="drawer__chev">›</span>
-                </button>
-              ) : (
-                <Link
-                  key={d.href}
-                  href={d.href}
-                  className={`drawer__link drawer__link--top ${isActive(d) ? "is-active" : ""}`}
-                >
-                  <span className="drawer__ico">{d.icon}</span>
-                  {d.label}
-                </Link>
-              )
-            )}
-
-            {rows.map((g) => (
-              <button key={g.key} className="drawer__grouphd" onClick={() => setTrail([g.key])}>
-                <span className="drawer__ico">{g.icon}</span>
-                <span className="drawer__groupname">{g.name}</span>
-                <span className="drawer__chev">›</span>
-              </button>
-            ))}
-
-            {NAV_DIRECT.filter((d) => !d.pin).map((d) => (
-              <Link
-                key={d.href}
-                href={d.href}
-                className={`drawer__link drawer__link--top ${isActive(d) ? "is-active" : ""}`}
-              >
-                <span className="drawer__ico">{d.icon}</span>
-                {d.label}
-              </Link>
-            ))}
-          </>
-        )}
-      </nav>
-    </aside>
-      </>
-      )}
+      <MenuRail menu={menu} open={open} setOpen={setOpen} mark={mark} />
     </>
   );
 }

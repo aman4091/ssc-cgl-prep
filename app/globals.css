@@ -3960,7 +3960,7 @@ body.exam-on .hresume { display: none; }
 /* ⌄ Aaj ka din — band rehta hai. */
 .fold { border: 1px solid var(--line); border-radius: var(--radius-md, 12px); background: var(--card); }
 .fold__hd {
-  width: 100%; background: none; border: 0; cursor: pointer; text-align: left;
+  width: 100%; box-sizing: border-box; background: none; border: 0; cursor: pointer; text-align: left;
   padding: 12px 14px; font-size: 0.9rem; font-weight: 700; color: var(--text);
 }
 .fold__body { padding: 0 14px 14px; }
