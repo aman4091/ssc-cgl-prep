@@ -76,9 +76,11 @@ function basePairs(k) {
 // beech mein 1-2 aa jaati hain (galti wali ho to zaroor).
 function pickSet(all, extra = []) {
   const g = readGalti();
-  // Galti wali apni jodi ho to pakka 1; warna 70% baar 1 (kabhi-kabhi 2).
+  // Apni jodi kabhi-kabhi hi beech mein — har set mein nahi (owner: "randomly
+  // daalna tha"). Lagbhag 3 mein se 1 set mein ek; galti wali ho to thoda
+  // zyada (lagbhag 2 mein se 1).
   const ownSorted = shuffle(extra).sort((a, b) => (g[b.id] ? 1 : 0) - (g[a.id] ? 1 : 0));
-  const k = !extra.length ? 0 : g[ownSorted[0].id] ? 1 : Math.random() < 0.7 ? (Math.random() < 0.3 ? 2 : 1) : 0;
+  const k = !extra.length ? 0 : Math.random() < (g[ownSorted[0].id] ? 0.45 : 0.3) ? 1 : 0;
   const own = ownSorted.slice(0, k);
   const pool = [...own, ...shuffle(all.filter((x) => g[x.id])), ...shuffle(all.filter((x) => !g[x.id]))];
   const out = []; const usedR = new Set(); const usedL = new Set();
