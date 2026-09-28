@@ -72,6 +72,12 @@ function Play({ pairs, onChange }) {
         <div>{left.map((m) => <button key={m.i} type="button" className={done.includes(m.i) ? "is-ok" : sel === m.i ? "is-sel" : ""} onClick={() => !done.includes(m.i) && setSel(m.i)}>{m.l}</button>)}</div>
         <div>{right.map((m) => <button key={m.i} type="button" className={done.includes(m.i) ? "is-ok" : bad === m.i ? "is-bad" : ""} onClick={() => tryR(m)}>{m.r}</button>)}</div>
       </div>
+      {allDone && (
+        <div className="jd-next">
+          <button type="button" onClick={() => { setDone([]); setMissed([]); setSi(cur); setSel(null); }}>↺ Yahi set dobara</button>
+          {cur < nSets - 1 ? <button type="button" className="jd-go" onClick={() => setSi(cur + 1)}>Agla set →</button> : <button type="button" className="jd-go" onClick={() => setSi(0)}>🎉 Pehle set se</button>}
+        </div>
+      )}
       {done.length > 0 && (
         <ul className="jd-notes">
           {set.filter((x) => done.includes(x.i)).map((x) => (
@@ -86,12 +92,6 @@ function Play({ pairs, onChange }) {
             </li>
           ))}
         </ul>
-      )}
-      {allDone && (
-        <div className="jd-next">
-          <button type="button" onClick={() => { setDone([]); setMissed([]); setSi(cur); setSel(null); }}>↺ Yahi set dobara</button>
-          {cur < nSets - 1 ? <button type="button" className="jd-go" onClick={() => setSi(cur + 1)}>Agla set →</button> : <button type="button" className="jd-go" onClick={() => setSi(0)}>🎉 Pehle set se</button>}
-        </div>
       )}
     </div>
   );
@@ -116,27 +116,32 @@ export default function NotesPairsBtn({ pageKey, title, page, text }) {
     return () => window.removeEventListener("keydown", k);
   }, [open]);
   const n = rec?.pairs?.length || 0;
-  // Poora page ek saath nahi banta to thoda-thoda: page ~2500 akshar ke
+  // Poora page ek saath nahi banta to thoda-thoda: page ~1500 akshar ke
   // tukdon mein, har tukde ki jodiyan bante hi save. Koi tukda fail ho to
   // use aadha karke dobara; phir bhi na bane to chhod kar aage.
   const make = async () => {
     if (busy) return;
     setBusy(true); setErr("");
-    let queue = chunks(String(text || ""), 2500);
-    const total = queue.length;
-    let got = [], done = 0, lastErr = "";
+    let queue = chunks(String(text || ""), 1500);
+    let got = [], done = 0, lastErr = "", calls = 0;
     const seen = new Set();
-    while (queue.length) {
+    while (queue.length && calls < 14) {
       const part = queue.shift();
-      setBusy(`${Math.min(done + 1, total)}/${total}`);
+      calls++;
+      setBusy(`${done + 1}/${done + 1 + queue.length}`);
       try {
-        const d = await notesPairs(part, title || "");
+        // 70s mein jawab na aaye to is tukde ko fail maano — ⏳ hamesha ke
+        // liye latka na rahe.
+        const d = await Promise.race([
+          notesPairs(part, title || ""),
+          new Promise((_, no) => setTimeout(() => no(new Error("DeepSeek ne time par jawab nahi diya.")), 70000)),
+        ]);
         for (const p of d.pairs || []) {
           const k = String(p.l).toLowerCase();
           if (!seen.has(k)) { seen.add(k); got.push(p); }
         }
         done++;
-        const r = { title: title || "Notes", page, pairs: got };
+        const r = { title: title || "Notes", page, pairs: [...got] };
         saveNoteSet(pageKey, r); setRec(r);
       } catch (e) {
         lastErr = e.message;
@@ -163,7 +168,7 @@ export default function NotesPairsBtn({ pageKey, title, page, text }) {
       {err && !open ? <span className="nt-meta" style={{ color: "var(--danger)" }}>{err}</span> : null}
       {open && rec && (
         <div className="modal-overlay" onClick={() => setOpen(false)} style={{ zIndex: 500 }}>
-          <div className="modal glass pocket-modal jd-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="modal glass jd-modal" onClick={(e) => e.stopPropagation()}>
             <div className="jd-hd">
               <div><span className="hero__eyebrow">🧩 Jodi milao · page {page}</span><h2>{title}</h2></div>
               <div className="jd-hdb">

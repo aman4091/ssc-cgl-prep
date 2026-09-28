@@ -60,30 +60,32 @@ function parsePairs(content) {
   });
 }
 
+export const maxDuration = 60;
+
 export async function POST(req) {
   try {
     const { text, topic, apiKey, model, baseUrl } = await req.json();
     const body = String(text || "").trim();
     if (!body) return Response.json({ error: "Page khaali hai." }, { status: 400 });
-    const isReasoner = (model || "").includes("reasoner");
-    let pairs = [];
-    let last = "";
-    // Ek baar kam bani to apne aap doosri koshish.
-    for (let tryNo = 0; tryNo < 2 && pairs.length < 2; tryNo++) {
-      const result = await deepseekChat({
-        apiKey, model, baseUrl,
-        temperature: tryNo ? 0.4 : 0.2,
-        jsonMode: true,
-        maxTokens: isReasoner ? 8000 : 4000,
-        messages: [
-          { role: "system", content: PROMPT },
-          { role: "user", content: (topic ? `Page ka topic: ${topic}\n\n` : "") + `NOTES PAGE:\n${body.slice(0, 14000)}` },
-        ],
-      });
-      if (!result.ok) return Response.json({ error: result.error }, { status: result.status });
-      last = result.content || "";
-      pairs = parsePairs(last);
-    }
+    // Model hamesha deepseek-chat (Settings ka reasoner/pro yahan minuton
+    // soch-ta reh jata tha — ⏳ latka rehta). JSON mode bhi nahi: usme kabhi
+    // khaali jagah ki lambi dhaar aati hai. Tukde chhote hain (client
+    // bhejta hai), to ek hi koshish, 50s tak — na bane to client us tukde ko
+    // aadha karke phir bhejta hai.
+    void model;
+    const result = await deepseekChat({
+      apiKey, model: "deepseek-chat", baseUrl,
+      temperature: 0.2,
+      maxTokens: 2500,
+      timeoutMs: 50000,
+      messages: [
+        { role: "system", content: PROMPT },
+        { role: "user", content: (topic ? `Page ka topic: ${topic}\n\n` : "") + `NOTES PAGE:\n${body.slice(0, 6000)}` },
+      ],
+    });
+    if (!result.ok) return Response.json({ error: result.error }, { status: result.status });
+    const last = result.content || "";
+    const pairs = parsePairs(last);
     if (pairs.length < 2) {
       return Response.json(
         { error: `DeepSeek se jodiyan nahi bani — dobara try karo. (Jawab: ${last.slice(0, 120) || "khaali"})` },

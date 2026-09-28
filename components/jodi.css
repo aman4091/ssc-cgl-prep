@@ -1,5 +1,5 @@
 /* 🧩 Notes page ka Jodi milao popup (components/NotesPairsBtn.js). */
-.jd-modal { max-width: 920px; width: min(920px, 96vw); padding: 18px; }
+.modal.jd-modal { max-width: 920px; width: min(920px, 96vw); padding: 18px; max-height: calc(100vh - 110px); overflow-y: auto; box-sizing: border-box; }
 .jd-modal button { font: inherit; color: inherit; }
 .jd-hd { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
 .jd-hd h2 { margin: 4px 0 0; font-size: 1.1rem; }
