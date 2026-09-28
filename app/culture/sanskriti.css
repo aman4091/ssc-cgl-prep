@@ -22,3 +22,13 @@
 .sk-notes span { color: var(--text-2); }
 .sk-go { display: block; margin: 16px auto 0; padding: 12px 26px; border-radius: 999px; border: 0; cursor: pointer; font-weight: 900; background: var(--accent); color: #1a1200 !important; }
 .sk-done { padding: 30px; text-align: center; border-radius: 16px; border: 1px dashed var(--line); }
+.sk-edbtn { margin-left: 8px; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-size: 0.75rem; font-weight: 700; }
+.sk-edbtn:hover { border-color: var(--accent); color: var(--accent) !important; }
+.sk-edit { display: grid; gap: 6px; margin-top: 8px; }
+.sk-edit :is(input, textarea) { box-sizing: border-box; width: 100%; padding: 8px 10px; border-radius: 10px; font: inherit; font-size: 0.9rem; background: var(--bg-2); color: var(--text-1); border: 1px solid var(--line); resize: vertical; }
+.sk-edit > div { display: flex; gap: 6px; }
+.sk-edit button { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; cursor: pointer; font-weight: 700; font-size: 0.8rem; }
+.sk-edit .sk-save { background: var(--accent); border-color: var(--accent); color: #1a1200 !important; }
+.sk-edit .sk-del { margin-left: auto; color: var(--vn) !important; border-color: var(--vn); }
+.sk-mine { max-width: 900px; margin: 22px auto 0; }
+.sk-mine summary { cursor: pointer; font-weight: 800; }

@@ -377,3 +377,9 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 }
 .sa-olm__new button:disabled { opacity: 0.5; cursor: default; }
 .sa-olm__hint { margin: 10px 0 0; font-size: 0.82rem; color: var(--text-3); }
+/* 🪔 Statics jodi */
+.sa-olm__in { display: block; width: 100%; box-sizing: border-box; height: 40px; margin: 0 0 8px; padding: 0 12px; border-radius: 10px; font: inherit; font-size: 0.95rem; background: var(--bg-2, var(--card)); color: var(--text-1); border: 1px solid var(--line); }
+.sa-olm__in:focus { outline: 0; border-color: var(--accent); }
+.sa-olm__books button:disabled { opacity: 0.45; cursor: default; }
+.sa-olm__hint { margin: 10px 0 0; font-size: 0.8rem; color: var(--text-3); line-height: 1.5; }
+.sa-olm__x { border: 0; background: none; color: var(--accent); cursor: pointer; font: inherit; font-weight: 700; padding: 0; }

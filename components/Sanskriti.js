@@ -12,6 +12,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { STATE_NAME, CLASSICAL, EXTRA, allItems, norm, readGalti, markGalti } from "@/lib/sanskriti";
+import { readPairs, updatePair, removePair, readEdits, saveEdit } from "@/lib/culturepairs";
 
 const shuffle = (a) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 const sn = (k) => STATE_NAME[k] || k;
@@ -39,6 +40,7 @@ const IMP = {
 };
 
 export const SETS = [
+  { k: "mine", l: "✍️ Mere jode" },
   { k: "fd", l: "🥁 Folk dance → Rajya" },
   { k: "fs", l: "🪔 Festival → Rajya" },
   { k: "cf", l: "💃 Classical — baatein" },
@@ -50,8 +52,14 @@ export const SETS = [
   { k: "imp", l: "🪔 Desh-bhar ke tyohar" },
 ];
 
-// Har set ki jodiyan: { id, l (baayen), r (daayen), note }
+// Har set ki jodiyan: { id, l (baayen), r (daayen), note } — owner ke
+// badlaav (`cgl.culture.edits`) upar se; "mine" = select menu se bani.
 function pairsOf(k) {
+  if (k === "mine") return readPairs().map((p) => ({ ...p, id: `my:${p.id}`, mine: p.id }));
+  const e = readEdits();
+  return basePairs(k).map((p) => (e[p.id] ? { ...p, ...e[p.id], edited: true } : p)).filter((p) => !p.del);
+}
+function basePairs(k) {
   if (k === "fd" || k === "fs") return allItems().filter((x) => x.t === k).map((x) => ({ id: x.id, l: x.n, r: sn(x.st), note: x.note }));
   if (k === "cf") return CLASSICAL.flatMap((c) => c.facts.map((f) => ({ id: `cf:${c.n}:${f}`, l: f, r: c.n, note: "" })));
   if (k === "cg") return CLASSICAL.flatMap((c) => c.guru.map((g) => ({ id: `cg:${c.n}:${g}`, l: g, r: c.n, note: "" })));
@@ -76,6 +84,52 @@ function pickSet(all) {
   return out;
 }
 
+// ✏️ Jodi milne ke baad — dono taraf ka text aur explanation badlo.
+function EditPair({ x, onDone }) {
+  const [f, setF] = useState({ l: x.l, r: x.r, note: x.note || "" });
+  const save = () => {
+    if (!f.l.trim() || !f.r.trim()) return;
+    const patch = { l: f.l.trim(), r: f.r.trim(), note: f.note.trim() };
+    if (x.mine) updatePair(x.mine, patch); else saveEdit(x.id, patch);
+    onDone(patch);
+  };
+  const del = () => {
+    if (!confirm("Ye jodi hata dein?")) return;
+    if (x.mine) removePair(x.mine); else saveEdit(x.id, { del: true });
+    onDone(null);
+  };
+  return (
+    <div className="sk-edit" onClick={(e) => e.stopPropagation()}>
+      <input value={f.l} onChange={(e) => setF({ ...f, l: e.target.value })} placeholder="Baayen" />
+      <input value={f.r} onChange={(e) => setF({ ...f, r: e.target.value })} placeholder="Daayen (jodi-daar)" />
+      <textarea rows={3} value={f.note} onChange={(e) => setF({ ...f, note: e.target.value })} placeholder="Explanation" />
+      <div><button type="button" className="sk-save" onClick={save}>💾 Save</button><button type="button" onClick={() => onDone(undefined)}>Radd</button><button type="button" className="sk-del" onClick={del}>🗑️ Hatao</button></div>
+    </div>
+  );
+}
+
+// ✍️ Apni saari jodiyan — khelne se pehle bhi dekhna / badalna.
+function MineList() {
+  const [list, setList] = useState(readPairs);
+  const [edit, setEdit] = useState(null);
+  if (!list.length) return null;
+  return (
+    <details className="sk-mine">
+      <summary>✍️ Meri saari jodiyan ({list.length}) — dekho / badlo</summary>
+      <ul className="sk-notes">
+        {list.map((p) => {
+          const x = { ...p, id: `my:${p.id}`, mine: p.id };
+          return (
+            <li key={p.id}><b>{p.l}</b> = <b>{p.r}</b>{p.note ? <span> — {p.note}</span> : null}
+              {edit === p.id ? <EditPair x={x} onDone={() => { setEdit(null); setList(readPairs()); }} /> : <button type="button" className="sk-edbtn" onClick={() => setEdit(p.id)}>✏️ Edit</button>}
+            </li>
+          );
+        })}
+      </ul>
+    </details>
+  );
+}
+
 function Match({ setK }) {
   const all = useMemo(() => pairsOf(setK), [setK]);
   const [round, setRound] = useState(0);
@@ -86,7 +140,9 @@ function Match({ setK }) {
   const [bad, setBad] = useState(null);
   const [missed, setMissed] = useState(new Set());
   const [sc, setSc] = useState({ y: 0, n: 0 });
-  useEffect(() => { setDone([]); setSel(null); setMissed(new Set()); }, [set]);
+  const [edit, setEdit] = useState(null);
+  const [patched, setPatched] = useState({});
+  useEffect(() => { setDone([]); setSel(null); setMissed(new Set()); setEdit(null); setPatched({}); }, [set]);
   const tryR = (m) => {
     if (!sel || done.includes(m.id)) return;
     if (norm(m.r) === norm(set.find((x) => x.id === sel).r)) {
@@ -99,7 +155,8 @@ function Match({ setK }) {
       setTimeout(() => setBad(null), 450);
     }
   };
-  if (set.length < 2) return <div className="sk-done">Is set mein jodiyan kam hain.</div>;
+  if (setK === "mine" && !all.length) return <div className="sk-done">Abhi koi apni jodi nahi. Kisi bhi page par shabd select karo → 📝 One-liner → 🪔 Statics — jodi-daar likho ya select karo.</div>;
+  if (set.length < 2) return <div className="sk-done">Is set mein kam se kam 2 jodi chahiye (abhi {all.length}).</div>;
   return (
     <div className="sk-match">
       <p className="sk-dim">Baayen se chuno, phir daayen uska jodi-daar. {done.length}/{set.length} · ✓ {sc.y} · ✗ {sc.n}</p>
@@ -109,7 +166,18 @@ function Match({ setK }) {
       </div>
       {done.length > 0 && (
         <ul className="sk-notes">
-          {set.filter((x) => done.includes(x.id)).map((x) => <li key={x.id} className={missed.has(x.id) ? "is-miss" : ""}><b>{x.l}</b> = <b>{x.r}</b>{x.note ? <span> — {x.note}</span> : null}</li>)}
+          {set.filter((x) => done.includes(x.id)).map((x0) => {
+            if (patched[x0.id] === null) return null;
+            const x = { ...x0, ...(patched[x0.id] || {}) };
+            return (
+              <li key={x.id} className={missed.has(x.id) ? "is-miss" : ""}>
+                <b>{x.l}</b> = <b>{x.r}</b>{x.note ? <span> — {x.note}</span> : null}
+                {edit === x.id
+                  ? <EditPair x={x} onDone={(p) => { if (p !== undefined) setPatched((o) => ({ ...o, [x.id]: p })); setEdit(null); }} />
+                  : <button type="button" className="sk-edbtn" onClick={() => setEdit(x.id)}>✏️ Edit</button>}
+              </li>
+            );
+          })}
         </ul>
       )}
       {done.length === set.length && <button type="button" className="sk-go" onClick={() => setRound((r) => r + 1)}>🎉 Agla set →</button>}
@@ -119,12 +187,24 @@ function Match({ setK }) {
 
 export default function Sanskriti() {
   const [k, setK] = useState("fd");
-  const counts = useMemo(() => Object.fromEntries(SETS.map((s) => [s.k, pairsOf(s.k).length])), []);
+  const [tick, setTick] = useState(0);
+  useEffect(() => {
+    // Select menu se "Kholo →" → /culture?set=mine; apni jodi ho to wahi pehle.
+    const q = new URLSearchParams(window.location.search).get("set");
+    if (q && SETS.some((x) => x.k === q)) setK(q);
+    else if (readPairs().length) setK("mine");
+    const on = () => setTick((t) => t + 1);
+    window.addEventListener("cgl:culture-pairs", on);
+    window.addEventListener("cgl:sync-applied", on);
+    return () => { window.removeEventListener("cgl:culture-pairs", on); window.removeEventListener("cgl:sync-applied", on); };
+  }, []);
+  const counts = useMemo(() => Object.fromEntries(SETS.map((s) => [s.k, pairsOf(s.k).length])), [tick]); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <section className="section sk">
       <h1 className="sk-h">🪔 Bharat Sanskriti · Jodi milao</h1>
       <div className="sk-cats">{SETS.map((s) => <button key={s.k} type="button" className={k === s.k ? "is-on" : ""} onClick={() => setK(s.k)}>{s.l} <small>{counts[s.k]}</small></button>)}</div>
       <Match key={k} setK={k} />
+      {k === "mine" && <MineList key={tick} />}
     </section>
   );
 }

@@ -40,6 +40,7 @@ import { searchImages } from "@/lib/webimages";
 import { getThreads, saveThread, newThreadId } from "@/lib/asklog";
 import { putAns, qText as sprintQText } from "@/lib/sprint";
 import { addOneLiner, OL_SUBS } from "@/lib/oneliners";
+import { addPair, readPending, setPending } from "@/lib/culturepairs";
 
 // 💬 Poochho dabate hi yahi sawaal apne aap chala jata hai — pehle kuch
 // likhna nahi padta.
@@ -117,20 +118,60 @@ function Strip({ m, onOpen }) {
 // Koi AI nahi chalta: line jaisi hai waisi jati hai. Isliye ye button muft hai.
 function OlPick({ text, onClose }) {
   const [saved, setSaved] = useState(null);
+  // 🪔 Statics — do shabd ki jodi (Modhera ↔ Gujarat) Bharat Sanskriti ke
+  // "✍️ Mere jode" mein. Pehla shabd `cgl.culture.pending` mein rukta hai;
+  // jodi-daar yahin likh do, ya page par select karke phir yahi button.
+  const [pending] = useState(readPending);
+  const [stat, setStat] = useState(false);
+  const [other, setOther] = useState("");
+  const [note, setNote] = useState("");
   const put = (sub) => {
     addOneLiner({ subject: sub.k, text });
     setSaved(sub);
     setTimeout(onClose, 2200);
+  };
+  const statics = () => {
+    if (pending && pending !== text) {
+      addPair(pending, text);
+      setPending("");
+      setSaved({ k: "statics", label: `🪔 ${pending} ↔ ${text}` });
+      setTimeout(onClose, 2600);
+    } else setStat(true);
+  };
+  const saveTyped = () => {
+    if (!other.trim()) return;
+    addPair(text, other, note);
+    setPending("");
+    setSaved({ k: "statics", label: `🪔 ${text} ↔ ${other.trim()}` });
+    setTimeout(onClose, 2600);
   };
 
   return (
     <div className="sa-olm" onClick={onClose}>
       <div className="sa-olm__box" onClick={(e) => e.stopPropagation()}>
         {saved ? (
-          <p className="sa-olm__ok">
-            ✅ <b>{saved.label}</b> ki one-liner ban gayi.{" "}
-            <a href={`/oneliners?sub=${saved.k}`}>Kholo →</a>
-          </p>
+          saved.k === "statics" ? (
+            <p className="sa-olm__ok">✅ Jodi ban gayi: <b>{saved.label}</b>{" "}<a href="/culture?set=mine">Kholo →</a></p>
+          ) : (
+            <p className="sa-olm__ok">
+              ✅ <b>{saved.label}</b> ki one-liner ban gayi.{" "}
+              <a href={`/oneliners?sub=${saved.k}`}>Kholo →</a>
+            </p>
+          )
+        ) : stat ? (
+          <>
+            <div className="sa-olm__hd">
+              <b>🪔 <q>{text.slice(0, 60)}</q> ka jodi-daar?</b>
+              <button type="button" onClick={onClose} aria-label="Band karo">✕</button>
+            </div>
+            <input className="sa-olm__in" autoFocus value={other} onChange={(e) => setOther(e.target.value)} placeholder="Jaise: Gujarat / Surya mandir…" onKeyDown={(e) => { if (e.key === "Enter") saveTyped(); }} />
+            <input className="sa-olm__in" value={note} onChange={(e) => setNote(e.target.value)} placeholder="Explanation (chahiye to)" />
+            <div className="sa-olm__books">
+              <button type="button" onClick={saveTyped} disabled={!other.trim()}><span>💾</span>Jodi save</button>
+              <button type="button" onClick={() => { setPending(text); onClose(); }}><span>👆</span>Baad mein select karunga</button>
+            </div>
+            <p className="sa-olm__hint">"Baad mein" chuna to page par jodi-daar select karo → 📝 One-liner → 🪔 Statics.</p>
+          </>
         ) : (
           <>
             <div className="sa-olm__hd">
@@ -145,7 +186,12 @@ function OlPick({ text, onClose }) {
                   {sub.label}
                 </button>
               ))}
+              <button type="button" onClick={statics}>
+                <span>🪔</span>
+                {pending && pending !== text ? `Statics — "${pending.slice(0, 24)}" se jodo` : "Statics"}
+              </button>
             </div>
+            {pending && pending !== text ? <p className="sa-olm__hint">🪔 <b>{pending}</b> ka jodi-daar baaki hai — ye shabd uske saath jodne ke liye Statics dabao. <button type="button" className="sa-olm__x" onClick={() => { setPending(""); onClose(); }}>radd karo</button></p> : null}
           </>
         )}
       </div>
