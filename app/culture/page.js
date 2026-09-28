@@ -1,9 +1,8 @@
 "use client";
 
 // 🪔 Bharat Sanskriti — rajya-wise folk dance, festival, classical dance.
-// Data Parmar Static notes se (lib/sanskriti); sirf do tareeke — "Kaun sa
-// rajya?" aur "Match the following" (components/Sanskriti). Pehle 15 roop
-// the — owner: "inse yaad hoga hi nahi", isliye hata diye.
+// Data Parmar Static notes se (lib/sanskriti); sirf Jodi milao (Vocab jaisa)
+// — saari chhoti baatein bhi jodiyon mein (components/Sanskriti).
 
 import Sanskriti from "@/components/Sanskriti";
 import "./sanskriti.css";
