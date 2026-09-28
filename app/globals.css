@@ -4255,3 +4255,7 @@ body.exam-on .hresume { display: none; }
   border-color: #f5a524;
   color: #f5a524;
 }
+
+/* ✍️ Jis question par tablet ka likha hua kaam pada hai — wo button alag dikhe. */
+.ansp__btn.has-ink { border-color: #a6e3a1; color: #a6e3a1; }
+.ansp__btn.has-ink sup { font-size: 9px; margin-left: 2px; font-weight: 700; }

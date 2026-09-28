@@ -44,7 +44,7 @@ import { backTo } from "@/lib/backto";
 // dono ke beech aana-jaana seedha rahe.
 
 const LOCAL_MS = 700;    // IndexedDB — sasta, isliye jaldi
-const CLOUD_MS = 6000;   // cloud upload band hai (lib/ink.js ka CLOUD switch) — sirf wapas chalu karne ke liye pada hai
+const CLOUD_MS = 6000;   // sirf "abhi likh raha hai" wale taalne ke liye
 
 // ⏱️ Per-question timer. Ek waqt chun lo — utna hi milta hai, phir agla question
 // APNE AAP khul jata hai aur wahi waqt dobara chalu ho jata hai. Chain tab tak
@@ -318,9 +318,9 @@ function SolveInner() {
     }
   }, [deferIfDrawing]);
 
-  // Cloud upload ab band hai (lib/ink.js ka CLOUD switch) — handwriting isi
-  // device par rehti hai. pushInk khud no-op hai, par call hi nahi karte taaki
-  // encode+gzip ka kaam bhi na ho.
+  // Cloud upload — R2 par, aur record par uska pointer. Ye tabhi chalta hai
+  // jab question badle, page chhodo, ya tab background mein jaye; likhte waqt
+  // nahi (deferIfDrawing) — nib kabhi nahi rukti.
   const flushCloud = useCallback(async () => {
     if (!pushInk) return;
     const r = recRef.current;
@@ -349,6 +349,11 @@ function SolveInner() {
       window.removeEventListener("pagehide", onHide);
       clearTimeout(localT.current);
       clearTimeout(cloudT.current);
+      // Page chhodte waqt (back button se bhi) aakhri question ka kaam upar
+      // chadha do — warna wo isi device par pada reh jata aur PC par kabhi
+      // nahi pahunchta.
+      flushLocal();
+      flushCloud();
     };
   }, [flushLocal, flushCloud]);
 

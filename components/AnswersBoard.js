@@ -245,7 +245,14 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
             <option value="">🏷️ tag</option>
             {QTAGS.map((t) => <option key={t.k} value={t.k}>{t.label}</option>)}
           </select>
-          <button className="ansp__btn ansp__btn--go" onClick={() => onOpen(rec)} title="Writing tablet par solve karo">✍️</button>
+          {/* ✍️ — is question par kitni likhawat hai (rec.inkStrokes record ke
+              saath sync hota hai), to PC par bhi pata chalta hai ki tablet par
+              kuch likha pada hai. Dabao to wahi khul jata hai. */}
+          <button
+            className={`ansp__btn ansp__btn--go${rec.inkStrokes ? " has-ink" : ""}`}
+            onClick={() => onOpen(rec)}
+            title={rec.inkStrokes ? `Tablet par likha hua kaam (${rec.inkStrokes} stroke) — kholo` : "Writing tablet par solve karo"}
+          >✍️{rec.inkStrokes ? <sup>{rec.inkStrokes}</sup> : null}</button>
           <button className="ansp__btn" onClick={askGemini} title={`Image copy karke ${aiSiteLabel(aiSite)} kholo, phir answer paste karo`}>
             {copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}
           </button>
