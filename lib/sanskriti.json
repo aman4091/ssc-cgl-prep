@@ -1,0 +1,4606 @@
+{
+"items": [
+{
+"t": "fd",
+"st": "AP",
+"n": "Veeranatyam",
+"note": "Known as the \"Song of Bravery\" or Dance of warriors. Performed by the Veeramusti community (believed to be followers of Veerabhadra (Lord Shiva)).",
+"hook": "Veer"
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Lambadi",
+"note": "Banjara tribe",
+"hook": "Logon"
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Dhimsa",
+"note": "Tribe of Araku valley. Performed by 15-20 women forming a chain.",
+"hook": "Dhimese"
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Kolattam",
+"note": "It is a stick dance performed in many southern states, including Andhra Pradesh, Tamil Nadu and Karnataka. It is not restricted to one specific state. It is mainly performed during the pongal festival.",
+"hook": "Koyle"
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Bhamakalapam",
+"note": "Dance-drama, Composed by Siddhendra Yogi.",
+"hook": "Bhaap"
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Burrakatha",
+"note": "Tambura instrument is used in the performance of Burrakatha.",
+"hook": "Burra"
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Bonalu",
+"note": "Celebrated in honour of Goddess Mahakali.",
+"hook": "Banalu"
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Butta Bommalu",
+"note": "Mask dance Performed in West Godavari region. Butta Bommalu means \"Basket Toys\".",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Dappu Nrityam",
+"note": "Performed in Andhra Pradesh and Telangana by the Mala and Madiga communities playing the Dappu (dafli) drum.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Kolannalu",
+"note": "Stick dance of Andhra Pradesh.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Vilasini Natyam",
+"note": "Traditionally performed by devadasis in temples and courts. It was revived from near extinction by swapnasundari.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Gusadi",
+"note": "Performed by the gond tribe.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Dandaria",
+"note": "Performed by the gond tribe.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AP",
+"n": "Yakshagana",
+"note": "Mainly from karnataka, but also performed in AP.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Rikhampada",
+"note": "Nyishi tribe",
+"hook": "Rekha"
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Aji Lamu",
+"note": "Monpa tribe",
+"hook": "Aji"
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Wancho",
+"note": "War dance The Wancho tribe celebrated in March/April during the Oriah festival. It is also known as the unity dance because it showcases the unity of their community.",
+"hook": "Wancho"
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Buiya",
+"note": "Digaru Mishmi tribe",
+"hook": "Baua Ke"
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Pasi Kongki",
+"note": "The Adi tribe performs this on Abhang songs.",
+"hook": "Pas"
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Chalo Loku",
+"note": "Nocte tribe performs in Oct-Nov.",
+"hook": "Chalo"
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Bardo Chham",
+"note": "Dance of 12 zodiacs (Sherdukpen community) and is associated with Tibetan-Buddhist.",
+"hook": "Sham Ko"
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Lion and Peacock",
+"note": "Monpa tribe",
+"hook": "Lion and Peacock"
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Popir",
+"note": "Performed by Garo tribe in tribute to Mopin Ape (Goddess of prosperity and fertility).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Ponung",
+"note": "Adi tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Yak Chham",
+"note": "Mask dance It is also known as Yak dance.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Tapu",
+"note": "Performed by the Adi tribe during the solung festival.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Ojiyele",
+"note": "Performed by the Galo tribe during the Mopin festival.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AR",
+"n": "Ozele",
+"note": "Wancho tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Ali ai Ligang",
+"note": "The Mishing tribe performs Gumrag dance in this festival (observed on first Wednesday of Feb-March).",
+"hook": "Ali"
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Bhortal",
+"note": "Developed by Narhari Burha Bhakat and is performed by Satriya community in Barpeta.",
+"hook": "Bhor"
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Deodhani",
+"note": "Performed to pay tribute to Goddess Mansa (Snake Goddess).",
+"hook": "Deo"
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Ankiya Naat",
+"note": "One -Act play It is centred around acts of Lord Krishna and teachings of Vaishnavite faith.",
+"hook": "Ank"
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Ojapali",
+"note": "Semi-dramatic tradition folk dance.",
+"hook": "Pali"
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Jhumur",
+"note": "Performed by Kulis (people who work in tea gardens).",
+"hook": "Jhum"
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Bagarumba",
+"note": "Performed by Bodo tribe during Bwisaga festival (women wear Dokhona/Arunai). A butterfly dance performed by the women of the Bodo tribe in Assam during their New Year festival. Known as the \"Bodo tribe's Bihu\" and signifies nature (butterflies, birds). In January 2026, over 10,000 participants performed this to create a Guinness world Record at the Arjun Bhogeswar Barua Stadium (Sarusajai Stadium) in Guwahati.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Bihu",
+"note": "It is a dance and also a festival. A Group of dancers performing in circles or rows, often accompanied by drums / pipes to celebrate the Bihu festival. Women wear a traditional costume called \"Mekhela Chador\". Three types of Bihu: Bohag Bihu /Rongali Bihu: celebrated as a New year festival in Spring (March-April). Kati Bihu / kongali Bihu: performed in October (kartik month). Magh Bihu /Bhogali Bihu: performed in January (Magh month).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Baidima",
+"note": "Dimasa tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Bawang",
+"note": "Karbi Anglong tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Yak Chaam",
+"note": "Monpa tribe.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "AS",
+"n": "Rabha War Dance",
+"note": "Dhawa dance A high-energy warrior dance performed by the Rabha community in the regions of Assam and West Bengal.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Natwa",
+"note": "Chamar community",
+"hook": "Natwe"
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Jat-Jatin",
+"note": "Shows tragic love story of Jat and Jatin. It is performed in Mithila region during moonlit nights (monsoon).",
+"hook": "Jat Jatin"
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Sohar Khelwana",
+"note": "Performed during child birth.",
+"hook": "Sohar Khila"
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Jhumri",
+"note": "Performed in Mithilanchal region during Karthik month (Oct-Nov).",
+"hook": "Jhum Ke"
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Bidesia",
+"note": "A Bhojpuri folk dance created by Bhikhari Thakur, who is famously known as the \"Shakespeare of Bihar\". This dance deals with many social issues, contradictory topics and conflict between the traditional and the modern, the urban and the rural, and the rich and the poor. Its main theme is to end discrimination.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Jharni",
+"note": "Juhula community",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Jhijhiya",
+"note": "From the mithilanchal region, performed mainly by women during navratri for Goddess Durga (dancers carry a pot on their heads).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Kajari",
+"note": "Performed to welcome the arrival of the monsoon season.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Karma",
+"note": "Baiga tribe It is an agrarian ritual performed during bhadra Ekadashi. performed during the Karma festival. Also done in jharkhand, odisha and chhattisgarh.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Launda Naach",
+"note": "Male performers cross-dressing as women, showcasing regional traditions and entertaining audiences during festivals.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Pari khanda",
+"note": "Martial dance",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Paika",
+"note": "Also done in Jharkhand and odisha. Performance segments of Piaka Nritya: Blowing the war conch (shankha). Shild- sword sparring drills. Acrobatic somersaults. Group victory shout of \"Jai Jagabbath\".",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Dhibia",
+"note": "Dhangar community",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "BR",
+"n": "Domkach",
+"note": "Performed by Women of the groom's family.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Kaksar",
+"note": "Performed by the Abujh Maria tribe of Bastar region.",
+"hook": "Aksar"
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Suwa Nacha",
+"note": "Kamar tribe Suwa literally translates to parrot. Dancers perform by mimicking the movements of a parrot.",
+"hook": "Suwa"
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Karma Nacha",
+"note": "Performed during Karma festival around sacred karma tree. The ritual honours the Karam tree on Bhadra Ekadashi in Chhattisgarh. The drum most associated is the Madal. Also done in Jharkhand, Odisha and Bihar.",
+"hook": "Karma"
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Gendi",
+"note": "Baiga tribe A dance that involves balancing and dancing on bamboo sticks (stilts).",
+"hook": "Gendiya"
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Gaur Maria",
+"note": "Performed by the Bison Horn Maria community during occasions like births and marriages.",
+"hook": "Marte Hai"
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Panthi Nacha",
+"note": "Performed by Satnami community (followers of Satnam panth). Panthi dancers wear Dhoti during performance. The dance encodes the teachings of Guru Ghasidas from his compilation called \"Amritvani\".",
+"hook": "Pagalpanti"
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Pandavani",
+"note": "A style of folk singing which includes narration of tales from Mahabharata. It is the dark horse of Chhattisgarh Folk dance. It portrays the account of pandavas - the main account of pandavas-the main characters of an epic battle. Famous exponents : Teejan Bai (Padma Vibhushan in 2019) and Usha Barle (Padma Shri in 2023).",
+"hook": "Pandavo"
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Jhumair",
+"note": "Linked with the Karam Puja or Sohrai festival.",
+"hook": "Jhumur"
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Saila",
+"note": "Performed by boys of Bhil tribe during harvest season. It is also known as a stick dance. Performed by the Gond tribe. It is a post-harvest dance performed in the month of Aghan (Nov-Dec). It is also performed in Odisha and Madhya Pradesh.",
+"hook": "Saila Dance"
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Baiga Pardhoni",
+"note": "An energetic dance from Chhattisgarh and Madhya Pradesh. Performed by the Baiga tribe during marriages to welcome the groom's procession (Barat). Baiga tribes also perform karma, saila, and Faag.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Bison Horn Maria",
+"note": "Performed by the Maria / Dandami Maria tribe (A Gond sub-group) in the Bastar region of Chhattisgarh and parts of Jharkhand. Dancers mimic the movement of a wild bison, with men wearing horn headgear, while women generally wear ornaments made of brass or silver. Ghotul : A traditional center of the Dandami Maria tribe used for imparting education and as a meeting place for unmarried couples.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "CG",
+"n": "Raut Nacha",
+"note": "Performed by the Yadav community, mainly at night.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Gop Raas",
+"note": "",
+"hook": "Gopiyan"
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Dandiya Raas",
+"note": "It depicts the fight between Durga Mata and Mahishasura. Performed during Navratri after Aarti. The Sticks used in the dance represent the sword of Goddess Durga. It represents a mock fight between Goddess Durga and the demon Mahishasura, symbolizing the victory of good over evil.",
+"hook": "Dandiya"
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Garba",
+"note": "Graceful dance performed during Navratri before aarti.",
+"hook": "Garba"
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Siddi Dhamal",
+"note": "Performed by Siddhi community of African origin.",
+"hook": "Siddiyon Se"
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Matukadi",
+"note": "Ravari and Bharwad community.",
+"hook": "Matak"
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Padhar",
+"note": "Padhar community, Mainly performed in the Nal Sarovar region of Ahmedabad.",
+"hook": "Padhar"
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Tippani",
+"note": "Koli and Kharwa tribe. Performed with sticks in Chorwad district. Tippani arises from the Saurashtra region of Gujarat. Women forcefully tap the floor with wooden sticks / rods to showcase and mimic hard labor. Male drummers provide dhol-nagara accompaniment.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Hudo",
+"note": "Bharwad tribe (shepherd community).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Ashwa",
+"note": "Koli community",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Shikaar",
+"note": "It showcases hunting traditions. Mainly performed in the Dharampur region of Gujarat.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Manjira",
+"note": "Padhar community, Mainly performed in the Nal Sarovar region of Ahmedabad.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Dangi",
+"note": "Performed by Dangi Adivasis of Dang district.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Daang",
+"note": "Performed primarily in the dang district. Musical instruments such as drums and flutes are used to accompany the dance.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Titodo",
+"note": "Performed by unmarried people.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Kakada",
+"note": "Performed to please the goddess for protection against pox.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Rathwa",
+"note": "Rathwa tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Bhavai",
+"note": "The long wind instrument Bhungal is associated with the Bhavai.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Lasya",
+"note": "It later became Garba.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GJ",
+"n": "Vinchhudo",
+"note": "It is based on the theme of a woman being bitten by a scorpion.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Mando",
+"note": "This dance depicts love and romance.",
+"hook": "Mandvi"
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Ghode Modni",
+"note": "This dance depicts bravery and victory and honours Maratha warriors.",
+"hook": "Ghode"
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Talgadi, Fugdi",
+"note": "Performed during Ganesh Chaturthi.",
+"hook": "Gadi"
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Jagor",
+"note": "This dance starts at midnight and continues till early morning.",
+"hook": "Jaguar"
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Dekhni",
+"note": "Performed by Christian girls wearing Indian attire in a music that is a blend of Indian melody and Western rhythm. Traditionally performed by young women known as devadasis, who carry oil lamps (diyas) during the performance.",
+"hook": "Dekhne"
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Tarangmel",
+"note": "Performed during Holi and Dussehra festivals. Goa",
+"hook": "Patang"
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Dhalo",
+"note": "Performed by women standing in two parallel rows interlocking their arms.",
+"hook": "Chalo"
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Gonf",
+"note": "Performed during festivals after the harvest.",
+"hook": "Gaon"
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Romat",
+"note": "This dance is associated with Shigmo festival in the month of Phalgun (Feb-March).",
+"hook": "Romat"
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Sao Jao",
+"note": "Performed during Sao Jao festivals in the month of June.",
+"hook": "So Jao"
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Goff",
+"note": "Performed during Shigmo festival.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Kunbi",
+"note": "Dance of the earliest settlers/tribals of Goa.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "GA",
+"n": "Dhangar",
+"note": "Performed by the shepherd community of Goa.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Nati",
+"note": "Performed in Shimla, kullu and sirmaur regions. The dance holds Guinness World Record for the most number of dancers (9,892 dancers) participating in Kullu district.",
+"hook": "Nata"
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Jhora/Jhali",
+"note": "",
+"hook": "Chhora"
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Dhaman",
+"note": "Performed during Dussehra in Kullu region. Himachal Pradesh",
+"hook": "Aman"
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Rakshas Nritya",
+"note": "Performed wearing a demon mask.",
+"hook": "Rakshasho"
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Cholamba",
+"note": "Oldest dance performed after killing a tiger.",
+"hook": "Chola"
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Kayang Mala",
+"note": "Performed by boys and girls who form a garland-like pattern by interlocking their arms.",
+"hook": "Mala"
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Shand / Shabu",
+"note": "Performed mainly in Buddhist monasteries and Lahaul. Performed to honor Lord Buddha.",
+"hook": "Sandh"
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Dangi",
+"note": "A popular traditional folk dance of the Chamba region.",
+"hook": "Dang"
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Chapeli",
+"note": "Performed in Sirmaur and Chamba districts.",
+"hook": "Chapa"
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Cham",
+"note": "Performed by Buddhist monks to ward off evil spirits.",
+"hook": "Chap"
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Rasa",
+"note": "Performed in Sirmaur district.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Gaddi Nati",
+"note": "Mainly performed in the three regions Chamba valley (Bharmour region), kangra and kullu.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Chhatrari",
+"note": "Performed by the Gaddi tribe in the Chamba valley.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Thoda",
+"note": "Performed by Rajputs community in the sirmaur region. It showcases the battle between the kauravas and pandavas from the Mahabharata.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Chham Chhanak",
+"note": "Performed by lamas of Lahaul-Spiti as a tribute to Lord Buddha.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Jhanjhar",
+"note": "Gaddi communities",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "HP",
+"n": "Chohara",
+"note": "Performed in Mahasu region.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "HR",
+"n": "Khoria",
+"note": "This dance is a variety of Jhumar dance styles.",
+"hook": "Choriya"
+},
+{
+"t": "fd",
+"st": "HR",
+"n": "Daph",
+"note": "Performed in spring season to commemorate bountiful harvest.",
+"hook": "Daphli"
+},
+{
+"t": "fd",
+"st": "HR",
+"n": "Manjira",
+"note": "Performed in Mewat district.",
+"hook": "Manjira"
+},
+{
+"t": "fd",
+"st": "HR",
+"n": "Jhumar",
+"note": "Performed by young married girls.",
+"hook": "Jhumar"
+},
+{
+"t": "fd",
+"st": "HR",
+"n": "Dhamal",
+"note": "Performed by men of Ahir community outside in moonlight (in Phalgun). The origin is rooted back to Mahabharata.",
+"hook": "Dhamal"
+},
+{
+"t": "fd",
+"st": "HR",
+"n": "Phag",
+"note": "Performed in Phalgun during Holi.",
+"hook": "Phalgun"
+},
+{
+"t": "fd",
+"st": "HR",
+"n": "Loor",
+"note": "Performed by girls of Bangar region in Phalgun during Holi.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "HR",
+"n": "swang (Saang)",
+"note": "A popular folk theatre dance.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "HR",
+"n": "Gugga",
+"note": "Performed by men in loving memory of Saint Gugga.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "HR",
+"n": "Ghoomar",
+"note": "Ghoomar is famous in Rajasthan but is also performed in Haryana.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "JK",
+"n": "Rouf",
+"note": "Performed by women standing in rows during the Spring season and major festivals like Eid / Ramadan. It is famous for its intricate footwork.",
+"hook": "Harris Rouf"
+},
+{
+"t": "fd",
+"st": "JK",
+"n": "Bhand Pather",
+"note": "It is a dance-drama.",
+"hook": "Bhand"
+},
+{
+"t": "fd",
+"st": "JK",
+"n": "Dumhal",
+"note": "Performed by men of Wattal tribe, started by Sufi saint Shah Sukar Saloni. Exclusively Wattal men plant a banner before dancing. Dumhal dancers wear colorful robes during the performance.",
+"hook": "Dhul"
+},
+{
+"t": "fd",
+"st": "JK",
+"n": "Kud",
+"note": "Performed at night to honour Lok Devta.",
+"hook": "Kud"
+},
+{
+"t": "fd",
+"st": "JK",
+"n": "Hikat",
+"note": "Performed in spring in harvest season. Participants join hands and spin while singing.",
+"hook": "Hai"
+},
+{
+"t": "fd",
+"st": "JK",
+"n": "Damali",
+"note": "",
+"hook": "Manali"
+},
+{
+"t": "fd",
+"st": "JH",
+"n": "Karam/ Karma",
+"note": "Performed by Oraon tribe where they worship Kadam tree during the festival (autumnal festival). Performed during karma festival. Also done in Odisha, Chhattisgarh and Bihar.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "JH",
+"n": "Paika",
+"note": "It is a traditional martial art dance performed by the Munda tribe or Sadan community. Also done in Bihar and Odisha.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "JH",
+"n": "Mundari",
+"note": "A traditional tribal dance of the Munda community performed during harvest festivals.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "JH",
+"n": "Domkach",
+"note": "It is a Nagpuri folk dance. It is a folk song form of Jharkhand that reflects the lived experiences, social unity, and often accompanies dance and drama performances.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "JH",
+"n": "Jhumair / Jhumar",
+"note": "It is a folk dance performed by the Sadan community. It is a harvest dance of jharkhand, performed in linked rows with mandar and nagara drums.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "JH",
+"n": "Chhau",
+"note": "It is a martial art dance. Three types: Purulia Chhau (West Bengal), Seraikella (Jharkhand), and Mayurbhanj Chhau (Odisha).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "JH",
+"n": "Santhali",
+"note": "This dance is also known as Jhika Dasain and is performed in October month by Santhal tribe.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "JH",
+"n": "Hunta",
+"note": "An ancient tribal dance performed by Santhal tribe which is a form of preparation for hunting.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "JH",
+"n": "TUSU",
+"note": "Performed by the Kurmi community in the Chhota Nagpur Plateau.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "JH",
+"n": "Bison Horn Maria",
+"note": "",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "JH",
+"n": "Phagua",
+"note": "Performed during Holi.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Yakshagana",
+"note": "Performed in colourful dresses in coastal regions. Yakshagana means \"song of the celestial beings\". Combines dance, music, dialogue, costume, and stage techniques with a unique style.",
+"hook": "Yash"
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Bolak",
+"note": "",
+"hook": "Bola"
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Kamsale",
+"note": "Performed by devotees of God Mahadeshwara. Kamsale is a brass instrument.",
+"hook": "Kam"
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Karga",
+"note": "",
+"hook": "Kar"
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Dollu Kunitha",
+"note": "Known as drum-dance. Performed by the Kuruba community. Dollu means \"drum\" in Kannada.",
+"hook": "Doll"
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Bhootha Aradhne",
+"note": "A ritualistic dance performed in coastal regions to celebrate connection between human, nature and divine spirit.",
+"hook": "Bhootha"
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Nagamandala",
+"note": "Performed by two priests, one enacts male snake and other as female snake.",
+"hook": "Nagamandali"
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Veeragase",
+"note": "Performed by Virabhadra community during Dussehra. \"Veer\" means warrior, making it a vigorous warrior dance. Performed by the Veerashaiva (Lingayat) community.",
+"hook": "Veerta"
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "kolattam",
+"note": "It is a stick dance performed in many southern states, including Andhra Pradesh, Kerala and Tamil Nadu. It is mainly performed during the pongal festival.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Kodava",
+"note": "Warrior dance of the Coorg district in Karnataka.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Karagam",
+"note": "It is also known as karakattam. It is performed to honor the Rain Goddess Mariamman to seek good rainfall.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Hulivesha",
+"note": "Tiger dance",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Somana Kunitha",
+"note": "Performed by the Gangemata or Okkaliga communities.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Goravara Kunitha",
+"note": "",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Joodu Haligi",
+"note": "A \"rhythmic performance involving two circular drums.\"",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Gaarudi Gombe",
+"note": "Giant puppets carried by dancers.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KA",
+"n": "Bolak-Aat",
+"note": "Performed during the Kailpodh (weapon worship) or Huttari (harvest) festivals.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Ottamthullal",
+"note": "A dance-drama was introduced by Kunchan Nambiar.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Kaliyattam / Theyyam",
+"note": "Depicts religious rituals of sacred groves of Malabar coast. Known as the \"dance of Gods\" with intense performances, heavy makeup, and elaborate costumes. Performed by the Vannam and Malayan communities in the North Malabar region (Kannur and Kasaragod districts). Vibrant costumes represent divine gods. Traditionally held from November to April during the kaliyattam festival.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Koodiyattam",
+"note": "This dance is a traditional Sanskrit theatre art dance.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Kolakali",
+"note": "Stick dance. In this dance, the dancers move in a circle striking small sticks in rhythm with their steps.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Chakyar Koothu",
+"note": "A monologue performance where the performer narrates episodes from Hindu epics (such as Ramayana and Mahabharata).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Oppana",
+"note": "Performed by the Muslim (Mapplia) community of the Malabar region in Kerala during marriages. Two types of Oppana: Oppana Chayal (no clapping) and Oppana Murukkam (continuous rhythmic clapping).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Mayil Attam",
+"note": "Also known as the \"Peacock Dance\". Dancers wear peacock feathers to honor Lord Murugan (Kartikeya).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Villu Pattu",
+"note": "Known as the \"Bow Song Dance\" because a large bow (arrow and bow style) is used during the performance.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Kummi",
+"note": "Performed by women in circles.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Kakkarissi Natakam",
+"note": "It is a folk theater/dance form primarily focusing on satirical elements.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "kolattam",
+"note": "Stick dance. Also performed in Andhra Pradesh and Tamil Nadu.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Puli Kali",
+"note": "It is performed during Onam, depicting Tiger Hunting.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Thiruvathira kali",
+"note": "It is a group dance performed mainly by women. Women wear white sarees called \"kasavu saree\". They dance in circles around a central lamp (deep). It is performed during the Thiruvathira festival (Dhanu month) and Onam. It commemorates the day Lord Shiva accepted Goddess Parvati as his wife.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Thappu kali",
+"note": "",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Kooravara kali",
+"note": "Performed during local temple festivals (Utsavams).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Kalaripayattu",
+"note": "Martial dance",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Velakali",
+"note": "Martial dance",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "KL",
+"n": "Theeyattu",
+"note": "Solo dance - drama",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Kaksar",
+"note": "Abujhmaria or Muria tribe of Madhya Pradesh and Chhattisgarh.",
+"hook": "Aksar"
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Bhagoria",
+"note": "Bhil tribe of Jhabua district.",
+"hook": "Goriya"
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Aada",
+"note": "The dance is a variation of matki dance performed in Malwa region.",
+"hook": "Ada"
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Matki",
+"note": "Performed in Malwa region.",
+"hook": "Matki"
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Jawara",
+"note": "Harvest dance",
+"hook": "Jawara"
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Phulpati",
+"note": "Performed by unmarried girls of Malwa region.",
+"hook": "Phulpati"
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Maach",
+"note": "Performed in Malwa region.",
+"hook": "Manch"
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Khada Nach",
+"note": "Performed in Malwa region.",
+"hook": "Khada Nachti"
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Tertali",
+"note": "Kamar tribe",
+"hook": "Tali"
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Saila",
+"note": "Baiga tribe and Gond tribe. Performed during Dussehra. It is also known as a stick dance. It is a post-harvest dance performed in the month of Aghan (Nov-Dec). Also performed in Odisha and Chhattisgarh. In MP, it is mainly performed in Betul, Chhindwara and Sarguja districts.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Baiga Pardhoni",
+"note": "An energetic dance from Madhya Pradesh and Chhattisgarh. Performed by the Baiga tribe during marriages to welcome the groom's procession (Baraat).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Badhi dance",
+"note": "It is a celebratory dance (\"Badhai\" means greeting / congratulations). Performed during childbirth and marriages. It is primarily performed to thank Goddess Sheetala.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Rai",
+"note": "Performed in the Bundelkhand region of Madhya Pradesh. The women who traditionally perform this dance are known as \"Bedni\". Men also perform this dance in disguise (cross-dressing as women). A highly famous exponent of this dance was Ram Sahay Pandey, who was awarded the Padma Shri in 2022.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Kathi",
+"note": "Performed in the Nimar region of Madhya Pradesh to worship Lord Shiva and Goddess Parvati.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Naurata",
+"note": "Performed during Navratri in Bundelkhand region.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Mallakhamb",
+"note": "Martial dance",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MP",
+"n": "Ahirai",
+"note": "Bharaia tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MN",
+"n": "Thang-Ta",
+"note": "Meitei community. Manipuri martial art dance. This dance involves the use of swords, spears, and shields.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MN",
+"n": "Lai Haraoba",
+"note": "Meitei tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MN",
+"n": "Dhol Cholom",
+"note": "An energetic drum dance performed by men during \"yaashang\" (Manipuri Holi). It starts slowly and gradually becomes highly energetic.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MN",
+"n": "Pung Cholom",
+"note": "This dance is also known as Mridanga kirtan or Dhumal.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MN",
+"n": "Jagoi",
+"note": "This dance is also known as Manipuri Raas-leela.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MN",
+"n": "Khamba Thoibi",
+"note": "Meitei tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MN",
+"n": "Pheiphit Lam",
+"note": "Meitei tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MN",
+"n": "Nupa",
+"note": "Performers wearing White Turbans.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "ML",
+"n": "Nongkrem",
+"note": "Khasi tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "ML",
+"n": "Wangala",
+"note": "Performed by Garo tribe during Wangala festival (also known as \"Festival of Hundred Drums\").",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "ML",
+"n": "Behdeinkhalam",
+"note": "Jaintia tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "ML",
+"n": "Laho",
+"note": "Jaintia tribe and Pnar tribe.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "ML",
+"n": "Shad Suk Mynsiem",
+"note": "It is a thanks giving dance of the Khasi tribe. It is also known as the \"Dance of joyful Hearts\".",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "ML",
+"n": "Shad Pliang",
+"note": "Jaintia tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MZ",
+"n": "Khullam",
+"note": "It is also known as \"Dance of Guests\".",
+"hook": "Khullam"
+},
+{
+"t": "fd",
+"st": "MZ",
+"n": "Chailam",
+"note": "Performed during Chapchar Kut festival.",
+"hook": "Chillam"
+},
+{
+"t": "fd",
+"st": "MZ",
+"n": "Zangtalam",
+"note": "Paite tribe",
+"hook": "Zang"
+},
+{
+"t": "fd",
+"st": "MZ",
+"n": "Cheraw",
+"note": "This dance is also known as Bamboo dance. Performed mainly during the Chapchar Kut festival. Men hold and clap bamboo staves on the ground while dancers step in sync between them.",
+"hook": "Chal"
+},
+{
+"t": "fd",
+"st": "MZ",
+"n": "So Lakia / Sarlamkai",
+"note": "Pawi and Mara communities. Performed to celebrate victory in war.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MZ",
+"n": "Tlanglam",
+"note": "Performed during Chapchar Kut festival.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MZ",
+"n": "Chheih Lam",
+"note": "It is known as a dance of \"joy and exhilaration\".",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MZ",
+"n": "Chawng Laizawn",
+"note": "Pawi (Lai) tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MH",
+"n": "Koli",
+"note": "Performed by the fisherman community.",
+"hook": "Kohli"
+},
+{
+"t": "fd",
+"st": "MH",
+"n": "Povadas",
+"note": "The dance describes events in the life of Chhatrapati Shivaji Maharaj.",
+"hook": "Vadapav"
+},
+{
+"t": "fd",
+"st": "MH",
+"n": "Lavani",
+"note": "A combination of traditional song and dance performed to the beats of Dholki. Baithakichi Lavani: Lavani performed for a private audience. Sulochana Chavan is known as Lavani Samradhni (Lavani Queen).",
+"hook": "Lana"
+},
+{
+"t": "fd",
+"st": "MH",
+"n": "Lezim",
+"note": "An acrobatic dance that involves calisthenic moves.",
+"hook": "Lazy"
+},
+{
+"t": "fd",
+"st": "MH",
+"n": "Tamasha",
+"note": "It is derived from Sanskrit dramas \"Prahasana\" and \"Bhana\". It is a Marathi folk-theatre genre often staged in villages during Shigma (Holika). The Kolhati community is traditionally linked with Tamasha troupes.",
+"hook": "Tamasha"
+},
+{
+"t": "fd",
+"st": "MH",
+"n": "Gafa",
+"note": "Performed by Gond tribe in Vidharbha region.",
+"hook": "Dafa"
+},
+{
+"t": "fd",
+"st": "MH",
+"n": "Mouni",
+"note": "Thakur tribe",
+"hook": "Mouni"
+},
+{
+"t": "fd",
+"st": "MH",
+"n": "Dhangari",
+"note": "Performed by shepherds, cowherds and blanket weavers of Sholapur district (known as Dhangars).",
+"hook": "Dhangka"
+},
+{
+"t": "fd",
+"st": "MH",
+"n": "Natak",
+"note": "",
+"hook": "Natak"
+},
+{
+"t": "fd",
+"st": "MH",
+"n": "Mardani Khel",
+"note": "Martial dance",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "MH",
+"n": "Dindi",
+"note": "It is associated with the Marathwada region. Performed in the month of Kartik.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Gotipua",
+"note": "Performed by young boys dressed as women to praise Lord Jagannath and Lord Krishna.",
+"hook": "Pua Khaya"
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Dalkhai",
+"note": "Performed in Sambalpur region. The dance rhythmic movements showcase the love stories of Radha and Krishna.",
+"hook": "Dalkhai"
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Danda Nacha",
+"note": "Performed in Kalahandi district.",
+"hook": "Danda Leke"
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Ghumura",
+"note": "Tiger Dance. Performed in Kalahandi district.",
+"hook": "Ghum"
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Bhaga Nacha",
+"note": "Tiger Dance. Performed in Ganjam district.",
+"hook": "Bhaga Nacha"
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Chhau",
+"note": "Martial dance. Mayurbhanj Chhau",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Karma",
+"note": "Also done in Jharkhand, Chhattisgarh and Bihar.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Ranappa",
+"note": "Martial dance. Performed in Ganjam district. The dance is dedicated to Lord Krishna. Dancers stand and perform on bamboo sticks (which are called \"Ranappa\"). It is influenced by the Paika martial tradition.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Saila",
+"note": "Gond tribe. It is also known as a stick dance. It is a post-harvest dance performed in the month of Aghan (Nov-Dec). Also done in Chhattisgarh and Madhya Pradesh.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Sambalpuri",
+"note": "Performed in western Odisha. It is a highly energetic dance performed during the Nuakhai festival. Dancers wear ghungroos on their feet.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Paika",
+"note": "Performed by Khandayat warrior caste of Odisha. Also done in Jharkhand and Bihar.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Chaiti Ghoda",
+"note": "Kaibartas (Fishermen) community",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "OD",
+"n": "Jhumair",
+"note": "",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Bamboo",
+"note": "Kuki tribe",
+"hook": "Bamboo"
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Rengma",
+"note": "Warrior Dance. Performed during Hornbill festival (1-10 Dec).",
+"hook": "Naag"
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Aaluyattu",
+"note": "Konyak tribe",
+"hook": "Aloo"
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Butterfly",
+"note": "Zeliang tribe",
+"hook": "Butterfly"
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Changai",
+"note": "Changai tribe",
+"hook": "Gai"
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Zeliang",
+"note": "Zeliang tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Modse",
+"note": "Ao tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Rukhyo Sharu",
+"note": "Lotha tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Maku Ngichi",
+"note": "Sangtam tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Sekrenyi",
+"note": "Angami tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Monyu",
+"note": "Phom Naga tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Monyoasho",
+"note": "Performed by the Phom Naga tribe during the month of April.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Kullu Tsen",
+"note": "A headhunting dance performed by the Yimkhiung tribe.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Chang Lo",
+"note": "It is also known as \"Sua Lua\". Performed to celebrate victory over an enemy in Nagaland. Performed by the Chang tribe during the Mohi festival.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Leshalaptu",
+"note": "Pochury tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "khupielilie",
+"note": "Pochury tribe",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "NL",
+"n": "Kuki",
+"note": "Bamboo Dance",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "RJ",
+"n": "Gangaur",
+"note": "Performed to worship Mata Gauri (Lord Shiva's wife).",
+"hook": "Ganga"
+},
+{
+"t": "fd",
+"st": "RJ",
+"n": "Kalbeliya",
+"note": "Sapera Dance. Kalbeliya tribe (known as snake charmers). The female costumes feature black, swirling skirts that are richly adorned with mirror embroidery. Kalbelia performers rarely document their art due to its oral nomadic heritage. It was added to the UNESCO list in 2010. Famous exponent: Gulabo Sapera",
+"hook": "Kal"
+},
+{
+"t": "fd",
+"st": "RJ",
+"n": "Ghoomar",
+"note": "Ghoomar means Twirl in Rajasthan. Initially, it was performed by the Bhil tribe to worship Goddess Saraswati. Later it was adopted by the Rajput community and is performed by women. It is primarily performed during the Teej and Gangaur festivals.",
+"hook": "Ghoom Rahe"
+},
+{
+"t": "fd",
+"st": "RJ",
+"n": "Chari",
+"note": "Performed by women of Gujjar community.",
+"hook": "Chaar"
+},
+{
+"t": "fd",
+"st": "RJ",
+"n": "Terah Taali",
+"note": "Performed by the Kamar tribe in Marwar region. Dedicated to honoring the local deity Baba Ramdev.",
+"hook": "Thali"
+},
+{
+"t": "fd",
+"st": "RJ",
+"n": "Suisini",
+"note": "It involves \"needle-like\" hand movements.",
+"hook": "Susaini"
+},
+{
+"t": "fd",
+"st": "RJ",
+"n": "Khayal",
+"note": "Bhawai tribe.",
+"hook": "Khayalon"
+},
+{
+"t": "fd",
+"st": "RJ",
+"n": "Ghudla",
+"note": "",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "RJ",
+"n": "Kachhi Ghodi",
+"note": "Performers wear a dummy horse around their waist.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "RJ",
+"n": "Bam dance",
+"note": "",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "SK",
+"n": "Chu-Faat",
+"note": "Performed by the Lepcha tribe in Pang Lhabsol festival to honour Mount khangchendzonga, the state's guardian deity.",
+"hook": "Chandni"
+},
+{
+"t": "fd",
+"st": "SK",
+"n": "Sikmari",
+"note": "A harvest dance Performed by the Lepcha tribe to celebrate the beauty of nature.",
+"hook": "Sikkim Ki"
+},
+{
+"t": "fd",
+"st": "SK",
+"n": "Zo-Mal-Lok",
+"note": "Yak Dance. Lepcha tribe",
+"hook": "Zameen"
+},
+{
+"t": "fd",
+"st": "SK",
+"n": "Singhi Chham",
+"note": "Kanchendzonga Dance. It is also known as the Snow Lion dance. It is a sacred mask dance. Performed by the Bhutia tribe during the Pang Lhabsol festival. Performed during the Losar festival (Tibetan New year).",
+"hook": "Singh"
+},
+{
+"t": "fd",
+"st": "SK",
+"n": "Kagyed",
+"note": "Involves burning an effigy of evil.",
+"hook": "Ke Saath"
+},
+{
+"t": "fd",
+"st": "SK",
+"n": "Ghantu",
+"note": "Gurung tribe",
+"hook": "Ghante"
+},
+{
+"t": "fd",
+"st": "SK",
+"n": "Yakcham",
+"note": "Performed in honour of the yak during Losar festival.",
+"hook": "Yatra"
+},
+{
+"t": "fd",
+"st": "SK",
+"n": "Maruni",
+"note": "Magar community Performed in Nepal, Sikkim, and Darjeeling (West Bengal). It celebrates the Tihar festival (Diwali) and was originally performed to worship Lord Vishnu.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Kolattam",
+"note": "Stick dance. Women use sticks to create rhythmic beats and perform intricate movements. It is mainly performed during the pongal festival. Performed in many southern states, including Andhra Pradesh, Kerala and Karnataka.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Silambattam/ Silambam",
+"note": "Martial art dance.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Oyilattam",
+"note": "Performed in the Madurai region.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Devarattam",
+"note": "This dance is also known as \"Dance of Gods\".",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Kudirai Attam",
+"note": "Poikkal Kuthirai Attam Dance. Dancers wear a dummy horse structure while performing.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Kummi",
+"note": "Performed by women during Pongal festival (harvest festival). Performed by women dancing in a circle while clapping their hands to a rhythm.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Kavadi Attam",
+"note": "Burden Dance. Performed to worship Lord Murugan, devotees carry a bamboo structure (Kavadi) on their shoulders. Devotees often pierce their skin with a spear (Lord Murugan's symbol) and carry offerings of rice and milk to the temple.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Mayil Attam",
+"note": "Also known as the \"Peacock Dance\". Dancers wear peacock feathers to honour Lord Murugan (Kartikeya).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Karakattam",
+"note": "It is also known as Karagam. Performed in front of an image of the Goddess Mariamman. Goddess Mariamman is known as the Goddess of Rain.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Villu pattu",
+"note": "Known as the \"Bow Song Dance\" because a large bow (arrow and bow style) is used during the performance.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Sevai Attam",
+"note": "\"Sevai\" means service. It is a service/dance performed to honour God Thirumal (an avatar of Lord Vishnu) by the Nayakar community.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Bommalattam",
+"note": "Puppet dance. Depicts scenes from the Ramayana and Mahabharata.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TN",
+"n": "Natyanjali",
+"note": "\"Natya\" means dance, and \"Anjali\" means offering. It is celebrated primarily on Maha Shivaratri in Chidambaram, Tamil Nadu. Dedicated to Lord Nataraja, the Cosmic dancer.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TG",
+"n": "Dhimsa",
+"note": "Performed by women of the Porja tribe in Andhra Pradesh and Telangana.",
+"hook": "Dhimsa Se"
+},
+{
+"t": "fd",
+"st": "TG",
+"n": "Lambadi",
+"note": "Lambadi tribe",
+"hook": "Gadi"
+},
+{
+"t": "fd",
+"st": "TG",
+"n": "Gussadi",
+"note": "Performed by Raj Gond tribe during Dandari festival (Dussehra/Diwali).",
+"hook": "Gusa Lun"
+},
+{
+"t": "fd",
+"st": "TG",
+"n": "Mathuri",
+"note": "Performed in Adilabad district.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TG",
+"n": "Bonalu",
+"note": "Performed during Bonalu festival to honour Goddess Mahakali.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TG",
+"n": "Perini Shivatandavam",
+"note": "It is also known as the \"Dance of Warriors\". It originated during the Kakatiya dynasty. Dedicated to Lord Shiva. It was revived in modern times by Dr. Nataraja Ramkrishna.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TG",
+"n": "Dappu",
+"note": "Performed in Andhra Pradesh and Telangana by the Mala and Madiga communities playing the Dappu(dafli) drum.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TR",
+"n": "Bijhu",
+"note": "Chakma tribe",
+"hook": "Biju"
+},
+{
+"t": "fd",
+"st": "TR",
+"n": "Hojagiri",
+"note": "Performed by the Bru Reang community during the Hojagiri festival after durga or Lakshmi Puja. The dance appeases Goddess Maliuma and Goddess Lakshmi and marks the harvest season. Dancers move only their lower body while balancing an earthen pot on their head.",
+"hook": "Dadagiri"
+},
+{
+"t": "fd",
+"st": "TR",
+"n": "Hai Hak",
+"note": "Performed by the Halam/Maslum community to honour Goddess Lakshmi after harvest.",
+"hook": "Haq Hai"
+},
+{
+"t": "fd",
+"st": "TR",
+"n": "Mamita",
+"note": "A harvest dance performed by the Kaloi community.",
+"hook": "Mata Pe"
+},
+{
+"t": "fd",
+"st": "TR",
+"n": "Garia",
+"note": "Performed during harvest festival (Spring season).",
+"hook": "Ghar"
+},
+{
+"t": "fd",
+"st": "TR",
+"n": "Lebang Boomani",
+"note": "\"Lebang\" means insect. Known as the Bamboo Dance of Tripura. It is performed during the sowing season to ward off insects from the fields. A harvest dance that depicts how bamboo clappers catch insects.",
+"hook": "Le Jaunga"
+},
+{
+"t": "fd",
+"st": "TR",
+"n": "Cheraw",
+"note": "Lusai community",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TR",
+"n": "Sangrai",
+"note": "Performed by Mog tribe in sangria festival during Chaitra month (Bengali calendar year).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "TR",
+"n": "Mosak Sulmani",
+"note": "Mosak sumani",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UP",
+"n": "Charkula",
+"note": "Performed in the Braj region to celebrate the birth of Radha or depict the Govardhan Leela. Women carry 108 oil lamps (deep) on their heads.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UP",
+"n": "Raslila",
+"note": "Performed in the Braj region. Depicts the love stories of Lord Krishna and Radha.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UP",
+"n": "Nautanki",
+"note": "A popular folk theatre form that combines music, dance, dialogue, and narration.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UP",
+"n": "Kajri",
+"note": "Performed during the rainy season in the Bhojpuri region of UP and Bihar.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UP",
+"n": "Ramlila",
+"note": "A dramatic folk dance that re-enacts the life of Lord Rama.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UP",
+"n": "Dadra",
+"note": "A semi-classical romantic dance form that originated in the Mirzapur district performed by both men and women.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UP",
+"n": "Swang(Saang)",
+"note": "While primarily from Haryana, it is also marked for Uttar Pradesh when Haryana isn't an option, as border districts like Saharanpur perform it.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UK",
+"n": "Chanchari",
+"note": "Performed in the Kumaon and Garhwal regions. It is danced in kumaon by mixed circles of men and women during spring fairs. The dance is accompanied primarily by the Hurka drum. In Jhora dance, participants hold each other by Arms or Waist.",
+"hook": "Chanchlani"
+},
+{
+"t": "fd",
+"st": "UK",
+"n": "Jhora",
+"note": "Performed in the Kumaon region.",
+"hook": "Chora"
+},
+{
+"t": "fd",
+"st": "UK",
+"n": "Chholia",
+"note": "A sword dance depicting martial traditions of the Kumaoni tribe.",
+"hook": "Jhola"
+},
+{
+"t": "fd",
+"st": "UK",
+"n": "Tandi",
+"note": "Performed by men in half circles.",
+"hook": "Dandi"
+},
+{
+"t": "fd",
+"st": "UK",
+"n": "Chhapeli",
+"note": "Performed in the Kumaon region.",
+"hook": "Chapa Chap"
+},
+{
+"t": "fd",
+"st": "UK",
+"n": "Thadiya",
+"note": "Mainly Performed during marriage in the Garhwal region. The dancers form semi-circle arcs by holding each other's shoulders.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UK",
+"n": "Pandava",
+"note": "Performed during Dussehra and Diwali in the Garhwal and Kumaon regions. The dance narrates stories from the Mahabharata.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UK",
+"n": "Jhoda",
+"note": "Performed on a full moon night around Holi in Kumaon region.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UK",
+"n": "Chamfuli",
+"note": "Performed by men and women in pairs.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "UK",
+"n": "Langvir",
+"note": "It is performed to the beats of Dhol and Damau.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Rabha war",
+"note": "Dhawa Dance A high-energy warrior dance performed by the Rabha community in the regions of West Bengal and West Bengal.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Maruni",
+"note": "Magar community Performed in Darjeeling (West Bengal), Nepal and Sikkim. It celebrates the Tihar festival (Diwali) and was originally performed to worship Lord Vishnu.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Sangria",
+"note": "Performed by the Mog tribe during the Sangria festival in the month of Chaitra (Bengali calendar).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Purulia Chhau",
+"note": "Masked dance from West Bengal, known for martial movements.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Jhumur",
+"note": "Performed in tea gardens.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Gambhira",
+"note": "A dance involving \"social satire\" and \"dialogue with God\".",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Tusu",
+"note": "Performed specifically by young, unmarried girls.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Bhadu",
+"note": "Performed in Bhadra / Early Autumn month.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Ranpa",
+"note": "",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Raibenshe",
+"note": "",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Brita",
+"note": "",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Baul",
+"note": "Included in UNESCO's Intangible Cultural Heritage list.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "WB",
+"n": "Dammi",
+"note": "",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "PB",
+"n": "Giddha",
+"note": "Giddha is performed by women in circles during Teej and Lohri festivals while singing \"Boliyan\".",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "PB",
+"n": "Bhangra",
+"note": "Bhangra is a lively folk dance of Punjab. Punjab is credited as the origin of Bhangra, traditionally performed to celebrate harvest and festive occasions.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "PB",
+"n": "Gatka",
+"note": "Martial dance",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "PB",
+"n": "Jaago",
+"note": "\"Jaago\" means \"wake up\". It is a wake-up call dance performed during weddings. Women carry decorated brass vessels with lamps on their heads.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "PB",
+"n": "Luddi",
+"note": "It is popular specifically in the Sandalbar region of Punjab.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "LA",
+"n": "Koshan",
+"note": "Performed in Leh and preceded by a horse race.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "LA",
+"n": "Shondol",
+"note": "A royal dance of ladakh, traditionally performed by highly skilled female dancers known as \"Takshoma\".",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "LA",
+"n": "Jabro",
+"note": "A high energy dance performed by the Changpa community of the Changthang plateau during the losar festival (Tibetan New Year).",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "LA",
+"n": "Cham",
+"note": "A sacred mask dances. performed by monks at Hemis represent various Guardian divinities of the Drukpa (Drugpa) lineage. Hemis is a famous monastery in Ladakh.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "LA",
+"n": "Spao",
+"note": "A warrior dance dedicated to Gyalpo Kesar. Performed by the Changpa tribe of the Changthang plateau.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "LD",
+"n": "Parichakali",
+"note": "Also known as Shield dance. It is a martial / warrior-style dance.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "LD",
+"n": "Lava",
+"note": "Performed in the Minicoy island of Lakshadweep. Performed only by males.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "LD",
+"n": "Bandiya",
+"note": "Performed in the Minicoy island of Lakshadweep.",
+"hook": ""
+},
+{
+"t": "fd",
+"st": "LD",
+"n": "Kolkali",
+"note": "A stick dance performed by the Muslim community (also famous in Kerala).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AP",
+"n": "Ugadi",
+"note": "Telugu New Year. Signifies the start of the harvest season. Marks the beginning of a new Hindu Lunisolar calendar.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AP",
+"n": "Tirupati Brahmotsavam",
+"note": "Annual festival of Lord Venkateswara at Tirumala, celebrated for 9 days.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AP",
+"n": "Durgamma",
+"note": "Celebrated in Durga Pooja.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AP",
+"n": "Visakha Utsav",
+"note": "Held in December.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AP",
+"n": "Yellama Jatara",
+"note": "Dedicated to Goddess Yellamma.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AP",
+"n": "Sankranti",
+"note": "Also known as Pedda Panduga. A harvest festival is celebrated in Andhra Pradesh and Telangana for four days with the Bhogi bonfire.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AP",
+"n": "Bathukamma",
+"note": "It is a 9-day floral festival celebrated mainly by women. A large central arrangement of flowers (called Bathukamma) is made. It starts on Mahalaya Amavasya (New Moon day). Goddess Gauri and nature are worshipped during this festival. It takes place during September-October. Celebrated in Telangana and parts of Andhra Pradesh.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AP",
+"n": "Bonalu",
+"note": "Celebrated in Andhra Pradesh and Telangana with special prayers to Goddess Kali and involves local fairs.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AP",
+"n": "Perupalem Beach Festival",
+"note": "This festival is celebrated in the West Godavari district of Andhra Pradesh, specifically at a place called Mogalthur. It was inaugurated in the year 2020. It is primarily a tourism and cultural festival that lasts for about 2 days. Events like beach volleyball are showcased during this festival. The traditional 'Burrakatha' dance is also performed here.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AP",
+"n": "Kanuma",
+"note": "It marks the celebration of the victory of good over evil. Arunachal Pradesh",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Sangken",
+"note": "A 3-day festival celebrated in April. Water festival of the Singpho tribe.",
+"hook": "Sang"
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Solung",
+"note": "A 10-day harvest festival celebrated by the Adi Tribe. Apong: This is the traditional rice beer shared during the festival to promote social bonding. Ponung Dance: This specific traditional dance is performed during the Solung festival. Deities Worshipped: They pray to the Goddess of Crop (Kine Nane) and the God of Domestic Animals (Dadi Bote) for prosperity.",
+"hook": "Solun"
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Dree",
+"note": "A harvest festival celebrated by the Apatani tribe in the month of July.",
+"hook": "Tree"
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Chalo Loku",
+"note": "It is celebrated in the Tirap district of Arunachal Pradesh by the Nocte tribe in July/August. The word 'Lofe ' (from which Loku is derived) means \"to drive out\" (driving out the old season). It is a 3-day harvest festival celebrated around Oct-Nov at the end of the paddy harvest. Day 1 (Famlam): \"Famlam\" involves omen-reading by elders to determine jhum plots before the buffalo slaughter begins. This is the day when the ceremonial animal slaughter (pigs, buffaloes) actually takes place. Day 2 (Chamkatja): People visit monasteries or shrines ('Chaatam ') to offer prayers. Day 3 (Thanglangja): This is the farewell day involving communal dancing, fasting, and omen-reading.",
+"hook": "Chalo"
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Losar",
+"note": "New Year Festival of Tibetan Buddhism, celebrated by the Monpa tribe. It marks the 1st day of the Tibetan calendar.",
+"hook": "Lo Sir"
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Mopin",
+"note": "Celebrated by the Galo tribe in April. Popir Dance is performed during the Mopin festival.",
+"hook": "Meri Pin"
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Pangsau",
+"note": "To honour the war heroes who died in WW2.",
+"hook": "Paas aao"
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Ziro",
+"note": "Founded in 2012. It is celebrated in the Ziro Valley.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Boori-Boot",
+"note": "celebrated by the Nyishi tribe in Spring/Feb.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Myoko",
+"note": "It is celebrated by the Apatani tribe in the Ziro Valley. This festival is based on rotating village responsibility for rituals.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Nyokum / Nyokum yullo",
+"note": "Celebrated by the Nyishi tribe in Feb. It refers to the ritual invocation (prayer) of deities for harmony and prosperity, where Nyo means earth, Kum means Collectiveness and Yullo means invocation. It is an agricultural festival where Donyi-Polo (the Moon/Sun God) is worshipped for a bountiful harvest.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AR",
+"n": "Pongtu",
+"note": "Celebrated by the Tutsa tribe. It is primarily observed to seek blessings from the Rangkhothak deity before millet harvesting. \"Pongtu \" translates to \" retreating wind\". It is a pre-harvest festival and is also celebrated as a New Year festival.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AS",
+"n": "Bihu",
+"note": "Celebrated thrice a year: Rongali/ Bohag Bihu(April): Assam New Year Kati/Kongali Bihu (Oct-Nov) Bhogali/Magh Bihu (Jan) Uruka before Magh Bihu features bonfires and feasting. Manuh Bihu includes gifting Gamucha and traditional dishes.",
+"hook": "Bahu"
+},
+{
+"t": "fs",
+"st": "AS",
+"n": "Baikho",
+"note": "Pre-harvest festival celebrated by the Rabha Community in June, featuring the 'Baranakai' fire.",
+"hook": "Baiko"
+},
+{
+"t": "fs",
+"st": "AS",
+"n": "Baishagu",
+"note": "The New Year festival of the Bodo Kachari community is celebrated in Mid-April, where prayers are offered to 'Bathou' / Lord Shiva.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AS",
+"n": "Dehing Patkai",
+"note": "A 3-day annual festival held in January at Lekhapani in Tinsukia district.",
+"hook": "Patak"
+},
+{
+"t": "fs",
+"st": "AS",
+"n": "Ali Ai Ligang",
+"note": "Harvest festival of the Mishing Tribe. Seed sowing festival in Feb-March by the Mising tribe, featuring the 'Gumrag' dance.",
+"hook": "Ali"
+},
+{
+"t": "fs",
+"st": "AS",
+"n": "Ambubachi Mela",
+"note": "Held at Kamakhya temple. Marks the Menstrual phase of Goddess Kamakhya. Also known as Ameti/Tantric fertility festival. It occurs around mid-June and signifies the onset of the monsoon. The word 'Ambubachi' means \" spoken with water \". It symbolizes Mother Earth regaining her fertility (rejuvenating for agriculture). For 3 days, the land is left completely empty - no digging, plowing, or sowing is allowed.",
+"hook": "Abbu"
+},
+{
+"t": "fs",
+"st": "AS",
+"n": "Majuli",
+"note": "A 3-day festival held in November.",
+"hook": "Majuli"
+},
+{
+"t": "fs",
+"st": "AS",
+"n": "Rongker",
+"note": "Celebrated by the Karbi tribe.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AS",
+"n": "Junbeel Mela",
+"note": "Exchange of products through Barter exchange.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AS",
+"n": "Makar Sankranti",
+"note": "Known as Magh Bihu or Bhogali Bihu.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "AS",
+"n": "Bushu",
+"note": "Dimasa community",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "BR",
+"n": "Sonepur Cattle Fair",
+"note": "The largest fair for elephant trading in Asia is actually the Sonepur Mela, which is held in November in Patna, Bihar.",
+"hook": "Sonu"
+},
+{
+"t": "fs",
+"st": "BR",
+"n": "Sama Chakeva",
+"note": "Originates from the Mithila region.",
+"hook": "Shaam"
+},
+{
+"t": "fs",
+"st": "BR",
+"n": "Chhath Pooja",
+"note": "It is a major festival of Bihar and UP dedicated to \"Chhathi Maiya\" and the Sun God (Surya). It begins exactly on the 6th day after Diwali. It is a 4-day long festival celebrated during Kartik month (around Oct / Nov).",
+"hook": "Chhath"
+},
+{
+"t": "fs",
+"st": "BR",
+"n": "Bihula",
+"note": "Celebrated in August, devotees pray to the Serpent Goddess Mansa.",
+"hook": "Bahu La"
+},
+{
+"t": "fs",
+"st": "BR",
+"n": "Rajgir",
+"note": "A 3 day festival started in 1986.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "BR",
+"n": "Salhesh",
+"note": "It is celebrated in the Mithila region of Bihar. This festival honors Baba Salhesh, who belonged to the Dusadh Dalit community. The Dusadh Dalit community is the primary group that celebrates this. The 'Bhagat' and 'Manarias ' narrate the dramatic stories and legends of Baba Salhesh.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "BR",
+"n": "Makar Sankranti",
+"note": "Known as Khichdi.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "BR",
+"n": "Santhal Festivals (Erok Sim & Magh Sim)",
+"note": "The Santhal community is mainly found in the states of Jharkhand, Bihar, Odisha, and West Bengal. Erok Sim marks the 'beginning' of the agricultural season. It is a seed-sowing festival celebrated before the sowing of paddy crops, very similar to the Chapchar Kut festival of Mizoram. Erok Sim is also known by the names 'Harisim' or 'Harpod'. Magh Sim is celebrated to express gratitude for the harvest and to prepare for a new agricultural cycle. During these festivals, animal sacrifices are made by the Santhal community, which generally consist of a rooster / chicken. The sacrifice is performed by the village priest, who is known as the 'Naike' (or Naiki). The sacrifice is offered at a sacred grove (a sacred piece of land/forest) known as the 'Jaherthan'. The deities to whom these sacrifices are offered are named 'Jaher Era'and 'Marang Buru'. Chhattisgarh",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "CG",
+"n": "Madai (Phagun Madai)",
+"note": "It is celebrated on the eve of Holi in the Dantewada district of Chhattisgarh. It is celebrated by the Gond and Baiga tribes during February-March (the month of Phagun). It takes place at the Maa Danteshwari temple and is also referred to as the \"Kumbh Mela of Tribal Culture\".",
+"hook": "Madai"
+},
+{
+"t": "fs",
+"st": "CG",
+"n": "Goncha",
+"note": "The Chariot festival is celebrated in Bastar (Jagdalpur), Chhattisgarh, primarily by the Maria and Muria tribe for 9 days. It marks the beginning of the famous Bastar Dussehra (which lasts for 75 days). Tupki is a playful mock gun made of wood/bamboo that uses Goncha fruits as bullets. A chariot procession takes place during the months of June-July, a tradition started by the Chalukya rulers. Rath Yatra begins on Ashadh Shukla Dashmi and ends on Dutiya.",
+"hook": "Soncha"
+},
+{
+"t": "fs",
+"st": "CG",
+"n": "Pola",
+"note": "A thanks giving festival to acknowledge the importance of Bulls & Oxen. It is celebrated in Madhya Pradesh (Balaghat), Maharashtra, and Chhattisgarh. It takes place during the month of Shravan (monsoon) on an Amavasya (New Moon) night. After completing the heavy field work (plowing/sowing), farmers bathe and decorate their bulls with oil, turmeric, and paints to honor their hard work.",
+"hook": "Bola"
+},
+{
+"t": "fs",
+"st": "CG",
+"n": "Hareli",
+"note": "A Harvest festival of Shravan month (July/August) celebrated by farmers.",
+"hook": "Haveli"
+},
+{
+"t": "fs",
+"st": "CG",
+"n": "Bastar Dussehra",
+"note": "To honour Goddess Danteshwari.",
+"hook": "Basta Dussehra"
+},
+{
+"t": "fs",
+"st": "CG",
+"n": "Karam",
+"note": "A harvest festival tribute to Karam Tree.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "CG",
+"n": "Champaran Mela",
+"note": "An annual fair held in Champaran region, Raipur.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "CG",
+"n": "Narayanpur Mela",
+"note": "Muria tribe",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "GA",
+"n": "3 Kings Festival",
+"note": "Also known as the Epiphany festival.",
+"hook": "3 Kings"
+},
+{
+"t": "fs",
+"st": "GA",
+"n": "Feast of Saint Francis Xavier",
+"note": "Celebrated on 3rd December (Death anniversary of Saint Francis). It takes place at the Basilica of Bom Jesus (associated with St. Francis Xavier).",
+"hook": "St. Francis Xavier"
+},
+{
+"t": "fs",
+"st": "GA",
+"n": "Grapes Escapade",
+"note": "Wine festival",
+"hook": "Grapes"
+},
+{
+"t": "fs",
+"st": "GA",
+"n": "Carnival",
+"note": "Celebrated immediately before the Lent Christian period.",
+"hook": "Car Nahi"
+},
+{
+"t": "fs",
+"st": "GA",
+"n": "Sunburn",
+"note": "Asia's largest Electronic Dance Music festival.",
+"hook": "Sunburn"
+},
+{
+"t": "fs",
+"st": "GA",
+"n": "Shigmo",
+"note": "Shigmotsav/ Shishirotsava is a spring festival celebrated in Falgun month of the Hindu calendar. Shigmo is celebrated in the spring season for 14 days to welcome homecoming warriors. The Ghode Modni (warrior dance) and Fugdi dance (performed to the beat of drums) are performed during this festival.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "GA",
+"n": "Bonderam",
+"note": "Celebrated on the 4th Saturday of every August in the Divar Island.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "GA",
+"n": "Chikal Kalo",
+"note": "A mud festival that celebrates Lord Krishna's childhood, in the Devaki Krishna temple of Marcel, Goa.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "GA",
+"n": "Sao Jao",
+"note": "Saint John the Baptist festival.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "GA",
+"n": "Maleyachi Jatra",
+"note": "",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "GJ",
+"n": "Shamlaji Melo",
+"note": "Dedicated to Lord Vishnu. Celebrated for 3 weeks in November.",
+"hook": "Sharmaji"
+},
+{
+"t": "fs",
+"st": "GJ",
+"n": "Madhavpur Mela",
+"note": "Celebrates the marriage of Lord Krishna and Rukmini in the Porbandar district of Gujarat.",
+"hook": "Madhav"
+},
+{
+"t": "fs",
+"st": "GJ",
+"n": "Modhera Dance Festival",
+"note": "Celebrated at Modhera Sun temple (Mehsana district) for 3 days in the 3rd week of January.",
+"hook": "Madhav"
+},
+{
+"t": "fs",
+"st": "GJ",
+"n": "Vautha Mela",
+"note": "An animal trading festival.",
+"hook": "Chauth"
+},
+{
+"t": "fs",
+"st": "GJ",
+"n": "Rann Utsav",
+"note": "Also known as the \"White Desert Festival\", it continues for 3 months in the Great Rann of Kutch.",
+"hook": "Rann"
+},
+{
+"t": "fs",
+"st": "GJ",
+"n": "Dang Darbar",
+"note": "A tribal festival celebrated just before Holi.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "GJ",
+"n": "Chitra Vichitra Fair",
+"note": "Gharasia/Bhil tribe",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "GJ",
+"n": "Bhavnath Fair",
+"note": "Dedicated to Lord Shiva.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "GJ",
+"n": "Dhrang Fair",
+"note": "Dedicated to Mekaran Dada (a famous saint of Kutch).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "GJ",
+"n": "Makar Sankranti",
+"note": "Uttarayan (famous for the International Kite Festival).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "GJ",
+"n": "Saptak Music Festival",
+"note": "It is celebrated in Ahmedabad, Gujarat. It lasts for 13 days. Indian classical music is showcased in this festival. Himachal Pradesh",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Pori",
+"note": "Also known as the Horse Festival.",
+"hook": "Pari"
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Halda",
+"note": "It is celebrated in the Lahaul Valley. It takes place around the time of Magh Purnima (Jan-feb). It is a 2-day New Year festival celebration for the locals in this region.",
+"hook": "Haldi"
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Phulaich",
+"note": "Festival of flowers. Also known as the Ukyam Festival. It takes place in the Kinnaur district of Himachal Pradesh. It is celebrated in the month of Bhadrapad (August- September).",
+"hook": "Phul"
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Sazo",
+"note": "Celebrated in the Kinnaur Valley. Sair festival.",
+"hook": "Saza"
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Minjar Fair",
+"note": "Held in the town of Chamba for one week. A week-long Festival is celebrated in Chamba Valley during July–August and marks the onset of the monsoon, where a masked dance known as \"Cham\" is performed.",
+"hook": "Kalinjar"
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Losar",
+"note": "Losar is the Tibetan New Year, famously known for its mask dances, which are called \"Cham \". Celebrated in the Lahaul Spiti Valley.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Kullu Dussehra",
+"note": "Dedicated to Lord Raghunath.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Doongri Festival",
+"note": "It is also known as the Hidimba Devi Fair, in honor of Hidimba Devi (wife of Bhima). It is celebrated in the spring season (around March) for 3 days. It takes place in the Kullu valley or Manali in Himachal Pradesh.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Nalwari Fair",
+"note": "It takes place in Bilaspur, Himachal Pradesh. It lasts for 4 to 5 days and is held at the Luhnu ground. It is primarily a cattle fair.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Fagli (Kus/Kuns)",
+"note": "Punha involves symbolic ploughing indoors using willow sticks, reflecting farming hopes during snow. Celebrated in Pattan Valley.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Raulane Festival",
+"note": "A 5,000-year-old traditional, masked cultural festival. It is celebrated in Kalpa and Kinnaur district of Himachal Pradesh honoring Sauni (mountain fairies) who protect villagers during harsh winter. The festival welcomes spring, marks the end of winter, and centers on a symbolic, silent divine marriage involving two villagers-the Raula and Raulane-representing celestial beings.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "HP",
+"n": "Chaitrol Festival-",
+"note": "A festival celebrated in Sirmaur district during March-April, known as the \"Festival of Pictures,\" where traditional dishes like Potlu are prepared.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "HR",
+"n": "Surajkund Mela",
+"note": "An international crafts fair held in Faridabad, Haryana.",
+"hook": "Suraj"
+},
+{
+"t": "fs",
+"st": "HR",
+"n": "Pinjore",
+"note": "Held in Panchkula district.",
+"hook": "Pin"
+},
+{
+"t": "fs",
+"st": "HR",
+"n": "Gugga Navami",
+"note": "Dedicated to Gugga Pir, worship of snakes.",
+"hook": "Ganga"
+},
+{
+"t": "fs",
+"st": "HR",
+"n": "Gangaur",
+"note": "Dedicated to Goddess Gauri or Parvati. Also celebrated in Rajasthan & MP.",
+"hook": "Gum"
+},
+{
+"t": "fs",
+"st": "JH",
+"n": "Rohini",
+"note": "It marks the beginning of the sowing season.",
+"hook": "Rohini"
+},
+{
+"t": "fs",
+"st": "JH",
+"n": "Bhagta Parab",
+"note": "To honour Budha Baba celebrated by indigenous tribes of Jharkhand.",
+"hook": "Bhagta"
+},
+{
+"t": "fs",
+"st": "JH",
+"n": "Sohrai",
+"note": "A Harvest festival is celebrated on the new moon day of Kartik. Cattle Worship is the primary focus of the Sohrai festival.",
+"hook": "Sohar"
+},
+{
+"t": "fs",
+"st": "JH",
+"n": "Tusu Parab",
+"note": "Held on the last day of Hindu month Paush.",
+"hook": "Susu"
+},
+{
+"t": "fs",
+"st": "JH",
+"n": "Karam",
+"note": "To honour Karam Devta-God of Power and Youthfulness, for a good harvest. During the Karam festival, a Karam tree is worshipped.",
+"hook": "Karam"
+},
+{
+"t": "fs",
+"st": "JH",
+"n": "Sarhul",
+"note": "Marks the arrival of Spring.",
+"hook": "Sarhad"
+},
+{
+"t": "fs",
+"st": "JH",
+"n": "Jawa",
+"note": "Celebrated by unmarried tribal girls for fertility and good agricultural prosperity. Grains (like barley/jau) are planted in a pot of soil, and as they sprout, they are called 'Jawa'. Both Karam and Jawa are celebrated around the monsoon season, generally in the Bhadrapada month (August-September).",
+"hook": "Jawa"
+},
+{
+"t": "fs",
+"st": "JH",
+"n": "Santhal Festivals",
+"note": "Erok Sim & Magh Sim festivals. The Santhal community is mainly found in the states of Jharkhand, Bihar, Odisha, and West Bengal.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "KA",
+"n": "Hampi",
+"note": "Also known as \"Vijay Utsav\".",
+"hook": "Humara"
+},
+{
+"t": "fs",
+"st": "KA",
+"n": "Kambala",
+"note": "A buffalo race event.",
+"hook": "Kaam wala"
+},
+{
+"t": "fs",
+"st": "KA",
+"n": "Maha-mastak-abhisheka",
+"note": "Held every 12 years Anointment of the Bahubali Gommateshwara statue, located at Shravanabelagola in Karnataka. Celebrated by the Jain community for Bahubali (son of Rishabhanatha), at Shravanabelagola where his largest statue (~57 ft monolithic) is located; last held in 2018, next in 2030.",
+"hook": "Abhishek"
+},
+{
+"t": "fs",
+"st": "KA",
+"n": "Pattadakal Dance Festival",
+"note": "A cultural festival held in January at Pattadakal, showcasing classical dance forms.",
+"hook": "Kal"
+},
+{
+"t": "fs",
+"st": "KA",
+"n": "Kailpodh",
+"note": "Worship of arms and weapons, celebrated by the Kodava community of Kodagu district.",
+"hook": "Kal"
+},
+{
+"t": "fs",
+"st": "KA",
+"n": "Gombe Habba",
+"note": "Known as the \"Festival of Dolls\". Dolls are placed in odd numbers (usually 9) since it is associated with the Navratri and Dussehra period in Karnataka.",
+"hook": "Abba"
+},
+{
+"t": "fs",
+"st": "KA",
+"n": "Gauri Habba",
+"note": "Words ending with \"Habba \" generally belong to Karnataka. It is celebrated with the worship of Godess Gouri and is observed one day before Ganesh Chaturthi",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "KA",
+"n": "Ugadi",
+"note": "New Year Festival.",
+"hook": "Gaadi"
+},
+{
+"t": "fs",
+"st": "KA",
+"n": "Karga",
+"note": "It is one of the oldest festivals of Bengaluru, celebrated in March–April. It is celebrated in Tamil Nadu & Karnataka. The festival lasts for 11 days. It is celebrated by the Thigala community to honor Draupadi and Shakti.",
+"hook": "Karke"
+},
+{
+"t": "fs",
+"st": "KA",
+"n": "Kodava Community Festivals",
+"note": "The Kodava community of Karnataka primarily celebrates three main festivals. 1. Puthari:\nIt is the harvest festival (also known as the new rice festival), generally celebrated around December.\nThe traditional dance performed during this time is called \"Ummathat\".\nThe chant \"Poli, Poli, Deva\" translates to \"Increase, Increase, O God.\" where people pray to God for an abundant harvest. 2. Kailpodh:\nA festival dedicated to weapon worship (weapons are worshipped during this time).\nIt generally takes place around September. 3. Kaveri Sankramana:\nA river worship festival dedicated to the Kaveri River, generally taking place around October.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "KA",
+"n": "Banashankari Devi Fair",
+"note": "A religious fair held at Badami, dedicated to Banashankari Devi.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Thrissur Pooram",
+"note": "Celebrated in Thrissur during April-May at the Vadakkumnathan temple. It is known as the \"Festival of Festivals\".",
+"hook": "Pooran"
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Vishu",
+"note": "Vishu is a New Year festival of Kerala that falls in the month of Medam (mid-April).",
+"hook": "Vasu"
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Theyyam",
+"note": "Celebrated mostly in North Malabar.",
+"hook": "They"
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Arattu",
+"note": "Held at Sree Padmanabhaswamy Temple.",
+"hook": "Are"
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Attukal Pongal",
+"note": "Holds the record for the largest gathering of women for a religious purpose. It is celebrated in Thiruvananthapuram for 10 days. It is known as the \"Sabarimala of Women\" because women are not allowed in the Sabarimala temple, whereas only women celebrate Attukal Pongala.",
+"hook": "At"
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Painkuni",
+"note": "Celebrated at Padmanabha Swamy temple.",
+"hook": "Pain"
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Vallam Kalli Boat Race",
+"note": "The Vallamkali boat race takes place during the Onam festival in Kerala. The boats used in this traditional race are snake-shaped.",
+"hook": "Boat race"
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Onam",
+"note": "A Harvest festival welcomes the return of the demon King Mahabali. Onam is the biggest festival of Kerala, held in Aug-Sept (Bhadrapada month).",
+"hook": "On"
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Makar Vilakku",
+"note": "Held at Sabarimala temple, dedicated to Lord Ayyappa.",
+"hook": "Makar Sankranti"
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Nishagandhi",
+"note": "A week-long dance festival is held in the last week of January, every year.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Thiruvathira",
+"note": "It is dedicated to honoring Lord Shiva and Goddess Parvati. It marks the union of Lord Shiva and Parvati, specifically the day Lord Shiva accepted Parvati as his wife. A central lamp is placed, and women wearing white sarees perform a dance around it. It is celebrated mainly in the Malayalam month of Dhanu (December-January).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Manjal Kuli",
+"note": "This is a local name for Holi in Kerala. It is primarily celebrated by the Kudumbi and Konkani communities of Kerala.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Guruvayur",
+"note": "It is a 10-day annual festival held at the Sri Krishna Temple. It takes place around February-March (Chaitra month). It begins with an elephant race known as 'Aanayottam'. It concludes with 'Aarattu', which is a holy immersion ceremony.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Vettukad",
+"note": "It is also known as the 'Feast of Christ the King'. It is celebrated by the Christian community. It is a 10-day annual celebration held at the Madre De Deus Church in Vettukad, Thiruvananthapuram, Kerala.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "KL",
+"n": "Chandanakuda Mahotsavam",
+"note": "It is an 11-day annual festival. It takes place at the Beemapally Dargah Shareef (Masjid) in Thiruvananthapuram. It is organized in honor of Saint Beema Beevi and her son.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Ghadlya",
+"note": "Celebrated in the month of Aug-Sept.",
+"hook": "Ghade"
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Lokrang",
+"note": "Commences on Republic Day.",
+"hook": "Rang"
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Khajuraho",
+"note": "Held in Chhatarpur district.",
+"hook": "Khajur"
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Ras Nawa",
+"note": "Celebrated by Baigas of Mandla district.",
+"hook": "Ras"
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Panchmarhi Utsav",
+"note": "A 6-day festival.",
+"hook": "Nagman"
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Gangaur",
+"note": "Celebrated in Rajasthan and Madhya Pradesh during March-April. Dedicated to Mata Gauri (an incarnation of Goddess Parvati). Ghudliya: It is the decorated earthen pot with a lamp inside that unmarried girls carry. Purpose: Unmarried girls pray for a good husband, while married women pray for the long life and well-being of their families.",
+"hook": "Ganga"
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Chethiyagiri Vihara",
+"note": "To worship the relics of Sariputta and Mahamogallena, in Sanchi, MP.",
+"hook": "Gira"
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Bhagoria Haat",
+"note": "A harvest festival in the spring season.",
+"hook": "Bhag"
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Pola Festival",
+"note": "It is celebrated in Madhya Pradesh (Balaghat), Maharashtra, and Chhattisgarh. It takes place during the month of Shravan (monsoon) on an Amavasya (New Moon) night. After completing the heavy field work (plowing/sowing), farmers bathe and decorate their bulls with oil, turmeric, and paints to honor their hard work.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Dhamoni Urs Fair",
+"note": "The fair is held during the months of April and May. It takes place at the dargah of Sufi saint Mastan Shah Vali located in Sagar, Madhya Pradesh.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Laru kaj",
+"note": "It is celebrated by the Bhil & Gond tribe of MP and Chhattisgarh. Known as the \"100-drum festival\". It features a ceremonial pig wedding in honour of Narayana Dev.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Chhabina",
+"note": "The ceremonial procession of Lord Dharanath in the Dhar district of Madhya Pradesh is locally referred to as a Chhabina.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MP",
+"n": "Malwa Utsav",
+"note": "Manipur",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MN",
+"n": "Kang Jatra Kut",
+"note": "A Hindu festival of Manipur associated with Lord Jagannath Rath Yatra, celebrated for 10 days.",
+"hook": "Sang"
+},
+{
+"t": "fs",
+"st": "MN",
+"n": "Dol Jatra (Yaoshang)",
+"note": "It is popularly known as the Holi of Manipur. It is a Spring festival that lasts for about 5 days. It is celebrated on the full moon day of the Lamta month (February-March). The festival features sports competitions, not academic quiz competitions. Thabal Chongba is a moonlight circle dance performed during this festival.",
+"hook": "Doll"
+},
+{
+"t": "fs",
+"st": "MN",
+"n": "Cherry Blossom",
+"note": "",
+"hook": "Cherry"
+},
+{
+"t": "fs",
+"st": "MN",
+"n": "Lai Haroba",
+"note": "It is called the \"Merry-making of Gods,\" celebrated by the Meitei community. It involves the worship of Umang Lai (ancestral forest deities). Male priests are called 'Maibas' and female priests are 'Maibis'. The Khamba Thoibi dance is also performed during this time.",
+"hook": "Lai"
+},
+{
+"t": "fs",
+"st": "MN",
+"n": "Heirku Hidongba",
+"note": "It is a boat racing festival.",
+"hook": "Hindon"
+},
+{
+"t": "fs",
+"st": "MN",
+"n": "Lui Ngai Ni",
+"note": "It is a seed-sowing festival (marking the beginning of the agricultural season) celebrated by the Naga tribes of Manipur around December-January.",
+"hook": "Nhai"
+},
+{
+"t": "fs",
+"st": "MN",
+"n": "Gang Ngai",
+"note": "It is a post-harvest thanksgiving festival celebrated by the Zeliangrong Naga community of Manipur.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MN",
+"n": "Ningol Chakouba",
+"note": "Focuses on the role of women in society and involves inviting sisters for feasting and gifts.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MN",
+"n": "Cheiraoba (Sajibu)",
+"note": "The New Year of the Meitei community, occurring in March-April.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MN",
+"n": "Kwak Jatra",
+"note": "It is also known as Kwak Tanba. It is celebrated in Manipur by the Meitei community. It is also called the 'Crow Festival' because a crow was released from the king's palace during this festival. It marks the end of the monsoon season and the beginning of prosperity. The monsoon ends around September-October, which is why it is celebrated in October. Nagaland",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "NL",
+"n": "Hornbill",
+"note": "Known for showcasing tribal culture and heritage. Celebrated from 1-10 December by Naga tribes. Nagaland's biggest festival (\"Festival of Festivals\"). The Hornbill bird symbolizes strength and cultural unity.",
+"hook": "Bill"
+},
+{
+"t": "fs",
+"st": "NL",
+"n": "Aoleang",
+"note": "It is celebrated in the 1st week of April by the Konyak Naga people.",
+"hook": "Aao"
+},
+{
+"t": "fs",
+"st": "NL",
+"n": "Moatsu Mong",
+"note": "Celebrated by the Ao Naga tribe (3 days) in the first week of May. The Ao Naga tribe serves as a time of recreation and joy after the hard work of clearing fields and sowing seeds. Sangpangtu: It is a ritual performed by the Ao tribe during the Moatsu Festival.",
+"hook": "Muh"
+},
+{
+"t": "fs",
+"st": "NL",
+"n": "Sekrenyi",
+"note": "Celebrated by the Angami tribe to invoke prosperity and ward off evil spirits before the sowing season. Also known as Phousanyi, it takes place in February for purifying the body and soul.",
+"hook": "Sakkar"
+},
+{
+"t": "fs",
+"st": "NL",
+"n": "Tuluni",
+"note": "The mid-July harvest festival of the Sumi tribe.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "NL",
+"n": "Tsungrem Mong",
+"note": "It is a pre-harvest festival held in early August (for 3 days).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "NL",
+"n": "Tokhu Emong",
+"note": "The post-harvest festival of the Lotha tribe that lasts for 9 days.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "NL",
+"n": "Nazu",
+"note": "It is celebrated for 10 days by the Pochury tribe. It takes place in February and marks the beginning of the agricultural season. 'Khupielilie' dance is specifically performed during this festival.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "NL",
+"n": "Bushu",
+"note": "It is celebrated by the Dimasa Kachari tribe in Nagaland (and Assam). It is a post-harvest festival (celebrated after the crop harvest). It takes place in the month of January, and the deity Sibrai is worshipped during this time.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "NL",
+"n": "Lu-Ngai-Ni",
+"note": "",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "OD",
+"n": "Nua Khai",
+"note": "An agriculture festival where new rice is offered as Prasad. This newly harvested rice is specifically offered to Maa Samaleswari in Sambalpur, Odisha. In the local language, \"Nua\" means new, and \"Khai\" means food. \"Nabanna\" refers to the newly harvested rice. The famous \"Dalkhai\" dance is performed to celebrate this festival.",
+"hook": "Nau Khai"
+},
+{
+"t": "fs",
+"st": "OD",
+"n": "Konark",
+"note": "A 5-day dance festival held Dec 1-5.",
+"hook": "Kaun"
+},
+{
+"t": "fs",
+"st": "OD",
+"n": "Kalinga Mahotsav",
+"note": "2-day long event. Martial arts and dance.",
+"hook": "Kalinga"
+},
+{
+"t": "fs",
+"st": "OD",
+"n": "Raja Prabha",
+"note": "Also known as Mithun Sankranti. It can be related to the Ambubachi festival of Assam. The land is left completely empty for three days. No sowing, digging, or playing takes place during this period. It is believed that Goddess Earth is regaining her fertility during this time.",
+"hook": "Raja"
+},
+{
+"t": "fs",
+"st": "OD",
+"n": "Rath Yatra",
+"note": "The chariot journey of Lord Jagannath, Balabhadra, and Subhadra.",
+"hook": "Rath"
+},
+{
+"t": "fs",
+"st": "OD",
+"n": "Bal Yatra",
+"note": "",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "OD",
+"n": "Nabakalebara",
+"note": "Celebrated in Jagannath Temple.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "OD",
+"n": "Chhau",
+"note": "",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "OD",
+"n": "Chaitra Parab",
+"note": "This festival is celebrated in the Koraput region of Odisha. It takes place during the month of Chaitra (February-March). It is associated with Dhemsa dances and drum performances.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "OD",
+"n": "Santhal Festivals",
+"note": "Erok Sim & Magh Sim festivals. The Santhal community is mainly found in the states of Jharkhand, Bihar, Odisha, and West Bengal.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "ML",
+"n": "Shad Suk Mynsiem",
+"note": "A festival of the Khasi tribe known as the \"Dance of Peaceful Hearts\" and celebrated in the spring season (April), lasting for 3 days.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "ML",
+"n": "Nongkrem Festival",
+"note": "A 5-day harvest festival that takes place in Autumn (Oct-Nov), celebrated by the Khasi tribe.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "ML",
+"n": "Behdienkhlam",
+"note": "The monsoon (July) festival of the Jaintia (Pnar) tribe lasts for 3 days. \"Behdien\" means to drive away, and \"Khlam\" means plague (driving away the plague). Therefore, this festival was initially started to drive away plagues or evil diseases.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "ML",
+"n": "Shad Sukra",
+"note": "",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "ML",
+"n": "Wangala",
+"note": "Garo Tribe (aka Festival of Festivals). It involves the worship of the Sun, the Earth, and agricultural tools to ensure a bountiful harvest. It is celebrated by the Garo tribe and is also known as the \"Festival of 100 Drums\".",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "ML",
+"n": "Strawberry",
+"note": "Held in Ri-Bhoi district.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "ML",
+"n": "Cherry Blossom",
+"note": "Held in Shillong.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "ML",
+"n": "Chad Laho (Shad Laho)",
+"note": "It is celebrated as a thanksgiving festival to God after the harvesting season. It is both a dance and a festival. It is celebrated by the Garo, Khasi, and Jaintia (Pnar) tribes of Meghalaya during the harvest season.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "ML",
+"n": "Agalmaka",
+"note": "It is celebrated by the Garo tribe of Meghalaya. It is a spring festival and an agricultural festival that takes place around March.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MZ",
+"n": "Chapchar Kut",
+"note": "A spring festival marking the preparation for maize sowing (March). \"Kut\" means festival in the local language. Any festival ending in Kut is generally from Mizoram.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MZ",
+"n": "Phawang Kut",
+"note": "",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MZ",
+"n": "Mim Kut",
+"note": "The cultural significance of \"Mim\" in the Mim Kut festival is the last harvest representing survival and love.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MZ",
+"n": "Pawl Kut",
+"note": "Also known as the \"Straw Festival\". It is a harvest festival celebrated in December. Mim kut, Chapchar Kut and pawl Kut festivals are celebrated by the Kuki Chin-Mizo tribes.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MZ",
+"n": "Lyuva Khutla",
+"note": "This festival takes place in the month of March and is celebrated by the Mara tribe of Mizoram. It is celebrated after 'jhuming' (slash and burn cultivation) is completed. Festival Host: Chaypi",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MZ",
+"n": "Anthurium",
+"note": "",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "PB",
+"n": "Hola Mohalla",
+"note": "Begins the day after Holi (lasts for 3 days) in Anandpur Sahib. It was started by Guru Gobind Singh Ji in 1701 for training in martial arts (Gatka). It showcases martial arts, langars, and Nihang mock battles at Anandpur Sahib.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "PB",
+"n": "Gurpurab",
+"note": "Celebrates the birth of Guru Nanak - 1st Sikh Guru. Martial arts displays by Sikhs.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "PB",
+"n": "Lohri",
+"note": "Celebrated the night before Makar Sankranti (Jan 13).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "PB",
+"n": "Baisakhi",
+"note": "Baisakhi is celebrated on 13 April, on this specific day in 1699, the 10th Sikh Guru, Guru Gobind Singh Ji, founded the Khalsa Panth (warrior clan). Marking the Sikh New Year.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "PB",
+"n": "Maghi (Makar Sankranti)",
+"note": "A harvest festival. Lohri is celebrated a day prior.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "PB",
+"n": "Chhapar Mela",
+"note": "The fair is held in Chhapar village of Ludhiana district in Punjab. It takes place in the month of September. It honors Gugga Pir, who is believed to provide protection against snakes.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Vithoba",
+"note": "Dedicated to the \"Vitthal\" form of Lord Vishnu.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Gudi Padwa",
+"note": "Symbolises the victory of good over evil. The New Year of the Marathi community, where a 'Gudi' (decorated victory flag) is hoisted.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Kala Ghoda Mahotsav",
+"note": "9 days long art festival.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Narali Purnima",
+"note": "The Koli community in Maharashtra celebrates Narali Purnima to pray for safe fishing.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Banganga",
+"note": "It is linked to the legend of Lord Rama and the creation of a freshwater tank.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Vat Purnima",
+"note": "Dedicated to the legendary devotion of Savitri.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Kojagiri Purnima",
+"note": "It is also known as Sharad Purnima. It is celebrated at the end of the monsoon season (in the month of Ashwin). It is celebrated by the people of Maharashtra as well as the Bengali community. In Bengali, Kojagiri means \"One who is awake\". People stay awake on this day because it is believed that Goddess Lakshmi arrives at night to shower blessings.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Ganesh Chaturthi",
+"note": "Celebrated in Bhadrapada month.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Elephanta",
+"note": "",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Pola",
+"note": "It is celebrated in Madhya Pradesh (Balaghat), Maharashtra, and Chhattisgarh. It takes place during the month of Shravan (monsoon) on an Amavasya (New Moon) night. After completing the heavy field work (plowing/sowing), farmers bathe and decorate their bulls with oil, turmeric, and paints to honor their hard work.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Palkhi",
+"note": "",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Teej",
+"note": "It is also called Hartalika Teej/Vrat, where women fast for the long life and prosperity of their husbands and children. This festival in Maharashtra involves worshipping the goddess Parvati and is considered a festival for marital bliss.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "MH",
+"n": "Jivati Puja",
+"note": "This puja is exclusively performed by married women. It is dedicated to Goddess Parvati, as \"Jivati\" is her incarnation. It is celebrated every Friday during the month of Shravan. The Goddess is worshipped as the life-giver and protector of children.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "RJ",
+"n": "Pushkar Fair",
+"note": "A camel/livestock fair held in Ajmer, Rajasthan during December that also includes religious activities.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "RJ",
+"n": "Gangaur",
+"note": "Dedicated to Goddess Gauri. It is celebrated for 18 days. Celebrated in Rajasthan and Madhya Pradesh during March-April, dedicated to Mata Gauri (an incarnation of Goddess Parvati). Ghudliya: It is the decorated earthen pot with a lamp inside that unmarried girls carry. Purpose: Unmarried girls pray for a good husband, while married women pray for the long life and well-being of their families.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "RJ",
+"n": "Desert festival",
+"note": "Celebrated in Jaisalmer, Rajasthan, for about 3 days in February.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "RJ",
+"n": "Nagaur fair",
+"note": "It is also known as the Shri Ramdev Cattle Fair. It is the second-largest livestock fair, held in Nagaur, Rajasthan.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "RJ",
+"n": "Chandrabhaga",
+"note": "Held in Kartik month (Oct-Nov).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "RJ",
+"n": "Bundi Utsav",
+"note": "Held in Kartik month (Oct-Nov).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "RJ",
+"n": "Baneshwar Fair",
+"note": "Bhil tribe Dedicated to Baneshwar Mahadev (Lord Shiva). Held in Dungarpur, Rajasthan, for 5 days. It is known as the \"Kumbh of Tribals\".",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "RJ",
+"n": "Kolayat fair",
+"note": "It is named after the great sage Kapil Muni (also called the Kapil Muni Fair). It is held in Bikaner, Rajasthan during Kartik Purnima. It includes a ritual at a lake surrounded by banyan trees.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "RJ",
+"n": "Rajasthan International Folk Festival (RIFF)",
+"note": "RIFF was launched in 2007 and is recognized by UNESCO as a 'Peoples Platform'. It takes place at Mehrangarh Fort in Jodhpur. It lasts for 5 days and begins on Sharad Purnima (full moon).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "RJ",
+"n": "Baran's Dol Mela",
+"note": "It is dedicated to Lord Shree Ji and Raghunath Ji. Lord Shreeji and Raghunathji's processions on Jaljhulani Gyaras attract traders from several states.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Losoong",
+"note": "Bhutia tribe",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Namsoong",
+"note": "Lepcha tribe",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Losar",
+"note": "Losar is the Tibetan New Year, famously known for its mask dances, which are called \"Cham\". It lasts for 15 days, with 3 main event days such as Lama Losar and Gyalpo Losar.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Sakewa",
+"note": "Annual 9-day festival by the Kirat Khambu Rai Community.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Pang Lhabsol",
+"note": "Chu Faat, a sacred folk dance, is performed by the Lepcha tribe of Sikkim during this festival. It signifies the worship of 5 sacred peaks: Mt. Kanchenjunga, Mt. Kabru, Mt. Simbrum, Mt. Pandim, and Mt. Narshing. It involves worship of Mount Kanchenjunga and includes prayers, masked dances and local fairs. It is also known as Pangtoed Cham and takes place in Aug-Sept. It features masked dances.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Saga Dawa",
+"note": "Also known as the Triple Blessed festival. Sikkim's most sacred, month-long festival that commemorates Lord Buddha's birth, enlightenment, and death (Mahaparinirvana).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Tendong Lho Rumfaat",
+"note": "Celebrated by the Lepcha community in July/August to honor Mount Tendong.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Tihar",
+"note": "Diwali is known as Tihar in Sikkim. Sikkim's Maruni dance is performed during the Tihar festival (Diwali).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Indra Jatra",
+"note": "It is celebrated by the Newar (Nawar) community in Sikkim. It lasts for 8 days. It is dedicated to the Rain God (Lord Indra).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Bumchu",
+"note": "A Buddhist festival is held at Tashiding Monastery in Sikkim, where a sacred pot of holy water (\"Bumchu\") is opened to predict the year's fortune.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Sonam Lochar",
+"note": "Sonam Lochar is a New Year festival of the Tamang people.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "SK",
+"n": "Tamu Lochar",
+"note": "Gurung community",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UK",
+"n": "Harela",
+"note": "Celebrated in the Kumaon region.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UK",
+"n": "Bhitauli",
+"note": "Celebrated in the Kumaon region.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UK",
+"n": "Syaldey Bikhauti Mela",
+"note": "It is celebrated in a place called Dwarahat in the Almora district of Uttarakhand. It takes place at the Vimandeshwar temple in the month of Baisakh (April-May). This festival begins with the \"Odha Bhetna\" (stone striking) ceremony.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UK",
+"n": "Phool Dei",
+"note": "It marks the welcoming of the Spring season. Young girls gather first-blooming flowers and place them at the doorsteps of houses in the village to wish prosperity. It is unique to Kumaon Hills.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UK",
+"n": "Kale Kauva (Ghugutiya)",
+"note": "Celebrated on Makar Sankranti.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UK",
+"n": "Kandali",
+"note": "It is celebrated in the Chaundas Valley of Pithoragarh, Uttarakhand. It is performed by the Rung tribe. It is held once every 12 years. The festival starts with the blooming of the Kangdali plant flowers.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UK",
+"n": "Ganga Dussehra",
+"note": "It is celebrated in the months of May and June and lasts for 10 days. It is celebrated because it is believed that on this day, Goddess Ganga descended from Heaven to Earth.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UK",
+"n": "Bisu Mela",
+"note": "A week-long Jaunsari tribal fair in Chakrata thanking for harvest and honoring Santoora Devi, a Durga form.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UK",
+"n": "Shakunkhar Mangal Geet",
+"note": "These are associated with the Kumaon region of Uttarakhand. These Mangal geets (auspicious songs) are sung exclusively by women. They are sung during different ceremonies like childbirth, marriage, and Ganesh puja.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UK",
+"n": "Baithki Holi",
+"note": "It is celebrated in the Kumaon region of Uttarakhand (known as Kumaoni Baithki Holi). It mainly takes place around Basant Panchami (January).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UK",
+"n": "Jauljibi Fair",
+"note": "A 13-day trade fair held in Pithoragarh at the confluence of Gori River and Kali River, celebrated in November.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Pongal",
+"note": "Pongal means \"to boil\". (referring to the traditional dish of boiled milk and rice). It is a harvest festival of Tamil Nadu that marks the Uttarayan (sun's northward movement / Makar Sankranti). A 4-day harvest festival (13-16 Jan): Day 1 (Bhogi): Dedicated to cleaning the home and letting go of the old. Day 2 (Thai/Surya): Dedicated to worshipping the Sun God. Day 3 (Mattu): Dedicated to worshipping Cattle. This is when the bull-taming sport Jallikattu is held. Day 4 (Kaanum): A day for family reunions and outings. Kolam: During the Pongal festival, Kolam Rangoli is drawn at the entrance of homes.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Jallikattu",
+"note": "It is a traditional bull-taming event held in Tamil Nadu. It takes place during the Pongal festival, specifically on the day of Mattu Pongal (which honors cattle).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Puthandu",
+"note": "The Tamil New Year. Includes ritual baths and temple visits.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Natyanjali",
+"note": "A famous annual classical dance festival in Tamil Nadu, dedicated to Lord Shiva (Nataraja), held at Chidambaram Temple, where the Cosmic dance (Tandava) of Shiva is depicted.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Karthigai Deepam",
+"note": "This festival is celebrated during November-December. It is associated with the Arunachaleshwar Temple and is generally linked to Lord Shiva. During Karthigai Deepam, earthen oil lamps called \"Agal vilakku\" are lit to mark the victory of good over evil.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Thaipusam",
+"note": "Worship of Lord Murugan where Kavadi is carried. Celebrated on the full moon of the Tamil month Thai, it commemorates the victory of Lord Murugan over the demon Surapadma.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Mahamaham",
+"note": "Known as the \"Kumbh of South\". Celebrated once every 12 years.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Kulasai Dasara",
+"note": "This takes place at the Arulmigu Mutharamman Temple in Tamil Nadu. It lasts for about 10 days during the Navratri period (Sept-Oct). Devotees wear demon-themed makeup and costumes.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Thiruvathirai",
+"note": "During Thiruvathirai, women swing on mango trees to celebrate womanhood.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Manjal Neerattu Vizha",
+"note": "A turmeric bathing ceremony held when a girl achieves womanhood (first menstruation).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Modhwidsh Festival",
+"note": "The Toda tribe is found in the Nilgiri Hills. Toda tribes build special huts and worship the buffalo, which is considered very sacred. \"Modhwidsh\" is also the New Year festival for the Toda tribe, generally celebrated around December/January.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TN",
+"n": "Karaga",
+"note": "It is celebrated mainly in Tamil Nadu and also in Karnataka. The festival lasts for 11 days. It is celebrated by the Thigala community to honor Draupadi and Shakti.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UP",
+"n": "Taj Mahotsav",
+"note": "Celebrated from 17th February to 27th February.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UP",
+"n": "Holi",
+"note": "Celebrated on the Full moon day (Purnima) of Phalgun Month. It is popularly known as the festival of Colors.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UP",
+"n": "Diwali",
+"note": "Celebrated on the New moon day (Amavasya) of Kartika Month. It is celebrated to mark the return of Lord Rama to Ayodhya after 14 years of exile.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UP",
+"n": "Kumbh Mela",
+"note": "Major spiritual gathering. It is held at four Tirthas: Prayagraj, Haridwar, Nasik, and Ujjain. These are the places where four drops of amrit (nectar) fell during a scuffle between gods and demons.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UP",
+"n": "Eid-ul-Fitr",
+"note": "It signifies the conclusion of Ramadan and is observed by Muslims with fasting, prayers, and communal feasts.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UP",
+"n": "Makar Sankranti",
+"note": "Known as Khichdi.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "UP",
+"n": "Chhath Puja",
+"note": "It is a major festival of Bihar and UP dedicated to \"Chhathi Maiya\" and the Sun God (Surya). It begins exactly on the 6th day after Diwali. It is a 4-day long festival celebrated during the Kartik month (around October/November).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "WB",
+"n": "Poila Boishakh",
+"note": "New Year",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "WB",
+"n": "Durga Puja",
+"note": "It is celebrated with the immersion of elaborately decorated clay idols of Goddess Durga.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "WB",
+"n": "Kali Puja",
+"note": "",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "WB",
+"n": "Dol Purnima",
+"note": "Also known as Dol Jatra.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "WB",
+"n": "Kenduli Fair",
+"note": "",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "WB",
+"n": "Santhal Festivals",
+"note": "Erok Sim & Magh Sim Festivals. The Santhal community is mainly found in the states of Jharkhand, Bihar, Odisha, and West Bengal.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "WB",
+"n": "Makar Sankranti",
+"note": "Known as Poush Sankranti.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TG",
+"n": "Bathukamma",
+"note": "It is a 9-day floral festival celebrated mainly by women. A large central arrangement of flowers (called Bathukamma) is made. It starts on Mahalaya Amavasya (New Moon day). Goddess Gauri and nature are worshipped during this festival. It takes place during September-October. Celebrated in Telangana and parts of Andhra Pradesh.",
+"hook": "Bathua"
+},
+{
+"t": "fs",
+"st": "TG",
+"n": "Bonalu",
+"note": "It started in 1813 to eradicate the plague (caused by Yersinia pestis bacteria). A \"Bonam\" (food offering) is offered to Goddess Mahakali. It is mainly celebrated in Hyderabad and Secunderabad, and was declared the Official State Festival of Telangana in 2014. Potharaju, the brother of Goddess Mahakali, is also worshipped.",
+"hook": "Banalu"
+},
+{
+"t": "fs",
+"st": "TG",
+"n": "Sammakka Jatara",
+"note": "Also known as Medaram Jatara. Rituals of this festival are performed by the Koya tribe.",
+"hook": "Sam"
+},
+{
+"t": "fs",
+"st": "TG",
+"n": "Dunnapothula Panduga",
+"note": "Also Known as Sadar festival. Celebrated by the Yadava Community.",
+"hook": "Padunga"
+},
+{
+"t": "fs",
+"st": "TG",
+"n": "Makar Sankranti",
+"note": "It is celebrated for four days with the Bhogi bonfire.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TG",
+"n": "Ugadi",
+"note": "It signifies the start of the harvest season and the official start of the New Year.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TR",
+"n": "Kharchi Puja",
+"note": "It involves a ritual bath in the river and a procession of deities to purify sins and protect against evil spirits. It involves worship of 14 specific deities. It lasts for 7 days in the month of July. It is mainly celebrated in Agartala (the capital of Tripura).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TR",
+"n": "Hojagiri",
+"note": "Celebrated by the Reang community to worship Goddess Mailuma (Laxmi).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TR",
+"n": "Garia Puja",
+"note": "It involves traditional tribal dances and rituals after jhum cultivation.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TR",
+"n": "Bijhu",
+"note": "Celebrated by the Chakma tribe to celebrate the New Year.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "TR",
+"n": "Garia Carnival",
+"note": "It is celebrated in Tripura to honor Baba Garia. The \"Ochai\" acts as a guide or priest for the entire festival. It involves the worship of a bamboo pole. It is celebrated during the month of Chaitra (March-April) and lasts for about 7 days.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "LA",
+"n": "Hemis",
+"note": "It is celebrated at the Hemis Monastery in Ladakh. It takes place during the months of June-July. It is celebrated to commemorate the birth anniversary of Guru Padmasambhava. The famous mask dance known as \"Cham\" is performed by monks during this festival.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "LA",
+"n": "Losar",
+"note": "Losar is the Ladakhi New Year. During this festival, symbolic dough models of the Sun, the Moon, and the Ibex (a type of mountain animal) are placed in households to welcome the new year.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "LA",
+"n": "Saka Dawa",
+"note": "Similar to Sikkim's \"Saga Dawa\". It is celebrated in Ladakh around May-June. It is known as a \"Triple Blessed Festival\" because it commemorates three major events of Lord Buddha: his birth, his enlightenment (Nirvana), and his death (Mahaparinirvana).",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "LA",
+"n": "Yuru Kabgyat",
+"note": "It takes place at the Lamayuru monastery in Ladakh in the months of July-August. It is a 2-day festival where the Mask Dance (Chham) is performed.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "LA",
+"n": "Dosmoche",
+"note": "Festival of Scapegoats.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "DL",
+"n": "International Mango Festival",
+"note": "It is celebrated at Dilli Haat (Janakpuri) in Delhi. It started in 1987. It typically takes place in the month of July, where more than 1000 varieties of mangoes are showcased.",
+"hook": ""
+},
+{
+"t": "fs",
+"st": "PY",
+"n": "Veerampattinam Festival",
+"note": "It is celebrated to honor the village goddess Sengazhuneer Amman. It is a 6-day annual event held in the month of August. A major highlight of this festival is the \"car dragging ceremony\".",
+"hook": ""
+}
+],
+"tricks": {
+"fd": {
+"AP": "Veer Logon Ke Liye Dhimese Koyle Ki Bhaap Se Burra Banalu",
+"AR": "Rekha → Aruna Aji Wancho Baua Ke Pas Chalo Sham Ko Aur Mask Lagake Lion and Peacock Dance Dekho",
+"AS": "Ali Bhor Main Deo Ke Pass Gaya, Hey Bhagawan Maths Main Ank Dila Dena Iss Pali Main Jhum Ke Nachunga",
+"BR": "Do Natwe Jat-Jatin Apna Sohar Khila Rahe Hai Jhum Ke",
+"CG": "Aksar Suwa Karma Na Karke Gendiya Marte Hai Pagalpanti Karte Hai Aur Pandavo Ke Saath Jhumur Ke Niche Saila Dance Karte Hai.",
+"GJ": "Gujarat Ki Gopiyan Dandiya aur Garba Khelne Siddiyon Se Matak Ke Padhar Rahi Hai",
+"GA": "Mandvi Ghode Gadi Jaguar Dekhne Aur Patang Udane Goa Ja Rahi Hai. Chalo Gaon Romat So Jao Jake",
+"HP": "Nata Chhora Aman Him Pe Rakshasho Ka Chola Aur Mala Odh Ke Sandh Per Baithkar Dang Lekar Chapa Chap Kar Raha Hai",
+"HR": "Haryana Ki Choriya Daphli aur Manjira Leke Jhumar Ke Niche Dhamaal Macha Rahe Phalgun Main",
+"JK": "Harris Rouf Bhand Hoke Dhul Main Kud Raha Hai Manali",
+"KA": "Yash Bola Kam Kar Saale Doll Bhootha Nagamandali Veerta Khatam Karegi",
+"MP": "Aksar Goriya Ada Dikhane Ke Liye Matki Main Jawara Aur Phulpati Rakhke Manch Pe Khada Nachti Hai Aur Tali Bajati Hai",
+"MZ": "Mizoram Ke Manch Pe Khullam Chillam Zang Chal Rahi",
+"MH": "Eh Kohli Vadapav Lana, Lazy Kahin Ki Tamasha Kar Rahi Hai, Dafa Hoja Varna Mouni Jo Dhangka Natak Karti Hai Uske Paas Chala Jaunga",
+"OD": "Pua Khaya Dalkhai Danda Leke Ghum Raha Bhaga Nacha",
+"NL": "Nagaland Ke Log Bamboo Main Naag, Aloo, Butterfly Gai Dalke Kha Rahe",
+"RJ": "Raja Ganga Kal Ghoom Rahe The Chaar Thali Leke Susaini Ke Saath Lekin Khayalon Main",
+"SK": "Chandni Sikkim Ki Zameen Pe Singh Ke Saath Ghante Bhar Se Yatra Kar Rahi Hai",
+"TG": "Dhime Se Gadi Gusa Lun Madhuri",
+"TR": "Biju Dadagiri Mata Pe Haq Hai Sang Ghar Le Jaunga",
+"UK": "Ashish Chanchlani Chora Hai Jhola Leke Dandi Rakh Chapa Chap Kar Raha Hai"
+},
+"fs": {
+"AR": "Arun kya tere Sang Solun is Tree ke neeche Chalo Sir Meri Pin pakdo aur Paas aao",
+"AS": "Assam ki Bahu ne Bai ko Patak patak ke mara kyunki usko Ali ke Abbu ke saath Majuli Festival dekhne jana tha.",
+"BR": "Sonu Shaam ko Chhath par Bahu La",
+"CG": "36 Madai Soncha aur Bola Haveli me Basta leke Dussehra Manaenge.",
+"GA": "3 Kings went to Goa's St. Francis Xavier church took some Grapes lekin Car Nahi mili aur Sunburn ho Gaya.",
+"GJ": "Sharma Ji Madhav se Karva Chauth pe Rann kar rahe the.",
+"HP": "Him Pari ko Haldi aur Phul se Saza do Kalinjar ke Raja aa rahe hain",
+"HR": "Suraj ki Pin Ganga me Gum ho gayi.",
+"JH": "Rohini ka Bhagta Sohar, usko Susu lagi aur usne ye Karam Sarhad pe kar diya.",
+"KA": "Humara kaam wala Abhishek kal apne abba ke sath gaadi Karke aya tha.",
+"KL": "Pooram Vasu they are at Pain because they lost Boat Race on Makar Sankranti.",
+"MP": "Ghade me Rang lagake Khajur ka Ras dalke Nagmani rakhke Ganga ke Madhya Gira do aur Bhag jao.",
+"MN": "Mani aate hi apne Sang Doll and Cherry lai fir Hindon me Nhai.",
+"NL": "Nag Bill me Aao, Muh se sakkar khao",
+"OD": "6 Khai ya Nau Khai, ye Kaun batayega? Kalinga ke Raja Jo Rath pe baithe hain.",
+"TG": "Bathua Banalu Sam me Padunga"
+}
+},
+"extra": {
+"similar": [
+"Ghoomar / Jhumar: Haryanaa",
+"Ghoomar: Rajasthan",
+"Jhumur: Assam and west Bengal",
+"Jhumair: Odisha & Chhattisgarh",
+"Jhumar: Jharkhand",
+"Dhamal: Gujarat & Haryana",
+"Dumhal: Jammu & Kashmir",
+"Tartali: Madhya pradesh",
+"Terah Taali: Rajasthan",
+"Purulia Chhau: West Bengal",
+"Seraikela chhau: Jharkhand",
+"Mayurbhanj chhau: Odisha"
+],
+"martial": [
+[
+"Lathi",
+"Punjab / West Bengal"
+],
+[
+"Purulia Chhau",
+"West Bengal"
+],
+[
+"Seraikella chhau, Paika",
+"Jharkhand"
+],
+[
+"Mayurbhanj Chhau, Ranappa",
+"Odisha"
+],
+[
+"Gatka",
+"Punjab"
+],
+[
+"Silambam",
+"Tamil Nadu"
+],
+[
+"Sarit Sarak / Thang-Ta",
+"Manipur"
+],
+[
+"Kalaripayattu, Velakali",
+"Kerala"
+],
+[
+"Thoda",
+"Himachal Pradesh"
+],
+[
+"Inbuan",
+"Mizoram"
+],
+[
+"Mardani Khel",
+"Maharashtra"
+],
+[
+"Pari Khanda",
+"Bihar"
+],
+[
+"Mallakhamba",
+"Madhya Pradesh"
+],
+[
+"Mushti Yudha",
+"Varanasi"
+]
+],
+"important": [
+[
+"Makar Sankranti",
+"Makar Sankranti is celebrated across India, marking the sun's northward movement (Uttarayan), entering the Capricorn zodiac (Makar) at the winter solstice."
+],
+[
+"Paryushana",
+"It involves fasting, prayer, and self-reflection and is observed during the Bhadrapada month. It is a Jain festival. It is celebrated in the month of Bhadrapada (August-September)."
+],
+[
+"Shahidi Divas",
+"It commemorates the martyrdom of Guru Arjan Dev. Guru Arjan Dev was the 5th Sikh Guru. He was executed by the Mughal Emperor Jahangir for giving shelter to Jahangir's son, Khusrau."
+],
+[
+"Buddha Purnima",
+"It commemorates the three major life events of Lord Buddha: his birth, his enlightenment, and his death (Mahaparinirvana), also called the \"Thrice Blessed Festival.\""
+],
+[
+"Kumbh Mela",
+"Major spiritual gathering. It is held at four Tirthas: Prayagraj, Haridwar, Nasik, and Ujjain. These are the places where four drops of amrit (nectar) fell during a scuffle between gods and demons."
+],
+[
+"Maha Shivaratri",
+"It is celebrated as a day of devotion to Lord Shiva and falls on the 14th day of the dark half of the Hindu month Phalguna."
+],
+[
+"Karva Chauth",
+"It is a festival observed with fasting by married women for their husbands' well-being, typically celebrated in the Hindu month of Kartik."
+],
+[
+"Bandi Chhor Divas",
+"It commemorates Guru Hargobind's release with 52 kings."
+],
+[
+"Navroz festival",
+"It is celebrated by the Parsi (Zoroastrian) community. Balban started the Navroz festival in India."
+],
+[
+"Tulip Festival",
+"Asia's largest tulip festival is organized in Srinagar."
+],
+[
+"Diwali",
+"Celebrated on the New moon day (Amavasya) of Kartika Month. It is celebrated to mark the return of Lord Rama to Ayodhya after 14 years of exile."
+],
+[
+"Holi",
+"Celebrated on the Full moon day (Purnima) of Phalgun Month. It is popularly known as the festival of Colors."
+],
+[
+"Navreh",
+"It is celebrated by Kashmiri Pandits. It is celebrated on the first day of the Chaitra month, making it the Kashmiri New Year. Items like walnuts, almonds, and raisins are kept during this festival."
+],
+[
+"Lohri",
+"It is a popular festival of North India, and is mainly associated with Sugarcane harvesting."
+],
+[
+"Muharram",
+"First month of Islamic calendar."
+],
+[
+"Eid-ul-Fitr",
+"It signifies the conclusion of Ramadan and is observed by Muslims with fasting, prayers, and communal feasts."
+],
+[
+"Barawafat (Eid-e-Milad-un-Nabi)",
+"It commemorates the birth anniversary of Prophet Muhammad, observed on the 12th day (Barah Wafat) of Rabi' al-Awwal."
+],
+[
+"Zakat al-Fitr",
+"Charity is given during this festival."
+]
+],
+"newyear": [
+[
+"Andhra Pradesh",
+"Ugadi",
+"March-April"
+],
+[
+"Arunachal Pradesh",
+"Mopin (Galo tribe), Longte (Nyishi tribe), Losar (Monpa tribe)",
+"March-April"
+],
+[
+"Assam",
+"Bohag Bihu (Rongali Bihu)",
+"April"
+],
+[
+"Kerala",
+"Vishu",
+"April"
+],
+[
+"Sikkim",
+"Losoong/Sonam Losar",
+"Dec-Jan"
+],
+[
+"Tamil Nadu",
+"Puthandu",
+"April"
+],
+[
+"West Bengal",
+"Poila Boishakh",
+"April"
+],
+[
+"Punjab",
+"Baisakhi",
+"April"
+],
+[
+"Maharashtra",
+"Gudi Padwa",
+"March-April"
+],
+[
+"Parsi Community",
+"Navroz (Jamshedi/Pateti Navroz)",
+"March"
+],
+[
+"Sindhi Community",
+"Cheti Chand",
+"March-April"
+]
+]
+}
+}
