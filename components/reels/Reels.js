@@ -16,6 +16,7 @@ import { ALL_SUBJECTS, sourcesFor, partsOf, loadOnePart } from "@/lib/allbank";
 import { getO40 } from "@/lib/mathdrill";
 import { getWrongBook, isPracticeable, subjectLabel, imagesOf, shownDetail } from "@/lib/wrongbook";
 import { useImageUrls } from "@/lib/wrongimages";
+import { getUserTopics, getUserTopicQuestions, shelfBook, getUserBook } from "@/lib/userpyq";
 import { vocabPool } from "@/lib/vocabpool";
 import { getFacts, factView } from "@/lib/missionfacts";
 import "./reels.css";
@@ -68,7 +69,7 @@ function toQ(q, kind, tag) {
 export default function Reels() {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const pools = useRef({ pyq: {}, o40: [], wrong: [], ans: [], jodi: [], vocab: [], facts: [], states: [], means: [] });
+  const pools = useRef({ pyq: {}, mine: [], o40: [], wrong: [], ans: [], jodi: [], vocab: [], facts: [], states: [], means: [] });
   const busy = useRef(false);
   const box = useRef(null);
   const [at, setAt] = useState(0);
@@ -106,6 +107,8 @@ export default function Reels() {
         P.lastSub = sub;
         return (P.pyq[sub] || []).shift();
       }],
+      // 📘 Khud jode hue question (GKTricks ke andar wale topic bhi).
+      ["mine", 14, () => P.mine.length > 0, () => pick(P.mine)],
       ["o40", 12, () => P.o40.length > 0, () => { const q = pick(P.o40); return toQ(q, "o40", `🐢 Maths 40+ · ${q._chapter || ""}`); }],
       ["wrong", 12, () => P.wrong.length > 0, () => { const r = pick(P.wrong); return toQ(r.q, "wrong", `🔴 Galti · ${subjectLabel(r.subject)}${r.category ? " · " + r.category : ""}`); }],
       // 📖 Answers page ke screenshot wale (bina options) — tasveer + jawab.
@@ -162,6 +165,13 @@ export default function Reels() {
     (async () => {
       const P = pools.current;
       try { P.o40 = getO40(); } catch { /* ignore */ }
+      try {
+        for (const t of getUserTopics()) {
+          const b = shelfBook(t.bookId) || getUserBook(t.bookId);
+          const tag = `${b?.icon || "📘"} ${b?.name || "Meri book"} · ${t.name || ""}`;
+          for (const q of getUserTopicQuestions(t.id)) if (q && q.question && Array.isArray(q.options) && q.answer != null) P.mine.push(toQ(q, "mine", tag));
+        }
+      } catch { /* ignore */ }
       try {
         const wb = getWrongBook("");
         P.wrong = wb.filter(isPracticeable);
