@@ -126,6 +126,43 @@ export default function PasteNotesPage() {
     note && shown.length === 1 && shown[0].items.length === 1 && shown[0].items[0].k === note
       ? shown[0]
       : null;
+  // ← → Usi book ke pichhle / agle page par — menu mein baar-baar jaaye bina.
+  const nav = useMemo(() => {
+    if (!oneBook) return null;
+    const all = (groups.find((g) => g.book === oneBook.book) || { items: [] }).items;
+    const i = all.findIndex((n) => n.k === note);
+    return { prev: i > 0 ? all[i - 1] : null, next: i >= 0 && i < all.length - 1 ? all[i + 1] : null, at: i + 1, total: all.length };
+  }, [oneBook, groups, note]);
+  const goNote = useCallback((k) => {
+    setNote(k);
+    try {
+      const u = new URL(window.location.href);
+      u.searchParams.set("n", k);
+      window.history.replaceState(null, "", u.toString());
+    } catch { /* ignore */ }
+    window.scrollTo({ top: 0 });
+  }, []);
+  const pager = nav && (nav.prev || nav.next) ? (
+    <div className="pn-pager">
+      <button type="button" className="pn-b" disabled={!nav.prev} onClick={() => nav.prev && goNote(nav.prev.k)}>
+        ← {nav.prev ? `p.${nav.prev.page}` : "pehla page"}
+      </button>
+      <span className="pn-pager__n">{nav.at}/{nav.total}</span>
+      <button type="button" className="pn-b" disabled={!nav.next} onClick={() => nav.next && goNote(nav.next.k)}>
+        {nav.next ? `p.${nav.next.page}` : "aakhri page"} →
+      </button>
+    </div>
+  ) : null;
+  useEffect(() => {
+    if (!nav) return undefined;
+    const k = (e) => {
+      if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+      if (e.key === "ArrowLeft" && nav.prev) goNote(nav.prev.k);
+      else if (e.key === "ArrowRight" && nav.next) goNote(nav.next.k);
+    };
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, [nav, goNote]);
   const tally = useMemo(() => {
     let pages = 0, pts = 0, star = 0;
     for (const g of shown) for (const n of g.items) {
@@ -178,12 +215,14 @@ export default function PasteNotesPage() {
         )}
       </div>
 
+      {pager}
       {shown.map((g) => (
         <div key={g.book}>
           {!book && groups.length > 1 && <h2 className="pn-bookt">{g.eyebrow || g.title}</h2>}
           {g.items.map((n) => <Note key={n.k} n={n} onGone={reload} />)}
         </div>
       ))}
+      {pager}
     </section>
   );
 }

@@ -87,3 +87,9 @@
   color: var(--accent);
   font-weight: 600;
 }
+
+/* ← → ek page khula ho to usi book ke pichhle / agle page par */
+.pn-pager { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 12px 0; }
+.pn-pager .pn-b { font-weight: 800; padding: 8px 16px; }
+.pn-pager .pn-b:disabled { opacity: 0.4; cursor: default; }
+.pn-pager__n { font-size: 0.8rem; color: var(--text-3); font-weight: 700; }
