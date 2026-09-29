@@ -35,12 +35,12 @@ export default function NowPlan() {
 
   if (!info) return null;
   if (!info.cur && !info.next) {
-    return <Link href="/" className="nowplan" title={`Day ${info.day}`}><span className="nowplan__time">😴</span><span className="nowplan__what">Sone ka waqt — kal subah phir</span></Link>;
+    return <Link href="/mission" className="nowplan" title={`Day ${info.day}`}><span className="nowplan__time">😴</span><span className="nowplan__what">Sone ka waqt — kal subah phir</span></Link>;
   }
   const b = info.cur || info.next;
   const tip = [`Day ${info.day}`, b.tg, b.how].filter(Boolean).join(" · ");
   return (
-    <Link href="/" className="nowplan" title={tip}>
+    <Link href="/mission" className="nowplan" title={tip}>
       <span className="nowplan__time">{info.cur ? "⏰ Abhi" : "⏭ Agla"} {b.start}–{b.end}</span>
       <span className="nowplan__what">{name(b)}</span>
     </Link>
