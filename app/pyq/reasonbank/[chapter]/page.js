@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadReasonChapter, reasonChapterMeta } from "@/lib/reasonbank";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
-import PyqDrill from "@/components/PyqDrill";
+import PyqDrill from "@/components/PyqReels";
 
 
 export default function ReasonbankChapterPage() {

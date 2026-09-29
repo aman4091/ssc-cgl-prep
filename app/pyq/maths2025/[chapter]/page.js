@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadSscMathsChapter, sscMathsChapterMeta } from "@/lib/sscmaths";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
-import PyqDrill from "@/components/PyqDrill";
+import PyqDrill from "@/components/PyqReels";
 
 // One chapter's questions, full width.
 //

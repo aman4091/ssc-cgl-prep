@@ -1,0 +1,28 @@
+/* 🎬 PYQ reels (components/PyqReels) */
+.pyqr-bar { display: flex; align-items: center; gap: 12px; margin: 10px 0 6px; }
+.pyqr-box {
+  height: calc(100dvh - 150px);
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  border-radius: 16px;
+}
+.pyqr-box::-webkit-scrollbar { display: none; }
+.pyqr-reel {
+  position: relative;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  padding: 4px 0 40px;
+  box-sizing: border-box;
+}
+.pyqr-card { height: 100%; overflow-y: auto; overscroll-behavior: contain; }
+.pyqr-next {
+  position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+  width: 40px; height: 30px; border-radius: 999px; border: 1px solid var(--line);
+  background: var(--card, var(--bg-1)); color: var(--text-3); font-size: 1.1rem; cursor: pointer;
+}
+@media (max-width: 600px) {
+  .pyqr-box { height: calc(100dvh - 120px); }
+}

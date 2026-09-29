@@ -7,7 +7,7 @@ import { allSubjectMeta, loadAllSubject } from "@/lib/allbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import MathQuestionCard from "@/components/MathQuestionCard";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
-import PyqDrill from "@/components/PyqDrill";
+import PyqDrill from "@/components/PyqReels";
 import { seededShuffle } from "@/lib/shuffle";
 
 // Ek subject ke SAARE question — har bank, har chapter, ek list mein.

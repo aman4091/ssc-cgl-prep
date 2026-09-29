@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { loadGkIndex, loadGkTopic } from "@/lib/gkbank";
 import { isUserTopicId, getUserTopic, getUserBook, getUserTopicQuestions } from "@/lib/userpyq";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
-import PyqDrill from "@/components/PyqDrill";
+import PyqDrill from "@/components/PyqReels";
 
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are

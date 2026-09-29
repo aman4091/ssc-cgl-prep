@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadWarSubject, warSubjectMeta } from "@/lib/warbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
-import PyqDrill from "@/components/PyqDrill";
+import PyqDrill from "@/components/PyqReels";
 
 
 // 🌑 Ek page Gemini ke parde jaisa — owner ne screenshot dikha kar kaha tha

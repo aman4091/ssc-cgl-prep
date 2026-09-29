@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadEngChapter, engChapterMeta } from "@/lib/engbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
-import PyqDrill from "@/components/PyqDrill";
+import PyqDrill from "@/components/PyqReels";
 
 
 export default function PinnacleChapterPage() {

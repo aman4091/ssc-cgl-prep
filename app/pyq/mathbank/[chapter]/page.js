@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { loadMathChapter, mathChapterMeta } from "@/lib/mathbank";
 import MathQuestionCard from "@/components/MathQuestionCard";
-import PyqDrill from "@/components/PyqDrill";
+import PyqDrill from "@/components/PyqReels";
 
 
 export default function MathbankChapterPage() {
