@@ -29,7 +29,7 @@
 /* ↑ ↓ gol button — question box ke dayein */
 .pyqr-wrap { display: flex; gap: 10px; align-items: stretch; }
 .pyqr-wrap .pyqr-box { flex: 1; min-width: 0; }
-.pyqr-nav { display: flex; flex-direction: column; justify-content: flex-start; gap: 12px; padding-top: 14px; }
+.pyqr-nav { display: flex; flex-direction: column; justify-content: center; gap: 12px; position: relative; z-index: 80; }
 .pyqr-nav button {
   width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line);
   background: var(--card, var(--bg-1)); color: var(--text-1); font-size: 1.25rem; font-weight: 800;
