@@ -78,3 +78,7 @@
   .reel__card { padding: 16px 14px; border-radius: 18px; }
   .reel__q { font-size: 1rem; }
 }
+
+.reel__fig { display: block; margin-top: 10px; max-height: 260px; object-fit: contain; }
+.reel--ans .reel__tag { color: #0ea5e9; border-color: #0ea5e9; }
+.reel--ans .reel__q img { display: block; margin-top: 8px; }

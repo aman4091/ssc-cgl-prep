@@ -14,7 +14,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Markdown from "@/components/Markdown";
 import { ALL_SUBJECTS, sourcesFor, partsOf, loadOnePart } from "@/lib/allbank";
 import { getO40 } from "@/lib/mathdrill";
-import { getWrongBook, isPracticeable, subjectLabel } from "@/lib/wrongbook";
+import { getWrongBook, isPracticeable, subjectLabel, imagesOf, shownDetail } from "@/lib/wrongbook";
+import { useImageUrls } from "@/lib/wrongimages";
 import { vocabPool } from "@/lib/vocabpool";
 import { getFacts, factView } from "@/lib/missionfacts";
 import "./reels.css";
@@ -57,7 +58,7 @@ function toQ(q, kind, tag) {
     question: q.question || q.qText || "",
     options: q.options || q.optText || [],
     answer: q.answer,
-    qImg: q.qImg || "", optImgs: Array.isArray(q.optImgs) ? q.optImgs : null,
+    qImg: q.qImg || "", figImg: q.img || "", optImgs: Array.isArray(q.optImgs) ? q.optImgs : null,
     explanation: String(q.explanation || q.solution || ""),
     solImg: q.solImg || "",
     method: q.method || "",
@@ -67,7 +68,7 @@ function toQ(q, kind, tag) {
 export default function Reels() {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
-  const pools = useRef({ pyq: {}, o40: [], wrong: [], jodi: [], vocab: [], facts: [], states: [], means: [] });
+  const pools = useRef({ pyq: {}, o40: [], wrong: [], ans: [], jodi: [], vocab: [], facts: [], states: [], means: [] });
   const busy = useRef(false);
   const box = useRef(null);
   const [at, setAt] = useState(0);
@@ -107,6 +108,11 @@ export default function Reels() {
       }],
       ["o40", 12, () => P.o40.length > 0, () => { const q = pick(P.o40); return toQ(q, "o40", `🐢 Maths 40+ · ${q._chapter || ""}`); }],
       ["wrong", 12, () => P.wrong.length > 0, () => { const r = pick(P.wrong); return toQ(r.q, "wrong", `🔴 Galti · ${subjectLabel(r.subject)}${r.category ? " · " + r.category : ""}`); }],
+      // 📖 Answers page ke screenshot wale (bina options) — tasveer + jawab.
+      ["ans", 12, () => P.ans.length > 0, () => {
+        const r = pick(P.ans);
+        return { kind: "ans", tag: `📖 Answers · ${subjectLabel(r.subject)}${r.category ? " · " + r.category : ""}`, images: imagesOf(r), note: r.note || "", explanation: r.answer || shownDetail(r) || "", question: r.q?.question || "" , qImg: "" };
+      }],
       ["jodi", 16, () => P.jodi.length > 0, () => {
         const x = pick(P.jodi);
         const m = mcq(x.st, P.states);
@@ -129,9 +135,9 @@ export default function Reels() {
       let r = Math.random() * total;
       const mk = live.find((m) => (r -= m[1]) < 0) || live[0];
       const item = mk[3]();
-      if (item && (item.kind === "fact" || item.question || item.qImg)) {
+      if (item && (item.kind === "fact" || item.kind === "ans" || item.question || item.qImg)) {
         P.last = mk[0];
-        const key = `${item.kind}:${String(item.question || item.qImg || item.text || "").slice(0, 120)}`;
+        const key = `${item.kind}:${String(item.question || item.qImg || item.text || (item.images || []).map((x) => x.url || x.id).join(",")).slice(0, 120)}`;
         out.push({ ...item, key, id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}` });
       }
     }
@@ -156,7 +162,11 @@ export default function Reels() {
     (async () => {
       const P = pools.current;
       try { P.o40 = getO40(); } catch { /* ignore */ }
-      try { P.wrong = getWrongBook("").filter(isPracticeable); } catch { /* ignore */ }
+      try {
+        const wb = getWrongBook("");
+        P.wrong = wb.filter(isPracticeable);
+        P.ans = wb.filter((r) => !isPracticeable(r) && imagesOf(r).length);
+      } catch { /* ignore */ }
       try { P.vocab = vocabPool().filter((v) => v.word && v.meaning); P.means = P.vocab.map((v) => clip(v.meaning, 90)); } catch { /* ignore */ }
       try { P.facts = getFacts().filter((f) => f && (f.text || f.zap)); } catch { /* ignore */ }
       try {
@@ -217,7 +227,9 @@ function Reel({ r, near, onNext, onWrong }) {
     <section className="reel">
       <div className={`reel__card reel--${r.kind}`}>
         <div className="reel__tag">{r.tag}</div>
-        {r.kind === "fact" ? (
+        {r.kind === "ans" ? (
+          <AnsReel r={r} near={near} open={open} onOpen={() => setOpen(true)} />
+        ) : r.kind === "fact" ? (
           <>
             <div className="reel__fact"><Markdown>{r.text}</Markdown></div>
             {r.more ? (open ? <div className="reel__exp"><Markdown>{r.more}</Markdown></div>
@@ -227,6 +239,7 @@ function Reel({ r, near, onNext, onWrong }) {
           <>
             <div className="reel__q">
               {r.qImg ? (near ? <img src={r.qImg} alt="question" /> : null) : <Markdown>{r.question}</Markdown>}
+              {r.figImg && near ? <img src={r.figImg} alt="figure" className="reel__fig" /> : null}
             </div>
             <div className="reel__opts">
               {(r.optImgs || r.options).map((o, k) => {
@@ -256,5 +269,22 @@ function Reel({ r, near, onNext, onWrong }) {
       </div>
       <button type="button" className="reel__next" onClick={onNext} aria-label="Agli">⌄</button>
     </section>
+  );
+}
+
+// 📖 Answers page ka screenshot wala question: tasveer, phir jawab.
+function AnsReel({ r, near, open, onOpen }) {
+  const { urls } = useImageUrls(near ? r.images : []);
+  return (
+    <>
+      {r.question ? <div className="reel__q"><Markdown>{r.question}</Markdown></div> : null}
+      <div className="reel__q">{urls.map((u) => <img key={u} src={u} alt="question" />)}</div>
+      {r.note ? <p className="reel__method">{r.note}</p> : null}
+      {open ? (
+        <div className="reel__exp">{r.explanation ? <Markdown>{r.explanation}</Markdown> : <p>Is question ka jawab Answers page par likha nahi hai.</p>}</div>
+      ) : (
+        <button type="button" className="reel__more" onClick={onOpen}>👀 Jawab dikhao</button>
+      )}
+    </>
   );
 }
