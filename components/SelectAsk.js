@@ -30,7 +30,7 @@
 //   • Panel ke BAHAR click karne par wo chhup jata hai, par baatcheet mitti
 //     nahi — dayein kinare par 💬 wala chhota button use wapas le aata hai.
 
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import "@/app/selectask.css";
 import Markdown from "./Markdown";
@@ -234,7 +234,6 @@ export default function SelectAsk() {
   const [imgWanted, setImgWanted] = useState("");
   const [light, setLight] = useState(null);  // { list, at }
   const [old, setOld] = useState([]);        // sambhale hue thread
-  const [at, setAt] = useState(-1);          // -1 = chalu, 0.. = purana
   // ⚡ Sprint mein abhi jo question saamne hai (wahi page khabar bhejta hai).
   const [sq, setSq] = useState(null);
   const [setAsDef, setSetAsDef] = useState(-1);   // kis sandesh par "✓ lag gaya"
@@ -242,6 +241,34 @@ export default function SelectAsk() {
   const msgsRef = useRef(null);
   const boxRef = useRef(null);
   const barRef = useRef(null);
+
+  // 🖥️ Desktop (chaudi screen) par panel dayein taraf FIX — page khud baayen
+  // khisak jaata hai, bahar click se band nahi hota, aur khula/band yaad
+  // rehta hai. Phone par pehle jaisa (neeche se uthta, bahar dabao to band).
+  const [dock, setDock] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1100px)");
+    const on = () => setDock(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    let want = true;
+    try { want = localStorage.getItem("cgl.sa.dock") !== "0"; } catch { /* ignore */ }
+    if (mq.matches && want) setOpen(true);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+  const closePanel = useCallback(() => {
+    setOpen(false);
+    if (dock) { try { localStorage.setItem("cgl.sa.dock", "0"); } catch { /* ignore */ } }
+  }, [dock]);
+  const showPanel = useCallback(() => {
+    setOpen(true);
+    try { localStorage.setItem("cgl.sa.dock", "1"); } catch { /* ignore */ }
+  }, []);
+  useEffect(() => {
+    const on = open && dock;
+    document.body.classList.toggle("sa-docked", on);
+    return () => document.body.classList.remove("sa-docked");
+  }, [open, dock]);
 
   // ── selection ki patti ─────────────────────────────────────────────────
   const read = useCallback(() => {
@@ -291,7 +318,7 @@ export default function SelectAsk() {
   // Panel ke bahar click → chhup jao. Badi tasveer khuli ho to usse pehle
   // wahi band hoti hai (wo poori screen leti hai).
   useEffect(() => {
-    if (!open) return undefined;
+    if (!open || dock) return undefined;
     const onDown = (e) => { if (!light && !insideOwn(e.target)) setOpen(false); };
     document.addEventListener("mousedown", onDown);
     document.addEventListener("touchstart", onDown);
@@ -299,11 +326,12 @@ export default function SelectAsk() {
       document.removeEventListener("mousedown", onDown);
       document.removeEventListener("touchstart", onDown);
     };
-  }, [open, light]);
+  }, [open, light, dock]);
 
+  // Latest hamesha neeche — naya sandesh aaya ya panel khula to neeche tak.
   useEffect(() => {
     if (msgsRef.current) msgsRef.current.scrollTop = msgsRef.current.scrollHeight;
-  }, [msgs, busy]);
+  }, [msgs, busy, open, tid]);
 
   useEffect(() => { setOld(getThreads()); }, []);
   useEffect(() => {
@@ -325,7 +353,6 @@ export default function SelectAsk() {
     setSel(text);
     setSubject(subjectFromPath(path));
     setMsgs([]);
-    setAt(-1);
     setErr("");
     setQ("");
     setFull(false);
@@ -398,27 +425,12 @@ export default function SelectAsk() {
     runAsk(t);
   }, [open, autoQ, runAsk]);
 
-  // ── purani baatcheet ───────────────────────────────────────────────────
-  const goto = useCallback((n) => {
-    if (n < -1 || n >= old.length) return;
-    setAt(n);
-    if (n === -1) return;
-    const t = old[n];
-    setTid(t.id);
-    setSel(t.sel || "");
-    setSubject(t.subject || "");
-    setMsgs(Array.isArray(t.msgs) ? t.msgs : []);
-    setErr("");
-    setFull(false);
-  }, [old]);
-
   // ➕ topic se hatt kar kuch bhi.
   const fresh = useCallback(() => {
     setTid(newThreadId());
     setSel("");
     setSubject(subjectFromPath(path));
     setMsgs([]);
-    setAt(-1);
     setErr("");
     setQ("");
     setOpen(true);
@@ -442,6 +454,7 @@ export default function SelectAsk() {
   }, [light, move]);
 
   const cur = light ? light.list[light.at] : null;
+  const earlier = useMemo(() => old.filter((t) => t.id !== tid).slice(0, 30).reverse(), [old, tid]);
 
   return (
     <>
@@ -484,36 +497,49 @@ export default function SelectAsk() {
 
       {/* Hamesha maujood — kuch select kiye bina bhi kuch bhi poochh sakte ho. */}
       {!open ? (
-        <button type="button" className="sa-reopen" onClick={() => setOpen(true)} title="Poochho">💬</button>
+        <button type="button" className="sa-reopen" onClick={showPanel} title="Poochho">💬</button>
       ) : null}
 
       {open ? (
         <aside className="sa-panel">
           <div className="sa-head">
-            <button type="button" className="sa-x" onClick={() => goto(at + 1)} disabled={at + 1 >= old.length} title="purani baat">‹</button>
-            <span className="sa-head__t">
-              {at === -1 ? "💬 Poochho" : `${at + 1}/${old.length} · purani`}
-            </span>
-            <button type="button" className="sa-x" onClick={() => goto(at - 1)} disabled={at <= -1} title="nayi baat">›</button>
+            <span className="sa-head__t">💬 Poochho</span>
             <span style={{ flex: 1 }} />
             <select value={subject} onChange={(e) => setSubject(e.target.value)} title="Subject">
               {SUBJECTS.map((s) => <option key={s.v} value={s.v}>{s.label}</option>)}
             </select>
             <button type="button" className="sa-x" onClick={fresh} title="Kuch bhi poochho — topic se alag">➕</button>
-            <button type="button" className="sa-x" onClick={() => setOpen(false)}>✕</button>
+            <button type="button" className="sa-x" onClick={closePanel} title="Band karo">✕</button>
           </div>
 
-          {sel ? (
-            <div
-              className={`sa-quote${full ? "" : " is-clip"}`}
-              onClick={() => setFull((v) => !v)}
-              title={full ? "chhota karo" : "poora dekho"}
-            >
-              {sel}
-            </div>
-          ) : null}
-
           <div className="sa-msgs" ref={msgsRef}>
+            {/* Purani baatcheet upar, ek ke neeche ek (sabse purani sabse
+                upar) — scroll karke wapas padh lo. Latest sabse neeche. */}
+            {earlier.map((t) => (
+              <div key={t.id} className="sa-thread">
+                {t.sel ? <div className="sa-quote is-clip sa-quote--old" title={t.sel}>{t.sel}</div> : null}
+                {(t.msgs || []).map((m, i) => (
+                  m.role === "user" ? (
+                    <div key={i} className="sa-msg sa-msg--me">{m.text}</div>
+                  ) : (
+                    <div key={i}>
+                      {m.role === "assistant" ? <div className="sa-msg sa-msg--ai"><Markdown>{m.text}</Markdown></div> : null}
+                      <Strip m={m} onOpen={openLight} />
+                    </div>
+                  )
+                ))}
+              </div>
+            ))}
+            {earlier.length > 0 && (sel || msgs.length) ? <div className="sa-sep">— naya —</div> : null}
+            {sel ? (
+              <div
+                className={`sa-quote${full ? "" : " is-clip"}`}
+                onClick={() => setFull((v) => !v)}
+                title={full ? "chhota karo" : "poora dekho"}
+              >
+                {sel}
+              </div>
+            ) : null}
             {msgs.length === 0 && !busy ? (
               <div className="sa-note">
                 {sel

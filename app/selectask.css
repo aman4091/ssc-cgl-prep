@@ -383,3 +383,22 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 .sa-olm__books button:disabled { opacity: 0.45; cursor: default; }
 .sa-olm__hint { margin: 10px 0 0; font-size: 0.8rem; color: var(--text-3); line-height: 1.5; }
 .sa-olm__x { border: 0; background: none; color: var(--accent); cursor: pointer; font: inherit; font-weight: 700; padding: 0; }
+
+/* ── 🖥️ Desktop: panel dayein taraf FIX, page baayen khisakta hai ─────── */
+:root { --sa-w: 440px; }
+@media (min-width: 1100px) {
+  body.sa-docked { padding-right: var(--sa-w); }
+  body.sa-docked .navbar,
+  body.sa-docked .sp-wrap,
+  body.sa-docked .mkt__go { right: var(--sa-w); }
+  body.sa-docked .rush-fab:not(.rush-fab--left),
+  body.sa-docked .ansp__top,
+  body.sa-docked .panic-fab { right: calc(var(--sa-w) + 22px); }
+  body.sa-docked .sa-panel { box-shadow: none; }
+}
+
+/* Purani baatcheet — ek ke neeche ek, halki */
+.sa-thread { display: flex; flex-direction: column; gap: 10px; padding-bottom: 12px; border-bottom: 1px dashed var(--line); opacity: 0.85; }
+.sa-msgs .sa-quote { border: 0; border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; flex: none; }
+.sa-quote--old { font-size: 0.78rem; }
+.sa-sep { text-align: center; font-size: 0.72rem; font-weight: 800; color: var(--text-3); letter-spacing: 0.08em; }
