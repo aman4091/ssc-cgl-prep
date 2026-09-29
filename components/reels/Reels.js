@@ -20,6 +20,13 @@ import { getFacts, factView } from "@/lib/missionfacts";
 import "./reels.css";
 
 const LETTER = ["A", "B", "C", "D", "E"];
+
+// 🔁 Galat hui reel 50 reel baad wapas. Line is device + sync (cgl.*) mein
+// bachti hai, taaki Home band karke kholne par bhi yaad rahe.
+const RETRY_KEY = "cgl.reels.retry";
+const RETRY_GAP = 50;
+const readRetry = () => { try { const v = JSON.parse(localStorage.getItem(RETRY_KEY) || "[]"); return Array.isArray(v) ? v : []; } catch { return []; } };
+const writeRetry = (v) => { try { localStorage.setItem(RETRY_KEY, JSON.stringify(v.slice(-300))); } catch { /* quota */ } };
 const pick = (a) => a[Math.floor(Math.random() * a.length)];
 const shuffle = (a) => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
 const clip = (s, n) => { const t = String(s || "").replace(/\s+/g, " ").trim(); return t.length > n ? t.slice(0, n - 1) + "…" : t; };
@@ -64,6 +71,17 @@ export default function Reels() {
   const busy = useRef(false);
   const box = useRef(null);
   const [at, setAt] = useState(0);
+  const maxSeen = useRef(0);
+  const listLen = useRef(0);
+  listLen.current = list.length;
+
+  // Galat → line mein, 50 reel baad wapas. Wahi dobara galat → phir 50 baad.
+  const onWrong = useCallback((r) => {
+    const { id, again, ...item } = r; // eslint-disable-line no-unused-vars
+    const q = readRetry().filter((x) => x.key !== r.key);
+    q.push({ key: r.key, item, left: RETRY_GAP });
+    writeRetry(q);
+  }, []);
 
   const refillPyq = useCallback(async (slug) => {
     const qs = await randomPart(slug).catch(() => []);
@@ -115,8 +133,28 @@ export default function Reels() {
       const item = mk[3]();
       if (item && (item.kind === "fact" || item.question || item.qImg)) {
         P.last = mk[0];
-        out.push({ ...item, id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}` });
+        const key = `${item.kind}:${String(item.question || item.qImg || item.text || "").slice(0, 120)}`;
+        out.push({ ...item, key, id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}` });
       }
+    }
+    // 50 poore hone wali galat reels — theek usi jagah jahan 50 poore hote
+    // hain. `ahead` = saamne wali reel ke aage pehle se bani padi reels.
+    const q = readRetry();
+    const ahead = Math.max(0, listLen.current - 1 - maxSeen.current);
+    const due = q.filter((x) => x.left - ahead <= out.length).sort((a, b) => a.left - b.left).slice(0, 3);
+    if (due.length) {
+      writeRetry(q.filter((x) => !due.includes(x)));
+      due.forEach((d, n) => {
+        const it = { ...d.item, again: true, id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}` };
+        // Option ka kram badlo (sahi jawab saath khiskega) — jagah ratt na jaaye.
+        if (Array.isArray(it.options) && !it.optImgs && it.answer != null) {
+          const right = it.options[it.answer];
+          it.options = shuffle(it.options);
+          it.answer = it.options.indexOf(right);
+        }
+        const pos = Math.min(out.length, Math.max(0, d.left - ahead - 1) + n);
+        out.splice(pos, 0, it);
+      });
     }
     setList((l) => [...l, ...out]);
     setLoading(false);
@@ -149,6 +187,13 @@ export default function Reels() {
     if (!el) return;
     const i = Math.round(el.scrollTop / el.clientHeight);
     setAt(i);
+    // Har NAYI reel par line ki ginti ek ghatao.
+    if (i > maxSeen.current) {
+      const d = i - maxSeen.current;
+      maxSeen.current = i;
+      const q = readRetry();
+      if (q.length) writeRetry(q.map((x) => ({ ...x, left: x.left - d })));
+    }
     if (i >= list.length - 3) more();
   }, [list.length, more]);
 
@@ -169,19 +214,19 @@ export default function Reels() {
   return (
     <div className="reels" ref={box} onScroll={onScroll}>
       {loading && <div className="reel"><div className="reel__card reel__wait">🎬 Reels taiyaar ho rahi hain…</div></div>}
-      {list.map((r, i) => <Reel key={r.id} r={r} near={Math.abs(i - at) <= 2} onNext={() => go(1)} />)}
+      {list.map((r, i) => <Reel key={r.id} r={r} near={Math.abs(i - at) <= 2} onNext={() => go(1)} onWrong={onWrong} />)}
     </div>
   );
 }
 
-function Reel({ r, near, onNext }) {
+function Reel({ r, near, onNext, onWrong }) {
   const [picked, setPicked] = useState(null);
   const [open, setOpen] = useState(false);
   const shown = picked != null || open;
   return (
     <section className="reel">
       <div className={`reel__card reel--${r.kind}`}>
-        <div className="reel__tag">{r.tag}</div>
+        <div className="reel__tag">{r.again ? "🔁 Pehle galat · " : ""}{r.tag}</div>
         {r.kind === "fact" ? (
           <>
             <div className="reel__fact"><Markdown>{r.text}</Markdown></div>
@@ -197,7 +242,7 @@ function Reel({ r, near, onNext }) {
               {(r.optImgs || r.options).map((o, k) => {
                 const st = !shown ? "" : k === r.answer ? " is-right" : k === picked ? " is-wrong" : " is-dim";
                 return (
-                  <button key={k} type="button" className={`reel__opt${st}`} onClick={() => picked == null && setPicked(k)}>
+                  <button key={k} type="button" className={`reel__opt${st}`} onClick={() => { if (picked != null) return; setPicked(k); if (k !== r.answer) onWrong(r); }}>
                     <b>{LETTER[k] || k + 1}</b>
                     <span>{r.optImgs ? (near ? <img src={o} alt={LETTER[k]} /> : null) : <Markdown inline>{String(o ?? "")}</Markdown>}</span>
                   </button>
