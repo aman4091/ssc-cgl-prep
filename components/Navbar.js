@@ -9,6 +9,7 @@ import { getUserTopics } from "@/lib/userpyq";
 import { notesByBook, bookIcon, bookLabel } from "@/lib/pastednotes";
 import ThemeToggle from "./ThemeToggle";
 import NowPlan from "./NowPlan";
+import { StaticsTopBtn } from "./StaticsInfo";
 import TopbarInfo from "./TopbarInfo";
 import MenuRail from "./MenuRail";
 
@@ -311,6 +312,8 @@ export default function Navbar() {
             padta, aur wahi ek pal sabse chubhta hai. */}
         {/* ⏰ 32 din ke plan mein ABHI kya karna hai (pehle yahan 🔒 lock tha). */}
         <NowPlan />
+        {/* 🪔 Saved statics (select → 🪔 Festival se) — ek-ek karke. */}
+        <StaticsTopBtn />
         <ThemeToggle />
       </header>
 

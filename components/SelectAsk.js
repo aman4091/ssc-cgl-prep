@@ -41,6 +41,7 @@ import { getThreads, saveThread, newThreadId } from "@/lib/asklog";
 import { putAns, qText as sprintQText } from "@/lib/sprint";
 import { addOneLiner, OL_SUBS } from "@/lib/oneliners";
 import { addPair, readPending, setPending } from "@/lib/culturepairs";
+import { StaticsPaste, askGeminiStatics } from "./StaticsInfo";
 
 // 💬 Poochho dabate hi yahi sawaal apne aap chala jata hai — pehle kuch
 // likhna nahi padta.
@@ -218,6 +219,7 @@ export default function SelectAsk() {
   const [bar, setBar] = useState(null);      // { text, x, y }
   // 📝 One-liner: chuna hua text, jab tak subject nahi poochh lete.
   const [olText, setOlText] = useState("");
+  const [siTerm, setSiTerm] = useState("");  // 🪔 Festival — paste popup kis shabd ka
   const [open, setOpen] = useState(false);
 
   // chalu baatcheet
@@ -483,6 +485,9 @@ export default function SelectAsk() {
           {/* 📝 Seedha One-liners page par — subject ek click mein poochhte
               hain, phir line apni jagah chali jati hai. */}
           <button type="button" onClick={() => { setOlText(bar.text); setBar(null); }}>📝 One-liner</button>
+          {/* 🪔 Statics ki poori jaankari — prompt + shabd copy, Gemini naya tab,
+              aur yahin paste ka popup (components/StaticsInfo). */}
+          <button type="button" onClick={() => { askGeminiStatics(bar.text); setSiTerm(bar.text); setBar(null); }}>🪔 Festival</button>
           <button
             type="button"
             onClick={() => {
@@ -494,6 +499,7 @@ export default function SelectAsk() {
       ) : null}
 
       {olText ? <OlPick text={olText} onClose={() => setOlText("")} /> : null}
+      {siTerm ? <StaticsPaste term={siTerm} onClose={() => setSiTerm("")} /> : null}
 
       {/* Hamesha maujood — kuch select kiye bina bhi kuch bhi poochh sakte ho. */}
       {!open ? (

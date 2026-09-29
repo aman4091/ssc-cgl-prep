@@ -102,7 +102,7 @@ function Note({ n, onGone }) {
           <textarea rows={12} value={draft} onChange={(e) => setDraft(e.target.value)} />
           <div className="row" style={{ gap: 8 }}>
             <button type="button" className="btn btn--primary btn--sm" onClick={() => { saveNote(n, draft); setEdit(false); onGone(); }}>
-              Sambhalo
+              Save
             </button>
             <button type="button" className="btn btn--ghost btn--sm" onClick={() => { setDraft(n.text); setEdit(false); }}>
               Rehne do

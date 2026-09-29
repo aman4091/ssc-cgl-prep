@@ -402,3 +402,18 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 .sa-msgs .sa-quote { border: 0; border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; flex: none; }
 .sa-quote--old { font-size: 0.78rem; }
 .sa-sep { text-align: center; font-size: 0.72rem; font-weight: 800; color: var(--text-3); letter-spacing: 0.08em; }
+
+/* 🪔 Statics — paste popup aur saved dekhne wala (components/StaticsInfo) */
+.si-ov { position: fixed; inset: 0; z-index: 470; display: grid; place-items: center; padding: 16px; background: rgba(0, 0, 0, 0.5); }
+.si-box { width: min(680px, 100%); max-height: 88vh; overflow: auto; padding: 16px 18px; border-radius: 16px; border: 1px solid var(--glass-border-strong, var(--line)); background: var(--bg-1); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4); box-sizing: border-box; }
+.si-box--view { width: min(780px, 100%); }
+.si-hd { display: flex; align-items: center; gap: 10px; font-size: 1rem; }
+.si-n { color: var(--text-3); font-size: 0.8rem; font-weight: 700; }
+.si-x { margin-left: auto; border: 0; background: none; color: var(--text-3); font-size: 1rem; cursor: pointer; }
+.si-hint { margin: 8px 0; font-size: 0.82rem; color: var(--text-3); }
+.si-name, .si-ta { display: block; width: 100%; box-sizing: border-box; padding: 9px 11px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-2, var(--card)); color: var(--text-1); font: inherit; font-size: 0.92rem; margin-bottom: 8px; }
+.si-ta { resize: vertical; line-height: 1.5; }
+.si-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+.si-body { margin: 12px 0; font-size: 0.95rem; line-height: 1.65; }
+.si-top { border: 1px solid var(--line); background: transparent; color: var(--text-1); border-radius: 999px; padding: 6px 10px; font: inherit; font-size: 0.9rem; cursor: pointer; white-space: nowrap; }
+.si-top small { font-weight: 800; color: var(--accent); }
