@@ -30,6 +30,9 @@ import OneLinerNotes from "@/components/OneLinerNotes";
 import { countOneLiner } from "@/lib/onelinerfmt";
 import { formatOneLiner } from "@/lib/client-ai";
 import { saveNote, removeNote, notesByBook, bookLabel } from "@/lib/pastednotes";
+import NotesPairsBtn from "@/components/NotesPairsBtn";
+import { loadNotes } from "@/lib/notesbank";
+import { pageText } from "@/lib/notestext";
 
 function Note({ n, onGone }) {
   const [edit, setEdit] = useState(false);
@@ -65,6 +68,20 @@ function Note({ n, onGone }) {
             href={`/notes/${encodeURIComponent(n.book)}${n.topic ? `?topic=${encodeURIComponent(n.topic)}` : ""}#nt-p-${encodeURIComponent(n.page)}`}
             title="Is page ke notes kholo"
           >📔 Notes</Link>
+        ) : null}
+        {/* 🧩 Wahi jodi-set jo notes ke page par banta hai — usi page ke asli
+            notes-text se, aur dono jagah ek hi (pageKey = book#page). */}
+        {n.book ? (
+          <NotesPairsBtn
+            pageKey={`${n.book}#${n.page}`}
+            title={`${n.bookTitle || n.book} · ${n.topic || ""}`}
+            page={n.page}
+            loadText={async () => {
+              const bk = await loadNotes(n.book);
+              const pg = (bk?.pages || []).find((x) => String(x.book_page) === String(n.page));
+              return pg ? pageText(pg) : "";
+            }}
+          />
         ) : null}
         <button type="button" className="pn-x" onClick={bold} disabled={busy} title="Zaroori shabd bold karwao (DeepSeek)">
           {busy ? "…" : "🐋 Bold"}

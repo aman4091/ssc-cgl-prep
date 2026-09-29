@@ -98,7 +98,7 @@ function Play({ pairs, onChange }) {
   );
 }
 
-export default function NotesPairsBtn({ pageKey, title, page, text }) {
+export default function NotesPairsBtn({ pageKey, title, page, text, loadText }) {
   const [rec, setRec] = useState(null);
   const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -126,7 +126,11 @@ export default function NotesPairsBtn({ pageKey, title, page, text }) {
   const make = async () => {
     if (busy) return;
     setBusy(true); setErr("");
-    let queue = chunks(String(text || ""), 1500);
+    // Notesliner se: page ka asli notes-text wahin se mangwao (loadText).
+    let src = text;
+    if (!src && loadText) { try { src = await loadText(); } catch { src = ""; } }
+    if (!String(src || "").trim()) { setBusy(false); setErr("Is page ka notes-text nahi mila."); return; }
+    let queue = chunks(String(src || ""), 1500);
     let got = [], done = 0, lastErr = "", calls = 0;
     const seen = new Set();
     while (queue.length && calls < 14) {
