@@ -75,7 +75,7 @@ export default function Reels() {
 
   // Galat → line mein, 50 reel baad wapas. Wahi dobara galat → phir 50 baad.
   const onWrong = useCallback((r) => {
-    const { id, again, ...item } = r; // eslint-disable-line no-unused-vars
+    const { id, ...item } = r; // eslint-disable-line no-unused-vars
     const q = readRetry().filter((x) => x.key !== r.key);
     q.push({ key: r.key, item, left: RETRY_GAP });
     writeRetry(q);
@@ -142,13 +142,7 @@ export default function Reels() {
     if (due.length) {
       writeRetry(q.filter((x) => !due.includes(x)));
       for (const d of due) {
-        const it = { ...d.item, again: true, id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}` };
-        // Option ka kram badlo (sahi jawab saath khiskega) — jagah ratt na jaaye.
-        if (Array.isArray(it.options) && !it.optImgs && it.answer != null) {
-          const right = it.options[it.answer];
-          it.options = shuffle(it.options);
-          it.answer = it.options.indexOf(right);
-        }
+        const it = { ...d.item, id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}` };
         out.splice(Math.floor(Math.random() * (out.length + 1)), 0, it);
       }
     }
@@ -222,7 +216,7 @@ function Reel({ r, near, onNext, onWrong }) {
   return (
     <section className="reel">
       <div className={`reel__card reel--${r.kind}`}>
-        <div className="reel__tag">{r.again ? "🔁 Pehle galat · " : ""}{r.tag}</div>
+        <div className="reel__tag">{r.tag}</div>
         {r.kind === "fact" ? (
           <>
             <div className="reel__fact"><Markdown>{r.text}</Markdown></div>
