@@ -72,8 +72,6 @@ export default function Reels() {
   const box = useRef(null);
   const [at, setAt] = useState(0);
   const maxSeen = useRef(0);
-  const listLen = useRef(0);
-  listLen.current = list.length;
 
   // Galat → line mein, 50 reel baad wapas. Wahi dobara galat → phir 50 baad.
   const onWrong = useCallback((r) => {
@@ -137,14 +135,13 @@ export default function Reels() {
         out.push({ ...item, key, id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}` });
       }
     }
-    // 50 poore hone wali galat reels — theek usi jagah jahan 50 poore hote
-    // hain. `ahead` = saamne wali reel ke aage pehle se bani padi reels.
+    // 50 poore ho gaye wali galat reels — is jatthe mein beech mein kahin
+    // (max 3). Isliye wo 50 ke thoda baad aati hai (lagbhag 50–64).
     const q = readRetry();
-    const ahead = Math.max(0, listLen.current - 1 - maxSeen.current);
-    const due = q.filter((x) => x.left - ahead <= out.length).sort((a, b) => a.left - b.left).slice(0, 3);
+    const due = q.filter((x) => x.left <= 0).slice(0, 3);
     if (due.length) {
       writeRetry(q.filter((x) => !due.includes(x)));
-      due.forEach((d, n) => {
+      for (const d of due) {
         const it = { ...d.item, again: true, id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}` };
         // Option ka kram badlo (sahi jawab saath khiskega) — jagah ratt na jaaye.
         if (Array.isArray(it.options) && !it.optImgs && it.answer != null) {
@@ -152,9 +149,8 @@ export default function Reels() {
           it.options = shuffle(it.options);
           it.answer = it.options.indexOf(right);
         }
-        const pos = Math.min(out.length, Math.max(0, d.left - ahead - 1) + n);
-        out.splice(pos, 0, it);
-      });
+        out.splice(Math.floor(Math.random() * (out.length + 1)), 0, it);
+      }
     }
     setList((l) => [...l, ...out]);
     setLoading(false);
