@@ -17,6 +17,7 @@
 
 import { cloneElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { hashStr } from "@/lib/syncitems";
+import { notebookQ } from "@/lib/imgq";
 import "./pyqreels.css";
 
 const qKeyOf = (q) => String(q?.id ?? q?.uid ?? q?.question ?? q?.qText ?? "");
@@ -32,7 +33,7 @@ function shuffled(list) {
 }
 
 export default function PyqReels({
-  title, list, resumeKey, renderCard, shuffleFirst = false, unit = "Q", keyOf, timer = 40,
+  title, list, resumeKey, renderCard, shuffleFirst = false, unit = "Q", keyOf, timer = 40, subject = "",
 }) {
   const keyFor = keyOf || qKeyOf;
   const base = useMemo(() => (shuffleFirst ? shuffled(list) : list), [list, shuffleFirst]);
@@ -167,6 +168,18 @@ export default function PyqReels({
   }, [left, timer]);
   const timeUp = !!timer && left <= 0;
 
+  // 💬 Poochho panel ko saamne wala question batao — wahan "⭐ Is question
+  // ka jawab bana do" isi par lagta hai (Sprint jaisa). Tasveer wale bank ka
+  // card jis roop (tq) se jawab padhta hai, wahi roop bhejte hain.
+  const curQ = seq[at] ? byHash.get(seq[at]) : null;
+  useEffect(() => {
+    const q = curQ ? notebookQ(curQ, curQ._card || subject) : null;
+    try { window.dispatchEvent(new CustomEvent("cgl:sprint-q", { detail: { q } })); } catch { /* ignore */ }
+  }, [curQ, subject]);
+  useEffect(() => () => {
+    try { window.dispatchEvent(new CustomEvent("cgl:sprint-q", { detail: { q: null } })); } catch { /* ignore */ }
+  }, []);
+
   if (!base.length) return <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>;
   const idxOf = (h) => { const q = byHash.get(h); return q ? base.indexOf(q) : -1; };
   const curH = seq[at];
@@ -181,6 +194,7 @@ export default function PyqReels({
           </span>
         )}
       </div>
+      <div className="pyqr-wrap">
       <div className="pyqr-box" ref={box} onScroll={onScroll}>
         {seq.map((h, i) => {
           const q = byHash.get(h);
@@ -199,6 +213,12 @@ export default function PyqReels({
             </section>
           );
         })}
+      </div>
+      {/* ↑ ↓ — jawab lamba ho to scroll karke agle tak pahunchna mushkil. */}
+      <div className="pyqr-nav">
+        <button type="button" onClick={() => go(-1)} disabled={at <= 0} aria-label="Pichhla question" title="Pichhla (↑)">↑</button>
+        <button type="button" onClick={() => go(1)} disabled={at >= seq.length - 1} aria-label="Agla question" title="Agla (↓)">↓</button>
+      </div>
       </div>
     </div>
   );

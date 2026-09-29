@@ -26,3 +26,18 @@
 @media (max-width: 600px) {
   .pyqr-box { height: calc(100dvh - 120px); }
 }
+/* ↑ ↓ gol button — question box ke dayein */
+.pyqr-wrap { display: flex; gap: 10px; align-items: stretch; }
+.pyqr-wrap .pyqr-box { flex: 1; min-width: 0; }
+.pyqr-nav { display: flex; flex-direction: column; justify-content: flex-start; gap: 12px; padding-top: 14px; }
+.pyqr-nav button {
+  width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line);
+  background: var(--card, var(--bg-1)); color: var(--text-1); font-size: 1.25rem; font-weight: 800;
+  cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+.pyqr-nav button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.pyqr-nav button:disabled { opacity: 0.35; cursor: default; }
+@media (max-width: 600px) {
+  .pyqr-wrap { gap: 6px; }
+  .pyqr-nav button { width: 38px; height: 38px; font-size: 1.05rem; }
+}
