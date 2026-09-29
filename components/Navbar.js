@@ -8,7 +8,7 @@ import { getNewWordEntries, newWordDayKey, newWordDayLabel } from "@/lib/vocab";
 import { getUserTopics } from "@/lib/userpyq";
 import { notesByBook, bookIcon, bookLabel } from "@/lib/pastednotes";
 import ThemeToggle from "./ThemeToggle";
-import FocusLock from "./FocusLock";
+import NowPlan from "./NowPlan";
 import TopbarInfo from "./TopbarInfo";
 import MenuRail from "./MenuRail";
 
@@ -309,9 +309,8 @@ export default function Navbar() {
         {/* Din/raat — patti ke dayein sire par, hamesha ek tap ki doori par.
             Menu ke ANDAR rakhne se raat mein site kholte hi pehle menu kholna
             padta, aur wahi ek pal sabse chubhta hai. */}
-        {/* 🔒 PC lock — patti ke dayein, din/raat ke bagal. Yahi ek jagah
-            hai jo har page par rehti hai. */}
-        <FocusLock />
+        {/* ⏰ 32 din ke plan mein ABHI kya karna hai (pehle yahan 🔒 lock tha). */}
+        <NowPlan />
         <ThemeToggle />
       </header>
 

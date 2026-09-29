@@ -4259,3 +4259,20 @@ body.exam-on .hresume { display: none; }
 /* ✍️ Jis question par tablet ka likha hua kaam pada hai — wo button alag dikhe. */
 .ansp__btn.has-ink { border-color: #a6e3a1; color: #a6e3a1; }
 .ansp__btn.has-ink sup { font-size: 9px; margin-left: 2px; font-weight: 700; }
+
+/* ⏰ Upar ki patti — 32 din ke plan mein abhi kya (components/NowPlan) */
+.nowplan {
+  display: inline-flex; align-items: center; gap: 8px; min-width: 0; max-width: min(460px, 52vw); margin-left: auto;
+  padding: 6px 12px; border-radius: 999px; text-decoration: none;
+  border: 1px solid var(--accent); background: var(--accent-wash, transparent); color: var(--text-1);
+  font-size: 0.82rem; line-height: 1.2;
+}
+.nowplan:hover { background: var(--accent); color: var(--on-accent, #1a1200); }
+.nowplan__time { font-weight: 800; white-space: nowrap; color: var(--accent); }
+.nowplan:hover .nowplan__time { color: inherit; }
+.nowplan + .themetog { margin-left: 0; }
+.nowplan__what { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+@media (max-width: 600px) {
+  .nowplan { max-width: 58vw; padding: 5px 9px; font-size: 0.72rem; gap: 5px; flex-direction: column; align-items: flex-start; border-radius: 12px; }
+  .nowplan__what { max-width: 100%; }
+}
