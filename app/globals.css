@@ -4276,3 +4276,9 @@ body.exam-on .hresume { display: none; }
   .nowplan { max-width: 58vw; padding: 5px 9px; font-size: 0.72rem; gap: 5px; flex-direction: column; align-items: flex-start; border-radius: 12px; }
   .nowplan__what { max-width: 100%; }
 }
+/* ✅ Notesliner mein save — page ke sar par */
+.nt-saved { font-size: 0.72rem; font-weight: 800; padding: 3px 9px; border-radius: 999px; text-decoration: none; color: #16a34a; border: 1px solid #16a34a; background: color-mix(in srgb, #22c55e 12%, transparent); white-space: nowrap; }
+.nt-saved:hover { background: #16a34a; color: #fff; }
+/* 📔 Notes: chapter ke aakhir mein pichhla / agla chapter */
+.nt-chapnav { display: flex; justify-content: space-between; gap: 10px; margin: 18px 0 8px; flex-wrap: wrap; }
+.nt-chapnav a { max-width: 48%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

@@ -1,10 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { scanUrl } from "@/lib/notesbank";
 import { NOTES_PROMPT } from "@/lib/notesprompt";
-import { setLastSource, getNote, saveNote } from "@/lib/pastednotes";
+import { setLastSource, getNote, saveNote, noteKey } from "@/lib/pastednotes";
 import OneLinerNotes from "@/components/OneLinerNotes";
 import { readImageText } from "@/lib/client-ai";
 import { startNotesQuiz } from "@/lib/notesquiz";
@@ -134,7 +135,6 @@ function GeminiBtn({ text, subject, src, onAfter }) {
 // se ek jagah jama hota rehta hai.
 function PasteBox({ src, onClose }) {
   const [text, setText] = useState(() => (getNote(src)?.text || ""));
-  const [saved, setSaved] = useState(false);
   return (
     <div className="nt-paste">
       <div className="nt-paste__hd">
@@ -146,17 +146,21 @@ function PasteBox({ src, onClose }) {
         className="input"
         rows={7}
         value={text}
-        onChange={(e) => { setText(e.target.value); setSaved(false); }}
+        onChange={(e) => setText(e.target.value)}
         placeholder="AI se aaye one-liner yahan paste karo…"
       />
       <div className="row mt-8" style={{ gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+        {/* Save karte hi box band — page ke sar par ✅ Notesliner aa jaata hai. */}
         <button
           className="btn btn--primary btn--sm"
-          onClick={() => { saveNote(src, text); setSaved(true); }}
+          onClick={() => { saveNote(src, text); onClose(); }}
           disabled={!text.trim()}
-        >💾 Sambhalo</button>
-        {saved && <span className="nt-meta" style={{ color: "var(--success)" }}>✓ sambhal liya</span>}
-        <a href="/notes/paste" className="btn btn--ghost btn--sm" style={{ marginLeft: "auto" }}>
+        >💾 Save</button>
+        <a
+          href={`/notes/paste?book=${encodeURIComponent(src.book)}&n=${encodeURIComponent(noteKey(src))}`}
+          className="btn btn--ghost btn--sm"
+          style={{ marginLeft: "auto" }}
+        >
           📝 Notesliner
         </a>
       </div>
@@ -436,6 +440,13 @@ export default function NotesReader({ book }) {
   // IndexedDB copy finishes hydrating on load (so already-saved pages appear).
   const [, setHxTick] = useState(0);
   useEffect(() => subscribeHinglish(() => setHxTick((n) => n + 1)), []);
+  // 📝 Notesliner mein naya save → page ke sar ka ✅ nishaan taza.
+  useEffect(() => {
+    const h = () => setHxTick((n) => n + 1);
+    window.addEventListener("cgl:pastednotes", h);
+    const t = setTimeout(h, 1200); // bada store thodi der mein khulta hai
+    return () => { window.removeEventListener("cgl:pastednotes", h); clearTimeout(t); };
+  }, []);
 
   const openHinglish = (p) => {
     const existing = getHinglish(hinglishKey(book, p));
@@ -499,6 +510,14 @@ export default function NotesReader({ book }) {
   }, [book, active, query, imageMode]);
 
 
+  // Notesliner se "📔 Notes" → #nt-p-<page> tak seedha.
+  useEffect(() => {
+    const h = typeof window !== "undefined" ? window.location.hash : "";
+    if (!h.startsWith("#nt-p-")) return undefined;
+    const t = setTimeout(() => document.getElementById(h.slice(1))?.scrollIntoView({ block: "start" }), 150);
+    return () => clearTimeout(t);
+  }, [pages]);
+
   return (
     <div className="notesdoc">
       <aside className="notesdoc__nav">
@@ -549,7 +568,7 @@ export default function NotesReader({ book }) {
           })
         ) : (
           pages.map((p) => (
-            <div className="nt-card" key={p.book_page}>
+            <div className="nt-card" key={p.book_page} id={`nt-p-${p.book_page}`}>
               <div className="nt-hd">
                 <b>{p.topic}</b>
                 <span className="nt-hd__right">
@@ -581,12 +600,21 @@ export default function NotesReader({ book }) {
                   {/* 🧩 Poora page → jodi milao ke sets (Bharat Sanskriti page par). */}
                   <NotesPairsBtn pageKey={notesPageKey(book, p)} title={`${book.title} · ${p.topic || ""}`} page={p.book_page} text={pageText(p)} />
                   <span className="nt-meta">page {p.book_page}</span>
+                  {/* ✅ Is page ke one-liner Notesliner mein save hain — dabao to seedha wahin. */}
+                  {getNote({ book: book.slug, page: p.book_page }) ? (
+                    <a
+                      className="nt-saved"
+                      href={`/notes/paste?book=${encodeURIComponent(book.slug)}&n=${encodeURIComponent(noteKey({ book: book.slug, page: p.book_page }))}`}
+                      title="Is page ke one-liner Notesliner mein save hain — kholo"
+                    >✅ Notesliner</a>
+                  ) : null}
                 </span>
               </div>
               {/* Box page ke SAR ke theek neeche — pehle ye page ke aakhir mein
                   tha aur lambe page par dikhta hi nahi tha. */}
               {pnPage === p.book_page && (
                 <PasteBox
+                  key={p.book_page}
                   src={{ book: book.slug, bookTitle: book.title, eyebrow: book.eyebrow, topic: p.topic, page: p.book_page }}
                   onClose={() => setPnPage(null)}
                 />
@@ -614,6 +642,20 @@ export default function NotesReader({ book }) {
             </div>
           ))
         )}
+        {/* Chapter khatam → agla chapter yahin se, menu khole bina. */}
+        {active && (() => {
+          const i = topicNames.indexOf(active);
+          const prev = topicNames[i - 1];
+          const next = topicNames[i + 1];
+          if (!prev && !next) return null;
+          const go = (t) => `?topic=${encodeURIComponent(t)}`;
+          return (
+            <div className="nt-chapnav">
+              {prev ? <Link className="btn btn--ghost btn--sm" href={go(prev)}>← {prev}</Link> : <span />}
+              {next ? <Link className="btn btn--primary btn--sm" href={go(next)}>{next} →</Link> : <span />}
+            </div>
+          );
+        })()}
       </div>
 
       {hxPage && (

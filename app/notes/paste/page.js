@@ -58,6 +58,14 @@ function Note({ n, onGone }) {
           {n.topic || "—"}
           <span className="pn-dim"> · page {n.page} · {c.n} point{c.star ? ` · ⭐ ${c.star}` : ""}</span>
         </h3>
+        {/* 📔 Seedha us page ke notes par. */}
+        {n.book ? (
+          <Link
+            className="pn-x"
+            href={`/notes/${encodeURIComponent(n.book)}${n.topic ? `?topic=${encodeURIComponent(n.topic)}` : ""}#nt-p-${encodeURIComponent(n.page)}`}
+            title="Is page ke notes kholo"
+          >📔 Notes</Link>
+        ) : null}
         <button type="button" className="pn-x" onClick={bold} disabled={busy} title="Zaroori shabd bold karwao (DeepSeek)">
           {busy ? "…" : "🐋 Bold"}
         </button>

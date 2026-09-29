@@ -222,9 +222,16 @@ export default function Reels() {
   }, [go]);
 
   return (
-    <div className="reels" ref={box} onScroll={onScroll}>
-      {loading && <div className="reel"><div className="reel__card reel__wait">🎬 Reels taiyaar ho rahi hain…</div></div>}
-      {list.map((r, i) => <Reel key={r.id} r={r} near={Math.abs(i - at) <= 2} onNext={() => go(1)} onWrong={onWrong} />)}
+    <div className="reels-wrap">
+      <div className="reels" ref={box} onScroll={onScroll}>
+        {loading && <div className="reel"><div className="reel__card reel__wait">🎬 Reels taiyaar ho rahi hain…</div></div>}
+        {list.map((r, i) => <Reel key={r.id} r={r} near={Math.abs(i - at) <= 2} onNext={() => go(1)} onWrong={onWrong} />)}
+      </div>
+      {/* ↑ ↓ — box ke dayein, beech mein (PYQ reels jaise). */}
+      <div className="reel-nav">
+        <button type="button" onClick={() => go(-1)} disabled={at <= 0} aria-label="Pichhli reel" title="Pichhli (↑)">↑</button>
+        <button type="button" onClick={() => go(1)} aria-label="Agli reel" title="Agli (↓)">↓</button>
+      </div>
     </div>
   );
 }

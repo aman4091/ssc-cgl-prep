@@ -82,3 +82,18 @@
 .reel__fig { display: block; margin-top: 10px; max-height: 260px; object-fit: contain; }
 .reel--ans .reel__tag { color: #0ea5e9; border-color: #0ea5e9; }
 .reel--ans .reel__q img { display: block; margin-top: 8px; }
+/* ↑ ↓ gol button — reel box ke dayein, beech mein */
+.reels-wrap { display: flex; justify-content: center; gap: 10px; }
+.reels-wrap .reels { flex: 1; min-width: 0; margin: 0; }
+.reel-nav { display: flex; flex-direction: column; justify-content: center; gap: 12px; position: relative; z-index: 80; }
+.reel-nav button {
+  width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line);
+  background: var(--card, var(--bg-1)); color: var(--text-1); font-size: 1.25rem; font-weight: 800;
+  cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+.reel-nav button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.reel-nav button:disabled { opacity: 0.35; cursor: default; }
+@media (max-width: 600px) {
+  .reels-wrap { gap: 6px; }
+  .reel-nav button { width: 38px; height: 38px; font-size: 1.05rem; }
+}

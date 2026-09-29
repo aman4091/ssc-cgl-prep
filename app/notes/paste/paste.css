@@ -93,3 +93,4 @@
 .pn-pager .pn-b { font-weight: 800; padding: 8px 16px; }
 .pn-pager .pn-b:disabled { opacity: 0.4; cursor: default; }
 .pn-pager__n { font-size: 0.8rem; color: var(--text-3); font-weight: 700; }
+a.pn-x { text-decoration: none; display: inline-flex; align-items: center; }
