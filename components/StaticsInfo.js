@@ -130,18 +130,20 @@ export function StaticsTopBtn() {
             <div className="si-hd si-hd--view">
               <span className="si-n">{Math.min(i, list.length - 1) + 1}/{list.length}</span>
               <b className="si-title">🪔 {cur.term}</b>
-              <button type="button" className="si-x" onClick={() => setOpen(false)} aria-label="Band karo">✕</button>
+              <span className="si-tr">
+                <button
+                  type="button"
+                  className="si-del"
+                  title="Ye hatao"
+                  onClick={() => { if (window.confirm(`"${cur.term}" hata dein?`)) { removeInfo(cur.id); setI((x) => Math.max(0, x - 1)); } }}
+                >🗑️</button>
+                <button type="button" className="si-x" onClick={() => setOpen(false)} aria-label="Band karo">✕</button>
+              </span>
             </div>
             <div className="si-body"><Markdown>{cur.text}</Markdown></div>
             <div className="si-row si-row--stick">
               <button type="button" className="btn btn--ghost btn--sm" disabled={i <= 0} onClick={() => setI((x) => Math.max(0, x - 1))}>← Pichhla</button>
-              <button type="button" className="btn btn--primary btn--sm" disabled={i >= list.length - 1} onClick={() => setI((x) => Math.min(list.length - 1, x + 1))}>Agla →</button>
-              <button
-                type="button"
-                className="btn btn--ghost btn--sm"
-                style={{ marginLeft: "auto" }}
-                onClick={() => { if (window.confirm(`"${cur.term}" hata dein?`)) { removeInfo(cur.id); setI((x) => Math.max(0, x - 1)); } }}
-              >🗑️</button>
+              <button type="button" className="btn btn--primary btn--sm" style={{ marginLeft: "auto" }} disabled={i >= list.length - 1} onClick={() => setI((x) => Math.min(list.length - 1, x + 1))}>Agla →</button>
             </div>
           </div>
         </div>,

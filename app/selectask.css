@@ -420,8 +420,11 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 /* 🪔 dekhne wala: naam beech mein bada, ← → neeche chipke (lamba jawab ho tab bhi) */
 .si-hd--view { position: relative; justify-content: center; min-height: 40px; }
 .si-hd--view .si-n { position: absolute; left: 0; }
-.si-hd--view .si-x { position: absolute; right: 0; margin: 0; }
-.si-title { font-size: 1.6rem; font-weight: 800; text-align: center; padding: 0 56px; line-height: 1.25; }
+.si-hd--view .si-tr { position: absolute; right: 0; display: flex; align-items: center; gap: 6px; }
+.si-hd--view .si-x { margin: 0; }
+.si-del { border: 1px solid var(--line); background: transparent; border-radius: 8px; padding: 3px 8px; cursor: pointer; font-size: 0.9rem; }
+.si-del:hover { border-color: #ef4444; }
+.si-title { font-size: 1.6rem; font-weight: 800; text-align: center; padding: 0 90px; line-height: 1.25; }
 .si-box--view { padding-bottom: 0; }
 .si-row--stick { position: sticky; bottom: 0; background: var(--bg-1); padding: 10px 0 14px; margin-top: 0; border-top: 1px solid var(--line); }
 @media (max-width: 600px) { .si-title { font-size: 1.3rem; } }
