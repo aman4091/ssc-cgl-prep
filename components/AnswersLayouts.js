@@ -8,7 +8,7 @@
 // Card ka ✅ (AnswersBoard.onDone) aur yahan ka button — dono wahi kaam karte
 // hain: pehli baar D0, baad mein aaj ka revise.
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { dayKey } from "@/lib/wrongbook";
 import { getRevMap, markDoneRev, unmarkToday, revPlan, addDaysKey } from "@/lib/ansrev";
 import { getTags, tagMeta, tagIn } from "@/lib/qtags";
@@ -118,7 +118,15 @@ export default function AnswersDoPane({ list, renderCard, bucketOf, jumpId }) {
   );
   const [id, setId] = useState("");
   useEffect(() => { if (jumpId) setId(jumpId); }, [jumpId]);
-  const cur = rows.find((r) => r.id === id) || rows[0] || null;
+  // Khulte hi wahi question jo abhi kiya nahi (🆕) — jaise 1–15 ho gaye to 16.
+  // List ka kram wahi (ho chuke upar); chuna hua ho to wahi.
+  const cur = rows.find((r) => r.id === id) || rows.find((r) => !plan(r).started) || rows[0] || null;
+  // Left list bhi us question tak khisak jaaye.
+  const navRef = useRef(null);
+  useEffect(() => {
+    const el = navRef.current?.querySelector(".al14-it.is-on");
+    if (el && navRef.current) navRef.current.scrollTop = el.offsetTop - navRef.current.clientHeight / 3;
+  }, [cur?.id]);
   const p = cur ? plan(cur) : null;
   const pick = (rid) => { setId(rid); if (window.innerWidth < 900) setTimeout(() => document.getElementById("dp-main")?.scrollIntoView({ behavior: "smooth" }), 0); };
 
@@ -133,7 +141,7 @@ export default function AnswersDoPane({ list, renderCard, bucketOf, jumpId }) {
         ))}
       </div>
       <div className="al14">
-        <nav className="al14-list">
+        <nav className="al14-list" ref={navRef}>
           {!rows.length && <p className="al14-empty">Is chhaanti mein kuch nahi.</p>}
           {rows.map((r, i) => {
             const dk = dayKey(r.at); const hd = dk !== lastDay; lastDay = dk; const q = plan(r);
