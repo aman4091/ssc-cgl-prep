@@ -127,13 +127,13 @@ export function StaticsTopBtn() {
       {open && cur && createPortal(
         <div className="si-ov" onClick={() => setOpen(false)}>
           <div className="si-box si-box--view" onClick={(e) => e.stopPropagation()}>
-            <div className="si-hd">
-              <b>🪔 {cur.term}</b>
+            <div className="si-hd si-hd--view">
               <span className="si-n">{Math.min(i, list.length - 1) + 1}/{list.length}</span>
+              <b className="si-title">🪔 {cur.term}</b>
               <button type="button" className="si-x" onClick={() => setOpen(false)} aria-label="Band karo">✕</button>
             </div>
             <div className="si-body"><Markdown>{cur.text}</Markdown></div>
-            <div className="si-row">
+            <div className="si-row si-row--stick">
               <button type="button" className="btn btn--ghost btn--sm" disabled={i <= 0} onClick={() => setI((x) => Math.max(0, x - 1))}>← Pichhla</button>
               <button type="button" className="btn btn--primary btn--sm" disabled={i >= list.length - 1} onClick={() => setI((x) => Math.min(list.length - 1, x + 1))}>Agla →</button>
               <button
