@@ -118,9 +118,9 @@ export default function AnswersDoPane({ list, renderCard, bucketOf, jumpId }) {
   );
   const [id, setId] = useState("");
   useEffect(() => { if (jumpId) setId(jumpId); }, [jumpId]);
-  // Khulte hi wahi question jo abhi kiya nahi (🆕) — jaise 1–15 ho gaye to 16.
-  // List ka kram wahi (ho chuke upar); chuna hua ho to wahi.
-  const cur = rows.find((r) => r.id === id) || rows.find((r) => !plan(r).started) || rows[0] || null;
+  // Khulte hi pehla wo question jis par abhi tak 🏷️ tag nahi laga — jaise
+  // 1–15 tag ho gaye to 16. List ka kram wahi; chuna hua ho to wahi.
+  const cur = rows.find((r) => r.id === id) || rows.find((r) => !tagIn(tags, r)) || rows[0] || null;
   // Left list bhi us question tak khisak jaaye.
   const navRef = useRef(null);
   useEffect(() => {
