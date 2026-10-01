@@ -574,3 +574,13 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 .fsq-opt b { opacity: 0.7; margin-right: 6px; }
 .fsq-opt.is-right { border-color: var(--ok); background: var(--ok-wash); }
 .fsq-opt.is-wrong { border-color: var(--bad); background: var(--bad-wash); }
+/* Tasveer wala sawaal (Maths / Reasoning) — wahi daayan bubble, accent kinara. */
+.qcard.qcard--chat.qcard--chat > .math-img-wrap,
+.qcard.qcard--chat.qcard--chat > a.math-img-wrap {
+  align-self: flex-end;
+  max-width: 88%;
+  margin-top: 12px;
+  border: 2px solid var(--accent);
+  border-radius: 14px 14px 4px 14px;
+  overflow: hidden;
+}

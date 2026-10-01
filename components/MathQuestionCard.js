@@ -12,6 +12,7 @@ import { addReview } from "@/lib/qreview";
 import { mathTq } from "@/lib/imgq";
 import Markdown from "./Markdown";
 import AskElsewhere from "./AskElsewhere";
+import Gemini20 from "./Gemini20";
 import OneLinerBtn from "./OneLinerBtn";
 import PasteAnswer from "./PasteAnswer";
 import ClusterButton from "./ClusterButton";
@@ -69,15 +70,17 @@ async function streamSimilar(sample, subject, quizId) {
   if (quiz && quiz.streaming) { quiz.streaming = false; saveQuiz(quiz); dispatchAppend(quizId, quiz.questions.length, true); }
 }
 
-export default function MathQuestionCard({ q, index, extraActions, subject = "math", resumeKey, chapterName, forceAnswer }) {
+export default function MathQuestionCard({ q, index, extraActions, subject = "math", resumeKey, chapterName, forceAnswer, chatLook, savedPick, savedHidden, onPickSave, onClearSave, onHideSave }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
   // kuch pehle jaisa chalta hai.
   const exam = useExamMode();
   const locked = !!exam?.locked;
-  const [picked, setPicked] = useState(exam?.pick ?? null);
-  const [revealed, setRevealed] = useState(false);
+  // 💬 chat wali list (components/QChatFeed): laga hua option aur 🙈 yaad.
+  const [picked, setPicked] = useState(exam?.pick ?? (savedPick ?? null));
+  const [revealed, setRevealed] = useState(savedPick != null);
+  const [ansHidden, setAnsHidden] = useState(!!savedHidden);
   const [shortcut, setShortcut] = useState("");
   const [scShown, setScShown] = useState(false);
   const [scLoading, setScLoading] = useState(false);
@@ -160,6 +163,9 @@ export default function MathQuestionCard({ q, index, extraActions, subject = "ma
     // Test ke dauraan bas nishaan; stats/notebook/ginti sab Submit par.
     if (locked) { exam?.onPick?.(oi, correct); return; }
     setRevealed(true);
+    setAnsHidden(false);
+    onHideSave?.(false);
+    onPickSave?.(oi);
     if (resumeKey) setResume(resumeKey, index);
     if (!recorded) { recordAttempts([{ q: tq, correct }]); setRecorded(true); }
     // Test chal raha ho to board ko batao — palette ka rang, ginti aur aakhri
@@ -275,10 +281,14 @@ Options: ${opts}
   // chhode hue question bhi.
   // forceAnswer = drill ki 40-second ghadi khatam (components/PyqDrill).
   const shown = !locked && (forceAnswer || !!exam?.revealAll || revealed || peek);
+  const clearPick = () => {
+    setPicked(null); setRevealed(false); setPeek(false); setAnsHidden(false); setFlash("");
+    onClearSave?.();
+  };
 
 
   return (
-    <article className={`qcard${done ? " is-done" : ""}`} id={`q-${index}`}>
+    <article className={`qcard${done ? " is-done" : ""}${chatLook ? " qcard--chat" : ""}`} id={`q-${index}`}>
       <h2 className="qcard__h">
         Question {index + 1}
         <span className="qcard__qid">
@@ -307,7 +317,8 @@ Options: ${opts}
             </button>
           )}
           <button className="btn btn--sm q-act--keep" onClick={openStylus} title="Tablet par pen se solve karo">✍️</button>
-          <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
+          {/* 🎯 20 — image copy + Gemini se likha hua question, phir DeepSeek. */}
+          {simLoading ? <button className="btn btn--sm q-act--keep" disabled>…</button> : <Gemini20 q={geminiQ} subject={subject} onDirect={make20} />}
           {/* Bahar se aaye button (Answers board ka ✅ Ho gaya, 🗑️) —
               wo bhi isi line mein, taaki card par ek hi patti rahe. */}
           {extraActions}
@@ -351,16 +362,22 @@ Options: ${opts}
       </div>
 
       <div className="qcard__acts">
-        {!shown && (
-          <button className="btn" onClick={() => setPeek(true)} title="Bina attempt kiye solution dekho">👁️ Answer</button>
+        {(!shown || ansHidden) && (
+          <button className="btn" onClick={() => { setPeek(true); setAnsHidden(false); onHideSave?.(false); }} title="Bina attempt kiye solution dekho">👁️ Answer</button>
+        )}
+        {chatLook && shown && !ansHidden && (
+          <button className="btn" onClick={() => { setAnsHidden(true); onHideSave?.(true); }} title="Jawab phir chhupao">🙈 Chhupao</button>
+        )}
+        {chatLook && (picked !== null || peek || revealed) && (
+          <button className="btn" onClick={clearPick} title="Laga hua answer hatao — sawaal phir se naya">🧹 Clear</button>
         )}
       </div>
 
-      {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
+      {flash && !chatLook && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
       {(err || dsq.err) && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err || dsq.err}</p>}
 
       {/* ANSWER — Answers page wala alag block, sabse neeche. */}
-      {shown ? (
+      {shown && !ansHidden ? (
         <div className="qcard__answer">
           <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
             ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}

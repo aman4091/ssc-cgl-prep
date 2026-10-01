@@ -30,6 +30,7 @@ import { getHardSet, toggleHard, pruneHard } from "@/lib/hardq";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
+import Gemini20 from "./Gemini20";
 import PointsButton from "./PointsButton";
 import AnswersDoPane from "./AnswersLayouts";
 import { markDoneRev } from "@/lib/ansrev";
@@ -254,7 +255,11 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
           <button className="ansp__btn" onClick={askGemini} title={`Image copy karke ${aiSiteLabel(aiSite)} kholo, phir answer paste karo`}>
             {copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}
           </button>
-          {canMake20 && (
+          {/* Maths / Reasoning: screenshot copy + Gemini se likha hua question,
+              phir 🐋 20 similar (components/Gemini20). */}
+          {/math|reason/i.test(String(rec.subject || "")) && imagesOf(rec).length ? (
+            <Gemini20 q={{ images: imagesOf(rec) }} subject={rec.subject} onDirect={canMake20 ? make20 : undefined} className="ansp__btn" />
+          ) : canMake20 && (
             <button className="ansp__btn" onClick={make20} disabled={simLoading}
               title="Isi type ke 20 naye questions generate karo">
               {simLoading ? "…" : "🎯 20"}

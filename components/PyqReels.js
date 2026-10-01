@@ -15,10 +15,36 @@
 //
 // Props wahi jo PyqDrill leta tha, taaki bank ke page sirf import badlein.
 
-import { cloneElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Children, Fragment, cloneElement, isValidElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { hashStr } from "@/lib/syncitems";
 import { notebookQ } from "@/lib/imgq";
 import "./pyqreels.css";
+import QChatFeed from "./QChatFeed";
+
+// 💬 Ab saare PYQ — Medieval jaisi DeepSeek chat wali window: saare question
+// ek ke neeche ek, jawab pehle chhupa, laga hua option / 🙈 yaad, ⏭ jahan
+// chhoda (components/QChatFeed). Purana reel (neeche) abhi rakha hai.
+export default function PyqReels({ title, list, resumeKey, renderCard, shuffleFirst = false }) {
+  const base = useMemo(() => (shuffleFirst ? shuffled(list) : list), [list, shuffleFirst]);
+  return (
+    <QChatFeed
+      title={title || "Questions"}
+      list={base}
+      storeKey={resumeKey || title || "pyq"}
+      renderCard={(q, i, mem) => {
+        const el = renderCard(q, i, base);
+        const extra = { chatLook: true, ...mem };
+        if (!isValidElement(el)) return null;
+        // Kuch page card ko <Fragment> mein lapet kar dete hain — andar wale card ko do.
+        if (el.type === Fragment) {
+          return cloneElement(el, {}, Children.map(el.props.children, (c) => (isValidElement(c) ? cloneElement(c, extra) : c)));
+        }
+        return cloneElement(el, extra);
+      }}
+    />
+  );
+}
+export { PyqReelsOld };
 
 const qKeyOf = (q) => String(q?.id ?? q?.uid ?? q?.question ?? q?.qText ?? "");
 const MAX_REPEAT = 5;
@@ -32,7 +58,7 @@ function shuffled(list) {
   return a;
 }
 
-export default function PyqReels({
+function PyqReelsOld({
   title, list, resumeKey, renderCard, shuffleFirst = false, unit = "Q", keyOf, timer = 40, subject = "",
 }) {
   const keyFor = keyOf || qKeyOf;

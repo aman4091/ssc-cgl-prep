@@ -15,6 +15,7 @@ import QuestionEditor from "./QuestionEditor";
 import AskButtons from "./AskButtons";
 import OneLinerBtn from "./OneLinerBtn";
 import PasteAnswer from "./PasteAnswer";
+import Gemini20 from "./Gemini20";
 import ClusterButton from "./ClusterButton";
 import PointsButton from "./PointsButton";
 import { isDone } from "@/lib/qdone";
@@ -257,7 +258,9 @@ Options: ${opts}
           {(subject === "math" || subject === "maths" || subject === "reasoning") && (
             <button className="btn btn--sm q-act--keep" onClick={openStylus} title="Tablet par pen se solve karo">✍️</button>
           )}
-          <button className="btn btn--sm q-act--keep" onClick={make20} disabled={simLoading} title="Isi type ke 20 naye questions generate karo">{simLoading ? "…" : "🎯 20"}</button>
+          {simLoading ? <button className="btn btn--sm q-act--keep" disabled>…</button>
+            : !toChat ? <Gemini20 q={q} subject={subject} onDirect={make20} />
+            : <button className="btn btn--sm q-act--keep" onClick={make20} title="Isi type ke 20 naye questions generate karo">🎯 20</button>}
           {/* Bahar se aaye button (Answers board ka ✅ Ho gaya, 🗑️) —
               wo bhi isi line mein, taaki card par ek hi patti rahe. */}
           {extraActions}
