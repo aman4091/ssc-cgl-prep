@@ -435,39 +435,22 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
    apne (daayen) bubble mein, jawab baayen AI bubble mein — wahi naap. */
 .qcard.qcard--chat.qcard--chat {
   width: 100%;
-  height: 100%;
   margin: 0;
-  padding: 0;
-  background: var(--bg-1);
+  padding: 0 0 14px;
+  background: transparent;
   border: 0;
+  border-bottom: 1px dashed var(--line);
   border-radius: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
 }
 .qcard.qcard--chat.qcard--chat .qcard__h {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  flex: none;
   margin: 0;
-  padding: 10px 12px;
-  background: var(--bg-1);
-  border-bottom: 1px solid var(--line);
-  font-size: 0.9rem;
+  padding: 12px 12px 0;
+  font-size: 0.85rem;
+  color: var(--text-3);
 }
-.qcard.qcard--chat.qcard--chat > .qcard__acts {
-  order: 99;
-  position: sticky;
-  bottom: 0;
-  z-index: 2;
-  flex: none;
-  margin: auto 0 0;
-  padding: 10px 12px;
-  background: var(--bg-1);
-  border-top: 1px solid var(--line);
-}
+.qcard.qcard--chat.qcard--chat > .qcard__acts { margin: 6px 12px 0; justify-content: flex-end; }
 .qcard.qcard--chat.qcard--chat .qcard__qid { font-size: 0.8rem; }
 .qcard.qcard--chat.qcard--chat .qcard__hacts { gap: 6px; }
 .qcard.qcard--chat.qcard--chat .qcard__hacts .btn { padding: 4px 9px; font-size: 0.8rem; }
@@ -516,33 +499,36 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 .qcard.qcard--chat.qcard--chat .qcard__stem *,
 .qcard.qcard--chat.qcard--chat .qcard__stem .md p, .qcard.qcard--chat.qcard--chat .qcard__opt > :not(b) { font-size: inherit; font-weight: 400; line-height: inherit; color: inherit; }
 
-/* Poori reel hi ek window — DeepSeek chat jaisi: upar se neeche tak, screen
-   par tiki hui. Desktop par chat ke theek baayen, phone par poori screen. */
-.pyqr.pyqr--chat {
+/* 💬 Window — DeepSeek chat jaisi: upar se neeche tak, page ke beech. */
+.qfeed {
   position: fixed;
   top: 0;
   bottom: 0;
-  right: 0;
+  left: 0;
   width: min(440px, 100vw);
   z-index: 120;
   display: flex;
   flex-direction: column;
   background: var(--bg-1);
   border-left: 1px solid var(--line);
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.18);
+  border-right: 1px solid var(--line);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.18);
 }
-.pyqr--chat .pyqr-bar { margin: 0; padding: 6px 12px; border-bottom: 1px solid var(--line); font-size: 0.8rem; }
-.pyqr--chat .pyqr-wrap { flex: 1; min-height: 0; position: relative; }
-.pyqr--chat .pyqr-box { height: 100%; border-radius: 0; }
-.pyqr--chat .pyqr-reel { padding: 0; }
-.pyqr--chat .pyqr-card { overflow: hidden; }
-.pyqr--chat .pyqr-next { display: none; }
-.pyqr--chat .pyqr-nav { position: absolute; top: 50%; left: -62px; transform: translateY(-50%); }
-@media (min-width: 1100px) {
-  body.sa-docked .pyqr.pyqr--chat { right: var(--sa-w); }
-  body.sa-docked:has(.pyqr--chat) .panic-fab { right: calc(var(--sa-w) + 462px); }
+.qfeed__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.9rem;
 }
+.qfeed__n { margin-left: auto; color: var(--text-3); font-size: 0.8rem; }
+.qfeed__body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; }
+.qfeed__end { padding: 16px; text-align: center; color: var(--text-3); font-size: 0.85rem; }
 @media (max-width: 1099px) {
-  .pyqr.pyqr--chat { width: 100vw; border-left: 0; box-shadow: none; }
-  .pyqr--chat .pyqr-nav { left: auto; right: 8px; }
+  .qfeed { width: 100vw; border: 0; box-shadow: none; }
 }
+.qfeed__body > * { flex: none; }
+.qfeed .qcard.qcard--chat.qcard--chat .qcard__answer--empty { display: none; }
+.qfeed .qcard.qcard--chat.qcard--chat .qcard__h { border-bottom: 0; background: transparent; }
+.qfeed .qcard.qcard--chat.qcard--chat > .qcard__acts { background: transparent; border: 0; padding: 0; }

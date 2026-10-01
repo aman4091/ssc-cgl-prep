@@ -33,7 +33,7 @@ function shuffled(list) {
 }
 
 export default function PyqReels({
-  title, list, resumeKey, renderCard, shuffleFirst = false, unit = "Q", keyOf, timer = 40, subject = "", chatLook = false,
+  title, list, resumeKey, renderCard, shuffleFirst = false, unit = "Q", keyOf, timer = 40, subject = "",
 }) {
   const keyFor = keyOf || qKeyOf;
   const base = useMemo(() => (shuffleFirst ? shuffled(list) : list), [list, shuffleFirst]);
@@ -185,7 +185,7 @@ export default function PyqReels({
   const curH = seq[at];
 
   return (
-    <div className={"pyqr" + (chatLook ? " pyqr--chat" : "")}>
+    <div className="pyqr">
       <div className="pyqr-bar">
         <span className="carev-count">{unit} {curH ? idxOf(curH) + 1 : 1}/{base.length}</span>
         {!!timer && (

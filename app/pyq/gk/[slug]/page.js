@@ -7,6 +7,7 @@ import { loadGkIndex, loadGkTopic } from "@/lib/gkbank";
 import { isUserTopicId, getUserTopic, getUserBook, getUserTopicQuestions } from "@/lib/userpyq";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import PyqDrill from "@/components/PyqReels";
+import QChatFeed from "@/components/QChatFeed";
 
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are
@@ -69,6 +70,7 @@ export default function GkTopicPage() {
 
   // Ek-ek sawaal (components/PyqDrill.js): answer khula, neeche "Aata hai / Nahi aata hai".
   const resumeKey = `gk:${slug}`;
+  const chatLook = /medi/i.test(topic?.label || topic?.chapter || "");
 
   return (
     <>
@@ -92,13 +94,31 @@ export default function GkTopicPage() {
           <div className="placeholder">Loading questions… 📚</div>
         ) : qs.length === 0 ? (
           <div className="placeholder">Is topic mein koi question nahi. 🤔</div>
+        ) : chatLook ? (
+          // 💬 Medieval: chat jaisi window, saare question ek ke neeche ek.
+          <QChatFeed
+            title={topic?.label || "Questions"}
+            list={qs}
+            renderCard={(q, i) => (
+              <PyqQuestionCard
+                resumeKey={resumeKey}
+                key={q.id || i}
+                q={q}
+                index={i}
+                subject={topic?.subject || "gs"}
+                chapterName={topic?.chapter || topic?.label}
+                archiveOnAnswer
+                fileToChapter
+                chatLook
+              />
+            )}
+          />
         ) : (
           <PyqDrill
             title={topic?.chapter || topic?.label || "Test"}
             list={qs}
             subject={topic?.subject || "gs"}
             resumeKey={resumeKey}
-            chatLook={/medi/i.test(topic?.label || topic?.chapter || "")}
             renderCard={(q, i, all) => (
               <PyqQuestionCard
                 resumeKey={resumeKey}
@@ -109,7 +129,6 @@ export default function GkTopicPage() {
                 chapterName={topic?.chapter || topic?.label}
                 archiveOnAnswer
                 fileToChapter
-                chatLook={/medi/i.test(topic?.label || topic?.chapter || "")}
               />
             )}
           />
