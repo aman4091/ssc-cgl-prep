@@ -205,7 +205,8 @@ Options: ${opts}
   // Timer chalte waqt kuch nahi khulta; Submit ke baad sab khulta hai —
   // chhode hue question bhi.
   // forceAnswer = drill ki 40-second ghadi khatam (components/PyqDrill).
-  const shown = !locked && !ansHidden && (forceAnswer || !!exam?.revealAll || revealed || peek);
+  // 🙈 sirf neeche ka jawab chhupata hai — options ka hara/laal waisa hi.
+  const shown = !locked && (forceAnswer || !!exam?.revealAll || revealed || peek);
   // 🧹 Clear — laga hua option aur khula jawab dono hatao, sawaal phir naya.
   const clearPick = () => {
     setPicked(null); setRevealed(false); setPeek(false); setAnsHidden(false); setFlash("");
@@ -315,10 +316,10 @@ Options: ${opts}
           options ke NEECHE, kyunki upar rakhne se pehle sawaal padho ki nahi
           wala kram toot jata hai. */}
       <div className="qcard__acts">
-        {!shown && (
+        {(!shown || ansHidden) && (
           <button className="btn" onClick={() => { setPeek(true); setAnsHidden(false); }} title="Bina attempt kiye answer dekho">👁️ Answer</button>
         )}
-        {chatLook && shown && (
+        {chatLook && shown && !ansHidden && (
           <button className="btn" onClick={() => setAnsHidden(true)} title="Jawab phir chhupao">🙈 Chhupao</button>
         )}
         {chatLook && (picked !== null || peek || revealed) && (
@@ -344,7 +345,7 @@ Options: ${opts}
 
       {/* ANSWER — Answers page ki tarah apne block mein, sabse neeche. Block
           hamesha maujood hai; khaali ho to wahi batata hai aur khol deta hai. */}
-      {shown ? (
+      {shown && !ansHidden ? (
         <div className="qcard__answer">
           {q.answer != null && q.options?.[q.answer] != null && (
             <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>

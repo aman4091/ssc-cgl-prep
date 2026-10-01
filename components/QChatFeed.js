@@ -23,7 +23,7 @@ function readPicks(k) {
 export default function QChatFeed({ title, list, renderCard, storeKey = "default" }) {
   const KEY = `cgl.qfeed.${storeKey}`;
   const [n, setN] = useState(STEP);
-  const [pos, setPos] = useState({ left: null, top: 0 });
+  const [pos, setPos] = useState({ left: null, top: 0, bottom: 0 });
   const [picks, setPicks] = useState(() => (typeof window === "undefined" ? {} : readPicks(KEY)));
   const [goTo, setGoTo] = useState(-1);
   const anchor = useRef(null);
@@ -45,12 +45,16 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
       const a = anchor.current;
       if (!a) return;
       const vw = window.innerWidth;
+      // Upar menu wali patti ke neeche, neeche wali line (footer) ke upar —
+      // dono ke beech.
       let top = 0;
-      if (vw < 1100) {
-        const nb = document.querySelector(".topbar");
-        const r = nb ? nb.getBoundingClientRect() : null;
-        top = r && r.height && r.bottom > 0 ? Math.round(r.bottom + 6) : 0;
-      }
+      const nb = document.querySelector(".topbar");
+      const tr = nb ? nb.getBoundingClientRect() : null;
+      if (tr && tr.height && tr.bottom > 0) top = Math.round(tr.bottom + 6);
+      let bottom = 0;
+      const ft = document.querySelector("footer");
+      const fr = ft ? ft.getBoundingClientRect() : null;
+      if (fr && fr.height && fr.top < window.innerHeight) bottom = Math.max(0, Math.round(window.innerHeight - fr.top));
       let left = null;
       if (vw >= 600) {
         const r = a.getBoundingClientRect();
@@ -61,14 +65,15 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
         const lo = vw >= 1100 ? Math.max(0, r.left) : 0;
         left = Math.round(Math.max(lo, Math.min(right - W, (lo + right) / 2 - W / 2)));
       }
-      setPos((p) => (p.left === left && p.top === top ? p : { left, top }));
+      setPos((p) => (p.left === left && p.top === top && p.bottom === bottom ? p : { left, top, bottom }));
     };
     place();
     window.addEventListener("resize", place);
+    window.addEventListener("scroll", place, true);
     const mo = new MutationObserver(place);
     mo.observe(document.body, { attributes: true, attributeFilter: ["class"] });
     const t = setInterval(place, 700);
-    return () => { window.removeEventListener("resize", place); mo.disconnect(); clearInterval(t); };
+    return () => { window.removeEventListener("resize", place); window.removeEventListener("scroll", place, true); mo.disconnect(); clearInterval(t); };
   }, []);
 
   // Neeche pahunchne se pehle hi agle 30 — scroll par naap kar.
@@ -92,7 +97,7 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
     if (el) { body.current.scrollTop = el.offsetTop - body.current.offsetTop; setGoTo(-1); }
   }, [goTo, n]);
 
-  const style = { top: pos.top };
+  const style = { top: pos.top, bottom: pos.bottom };
   if (pos.left != null) style.left = pos.left;
 
   return (
