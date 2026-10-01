@@ -17,7 +17,6 @@ import OneLinerBtn from "./OneLinerBtn";
 import PasteAnswer from "./PasteAnswer";
 import Gemini20 from "./Gemini20";
 import ClusterButton from "./ClusterButton";
-import PointsButton from "./PointsButton";
 import { isDone } from "@/lib/qdone";
 import { useExamMode } from "./ExamMode";
 
@@ -373,7 +372,6 @@ Options: ${opts}
           {/* Answers page wala button — jawab ka 🧩 CLUSTER seedha Fact log mein.
               Cluster section na ho to button dikhta hi nahi. */}
           <ClusterButton md={solution} subject={subject} onFlash={setFlash} srcQ={q} />
-          <PointsButton md={solution} src={chapterName} onFlash={setFlash} />
           {solution ? <Markdown>{chatLook ? zapLines(solution) : solution}</Markdown> : (
             <span style={{ color: "var(--text-3)", fontStyle: "italic" }}>
               Is question ka explanation abhi nahi hai — ✨ Gemini se laa kar paste kar do.

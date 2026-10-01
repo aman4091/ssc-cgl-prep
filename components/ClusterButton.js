@@ -48,7 +48,9 @@ export default function ClusterButton({ md, subject, onFlash, srcQ }) {
   const add = (arr) => {
     const fresh = arr.filter((c) => !have.has(clusterKey(c)));
     if (!fresh.length) return;
-    const src = srcOf(srcQ);
+    // Sawaal ke saath uska POORA jawab bhi — Fact log ke ❓ par wahi khulta hai.
+    const src0 = srcOf(srcQ);
+    const src = src0 ? { ...src0, ...(md ? { ans: String(md).slice(0, 6000) } : {}) } : null;
     for (const c of fresh) addFact({ ...factOf(c), ...(src ? { src } : {}) });
     // 🧹 Naya fact aate hi uski saaf shakl bhi — peechhe, apne aap.
     autoTidyFacts();

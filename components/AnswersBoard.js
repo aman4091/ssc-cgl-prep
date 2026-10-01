@@ -31,7 +31,6 @@ import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
 import Gemini20 from "./Gemini20";
-import PointsButton from "./PointsButton";
 import AnswersDoPane from "./AnswersLayouts";
 import { markDoneRev } from "@/lib/ansrev";
 import "./answers-layouts.css";
@@ -318,7 +317,6 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
           <div className="ansp__answer">
             <div className="ansp__gemhead">{mainSrc}</div>
             <ClusterButton md={main} subject={rec.subject} onFlash={onFlash} srcQ={rec.q} />
-            <PointsButton md={main} src={rec.subject} onFlash={onFlash} />
             <LazyMarkdown>{main}</LazyMarkdown>
           </div>
           {folds.map((f) => (

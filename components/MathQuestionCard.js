@@ -16,7 +16,6 @@ import Gemini20 from "./Gemini20";
 import OneLinerBtn from "./OneLinerBtn";
 import PasteAnswer from "./PasteAnswer";
 import ClusterButton from "./ClusterButton";
-import PointsButton from "./PointsButton";
 import { isDone } from "@/lib/qdone";
 import { useExamMode } from "./ExamMode";
 import { useDeepSeek, dsLabel, dsTitle } from "@/lib/usedeepseek";
@@ -385,7 +384,6 @@ Options: ${opts}
           {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
           {/* Jawab ka 🧩 CLUSTER seedha Fact log mein — Answers page wala button. */}
           <ClusterButton md={solution} subject={subject} onFlash={setFlash} srcQ={q} />
-          <PointsButton md={solution} src={chapterName} onFlash={setFlash} />
           {/* A pasted Gemini answer replaces the book's solution image outright,
               rather than being stacked under it. */}
           {solution ? (

@@ -9,6 +9,7 @@ import Markdown from "./Markdown";
 export default function FactSrcBtn({ src }) {
   const [open, setOpen] = useState(false);
   const [pick, setPick] = useState(null);
+  const [ans, setAns] = useState(false);   // 👁️ us question ka jawab
   if (!src) return null;
   const opts = Array.isArray(src.options) ? src.options : [];
   const has = Number.isInteger(src.answer);
@@ -18,7 +19,7 @@ export default function FactSrcBtn({ src }) {
         type="button"
         className="fsq-btn"
         title="Ye fact jis question se aaya, wo kholo"
-        onClick={() => { setOpen((v) => !v); setPick(null); }}
+        onClick={() => { setOpen((v) => !v); setPick(null); setAns(false); }}
       >
         {open ? "✕ Sawaal" : "❓ Sawaal"}
       </button>
@@ -42,6 +43,17 @@ export default function FactSrcBtn({ src }) {
                   </button>
                 );
               })}
+            </div>
+          )}
+          <div className="fsq-acts">
+            <button type="button" className="fsq-btn" onClick={() => { setAns((v) => !v); if (pick === null && has) setPick(-1); }}>
+              {ans ? "🙈 Jawab chhupao" : "👁️ Jawab"}
+            </button>
+          </div>
+          {ans && (
+            <div className="fsq-ans">
+              {has && opts[src.answer] != null ? <p className="fsq-right">✓ Sahi jawab: {String.fromCharCode(65 + src.answer)} — {opts[src.answer]}</p> : null}
+              {src.ans ? <Markdown>{src.ans}</Markdown> : null}
             </div>
           )}
         </div>
