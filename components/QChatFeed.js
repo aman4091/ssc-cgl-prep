@@ -20,7 +20,7 @@ function readPicks(k) {
   try { const v = JSON.parse(localStorage.getItem(k) || "{}"); return v && typeof v === "object" ? v : {}; } catch { return {}; }
 }
 
-export default function QChatFeed({ title, list, renderCard, storeKey = "default" }) {
+export default function QChatFeed({ title, list, renderCard, storeKey = "default", jumpIndex = -1, belowAnchor = false }) {
   const KEY = `cgl.qfeed.${storeKey}`;
   const [n, setN] = useState(STEP);
   const [pos, setPos] = useState({ left: null, top: 0, bottom: 0 });
@@ -60,6 +60,8 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
       const nb = document.querySelector(".topbar");
       const tr = nb ? nb.getBoundingClientRect() : null;
       if (tr && tr.height && tr.bottom > 0) top = Math.round(tr.bottom + 6);
+      // Page ke apne button (Answers ke filter) upar dikhte rahein — window unke neeche se.
+      if (belowAnchor) { const ar = a.getBoundingClientRect(); if (ar.top > top) top = Math.round(ar.top); }
       let bottom = 0;
       const ft = document.querySelector("footer");
       const fr = ft ? ft.getBoundingClientRect() : null;
@@ -100,9 +102,13 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
     setN((x) => Math.max(x, j + 5));
     setGoTo(j);
   };
+  // Bahar se kisi khaas question par bheja (?qid=…) — seedha wahin.
+  useEffect(() => {
+    if (jumpIndex >= 0) { setN((x) => Math.max(x, jumpIndex + 5)); setGoTo(jumpIndex); }
+  }, [jumpIndex]);
   useEffect(() => {
     if (goTo < 0) return;
-    const el = body.current && body.current.querySelector(`#q-${goTo}`);
+    const el = body.current && body.current.querySelector(`[data-qi="${goTo}"]`);
     if (el) { body.current.scrollTop = el.offsetTop - body.current.offsetTop; setGoTo(-1); }
   }, [goTo, n]);
 
@@ -121,13 +127,17 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
         <div className="qfeed__body" ref={body} onScroll={more}>
           {list.slice(0, n).map((q, i) => {
             const id = idOf(q, i);
-            return renderCard(q, i, {
-              savedPick: picks[id] ?? null,
-              savedHidden: !!hid[id],
-              onPickSave: (oi) => savePick(id, oi),
-              onClearSave: () => { savePick(id, null); saveHid(id, false); },
-              onHideSave: (on) => saveHid(id, on),
-            });
+            return (
+              <div key={id} className="qfeed__item" data-qi={i}>
+                {renderCard(q, i, {
+                  savedPick: picks[id] ?? null,
+                  savedHidden: !!hid[id],
+                  onPickSave: (oi) => savePick(id, oi),
+                  onClearSave: () => { savePick(id, null); saveHid(id, false); },
+                  onHideSave: (on) => saveHid(id, on),
+                })}
+              </div>
+            );
           })}
           <div className="qfeed__end">{n < list.length ? "…" : "— bas, saare ho gaye —"}</div>
         </div>

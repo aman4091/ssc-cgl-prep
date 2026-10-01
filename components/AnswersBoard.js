@@ -32,7 +32,8 @@ import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
 import Gemini20 from "./Gemini20";
 import PointsButton from "./PointsButton";
-import AnswersDoPane from "./AnswersLayouts";
+import AnswersDoPane from "./AnswersLayouts"; // eslint-disable-line no-unused-vars
+import QChatFeed from "./QChatFeed";
 import { markDoneRev } from "@/lib/ansrev";
 import "./answers-layouts.css";
 
@@ -105,7 +106,10 @@ const bucketOf = (r) => (KNOWN.has(r.subject) ? r.subject : "other");
 const labelOf = (k) =>
   k === "other" ? "Other" : (SUBJECTS.find((s) => s.key === k) || ALL_SUBJ).label;
 
-function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard }) {
+function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard, chatLook, savedPick, savedHidden, onPickSave, onClearSave, onHideSave }) {
+  // 💬 chat wali window (components/QChatFeed): jawab pehle chhupa; 👁️ khole,
+  // 🙈 chhupaye, 🧹 sab hataye — teeno yaad rehte hain.
+  const ansOpen = !chatLook || (savedPick != null && !savedHidden);
   const router = useRouter();
   const { urls, missing } = useImageUrls(imagesOf(rec));
   // 🏷️ tag (lib/qtags) — card khulte hi store se, aur badalte hi wahin wapas.
@@ -224,7 +228,7 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
 
   return (
     <div
-      className={`ansp__card${highlight ? " is-hit" : ""}${fresh ? " is-new" : ""}`}
+      className={`ansp__card${highlight ? " is-hit" : ""}${fresh ? " is-new" : ""}${chatLook ? " ansp__card--chat" : ""}`}
       id={`ans-${rec.id}`}
     >
       <h2>
@@ -296,7 +300,21 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
         </div>
       )}
 
-      {main ? (
+      {chatLook && (
+        <div className="ansp__chatacts">
+          {!ansOpen && (
+            <button className="ansp__btn" onClick={() => { onPickSave?.(1); onHideSave?.(false); }} title="Jawab dekho">👁️ Answer</button>
+          )}
+          {ansOpen && (
+            <button className="ansp__btn" onClick={() => onHideSave?.(true)} title="Jawab phir chhupao">🙈 Chhupao</button>
+          )}
+          {savedPick != null && (
+            <button className="ansp__btn" onClick={() => onClearSave?.()} title="Sab hatao — sawaal phir se naya">🧹 Clear</button>
+          )}
+        </div>
+      )}
+
+      {!ansOpen ? null : main ? (
         <>
           <div className="ansp__answer">
             <div className="ansp__gemhead">{mainSrc}</div>
@@ -799,9 +817,13 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     setTimeout(() => setFlash(""), 5000);
   }, []);
 
+  // Chat window ka kram — purana sabse upar, aaj wala sabse neeche.
+  const chatRows = useMemo(() => [...list].sort((a, b) => String(a.at).localeCompare(String(b.at))), [list]);
+
   // Ek card — list mein bhi aur 🔍 popup mein bhi wahi (saare button samet).
-  const renderCard = (r, i, inPopup) => (
+  const renderCard = (r, i, inPopup, mem) => (
     <AnsCard
+      {...(mem || {})}
       key={r.uid}
       rec={r}
       n={i + 1}
@@ -981,11 +1003,15 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           </p>
         ) : (
           // 📖 Do-pane — owner ka chuna hua ek hi roop (components/AnswersLayouts).
-          <AnswersDoPane
-            list={list}
-            renderCard={renderCard}
-            bucketOf={bucketOf}
-            jumpId={urlQid ? (list.find((r) => r.qid === urlQid) || {}).id : ""}
+          // 💬 PYQ jaisi DeepSeek chat wali window — saare question ek ke neeche
+          // ek (purana sabse upar), jawab pehle chhupa (components/QChatFeed).
+          <QChatFeed
+            title="Answers"
+            list={chatRows}
+            storeKey={`answers.${src}`}
+            belowAnchor
+            jumpIndex={urlQid ? chatRows.findIndex((r) => r.qid === urlQid) : -1}
+            renderCard={(r, i, mem) => renderCard(r, i, false, { chatLook: true, ...mem })}
           />
         )}
 

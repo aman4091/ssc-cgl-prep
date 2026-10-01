@@ -584,3 +584,43 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
   border-radius: 14px 14px 4px 14px;
   overflow: hidden;
 }
+
+/* 💬 Answers page ka card, chat window ke andar — PYQ wale jaisa. */
+.qfeed .ansp__card.ansp__card--chat {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0 0 14px;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px dashed var(--line);
+  border-radius: 0;
+  box-shadow: none;
+}
+.qfeed .ansp__card--chat > h2 {
+  margin: 0;
+  padding: 12px 12px 0;
+  font-size: 0.85rem;
+  color: var(--text-3);
+  background: transparent;
+  border: 0;
+}
+.qfeed .ansp__card--chat > * { margin-left: 12px; margin-right: 12px; }
+.qfeed .ansp__card--chat > h2 { margin-left: 0; margin-right: 0; }
+.qfeed .ansp__card--chat > img {
+  align-self: flex-end;
+  max-width: 88%;
+  margin-top: 10px;
+  border: 2px solid var(--accent);
+  border-radius: 14px 14px 4px 14px;
+}
+.ansp__chatacts { display: flex; gap: 6px; justify-content: flex-end; margin-top: 8px; flex-wrap: wrap; }
+.qfeed .ansp__card--chat .ansp__answer {
+  margin-top: 10px;
+  background: var(--glass-bg);
+  border: 1px solid var(--line);
+  border-radius: 14px 14px 14px 4px;
+  padding: 10px 12px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
