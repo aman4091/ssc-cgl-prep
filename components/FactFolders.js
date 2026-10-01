@@ -8,7 +8,7 @@
 // Owner ne dropdown ke 15 roop mein se yahi chuna; baaki hata diye.
 // Fact ka "sar" aur "points" usi tarah bante hain jaise revise card mein.
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { FACT_SECS, GAPS, factView, reviewFact, removeFact } from "@/lib/missionfacts";
 import FactSrcBtn from "./FactSrcBtn";
 import QChatFeed from "./QChatFeed";
@@ -50,9 +50,9 @@ export default function FactFolders({ facts, onChange }) {
     }
     return [...g.entries()].sort((a, b) => b[1].length - a[1].length);
   }, [facts, today]);
-  // "" = saare topic. Chips upar (window ke bahar), facts chat wali window mein.
-  const [t, setT] = useState("");
-  const cur = topics.find(([k]) => k === t);
+  // Topic ke chips hata diye (owner) — saare facts ek hi window mein.
+  const t = "";
+  const cur = null;
   const shown = useMemo(() => {
     const list = cur ? cur[1] : topics.flatMap(([, l]) => l);
     // Aaj wale sabse upar.
@@ -63,23 +63,8 @@ export default function FactFolders({ facts, onChange }) {
   const del = (id) => { if (confirm("Ye fact hata dein?")) { removeFact(id); onChange(); } };
 
   if (!topics.length) return <div className="placeholder">Abhi koi fact nahi.</div>;
-  const allN = topics.reduce((n, [, l]) => n + l.length, 0);
-  const allDue = topics.reduce((n, [, l]) => n + l.filter((m) => m.isDue).length, 0);
   return (
     <>
-      <div className="subj-row ffd-chips">
-        <button type="button" className={`subj-chip${!cur ? " is-active" : ""}`} onClick={() => setT("")}>
-          📂 Sab · {allN}{allDue ? ` · 🔴 ${allDue}` : ""}
-        </button>
-        {topics.map(([k, list]) => {
-          const due = list.filter((m) => m.isDue).length;
-          return (
-            <button key={k} type="button" className={`subj-chip${cur && cur[0] === k ? " is-active" : ""}`} onClick={() => setT(k)}>
-              {k} · {list.length}{due ? ` · 🔴 ${due}` : ""}
-            </button>
-          );
-        })}
-      </div>
       {/* 💬 Chat wali window — har fact: sar daayen bubble mein, baatein jawab
           wale bubble mein, neeche ❓ Sawaal aur (aaj ho to) ✓ / ✗. */}
       <QChatFeed
