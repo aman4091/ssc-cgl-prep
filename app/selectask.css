@@ -506,7 +506,7 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
   bottom: 0;
   left: 0;
   width: min(440px, 100vw);
-  z-index: 120;
+  z-index: 60; /* ☰ menu (drawer 63) iske upar khule */
   display: flex;
   flex-direction: column;
   background: var(--bg-1);
