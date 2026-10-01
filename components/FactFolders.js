@@ -2,14 +2,14 @@
 
 // 📂 Fact log ka TOPIC FOLDERS roop — baayen har topic ka folder (kitne
 // fact, laal gola = aaj kitne due), daayen chune hue topic ke saare facts.
-// Due fact par wahin "✓ Aata tha / ✗ Nahi" — wahi 1/3/7/14 ka schedule
-// (lib/missionfacts reviewFact). 🗑️ se fact hatao.
+// Ab Medieval wali chat window jaisa: har fact ka sar sawaal ki tarah, baatein
+// jawab ki tarah (pehle chhupi) — 👁️ / 🙈 / 🧹 / ⏭. 🗑️ se fact hatao.
 //
 // Owner ne dropdown ke 15 roop mein se yahi chuna; baaki hata diye.
 // Fact ka "sar" aur "points" usi tarah bante hain jaise revise card mein.
 
 import { useMemo } from "react";
-import { FACT_SECS, GAPS, factView, reviewFact, removeFact } from "@/lib/missionfacts";
+import { FACT_SECS, GAPS, factView, removeFact } from "@/lib/missionfacts";
 import FactSrcBtn from "./FactSrcBtn";
 import QChatFeed from "./QChatFeed";
 import { dayKey } from "@/lib/daytime";
@@ -59,7 +59,6 @@ export default function FactFolders({ facts, onChange }) {
     return [...list].sort((a, b) => Number(b.isDue) - Number(a.isDue));
   }, [cur, topics]);
 
-  const rate = (id, ok) => { reviewFact(id, ok); onChange(); };
   const del = (id) => { if (confirm("Ye fact hata dein?")) { removeFact(id); onChange(); } };
 
   if (!topics.length) return <div className="placeholder">Abhi koi fact nahi.</div>;
@@ -73,34 +72,37 @@ export default function FactFolders({ facts, onChange }) {
         list={shown}
         storeKey={`facts.${t || "all"}`}
         belowAnchor
-        noJump
         unit="fact"
-        renderCard={(m) => (
-          <article key={m.id} className="qcard qcard--chat ffd-c" style={{ "--c": m.c }}>
-            <h2 className="qcard__h">
-              {m.topic} · {m.isDue ? "🔴 aaj" : m.stage}
-              <span className="qcard__hacts">
-                <button type="button" className="btn btn--sm" title="Hata do" onClick={() => del(m.id)}>🗑️</button>
-              </span>
-            </h2>
-            <div className="qcard__stem">{m.head}</div>
-            <div className="qcard__answer">
-              {m.pts
-                ? <ul className="ffd-pts">{m.pts.map((p, i) => <li key={i}>{p.head ? <><b>{p.head}</b> — </> : null}{p.rest}</li>)}</ul>
-                : <p className="ffd-txt" style={{ margin: 0 }}>{m.body}</p>}
-            </div>
-            <div className="qcard__acts">
-              {/* ❓ Ye fact jis question se aaya — yahin khulta hai. */}
-              <FactSrcBtn src={m.src} />
-              {m.isDue && (
-                <>
-                  <button type="button" className="btn" onClick={() => rate(m.id, true)}>✓ Aata tha</button>
-                  <button type="button" className="btn" onClick={() => rate(m.id, false)}>✗ Nahi</button>
-                </>
+        renderCard={(m, i, mem) => {
+          // Medieval wali window jaisa: sar sawaal ki tarah, baatein jawab ki
+          // tarah — pehle chhupi; 👁️ khole, 🙈 chhupaye, 🧹 sab hataye (yaad).
+          const open = mem.savedPick != null && !mem.savedHidden;
+          return (
+            <article key={m.id} className="qcard qcard--chat">
+              <h2 className="qcard__h">
+                Fact {i + 1}
+                <span className="qcard__hacts">
+                  <button type="button" className="btn btn--sm" title="Hata do" onClick={() => del(m.id)}>🗑️</button>
+                </span>
+              </h2>
+              <div className="qcard__stem">{m.head}</div>
+              <div className="qcard__acts">
+                {/* ❓ Ye fact jis question se aaya — yahin khulta hai. */}
+                <FactSrcBtn src={m.src} />
+                {!open && <button type="button" className="btn" onClick={() => { mem.onPickSave(1); mem.onHideSave(false); }}>👁️ Answer</button>}
+                {open && <button type="button" className="btn" onClick={() => mem.onHideSave(true)}>🙈 Chhupao</button>}
+                {mem.savedPick != null && <button type="button" className="btn" onClick={() => mem.onClearSave()}>🧹 Clear</button>}
+              </div>
+              {open && (
+                <div className="qcard__answer">
+                  {m.pts
+                    ? <ul className="ffd-pts">{m.pts.map((p, k) => <li key={k}>{p.head ? <><b>{p.head}</b> — </> : null}{p.rest}</li>)}</ul>
+                    : <p className="ffd-txt" style={{ margin: 0 }}>{m.body}</p>}
+                </div>
               )}
-            </div>
-          </article>
-        )}
+            </article>
+          );
+        }}
       />
     </>
   );
