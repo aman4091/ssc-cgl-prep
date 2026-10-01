@@ -4,32 +4,64 @@
 // page ke beech), andar saare questions ek ke neeche ek. Bas scroll karte
 // jao. Jawab har question ka pehle chhupa (option chuno ya 👁️ dabao).
 //
+// Jo option laga diya wo yaad (cgl.qfeed.<key>) — 🧹 Clear tak wahi dikhta
+// hai. ⏭ "Jahan chhoda" = sabse aage wale lage hue question ke baad wala.
+//
 // Hazaaron question ek saath banana bhaari hai — pehle 30, neeche pahunchne
 // se pehle hi agle 30.
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const STEP = 30;
+const W = 440;
 
-export default function QChatFeed({ title, list, renderCard }) {
+const idOf = (q, i) => String(q && q.id != null ? q.id : i);
+function readPicks(k) {
+  try { const v = JSON.parse(localStorage.getItem(k) || "{}"); return v && typeof v === "object" ? v : {}; } catch { return {}; }
+}
+
+export default function QChatFeed({ title, list, renderCard, storeKey = "default" }) {
+  const KEY = `cgl.qfeed.${storeKey}`;
   const [n, setN] = useState(STEP);
-  const [left, setLeft] = useState(null);
+  const [pos, setPos] = useState({ left: null, top: 0 });
+  const [picks, setPicks] = useState(() => (typeof window === "undefined" ? {} : readPicks(KEY)));
+  const [goTo, setGoTo] = useState(-1);
   const anchor = useRef(null);
   const body = useRef(null);
 
-  // Window page ke beech — jitni jagah sidebar aur chat ke beech hai, uske beech.
+  useEffect(() => { setPicks(readPicks(KEY)); }, [KEY]);
+  const savePick = useCallback((id, oi) => {
+    const all = readPicks(KEY);
+    if (oi == null) delete all[id]; else all[id] = oi;
+    try { localStorage.setItem(KEY, JSON.stringify(all)); } catch { /* quota */ }
+    setPicks(all);
+  }, [KEY]);
+
+  // Kahan baithe: desktop par sidebar aur chat ke beech; tablet / split
+  // window mein beech mein par upar ki patti (☰) ke neeche; phone par poori
+  // chaudai, wo bhi patti ke neeche — taaki menu hamesha mile.
   useLayoutEffect(() => {
     const place = () => {
       const a = anchor.current;
-      if (!a || window.innerWidth < 1100) { setLeft((x) => (x === null ? x : null)); return; }
-      const r = a.getBoundingClientRect();
-      // DeepSeek chat khula ho (docked ho ya upar tairta) to uske baayen hi
-      // rehna — kabhi uske neeche ya daayen nahi.
-      const panel = document.querySelector(".sa-panel");
-      const pr = panel ? panel.getBoundingClientRect() : null;
-      const right = pr && pr.width ? Math.min(r.right, pr.left) : r.right;
-      const lo = Math.max(0, r.left);
-      setLeft(Math.round(Math.max(lo, Math.min(right - 440, (lo + right) / 2 - 220))));
+      if (!a) return;
+      const vw = window.innerWidth;
+      let top = 0;
+      if (vw < 1100) {
+        const nb = document.querySelector(".topbar");
+        const r = nb ? nb.getBoundingClientRect() : null;
+        top = r && r.height && r.bottom > 0 ? Math.round(r.bottom + 6) : 0;
+      }
+      let left = null;
+      if (vw >= 600) {
+        const r = a.getBoundingClientRect();
+        // DeepSeek chat khula ho (docked ho ya upar tairta) to uske baayen hi.
+        const panel = document.querySelector(".sa-panel");
+        const pr = panel ? panel.getBoundingClientRect() : null;
+        const right = vw >= 1100 && pr && pr.width ? Math.min(r.right, pr.left) : (vw >= 1100 ? r.right : vw);
+        const lo = vw >= 1100 ? Math.max(0, r.left) : 0;
+        left = Math.round(Math.max(lo, Math.min(right - W, (lo + right) / 2 - W / 2)));
+      }
+      setPos((p) => (p.left === left && p.top === top ? p : { left, top }));
     };
     place();
     window.addEventListener("resize", place);
@@ -46,16 +78,41 @@ export default function QChatFeed({ title, list, renderCard }) {
   };
   useEffect(() => { more(); }, [n]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // ⏭ Jahan chhoda — sabse aage wala laga hua question, uske baad wala.
+  const jump = () => {
+    let last = -1;
+    list.forEach((q, i) => { if (picks[idOf(q, i)] != null) last = i; });
+    const j = Math.min(list.length - 1, last + 1);
+    setN((x) => Math.max(x, j + 5));
+    setGoTo(j);
+  };
+  useEffect(() => {
+    if (goTo < 0) return;
+    const el = body.current && body.current.querySelector(`#q-${goTo}`);
+    if (el) { body.current.scrollTop = el.offsetTop - body.current.offsetTop; setGoTo(-1); }
+  }, [goTo, n]);
+
+  const style = { top: pos.top };
+  if (pos.left != null) style.left = pos.left;
+
   return (
     <>
       <div ref={anchor} className="qfeed-anchor" />
-      <div className="qfeed" style={left != null ? { left } : undefined}>
+      <div className="qfeed" style={style}>
         <div className="qfeed__head">
           <b>💬 {title}</b>
           <span className="qfeed__n">{list.length} questions</span>
+          <button type="button" className="qfeed__jump" onClick={jump} title="Jahan tak lagaye, uske baad wala question">⏭</button>
         </div>
         <div className="qfeed__body" ref={body} onScroll={more}>
-          {list.slice(0, n).map((q, i) => renderCard(q, i))}
+          {list.slice(0, n).map((q, i) => {
+            const id = idOf(q, i);
+            return renderCard(q, i, {
+              savedPick: picks[id] ?? null,
+              onPickSave: (oi) => savePick(id, oi),
+              onClearSave: () => savePick(id, null),
+            });
+          })}
           <div className="qfeed__end">{n < list.length ? "…" : "— bas, saare ho gaye —"}</div>
         </div>
       </div>

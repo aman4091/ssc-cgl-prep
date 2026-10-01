@@ -28,7 +28,7 @@ import { useExamMode } from "./ExamMode";
 // quiz nahi hai), yahan question attempt karne ki cheez hai — isliye answer ka
 // block hamesha maujood hai par option chunne tak (ya 👁️ dabane tak) andar
 // "Answer dekho" likha rehta hai. 👁️ se koi attempt record nahi hota.
-export default function PyqQuestionCard({ q, index, extraActions, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, forceAnswer, chatLook }) {
+export default function PyqQuestionCard({ q, index, extraActions, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, forceAnswer, chatLook, savedPick, onPickSave, onClearSave }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -42,8 +42,11 @@ export default function PyqQuestionCard({ q, index, extraActions, subject, resum
   const examReg = exam?.register;
   const examIdx = exam?.index;
   useEffect(() => { examReg?.(examIdx, q); }, [examReg, examIdx, q.question]);
-  const [picked, setPicked] = useState(exam?.pick ?? null);
-  const [revealed, setRevealed] = useState(false);
+  // savedPick — 💬 chat wali list mein jo option laga diya tha, wo tab tak
+  // laga rehta hai jab tak 🧹 Clear na karo (components/QChatFeed).
+  const [picked, setPicked] = useState(exam?.pick ?? (savedPick ?? null));
+  const [revealed, setRevealed] = useState(savedPick != null);
+  const [ansHidden, setAnsHidden] = useState(false);   // 🙈 — khula jawab phir chhupao
   const [shortcut, setShortcut] = useState("");
   const [scShown, setScShown] = useState(false);
   const [scLoading, setScLoading] = useState(false);
@@ -92,6 +95,8 @@ export default function PyqQuestionCard({ q, index, extraActions, subject, resum
     // badal diya wo bhi ginti mein chadh jata.
     if (locked) { exam?.onPick?.(oi, correct); return; }
     setRevealed(true);
+    setAnsHidden(false);
+    onPickSave?.(oi);
     if (resumeKey) setResume(resumeKey, index);
     if (!recorded) {
       recordAttempts([{ q, correct }]);
@@ -200,7 +205,12 @@ Options: ${opts}
   // Timer chalte waqt kuch nahi khulta; Submit ke baad sab khulta hai —
   // chhode hue question bhi.
   // forceAnswer = drill ki 40-second ghadi khatam (components/PyqDrill).
-  const shown = !locked && (forceAnswer || !!exam?.revealAll || revealed || peek);
+  const shown = !locked && !ansHidden && (forceAnswer || !!exam?.revealAll || revealed || peek);
+  // 🧹 Clear — laga hua option aur khula jawab dono hatao, sawaal phir naya.
+  const clearPick = () => {
+    setPicked(null); setRevealed(false); setPeek(false); setAnsHidden(false); setFlash("");
+    onClearSave?.();
+  };
 
 
   return (
@@ -306,7 +316,13 @@ Options: ${opts}
           wala kram toot jata hai. */}
       <div className="qcard__acts">
         {!shown && (
-          <button className="btn" onClick={() => setPeek(true)} title="Bina attempt kiye answer dekho">👁️ Answer</button>
+          <button className="btn" onClick={() => { setPeek(true); setAnsHidden(false); }} title="Bina attempt kiye answer dekho">👁️ Answer</button>
+        )}
+        {chatLook && shown && (
+          <button className="btn" onClick={() => setAnsHidden(true)} title="Jawab phir chhupao">🙈 Chhupao</button>
+        )}
+        {chatLook && (picked !== null || peek || revealed) && (
+          <button className="btn" onClick={clearPick} title="Laga hua answer hatao — sawaal phir se naya">🧹 Clear</button>
         )}
         {onEdit && !editing && <button className="btn" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
         {onDelete && <button className="btn" onClick={onDelete} title="Delete">🗑️</button>}

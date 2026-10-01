@@ -99,8 +99,10 @@ export default function GkTopicPage() {
           <QChatFeed
             title={topic?.label || "Questions"}
             list={qs}
-            renderCard={(q, i) => (
+            storeKey={slug}
+            renderCard={(q, i, mem) => (
               <PyqQuestionCard
+                {...mem}
                 resumeKey={resumeKey}
                 key={q.id || i}
                 q={q}

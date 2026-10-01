@@ -525,8 +525,27 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 .qfeed__n { margin-left: auto; color: var(--text-3); font-size: 0.8rem; }
 .qfeed__body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; }
 .qfeed__end { padding: 16px; text-align: center; color: var(--text-3); font-size: 0.85rem; }
-@media (max-width: 1099px) {
+@media (max-width: 599px) {
   .qfeed { width: 100vw; border: 0; box-shadow: none; }
+}
+/* ⏭ Jahan chhoda — desktop / tablet par window ke daayen, phone par sar mein. */
+.qfeed__jump {
+  border: 1px solid var(--line);
+  background: var(--card, var(--bg-1));
+  color: var(--text-1);
+  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+.qfeed__jump:hover { border-color: var(--accent); color: var(--accent); }
+@media (min-width: 600px) {
+  .qfeed__jump { position: absolute; top: 50%; right: -60px; transform: translateY(-50%); }
+}
+@media (max-width: 599px) {
+  .qfeed__jump { width: 34px; height: 34px; font-size: 1rem; box-shadow: none; }
 }
 .qfeed__body > * { flex: none; }
 .qfeed .qcard.qcard--chat.qcard--chat .qcard__answer--empty { display: none; }
