@@ -20,6 +20,7 @@ import { getUserTopics, getUserTopicQuestions, shelfBook, getUserBook } from "@/
 import { vocabPool } from "@/lib/vocabpool";
 import { getFacts, factView } from "@/lib/missionfacts";
 import "./reels.css";
+import QChatFeed from "@/components/QChatFeed";
 
 const LETTER = ["A", "B", "C", "D", "E"];
 
@@ -71,9 +72,6 @@ export default function Reels() {
   const [loading, setLoading] = useState(true);
   const pools = useRef({ pyq: {}, mine: [], o40: [], wrong: [], ans: [], jodi: [], vocab: [], facts: [], states: [], means: [] });
   const busy = useRef(false);
-  const box = useRef(null);
-  const [at, setAt] = useState(0);
-  const maxSeen = useRef(0);
 
   // Galat → line mein, 50 reel baad wapas. Wahi dobara galat → phir 50 baad.
   const onWrong = useCallback((r) => {
@@ -146,7 +144,9 @@ export default function Reels() {
     }
     // 50 poore ho gaye wali galat reels — is jatthe mein beech mein kahin
     // (max 3). Isliye wo 50 ke thoda baad aati hai (lagbhag 50–64).
-    const q = readRetry();
+    // Har nayi reel par line ki ginti ek ghatao (ab scroll ki jagah jattha bante hi).
+    const q = readRetry().map((x) => ({ ...x, left: x.left - out.length }));
+    writeRetry(q);
     const due = q.filter((x) => x.left <= 0).slice(0, 3);
     if (due.length) {
       writeRetry(q.filter((x) => !due.includes(x)));
@@ -191,117 +191,106 @@ export default function Reels() {
     return () => { ok = false; };
   }, [more]);
 
-  // Kaunsi reel saamne hai + aakhri 3 par pahunche to aur jodo.
-  const onScroll = useCallback(() => {
-    const el = box.current;
-    if (!el) return;
-    const i = Math.round(el.scrollTop / el.clientHeight);
-    setAt(i);
-    // Har NAYI reel par line ki ginti ek ghatao.
-    if (i > maxSeen.current) {
-      const d = i - maxSeen.current;
-      maxSeen.current = i;
-      const q = readRetry();
-      if (q.length) writeRetry(q.map((x) => ({ ...x, left: x.left - d })));
-    }
-    if (i >= list.length - 3) more();
-  }, [list.length, more]);
-
-  const go = useCallback((d) => {
-    const el = box.current;
-    if (el) el.scrollTo({ top: (at + d) * el.clientHeight, behavior: "smooth" });
-  }, [at]);
-  useEffect(() => {
-    const k = (e) => {
-      if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
-      if (e.key === "ArrowDown" || e.key === "j") { e.preventDefault(); go(1); }
-      else if (e.key === "ArrowUp" || e.key === "k") { e.preventDefault(); go(-1); }
-    };
-    window.addEventListener("keydown", k);
-    return () => window.removeEventListener("keydown", k);
-  }, [go]);
-
   return (
-    <div className="reels-wrap">
-      <div className="reels" ref={box} onScroll={onScroll}>
-        {loading && <div className="reel"><div className="reel__card reel__wait">🎬 Reels taiyaar ho rahi hain…</div></div>}
-        {list.map((r, i) => <Reel key={r.id} r={r} near={Math.abs(i - at) <= 2} onNext={() => go(1)} onWrong={onWrong} />)}
-      </div>
-      {/* ↑ ↓ — box ke dayein, beech mein (PYQ reels jaise). */}
-      <div className="reel-nav">
-        <button type="button" onClick={() => go(-1)} disabled={at <= 0} aria-label="Pichhli reel" title="Pichhli (↑)">↑</button>
-        <button type="button" onClick={() => go(1)} aria-label="Agli reel" title="Agli (↓)">↓</button>
-      </div>
-    </div>
+    <QChatFeed
+      title="Home"
+      list={loading ? [] : list}
+      storeKey="home"
+      noJump
+      onNeedMore={more}
+      renderCard={(r) => <HomeCard key={r.id} r={r} onWrong={onWrong} />}
+    />
   );
 }
 
-function Reel({ r, near, onNext, onWrong }) {
+// 💬 Ek card — PYQ wali chat window jaisa: upar tag, daayen sawaal + options,
+// neeche jawab (pehle chhupa). 👁️ khole, 🙈 chhupaye, 🧹 sab hataye.
+function HomeCard({ r, onWrong }) {
   const [picked, setPicked] = useState(null);
   const [open, setOpen] = useState(false);
+  const [hid, setHid] = useState(false);
   const shown = picked != null || open;
-  return (
-    <section className="reel">
-      <div className={`reel__card reel--${r.kind}`}>
-        <div className="reel__tag">{r.tag}</div>
-        {r.kind === "ans" ? (
-          <AnsReel r={r} near={near} open={open} onOpen={() => setOpen(true)} />
-        ) : r.kind === "fact" ? (
-          <>
-            <div className="reel__fact"><Markdown>{r.text}</Markdown></div>
-            {r.more ? (open ? <div className="reel__exp"><Markdown>{r.more}</Markdown></div>
-              : <button type="button" className="reel__more" onClick={() => setOpen(true)}>⌄ poora padho</button>) : null}
-          </>
-        ) : (
-          <>
-            <div className="reel__q">
-              {r.qImg ? (near ? <img src={r.qImg} alt="question" /> : null) : <Markdown>{r.question}</Markdown>}
-              {r.figImg && near ? <img src={r.figImg} alt="figure" className="reel__fig" /> : null}
-            </div>
-            <div className="reel__opts">
-              {(r.optImgs || r.options).map((o, k) => {
-                const st = !shown ? "" : k === r.answer ? " is-right" : k === picked ? " is-wrong" : " is-dim";
-                return (
-                  <button key={k} type="button" className={`reel__opt${st}`} onClick={() => { if (picked != null) return; setPicked(k); if (k !== r.answer) onWrong(r); }}>
-                    <b>{LETTER[k] || k + 1}</b>
-                    <span>{r.optImgs ? (near ? <img src={o} alt={LETTER[k]} /> : null) : <Markdown inline>{String(o ?? "")}</Markdown>}</span>
-                  </button>
-                );
-              })}
-            </div>
-            {shown ? (
-              <div className="reel__exp">
-                <div className={`reel__verdict ${picked === r.answer ? "ok" : picked == null ? "" : "bad"}`}>
-                  {picked == null ? "👀 Jawab" : picked === r.answer ? "✅ Sahi" : "❌ Galat"}
-                </div>
-                {r.method ? <p className="reel__method">🧠 Tumhara method: <b>{r.method}</b></p> : null}
-                {r.solImg && near ? <img src={r.solImg} alt="solution" /> : null}
-                {r.explanation ? <Markdown>{r.explanation}</Markdown> : null}
-              </div>
-            ) : (
-              <button type="button" className="reel__more" onClick={() => setOpen(true)}>👀 Seedha jawab dikhao</button>
-            )}
-          </>
+  const ansShown = shown && !hid;
+  const acts = (
+    <div className="qcard__acts">
+      {!ansShown && <button className="btn" onClick={() => { setOpen(true); setHid(false); }}>👁️ Answer</button>}
+      {ansShown && <button className="btn" onClick={() => setHid(true)}>🙈 Chhupao</button>}
+      {shown && <button className="btn" onClick={() => { setPicked(null); setOpen(false); setHid(false); }}>🧹 Clear</button>}
+    </div>
+  );
+  if (r.kind === "fact") {
+    return (
+      <article className="qcard qcard--chat">
+        <h2 className="qcard__h">{r.tag}</h2>
+        <div className="qcard__answer"><Markdown>{r.text}</Markdown>{r.more && open ? <Markdown>{r.more}</Markdown> : null}</div>
+        {r.more && !open ? <div className="qcard__acts"><button className="btn" onClick={() => setOpen(true)}>⌄ poora padho</button></div> : null}
+      </article>
+    );
+  }
+  if (r.kind === "ans") {
+    return (
+      <article className="qcard qcard--chat">
+        <h2 className="qcard__h">{r.tag}</h2>
+        <AnsReel r={r} />
+        {acts}
+        {ansShown && (
+          <div className="qcard__answer">{r.explanation ? <Markdown>{r.explanation}</Markdown> : <p>Is question ka jawab Answers page par likha nahi hai.</p>}</div>
         )}
+      </article>
+    );
+  }
+  return (
+    <article className="qcard qcard--chat">
+      <h2 className="qcard__h">{r.tag}</h2>
+      {r.qImg ? (
+        <div className="math-img-wrap"><img src={r.qImg} alt="question" loading="lazy" className="math-img" /></div>
+      ) : (
+        <div className="qcard__stem"><Markdown inline>{r.question}</Markdown></div>
+      )}
+      {r.figImg ? <div className="math-img-wrap"><img src={r.figImg} alt="figure" loading="lazy" className="math-img" /></div> : null}
+      <div className="qcard__opts">
+        {(r.optImgs || r.options).map((o, k) => {
+          const right = shown && k === r.answer;
+          const wrong = shown && k === picked && k !== r.answer;
+          return (
+            <button
+              key={k}
+              type="button"
+              className={`qcard__opt${picked === null ? " is-pick" : ""}${picked === k ? " is-picked" : ""}${right ? " is-right" : ""}${wrong ? " is-wrong" : ""}`}
+              onClick={() => { if (picked != null) return; setPicked(k); setHid(false); if (k !== r.answer) onWrong(r); }}
+            >
+              <b>{LETTER[k] || k + 1}</b>
+              {r.optImgs ? <img src={o} alt={LETTER[k]} loading="lazy" className="math-opt-img" /> : <Markdown inline>{String(o ?? "")}</Markdown>}
+              {right && <span style={{ color: "var(--ok)", marginLeft: 8 }}>✓</span>}
+            </button>
+          );
+        })}
       </div>
-      <button type="button" className="reel__next" onClick={onNext} aria-label="Agli">⌄</button>
-    </section>
+      {acts}
+      {ansShown && (
+        <div className="qcard__answer">
+          {r.answer != null && (r.optImgs || r.options)?.[r.answer] != null && (
+            <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
+              ✓ Sahi jawab: {LETTER[r.answer]}{!r.optImgs && r.options[r.answer] ? ` — ${r.options[r.answer]}` : ""}
+            </p>
+          )}
+          {r.method ? <p className="reel__method">🧠 Tumhara method: <b>{r.method}</b></p> : null}
+          {r.solImg ? <img src={r.solImg} alt="solution" loading="lazy" style={{ maxWidth: "100%" }} /> : null}
+          {r.explanation ? <Markdown>{r.explanation}</Markdown> : null}
+        </div>
+      )}
+    </article>
   );
 }
 
-// 📖 Answers page ka screenshot wala question: tasveer, phir jawab.
-function AnsReel({ r, near, open, onOpen }) {
-  const { urls } = useImageUrls(near ? r.images : []);
+// 📖 Answers page ka screenshot wala question — tasveer(ein), sawaal ke bubble mein.
+function AnsReel({ r }) {
+  const { urls } = useImageUrls(r.images);
   return (
     <>
-      {r.question ? <div className="reel__q"><Markdown>{r.question}</Markdown></div> : null}
-      <div className="reel__q">{urls.map((u) => <img key={u} src={u} alt="question" />)}</div>
+      {r.question ? <div className="qcard__stem"><Markdown inline>{r.question}</Markdown></div> : null}
+      {urls.map((u) => <div key={u} className="math-img-wrap"><img src={u} alt="question" loading="lazy" className="math-img" /></div>)}
       {r.note ? <p className="reel__method">{r.note}</p> : null}
-      {open ? (
-        <div className="reel__exp">{r.explanation ? <Markdown>{r.explanation}</Markdown> : <p>Is question ka jawab Answers page par likha nahi hai.</p>}</div>
-      ) : (
-        <button type="button" className="reel__more" onClick={onOpen}>👀 Jawab dikhao</button>
-      )}
     </>
   );
 }

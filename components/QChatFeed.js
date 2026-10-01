@@ -20,7 +20,7 @@ function readPicks(k) {
   try { const v = JSON.parse(localStorage.getItem(k) || "{}"); return v && typeof v === "object" ? v : {}; } catch { return {}; }
 }
 
-export default function QChatFeed({ title, list, renderCard, storeKey = "default", jumpIndex = -1, belowAnchor = false }) {
+export default function QChatFeed({ title, list, renderCard, storeKey = "default", jumpIndex = -1, belowAnchor = false, onNeedMore, noJump = false }) {
   const KEY = `cgl.qfeed.${storeKey}`;
   const [n, setN] = useState(STEP);
   const [pos, setPos] = useState({ left: null, top: 0, bottom: 0 });
@@ -90,9 +90,12 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
   // Neeche pahunchne se pehle hi agle 30 — scroll par naap kar.
   const more = () => {
     const b = body.current;
-    if (b && b.scrollTop + b.clientHeight > b.scrollHeight - 1500) setN((x) => Math.min(list.length, x + STEP));
+    if (!b || b.scrollTop + b.clientHeight <= b.scrollHeight - 1500) return;
+    // Khatam na hone wali list (Home) — saare dikh gaye to aur maango.
+    if (onNeedMore && n >= list.length) onNeedMore();
+    setN((x) => Math.min(Math.max(list.length, STEP), x + STEP));
   };
-  useEffect(() => { more(); }, [n]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { more(); }, [n, list.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ⏭ Jahan chhoda — sabse aage wala laga hua question, uske baad wala.
   const jump = () => {
@@ -121,8 +124,8 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
       <div className="qfeed" style={style}>
         <div className="qfeed__head">
           <b>💬 {title}</b>
-          <span className="qfeed__n">{list.length} questions</span>
-          <button type="button" className="qfeed__jump" onClick={jump} title="Jahan tak lagaye, uske baad wala question">⏭</button>
+          {onNeedMore ? <span className="qfeed__n" /> : <span className="qfeed__n">{list.length} questions</span>}
+          {noJump ? null : <button type="button" className="qfeed__jump" onClick={jump} title="Jahan tak lagaye, uske baad wala question">⏭</button>}
         </div>
         <div className="qfeed__body" ref={body} onScroll={more}>
           {list.slice(0, n).map((q, i) => {
@@ -139,7 +142,7 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
               </div>
             );
           })}
-          <div className="qfeed__end">{n < list.length ? "…" : "— bas, saare ho gaye —"}</div>
+          <div className="qfeed__end">{n < list.length || onNeedMore ? "…" : "— bas, saare ho gaye —"}</div>
         </div>
       </div>
     </>
