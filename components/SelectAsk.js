@@ -440,18 +440,35 @@ export default function SelectAsk() {
     working.current = false;
   }, [fetchImgs]);
 
-  const runAsk = useCallback((text) => {
+  // o: card ke 🐋 se aaya sawaal — { q, subject, sel: "", noHistory } —
+  // jawab usi question par lage, pichhli baatcheet uske saath na jaaye.
+  const runAsk = useCallback((text, o = {}) => {
     if (!text) return;
     const mid = `m_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
-    const qNow = sqRef.current || null;
-    const history = msgs.filter((m) => !m.pending);
+    const qNow = o.q !== undefined ? o.q : (sqRef.current || null);
+    const history = o.noHistory ? [] : msgs.filter((m) => !m.pending);
+    if (!tidRef.current) { const t = newThreadId(); tidRef.current = t; setTid(t); }
     setSentTick((x) => x + 1);
     setMsgs((m) => [...m, { role: "user", text, mid: mid + "u" }, { role: "assistant", text: "", pending: true, mid, q: qNow }]);
     setErr("");
-    jobs.current.push({ mid, tid: tidRef.current, sel, subject, history, text, q: qNow });
+    jobs.current.push({ mid, tid: tidRef.current, sel: o.sel !== undefined ? o.sel : sel, subject: o.subject || subject, history, text, q: qNow });
     setQueued(jobs.current.length);
     pump();
   }, [msgs, sel, subject, pump]);
+
+  // 🐋 GS / English question card ka button → sawaal + options seedha yahan.
+  const runAskRef = useRef(runAsk); runAskRef.current = runAsk;
+  useEffect(() => {
+    const h = (e) => {
+      const d = (e && e.detail) || {};
+      if (!d.text) return;
+      setOpen(true);
+      if (d.subject) setSubject(d.subject);
+      runAskRef.current(d.text, { q: d.q || null, subject: d.subject, sel: "", noHistory: true });
+    };
+    window.addEventListener("cgl:chat-ask", h);
+    return () => window.removeEventListener("cgl:chat-ask", h);
+  }, []);
 
   const send = useCallback(() => {
     const text = q.trim();

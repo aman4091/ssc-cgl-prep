@@ -108,6 +108,7 @@ export default function GkTopicPage() {
                 chapterName={topic?.chapter || topic?.label}
                 archiveOnAnswer
                 fileToChapter
+                chatLook={/medi/i.test(topic?.label || topic?.chapter || "")}
               />
             )}
           />

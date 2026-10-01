@@ -28,7 +28,7 @@ import { useExamMode } from "./ExamMode";
 // quiz nahi hai), yahan question attempt karne ki cheez hai — isliye answer ka
 // block hamesha maujood hai par option chunne tak (ya 👁️ dabane tak) andar
 // "Answer dekho" likha rehta hai. 👁️ se koi attempt record nahi hota.
-export default function PyqQuestionCard({ q, index, extraActions, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, forceAnswer }) {
+export default function PyqQuestionCard({ q, index, extraActions, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, forceAnswer, chatLook }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -143,7 +143,19 @@ Options: ${opts}
       + (q.answer != null ? `Correct answer (already verified): ${String.fromCharCode(65 + q.answer)}) ${q.options[q.answer]}
 ` : "");
   });
-  const askDeepSeek = async () => { await dsq.ask(); setPeek(true); };
+  // GS / English: 🐋 ab jawab card mein nahi laata — sawaal + options seedha
+  // DeepSeek chat mein (components/SelectAsk), Settings wale prompt ke saath.
+  // Wahan ⭐ dabao to jawab isi question par lagta hai.
+  const toChat = !/math|reason/i.test(String(subject || ""));
+  const askDeepSeek = async () => {
+    if (toChat) {
+      const opts = (q.options || []).map((o, i) => `${String.fromCharCode(65 + i)}) ${o}`).join("\n");
+      const text = `${q.passage ? q.passage + "\n\n" : ""}${q.question}\n\n${opts}`;
+      window.dispatchEvent(new CustomEvent("cgl:chat-ask", { detail: { text, q, subject } }));
+      return;
+    }
+    await dsq.ask(); setPeek(true);
+  };
 
   // ✍️ Stylus — yahi ek question tablet ke pen wale parde par
   // (/wrong/solve). Maths aur Reasoning kaagaz ke bina hote hi nahi, aur
@@ -192,7 +204,7 @@ Options: ${opts}
 
 
   return (
-    <article className={`qcard${done ? " is-done" : ""}`} id={`q-${index}`}>
+    <article className={`qcard${done ? " is-done" : ""}${chatLook ? " qcard--chat" : ""}`} id={`q-${index}`}>
       {/* Sar — Answers page ka `Question N (qid · date)`. Yahan qid ki jagah
           paper/source hai, kyunki PYQ ka pata wahi hai. */}
       <h2 className="qcard__h">
@@ -212,10 +224,10 @@ Options: ${opts}
           <button
             className="btn btn--sm q-act--keep"
             onClick={askDeepSeek}
-            disabled={dsq.loading}
-            title={dsTitle(dsq)}
+            disabled={!toChat && dsq.loading}
+            title={toChat ? "Sawaal + options DeepSeek chat mein bhejo" : dsTitle(dsq)}
           >
-            {dsLabel(dsq)}
+            {toChat ? "🐋 DeepSeek" : dsLabel(dsq)}
           </button>
           {(subject === "math" || subject === "maths" || subject === "reasoning") && (
             <button className="btn btn--sm q-act--keep" onClick={openStylus} title="Tablet par pen se solve karo">✍️</button>
