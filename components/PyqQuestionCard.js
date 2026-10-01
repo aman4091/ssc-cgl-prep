@@ -259,8 +259,7 @@ Options: ${opts}
             <button className="btn btn--sm q-act--keep" onClick={openStylus} title="Tablet par pen se solve karo">✍️</button>
           )}
           {simLoading ? <button className="btn btn--sm q-act--keep" disabled>…</button>
-            : !toChat ? <Gemini20 q={q} subject={subject} onDirect={make20} />
-            : <button className="btn btn--sm q-act--keep" onClick={make20} title="Isi type ke 20 naye questions generate karo">🎯 20</button>}
+            : <Gemini20 q={q} subject={subject} onDirect={make20} />}
           {/* Bahar se aaye button (Answers board ka ✅ Ho gaya, 🗑️) —
               wo bhi isi line mein, taaki card par ek hi patti rahe. */}
           {extraActions}
