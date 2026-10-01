@@ -11,6 +11,7 @@
 import { useMemo, useState } from "react";
 import { FACT_SECS, GAPS, factView, reviewFact, removeFact } from "@/lib/missionfacts";
 import FactSrcBtn from "./FactSrcBtn";
+import QChatFeed from "./QChatFeed";
 import { dayKey } from "@/lib/daytime";
 import { answerPoints } from "@/components/carevision/Recall";
 
@@ -49,52 +50,73 @@ export default function FactFolders({ facts, onChange }) {
     }
     return [...g.entries()].sort((a, b) => b[1].length - a[1].length);
   }, [facts, today]);
+  // "" = saare topic. Chips upar (window ke bahar), facts chat wali window mein.
   const [t, setT] = useState("");
-  const cur = topics.find(([k]) => k === t) || topics[0];
+  const cur = topics.find(([k]) => k === t);
+  const shown = useMemo(() => {
+    const list = cur ? cur[1] : topics.flatMap(([, l]) => l);
+    // Aaj wale sabse upar.
+    return [...list].sort((a, b) => Number(b.isDue) - Number(a.isDue));
+  }, [cur, topics]);
 
   const rate = (id, ok) => { reviewFact(id, ok); onChange(); };
   const del = (id) => { if (confirm("Ye fact hata dein?")) { removeFact(id); onChange(); } };
 
   if (!topics.length) return <div className="placeholder">Abhi koi fact nahi.</div>;
+  const allN = topics.reduce((n, [, l]) => n + l.length, 0);
+  const allDue = topics.reduce((n, [, l]) => n + l.filter((m) => m.isDue).length, 0);
   return (
-    <div className="ffd">
-      <nav>
+    <>
+      <div className="subj-row ffd-chips">
+        <button type="button" className={`subj-chip${!cur ? " is-active" : ""}`} onClick={() => setT("")}>
+          📂 Sab · {allN}{allDue ? ` · 🔴 ${allDue}` : ""}
+        </button>
         {topics.map(([k, list]) => {
           const due = list.filter((m) => m.isDue).length;
-          const on = cur && cur[0] === k;
           return (
-            <button key={k} type="button" className={on ? "is-on" : ""} onClick={() => setT(k)}>
-              <span>{on ? "📂" : "📁"} {k}</span>
-              <em>{due ? <i>{due}</i> : null}{list.length}</em>
+            <button key={k} type="button" className={`subj-chip${cur && cur[0] === k ? " is-active" : ""}`} onClick={() => setT(k)}>
+              {k} · {list.length}{due ? ` · 🔴 ${due}` : ""}
             </button>
           );
         })}
-      </nav>
-      {cur && (
-        <section>
-          <h3>📂 {cur[0]} <small>{cur[1].length} fact</small></h3>
-          {cur[1].map((m) => (
-            <article key={m.id} className="ffd-f" style={{ "--c": m.c }}>
-              <header>
-                <b>{m.head}</b>
-                <span>{m.isDue ? "🔴 aaj" : m.stage}</span>
-                <button type="button" className="ffd-del" title="Hata do" onClick={() => del(m.id)}>🗑️</button>
-              </header>
+      </div>
+      {/* 💬 Chat wali window — har fact: sar daayen bubble mein, baatein jawab
+          wale bubble mein, neeche ❓ Sawaal aur (aaj ho to) ✓ / ✗. */}
+      <QChatFeed
+        key={t || "all"}
+        title={cur ? `🧠 ${cur[0]}` : "🧠 Fact log"}
+        list={shown}
+        storeKey={`facts.${t || "all"}`}
+        belowAnchor
+        noJump
+        unit="fact"
+        renderCard={(m) => (
+          <article key={m.id} className="qcard qcard--chat ffd-c" style={{ "--c": m.c }}>
+            <h2 className="qcard__h">
+              {m.topic} · {m.isDue ? "🔴 aaj" : m.stage}
+              <span className="qcard__hacts">
+                <button type="button" className="btn btn--sm" title="Hata do" onClick={() => del(m.id)}>🗑️</button>
+              </span>
+            </h2>
+            <div className="qcard__stem">{m.head}</div>
+            <div className="qcard__answer">
               {m.pts
                 ? <ul className="ffd-pts">{m.pts.map((p, i) => <li key={i}>{p.head ? <><b>{p.head}</b> — </> : null}{p.rest}</li>)}</ul>
-                : <p className="ffd-txt">{m.body}</p>}
+                : <p className="ffd-txt" style={{ margin: 0 }}>{m.body}</p>}
+            </div>
+            <div className="qcard__acts">
               {/* ❓ Ye fact jis question se aaya — yahin khulta hai. */}
               <FactSrcBtn src={m.src} />
               {m.isDue && (
-                <span className="ffd-rate">
-                  <button type="button" className="is-y" onClick={() => rate(m.id, true)}>✓ Aata tha</button>
-                  <button type="button" className="is-n" onClick={() => rate(m.id, false)}>✗ Nahi</button>
-                </span>
+                <>
+                  <button type="button" className="btn" onClick={() => rate(m.id, true)}>✓ Aata tha</button>
+                  <button type="button" className="btn" onClick={() => rate(m.id, false)}>✗ Nahi</button>
+                </>
               )}
-            </article>
-          ))}
-        </section>
-      )}
-    </div>
+            </div>
+          </article>
+        )}
+      />
+    </>
   );
 }

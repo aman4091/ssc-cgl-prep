@@ -10,6 +10,7 @@ import { useEffect, useMemo, useState } from "react";
 import Markdown from "@/components/Markdown";
 import { olLines, olTitle, isTrickLine, subOf, updateOneLiner } from "@/lib/oneliners";
 import { formatOneLiner } from "@/lib/client-ai";
+import QChatFeed from "./QChatFeed";
 
 const COL = { gs: "#10b981", english: "#a855f7", math: "#3b82f6", reasoning: "#f59e0b" };
 const M = ({ t }) => <Markdown inline>{t}</Markdown>;
@@ -109,5 +110,66 @@ export default function OneLinersInbox({ items, onDelete, onChange }) {
         </article>
       )}
     </div>
+  );
+}
+
+// 💬 Chat wali window — saari one-liners ek ke neeche ek: upar subject · din,
+// sar daayen bubble mein, poori lines jawab wale bubble mein, trick alag.
+export function OneLinersChat({ items, onDelete, onChange }) {
+  const [busy, setBusy] = useState("");
+  const [err, setErr] = useState("");
+  const bold = async (o) => {
+    if (busy) return;
+    setBusy(o.id); setErr("");
+    try {
+      const { text } = await formatOneLiner(o.text);
+      updateOneLiner(o.id, text);
+      if (onChange) onChange();
+    } catch (e) { setErr(e.message); }
+    finally { setBusy(""); }
+  };
+  const rows = useMemo(() => items.map((o) => {
+    const all = olLines(o.text);
+    return {
+      id: o.id, o, s: subOf(o.subject), title: olTitle(o),
+      lines: all.filter((l) => !isTrickLine(l)).map((l) => {
+        const m = /^(\d{1,3})[.)]\s*/.exec(l);
+        return { n: m ? m[1] : "", t: m ? l.slice(m[0].length) : l };
+      }),
+      trick: all.filter(isTrickLine),
+    };
+  }), [items]);
+  return (
+    <QChatFeed
+      title="📝 One-liners"
+      list={rows}
+      storeKey="oneliners"
+      belowAnchor
+      noJump
+      unit="lines"
+      renderCard={(r) => (
+        <article key={r.id} className="qcard qcard--chat">
+          <h2 className="qcard__h">
+            {r.s.icon} {r.s.label} · {dmy(r.o.at)}
+            <span className="qcard__hacts">
+              <button type="button" className="btn btn--sm" onClick={() => bold(r.o)} disabled={busy === r.o.id} title="Zaroori shabd bold karwao (DeepSeek)">
+                {busy === r.o.id ? "…" : "🐋"}
+              </button>
+              <button type="button" className="btn btn--sm" onClick={() => onDelete(r.o.id)} title="Hata do">🗑️</button>
+            </span>
+          </h2>
+          <div className="qcard__stem"><M t={r.title} /></div>
+          <div className="qcard__answer">
+            {r.lines.map((l, j) => (
+              <p key={j} className={l.n ? "olx-num" : "olx-sub"} style={{ margin: "0 0 4px" }}>
+                {l.n ? <b>{l.n}. </b> : null}
+                <M t={l.t} />
+              </p>
+            ))}
+            {r.trick.map((l, j) => <div key={j} className="olx-trick"><M t={l} /></div>)}
+          </div>
+        </article>
+      )}
+    />
   );
 }

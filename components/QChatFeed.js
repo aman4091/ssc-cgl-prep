@@ -20,7 +20,7 @@ function readPicks(k) {
   try { const v = JSON.parse(localStorage.getItem(k) || "{}"); return v && typeof v === "object" ? v : {}; } catch { return {}; }
 }
 
-export default function QChatFeed({ title, list, renderCard, storeKey = "default", jumpIndex = -1, belowAnchor = false, onNeedMore, noJump = false, wide = false }) {
+export default function QChatFeed({ title, list, renderCard, storeKey = "default", jumpIndex = -1, belowAnchor = false, onNeedMore, noJump = false, wide = false, unit = "questions" }) {
   const KEY = `cgl.qfeed.${storeKey}`;
   const [n, setN] = useState(STEP);
   const [pos, setPos] = useState({ left: null, top: 0, bottom: 0 });
@@ -129,7 +129,7 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
       <div className="qfeed" style={style}>
         <div className="qfeed__head">
           <b>💬 {title}</b>
-          {onNeedMore ? <span className="qfeed__n" /> : <span className="qfeed__n">{list.length} questions</span>}
+          {onNeedMore ? <span className="qfeed__n" /> : <span className="qfeed__n">{list.length} {unit}</span>}
           {noJump ? null : <button type="button" className="qfeed__jump" onClick={jump} title="Jahan tak lagaye, uske baad wala question">⏭</button>}
         </div>
         <div className="qfeed__body" ref={body} onScroll={more}>

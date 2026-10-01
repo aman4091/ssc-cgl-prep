@@ -27,6 +27,7 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "./paste.css";
 import OneLinerNotes from "@/components/OneLinerNotes";
+import QChatFeed from "@/components/QChatFeed";
 import { countOneLiner } from "@/lib/onelinerfmt";
 import { formatOneLiner } from "@/lib/client-ai";
 import { saveNote, removeNote, notesByBook, bookLabel } from "@/lib/pastednotes";
@@ -55,12 +56,10 @@ function Note({ n, onGone }) {
   };
 
   return (
-    <article className="pn-note">
-      <div className="pn-note__hd">
-        <h3 className="pn-note__t">
-          {n.topic || "—"}
-          <span className="pn-dim"> · page {n.page} · {c.n} point{c.star ? ` · ⭐ ${c.star}` : ""}</span>
-        </h3>
+    <article className="qcard qcard--chat pn-chat">
+      <h2 className="qcard__h">
+        {n.bookTitle || n.book || "Notes"} · page {n.page} · {c.n} point{c.star ? ` · ⭐ ${c.star}` : ""}
+        <span className="qcard__hacts pn-acts">
         {/* 📔 Seedha us page ke notes par. */}
         {n.book ? (
           <Link
@@ -93,12 +92,14 @@ function Note({ n, onGone }) {
           title="Ye note hatao"
           onClick={() => { if (window.confirm("Ye note hata dein?")) { removeNote(n.k); onGone(); } }}
         >🗑️</button>
-      </div>
+        </span>
+      </h2>
+      <div className="qcard__stem">{n.topic || "—"}</div>
 
       {err ? <div className="pn-err">⚠️ {err}</div> : null}
 
       {edit ? (
-        <div className="pn-edit">
+        <div className="pn-edit qcard__answer">
           <textarea rows={12} value={draft} onChange={(e) => setDraft(e.target.value)} />
           <div className="row" style={{ gap: 8 }}>
             <button type="button" className="btn btn--primary btn--sm" onClick={() => { saveNote(n, draft); setEdit(false); onGone(); }}>
@@ -110,7 +111,7 @@ function Note({ n, onGone }) {
           </div>
         </div>
       ) : (
-        <OneLinerNotes text={n.text} />
+        <div className="qcard__answer"><OneLinerNotes text={n.text} /></div>
       )}
     </article>
   );
@@ -241,13 +242,17 @@ export default function PasteNotesPage() {
       </div>
 
       {pager}
-      {shown.map((g) => (
-        <div key={g.book}>
-          {!book && groups.length > 1 && <h2 className="pn-bookt">{g.eyebrow || g.title}</h2>}
-          {g.items.map((n) => <Note key={n.k} n={n} onGone={reload} />)}
-        </div>
-      ))}
-      {pager}
+      {/* 💬 Chat wali window — saare page ek ke neeche ek (patti upar dikhti rehti hai). */}
+      <QChatFeed
+        key={`${book}|${note}`}
+        title={oneBook ? `📝 ${bookLabel(oneBook)}` : book ? `📝 ${(shown[0] && (shown[0].eyebrow || shown[0].title)) || "Notesliner"}` : "📝 Notesliner"}
+        list={shown.flatMap((g) => g.items.map((n) => ({ ...n, id: n.k })))}
+        storeKey={`notesliner.${book || "all"}`}
+        belowAnchor
+        noJump
+        unit="page"
+        renderCard={(n) => <Note key={n.k} n={n} onGone={reload} />}
+      />
     </section>
   );
 }

@@ -627,3 +627,7 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 .fsq-acts { display: flex; justify-content: flex-end; }
 .fsq-ans { margin-top: 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 14px 14px 14px 4px; background: var(--glass-bg); font-size: 0.9rem; line-height: 1.6; }
 .fsq-right { margin: 0 0 6px; color: var(--ok); font-weight: 700; }
+.qcard__acts .fsq { flex-basis: 100%; order: 9; text-align: left; }
+/* Notesliner ke note ke button — chat window ki patti mein chhote */
+.pn-chat .pn-acts .pn-x, .pn-chat .pn-acts button, .pn-chat .pn-acts a { font-size: 0.78rem; padding: 3px 8px; }
+.pn-chat .qcard__answer textarea { width: 100%; box-sizing: border-box; }

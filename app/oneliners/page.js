@@ -17,7 +17,7 @@
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getOneLiners, removeOneLiner, clearOneLiners, OL_SUBS } from "@/lib/oneliners";
-import OneLinersInbox from "@/components/OneLinersInbox";
+import { OneLinersChat } from "@/components/OneLinersInbox";
 import "./inbox.css";
 
 // Menu se seedha subject: /oneliners?sub=gs. Chips wahi ke wahi hain — ye
@@ -94,7 +94,8 @@ function OneLinersInner() {
               : "Is chhaan-been mein kuch nahi mila."}
           </div>
         ) : (
-          <OneLinersInbox key={`${sub}|${q}`} items={shown} onDelete={drop} onChange={load} />
+          // 💬 Chat wali window (pehle Inbox — baayen list, daayen ek line).
+          <OneLinersChat key={`${sub}|${q}`} items={shown} onDelete={drop} onChange={load} />
         )}
       </section>
     </>
