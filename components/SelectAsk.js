@@ -389,30 +389,65 @@ export default function SelectAsk() {
   }, [open, imgWanted, sel, fetchImgs]);
 
   // ── sawaal ─────────────────────────────────────────────────────────────
-  const runAsk = useCallback(async (text) => {
-    if (!text || busy) return;
-    const history = msgs;
-    setMsgs((m) => [...m, { role: "user", text }]);
-    setErr("");
-    setBusy(true);
-    let answer = "";
-    try {
-      const r = await askSelection({ selection: sel, question: text, subject, history });
-      answer = r.answer;
-    } catch (e) {
-      setErr(e.message);
-      setBusy(false);
-      return;
+  // ── 🐋 Queue: sawaal line mein lagte hain, jawab ek-ek karke peechhe ──────
+  // Har sawaal ke saath us waqt saamne wala question (sq) bhi yaad — jawab
+  // aane par "⭐ Is question ka jawab bana do" USI par lagta hai, latest par
+  // nahi. Beech mein nayi baatcheet khol di to jawab purani baatcheet mein
+  // jaata hai (asklog).
+  const tidRef = useRef(tid); tidRef.current = tid;
+  const sqRef = useRef(sq); sqRef.current = sq;
+  const jobs = useRef([]);
+  const working = useRef(false);
+  const [queued, setQueued] = useState(0);
+
+  const pump = useCallback(async () => {
+    if (working.current) return;
+    working.current = true;
+    while (jobs.current.length) {
+      setQueued(jobs.current.length);
+      setBusy(true);
+      const j = jobs.current[0];
+      let answer = "", error = "";
+      try {
+        const r = await askSelection({ selection: j.sel, question: j.text, subject: j.subject, history: j.history });
+        answer = r.answer;
+      } catch (e) { error = e.message || "Jawab nahi aaya"; }
+      jobs.current.shift();
+      const fill = (m) => (m.mid === j.mid && m.pending ? { ...m, pending: false, text: answer || `⚠️ ${error}`, err: !answer } : m);
+      if (tidRef.current === j.tid) {
+        setMsgs((ms) => {
+          const next = ms.map(fill);
+          const at = next.findIndex((m) => m.mid === j.mid);
+          if (answer && at >= 0) setTimeout(() => fetchImgs(at, imageQueryFor(j.text === AUTO_Q ? "" : j.text, j.sel)), 0);
+          return next;
+        });
+      } else {
+        // Purani baatcheet — sambhali hui copy mein jawab bhar do.
+        const t = getThreads().find((x) => x.id === j.tid);
+        if (t) {
+          const ms = t.msgs || [];
+          const has = ms.some((m) => m.mid === j.mid);
+          saveThread({ ...t, msgs: has ? ms.map(fill) : [...ms, { role: "assistant", text: answer || `⚠️ ${error}`, mid: j.mid, q: j.q, ...(answer ? {} : { err: true }) }] });
+        }
+        setOld(getThreads());
+      }
     }
+    setQueued(0);
     setBusy(false);
-    setMsgs((m) => {
-      const next = [...m, { role: "assistant", text: answer }];
-      // Apne aap wale sawaal ("Isko samjhao…") mein koi naam hota hi nahi —
-      // uske liye seedha wahi text jo chuna gaya tha.
-      setTimeout(() => fetchImgs(next.length - 1, imageQueryFor(text === AUTO_Q ? "" : text, sel)), 0);
-      return next;
-    });
-  }, [busy, msgs, sel, subject, fetchImgs]);
+    working.current = false;
+  }, [fetchImgs]);
+
+  const runAsk = useCallback((text) => {
+    if (!text) return;
+    const mid = `m_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+    const qNow = sqRef.current || null;
+    const history = msgs.filter((m) => !m.pending);
+    setMsgs((m) => [...m, { role: "user", text, mid: mid + "u" }, { role: "assistant", text: "", pending: true, mid, q: qNow }]);
+    setErr("");
+    jobs.current.push({ mid, tid: tidRef.current, sel, subject, history, text, q: qNow });
+    setQueued(jobs.current.length);
+    pump();
+  }, [msgs, sel, subject, pump]);
 
   const send = useCallback(() => {
     const text = q.trim();
@@ -532,6 +567,13 @@ export default function SelectAsk() {
                     <div key={i}>
                       {m.role === "assistant" ? <div className="sa-msg sa-msg--ai"><Markdown>{m.text}</Markdown></div> : null}
                       {m.role === "assistant" ? <ClusterButton md={m.text} subject={t.subject || "gs"} /> : null}
+                      {m.role === "assistant" && m.q && !m.pending ? (
+                        <button type="button" className="sa-setdef" onClick={() => { putAns(m.q, m.text); setSetAsDef(m.mid); }}>
+                          {setAsDef === m.mid ? "✓ Is question ka jawab ban gaya" : "⭐ Is question ka jawab bana do"}
+                          <span className="sa-setdef__q"> · {sprintQText(m.q).replace(/^\[[^\]]*\]\s*/, "").slice(0, 40)}…</span>
+                        </button>
+                      ) : null}
+
                       <Strip m={m} onOpen={openLight} />
                     </div>
                   )
@@ -560,26 +602,31 @@ export default function SelectAsk() {
                 <div key={i} className="sa-msg sa-msg--me">{m.text}</div>
               ) : (
                 <div key={i}>
-                  {m.role === "assistant" ? (
+                  {m.role === "assistant" && m.pending ? (
+                    <div className="sa-note">🐋 {msgs.findIndex((x) => x.pending) === i ? "soch raha hai…" : "line mein — pehle wale ke baad"}</div>
+                  ) : null}
+                  {m.role === "assistant" && !m.pending ? (
                     <div className="sa-msg sa-msg--ai"><Markdown>{m.text}</Markdown></div>
                   ) : null}
                   {/* 🧩 Jawab mein cluster ho to seedha Fact log mein. */}
-                  {m.role === "assistant" ? <ClusterButton md={m.text} subject={subject || "gs"} /> : null}
-                  {m.role === "assistant" && sq ? (
+                  {m.role === "assistant" && !m.pending && !m.err ? <ClusterButton md={m.text} subject={subject || "gs"} /> : null}
+                  {/* ⭐ Jis question par poochha tha USI par — m.q (us waqt ka). */}
+                  {m.role === "assistant" && !m.pending && !m.err && (m.q || sq) ? (
                     <button
                       type="button"
                       className="sa-setdef"
-                      title={`Sprint ke is question par lag jayega: ${sprintQText(sq).slice(0, 80)}`}
-                      onClick={() => { putAns(sq, m.text); setSetAsDef(i); }}
+                      title={`Is question par lagega: ${sprintQText(m.q || sq).slice(0, 80)}`}
+                      onClick={() => { putAns(m.q || sq, m.text); setSetAsDef(m.mid || i); }}
                     >
-                      {setAsDef === i ? "✓ Is question ka jawab ban gaya" : "⭐ Is question ka jawab bana do"}
+                      {setAsDef === (m.mid || i) ? "✓ Is question ka jawab ban gaya" : "⭐ Is question ka jawab bana do"}
+                      {m.q ? <span className="sa-setdef__q"> · {sprintQText(m.q).replace(/^\[[^\]]*\]\s*/, "").slice(0, 40)}…</span> : null}
                     </button>
                   ) : null}
                   <Strip m={m} onOpen={openLight} />
                 </div>
               )
             ))}
-            {busy ? <div className="sa-note">🐋 soch raha hai…</div> : null}
+            {queued > 1 ? <div className="sa-note">🐋 {queued} sawaal line mein — ek-ek karke ban rahe hain</div> : null}
             {err ? <div className="sa-err">⚠️ {err}</div> : null}
           </div>
 
@@ -594,8 +641,8 @@ export default function SelectAsk() {
                 if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); }
               }}
             />
-            <button type="button" className="sa-send" onClick={send} disabled={busy || !q.trim()}>
-              {busy ? "…" : "Bhejo"}
+            <button type="button" className="sa-send" onClick={send} disabled={!q.trim()}>
+              Bhejo
             </button>
           </div>
         </aside>
