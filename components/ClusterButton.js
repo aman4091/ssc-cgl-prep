@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { addFact, getFacts } from "@/lib/missionfacts";
 import { clustersOf, factOf, clusterKey } from "@/lib/clusterparse";
+import { autoTidyFacts } from "@/lib/facttidy";
 
 // 🧩 GS answer ke CLUSTER → fact log.
 //
@@ -47,6 +48,8 @@ export default function ClusterButton({ md, subject, onFlash }) {
     const fresh = arr.filter((c) => !have.has(clusterKey(c)));
     if (!fresh.length) return;
     for (const c of fresh) addFact(factOf(c));
+    // 🧹 Naya fact aate hi uski saaf shakl bhi — peechhe, apne aap.
+    autoTidyFacts();
     setHave((h) => new Set([...h, ...fresh.map(clusterKey)]));
     onFlash && onFlash(
       fresh.length === 1

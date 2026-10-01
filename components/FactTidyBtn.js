@@ -17,12 +17,7 @@ import { getFacts, setFactFmt, clearFactFmt } from "@/lib/missionfacts";
 // wahi saved shakl dikhti hai. "↩ asli" se hata bhi sakte ho.
 // Jo pehle se theek hai use bhejna hi nahi — ek chhoti ya pehle se
 // line-dar-line entry par button aata hi nahi, to uska paisa bhi nahi lagta.
-function needsTidy(f) {
-  const t = String((f && f.text) || "").trim();
-  if (!t || t.length < 140) return false;                       // chhota hai, padh lo
-  if (t.indexOf(String.fromCharCode(10)) >= 0) return false;    // pehle se alag lines
-  return true;                                                  // ek chipka hua paragraph
-}
+import { needsTidy } from "@/lib/facttidy";
 
 export default function FactTidyBtn({ id, onDone }) {
   const [busy, setBusy] = useState(false);

@@ -7,6 +7,7 @@ import { clearSession } from "@/lib/recallsession";
 import Recall from "@/components/carevision/Recall";
 import TrickButtons from "@/components/TrickButtons";
 import FactTidyBtn from "@/components/FactTidyBtn";
+import { autoTidyFacts } from "@/lib/facttidy";
 import FactFolders from "@/components/FactFolders";
 import "./folders.css";
 
@@ -73,7 +74,9 @@ export default function MissionFactsPage() {
   const load = () => setFacts(getFacts());
   useEffect(() => {
     load();
-    const on = () => load();
+    // 🧹 Chipke hue facts apne aap saaf — ek-ek karke, peechhe (lib/facttidy).
+    autoTidyFacts();
+    const on = () => { load(); autoTidyFacts(); };
     window.addEventListener("cgl:mission-changed", on);
     window.addEventListener("cgl:sync-applied", on);
     return () => { window.removeEventListener("cgl:mission-changed", on); window.removeEventListener("cgl:sync-applied", on); };
