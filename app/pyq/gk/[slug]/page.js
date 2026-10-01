@@ -98,6 +98,7 @@ export default function GkTopicPage() {
             list={qs}
             subject={topic?.subject || "gs"}
             resumeKey={resumeKey}
+            chatLook={/medi/i.test(topic?.label || topic?.chapter || "")}
             renderCard={(q, i, all) => (
               <PyqQuestionCard
                 resumeKey={resumeKey}
