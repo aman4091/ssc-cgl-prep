@@ -28,6 +28,19 @@ import { useExamMode } from "./ExamMode";
 // quiz nahi hai), yahan question attempt karne ki cheez hai — isliye answer ka
 // block hamesha maujood hai par option chunne tak (ya 👁️ dabane tak) andar
 // "Answer dekho" likha rehta hai. 👁️ se koi attempt record nahi hota.
+// 💬 Chat wali window: "⚡ a · b · c" ek line mein chipka aata hai — har
+// baat apni line par. Baaki jawab jaisa hai waisa.
+function zapLines(md) {
+  return String(md || "").split("\n").map((line) => {
+    if (/^\s*#{0,4}\s*🧩/.test(line)) return line + "\n";   // 🧩 naam apni line par
+    const m = /^\s*(?:\*\*)?⚡(?:\*\*)?\s*(.*)$/.exec(line);
+    if (!m) return line;
+    const parts = m[1].split(/\s+·\s+/).map((x) => x.trim()).filter(Boolean);
+    if (parts.length < 2) return line;
+    return "\n⚡\n\n" + parts.map((x) => `- ${x}`).join("\n") + "\n";
+  }).join("\n");
+}
+
 export default function PyqQuestionCard({ q, index, extraActions, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, forceAnswer, chatLook, savedPick, savedHidden, onPickSave, onClearSave, onHideSave }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
@@ -359,7 +372,7 @@ Options: ${opts}
               Cluster section na ho to button dikhta hi nahi. */}
           <ClusterButton md={solution} subject={subject} onFlash={setFlash} />
           <PointsButton md={solution} src={chapterName} onFlash={setFlash} />
-          {solution ? <Markdown>{solution}</Markdown> : (
+          {solution ? <Markdown>{chatLook ? zapLines(solution) : solution}</Markdown> : (
             <span style={{ color: "var(--text-3)", fontStyle: "italic" }}>
               Is question ka explanation abhi nahi hai — ✨ Gemini se laa kar paste kar do.
             </span>
