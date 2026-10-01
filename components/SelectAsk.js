@@ -331,10 +331,13 @@ export default function SelectAsk() {
     };
   }, [open, light, dock]);
 
-  // Latest hamesha neeche — naya sandesh aaya ya panel khula to neeche tak.
+  // Neeche tak sirf tab jab TUM sawaal bhejo, panel khule ya baatcheet badle.
+  // Line wale jawab peechhe bante waqt khud neeche nahi khichte — jo padh
+  // rahe ho wahin rehta hai.
+  const [sentTick, setSentTick] = useState(0);
   useEffect(() => {
     if (msgsRef.current) msgsRef.current.scrollTop = msgsRef.current.scrollHeight;
-  }, [msgs, busy, open, tid]);
+  }, [sentTick, open, tid]);
 
   useEffect(() => { setOld(getThreads()); }, []);
   useEffect(() => {
@@ -442,6 +445,7 @@ export default function SelectAsk() {
     const mid = `m_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
     const qNow = sqRef.current || null;
     const history = msgs.filter((m) => !m.pending);
+    setSentTick((x) => x + 1);
     setMsgs((m) => [...m, { role: "user", text, mid: mid + "u" }, { role: "assistant", text: "", pending: true, mid, q: qNow }]);
     setErr("");
     jobs.current.push({ mid, tid: tidRef.current, sel, subject, history, text, q: qNow });
