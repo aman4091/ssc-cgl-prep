@@ -587,7 +587,7 @@ export default function SelectAsk() {
                   ) : (
                     <div key={i}>
                       {m.role === "assistant" ? <div className="sa-msg sa-msg--ai"><Markdown>{m.text}</Markdown></div> : null}
-                      {m.role === "assistant" ? <ClusterButton md={m.text} subject={t.subject || "gs"} /> : null}
+                      {m.role === "assistant" ? <ClusterButton md={m.text} subject={t.subject || "gs"} srcQ={m.q} /> : null}
                       {m.role === "assistant" && m.q && !m.pending ? (
                         <button type="button" className="sa-setdef" onClick={() => { putAns(m.q, m.text); setSetAsDef(m.mid); }}>
                           {setAsDef === m.mid ? "✓ Is question ka jawab ban gaya" : "⭐ Is question ka jawab bana do"}
@@ -630,7 +630,7 @@ export default function SelectAsk() {
                     <div className="sa-msg sa-msg--ai"><Markdown>{m.text}</Markdown></div>
                   ) : null}
                   {/* 🧩 Jawab mein cluster ho to seedha Fact log mein. */}
-                  {m.role === "assistant" && !m.pending && !m.err ? <ClusterButton md={m.text} subject={subject || "gs"} /> : null}
+                  {m.role === "assistant" && !m.pending && !m.err ? <ClusterButton md={m.text} subject={subject || "gs"} srcQ={m.q} /> : null}
                   {/* ⭐ Jis question par poochha tha USI par — m.q (us waqt ka). */}
                   {m.role === "assistant" && !m.pending && !m.err && (m.q || sq) ? (
                     <button

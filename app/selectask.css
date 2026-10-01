@@ -551,3 +551,26 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 .qfeed .qcard.qcard--chat.qcard--chat .qcard__answer--empty { display: none; }
 .qfeed .qcard.qcard--chat.qcard--chat .qcard__h { border-bottom: 0; background: transparent; }
 .qfeed .qcard.qcard--chat.qcard--chat > .qcard__acts { background: transparent; border: 0; padding: 0; }
+
+/* ❓ Fact log — fact jis question se aaya (components/FactSrcBtn) */
+.fsq-btn {
+  margin-top: 8px;
+  border: 1px solid var(--line);
+  background: var(--glass-bg);
+  color: var(--text-1);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.fsq-btn:hover { border-color: var(--accent); color: var(--accent); }
+.fsq { margin-top: 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2, var(--bg-1)); }
+.fsq-q { font-size: 0.92rem; line-height: 1.6; margin-bottom: 8px; }
+.fsq-img { max-width: 100%; border-radius: 8px; margin-bottom: 8px; }
+.fsq-opts { display: grid; gap: 6px; }
+.fsq-opt { text-align: left; padding: 7px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg-1); color: var(--text-1); font: inherit; font-size: 0.88rem; cursor: pointer; }
+.fsq-opt b { opacity: 0.7; margin-right: 6px; }
+.fsq-opt.is-right { border-color: var(--ok); background: var(--ok-wash); }
+.fsq-opt.is-wrong { border-color: var(--bad); background: var(--bad-wash); }

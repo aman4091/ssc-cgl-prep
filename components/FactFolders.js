@@ -10,6 +10,7 @@
 
 import { useMemo, useState } from "react";
 import { FACT_SECS, GAPS, factView, reviewFact, removeFact } from "@/lib/missionfacts";
+import FactSrcBtn from "./FactSrcBtn";
 import { dayKey } from "@/lib/daytime";
 import { answerPoints } from "@/components/carevision/Recall";
 
@@ -33,6 +34,7 @@ function toModel(f, today) {
     body, pts: answerPoints(body),
     stage: done ? "Pakka 🏁" : `D+${GAPS[f.step]}`,
     isDue: !done && !!f.due && f.due <= today,
+    src: f.src || null,
   };
 }
 
@@ -81,6 +83,8 @@ export default function FactFolders({ facts, onChange }) {
               {m.pts
                 ? <ul className="ffd-pts">{m.pts.map((p, i) => <li key={i}>{p.head ? <><b>{p.head}</b> — </> : null}{p.rest}</li>)}</ul>
                 : <p className="ffd-txt">{m.body}</p>}
+              {/* ❓ Ye fact jis question se aaya — yahin khulta hai. */}
+              <FactSrcBtn src={m.src} />
               {m.isDue && (
                 <span className="ffd-rate">
                   <button type="button" className="is-y" onClick={() => rate(m.id, true)}>✓ Aata tha</button>

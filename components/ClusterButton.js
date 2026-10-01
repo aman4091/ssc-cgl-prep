@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { addFact, getFacts } from "@/lib/missionfacts";
+import { addFact, getFacts, srcOf } from "@/lib/missionfacts";
 import { clustersOf, factOf, clusterKey } from "@/lib/clusterparse";
 import { autoTidyFacts } from "@/lib/facttidy";
 
@@ -16,7 +16,8 @@ import { autoTidyFacts } from "@/lib/facttidy";
 // Purane format ke saved answers bhi chalte hain (lib/clusterparse dono
 // padhta hai) — wahan prose hota hi nahi tha, sirf ⚡ jaisi ek line.
 
-export default function ClusterButton({ md, subject, onFlash }) {
+// srcQ — jis question ke jawab se cluster aaya; fact ke saath yaad rehta hai.
+export default function ClusterButton({ md, subject, onFlash, srcQ }) {
   // GS ke jawab par bina "🧩" wale paragraph bhi cluster maane jaate hain —
   // AI aksar format bhool jata hai, aur tab tak button hi nahi aata tha.
   // Maths/Reasoning/English ke jawab par ye nahi: wahan poora solution hota
@@ -47,7 +48,8 @@ export default function ClusterButton({ md, subject, onFlash }) {
   const add = (arr) => {
     const fresh = arr.filter((c) => !have.has(clusterKey(c)));
     if (!fresh.length) return;
-    for (const c of fresh) addFact(factOf(c));
+    const src = srcOf(srcQ);
+    for (const c of fresh) addFact({ ...factOf(c), ...(src ? { src } : {}) });
     // 🧹 Naya fact aate hi uski saaf shakl bhi — peechhe, apne aap.
     autoTidyFacts();
     setHave((h) => new Set([...h, ...fresh.map(clusterKey)]));

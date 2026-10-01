@@ -299,7 +299,7 @@ Options: ${opts}
           </p>
           {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
           {/* Jawab ka 🧩 CLUSTER seedha Fact log mein — Answers page wala button. */}
-          <ClusterButton md={solution} subject={subject} onFlash={setFlash} />
+          <ClusterButton md={solution} subject={subject} onFlash={setFlash} srcQ={q} />
           <PointsButton md={solution} src={chapterName} onFlash={setFlash} />
           {solution ? (
             <Markdown>{solution}</Markdown>

@@ -354,7 +354,7 @@ Options: ${opts}
         <p className="qcard__note">⚠ Is question ki answer-key source mein nahi thi — ye kisi ginti mein nahi aata.</p>
       )}
 
-      {flash && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
+      {flash && !chatLook && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
       {(err || dsq.err) && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err || dsq.err}</p>}
 
       {/* ANSWER — Answers page ki tarah apne block mein, sabse neeche. Block
@@ -370,7 +370,7 @@ Options: ${opts}
           {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
           {/* Answers page wala button — jawab ka 🧩 CLUSTER seedha Fact log mein.
               Cluster section na ho to button dikhta hi nahi. */}
-          <ClusterButton md={solution} subject={subject} onFlash={setFlash} />
+          <ClusterButton md={solution} subject={subject} onFlash={setFlash} srcQ={q} />
           <PointsButton md={solution} src={chapterName} onFlash={setFlash} />
           {solution ? <Markdown>{chatLook ? zapLines(solution) : solution}</Markdown> : (
             <span style={{ color: "var(--text-3)", fontStyle: "italic" }}>
