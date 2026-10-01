@@ -28,12 +28,17 @@ const SUBJECTS = {
 
 export async function POST(req) {
   try {
-    const { selection, question, subject, history, apiKey, model, baseUrl } = await req.json();
+    const { selection, question, subject, history, customPrompt, apiKey, model, baseUrl } = await req.json();
     const q = String(question || "").trim();
     const sel = String(selection || "").trim();
     if (!q) return Response.json({ error: "Sawaal khaali hai." }, { status: 400 });
 
-    let system = SYS;
+    // GS / English: Settings ka owner wala prompt (client bhejta hai) — wahi
+    // asli niyam; bas itna batate hain ki ye selected text par baatcheet hai.
+    const cp = String(customPrompt || "").trim();
+    let system = cp
+      ? `${cp}\n\n(Student ne site par se ek text select kiya hai aur usi par sawaal poochh raha hai — aage ke chhote sawaalon ka jawab bhi isi shakl mein do.)`
+      : SYS;
     if (subject && SUBJECTS[subject]) {
       system = `Ye ${SUBJECTS[subject]} ka maamla hai — usi subject ke hisaab se jawab do.\n\n` + system;
     }
