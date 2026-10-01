@@ -28,7 +28,7 @@ import { useExamMode } from "./ExamMode";
 // quiz nahi hai), yahan question attempt karne ki cheez hai — isliye answer ka
 // block hamesha maujood hai par option chunne tak (ya 👁️ dabane tak) andar
 // "Answer dekho" likha rehta hai. 👁️ se koi attempt record nahi hota.
-export default function PyqQuestionCard({ q, index, extraActions, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, forceAnswer, chatLook, savedPick, onPickSave, onClearSave }) {
+export default function PyqQuestionCard({ q, index, extraActions, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, forceAnswer, chatLook, savedPick, savedHidden, onPickSave, onClearSave, onHideSave }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -46,7 +46,7 @@ export default function PyqQuestionCard({ q, index, extraActions, subject, resum
   // laga rehta hai jab tak 🧹 Clear na karo (components/QChatFeed).
   const [picked, setPicked] = useState(exam?.pick ?? (savedPick ?? null));
   const [revealed, setRevealed] = useState(savedPick != null);
-  const [ansHidden, setAnsHidden] = useState(false);   // 🙈 — khula jawab phir chhupao
+  const [ansHidden, setAnsHidden] = useState(!!savedHidden);   // 🙈 — khula jawab phir chhupao (yaad bhi rehta hai)
   const [shortcut, setShortcut] = useState("");
   const [scShown, setScShown] = useState(false);
   const [scLoading, setScLoading] = useState(false);
@@ -96,6 +96,7 @@ export default function PyqQuestionCard({ q, index, extraActions, subject, resum
     if (locked) { exam?.onPick?.(oi, correct); return; }
     setRevealed(true);
     setAnsHidden(false);
+    onHideSave?.(false);
     onPickSave?.(oi);
     if (resumeKey) setResume(resumeKey, index);
     if (!recorded) {
@@ -317,10 +318,10 @@ Options: ${opts}
           wala kram toot jata hai. */}
       <div className="qcard__acts">
         {(!shown || ansHidden) && (
-          <button className="btn" onClick={() => { setPeek(true); setAnsHidden(false); }} title="Bina attempt kiye answer dekho">👁️ Answer</button>
+          <button className="btn" onClick={() => { setPeek(true); setAnsHidden(false); onHideSave?.(false); }} title="Bina attempt kiye answer dekho">👁️ Answer</button>
         )}
         {chatLook && shown && !ansHidden && (
-          <button className="btn" onClick={() => setAnsHidden(true)} title="Jawab phir chhupao">🙈 Chhupao</button>
+          <button className="btn" onClick={() => { setAnsHidden(true); onHideSave?.(true); }} title="Jawab phir chhupao">🙈 Chhupao</button>
         )}
         {chatLook && (picked !== null || peek || revealed) && (
           <button className="btn" onClick={clearPick} title="Laga hua answer hatao — sawaal phir se naya">🧹 Clear</button>

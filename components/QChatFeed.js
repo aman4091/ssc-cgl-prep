@@ -36,6 +36,15 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
     try { localStorage.setItem(KEY, JSON.stringify(all)); } catch { /* quota */ }
     setPicks(all);
   }, [KEY]);
+  // 🙈 jo chhupaye — reload ke baad bhi chhupe rahein.
+  const HKEY = `${KEY}.hid`;
+  const [hid, setHid] = useState(() => (typeof window === "undefined" ? {} : readPicks(HKEY)));
+  const saveHid = useCallback((id, on) => {
+    const all = readPicks(HKEY);
+    if (on) all[id] = 1; else delete all[id];
+    try { localStorage.setItem(HKEY, JSON.stringify(all)); } catch { /* quota */ }
+    setHid(all);
+  }, [HKEY]);
 
   // Kahan baithe: desktop par sidebar aur chat ke beech; tablet / split
   // window mein beech mein par upar ki patti (☰) ke neeche; phone par poori
@@ -114,8 +123,10 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
             const id = idOf(q, i);
             return renderCard(q, i, {
               savedPick: picks[id] ?? null,
+              savedHidden: !!hid[id],
               onPickSave: (oi) => savePick(id, oi),
-              onClearSave: () => savePick(id, null),
+              onClearSave: () => { savePick(id, null); saveHid(id, false); },
+              onHideSave: (on) => saveHid(id, on),
             });
           })}
           <div className="qfeed__end">{n < list.length ? "…" : "— bas, saare ho gaye —"}</div>
