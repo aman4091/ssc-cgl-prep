@@ -42,6 +42,7 @@ import { putAns, qText as sprintQText } from "@/lib/sprint";
 import { addOneLiner, OL_SUBS } from "@/lib/oneliners";
 import { addPair, readPending, setPending } from "@/lib/culturepairs";
 import { StaticsPaste, askGeminiStatics } from "./StaticsInfo";
+import ClusterButton from "./ClusterButton";
 
 // 💬 Poochho dabate hi yahi sawaal apne aap chala jata hai — pehle kuch
 // likhna nahi padta.
@@ -530,6 +531,7 @@ export default function SelectAsk() {
                   ) : (
                     <div key={i}>
                       {m.role === "assistant" ? <div className="sa-msg sa-msg--ai"><Markdown>{m.text}</Markdown></div> : null}
+                      {m.role === "assistant" ? <ClusterButton md={m.text} subject={t.subject || "gs"} /> : null}
                       <Strip m={m} onOpen={openLight} />
                     </div>
                   )
@@ -561,6 +563,8 @@ export default function SelectAsk() {
                   {m.role === "assistant" ? (
                     <div className="sa-msg sa-msg--ai"><Markdown>{m.text}</Markdown></div>
                   ) : null}
+                  {/* 🧩 Jawab mein cluster ho to seedha Fact log mein. */}
+                  {m.role === "assistant" ? <ClusterButton md={m.text} subject={subject || "gs"} /> : null}
                   {m.role === "assistant" && sq ? (
                     <button
                       type="button"
