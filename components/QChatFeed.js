@@ -20,7 +20,7 @@ function readPicks(k) {
   try { const v = JSON.parse(localStorage.getItem(k) || "{}"); return v && typeof v === "object" ? v : {}; } catch { return {}; }
 }
 
-export default function QChatFeed({ title, list, renderCard, storeKey = "default", jumpIndex = -1, belowAnchor = false, onNeedMore, noJump = false }) {
+export default function QChatFeed({ title, list, renderCard, storeKey = "default", jumpIndex = -1, belowAnchor = false, onNeedMore, noJump = false, wide = false }) {
   const KEY = `cgl.qfeed.${storeKey}`;
   const [n, setN] = useState(STEP);
   const [pos, setPos] = useState({ left: null, top: 0, bottom: 0 });
@@ -67,6 +67,7 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
       const fr = ft ? ft.getBoundingClientRect() : null;
       if (fr && fr.height && fr.top < window.innerHeight) bottom = Math.max(0, Math.round(window.innerHeight - fr.top));
       let left = null;
+      let width = null;
       if (vw >= 600) {
         const r = a.getBoundingClientRect();
         // DeepSeek chat khula ho (docked ho ya upar tairta) to uske baayen hi.
@@ -74,9 +75,12 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
         const pr = panel ? panel.getBoundingClientRect() : null;
         const right = vw >= 1100 && pr && pr.width ? Math.min(r.right, pr.left) : (vw >= 1100 ? r.right : vw);
         const lo = vw >= 1100 ? Math.max(0, r.left) : 0;
-        left = Math.round(Math.max(lo, Math.min(right - W, (lo + right) / 2 - W / 2)));
+        // Tasveer wale question (Maths / Reasoning) — window chaudi, jitni jagah ho.
+        const w = wide ? Math.max(W, Math.min(760, right - lo - 72)) : W;
+        width = w;
+        left = Math.round(Math.max(lo, Math.min(right - w, (lo + right) / 2 - w / 2)));
       }
-      setPos((p) => (p.left === left && p.top === top && p.bottom === bottom ? p : { left, top, bottom }));
+      setPos((p) => (p.left === left && p.top === top && p.bottom === bottom && p.width === width ? p : { left, top, bottom, width }));
     };
     place();
     window.addEventListener("resize", place);
@@ -85,7 +89,7 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
     mo.observe(document.body, { attributes: true, attributeFilter: ["class"] });
     const t = setInterval(place, 700);
     return () => { window.removeEventListener("resize", place); window.removeEventListener("scroll", place, true); mo.disconnect(); clearInterval(t); };
-  }, []);
+  }, [wide, belowAnchor]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Neeche pahunchne se pehle hi agle 30 — scroll par naap kar.
   const more = () => {
@@ -117,6 +121,7 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
 
   const style = { top: pos.top, bottom: pos.bottom };
   if (pos.left != null) style.left = pos.left;
+  if (pos.width != null) style.width = pos.width;
 
   return (
     <>

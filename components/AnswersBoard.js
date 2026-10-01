@@ -32,8 +32,7 @@ import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
 import Gemini20 from "./Gemini20";
 import PointsButton from "./PointsButton";
-import AnswersDoPane from "./AnswersLayouts"; // eslint-disable-line no-unused-vars
-import QChatFeed from "./QChatFeed";
+import AnswersDoPane from "./AnswersLayouts";
 import { markDoneRev } from "@/lib/ansrev";
 import "./answers-layouts.css";
 
@@ -817,9 +816,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     setTimeout(() => setFlash(""), 5000);
   }, []);
 
-  // Chat window ka kram — purana sabse upar, aaj wala sabse neeche.
-  const chatRows = useMemo(() => [...list].sort((a, b) => String(a.at).localeCompare(String(b.at))), [list]);
-
   // Ek card — list mein bhi aur 🔍 popup mein bhi wahi (saare button samet).
   const renderCard = (r, i, inPopup, mem) => (
     <AnsCard
@@ -1003,15 +999,13 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           </p>
         ) : (
           // 📖 Do-pane — owner ka chuna hua ek hi roop (components/AnswersLayouts).
-          // 💬 PYQ jaisi DeepSeek chat wali window — saare question ek ke neeche
-          // ek (purana sabse upar), jawab pehle chhupa (components/QChatFeed).
-          <QChatFeed
-            title="Answers"
-            list={chatRows}
-            storeKey={`answers.${src}`}
-            belowAnchor
-            jumpIndex={urlQid ? chatRows.findIndex((r) => r.qid === urlQid) : -1}
-            renderCard={(r, i, mem) => renderCard(r, i, false, { chatLook: true, ...mem })}
+          // 📖 Do-pane — owner ka chuna hua roop (components/AnswersLayouts).
+          // Chat wali window yahan jachi nahi (tasveer chhoti) — purana wapas.
+          <AnswersDoPane
+            list={list}
+            renderCard={renderCard}
+            bucketOf={bucketOf}
+            jumpId={urlQid ? (list.find((r) => r.qid === urlQid) || {}).id : ""}
           />
         )}
 

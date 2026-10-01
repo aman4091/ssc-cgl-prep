@@ -31,6 +31,7 @@ export default function PyqReels({ title, list, resumeKey, renderCard, shuffleFi
       title={title || "Questions"}
       list={base}
       storeKey={resumeKey || title || "pyq"}
+      wide={base.some((q) => q && (q.qImg || q.img || q.optImgs))}
       renderCard={(q, i, mem) => {
         const el = renderCard(q, i, base);
         const extra = { chatLook: true, ...mem };
