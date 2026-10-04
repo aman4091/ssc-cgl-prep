@@ -213,34 +213,16 @@ export default function PasteNotesPage() {
 
   return (
     <section className="section" style={{ marginTop: 16 }}>
-      {/* Ek patli patti — ginti aur book ki chhaanti. Isse zyada kuch nahi:
-          ye padhne ki jagah hai. */}
-      <div className="pn-bar">
-        <span className="pn-count">
-          📝 {tally.pages} page · {tally.pts} point{tally.star ? ` · ⭐ ${tally.star}` : ""}
-        </span>
-        {/* Menu se ek page khola hai to sirf wahi dikh raha hai — poori book
-            par wapas jaane ka ek daba yahin. */}
-        {oneBook && (
+      {/* Upar ki patti (ginti + book ke naam) hata di — window ab upar se
+          neeche tak. Book menu se chuno. Sirf ek page khula ho to wapas
+          poori book ka daba aur ← → page wali patti upar. */}
+      {oneBook && (
+        <div className="pn-bar">
           <button type="button" className="pn-b pn-b--back" onClick={() => setNote("")}>
             ← Poora {bookLabel(oneBook)}
           </button>
-        )}
-        {groups.length > 1 && (
-          <span className="pn-books">
-            <button type="button" className={`pn-b${book ? "" : " is-on"}`} onClick={() => { setBook(""); setNote(""); }}>Sab</button>
-            {groups.map((g) => (
-              <button
-                key={g.book}
-                type="button"
-                className={`pn-b${book === g.book ? " is-on" : ""}`}
-                onClick={() => { setBook(g.book); setNote(""); }}
-              >{g.eyebrow || g.title}</button>
-            ))}
-          </span>
-        )}
-      </div>
-
+        </div>
+      )}
       {pager}
       {/* 💬 Chat wali window — saare page ek ke neeche ek (patti upar dikhti rehti hai). */}
       <QChatFeed
@@ -248,7 +230,7 @@ export default function PasteNotesPage() {
         title={oneBook ? `📝 ${bookLabel(oneBook)}` : book ? `📝 ${(shown[0] && (shown[0].eyebrow || shown[0].title)) || "Notesliner"}` : "📝 Notesliner"}
         list={shown.flatMap((g) => g.items.map((n) => ({ ...n, id: n.k })))}
         storeKey={`notesliner.${book || "all"}`}
-        belowAnchor
+        belowAnchor={!!oneBook}
         noJump
         unit="page"
         renderCard={(n) => <Note key={n.k} n={n} onGone={reload} />}
