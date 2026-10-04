@@ -115,7 +115,7 @@ export default function OneLinersInbox({ items, onDelete, onChange }) {
 
 // 💬 Chat wali window — saari one-liners ek ke neeche ek: upar subject · din,
 // sar daayen bubble mein, poori lines jawab wale bubble mein, trick alag.
-export function OneLinersChat({ items, onDelete, onChange }) {
+export function OneLinersChat({ items, onDelete, onChange, headExtra = null }) {
   const [busy, setBusy] = useState("");
   const [err, setErr] = useState("");
   const bold = async (o) => {
@@ -144,9 +144,9 @@ export function OneLinersChat({ items, onDelete, onChange }) {
       title="📝 One-liners"
       list={rows}
       storeKey="oneliners"
-      belowAnchor
       noJump
       unit="lines"
+      headExtra={headExtra}
       renderCard={(r) => (
         <article key={r.id} className="qcard qcard--chat">
           <h2 className="qcard__h">

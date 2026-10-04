@@ -39,7 +39,7 @@ function toModel(f, today) {
   };
 }
 
-export default function FactFolders({ facts, onChange }) {
+export default function FactFolders({ facts, onChange, headExtra = null }) {
   const today = dayKey();
   const topics = useMemo(() => {
     const g = new Map();
@@ -71,8 +71,8 @@ export default function FactFolders({ facts, onChange }) {
         title={cur ? `🧠 ${cur[0]}` : "🧠 Fact log"}
         list={shown}
         storeKey={`facts.${t || "all"}`}
-        belowAnchor
         unit="fact"
+        headExtra={headExtra}
         renderCard={(m, i, mem) => {
           // Medieval wali window jaisa: sar sawaal ki tarah, baatein jawab ki
           // tarah — pehle chhupi; 👁️ khole, 🙈 chhupaye, 🧹 sab hataye (yaad).

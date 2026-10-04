@@ -51,20 +51,23 @@ function OneLinersInner() {
   // Hatane ke baad Inbox usi jagah rehta hai — agli line wahan aa jati hai.
   const drop = (id) => { removeOneLiner(id); load(); };
 
-  return (
-    <>
-      {/* Upar bas naam. Pehle yahan ek poora hero tha — badi "Ek question, ek
-          line" aur do line ka bayaan — jo har baar aadhi screen kha jata tha;
-          owner ne hata diya. */}
-      <section className="section" style={{ marginTop: 16, marginBottom: 0 }}>
-        <h1 className="ol-h1">📝 One-liners</h1>
+  if (all.length === 0) {
+    return (
+      <section className="section" style={{ marginTop: 16 }}>
+        <div className="placeholder">Abhi koi one-liner nahi. Overlay par subject ka answer copy karne ke baad 📝 dabao.</div>
       </section>
-
-      <section className="section" style={{ marginTop: 8 }}>
-        <div className="subj-row" style={{ marginBottom: 12 }}>
-          <button className={`subj-chip${sub === "all" ? " is-active" : ""}`} onClick={() => setSub("all")}>
-            📝 Sab · {all.length}
-          </button>
+    );
+  }
+  // 💬 Chat wali window — subject chips, 🔎 aur 🗑️ window ke sar mein, taaki
+  // window menu ki line se neeche tak rahe.
+  return (
+    <OneLinersChat
+      items={shown}
+      onDelete={drop}
+      onChange={load}
+      headExtra={(
+        <>
+          <button className={`subj-chip${sub === "all" ? " is-active" : ""}`} onClick={() => setSub("all")}>📝 Sab · {all.length}</button>
           {OL_SUBS.map((s) => {
             const n = all.filter((o) => o.subject === s.k).length;
             if (!n) return null;
@@ -74,31 +77,14 @@ function OneLinersInner() {
               </button>
             );
           })}
-        </div>
-
-        <div className="row between ms-form" style={{ marginBottom: 8 }}>
-          <h2 className="ms-h2" style={{ margin: 0 }}>Saari lines ({shown.length})</h2>
-          {all.length > 0 && (
-            <button
-              className="btn btn--ghost btn--sm"
-              onClick={() => { if (confirm(`Saari ${all.length} one-liners hamesha ke liye hat jayengi. Pakka?`)) { clearOneLiners(); load(); } }}
-            >🗑️ Sab hatao</button>
-          )}
-          <input className="input" style={{ maxWidth: 220 }} value={q} onChange={(e) => setQ(e.target.value)} placeholder="🔎 dhoondo" />
-        </div>
-
-        {shown.length === 0 ? (
-          <div className="placeholder">
-            {all.length === 0
-              ? "Abhi koi one-liner nahi. Overlay par subject ka answer copy karne ke baad 📝 dabao."
-              : "Is chhaan-been mein kuch nahi mila."}
-          </div>
-        ) : (
-          // 💬 Chat wali window (pehle Inbox — baayen list, daayen ek line).
-          <OneLinersChat key={`${sub}|${q}`} items={shown} onDelete={drop} onChange={load} />
-        )}
-      </section>
-    </>
+          <input className="input qfeed__search" value={q} onChange={(e) => setQ(e.target.value)} placeholder="🔎 dhoondo" />
+          <button
+            className="btn btn--ghost btn--sm"
+            onClick={() => { if (confirm(`Saari ${all.length} one-liners hamesha ke liye hat jayengi. Pakka?`)) { clearOneLiners(); load(); } }}
+          >🗑️ Sab hatao</button>
+        </>
+      )}
+    />
   );
 }
 

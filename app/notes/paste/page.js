@@ -213,24 +213,18 @@ export default function PasteNotesPage() {
 
   return (
     <section className="section" style={{ marginTop: 16 }}>
-      {/* Upar ki patti (ginti + book ke naam) hata di — window ab upar se
-          neeche tak. Book menu se chuno. Sirf ek page khula ho to wapas
-          poori book ka daba aur ← → page wali patti upar. */}
-      {oneBook && (
-        <div className="pn-bar">
-          <button type="button" className="pn-b pn-b--back" onClick={() => setNote("")}>
-            ← Poora {bookLabel(oneBook)}
-          </button>
-        </div>
-      )}
-      {pager}
       {/* 💬 Chat wali window — saare page ek ke neeche ek (patti upar dikhti rehti hai). */}
       <QChatFeed
         key={`${book}|${note}`}
         title={oneBook ? `📝 ${bookLabel(oneBook)}` : book ? `📝 ${(shown[0] && (shown[0].eyebrow || shown[0].title)) || "Notesliner"}` : "📝 Notesliner"}
         list={shown.flatMap((g) => g.items.map((n) => ({ ...n, id: n.k })))}
         storeKey={`notesliner.${book || "all"}`}
-        belowAnchor={!!oneBook}
+        headExtra={oneBook ? (
+          <>
+            <button type="button" className="pn-b pn-b--back" onClick={() => setNote("")}>← Poora {bookLabel(oneBook)}</button>
+            {pager}
+          </>
+        ) : null}
         noJump
         unit="page"
         renderCard={(n) => <Note key={n.k} n={n} onGone={reload} />}

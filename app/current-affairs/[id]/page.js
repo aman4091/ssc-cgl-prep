@@ -72,9 +72,8 @@ export default function CurrentAffairsMonth() {
 
   if (!ready) return null;
 
-  return (
-    <>
-      <section className="section ca-top">
+  const caTop = (
+    <div className="ca-top ca-top--in">
         <div className="row between" style={{ gap: 10, flexWrap: "wrap" }}>
           <div className="row" style={{ gap: 8, alignItems: "center", flexWrap: "wrap" }}>
             <span className="ca-eyebrow">📰 Current Affairs</span>
@@ -93,7 +92,13 @@ export default function CurrentAffairsMonth() {
           </div>
           <CaImportButton />
         </div>
-      </section>
+    </div>
+  );
+
+  return (
+    <>
+      {/* Mahina aur 📥 Import — window na ho tab yahan, warna window ke sar mein. */}
+      {(!entry || !list.length) && caTop}
 
       {!entry ? (
         <div className="placeholder">Ye mahina nahi mila. Upar dropdown se doosra chuno.</div>
@@ -101,12 +106,12 @@ export default function CurrentAffairsMonth() {
         <div className="placeholder">Is mahine mein koi question nahi.</div>
       ) : (
         // 💬 Chat wali window — saare question ek ke neeche ek, jawab chhupa;
-        // mahina chunne ka dropdown upar dikhta rehta hai (belowAnchor).
+        // mahina chunne ka dropdown window ke sar mein.
         <QChatFeed
           title={`📰 ${heading}`}
           list={list}
           storeKey={`ca:${id}`}
-          belowAnchor
+          headExtra={caTop}
           renderCard={(q, i, mem) => (
             <PyqQuestionCard {...mem} key={q.id} q={q} index={i} subject="gs" chapterName={`Current Affairs · ${heading}`} chatLook />
           )}

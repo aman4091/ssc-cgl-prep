@@ -20,7 +20,7 @@ function readPicks(k) {
   try { const v = JSON.parse(localStorage.getItem(k) || "{}"); return v && typeof v === "object" ? v : {}; } catch { return {}; }
 }
 
-export default function QChatFeed({ title, list, renderCard, storeKey = "default", jumpIndex = -1, belowAnchor = false, onNeedMore, noJump = false, wide = false, unit = "questions" }) {
+export default function QChatFeed({ title, list, renderCard, storeKey = "default", jumpIndex = -1, belowAnchor = false, onNeedMore, noJump = false, wide = false, unit = "questions", headExtra = null }) {
   const KEY = `cgl.qfeed.${storeKey}`;
   const [n, setN] = useState(STEP);
   const [pos, setPos] = useState({ left: null, top: 0, bottom: 0 });
@@ -132,6 +132,9 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
           {onNeedMore ? <span className="qfeed__n" /> : <span className="qfeed__n">{list.length} {unit}</span>}
           {noJump ? null : <button type="button" className="qfeed__jump" onClick={jump} title="Jahan tak lagaye, uske baad wala question">⏭</button>}
         </div>
+        {/* Page ke apne button (chips, mahina, ← → page) — window ke ANDAR, taaki
+            window hamesha menu ki line se neeche tak rahe. */}
+        {headExtra ? <div className="qfeed__headx">{headExtra}</div> : null}
         <div className="qfeed__body" ref={body} onScroll={more}>
           {list.slice(0, n).map((q, i) => {
             const id = idOf(q, i);

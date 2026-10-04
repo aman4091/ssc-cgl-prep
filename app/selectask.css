@@ -631,3 +631,9 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 /* Notesliner ke note ke button — chat window ki patti mein chhote */
 .pn-chat .pn-acts .pn-x, .pn-chat .pn-acts button, .pn-chat .pn-acts a { font-size: 0.78rem; padding: 3px 8px; }
 .pn-chat .qcard__answer textarea { width: 100%; box-sizing: border-box; }
+/* Window ke sar ke neeche page ke apne button (chips / mahina / ← → page) */
+.qfeed__headx { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--line); max-height: 28vh; overflow-y: auto; }
+.qfeed__headx .subj-chip { padding: 4px 10px; font-size: 0.78rem; }
+.qfeed__headx .qfeed__search { flex: 1 1 140px; min-width: 120px; padding: 5px 10px; font-size: 0.85rem; }
+.qfeed__headx .pn-pager { display: flex; gap: 6px; align-items: center; margin: 0; flex: 1 1 auto; justify-content: space-between; }
+.qfeed__headx .ca-top--in { width: 100%; }

@@ -121,15 +121,16 @@ export default function MissionFactsPage() {
 
   return (
     <>
-      <div className="ffd-top">
-        <h1>🧠 Fact log <span className="muted" style={{ fontSize: "0.85rem", fontWeight: 600 }}>· {facts.length}</span></h1>
-        {facts.length > 0 && (
+      {/* Sar aur ▶ Revise ab window ke andar — window menu se neeche tak. */}
+      <FactFolders
+        facts={facts}
+        onChange={load}
+        headExtra={facts.length > 0 ? (
           <button className="btn btn--primary btn--sm" onClick={() => { clearSession("facts"); setRevising(shuffle(facts).map(toCard)); }}>
             ▶ Revise karo · {facts.length}
           </button>
-        )}
-      </div>
-      <FactFolders facts={facts} onChange={load} />
+        ) : null}
+      />
     </>
   );
 }
