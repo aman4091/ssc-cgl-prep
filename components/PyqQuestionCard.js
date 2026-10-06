@@ -41,7 +41,7 @@ function zapLines(md) {
   }).join("\n");
 }
 
-export default function PyqQuestionCard({ q, index, extraActions, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, forceAnswer, chatLook, savedPick, savedHidden, onPickSave, onClearSave, onHideSave }) {
+export default function PyqQuestionCard({ q, index, extraActions, subject, resumeKey, chapterName, chapterId, onDelete, onEdit, archiveOnAnswer, markControl, fileToChapter, forceAnswer, chatLook, split, savedPick, savedHidden, onPickSave, onClearSave, onHideSave }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -228,10 +228,9 @@ Options: ${opts}
   };
 
 
-  return (
-    <article className={`qcard${done ? " is-done" : ""}${chatLook ? " qcard--chat" : ""}`} id={`q-${index}`}>
-      {/* Sar — Answers page ka `Question N (qid · date)`. Yahan qid ki jagah
-          paper/source hai, kyunki PYQ ka pata wahi hai. */}
+  // Sprint jaisa roop (split): sar + saare button aur jawab DAAYEN, sawaal +
+  // options BAAYEN (components/PyqSplit).
+  const headEl = (
       <h2 className="qcard__h">
         Question {index + 1}
         <span className="qcard__qid">
@@ -264,6 +263,47 @@ Options: ${opts}
           {extraActions}
         </span>
       </h2>
+  );
+  const answerEl = (
+      shown && !ansHidden ? (
+        <div className="qcard__answer">
+          {q.answer != null && q.options?.[q.answer] != null && (
+            <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
+              ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
+              {!q.img && q.options[q.answer] ? ` — ${q.options[q.answer]}` : ""}
+            </p>
+          )}
+          {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
+          {/* Answers page wala button — jawab ka 🧩 CLUSTER seedha Fact log mein.
+              Cluster section na ho to button dikhta hi nahi. */}
+          <ClusterButton md={solution} subject={subject} onFlash={setFlash} srcQ={q} />
+          {solution ? <Markdown>{chatLook ? zapLines(solution) : solution}</Markdown> : (
+            <span style={{ color: "var(--text-3)", fontStyle: "italic" }}>
+              Is question ka explanation abhi nahi hai — ✨ Gemini se laa kar paste kar do.
+            </span>
+          )}
+          {dsUp ? (
+            <button className="btn btn--ghost btn--sm mt-12" onClick={dsq.regen} disabled={dsq.loading}>
+              {dsq.loading ? "Soch raha hai…" : "🔄 Naya DeepSeek jawab"}
+            </button>
+          ) : null}
+          {scShown && shortcut && (
+            <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
+              {scLoading ? "Thinking…" : "🔄 New shortcut"}
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="qcard__answer qcard__answer--empty">
+          {split ? "Answer yahan aayega — option chuno ya 👁️ dabao." : "Answer neeche yahin aayega — option chuno ya 👁️ dabao."}
+        </div>
+      )
+  );
+  const card = (
+    <article className={`qcard${done ? " is-done" : ""}${chatLook ? " qcard--chat" : ""}`} id={`q-${index}`}>
+      {/* Sar — Answers page ka `Question N (qid · date)`. Yahan qid ki jagah
+          paper/source hai, kyunki PYQ ka pata wahi hai. */}
+      {split ? null : headEl}
 
       {/* The stem, on its own line under the number. Some questions ARE a crop of
           the printed page — the stacked fractions never made it into the PDF's
@@ -334,10 +374,10 @@ Options: ${opts}
         {(!shown || ansHidden) && (
           <button className="btn" onClick={() => { setPeek(true); setAnsHidden(false); onHideSave?.(false); }} title="Bina attempt kiye answer dekho">👁️ Answer</button>
         )}
-        {chatLook && shown && !ansHidden && (
+        {(chatLook || split) && shown && !ansHidden && (
           <button className="btn" onClick={() => { setAnsHidden(true); onHideSave?.(true); }} title="Jawab phir chhupao">🙈 Chhupao</button>
         )}
-        {chatLook && (picked !== null || peek || revealed) && (
+        {(chatLook || split) && (picked !== null || peek || revealed) && (
           <button className="btn" onClick={clearPick} title="Laga hua answer hatao — sawaal phir se naya">🧹 Clear</button>
         )}
         {onEdit && !editing && <button className="btn" onClick={() => setEditing(true)} title="Edit question">✏️</button>}
@@ -355,46 +395,23 @@ Options: ${opts}
         <p className="qcard__note">⚠ Is question ki answer-key source mein nahi thi — ye kisi ginti mein nahi aata.</p>
       )}
 
-      {flash && !chatLook && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
+      {flash && !chatLook && !split && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
       {(err || dsq.err) && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err || dsq.err}</p>}
 
       {/* ANSWER — Answers page ki tarah apne block mein, sabse neeche. Block
           hamesha maujood hai; khaali ho to wahi batata hai aur khol deta hai. */}
-      {shown && !ansHidden ? (
-        <div className="qcard__answer">
-          {q.answer != null && q.options?.[q.answer] != null && (
-            <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
-              ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
-              {!q.img && q.options[q.answer] ? ` — ${q.options[q.answer]}` : ""}
-            </p>
-          )}
-          {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
-          {/* Answers page wala button — jawab ka 🧩 CLUSTER seedha Fact log mein.
-              Cluster section na ho to button dikhta hi nahi. */}
-          <ClusterButton md={solution} subject={subject} onFlash={setFlash} srcQ={q} />
-          {solution ? <Markdown>{chatLook ? zapLines(solution) : solution}</Markdown> : (
-            <span style={{ color: "var(--text-3)", fontStyle: "italic" }}>
-              Is question ka explanation abhi nahi hai — ✨ Gemini se laa kar paste kar do.
-            </span>
-          )}
-          {dsUp ? (
-            <button className="btn btn--ghost btn--sm mt-12" onClick={dsq.regen} disabled={dsq.loading}>
-              {dsq.loading ? "Soch raha hai…" : "🔄 Naya DeepSeek jawab"}
-            </button>
-          ) : null}
-          {scShown && shortcut && (
-            <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
-              {scLoading ? "Thinking…" : "🔄 New shortcut"}
-            </button>
-          )}
-        </div>
-      ) : (
-        <div className="qcard__answer qcard__answer--empty">
-          Answer neeche yahin aayega — option chuno ya 👁️ dabao.
-        </div>
-      )}
+      {split ? null : answerEl}
       </>
       )}
     </article>
   );
+  if (split) {
+    return (
+      <div className="qsplit">
+        <div className="qsplit__l">{card}</div>
+        <div className="qsplit__r">{headEl}{answerEl}</div>
+      </div>
+    );
+  }
+  return card;
 }

@@ -38,7 +38,7 @@ import { useDeepSeek, dsLabel, dsTitle } from "@/lib/usedeepseek";
 // copy would go out as "A) a  B) b  C) c  D) d" and any answer that came back
 // would be invented. So the AI helpers are hidden on those 640 questions rather
 // than shipped as a button that reliably lies.
-export default function ReasonQuestionCard({ q, index, extraActions, subject = "reasoning", resumeKey, chapterName, forceAnswer, chatLook, savedPick, savedHidden, onPickSave, onClearSave, onHideSave }) {
+export default function ReasonQuestionCard({ q, index, extraActions, subject = "reasoning", resumeKey, chapterName, forceAnswer, chatLook, split, savedPick, savedHidden, onPickSave, onClearSave, onHideSave }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -209,8 +209,9 @@ Options: ${opts}
   };
 
 
-  return (
-    <article className={`qcard${done ? " is-done" : ""}${chatLook ? " qcard--chat" : ""}`} id={`q-${index}`}>
+  // Sprint jaisa roop (split): sar + saare button aur jawab DAAYEN, sawaal +
+  // options BAAYEN (components/PyqSplit).
+  const headEl = (
       <h2 className="qcard__h">
         Question {index + 1}
         <span className="qcard__qid">
@@ -236,6 +237,42 @@ Options: ${opts}
           {extraActions}
         </span>
       </h2>
+  );
+  const answerEl = (
+      shown && !ansHidden ? (
+        <div className="qcard__answer">
+          <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
+            ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
+          </p>
+          {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
+          {/* Jawab ka 🧩 CLUSTER seedha Fact log mein — Answers page wala button. */}
+          <ClusterButton md={solution} subject={subject} onFlash={setFlash} srcQ={q} />
+          {solution ? (
+            <Markdown>{solution}</Markdown>
+          ) : q.solImg ? (
+            <div className="math-img-wrap">
+              <img src={q.solImg} alt="solution" loading="lazy" className="math-img" />
+            </div>
+          ) : (
+            <span style={{ color: "var(--text-3)", fontStyle: "italic" }}>
+              Is question ka solution book mein nahi chhapa. Correct option upar mark hai.
+            </span>
+          )}
+          {scShown && shortcut && (
+            <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
+              {scLoading ? "Thinking…" : "🔄 New shortcut"}
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="qcard__answer qcard__answer--empty">
+          {split ? "Answer yahan aayega — option chuno ya 👁️ dabao." : "Answer neeche yahin aayega — option chuno ya 👁️ dabao."}
+        </div>
+      )
+  );
+  const card = (
+    <article className={`qcard${done ? " is-done" : ""}${chatLook ? " qcard--chat" : ""}`} id={`q-${index}`}>
+      {split ? null : headEl}
 
       {/* The chapter Direction — on a non-verbal question this IS the task */}
       {q.instruction && <p className="reason-direction">{q.instruction}</p>}
@@ -287,10 +324,10 @@ Options: ${opts}
         {(!shown || ansHidden) && (
           <button className="btn" onClick={() => { setPeek(true); setAnsHidden(false); onHideSave?.(false); }} title="Bina attempt kiye solution dekho">👁️ Answer</button>
         )}
-        {chatLook && shown && !ansHidden && (
+        {(chatLook || split) && shown && !ansHidden && (
           <button className="btn" onClick={() => { setAnsHidden(true); onHideSave?.(true); }} title="Jawab phir chhupao">🙈 Chhupao</button>
         )}
-        {chatLook && (picked !== null || peek || revealed) && (
+        {(chatLook || split) && (picked !== null || peek || revealed) && (
           <button className="btn" onClick={clearPick} title="Laga hua answer hatao — sawaal phir se naya">🧹 Clear</button>
         )}
         {/* Gemini ab HAR question par — non-verbal par bhi. Pehle ye chhupa tha
@@ -298,7 +335,7 @@ Options: ${opts}
             question hi sabse zyada faayda uthata hai. */}
       </div>
 
-      {flash && !chatLook && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
+      {flash && !chatLook && !split && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
       {(err || dsq.err) && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err || dsq.err}</p>}
       {!aiUseful && (
         <p className="qcard__note">
@@ -308,36 +345,16 @@ Options: ${opts}
       )}
 
       {/* ANSWER — Answers page wala alag block, sabse neeche. */}
-      {shown && !ansHidden ? (
-        <div className="qcard__answer">
-          <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
-            ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
-          </p>
-          {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
-          {/* Jawab ka 🧩 CLUSTER seedha Fact log mein — Answers page wala button. */}
-          <ClusterButton md={solution} subject={subject} onFlash={setFlash} srcQ={q} />
-          {solution ? (
-            <Markdown>{solution}</Markdown>
-          ) : q.solImg ? (
-            <div className="math-img-wrap">
-              <img src={q.solImg} alt="solution" loading="lazy" className="math-img" />
-            </div>
-          ) : (
-            <span style={{ color: "var(--text-3)", fontStyle: "italic" }}>
-              Is question ka solution book mein nahi chhapa. Correct option upar mark hai.
-            </span>
-          )}
-          {scShown && shortcut && (
-            <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
-              {scLoading ? "Thinking…" : "🔄 New shortcut"}
-            </button>
-          )}
-        </div>
-      ) : (
-        <div className="qcard__answer qcard__answer--empty">
-          Answer neeche yahin aayega — option chuno ya 👁️ dabao.
-        </div>
-      )}
+      {split ? null : answerEl}
     </article>
   );
+  if (split) {
+    return (
+      <div className="qsplit">
+        <div className="qsplit__l">{card}</div>
+        <div className="qsplit__r">{headEl}{answerEl}</div>
+      </div>
+    );
+  }
+  return card;
 }

@@ -7,7 +7,7 @@ import { loadGkIndex, loadGkTopic } from "@/lib/gkbank";
 import { isUserTopicId, getUserTopic, getUserBook, getUserTopicQuestions } from "@/lib/userpyq";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import PyqDrill from "@/components/PyqReels";
-import QChatFeed from "@/components/QChatFeed";
+import PyqSplit from "@/components/PyqSplit";
 
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are
@@ -96,7 +96,7 @@ export default function GkTopicPage() {
           <div className="placeholder">Is topic mein koi question nahi. 🤔</div>
         ) : chatLook ? (
           // 💬 Medieval: chat jaisi window, saare question ek ke neeche ek.
-          <QChatFeed
+          <PyqSplit
             title={topic?.label || "Questions"}
             list={qs}
             storeKey={slug}
@@ -111,7 +111,7 @@ export default function GkTopicPage() {
                 chapterName={topic?.chapter || topic?.label}
                 archiveOnAnswer
                 fileToChapter
-                chatLook
+                split
               />
             )}
           />

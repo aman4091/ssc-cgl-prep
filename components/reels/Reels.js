@@ -20,7 +20,7 @@ import { getUserTopics, getUserTopicQuestions, shelfBook, getUserBook } from "@/
 import { vocabPool } from "@/lib/vocabpool";
 import { getFacts, factView } from "@/lib/missionfacts";
 import "./reels.css";
-import QChatFeed from "@/components/QChatFeed";
+import PyqSplit from "@/components/PyqSplit";
 
 const LETTER = ["A", "B", "C", "D", "E"];
 
@@ -192,14 +192,16 @@ export default function Reels() {
   }, [more]);
 
   return (
-    <QChatFeed
-      title="Home"
-      list={loading ? [] : list}
-      storeKey="home"
-      noJump
-      onNeedMore={more}
-      renderCard={(r) => <HomeCard key={r.id} r={r} onWrong={onWrong} />}
-    />
+    loading ? <div className="placeholder">🎬 Taiyaar ho raha hai…</div> : (
+      <PyqSplit
+        title="Home"
+        list={list}
+        storeKey="home"
+        noJump
+        onNeedMore={more}
+        renderCard={(r) => <HomeCard r={r} onWrong={onWrong} />}
+      />
+    )
   );
 }
 
@@ -211,43 +213,49 @@ function HomeCard({ r, onWrong }) {
   const [hid, setHid] = useState(false);
   const shown = picked != null || open;
   const ansShown = shown && !hid;
+  // Sprint jaisa: baayen sawaal, daayen sar + button + jawab.
+  const split = (left, right) => (
+    <div className="qsplit">
+      <div className="qsplit__l"><article className="qcard">{left}</article></div>
+      <div className="qsplit__r">
+        <h2 className="qcard__h">{r.tag}</h2>
+        {right}
+      </div>
+    </div>
+  );
   const acts = (
-    <div className="qcard__acts">
+    <div className="qcard__acts" style={{ marginTop: 0, marginBottom: 12 }}>
       {!ansShown && <button className="btn" onClick={() => { setOpen(true); setHid(false); }}>👁️ Answer</button>}
       {ansShown && <button className="btn" onClick={() => setHid(true)}>🙈 Chhupao</button>}
       {shown && <button className="btn" onClick={() => { setPicked(null); setOpen(false); setHid(false); }}>🧹 Clear</button>}
     </div>
   );
   if (r.kind === "fact") {
-    return (
-      <article className="qcard qcard--chat">
-        <h2 className="qcard__h">{r.tag}</h2>
-        <div className="qcard__answer"><Markdown>{r.text}</Markdown>{r.more && open ? <Markdown>{r.more}</Markdown> : null}</div>
-        {r.more && !open ? <div className="qcard__acts"><button className="btn" onClick={() => setOpen(true)}>⌄ poora padho</button></div> : null}
-      </article>
+    return split(
+      <div className="qcard__stem"><Markdown>{r.text}</Markdown></div>,
+      r.more ? (open ? <div className="qcard__answer"><Markdown>{r.more}</Markdown></div>
+        : <div className="qcard__acts" style={{ marginTop: 0 }}><button className="btn" onClick={() => setOpen(true)}>⌄ poora padho</button></div>) : null,
     );
   }
   if (r.kind === "ans") {
-    return (
-      <article className="qcard qcard--chat">
-        <h2 className="qcard__h">{r.tag}</h2>
-        <AnsReel r={r} />
+    return split(
+      <AnsReel r={r} />,
+      <>
         {acts}
         {ansShown && (
           <div className="qcard__answer">{r.explanation ? <Markdown>{r.explanation}</Markdown> : <p>Is question ka jawab Answers page par likha nahi hai.</p>}</div>
         )}
-      </article>
+      </>,
     );
   }
-  return (
-    <article className="qcard qcard--chat">
-      <h2 className="qcard__h">{r.tag}</h2>
+  return split(
+    <>
       {r.qImg ? (
-        <div className="math-img-wrap"><img src={r.qImg} alt="question" loading="lazy" className="math-img" /></div>
+        <div className="math-img-wrap"><img src={r.qImg} alt="question" className="math-img" /></div>
       ) : (
-        <div className="qcard__stem"><Markdown inline>{r.question}</Markdown></div>
+        <div className="qcard__stem"><Markdown>{r.question}</Markdown></div>
       )}
-      {r.figImg ? <div className="math-img-wrap"><img src={r.figImg} alt="figure" loading="lazy" className="math-img" /></div> : null}
+      {r.figImg ? <div className="math-img-wrap"><img src={r.figImg} alt="figure" className="math-img" /></div> : null}
       <div className="qcard__opts">
         {(r.optImgs || r.options).map((o, k) => {
           const right = shown && k === r.answer;
@@ -260,12 +268,14 @@ function HomeCard({ r, onWrong }) {
               onClick={() => { if (picked != null) return; setPicked(k); setHid(false); if (k !== r.answer) onWrong(r); }}
             >
               <b>{LETTER[k] || k + 1}</b>
-              {r.optImgs ? <img src={o} alt={LETTER[k]} loading="lazy" className="math-opt-img" /> : <Markdown inline>{String(o ?? "")}</Markdown>}
+              {r.optImgs ? <img src={o} alt={LETTER[k]} className="math-opt-img" /> : <Markdown inline>{String(o ?? "")}</Markdown>}
               {right && <span style={{ color: "var(--ok)", marginLeft: 8 }}>✓</span>}
             </button>
           );
         })}
       </div>
+    </>,
+    <>
       {acts}
       {ansShown && (
         <div className="qcard__answer">
@@ -275,11 +285,11 @@ function HomeCard({ r, onWrong }) {
             </p>
           )}
           {r.method ? <p className="reel__method">🧠 Tumhara method: <b>{r.method}</b></p> : null}
-          {r.solImg ? <img src={r.solImg} alt="solution" loading="lazy" style={{ maxWidth: "100%" }} /> : null}
+          {r.solImg ? <img src={r.solImg} alt="solution" style={{ maxWidth: "100%" }} /> : null}
           {r.explanation ? <Markdown>{r.explanation}</Markdown> : null}
         </div>
       )}
-    </article>
+    </>,
   );
 }
 

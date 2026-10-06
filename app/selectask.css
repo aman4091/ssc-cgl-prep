@@ -637,3 +637,22 @@ body:has(.sp-wrap) .sa-reopen { display: none; }
 .qfeed__headx .qfeed__search { flex: 1 1 140px; min-width: 120px; padding: 5px 10px; font-size: 0.85rem; }
 .qfeed__headx .pn-pager { display: flex; gap: 6px; align-items: center; margin: 0; flex: 1 1 auto; justify-content: space-between; }
 .qfeed__headx .ca-top--in { width: 100%; }
+
+/* ⚡ PYQ / Home — Sprint jaisa roop (components/PyqSplit + card ka split) */
+body:has(.pyqs) .sa-reopen { display: inline-block; }
+.pyqs.is-menu { z-index: 50; }
+.pyqs-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.pyqs-body { flex: 1; min-height: 0; display: flex; }
+.pyqs-body > .qsplit { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; }
+.qsplit__l, .qsplit__r { overflow: auto; padding: 16px 18px; min-width: 0; }
+.qsplit__r { border-left: 1px solid var(--line); background: var(--bg-1); }
+.qsplit .qsplit__l > .qcard { background: transparent; padding: 0; border-radius: 0; }
+.qsplit .qsplit__r > .qcard__h { margin: 0 0 12px; font-size: 1rem; }
+.qsplit .qsplit__r > .qcard__h .qcard__hacts { margin-left: 0; width: 100%; }
+.qsplit .qsplit__r > .qcard__answer { margin-top: 0; }
+.qsplit .qsplit__l .math-img-wrap img, .qsplit .qsplit__l .q-crop { max-width: 100%; }
+@media (max-width: 860px) {
+  .pyqs-body > .qsplit { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
+  .qsplit__r { border-left: 0; border-top: 1px solid var(--line); }
+  .qsplit__l, .qsplit__r { padding: 12px; }
+}

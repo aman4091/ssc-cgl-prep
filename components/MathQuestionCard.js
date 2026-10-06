@@ -69,7 +69,7 @@ async function streamSimilar(sample, subject, quizId) {
   if (quiz && quiz.streaming) { quiz.streaming = false; saveQuiz(quiz); dispatchAppend(quizId, quiz.questions.length, true); }
 }
 
-export default function MathQuestionCard({ q, index, extraActions, subject = "math", resumeKey, chapterName, forceAnswer, chatLook, savedPick, savedHidden, onPickSave, onClearSave, onHideSave }) {
+export default function MathQuestionCard({ q, index, extraActions, subject = "math", resumeKey, chapterName, forceAnswer, chatLook, split, savedPick, savedHidden, onPickSave, onClearSave, onHideSave }) {
   const router = useRouter();
   // Test chal raha ho to card apna sahi/galat chhupa leta hai (dekho
   // components/ExamMode.js). Test ke bahar `exam` null hota hai aur sab
@@ -286,8 +286,9 @@ Options: ${opts}
   };
 
 
-  return (
-    <article className={`qcard${done ? " is-done" : ""}${chatLook ? " qcard--chat" : ""}`} id={`q-${index}`}>
+  // Sprint jaisa roop (split): sar + saare button aur jawab DAAYEN, sawaal +
+  // options BAAYEN (components/PyqSplit).
+  const headEl = (
       <h2 className="qcard__h">
         Question {index + 1}
         <span className="qcard__qid">
@@ -323,6 +324,40 @@ Options: ${opts}
           {extraActions}
         </span>
       </h2>
+  );
+  const answerEl = (
+      shown && !ansHidden ? (
+        <div className="qcard__answer">
+          <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
+            ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
+          </p>
+          {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
+          {/* Jawab ka 🧩 CLUSTER seedha Fact log mein — Answers page wala button. */}
+          <ClusterButton md={solution} subject={subject} onFlash={setFlash} srcQ={q} />
+          {/* A pasted Gemini answer replaces the book's solution image outright,
+              rather than being stacked under it. */}
+          {solution ? (
+            <Markdown>{solution}</Markdown>
+          ) : (
+            <div className="math-img-wrap">
+              <img src={q.solImg} alt="solution" loading="lazy" className="math-img" />
+            </div>
+          )}
+          {scShown && shortcut && (
+            <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
+              {scLoading ? "Thinking…" : "🔄 New shortcut"}
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="qcard__answer qcard__answer--empty">
+          {split ? "Answer yahan aayega — option chuno ya 👁️ dabao." : "Answer neeche yahin aayega — option chuno ya 👁️ dabao."}
+        </div>
+      )
+  );
+  const card = (
+    <article className={`qcard${done ? " is-done" : ""}${chatLook ? " qcard--chat" : ""}`} id={`q-${index}`}>
+      {split ? null : headEl}
 
       {/* The stem — figure (if any) is baked into this crop */}
       {/* Not a link: tapping the question used to open the raw image in a
@@ -364,46 +399,28 @@ Options: ${opts}
         {(!shown || ansHidden) && (
           <button className="btn" onClick={() => { setPeek(true); setAnsHidden(false); onHideSave?.(false); }} title="Bina attempt kiye solution dekho">👁️ Answer</button>
         )}
-        {chatLook && shown && !ansHidden && (
+        {(chatLook || split) && shown && !ansHidden && (
           <button className="btn" onClick={() => { setAnsHidden(true); onHideSave?.(true); }} title="Jawab phir chhupao">🙈 Chhupao</button>
         )}
-        {chatLook && (picked !== null || peek || revealed) && (
+        {(chatLook || split) && (picked !== null || peek || revealed) && (
           <button className="btn" onClick={clearPick} title="Laga hua answer hatao — sawaal phir se naya">🧹 Clear</button>
         )}
       </div>
 
-      {flash && !chatLook && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
+      {flash && !chatLook && !split && <p className="mt-12" style={{ color: "var(--accent-2)", fontSize: "0.85rem", fontWeight: 600 }}>{flash}</p>}
       {(err || dsq.err) && <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginTop: 8 }}>{err || dsq.err}</p>}
 
       {/* ANSWER — Answers page wala alag block, sabse neeche. */}
-      {shown && !ansHidden ? (
-        <div className="qcard__answer">
-          <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
-            ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
-          </p>
-          {solSrc && <div className="qcard__ansrc">{solSrc}</div>}
-          {/* Jawab ka 🧩 CLUSTER seedha Fact log mein — Answers page wala button. */}
-          <ClusterButton md={solution} subject={subject} onFlash={setFlash} srcQ={q} />
-          {/* A pasted Gemini answer replaces the book's solution image outright,
-              rather than being stacked under it. */}
-          {solution ? (
-            <Markdown>{solution}</Markdown>
-          ) : (
-            <div className="math-img-wrap">
-              <img src={q.solImg} alt="solution" loading="lazy" className="math-img" />
-            </div>
-          )}
-          {scShown && shortcut && (
-            <button className="btn btn--ghost btn--sm mt-12" onClick={regenShortcut} disabled={scLoading}>
-              {scLoading ? "Thinking…" : "🔄 New shortcut"}
-            </button>
-          )}
-        </div>
-      ) : (
-        <div className="qcard__answer qcard__answer--empty">
-          Answer neeche yahin aayega — option chuno ya 👁️ dabao.
-        </div>
-      )}
+      {split ? null : answerEl}
     </article>
   );
+  if (split) {
+    return (
+      <div className="qsplit">
+        <div className="qsplit__l">{card}</div>
+        <div className="qsplit__r">{headEl}{answerEl}</div>
+      </div>
+    );
+  }
+  return card;
 }

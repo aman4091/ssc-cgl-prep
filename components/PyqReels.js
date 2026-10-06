@@ -19,22 +19,21 @@ import { Children, Fragment, cloneElement, isValidElement, useCallback, useEffec
 import { hashStr } from "@/lib/syncitems";
 import { notebookQ } from "@/lib/imgq";
 import "./pyqreels.css";
-import QChatFeed from "./QChatFeed";
+import PyqSplit from "./PyqSplit";
 
-// 💬 Ab saare PYQ — Medieval jaisi DeepSeek chat wali window: saare question
-// ek ke neeche ek, jawab pehle chhupa, laga hua option / 🙈 yaad, ⏭ jahan
-// chhoda (components/QChatFeed). Purana reel (neeche) abhi rakha hai.
+// ⚡ Saare PYQ — Sprint jaisa roop (components/PyqSplit): baayen sawaal,
+// daayen button + jawab, ek waqt mein ek. Laga hua option / 🙈 / ⏭ yaad.
+// Purana reel (neeche) abhi rakha hai.
 export default function PyqReels({ title, list, resumeKey, renderCard, shuffleFirst = false }) {
   const base = useMemo(() => (shuffleFirst ? shuffled(list) : list), [list, shuffleFirst]);
   return (
-    <QChatFeed
+    <PyqSplit
       title={title || "Questions"}
       list={base}
       storeKey={resumeKey || title || "pyq"}
-      wide={base.some((q) => q && (q.qImg || q.img || q.optImgs))}
       renderCard={(q, i, mem) => {
         const el = renderCard(q, i, base);
-        const extra = { chatLook: true, ...mem };
+        const extra = { split: true, ...mem };
         if (!isValidElement(el)) return null;
         // Kuch page card ko <Fragment> mein lapet kar dete hain — andar wale card ko do.
         if (el.type === Fragment) {
