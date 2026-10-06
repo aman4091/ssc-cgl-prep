@@ -19,7 +19,7 @@ function readObj(k) {
 }
 const MENU_KEY = "cgl.pyqs.menu";
 
-export default function PyqSplit({ title, list, renderCard, storeKey = "default", onNeedMore, noJump = false, headExtra = null }) {
+export default function PyqSplit({ title, list, renderCard, storeKey = "default", onNeedMore, noJump = false, headExtra = null, fullscreen = false }) {
   const KEY = `cgl.qfeed.${storeKey}`;
   const HKEY = `${KEY}.hid`;
   const PKEY = `cgl.pyqs.pos.${storeKey}`;
@@ -108,6 +108,20 @@ export default function PyqSplit({ title, list, renderCard, storeKey = "default"
   }, [menu]);
   const toggleMenu = () => setMenu((m) => { const n = !m; try { localStorage.setItem(MENU_KEY, n ? "1" : "0"); } catch { /* quota */ } return n; });
 
+  // ⛶ Poori screen (Home par) — Sprint wala hi tarika.
+  const [fs, setFs] = useState(false);
+  useEffect(() => {
+    const h = () => setFs(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", h);
+    return () => document.removeEventListener("fullscreenchange", h);
+  }, []);
+  const toggleFs = () => {
+    try {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else document.documentElement.requestFullscreen();
+    } catch { /* ignore */ }
+  };
+
   if (!list.length) return <div className="placeholder">Abhi koi question nahi.</div>;
   const id = idOf(cur, at);
   const done = list.reduce((n, q, i) => n + (picks[idOf(q, i)] != null ? 1 : 0), 0);
@@ -120,6 +134,7 @@ export default function PyqSplit({ title, list, renderCard, storeKey = "default"
         <span className="sp-top__sp" />
         {headExtra}
         {noJump ? null : <button type="button" className="sp-ibtn" onClick={jump} title="Jahan tak lagaye, uske baad wala question">⏭</button>}
+        {fullscreen ? <button type="button" className="sp-ibtn" onClick={toggleFs} title="Poori screen">{fs ? "⤡" : "⛶"}</button> : null}
       </div>
       <div className="sp-bar"><div className="sp-bar__fill" style={{ width: `${((at + 1) / list.length) * 100}%` }} /></div>
       <div className="pyqs-body" key={id}>

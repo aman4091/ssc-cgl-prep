@@ -201,6 +201,7 @@ export default function Reels() {
         list={list}
         storeKey="home"
         noJump
+        fullscreen
         onNeedMore={more}
         renderCard={(r) => <HomeCard r={r} onWrong={onWrong} />}
       />
