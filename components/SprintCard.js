@@ -10,6 +10,13 @@
 
 import Markdown from "./Markdown";
 import { qText, qOpts, isVocab } from "@/lib/sprint";
+import { useImageUrls } from "@/lib/wrongimages";
+
+// 📖 Answers page ka screenshot wala question — tasveer(ein).
+function WbImgs({ imgs }) {
+  const { urls } = useImageUrls(imgs);
+  return <>{urls.map((u) => <img key={u} src={u} alt="question" className="sp-img" />)}</>;
+}
 
 const LETTER = ["A", "B", "C", "D", "E"];
 
@@ -28,12 +35,18 @@ export default function SprintCard({ q, n, total, picked, onPick }) {
       </div>
 
       <div className={isVocab(q) ? "sp-word" : "sp-q"}>
-        {q.qImg
+        {q._imgs ? <WbImgs imgs={q._imgs} />
+          : q.qImg
           ? <img src={q.qImg} alt={qText(q) || "question"} className="sp-img" />
           : isVocab(q) ? qText(q)
           : <Markdown>{qText(q)}</Markdown>}
       </div>
 
+      {q._imgs && picked == null ? (
+        <div className="sp-opts">
+          <button type="button" className="sp-opt" onClick={() => onPick(-1)}>👀 Jawab dekho</button>
+        </div>
+      ) : null}
       <div className="sp-opts">
         {Array.from({ length: count }, (_, i) => {
           // Jawab chun lene ke baad hi rang aata hai: sahi hamesha hara,

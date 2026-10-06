@@ -23,7 +23,7 @@ import { vocabPool } from "@/lib/vocabpool";
 import { TYPES as VOCAB_TYPES } from "@/lib/vocab";
 import { loadCaBankIndex, loadCaBankMonth } from "@/lib/cabank";
 import { getCurrentAffairsQuestions } from "@/lib/feed";
-import { SUBJECTS as WB_SUBJECTS, getWrongBook, isPracticeable } from "@/lib/wrongbook";
+import { SUBJECTS as WB_SUBJECTS, getWrongBook, isPracticeable, imagesOf, shownDetail } from "@/lib/wrongbook";
 import { sprintAnswer } from "@/lib/client-ai";
 import SprintCard from "@/components/SprintCard";
 import SprintAnswer from "@/components/SprintAnswer";
@@ -213,7 +213,7 @@ export default function SprintPage() {
       setTotals((t) => ({
         ...t,
         ca: ((idx && idx.total) || 0) + mine,
-        wrong: (() => { try { return getWrongBook("").filter(isPracticeable).length; } catch { return 0; } })(),
+        wrong: (() => { try { return getWrongBook("").filter((r) => isPracticeable(r) || imagesOf(r).length).length; } catch { return 0; } })(),
       }));
     })();
     return () => { ok = false; };
@@ -256,7 +256,7 @@ export default function SprintPage() {
       // 📰 Current Affairs par DeepSeek ko bulana hi nahi: uski jaankari
       // purani hai, aur source ka apna jawab pehle se saath aata hai. Paisa
       // bhi bachta hai.
-      if (q._slug === "ca") continue;
+      if (q._slug === "ca" || q._imgs) continue;
       const h = sHash(q);
       // Pichhli baar bana hua jawab pada ho to dobara paisa nahi lagta.
       const old = getAns(q);
@@ -299,14 +299,23 @@ export default function SprintPage() {
     if (s === "wrong") {
       // `b` = subject ("math"/"gs"/…), khali = saare. Sirf wahi record jinke
       // paas asli options hain — sirf-tasveer wale card yahan nahi chalte.
+      // Answers page ke screenshot wale (bina text/options) bhi — tasveer
+      // dikhti hai, jawab record ka apna (DeepSeek nahi bulate).
       return getWrongBook(b || "")
-        .filter(isPracticeable)
-        .map((r) => ({
+        .filter((r) => isPracticeable(r) || imagesOf(r).length)
+        .map((r) => (isPracticeable(r) ? {
           ...r.q,
           _slug: "wrong", _subj: (WB_SUBJECTS.find((x) => x.key === r.subject) || {}).label || "Mistake",
           _srcLabel: "Mistake Notebook",
           _chapter: r.category || r.source || "",
           explanation: r.q.explanation || r.answer || "",
+        } : {
+          question: "", options: [],
+          _wbid: r.id, _imgs: imagesOf(r),
+          _slug: "wrong", _subj: (WB_SUBJECTS.find((x) => x.key === r.subject) || {}).label || "Mistake",
+          _srcLabel: "Answers",
+          _chapter: r.category || r.source || "",
+          explanation: r.answer || shownDetail(r) || "",
         }));
     }
     if (s === "ca") {
@@ -443,12 +452,12 @@ export default function SprintPage() {
 
   // Pehle WARM jawab ban gaye → daud shuru.
   const readyN = useMemo(
-    () => batch.slice(0, WARM).filter((q) => ans[sHash(q)] || errs[sHash(q)]).length,
+    () => batch.slice(0, WARM).filter((q) => q._imgs || ans[sHash(q)] || errs[sHash(q)]).length,
     [batch, ans, errs],
   );
   // CA ke batch mein koi AI call hoti hi nahi, isliye wahan taiyaari ka
   // intezaar bekaar hai — seedha daud.
-  const noAi = batch.length > 0 && batch.every((q) => q._slug === "ca");
+  const noAi = batch.length > 0 && batch.every((q) => q._slug === "ca" || q._imgs);
   useEffect(() => {
     if (phase !== "prep") return;
     if (noAi || readyN >= Math.min(WARM, batch.length)) setPhase("run");
@@ -519,6 +528,8 @@ export default function SprintPage() {
 
   const choose = useCallback((i) => {
     if (picked != null || !cur) return;
+    // Screenshot wala (bina options) — sirf jawab kholna, ginti nahi.
+    if (cur._imgs) { setPicked(-1); return; }
     setPicked(i);
     // Vocab mein sahi option jaisa kuch nahi — wahan "✓ Yaad tha" khud sahi
     // maana jata hai aur "✗" galat (choose(-1)).
@@ -592,7 +603,7 @@ export default function SprintPage() {
               solImg={cur.solImg || ""}
               // 📰 CA par sirf source ka apna jawab — koi tab nahi, koi
               // DeepSeek nahi.
-              onlyOrig={cur._slug === "ca"}
+              onlyOrig={cur._slug === "ca" || !!cur._imgs}
             />
             )}
           </div>
