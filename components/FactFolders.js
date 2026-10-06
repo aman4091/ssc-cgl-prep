@@ -11,7 +11,7 @@
 import { useMemo } from "react";
 import { FACT_SECS, GAPS, factView, removeFact } from "@/lib/missionfacts";
 import FactSrcBtn from "./FactSrcBtn";
-import QChatFeed from "./QChatFeed";
+import PyqSplit from "./PyqSplit";
 import { dayKey } from "@/lib/daytime";
 import { answerPoints } from "@/components/carevision/Recall";
 
@@ -67,43 +67,34 @@ export default function FactFolders({ facts, onChange, headExtra = null }) {
     <>
       {/* 💬 Chat wali window — har fact: sar daayen bubble mein, baatein jawab
           wale bubble mein, neeche ❓ Sawaal aur (aaj ho to) ✓ / ✗. */}
-      <QChatFeed
-        key={t || "all"}
-        title={cur ? `🧠 ${cur[0]}` : "🧠 Fact log"}
+      {/* ⚡ Sprint jaisa roop (components/PyqSplit): baayen fact ka sar,
+          daayen Fact N + 🗑️ + ❓ Sawaal aur saari baatein. */}
+      <PyqSplit
+        title="🧠 Fact log"
         list={shown}
-        storeKey={`facts.${t || "all"}`}
-        unit="fact"
+        storeKey="facts"
+        noJump
         headExtra={headExtra}
-        renderCard={(m, i, mem) => {
-          // Medieval wali window jaisa: sar sawaal ki tarah, baatein jawab ki
-          // tarah — pehle chhupi; 👁️ khole, 🙈 chhupaye, 🧹 sab hataye (yaad).
-          const open = mem.savedPick != null && !mem.savedHidden;
-          return (
-            <article key={m.id} className="qcard qcard--chat">
+        renderCard={(m, i) => (
+          <div className="qsplit">
+            <div className="qsplit__l"><article className="qcard"><div className="qcard__stem">{m.head}</div></article></div>
+            <div className="qsplit__r">
               <h2 className="qcard__h">
-                Fact {i + 1}
+                Fact {i + 1}{m.topic && m.topic !== m.head ? <span className="qcard__qid">({m.topic})</span> : null}
                 <span className="qcard__hacts">
                   <button type="button" className="btn btn--sm" title="Hata do" onClick={() => del(m.id)}>🗑️</button>
                 </span>
               </h2>
-              <div className="qcard__stem">{m.head}</div>
-              <div className="qcard__acts">
-                {/* ❓ Ye fact jis question se aaya — yahin khulta hai. */}
-                <FactSrcBtn src={m.src} />
-                {!open && <button type="button" className="btn" onClick={() => { mem.onPickSave(1); mem.onHideSave(false); }}>👁️ Answer</button>}
-                {open && <button type="button" className="btn" onClick={() => mem.onHideSave(true)}>🙈 Chhupao</button>}
-                {mem.savedPick != null && <button type="button" className="btn" onClick={() => mem.onClearSave()}>🧹 Clear</button>}
+              {/* ❓ Ye fact jis question se aaya — yahin khulta hai. */}
+              {m.src ? <div className="qcard__acts" style={{ marginTop: 0, marginBottom: 12 }}><FactSrcBtn src={m.src} /></div> : null}
+              <div className="qcard__answer">
+                {m.pts
+                  ? <ul className="ffd-pts">{m.pts.map((p, k) => <li key={k}>{p.head ? <><b>{p.head}</b> — </> : null}{p.rest}</li>)}</ul>
+                  : <p className="ffd-txt" style={{ margin: 0, whiteSpace: "pre-line" }}>{m.body}</p>}
               </div>
-              {open && (
-                <div className="qcard__answer">
-                  {m.pts
-                    ? <ul className="ffd-pts">{m.pts.map((p, k) => <li key={k}>{p.head ? <><b>{p.head}</b> — </> : null}{p.rest}</li>)}</ul>
-                    : <p className="ffd-txt" style={{ margin: 0 }}>{m.body}</p>}
-                </div>
-              )}
-            </article>
-          );
-        }}
+            </div>
+          </div>
+        )}
       />
     </>
   );

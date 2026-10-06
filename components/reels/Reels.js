@@ -22,6 +22,7 @@ import { getFacts, factView } from "@/lib/missionfacts";
 import "./reels.css";
 import PyqSplit from "@/components/PyqSplit";
 import { toModel } from "@/components/FactFolders";
+import FactSrcBtn from "@/components/FactSrcBtn";
 import { dayKey } from "@/lib/daytime";
 import "@/app/mission/facts/folders.css";
 
@@ -241,11 +242,14 @@ function HomeCard({ r, onWrong }) {
     if (m) {
       return split(
         <div className="qcard__stem">{m.head}</div>,
+        <>
+        {m.src ? <div className="qcard__acts" style={{ marginTop: 0, marginBottom: 12 }}><FactSrcBtn src={m.src} /></div> : null}
         <div className="qcard__answer">
           {m.pts
             ? <ul className="ffd-pts">{m.pts.map((p, k) => <li key={k}>{p.head ? <><b>{p.head}</b> — </> : null}{p.rest}</li>)}</ul>
             : <p className="ffd-txt" style={{ margin: 0, whiteSpace: "pre-line" }}>{m.body}</p>}
-        </div>,
+        </div>
+        </>,
       );
     }
     return split(
