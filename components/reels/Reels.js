@@ -21,6 +21,7 @@ import { vocabPool } from "@/lib/vocabpool";
 import { getFacts, factView } from "@/lib/missionfacts";
 import "./reels.css";
 import PyqSplit from "@/components/PyqSplit";
+import { getAns, sHash } from "@/lib/sprint";
 import { toModel } from "@/components/FactFolders";
 import FactSrcBtn from "@/components/FactSrcBtn";
 import { dayKey } from "@/lib/daytime";
@@ -119,7 +120,7 @@ export default function Reels() {
       // 📖 Answers page ke screenshot wale (bina options) — tasveer + jawab.
       ["ans", 12, () => P.ans.length > 0, () => {
         const r = pick(P.ans);
-        return { kind: "ans", _ask: r.subject || "", tag: `📖 Answers · ${subjectLabel(r.subject)}${r.category ? " · " + r.category : ""}`, images: imagesOf(r), note: r.note || "", explanation: r.answer || shownDetail(r) || "", question: r.q?.question || "" , qImg: "" };
+        return { kind: "ans", _wbid: r.id, _ask: r.subject || "", tag: `📖 Answers · ${subjectLabel(r.subject)}${r.category ? " · " + r.category : ""}`, images: imagesOf(r), note: r.note || "", explanation: r.answer || shownDetail(r) || "", question: r.q?.question || "" , qImg: "" };
       }],
       ["jodi", 16, () => P.jodi.length > 0, () => {
         const x = pick(P.jodi);
@@ -217,6 +218,17 @@ export default function Reels() {
 // neeche jawab (pehle chhupa). 👁️ khole, 🙈 chhupaye, 🧹 sab hataye.
 function HomeCard({ r, onWrong }) {
   const [picked, setPicked] = useState(null);
+  // 💬 Chat se "⭐ Is question ka jawab bana do" — wahi jawab yahan (PYQ card
+  // jaisa): saved ho to wahi dikhta hai, warna book ka apna.
+  const [ds, setDs] = useState(() => getAns(r));
+  useEffect(() => {
+    const h = sHash(r);
+    const on = (e) => { if (!e || !e.detail || !e.detail.h || e.detail.h === h) setDs(getAns(r)); };
+    const on2 = () => setDs(getAns(r));
+    window.addEventListener("cgl:sprint-ans", on);
+    window.addEventListener("cgl:ds-saved", on2);
+    return () => { window.removeEventListener("cgl:sprint-ans", on); window.removeEventListener("cgl:ds-saved", on2); };
+  }, [r]);
   // Sprint jaisa — jawab hamesha daayen dikhta hai; option chunne par sirf rang.
   const shown = picked != null;
   const ansShown = true;
@@ -263,7 +275,7 @@ function HomeCard({ r, onWrong }) {
       <>
         {acts}
         {ansShown && (
-          <div className="qcard__answer">{r.explanation ? <Markdown>{r.explanation}</Markdown> : <p>Is question ka jawab Answers page par likha nahi hai.</p>}</div>
+          <div className="qcard__answer">{ds || r.explanation ? <Markdown>{ds || r.explanation}</Markdown> : <p>Is question ka jawab Answers page par likha nahi hai.</p>}</div>
         )}
       </>,
     );
@@ -306,7 +318,7 @@ function HomeCard({ r, onWrong }) {
           )}
           {r.method ? <p className="reel__method">🧠 Tumhara method: <b>{r.method}</b></p> : null}
           {r.solImg ? <img src={r.solImg} alt="solution" style={{ maxWidth: "100%" }} /> : null}
-          {r.explanation ? <Markdown>{r.explanation}</Markdown> : null}
+          {ds ? <Markdown>{ds}</Markdown> : r.explanation ? <Markdown>{r.explanation}</Markdown> : null}
         </div>
       )}
     </>,
