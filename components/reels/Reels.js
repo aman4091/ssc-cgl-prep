@@ -209,10 +209,9 @@ export default function Reels() {
 // neeche jawab (pehle chhupa). 👁️ khole, 🙈 chhupaye, 🧹 sab hataye.
 function HomeCard({ r, onWrong }) {
   const [picked, setPicked] = useState(null);
-  const [open, setOpen] = useState(false);
-  const [hid, setHid] = useState(false);
-  const shown = picked != null || open;
-  const ansShown = shown && !hid;
+  // Sprint jaisa — jawab hamesha daayen dikhta hai; option chunne par sirf rang.
+  const shown = picked != null;
+  const ansShown = true;
   // Sprint jaisa: baayen sawaal, daayen sar + button + jawab.
   const split = (left, right) => (
     <div className="qsplit">
@@ -223,18 +222,15 @@ function HomeCard({ r, onWrong }) {
       </div>
     </div>
   );
-  const acts = (
+  const acts = shown ? (
     <div className="qcard__acts" style={{ marginTop: 0, marginBottom: 12 }}>
-      {!ansShown && <button className="btn" onClick={() => { setOpen(true); setHid(false); }}>👁️ Answer</button>}
-      {ansShown && <button className="btn" onClick={() => setHid(true)}>🙈 Chhupao</button>}
-      {shown && <button className="btn" onClick={() => { setPicked(null); setOpen(false); setHid(false); }}>🧹 Clear</button>}
+      <button className="btn" onClick={() => setPicked(null)}>🧹 Clear</button>
     </div>
-  );
+  ) : null;
   if (r.kind === "fact") {
     return split(
       <div className="qcard__stem"><Markdown>{r.text}</Markdown></div>,
-      r.more ? (open ? <div className="qcard__answer"><Markdown>{r.more}</Markdown></div>
-        : <div className="qcard__acts" style={{ marginTop: 0 }}><button className="btn" onClick={() => setOpen(true)}>⌄ poora padho</button></div>) : null,
+      r.more ? <div className="qcard__answer"><Markdown>{r.more}</Markdown></div> : null,
     );
   }
   if (r.kind === "ans") {
@@ -265,7 +261,7 @@ function HomeCard({ r, onWrong }) {
               key={k}
               type="button"
               className={`qcard__opt${picked === null ? " is-pick" : ""}${picked === k ? " is-picked" : ""}${right ? " is-right" : ""}${wrong ? " is-wrong" : ""}`}
-              onClick={() => { if (picked != null) return; setPicked(k); setHid(false); if (k !== r.answer) onWrong(r); }}
+              onClick={() => { if (picked != null) return; setPicked(k); if (k !== r.answer) onWrong(r); }}
             >
               <b>{LETTER[k] || k + 1}</b>
               {r.optImgs ? <img src={o} alt={LETTER[k]} className="math-opt-img" /> : <Markdown inline>{String(o ?? "")}</Markdown>}

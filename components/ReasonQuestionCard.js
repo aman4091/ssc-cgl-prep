@@ -239,7 +239,8 @@ Options: ${opts}
       </h2>
   );
   const answerEl = (
-      shown && !ansHidden ? (
+      // Sprint jaisa roop (split) — jawab hamesha daayen dikhta hai.
+      (split || (shown && !ansHidden)) ? (
         <div className="qcard__answer">
           <p style={{ margin: "0 0 8px", color: "var(--ok)", fontWeight: 700 }}>
             ✓ Sahi jawab: {String.fromCharCode(65 + q.answer)}
@@ -321,10 +322,10 @@ Options: ${opts}
       </div>
 
       <div className="qcard__acts">
-        {(!shown || ansHidden) && (
+        {!split && (!shown || ansHidden) && (
           <button className="btn" onClick={() => { setPeek(true); setAnsHidden(false); onHideSave?.(false); }} title="Bina attempt kiye solution dekho">👁️ Answer</button>
         )}
-        {(chatLook || split) && shown && !ansHidden && (
+        {chatLook && shown && !ansHidden && (
           <button className="btn" onClick={() => { setAnsHidden(true); onHideSave?.(true); }} title="Jawab phir chhupao">🙈 Chhupao</button>
         )}
         {(chatLook || split) && (picked !== null || peek || revealed) && (
