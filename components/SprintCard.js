@@ -42,11 +42,6 @@ export default function SprintCard({ q, n, total, picked, onPick }) {
           : <Markdown>{qText(q)}</Markdown>}
       </div>
 
-      {q._imgs && picked == null ? (
-        <div className="sp-opts">
-          <button type="button" className="sp-opt" onClick={() => onPick(-1)}>👀 Jawab dekho</button>
-        </div>
-      ) : null}
       <div className="sp-opts">
         {Array.from({ length: count }, (_, i) => {
           // Jawab chun lene ke baad hi rang aata hai: sahi hamesha hara,
