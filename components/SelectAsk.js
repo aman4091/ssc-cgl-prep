@@ -67,6 +67,16 @@ function subjectFromPath(path) {
   return "";
 }
 
+// Saamne wale question ka apna subject (Home ke card `_ask` ke saath aate hain)
+// — page ke pate se zyada sahi: Home par English ka sawaal ho to English ka prompt.
+function subjectOfQ(q) {
+  const k = String((q && q._ask) || "").toLowerCase();
+  if (k === "maths" || k === "math") return "math";
+  if (k === "reasoning" || k === "english") return k;
+  if (k === "gs" || k === "ca") return "gs";
+  return "";
+}
+
 // Selection panel / patti / badi tasveer ke andar se aayi hai? (Wahan ka
 // select karna apna kaam hai — uspar dobara patti nahi aani chahiye.)
 function insideOwn(node) {
@@ -357,7 +367,7 @@ export default function SelectAsk() {
   const openPanel = useCallback((text, auto) => {
     setTid(newThreadId());
     setSel(text);
-    setSubject(subjectFromPath(path));
+    setSubject(subjectOfQ(sqRef.current) || subjectFromPath(path));
     setMsgs([]);
     setErr("");
     setQ("");
@@ -488,7 +498,7 @@ export default function SelectAsk() {
   const fresh = useCallback(() => {
     setTid(newThreadId());
     setSel("");
-    setSubject(subjectFromPath(path));
+    setSubject(subjectOfQ(sqRef.current) || subjectFromPath(path));
     setMsgs([]);
     setErr("");
     setQ("");

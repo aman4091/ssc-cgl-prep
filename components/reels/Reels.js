@@ -89,7 +89,7 @@ export default function Reels() {
     const meta = ALL_SUBJECTS.find((s) => s.slug === slug);
     // Ek chapter se sirf 4 — phir naya random chapter, taaki wahi topic
     // baar-baar na aaye.
-    pools.current.pyq[slug] = shuffle(qs).slice(0, 4).map((q) => toQ(q, "pyq", `${meta?.icon || "📝"} ${meta?.label || ""} PYQ${q._chapter ? " · " + q._chapter : ""}`));
+    pools.current.pyq[slug] = shuffle(qs).slice(0, 4).map((q) => ({ ...toQ(q, "pyq", `${meta?.icon || "📝"} ${meta?.label || ""} PYQ${q._chapter ? " · " + q._chapter : ""}`), _ask: meta?.subject || "" }));
   }, []);
 
   // Agli 8 reel — har baar alag kism, jo pool khaali ho wo chhoot jaata.
@@ -110,24 +110,24 @@ export default function Reels() {
       }],
       // 📘 Khud jode hue question (GKTricks ke andar wale topic bhi).
       ["mine", 14, () => P.mine.length > 0, () => pick(P.mine)],
-      ["o40", 12, () => P.o40.length > 0, () => { const q = pick(P.o40); return toQ(q, "o40", `🐢 Maths 40+ · ${q._chapter || ""}`); }],
-      ["wrong", 12, () => P.wrong.length > 0, () => { const r = pick(P.wrong); return toQ(r.q, "wrong", `🔴 Galti · ${subjectLabel(r.subject)}${r.category ? " · " + r.category : ""}`); }],
+      ["o40", 12, () => P.o40.length > 0, () => { const q = pick(P.o40); return { ...toQ(q, "o40", `🐢 Maths 40+ · ${q._chapter || ""}`), _ask: "math" }; }],
+      ["wrong", 12, () => P.wrong.length > 0, () => { const r = pick(P.wrong); return { ...toQ(r.q, "wrong", `🔴 Galti · ${subjectLabel(r.subject)}${r.category ? " · " + r.category : ""}`), _ask: r.subject || "" }; }],
       // 📖 Answers page ke screenshot wale (bina options) — tasveer + jawab.
       ["ans", 12, () => P.ans.length > 0, () => {
         const r = pick(P.ans);
-        return { kind: "ans", tag: `📖 Answers · ${subjectLabel(r.subject)}${r.category ? " · " + r.category : ""}`, images: imagesOf(r), note: r.note || "", explanation: r.answer || shownDetail(r) || "", question: r.q?.question || "" , qImg: "" };
+        return { kind: "ans", _ask: r.subject || "", tag: `📖 Answers · ${subjectLabel(r.subject)}${r.category ? " · " + r.category : ""}`, images: imagesOf(r), note: r.note || "", explanation: r.answer || shownDetail(r) || "", question: r.q?.question || "" , qImg: "" };
       }],
       ["jodi", 16, () => P.jodi.length > 0, () => {
         const x = pick(P.jodi);
         const m = mcq(x.st, P.states);
-        return { kind: "jodi", tag: x.t === "fd" ? "🪔 Folk dance → Rajya" : "🪔 Tyohar → Rajya", question: `**${x.n}** — kis rajya ka?`, ...m, explanation: x.note || "" };
+        return { kind: "jodi", _ask: "gs", tag: x.t === "fd" ? "🪔 Folk dance → Rajya" : "🪔 Tyohar → Rajya", question: `**${x.n}** — kis rajya ka?`, ...m, explanation: x.note || "" };
       }],
       ["vocab", 14, () => P.vocab.length > 3, () => {
         const v = pick(P.vocab);
         const m = mcq(clip(v.meaning, 90), P.means);
-        return { kind: "vocab", tag: `🔤 ${v.label || "Vocab"}`, question: `**${v.word}** — matlab?`, ...m, explanation: v.meaning };
+        return { kind: "vocab", _ask: "english", tag: `🔤 ${v.label || "Vocab"}`, question: `**${v.word}** — matlab?`, ...m, explanation: v.meaning };
       }],
-      ["fact", 12, () => P.facts.length > 0, () => { const f = pick(P.facts); const v = factView(f); return { kind: "fact", tag: `🧠 Fact${f.topic ? " · " + f.topic : ""}`, text: v.main, more: v.more }; }],
+      ["fact", 12, () => P.facts.length > 0, () => { const f = pick(P.facts); const v = factView(f); return { kind: "fact", _ask: f.sec || "gs", tag: `🧠 Fact${f.topic ? " · " + f.topic : ""}`, text: v.main, more: v.more }; }],
     ];
     const out = [];
     for (let guard = 0; out.length < 8 && guard < 40; guard++) {
@@ -172,7 +172,7 @@ export default function Reels() {
         for (const t of getUserTopics()) {
           const b = shelfBook(t.bookId) || getUserBook(t.bookId);
           const tag = `${b?.icon || "📘"} ${b?.name || "Meri book"} · ${t.name || ""}`;
-          for (const q of getUserTopicQuestions(t.id)) if (q && q.question && Array.isArray(q.options) && q.answer != null) P.mine.push(toQ(q, "mine", tag));
+          for (const q of getUserTopicQuestions(t.id)) if (q && q.question && Array.isArray(q.options) && q.answer != null) P.mine.push({ ...toQ(q, "mine", tag), _ask: b?.subject || "gs" });
         }
       } catch { /* ignore */ }
       try {
