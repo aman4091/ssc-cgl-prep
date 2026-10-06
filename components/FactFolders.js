@@ -20,7 +20,8 @@ const SEC_C = { gs: "#10b981", ca: "#f59e0b", english: "#a855f7", maths: "#3b82f
 
 // Ek fact → padhne ki shakl. Ek line: "Naam: baaki" → sar + jawab. Kai
 // line (🧹 saaf ki hui): pehli line sar, baaki points.
-function toModel(f, today) {
+// Home (components/reels) bhi fact isi shakl mein dikhata hai.
+export function toModel(f, today) {
   const v = factView(f);
   const s = FACT_SECS.find((x) => x.k === f.sec) || FACT_SECS[0];
   const main = String(v.main || "").trim();

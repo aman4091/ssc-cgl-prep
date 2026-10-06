@@ -21,6 +21,9 @@ import { vocabPool } from "@/lib/vocabpool";
 import { getFacts, factView } from "@/lib/missionfacts";
 import "./reels.css";
 import PyqSplit from "@/components/PyqSplit";
+import { toModel } from "@/components/FactFolders";
+import { dayKey } from "@/lib/daytime";
+import "@/app/mission/facts/folders.css";
 
 const LETTER = ["A", "B", "C", "D", "E"];
 
@@ -127,7 +130,7 @@ export default function Reels() {
         const m = mcq(clip(v.meaning, 90), P.means);
         return { kind: "vocab", _ask: "english", tag: `🔤 ${v.label || "Vocab"}`, question: `**${v.word}** — matlab?`, ...m, explanation: v.meaning };
       }],
-      ["fact", 12, () => P.facts.length > 0, () => { const f = pick(P.facts); const v = factView(f); return { kind: "fact", _ask: f.sec || "gs", tag: `🧠 Fact${f.topic ? " · " + f.topic : ""}`, text: v.main, more: v.more }; }],
+      ["fact", 12, () => P.facts.length > 0, () => { const f = pick(P.facts); const v = factView(f); return { kind: "fact", _ask: f.sec || "gs", tag: `🧠 Fact${f.topic ? " · " + f.topic : ""}`, text: v.main, more: v.more, fact: f }; }],
     ];
     const out = [];
     for (let guard = 0; out.length < 8 && guard < 40; guard++) {
@@ -232,6 +235,19 @@ function HomeCard({ r, onWrong }) {
     </div>
   ) : null;
   if (r.kind === "fact") {
+    // Fact log jaisi hi shakl (components/FactFolders toModel): sar baayen,
+    // baatein alag-alag point mein daayen.
+    const m = r.fact ? toModel(r.fact, dayKey()) : null;
+    if (m) {
+      return split(
+        <div className="qcard__stem">{m.head}</div>,
+        <div className="qcard__answer">
+          {m.pts
+            ? <ul className="ffd-pts">{m.pts.map((p, k) => <li key={k}>{p.head ? <><b>{p.head}</b> — </> : null}{p.rest}</li>)}</ul>
+            : <p className="ffd-txt" style={{ margin: 0, whiteSpace: "pre-line" }}>{m.body}</p>}
+        </div>,
+      );
+    }
     return split(
       <div className="qcard__stem"><Markdown>{r.text}</Markdown></div>,
       r.more ? <div className="qcard__answer"><Markdown>{r.more}</Markdown></div> : null,

@@ -19,7 +19,7 @@ function readObj(k) {
 }
 const MENU_KEY = "cgl.pyqs.menu";
 
-export default function PyqSplit({ title, list, renderCard, storeKey = "default", onNeedMore, noJump = false, headExtra = null, fullscreen = false }) {
+export default function PyqSplit({ title, list, renderCard, storeKey = "default", onNeedMore, noJump = false, headExtra = null, fullscreen = true }) {
   const KEY = `cgl.qfeed.${storeKey}`;
   const HKEY = `${KEY}.hid`;
   const PKEY = `cgl.pyqs.pos.${storeKey}`;
