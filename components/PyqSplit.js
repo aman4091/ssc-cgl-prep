@@ -19,7 +19,7 @@ function readObj(k) {
 }
 const MENU_KEY = "cgl.pyqs.menu";
 
-export default function PyqSplit({ title, list, renderCard, storeKey = "default", onNeedMore, noJump = false }) {
+export default function PyqSplit({ title, list, renderCard, storeKey = "default", onNeedMore, noJump = false, headExtra = null }) {
   const KEY = `cgl.qfeed.${storeKey}`;
   const HKEY = `${KEY}.hid`;
   const PKEY = `cgl.pyqs.pos.${storeKey}`;
@@ -118,6 +118,7 @@ export default function PyqSplit({ title, list, renderCard, storeKey = "default"
         <span className="sp-top__n">{at + 1}/{list.length}{onNeedMore ? "+" : ""}</span>
         <span className="sp-top__dim pyqs-title">{title}{onNeedMore ? "" : ` · ✓ ${done}`}</span>
         <span className="sp-top__sp" />
+        {headExtra}
         {noJump ? null : <button type="button" className="sp-ibtn" onClick={jump} title="Jahan tak lagaye, uske baad wala question">⏭</button>}
       </div>
       <div className="sp-bar"><div className="sp-bar__fill" style={{ width: `${((at + 1) / list.length) * 100}%` }} /></div>

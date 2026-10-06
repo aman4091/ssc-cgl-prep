@@ -48,10 +48,13 @@ async function randomPart(slug) {
   const srcs = sourcesFor(slug);
   if (!srcs.length) return [];
   const src = pick(srcs);
-  const parts = (await partsOf(slug, src.id)).filter((p) => (p.count || 0) > 0);
+  // English ke Cloze test / RC (comprehension) Home par nahi — passage ke bina
+  // unka sawaal adhoora hai (owner).
+  const RC = /cloze|comprehension|reading|passage|\brc\b/i;
+  const parts = (await partsOf(slug, src.id)).filter((p) => (p.count || 0) > 0 && !RC.test(`${p.slug || ""} ${p.label || ""}`));
   if (!parts.length) return [];
   const qs = await loadOnePart(slug, src.id, pick(parts).slug);
-  return qs.filter((q) => (q.question || q.qText || q.qImg) && ((q.options || q.optText || []).length >= 2 || q.optImgs) && q.answer != null);
+  return qs.filter((q) => !q.passage && !RC.test(String(q._chapter || "")) && (q.question || q.qText || q.qImg) && ((q.options || q.optText || []).length >= 2 || q.optImgs) && q.answer != null);
 }
 
 function toQ(q, kind, tag) {

@@ -656,3 +656,7 @@ body:has(.pyqs) .sa-reopen { display: inline-block; }
   .qsplit__r { border-left: 0; border-top: 1px solid var(--line); }
   .qsplit__l, .qsplit__r { padding: 12px; }
 }
+/* CA ka mahina / Import — Sprint jaisi patti ke andar, chhota */
+.sp-top .ca-top--in { width: auto; }
+.sp-top .ca-top--in .ca-eyebrow { display: none; }
+.sp-top .ca-top--in .ca-month { padding: 4px 8px; font-size: 0.85rem; }

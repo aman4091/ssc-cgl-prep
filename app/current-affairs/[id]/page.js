@@ -21,7 +21,7 @@ import { useParams, useRouter } from "next/navigation";
 import { getEntry, getEntries } from "@/lib/feed";
 import { isCaBankId, loadCaBankEntry, loadCaBankIndex, caBankId } from "@/lib/cabank";
 import CaImportButton from "@/components/CaImportButton";
-import QChatFeed from "@/components/QChatFeed";
+import PyqSplit from "@/components/PyqSplit";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 
 // Imported entry ka sortable roop ("2026-07"); `date` kabhi "July 2026" jaisa
@@ -105,15 +105,15 @@ export default function CurrentAffairsMonth() {
       ) : !list.length ? (
         <div className="placeholder">Is mahine mein koi question nahi.</div>
       ) : (
-        // 💬 Chat wali window — saare question ek ke neeche ek, jawab chhupa;
-        // mahina chunne ka dropdown window ke sar mein.
-        <QChatFeed
+        // ⚡ Sprint jaisa roop (components/PyqSplit) — baayen sawaal, daayen
+        // button + jawab; mahina ka dropdown upar ki patti mein.
+        <PyqSplit
           title={`📰 ${heading}`}
           list={list}
           storeKey={`ca:${id}`}
           headExtra={caTop}
           renderCard={(q, i, mem) => (
-            <PyqQuestionCard {...mem} key={q.id} q={q} index={i} subject="gs" chapterName={`Current Affairs · ${heading}`} chatLook />
+            <PyqQuestionCard {...mem} q={q} index={i} subject="gs" chapterName={`Current Affairs · ${heading}`} split />
           )}
         />
       )}
