@@ -305,7 +305,8 @@ function slopeOf(ys) {
 
 /* ================================ Report ================================ */
 
-export default function MockReport({ cat, mocks }) {
+// keep — page ki 🔁 / 📅 chhaanti; doosre subject ki tulna par bhi wahi lage.
+export default function MockReport({ cat, mocks, keep = () => true }) {
   const [range, setRange] = useState("all");
   const [showTable, setShowTable] = useState(false);
   const catInfo = CATEGORIES.find((c) => c.key === cat) || CATEGORIES[0];
@@ -321,7 +322,7 @@ export default function MockReport({ cat, mocks }) {
 
   // Sirf sectional subjects ki tulna — Full Mock subject nahi, poora paper hai.
   const compare = useMemo(() => CATEGORIES.filter((c) => c.subject).map((c) => {
-    const rs = applyRange(toRows(getMocks(c.key)), range);
+    const rs = applyRange(toRows(getMocks(c.key).filter(keep)), range);
     const mx = sum(rs, (r) => r.max);
     const att = sum(rs, (r) => r.attempted);
     return {

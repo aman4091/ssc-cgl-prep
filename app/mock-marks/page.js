@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import {
   FULL_SECTIONS, CATEGORIES, categoryOf,
   getMocks, addMock, removeMock, mockTotals, sectionStats, percentileOf,
+  MOCK_YEARS, yearOf, isReattempt,
 } from "@/lib/mockmarks";
 import MockReport from "@/components/MockReport";
 import { buildMockTextReport } from "@/lib/mockreporttext";
@@ -38,6 +39,17 @@ function downloadTextReport() {
 }
 
 const VIEW_KEY = "cgl.mockmarks.view";
+const FILT_KEY = "cgl.mockmarks.filter";
+// 🔁 Reattempt / saal ki chhaanti — list aur graph dono par.
+const RE_OPTS = [
+  { k: "all", l: "Sab" },
+  { k: "no", l: "Bina reattempt" },
+  { k: "only", l: "🔁 Sirf reattempt" },
+];
+function keepMock(f) {
+  return (m) => (f.re === "all" || (f.re === "no" ? !isReattempt(m) : isReattempt(m)))
+    && (f.yr === "all" || yearOf(m) === f.yr);
+}
 const todayStr = () => new Date().toISOString().slice(0, 10);
 const blankSection = () => ({ name: "", correct: "", wrong: "", total: "", timeMin: "" });
 const fmtDate = (d) => { try { return new Date(d + "T00:00:00").toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }); } catch { return d; } };
@@ -47,7 +59,11 @@ function MockMarksInner() {
   const cat = categoryOf(sp.get("cat"));
   const isFull = cat.key === "full";
 
-  const [mocks, setMocks] = useState([]);
+  const [allMocks, setMocks] = useState([]);
+  const [filt, setFiltState] = useState({ re: "all", yr: "all" });
+  useEffect(() => { try { const v = JSON.parse(localStorage.getItem(FILT_KEY) || "null"); if (v && v.re && v.yr) setFiltState(v); } catch {} }, []);
+  const setFilt = (patch) => setFiltState((f) => { const n = { ...f, ...patch }; try { localStorage.setItem(FILT_KEY, JSON.stringify(n)); } catch {} return n; });
+  const mocks = allMocks.filter(keepMock(filt));
   const [open, setOpen] = useState(false);
   // 📋 List ya 📈 Graph & Report — jo aakhri baar chuna tha wahi khule.
   const [view, setViewState] = useState("list");
@@ -61,6 +77,8 @@ function MockMarksInner() {
   // 📈 Rank aur "kitne mein se" — Testbook/RBE dono saamne dikhate hain, aur
   // inhi do se percentile banta hai. Score batata hai kitna kiya; percentile
   // batata hai ki baaki logon ke saamne kahan khade ho — asli chunav wahi hai.
+  const [reattempt, setReattempt] = useState(false);
+  const [year, setYear] = useState("2025");
   const [rank, setRank] = useState("");
   const [outOf, setOutOf] = useState("");
   const [err, setErr] = useState("");
@@ -79,7 +97,7 @@ function MockMarksInner() {
       ? FULL_SECTIONS.map((n) => ({ ...blankSection(), name: n }))
       : [{ ...blankSection(), name: cat.subject }];
 
-  const resetForm = () => { setName(""); setDate(todayStr()); setSections(freshSections()); setRank(""); setOutOf(""); setErr(""); setAck(false); };
+  const resetForm = () => { setName(""); setDate(todayStr()); setSections(freshSections()); setRank(""); setOutOf(""); setErr(""); setAck(false); setReattempt(false); setYear("2025"); };
 
   useEffect(() => { refresh(); setOpen(false); resetForm(); setJustSaved(null); /* eslint-disable-next-line */ }, [cat.key]);
 
@@ -107,7 +125,7 @@ function MockMarksInner() {
       warns.push("📘 English 25 attempt = 32 marks @74%. 23 attempt @88% = 38.5 marks. 2 unknown vocab Q CHHODO — 23 par ruko.");
     }
     if (warns.length && !ack) { setErr(warns.join("  ·  ")); setAck(true); return; }
-    const rec = addMock({ name, cat: cat.key, date, sections, rank, outOf });
+    const rec = addMock({ name, cat: cat.key, date, sections, rank, outOf, reattempt, year });
     setJustSaved(rec);
     setOpen(false); resetForm(); refresh();
   };
@@ -185,6 +203,16 @@ function MockMarksInner() {
                   <div className="input" style={{ display: "flex", alignItems: "center", color: "var(--accent-2)", fontWeight: 700 }}>{draftPc}</div>
                 </div>
               )}
+              <div style={{ flex: "1 1 120px" }}>
+                <label className="vd-label">Paper ka saal</label>
+                <select className="input" value={year} onChange={(e) => setYear(e.target.value)}>
+                  {MOCK_YEARS.map((y) => <option key={y} value={y}>{y}</option>)}
+                </select>
+              </div>
+              <label style={{ flex: "1 1 160px", display: "flex", alignItems: "center", gap: 8, cursor: "pointer", paddingBottom: 10 }}>
+                <input type="checkbox" checked={reattempt} onChange={(e) => setReattempt(e.target.checked)} />
+                🔁 Reattempt (ye mock dobara diya)
+              </label>
             </div>
 
             {isFull ? (
@@ -258,10 +286,24 @@ function MockMarksInner() {
       </section>
 
       <section className="section">
+        {/* 🔁 Reattempt aur 📅 saal ki chhaanti — list aur graph dono par. */}
+        <div className="row" style={{ gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
+          {RE_OPTS.map((o) => (
+            <button key={o.k} className={"chip chip--btn" + (filt.re === o.k ? " is-active" : "")} aria-pressed={filt.re === o.k} onClick={() => setFilt({ re: o.k })}>
+              {filt.re === o.k ? "✓ " : ""}{o.l}
+            </button>
+          ))}
+          <span className="muted" style={{ margin: "0 4px" }}>·</span>
+          {["all", ...MOCK_YEARS].map((y) => (
+            <button key={y} className={"chip chip--btn" + (filt.yr === y ? " is-active" : "")} aria-pressed={filt.yr === y} onClick={() => setFilt({ yr: y })}>
+              {filt.yr === y ? "✓ " : ""}{y === "all" ? "📅 Saare saal" : `📅 ${y}`}
+            </button>
+          ))}
+        </div>
         {view === "report" ? (
-          <MockReport cat={cat.key} mocks={mocks} />
+          <MockReport cat={cat.key} mocks={mocks} keep={keepMock(filt)} />
         ) : mocks.length === 0 ? (
-          <div className="placeholder">Abhi koi {cat.label} record nahi. Upar “➕ Add {cat.label} marks” se daalo.</div>
+          <div className="placeholder">{allMocks.length ? "Is chhaanti mein koi mock nahi — upar 'Sab' / 'Saare saal' chuno." : `Abhi koi ${cat.label} record nahi. Upar “➕ Add ${cat.label} marks” se daalo.`}</div>
         ) : (
           <div style={{ display: "grid", gap: 12 }}>
             {mocks.map((m) => {
@@ -289,6 +331,8 @@ function MockMarksInner() {
                       </>
                     )}
                     {m.external && <span className="chip muted">🌐 bahar</span>}
+                    {isReattempt(m) && <span className="chip" style={{ color: "var(--warning)" }}>🔁 Reattempt</span>}
+                    <span className="chip muted">📅 {yearOf(m)} paper</span>
                   </div>
                 </div>
               );
