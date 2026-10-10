@@ -27,7 +27,7 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import "./paste.css";
 import OneLinerNotes from "@/components/OneLinerNotes";
-import QChatFeed from "@/components/QChatFeed";
+import PyqSplit from "@/components/PyqSplit";
 import { countOneLiner } from "@/lib/onelinerfmt";
 import { formatOneLiner } from "@/lib/client-ai";
 import { saveNote, removeNote, notesByBook, bookLabel } from "@/lib/pastednotes";
@@ -55,8 +55,12 @@ function Note({ n, onGone }) {
     finally { setBusy(false); }
   };
 
+  // ⚡ Sprint jaisa roop (components/PyqSplit): baayen page ka topic, daayen
+  // book · page · button aur poore notes.
   return (
-    <article className="qcard qcard--chat pn-chat">
+    <div className="qsplit pn-split">
+      <div className="qsplit__l"><article className="qcard"><div className="qcard__stem">{n.topic || "—"}</div></article></div>
+      <div className="qsplit__r pn-chat">
       <h2 className="qcard__h">
         {n.bookTitle || n.book || "Notes"} · page {n.page} · {c.n} point{c.star ? ` · ⭐ ${c.star}` : ""}
         <span className="qcard__hacts pn-acts">
@@ -94,7 +98,6 @@ function Note({ n, onGone }) {
         >🗑️</button>
         </span>
       </h2>
-      <div className="qcard__stem">{n.topic || "—"}</div>
 
       {err ? <div className="pn-err">⚠️ {err}</div> : null}
 
@@ -113,7 +116,8 @@ function Note({ n, onGone }) {
       ) : (
         <div className="qcard__answer"><OneLinerNotes text={n.text} /></div>
       )}
-    </article>
+      </div>
+    </div>
   );
 }
 
@@ -179,16 +183,6 @@ export default function PasteNotesPage() {
       </button>
     </div>
   ) : null;
-  useEffect(() => {
-    if (!nav) return undefined;
-    const k = (e) => {
-      if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
-      if (e.key === "ArrowLeft" && nav.prev) goNote(nav.prev.k);
-      else if (e.key === "ArrowRight" && nav.next) goNote(nav.next.k);
-    };
-    window.addEventListener("keydown", k);
-    return () => window.removeEventListener("keydown", k);
-  }, [nav, goNote]);
   const tally = useMemo(() => {
     let pages = 0, pts = 0, star = 0;
     for (const g of shown) for (const n of g.items) {
@@ -213,22 +207,24 @@ export default function PasteNotesPage() {
 
   return (
     <section className="section" style={{ marginTop: 16 }}>
-      {/* 💬 Chat wali window — saare page ek ke neeche ek (patti upar dikhti rehti hai). */}
-      <QChatFeed
-        key={`${book}|${note}`}
-        title={oneBook ? `📝 ${bookLabel(oneBook)}` : book ? `📝 ${(shown[0] && (shown[0].eyebrow || shown[0].title)) || "Notesliner"}` : "📝 Notesliner"}
-        list={shown.flatMap((g) => g.items.map((n) => ({ ...n, id: n.k })))}
-        storeKey={`notesliner.${book || "all"}`}
-        headExtra={oneBook ? (
-          <>
-            <button type="button" className="pn-b pn-b--back" onClick={() => setNote("")}>← Poora {bookLabel(oneBook)}</button>
-            {pager}
-          </>
-        ) : null}
-        noJump
-        unit="page"
-        renderCard={(n) => <Note key={n.k} n={n} onGone={reload} />}
-      />
+      {/* ⚡ Sprint jaisa roop — ek page ek baar, ← → se agla/pichhla. Menu se
+          ek page khola ho to usi book ke saare page, wahi wala saamne. */}
+      {(() => {
+        const gs = book ? groups.filter((g) => g.book === book) : (oneBook ? groups.filter((g) => g.book === oneBook.book) : groups);
+        const list = gs.flatMap((g) => g.items.map((n) => ({ ...n, id: n.k })));
+        const at = note ? list.findIndex((n) => n.k === note) : -1;
+        return (
+          <PyqSplit
+            key={`${book}|${oneBook ? oneBook.book : ""}|${note}`}
+            title={book || oneBook ? `📝 ${bookLabel(gs[0] || {})}` : "📝 Notesliner"}
+            list={list}
+            storeKey={`notesliner.${book || (oneBook && oneBook.book) || "all"}`}
+            startAt={at}
+            noJump
+            renderCard={(n) => <Note key={n.k} n={n} onGone={reload} />}
+          />
+        );
+      })()}
     </section>
   );
 }

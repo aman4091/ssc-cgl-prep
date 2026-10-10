@@ -19,7 +19,7 @@ function readObj(k) {
 }
 const MENU_KEY = "cgl.pyqs.menu";
 
-export default function PyqSplit({ title, list, renderCard, storeKey = "default", onNeedMore, noJump = false, headExtra = null, fullscreen = true }) {
+export default function PyqSplit({ title, list, renderCard, storeKey = "default", onNeedMore, noJump = false, headExtra = null, fullscreen = true, startAt = -1 }) {
   const KEY = `cgl.qfeed.${storeKey}`;
   const HKEY = `${KEY}.hid`;
   const PKEY = `cgl.pyqs.pos.${storeKey}`;
@@ -27,6 +27,7 @@ export default function PyqSplit({ title, list, renderCard, storeKey = "default"
   const [hid, setHid] = useState(() => (typeof window === "undefined" ? {} : readObj(HKEY)));
   const [pos, setPos] = useState(() => {
     // Home ki list har baar nayi bante hai — wahan "kahan the" yaad rakhna bekaar.
+    if (startAt >= 0) return startAt;   // bahar se khaas page (menu ka "p.12")
     if (typeof window === "undefined" || onNeedMore) return 0;
     const n = Number(localStorage.getItem(PKEY) || 0);
     return Number.isFinite(n) && n > 0 ? n : 0;

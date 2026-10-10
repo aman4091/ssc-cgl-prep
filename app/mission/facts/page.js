@@ -1,7 +1,7 @@
 "use client";
 
 import "@/app/carev.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FACT_SECS, factView, getFacts, removeFact } from "@/lib/missionfacts";
 import FactSrcBtn from "@/components/FactSrcBtn";
 import { clearSession } from "@/lib/recallsession";
@@ -73,8 +73,15 @@ export default function MissionFactsPage() {
   const [rev, setRev] = useState(0);
 
   const load = () => setFacts(getFacts());
+  // Fact log kholte hi seedha ▶ Revise (owner) — ek hi baar; band karo to list.
+  const autoRev = useRef(false);
   useEffect(() => {
     load();
+    if (!autoRev.current) {
+      autoRev.current = true;
+      const all = getFacts();
+      if (all.length) setRevising(shuffle(all).map(toCard));
+    }
     // 🧹 Chipke hue facts apne aap saaf — ek-ek karke, peechhe (lib/facttidy).
     autoTidyFacts();
     const on = () => { load(); autoTidyFacts(); };
