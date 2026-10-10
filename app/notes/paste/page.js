@@ -24,10 +24,13 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./paste.css";
 import OneLinerNotes from "@/components/OneLinerNotes";
 import PyqSplit from "@/components/PyqSplit";
+import "@/app/carev.css";
+import Recall from "@/components/carevision/Recall";
+import { clearSession } from "@/lib/recallsession";
 import { countOneLiner } from "@/lib/onelinerfmt";
 import { formatOneLiner } from "@/lib/client-ai";
 import { saveNote, removeNote, notesByBook, bookLabel } from "@/lib/pastednotes";
@@ -121,6 +124,38 @@ function Note({ n, onGone }) {
   );
 }
 
+// 🔁 Fact log ke Revise jaisa — par ek page ek saath nahi: uske points 2-3
+// hisson mein, har hissa apna card (owner: "poora page ek baar mein na ho").
+const NOTE_LABELS = { bad: "Nahi aata tha", good: "Aata tha", show: "Dikhao" };
+function noteChunks(text) {
+  const lines = String(text || "").split("\n").filter((l) => l.trim());
+  const k = lines.length <= 5 ? 1 : lines.length <= 12 ? 2 : 3;
+  const size = Math.ceil(lines.length / k);
+  const out = [];
+  for (let i = 0; i < lines.length; i += size) out.push(lines.slice(i, i + size));
+  // Sar (## …) hisse ke aakhir mein akela na rahe — agle hisse ke saath jaaye.
+  for (let i = 0; i < out.length - 1; i++) {
+    const last = out[i][out[i].length - 1];
+    if (/^\s*#{1,4}\s/.test(last) && out[i].length > 1) out[i + 1].unshift(out[i].pop());
+  }
+  return out.filter((g) => g.length).map((g) => g.join("\n"));
+}
+function noteCards(items) {
+  return items.flatMap((n) => {
+    const parts = noteChunks(n.text);
+    return parts.map((c, i) => ({
+      id: `${n.k}#${i}`,
+      trigger: parts.length > 1 ? `${n.topic || "—"} · ${i + 1}/${parts.length}` : (n.topic || "—"),
+      meta: `${n.bookTitle || n.book || "Notes"} · page ${n.page}`,
+      answer: "",
+      extra: <OneLinerNotes text={c} />,
+      more: "",
+      pdfPage: null,
+      note: n,
+    }));
+  });
+}
+
 export default function PasteNotesPage() {
   const params = useSearchParams();
   const qBook = params.get("book") || "";
@@ -193,6 +228,54 @@ export default function PasteNotesPage() {
     return { pages, pts, star };
   }, [shown]);
 
+  // Kholte hi seedha 🔁 Revise (Fact log jaisa); band karo to page wali list.
+  const [revising, setRevising] = useState(null);
+  const [revKey, setRevKey] = useState("notes");
+  const startRev = useCallback((fromNote) => {
+    const gs = book ? groups.filter((g) => g.book === book) : groups;
+    let items = gs.flatMap((g) => g.items);
+    const key = `notes.${book || "all"}`;
+    if (fromNote) {
+      // Menu se ek page — usi book ke page, wahi page pehle.
+      const g = groups.find((x) => x.items.some((n) => n.k === fromNote));
+      if (g) items = g.items;
+      const i = items.findIndex((n) => n.k === fromNote);
+      if (i > 0) items = [...items.slice(i), ...items.slice(0, i)];
+      clearSession(key);
+    }
+    setRevKey(key);
+    setRevising(noteCards(items));
+  }, [groups, book]);
+  const autoRev = useRef("");
+  useEffect(() => {
+    if (!groups.length) return;
+    const sig = `${book}|${note}`;
+    if (autoRev.current === sig) return;
+    autoRev.current = sig;
+    startRev(note || "");
+  }, [groups, book, note, startRev]);
+
+  if (revising && revising.length) {
+    return (
+      <Recall
+        key={`${revKey}|${revising.length}|${revising[0]?.id}`}
+        queue={revising}
+        labels={NOTE_LABELS}
+        open
+        loop
+        onRate={() => {}}
+        tools={(c) => (c.note && c.note.book ? (
+          <Link
+            className="btn btn--ghost btn--sm"
+            href={`/notes/${encodeURIComponent(c.note.book)}${c.note.topic ? `?topic=${encodeURIComponent(c.note.topic)}` : ""}#nt-p-${encodeURIComponent(c.note.page)}`}
+          >📔 Notes</Link>
+        ) : null)}
+        resumeKey={revKey}
+        onExit={() => { setRevising(null); window.scrollTo(0, 0); }}
+      />
+    );
+  }
+
   if (!groups.length) {
     return (
       <section className="section" style={{ marginTop: 24 }}>
@@ -221,6 +304,7 @@ export default function PasteNotesPage() {
             storeKey={`notesliner.${book || (oneBook && oneBook.book) || "all"}`}
             startAt={at}
             noJump
+            headExtra={<button type="button" className="btn btn--primary btn--sm" onClick={() => startRev("")}>▶ Revise karo</button>}
             renderCard={(n) => <Note key={n.k} n={n} onGone={reload} />}
           />
         );
