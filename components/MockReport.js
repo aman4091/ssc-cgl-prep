@@ -306,7 +306,7 @@ function slopeOf(ys) {
 /* ================================ Report ================================ */
 
 // keep — page ki 🔁 / 📅 chhaanti; doosre subject ki tulna par bhi wahi lage.
-export default function MockReport({ cat, mocks, keep = () => true }) {
+export default function MockReport({ cat, mocks, keep = () => true, filters = null }) {
   const [range, setRange] = useState("all");
   const [showTable, setShowTable] = useState(false);
   const catInfo = CATEGORIES.find((c) => c.key === cat) || CATEGORIES[0];
@@ -347,14 +347,19 @@ export default function MockReport({ cat, mocks, keep = () => true }) {
     }));
   }, [rows, cat]);
 
+  // Page ki 🔁 / 📅 chhaanti + yahan ki "kitne" — ek hi patti.
   const rangeBar = (
-    <div className="mr-filters" role="group" aria-label="Range">
-      {RANGES.map((r) => (
-        <button key={r.key} className={"chip chip--btn" + (range === r.key ? " is-active" : "")}
-          aria-pressed={range === r.key} onClick={() => setRange(r.key)}>
-          {range === r.key ? "✓ " : ""}{r.label}
-        </button>
-      ))}
+    <div className="mf-bar">
+      {filters}
+      <div className="mf-group" role="group" aria-label="Kitne">
+        <span className="mf-lbl">Kitne</span>
+        {RANGES.map((r) => (
+          <button key={r.key} type="button" className={range === r.key ? "is-on" : ""}
+            aria-pressed={range === r.key} onClick={() => setRange(r.key)}>
+            {r.key === "all" ? "Saare" : r.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 
@@ -363,7 +368,7 @@ export default function MockReport({ cat, mocks, keep = () => true }) {
       <div className="mr-root">
         {rangeBar}
         <div className="placeholder" style={{ marginTop: 12 }}>
-          {mocks.length ? "Is range mein koi mock nahi — upar 'Sab' chuno." : `Abhi koi ${catInfo.label} record nahi — graph ke liye pehle marks daalo.`}
+          {mocks.length ? "Is chhaanti mein koi mock nahi — upar 'Saare' chuno." : `Abhi koi ${catInfo.label} record nahi — graph ke liye pehle marks daalo.`}
         </div>
       </div>
     );

@@ -42,9 +42,9 @@ const VIEW_KEY = "cgl.mockmarks.view";
 const FILT_KEY = "cgl.mockmarks.filter";
 // 🔁 Reattempt / saal ki chhaanti — list aur graph dono par.
 const RE_OPTS = [
-  { k: "all", l: "Sab" },
+  { k: "all", l: "Saare" },
   { k: "no", l: "Bina reattempt" },
-  { k: "only", l: "🔁 Sirf reattempt" },
+  { k: "only", l: "🔁 Reattempt" },
 ];
 function keepMock(f) {
   return (m) => (f.re === "all" || (f.re === "no" ? !isReattempt(m) : isReattempt(m)))
@@ -131,6 +131,23 @@ function MockMarksInner() {
   };
 
   const remove = (id) => { if (confirm("Ye mock hata dein?")) { removeMock(id); refresh(); } };
+
+  const filterGroups = (
+    <>
+      <div className="mf-group" role="group" aria-label="Mock">
+        <span className="mf-lbl">Mock</span>
+        {RE_OPTS.map((o) => (
+          <button key={o.k} type="button" className={filt.re === o.k ? "is-on" : ""} aria-pressed={filt.re === o.k} onClick={() => setFilt({ re: o.k })}>{o.l}</button>
+        ))}
+      </div>
+      <div className="mf-group" role="group" aria-label="Saal">
+        <span className="mf-lbl">Saal</span>
+        {["all", ...MOCK_YEARS].map((y) => (
+          <button key={y} type="button" className={filt.yr === y ? "is-on" : ""} aria-pressed={filt.yr === y} onClick={() => setFilt({ yr: y })}>{y === "all" ? "Saare" : y}</button>
+        ))}
+      </div>
+    </>
+  );
 
   const draftTotals = mockTotals({ sections });
   const draftPc = percentileOf(rank, outOf);
@@ -286,24 +303,13 @@ function MockMarksInner() {
       </section>
 
       <section className="section">
-        {/* 🔁 Reattempt aur 📅 saal ki chhaanti — list aur graph dono par. */}
-        <div className="row" style={{ gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
-          {RE_OPTS.map((o) => (
-            <button key={o.k} className={"chip chip--btn" + (filt.re === o.k ? " is-active" : "")} aria-pressed={filt.re === o.k} onClick={() => setFilt({ re: o.k })}>
-              {filt.re === o.k ? "✓ " : ""}{o.l}
-            </button>
-          ))}
-          <span className="muted" style={{ margin: "0 4px" }}>·</span>
-          {["all", ...MOCK_YEARS].map((y) => (
-            <button key={y} className={"chip chip--btn" + (filt.yr === y ? " is-active" : "")} aria-pressed={filt.yr === y} onClick={() => setFilt({ yr: y })}>
-              {filt.yr === y ? "✓ " : ""}{y === "all" ? "📅 Saare saal" : `📅 ${y}`}
-            </button>
-          ))}
-        </div>
+        {/* 🔁 Reattempt / 📅 saal (aur graph par "kitne") — ek hi patti, har
+            group ka apna naam. */}
+        {view !== "report" && <div className="mf-bar">{filterGroups}</div>}
         {view === "report" ? (
-          <MockReport cat={cat.key} mocks={mocks} keep={keepMock(filt)} />
+          <MockReport cat={cat.key} mocks={mocks} keep={keepMock(filt)} filters={filterGroups} />
         ) : mocks.length === 0 ? (
-          <div className="placeholder">{allMocks.length ? "Is chhaanti mein koi mock nahi — upar 'Sab' / 'Saare saal' chuno." : `Abhi koi ${cat.label} record nahi. Upar “➕ Add ${cat.label} marks” se daalo.`}</div>
+          <div className="placeholder">{allMocks.length ? "Is chhaanti mein koi mock nahi — upar 'Saare' chuno." : `Abhi koi ${cat.label} record nahi. Upar “➕ Add ${cat.label} marks” se daalo.`}</div>
         ) : (
           <div style={{ display: "grid", gap: 12 }}>
             {mocks.map((m) => {
