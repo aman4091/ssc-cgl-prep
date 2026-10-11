@@ -468,9 +468,24 @@ export default function SelectAsk() {
     const history = o.noHistory ? [] : msgs.filter((m) => !m.pending);
     if (!tidRef.current) { const t = newThreadId(); tidRef.current = t; setTid(t); }
     setSentTick((x) => x + 1);
-    setMsgs((m) => [...m, { role: "user", text, mid: mid + "u" }, { role: "assistant", text: "", pending: true, mid, q: qNow }]);
+    setMsgs((m) => [...m, { role: "user", text, mid: mid + "u" }, { role: "assistant", text: "", pending: true, mid, q: qNow, ask: { sel: o.sel !== undefined ? o.sel : sel, subject: o.subject || subject, noHistory: !!o.noHistory } }]);
     setErr("");
     jobs.current.push({ mid, tid: tidRef.current, sel: o.sel !== undefined ? o.sel : sel, subject: o.subject || subject, history, text, q: qNow });
+    setQueued(jobs.current.length);
+    pump();
+  }, [msgs, sel, subject, pump]);
+
+  // 🔄 ⚠️ wala jawab (khaali / nahi aaya) — wahi sawaal dobara, usi jagah.
+  const retry = useCallback((i) => {
+    const m = msgs[i];
+    const u = msgs[i - 1];
+    if (!m || !m.err || !u || u.role !== "user" || !u.text) return;
+    const mid = m.mid || `m_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
+    const a = m.ask || {};
+    const history = a.noHistory ? [] : msgs.slice(0, i - 1).filter((x) => !x.pending && !x.err && (x.role === "user" || x.role === "assistant"));
+    if (!tidRef.current) { const t = newThreadId(); tidRef.current = t; setTid(t); }
+    setMsgs((ms) => ms.map((x, k) => (k === i ? { ...x, mid, pending: true, err: false, text: "" } : x)));
+    jobs.current.push({ mid, tid: tidRef.current, sel: a.sel !== undefined ? a.sel : sel, subject: a.subject || subject, history, text: u.text, q: m.q || null });
     setQueued(jobs.current.length);
     pump();
   }, [msgs, sel, subject, pump]);
@@ -661,6 +676,9 @@ export default function SelectAsk() {
                       {setAsDef === (m.mid || i) ? "✓ Is question ka jawab ban gaya" : "⭐ Is question ka jawab bana do"}
                       {m.q ? <span className="sa-setdef__q"> · {sprintQText(m.q).replace(/^\[[^\]]*\]\s*/, "").slice(0, 40)}…</span> : null}
                     </button>
+                  ) : null}
+                  {m.role === "assistant" && !m.pending && m.err && msgs[i - 1]?.role === "user" ? (
+                    <button type="button" className="sa-setdef" onClick={() => retry(i)}>🔄 Dobara poochho</button>
                   ) : null}
                   <Strip m={m} onOpen={openLight} />
                 </div>
