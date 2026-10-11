@@ -301,11 +301,3 @@
 .hx-pick button.is-on { background: var(--tb-blue); border-color: var(--tb-blue); color: #fff; }
 .hx-pick__n { margin-left: 6px; color: var(--tb-dim); font-weight: 600; }
 
-/* 🎨 Home ka roop chunne wala dropdown (components/home/HomeSwitch). */
-.home-pickbar { display: flex; justify-content: flex-end; margin: 10px 0 4px; }
-.home-pick {
-  height: 32px; max-width: 220px; padding: 0 10px; border-radius: 999px; cursor: pointer; font: inherit; font-size: 0.8rem; font-weight: 700;
-  border: 1px solid var(--accent, #f5c451); background: var(--card); color: var(--text-1, inherit);
-}
-.sp-top .home-pick, .sp-top .fl-pick select, .sp-top .pn-lay select { height: 28px; max-width: 170px; font-size: 0.74rem; }
-@media (max-width: 600px) { .sp-top .home-pick, .sp-top .fl-pick select, .sp-top .pn-lay select { max-width: 92px; } }

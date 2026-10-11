@@ -1,6 +1,6 @@
 "use client";
 
-// 🅱 Din ki Timeline — poora din ek khadi samay-rekha par (05:30 → 23:00),
+// 🕒 Din ki Timeline (/din) — purane Home ka roop "B", ab apna page. Poora din ek khadi samay-rekha par (05:30 → 23:00),
 // jaise calendar ka din. Abhi wala block khula aur bada, "ABHI" ki laal
 // lakeer, beete block halke, har kaam ke aage tick. Daayen chipka panel:
 // countdown, CORE 5 ki ginti aur aaj ke topic.
@@ -9,7 +9,7 @@ import Link from "next/link";
 import { Go, Tick, subjectsOf, BlockName, secOf, splitTitle } from "./parts";
 import { hhmm } from "./useMissionHome";
 
-export default function HomeTimeline({ d }) {
+export default function DinTimeline({ d }) {
   const subs = subjectsOf(d);
   return (
     <div className="hB">
