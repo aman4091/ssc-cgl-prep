@@ -39,6 +39,7 @@ import { askSelection } from "@/lib/client-ai";
 import { searchImages } from "@/lib/webimages";
 import { getThreads, saveThread, newThreadId } from "@/lib/asklog";
 import { putAns, qText as sprintQText } from "@/lib/sprint";
+import { getSavedShortcut, saveShortcutFor } from "@/lib/shortcuts";
 import { addOneLiner, OL_SUBS } from "@/lib/oneliners";
 import { addPair, readPending, setPending } from "@/lib/culturepairs";
 import { StaticsPaste, askGeminiStatics } from "./StaticsInfo";
@@ -223,6 +224,14 @@ function OlPick({ text, onClose }) {
       </div>
     </div>
   );
+}
+
+// ⭐ "Is question ka jawab bana do" — card par paste kiya ✨ Gemini jawab
+// pehle se ho to wo upar dikhta tha aur ye chhup jata. Ab yahi us question
+// ka jawab ban jata hai.
+function setQAns(q, text) {
+  putAns(q, text);
+  if (q && getSavedShortcut(q)) saveShortcutFor(q, text);
 }
 
 export default function SelectAsk() {
@@ -599,7 +608,7 @@ export default function SelectAsk() {
                       {m.role === "assistant" ? <div className="sa-msg sa-msg--ai"><Markdown>{m.text}</Markdown></div> : null}
                       {m.role === "assistant" ? <ClusterButton md={m.text} subject={t.subject || "gs"} srcQ={m.q} /> : null}
                       {m.role === "assistant" && m.q && !m.pending ? (
-                        <button type="button" className="sa-setdef" onClick={() => { putAns(m.q, m.text); setSetAsDef(m.mid); }}>
+                        <button type="button" className="sa-setdef" onClick={() => { setQAns(m.q, m.text); setSetAsDef(m.mid); }}>
                           {setAsDef === m.mid ? "✓ Is question ka jawab ban gaya" : "⭐ Is question ka jawab bana do"}
                           <span className="sa-setdef__q"> · {sprintQText(m.q).replace(/^\[[^\]]*\]\s*/, "").slice(0, 40)}…</span>
                         </button>
@@ -647,7 +656,7 @@ export default function SelectAsk() {
                       type="button"
                       className="sa-setdef"
                       title={`Is question par lagega: ${sprintQText(m.q || sq).slice(0, 80)}`}
-                      onClick={() => { putAns(m.q || sq, m.text); setSetAsDef(m.mid || i); }}
+                      onClick={() => { setQAns(m.q || sq, m.text); setSetAsDef(m.mid || i); }}
                     >
                       {setAsDef === (m.mid || i) ? "✓ Is question ka jawab ban gaya" : "⭐ Is question ka jawab bana do"}
                       {m.q ? <span className="sa-setdef__q"> · {sprintQText(m.q).replace(/^\[[^\]]*\]\s*/, "").slice(0, 40)}…</span> : null}
