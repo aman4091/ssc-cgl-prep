@@ -11,11 +11,42 @@
 // Purana wala page (import, din, quiz) /vocab/manage par hai.
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { vocabPool } from "@/lib/vocabpool";
 import VocabLayouts, { VL_TYPES } from "@/components/VocabLayouts";
 import "./layouts15.css";
 import "./layouts.css";
+
+// Pool A–Z mein aata hai, to "Sab" mein shuru ke saare Idiom ("A bird…",
+// "At …") ek saath aa jaate the. Ab type-wise baari-baari: OWS, Idiom,
+// Vocab, New, phir OWS… — har type apne A–Z kram mein.
+function mixTypes(pool) {
+  const by = new Map();
+  for (const p of pool) { if (!by.has(p.type)) by.set(p.type, []); by.get(p.type).push(p); }
+  const lists = ["ows", "idiom", "vocab", "new", ...[...by.keys()].filter((k) => !["ows", "idiom", "vocab", "new"].includes(k))]
+    .map((k) => by.get(k) || []).filter((l) => l.length);
+  const out = [];
+  for (let i = 0; out.length < pool.length; i++) for (const l of lists) if (i < l.length) out.push(l[i]);
+  return out;
+}
+
+// Kram ek baar ban kar PAKKA — har word ka number refresh ke baad bhi wahi
+// (cgl.vocab.order, sync hota hai). Naye word aakhir mein judte hain (wo bhi
+// baari-baari), hate hue word list se nikal jaate hain.
+const ORDER_KEY = "cgl.vocab.order";
+function fixedOrder(pool) {
+  let saved = [];
+  try { const v = JSON.parse(localStorage.getItem(ORDER_KEY) || "[]"); if (Array.isArray(v)) saved = v; } catch { /* ignore */ }
+  const byId = new Map(pool.map((p) => [p.id, p]));
+  const kept = saved.filter((id) => byId.has(id));
+  const seen = new Set(kept);
+  const fresh = mixTypes(pool.filter((p) => !seen.has(p.id))).map((p) => p.id);
+  const order = [...kept, ...fresh];
+  if (fresh.length || kept.length !== saved.length) {
+    try { localStorage.setItem(ORDER_KEY, JSON.stringify(order)); } catch { /* quota */ }
+  }
+  return order.map((id) => byId.get(id));
+}
 
 export default function VocabPage() {
   const [pool, setPool] = useState(null);
@@ -27,6 +58,8 @@ export default function VocabPage() {
     window.addEventListener("cgl:sync-applied", load);
     return () => window.removeEventListener("cgl:sync-applied", load);
   }, []);
+
+  const mixed = useMemo(() => (pool ? fixedOrder(pool) : []), [pool]);
 
   if (!pool) return null;
 
@@ -55,7 +88,7 @@ export default function VocabPage() {
           Abhi koi word nahi. <Link href="/vocab/manage" className="link">Import karo</Link>.
         </div>
       ) : (
-        <VocabLayouts lay="11" pool={pool} type={type} />
+        <VocabLayouts lay="11" pool={mixed} type={type} />
       )}
     </>
   );

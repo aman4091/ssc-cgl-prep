@@ -10,8 +10,9 @@ import "./looks/window.css";
 // Menu ka roop — timeline.css ke BAAD, warna uske apne menu-rule jeet jate.
 import "./looks/tilenav.css";
 // Menu: Icon rail (components/MenuRail) — <html data-menu="4">.
-import "./looks/menus15.css";
 import "./looks/menus.css";
+// Upar wali fix patti ke 15 roop (components/MenuTop) — <html data-menu="t1"…>.
+import "./looks/menutop.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
@@ -80,7 +81,7 @@ export default function RootLayout({ children }) {
               "if(t==='dark')d.setAttribute('data-theme','dark');" +
               // 🎨 Menu ka chuna hua roop (components/Navbar) — pehle paint se
               // pehle, taaki page jagah chhod kar na uchhle.
-              "var mn=localStorage.getItem('cgl.menulayout2');if(mn==='0')d.removeAttribute('data-menu');else if(mn)d.setAttribute('data-menu',mn);" +
+              "var mn=localStorage.getItem('cgl.menulayout3');if(mn&&/^t([1-9]|1[0-5])$/.test(mn))d.setAttribute('data-menu',mn);" +
               // Roop hamesha Window (13). Address bar ka rang: bina-media wala
               // meta sabse aage, taaki OS ki pasand wali do se pehle mile.
               "var b='#0d0f14';" +
