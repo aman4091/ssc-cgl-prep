@@ -4,10 +4,34 @@ import "katex/dist/katex.min.css";
 import "./globals.css";
 import "./exam.css";
 import "./looks/looks.css";
+// 🎨 Site ke baaki roop (lib/look.js, upar ka dropdown) — har ek
+// `html[data-look="N"]` ke peeche, isliye default Timeline par kuch nahi badalta.
+import "./looks/midnight.css";
+import "./looks/bento.css";
+import "./looks/aurora.css";
+import "./looks/terminal.css";
+import "./looks/sky.css";
+import "./looks/candy.css";
+import "./looks/notion.css";
+import "./looks/cinema.css";
+import "./looks/split.css";
 import "./looks/timeline.css";
+import "./looks/masonry.css";
+import "./looks/hud.css";
+import "./looks/window.css";
+import "./looks/kanban.css";
+import "./looks/landing.css";
+import "./looks/folder.css";
+import "./looks/mosaic.css";
+import "./looks/orbit.css";
+import "./looks/pocket.css";
+import "./looks/sheet.css";
+import "./looks/bands.css";
+import "./looks/chat.css";
 // Menu ka roop — timeline.css ke BAAD, warna uske apne menu-rule jeet jate.
 import "./looks/tilenav.css";
 // Menu: Icon rail (components/MenuRail) — <html data-menu="4">.
+import "./looks/menus15.css";
 import "./looks/menus.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -75,12 +99,18 @@ export default function RootLayout({ children }) {
             __html:
               "try{var d=document.documentElement,t=localStorage.getItem('cgl.theme');" +
               "if(t==='dark')d.setAttribute('data-theme','dark');" +
+              // 🎨 Menu ka chuna hua roop (components/Navbar) — pehle paint se
+              // pehle, taaki page jagah chhod kar na uchhle.
+              "var mn=localStorage.getItem('cgl.menulayout2');if(mn==='0')d.removeAttribute('data-menu');else if(mn)d.setAttribute('data-menu',mn);" +
               // Roop ab ek hi hai (Timeline) aur wo <html data-look=\"10\"> par
               // seedha likha hai — script ko use lagane ki zaroorat nahi.
               // Address bar ka rang: bina-media wala meta sabse aage, taaki wo
               // upar wali do (OS ki pasand wali) se pehle mile.
+              // 🎨 Chuna hua roop (lib/look.js) — pehle paint se pehle.
+              "var l=localStorage.getItem('cgl.look2');if(l)d.setAttribute('data-look',l);" +
+              "var b={'0':(t==='dark'?'#141922':'#ffffff'),'1':'#08080a','2':'#0a0a0a','3':'#070a12','4':'#0b0c0a','5':'#ffffff','6':'#fff6f1','7':'#ffffff','8':'#050505','9':'#07100d','11':'#141216','12':'#03080b','13':'#0d0f14','14':'#0f141c','15':'#07060b','16':'#120e0a','17':'#060808','18':'#06051a','19':'#050505','20':'#0f1512','21':'#081120','22':'#0b141a'}[l]||'#0d1122';" +
               "var m=document.createElement('meta');m.id='tc-user';" +
-              "m.name='theme-color';m.content='#0d1122';" +
+              "m.name='theme-color';m.content=b;" +
               "document.head.prepend(m)}catch(e){}",
           }}
         />

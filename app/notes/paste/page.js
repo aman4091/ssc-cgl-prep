@@ -26,6 +26,15 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import "./paste.css";
+import OneLinerLayouts, { OL_LAYOUTS } from "@/components/OneLinerLayouts";
+import "./layouts.css";
+
+// 🎨 Padhne ka roop — "0" abhi wala (Revise + ek page ek baar), 1–15
+// components/OneLinerLayouts. Is device par yaad (cgl.ollayout).
+const OL_KEY = "cgl.ollayout2";
+const savedOl = () => {
+  try { const v = localStorage.getItem(OL_KEY); return v && OL_LAYOUTS.some((l) => l.id === v) ? v : "0"; } catch { return "0"; }
+};
 import OneLinerNotes from "@/components/OneLinerNotes";
 import PyqSplit from "@/components/PyqSplit";
 import "@/app/carev.css";
@@ -228,6 +237,10 @@ export default function PasteNotesPage() {
     return { pages, pts, star };
   }, [shown]);
 
+  const [lay, setLay] = useState("0");
+  useEffect(() => { setLay(savedOl()); }, []);
+  const pickLay = (v) => { setLay(v); try { localStorage.setItem(OL_KEY, v); } catch { /* ignore */ } };
+
   // Kholte hi seedha 🔁 Revise (Fact log jaisa); band karo to page wali list.
   const [revising, setRevising] = useState(null);
   const [revKey, setRevKey] = useState("notes");
@@ -252,6 +265,7 @@ export default function PasteNotesPage() {
     const sig = `${book}|${note}`;
     if (autoRev.current === sig) return;
     autoRev.current = sig;
+    if (savedOl() !== "0") return;   // dusra roop chuna hai — seedha wahi
     startRev(note || "");
   }, [groups, book, note, startRev]);
 
@@ -288,6 +302,25 @@ export default function PasteNotesPage() {
     );
   }
 
+  const pick = (
+    <label className="pn-lay">
+      <select value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Padhne ka roop">
+        <option value="0">🎨 0 · Abhi wala (Revise + page)</option>
+        {OL_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id} · {l.name}</option>)}
+      </select>
+    </label>
+  );
+  const revBtn = <button type="button" className="btn btn--primary btn--sm" onClick={() => startRev("")}>▶ Revise karo</button>;
+
+  if (lay !== "0") {
+    return (
+      <section className="section" style={{ marginTop: 16 }}>
+        <div className="pn-bar">{pick}{revBtn}{pager}</div>
+        <OneLinerLayouts lay={lay} groups={shown} />
+      </section>
+    );
+  }
+
   return (
     <section className="section" style={{ marginTop: 16 }}>
       {/* ⚡ Sprint jaisa roop — ek page ek baar, ← → se agla/pichhla. Menu se
@@ -304,7 +337,7 @@ export default function PasteNotesPage() {
             storeKey={`notesliner.${book || (oneBook && oneBook.book) || "all"}`}
             startAt={at}
             noJump
-            headExtra={<button type="button" className="btn btn--primary btn--sm" onClick={() => startRev("")}>▶ Revise karo</button>}
+            headExtra={<>{pick}{revBtn}</>}
             renderCard={(n) => <Note key={n.k} n={n} onGone={reload} />}
           />
         );

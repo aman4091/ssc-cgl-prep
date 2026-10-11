@@ -12,8 +12,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SKILLS, skillOf, withK, genLevel, numOpts, record } from "@/lib/calcskills";
+import CalcLayoutsMore, { CL_MORE } from "./CalcLayoutsMore";
 
-export const CL_LAYOUTS = [
+const CL_KEPT = [
   { id: "3", name: "Seedhi (ladder) — 10 paayedaan" },
   { id: "5", name: "Race — ghost se muqabla" },
   { id: "6", name: "Survival — 3 jaan" },
@@ -302,10 +303,13 @@ function Chain() {
   );
 }
 
+// Abhi wale 6 + purane 9 (components/CalcLayoutsMore) — number ke kram mein.
+export const CL_LAYOUTS = [...CL_KEPT, ...CL_MORE].sort((a, b) => Number(a.id) - Number(b.id));
+
 const COMP = { 3: Ladder, 5: Race, 6: Survival, 8: McqFast, 9: Verify, 14: Chain };
 
 export default function CalcLayouts({ lay }) {
   const C = COMP[lay];
-  if (!C) return null;
+  if (!C) return <CalcLayoutsMore lay={lay} />;
   return <div className={`clx clx--${lay}`}><C key={lay} /></div>;
 }

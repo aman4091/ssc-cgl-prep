@@ -75,7 +75,7 @@ function toQ(q, kind, tag) {
   };
 }
 
-export default function Reels() {
+export default function Reels({ headExtra = null }) {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
   const pools = useRef({ pyq: {}, mine: [], o40: [], wrong: [], ans: [], jodi: [], vocab: [], facts: [], states: [], means: [] });
@@ -206,6 +206,7 @@ export default function Reels() {
         list={list}
         storeKey="home"
         noJump
+        headExtra={headExtra}
         fullscreen
         onNeedMore={more}
         renderCard={(r) => <HomeCard r={r} onWrong={onWrong} />}

@@ -11,6 +11,15 @@ import FactTidyBtn from "@/components/FactTidyBtn";
 import { autoTidyFacts } from "@/lib/facttidy";
 import FactFolders from "@/components/FactFolders";
 import "./folders.css";
+import FactLayouts, { FL_LAYOUTS } from "@/components/FactLayouts";
+import "./layouts.css";
+
+// 🎨 Padhne ka roop — dropdown se. "0" = abhi wala (khulte hi Revise, band
+// karo to topic folders). Baaki 15 components/FactLayouts. Is device par yaad.
+const LAY_KEY = "cgl.factlayout2";
+const savedLay = () => {
+  try { const v = localStorage.getItem(LAY_KEY); return v && FL_LAYOUTS.some((l) => l.id === v) ? v : "0"; } catch { return "0"; }
+};
 
 // Bade card mein revise (CA Revision wala Recall, khula roop): upar naam,
 // neeche uske baare mein — seedha dikhta hai, chhupa nahi. "Kerala dance:
@@ -72,15 +81,21 @@ export default function MissionFactsPage() {
   // se wo wahin se uthta hai jahan tha, isliye jhatka nahi lagta.
   const [rev, setRev] = useState(0);
 
+  const [lay, setLay] = useState("0");
+  const pickLay = (v) => { setLay(v); try { localStorage.setItem(LAY_KEY, v); } catch { /* private */ } };
+
   const load = () => setFacts(getFacts());
   // Fact log kholte hi seedha ▶ Revise (owner) — ek hi baar; band karo to list.
   const autoRev = useRef(false);
   useEffect(() => {
     load();
+    const l = savedLay();
+    setLay(l);
     if (!autoRev.current) {
       autoRev.current = true;
       const all = getFacts();
-      if (all.length) setRevising(shuffle(all).map(toCard));
+      // Dusra roop chuna hai to seedha wahi — Revise apne aap nahi.
+      if (all.length && l === "0") setRevising(shuffle(all).map(toCard));
     }
     // 🧹 Chipke hue facts apne aap saaf — ek-ek karke, peechhe (lib/facttidy).
     autoTidyFacts();
@@ -127,17 +142,36 @@ export default function MissionFactsPage() {
     );
   }
 
+  const pick = (
+    <label className="fl-pick">
+      <select value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Fact log ka roop">
+        <option value="0">🎨 0 · Abhi wala (Revise + folders)</option>
+        {FL_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id} · {l.name}</option>)}
+      </select>
+    </label>
+  );
+  const revBtn = facts.length > 0 ? (
+    <button className="btn btn--primary btn--sm" onClick={() => { clearSession("facts"); setRevising(shuffle(facts).map(toCard)); }}>
+      ▶ Revise karo · {facts.length}
+    </button>
+  ) : null;
+
+  if (lay !== "0") {
+    return (
+      <section className="section">
+        <div className="fl-bar">{pick}{revBtn}</div>
+        <FactLayouts lay={lay} facts={facts} onChange={load} />
+      </section>
+    );
+  }
+
   return (
     <>
       {/* Sar aur ▶ Revise ab window ke andar — window menu se neeche tak. */}
       <FactFolders
         facts={facts}
         onChange={load}
-        headExtra={facts.length > 0 ? (
-          <button className="btn btn--primary btn--sm" onClick={() => { clearSession("facts"); setRevising(shuffle(facts).map(toCard)); }}>
-            ▶ Revise karo · {facts.length}
-          </button>
-        ) : null}
+        headExtra={<>{pick}{revBtn}</>}
       />
     </>
   );

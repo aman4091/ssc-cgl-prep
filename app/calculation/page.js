@@ -23,6 +23,7 @@ import "./calc.css";
 import { GROUPS, groupOf, buildDeck, shuffled, optionsFor } from "@/lib/calcdecks";
 import CalcLayouts, { CL_LAYOUTS } from "@/components/CalcLayouts";
 import { numOpts } from "@/lib/calcskills";
+import "./layouts15.css";
 import "./layouts.css";
 
 const LAY_KEY = "cgl.calclayout";

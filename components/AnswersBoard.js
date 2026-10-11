@@ -32,6 +32,7 @@ import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
 import Gemini20 from "./Gemini20";
 import AnswersDoPane from "./AnswersLayouts";
+import AnswersLayoutsAll, { ANS_LAYOUTS } from "./AnswersLayoutsAll";
 import { markDoneRev } from "@/lib/ansrev";
 import "./answers-layouts.css";
 
@@ -929,6 +930,15 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   const chips = [ALL_SUBJ, ...SUBJECTS];
 
+  // 📅 Roop — "0" = abhi wala Do-pane; "list" = purani lambi list (number
+  // rail ke saath); 1–15 purane roop (components/AnswersLayoutsAll).
+  // Is device par yaad (cgl.anslayout2).
+  const [lay, setLay] = useState("0");
+  useEffect(() => {
+    try { const v = localStorage.getItem("cgl.anslayout2") || ""; if (v === "list" || ANS_LAYOUTS.some((l) => l.id === v)) setLay(v); } catch { /* ignore */ }
+  }, []);
+  const pickLay = (v) => { setLay(v); try { localStorage.setItem("cgl.anslayout2", v); } catch { /* ignore */ } };
+
 
 
   return (
@@ -936,7 +946,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       {/* Daayen kinare poori list — har question ka number. Tap karo to wahi
           card saamne. Card abhi bana na ho (25-25 karke bante hain) to pehle
           utne khul jate hain, phir scroll. */}
-      {false && list.length > 0 && (
+      {lay === "list" && list.length > 0 && (
         <nav className="ansp__side" ref={railRef}>
           {list.map((r, i) => {
             const id = `ans-${r.id}`;
@@ -964,6 +974,13 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           >
             📊 Chapter report
           </button>
+          <span className="al-pick">
+            <select className="al-pick__sel" value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Layout">
+              <option value="0">🎨 0 · Abhi wala (Do-pane)</option>
+              <option value="list">🎨 Purani list</option>
+              {ANS_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id} · {l.name}</option>)}
+            </select>
+          </span>
           {/* 🏷️ Tag ki chhaanti — "permanent skip" wale ek jagah, "hard par ho
               jayega" wale alag. Ginti bhi saath, taaki pata rahe kitne pade
               hain. */}
@@ -995,6 +1012,12 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               ? "Is chhaanti mein koi galti nahi. Koi quiz do — galat ya chhoda hua question apne aap yahan aa jayega."
               : "Yaha abhi koi question nahi hai."}
           </p>
+        ) : lay === "list" ? (
+          shown.map((r, i) => renderCard(r, i, false))
+        ) : lay !== "0" ? (
+          <div className="alx-old">
+            <AnswersLayoutsAll lay={lay} list={list} renderCard={renderCard} doneMap={doneMap} bucketOf={bucketOf} chapterOf={chapterOf} />
+          </div>
         ) : (
           // 📖 Do-pane — owner ka chuna hua ek hi roop (components/AnswersLayouts).
           // 📖 Do-pane — owner ka chuna hua roop (components/AnswersLayouts).
@@ -1008,7 +1031,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
         )}
 
         {/* Aur card — neeche pahunchte hi apne aap khul jate hain. */}
-        {false && ready && visible < list.length && (
+        {lay === "list" && ready && visible < list.length && (
           <div ref={tail} className="ansp__acts">
             <button className="ansp__btn" onClick={() => setVisible((v) => Math.min(v + PAGE, list.length))}>
               ⬇️ Aur {Math.min(PAGE, list.length - visible)} dikhao ({visible}/{list.length})
