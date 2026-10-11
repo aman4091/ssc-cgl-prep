@@ -59,7 +59,7 @@ export default function VocabPage() {
       <section className="section vocab-top">
         <div className="row between" style={{ gap: 10, flexWrap: "wrap" }}>
           <span className="ca-eyebrow">
-            🔤 Vocab · {pool.length} word · Jodi milao
+            🔤 Vocab · {pool.length} word · {(VL_LAYOUTS.find((l) => l.id === lay) || {}).name || "Jodi milao"}
             {tally.done ? <> · ✅ {tally.done} pakke</> : null}
           </span>
           <Link href="/vocab/manage" className="btn btn--sm btn--ghost">⚙️ Import / din</Link>
