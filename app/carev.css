@@ -293,3 +293,8 @@
 .carev-split > .carev-card { margin-bottom: 0; }
 .carev-side { min-width: 0; }
 @media (max-width: 760px) { .carev-split { grid-template-columns: 1fr; } }
+/* Daayen sawaal-jawab apne andar scroll; baayen fact apni jagah tika rahe. */
+@media (min-width: 761px) {
+  .carev-split .carev-side { max-height: calc(100dvh - 270px); overflow-y: auto; overscroll-behavior: contain; border-radius: 14px; }
+  .carev-split > .carev-card { position: sticky; top: 12px; max-height: calc(100dvh - 270px); overflow-y: auto; }
+}
