@@ -12,7 +12,6 @@ import NowPlan from "./NowPlan";
 import { StaticsTopBtn } from "./StaticsInfo";
 import TopbarInfo from "./TopbarInfo";
 import MenuRail from "./MenuRail";
-import LookSwitch from "./LookSwitch";
 import MenuVariants, { MENU_LAYOUTS } from "./MenuVariants";
 
 // 🎨 Menu ka roop — upar patti ke dropdown se. "4" = Icon rail (abhi wala,
@@ -343,8 +342,6 @@ export default function Navbar() {
         <NowPlan />
         {/* 🪔 Saved statics (select → 🪔 Festival se) — ek-ek karke. */}
         <StaticsTopBtn />
-        {/* 🎨 Site ka roop (lib/look.js) — default Timeline. */}
-        <LookSwitch />
         <label className="mnu-pick" title="Menu ka roop">
           <select value={menuLay} onChange={(e) => pickMenu(e.target.value)} aria-label="Menu ka roop">
             <option value="0">🎨 0 · Purana (tiles)</option>
