@@ -59,7 +59,7 @@ export function answerPoints(text) {
 
 export default function Recall({
   queue: initial, today, onExit, onRate, labels = DEFAULT_LABELS, open = false, loop = false,
-  onDelete, resumeKey, tools,
+  onDelete, resumeKey, tools, side,
 }) {
   const withStar = !onRate;
   // Adhoora round wapas (lib/recallsession): qataar ka kram — dobara-aane
@@ -190,8 +190,9 @@ export default function Recall({
   }
 
   const starred = !!stars[card.id];
+  // side(card) — daayen ek aur khana (Fact log: us fact ka sawaal + jawab).
   return (
-    <div className="carev-recall">
+    <div className={`carev-recall${side ? " carev-recall--side" : ""}`}>
       <div className="carev-bar">
         <button className="carev-link" onClick={onExit} aria-label="Wapas">← Wapas</button>
         <span className="carev-count">{pos + 1} / {queue.length}</span>
@@ -211,6 +212,48 @@ export default function Recall({
         <div style={{ width: `${(pos / queue.length) * 100}%` }} />
       </div>
 
+      {side ? <div className="carev-split">      <div className="carev-card" onClick={() => !shown && setShown(true)}>
+        <div className="carev-meta">
+          {card.meta ? <span>{card.meta}</span> : <><span>Part {card.part}</span> · <span>{card.section}</span></>}
+          {card.__retry ? <span className="carev-again"> · {card.__check ? "pakki jaanch" : "phir se"}</span> : null}
+        </div>
+        <div className="carev-trigger">{card.trigger}</div>
+        <div className={`carev-answer${shown ? " shown" : ""}`} aria-live="polite">
+          {shown ? (
+            <>
+              {(() => {
+                const pts = answerPoints(card.answer);
+                if (!pts) return <div className="carev-answer-text">{card.answer}</div>;
+                return (
+                  <ul className="carev-points">
+                    {pts.map((p, i) => (
+                      <li key={i}>
+                        {p.head ? <b>{p.head}</b> : null}
+                        {p.head ? " — " : ""}
+                        {p.rest}
+                      </li>
+                    ))}
+                  </ul>
+                );
+              })()}
+              {/* ⌄ poora padho — D+3 se aage card par sirf "⚡" wali chhoti
+                  line hoti hai (120 cluster 15 min mein nikalne ke liye).
+                  Poora prose yahin ek tap door rehta hai. */}
+              {card.more ? <MoreLine text={card.more} /> : null}
+              {card.extra ? <div className="carev-extra">{card.extra}</div> : null}
+              {card.pdfPage ? <div className="carev-src">PDF p.{card.pdfPage}</div> : null}
+              {/* Card ke apne auzaar — fact log / Zaroori baatein yahan
+                  "iski trick bana do" wale button dete hain. */}
+              {tools ? tools(card) : null}
+            </>
+          ) : (
+            <div className="carev-hint">Socho… phir tap karo</div>
+          )}
+        </div>
+      </div>
+        <div className="carev-side">{side(card)}</div>
+      </div> : null}
+      {side ? null : (
       <div className="carev-card" onClick={() => !shown && setShown(true)}>
         <div className="carev-meta">
           {card.meta ? <span>{card.meta}</span> : <><span>Part {card.part}</span> · <span>{card.section}</span></>}
@@ -250,6 +293,7 @@ export default function Recall({
           )}
         </div>
       </div>
+      )}
 
       <div className="carev-actions">
         {shown ? (

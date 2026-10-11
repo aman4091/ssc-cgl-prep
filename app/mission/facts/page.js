@@ -3,7 +3,7 @@
 import "@/app/carev.css";
 import { useEffect, useRef, useState } from "react";
 import { FACT_SECS, factView, getFacts, removeFact } from "@/lib/missionfacts";
-import FactSrcBtn from "@/components/FactSrcBtn";
+import { FactSrcPanel } from "@/components/FactSrcBtn";
 import { clearSession } from "@/lib/recallsession";
 import Recall from "@/components/carevision/Recall";
 import TrickButtons from "@/components/TrickButtons";
@@ -116,9 +116,10 @@ export default function MissionFactsPage() {
               }}
             />
             <TrickButtons card={c} subject="gs" />
-            <FactSrcBtn src={(getFacts().find((f) => f.id === c.id) || {}).src} />
           </>
         )}
+        // Daayen us fact ka sawaal + jawab; neeche Nahi aata / Aata tha wahi.
+        side={(c) => <FactSrcPanel src={(getFacts().find((f) => f.id === c.id) || {}).src} />}
         onDelete={(c) => { removeFact(c.id); load(); }}
         resumeKey="facts"
         onExit={() => { setRevising(null); load(); window.scrollTo(0, 0); }}

@@ -669,3 +669,7 @@ body:has(.pyqs) .sa-reopen { display: inline-block; }
 .mf-group button + button { border-left: 1px solid var(--line); }
 .mf-group button:hover { color: var(--text-1); background: var(--glass-bg-strong); }
 .mf-group button.is-on { background: var(--accent); color: var(--on-accent); }
+.fsq.fsq--panel { margin-top: 0; padding: 14px 16px; border-radius: 14px; }
+.fsq-h { font-size: 0.78rem; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
+.fsq--panel .fsq-opt { cursor: default; }
+.fsq--none { color: var(--text-3); font-size: 0.9rem; }

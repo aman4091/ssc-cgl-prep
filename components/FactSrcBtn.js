@@ -61,3 +61,27 @@ export default function FactSrcBtn({ src }) {
     </>
   );
 }
+
+// 📌 Fact log ke Revise mein daayen — us fact ka sawaal aur jawab, hamesha khula.
+export function FactSrcPanel({ src }) {
+  if (!src) return <div className="fsq fsq--panel fsq--none">Is fact ke saath sawaal save nahi hua.</div>;
+  const opts = Array.isArray(src.options) ? src.options : [];
+  const has = Number.isInteger(src.answer);
+  return (
+    <div className="fsq fsq--panel">
+      <div className="fsq-h">❓ Sawaal</div>
+      {src.img ? <img src={src.img} alt="Question" className="fsq-img" loading="lazy" /> : null}
+      {src.question ? <div className="fsq-q"><Markdown inline>{src.question}</Markdown></div> : null}
+      {opts.length > 0 && (
+        <div className="fsq-opts">
+          {opts.map((o, i) => (
+            <div key={i} className={`fsq-opt${has && i === src.answer ? " is-right" : ""}`}>
+              <b>{String.fromCharCode(65 + i)}</b> {o}{has && i === src.answer ? " ✓" : ""}
+            </div>
+          ))}
+        </div>
+      )}
+      {src.ans ? <div className="fsq-ans"><Markdown>{src.ans}</Markdown></div> : null}
+    </div>
+  );
+}
