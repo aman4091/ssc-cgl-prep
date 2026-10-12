@@ -8,15 +8,9 @@
 .gkc th { text-align: left; padding: 8px 12px; background: var(--bg-2, rgba(255,255,255,.04)); font-size: 0.72rem; text-transform: uppercase; color: var(--text-3); }
 .gkc td { padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: top; line-height: 1.5; cursor: pointer; }
 .gkc td:first-child { width: 34px; color: var(--text-3); }
+.gkc td:nth-child(3) { width: 34%; }
 .gkc td b { color: var(--accent); }
 .gkc td.is-cov { color: transparent; background: repeating-linear-gradient(135deg, var(--bg-2, rgba(255,255,255,.03)) 0 8px, color-mix(in srgb, var(--accent) 12%, transparent) 8px 16px); }
 .gkc td.is-cov * { visibility: hidden; }
 .gkc-more { display: block; margin: 12px auto 0; padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: inherit; font: inherit; font-weight: 700; cursor: pointer; }
-@media (max-width: 600px) { .gkc td { padding: 9px 6px; font-size: 0.84rem; } }
-.gkc td:nth-child(2) { width: 34%; }
-.gkc td:nth-child(3) { width: 20%; }
-.gkc-fact { cursor: default; font-size: 0.86rem; line-height: 1.55; }
-.gkc-fact p { margin: 0 0 4px; }
-.gkc-wait { color: var(--text-3); }
-.gkc-send { margin-top: 4px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text-2); font: inherit; font-size: 0.72rem; font-weight: 700; cursor: pointer; }
-.gkc-send:disabled { opacity: 0.6; cursor: default; }
+@media (max-width: 600px) { .gkc td:nth-child(3) { width: 38%; } .gkc td { padding: 9px 8px; font-size: 0.88rem; } }
