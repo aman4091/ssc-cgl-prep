@@ -8,6 +8,7 @@ import { isUserTopicId, getUserTopic, getUserBook, getUserTopicQuestions } from 
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import PyqDrill from "@/components/PyqReels";
 import GkCover from "@/components/GkCover";
+import MedLayouts, { MED_LAYOUTS } from "@/components/MedLayouts";
 
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are
@@ -19,6 +20,10 @@ export default function GkTopicPage() {
   const [topic, setTopic] = useState(null);
   const [qs, setQs] = useState([]);
   const [ready, setReady] = useState(false);
+  // 🏰 Medieval: yaad karne ka tareeka — "0" = Cover table (abhi wala).
+  const [medLay, setMedLay] = useState("0");
+  useEffect(() => { try { const v = localStorage.getItem("cgl.medlayout"); if (v) setMedLay(v); } catch { /* ignore */ } }, []);
+  const pickMed = (v) => { setMedLay(v); try { localStorage.setItem("cgl.medlayout", v); } catch { /* quota */ } };
 
   useEffect(() => {
     let alive = true;
@@ -98,7 +103,15 @@ export default function GkTopicPage() {
           // 📋 Medieval: Vocab jaisa Cover method — baayen sawaal, daayen sirf
           // jawab (dhaka hua). Owner try kar raha hai; pehle wala PyqSplit
           // (sawaal + options + button) commit 0348b60 mein hai.
-          <GkCover qs={qs} />
+          <>
+            <div className="row" style={{ maxWidth: 980, margin: "0 auto 12px" }}>
+              <select className="select" style={{ width: "auto", padding: "8px 12px" }} value={medLay} onChange={(e) => pickMed(e.target.value)} aria-label="Yaad karne ka tareeka">
+                <option value="0">0 · Cover table (abhi wala)</option>
+                {MED_LAYOUTS.map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
+              </select>
+            </div>
+            {medLay === "0" ? <GkCover qs={qs} /> : <MedLayouts lay={medLay} qs={qs} />}
+          </>
         ) : (
           <PyqDrill
             title={topic?.chapter || topic?.label || "Test"}
