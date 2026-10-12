@@ -122,6 +122,30 @@ function Facts({ m, auto = false, mode = "", q = "" }) {
   );
 }
 
+// 33 · Do pane: poora cluster — 🧩 naam + poora paragraph + ⚡ fact.
+function Clusters({ m }) {
+  const md = lookup()(m.raw);
+  if (!md) return <Wait />;
+  const cs = clustersOf(md, { prose: true });
+  const send = (e) => {
+    const n = addClustersToFacts(md, "gs", m.raw);
+    e.currentTarget.textContent = n ? "✓ Fact log" : "✓ pehle se";
+    e.currentTarget.disabled = true;
+  };
+  return (
+    <div className="mf-cl">
+      {cs.length ? cs.map((c, i) => (
+        <section key={i} className="mf-cl-it">
+          {c.title ? <h3>🧩 {c.title}</h3> : null}
+          {c.prose ? <div className="mf-cl-p"><Markdown>{c.prose}</Markdown></div> : null}
+          {c.zap ? <p className="mf-cl-z">⚡ {c.zap}</p> : null}
+        </section>
+      )) : <div className="mf-cl-p"><Markdown>{md}</Markdown></div>}
+      <button type="button" className="mf-send" onClick={send} title="Ye cluster, fact log mein bhejo">＋ Fact log</button>
+    </div>
+  );
+}
+
 function useResume(key, n) {
   const [i, setI] = useState(() => { const v = Number(readJ(key, 0)); return Number.isFinite(v) && v >= 0 && v < n ? v : 0; });
   const set = (v) => { const k = ((v % n) + n) % n; setI(k); writeJ(key, k); };
@@ -523,7 +547,7 @@ function TwoPane({ ms }) {
         <small>#{i + 1}</small>
         <div className="mf33-q"><Q m={m} /></div>
         <h2>{m.a}</h2>
-        <Facts m={m} />
+        <Clusters m={m} />
         <Nav i={i} n={ms.length} go={(d) => setI(i + d)} />
       </div>
     </div>

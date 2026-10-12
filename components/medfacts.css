@@ -194,3 +194,12 @@
 .mf21-page .md, .mf21-page .md strong, .mf21-page .md b,
 .mf22-note .md, .mf22-note .md strong, .mf22-note .md b,
 .mf25 .md, .mf25 .md strong, .mf25 .md b { color: inherit; font-size: inherit; line-height: inherit; }
+
+/* 33 · poora cluster */
+.mf-cl { display: grid; gap: 10px; margin-top: 8px; }
+.mf-cl-it { padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg); }
+.mf-cl-it h3 { margin: 0 0 6px; font-size: 1rem; color: var(--accent); }
+.mf-cl-p { line-height: 1.65; }
+.mf-cl-p .md p { margin: 0 0 6px; }
+.mf-cl-z { margin: 8px 0 0; padding: 6px 10px; border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; background: var(--accent-wash); font-weight: 600; line-height: 1.5; }
+.mf-cl > .mf-send { justify-self: start; }
