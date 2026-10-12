@@ -7,21 +7,14 @@ import { NAV_GROUPS, NAV_DIRECT, trailForPath, nodeAt } from "@/lib/nav";
 import { getNewWordEntries, newWordDayKey, newWordDayLabel } from "@/lib/vocab";
 import { getUserTopics } from "@/lib/userpyq";
 import { notesByBook, bookIcon, bookLabel } from "@/lib/pastednotes";
-import ThemeToggle from "./ThemeToggle";
-import NowPlan from "./NowPlan";
 import { StaticsTopBtn } from "./StaticsInfo";
-import TopbarInfo from "./TopbarInfo";
-import MenuRail from "./MenuRail";
-import MenuTop, { TOP_LAYOUTS } from "./MenuTop";
+import MenuTop from "./MenuTop";
 
-// 🎨 Menu ka roop — upar patti ke dropdown se. "4" = Icon rail (abhi wala,
-// default); t1–t15 = upar wali fix patti ke 15 roop (components/MenuTop).
-// Purane 15 roop + tile sidebar backup mein (backup/README.md).
-// Chunaav is device par `cgl.menulayout3`; <html data-menu="…"> par lagta hai.
-const MENU_KEY = "cgl.menulayout3";
-const readMenu = () => {
-  try { const v = localStorage.getItem(MENU_KEY); return TOP_LAYOUTS.some((l) => l.id === v) ? v : "4"; } catch { return "4"; }
-};
+// 🧭 Menu: T6 · ICON TOOLBAR — upar fix patti, icon ke neeche naam
+// (components/MenuTop, <html data-menu="t6"> layout.js mein). Owner ne final
+// kiya; neeche wali patti (tareekh, "Abhi", roop ke dropdown) hata di —
+// sirf 🪔 festival button bacha, wo menu mein sabse daayen. Icon rail aur
+// baaki roop backup mein (backup/README.md).
 
 // Nav group key -> user "shelf book" id (Settings → PYQ Manager): jab bank ka
 // menu khule to user ke apne topics bhi uske chapters ke saath dikhein.
@@ -66,12 +59,6 @@ export default function Navbar() {
   const [bankLinks, setBankLinks] = useState({});
   // Phones only: the rail is off-canvas until the hamburger asks for it.
   const [open, setOpen] = useState(false);
-  const [menuLay, setMenuLay] = useState(readMenu);
-  useEffect(() => {
-    const d = document.documentElement;
-    d.setAttribute("data-menu", menuLay);
-  }, [menuLay]);
-  const pickMenu = (v) => { setMenuLay(v); setOpen(false); try { localStorage.setItem(MENU_KEY, v); } catch { /* private */ } };
 
   // Page badla to menu apne aap band — parda page ke upar hai, khula chhodne
   // par jis page par gaye ho wahi dikhta hi nahi.
@@ -306,44 +293,7 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Sabse upar ki patti — ☰ aur naam, bas. Test ke dauraan ye bhi chhup
-          jaati hai (body.exam-on). */}
-      <header className="topbar">
-        <button
-          className="topbar__burger"
-          aria-label="Menu"
-          aria-expanded={open}
-          onClick={() => setOpen(true)}
-        >
-          ☰
-        </button>
-        <Link href="/" className="topbar__brand">
-          {mark}
-          <strong>SSC CGL Pre</strong>
-        </Link>
-        {/* ⏳ Aaj ki tareekh + exam countdown — patti ab khaali nahi. */}
-        <TopbarInfo />
-        {/* Din/raat — patti ke dayein sire par, hamesha ek tap ki doori par.
-            Menu ke ANDAR rakhne se raat mein site kholte hi pehle menu kholna
-            padta, aur wahi ek pal sabse chubhta hai. */}
-        {/* ⏰ 32 din ke plan mein ABHI kya karna hai (pehle yahan 🔒 lock tha). */}
-        <NowPlan />
-        {/* 🪔 Saved statics (select → 🪔 Festival se) — ek-ek karke. */}
-        <StaticsTopBtn />
-        <label className="mnu-pick" title="Menu ka roop">
-          <select value={menuLay} onChange={(e) => pickMenu(e.target.value)} aria-label="Menu ka roop">
-            <option value="4">🎨 4 · Icon rail (abhi wala)</option>
-            {TOP_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id.toUpperCase()} · {l.name}</option>)}
-          </select>
-        </label>
-        <ThemeToggle />
-      </header>
-
-      {menuLay === "4" ? (
-        <MenuRail menu={menu} open={open} setOpen={setOpen} mark={mark} />
-      ) : (
-        <MenuTop lay={menuLay} menu={menu} open={open} setOpen={setOpen} mark={mark} />
-      )}
+      <MenuTop lay="t6" menu={menu} open={open} setOpen={setOpen} mark={mark} right={<StaticsTopBtn />} />
     </>
   );
 }

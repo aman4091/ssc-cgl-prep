@@ -9,7 +9,7 @@ import "./looks/looks.css";
 import "./looks/window.css";
 // Menu ka roop — timeline.css ke BAAD, warna uske apne menu-rule jeet jate.
 import "./looks/tilenav.css";
-// Menu: Icon rail (components/MenuRail) — <html data-menu="4">.
+// Menu: T6 icon toolbar, upar fix (components/MenuTop) — <html data-menu="t6">.
 import "./looks/menus.css";
 // Upar wali fix patti ke 15 roop (components/MenuTop) — <html data-menu="t1"…>.
 import "./looks/menutop.css";
@@ -72,16 +72,13 @@ export default function RootLayout({ children }) {
   return (
     /* Script <html> ka apna attribute badalta hai, isliye server ka HTML aur
        client ka HTML yahan alag honge — ye ISI element par expected hai. */
-    <html lang="en" data-look="13" data-menu="4" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" data-look="13" data-menu="t6" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html:
               "try{var d=document.documentElement,t=localStorage.getItem('cgl.theme');" +
               "if(t==='dark')d.setAttribute('data-theme','dark');" +
-              // 🎨 Menu ka chuna hua roop (components/Navbar) — pehle paint se
-              // pehle, taaki page jagah chhod kar na uchhle.
-              "var mn=localStorage.getItem('cgl.menulayout3');if(mn&&/^t([1-9]|1[0-5])$/.test(mn))d.setAttribute('data-menu',mn);" +
               // Roop hamesha Window (13). Address bar ka rang: bina-media wala
               // meta sabse aage, taaki OS ki pasand wali do se pehle mile.
               "var b='#0d0f14';" +
@@ -110,7 +107,7 @@ export default function RootLayout({ children }) {
             {/* Navbar reads the query string to tell rows apart that share a path
                 (the Current Affairs tabs), and useSearchParams needs a Suspense
                 boundary or every page opts out of static rendering. */}
-            <Suspense fallback={<nav className="mnu mnu4" />}>
+            <Suspense fallback={<header className="mtp mtp-t6" />}>
               <Navbar />
             </Suspense>
             <main className="container">{children}</main>

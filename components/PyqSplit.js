@@ -88,7 +88,7 @@ export default function PyqSplit({ title, list, renderCard, storeKey = "default"
   useLayoutEffect(() => {
     if (!menu) { setInset({ top: 0, left: 0 }); return undefined; }
     const place = () => {
-      const tb = document.querySelector(".topbar");
+      const tb = document.querySelector(".mtp") || document.querySelector(".topbar");
       const tr = tb ? tb.getBoundingClientRect() : null;
       const top = tr && tr.height ? Math.max(0, Math.round(tr.bottom + 6)) : 0;
       // Baayen ki menu patti (desktop par hamesha khuli) — uske bagal se.

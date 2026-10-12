@@ -57,7 +57,7 @@ export default function QChatFeed({ title, list, renderCard, storeKey = "default
       // Upar menu wali patti ke neeche, neeche wali line (footer) ke upar —
       // dono ke beech.
       let top = 0;
-      const nb = document.querySelector(".topbar");
+      const nb = document.querySelector(".mtp") || document.querySelector(".topbar");
       const tr = nb ? nb.getBoundingClientRect() : null;
       if (tr && tr.height && tr.bottom > 0) top = Math.round(tr.bottom + 6);
       // Page ke apne button (Answers ke filter) upar dikhte rahein — window unke neeche se.

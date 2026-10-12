@@ -122,12 +122,56 @@ function Pop({ pos, title, icon, children, cls = "", onClose }) {
 
 // Har roop ka khol: desktop par apni patti, phone par logo + ☰ aur upar se
 // poora menu.
-function Bar({ id, mark, open, setOpen, menu, children, hidden = false }) {
+// Mouse se bagal mein scroll: pahiya (upar-neeche) patti ko daayen-baayen
+// chalata hai, aur dabakar khinchne se bhi chalti hai (tablet + mouse).
+function useMouseScroll(ref) {
+  useEffect(() => {
+    const root = ref.current;
+    if (!root) return undefined;
+    const offs = [];
+    for (const row of root.querySelectorAll(".mtp-row")) {
+      const wheel = (e) => {
+        if (row.scrollWidth <= row.clientWidth + 2 || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+        row.scrollLeft += e.deltaY;
+        e.preventDefault();
+      };
+      let x0 = null, s0 = 0, moved = false;
+      const down = (e) => { if (e.pointerType !== "mouse" || e.button !== 0) return; x0 = e.clientX; s0 = row.scrollLeft; moved = false; };
+      const move = (e) => {
+        if (x0 == null) return;
+        const dx = e.clientX - x0;
+        if (!moved && Math.abs(dx) > 5) { moved = true; row.classList.add("is-drag"); }
+        if (moved) row.scrollLeft = s0 - dx;
+      };
+      const up = () => { x0 = null; row.classList.remove("is-drag"); };
+      // Khinchne ke baad chhodne par link na khule.
+      const click = (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; } };
+      row.addEventListener("wheel", wheel, { passive: false });
+      row.addEventListener("pointerdown", down);
+      window.addEventListener("pointermove", move);
+      window.addEventListener("pointerup", up);
+      row.addEventListener("click", click, true);
+      offs.push(() => {
+        row.removeEventListener("wheel", wheel);
+        row.removeEventListener("pointerdown", down);
+        window.removeEventListener("pointermove", move);
+        window.removeEventListener("pointerup", up);
+        row.removeEventListener("click", click, true);
+      });
+    }
+    return () => offs.forEach((f) => f());
+  });
+}
+
+function Bar({ id, mark, open, setOpen, menu, children, hidden = false, right = null }) {
+  const ref = useRef(null);
+  useMouseScroll(ref);
   return (
-    <header className={`mtp mtp-${id}${hidden ? " is-hid" : ""}`}>
-      <div className="mtp-d">{children}</div>
+    <header ref={ref} className={`mtp mtp-${id}${hidden ? " is-hid" : ""}`}>
+      <div className="mtp-d">{children}{right ? <span className="mtp-right">{right}</span> : null}</div>
       <div className="mtp-m">
         <Link href="/" className="mtp-logo">{mark}<b>SSC CGL Pre</b></Link>
+        {right ? <span className="mtp-right">{right}</span> : null}
         <button type="button" className="mtp-burger" onClick={() => setOpen(!open)} aria-label="Menu">{open ? "✕" : "☰"}</button>
       </div>
       {open && (

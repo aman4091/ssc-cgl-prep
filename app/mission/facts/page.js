@@ -11,14 +11,16 @@ import FactTidyBtn from "@/components/FactTidyBtn";
 import { autoTidyFacts } from "@/lib/facttidy";
 import FactFolders from "@/components/FactFolders";
 import "./folders.css";
-import FactLayouts, { FL_LAYOUTS } from "@/components/FactLayouts";
+import FactLayouts2, { FL2_LAYOUTS } from "@/components/FactLayouts2";
 import "./layouts.css";
+import "./layouts2.css";
 
 // 🎨 Padhne ka roop — dropdown se. "0" = abhi wala (khulte hi Revise, band
-// karo to topic folders). Baaki 15 components/FactLayouts. Is device par yaad.
-const LAY_KEY = "cgl.factlayout2";
+// karo to topic folders). Baaki 15 naye — yaad karne wale (components/
+// FactLayouts2); pehle wale 15 backup mein. Is device par yaad.
+const LAY_KEY = "cgl.factlayout3";
 const savedLay = () => {
-  try { const v = localStorage.getItem(LAY_KEY); return v && FL_LAYOUTS.some((l) => l.id === v) ? v : "0"; } catch { return "0"; }
+  try { const v = localStorage.getItem(LAY_KEY); return v && FL2_LAYOUTS.some((l) => l.id === v) ? v : "0"; } catch { return "0"; }
 };
 
 // Bade card mein revise (CA Revision wala Recall, khula roop): upar naam,
@@ -146,7 +148,7 @@ export default function MissionFactsPage() {
     <label className="fl-pick">
       <select value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Fact log ka roop">
         <option value="0">🎨 0 · Abhi wala (Revise + folders)</option>
-        {FL_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id} · {l.name}</option>)}
+        {FL2_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id} · {l.name}</option>)}
       </select>
     </label>
   );
@@ -160,7 +162,7 @@ export default function MissionFactsPage() {
     return (
       <section className="section">
         <div className="fl-bar">{pick}{revBtn}</div>
-        <FactLayouts lay={lay} facts={facts} onChange={load} />
+        <FactLayouts2 lay={lay} facts={facts} onChange={load} />
       </section>
     );
   }

@@ -17,7 +17,7 @@ html[data-menu^="t"] { --mtp-h: 58px; }
 html[data-menu="t2"] { --mtp-h: 96px; }
 html[data-menu="t14"] { --mtp-h: 116px; }
 html[data-menu="t13"] { --mtp-h: 76px; }
-@media (max-width: 899px) { html[data-menu^="t"] { --mtp-h: 54px; } }
+@media (max-width: 599px) { html[data-menu^="t"] { --mtp-h: 54px; } }
 
 /* Page ki jagah: baayen kuch nahi, upar patti jitna. */
 html[data-menu^="t"] body.examskin { padding-top: var(--mtp-h); }
@@ -68,8 +68,8 @@ body.exam-on .mtp { display: none !important; }
 @keyframes mtp-in { from { transform: translateY(-6px); opacity: 0; } }
 .mnu-row.is-sel { background: var(--nav-hover, rgba(255,255,255,.07)); }
 
-/* ── Phone: logo + ☰, menu upar se ── */
-@media (max-width: 899px) {
+/* ── Phone: logo + ☰, menu upar se (tablet par poori patti, mouse se scroll) ── */
+@media (max-width: 599px) {
   .mtp-d { display: none; }
   .mtp-m { display: flex; align-items: center; justify-content: space-between; height: 100%; padding: 0 12px; }
   .mtp-burger { width: 40px; height: 40px; border-radius: 12px; font-size: 1.2rem !important; background: var(--ma) !important; color: var(--moa) !important; display: grid; place-items: center; text-align: center !important; }
@@ -222,3 +222,9 @@ body.exam-on .mtp { display: none !important; }
 .mtp15-i.is-on { box-shadow: inset 0 -2px 0 var(--ma); }
 .mtp15-logo { display: flex; flex-direction: column; align-items: center; flex: none; padding: 0 18px; font-size: 0.62rem; font-weight: 900; letter-spacing: 0.2em; }
 .mtp15-logo img { width: 30px; height: 30px; }
+
+/* Daayen sire par 🪔 festival (components/StaticsInfo) */
+.mtp-right { display: inline-flex; align-items: center; flex: none; margin-left: auto; padding-left: 8px; }
+.mtp-m .mtp-right { margin-left: auto; margin-right: 8px; }
+.mtp-row.is-drag { cursor: grabbing; user-select: none; }
+.mtp-row.is-drag * { pointer-events: none; }
