@@ -38,12 +38,12 @@ import { termsOf } from "@/lib/terms";
 import { askSelection } from "@/lib/client-ai";
 import { searchImages } from "@/lib/webimages";
 import { getThreads, saveThread, newThreadId } from "@/lib/asklog";
-import { putAns, qText as sprintQText } from "@/lib/sprint";
+import { putAns, getAns, qText as sprintQText } from "@/lib/sprint";
 import { getSavedShortcut, saveShortcutFor } from "@/lib/shortcuts";
 import { addOneLiner, OL_SUBS } from "@/lib/oneliners";
 import { addPair, readPending, setPending } from "@/lib/culturepairs";
 import { StaticsPaste, askGeminiStatics } from "./StaticsInfo";
-import ClusterButton from "./ClusterButton";
+import ClusterButton, { addClustersToFacts } from "./ClusterButton";
 
 // 💬 Poochho dabate hi yahi sawaal apne aap chala jata hai — pehle kuch
 // likhna nahi padta.
@@ -229,6 +229,14 @@ function OlPick({ text, onClose }) {
 // ⭐ "Is question ka jawab bana do" — card par paste kiya ✨ Gemini jawab
 // pehle se ho to wo upar dikhta tha aur ye chhup jata. Ab yahi us question
 // ka jawab ban jata hai.
+// 🐋 auto: question → chuna hua text (sawaal + options), pehchaan.
+function qTextOf(q) {
+  const opts = (q.options || []).map((o, i) => `${String.fromCharCode(65 + i)}) ${o}`).join("\n");
+  return `${q.passage ? q.passage + "\n\n" : ""}${q.question}${opts ? "\n\n" + opts : ""}`;
+}
+const qKeyOf = (q) => `${q.id ?? ""}|${String(q.question || "").slice(0, 120)}`;
+const sameQ = (a, b) => qKeyOf(a) === qKeyOf(b);
+
 function setQAns(q, text) {
   putAns(q, text);
   if (q && getSavedShortcut(q)) saveShortcutFor(q, text);
@@ -360,7 +368,11 @@ export default function SelectAsk() {
 
   useEffect(() => { setOld(getThreads()); }, []);
   useEffect(() => {
-    const h = (e) => { setSq((e && e.detail && e.detail.q) || null); setSetAsDef(-1); };
+    const h = (e) => {
+      setSq((e && e.detail && e.detail.q) || null);
+      nextRef.current = (e && e.detail && Array.isArray(e.detail.next)) ? e.detail.next : [];
+      setSetAsDef(-1);
+    };
     window.addEventListener("cgl:sprint-q", h);
     return () => window.removeEventListener("cgl:sprint-q", h);
   }, []);
@@ -418,6 +430,10 @@ export default function SelectAsk() {
   // jaata hai (asklog).
   const tidRef = useRef(tid); tidRef.current = tid;
   const sqRef = useRef(sq); sqRef.current = sq;
+  // Saamne wale ke baad ke 5 (components/PyqSplit) — 🐋 par ye bhi line mein.
+  const nextRef = useRef([]);
+  // 🐋 se line mein lage question — dobara na lagen.
+  const autoSeen = useRef(new Set());
   const jobs = useRef([]);
   const working = useRef(false);
   const [queued, setQueued] = useState(0);
@@ -435,7 +451,15 @@ export default function SelectAsk() {
         answer = r.answer;
       } catch (e) { error = e.message || "Jawab nahi aaya"; }
       jobs.current.shift();
-      const fill = (m) => (m.mid === j.mid && m.pending ? { ...m, pending: false, text: answer || `⚠️ ${error}`, err: !answer } : m);
+      // 🐋 wala (auto): jawab apne aap us question ka jawab + cluster fact log mein.
+      let note = "";
+      if (answer && j.auto && j.q) {
+        try { setQAns(j.q, answer); } catch { /* ignore */ }
+        let nf = 0;
+        try { nf = addClustersToFacts(answer, j.subject, j.q); } catch { nf = 0; }
+        note = `✓ Is question ka jawab ban gaya${nf ? ` · 🧩 ${nf} fact log mein` : ""}`;
+      }
+      const fill = (m) => (m.mid === j.mid && m.pending ? { ...m, pending: false, text: answer || `⚠️ ${error}`, err: !answer, ...(note ? { autoNote: note } : {}) } : m);
       if (tidRef.current === j.tid) {
         setMsgs((ms) => {
           const next = ms.map(fill);
@@ -468,9 +492,9 @@ export default function SelectAsk() {
     const history = o.noHistory ? [] : msgs.filter((m) => !m.pending);
     if (!tidRef.current) { const t = newThreadId(); tidRef.current = t; setTid(t); }
     setSentTick((x) => x + 1);
-    setMsgs((m) => [...m, { role: "user", text, mid: mid + "u" }, { role: "assistant", text: "", pending: true, mid, q: qNow, ask: { sel: o.sel !== undefined ? o.sel : sel, subject: o.subject || subject, noHistory: !!o.noHistory } }]);
+    setMsgs((m) => [...m, { role: "user", text: o.show || text, mid: mid + "u" }, { role: "assistant", text: "", pending: true, mid, q: qNow, ask: { sel: o.sel !== undefined ? o.sel : sel, subject: o.subject || subject, noHistory: !!o.noHistory, auto: !!o.auto, text } }]);
     setErr("");
-    jobs.current.push({ mid, tid: tidRef.current, sel: o.sel !== undefined ? o.sel : sel, subject: o.subject || subject, history, text, q: qNow });
+    jobs.current.push({ mid, tid: tidRef.current, sel: o.sel !== undefined ? o.sel : sel, subject: o.subject || subject, history, text, q: qNow, auto: !!o.auto });
     setQueued(jobs.current.length);
     pump();
   }, [msgs, sel, subject, pump]);
@@ -485,7 +509,7 @@ export default function SelectAsk() {
     const history = a.noHistory ? [] : msgs.slice(0, i - 1).filter((x) => !x.pending && !x.err && (x.role === "user" || x.role === "assistant"));
     if (!tidRef.current) { const t = newThreadId(); tidRef.current = t; setTid(t); }
     setMsgs((ms) => ms.map((x, k) => (k === i ? { ...x, mid, pending: true, err: false, text: "" } : x)));
-    jobs.current.push({ mid, tid: tidRef.current, sel: a.sel !== undefined ? a.sel : sel, subject: a.subject || subject, history, text: u.text, q: m.q || null });
+    jobs.current.push({ mid, tid: tidRef.current, sel: a.sel !== undefined ? a.sel : sel, subject: a.subject || subject, history, text: a.text || u.text, q: m.q || null, auto: !!a.auto });
     setQueued(jobs.current.length);
     pump();
   }, [msgs, sel, subject, pump]);
@@ -495,10 +519,26 @@ export default function SelectAsk() {
   useEffect(() => {
     const h = (e) => {
       const d = (e && e.detail) || {};
-      if (!d.text) return;
+      if (!d.q && !d.text) return;
       setOpen(true);
       if (d.subject) setSubject(d.subject);
-      runAskRef.current(d.text, { q: d.q || null, subject: d.subject, sel: "", noHistory: true });
+      if (!d.auto || !d.q) {
+        runAskRef.current(d.text, { q: d.q || null, subject: d.subject, sel: "", noHistory: true });
+        return;
+      }
+      // 🐋 = right-click "Poochho" jaisa: sawaal + options CHUNA HUA text,
+      // sawaal wahi AUTO_Q (Settings wala prompt). Saath mein saamne wale
+      // ke agle 5 bhi (jinka jawab pehle se nahi), line mein.
+      const same = sqRef.current && (sqRef.current === d.q || sameQ(sqRef.current, d.q));
+      const list = [d.q, ...(same ? nextRef.current : [])];
+      list.forEach((qq, i) => {
+        if (!qq || !qq.question) return;
+        const k = qKeyOf(qq);
+        if (i > 0 && (autoSeen.current.has(k) || getAns(qq))) return;
+        autoSeen.current.add(k);
+        const t = qTextOf(qq);
+        runAskRef.current(AUTO_Q, { q: qq, subject: d.subject, sel: t, noHistory: true, auto: true, show: `${i ? `⏭ Agla ${i} · ` : "🐋 "}${t}` });
+      });
     };
     window.addEventListener("cgl:chat-ask", h);
     return () => window.removeEventListener("cgl:chat-ask", h);
@@ -663,6 +703,7 @@ export default function SelectAsk() {
                   {m.role === "assistant" && !m.pending ? (
                     <div className="sa-msg sa-msg--ai"><Markdown>{m.text}</Markdown></div>
                   ) : null}
+                  {m.autoNote ? <div className="sa-autonote">{m.autoNote}</div> : null}
                   {/* 🧩 Jawab mein cluster ho to seedha Fact log mein. */}
                   {m.role === "assistant" && !m.pending && !m.err ? <ClusterButton md={m.text} subject={subject || "gs"} srcQ={m.q} /> : null}
                   {/* ⭐ Jis question par poochha tha USI par — m.q (us waqt ka). */}

@@ -16,6 +16,23 @@ import { autoTidyFacts } from "@/lib/facttidy";
 // Purane format ke saved answers bhi chalte hain (lib/clusterparse dono
 // padhta hai) — wahan prose hota hi nahi tha, sirf ⚡ jaisi ek line.
 
+// Bina button ke — 🐋 wale apne-aap jawab (components/SelectAsk) ke cluster
+// seedha fact log mein. Jo pehle se hain wo dobara nahi. -> kitne naye gaye.
+export function addClustersToFacts(md, subject, srcQ) {
+  const gs = !subject || String(subject).toLowerCase() === "gs";
+  const list = clustersOf(md, { prose: gs });
+  if (!list.length) return 0;
+  let have;
+  try { have = new Set(getFacts().map((f) => clusterKey({ title: f.topic, zap: f.zap, prose: f.text }))); } catch { have = new Set(); }
+  const fresh = list.filter((c) => !have.has(clusterKey(c)));
+  if (!fresh.length) return 0;
+  const src0 = srcOf(srcQ);
+  const src = src0 ? { ...src0, ...(md ? { ans: String(md).slice(0, 6000) } : {}) } : null;
+  for (const c of fresh) addFact({ ...factOf(c), ...(src ? { src } : {}) });
+  autoTidyFacts();
+  return fresh.length;
+}
+
 // srcQ — jis question ke jawab se cluster aaya; fact ke saath yaad rehta hai.
 export default function ClusterButton({ md, subject, onFlash, srcQ }) {
   // GS ke jawab par bina "🧩" wale paragraph bhi cluster maane jaate hain —

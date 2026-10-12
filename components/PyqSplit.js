@@ -67,9 +67,10 @@ export default function PyqSplit({ title, list, renderCard, storeKey = "default"
 
   // 💬 Poochho panel ko saamne wala question — wahan ⭐ isi par lagta hai.
   const cur = list[at];
+  // next — agle 5 (🐋 dabane par ye bhi apne aap chat ki line mein).
   useEffect(() => {
-    try { window.dispatchEvent(new CustomEvent("cgl:sprint-q", { detail: { q: cur || null } })); } catch { /* ignore */ }
-  }, [cur]);
+    try { window.dispatchEvent(new CustomEvent("cgl:sprint-q", { detail: { q: cur || null, next: list.slice(at + 1, at + 6) } })); } catch { /* ignore */ }
+  }, [cur]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => () => {
     try { window.dispatchEvent(new CustomEvent("cgl:sprint-q", { detail: { q: null } })); } catch { /* ignore */ }
   }, []);

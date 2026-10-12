@@ -163,14 +163,17 @@ Options: ${opts}
 ` : "");
   });
   // GS / English: 🐋 ab jawab card mein nahi laata — sawaal + options seedha
-  // DeepSeek chat mein (components/SelectAsk), Settings wale prompt ke saath.
-  // Wahan ⭐ dabao to jawab isi question par lagta hai.
+  // DeepSeek chat mein (components/SelectAsk), right-click "Poochho" jaisa.
+  // Jawab aate hi wo isi question ka jawab ban jata hai aur uske cluster
+  // fact log mein; saath mein agle 5 question bhi line mein lag jaate hain.
   const toChat = !/math|reason/i.test(String(subject || ""));
   const askDeepSeek = async () => {
     if (toChat) {
       const opts = (q.options || []).map((o, i) => `${String.fromCharCode(65 + i)}) ${o}`).join("\n");
       const text = `${q.passage ? q.passage + "\n\n" : ""}${q.question}\n\n${opts}`;
-      window.dispatchEvent(new CustomEvent("cgl:chat-ask", { detail: { text, q, subject } }));
+      // auto: right-click "Poochho" jaisa prompt; jawab apne aap is question
+      // ka jawab + cluster fact log mein; agle 5 bhi line mein (SelectAsk).
+      window.dispatchEvent(new CustomEvent("cgl:chat-ask", { detail: { text, q, subject, auto: true } }));
       return;
     }
     await dsq.ask(); setPeek(true);

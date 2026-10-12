@@ -673,3 +673,6 @@ body:has(.pyqs) .sa-reopen { display: inline-block; }
 .fsq-h { font-size: 0.78rem; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 8px; }
 .fsq--panel .fsq-opt { cursor: default; }
 .fsq--none { color: var(--text-3); font-size: 0.9rem; }
+
+/* 🐋 auto: jawab laga + fact log */
+.sa-autonote { margin: 4px 0 2px; padding: 6px 10px; border-radius: 10px; font-size: 0.78rem; font-weight: 700; color: #16a34a; background: color-mix(in srgb, #22c55e 12%, transparent); border: 1px solid color-mix(in srgb, #22c55e 35%, transparent); }
