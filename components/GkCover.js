@@ -4,14 +4,14 @@
 // baayen sawaal, daayen sirf sahi jawab (options nahi), jawab dhaka hua.
 // Row dabao to khule; "Chhupao" se sawaal bhi dhak sakte ho.
 //
-// Khuli row ke jawab ke neeche us sawaal ka 🧩 FACT — DeepSeek chat wale
-// jawab ka sirf cluster (poora jawab nahi). Wo jawab PYQ ki tarah apne aap
+// Chautha khaana "⚡ Fact" — DeepSeek chat wale jawab ki sirf ⚡ line (poora
+// jawab nahi), row kholne par. Wo jawab PYQ ki tarah apne aap
 // banta hai: jo row kholi + uske agle 5 (components/SelectAsk prefetch,
 // `cgl:sprint-q`). Fact log mein bhejna khud — 🧩 button se.
 
 import { useEffect, useState } from "react";
 import Markdown from "./Markdown";
-import ClusterButton from "./ClusterButton";
+import { addClustersToFacts } from "./ClusterButton";
 import { getAns } from "@/lib/sprint";
 import { clustersOf } from "@/lib/clusterparse";
 import "./gkcover.css";
@@ -21,21 +21,34 @@ const ansOf = (q) => {
   return String(q.answerText || q.correct || "");
 };
 
+// Jawab se sirf ⚡ wali line(ein) — poora jawab / prose nahi.
+function zapsOf(md) {
+  const out = [];
+  for (const c of clustersOf(md, { prose: false })) if (c.zap) out.push(c.zap);
+  if (!out.length) {
+    for (const l of String(md || "").split("\n")) {
+      const m = /^\s*(?:[-*]\s*)?(?:\*\*)?⚡(?:\*\*)?\s*(.+)$/.exec(l);
+      if (m) out.push(m[1].replace(/\*\*/g, "").trim());
+    }
+  }
+  return [...new Set(out)];
+}
+
 function Fact({ q }) {
   const md = getAns(q);
-  if (!md) return <div className="gkc-fact gkc-fact--wait">🐋 Fact ban raha hai…</div>;
-  const list = clustersOf(md, { prose: true });
-  if (!list.length) return null;
+  if (!md) return <span className="gkc-wait">…</span>;
+  const zaps = zapsOf(md);
+  if (!zaps.length) return <span className="gkc-wait">—</span>;
+  const send = (e) => {
+    e.stopPropagation();
+    const n = addClustersToFacts(md, "gs", q);
+    e.currentTarget.textContent = n ? "✓ Fact log" : "✓ pehle se";
+    e.currentTarget.disabled = true;
+  };
   return (
-    <div className="gkc-fact" onClick={(e) => e.stopPropagation()}>
-      {list.map((c, i) => (
-        <div key={i} className="gkc-fact__one">
-          {c.title ? <b>🧩 {c.title}</b> : null}
-          {c.prose ? <Markdown>{c.prose}</Markdown> : null}
-          {c.zap ? <p className="gkc-fact__zap">⚡ {c.zap}</p> : null}
-        </div>
-      ))}
-      <ClusterButton md={md} subject="gs" srcQ={q} />
+    <div className="gkc-fact">
+      {zaps.map((z, i) => <p key={i}>⚡ {z}</p>)}
+      <button type="button" className="gkc-send" onClick={send} title="Ye fact, fact log mein bhejo">＋ Fact log</button>
     </div>
   );
 }
@@ -80,7 +93,7 @@ export default function GkCover({ qs }) {
         <span className="gkc-n">{qs.length} sawaal</span>
       </div>
       <table>
-        <thead><tr><th>#</th><th>Sawaal</th><th>Jawab</th></tr></thead>
+        <thead><tr><th>#</th><th>Sawaal</th><th>Jawab</th><th>⚡ Fact</th></tr></thead>
         <tbody>
           {rows.map((q, i) => {
             const o = open[q.id ?? i];
@@ -88,10 +101,8 @@ export default function GkCover({ qs }) {
               <tr key={q.id ?? i} onClick={() => toggle(q, i)}>
                 <td>{i + 1}</td>
                 <td className={hide === "q" && !o ? "is-cov" : ""}><Markdown inline>{q.question}</Markdown></td>
-                <td className={hide === "a" && !o ? "is-cov" : ""}>
-                  <b>{ansOf(q) || "—"}</b>
-                  {o ? <Fact q={q} /> : null}
-                </td>
+                <td className={hide === "a" && !o ? "is-cov" : ""}><b>{ansOf(q) || "—"}</b></td>
+                <td className={!o ? "is-cov" : ""}>{o ? <Fact q={q} /> : null}</td>
               </tr>
             );
           })}
