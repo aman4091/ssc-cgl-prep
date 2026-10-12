@@ -43,7 +43,7 @@ import { getSavedShortcut, saveShortcutFor } from "@/lib/shortcuts";
 import { addOneLiner, OL_SUBS } from "@/lib/oneliners";
 import { addPair, readPending, setPending } from "@/lib/culturepairs";
 import { StaticsPaste, askGeminiStatics } from "./StaticsInfo";
-import ClusterButton, { addClustersToFacts } from "./ClusterButton";
+import ClusterButton from "./ClusterButton";
 
 // 💬 Poochho dabate hi yahi sawaal apne aap chala jata hai — pehle kuch
 // likhna nahi padta.
@@ -235,7 +235,6 @@ function qTextOf(q) {
   return `${q.passage ? q.passage + "\n\n" : ""}${q.question}${opts ? "\n\n" + opts : ""}`;
 }
 const qKeyOf = (q) => `${q.id ?? ""}|${String(q.question || "").slice(0, 120)}`;
-const sameQ = (a, b) => qKeyOf(a) === qKeyOf(b);
 
 function setQAns(q, text) {
   putAns(q, text);
@@ -244,6 +243,7 @@ function setQAns(q, text) {
 
 export default function SelectAsk() {
   const path = usePathname();
+  const pathRef = useRef(path); pathRef.current = path;
   const [bar, setBar] = useState(null);      // { text, x, y }
   // 📝 One-liner: chuna hua text, jab tak subject nahi poochh lete.
   const [olText, setOlText] = useState("");
@@ -368,13 +368,34 @@ export default function SelectAsk() {
 
   useEffect(() => { setOld(getThreads()); }, []);
   useEffect(() => {
+    let tmr = 0;
     const h = (e) => {
-      setSq((e && e.detail && e.detail.q) || null);
+      const cur = (e && e.detail && e.detail.q) || null;
+      setSq(cur);
       nextRef.current = (e && e.detail && Array.isArray(e.detail.next)) ? e.detail.next : [];
       setSetAsDef(-1);
+      // ⏭ APNE AAP: saamne wala + agle 5 (GS / English) ka jawab peechhe
+      // ban jaye — 1st par 1–6, 2nd par aate hi 7th, … Jinka jawab pehle se
+      // hai ya line mein hai, wo dobara nahi. Jaldi-jaldi aage badhne par
+      // har beech wale par nahi — thoda tik kar.
+      clearTimeout(tmr);
+      if (!cur) return;
+      const next = nextRef.current;
+      tmr = setTimeout(() => {
+        [cur, ...next].forEach((qq, i) => {
+          if (!qq || !qq.question || !Array.isArray(qq.options) || qq.options.length < 2) return;
+          const sub = subjectOfQ(qq) || subjectFromPath(pathRef.current);
+          if (sub !== "gs" && sub !== "english") return;
+          const k = qKeyOf(qq);
+          if (autoSeen.current.has(k) || getAns(qq)) return;
+          autoSeen.current.add(k);
+          const t = qTextOf(qq);
+          runAskRef.current(AUTO_Q, { q: qq, subject: sub, sel: t, noHistory: true, auto: true, show: `⏭ ${i ? `Agla ${i}` : "Ye wala"} · ${t}` });
+        });
+      }, 700);
     };
     window.addEventListener("cgl:sprint-q", h);
-    return () => window.removeEventListener("cgl:sprint-q", h);
+    return () => { clearTimeout(tmr); window.removeEventListener("cgl:sprint-q", h); };
   }, []);
 
   // Baatcheet badalte hi sambhal jati hai — band karke kholne par wahi milti.
@@ -451,13 +472,12 @@ export default function SelectAsk() {
         answer = r.answer;
       } catch (e) { error = e.message || "Jawab nahi aaya"; }
       jobs.current.shift();
-      // 🐋 wala (auto): jawab apne aap us question ka jawab + cluster fact log mein.
+      // 🐋 / apne-aap wala (auto): jawab apne aap us question ka jawab.
       let note = "";
       if (answer && j.auto && j.q) {
         try { setQAns(j.q, answer); } catch { /* ignore */ }
-        let nf = 0;
-        try { nf = addClustersToFacts(answer, j.subject, j.q); } catch { nf = 0; }
-        note = `✓ Is question ka jawab ban gaya${nf ? ` · 🧩 ${nf} fact log mein` : ""}`;
+        // Fact log apne aap NAHI (owner) — neeche ke 🧩 button se khud bhejo.
+        note = "✓ Is question ka jawab ban gaya";
       }
       const fill = (m) => (m.mid === j.mid && m.pending ? { ...m, pending: false, text: answer || `⚠️ ${error}`, err: !answer, ...(note ? { autoNote: note } : {}) } : m);
       if (tidRef.current === j.tid) {
@@ -527,18 +547,11 @@ export default function SelectAsk() {
         return;
       }
       // 🐋 = right-click "Poochho" jaisa: sawaal + options CHUNA HUA text,
-      // sawaal wahi AUTO_Q (Settings wala prompt). Saath mein saamne wale
-      // ke agle 5 bhi (jinka jawab pehle se nahi), line mein.
-      const same = sqRef.current && (sqRef.current === d.q || sameQ(sqRef.current, d.q));
-      const list = [d.q, ...(same ? nextRef.current : [])];
-      list.forEach((qq, i) => {
-        if (!qq || !qq.question) return;
-        const k = qKeyOf(qq);
-        if (i > 0 && (autoSeen.current.has(k) || getAns(qq))) return;
-        autoSeen.current.add(k);
-        const t = qTextOf(qq);
-        runAskRef.current(AUTO_Q, { q: qq, subject: d.subject, sel: t, noHistory: true, auto: true, show: `${i ? `⏭ Agla ${i} · ` : "🐋 "}${t}` });
-      });
+      // sawaal wahi AUTO_Q (Settings wala prompt). Sirf yahi ek sawaal —
+      // agle wale apne aap (neeche prefetch) bante hain.
+      autoSeen.current.add(qKeyOf(d.q));
+      const t = qTextOf(d.q);
+      runAskRef.current(AUTO_Q, { q: d.q, subject: d.subject, sel: t, noHistory: true, auto: true, show: `🐋 ${t}` });
     };
     window.addEventListener("cgl:chat-ask", h);
     return () => window.removeEventListener("cgl:chat-ask", h);
