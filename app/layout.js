@@ -13,6 +13,8 @@ import "./looks/tilenav.css";
 import "./looks/menus.css";
 // Upar wali fix patti ke 15 roop (components/MenuTop) — <html data-menu="t1"…>.
 import "./looks/menutop.css";
+// 📖 Kitaab roop — TEST, Window ke upar (<html data-book="1">, 📖/🪟 button).
+import "./looks/kitaab.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
@@ -82,6 +84,8 @@ export default function RootLayout({ children }) {
               // Roop hamesha Window (13). Address bar ka rang: bina-media wala
               // meta sabse aage, taaki OS ki pasand wali do se pehle mile.
               "var b='#0d0f14';" +
+              // 📖 Kitaab roop (test) — jab tak 🪟 dabake band na kiya ho.
+              "if(localStorage.getItem('cgl.book')!=='0'){d.setAttribute('data-book','1');b='#e9dcbc'}" +
               "var m=document.createElement('meta');m.id='tc-user';" +
               "m.name='theme-color';m.content=b;" +
               "document.head.prepend(m)}catch(e){}",

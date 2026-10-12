@@ -11,6 +11,10 @@ import GkCover from "@/components/GkCover";
 import MedLayouts, { MED_LAYOUTS } from "@/components/MedLayouts";
 import MedFacts, { MED_FACT_LAYOUTS } from "@/components/MedFacts";
 
+// Owner ne ye 10 rakhe; baaki tareeke code mein hain (backup/README.md),
+// bas dropdown se hate.
+const MED_KEEP = new Set(["0", "7", "16", "19", "21", "25", "31", "33", "34", "36"]);
+
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are
 // unique across the bank, so a single route serves both rather than two
@@ -23,7 +27,7 @@ export default function GkTopicPage() {
   const [ready, setReady] = useState(false);
   // 🏰 Medieval: yaad karne ka tareeka — "0" = Cover table (abhi wala).
   const [medLay, setMedLay] = useState("0");
-  useEffect(() => { try { const v = localStorage.getItem("cgl.medlayout"); if (v) setMedLay(v); } catch { /* ignore */ } }, []);
+  useEffect(() => { try { const v = localStorage.getItem("cgl.medlayout"); if (v && MED_KEEP.has(v)) setMedLay(v); } catch { /* ignore */ } }, []);
   const pickMed = (v) => { setMedLay(v); try { localStorage.setItem("cgl.medlayout", v); } catch { /* quota */ } };
 
   useEffect(() => {
@@ -109,10 +113,10 @@ export default function GkTopicPage() {
               <select className="select" style={{ width: "auto", padding: "8px 12px" }} value={medLay} onChange={(e) => pickMed(e.target.value)} aria-label="Yaad karne ka tareeka">
                 <option value="0">0 · Cover table (abhi wala)</option>
                 <optgroup label="Bina facts">
-                  {MED_LAYOUTS.map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
+                  {MED_LAYOUTS.filter((l) => MED_KEEP.has(l.id)).map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
                 </optgroup>
                 <optgroup label="Facts ke saath (DeepSeek ⚡)">
-                  {MED_FACT_LAYOUTS.map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
+                  {MED_FACT_LAYOUTS.filter((l) => MED_KEEP.has(l.id)).map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
                 </optgroup>
               </select>
             </div>

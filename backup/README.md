@@ -24,3 +24,5 @@ Home ke purane roop (A–N + purana Home) commit **`fabaac1`** mein hain
 | 🧮 Calculation | Topic: Dekho → Test (dropdown abhi hai) | 15 tareeke | `components/CalcLayouts.js`, `components/CalcLayoutsMore.js`, `app/calculation/layouts*.css` |
 | 🪔 Bharat Sanskriti | Jodi milao (dropdown abhi hai) | 15 tareeke (apne purane data `lib/culture.js` ke saath) | `components/CultureLayouts.js`, `lib/culture.js`, `app/culture/culture.css` |
 | 🏠 Home | Sawaal-jawab (koi dropdown nahi) | Purana Home + A–N (B ab `/din` page hai) | commit `fabaac1` |
+| 🏰 GKTricks Medieval | Dropdown mein sirf **0, 7, 16, 19, 21, 25, 31, 33, 34, 36** (`MED_KEEP`, `app/pyq/gk/[slug]/page.js`) | Baaki 1–20 aur 21–40 code mein hi hain, bas dropdown se hate — `MED_KEEP` mein id daalo to wapas | `components/MedLayouts.js`, `components/MedFacts.js` |
+| 📖 Kitaab roop (TEST) | Window ke upar, upar menu ka 📖/🪟 button (`cgl.book`) | Hatana ho: `app/looks/kitaab.css`, `components/BookToggle.js`, `app/layout.js` ka import + script line, `components/Navbar.js` | — |
