@@ -20,8 +20,10 @@ import "./layouts2.css";
 // FactLayouts2); pehle wale 15 backup mein. Is device par yaad.
 // Default "4 · Pehla akshar" (scroll wala) — owner ne set kiya.
 const LAY_KEY = "cgl.factlayout4";
+// Dropdown hata diya (owner) — Fact log hamesha "4 · Pehla akshar" reel.
+// Baaki roop components/FactLayouts2 mein pade hain (backup/README.md).
 const savedLay = () => {
-  try { const v = localStorage.getItem(LAY_KEY); return v === "0" || FL2_LAYOUTS.some((l) => l.id === v) ? v : "4"; } catch { return "4"; }
+  return "4";
 };
 
 // Bade card mein revise (CA Revision wala Recall, khula roop): upar naam,
@@ -162,7 +164,7 @@ export default function MissionFactsPage() {
   if (lay !== "0") {
     return (
       <section className="section">
-        <div className="fl-bar">{pick}{revBtn}</div>
+        <div className="fl-bar">{revBtn}</div>
         <FactLayouts2 lay={lay} facts={facts} onChange={load} />
       </section>
     );
@@ -174,7 +176,7 @@ export default function MissionFactsPage() {
       <FactFolders
         facts={facts}
         onChange={load}
-        headExtra={<>{pick}{revBtn}</>}
+        headExtra={revBtn}
       />
     </>
   );
