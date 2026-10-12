@@ -9,6 +9,7 @@ import PyqQuestionCard from "@/components/PyqQuestionCard";
 import PyqDrill from "@/components/PyqReels";
 import GkCover from "@/components/GkCover";
 import MedLayouts, { MED_LAYOUTS } from "@/components/MedLayouts";
+import MedFacts, { MED_FACT_LAYOUTS } from "@/components/MedFacts";
 
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are
@@ -107,10 +108,15 @@ export default function GkTopicPage() {
             <div className="row" style={{ maxWidth: 980, margin: "0 auto 12px" }}>
               <select className="select" style={{ width: "auto", padding: "8px 12px" }} value={medLay} onChange={(e) => pickMed(e.target.value)} aria-label="Yaad karne ka tareeka">
                 <option value="0">0 · Cover table (abhi wala)</option>
-                {MED_LAYOUTS.map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
+                <optgroup label="Bina facts">
+                  {MED_LAYOUTS.map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
+                </optgroup>
+                <optgroup label="Facts ke saath (DeepSeek ⚡)">
+                  {MED_FACT_LAYOUTS.map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
+                </optgroup>
               </select>
             </div>
-            {medLay === "0" ? <GkCover qs={qs} /> : <MedLayouts lay={medLay} qs={qs} />}
+            {medLay === "0" ? <GkCover qs={qs} /> : Number(medLay) > 20 ? <MedFacts lay={medLay} qs={qs} /> : <MedLayouts lay={medLay} qs={qs} />}
           </>
         ) : (
           <PyqDrill

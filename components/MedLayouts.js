@@ -35,24 +35,24 @@ export const MED_LAYOUTS = [
 ];
 
 // ── saajha ───────────────────────────────────────────────────────────────
-const plain = (s) => String(s || "").replace(/\*\*|__|`|\$/g, "").replace(/\s+/g, " ").trim();
-function shuffle(a) { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; }
-const norm = (s) => plain(s).toLowerCase().replace(/[^a-z0-9ऀ-ॿ ]/g, "").replace(/\s+/g, " ").trim();
+export const plain = (s) => String(s || "").replace(/\*\*|__|`|\$/g, "").replace(/\s+/g, " ").trim();
+export function shuffle(a) { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; }
+export const norm = (s) => plain(s).toLowerCase().replace(/[^a-z0-9ऀ-ॿ ]/g, "").replace(/\s+/g, " ").trim();
 
 const MISS = "cgl.medmiss";
-const readJ = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k) || "null"); return v ?? d; } catch { return d; } };
-const writeJ = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* quota */ } };
-function mark(id, ok) {
+export const readJ = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k) || "null"); return v ?? d; } catch { return d; } };
+export const writeJ = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* quota */ } };
+export function mark(id, ok) {
   const all = readJ(MISS, {});
   const e = all[id] || { miss: 0, seen: 0 };
   all[id] = { miss: Math.max(0, e.miss + (ok ? 0 : 1)), seen: e.seen + 1, at: Date.now() };
   writeJ(MISS, all);
 }
 
-const Q = ({ m }) => <Markdown inline>{m.q}</Markdown>;
-const Empty = ({ children }) => <div className="placeholder">{children}</div>;
-function Score({ y, n, extra }) { return <div className="ml-score">✓ {y} · ✗ {n}{extra ? ` · ${extra}` : ""}</div>; }
-function Rate({ onRate, labels = ["✗ Nahi aaya", "✓ Aaya"] }) {
+export const Q = ({ m }) => <Markdown inline>{m.q}</Markdown>;
+export const Empty = ({ children }) => <div className="placeholder">{children}</div>;
+export function Score({ y, n, extra }) { return <div className="ml-score">✓ {y} · ✗ {n}{extra ? ` · ${extra}` : ""}</div>; }
+export function Rate({ onRate, labels = ["✗ Nahi aaya", "✓ Aaya"] }) {
   return (
     <div className="ml-rate">
       <button type="button" className="is-n" onClick={() => onRate(false)}>{labels[0]}</button>
@@ -77,7 +77,7 @@ function Done({ s, reset }) {
   return <div className="ml-done"><b>Sab ho gaye 🎉</b><Score {...s} /><button type="button" className="ml-big" onClick={reset}>Phir se</button></div>;
 }
 // Galat option (sahi ke alawa) — bank ke apne option, na hon to doosre sawaalon ke jawab.
-function wrongsOf(m, ms, n = 3) {
+export function wrongsOf(m, ms, n = 3) {
   const w = (m.opts || []).filter((o, i) => i !== m.ai && plain(o));
   const extra = shuffle(ms.filter((x) => x.id !== m.id && norm(x.a) !== norm(m.a)).map((x) => x.a));
   return [...w, ...extra].slice(0, n);
@@ -370,7 +370,7 @@ function Diary({ ms }) {
 }
 
 // ─── 13 · Topic jhund ───
-const GROUPS = [
+export const GROUPS = [
   ["🗡️ Delhi Sultanate", /sultan|slave dynasty|ghulam|mamluk|khal?ji|tughl?aq|lodi|sayyid|aibak|iltutmish|balban|alauddin|ala-ud-din|razia|firoz|muhammad bin|qutb/],
   ["👑 Mughal", /mughal|babur|humayun|akbar|jahangir|shah ?jahan|aurangzeb|nur ?jahan|dara|sher shah|suri|bairam|todar|birbal/],
   ["🏯 Vijayanagar / Bahmani / Dakshin", /vijayanagar|krishna ?deva|hampi|bahmani|deccan|golconda|bijapur|ahmadnagar|chola|chalukya|rashtrakuta|pallava|hoysala|kakatiya|yadava/],
@@ -610,12 +610,17 @@ function Survival({ ms }) {
 
 const COMP = { 1: Flash, 2: Reel, 3: Mcq, 4: Reverse, 5: TypeIt, 6: Hint, 7: Match, 8: TrueFalse, 9: Speed, 10: Leitner, 11: Test10, 12: Diary, 13: Groups, 14: Timeline, 15: Eliminate, 16: Lines, 17: Tiles, 18: Listen, 19: Chunk, 20: Survival };
 
-export default function MedLayouts({ lay, qs }) {
-  const ms = useMemo(() => qs.map((q, i) => {
+// Bank ke sawaal → { id, raw (asli sawaal), q, a, opts, ai } — sirf jinka jawab pata hai.
+export function toMs(qs) {
+  return qs.map((q, i) => {
     const ai = Number.isInteger(q.answer) ? q.answer : -1;
     const a = ai >= 0 && Array.isArray(q.options) ? plain(q.options[ai]) : plain(q.answerText || "");
-    return { id: String(q.id ?? i), q: q.question, a, opts: Array.isArray(q.options) ? q.options.map(plain) : [], ai };
-  }).filter((m) => m.q && m.a), [qs]);
+    return { id: String(q.id ?? i), raw: q, q: q.question, a, opts: Array.isArray(q.options) ? q.options.map(plain) : [], ai };
+  }).filter((m) => m.q && m.a);
+}
+
+export default function MedLayouts({ lay, qs }) {
+  const ms = useMemo(() => toMs(qs), [qs]);
   const C = COMP[lay];
   if (!C) return null;
   if (!ms.length) return <Empty>Jawab wale sawaal nahi mile.</Empty>;

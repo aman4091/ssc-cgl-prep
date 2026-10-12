@@ -62,7 +62,7 @@ function Card({ it, no, total }) {
   );
 }
 
-export default function MnemonicScroll({ items, storeKey, startId = "" }) {
+export default function MnemonicScroll({ items, storeKey, startId = "", onAt }) {
   const KEY = `cgl.mnscroll.${storeKey}`;
   const n = items.length;
   // Kahan se shuru: bahar se diya hua card, warna jahan tak pichhli baar padha.
@@ -101,8 +101,9 @@ export default function MnemonicScroll({ items, storeKey, startId = "" }) {
 
   const save = useCallback((i) => {
     setCur(i);
+    if (onAt) onAt(i);   // saamne kaunsa card (GKTricks Medieval: uska DeepSeek fact)
     try { localStorage.setItem(KEY, JSON.stringify({ i, id: items[i] && items[i].id, at: Date.now() })); } catch { /* quota */ }
-  }, [KEY, items]);
+  }, [KEY, items, onAt]);
   // Kaunsi reel saamne — wahi "yahan tak padha".
   const onScroll = () => {
     const el = box.current;
