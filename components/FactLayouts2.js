@@ -29,6 +29,7 @@ import Markdown from "@/components/Markdown";
 import { GAPS, reviewFact } from "@/lib/missionfacts";
 import { dayKey } from "@/lib/daytime";
 import { toModel } from "@/components/FactFolders";
+import MnemonicScroll from "@/components/MnemonicScroll";
 
 export const FL2_LAYOUTS = [
   { id: "1", name: "Likh ke yaad karo" },
@@ -184,30 +185,14 @@ function Palace({ ms }) {
 }
 
 // ─── 4 · Pehla akshar ───
+// Scroll wala (components/MnemonicScroll): card ek ke neeche ek, jahan tak
+// padha wahan se agli baar, aakhri ke baad phir 1.
 function Mnemonic({ ms }) {
-  const [i, setI] = useState(0);
-  const [open, setOpen] = useState({});
-  const m = ms[i];
-  const pts = pointsOf(m);
-  const code = pts.map(firstLetter);
-  const go = (x) => { setI(x); setOpen({}); };
-  return (
-    <div className="fn4">
-      <Tag m={m} />
-      <h2>{m.head}</h2>
-      <div className="fn4-code">{code.map((c, k) => <span key={k} className={open[k] ? "is-open" : ""} onClick={() => setOpen((o) => ({ ...o, [k]: !o[k] }))}>{c}</span>)}</div>
-      <p className="fn-dim">Har akshar se ek baat — bolo, phir akshar dabao.</p>
-      <ul className="fn4-list">
-        {pts.map((p, k) => (
-          <li key={k} className={open[k] ? "is-open" : ""} onClick={() => setOpen((o) => ({ ...o, [k]: !o[k] }))}>
-            <b>{code[k]}</b><span>{open[k] ? p : "…"}</span>
-          </li>
-        ))}
-      </ul>
-      <div className="fn-row"><button type="button" onClick={() => setOpen(Object.fromEntries(pts.map((_, k) => [k, true])))}>Sab kholo</button></div>
-      <Nav i={i} n={ms.length} set={go} />
-    </div>
-  );
+  const items = useMemo(() => ms.map((m) => ({
+    id: m.id, head: m.head, tag: m.topic, color: m.c,
+    pts: pointsOf(m).map((t) => ({ t })),
+  })), [ms]);
+  return <MnemonicScroll items={items} storeKey="facts" />;
 }
 
 // Topic chunne ki patti (5, 9).

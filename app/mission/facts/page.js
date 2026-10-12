@@ -18,9 +18,10 @@ import "./layouts2.css";
 // 🎨 Padhne ka roop — dropdown se. "0" = abhi wala (khulte hi Revise, band
 // karo to topic folders). Baaki 15 naye — yaad karne wale (components/
 // FactLayouts2); pehle wale 15 backup mein. Is device par yaad.
-const LAY_KEY = "cgl.factlayout3";
+// Default "4 · Pehla akshar" (scroll wala) — owner ne set kiya.
+const LAY_KEY = "cgl.factlayout4";
 const savedLay = () => {
-  try { const v = localStorage.getItem(LAY_KEY); return v && FL2_LAYOUTS.some((l) => l.id === v) ? v : "0"; } catch { return "0"; }
+  try { const v = localStorage.getItem(LAY_KEY); return v === "0" || FL2_LAYOUTS.some((l) => l.id === v) ? v : "4"; } catch { return "4"; }
 };
 
 // Bade card mein revise (CA Revision wala Recall, khula roop): upar naam,
@@ -83,7 +84,7 @@ export default function MissionFactsPage() {
   // se wo wahin se uthta hai jahan tha, isliye jhatka nahi lagta.
   const [rev, setRev] = useState(0);
 
-  const [lay, setLay] = useState("0");
+  const [lay, setLay] = useState("4");
   const pickLay = (v) => { setLay(v); try { localStorage.setItem(LAY_KEY, v); } catch { /* private */ } };
 
   const load = () => setFacts(getFacts());

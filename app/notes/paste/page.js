@@ -31,11 +31,13 @@ import "./layouts.css";
 
 // 🎨 Padhne ka roop — "0" abhi wala (Revise + ek page ek baar), 1–15
 // components/OneLinerLayouts. Is device par yaad (cgl.ollayout).
-const OL_KEY = "cgl.ollayout2";
+// Default "pa" = 🔠 Pehla akshar scroll (Fact log jaisa — components/MnemonicScroll).
+const OL_KEY = "cgl.ollayout3";
 const savedOl = () => {
-  try { const v = localStorage.getItem(OL_KEY); return v && OL_LAYOUTS.some((l) => l.id === v) ? v : "0"; } catch { return "0"; }
+  try { const v = localStorage.getItem(OL_KEY); return v === "0" || v === "pa" || OL_LAYOUTS.some((l) => l.id === v) ? v : "pa"; } catch { return "pa"; }
 };
 import OneLinerNotes from "@/components/OneLinerNotes";
+import MnemonicScroll from "@/components/MnemonicScroll";
 import PyqSplit from "@/components/PyqSplit";
 import "@/app/carev.css";
 import Recall from "@/components/carevision/Recall";
@@ -237,7 +239,7 @@ export default function PasteNotesPage() {
     return { pages, pts, star };
   }, [shown]);
 
-  const [lay, setLay] = useState("0");
+  const [lay, setLay] = useState("pa");
   useEffect(() => { setLay(savedOl()); }, []);
   const pickLay = (v) => { setLay(v); try { localStorage.setItem(OL_KEY, v); } catch { /* ignore */ } };
 
@@ -305,12 +307,39 @@ export default function PasteNotesPage() {
   const pick = (
     <label className="pn-lay">
       <select value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Padhne ka roop">
-        <option value="0">🎨 0 · Abhi wala (Revise + page)</option>
+        <option value="pa">🎨 🔠 Pehla akshar (scroll)</option>
+        <option value="0">🎨 0 · Revise + page</option>
         {OL_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id} · {l.name}</option>)}
       </select>
     </label>
   );
   const revBtn = <button type="button" className="btn btn--primary btn--sm" onClick={() => startRev("")}>▶ Revise karo</button>;
+
+  if (lay === "pa") {
+    // Har page 2–3 hisson mein (noteChunks), har hissa ek card. Menu se ek
+    // page khola ho to usi book ke saare, wahi page pehle.
+    const gs = book ? groups.filter((g) => g.book === book) : (oneBook ? groups.filter((g) => g.book === oneBook.book) : groups);
+    const items = gs.flatMap((g) => g.items.flatMap((n) => {
+      const parts = noteChunks(n.text);
+      return parts.map((c, i) => ({
+        id: `${n.k}#${i}`,
+        head: `${n.topic || "—"}${parts.length > 1 ? ` · ${i + 1}/${parts.length}` : ""}`,
+        tag: `${n.bookTitle || n.book || "Notes"} · p.${n.page}`,
+        pts: c.split("\n").filter((l) => l.trim()).map((l) => (/^\s*#{1,4}\s/.test(l) ? { t: l, h: true } : { t: l })),
+      }));
+    }));
+    return (
+      <section className="section" style={{ marginTop: 16 }}>
+        <div className="pn-bar">{pick}{revBtn}</div>
+        <MnemonicScroll
+          key={`${book}|${oneBook ? oneBook.book : ""}|${note}`}
+          items={items}
+          storeKey={`notes.${book || (oneBook && oneBook.book) || "all"}`}
+          startId={note ? `${note}#0` : ""}
+        />
+      </section>
+    );
+  }
 
   if (lay !== "0") {
     return (
