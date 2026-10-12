@@ -7,7 +7,7 @@ import { loadGkIndex, loadGkTopic } from "@/lib/gkbank";
 import { isUserTopicId, getUserTopic, getUserBook, getUserTopicQuestions } from "@/lib/userpyq";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import PyqDrill from "@/components/PyqReels";
-import PyqSplit from "@/components/PyqSplit";
+import GkCover from "@/components/GkCover";
 
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are
@@ -95,26 +95,10 @@ export default function GkTopicPage() {
         ) : qs.length === 0 ? (
           <div className="placeholder">Is topic mein koi question nahi. 🤔</div>
         ) : chatLook ? (
-          // 💬 Medieval: chat jaisi window, saare question ek ke neeche ek.
-          <PyqSplit
-            title={topic?.label || "Questions"}
-            list={qs}
-            storeKey={slug}
-            renderCard={(q, i, mem) => (
-              <PyqQuestionCard
-                {...mem}
-                resumeKey={resumeKey}
-                key={q.id || i}
-                q={q}
-                index={i}
-                subject={topic?.subject || "gs"}
-                chapterName={topic?.chapter || topic?.label}
-                archiveOnAnswer
-                fileToChapter
-                split
-              />
-            )}
-          />
+          // 📋 Medieval: Vocab jaisa Cover method — baayen sawaal, daayen sirf
+          // jawab (dhaka hua). Owner try kar raha hai; pehle wala PyqSplit
+          // (sawaal + options + button) commit 0348b60 mein hai.
+          <GkCover qs={qs} />
         ) : (
           <PyqDrill
             title={topic?.chapter || topic?.label || "Test"}
