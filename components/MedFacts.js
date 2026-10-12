@@ -12,7 +12,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "./Markdown";
 import MnemonicScroll from "./MnemonicScroll";
 import { addClustersToFacts } from "./ClusterButton";
-import { getAns } from "@/lib/sprint";
+import { getAns, ansLookup } from "@/lib/sprint";
 import { clustersOf } from "@/lib/clusterparse";
 import { plain, shuffle, norm, Q, Empty, Rate, mark, wrongsOf, GROUPS, readJ, writeJ, toMs } from "./MedLayouts";
 import "./medlayouts.css";
@@ -58,7 +58,10 @@ function zapsOf(md) {
   return r;
 }
 // null = abhi bana nahi · [] = jawab hai par ⚡ nahi · [..] = facts
-const factsOf = (m) => { const md = getAns(m.raw); return md ? zapsOf(md) : null; };
+// Store ek baar padh kar rakho; naya jawab aate hi (cgl:sprint-ans / ds-saved) phir se.
+let LOOK = null;
+const lookup = () => LOOK || (LOOK = ansLookup());
+const factsOf = (m) => { const md = lookup()(m.raw); return md ? zapsOf(md) : null; };
 
 // ── DeepSeek: saamne wala + agle 5 ────────────────────────────────────────
 let ALL = [];
@@ -731,14 +734,15 @@ function Trick({ ms }) {
 const COMP = { 21: Book, 22: Sticky, 23: Clue, 24: Cloze, 25: Paper, 26: Chat, 27: MindMap, 28: Kosh, 29: WhoseFact, 30: WriteCheck, 31: Today10, 32: Search, 33: TwoPane, 34: Highlight, 35: LetterReel, 36: Recent, 37: ByAnswer, 38: Notes, 39: Swipe, 40: Trick };
 
 export default function MedFacts({ lay, qs }) {
-  const all = useMemo(() => toMs(qs), [qs]);
+  const all = useMemo(() => { LOOK = null; return toMs(qs); }, [qs]);
   const [tick, setTick] = useState(0);
-  // 🧪 Abhi testing: sirf wo sawaal jinke ⚡ facts PEHLE SE bane hain (naye
+  // 🧪 Abhi testing: sirf 10 sawaal jinke ⚡ facts PEHLE SE bane hain (naye
   // banne mein der lagti hai). Inke jawab ho chuke, to DeepSeek dobara nahi
   // chalta. List tabhi badle jab sach mein naya fact aaye.
   const prev = useRef([]);
   const ms = useMemo(() => {
-    const r = all.filter((m) => (factsOf(m) || []).length > 0);
+    const r = [];
+    for (const m of all) { if ((factsOf(m) || []).length) r.push(m); if (r.length >= 10) break; }
     const same = r.length === prev.current.length && r.every((m, i) => m === prev.current[i]);
     if (!same) prev.current = r;
     return prev.current;
@@ -746,7 +750,7 @@ export default function MedFacts({ lay, qs }) {
   ALL = ms;
   // DeepSeek ka jawab aaya → facts dikhao.
   useEffect(() => {
-    const on = () => setTick((t) => t + 1);
+    const on = () => { LOOK = null; setTick((t) => t + 1); };
     window.addEventListener("cgl:sprint-ans", on);
     window.addEventListener("cgl:ds-saved", on);
     return () => { window.removeEventListener("cgl:sprint-ans", on); window.removeEventListener("cgl:ds-saved", on); };
