@@ -97,7 +97,7 @@ export default function MnemonicScroll({ items, storeKey, startId = "" }) {
     window.addEventListener("resize", fit);
     const t = setTimeout(fit, 300);
     return () => { window.removeEventListener("resize", fit); clearTimeout(t); };
-  }, []);
+  }, [n]);   // data baad mein aaye (Notesliner) to tab naapo
 
   const save = useCallback((i) => {
     setCur(i);
@@ -134,7 +134,7 @@ export default function MnemonicScroll({ items, storeKey, startId = "" }) {
     };
     el.addEventListener("wheel", wheel, { passive: false });
     return () => el.removeEventListener("wheel", wheel);
-  }, [h]);
+  }, [h, n]);
 
   // ↑ ↓ / PageUp PageDown se bhi.
   useEffect(() => {
