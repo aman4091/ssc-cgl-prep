@@ -731,9 +731,19 @@ function Trick({ ms }) {
 const COMP = { 21: Book, 22: Sticky, 23: Clue, 24: Cloze, 25: Paper, 26: Chat, 27: MindMap, 28: Kosh, 29: WhoseFact, 30: WriteCheck, 31: Today10, 32: Search, 33: TwoPane, 34: Highlight, 35: LetterReel, 36: Recent, 37: ByAnswer, 38: Notes, 39: Swipe, 40: Trick };
 
 export default function MedFacts({ lay, qs }) {
-  const ms = useMemo(() => toMs(qs), [qs]);
-  ALL = ms;
+  const all = useMemo(() => toMs(qs), [qs]);
   const [tick, setTick] = useState(0);
+  // 🧪 Abhi testing: sirf wo sawaal jinke ⚡ facts PEHLE SE bane hain (naye
+  // banne mein der lagti hai). Inke jawab ho chuke, to DeepSeek dobara nahi
+  // chalta. List tabhi badle jab sach mein naya fact aaye.
+  const prev = useRef([]);
+  const ms = useMemo(() => {
+    const r = all.filter((m) => (factsOf(m) || []).length > 0);
+    const same = r.length === prev.current.length && r.every((m, i) => m === prev.current[i]);
+    if (!same) prev.current = r;
+    return prev.current;
+  }, [all, tick]);
+  ALL = ms;
   // DeepSeek ka jawab aaya → facts dikhao.
   useEffect(() => {
     const on = () => setTick((t) => t + 1);
@@ -744,6 +754,6 @@ export default function MedFacts({ lay, qs }) {
   useEffect(() => () => { try { window.dispatchEvent(new CustomEvent("cgl:sprint-q", { detail: { q: null } })); } catch { /* ignore */ } }, []);
   const C = COMP[lay];
   if (!C) return null;
-  if (!ms.length) return <Empty>Jawab wale sawaal nahi mile.</Empty>;
+  if (!ms.length) return <Empty>Abhi kisi sawaal ke ⚡ facts bane hue nahi hai.</Empty>;
   return <div className={`ml mf mf--${lay}`}><C key={lay} ms={ms} tick={tick} /></div>;
 }
