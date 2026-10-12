@@ -14,3 +14,11 @@
 .gkc td.is-cov * { visibility: hidden; }
 .gkc-more { display: block; margin: 12px auto 0; padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: inherit; font: inherit; font-weight: 700; cursor: pointer; }
 @media (max-width: 600px) { .gkc td:nth-child(3) { width: 38%; } .gkc td { padding: 9px 8px; font-size: 0.88rem; } }
+.gkc td:nth-child(3) { width: 46%; }
+.gkc-fact { margin-top: 8px; padding: 8px 10px; border-radius: 10px; font-size: 0.86rem; line-height: 1.55; cursor: default; background: color-mix(in srgb, var(--accent) 8%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent); }
+.gkc-fact b { color: var(--text-1); }
+.gkc-fact p { margin: 4px 0; }
+.gkc-fact__one + .gkc-fact__one { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+.gkc-fact__zap { color: var(--text-2); font-size: 0.82rem; }
+.gkc-fact--wait { color: var(--text-3); font-style: italic; }
+.gkc-fact .clbtns { margin-top: 6px; }

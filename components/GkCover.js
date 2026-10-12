@@ -3,9 +3,17 @@
 // 📋 Cover method — Vocab jaisa (owner try kar raha hai, GKTricks Medieval):
 // baayen sawaal, daayen sirf sahi jawab (options nahi), jawab dhaka hua.
 // Row dabao to khule; "Chhupao" se sawaal bhi dhak sakte ho.
+//
+// Khuli row ke jawab ke neeche us sawaal ka 🧩 FACT — DeepSeek chat wale
+// jawab ka sirf cluster (poora jawab nahi). Wo jawab PYQ ki tarah apne aap
+// banta hai: jo row kholi + uske agle 5 (components/SelectAsk prefetch,
+// `cgl:sprint-q`). Fact log mein bhejna khud — 🧩 button se.
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Markdown from "./Markdown";
+import ClusterButton from "./ClusterButton";
+import { getAns } from "@/lib/sprint";
+import { clustersOf } from "@/lib/clusterparse";
 import "./gkcover.css";
 
 const ansOf = (q) => {
@@ -13,11 +21,54 @@ const ansOf = (q) => {
   return String(q.answerText || q.correct || "");
 };
 
+function Fact({ q }) {
+  const md = getAns(q);
+  if (!md) return <div className="gkc-fact gkc-fact--wait">🐋 Fact ban raha hai…</div>;
+  const list = clustersOf(md, { prose: true });
+  if (!list.length) return null;
+  return (
+    <div className="gkc-fact" onClick={(e) => e.stopPropagation()}>
+      {list.map((c, i) => (
+        <div key={i} className="gkc-fact__one">
+          {c.title ? <b>🧩 {c.title}</b> : null}
+          {c.prose ? <Markdown>{c.prose}</Markdown> : null}
+          {c.zap ? <p className="gkc-fact__zap">⚡ {c.zap}</p> : null}
+        </div>
+      ))}
+      <ClusterButton md={md} subject="gs" srcQ={q} />
+    </div>
+  );
+}
+
 export default function GkCover({ qs }) {
   const [hide, setHide] = useState("a");   // "a" = jawab dhako, "q" = sawaal dhako
   const [open, setOpen] = useState({});
   const [n, setN] = useState(30);
+  const [cur, setCur] = useState(0);       // jo row abhi kholi — uske agle 5 ka fact peechhe
+  const [, setTick] = useState(0);
   const rows = qs.slice(0, n);
+
+  // Saamne wala + agle 5 → SelectAsk apne aap DeepSeek se banata hai.
+  useEffect(() => {
+    try { window.dispatchEvent(new CustomEvent("cgl:sprint-q", { detail: { q: qs[cur] || null, next: qs.slice(cur + 1, cur + 6) } })); } catch { /* ignore */ }
+  }, [cur, qs]);
+  useEffect(() => () => {
+    try { window.dispatchEvent(new CustomEvent("cgl:sprint-q", { detail: { q: null } })); } catch { /* ignore */ }
+  }, []);
+  // Jawab aaya → fact dikhao.
+  useEffect(() => {
+    const on = () => setTick((t) => t + 1);
+    window.addEventListener("cgl:sprint-ans", on);
+    window.addEventListener("cgl:ds-saved", on);
+    return () => { window.removeEventListener("cgl:sprint-ans", on); window.removeEventListener("cgl:ds-saved", on); };
+  }, []);
+
+  const toggle = (q, i) => {
+    const k = q.id ?? i;
+    setOpen((x) => ({ ...x, [k]: !x[k] }));
+    setCur(i);
+  };
+
   return (
     <div className="gkc">
       <div className="gkc-bar">
@@ -34,10 +85,13 @@ export default function GkCover({ qs }) {
           {rows.map((q, i) => {
             const o = open[q.id ?? i];
             return (
-              <tr key={q.id ?? i} onClick={() => setOpen((x) => ({ ...x, [q.id ?? i]: !x[q.id ?? i] }))}>
+              <tr key={q.id ?? i} onClick={() => toggle(q, i)}>
                 <td>{i + 1}</td>
                 <td className={hide === "q" && !o ? "is-cov" : ""}><Markdown inline>{q.question}</Markdown></td>
-                <td className={hide === "a" && !o ? "is-cov" : ""}><b>{ansOf(q) || "—"}</b></td>
+                <td className={hide === "a" && !o ? "is-cov" : ""}>
+                  <b>{ansOf(q) || "—"}</b>
+                  {o ? <Fact q={q} /> : null}
+                </td>
               </tr>
             );
           })}
