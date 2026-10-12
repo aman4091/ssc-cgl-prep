@@ -1,14 +1,18 @@
 /* 🔠 Pehla akshar — scroll (components/MnemonicScroll.js). */
-.mns { max-width: 760px; margin: 0 auto 40px; display: flex; flex-direction: column; gap: 14px; }
-.mns-bar { position: sticky; top: calc(var(--mtp-h, 0px) + 6px); z-index: 5; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 8px 14px; border-radius: 999px; background: color-mix(in srgb, var(--card) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid var(--line); font-size: 0.85rem; }
+.mns-reel { position: relative; max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; }
+.mns { flex: 1; min-height: 0; overflow-y: auto; scroll-snap-type: y mandatory; overscroll-behavior: contain; scrollbar-width: none; border-radius: 22px; }
+.mns::-webkit-scrollbar { display: none; }
+.mns-slide { height: 100%; box-sizing: border-box; scroll-snap-align: start; scroll-snap-stop: always; display: flex; flex-direction: column; justify-content: center; padding: 6px 2px; }
+.mns-slide > .mns-card { max-height: 100%; overflow-y: auto; box-sizing: border-box; }
+.mns-bar { flex: none; margin-bottom: 8px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 8px 14px; border-radius: 999px; background: color-mix(in srgb, var(--card) 92%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border: 1px solid var(--line); font-size: 0.85rem; }
 .mns-bar b { color: var(--accent); font-size: 1rem; }
 .mns-bar__hint { flex: 1; color: var(--text-3); font-size: 0.74rem; }
 .mns-bar button { padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text-2); font: inherit; font-size: 0.76rem; font-weight: 700; cursor: pointer; }
-.mns-card { --c: var(--accent); padding: 18px 20px; border-radius: 20px; background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--c); }
+.mns-card { --c: var(--accent); padding: 22px 24px; border-radius: 20px; background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--c); }
 .mns-top { display: flex; align-items: center; gap: 8px; }
 .mns-no { font-size: 0.72rem; font-weight: 800; color: var(--text-3); }
 .mns-tag { padding: 2px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 800; background: color-mix(in srgb, var(--c) 20%, transparent); color: var(--c); }
-.mns-head { margin: 8px 0 12px; font-size: clamp(1.1rem, 2.8vw, 1.35rem); line-height: 1.35; }
+.mns-head { margin: 10px 0 16px; font-size: clamp(1.25rem, 3vw, 1.6rem); line-height: 1.35; }
 .mns-code { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
 .mns-code span { width: 42px; height: 50px; display: grid; place-items: center; border-radius: 12px; font-size: 1.45rem; font-weight: 900; cursor: pointer; border: 2px solid var(--c); color: var(--c); user-select: none; }
 .mns-code span.is-open { background: var(--c); color: #fff; }
@@ -18,4 +22,4 @@
 .mns-list li.is-open { border-color: color-mix(in srgb, var(--c) 45%, transparent); }
 .mns-list li.mns-sub { cursor: default; background: transparent; padding: 6px 2px 0; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-3); }
 .mns-all { margin-top: 12px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text-2); font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
-.mns-wrap { margin: 6px 0 14px; padding: 10px; border-radius: 12px; text-align: center; font-weight: 800; font-size: 0.85rem; color: var(--accent); border: 1px dashed var(--accent); }
+.mns-wrap { flex: none; margin: 0 0 10px; padding: 10px; border-radius: 12px; text-align: center; font-weight: 800; font-size: 0.85rem; color: var(--accent); border: 1px dashed var(--accent); }

@@ -37,9 +37,9 @@ function Card({ it, no, total }) {
     <article className="mns-card" style={it.color ? { "--c": it.color } : undefined}>
       <div className="mns-top">
         <span className="mns-no">{no} / {total}</span>
-        {it.tag ? <span className="mns-tag">{it.tag}</span> : null}
+        {it.tag ? <span className="mns-tag">{plain(it.tag)}</span> : null}
       </div>
-      <h3 className="mns-head">{it.head}</h3>
+      <h3 className="mns-head"><Markdown inline>{String(it.head || "").replace(/^\s*\*\*([^*]*)$/, "$1")}</Markdown></h3>
       <div className="mns-code">
         {pts.map((p, k) => (p.h ? null : (
           <span key={k} className={open[k] ? "is-open" : ""} onClick={() => flip(k)}>{firstLetter(p.t)}</span>
@@ -80,67 +80,100 @@ export default function MnemonicScroll({ items, storeKey, startId = "" }) {
   const [base, setBase] = useState(start);
   const [count, setCount] = useState(STEP);
   const [cur, setCur] = useState(start);
-  useEffect(() => { setBase(start); setCount(STEP); setCur(start); window.scrollTo({ top: 0 }); }, [start, KEY]);
 
-  // Sabse upar dikh raha card = "yahan tak padha" — yaad rakho.
+  // REEL: ek waqt mein ek card poori unchai par; scroll / swipe = agla
+  // (scroll-snap). Dabba page ki bachi hui unchai jitna — upar se naap kar.
   const box = useRef(null);
+  useEffect(() => { setBase(start); setCount(STEP); setCur(start); if (box.current) box.current.scrollTop = 0; }, [start, KEY]);
+  const [h, setH] = useState(0);
+  useEffect(() => {
+    const fit = () => {
+      const el = box.current;
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY;
+      setH(Math.max(320, window.innerHeight - Math.max(0, top - window.scrollY) - 12));
+    };
+    fit();
+    window.addEventListener("resize", fit);
+    const t = setTimeout(fit, 300);
+    return () => { window.removeEventListener("resize", fit); clearTimeout(t); };
+  }, []);
+
   const save = useCallback((i) => {
     setCur(i);
     try { localStorage.setItem(KEY, JSON.stringify({ i, id: items[i] && items[i].id, at: Date.now() })); } catch { /* quota */ }
   }, [KEY, items]);
+  // Kaunsi reel saamne — wahi "yahan tak padha".
+  const onScroll = () => {
+    const el = box.current;
+    if (!el || !el.clientHeight) return;
+    const k = Math.round(el.scrollTop / el.clientHeight);
+    const i = (base + k) % n;
+    if (i !== cur) save(i);
+    if (k >= count - 4) setCount((c) => c + STEP);
+  };
+  // Mouse ka pahiya: ek ghumaav = ek reel (thoda scroll karke wapas na
+  // aaye). Card ke andar lamba text ho to pehle wahi scroll hota hai.
   useEffect(() => {
-    let raf = 0;
-    const on = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const el = box.current;
-        if (!el) return;
-        const cards = el.querySelectorAll("[data-mi]");
-        const topLine = 120;
-        let pick = null;
-        for (const c of cards) {
-          const r = c.getBoundingClientRect();
-          if (r.bottom > topLine) { pick = c; break; }
-        }
-        if (pick) {
-          const i = Number(pick.getAttribute("data-mi"));
-          if (i !== cur) save(i);
-        }
-        // Neeche pahunchne se pehle aur card.
-        const last = cards[cards.length - 1];
-        if (last && last.getBoundingClientRect().top < window.innerHeight * 2.5) setCount((c) => c + STEP);
-      });
+    const el = box.current;
+    if (!el) return undefined;
+    let lock = 0;
+    const wheel = (e) => {
+      if (Math.abs(e.deltaY) < 4) return;
+      const inner = e.target.closest && e.target.closest(".mns-card");
+      if (inner && inner.scrollHeight > inner.clientHeight + 2) {
+        const atTop = inner.scrollTop <= 0, atEnd = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 2;
+        if ((e.deltaY > 0 && !atEnd) || (e.deltaY < 0 && !atTop)) return;
+      }
+      e.preventDefault();
+      const now = Date.now();
+      if (now < lock) return;
+      lock = now + 550;
+      const k = Math.round(el.scrollTop / el.clientHeight) + (e.deltaY > 0 ? 1 : -1);
+      el.scrollTo({ top: Math.max(0, k) * el.clientHeight, behavior: "smooth" });
     };
-    on();
-    window.addEventListener("scroll", on, { passive: true });
-    window.addEventListener("resize", on);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("scroll", on); window.removeEventListener("resize", on); };
-  }, [cur, save, count]);
+    el.addEventListener("wheel", wheel, { passive: false });
+    return () => el.removeEventListener("wheel", wheel);
+  }, [h]);
+
+  // ↑ ↓ / PageUp PageDown se bhi.
+  useEffect(() => {
+    const key = (e) => {
+      if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+      const el = box.current;
+      if (!el) return;
+      if (e.key === "ArrowDown" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); el.scrollBy({ top: el.clientHeight, behavior: "smooth" }); }
+      else if (e.key === "ArrowUp" || e.key === "PageUp") { e.preventDefault(); el.scrollBy({ top: -el.clientHeight, behavior: "smooth" }); }
+    };
+    window.addEventListener("keydown", key);
+    return () => window.removeEventListener("keydown", key);
+  }, []);
 
   if (!n) return <div className="placeholder">Abhi kuch nahi.</div>;
 
   const seq = [];
   for (let k = 0; k < count; k++) seq.push(k);
   return (
-    <div className="mns" ref={box}>
+    <div className="mns-reel" style={h ? { height: h } : undefined}>
       <div className="mns-bar">
         <span>📍 <b>{cur + 1}</b> / {n}</span>
-        <span className="mns-bar__hint">Jahan tak padhoge, agli baar wahi se · {n} ke baad phir 1</span>
+        <span className="mns-bar__hint">Scroll / swipe = agla · jahan chhodoge wahi se · {n} ke baad phir 1</span>
         {cur !== 0 ? (
-          <button type="button" onClick={() => { save(0); setBase(0); setCount(STEP); window.scrollTo({ top: 0 }); }}>↺ 1 se</button>
+          <button type="button" onClick={() => { save(0); setBase(0); setCount(STEP); if (box.current) box.current.scrollTop = 0; }}>↺ 1 se</button>
         ) : null}
       </div>
-      {seq.map((k) => {
-        const i = (base + k) % n;
-        const it = items[i];
-        const wrap = k > 0 && i === 0;
-        return (
-          <div key={k} data-mi={i}>
-            {wrap && <div className="mns-wrap">🔁 Saare {n} ho gaye — phir 1 se</div>}
-            <Card it={it} no={i + 1} total={n} />
-          </div>
-        );
-      })}
+      <div className="mns" ref={box} onScroll={onScroll}>
+        {seq.map((k) => {
+          const i = (base + k) % n;
+          const wrap = k > 0 && i === 0;
+          return (
+            <section key={k} className="mns-slide" data-mi={i}>
+              {wrap && <div className="mns-wrap">🔁 Saare {n} ho gaye — phir 1 se</div>}
+              <Card it={items[i]} no={i + 1} total={n} />
+            </section>
+          );
+        })}
+      </div>
     </div>
   );
 }
