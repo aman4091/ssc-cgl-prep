@@ -29,6 +29,7 @@ import { countMark } from "@/lib/qcounter";
 import { recordQuizAttempts } from "@/lib/qreview";
 import { recordAttempts } from "@/lib/qstats";
 import { subjectOfPath } from "@/lib/pomo";
+import { hashStr } from "@/lib/syncitems";
 import "./answers-play.css";
 
 const SET_SIZE = 25;
@@ -54,8 +55,8 @@ function cardFor(q, i, sub0, rk) {
 export default function PyqSets({ list, sets: given, sub: subIn, subject, resumeKey, title = "PYQ", renderCard, setName = "Set", empty }) {
   const path = usePathname() || "";
   const sub = subIn || SUBS[subject] || SUBS[subjectOfPath(path)] || "gs";
-  const rk = resumeKey || `pyq:${path}`;
   const all = useMemo(() => list || [], [list]);
+  const rk = resumeKey || `pyq:${path}`;
   // Set ki list — Wrong Sets apne set khud deta hai, warna 25-25 ke tukde.
   const sets = useMemo(() => {
     if (given) return given;
@@ -64,6 +65,13 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     return out;
   }, [given, all]);
   const baseOf = (i) => (given ? 0 : i * SET_SIZE);
+  // Har SET ki pehchaan uske 25 sawaalon se (owner): dropdown / chhaanti se
+  // list badli to set bhi naye — kisi aur list ke "Set 1" ka natija yahan
+  // nahi. Natija + Resume isi naam se ("s<hash>"). Purane (number wale)
+  // natije isi wajah se ab nahi dikhte. Wrong Sets (given) — number hi, kyunki
+  // lib/wrongsets band set ko number se pehchaanta hai.
+  const sigs = useMemo(() => sets.map((c) => (given ? null : `s${hashStr(c.map(doneKeyFor).join("|"))}`)), [sets, given]);
+  const kOf = (i) => (given ? i : sigs[i]);
   const total = sets.reduce((a, s) => a + s.length, 0);
 
   const [results, setResults] = useState({});
@@ -114,10 +122,10 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
 
   // how: "test" (naya) | "resume" (chhoda hua) | "result"
   const start = (i, how) => {
-    const prev = how === "result" ? results[i] : null;
-    const pg = how === "resume" ? progs[i] : null;
-    if (how === "test") clearProg(rk, i);
-    retryRef.current = how !== "result" && !!results[i];
+    const prev = how === "result" ? results[kOf(i)] : null;
+    const pg = how === "resume" ? progs[kOf(i)] : null;
+    if (how === "test") clearProg(rk, kOf(i));
+    retryRef.current = how !== "result" && !!results[kOf(i)];
     regRef.current = {};
     setQs((sets[i] || []).map(normQ)); setOpen(i);
     setCur(pg ? pg.cur || 0 : 0); setReview(pg ? pg.review || {} : {}); setSeen(pg ? pg.seen || { 0: true } : { 0: true });
@@ -135,9 +143,10 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   // bhi galat bani thi. Sets khulte hi ek baar: chune hue option se dobara
   // hisaab, galat + chhode Wrong Sets mein, aur natije par nishaan (ws).
   useEffect(() => {
-    for (const k of Object.keys(results)) {
-      const i = Number(k);
-      const r = results[k];
+    for (let i = 0; i < sets.length; i++) {
+      // Purana natija number se ("#0") pada ho sakta hai — wo bhi (sirf yahi
+      // shart poori kare to) naye naam par aa jata hai.
+      const r = results[kOf(i)] || (!given ? results[i] : null);
       const raw = sets[i];
       if (!r || r.ws || !r.picks || !raw || !raw.length) continue;
       // Sirf Wrong Sets aane ke BAAD diye test (13 Oct) — purane saalon ke set
@@ -157,14 +166,14 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
         if (ok) right2++; else wrong2++;
       });
       pushWrong(qq.filter((q, j) => hasKey(q) && !picks2[j]?.correct).map((q) => ({ ...q, _sub: q._sub || sub })));
-      saveSetResult(rk, i, { ...r, right: right2, wrong: wrong2, skipped: keyed2 - right2 - wrong2, total: keyed2, picks: picks2, ws: 1 });
+      saveSetResult(rk, kOf(i), { ...r, right: right2, wrong: wrong2, skipped: keyed2 - right2 - wrong2, total: keyed2, picks: picks2, ws: 1 });
     }
-  }, [results, sets, rk, sub]);
+  }, [results, sets, rk, sub, sigs, given]);
   // ⏸ Chalte test ka haal har badlav par — chhod do to set par Resume.
   useEffect(() => {
     if (!running) return;
-    saveProg(rk, open, { picks, review, seen, cur, left, times });
-  }, [running, rk, open, picks, review, seen, cur, left, times]);
+    saveProg(rk, kOf(open), { picks, review, seen, cur, left, times });
+  }, [running, rk, open, picks, review, seen, cur, left, times, sigs, given]);
 
   const keyed = qs.map((q, i) => (hasKey(q) ? i : -1)).filter((i) => i >= 0);
   const right = keyed.filter((i) => picks[i]?.correct).length;
@@ -175,8 +184,8 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     if (!running) return;
     const s = SET_MIN * 60 - left;
     setSec(s); setDone(true); setCur(0);
-    clearProg(rk, open);
-    saveSetResult(rk, open, {
+    clearProg(rk, kOf(open));
+    saveSetResult(rk, kOf(open), {
       right, wrong, skipped: keyed.length - answered, total: keyed.length, sec: s, ws: 1, times,
       picks: Object.fromEntries(Object.entries(picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }])),
     });
@@ -194,12 +203,12 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     // 🔁 Galat + chhode → Wrong Sets (wahan bhi — chakkar).
     pushWrong(qs.filter((qq, i) => hasKey(qq) && !picks[i]?.correct).map((qq) => ({ ...qq, _sub: qq._sub || sub })));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [running, left, picks, qs, open, rk, sub, title, given, times]);
+  }, [running, left, picks, qs, open, rk, sub, title, given, times, sigs]);
   useEffect(() => { if (running && left === 0) submit(); }, [running, left, submit]);
 
   // ───────── parda 1: set chuno ─────────
   if (open === null) {
-    const doneSets = sets.filter((_, i) => results[i]).length;
+    const doneSets = sets.filter((_, i) => results[kOf(i)]).length;
     return (
       <div className="tbx tbx-inline tbx-sets">
         <header className="tbx-head">
@@ -211,8 +220,8 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
           <div className="setgrid">
             {sets.map((chunk, i) => {
               const a = baseOf(i);
-              const r = results[i];
-              const pg = progs[i];
+              const r = results[kOf(i)];
+              const pg = progs[kOf(i)];
               const L = Math.max(1, chunk.length);
               return (
                 <div key={i} className={`setcard${r ? " is-done" : ""}${pg ? " is-paused" : ""}`}>
@@ -247,7 +256,8 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   const at = Math.min(cur, n - 1);
   const q = qs[at];
   const base = baseOf(open);
-  const numOf = (i) => base + i + 1;
+  // Set ke andar hamesha 1–25 (owner) — list ka asli number nahi.
+  const numOf = (i) => i + 1;
   const marked = Object.keys(review).filter((k) => review[k]).length;
   const go = (i) => setCur(Math.max(0, Math.min(n - 1, i)));
   const state = (i) => {

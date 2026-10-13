@@ -19,6 +19,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import TestPage, { clock } from "./TestPage";
 import { progsFor, saveProg, clearProg } from "@/lib/setprog";
+import { hashStr } from "@/lib/syncitems";
 
 const SET_SIZE = 25;
 const SET_MIN = 15;
@@ -51,6 +52,10 @@ export default function AnswersSets({ ctx }) {
   const subs = [...new Set(all.map((x) => ctx.bucketOf(x)))].sort();
   const rkey = `answers:${subs.join("+") || "all"}`;
   const setCount = Math.ceil(all.length / SET_SIZE);
+  // Har SET ki pehchaan uske sawaalon se (PyqSets jaisa) — list badle / naye
+  // sawaal judein to purane set ka natija galat set par na chipke.
+  const sigs = useMemo(() => Array.from({ length: setCount }, (_, i) => `s${hashStr(all.slice(i * SET_SIZE, i * SET_SIZE + SET_SIZE).map((r) => r.id).join("|"))}`), [all, setCount]);
+  const kOf = (i) => sigs[i];
   const [results, setResults] = useState({});
   const [progs, setProgs] = useState({});
   useEffect(() => {
@@ -113,14 +118,14 @@ export default function AnswersSets({ ctx }) {
   };
   const save = (pk, sf, s) => {
     const t = tally(pk, sf);
-    saveSetResult(rkey, setIdx, { ...t, sec: s, picks: pk, self: sf, times: times || {} });
+    saveSetResult(rkey, kOf(setIdx), { ...t, sec: s, picks: pk, self: sf, times: times || {} });
   };
 
   const submit = useCallback(() => {
     if (!running) return;
     const s = SET_MIN * 60 - left;
     setSec(s); setDone(true); setCur(0);
-    clearProg(rkey, setIdx);
+    clearProg(rkey, kOf(setIdx));
     save(picks, self, s);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [running, left, picks, self, times]);
@@ -128,9 +133,9 @@ export default function AnswersSets({ ctx }) {
 
   // how: "test" (naya) | "resume" (chhoda hua) | "result"
   const open = (i, how) => {
-    const prev = how === "result" ? results[i] : null;
-    const pg = how === "resume" ? progs[i] : null;
-    if (how === "test") clearProg(rkey, i);
+    const prev = how === "result" ? results[kOf(i)] : null;
+    const pg = how === "resume" ? progs[kOf(i)] : null;
+    if (how === "test") clearProg(rkey, kOf(i));
     setSetIdx(i);
     setCur(pg ? pg.cur || 0 : 0); setReview(pg ? pg.review || {} : {}); setSeen(pg ? pg.seen || { 0: true } : { 0: true });
     setPicks(pg ? pg.picks || {} : prev ? prev.picks || {} : {});
@@ -144,8 +149,8 @@ export default function AnswersSets({ ctx }) {
   // ⏸ Chalte test ka haal — chhod do to set par Resume.
   useEffect(() => {
     if (!running) return;
-    saveProg(rkey, setIdx, { picks, review, seen, cur, left, times });
-  }, [running, rkey, setIdx, picks, review, seen, cur, left, times]);
+    saveProg(rkey, kOf(setIdx), { picks, review, seen, cur, left, times });
+  }, [running, rkey, setIdx, picks, review, seen, cur, left, times, sigs]);
   const setMine = (i, v) => {
     const sf = { ...self, [i]: v };
     setSelf(sf);
@@ -154,7 +159,7 @@ export default function AnswersSets({ ctx }) {
 
   // ───────── parda 1: set chuno ─────────
   if (setIdx === null) {
-    const doneSets = Array.from({ length: setCount }, (_, i) => results[i]).filter(Boolean).length;
+    const doneSets = Array.from({ length: setCount }, (_, i) => results[kOf(i)]).filter(Boolean).length;
     return (
       <div className="tbx tbx-inline tbx-sets">
         <header className="tbx-head">
@@ -166,8 +171,8 @@ export default function AnswersSets({ ctx }) {
             {Array.from({ length: setCount }, (_, i) => {
               const a = i * SET_SIZE;
               const chunk = all.slice(a, a + SET_SIZE);
-              const r = results[i];
-              const pg = progs[i];
+              const r = results[kOf(i)];
+              const pg = progs[kOf(i)];
               const L = Math.max(1, chunk.length);
               return (
                 <div key={i} className={`setcard${r ? " is-done" : ""}${pg ? " is-paused" : ""}`}>
@@ -203,7 +208,8 @@ export default function AnswersSets({ ctx }) {
   // ───────── parda 2: test / natija (components/TestPage — screenshot jaisa) ─────────
   const at = Math.min(cur, n - 1);
   const r = qs[at];
-  const num = (i) => setIdx * SET_SIZE + i + 1;
+  // Set ke andar hamesha 1–25 (owner) — list ka asli number nahi.
+  const num = (i) => i + 1;
   const opts = optsOf(r);
   const t = tally(picks, self);
   const answered = Object.keys(picks).length;
