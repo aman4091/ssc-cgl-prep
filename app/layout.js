@@ -27,6 +27,7 @@ import StoreGate from "@/components/StoreGate";
 import SWRegister from "@/components/SWRegister";
 import PathMemo from "@/components/PathMemo";
 import SelectAsk from "@/components/SelectAsk";
+import PomoWidget from "@/components/PomoWidget";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -129,6 +130,8 @@ export default function RootLayout({ children }) {
           <PathMemo />
           {/* 💬 Kahin bhi text select karo — Poochho / Google / Copy. */}
           <SelectAsk />
+          {/* 🍅 Pomodoro — har page par; subject-wise minute (lib/pomo). */}
+          <PomoWidget />
         </StoreGate>
       </body>
     </html>

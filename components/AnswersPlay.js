@@ -16,6 +16,7 @@ import { dayKey } from "@/lib/wrongbook";
 import { getRevMap, markDoneRev, unmarkToday, revPlan, addDaysKey } from "@/lib/ansrev";
 import { simItems, simScore, getPicks, simDays, SIM_PER } from "@/lib/anssim";
 import SimInline, { SimQ, useSimTick } from "./SimInline";
+import { getRun, startFocus, getLog, subjectOfPath, fmtMin } from "@/lib/pomo";
 import Markdown from "./Markdown";
 import "./answers-play.css";
 
@@ -293,21 +294,26 @@ function Plant({ ctx }) {
   );
 }
 
+// 🍅 Ab site wala hi pomodoro (lib/pomo, neeche-baayen 🍅) — minute subject mein judte hain.
 function Pomodoro({ ctx }) {
-  const focus = useTimer(25 * 60);
-  const brk = useTimer(5 * 60);
-  const [rounds, setRounds] = useState(() => readJ("cgl.ans.pomo", {})[ctx.today] || 0);
+  const [run, setRun] = useState(null);
+  const [now, setNow] = useState(0);
   useEffect(() => {
-    if (!focus.over) return;
-    const all = readJ("cgl.ans.pomo", {}); all[ctx.today] = (all[ctx.today] || 0) + 1; writeJ("cgl.ans.pomo", all);
-    setRounds(all[ctx.today]); brk.start();
-  }, [focus.over]); // eslint-disable-line react-hooks/exhaustive-deps
+    const on = () => setRun(getRun());
+    on(); setNow(Date.now());
+    window.addEventListener("cgl:pomo", on);
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => { window.removeEventListener("cgl:pomo", on); clearInterval(t); };
+  }, []);
+  const today = getLog()[ctx.today] || {};
   const r = ctx.queue[0];
-  if (brk.run) return <div className="ap4-start"><h2>☕ Aaram — {mmss(brk.left)}</h2><p>Paani piyo, aankhein band. Aaj 🍅 {rounds}</p></div>;
-  if (!focus.run) return <div className="ap4-start"><h2>🍅 25 minute, sirf yahi</h2><p>Phone door, bas Answers. Aaj 🍅 {rounds}</p><button type="button" className="ap-go" onClick={focus.start}>▶ 🍅 Shuru</button></div>;
+  const sub = subjectOfPath(window.location.pathname, window.location.search);
+  if (run && run.mode === "break") return <div className="ap4-start"><h2>☕ Aaram — {mmss(Math.max(0, Math.ceil((run.endAt - now) / 1000)))}</h2><p>Paani piyo, aankhein band. Aaj 🍅 {today._n || 0}</p></div>;
+  if (!run) return <div className="ap4-start"><h2>🍅 25 minute, sirf yahi</h2><p>Phone door, bas Answers. Aaj 🍅 {today._n || 0} · {fmtMin(Object.entries(today).filter(([k]) => k !== "_n").reduce((a, [, v]) => a + v, 0))}</p><button type="button" className="ap-go" onClick={() => startFocus(sub)}>▶ 🍅 Shuru</button></div>;
+  const left = Math.max(0, Math.ceil((run.endAt - now) / 1000));
   return (
     <div className="ap4">
-      <div className="ap4-bar is-pomo"><b>🍅 {mmss(focus.left)}</b><span>Aaj ✓ {ctx.stats.todayN}</span><div className="ap-bar"><i style={{ width: `${(focus.left / 1500) * 100}%` }} /></div></div>
+      <div className="ap4-bar is-pomo"><b>🍅 {mmss(left)}</b><span>Aaj ✓ {ctx.stats.todayN}</span><div className="ap-bar"><i style={{ width: `${(left / 1500) * 100}%` }} /></div></div>
       {r ? <Work r={r} ctx={ctx} /> : <AllDone />}
     </div>
   );

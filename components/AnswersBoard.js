@@ -35,6 +35,7 @@ import AnswersDoPane from "./AnswersLayouts";
 import AnswersLayoutsAll from "./AnswersLayoutsAll";
 import AnswersPlay, { PLAY_LAYOUTS, SIM_LAYOUTS, isPlayLayout } from "./AnswersPlay";
 import { markDoneRev } from "@/lib/ansrev";
+import { linkSim } from "@/lib/anssim";
 import "./answers-layouts.css";
 
 // Answers — mock test ke screenshot, aur unke jawab.
@@ -259,16 +260,20 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
           <button className="ansp__btn" onClick={askGemini} title={`Image copy karke ${aiSiteLabel(aiSite)} kholo, phir answer paste karo`}>
             {copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}
           </button>
-          {/* Maths / Reasoning: screenshot copy + Gemini se likha hua question,
-              phir 🐋 20 similar (components/Gemini20). */}
-          {/math|reason/i.test(String(rec.subject || "")) && imagesOf(rec).length ? (
-            <Gemini20 q={{ images: imagesOf(rec) }} subject={rec.subject} onDirect={canMake20 ? make20 : undefined} className="ansp__btn" />
-          ) : canMake20 && (
-            <button className="ansp__btn" onClick={make20} disabled={simLoading}
-              title="Isi type ke 20 naye questions generate karo">
-              {simLoading ? "…" : "🎯 20"}
-            </button>
-          )}
+          {/* 🎯 5 similar — HAR subject mein Maths wala hi tareeka (owner):
+              likha hua sawaal (q / OCR) ho to seedha 🐋 DeepSeek, sirf tasveer
+              ho to Gemini se likhwa kar (components/Gemini20). Bane hue 5 is
+              galti se jud jaate hain (lib/anssim) — Answers ke 21–40 roop mein
+              wahin dikhte hain, /similar par bhi. Purana 🎯 20 quiz: make20. */}
+          {(rec.q && rec.q.question) || rec.ocrText || imagesOf(rec).length ? (
+            <Gemini20
+              q={rec.q && rec.q.question ? { question: rec.q.question, options: rec.q.options || [] } : rec.ocrText ? { question: rec.ocrText, options: [] } : { images: imagesOf(rec) }}
+              subject={rec.subject}
+              onDirect={canMake20 ? make20 : undefined}
+              onGroup={(g) => linkSim(rec.id, g)}
+              className="ansp__btn"
+            />
+          ) : null}
           <button className="ansp__btn" onClick={() => onDelete(rec)} title="Hatao">🗑️</button>
         </span>
       </h2>
