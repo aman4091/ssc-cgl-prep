@@ -69,7 +69,7 @@ export default function PomoGate({ children }) {
   if (run) {
     return (
       <>
-        <div className="pomo-gate">
+        <div className="pomo-gate pomo-gate--bar">
           <div className="ap4-bar is-pomo"><b>🍅 {mmss(left)}</b><span>Aaj 🍅 {today._n || 0}{mins ? ` · ${mins}` : ""}</span><div className="ap-bar"><i style={{ width: `${(left / (FOCUS_MIN * 60)) * 100}%` }} /></div></div>
         </div>
         {children}
