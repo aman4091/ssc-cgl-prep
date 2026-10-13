@@ -245,3 +245,4 @@
   .ap17-days { gap: 3px; }
   .ap17-days b { font-size: 0.8rem; }
 }
+.sim-err { color: var(--bad); }

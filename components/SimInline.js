@@ -2,14 +2,15 @@
 
 // 🎯 Ek galat sawaal ke 5 similar — Answers page par WAHIN (lib/anssim).
 // Na bane hon to "🎯 5 similar banao": likha hua text ho (q / OCR) to seedha
-// 🐋 DeepSeek ko; sirf tasveer ho to Gemini wala raasta (components/Gemini20).
+// 🐋 DeepSeek ko; sirf tasveer ho to pehle apne aap padh kar (lib/anssim).
 // Har similar ek chhota MCQ: option dabao → sahi / galat + samjhaana.
 
 import { useEffect, useState } from "react";
 import Markdown from "./Markdown";
 import Gemini20 from "./Gemini20";
+import "./answers-play.css";
 import { imagesOf } from "@/lib/wrongbook";
-import { simItems, simGroups, makeSim, linkSim, recText, simBusy, getPicks, setPick, SIM_PER } from "@/lib/anssim";
+import { simItems, simGroups, makeSimAuto, linkSim, simBusy, getPicks, setPick, SIM_PER } from "@/lib/anssim";
 
 // Similar ka haal badle (bana / option laga) → dobara padho.
 export function useSimTick() {
@@ -23,17 +24,26 @@ export function useSimTick() {
   return t;
 }
 
-export function SimMake({ r, label = `🎯 ${SIM_PER} similar banao` }) {
-  const [msg, setMsg] = useState("");
-  if (recText(r)) {
-    return (
-      <span className="sim-make">
-        <button type="button" className="ansp__btn ansp__btn--go" onClick={() => { makeSim(r); setMsg(`🐋 ${SIM_PER} ban rahe hain…`); }}>{label}</button>
-        {msg ? <small>{msg}</small> : null}
-      </span>
-    );
-  }
-  return <Gemini20 q={{ images: imagesOf(r) }} subject={r.subject} onGroup={(g) => linkSim(r.id, g)} className="ansp__btn ansp__btn--go" label={label} />;
+// 🎯 5 similar — tasveer ho to bhi Gemini nahi: lib/anssim makeSimAuto apne
+// aap padh leta hai. Padh na paye tabhi Gemini wala purana raasta.
+export function SimMake({ r, label = `🎯 ${SIM_PER} similar banao`, className = "ansp__btn ansp__btn--go", onDone }) {
+  const [busy, setBusy] = useState("");
+  const [err, setErr] = useState("");
+  const go = async () => {
+    setErr(""); setBusy("…");
+    try {
+      await makeSimAuto(r, (p) => setBusy(`📖 tasveer padh raha ${Math.round(p * 100)}%`));
+      setBusy(`🐋 ${SIM_PER} ban rahe hain…`);
+      onDone && onDone();
+    } catch (e) { setBusy(""); setErr(e.message || "Nahi bana"); }
+  };
+  return (
+    <span className="sim-make">
+      <button type="button" className={className} onClick={go} disabled={!!busy && busy !== `🐋 ${SIM_PER} ban rahe hain…`} title="Isi type ke 5 naye sawaal — yahin">{busy && busy.startsWith("📖") ? "📖…" : label}</button>
+      {busy ? <small>{busy}</small> : null}
+      {err ? <><small className="sim-err">{err}</small><Gemini20 q={{ images: imagesOf(r) }} subject={r.subject} onGroup={(g) => linkSim(r.id, g)} className={className} label="✨ Gemini se" /></> : null}
+    </span>
+  );
 }
 
 // Ek similar sawaal — option dabao, turant sahi/galat.

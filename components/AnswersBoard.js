@@ -30,12 +30,11 @@ import { getHardSet, toggleHard, pruneHard } from "@/lib/hardq";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
-import Gemini20 from "./Gemini20";
 import AnswersDoPane from "./AnswersLayouts";
 import AnswersLayoutsAll from "./AnswersLayoutsAll";
 import AnswersPlay, { PLAY_LAYOUTS, SIM_LAYOUTS, isPlayLayout } from "./AnswersPlay";
 import { markDoneRev } from "@/lib/ansrev";
-import { linkSim } from "@/lib/anssim";
+import { SimMake } from "./SimInline";
 import "./answers-layouts.css";
 
 // Answers — mock test ke screenshot, aur unke jawab.
@@ -260,19 +259,12 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
           <button className="ansp__btn" onClick={askGemini} title={`Image copy karke ${aiSiteLabel(aiSite)} kholo, phir answer paste karo`}>
             {copied === "gem" ? "🖼️ ✓" : `✨ ${aiSiteLabel(aiSite)}`}
           </button>
-          {/* 🎯 5 similar — HAR subject mein Maths wala hi tareeka (owner):
-              likha hua sawaal (q / OCR) ho to seedha 🐋 DeepSeek, sirf tasveer
-              ho to Gemini se likhwa kar (components/Gemini20). Bane hue 5 is
-              galti se jud jaate hain (lib/anssim) — Answers ke 21–40 roop mein
-              wahin dikhte hain, /similar par bhi. Purana 🎯 20 quiz: make20. */}
+          {/* 🎯 5 similar — HAR subject, tasveer ho to bhi Gemini nahi: text na
+              ho to tasveer apne aap padh kar (lib/anssim makeSimAuto), phir
+              🐋 DeepSeek ke 5. Galti se jud jaate hain — Answers ke 21–40 roop
+              mein wahin, /similar par bhi. Purana 🎯 20 quiz: make20. */}
           {(rec.q && rec.q.question) || rec.ocrText || imagesOf(rec).length ? (
-            <Gemini20
-              q={rec.q && rec.q.question ? { question: rec.q.question, options: rec.q.options || [] } : rec.ocrText ? { question: rec.ocrText, options: [] } : { images: imagesOf(rec) }}
-              subject={rec.subject}
-              onDirect={canMake20 ? make20 : undefined}
-              onGroup={(g) => linkSim(rec.id, g)}
-              className="ansp__btn"
-            />
+            <SimMake r={rec} label="🎯 5" className="ansp__btn" onDone={() => onFlash("🐋 5 similar ban rahe hain — 🎯 Similar page aur Answers ke 21–40 roop mein")} />
           ) : null}
           <button className="ansp__btn" onClick={() => onDelete(rec)} title="Hatao">🗑️</button>
         </span>
