@@ -246,3 +246,9 @@
   .ap17-days b { font-size: 0.8rem; }
 }
 .sim-err { color: var(--bad); }
+
+/* 🍅 PomoGate — PYQ / padhai wale page ke upar (Answers roop 9 jaisa) */
+.pomo-gate { max-width: 980px; margin: 0 auto 14px; display: grid; gap: 10px; }
+.pomo-gate .ap4-bar.is-pomo .ap-bar i { background: #e03131; }
+.pomo-gate__skip { border: 0; background: none; color: var(--text-3); font: inherit; font-size: 0.85rem; font-weight: 700; cursor: pointer; text-decoration: underline; }
+.pomo-chip { padding: 3px 10px; border-radius: 999px; background: #e03131; color: #fff; font-weight: 800; font-size: 0.82rem; font-variant-numeric: tabular-nums; white-space: nowrap; }

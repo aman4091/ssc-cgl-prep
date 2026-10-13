@@ -12,6 +12,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import "../app/pyq/sprint/sprint.css";
+import { PomoChip } from "./PomoGate";
 
 const idOf = (q, i) => String(q && q.id != null ? q.id : i);
 function readObj(k) {
@@ -134,6 +135,7 @@ export default function PyqSplit({ title, list, renderCard, storeKey = "default"
         <span className="sp-top__n">{at + 1}/{list.length}{onNeedMore ? "+" : ""}</span>
         <span className="sp-top__dim pyqs-title">{title}{onNeedMore ? "" : ` · ✓ ${done}`}</span>
         <span className="sp-top__sp" />
+        <PomoChip />
         {headExtra}
         {noJump ? null : <button type="button" className="sp-ibtn" onClick={jump} title="Jahan tak lagaye, uske baad wala question">⏭</button>}
         {fullscreen ? <button type="button" className="sp-ibtn" onClick={toggleFs} title="Poori screen">{fs ? "⤡" : "⛶"}</button> : null}

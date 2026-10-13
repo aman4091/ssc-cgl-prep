@@ -27,7 +27,7 @@ import StoreGate from "@/components/StoreGate";
 import SWRegister from "@/components/SWRegister";
 import PathMemo from "@/components/PathMemo";
 import SelectAsk from "@/components/SelectAsk";
-import PomoWidget from "@/components/PomoWidget";
+import PomoGate from "@/components/PomoGate";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -114,7 +114,8 @@ export default function RootLayout({ children }) {
             <Suspense fallback={<header className="mtp mtp-t6" />}>
               <Navbar />
             </Suspense>
-            <main className="container">{children}</main>
+            {/* 🍅 PYQ / padhai wale page se pehle Answers ke roop 9 jaisa pomodoro (components/PomoGate). */}
+            <main className="container"><PomoGate>{children}</PomoGate></main>
           </div>
           <Footer />
           <CurrentAffairsRush />
@@ -130,8 +131,6 @@ export default function RootLayout({ children }) {
           <PathMemo />
           {/* 💬 Kahin bhi text select karo — Poochho / Google / Copy. */}
           <SelectAsk />
-          {/* 🍅 Pomodoro — har page par; subject-wise minute (lib/pomo). */}
-          <PomoWidget />
         </StoreGate>
       </body>
     </html>
