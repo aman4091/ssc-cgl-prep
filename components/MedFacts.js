@@ -587,8 +587,6 @@ function TwoPane({ ms }) {
         <button type="button" className="mf33-back" onClick={() => setDetail(false)}>← List</button>
         <small>#{m.no}</small>
         <div className="mf33-q"><Q m={m} /></div>
-        {/* Mobile: options jawab ke UPAR (desktop par daayen alag khaana). */}
-        <ol className="mf33-opts mf33-opts--in">{opts}</ol>
         <h2>{m.a}</h2>
         <Clusters m={m} />
         <Nav i={m.no - 1} n={ms[ms.length - 1].no} go={(d) => setI(i + d)} />
