@@ -13,9 +13,10 @@
 // Leitner ke dabbe `cgl.vocab.leitner` mein bachte hain (sync hote hain);
 // baaki tareeke ek baithak ke — ginti page band karne par nayi.
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "@/components/Markdown";
 import { storeGet, storeSet } from "@/lib/bigstore";
+import { getHindiMap, hindiOf, ensureHindi, hindiBusy, hindiError } from "@/lib/vocabhindi";
 
 export const VL_LAYOUTS = [
   { id: "1", name: "Flip card — palto aur batao" },
@@ -65,7 +66,7 @@ function toM(it) {
   const b = brief(it);
   const ows = it.type === "ows";
   return {
-    id: it.id, word: it.word, type: it.type, label: it.label, icon: it.icon, brief: b, full: it.meaning || it.def || "",
+    id: it.id, word: it.word, type: it.type, label: it.label, icon: it.icon, brief: b, full: it.meaning || it.def || "", def: it.def || it.meaning || "",
     q: ows ? b : it.word, a: ows ? it.word : b, qWord: !ows,
   };
 }
@@ -398,28 +399,62 @@ function TrueFalse({ ms }) {
 }
 
 // ─── 11 · Cover method ───
+// 🇮🇳 Hindi matlab — OWS aur Vocab ka (Idiom / New ka nahi), DeepSeek se peechhe
+// (lib/vocabhindi): jahan tak padha uske 50 + agle 50.
+const hiType = (m) => m.type === "ows" || m.type === "vocab";
 function Cover({ ms }) {
   const [hide, setHide] = useState("a");
   const [open, setOpen] = useState({});
   const [n, setN] = useState(30);
+  const [hi, setHi] = useState(() => getHindiMap());
+  const [seen, setSeen] = useState(0);
+  const body = useRef(null);
   const rows = ms.slice(0, n);
+  const showHi = ms.some(hiType);
+  useEffect(() => {
+    const on = () => setHi(getHindiMap());
+    window.addEventListener("cgl:vocab-hindi", on);
+    window.addEventListener("cgl:sync-applied", on);
+    return () => { window.removeEventListener("cgl:vocab-hindi", on); window.removeEventListener("cgl:sync-applied", on); };
+  }, []);
+  // Kahan tak padh rahe ho — screen par aayi sabse aakhri row.
+  useEffect(() => {
+    const el = body.current;
+    if (!el || typeof IntersectionObserver === "undefined") return undefined;
+    const io = new IntersectionObserver((es) => {
+      let mx = -1;
+      for (const e of es) if (e.isIntersecting) mx = Math.max(mx, Number(e.target.dataset.i || 0));
+      if (mx >= 0) setSeen((s) => Math.max(s, mx));
+    });
+    el.querySelectorAll("tr[data-i]").forEach((tr) => io.observe(tr));
+    return () => io.disconnect();
+  }, [n, ms]);
+  const batch = Math.floor(seen / 50);
+  useEffect(() => {
+    if (!showHi) return;
+    ensureHindi(ms.slice(0, (batch + 2) * 50).filter(hiType).map((m) => ({ word: m.word, def: m.def })));
+  }, [batch, ms, showHi]);
+  const made = showHi ? ms.filter((m) => hiType(m) && hindiOf(hi, m.word)).length : 0;
   return (
     <div className="vl11">
       <div className="vl11-bar">
         <span>Chhupao:</span>
         {[["a", "Matlab"], ["w", "Word"]].map(([k, l]) => <button key={k} type="button" className={hide === k ? "is-on" : ""} onClick={() => { setHide(k); setOpen({}); }}>{l}</button>)}
         <button type="button" onClick={() => setOpen({})}>↺ Sab dhako</button>
+        {showHi ? <span className="vl11-hi">🇮🇳 Hindi {made}/{ms.filter(hiType).length}{hindiBusy() ? " · 🐋 ban rahe…" : ""}{hindiError() ? ` · ⚠️ ${hindiError()}` : ""}</span> : null}
       </div>
       <table>
-        <thead><tr><th>#</th><th>Word / phrase</th><th>Matlab</th></tr></thead>
-        <tbody>
+        <thead><tr><th>#</th><th>Word / phrase</th><th>Matlab</th>{showHi ? <th>Hindi</th> : null}</tr></thead>
+        <tbody ref={body}>
           {rows.map((m, i) => {
             const o = open[m.id];
+            const h = hiType(m) ? hindiOf(hi, m.word) : "";
             return (
-              <tr key={m.id} onClick={() => setOpen((x) => ({ ...x, [m.id]: !x[m.id] }))}>
+              <tr key={m.id} data-i={i} onClick={() => setOpen((x) => ({ ...x, [m.id]: !x[m.id] }))}>
                 <td>{i + 1}</td>
-                <td className={hide === "w" && !o ? "is-cov" : ""}><b>{m.word}</b> <Badge m={m} /></td>
+                <td className={hide === "w" && !o ? "is-cov" : ""}><b>{m.word}</b></td>
                 <td className={hide === "a" && !o ? "is-cov" : ""}>{m.brief || "—"}</td>
+                {showHi ? <td className={`vl11-hcell${hide === "a" && !o ? " is-cov" : ""}`}>{hiType(m) ? (h || "⏳") : "—"}</td> : null}
               </tr>
             );
           })}

@@ -4,7 +4,7 @@
 // matlab ki table, ek column dhaka; row dabao to khule.
 //
 // Din wale words (OWS / Idiom / Vocab) aur khud pakde hue New Words ek saath
-// (lib/vocabpool). Upar type ki chhaanti (Sab / OWS / Idiom / Vocab / New).
+// (lib/vocabpool). Upar type ki chhaanti (OWS / Idiom / Vocab / New — "Sab" hataya).
 // Owner ne 15 tareekon mein se Cover method final kiya — baaki tareeke aur
 // pehle wala Jodi milao (components/VocabMatch) backup mein hain (backup/README.md).
 //
@@ -50,7 +50,8 @@ function fixedOrder(pool) {
 
 export default function VocabPage() {
   const [pool, setPool] = useState(null);
-  const [type, setType] = useState("all");
+  // "Sab" hata diya (owner) — seedha OWS (na ho to pehla jo hai).
+  const [type, setType] = useState("ows");
 
   useEffect(() => {
     const load = () => setPool(vocabPool());
@@ -60,6 +61,12 @@ export default function VocabPage() {
   }, []);
 
   const mixed = useMemo(() => (pool ? fixedOrder(pool) : []), [pool]);
+  // Chuna hua type khaali ho (jaise OWS hai hi nahi) to pehla bhara hua.
+  useEffect(() => {
+    if (!pool || pool.some((p) => p.type === type)) return;
+    const first = VL_TYPES.find((t) => t.k !== "all" && pool.some((p) => p.type === t.k));
+    if (first) setType(first.k);
+  }, [pool, type]);
 
   if (!pool) return null;
 
@@ -73,8 +80,8 @@ export default function VocabPage() {
         {pool.length > 0 && (
           <div className="vl-bar">
             <div className="vl-types">
-              {VL_TYPES.map((t) => {
-                const n = t.k === "all" ? pool.length : pool.filter((p) => p.type === t.k).length;
+              {VL_TYPES.filter((t) => t.k !== "all").map((t) => {
+                const n = pool.filter((p) => p.type === t.k).length;
                 if (!n) return null;
                 return <button key={t.k} type="button" className={type === t.k ? "is-on" : ""} onClick={() => setType(t.k)}>{t.l} · {n}</button>;
               })}

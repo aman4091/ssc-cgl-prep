@@ -156,3 +156,5 @@
 .vl15-s em { font-style: normal; color: var(--text-3); font-size: 0.8rem; text-align: center; }
 .vl1-back .vlx-badge, .vl1-front .vlx-badge { align-self: center; }
 .vl1-back .vlx-badge { align-self: flex-start; }
+.vl11-hi { margin-left: auto; color: var(--text-3); font-weight: 700; }
+.vl11 td.vl11-hcell { width: 22%; font-weight: 700; color: var(--accent); }
