@@ -13,7 +13,7 @@ import "./looks/tilenav.css";
 import "./looks/menus.css";
 // Upar wali fix patti ke 15 roop (components/MenuTop) — <html data-menu="t1"…>.
 import "./looks/menutop.css";
-// 📖 Kitaab roop — TEST, Window ke upar (<html data-book="1">, 📖/🪟 button).
+// 📖 Kitaab roop — FINAL (owner), Window ke dhaanche ke upar (<html data-book="1">).
 import "./looks/kitaab.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -74,18 +74,17 @@ export default function RootLayout({ children }) {
   return (
     /* Script <html> ka apna attribute badalta hai, isliye server ka HTML aur
        client ka HTML yahan alag honge — ye ISI element par expected hai. */
-    <html lang="en" data-look="13" data-menu="t6" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" data-look="13" data-book="1" data-menu="t6" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html:
               "try{var d=document.documentElement,t=localStorage.getItem('cgl.theme');" +
               "if(t==='dark')d.setAttribute('data-theme','dark');" +
-              // Roop hamesha Window (13). Address bar ka rang: bina-media wala
-              // meta sabse aage, taaki OS ki pasand wali do se pehle mile.
-              "var b='#0d0f14';" +
-              // 📖 Kitaab roop (test) — jab tak 🪟 dabake band na kiya ho.
-              "if(localStorage.getItem('cgl.book')!=='0'){d.setAttribute('data-book','1');b='#e9dcbc'}" +
+              // Roop hamesha Kitaab (Window ke dhaanche par). Address bar ka
+              // rang: bina-media wala meta sabse aage, taaki OS ki pasand wali
+              // do se pehle mile.
+              "var b='#e9dcbc';" +
               "var m=document.createElement('meta');m.id='tc-user';" +
               "m.name='theme-color';m.content=b;" +
               "document.head.prepend(m)}catch(e){}",

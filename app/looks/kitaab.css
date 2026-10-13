@@ -1,11 +1,10 @@
 /* ===================================================================
-   📖 KITAAB roop — TEST (owner: "21 wala kitaab poori site ki theme bana
-   kar dikhao"). GKTricks Medieval ke 21 · Kitaab jaisa: purane kagaz ka
-   kreem rang, bhoori syahi, jang-laal (rust) pen, Georgia serif.
+   📖 KITAAB roop — FINAL (owner ne Window ki jagah chuna). GKTricks
+   Medieval ke 21 · Kitaab jaisa: purane kagaz ka kreem rang, bhoori
+   syahi, jang-laal (rust) pen, Georgia serif.
 
-   <html data-book="1"> par chalta hai — Window (13) ke UPAR. Upar menu ka
-   📖/🪟 button (components/BookToggle) se on/off; choice `cgl.book` mein.
-   Hatana ho to ye file + BookToggle + layout.js ka script hata do.
+   <html data-book="1"> (app/layout.js) — Window (13) ke dhaanche ke UPAR.
+   📖/🪟 button hata diya (wo commit 99439f1 mein hai).
    =================================================================== */
 
 html[data-book="1"],
@@ -99,7 +98,3 @@ html[data-book="1"] .examskin:not(.gemskin) ::selection { background: #f3dc9b; c
 
 /* Bina pass ka chat panel (SelectAsk) bhi kagaz par */
 html[data-book="1"] .examskin:not(.gemskin) :is(.sa-panel, .sa-dock) { background: #f7eed6; color: #3b3226; border-color: #d4c39c; }
-
-/* Toggle button */
-.booktog { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 999px; font-size: 1.05rem; flex: none; }
-.booktog:hover { background: var(--nav-hover, rgba(255, 255, 255, 0.07)); }

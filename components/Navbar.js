@@ -8,7 +8,6 @@ import { getNewWordEntries, newWordDayKey, newWordDayLabel } from "@/lib/vocab";
 import { getUserTopics } from "@/lib/userpyq";
 import { notesByBook, bookIcon, bookLabel } from "@/lib/pastednotes";
 import { StaticsTopBtn } from "./StaticsInfo";
-import BookToggle from "./BookToggle";
 import MenuTop from "./MenuTop";
 
 // 🧭 Menu: T6 · ICON TOOLBAR — upar fix patti, icon ke neeche naam
@@ -294,7 +293,7 @@ export default function Navbar() {
 
   return (
     <>
-      <MenuTop lay="t6" menu={menu} open={open} setOpen={setOpen} mark={mark} right={<><BookToggle /><StaticsTopBtn /></>} />
+      <MenuTop lay="t6" menu={menu} open={open} setOpen={setOpen} mark={mark} right={<StaticsTopBtn />} />
     </>
   );
 }
