@@ -26,3 +26,4 @@ Home ke purane roop (A–N + purana Home) commit **`fabaac1`** mein hain
 | 🏠 Home | Sawaal-jawab (koi dropdown nahi) | Purana Home + A–N (B ab `/din` page hai) | commit `fabaac1` |
 | 🏰 GKTricks Medieval | Dropdown mein sirf **0, 7, 16, 19, 21, 25, 31, 33, 34, 36** (`MED_KEEP`, `app/pyq/gk/[slug]/page.js`) | Baaki 1–20 aur 21–40 code mein hi hain, bas dropdown se hate — `MED_KEEP` mein id daalo to wapas | `components/MedLayouts.js`, `components/MedFacts.js` |
 | 📖 Kitaab roop (TEST) | Window ke upar, upar menu ka 📖/🪟 button (`cgl.book`) | Hatana ho: `app/looks/kitaab.css`, `components/BookToggle.js`, `app/layout.js` ka import + script line, `components/Navbar.js` | — |
+| 🧩 33 · Do pane ka jawab | **19 · Mind map** (upar ⚡ chips) — dropdown hataya | Baaki 19 roop (Dabbe, Saada lekh, Bullet, Table, Timeline, Index card, Highlighter, …) | `components/AnsFormats.js` (`FMT` in `components/MedFacts.js`) |

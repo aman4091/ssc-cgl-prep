@@ -46,6 +46,8 @@ function hl(text) {
   out.push(s.slice(last));
   return out;
 }
+// ⚡ line ke tukde — "1347 – Zafar Khan · Gulbarga → Bidar" → ["1347 – Zafar Khan", "Gulbarga → Bidar"].
+const zapParts = (z) => String(z || "").split(/\s*[·|;•]\s*/).map((x) => x.trim()).filter(Boolean);
 const keysOf = (c) => [...new Set(`${c.prose} ${c.zap}`.match(KEY) || [])].slice(0, 10);
 const P = ({ t }) => <Markdown inline>{t}</Markdown>;
 
@@ -157,9 +159,14 @@ export default function AnsView({ cs, fmt }) {
         <p key={i}><b>🧩 {c.title}</b> — <P t={c.prose} />{c.zap ? <span className="af18-z"> ⚡ {c.zap}</span> : null}</p>
       ))}</div>
     );
+    // FINAL (owner): upar ⚡ line keyword chips ki tarah tukdon mein, neeche mind map.
     case "19": return (
       <div className="af19">{cs.map((c, i) => (
-        <section key={i}><div className="af19-c">{c.title || `Cluster ${i + 1}`}</div><div className="af19-br">{sents(c.prose).map((s, k) => <span key={k}><P t={s} /></span>)}{c.zap ? <span className="is-z">⚡ {c.zap}</span> : null}</div></section>
+        <section key={i}>
+          {c.zap ? <div className="af19-zap"><b>⚡</b>{zapParts(c.zap).map((z, k) => <span key={k}>{z}</span>)}</div> : null}
+          <div className="af19-c">{c.title || `Cluster ${i + 1}`}</div>
+          <div className="af19-br">{sents(c.prose).map((s, k) => <span key={k}><P t={s} /></span>)}</div>
+        </section>
       ))}</div>
     );
     case "20": return <div className="af20"><Tabs cs={cs} /></div>;

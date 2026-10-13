@@ -11,7 +11,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "./Markdown";
 import MnemonicScroll from "./MnemonicScroll";
-import AnsView, { ANS_FORMATS } from "./AnsFormats";
+import AnsView from "./AnsFormats";
 import { addClustersToFacts } from "./ClusterButton";
 import { getAns, ansLookup } from "@/lib/sprint";
 import { clustersOf } from "@/lib/clusterparse";
@@ -124,19 +124,13 @@ function Facts({ m, auto = false, mode = "", q = "" }) {
 }
 
 // 33 · Do pane: poora cluster — 🧩 naam + poora paragraph + ⚡ fact.
-// Dikhne ke 20 roop (components/AnsFormats) — choice `cgl.ansfmt`.
+// Roop: 19 · Mind map FINAL (owner) — dropdown hataya. Baaki 19 roop
+// components/AnsFormats mein (backup/README.md); FMT badlo to wo chalega.
+const FMT = "19";
 function Clusters({ m }) {
-  const [fmt, setFmt] = useState(() => String(readJ("cgl.ansfmt", "1")));
-  const pickFmt = (v) => { setFmt(v); writeJ("cgl.ansfmt", v); };
+  const fmt = FMT;
   const md = lookup()(m.raw);
-  const picker = (
-    <label className="af-pick">Jawab ka roop
-      <select value={fmt} onChange={(e) => pickFmt(e.target.value)} aria-label="Jawab ka roop">
-        {ANS_FORMATS.map((f) => <option key={f.id} value={f.id}>{f.id} · {f.name}</option>)}
-      </select>
-    </label>
-  );
-  if (!md) return <>{picker}<Wait /></>;
+  if (!md) return <Wait />;
   const cs = clustersOf(md, { prose: true });
   const send = (e) => {
     const n = addClustersToFacts(md, "gs", m.raw);
@@ -145,7 +139,6 @@ function Clusters({ m }) {
   };
   return (
     <div className={`mf-cl af af--${fmt}`}>
-      {picker}
       {cs.length ? <AnsView cs={cs} fmt={fmt} /> : <div className="mf-cl-p"><Markdown>{md}</Markdown></div>}
       <button type="button" className="mf-send" onClick={send} title="Ye cluster, fact log mein bhejo">＋ Fact log</button>
     </div>
