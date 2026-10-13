@@ -327,9 +327,21 @@ function MindMap({ secs }) {
 // ─── 14 · Slides ─── FINAL (owner) — Notesliner, Fact log, One-liners teeno
 // mein yahi. Chhote ‹ › button (aur ← → keys) se ek slide aage-peeche.
 // secs: [{ key, title, kind, points: [{ text, star }], meta? | note+book }]
-export function SlideRow({ secs, empty = "Koi slide nahi.", onAt }) {
+export function SlideRow({ secs, empty = "Koi slide nahi.", onAt, start = 0 }) {
   const box = useRef(null);
-  const [cur, setCur] = useState(0);
+  const [cur, setCur] = useState(start);
+  // Jahan chhoda tha wahin se (Vocab) — pehli baar khulte hi us slide par.
+  const placed = useRef(false);
+  useEffect(() => {
+    const el = box.current;
+    if (placed.current || !el || !secs.length) return;
+    placed.current = true;
+    if (start > 0) {
+      const f = el.firstElementChild;
+      const w = f ? f.getBoundingClientRect().width + 16 : 0;
+      if (w) el.scrollLeft = Math.min(start, secs.length - 1) * w;
+    }
+  }, [secs.length, start]);
   const step = () => {
     const el = box.current;
     const f = el && el.firstElementChild;
