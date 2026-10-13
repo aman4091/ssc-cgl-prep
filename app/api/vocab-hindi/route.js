@@ -10,9 +10,15 @@ Bad (too formal): "उन्मूलन", "संक्षेपण", "वि�
 Return STRICT JSON only, one item for EVERY numbered word, same order: {"items":[{"n":<the number given>,"w":"<word>","hi":"<simple Hindi meaning>"}]}
 No transliteration, no English, no explanation.`;
 
+// New Words (khud pakde) — inki angrezi def hoti hi nahi, to English bhi yahin
+// se, CHHOTI (owner: "bas kuch words ka ho").
+const EN_EXTRA = `
+ALSO give "en": the word's meaning in SIMPLE English, 2 to 6 words only (no full sentence).
+Then each item is {"n":<number>,"w":"<word>","en":"<short English meaning>","hi":"<simple Hindi meaning>"}.`;
+
 export async function POST(req) {
   try {
-    const { words, apiKey, model, baseUrl } = await req.json();
+    const { words, apiKey, model, baseUrl, en } = await req.json();
     const list = (Array.isArray(words) ? words : []).filter((x) => x && x.word).slice(0, 60);
     if (!list.length) return Response.json({ error: "Words missing." }, { status: 400 });
     const result = await deepseekChat({
@@ -21,7 +27,7 @@ export async function POST(req) {
       jsonMode: true,
       maxTokens: 3000,
       messages: [
-        { role: "system", content: PROMPT },
+        { role: "system", content: en ? PROMPT + EN_EXTRA : PROMPT },
         { role: "user", content: list.map((x, i) => `${i + 1}. ${x.word} — ${String(x.def || "").slice(0, 160)}`).join("\n") },
       ],
     });
@@ -37,7 +43,7 @@ export async function POST(req) {
       if (!x || !x.hi) return;
       const n = Number(x.n);
       const w = (Number.isInteger(n) && list[n - 1] && list[n - 1].word) || byNorm.get(norm(x.w)) || (raw.length === list.length && list[k] ? list[k].word : "");
-      if (w) items.push({ w, hi: String(x.hi).trim() });
+      if (w) items.push({ w, hi: String(x.hi).trim(), ...(en && x.en ? { en: String(x.en).trim() } : {}) });
     });
     return Response.json({ items });
   } catch (e) {

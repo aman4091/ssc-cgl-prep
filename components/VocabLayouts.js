@@ -16,7 +16,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "@/components/Markdown";
 import { storeGet, storeSet } from "@/lib/bigstore";
-import { getHindiMap, hindiOf, ensureHindi, hindiBusy, hindiError } from "@/lib/vocabhindi";
+import { getHindiMap, hindiOf, getEnMap, enOf, ensureHindi, hindiBusy, hindiError } from "@/lib/vocabhindi";
 
 export const VL_LAYOUTS = [
   { id: "1", name: "Flip card — palto aur batao" },
@@ -401,18 +401,21 @@ function TrueFalse({ ms }) {
 // ─── 11 · Cover method ───
 // 🇮🇳 Hindi matlab — OWS aur Vocab ka (Idiom / New ka nahi), DeepSeek se peechhe
 // (lib/vocabhindi): jahan tak padha uske 50 + agle 50.
-const hiType = (m) => m.type === "ows" || m.type === "vocab";
+// New Words (khud pakde) ka Hindi + CHHOTA English, dono DeepSeek se.
+const hiType = (m) => m.type === "ows" || m.type === "vocab" || m.type === "new";
+const enType = (m) => m.type === "new";
 function Cover({ ms }) {
   const [hide, setHide] = useState("a");
   const [open, setOpen] = useState({});
   const [n, setN] = useState(30);
   const [hi, setHi] = useState(() => getHindiMap());
+  const [en, setEn] = useState(() => getEnMap());
   const [seen, setSeen] = useState(0);
   const body = useRef(null);
   const rows = ms.slice(0, n);
   const showHi = ms.some(hiType);
   useEffect(() => {
-    const on = () => setHi(getHindiMap());
+    const on = () => { setHi(getHindiMap()); setEn(getEnMap()); };
     window.addEventListener("cgl:vocab-hindi", on);
     window.addEventListener("cgl:sync-applied", on);
     return () => { window.removeEventListener("cgl:vocab-hindi", on); window.removeEventListener("cgl:sync-applied", on); };
@@ -432,7 +435,7 @@ function Cover({ ms }) {
   const batch = Math.floor(seen / 50);
   useEffect(() => {
     if (!showHi) return;
-    ensureHindi(ms.slice(0, (batch + 2) * 50).filter(hiType).map((m) => ({ word: m.word, def: m.def })));
+    ensureHindi(ms.slice(0, (batch + 2) * 50).filter(hiType).map((m) => ({ word: m.word, def: m.def, en: enType(m) })));
   }, [batch, ms, showHi]);
   const made = showHi ? ms.filter((m) => hiType(m) && hindiOf(hi, m.word)).length : 0;
   return (
@@ -453,7 +456,7 @@ function Cover({ ms }) {
               <tr key={m.id} data-i={i} onClick={() => setOpen((x) => ({ ...x, [m.id]: !x[m.id] }))}>
                 <td>{i + 1}</td>
                 <td className={hide === "w" && !o ? "is-cov" : ""}><b>{m.word}</b></td>
-                <td className={hide === "a" && !o ? "is-cov" : ""}>{m.brief || "—"}</td>
+                <td className={hide === "a" && !o ? "is-cov" : ""}>{enType(m) ? (enOf(en, m.word) || "⏳") : (m.brief || "—")}</td>
                 {showHi ? <td className={`vl11-hcell${hide === "a" && !o ? " is-cov" : ""}`}>{hiType(m) ? (h || "⏳") : "—"}</td> : null}
               </tr>
             );
