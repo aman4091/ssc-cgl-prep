@@ -150,7 +150,7 @@ export default function AnswersSets({ ctx }) {
   useEffect(() => {
     for (let i = 0; i < setCount; i++) {
       const old = results[String(i)];
-      if (!old || results[sigs[i]] || !(String(old.at || "") >= "2026-10-13T00:00")) continue;
+      if (!old || results[sigs[i]] || !(String(old.at || "") >= "2026-10-12T00:00")) continue;
       moveResult(rkey, String(i), sigs[i]);
     }
   }, [results, sigs, setCount, rkey]);
@@ -197,7 +197,6 @@ export default function AnswersSets({ ctx }) {
               const L = Math.max(1, chunk.length);
               return (
                 <div key={i} className={`setcard${r ? " is-done" : ""}${pg ? " is-paused" : ""}`}>
-                  {pg ? <button type="button" className="setcard__resume" onClick={() => open(i, "resume")}>⏸ Resume · {clock(pg.left || 0)} bacha</button> : null}
                   <button type="button" className="setcard__open" onClick={() => open(i, pg ? "resume" : r ? "result" : "test")}>
                     <span className="setcard__n">Set {i + 1}{r ? " ✓" : ""}</span>
                     <span className="setcard__meta">Q {a + 1}–{a + chunk.length} · {chunk.length} questions</span>
@@ -209,7 +208,12 @@ export default function AnswersSets({ ctx }) {
                       <span className="setcard__score">{fmtMarks(marksOf(r))}/{maxMarks(r.total)} marks · {r.right} sahi · <em className="setcard__wrong">{r.wrong || 0} wrong</em> · {accuracyOf(r)}%{r.ask ? ` · ${r.ask} jaanchna baaki` : ""}</span>
                     ) : null}
                   </button>
-                  {r ? (
+                  {pg ? (
+                    <span className="setcard__acts">
+                      <button type="button" className="btn btn--sm" onClick={() => open(i, "resume")}>Resume</button>
+                      {r ? <button type="button" className="btn btn--ghost btn--sm" onClick={() => open(i, "result")}>📖 Result</button> : null}
+                    </span>
+                  ) : r ? (
                     <span className="setcard__acts">
                       <button type="button" className="btn btn--sm" onClick={() => open(i, "test")}>🔁 Attempt again</button>
                       <button type="button" className="btn btn--ghost btn--sm" onClick={() => open(i, "result")}>📖 Result</button>

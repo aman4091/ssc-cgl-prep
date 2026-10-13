@@ -37,7 +37,7 @@ const SET_MIN = 15;
 // Kuch bank (jaise Medieval) mein jawab "2" (text) hai — pehle wo "bina
 // jawab" gina jata tha, isliye galat sawaal Wrong Sets mein nahi jaate the.
 const hasKey = (q) => typeof q?.answer === "number";
-const WS_SINCE = "2026-10-13T00:00";   // Wrong Sets ka pehla din
+const WS_SINCE = "2026-10-12T00:00";   // Wrong Sets ka pehla din (UTC — IST ki subah bhi aaye)
 const normQ = (q) => (q && typeof q.answer === "string" && /^\s*\d+\s*$/.test(q.answer) ? { ...q, answer: Number(q.answer) } : q);
 const SUBS = { maths: "math", math: "math", reasoning: "reasoning", english: "english", gs: "gs" };
 export const SUB_LABEL = { math: "Maths", reasoning: "Reasoning", english: "English", gs: "GS" };
@@ -251,7 +251,6 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
               const L = Math.max(1, chunk.length);
               return (
                 <div key={i} className={`setcard${r ? " is-done" : ""}${pg ? " is-paused" : ""}`}>
-                  {pg ? <button type="button" className="setcard__resume" onClick={() => start(i, "resume")}>⏸ Resume · {clock(pg.left || 0)} bacha</button> : null}
                   <button type="button" className="setcard__open" onClick={() => start(i, pg ? "resume" : r ? "result" : "test")}>
                     <span className="setcard__n">{setName} {i + 1}{r ? " ✓" : ""}</span>
                     <span className="setcard__meta">{given ? `${chunk.length} questions` : `Q ${a + 1}–${a + chunk.length} · ${chunk.length} questions`}</span>
@@ -261,7 +260,12 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
                     </span>
                     {r ? <span className="setcard__score">{fmtMarks(marksOf(r))}/{maxMarks(r.total)} marks · {r.right} sahi · <em className="setcard__wrong">{r.wrong || 0} wrong</em> · {accuracyOf(r)}%</span> : null}
                   </button>
-                  {r ? (
+                  {pg ? (
+                    <span className="setcard__acts">
+                      <button type="button" className="btn btn--sm" onClick={() => start(i, "resume")}>Resume</button>
+                      {r ? <button type="button" className="btn btn--ghost btn--sm" onClick={() => start(i, "result")}>📖 Result</button> : null}
+                    </span>
+                  ) : r ? (
                     <span className="setcard__acts">
                       <button type="button" className="btn btn--sm" onClick={() => start(i, "test")}>🔁 Attempt again</button>
                       <button type="button" className="btn btn--ghost btn--sm" onClick={() => start(i, "result")}>📖 Result</button>
