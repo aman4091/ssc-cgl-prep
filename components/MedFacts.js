@@ -11,6 +11,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "./Markdown";
 import MnemonicScroll from "./MnemonicScroll";
+import AnsView, { ANS_FORMATS } from "./AnsFormats";
 import { addClustersToFacts } from "./ClusterButton";
 import { getAns, ansLookup } from "@/lib/sprint";
 import { clustersOf } from "@/lib/clusterparse";
@@ -123,9 +124,19 @@ function Facts({ m, auto = false, mode = "", q = "" }) {
 }
 
 // 33 · Do pane: poora cluster — 🧩 naam + poora paragraph + ⚡ fact.
+// Dikhne ke 20 roop (components/AnsFormats) — choice `cgl.ansfmt`.
 function Clusters({ m }) {
+  const [fmt, setFmt] = useState(() => String(readJ("cgl.ansfmt", "1")));
+  const pickFmt = (v) => { setFmt(v); writeJ("cgl.ansfmt", v); };
   const md = lookup()(m.raw);
-  if (!md) return <Wait />;
+  const picker = (
+    <label className="af-pick">Jawab ka roop
+      <select value={fmt} onChange={(e) => pickFmt(e.target.value)} aria-label="Jawab ka roop">
+        {ANS_FORMATS.map((f) => <option key={f.id} value={f.id}>{f.id} · {f.name}</option>)}
+      </select>
+    </label>
+  );
+  if (!md) return <>{picker}<Wait /></>;
   const cs = clustersOf(md, { prose: true });
   const send = (e) => {
     const n = addClustersToFacts(md, "gs", m.raw);
@@ -133,14 +144,9 @@ function Clusters({ m }) {
     e.currentTarget.disabled = true;
   };
   return (
-    <div className="mf-cl">
-      {cs.length ? cs.map((c, i) => (
-        <section key={i} className="mf-cl-it">
-          {c.title ? <h3>🧩 {c.title}</h3> : null}
-          {c.prose ? <div className="mf-cl-p"><Markdown>{c.prose}</Markdown></div> : null}
-          {c.zap ? <p className="mf-cl-z">⚡ {c.zap}</p> : null}
-        </section>
-      )) : <div className="mf-cl-p"><Markdown>{md}</Markdown></div>}
+    <div className={`mf-cl af af--${fmt}`}>
+      {picker}
+      {cs.length ? <AnsView cs={cs} fmt={fmt} /> : <div className="mf-cl-p"><Markdown>{md}</Markdown></div>}
       <button type="button" className="mf-send" onClick={send} title="Ye cluster, fact log mein bhejo">＋ Fact log</button>
     </div>
   );
