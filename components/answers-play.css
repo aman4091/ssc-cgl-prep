@@ -290,3 +290,94 @@ body.exam-on .pomo-btn { display: none; }
 .aps1-nav:disabled { opacity: .4; cursor: default; }
 @media (min-width: 1100px) { body.sa-docked .aps1-nav.is-next { right: calc(var(--sa-w, 0px) + 14px); } }
 .ap--s1 { padding-bottom: 64px; }
+
+/* ══════════ 21 · TESTBOOK jaisa (owner ka screenshot — same layout) ══════════
+   Poori screen (upar ki menu patti ke neeche), Testbook ke rang + font. */
+body:has(.tbx) { overflow: hidden; }
+.tbx {
+  position: fixed; top: var(--mtp-h, 58px); left: 0; right: 0; bottom: 0; z-index: 60;
+  display: flex; flex-direction: column; background: #ffffff; color: #333333;
+  font-family: "Helvetica Neue", Helvetica, Arial, "Nirmala UI", sans-serif; font-size: 14px;
+}
+@media (min-width: 1100px) { body.sa-docked .tbx { right: var(--sa-w); } }
+.tbx button { font-family: inherit; }
+
+/* neeli patti */
+.tbx-head { flex: none; display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 6px 16px; background: #059ac4; color: #ffffff; }
+.tbx-title { display: grid; gap: 3px; min-width: 0; }
+.tbx-title b { font-size: 17px; font-weight: 700; }
+.tbx-title small { font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tbx-head__r { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.tbx-today { display: inline-flex; align-items: center; gap: 4px; padding: 8px 14px; border-radius: 4px; background: #0591bb; border: 1px solid rgba(255, 255, 255, 0.18); font-size: 13px; white-space: nowrap; }
+.tbx-today b { font-size: 15px; }
+
+.tbx-body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 0; position: relative; }
+.tbx.is-side .tbx-body { grid-template-columns: minmax(0, 1fr) 300px; }
+
+/* baayan — sawaal */
+.tbx-main { position: relative; display: flex; flex-direction: column; min-height: 0; min-width: 0; }
+.tbx-sec { flex: none; display: flex; align-items: center; height: 40px; background: #f9f9f9; border-bottom: 1px solid #dddddd; }
+.tbx-sec > span { padding: 0 16px; font-size: 13px; color: #333333; border-right: 1px solid #dddddd; line-height: 40px; }
+.tbx-tab { margin-left: 40px; min-width: 126px; padding: 5px 16px; border-radius: 3px; background: #166a84; color: #ffffff; font-weight: 400; font-size: 14px; text-align: center; }
+.tbx-scroll { flex: 1; min-height: 0; overflow-y: auto; }
+.tbx-qh { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 12px 16px 10px; border-bottom: 1px solid #eeeeee; }
+.tbx-qh > b { font-size: 15px; color: #333333; }
+.tbx-badge { padding: 2px 9px; border-radius: 10px; background: #777777; color: #ffffff; font-size: 12px; font-weight: 700; }
+.tbx-badge.is-ok { background: #27ae60; }
+.tbx-ch { padding: 2px 8px; border-radius: 3px; background: #27ae60; color: #ffffff; font-size: 12px; text-transform: capitalize; }
+.tbx .tbx-save { margin-left: auto; padding: 4px 10px; border-radius: 3px; border: 1px solid #27ae60; background: #27ae60; color: #ffffff; font-size: 12px; font-weight: 700; cursor: pointer; }
+.tbx .tbx-save:hover { background: #219150; }
+/* card — Testbook ka saaf safed sawaal; card ka apna "Question N" chhupa (upar hai) */
+.tbx-q { padding: 6px 16px 0; font-size: 16px; line-height: 1.5; }
+.tbx-q .ansp__card { margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; color: #333333; }
+.tbx-q .ansp__card > h2 { font-size: 0; margin: 0 0 8px; padding: 0; border: 0; background: transparent; display: flex; justify-content: flex-end; }
+.tbx-q .ansp__card > h2 .ansp__hacts { font-size: 13px; }
+.tbx-sim { padding: 14px 16px 24px; }
+.tbx-sim .sim { border-radius: 0; border: 1px solid #fbe0cd; background: #fdf0e4; }
+
+/* neeche — Previous / Next */
+.tbx-foot { flex: none; display: flex; align-items: center; justify-content: space-between; height: 50px; padding: 0 16px; background: #f9f9f9; border-top: 1px solid #dddddd; }
+.tbx .tbx-btn { padding: 8px 12px; border-radius: 3px; border: 1px solid #8fc1ee; background: #a9d0f5; color: #2c3e50; font-size: 14px; cursor: pointer; }
+.tbx .tbx-btn:hover:not(:disabled) { background: #93c4f2; }
+.tbx .tbx-btn:disabled { background: #adbfc7; border-color: #adbfc7; color: #ffffff; cursor: default; }
+.tbx .tbx-arrow { position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 3; width: 16px; height: 50px; padding: 0; border: 0; border-radius: 2px 0 0 2px; background: #333333; color: #ffffff; font-size: 14px; cursor: pointer; }
+
+/* daayan — halka neela panel */
+.tbx-side { display: flex; flex-direction: column; min-height: 0; overflow: hidden; background: #d9edf7; border-left: 1px solid #dddddd; }
+.tbx:not(.is-side) .tbx-side { display: none; }
+.tbx-user { flex: none; display: flex; align-items: center; gap: 12px; padding: 10px 16px; }
+.tbx-user i { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #1fbad6; font-style: normal; font-size: 15px; }
+.tbx-user b { font-size: 15px; font-weight: 400; color: #333333; }
+.tbx-legend { flex: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 4px 16px 12px; border-bottom: 1px solid #c4dfec; font-size: 12px; color: #333333; }
+.tbx-legend span { display: flex; align-items: center; gap: 6px; }
+.tbx-legend i { display: inline-grid; place-items: center; min-width: 18px; height: 16px; padding: 0 3px; border: 1px solid #000000; background: #ffffff; font-style: normal; font-size: 11px; }
+.tbx-legend i.is-ok { background: #27ae60; border-color: #27ae60; color: #ffffff; }
+.tbx-sechd { flex: none; padding: 9px 12px; background: #b4dbed; font-size: 14px; font-weight: 700; color: #333333; }
+.tbx-sechd span { font-weight: 400; }
+.tbx-grid { flex: 1; min-height: 0; overflow-y: auto; display: grid; grid-template-columns: repeat(5, 38px); justify-content: space-between; align-content: start; gap: 14px 0; padding: 16px 18px; }
+.tbx .tbx-grid button { width: 38px; height: 30px; padding: 0; border: 1px solid #000000; border-radius: 0; background: #ffffff; color: #333333; font-size: 16px; cursor: pointer; }
+.tbx .tbx-grid button.is-ok { background: #27ae60; border-color: #27ae60; color: #ffffff; border-radius: 50% 50% 0 0 / 60% 60% 0 0; }
+.tbx .tbx-grid button.is-cur { border-radius: 999px; border: 1px solid #000000; background: #f9f9f9; color: #333333; }
+.tbx .tbx-grid button.is-ok.is-cur { background: #27ae60; color: #ffffff; }
+.tbx-sidefoot { flex: none; display: flex; gap: 10px; padding: 9px 16px; border-top: 1px solid #c4dfec; }
+.tbx-sidefoot .tbx-btn { flex: 1; }
+
+/* phone / tablet — panel upar se khulta hai (›) */
+@media (max-width: 900px) {
+  .tbx.is-side .tbx-body { grid-template-columns: minmax(0, 1fr); }
+  .tbx-side { position: absolute; top: 0; right: 0; bottom: 0; width: min(300px, 86vw); z-index: 4; box-shadow: -6px 0 18px rgba(0, 0, 0, 0.2); }
+  .tbx.is-side .tbx-arrow { right: min(300px, 86vw); }
+  .tbx-head { min-height: 54px; }
+  .tbx-title small { white-space: normal; }
+  .tbx-today { padding: 5px 9px; font-size: 12px; }
+  .tbx-tab { margin-left: 14px; min-width: 0; }
+}
+/* 🍅 button — Testbook ki neeche wali patti ke beech (sawaal wale hisse ke). */
+@media (min-width: 701px) {
+  body:has(.tbx) .pomo-btn { bottom: 4px; padding: 6px 16px; }
+  body:has(.tbx.is-side) .pomo-btn { left: calc((100% - 300px) / 2); }
+}
+@media (min-width: 1100px) {
+  body.sa-docked:has(.tbx.is-side) .pomo-btn { left: calc((100% - 300px - var(--sa-w)) / 2); }
+  body.sa-docked:has(.tbx:not(.is-side)) .pomo-btn { left: calc((100% - var(--sa-w)) / 2); }
+}

@@ -524,11 +524,13 @@ function Quests({ ctx }) {
 
 // ═══════════════════════ 21–40 · 5 similar wahin ═══════════════════════
 
-// 21 · FINAL (owner): ✅ Ho gaya dabate hi wo sawaal katar mein sabse neeche,
-// agla upar aur wahi saamne (lib/answersdone ka waqt — jo kabhi nahi hua wo
-// apne kram mein pehle, phir hue wale purane-pehle). Baayen sirf number ki
-// patti (isi katar mein), neeche fix ← Pichhla / Agla →. Card ka number
-// list wala hi (pakka) — katar ghoomti hai, number nahi.
+// 21 · FINAL (owner) — TESTBOOK ke solution page jaisa (owner ka screenshot,
+// "same layout, sab kuch same"): upar neeli patti, SECTIONS ka tab, baayen
+// sawaal (Question No.N + badge + ✅ Ho gaya), neeche Previous / Next, daayen
+// halka-neela panel — ginti (legend), "SECTION :" patti, number ka jaal
+// (ho gaya = hara gumbad, baaki = safed dabba, abhi wala = gol ghera).
+// ✅ Ho gaya dabate hi wo sawaal katar mein sabse neeche, agla upar aur wahi
+// saamne (lib/answersdone ka waqt). Card ka number list wala hi (pakka).
 function SimPair({ ctx }) {
   const order = useMemo(() => {
     const dm = ctx.doneMap || {};
@@ -538,12 +540,16 @@ function SimPair({ ctx }) {
   }, [ctx.list, ctx.doneMap]);
   const n = order.length;
   const [id, setId] = useState(() => readJ("cgl.ans.s1", ""));
+  // Daayan panel — phone par band (› se khulta hai), bade par khula.
+  const [side, setSide] = useState(() => typeof window === "undefined" || window.innerWidth > 900);
+  const scrollRef = useRef(null);
   let k = order.findIndex((r) => r.id === id);
   if (k < 0) k = 0;
   const r = order[k];
   const pick = (nid) => {
     setId(nid); writeJ("cgl.ans.s1", nid);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+    if (typeof window !== "undefined" && window.innerWidth <= 900) setSide(false);
   };
   const go = (d) => pick(order[Math.min(n - 1, Math.max(0, k + d))].id);
   const done = () => {
@@ -552,40 +558,66 @@ function SimPair({ ctx }) {
     const rest = order.filter((x) => x.id !== r.id);
     pick((rest[0] || r).id);
   };
-  const railRef = useRef(null);
+  const gridRef = useRef(null);
   useEffect(() => {
-    const el = railRef.current && railRef.current.querySelector(".is-on");
+    const el = gridRef.current && gridRef.current.querySelector(".is-cur");
     if (el) el.scrollIntoView({ block: "nearest" });
-  }, [r && r.id]);
+  }, [r && r.id, side]);
   if (!r) return null;
   const s = subOf(ctx.bucketOf(r));
   const ch = ctx.chapterOf(r).ch;
   const dm = ctx.doneMap || {};
+  const doneN = order.filter((x) => dm[x.id]).length;
+  const numOf = (x) => (ctx.index.get(x.id) ?? 0) + 1;
+  const subs = [...new Set(ctx.list.map((x) => subOf(ctx.bucketOf(x)).label))];
   return (
-    <>
-      <div className="aps1">
-        <nav className="aps1-rail" ref={railRef}>
-          {order.map((x) => (
-            <button key={x.id} type="button" className={`${x.id === r.id ? "is-on" : ""}${dm[x.id] ? " is-done" : ""}`} onClick={() => pick(x.id)}>
-              {(ctx.index.get(x.id) ?? 0) + 1}
-            </button>
-          ))}
-        </nav>
-        <div className="aps1-l">
-          <div className="ap-work">
-            <div className="ap-work__bar" style={{ "--sc": s.c }}>
-              <span>{s.icon} {s.label}</span>
-              {ch ? <span>· {ch.replace(/-/g, " ")}</span> : null}
-              <button type="button" className="aps1-done" onClick={done}>✅ Ho gaya</button>
-            </div>
-            {ctx.renderCard(r, ctx.index.get(r.id) ?? 0, false)}
-          </div>
+    <div className={`tbx${side ? " is-side" : ""}`}>
+      <header className="tbx-head">
+        <div className="tbx-title">
+          <b>Answers</b>
+          <small>{subs.join(" · ")} — {n} sawaal{ch ? ` · ${ch.replace(/-/g, " ")}` : ""}</small>
         </div>
-        <div className="aps1-r"><SimInline r={r} /></div>
+        <div className="tbx-head__r">{ctx.head}</div>
+      </header>
+      <div className="tbx-body">
+        <section className="tbx-main">
+          <div className="tbx-sec"><span>SECTIONS</span><b className="tbx-tab">{s.label}</b></div>
+          <div className="tbx-scroll" ref={scrollRef}>
+            <div className="tbx-qh">
+              <b>Question No.{numOf(r)}</b>
+              <span className={`tbx-badge${dm[r.id] ? " is-ok" : ""}`}>{dm[r.id] ? "Ho gaya" : "Baaki"}</span>
+              {ch ? <span className="tbx-ch">{ch.replace(/-/g, " ")}</span> : null}
+              <button type="button" className="tbx-save" onClick={done}>✅ Ho gaya</button>
+            </div>
+            <div className="tbx-q">{ctx.renderCard(r, ctx.index.get(r.id) ?? 0, false)}</div>
+            <div className="tbx-sim"><SimInline r={r} /></div>
+          </div>
+          <footer className="tbx-foot">
+            <button type="button" className="tbx-btn tbx-prev" onClick={() => go(-1)} disabled={k <= 0}>Previous</button>
+            <button type="button" className="tbx-btn tbx-next" onClick={() => go(1)} disabled={k >= n - 1}>Next</button>
+          </footer>
+          <button type="button" className="tbx-arrow" onClick={() => setSide((v) => !v)} aria-label="Panel">{side ? "›" : "‹"}</button>
+        </section>
+        <aside className="tbx-side">
+          <div className="tbx-user"><i>👤</i><b>{s.label}</b></div>
+          <div className="tbx-legend">
+            <span><i className="is-ok">{doneN}</i>Ho gaye</span>
+            <span><i>{n - doneN}</i>Baaki</span>
+          </div>
+          <div className="tbx-sechd">SECTION : <span>{s.label}</span></div>
+          <div className="tbx-grid" ref={gridRef}>
+            {order.map((x) => (
+              <button key={x.id} type="button" className={`${dm[x.id] ? "is-ok" : ""}${x.id === r.id ? " is-cur" : ""}`} onClick={() => pick(x.id)}>
+                {numOf(x)}
+              </button>
+            ))}
+          </div>
+          <div className="tbx-sidefoot">
+            {ctx.onReport ? <button type="button" className="tbx-btn" onClick={ctx.onReport}>Chapter report</button> : null}
+          </div>
+        </aside>
       </div>
-      <button type="button" className="aps1-nav is-prev" onClick={() => go(-1)} disabled={k <= 0}>← Pichhla</button>
-      <button type="button" className="aps1-nav is-next" onClick={() => go(1)} disabled={k >= n - 1}>Agla → <small>{k + 1}/{n}</small></button>
-    </>
+    </div>
   );
 }
 
@@ -962,7 +994,7 @@ function statsOf(list, rev, plan, today, bucketOf) {
   return { days, total, todayN: days[today] || 0, streak, best: Math.max(best, streak), bestDay: Math.max(0, ...Object.values(days)), pakka, bySub };
 }
 
-export default function AnswersPlay({ lay, list, renderCard, bucketOf, chapterOf, doneMap, onDone }) {
+export default function AnswersPlay({ lay, list, renderCard, bucketOf, chapterOf, doneMap, onDone, head, onReport }) {
   const [rev, setRev] = useState({});
   const seen = useRef(false);
   useEffect(() => {
@@ -987,7 +1019,7 @@ export default function AnswersPlay({ lay, list, renderCard, bucketOf, chapterOf
   const stats = useMemo(() => statsOf(list, rev, plan, today, bucketOf), [list, rev, plan, today, bucketOf]);
   const index = useMemo(() => new Map(list.map((r, k) => [r.id, k])), [list]);
   const ctx = {
-    list, renderCard, bucketOf, chapterOf, plan, queue, stats, today, index, doneMap,
+    list, renderCard, bucketOf, chapterOf, plan, queue, stats, today, index, doneMap, head, onReport,
     onDone: (r) => { if (onDone) onDone(r); else setRev(markDoneRev(r.id)); },
     act: (id) => setRev(markDoneRev(id)),
     undo: (id) => setRev(unmarkToday(id)),

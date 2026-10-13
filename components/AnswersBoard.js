@@ -953,7 +953,8 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
       )}
 
       <div className="ansp__main">
-        <div className="ansp__acts ansp__acts--top">
+        {/* 21 (Testbook jaisa) mein ye sab uski neeli patti / panel mein hai. */}
+        {lay !== "s1" && <div className="ansp__acts ansp__acts--top">
           {/* Upar ab bas yahi — owner ne baaki sab hata diya. Question ke
               apne button (✨ Gemini, 🐋 DeepSeek, 🎯 20) card par hi hain. */}
           <button
@@ -967,7 +968,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           {doneBySub.map((x) => (
             <span key={x.k} className="ansp__hogya">{x.icon} {x.label}: aaj <b>{x.today}</b> ho gaye</span>
           ))}
-        </div>
+        </div>}
 
         {flash && <p className="ansp__flash">{flash}</p>}
         {err && <p className="ansp__err">{err}</p>}
@@ -981,7 +982,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               : "Yaha abhi koi question nahi hai."}
           </p>
         ) : isPlayLayout(lay) ? (
-          <AnswersPlay lay={lay} list={list} renderCard={renderCard} bucketOf={bucketOf} chapterOf={chapterOf} doneMap={doneMap} onDone={onDone} />
+          <AnswersPlay lay={lay} list={list} renderCard={renderCard} bucketOf={bucketOf} chapterOf={chapterOf} doneMap={doneMap} onDone={onDone}
+            onReport={() => setReport(true)}
+            head={doneBySub.map((x) => <span key={x.k} className="tbx-today">{x.label}: aaj <b>{x.today}</b> ho gaye</span>)} />
         ) : lay === "list" ? (
           shown.map((r, i) => renderCard(r, i, false))
         ) : lay !== "0" ? (

@@ -13,8 +13,10 @@ import "./looks/tilenav.css";
 import "./looks/menus.css";
 // Upar wali fix patti ke 15 roop (components/MenuTop) — <html data-menu="t1"…>.
 import "./looks/menutop.css";
-// 📖 Kitaab roop — FINAL (owner), Window ke dhaanche ke upar (<html data-book="1">).
+// 🟦 Testbook roop — owner ka naya FINAL (Kitaab ki jagah), Window ke dhaanche
+// ke upar (<html data-tb="1">). Kitaab (data-book) ki file rakhi hai, band hai.
 import "./looks/kitaab.css";
+import "./looks/tbook.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
@@ -76,17 +78,17 @@ export default function RootLayout({ children }) {
   return (
     /* Script <html> ka apna attribute badalta hai, isliye server ka HTML aur
        client ka HTML yahan alag honge — ye ISI element par expected hai. */
-    <html lang="en" data-look="13" data-book="1" data-menu="t6" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" data-look="13" data-tb="1" data-menu="t6" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
             __html:
               "try{var d=document.documentElement,t=localStorage.getItem('cgl.theme');" +
               "if(t==='dark')d.setAttribute('data-theme','dark');" +
-              // Roop hamesha Kitaab (Window ke dhaanche par). Address bar ka
+              // Roop hamesha Testbook (Window ke dhaanche par). Address bar ka
               // rang: bina-media wala meta sabse aage, taaki OS ki pasand wali
               // do se pehle mile.
-              "var b='#e9dcbc';" +
+              "var b='#059ac4';" +
               "var m=document.createElement('meta');m.id='tc-user';" +
               "m.name='theme-color';m.content=b;" +
               "document.head.prepend(m)}catch(e){}",

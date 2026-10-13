@@ -1,0 +1,101 @@
+/* ===================================================================
+   🟦 TESTBOOK roop — owner ne Testbook ke test-solution page ka screenshot
+   diya: "same font same colour". Kitaab (data-book) ki jagah, Window (13)
+   ke dhaanche ke UPAR — par khidki ka title-bar / saaya hata kar seedha
+   safed panna, upar neeli patti.
+
+   <html data-tb="1"> (app/layout.js).
+   Rang screenshot se: patti #059ac4, tab #166a84, panel #d9edf7, section
+   #b4dbed, button #a9d0f5, sahi #27ae60, galat #c0392b, peela #ffd03b.
+   Font Helvetica / Arial (Testbook jaisa).
+   =================================================================== */
+
+html[data-tb="1"],
+html[data-tb="1"] body.examskin,
+html[data-tb="1"] body.examskin:not(.gemskin) {
+  /* globals.css ke token */
+  --bg: #ffffff; --card: #ffffff; --line: #dddddd; --ink: #333333; --dim: #777777;
+  --accent2: #166a84; --ok: #27ae60; --bad: #c0392b; --mark: #ffd03b;
+  --bg-0: #ffffff; --bg-1: #f9f9f9; --bg-2: #f1f1f1;
+  --glass-bg: #ffffff; --glass-bg-strong: #f9f9f9; --glass-border: #dddddd; --glass-border-strong: #cccccc;
+  --glass-shadow: none;
+  --text-1: #333333; --text-2: #555555; --text-3: #777777;
+  --accent: #059ac4; --on-accent: #ffffff; --accent-2: #166a84; --accent-3: #166a84;
+  --accent-grad: linear-gradient(#059ac4, #059ac4);
+  --head: #166a84; --emph: #222222; --mauve: #7a4a8a;
+  --nav-active: #059ac4; --nav-hover: rgba(5, 154, 196, 0.08);
+  --ok-wash: #e3f5ea; --bad-wash: #f8e1de; --accent-wash: #d9edf7; --accent2-wash: #d9edf7; --warn-wash: #fdf0e4; --mauve-wash: #ece0ec;
+  --font: "Helvetica Neue", Helvetica, Arial, "Nirmala UI", sans-serif;
+
+  /* exam.css / window.css ke --tb-* */
+  --tb-font: "Helvetica Neue", Helvetica, Arial, "Nirmala UI", sans-serif;
+  --A: #059ac4; --A2: #0487ad; --on-A: #ffffff;
+  --panel: #d9edf7; --field: #ffffff;
+  --tb-blue: #059ac4; --tb-blue-dark: #0487ad; --tb-blue-soft: #d9edf7; --tb-blue-ink: #166a84; --tb-navy: #166a84;
+  --tb-q: #333333;
+  --tb-green: #27ae60; --tb-green-dark: #219150; --tb-green-soft: #e3f5ea; --tb-ok-ink: #1e8449;
+  --tb-red: #c0392b; --tb-red-soft: #f8e1de; --tb-bad-ink: #a93226; --tb-red-ink-soft: #641e16;
+  --tb-orange: #059ac4;
+  --tb-yellow: #fff6d6; --tb-warn-ink: #8a6a00; --tb-warn-ink-2: #a07c00;
+  --tb-amber: #ffd03b; --tb-rev: #f5b301; --tb-rev-hover: #ffc21a; --tb-rev-on: #ffc21a;
+  --tb-rev-line: #c99300; --tb-rev-ink: #333333; --tb-rev-soft: #fff6d6;
+  --tb-key-line: #059ac4;
+  --tb-skip: #f1f1f1; --tb-skip-ink: #777777;
+  --tb-ink: #333333; --tb-ink-2: #555555; --tb-dim: #777777;
+  --tb-line: #dddddd; --tb-line-soft: #eeeeee; --tb-line-hard: #cccccc;
+  --tb-head: #f9f9f9; --tb-page: #ffffff; --tb-soft: #f9f9f9;
+  --tb-tint: #d9edf7; --tb-bg-2: #f1f1f1; --tb-raised: #ffffff;
+  --tb-focus: #059ac4; --tb-code: #166a84;
+  --scheme: light;
+  color-scheme: light;
+}
+html[data-tb="1"] { background: #ffffff; }
+html[data-tb="1"] body.examskin:not(.gemskin) {
+  background: #ffffff; color: #333333;
+  font-family: var(--font);
+}
+html[data-tb="1"] .examskin:not(.gemskin) .bg-orbs { background: #ffffff; }
+html[data-tb="1"] .examskin:not(.gemskin) .bg-orbs .orb { display: none; }
+
+/* Khidki hatao — seedha safed panna (title-bar, gol kone, saaya nahi). */
+@media (min-width: 1024px) {
+  html[data-tb="1"] .examskin:not(.gemskin) .shell {
+    background: #ffffff !important; border: 0 !important; border-radius: 0 !important;
+    box-shadow: none !important; max-width: none !important; margin-top: 0 !important;
+    grid-template-rows: 0 auto 1fr !important;
+  }
+  html[data-tb="1"] .examskin:not(.gemskin) .shell::before { content: none !important; display: none !important; }
+  html[data-tb="1"] .examskin:not(.gemskin) .topbar { background: #f9f9f9 !important; border-bottom-color: #dddddd !important; }
+}
+
+/* Upar ki fix patti — Testbook ki neeli patti, safed akshar. */
+html[data-tb="1"] .mtp {
+  --mt: #ffffff; --md: rgba(255, 255, 255, 0.88); --ma: #ffffff; --ml: #0487ad; --mp: #059ac4;
+  background: #059ac4; color: #ffffff; border-bottom-color: #0487ad; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+html[data-tb="1"] .mtp .mtp6-i small { color: rgba(255, 255, 255, 0.88); }
+html[data-tb="1"] .mtp .mtp6-i:hover, html[data-tb="1"] .mtp .mtp6-i.is-drop { background: rgba(255, 255, 255, 0.14); }
+html[data-tb="1"] .mtp .mtp6-i.is-on { background: #166a84; }
+html[data-tb="1"] .mtp .mtp6-i.is-on small { color: #ffffff; }
+html[data-tb="1"] .mtp-pop { background: #ffffff; color: #333333; border-color: #dddddd; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+
+/* Window ke hardcoded safed / kaale rang → Testbook ki syahi */
+html[data-tb="1"] .examskin:not(.gemskin) :is(.hero__title, .pyq-row__name, h1, h2, h3) { color: #333333; }
+html[data-tb="1"] .examskin:not(.gemskin) .hero__title { font-family: var(--font); font-weight: 700; }
+html[data-tb="1"] .examskin:not(.gemskin) :is(.drawer__grouphd, .drawer__link, .home-acc__link):hover { color: #059ac4; }
+html[data-tb="1"] .examskin:not(.gemskin) .home-acc__item:nth-child(even) { background: #f9f9f9; }
+html[data-tb="1"] .examskin:not(.gemskin) .drawer { background: #d9edf7; border-right-color: #dddddd; }
+html[data-tb="1"] .examskin:not(.gemskin) .pyq-row__ico { filter: none; }
+html[data-tb="1"] .examskin:not(.gemskin) .pyq-row:hover { background: #d9edf7; border-color: #b4dbed; }
+html[data-tb="1"] .examskin:not(.gemskin) ::-webkit-scrollbar-thumb { background: #c1c1c1; border-color: #ffffff; }
+
+/* Dabbe — safed, patli grey lakeer, saaya nahi (Testbook jaisa saaf). */
+html[data-tb="1"] .examskin:not(.gemskin) :is(.placeholder, .glass-card, .qcard, .stat, .home-acc__item, .pyq-row--all, .daily-card) {
+  background: #ffffff; border-color: #dddddd; box-shadow: none;
+}
+html[data-tb="1"] .examskin:not(.gemskin) .md { color: #333333; }
+html[data-tb="1"] .examskin:not(.gemskin) ::selection { background: #b4dbed; color: #222222; }
+
+/* Bina pass ka chat panel (SelectAsk) */
+html[data-tb="1"] .examskin:not(.gemskin) :is(.sa-panel, .sa-dock) { background: #ffffff; color: #333333; border-color: #dddddd; }
