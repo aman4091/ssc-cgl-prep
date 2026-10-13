@@ -39,7 +39,8 @@ function textOf(q) {
   return `${t}\n${opts}`.trim();
 }
 
-export default function Gemini20({ q, subject, onDirect, className = "btn btn--sm q-act--keep", label = `🎯 ${SIM_PER}` }) {
+// onGroup(g) — bana hua group kis sawaal ka hai, bulane wala yaad rakhe (Answers: lib/anssim).
+export default function Gemini20({ q, subject, onDirect, onGroup, className = "btn btn--sm q-act--keep", label = `🎯 ${SIM_PER}` }) {
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const busy = false;
@@ -49,7 +50,8 @@ export default function Gemini20({ q, subject, onDirect, className = "btn btn--s
     if (!questionImage(q)) {
       const t = textOf(q);
       if (!t) { onDirect?.(); return; }
-      addSimilar(t, subject);
+      const g = addSimilar(t, subject);
+      onGroup?.(g);
       toast(`🐋 Iske jaise ${SIM_PER} peechhe ban rahe hain — 🎯 Similar page par milenge`);
       return;
     }
@@ -65,7 +67,8 @@ export default function Gemini20({ q, subject, onDirect, className = "btn btn--s
   const make = () => {
     setErr("");
     try {
-      addSimilar(text, subject);
+      const g = addSimilar(text, subject);
+      onGroup?.(g);
       setOpen(false);
       toast(`🐋 Iske jaise ${SIM_PER} peechhe ban rahe hain — 🎯 Similar page par milenge`);
     } catch (e) { setErr(e.message || "Nahi hua — dobara try karo"); }

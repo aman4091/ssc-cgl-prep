@@ -32,7 +32,8 @@ import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
 import Gemini20 from "./Gemini20";
 import AnswersDoPane from "./AnswersLayouts";
-import AnswersLayoutsAll, { ANS_LAYOUTS } from "./AnswersLayoutsAll";
+import AnswersLayoutsAll from "./AnswersLayoutsAll";
+import AnswersPlay, { PLAY_LAYOUTS, SIM_LAYOUTS, isPlayLayout } from "./AnswersPlay";
 import { markDoneRev } from "@/lib/ansrev";
 import "./answers-layouts.css";
 
@@ -930,14 +931,15 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   const chips = [ALL_SUBJ, ...SUBJECTS];
 
-  // 📅 Roop — "0" = abhi wala Do-pane; "list" = purani lambi list (number
-  // rail ke saath); 1–15 purane roop (components/AnswersLayoutsAll).
-  // Is device par yaad (cgl.anslayout2).
-  const [lay, setLay] = useState("0");
+  // 📅 Roop — owner: "kar nahi raha, mann kare aise roop do". Dropdown mein
+  // ab "0" Do-pane + naye 40 (components/AnswersPlay): p1–p20 mann lage,
+  // s1–s20 har galti ke 5 similar wahin. Purani list + 1–15 dropdown se hate
+  // (code yahin, backup/README.md). Is device par yaad (cgl.anslayout3).
+  const [lay, setLay] = useState("p1");
   useEffect(() => {
-    try { const v = localStorage.getItem("cgl.anslayout2") || ""; if (v === "list" || ANS_LAYOUTS.some((l) => l.id === v)) setLay(v); } catch { /* ignore */ }
+    try { const v = localStorage.getItem("cgl.anslayout3") || ""; if (v === "0" || isPlayLayout(v)) setLay(v); } catch { /* ignore */ }
   }, []);
-  const pickLay = (v) => { setLay(v); try { localStorage.setItem("cgl.anslayout2", v); } catch { /* ignore */ } };
+  const pickLay = (v) => { setLay(v); try { localStorage.setItem("cgl.anslayout3", v); } catch { /* ignore */ } };
 
 
 
@@ -976,9 +978,13 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           </button>
           <span className="al-pick">
             <select className="al-pick__sel" value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Layout">
-              <option value="0">🎨 0 · Abhi wala (Do-pane)</option>
-              <option value="list">🎨 Purani list</option>
-              {ANS_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id} · {l.name}</option>)}
+              <option value="0">0 · Abhi wala (Do-pane)</option>
+              <optgroup label="🔥 Mann lage (1–20)">
+                {PLAY_LAYOUTS.map((l, k) => <option key={l.id} value={l.id}>{k + 1} · {l.name}</option>)}
+              </optgroup>
+              <optgroup label="🎯 5 similar wahin (21–40)">
+                {SIM_LAYOUTS.map((l, k) => <option key={l.id} value={l.id}>{k + 21} · {l.name}</option>)}
+              </optgroup>
             </select>
           </span>
           {/* 🏷️ Tag ki chhaanti — "permanent skip" wale ek jagah, "hard par ho
@@ -1012,6 +1018,8 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               ? "Is chhaanti mein koi galti nahi. Koi quiz do — galat ya chhoda hua question apne aap yahan aa jayega."
               : "Yaha abhi koi question nahi hai."}
           </p>
+        ) : isPlayLayout(lay) ? (
+          <AnswersPlay lay={lay} list={list} renderCard={renderCard} bucketOf={bucketOf} chapterOf={chapterOf} />
         ) : lay === "list" ? (
           shown.map((r, i) => renderCard(r, i, false))
         ) : lay !== "0" ? (
