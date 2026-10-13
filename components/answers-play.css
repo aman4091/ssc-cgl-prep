@@ -293,7 +293,7 @@ body.exam-on .pomo-btn { display: none; }
 
 /* ══════════ 21 · TESTBOOK jaisa (owner ka screenshot — same layout) ══════════
    Poori screen (upar ki menu patti ke neeche), Testbook ke rang + font. */
-body:has(.tbx) { overflow: hidden; }
+body:has(.tbx:not(.tbx-inline)) { overflow: hidden; }
 .tbx {
   position: fixed; top: var(--mtp-h, 58px); left: 0; right: 0; bottom: 0; z-index: 60;
   display: flex; flex-direction: column; background: #ffffff; color: #333333;
@@ -428,3 +428,15 @@ body.exam-on .tbx { top: 0; }
   .tbx .tbx-sec .tbx-tab:first-of-type { margin-left: 10px; }
   .tbx .tbx-tab { margin-left: 6px; padding: 5px 8px; font-size: 13px; }
 }
+
+/* ── PYQ ke Sets (components/PyqSets) — set chunne ka parda page ke andar ── */
+.tbx.tbx-inline { position: static; z-index: auto; display: block; margin: 0 0 16px; border: 1px solid #dddddd; }
+.tbx.tbx-inline .tbx-setsbody { padding: 16px; }
+.tbx.tbx-tabsonly { border: 0; border-bottom: 1px solid #dddddd; }
+.tbx-setsh { margin: 4px 0 10px; font-size: 15px; font-weight: 700; color: #333333; }
+.tbx-setsh + .setgrid { margin-bottom: 18px; }
+.tbx-sets .setcard.is-miss { border-left: 3px solid #e67e22; background: #fffaf3; }
+.tbx-q--pyq { padding: 10px 16px 24px; font-size: 16px; }
+.tbx-q--pyq .qcard { margin: 0; border: 0; box-shadow: none; padding: 0; background: transparent; }
+.tbx .tbx-msub { display: none; background: #27ae60; border-color: #27ae60; font-weight: 700; }
+@media (max-width: 900px) { .tbx .tbx-msub { display: inline-block; } }

@@ -208,6 +208,7 @@ export default function AnswersSets({ ctx, tabs }) {
           ) : (
             <>
               <span className={`tbx-today tbx-clock${left <= 60 ? " is-low" : ""}`}>⏱ <b>{clock(left)}</b></span>
+              <button type="button" className="tbx-hbtn tbx-msub" onClick={() => { if (window.confirm(`Submit karein? ${answered}/${n} ka jawab diya hai.`)) submit(); }}>Submit</button>
               <button type="button" className="tbx-hbtn" onClick={() => { if (window.confirm("Test chhod ke wapas? Natija save nahi hoga.")) back(); }}>✕</button>
             </>
           )}

@@ -20,17 +20,19 @@ import { hashStr } from "@/lib/syncitems";
 import { notebookQ } from "@/lib/imgq";
 import "./pyqreels.css";
 import PyqSplit from "./PyqSplit";
+import PyqSets from "./PyqSets";
 
 // ⚡ Saare PYQ — Sprint jaisa roop (components/PyqSplit): baayen sawaal,
 // daayen button + jawab, ek waqt mein ek. Laga hua option / 🙈 / ⏭ yaad.
 // Purana reel (neeche) abhi rakha hai.
-export default function PyqReels({ title, list, resumeKey, renderCard, shuffleFirst = false }) {
+function PyqReelsCore({ title, list, resumeKey, renderCard, shuffleFirst = false, headExtra = null }) {
   const base = useMemo(() => (shuffleFirst ? shuffled(list) : list), [list, shuffleFirst]);
   return (
     <PyqSplit
       title={title || "Questions"}
       list={base}
       storeKey={resumeKey || title || "pyq"}
+      headExtra={headExtra}
       renderCard={(q, i, mem) => {
         const el = renderCard(q, i, base);
         const extra = { split: true, ...mem };
@@ -247,5 +249,23 @@ function PyqReelsOld({
       </div>
       </div>
     </div>
+  );
+}
+
+// 📝 Har PYQ chapter: "📖 Padho | 📝 Sets · Test" (components/PyqSets). Padho =
+// yahi poori-screen wala drill jaisa tha (upar 📝 Sets se wapas); Sets = 25-25
+// ke 15 minute wale test.
+export default function PyqReels(props) {
+  return (
+    <PyqSets
+      list={props.list}
+      subject={props.subject}
+      resumeKey={props.resumeKey}
+      title={props.title}
+      renderCard={props.renderCard}
+      padho={(toSets) => (
+        <PyqReelsCore {...props} headExtra={<button type="button" className="sp-ibtn" onClick={toSets} title="25-25 ke set, 15 minute test">📝 Sets</button>} />
+      )}
+    />
   );
 }
