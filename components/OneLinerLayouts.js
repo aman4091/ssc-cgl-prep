@@ -324,21 +324,54 @@ function MindMap({ secs }) {
   );
 }
 
-// ─── 14 · Slides ───
-function Slides({ secs }) {
+// ─── 14 · Slides ─── FINAL (owner) — Notesliner, Fact log, One-liners teeno
+// mein yahi. Chhote ‹ › button (aur ← → keys) se ek slide aage-peeche.
+// secs: [{ key, title, kind, points: [{ text, star }], meta? | note+book }]
+export function SlideRow({ secs, empty = "Koi slide nahi." }) {
+  const box = useRef(null);
+  const [cur, setCur] = useState(0);
+  const step = () => {
+    const el = box.current;
+    const f = el && el.firstElementChild;
+    return f ? f.getBoundingClientRect().width + 16 : 0;
+  };
+  const go = (d) => { const el = box.current; if (el) el.scrollBy({ left: d * step(), behavior: "smooth" }); };
+  useEffect(() => {
+    const el = box.current;
+    if (!el) return undefined;
+    const on = () => { const w = step(); if (w) setCur(Math.round(el.scrollLeft / w)); };
+    el.addEventListener("scroll", on, { passive: true });
+    return () => el.removeEventListener("scroll", on);
+  }, [secs]);
+  useEffect(() => {
+    const k = (e) => {
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
+      if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+    };
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, []);
+  if (!secs.length) return <p className="hint">{empty}</p>;
   return (
-    <div className="ol14">
-      {secs.map((s, k) => (
-        <section key={s.key} className={`ol14-s${s.kind === "warn" ? " is-warn" : ""}`}>
-          <span className="ol14-n">{k + 1} / {secs.length}</span>
-          <h3>{s.kind === "warn" ? "⚠️ " : ""}{s.title}</h3>
-          <ul>{s.points.map((p, i) => <li key={i} className={p.star ? "is-star" : ""}><M t={p.text} /></li>)}</ul>
-          <Meta sec={s} />
-        </section>
-      ))}
+    <div className="ol14-wrap">
+      <button type="button" className="ol14-go is-l" onClick={() => go(-1)} disabled={cur <= 0} aria-label="Pichhli slide">‹</button>
+      <div className="ol14" ref={box}>
+        {secs.map((s, k) => (
+          <section key={s.key} className={`ol14-s${s.kind === "warn" ? " is-warn" : ""}`}>
+            <span className="ol14-n">{k + 1} / {secs.length}</span>
+            <h3>{s.kind === "warn" ? "⚠️ " : ""}{s.title}</h3>
+            <ul>{s.points.map((p, i) => <li key={i} className={p.star ? "is-star" : ""}><M t={p.text} /></li>)}</ul>
+            {s.meta != null ? (s.meta ? <span className="olx-meta">{s.meta}</span> : null) : <Meta sec={s} />}
+            {s.act ? <span className="ol14-act">{s.act}</span> : null}
+          </section>
+        ))}
+      </div>
+      <button type="button" className="ol14-go is-r" onClick={() => go(1)} disabled={cur >= secs.length - 1} aria-label="Agli slide">›</button>
     </div>
   );
 }
+function Slides({ secs }) { return <SlideRow secs={secs} />; }
 
 // ─── 15 · Khud yaad karo ───
 function Recall({ pts }) {

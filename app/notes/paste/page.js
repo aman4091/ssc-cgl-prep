@@ -239,8 +239,9 @@ export default function PasteNotesPage() {
     return { pages, pts, star };
   }, [shown]);
 
-  const [lay, setLay] = useState("pa");
-  useEffect(() => { setLay(savedOl()); }, []);
+  // 🎞️ FINAL (owner): "14 · Slides" — chhote ‹ › button ke saath. Dropdown
+  // hata diya; baaki roop (pa / 0 / 1–15) code mein hain.
+  const [lay, setLay] = useState("14");
   const pickLay = (v) => { setLay(v); try { localStorage.setItem(OL_KEY, v); } catch { /* ignore */ } };
 
   // Kholte hi seedha 🔁 Revise (Fact log jaisa); band karo to page wali list.
@@ -267,9 +268,9 @@ export default function PasteNotesPage() {
     const sig = `${book}|${note}`;
     if (autoRev.current === sig) return;
     autoRev.current = sig;
-    if (savedOl() !== "0") return;   // dusra roop chuna hai — seedha wahi
+    if (lay !== "0") return;   // dusra roop (Slides final) — seedha wahi
     startRev(note || "");
-  }, [groups, book, note, startRev]);
+  }, [groups, book, note, startRev, lay]);
 
   if (revising && revising.length) {
     return (
@@ -344,7 +345,7 @@ export default function PasteNotesPage() {
   if (lay !== "0") {
     return (
       <section className="section" style={{ marginTop: 16 }}>
-        <div className="pn-bar">{pick}{revBtn}{pager}</div>
+        <div className="pn-bar">{revBtn}{pager}</div>
         <OneLinerLayouts lay={lay} groups={shown} />
       </section>
     );

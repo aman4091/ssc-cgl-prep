@@ -1050,6 +1050,8 @@
 }
 .examskin .panic-fab:hover { transform: scale(1.08); }
 body.exam-on .panic-fab { display: none; }
+/* 🚨 Site par gol button chhupa (owner) — PC par overlay /panic page hi kholta hai, code wahi ka wahi. */
+.panic-fab { display: none !important; }
 
 /* Panic player (components/PanicPlayer) — poori screen, sab popups ke upar. */
 .examskin .panic {

@@ -12,6 +12,9 @@ import { autoTidyFacts } from "@/lib/facttidy";
 import FactFolders from "@/components/FactFolders";
 import "./folders.css";
 import FactLayouts2, { FL2_LAYOUTS } from "@/components/FactLayouts2";
+import { SlideRow } from "@/components/OneLinerLayouts";
+import { parseOneLiner } from "@/lib/onelinerfmt";
+import "@/app/notes/paste/layouts.css";
 import "./layouts.css";
 import "./layouts2.css";
 
@@ -22,9 +25,28 @@ import "./layouts2.css";
 const LAY_KEY = "cgl.factlayout4";
 // Dropdown hata diya (owner) — Fact log hamesha "4 · Pehla akshar" reel.
 // Baaki roop components/FactLayouts2 mein pade hain (backup/README.md).
+// 🎞️ Ab FINAL (owner): Notesliner wala "Slides" — har fact ek slide, chhote
+// ‹ › button (components/OneLinerLayouts SlideRow). "4 · Pehla akshar" code mein.
 const savedLay = () => {
-  return "4";
+  return "sl";
 };
+// Fact → slide: shakl (fmt) ho to wahi, warna text; khaane parseOneLiner se.
+function factSecs(facts) {
+  const out = [];
+  for (const f of facts) {
+    const parts = parseOneLiner(f.fmt || f.text || "");
+    parts.forEach((p, k) => {
+      if (!p.points.length && !p.title) return;
+      out.push({
+        key: `${f.id}|${k}`, kind: p.kind,
+        title: p.title || f.topic || "—",
+        points: p.points.length ? p.points : [{ text: p.title, star: false }],
+        meta: f.topic && p.title && p.title !== f.topic ? f.topic : "",
+      });
+    });
+  }
+  return out;
+}
 
 // Bade card mein revise (CA Revision wala Recall, khula roop): upar naam,
 // neeche uske baare mein — seedha dikhta hai, chhupa nahi. "Kerala dance:
@@ -86,7 +108,7 @@ export default function MissionFactsPage() {
   // se wo wahin se uthta hai jahan tha, isliye jhatka nahi lagta.
   const [rev, setRev] = useState(0);
 
-  const [lay, setLay] = useState("4");
+  const [lay, setLay] = useState("sl");
   const pickLay = (v) => { setLay(v); try { localStorage.setItem(LAY_KEY, v); } catch { /* private */ } };
 
   const load = () => setFacts(getFacts());
@@ -161,6 +183,14 @@ export default function MissionFactsPage() {
     </button>
   ) : null;
 
+  if (lay === "sl") {
+    return (
+      <section className="section">
+        <div className="fl-bar">{revBtn}</div>
+        <SlideRow secs={factSecs(facts)} empty="Abhi koi fact nahi." />
+      </section>
+    );
+  }
   if (lay !== "0") {
     return (
       <section className="section">

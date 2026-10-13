@@ -170,7 +170,19 @@
 .ol13-s h3 b, .ol13-s h3 strong { color: #fff !important; }
 
 /* ─── 14 · Slides ─── */
-.ol14 { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; }
+.ol14 { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 10px; scrollbar-width: thin; }
+.ol14-wrap { position: relative; }
+.ol14-go {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
+  width: 32px; height: 32px; padding: 0; border-radius: 50%; border: 1px solid var(--line);
+  background: var(--card); color: var(--text-1); font: inherit; font-size: 1.25rem; line-height: 1; font-weight: 700;
+  cursor: pointer; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+.ol14-go.is-l { left: 4px; }
+.ol14-go.is-r { right: 4px; }
+.ol14-go:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: var(--on-accent, #fff); }
+.ol14-go:disabled { opacity: 0.35; cursor: default; }
+.ol14-act { display: flex; justify-content: flex-end; }
 .ol14-s {
   flex: 0 0 min(760px, 88%); min-height: 380px; scroll-snap-align: center; box-sizing: border-box; padding: 28px 32px;
   border-radius: 24px; background: var(--card); border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px;

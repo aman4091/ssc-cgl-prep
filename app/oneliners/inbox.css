@@ -46,3 +46,7 @@
 
 /* Page ka naam — hero ki jagah bas itna. */
 .ol-h1 { margin: 0; font-size: 1.35rem; font-weight: 800; }
+
+/* 🎞️ Slides ke upar ki patti — subject chips, 🔎, 🗑️ Sab hatao */
+.ol-slidebar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+.ol-slidebar .qfeed__search { max-width: 220px; }

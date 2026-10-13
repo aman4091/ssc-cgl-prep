@@ -17,7 +17,9 @@
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { getOneLiners, removeOneLiner, clearOneLiners, OL_SUBS } from "@/lib/oneliners";
-import { OneLinersChat } from "@/components/OneLinersInbox";
+import { SlideRow } from "@/components/OneLinerLayouts";
+import { parseOneLiner } from "@/lib/onelinerfmt";
+import "@/app/notes/paste/layouts.css";
 import "./inbox.css";
 
 // Menu se seedha subject: /oneliners?sub=gs. Chips wahi ke wahi hain — ye
@@ -58,14 +60,22 @@ function OneLinersInner() {
       </section>
     );
   }
-  // 💬 Chat wali window — subject chips, 🔎 aur 🗑️ window ke sar mein, taaki
-  // window menu ki line se neeche tak rahe.
+  // 🎞️ FINAL (owner): Notesliner wala "Slides" — har line ek slide, chhote ‹ ›
+  // button (components/OneLinerLayouts SlideRow). Chat wali window code mein.
+  const secs = shown.flatMap((o) => {
+    const sub = OL_SUBS.find((x) => x.k === o.subject);
+    const parts = parseOneLiner(o.text).filter((p) => p.points.length || p.title);
+    return parts.map((p, k) => ({
+      key: `${o.id}|${k}`, kind: p.kind,
+      title: p.title || (sub ? `${sub.icon} ${sub.label}` : "📝"),
+      points: p.points.length ? p.points : [{ text: p.title, star: false }],
+      meta: sub ? `${sub.icon} ${sub.label}` : "",
+      act: k === 0 ? <button type="button" className="btn btn--ghost btn--sm" onClick={() => drop(o.id)} title="Ye line hatao">🗑️</button> : null,
+    }));
+  });
   return (
-    <OneLinersChat
-      items={shown}
-      onDelete={drop}
-      onChange={load}
-      headExtra={(
+    <section className="section" style={{ marginTop: 16 }}>
+      <div className="ol-slidebar">
         <>
           <button className={`subj-chip${sub === "all" ? " is-active" : ""}`} onClick={() => setSub("all")}>📝 Sab · {all.length}</button>
           {OL_SUBS.map((s) => {
@@ -83,8 +93,9 @@ function OneLinersInner() {
             onClick={() => { if (confirm(`Saari ${all.length} one-liners hamesha ke liye hat jayengi. Pakka?`)) { clearOneLiners(); load(); } }}
           >🗑️ Sab hatao</button>
         </>
-      )}
-    />
+      </div>
+      <SlideRow secs={secs} empty="Is chhaanti mein koi line nahi." />
+    </section>
   );
 }
 
