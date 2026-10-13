@@ -580,17 +580,16 @@ function TwoPane({ ms }) {
         <button type="button" className="mf33-back" onClick={() => setDetail(false)}>← List</button>
         <small>#{m.no}</small>
         <div className="mf33-q"><Q m={m} /></div>
-        {/* Jawab ke daayen us sawaal ke options (sahi wala rang mein). */}
-        <div className="mf33-ar">
-          <h2>{m.a}</h2>
-          {m.opts.length ? (
-            <ol className="mf33-opts">
-              {m.opts.map((o, k) => <li key={k} className={k === m.ai ? "is-a" : ""}><b>{String.fromCharCode(65 + k)}</b>{o}</li>)}
-            </ol>
-          ) : null}
-        </div>
+        <h2>{m.a}</h2>
         <Clusters m={m} />
         <Nav i={m.no - 1} n={ms[ms.length - 1].no} go={(d) => setI(i + d)} />
+      </div>
+      {/* Jawab wale dabbe ke DAAYEN alag khaana — us sawaal ke options. */}
+      <div className="mf33-side">
+        <small>Options</small>
+        <ol className="mf33-opts">
+          {m.opts.map((o, k) => <li key={k} className={k === m.ai ? "is-a" : ""}><b>{String.fromCharCode(65 + k)}</b>{o}</li>)}
+        </ol>
       </div>
     </div>
   );
