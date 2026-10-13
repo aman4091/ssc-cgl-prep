@@ -256,3 +256,13 @@
 /* Chalti ghadi wali patti scroll ke saath upar tiki rahe (owner). */
 .pomo-gate--bar { position: sticky; top: calc(var(--mtp-h, 58px) + 6px); z-index: 50; }
 .pomo-gate--bar .ap4-bar { position: static; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12); }
+/* ⏸ / ▶ — pomodoro patti */
+.pomo-gate .ap4-bar { grid-template-columns: auto auto 1fr auto; }
+.pomo-btns { display: inline-flex; gap: 6px; }
+.pomo-b { padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: inherit; font: inherit; font-weight: 800; font-size: 0.82rem; cursor: pointer; white-space: nowrap; }
+.pomo-b.is-go { background: #e03131; border-color: #e03131; color: #fff; }
+.ap4-bar.is-paused .ap-bar i { background: var(--text-3) !important; }
+.ap4-bar.is-done .ap-bar, .ap4-bar.is-done > span:nth-of-type(2) { display: none; }
+button.pomo-chip { border: 0; cursor: pointer; font: inherit; font-weight: 800; font-size: 0.82rem; }
+.pomo-chip.is-paused { background: var(--text-3); }
+@media (max-width: 520px) { .pomo-gate .ap4-bar { grid-template-columns: auto 1fr auto; } .pomo-gate .ap4-bar > span:nth-of-type(1) { display: none; } }

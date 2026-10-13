@@ -308,15 +308,9 @@ function Pomodoro({ ctx }) {
   const today = getLog()[ctx.today] || {};
   const r = ctx.queue[0];
   const sub = subjectOfPath(window.location.pathname, window.location.search);
-  if (run && run.mode === "break") return <div className="ap4-start"><h2>☕ Aaram — {mmss(Math.max(0, Math.ceil((run.endAt - now) / 1000)))}</h2><p>Paani piyo, aankhein band. Aaj 🍅 {today._n || 0}</p></div>;
   if (!run) return <div className="ap4-start"><h2>🍅 25 minute, sirf yahi</h2><p>Phone door, bas Answers. Aaj 🍅 {today._n || 0} · {fmtMin(Object.entries(today).filter(([k]) => k !== "_n").reduce((a, [, v]) => a + v, 0))}</p><button type="button" className="ap-go" onClick={() => startFocus(sub)}>▶ 🍅 Shuru</button></div>;
-  const left = Math.max(0, Math.ceil((run.endAt - now) / 1000));
-  return (
-    <div className="ap4">
-      <div className="ap4-bar is-pomo"><b>🍅 {mmss(left)}</b><span>Aaj ✓ {ctx.stats.todayN}</span><div className="ap-bar"><i style={{ width: `${(left / 1500) * 100}%` }} /></div></div>
-      {r ? <Work r={r} ctx={ctx} /> : <AllDone />}
-    </div>
-  );
+  // Ghadi aur ⏸ upar wali site ki patti mein (components/PomoGate) — yahan bas kaam.
+  return r ? <Work r={r} ctx={ctx} /> : <AllDone />;
 }
 
 function Box5({ ctx }) {
