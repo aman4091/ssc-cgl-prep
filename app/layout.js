@@ -26,6 +26,7 @@ import VocabFeeder from "@/components/VocabFeeder";
 import StoreGate from "@/components/StoreGate";
 import SWRegister from "@/components/SWRegister";
 import PathMemo from "@/components/PathMemo";
+import PanicButton from "@/components/PanicButton";
 import SelectAsk from "@/components/SelectAsk";
 import PomoGate from "@/components/PomoGate";
 
@@ -127,6 +128,7 @@ export default function RootLayout({ children }) {
           <VocabFeeder />
           {/* Beech mein chhoda hua quiz — floating "jahan chhoda tha" chip. */}
           {/* 🚨 Har page par — motivation gayi to ek tap, videos shuru. */}
+          <PanicButton />
           {/* Quiz ka Exit "jahan se aaye the" wahin lauta sake — lib/backto */}
           <PathMemo />
           {/* 💬 Kahin bhi text select karo — Poochho / Google / Copy. */}
