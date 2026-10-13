@@ -380,6 +380,8 @@ export default function SelectAsk() {
       // har beech wale par nahi — thoda tik kar.
       clearTimeout(tmr);
       if (!cur) return;
+      // 🏠 Home par DeepSeek apne aap NAHI (owner) — wahan sirf haath se 🐋.
+      if ((pathRef.current || "/") === "/") return;
       const next = nextRef.current;
       tmr = setTimeout(() => {
         [cur, ...next].forEach((qq, i) => {
