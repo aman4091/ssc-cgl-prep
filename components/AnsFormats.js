@@ -159,12 +159,12 @@ export default function AnsView({ cs, fmt }) {
         <p key={i}><b>🧩 {c.title}</b> — <P t={c.prose} />{c.zap ? <span className="af18-z"> ⚡ {c.zap}</span> : null}</p>
       ))}</div>
     );
-    // FINAL (owner): upar ⚡ line keyword chips ki tarah tukdon mein, neeche mind map.
+    // FINAL (owner): upar topic ka naam, uske neeche ⚡ line keyword chips ki tarah tukdon mein, phir mind map.
     case "19": return (
       <div className="af19">{cs.map((c, i) => (
         <section key={i}>
-          {c.zap ? <div className="af19-zap"><b>⚡</b>{zapParts(c.zap).map((z, k) => <span key={k}>{z}</span>)}</div> : null}
           <div className="af19-c">{c.title || `Cluster ${i + 1}`}</div>
+          {c.zap ? <div className="af19-zap"><b>⚡</b>{zapParts(c.zap).map((z, k) => <span key={k}>{z}</span>)}</div> : null}
           <div className="af19-br">{sents(c.prose).map((s, k) => <span key={k}><P t={s} /></span>)}</div>
         </section>
       ))}</div>
