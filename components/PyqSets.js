@@ -21,7 +21,7 @@ import PyqQuestionCard from "./PyqQuestionCard";
 import MathQuestionCard from "./MathQuestionCard";
 import ReasonQuestionCard from "./ReasonQuestionCard";
 import TestPage, { clock } from "./TestPage";
-import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
+import { getChapterResults, saveSetResult, moveResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import { pushWrong } from "@/lib/wrongsets";
 import { progsFor, saveProg, clearProg } from "@/lib/setprog";
 import { markDoneMany, doneKeyFor } from "@/lib/qdone";
@@ -150,6 +150,18 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     start(i, results[want] ? "result" : progs[want] ? "resume" : "test");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sets, results, progs]);
+
+  // 🩹 Set NUMBER wale purane natije ("#0") → is set ki pehchaan par. Ek
+  // chapter-key ka natija usi list ka hota hai, to number se milana theek hai.
+  // Sirf Wrong Sets ke baad (13 Oct se) diye — usse purane nahi uthate.
+  useEffect(() => {
+    if (given) return;
+    for (let i = 0; i < sets.length; i++) {
+      const old = results[String(i)];
+      if (!old || results[kOf(i)] || !(String(old.at || "") >= WS_SINCE)) continue;
+      moveResult(rk, String(i), kOf(i));
+    }
+  }, [results, sets, rk, given, sigs]);
 
   // 🩹 Purane natije (fix se pehle) — jin set ke jawab "2" jaise TEXT mein the
   // (Medieval), unka galat/chhoda Wrong Sets mein gaya hi nahi tha aur ginti

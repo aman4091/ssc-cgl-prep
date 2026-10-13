@@ -16,7 +16,7 @@
 // gaya neeche" wali chhantayi yahan nahi, warna set ke sawaal badalte rehte.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
+import { getChapterResults, saveSetResult, moveResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import TestPage, { clock } from "./TestPage";
 import { progsFor, saveProg, clearProg } from "@/lib/setprog";
 import { hashStr } from "@/lib/syncitems";
@@ -146,6 +146,15 @@ export default function AnswersSets({ ctx }) {
     setLeft(pg ? Math.max(1, pg.left || 0) : SET_MIN * 60);
   };
   const back = () => { setSetIdx(null); setDone(false); setProgs(progsFor(rkey)); };
+  // 🩹 Set NUMBER wale purane natije ("#0", 13 Oct se) → set ki nayi pehchaan.
+  useEffect(() => {
+    for (let i = 0; i < setCount; i++) {
+      const old = results[String(i)];
+      if (!old || results[sigs[i]] || !(String(old.at || "") >= "2026-10-13T00:00")) continue;
+      moveResult(rkey, String(i), sigs[i]);
+    }
+  }, [results, sigs, setCount, rkey]);
+
   // 🏠 Home ki report se "▶" — ?set=<pehchaan> se wahi set seedha.
   const autoRef = useRef(false);
   useEffect(() => {
