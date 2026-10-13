@@ -1,7 +1,7 @@
 "use client";
 
 import "@/app/carev.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FACT_SECS, factView, getFacts, removeFact } from "@/lib/missionfacts";
 import { FactSrcPanel } from "@/components/FactSrcBtn";
 import { clearSession } from "@/lib/recallsession";
@@ -13,7 +13,8 @@ import FactFolders from "@/components/FactFolders";
 import "./folders.css";
 import FactLayouts2, { FL2_LAYOUTS } from "@/components/FactLayouts2";
 import { SlideRow } from "@/components/OneLinerLayouts";
-import { parseOneLiner } from "@/lib/onelinerfmt";
+import { makeStepper } from "@/lib/dailyprog";
+import { factSecs } from "@/lib/factslides";
 import "@/app/notes/paste/layouts.css";
 import "./layouts.css";
 import "./layouts2.css";
@@ -30,23 +31,6 @@ const LAY_KEY = "cgl.factlayout4";
 const savedLay = () => {
   return "sl";
 };
-// Fact → slide: shakl (fmt) ho to wahi, warna text; khaane parseOneLiner se.
-function factSecs(facts) {
-  const out = [];
-  for (const f of facts) {
-    const parts = parseOneLiner(f.fmt || f.text || "");
-    parts.forEach((p, k) => {
-      if (!p.points.length && !p.title) return;
-      out.push({
-        key: `${f.id}|${k}`, kind: p.kind,
-        title: p.title || f.topic || "—",
-        points: p.points.length ? p.points : [{ text: p.title, star: false }],
-        meta: f.topic && p.title && p.title !== f.topic ? f.topic : "",
-      });
-    });
-  }
-  return out;
-}
 
 // Bade card mein revise (CA Revision wala Recall, khula roop): upar naam,
 // neeche uske baare mein — seedha dikhta hai, chhupa nahi. "Kerala dance:
@@ -109,6 +93,8 @@ export default function MissionFactsPage() {
   const [rev, setRev] = useState(0);
 
   const [lay, setLay] = useState("sl");
+  // 📅 aaj kitni slides aage badhe — Home mission (saare facts = ek round).
+  const factStep = useMemo(() => makeStepper("facts"), []);
   const pickLay = (v) => { setLay(v); try { localStorage.setItem(LAY_KEY, v); } catch { /* private */ } };
 
   const load = () => setFacts(getFacts());
@@ -187,7 +173,7 @@ export default function MissionFactsPage() {
     return (
       <section className="section">
         <div className="fl-bar">{revBtn}</div>
-        <SlideRow secs={factSecs(facts)} empty="Abhi koi fact nahi." />
+        <SlideRow secs={factSecs(facts)} onAt={factStep} empty="Abhi koi fact nahi." />
       </section>
     );
   }

@@ -15,6 +15,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { vocabPool } from "@/lib/vocabpool";
 import { storeGet, storeSet } from "@/lib/bigstore";
 import { hashStr } from "@/lib/syncitems";
+import { makeStepper } from "@/lib/dailyprog";
 import { SlideRow } from "@/components/OneLinerLayouts";
 import { getHindiMap, hindiOf, getEnMap, enOf, ensureHindi } from "@/lib/vocabhindi";
 import "./layouts15.css";
@@ -89,10 +90,12 @@ function VocabSlides({ pool }) {
   }, []);
   // Saamne wali slide se aage ke 20 tak ka Hindi (aur New ka English). Aage
   // badhte ho to bas naya EK judta hai — jo ban chuke wo dobara nahi maangte.
+  const step = useMemo(() => makeStepper("vocab"), []);
   const onAt = useCallback((at) => {
     try { localStorage.setItem(SAT, String(at)); } catch { /* ignore */ }
+    step(at);   // 📅 aaj kitni slides aage badhe — Home mission (50 ka ek set)
     ensureHindi(list.slice(at, at + 21).map((p) => ({ word: p.word, def: p.def || p.meaning || "", en: p.type === "new" })));
-  }, [list]);
+  }, [list, step]);
   const secs = list.map((p) => {
     const mean = p.type === "new" ? (enOf(en, p.word) || plainLine(p.mine || p.meaning)) : plainLine(p.def || p.meaning);
     const h = hindiOf(hi, p.word);

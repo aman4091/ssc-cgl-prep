@@ -143,7 +143,12 @@ L[1] = ({ d }) => (
 L[2] = ({ d }) => {
   const items = [
     ...SUBJ.flatMap((s) => Array.from({ length: PER_DAY }, (_, i) => ({ key: `${s.k}${i}`, t: `${s.icon} ${s.label} — set ${i + 1}`, done: d.bySub[s.k].today > i, href: s.href }))),
-    { key: "ca", t: `${CA.icon} ${CA.label} — 1 set`, done: (d.bySub.ca || {}).today > 0, href: CA.href },
+    ...[0, 1].map((i) => ({ key: `ca${i}`, t: `${CA.icon} ${CA.label} — set ${i + 1}`, done: (d.bySub.ca || {}).today > i, href: CA.href })),
+    // 🧮 Seedhi poori 2 baar · 🔤 Vocab 150 = 50 ke 3 set · 🧠 Fact log saare 2 baar
+    ...[0, 1].map((i) => ({ key: `calc${i}`, t: `🧮 Calculation seedhi — set ${i + 1}`, done: (d.prog.ladder || 0) > i, href: "/calculation" })),
+    ...[0, 1, 2].map((i) => ({ key: `voc${i}`, t: `🔤 Vocab — set ${i + 1} (50 word)${(d.prog.vocab || 0) < (i + 1) * 50 && (d.prog.vocab || 0) > i * 50 ? ` · ${(d.prog.vocab || 0) - i * 50}/50` : ""}`, done: (d.prog.vocab || 0) >= (i + 1) * 50, href: "/vocab" })),
+    // Pehli slide se aakhri tak = (slides − 1) kadam — ek round.
+    ...(d.factSlides ? [0, 1].map((i) => { const R = Math.max(1, d.factSlides - 1); const f = d.prog.facts || 0; return { key: `fact${i}`, t: `🧠 Fact log — round ${i + 1} (saare ${d.factSlides})${f < (i + 1) * R && f > i * R ? ` · ${f - i * R}/${R}` : ""}`, done: f >= (i + 1) * R, href: "/mission/facts" }; }) : []),
     { key: "w", t: "🔁 Ek Wrong Set", done: d.bySub.wrong.today > 0 || (!d.wrong.pending && d.wrong.sets > 0), href: "/wrong-sets" },
     { key: "a", t: "📖 Ek Answers set", done: d.bySub.answers.today > 0, href: "/answers" },
   ];

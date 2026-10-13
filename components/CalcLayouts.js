@@ -13,9 +13,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { SKILLS, skillOf, withK, genLevel, numOpts, record } from "@/lib/calcskills";
 import CalcLayoutsMore, { CL_MORE } from "./CalcLayoutsMore";
+import { bumpProg, todayProg, dayNow } from "@/lib/dailyprog";
 
 const CL_KEPT = [
-  { id: "3", name: "Seedhi (ladder) — 10 paayedaan" },
+  { id: "3", name: "Seedhi (ladder) — 14 paayedaan, har par 10 sahi" },
   { id: "5", name: "Race — ghost se muqabla" },
   { id: "6", name: "Survival — 3 jaan" },
   { id: "8", name: "MCQ fatafat" },
@@ -73,39 +74,48 @@ function Ans({ item, onDone, disabled }) {
 }
 const Q = ({ item, big }) => <div className={`clx-q${big ? " is-big" : ""}`}>{item.q}</div>;
 
-// ─── 3 · Ladder ───
-const RUNGS = ["add2", "sub2", "mul21", "add3", "sub3", "mul11", "pct", "mul22", "div", "sqrt"];
+// ─── 3 · Ladder ─── FINAL (owner): har paayedaan par 10 SAHI = agli. Upar
+// Triplets, Squares, Cubes aur Fraction → % ki paayedaan bhi (decks). Poori
+// seedhi chadhna = ek "set" — roz 2 (Home ka mission, lib/dailyprog). Beech
+// mein chhodo to wahin se (cgl.calc.ladderrun, aaj ka).
+const RUNGS = ["add2", "sub2", "mul21", "add3", "sub3", "mul11", "pct", "mul22", "div", "sqrt", "d:trip", "d:square", "d:cube", "d:frac"];
+const NEED = 10;
+const RUN_KEY = "cgl.calc.ladderrun";
 function Ladder() {
-  const today = new Date().toISOString().slice(0, 10);
-  const [rung, setRung] = useState(0);
-  const [streak, setStreak] = useState(0);
-  const [item, setItem] = useState(() => withK(RUNGS[0]));
+  const today = dayNow();
+  const saved0 = (() => { const v = lsGet(RUN_KEY, null); return v && v.day === today ? v : { day: today, rung: 0, ok: 0 }; })();
+  const [rung, setRung] = useState(saved0.rung);
+  const [ok, setOk] = useState(saved0.ok);
+  const [item, setItem] = useState(() => withK(RUNGS[Math.min(saved0.rung, RUNGS.length - 1)]));
   const [flash, setFlash] = useState(null);
-  const saved = lsGet("cgl.calc.ladder", {});
+  const [laps, setLaps] = useState(() => todayProg().ladder || 0);
   const t0 = useRef(Date.now());
-  const done = (ok) => {
-    record(item.sk, ok, Date.now() - t0.current);
-    setFlash(ok ? "y" : "n");
+  const save = (r, o) => lsSet(RUN_KEY, { day: today, rung: r, ok: o });
+  const done = (good) => {
+    record(item.sk, good, Date.now() - t0.current);
+    setFlash(good ? "y" : "n");
     setTimeout(() => setFlash(null), 350);
-    let r = rung, s = ok ? streak + 1 : 0;
-    if (s >= 3) { r = rung + 1; s = 0; if (r > (saved[today] || 0)) lsSet("cgl.calc.ladder", { ...saved, [today]: r }); }
-    setRung(r); setStreak(s);
+    let r = rung, o = good ? ok + 1 : ok;
+    if (o >= NEED) { r = rung + 1; o = 0; }
+    if (r >= RUNGS.length) { bumpProg("ladder", 1); setLaps((x) => x + 1); }
+    setRung(r); setOk(o); save(r, o);
     if (r < RUNGS.length) setItem(withK(RUNGS[r]));
     t0.current = Date.now();
   };
+  const again = () => { setRung(0); setOk(0); save(0, 0); setItem(withK(RUNGS[0])); };
   return (
     <div className="cl3">
       <ol className="cl3-lad">
         {RUNGS.map((kk, i) => (
           <li key={kk} className={i < rung ? "is-done" : i === rung ? "is-cur" : ""}>
-            <span>{i + 1}</span><SkillName k={kk} />{i === rung && <em>{"●".repeat(streak)}{"○".repeat(3 - streak)}</em>}
+            <span>{i + 1}</span><SkillName k={kk} />{i === rung && <em>{ok}/{NEED}</em>}
           </li>
         )).reverse()}
       </ol>
       <div className={`cl3-play${flash ? ` is-${flash}` : ""}`}>
-        {rung >= RUNGS.length ? <div className="clx-result"><b>🏆</b><span>Poori seedhi chadh gaye!</span><button type="button" className="clx-go" onClick={() => { setRung(0); setStreak(0); setItem(withK(RUNGS[0])); }}>↺ Phir se</button></div> : (
+        {rung >= RUNGS.length ? <div className="clx-result"><b>🏆</b><span>Poori seedhi chadh gaye! Aaj {laps} baar (mission: 2).</span><button type="button" className="clx-go" onClick={again}>↺ Phir se</button></div> : (
           <>
-            <p className="clx-dim">Paayedaan {rung + 1}: lagataar 3 sahi = upar. Aaj ka best: {saved[today] || 0}/10</p>
+            <p className="clx-dim">Paayedaan {rung + 1}/{RUNGS.length}: {NEED} sahi = upar · abhi {ok}/{NEED} · aaj poori seedhi {laps} baar (mission: 2)</p>
             <Q item={item} big />
             <Ans item={item} onDone={done} />
           </>

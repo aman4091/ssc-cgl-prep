@@ -162,8 +162,9 @@ export default function CalculationPage() {
   const [open, setOpen] = useState(null);        // { g, v, mode: "show" | "test" }
   const [best, setBest] = useState({});
   useEffect(() => { setBest(readBest()); }, []);
-  const [lay, setLay] = useState("0");
-  useEffect(() => { try { const v = localStorage.getItem(LAY_KEY); if (v && CL_LAYOUTS.some((l) => l.id === v)) setLay(v); } catch { /* private */ } }, []);
+  // 🪜 FINAL (owner): "3 · Seedhi" — dropdown hata diya. Baaki tareeke
+  // (0 purana, 5 Race, 6 Survival …) code mein pade hain.
+  const [lay, setLay] = useState("3");
   const pickLay = (v) => { setLay(v); setOpen(null); try { localStorage.setItem(LAY_KEY, v); } catch { /* private */ } };
   const bar = (
     <div className="cl-bar">
@@ -189,8 +190,7 @@ export default function CalculationPage() {
   if (lay !== "0") {
     return (
       <section className="section cal">
-        <h1 className="cal-h1">🧮 Calculation</h1>
-        {bar}
+        <h1 className="cal-h1">🧮 Calculation · Seedhi</h1>
         <CalcLayouts lay={lay} />
       </section>
     );
