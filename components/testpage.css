@@ -120,3 +120,16 @@ body:has(.tbt) { overflow: hidden; }
 /* Mark for Review — peela (owner) */
 .tbt .tbt-acts__mid button.is-mark { background: #ffc107; color: #000000; }
 .tbt .tbt-acts__mid button.is-mark:hover { background: #e0a800; }
+
+/* Submit ka dabba — site par beech mein */
+.tbt-pop { position: fixed; inset: 0; z-index: 950; display: grid; place-items: center; padding: 16px; background: rgba(0, 0, 0, 0.45); }
+.tbt-ask { max-width: 380px; width: 100%; }
+.tbt-ask h3 { margin: 0 0 12px; font-size: 17px; color: #222222; }
+.tbt-ask__acts { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+.tbt .tbt-ask__acts button { padding: 7px 16px; border-radius: 3px; border: 1px solid #2e66cc; background: #ffffff; color: #2e66cc; font-size: 14px; font-weight: 700; }
+.tbt .tbt-ask__acts button.is-yes { background: #2e66cc; color: #ffffff; }
+.tbt:fullscreen { overflow: hidden; }
+.tbt-pop__box { position: relative; max-width: 440px; width: 100%; padding: 18px 20px; border-radius: 6px; background: #ffffff; color: #222222; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3); font-size: 14px; }
+.tbt-pop__box h3 { margin: 0 0 10px; font-size: 16px; }
+.tbt-pop__box p { margin: 6px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tbt .tbt-pop__x { position: absolute; top: 8px; right: 10px; border: 0; background: none; font-size: 16px; color: #555555; }

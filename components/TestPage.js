@@ -11,7 +11,7 @@
 // Submit ke baad wahi parda natije ke saath (sahi hara / galat laal).
 // Sawaal kaise dikhe wo bulane wala deta hai (PyqSets / AnswersSets).
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./testpage.css";
 
 const two = (n) => String(n).padStart(2, "0");
@@ -23,10 +23,24 @@ export default function TestPage({
   answered, marked, tally, children, onMark, onNext, onSubmit, onBack, onQuit,
 }) {
   const [pop, setPop] = useState("");
+  // ⛶ Poori screen (owner) — browser ka fullscreen, isi parde ka.
+  const rootRef = useRef(null);
+  const [fs, setFs] = useState(false);
+  useEffect(() => {
+    const h = () => setFs(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", h);
+    return () => document.removeEventListener("fullscreenchange", h);
+  }, []);
+  const toggleFs = () => {
+    if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+    else rootRef.current?.requestFullscreen?.().catch(() => {});
+  };
+  // Submit ka poochhna — browser ka popup nahi, site par beech mein dabba.
+  const [ask, setAsk] = useState(false);
   const counts = { ans: 0, not: 0, mark: 0, new: 0 };
   if (!done) for (let i = 0; i < n; i++) counts[state(i)] = (counts[state(i)] || 0) + 1;
   return (
-    <div className={`tbt${done ? " is-done" : ""}`}>
+    <div className={`tbt${done ? " is-done" : ""}`} ref={rootRef}>
       <header className="tbt-head">
         <div className="tbt-brand">
           <b>📘 SSC CGL Pre</b>
@@ -46,9 +60,10 @@ export default function TestPage({
             </>
           )}
         </div>
+        <button type="button" className="tbt-x" onClick={toggleFs} title="Poori screen">{fs ? "⤡" : "⛶"}</button>
         {done
           ? <button type="button" className="tbt-x" onClick={onBack}>← Sets</button>
-          : <button type="button" className="tbt-x" onClick={onQuit} title="Test chhodo">✕</button>}
+          : <button type="button" className="tbt-x" onClick={onQuit} title="Baad mein — set par Resume milega">✕</button>}
       </header>
 
       <div className="tbt-body">
@@ -71,7 +86,7 @@ export default function TestPage({
                 <>
                   <button type="button" className="is-mark" onClick={onMark}>Mark for Review</button>
                   <button type="button" onClick={onNext}>Save &amp; Next</button>
-                  <button type="button" onClick={onSubmit}>Submit Test</button>
+                  <button type="button" onClick={() => setAsk(true)}>Submit Test</button>
                 </>
               )}
             </span>
@@ -114,6 +129,26 @@ export default function TestPage({
           </table>
         </aside>
       </div>
+
+      {ask ? (
+        <div className="tbt-pop" onClick={() => setAsk(false)}>
+          <div className="tbt-pop__box tbt-ask" onClick={(e) => e.stopPropagation()}>
+            <h3>Test submit karein?</h3>
+            <table className="tbt-ana">
+              <tbody>
+                <tr><td>Total</td><td><b>{n}</b></td></tr>
+                <tr><td>Answered</td><td><b>{answered}</b></td></tr>
+                <tr><td>Not Answered</td><td><b>{n - answered}</b></td></tr>
+                <tr><td>Mark for Review</td><td><b>{marked}</b></td></tr>
+              </tbody>
+            </table>
+            <div className="tbt-ask__acts">
+              <button type="button" className="is-yes" onClick={() => { setAsk(false); onSubmit(); }}>Haan, Submit</button>
+              <button type="button" onClick={() => setAsk(false)}>Nahi, wapas</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       {pop ? (
         <div className="tbt-pop" onClick={() => setPop("")}>

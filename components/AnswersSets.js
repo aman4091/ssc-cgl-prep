@@ -18,6 +18,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import TestPage, { clock } from "./TestPage";
+import { progsFor, saveProg, clearProg } from "@/lib/setprog";
 
 const SET_SIZE = 25;
 const SET_MIN = 15;
@@ -51,8 +52,9 @@ export default function AnswersSets({ ctx }) {
   const rkey = `answers:${subs.join("+") || "all"}`;
   const setCount = Math.ceil(all.length / SET_SIZE);
   const [results, setResults] = useState({});
+  const [progs, setProgs] = useState({});
   useEffect(() => {
-    const on = () => setResults(getChapterResults(rkey));
+    const on = () => { setResults(getChapterResults(rkey)); setProgs(progsFor(rkey)); };
     on();
     window.addEventListener("cgl:settest-changed", on);
     window.addEventListener("cgl:sync-applied", on);
@@ -110,21 +112,31 @@ export default function AnswersSets({ ctx }) {
     if (!running) return;
     const s = SET_MIN * 60 - left;
     setSec(s); setDone(true); setCur(0);
+    clearProg(rkey, setIdx);
     save(picks, self, s);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [running, left, picks, self]);
   useEffect(() => { if (running && left === 0) submit(); }, [running, left, submit]);
 
+  // how: "test" (naya) | "resume" (chhoda hua) | "result"
   const open = (i, how) => {
     const prev = how === "result" ? results[i] : null;
-    setSetIdx(i); setCur(0); setReview({}); setSeen({ 0: true });
-    setPicks(prev ? prev.picks || {} : {});
+    const pg = how === "resume" ? progs[i] : null;
+    if (how === "test") clearProg(rkey, i);
+    setSetIdx(i);
+    setCur(pg ? pg.cur || 0 : 0); setReview(pg ? pg.review || {} : {}); setSeen(pg ? pg.seen || { 0: true } : { 0: true });
+    setPicks(pg ? pg.picks || {} : prev ? prev.picks || {} : {});
     setSelf(prev ? prev.self || {} : {});
     setSec(prev ? prev.sec || 0 : 0);
     setDone(how === "result");
-    setLeft(SET_MIN * 60);
+    setLeft(pg ? Math.max(1, pg.left || 0) : SET_MIN * 60);
   };
-  const back = () => { setSetIdx(null); setDone(false); };
+  const back = () => { setSetIdx(null); setDone(false); setProgs(progsFor(rkey)); };
+  // ⏸ Chalte test ka haal — chhod do to set par Resume.
+  useEffect(() => {
+    if (!running) return;
+    saveProg(rkey, setIdx, { picks, review, seen, cur, left });
+  }, [running, rkey, setIdx, picks, review, seen, cur, left]);
   const setMine = (i, v) => {
     const sf = { ...self, [i]: v };
     setSelf(sf);
@@ -146,14 +158,20 @@ export default function AnswersSets({ ctx }) {
               const a = i * SET_SIZE;
               const chunk = all.slice(a, a + SET_SIZE);
               const r = results[i];
+              const pg = progs[i];
+              const L = Math.max(1, chunk.length);
               return (
-                <div key={i} className={`setcard${r ? " is-done" : ""}`}>
-                  <button type="button" className="setcard__open" onClick={() => open(i, r ? "result" : "test")}>
+                <div key={i} className={`setcard${r ? " is-done" : ""}${pg ? " is-paused" : ""}`}>
+                  {pg ? <button type="button" className="setcard__resume" onClick={() => open(i, "resume")}>⏸ Resume · {clock(pg.left || 0)} bacha</button> : null}
+                  <button type="button" className="setcard__open" onClick={() => open(i, pg ? "resume" : r ? "result" : "test")}>
                     <span className="setcard__n">Set {i + 1}{r ? " ✓" : ""}</span>
                     <span className="setcard__meta">Q {a + 1}–{a + chunk.length} · {chunk.length} questions</span>
-                    <span className="setcard__bar"><i style={{ width: `${r ? Math.round((r.right / chunk.length) * 100) : 0}%` }} /></span>
+                    <span className="setcard__bar setcard__bar--2">
+                      <i style={{ width: `${r ? Math.round((r.right / L) * 100) : 0}%` }} />
+                      <i className="is-bad" style={{ width: `${r ? Math.round(((r.wrong || 0) / L) * 100) : 0}%` }} />
+                    </span>
                     {r ? (
-                      <span className="setcard__score">{fmtMarks(marksOf(r))}/{maxMarks(r.total)} marks · {r.right}/{r.total} sahi · {accuracyOf(r)}%{r.ask ? ` · ${r.ask} jaanchna baaki` : ""}</span>
+                      <span className="setcard__score">{fmtMarks(marksOf(r))}/{maxMarks(r.total)} marks · {r.right} sahi · <em className="setcard__wrong">{r.wrong || 0} wrong</em> · {accuracyOf(r)}%{r.ask ? ` · ${r.ask} jaanchna baaki` : ""}</span>
                     ) : null}
                   </button>
                   {r ? (
@@ -197,9 +215,9 @@ export default function AnswersSets({ ctx }) {
       tally={{ ...t, marks: `${fmtMarks(marksOf(t))}/${maxMarks(n)}`, time: clock(sec) }}
       onMark={() => { setReview((x) => ({ ...x, [at]: !x[at] })); go(at + 1); }}
       onNext={() => go(at + 1)}
-      onSubmit={() => { if (window.confirm(`Submit karein? ${answered}/${n} ka jawab diya hai.`)) submit(); }}
+      onSubmit={submit}
       onBack={back}
-      onQuit={() => { if (window.confirm("Test chhod ke wapas? Natija save nahi hoga.")) back(); }}
+      onQuit={back}
     >
       <div className="tbt-ansq">
         {ctx.renderCard(r, ctx.index.get(r.id) ?? 0, false, done ? {} : { chatLook: true, savedPick: null, savedHidden: false })}
@@ -211,7 +229,7 @@ export default function AnswersSets({ ctx }) {
             : "";
           return (
             <label key={k} className={`tbt-opt${cls}`}>
-              <span><input type="radio" name={`o${at}`} checked={picks[at] === k} disabled={done} onChange={() => setPicks((p) => ({ ...p, [at]: k }))} /></span>
+              <span><input type="radio" name={`o${at}`} checked={picks[at] === k} disabled={done} readOnly onClick={() => setPicks((p) => { const c = { ...p }; if (c[at] === k) delete c[at]; else c[at] = k; return c; })} /></span>
               <span>{o ? `${L[k]}) ${o}` : L[k]}</span>
             </label>
           );

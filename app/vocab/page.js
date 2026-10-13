@@ -20,7 +20,8 @@ import "./layouts.css";
 import "@/app/notes/paste/layouts.css";
 
 // 🎞️ FINAL (owner): Fact log jaisi SLIDES — OWS / Idiom / Vocab / New sab
-// mila-jula, RANDOM kram (har baar naya). Ek slide = ek word: matlab + 🇮🇳
+// mila-jula, RANDOM kram (har baar naya). Ek slide = ek word: matlab +
+// (jhanda nahi — Windows par 🇮🇳 "IN" dikhta tha)
 // Hindi (DeepSeek, peechhe — lib/vocabhindi; New ka chhota English bhi).
 // Cover method (VocabLayouts "11") code mein pada hai.
 const TYPE_LABEL = { ows: "🔤 OWS", idiom: "💬 Idiom", vocab: "📖 Vocab", new: "📋 New" };
@@ -47,7 +48,7 @@ function VocabSlides({ pool }) {
     const h = hindiOf(hi, p.word);
     return {
       key: p.id, kind: "topic", title: p.word,
-      points: [{ text: mean || "⏳", star: false }, { text: `🇮🇳 ${h || "⏳"}`, star: false }],
+      points: [{ text: mean || "⏳", star: false }, { text: h || "⏳", star: false }],
       meta: TYPE_LABEL[p.type] || "",
     };
   });

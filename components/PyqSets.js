@@ -23,6 +23,7 @@ import ReasonQuestionCard from "./ReasonQuestionCard";
 import TestPage, { clock } from "./TestPage";
 import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import { pushWrong } from "@/lib/wrongsets";
+import { progsFor, saveProg, clearProg } from "@/lib/setprog";
 import { markDoneMany, doneKeyFor } from "@/lib/qdone";
 import { countMark } from "@/lib/qcounter";
 import { recordQuizAttempts } from "@/lib/qreview";
@@ -32,12 +33,16 @@ import "./answers-play.css";
 
 const SET_SIZE = 25;
 const SET_MIN = 15;
+// Kuch bank (jaise Medieval) mein jawab "2" (text) hai — pehle wo "bina
+// jawab" gina jata tha, isliye galat sawaal Wrong Sets mein nahi jaate the.
 const hasKey = (q) => typeof q?.answer === "number";
+const normQ = (q) => (q && typeof q.answer === "string" && /^\s*\d+\s*$/.test(q.answer) ? { ...q, answer: Number(q.answer) } : q);
 const SUBS = { maths: "math", math: "math", reasoning: "reasoning", english: "english", gs: "gs" };
 export const SUB_LABEL = { math: "Maths", reasoning: "Reasoning", english: "English", gs: "GS" };
 
 // Alag-alag bank ke sawaal (Wrong Sets) — card shakl dekh kar.
-function cardFor(q, i, sub, rk) {
+function cardFor(q, i, sub0, rk) {
+  const sub = (q && q._sub) || sub0;
   const img = q && (q.qImg || q.optImgs || q.figOpts || q.qText != null);
   const name = `🔁 Wrong Sets · ${SUB_LABEL[sub] || ""}`;
   if (img && sub === "math") return <MathQuestionCard key={doneKeyFor(q)} q={q} index={i} subject="math" resumeKey={rk} chapterName={name} />;
@@ -61,8 +66,9 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   const total = sets.reduce((a, s) => a + s.length, 0);
 
   const [results, setResults] = useState({});
+  const [progs, setProgs] = useState({});
   useEffect(() => {
-    const on = () => setResults(getChapterResults(rk));
+    const on = () => { setResults(getChapterResults(rk)); setProgs(progsFor(rk)); };
     on();
     window.addEventListener("cgl:settest-changed", on);
     window.addEventListener("cgl:sync-applied", on);
@@ -97,18 +103,27 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   }, [open]);
   useEffect(() => { if (open !== null) setSeen((s) => (s[cur] ? s : { ...s, [cur]: true })); }, [cur, open]);
 
+  // how: "test" (naya) | "resume" (chhoda hua) | "result"
   const start = (i, how) => {
     const prev = how === "result" ? results[i] : null;
-    retryRef.current = how === "test" && !!results[i];
+    const pg = how === "resume" ? progs[i] : null;
+    if (how === "test") clearProg(rk, i);
+    retryRef.current = how !== "result" && !!results[i];
     regRef.current = {};
-    setQs(sets[i] || []); setOpen(i); setCur(0); setReview({}); setSeen({ 0: true });
-    setPicks(prev && prev.picks ? prev.picks : {});
+    setQs((sets[i] || []).map(normQ)); setOpen(i);
+    setCur(pg ? pg.cur || 0 : 0); setReview(pg ? pg.review || {} : {}); setSeen(pg ? pg.seen || { 0: true } : { 0: true });
+    setPicks(pg ? pg.picks || {} : prev && prev.picks ? prev.picks : {});
     setSec(prev ? prev.sec || 0 : 0);
     setDone(how === "result");
-    setLeft(SET_MIN * 60);
+    setLeft(pg ? Math.max(1, pg.left || 0) : SET_MIN * 60);
     setRound((r) => r + 1);
   };
-  const back = () => { setOpen(null); setDone(false); setQs([]); };
+  const back = () => { setOpen(null); setDone(false); setQs([]); setProgs(progsFor(rk)); };
+  // ⏸ Chalte test ka haal har badlav par — chhod do to set par Resume.
+  useEffect(() => {
+    if (!running) return;
+    saveProg(rk, open, { picks, review, seen, cur, left });
+  }, [running, rk, open, picks, review, seen, cur, left]);
 
   const keyed = qs.map((q, i) => (hasKey(q) ? i : -1)).filter((i) => i >= 0);
   const right = keyed.filter((i) => picks[i]?.correct).length;
@@ -119,6 +134,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     if (!running) return;
     const s = SET_MIN * 60 - left;
     setSec(s); setDone(true); setCur(0);
+    clearProg(rk, open);
     saveSetResult(rk, open, {
       right, wrong, skipped: keyed.length - answered, total: keyed.length, sec: s,
       picks: Object.fromEntries(Object.entries(picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }])),
@@ -135,7 +151,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     })));
     for (const qq of qs) countMark(doneKeyFor(qq), qq?._subject || sub, true);
     // 🔁 Galat + chhode → Wrong Sets (wahan bhi — chakkar).
-    pushWrong(sub, qs.filter((qq, i) => hasKey(qq) && !picks[i]?.correct));
+    pushWrong(qs.filter((qq, i) => hasKey(qq) && !picks[i]?.correct).map((qq) => ({ ...qq, _sub: qq._sub || sub })));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [running, left, picks, qs, open, rk, sub, title, given]);
   useEffect(() => { if (running && left === 0) submit(); }, [running, left, submit]);
@@ -155,13 +171,19 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
             {sets.map((chunk, i) => {
               const a = baseOf(i);
               const r = results[i];
+              const pg = progs[i];
+              const L = Math.max(1, chunk.length);
               return (
-                <div key={i} className={`setcard${r ? " is-done" : ""}`}>
-                  <button type="button" className="setcard__open" onClick={() => start(i, r ? "result" : "test")}>
+                <div key={i} className={`setcard${r ? " is-done" : ""}${pg ? " is-paused" : ""}`}>
+                  {pg ? <button type="button" className="setcard__resume" onClick={() => start(i, "resume")}>⏸ Resume · {clock(pg.left || 0)} bacha</button> : null}
+                  <button type="button" className="setcard__open" onClick={() => start(i, pg ? "resume" : r ? "result" : "test")}>
                     <span className="setcard__n">{setName} {i + 1}{r ? " ✓" : ""}</span>
                     <span className="setcard__meta">{given ? `${chunk.length} questions` : `Q ${a + 1}–${a + chunk.length} · ${chunk.length} questions`}</span>
-                    <span className="setcard__bar"><i style={{ width: `${r ? Math.round((r.right / Math.max(1, chunk.length)) * 100) : 0}%` }} /></span>
-                    {r ? <span className="setcard__score">{fmtMarks(marksOf(r))}/{maxMarks(r.total)} marks · {r.right}/{r.total} sahi · {accuracyOf(r)}%</span> : null}
+                    <span className="setcard__bar setcard__bar--2">
+                      <i style={{ width: `${r ? Math.round((r.right / L) * 100) : 0}%` }} />
+                      <i className="is-bad" style={{ width: `${r ? Math.round(((r.wrong || 0) / L) * 100) : 0}%` }} />
+                    </span>
+                    {r ? <span className="setcard__score">{fmtMarks(marksOf(r))}/{maxMarks(r.total)} marks · {r.right} sahi · <em className="setcard__wrong">{r.wrong || 0} wrong</em> · {accuracyOf(r)}%</span> : null}
                   </button>
                   {r ? (
                     <span className="setcard__acts">
@@ -196,7 +218,14 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   const slot = {
     locked: !done, revealAll: done, index: at, register,
     pick: picks[at]?.opt,
-    onPick: (opt, correct) => { if (!done) setPicks((p) => ({ ...p, [at]: { opt, correct } })); },
+    // Wahi option dobara chuno to saaf (owner). Card apna chuna hua mount par
+    // padhta hai — saaf karne par naya key (round) dekar dobara banta hai.
+    onPick: (opt) => {
+      if (done) return;
+      const ok = Number(qs[at]?.answer) === opt;
+      if (picks[at]?.opt === opt) { setPicks((p) => { const c = { ...p }; delete c[at]; return c; }); setRound((r) => r + 1); return; }
+      setPicks((p) => ({ ...p, [at]: { opt, correct: ok } }));
+    },
   };
   const card = given || !renderCard ? cardFor(q, base + at, sub, rk) : renderCard(q, base + at, all);
   const t = { right, wrong, skipped: keyed.length - answered };
@@ -209,9 +238,9 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
       tally={{ ...t, marks: `${fmtMarks(marksOf(t))}/${maxMarks(keyed.length)}`, time: clock(sec) }}
       onMark={() => { setReview((x) => ({ ...x, [at]: !x[at] })); go(at + 1); }}
       onNext={() => go(at + 1)}
-      onSubmit={() => { if (window.confirm(`Submit karein? ${answered}/${keyed.length} ka jawab diya hai.`)) submit(); }}
+      onSubmit={submit}
       onBack={back}
-      onQuit={() => { if (window.confirm("Test chhod ke wapas? Natija save nahi hoga.")) back(); }}
+      onQuit={back}
     >
       <div key={`${round}-${at}`}>
         <ExamModeProvider value={slot}>{card}</ExamModeProvider>
