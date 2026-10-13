@@ -118,7 +118,7 @@ export default function AnswersSets({ ctx }) {
   };
   const save = (pk, sf, s) => {
     const t = tally(pk, sf);
-    saveSetResult(rkey, kOf(setIdx), { ...t, sec: s, picks: pk, self: sf, times: times || {} });
+    saveSetResult(rkey, kOf(setIdx), { ...t, sec: s, picks: pk, self: sf, times: times || {}, path: window.location.pathname + window.location.search.replace(/[?&]set=[^&]*/, "").replace(/^&/, "?"), title: `Answers · Set ${setIdx + 1}` });
   };
 
   const submit = useCallback(() => {
@@ -146,6 +146,18 @@ export default function AnswersSets({ ctx }) {
     setLeft(pg ? Math.max(1, pg.left || 0) : SET_MIN * 60);
   };
   const back = () => { setSetIdx(null); setDone(false); setProgs(progsFor(rkey)); };
+  // 🏠 Home ki report se "▶" — ?set=<pehchaan> se wahi set seedha.
+  const autoRef = useRef(false);
+  useEffect(() => {
+    if (autoRef.current || !setCount || typeof window === "undefined") return;
+    const want = new URLSearchParams(window.location.search).get("set");
+    if (!want) return;
+    const i = sigs.findIndex((x) => x === want);
+    if (i < 0) return;
+    autoRef.current = true;
+    open(i, results[want] ? "result" : progs[want] ? "resume" : "test");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sigs, results, progs]);
   // ⏸ Chalte test ka haal — chhod do to set par Resume.
   useEffect(() => {
     if (!running) return;

@@ -105,3 +105,10 @@
   .h20-score { grid-template-columns: 110px 1fr 44px; }
   .h20-big { padding: 18px 20px; font-size: 1.1rem; }
 }
+
+/* ✅ Final — report ka dabba pakki unchai, andar scroll; sar chipka rahe */
+.h20-rep { max-height: 360px; overflow-y: auto; border: 1px solid var(--line); border-radius: 6px; }
+.h20-rep .h20-table thead th { position: sticky; top: 0; background: var(--card); z-index: 1; }
+.h20-rt { display: block; font-size: 0.72rem; color: var(--text-3); }
+.h20-open { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: var(--on-accent, #fff) !important; font-size: 0.75rem; }
+.h20-open:hover { filter: brightness(1.1); }

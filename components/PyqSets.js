@@ -137,6 +137,19 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     setRound((r) => r + 1);
   };
   const back = () => { setOpen(null); setDone(false); setQs([]); setProgs(progsFor(rk)); };
+  // 🏠 Home ki report se "▶" — ?set=<pehchaan> se wahi set seedha khule
+  // (diya hua ho to natija, warna test).
+  const autoRef = useRef(false);
+  useEffect(() => {
+    if (autoRef.current || !sets.length || typeof window === "undefined") return;
+    const want = new URLSearchParams(window.location.search).get("set");
+    if (!want) return;
+    const i = sets.findIndex((_, k) => String(kOf(k)) === want);
+    if (i < 0) return;
+    autoRef.current = true;
+    start(i, results[want] ? "result" : progs[want] ? "resume" : "test");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sets, results, progs]);
 
   // 🩹 Purane natije (fix se pehle) — jin set ke jawab "2" jaise TEXT mein the
   // (Medieval), unka galat/chhoda Wrong Sets mein gaya hi nahi tha aur ginti
@@ -187,6 +200,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     clearProg(rk, kOf(open));
     saveSetResult(rk, kOf(open), {
       right, wrong, skipped: keyed.length - answered, total: keyed.length, sec: s, ws: 1, times,
+      path: window.location.pathname + window.location.search.replace(/[?&]set=[^&]*/, "").replace(/^&/, "?"), title: `${title} · ${setName} ${open + 1}`,
       picks: Object.fromEntries(Object.entries(picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }])),
     });
     // QBoard jaisa hisaab — stats, Mistake Notebook, ho gaya, aaj ki ginti.

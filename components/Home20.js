@@ -26,8 +26,8 @@
 // 20 Aaj ke 3 kaam    — sirf teen sabse zaroori kaam
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useHomeData, SUBJ, PER_DAY, adviceOf, nextUp, dayKeyBack, todayKey, setTodos } from "@/lib/homedata";
+import { useState } from "react";
+import { useHomeData, SUBJ, PER_DAY, adviceOf, nextUp, dayKeyBack, todayKey, setTodos, CA, openHref } from "@/lib/homedata";
 import { fmtMarks, marksOf, maxMarks } from "@/lib/settests";
 import "./home20.css";
 
@@ -48,8 +48,8 @@ const EXTRA = [
   { href: "/notes/paste", icon: "📝", label: "Notesliner" },
 ];
 const accOf = (b) => (b.right + b.wrong ? Math.round((b.right / (b.right + b.wrong)) * 100) : null);
-const subLabel = (k) => (SUBJ.find((s) => s.k === k) || { label: k === "wrong" ? "Wrong" : k === "answers" ? "Answers" : "Other" }).label;
-const subIcon = (k) => (SUBJ.find((s) => s.k === k) || { icon: k === "wrong" ? "🔁" : k === "answers" ? "📖" : "📎" }).icon;
+const subLabel = (k) => (SUBJ.find((s) => s.k === k) || { label: k === "wrong" ? "Wrong Sets" : k === "answers" ? "Answers" : k === "ca" ? CA.label : "Other" }).label;
+const subIcon = (k) => (SUBJ.find((s) => s.k === k) || { icon: k === "wrong" ? "🔁" : k === "answers" ? "📖" : k === "ca" ? CA.icon : "📎" }).icon;
 const when = (iso) => new Date(iso).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
 
 // ── chhote tukde ──
@@ -143,6 +143,7 @@ L[1] = ({ d }) => (
 L[2] = ({ d }) => {
   const items = [
     ...SUBJ.flatMap((s) => Array.from({ length: PER_DAY }, (_, i) => ({ key: `${s.k}${i}`, t: `${s.icon} ${s.label} — set ${i + 1}`, done: d.bySub[s.k].today > i, href: s.href }))),
+    { key: "ca", t: `${CA.icon} ${CA.label} — 1 set`, done: (d.bySub.ca || {}).today > 0, href: CA.href },
     { key: "w", t: "🔁 Ek Wrong Set", done: d.bySub.wrong.today > 0 || (!d.wrong.pending && d.wrong.sets > 0), href: "/wrong-sets" },
     { key: "a", t: "📖 Ek Answers set", done: d.bySub.answers.today > 0, href: "/answers" },
   ];
@@ -363,23 +364,56 @@ L[20] = ({ d }) => {
   );
 };
 
+// ✅ FINAL (owner): "13 Report" — sirf 4 subject + Current Affairs + Wrong
+// Sets + Answers ke test ("Other" nahi), pakki unchai ka dabba jisme scroll,
+// har line par ▶ (wahi set seedha). Neeche subject ke dabbon ki jagah
+// "2 · Aaj ka mission". Date-time ki jagah nahi — Accuracy, Chhode aur Marks
+// ke beech.
+const SHOW = new Set(["math", "reasoning", "english", "gs", "ca", "wrong", "answers"]);
+function Final({ d }) {
+  const rows = d.recentAll.filter((r) => SHOW.has(r.sub));
+  return (
+    <>
+      <div className="h20-box">
+        <h2>📊 Pichhle test</h2>
+        <div className="h20-rep">
+          {rows.length ? (
+            <table className="h20-table">
+              <thead><tr><th>Subject</th><th>✓</th><th>✗</th><th>Chhode</th><th>Accuracy</th><th>Marks</th><th /></tr></thead>
+              <tbody>
+                {rows.map((r, i) => {
+                  const a = r.right + r.wrong ? Math.round((r.right / (r.right + r.wrong)) * 100) : null;
+                  const href = openHref(r);
+                  return (
+                    <tr key={i}>
+                      <td>{subIcon(r.sub)} {subLabel(r.sub)}{r.title ? <small className="h20-rt">{r.title}</small> : null}</td>
+                      <td>{r.right}</td>
+                      <td className="is-bad">{r.wrong}</td>
+                      <td>{r.skipped}</td>
+                      <td>{a == null ? "—" : `${a}%`}</td>
+                      <td><b>{fmtMarks(marksOf(r))}</b>/{maxMarks(r.total)}</td>
+                      <td>{href ? <Link href={href} className="h20-open" title="Ye set kholo">▶</Link> : null}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          ) : <p className="h20-dim">Abhi koi test nahi diya — neeche mission se shuru karo.</p>}
+        </div>
+      </div>
+      {L[2]({ d })}
+    </>
+  );
+}
+
 export default function Home20() {
+  // Dropdown hata diya — Final (13 Report + 2 Mission). Baaki 20 roop (L)
+  // code mein pade hain.
   const d = useHomeData();
-  const [lay, setLay] = useState("1");
-  useEffect(() => { try { const v = localStorage.getItem(KEY); if (v && L[v]) setLay(v); } catch { /* ignore */ } }, []);
-  const pick = (v) => { setLay(v); try { localStorage.setItem(KEY, v); } catch { /* ignore */ } };
-  const C = L[lay] || L[1];
   return (
     <section className="section h20">
-      <div className="h20-top">
-        <span className="h20-title">🏠 Home</span>
-        <label className="h20-pick">
-          <select value={lay} onChange={(e) => pick(e.target.value)} aria-label="Home ka roop">
-            {HOME_LAYOUTS.map((l) => <option key={l.id} value={l.id}>🎨 {l.id} · {l.name}</option>)}
-          </select>
-        </label>
-      </div>
-      {d ? <div className={`h20-body h20--${lay}`}><C d={d} /></div> : <p className="h20-dim">…</p>}
+      <div className="h20-top"><span className="h20-title">🏠 Home</span>{d ? <Days d={d} /> : null}</div>
+      {d ? <div className="h20-body h20--final"><Final d={d} /></div> : <p className="h20-dim">…</p>}
     </section>
   );
 }
