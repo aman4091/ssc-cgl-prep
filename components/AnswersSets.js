@@ -17,12 +17,11 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
+import TestPage, { clock } from "./TestPage";
 
 const SET_SIZE = 25;
 const SET_MIN = 15;
 const L = "ABCD";
-const two = (n) => String(n).padStart(2, "0");
-const clock = (s) => `${two(Math.floor(Math.max(0, s) / 60))}:${two(Math.max(0, s) % 60)}`;
 
 // Sahi option ka number (0–3), ya -1 (pata nahi).
 function keyOf(r) {
@@ -46,7 +45,7 @@ const optsOf = (r) => {
   return o.length >= 2 ? o.slice(0, 4).map(String) : ["", "", "", ""];
 };
 
-export default function AnswersSets({ ctx, tabs }) {
+export default function AnswersSets({ ctx }) {
   const all = ctx.list;
   const subs = [...new Set(all.map((x) => ctx.bucketOf(x)))].sort();
   const rkey = `answers:${subs.join("+") || "all"}`;
@@ -68,7 +67,7 @@ export default function AnswersSets({ ctx, tabs }) {
   const [self, setSelf] = useState({});       // i -> true/false (bina key wale ka apna faisla)
   const [left, setLeft] = useState(SET_MIN * 60);
   const [sec, setSec] = useState(0);
-  const [side, setSide] = useState(() => typeof window === "undefined" || window.innerWidth > 900);
+  const [seen, setSeen] = useState({});
 
   const qs = useMemo(() => (setIdx === null ? [] : all.slice(setIdx * SET_SIZE, setIdx * SET_SIZE + SET_SIZE)), [all, setIdx]);
   const keys = useMemo(() => qs.map(keyOf), [qs]);
@@ -83,10 +82,11 @@ export default function AnswersSets({ ctx, tabs }) {
   }, [running]);
   // Test ke dauraan 🚨 / 🍅 chhupe (QBoard jaisa).
   useEffect(() => {
-    if (!running) return undefined;
+    if (setIdx === null) return undefined;
     document.body.classList.add("exam-on");
     return () => document.body.classList.remove("exam-on");
-  }, [running]);
+  }, [setIdx]);
+  useEffect(() => { if (setIdx !== null) setSeen((x) => (x[cur] ? x : { ...x, [cur]: true })); }, [cur, setIdx]);
 
   const verdict = useCallback((i, pk = picks, sf = self) => {
     if (pk[i] == null) return "skip";
@@ -117,7 +117,7 @@ export default function AnswersSets({ ctx, tabs }) {
 
   const open = (i, how) => {
     const prev = how === "result" ? results[i] : null;
-    setSetIdx(i); setCur(0); setReview({});
+    setSetIdx(i); setCur(0); setReview({}); setSeen({ 0: true });
     setPicks(prev ? prev.picks || {} : {});
     setSelf(prev ? prev.self || {} : {});
     setSec(prev ? prev.sec || 0 : 0);
@@ -135,12 +135,11 @@ export default function AnswersSets({ ctx, tabs }) {
   if (setIdx === null) {
     const doneSets = Array.from({ length: setCount }, (_, i) => results[i]).filter(Boolean).length;
     return (
-      <div className="tbx tbx-sets">
+      <div className="tbx tbx-inline tbx-sets">
         <header className="tbx-head">
           <div className="tbx-title"><b>Answers · Sets</b><small>{all.length} sawaal — 25-25 ke {setCount} set · har set {SET_MIN} minute</small></div>
           <div className="tbx-head__r"><span className="tbx-today">✅ Set ho gaye: <b>{doneSets}</b> / {setCount}</span></div>
         </header>
-        {tabs}
         <div className="tbx-setsbody">
           <div className="setgrid">
             {Array.from({ length: setCount }, (_, i) => {
@@ -174,7 +173,7 @@ export default function AnswersSets({ ctx, tabs }) {
     );
   }
 
-  // ───────── parda 2: test / natija ─────────
+  // ───────── parda 2: test / natija (components/TestPage — screenshot jaisa) ─────────
   const at = Math.min(cur, n - 1);
   const r = qs[at];
   const num = (i) => setIdx * SET_SIZE + i + 1;
@@ -183,112 +182,48 @@ export default function AnswersSets({ ctx, tabs }) {
   const answered = Object.keys(picks).length;
   const marked = Object.keys(review).filter((k) => review[k]).length;
   const go = (i) => setCur(Math.max(0, Math.min(n - 1, i)));
-  const v = done ? verdict(at) : null;
-  const cellCls = (i) => {
-    if (done) {
-      const x = verdict(i);
-      return x === "ok" ? "is-ok" : x === "bad" ? "is-bad" : x === "ask" ? "is-ask" : "";
-    }
-    return review[i] ? "is-mark" : picks[i] != null ? "is-ok" : "";
+  const state = (i) => {
+    if (done) return verdict(i);
+    if (review[i]) return "mark";
+    if (picks[i] != null) return "ans";
+    return seen[i] ? "not" : "new";
   };
   return (
-    <div className={`tbx tbx-test${done ? " is-done" : " is-run"}${side ? " is-side" : ""}`}>
-      <header className="tbx-head">
-        <div className="tbx-title">
-          <b>{done ? "Result" : "Test"}</b>
-          <small>Answers · Set {setIdx + 1} (Q {num(0)}–{num(n - 1)})</small>
-        </div>
-        <div className="tbx-head__r">
-          {done ? (
-            <>
-              <span className="tbx-today">{fmtMarks(marksOf(t))}/{maxMarks(n)} marks · <b>{t.right}</b> sahi · {t.wrong} galat · {t.skipped} chhode{t.ask ? ` · ${t.ask} jaancho` : ""}</span>
-              <span className="tbx-today">⏱ {clock(sec)}</span>
-              <button type="button" className="tbx-hbtn" onClick={back}>← Sets</button>
-            </>
-          ) : (
-            <>
-              <span className={`tbx-today tbx-clock${left <= 60 ? " is-low" : ""}`}>⏱ <b>{clock(left)}</b></span>
-              <button type="button" className="tbx-hbtn tbx-msub" onClick={() => { if (window.confirm(`Submit karein? ${answered}/${n} ka jawab diya hai.`)) submit(); }}>Submit</button>
-              <button type="button" className="tbx-hbtn" onClick={() => { if (window.confirm("Test chhod ke wapas? Natija save nahi hoga.")) back(); }}>✕</button>
-            </>
-          )}
-        </div>
-      </header>
-      <div className="tbx-body">
-        <section className="tbx-main">
-          <div className="tbx-sec"><span>SECTIONS</span><b className="tbx-tab">Set {setIdx + 1}</b></div>
-          <div className="tbx-scroll">
-            <div className="tbx-qh">
-              <b>Question No.{num(at)}</b>
-              {done ? (
-                <span className={`tbx-badge${v === "ok" ? " is-ok" : v === "bad" ? " is-bad" : ""}`}>{v === "ok" ? "Correct" : v === "bad" ? "Incorrect" : v === "skip" ? "Skipped" : "Jaancho"}</span>
-              ) : picks[at] != null ? <span className="tbx-badge is-ok">Answered</span> : <span className="tbx-badge">Not answered</span>}
-            </div>
-            <div className="tbx-q">
-              {ctx.renderCard(r, ctx.index.get(r.id) ?? 0, false, done ? {} : { chatLook: true, savedPick: null, savedHidden: false })}
-            </div>
-            <div className="tbx-opts">
-              {opts.map((o, k) => {
-                const cls = done
-                  ? (keys[at] === k ? " is-key" : "") + (picks[at] === k ? (keys[at] >= 0 ? (keys[at] === k ? " is-ok" : " is-bad") : " is-mine") : "")
-                  : picks[at] === k ? " is-pick" : "";
-                return (
-                  <label key={k} className={`tbx-opt${cls}`}>
-                    <input type="radio" name={`o${at}`} checked={picks[at] === k} disabled={done} onChange={() => setPicks((p) => ({ ...p, [at]: k }))} />
-                    <b>{L[k]}</b>{o ? <span>{o}</span> : null}
-                  </label>
-                );
-              })}
-            </div>
-            {done && picks[at] != null && keys[at] < 0 ? (
-              <div className="tbx-self">
-                <span>Sahi option record mein nahi — jawab dekh kar khud batao: tumhara <b>{L[picks[at]]}</b></span>
-                <button type="button" className={self[at] === true ? "is-on is-ok" : ""} onClick={() => setMine(at, true)}>✓ Sahi tha</button>
-                <button type="button" className={self[at] === false ? "is-on is-bad" : ""} onClick={() => setMine(at, false)}>✗ Galat tha</button>
-              </div>
-            ) : null}
-          </div>
-          <footer className="tbx-foot">
-            <button type="button" className="tbx-btn tbx-prev" onClick={() => go(at - 1)} disabled={at <= 0}>Previous</button>
-            {!done ? (
-              <span className="tbx-foot__acts">
-                <button type="button" className="tbx-btn" onClick={() => { setReview((x) => ({ ...x, [at]: !x[at] })); go(at + 1); }}>Mark for Review &amp; Next</button>
-                <button type="button" className="tbx-btn" onClick={() => setPicks((p) => { const c = { ...p }; delete c[at]; return c; })}>Clear</button>
-              </span>
-            ) : null}
-            <button type="button" className="tbx-btn tbx-next" onClick={() => go(at + 1)} disabled={at >= n - 1}>{done ? "Next" : "Save & Next"}</button>
-          </footer>
-          <button type="button" className="tbx-arrow" onClick={() => setSide((x) => !x)} aria-label="Panel">{side ? "›" : "‹"}</button>
-        </section>
-        <aside className="tbx-side">
-          <div className="tbx-user"><i>👤</i><b>Set {setIdx + 1}</b></div>
-          {done ? (
-            <div className="tbx-legend tbx-legend--3">
-              <span><i className="is-ok">{t.right}</i>Correct</span>
-              <span><i className="is-bad">{t.wrong}</i>Incorrect</span>
-              <span><i>{t.skipped}</i>Unattempted</span>
-              {t.ask ? <span><i className="is-ask">{t.ask}</i>Jaancho</span> : null}
-            </div>
-          ) : (
-            <div className="tbx-legend tbx-legend--3">
-              <span><i className="is-ok">{answered}</i>Answered</span>
-              <span><i>{n - answered}</i>Not answered</span>
-              <span><i className="is-mark">{marked}</i>Marked</span>
-            </div>
-          )}
-          <div className="tbx-sechd">SECTION : <span>Set {setIdx + 1}</span></div>
-          <div className="tbx-grid">
-            {qs.map((x, i) => (
-              <button key={x.id} type="button" className={`${cellCls(i)}${i === at ? " is-cur" : ""}`} onClick={() => go(i)}>{num(i)}</button>
-            ))}
-          </div>
-          <div className="tbx-sidefoot">
-            {done
-              ? <button type="button" className="tbx-btn" onClick={back}>Sets</button>
-              : <button type="button" className="tbx-btn tbx-submit" onClick={() => { if (window.confirm(`Submit karein? ${answered}/${n} ka jawab diya hai.`)) submit(); }}>Submit Test</button>}
-          </div>
-        </aside>
+    <TestPage
+      title={`Answers · Set ${setIdx + 1}`}
+      section={`Set ${setIdx + 1}`}
+      n={n} at={at} onGo={go} numOf={num} state={state} left={left} done={done}
+      answered={answered} marked={marked}
+      tally={{ ...t, marks: `${fmtMarks(marksOf(t))}/${maxMarks(n)}`, time: clock(sec) }}
+      onMark={() => { setReview((x) => ({ ...x, [at]: !x[at] })); go(at + 1); }}
+      onNext={() => go(at + 1)}
+      onSubmit={() => { if (window.confirm(`Submit karein? ${answered}/${n} ka jawab diya hai.`)) submit(); }}
+      onBack={back}
+      onQuit={() => { if (window.confirm("Test chhod ke wapas? Natija save nahi hoga.")) back(); }}
+    >
+      <div className="tbt-ansq">
+        {ctx.renderCard(r, ctx.index.get(r.id) ?? 0, false, done ? {} : { chatLook: true, savedPick: null, savedHidden: false })}
       </div>
-    </div>
+      <div className="tbt-opts">
+        {opts.map((o, k) => {
+          const cls = done
+            ? (keys[at] === k ? " is-key" : "") + (picks[at] === k ? (keys[at] >= 0 ? (keys[at] === k ? "" : " is-bad") : " is-mine") : "")
+            : "";
+          return (
+            <label key={k} className={`tbt-opt${cls}`}>
+              <span><input type="radio" name={`o${at}`} checked={picks[at] === k} disabled={done} onChange={() => setPicks((p) => ({ ...p, [at]: k }))} /></span>
+              <span>{o ? `${L[k]}) ${o}` : L[k]}</span>
+            </label>
+          );
+        })}
+      </div>
+      {done && picks[at] != null && keys[at] < 0 ? (
+        <div className="tbx-self">
+          <span>Sahi option record mein nahi — jawab dekh kar khud batao: tumhara <b>{L[picks[at]]}</b></span>
+          <button type="button" className={self[at] === true ? "is-on is-ok" : ""} onClick={() => setMine(at, true)}>✓ Sahi tha</button>
+          <button type="button" className={self[at] === false ? "is-on is-bad" : ""} onClick={() => setMine(at, false)}>✗ Galat tha</button>
+        </div>
+      ) : null}
+    </TestPage>
   );
 }

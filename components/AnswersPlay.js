@@ -532,7 +532,7 @@ function Quests({ ctx }) {
 // (ho gaya = hara gumbad, baaki = safed dabba, abhi wala = gol ghera).
 // ✅ Ho gaya dabate hi wo sawaal katar mein sabse neeche, agla upar aur wahi
 // saamne (lib/answersdone ka waqt). Card ka number list wala hi (pakka).
-function SimPair({ ctx }) {
+function SimPairPadho({ ctx }) {
   // 📖 Padho (Ho gaya wala) | 📝 Sets · Test (25-25, 15 min — components/AnswersSets)
   const [mode, setMode] = useState(() => readJ("cgl.ans.mode", "sets"));
   const pickMode = (m) => { setMode(m); writeJ("cgl.ans.mode", m); };
@@ -574,7 +574,7 @@ function SimPair({ ctx }) {
     const el = gridRef.current && gridRef.current.querySelector(".is-cur");
     if (el) el.scrollIntoView({ block: "nearest" });
   }, [r && r.id, side]);
-  if (mode === "sets") return <AnswersSets ctx={ctx} tabs={tabs} />;
+  if (mode === "sets") return <AnswersSets ctx={ctx} />;
   if (!r) return null;
   const s = subOf(ctx.bucketOf(r));
   const ch = ctx.chapterOf(r).ch;
@@ -632,6 +632,10 @@ function SimPair({ ctx }) {
     </div>
   );
 }
+
+// Padho hata diya (owner: "padho hta de jaha pr sets hai") — 21 ab sirf Sets.
+// Purana Padho / Ho gaya wala (SimPairPadho) upar pada hai.
+function SimPair({ ctx }) { return <AnswersSets ctx={ctx} />; }
 
 function SimPakka({ ctx }) {
   useSimTick();

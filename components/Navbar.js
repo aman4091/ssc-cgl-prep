@@ -8,7 +8,11 @@ import { getNewWordEntries, newWordDayKey, newWordDayLabel } from "@/lib/vocab";
 import { getUserTopics } from "@/lib/userpyq";
 import { notesByBook, bookIcon, bookLabel } from "@/lib/pastednotes";
 import { StaticsTopBtn } from "./StaticsInfo";
-import MenuTop from "./MenuTop";
+import MenuTop from "./MenuTop"; // eslint-disable-line no-unused-vars
+import MenuRail from "./MenuRail";
+import TopbarInfo from "./TopbarInfo";
+import NowPlan from "./NowPlan";
+import ThemeToggle from "./ThemeToggle";
 
 // 🧭 Menu: T6 · ICON TOOLBAR — upar fix patti, icon ke neeche naam
 // (components/MenuTop, <html data-menu="t6"> layout.js mein). Owner ne final
@@ -293,7 +297,29 @@ export default function Navbar() {
 
   return (
     <>
-      <MenuTop lay="t6" menu={menu} open={open} setOpen={setOpen} mark={mark} right={<StaticsTopBtn />} />
+      {/* 🧭 Menu: ICON RAIL wapas (owner: "menu vapas se left mein … icon
+          rail vala, vaise hi") — upar ki patti (☰, naam, tareekh, Abhi, 🪔)
+          + baayen MenuRail, <html data-menu="4">. T6 toolbar (MenuTop) code
+          mein. Roop ka dropdown nahi. Test ke dauraan patti chhupti hai. */}
+      <header className="topbar">
+        <button
+          className="topbar__burger"
+          aria-label="Menu"
+          aria-expanded={open}
+          onClick={() => setOpen(true)}
+        >
+          ☰
+        </button>
+        <Link href="/" className="topbar__brand">
+          {mark}
+          <strong>SSC CGL Pre</strong>
+        </Link>
+        <TopbarInfo />
+        <NowPlan />
+        <StaticsTopBtn />
+        <ThemeToggle />
+      </header>
+      <MenuRail menu={menu} open={open} setOpen={setOpen} mark={mark} />
     </>
   );
 }

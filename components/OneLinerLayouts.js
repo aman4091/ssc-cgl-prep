@@ -327,7 +327,7 @@ function MindMap({ secs }) {
 // ─── 14 · Slides ─── FINAL (owner) — Notesliner, Fact log, One-liners teeno
 // mein yahi. Chhote ‹ › button (aur ← → keys) se ek slide aage-peeche.
 // secs: [{ key, title, kind, points: [{ text, star }], meta? | note+book }]
-export function SlideRow({ secs, empty = "Koi slide nahi." }) {
+export function SlideRow({ secs, empty = "Koi slide nahi.", onAt }) {
   const box = useRef(null);
   const [cur, setCur] = useState(0);
   const step = () => {
@@ -343,6 +343,8 @@ export function SlideRow({ secs, empty = "Koi slide nahi." }) {
     el.addEventListener("scroll", on, { passive: true });
     return () => el.removeEventListener("scroll", on);
   }, [secs]);
+  // Kaun si slide saamne hai — bulane wala aage ki taiyaari kar sake (Vocab ka Hindi).
+  useEffect(() => { if (onAt) onAt(cur); }, [cur, onAt]);
   useEffect(() => {
     const k = (e) => {
       if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
@@ -355,7 +357,7 @@ export function SlideRow({ secs, empty = "Koi slide nahi." }) {
   if (!secs.length) return <p className="hint">{empty}</p>;
   return (
     <div className="ol14-wrap">
-      <button type="button" className="ol14-go is-l" onClick={() => go(-1)} disabled={cur <= 0} aria-label="Pichhli slide">‹</button>
+      {/* ‹ › neeche beech mein — kinare par 💬 / DeepSeek ka button inhe dhak leta tha (owner). */}
       <div className="ol14" ref={box}>
         {secs.map((s, k) => (
           <section key={s.key} className={`ol14-s${s.kind === "warn" ? " is-warn" : ""}`}>
@@ -367,7 +369,11 @@ export function SlideRow({ secs, empty = "Koi slide nahi." }) {
           </section>
         ))}
       </div>
-      <button type="button" className="ol14-go is-r" onClick={() => go(1)} disabled={cur >= secs.length - 1} aria-label="Agli slide">›</button>
+      <div className="ol14-nav">
+        <button type="button" className="ol14-go" onClick={() => go(-1)} disabled={cur <= 0} aria-label="Pichhli slide">‹</button>
+        <span>{Math.min(cur + 1, secs.length)} / {secs.length}</span>
+        <button type="button" className="ol14-go" onClick={() => go(1)} disabled={cur >= secs.length - 1} aria-label="Agli slide">›</button>
+      </div>
     </div>
   );
 }

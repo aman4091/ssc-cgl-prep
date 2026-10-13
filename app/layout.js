@@ -9,7 +9,7 @@ import "./looks/looks.css";
 import "./looks/window.css";
 // Menu ka roop — timeline.css ke BAAD, warna uske apne menu-rule jeet jate.
 import "./looks/tilenav.css";
-// Menu: T6 icon toolbar, upar fix (components/MenuTop) — <html data-menu="t6">.
+// Menu: Icon rail (components/MenuRail) — <html data-menu="4"> (wapas, owner).
 import "./looks/menus.css";
 // Upar wali fix patti ke 15 roop (components/MenuTop) — <html data-menu="t1"…>.
 import "./looks/menutop.css";
@@ -30,7 +30,6 @@ import SWRegister from "@/components/SWRegister";
 import PathMemo from "@/components/PathMemo";
 import PanicButton from "@/components/PanicButton";
 import SelectAsk from "@/components/SelectAsk";
-import PomoGate from "@/components/PomoGate";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -78,7 +77,7 @@ export default function RootLayout({ children }) {
   return (
     /* Script <html> ka apna attribute badalta hai, isliye server ka HTML aur
        client ka HTML yahan alag honge — ye ISI element par expected hai. */
-    <html lang="en" data-look="13" data-tb="1" data-menu="t6" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" data-look="13" data-tb="1" data-menu="4" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -114,11 +113,12 @@ export default function RootLayout({ children }) {
             {/* Navbar reads the query string to tell rows apart that share a path
                 (the Current Affairs tabs), and useSearchParams needs a Suspense
                 boundary or every page opts out of static rendering. */}
-            <Suspense fallback={<header className="mtp mtp-t6" />}>
+            <Suspense fallback={<nav className="mnu mnu4" />}>
               <Navbar />
             </Suspense>
-            {/* 🍅 PYQ / padhai wale page se pehle Answers ke roop 9 jaisa pomodoro (components/PomoGate). */}
-            <main className="container"><PomoGate>{children}</PomoGate></main>
+            {/* 🍅 Pomodoro hataya (owner: sets ab apni ghadi ke saath chalte hain) —
+                components/PomoGate code mein pada hai. */}
+            <main className="container">{children}</main>
           </div>
           <Footer />
           <CurrentAffairsRush />

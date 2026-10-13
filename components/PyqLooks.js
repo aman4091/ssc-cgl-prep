@@ -5,11 +5,10 @@
 // Dropdown hata diya; baaki tareeke code mein hain (MedLayouts / MedFacts,
 // backup/README.md). Maths / Reasoning (on=false) par page ka purana roop.
 
-// 📝 Upar "📖 Padho | 📝 Sets · Test" (components/PyqSets): Padho = 33 jaisa
-// tha; Sets = 25-25 ke 15 minute wale test. Card / title andar wale PyqDrill
-// (children) se. on=false par PyqDrill khud ye kaam karta hai.
+// 📝 Ab SIRF Sets (components/PyqSets) — owner: "padho hta de jaha pr sets
+// hai". 33 · Do pane (MedFacts) code mein pada hai. Card / title andar wale
+// PyqReels (children) se. on=false par PyqReels khud yahi karta hai.
 
-import MedFacts from "./MedFacts";
 import PyqSets from "./PyqSets";
 
 export default function PyqLooks({ qs, ns = "", on = true, children }) {
@@ -22,7 +21,6 @@ export default function PyqLooks({ qs, ns = "", on = true, children }) {
       resumeKey={ns || cp.resumeKey}
       title={cp.title || "PYQ"}
       renderCard={cp.renderCard}
-      padho={<MedFacts lay="33" qs={qs} ns={ns} />}
     />
   );
 }

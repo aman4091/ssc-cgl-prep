@@ -252,9 +252,8 @@ function PyqReelsOld({
   );
 }
 
-// 📝 Har PYQ chapter: "📖 Padho | 📝 Sets · Test" (components/PyqSets). Padho =
-// yahi poori-screen wala drill jaisa tha (upar 📝 Sets se wapas); Sets = 25-25
-// ke 15 minute wale test.
+// 📝 Har PYQ chapter par ab SIRF Sets (components/PyqSets) — owner: "padho
+// hta de jaha pr sets hai". Purana poori-screen drill (PyqReelsCore) code mein.
 export default function PyqReels(props) {
   return (
     <PyqSets
@@ -263,9 +262,6 @@ export default function PyqReels(props) {
       resumeKey={props.resumeKey}
       title={props.title}
       renderCard={props.renderCard}
-      padho={(toSets) => (
-        <PyqReelsCore {...props} headExtra={<button type="button" className="sp-ibtn" onClick={toSets} title="25-25 ke set, 15 minute test">📝 Sets</button>} />
-      )}
     />
   );
 }
