@@ -141,3 +141,10 @@ body:has(.tbt) { overflow: hidden; }
 .tbt-pop__box h3 { margin: 0 0 10px; font-size: 16px; }
 .tbt-pop__box p { margin: 6px 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .tbt .tbt-pop__x { position: absolute; top: 8px; right: 10px; border: 0; background: none; font-size: 16px; color: #555555; }
+
+/* 💬 Natija dekhte waqt DeepSeek "Poochho" panel (430), uska tab (425) aur
+   select karne par aane wali patti (440) is parde ke UPAR chahiye (owner) —
+   test ke dauraan nahi (tab 900 hi). Panel khula (docked) ho to uski jagah
+   chhodo. */
+.tbt.is-done { z-index: 420; }
+@media (min-width: 1100px) { body.sa-docked .tbt.is-done { right: var(--sa-w, 440px); } }
