@@ -524,28 +524,63 @@ function Quests({ ctx }) {
 
 // ═══════════════════════ 21–40 · 5 similar wahin ═══════════════════════
 
-// 21 · FINAL (owner): neeche fix ← Pichhla / Agla →, kram list wala (number
-// pakka). Shuru wahan se jahan pichhli baar the, warna pehla bacha hua.
+// 21 · FINAL (owner): ✅ Ho gaya dabate hi wo sawaal katar mein sabse neeche,
+// agla upar aur wahi saamne (lib/answersdone ka waqt — jo kabhi nahi hua wo
+// apne kram mein pehle, phir hue wale purane-pehle). Baayen sirf number ki
+// patti (isi katar mein), neeche fix ← Pichhla / Agla →. Card ka number
+// list wala hi (pakka) — katar ghoomti hai, number nahi.
 function SimPair({ ctx }) {
-  const n = ctx.list.length;
-  const [i, setI] = useState(() => {
-    const saved = readJ("cgl.ans.s1", "");
-    const k = saved ? ctx.list.findIndex((r) => r.id === saved) : -1;
-    if (k >= 0) return k;
-    const q = ctx.queue[0];
-    return q ? Math.max(0, ctx.list.findIndex((r) => r.id === q.id)) : 0;
-  });
-  const k = Math.min(Math.max(0, i), n - 1);
-  const r = ctx.list[k];
-  const go = (d) => {
-    const nk = Math.min(n - 1, Math.max(0, k + d));
-    setI(nk); writeJ("cgl.ans.s1", ctx.list[nk].id);
+  const order = useMemo(() => {
+    const dm = ctx.doneMap || {};
+    const not = ctx.list.filter((r) => !dm[r.id]);
+    const yes = ctx.list.filter((r) => dm[r.id]).sort((x, y) => (dm[x.id] < dm[y.id] ? -1 : dm[x.id] > dm[y.id] ? 1 : 0));
+    return [...not, ...yes];
+  }, [ctx.list, ctx.doneMap]);
+  const n = order.length;
+  const [id, setId] = useState(() => readJ("cgl.ans.s1", ""));
+  let k = order.findIndex((r) => r.id === id);
+  if (k < 0) k = 0;
+  const r = order[k];
+  const pick = (nid) => {
+    setId(nid); writeJ("cgl.ans.s1", nid);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  const go = (d) => pick(order[Math.min(n - 1, Math.max(0, k + d))].id);
+  const done = () => {
+    ctx.onDone(r);
+    // Naye kram mein jo sabse upar hoga — ye wala to ab neeche hai.
+    const rest = order.filter((x) => x.id !== r.id);
+    pick((rest[0] || r).id);
+  };
+  const railRef = useRef(null);
+  useEffect(() => {
+    const el = railRef.current && railRef.current.querySelector(".is-on");
+    if (el) el.scrollIntoView({ block: "nearest" });
+  }, [r && r.id]);
+  if (!r) return null;
+  const s = subOf(ctx.bucketOf(r));
+  const ch = ctx.chapterOf(r).ch;
+  const dm = ctx.doneMap || {};
   return (
     <>
       <div className="aps1">
-        <div className="aps1-l"><Work r={r} ctx={ctx} /></div>
+        <nav className="aps1-rail" ref={railRef}>
+          {order.map((x) => (
+            <button key={x.id} type="button" className={`${x.id === r.id ? "is-on" : ""}${dm[x.id] ? " is-done" : ""}`} onClick={() => pick(x.id)}>
+              {(ctx.index.get(x.id) ?? 0) + 1}
+            </button>
+          ))}
+        </nav>
+        <div className="aps1-l">
+          <div className="ap-work">
+            <div className="ap-work__bar" style={{ "--sc": s.c }}>
+              <span>{s.icon} {s.label}</span>
+              {ch ? <span>· {ch.replace(/-/g, " ")}</span> : null}
+            </div>
+            {ctx.renderCard(r, ctx.index.get(r.id) ?? 0, false)}
+            <div className="ap-act"><button type="button" className="ap-go" onClick={done}>✅ Ho gaya</button></div>
+          </div>
+        </div>
         <div className="aps1-r"><SimInline r={r} /></div>
       </div>
       <button type="button" className="aps1-nav is-prev" onClick={() => go(-1)} disabled={k <= 0}>← Pichhla</button>
@@ -927,7 +962,7 @@ function statsOf(list, rev, plan, today, bucketOf) {
   return { days, total, todayN: days[today] || 0, streak, best: Math.max(best, streak), bestDay: Math.max(0, ...Object.values(days)), pakka, bySub };
 }
 
-export default function AnswersPlay({ lay, list, renderCard, bucketOf, chapterOf }) {
+export default function AnswersPlay({ lay, list, renderCard, bucketOf, chapterOf, doneMap, onDone }) {
   const [rev, setRev] = useState({});
   const seen = useRef(false);
   useEffect(() => {
@@ -952,7 +987,8 @@ export default function AnswersPlay({ lay, list, renderCard, bucketOf, chapterOf
   const stats = useMemo(() => statsOf(list, rev, plan, today, bucketOf), [list, rev, plan, today, bucketOf]);
   const index = useMemo(() => new Map(list.map((r, k) => [r.id, k])), [list]);
   const ctx = {
-    list, renderCard, bucketOf, chapterOf, plan, queue, stats, today, index,
+    list, renderCard, bucketOf, chapterOf, plan, queue, stats, today, index, doneMap,
+    onDone: (r) => { if (onDone) onDone(r); else setRev(markDoneRev(r.id)); },
     act: (id) => setRev(markDoneRev(id)),
     undo: (id) => setRev(unmarkToday(id)),
   };

@@ -2935,6 +2935,8 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 
 .ansp__acts { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; align-items: center; }
 .ansp__acts--top { margin: 0 0 12px; }
+.ansp__hogya { font-size: 0.85rem; font-weight: 700; color: var(--text-2); padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
+.ansp__hogya b { color: var(--ok); }
 .ansp__hint { color: #6c7086; font-size: 13px; margin-right: auto; }
 .ansp__mark {
   display: flex; align-items: center; gap: 6px; cursor: pointer;

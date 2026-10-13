@@ -914,6 +914,22 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   const chips = [ALL_SUBJ, ...SUBJECTS];
 
+  // ✅ Ho gaya ki ginti — chapter chhaanti ke bina, poore subject ki.
+  const doneBySub = useMemo(() => {
+    const m = new Map();
+    for (const r of reportRows) {
+      const k = bucketOf(r);
+      if (!m.has(k)) m.set(k, { n: 0, d: 0 });
+      const e = m.get(k);
+      e.n += 1;
+      if (doneMap[r.id]) e.d += 1;
+    }
+    return [...m.entries()].map(([k, e]) => {
+      const sj = SUBJECTS.find((x) => x.key === k) || { label: "Other", icon: "\u{1F4DD}" };
+      return { k, ...e, label: sj.label, icon: sj.icon, today: counts[k] || 0 };
+    });
+  }, [reportRows, doneMap, counts]);
+
   // 📅 Roop — 21 · Galti + uske 5 similar FINAL (owner), dropdown hataya.
   // Baaki (0 Do-pane, p1–p20, s2–s20, purani list, 1–15) code mein hain.
   const lay = "s1";
@@ -953,6 +969,10 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           >
             📊 Chapter report
           </button>
+          {/* ✅ Kitne ho gaye — subject-wise (kul / aaj). */}
+          {doneBySub.map((x) => (
+            <span key={x.k} className="ansp__hogya">{x.icon} {x.label}: <b>{x.d}/{x.n}</b> ho gaye · aaj <b>{x.today}</b></span>
+          ))}
         </div>
 
         {flash && <p className="ansp__flash">{flash}</p>}
@@ -967,7 +987,7 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
               : "Yaha abhi koi question nahi hai."}
           </p>
         ) : isPlayLayout(lay) ? (
-          <AnswersPlay lay={lay} list={list} renderCard={renderCard} bucketOf={bucketOf} chapterOf={chapterOf} />
+          <AnswersPlay lay={lay} list={list} renderCard={renderCard} bucketOf={bucketOf} chapterOf={chapterOf} doneMap={doneMap} onDone={onDone} />
         ) : lay === "list" ? (
           shown.map((r, i) => renderCard(r, i, false))
         ) : lay !== "0" ? (
