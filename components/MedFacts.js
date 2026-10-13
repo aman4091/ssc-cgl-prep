@@ -522,12 +522,46 @@ function Search({ ms, tick }) {
 }
 
 // ─── 33 · Do pane ───
+// DeepSeek (owner ka niyam): khulte hi saamne wala + agle 4 (1–5). Phir jis
+// sawaal par ho uske 5 AAGE wala ek (1 par → 6, 7 par → 12) — saare nahi.
+// Saamne wale ka jawab na ho to wo bhi. Jaldi-jaldi aage badhne par beech
+// wale chhoot na jayein (SelectAsk aakhri event hi uthata hai), isliye jo
+// bheje nahi gaye wo agle event mein saath jaate hain.
+function useAheadFive(ms, i) {
+  const first = useRef(true);
+  const pend = useRef([]);
+  const last = useRef(0);
+  useEffect(() => {
+    const m = ms[i];
+    if (!m) return;
+    // Ginti sawaal ke asli number se (bina jawab wala beech mein ho to bhi 1 → 6).
+    if (first.current) { first.current = false; pend.current = ms.filter((x) => x.no > m.no && x.no < m.no + 5); }
+    // Thoda aage badhe (≤5) to beech ki ginti bhi — koi chhoote nahi; lambi
+    // chhalang par sirf ek (saare nahi).
+    const step = m.no - last.current;
+    const from = step > 0 && step <= 5 ? last.current + 5 : m.no + 4;
+    for (const x of ms.filter((y) => y.no > from && y.no <= m.no + 5)) if (!pend.current.includes(x)) pend.current.push(x);
+    if (!ms.some((y) => y.no > from && y.no <= m.no + 5)) {
+      const ahead = ms.find((x) => x.no >= m.no + 5);
+      if (ahead && !pend.current.includes(ahead)) pend.current.push(ahead);
+    }
+    last.current = m.no;
+    const look = lookup();
+    pend.current = pend.current.filter((x) => !look(x.raw)).slice(-12);
+    focus(m, pend.current);
+  }, [i, ms]); // eslint-disable-line react-hooks/exhaustive-deps
+}
+
 function TwoPane({ ms }) {
   const [i, setI] = useResume("cgl.medf.pane", ms.length);
   const [detail, setDetail] = useState(false);
   const m = ms[i];
-  useFocus(m, ms.slice(i + 1, i + 6));
+  useAheadFive(ms, i);
   const listRef = useRef(null);
+  // 7000+ button — har naye jawab par dobara na banen.
+  const list = useMemo(() => ms.map((x, k) => (
+    <button key={x.id} type="button" className={k === i ? "is-on" : ""} onClick={() => { setI(k); setDetail(true); }}><span>{x.no}</span>{plain(x.q)}</button>
+  )), [ms, i]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => { const el = listRef.current && listRef.current.querySelector(".is-on"); if (el) el.scrollIntoView({ block: "nearest" }); }, [i]);
   useEffect(() => {
     const k = (e) => {
@@ -540,15 +574,15 @@ function TwoPane({ ms }) {
   return (
     <div className={`mf33${detail ? " is-detail" : ""}`}>
       <div className="mf33-list" ref={listRef}>
-        {ms.map((x, k) => <button key={x.id} type="button" className={k === i ? "is-on" : ""} onClick={() => { setI(k); setDetail(true); }}><span>{k + 1}</span>{plain(x.q)}</button>)}
+        {list}
       </div>
       <div className="mf33-pane">
         <button type="button" className="mf33-back" onClick={() => setDetail(false)}>← List</button>
-        <small>#{i + 1}</small>
+        <small>#{m.no}</small>
         <div className="mf33-q"><Q m={m} /></div>
         <h2>{m.a}</h2>
         <Clusters m={m} />
-        <Nav i={i} n={ms.length} go={(d) => setI(i + d)} />
+        <Nav i={m.no - 1} n={ms[ms.length - 1].no} go={(d) => setI(i + d)} />
       </div>
     </div>
   );
@@ -760,17 +794,7 @@ const COMP = { 21: Book, 22: Sticky, 23: Clue, 24: Cloze, 25: Paper, 26: Chat, 2
 export default function MedFacts({ lay, qs }) {
   const all = useMemo(() => { LOOK = null; return toMs(qs); }, [qs]);
   const [tick, setTick] = useState(0);
-  // 🧪 Abhi testing: sirf 10 sawaal jinke ⚡ facts PEHLE SE bane hain (naye
-  // banne mein der lagti hai). Inke jawab ho chuke, to DeepSeek dobara nahi
-  // chalta. List tabhi badle jab sach mein naya fact aaye.
-  const prev = useRef([]);
-  const ms = useMemo(() => {
-    const r = [];
-    for (const m of all) { if ((factsOf(m) || []).length) r.push(m); if (r.length >= 10) break; }
-    const same = r.length === prev.current.length && r.every((m, i) => m === prev.current[i]);
-    if (!same) prev.current = r;
-    return prev.current;
-  }, [all, tick]);
+  const ms = all;
   ALL = ms;
   // DeepSeek ka jawab aaya → facts dikhao.
   useEffect(() => {
@@ -782,6 +806,6 @@ export default function MedFacts({ lay, qs }) {
   useEffect(() => () => { try { window.dispatchEvent(new CustomEvent("cgl:sprint-q", { detail: { q: null } })); } catch { /* ignore */ } }, []);
   const C = COMP[lay];
   if (!C) return null;
-  if (!ms.length) return <Empty>Abhi kisi sawaal ke ⚡ facts bane hue nahi hai.</Empty>;
+  if (!ms.length) return <Empty>Jawab wale sawaal nahi mile.</Empty>;
   return <div className={`ml mf mf--${lay}`}><C key={lay} ms={ms} tick={tick} /></div>;
 }

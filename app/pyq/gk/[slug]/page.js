@@ -25,10 +25,11 @@ export default function GkTopicPage() {
   const [topic, setTopic] = useState(null);
   const [qs, setQs] = useState([]);
   const [ready, setReady] = useState(false);
-  // 🏰 Medieval: yaad karne ka tareeka — "0" = Cover table (abhi wala).
-  const [medLay, setMedLay] = useState("0");
-  useEffect(() => { try { const v = localStorage.getItem("cgl.medlayout"); if (v && MED_KEEP.has(v)) setMedLay(v); } catch { /* ignore */ } }, []);
-  const pickMed = (v) => { setMedLay(v); try { localStorage.setItem("cgl.medlayout", v); } catch { /* quota */ } };
+  // 🏰 Medieval: yaad karne ka tareeka.
+  // Default 33 · Do pane (owner ne chuna) — nayi key taaki pehle chuna hua beech mein na aaye.
+  const [medLay, setMedLay] = useState("33");
+  useEffect(() => { try { const v = localStorage.getItem("cgl.medlayout2"); if (v && MED_KEEP.has(v)) setMedLay(v); } catch { /* ignore */ } }, []);
+  const pickMed = (v) => { setMedLay(v); try { localStorage.setItem("cgl.medlayout2", v); } catch { /* quota */ } };
 
   useEffect(() => {
     let alive = true;

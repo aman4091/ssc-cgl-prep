@@ -610,12 +610,13 @@ function Survival({ ms }) {
 
 const COMP = { 1: Flash, 2: Reel, 3: Mcq, 4: Reverse, 5: TypeIt, 6: Hint, 7: Match, 8: TrueFalse, 9: Speed, 10: Leitner, 11: Test10, 12: Diary, 13: Groups, 14: Timeline, 15: Eliminate, 16: Lines, 17: Tiles, 18: Listen, 19: Chunk, 20: Survival };
 
-// Bank ke sawaal → { id, raw (asli sawaal), q, a, opts, ai } — sirf jinka jawab pata hai.
+// Bank ke sawaal → { id, no, raw (asli sawaal), q, a, opts, ai } — sirf jinka jawab pata hai.
 export function toMs(qs) {
   return qs.map((q, i) => {
     const ai = Number.isInteger(q.answer) ? q.answer : -1;
     const a = ai >= 0 && Array.isArray(q.options) ? plain(q.options[ai]) : plain(q.answerText || "");
-    return { id: String(q.id ?? i), raw: q, q: q.question, a, opts: Array.isArray(q.options) ? q.options.map(plain) : [], ai };
+    // no = bank mein asli number (1 se) — chhante ke baad bhi wahi rehta hai.
+    return { id: String(q.id ?? i), no: i + 1, raw: q, q: q.question, a, opts: Array.isArray(q.options) ? q.options.map(plain) : [], ai };
   }).filter((m) => m.q && m.a);
 }
 
