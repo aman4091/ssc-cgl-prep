@@ -273,3 +273,11 @@ button.pomo-chip { border: 0; cursor: pointer; font: inherit; font-weight: 800; 
 body.exam-on .pomo-btn { display: none; }
 /* Phone par PYQ ki neeche wali "← pichhla / aage →" patti ke upar */
 @media (max-width: 700px) { .pomo-btn { bottom: 72px; } }
+/* 21 · neeche fix: baayen ← Pichhla, daayen Agla → */
+.aps1-nav { position: fixed; bottom: 14px; z-index: 419; padding: 10px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--text-1); font: inherit; font-weight: 800; cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18); }
+.aps1-nav.is-prev { left: 14px; }
+.aps1-nav.is-next { right: 14px; background: var(--accent); border-color: var(--accent); color: var(--on-accent, #fff); }
+.aps1-nav small { font-weight: 700; opacity: .8; margin-left: 4px; }
+.aps1-nav:disabled { opacity: .4; cursor: default; }
+@media (min-width: 1100px) { body.sa-docked .aps1-nav.is-next { right: calc(var(--sa-w, 0px) + 14px); } }
+.ap--s1 { padding-bottom: 64px; }

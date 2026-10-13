@@ -15,7 +15,7 @@ import { getCounts, bumpCount, countMark } from "@/lib/qcounter";
 import { useImageUrls } from "@/lib/wrongimages";
 // qchapter bhi getTags/setTags deta hai (wo CHAPTER ke tag hain), isliye
 // yahan alag naam.
-import { TAGS as QTAGS, getTag as getQTag, getTags as getQTags, setTag as setQTag, tagMeta as qTagMeta, tagIn as qTagIn } from "@/lib/qtags";
+import { TAGS as QTAGS, getTag as getQTag, getTags as getQTags, setTag as setQTag, tagIn as qTagIn } from "@/lib/qtags";
 import { imagesFromEvent, isImageFile } from "@/lib/pasteimg";
 import { saveQuiz, makeId, storageUsage } from "@/lib/storage";
 import Markdown, { LazyMarkdown } from "@/components/Markdown";
@@ -32,7 +32,7 @@ import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import ClusterButton from "./ClusterButton";
 import AnswersDoPane from "./AnswersLayouts";
 import AnswersLayoutsAll from "./AnswersLayoutsAll";
-import AnswersPlay, { PLAY_LAYOUTS, SIM_LAYOUTS, isPlayLayout } from "./AnswersPlay";
+import AnswersPlay, { isPlayLayout } from "./AnswersPlay";
 import { markDoneRev } from "@/lib/ansrev";
 import { SimMake } from "./SimInline";
 import "./answers-layouts.css";
@@ -236,18 +236,7 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
         {/* Card ke saare button yahin, sar ke daayen — owner ka niyam.
             ✨ paste ka dabba bhi khol deta hai, isliye uska alag button nahi. */}
         <span className="ansp__hacts">
-          {/* 🏷️ Is question ka tag — ✅ "ho gaya" aur 🔴 "hard" ki jagah.
-              Solve page par ghadi khud lagati hai; yahan haath se badal lo. */}
-          <select
-            className="ansp__tag"
-            value={tag}
-            onChange={(e) => { setQTag(rec, e.target.value); setTagV(e.target.value); }}
-            title="Ye question mere liye kaisa hai"
-            style={qTagMeta(tag) ? { borderColor: qTagMeta(tag).c, color: qTagMeta(tag).c } : undefined}
-          >
-            <option value="">🏷️ tag</option>
-            {QTAGS.map((t) => <option key={t.k} value={t.k}>{t.label}</option>)}
-          </select>
+          {/* 🏷️ tag ka dabba hataya (owner) — lib/qtags ka data pada hai, dikhta nahi. */}
           {/* ✍️ — is question par kitni likhawat hai (rec.inkStrokes record ke
               saath sync hota hai), to PC par bhi pata chalta hai ki tablet par
               kuch likha pada hai. Dabao to wahi khul jata hai. */}
@@ -596,11 +585,8 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
     }
     if (n) setQtagMap(getQTags());
   }, [hard, mock]);
-  const pool = useMemo(() => {
-    if (src === "untag") return mock.filter((r) => !qTagIn(qtagMap, r));
-    if (src.startsWith("tag:")) { const k = src.slice(4); return mock.filter((r) => qTagIn(qtagMap, r) === k); }
-    return mock;
-  }, [mock, src, qtagMap]);
+  // Tag ki chhaanti hata di (owner) — hamesha saare.
+  const pool = mock;
 
   const rows = useMemo(
     () => pool
@@ -928,15 +914,9 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
 
   const chips = [ALL_SUBJ, ...SUBJECTS];
 
-  // 📅 Roop — owner: "kar nahi raha, mann kare aise roop do". Dropdown mein
-  // ab "0" Do-pane + naye 40 (components/AnswersPlay): p1–p20 mann lage,
-  // s1–s20 har galti ke 5 similar wahin. Purani list + 1–15 dropdown se hate
-  // (code yahin, backup/README.md). Is device par yaad (cgl.anslayout3).
-  const [lay, setLay] = useState("p1");
-  useEffect(() => {
-    try { const v = localStorage.getItem("cgl.anslayout3") || ""; if (v === "0" || isPlayLayout(v)) setLay(v); } catch { /* ignore */ }
-  }, []);
-  const pickLay = (v) => { setLay(v); try { localStorage.setItem("cgl.anslayout3", v); } catch { /* ignore */ } };
+  // 📅 Roop — 21 · Galti + uske 5 similar FINAL (owner), dropdown hataya.
+  // Baaki (0 Do-pane, p1–p20, s2–s20, purani list, 1–15) code mein hain.
+  const lay = "s1";
 
 
 
@@ -973,35 +953,6 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
           >
             📊 Chapter report
           </button>
-          <span className="al-pick">
-            <select className="al-pick__sel" value={lay} onChange={(e) => pickLay(e.target.value)} aria-label="Layout">
-              <option value="0">0 · Abhi wala (Do-pane)</option>
-              <optgroup label="🔥 Mann lage (1–20)">
-                {PLAY_LAYOUTS.map((l, k) => <option key={l.id} value={l.id}>{k + 1} · {l.name}</option>)}
-              </optgroup>
-              <optgroup label="🎯 5 similar wahin (21–40)">
-                {SIM_LAYOUTS.map((l, k) => <option key={l.id} value={l.id}>{k + 21} · {l.name}</option>)}
-              </optgroup>
-            </select>
-          </span>
-          {/* 🏷️ Tag ki chhaanti — "permanent skip" wale ek jagah, "hard par ho
-              jayega" wale alag. Ginti bhi saath, taaki pata rahe kitne pade
-              hain. */}
-          <span className="ansp__tags">
-            {SOURCES.map((x) => {
-              const n = x.key === "all" ? mock.length
-                : x.key === "untag" ? mock.filter((r) => !qTagIn(qtagMap, r)).length
-                  : mock.filter((r) => qTagIn(qtagMap, r) === x.key.slice(4)).length;
-              return (
-                <button
-                  key={x.key}
-                  type="button"
-                  className={`ansp__tagchip${src === x.key ? " is-on" : ""}`}
-                  onClick={() => setSrc(x.key)}
-                >{x.label} · {n}</button>
-              );
-            })}
-          </span>
         </div>
 
         {flash && <p className="ansp__flash">{flash}</p>}

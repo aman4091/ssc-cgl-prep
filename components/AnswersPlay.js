@@ -524,13 +524,33 @@ function Quests({ ctx }) {
 
 // ═══════════════════════ 21–40 · 5 similar wahin ═══════════════════════
 
+// 21 · FINAL (owner): neeche fix ← Pichhla / Agla →, kram list wala (number
+// pakka). Shuru wahan se jahan pichhli baar the, warna pehla bacha hua.
 function SimPair({ ctx }) {
-  const r = ctx.queue[0] || ctx.list[0];
+  const n = ctx.list.length;
+  const [i, setI] = useState(() => {
+    const saved = readJ("cgl.ans.s1", "");
+    const k = saved ? ctx.list.findIndex((r) => r.id === saved) : -1;
+    if (k >= 0) return k;
+    const q = ctx.queue[0];
+    return q ? Math.max(0, ctx.list.findIndex((r) => r.id === q.id)) : 0;
+  });
+  const k = Math.min(Math.max(0, i), n - 1);
+  const r = ctx.list[k];
+  const go = (d) => {
+    const nk = Math.min(n - 1, Math.max(0, k + d));
+    setI(nk); writeJ("cgl.ans.s1", ctx.list[nk].id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
-    <div className="aps1">
-      <div className="aps1-l"><Work r={r} ctx={ctx} /></div>
-      <div className="aps1-r"><SimInline r={r} /></div>
-    </div>
+    <>
+      <div className="aps1">
+        <div className="aps1-l"><Work r={r} ctx={ctx} /></div>
+        <div className="aps1-r"><SimInline r={r} /></div>
+      </div>
+      <button type="button" className="aps1-nav is-prev" onClick={() => go(-1)} disabled={k <= 0}>← Pichhla</button>
+      <button type="button" className="aps1-nav is-next" onClick={() => go(1)} disabled={k >= n - 1}>Agla → <small>{k + 1}/{n}</small></button>
+    </>
   );
 }
 
