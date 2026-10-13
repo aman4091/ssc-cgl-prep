@@ -13,6 +13,8 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { vocabPool } from "@/lib/vocabpool";
+import { storeGet, storeSet } from "@/lib/bigstore";
+import { hashStr } from "@/lib/syncitems";
 import { SlideRow } from "@/components/OneLinerLayouts";
 import { getHindiMap, hindiOf, getEnMap, enOf, ensureHindi } from "@/lib/vocabhindi";
 import "./layouts15.css";
@@ -26,23 +28,49 @@ import "@/app/notes/paste/layouts.css";
 // Cover method (VocabLayouts "11") code mein pada hai.
 const TYPE_LABEL = { ows: "🔤 OWS", idiom: "💬 Idiom", vocab: "📖 Vocab", new: "📋 New" };
 const plainLine = (s) => String(s || "").replace(/\*\*|__|`/g, "").split("\n").map((x) => x.trim()).find(Boolean) || "";
-function shuffled(a) { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; }
 
-// Random kram EK BAAR ban kar pakka (owner: "har refresh par naye nahi —
+// Random jaisa kram — par PAKKA, har device par ek (owner: "har refresh par naye nahi —
 // number same, fix"). Naye word aakhir mein (unka apna random), hate hue
 // nikal jaate hain. Kahan tak pahunche — cgl.vocab.slideat, wahin se shuru.
-const SORDER = "cgl.vocab.slideorder";
+//
+// Kram { ids: "id1\nid2…" } — EK lambi line mein (lib/bigstore, IndexedDB).
+// Pehle ye ["id1","id2",…] list thi: sync list ke har tukde ko alag jodta
+// hai aur KRAM nahi rakhta — refresh / sync ke baad sab ulat-pulat ho jata
+// tha (owner: "pehle jo 1st tha, refresh ke baad koi aur").
+// hashStr milte-julte naam (Word001, Word002) ko paas-paas rakhta hai — upar
+// se murmur ka "fmix" chala kar achha bikhra hua (random jaisa) number.
+function mixOf(id) {
+  let h = parseInt(hashStr(`vocab-slides|${id}`), 36) >>> 0;
+  h ^= h >>> 16; h = Math.imul(h, 0x85ebca6b);
+  h ^= h >>> 13; h = Math.imul(h, 0xc2b2ae35);
+  h ^= h >>> 16;
+  return h >>> 0;
+}
+const SORDER = "cgl.vocab.slideord";
+const OLD_SORDER = "cgl.vocab.slideorder";
 const SAT = "cgl.vocab.slideat";
+function readOrder() {
+  try { const v = JSON.parse(storeGet(SORDER) || "null"); if (v && typeof v.ids === "string") return v.ids ? v.ids.split("\n") : []; } catch { /* ignore */ }
+  return null;
+}
 function slideOrder(pool) {
-  let saved = [];
-  try { const v = JSON.parse(localStorage.getItem(SORDER) || "[]"); if (Array.isArray(v)) saved = v; } catch { /* ignore */ }
+  let saved = readOrder();
+  if (!saved) {
+    // Purani (bigdi hui, har device ki alag) list nahi uthate — har device
+    // naye pakke kram se shuru kare. Bas jagah khali karo.
+    saved = [];
+    try { localStorage.removeItem(OLD_SORDER); } catch { /* ignore */ }
+  }
   const byId = new Map(pool.map((p) => [p.id, p]));
   const kept = saved.filter((id) => byId.has(id));
   const seen = new Set(kept);
-  const fresh = shuffled(pool.filter((p) => !seen.has(p.id)).map((p) => p.id));
+  // Naye word ka kram bhi PAKKA — word ke naam ke hash se. Har device (phone /
+  // laptop) bina sync ke bhi BILKUL wahi kram banata hai, to number har jagah
+  // ek (owner: "mobile mein padhu to kram badal jayega").
+  const fresh = pool.filter((p) => !seen.has(p.id)).map((p) => p.id).sort((x, y) => mixOf(x) - mixOf(y) || (x < y ? -1 : 1));
   const order = [...kept, ...fresh];
-  if (fresh.length || kept.length !== saved.length) {
-    try { localStorage.setItem(SORDER, JSON.stringify(order)); } catch { /* quota */ }
+  if (fresh.length || kept.length !== saved.length || !readOrder()) {
+    try { storeSet(SORDER, JSON.stringify({ ids: order.join("\n") })); } catch { /* quota */ }
   }
   return order.map((id) => byId.get(id));
 }

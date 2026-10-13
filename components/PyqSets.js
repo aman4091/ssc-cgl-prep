@@ -172,7 +172,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   // ⏸ Chalte test ka haal har badlav par — chhod do to set par Resume.
   useEffect(() => {
     if (!running) return;
-    saveProg(rk, kOf(open), { picks, review, seen, cur, left, times });
+    saveProg(rk, kOf(open), { picks, review, seen, cur, left, times, path: window.location.pathname + window.location.search, title: `${title} · Set ${(open) + 1}` });
   }, [running, rk, open, picks, review, seen, cur, left, times, sigs, given]);
 
   const keyed = qs.map((q, i) => (hasKey(q) ? i : -1)).filter((i) => i >= 0);

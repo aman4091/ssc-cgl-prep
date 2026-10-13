@@ -149,7 +149,7 @@ export default function AnswersSets({ ctx }) {
   // ⏸ Chalte test ka haal — chhod do to set par Resume.
   useEffect(() => {
     if (!running) return;
-    saveProg(rkey, kOf(setIdx), { picks, review, seen, cur, left, times });
+    saveProg(rkey, kOf(setIdx), { picks, review, seen, cur, left, times, path: window.location.pathname + window.location.search, title: `${"Answers"} · Set ${(setIdx) + 1}` });
   }, [running, rkey, setIdx, picks, review, seen, cur, left, times, sigs]);
   const setMine = (i, v) => {
     const sf = { ...self, [i]: v };

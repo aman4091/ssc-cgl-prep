@@ -1,9 +1,9 @@
-import Reels from "@/components/reels/Reels";
+import Home20 from "@/components/Home20";
 
-// 🏠 Home = 🎬 Reels (owner ne chuna). Pehle yahan Mission ka ABHI card,
-// Scoreboard aur "Aaj ka kaam" the — sab hata diye. "Abhi kya karna hai"
-// ab upar ki patti mein har page par hai (components/NowPlan), aur poora
-// din /mission par.
+// 🏠 Home = 20 naye roop (components/Home20) — owner ne Reels wala roop
+// poori tarah hatane ko kaha. Har subject ke Sets, Wrong Sets, chhode hue
+// test (Resume), todo aur salah — upar dropdown se roop chuno.
+// Purana 🎬 Reels (components/reels/Reels) code mein pada hai.
 export default function Home() {
-  return <Reels />;
+  return <Home20 />;
 }
