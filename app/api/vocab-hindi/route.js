@@ -7,7 +7,7 @@ For EACH English word / one-word-substitution below (its English definition is g
 Use common words even if they come from Urdu or English, as long as an ordinary Hindi speaker instantly understands them. If no single simple word exists, describe it in a few easy words.
 Good: "Abate" → "कम होना", "Abattoir" → "कसाईखाना", "Abbot" → "मठ का मुखिया", "Abbreviation" → "छोटा रूप", "Abdicate" → "गद्दी छोड़ना", "Aberration" → "गड़बड़, सामान्य से हटकर", "Abeyance" → "रुका हुआ, टला हुआ", "Ablution" → "नहाना-धोना", "Abolish" → "खत्म करना".
 Bad (too formal): "उन्मूलन", "संक्षेपण", "विचलन", "स्थगन", "मठाधीश".
-Return STRICT JSON only: {"items":[{"w":"<word exactly as given>","hi":"<simple Hindi meaning>"}]}
+Return STRICT JSON only, one item for EVERY numbered word, same order: {"items":[{"n":<the number given>,"w":"<word>","hi":"<simple Hindi meaning>"}]}
 No transliteration, no English, no explanation.`;
 
 export async function POST(req) {
@@ -27,7 +27,18 @@ export async function POST(req) {
     });
     if (!result.ok) return Response.json({ error: result.error }, { status: result.status });
     const parsed = parseJsonLoose(result.content) || {};
-    const items = (Array.isArray(parsed.items) ? parsed.items : []).filter((x) => x && x.w && x.hi).map((x) => ({ w: String(x.w), hi: String(x.hi).trim() }));
+    // Shabd WAPAS apni list se — model "1. Abate" / "abate " jaisa kuch bhi
+    // likhe, number (n) se ya saaf kiye shabd se asli shabd par hi jama ho.
+    const norm = (w) => String(w || "").toLowerCase().replace(/^\s*\d+[.)]\s*/, "").split(/\s+[—–-]\s+/)[0].replace(/[^a-z0-9\s'-]/g, "").replace(/\s+/g, " ").trim();
+    const byNorm = new Map(list.map((x) => [norm(x.word), x.word]));
+    const raw = Array.isArray(parsed.items) ? parsed.items : Array.isArray(parsed) ? parsed : [];
+    const items = [];
+    raw.forEach((x, k) => {
+      if (!x || !x.hi) return;
+      const n = Number(x.n);
+      const w = (Number.isInteger(n) && list[n - 1] && list[n - 1].word) || byNorm.get(norm(x.w)) || (raw.length === list.length && list[k] ? list[k].word : "");
+      if (w) items.push({ w, hi: String(x.hi).trim() });
+    });
     return Response.json({ items });
   } catch (e) {
     return Response.json({ error: e.message || "Server error" }, { status: 500 });
