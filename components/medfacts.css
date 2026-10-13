@@ -214,8 +214,9 @@
 .mf33-opts li b { flex: none; font-size: 0.75rem; color: var(--text-3); }
 .mf33-opts li.is-a { border-color: var(--ok); background: var(--ok-wash); font-weight: 700; }
 .mf33-opts li.is-a b { color: var(--ok); }
+.mf33-opts--in { display: none; }
 @media (max-width: 700px) {
   .mf33 { grid-template-columns: 1fr; }
-  .mf33 .mf33-side { display: none; }
-  .mf33.is-detail .mf33-side { display: block; }
+  .mf33 .mf33-side { display: none !important; }
+  .mf33-opts--in { display: grid; margin: 4px 0 10px; }
 }

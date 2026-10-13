@@ -8,12 +8,7 @@ import { isUserTopicId, getUserTopic, getUserBook, getUserTopicQuestions } from 
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import PyqDrill from "@/components/PyqReels";
 import GkCover from "@/components/GkCover";
-import MedLayouts, { MED_LAYOUTS } from "@/components/MedLayouts";
-import MedFacts, { MED_FACT_LAYOUTS } from "@/components/MedFacts";
-
-// Owner ne ye 10 rakhe; baaki tareeke code mein hain (backup/README.md),
-// bas dropdown se hate.
-const MED_KEEP = new Set(["0", "7", "16", "19", "21", "25", "31", "33", "34", "36"]);
+import PyqLooks from "@/components/PyqLooks";
 
 // One page for ANY crazygktrick topic, whichever index sent you here — GKTricks
 // (Polity, Ancient History) or Mirror of Common Errors (Noun). The slugs are
@@ -25,11 +20,6 @@ export default function GkTopicPage() {
   const [topic, setTopic] = useState(null);
   const [qs, setQs] = useState([]);
   const [ready, setReady] = useState(false);
-  // 🏰 Medieval: yaad karne ka tareeka.
-  // Default 33 · Do pane (owner ne chuna) — nayi key taaki pehle chuna hua beech mein na aaye.
-  const [medLay, setMedLay] = useState("33");
-  useEffect(() => { try { const v = localStorage.getItem("cgl.medlayout2"); if (v && MED_KEEP.has(v)) setMedLay(v); } catch { /* ignore */ } }, []);
-  const pickMed = (v) => { setMedLay(v); try { localStorage.setItem("cgl.medlayout2", v); } catch { /* quota */ } };
 
   useEffect(() => {
     let alive = true;
@@ -106,42 +96,32 @@ export default function GkTopicPage() {
         ) : qs.length === 0 ? (
           <div className="placeholder">Is topic mein koi question nahi. 🤔</div>
         ) : chatLook ? (
-          // 📋 Medieval: Vocab jaisa Cover method — baayen sawaal, daayen sirf
-          // jawab (dhaka hua). Owner try kar raha hai; pehle wala PyqSplit
+          // 🏰 Medieval: "0" = Cover table (vocab jaisa). Pehle wala PyqSplit
           // (sawaal + options + button) commit 0348b60 mein hai.
-          <>
-            <div className="row" style={{ maxWidth: 980, margin: "0 auto 12px" }}>
-              <select className="select" style={{ width: "auto", padding: "8px 12px" }} value={medLay} onChange={(e) => pickMed(e.target.value)} aria-label="Yaad karne ka tareeka">
-                <option value="0">0 · Cover table (abhi wala)</option>
-                <optgroup label="Bina facts">
-                  {MED_LAYOUTS.filter((l) => MED_KEEP.has(l.id)).map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
-                </optgroup>
-                <optgroup label="Facts ke saath (DeepSeek ⚡)">
-                  {MED_FACT_LAYOUTS.filter((l) => MED_KEEP.has(l.id)).map((l) => <option key={l.id} value={l.id}>{l.id} · {l.name}</option>)}
-                </optgroup>
-              </select>
-            </div>
-            {medLay === "0" ? <GkCover qs={qs} /> : Number(medLay) > 20 ? <MedFacts lay={medLay} qs={qs} /> : <MedLayouts lay={medLay} qs={qs} />}
-          </>
+          <PyqLooks qs={qs} storeKey="cgl.medlayout2" zeroLabel="Cover table (abhi wala)">
+            <GkCover qs={qs} />
+          </PyqLooks>
         ) : (
-          <PyqDrill
-            title={topic?.chapter || topic?.label || "Test"}
-            list={qs}
-            subject={topic?.subject || "gs"}
-            resumeKey={resumeKey}
-            renderCard={(q, i, all) => (
-              <PyqQuestionCard
-                resumeKey={resumeKey}
-                key={q.id || i}
-                q={q}
-                index={i}
-                subject={topic?.subject || "gs"}
-                chapterName={topic?.chapter || topic?.label}
-                archiveOnAnswer
-                fileToChapter
-              />
-            )}
-          />
+          <PyqLooks qs={qs} ns={resumeKey}>
+            <PyqDrill
+              title={topic?.chapter || topic?.label || "Test"}
+              list={qs}
+              subject={topic?.subject || "gs"}
+              resumeKey={resumeKey}
+              renderCard={(q, i, all) => (
+                <PyqQuestionCard
+                  resumeKey={resumeKey}
+                  key={q.id || i}
+                  q={q}
+                  index={i}
+                  subject={topic?.subject || "gs"}
+                  chapterName={topic?.chapter || topic?.label}
+                  archiveOnAnswer
+                  fileToChapter
+                />
+              )}
+            />
+          </PyqLooks>
         )}
       </section>
 

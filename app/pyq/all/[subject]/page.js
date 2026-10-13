@@ -8,6 +8,7 @@ import PyqQuestionCard from "@/components/PyqQuestionCard";
 import MathQuestionCard from "@/components/MathQuestionCard";
 import ReasonQuestionCard from "@/components/ReasonQuestionCard";
 import PyqDrill from "@/components/PyqReels";
+import PyqLooks from "@/components/PyqLooks";
 import { seededShuffle } from "@/lib/shuffle";
 
 // Ek subject ke SAARE question — har bank, har chapter, ek list mein.
@@ -157,31 +158,34 @@ export default function AllSubjectPage() {
             Saare chapter khul rahe hain… 📚 {prog.total ? `${prog.done}/${prog.total} (${pct}%)` : ""}
           </div>
         ) : (
-          <PyqDrill
-            title={`All · ${meta.label}`}
-            list={filtered}
-            subject={meta.subject}
-            resumeKey={resumeKey}
-            emptyText="Is filter par koi question nahi."
-            renderCard={(q, i, all) => {
-              // Bank ka naam card ke upar likhna band kar diya — test ke beech
-              // mein "Pinnacle Maths · Mensuration" padhne ki koi zaroorat nahi,
-              // aur card ke sar mein question ka apna id/paper waise bhi hai.
-              // Naam sirf Mistake Notebook ki category ke liye banta hai.
-              const name = `${q._srcLabel} · ${q._chapter}`;
-              return (
-                <Fragment key={q._uid}>
-                  {q._card === "math" ? (
-                    <MathQuestionCard q={q} index={i} subject="math" resumeKey={resumeKey} chapterName={name} />
-                  ) : q._card === "reason" ? (
-                    <ReasonQuestionCard q={q} index={i} subject="reasoning" resumeKey={resumeKey} chapterName={name} />
-                  ) : (
-                    <PyqQuestionCard q={q} index={i} subject={meta.subject} resumeKey={resumeKey} chapterName={name} />
-                  )}
-                </Fragment>
-              );
-            }}
-          />
+          // GS / English: Medieval wale yaad karne ke tareeke; Maths / Reasoning par purana hi.
+          <PyqLooks qs={filtered} ns={resumeKey} on={["gs", "english"].includes(meta.subject)}>
+            <PyqDrill
+              title={`All · ${meta.label}`}
+              list={filtered}
+              subject={meta.subject}
+              resumeKey={resumeKey}
+              emptyText="Is filter par koi question nahi."
+              renderCard={(q, i, all) => {
+                // Bank ka naam card ke upar likhna band kar diya — test ke beech
+                // mein "Pinnacle Maths · Mensuration" padhne ki koi zaroorat nahi,
+                // aur card ke sar mein question ka apna id/paper waise bhi hai.
+                // Naam sirf Mistake Notebook ki category ke liye banta hai.
+                const name = `${q._srcLabel} · ${q._chapter}`;
+                return (
+                  <Fragment key={q._uid}>
+                    {q._card === "math" ? (
+                      <MathQuestionCard q={q} index={i} subject="math" resumeKey={resumeKey} chapterName={name} />
+                    ) : q._card === "reason" ? (
+                      <ReasonQuestionCard q={q} index={i} subject="reasoning" resumeKey={resumeKey} chapterName={name} />
+                    ) : (
+                      <PyqQuestionCard q={q} index={i} subject={meta.subject} resumeKey={resumeKey} chapterName={name} />
+                    )}
+                  </Fragment>
+                );
+              }}
+            />
+          </PyqLooks>
         )}
       </section>
     </>

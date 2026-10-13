@@ -6,6 +6,8 @@ import { useParams } from "next/navigation";
 import { loadWarSubject, warSubjectMeta } from "@/lib/warbank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import PyqDrill from "@/components/PyqReels";
+// GS / English: Medieval wale yaad karne ke tareeke (default 33 · Do pane).
+import PyqLooks from "@/components/PyqLooks";
 
 
 // 🌑 Ek page Gemini ke parde jaisa — owner ne screenshot dikha kar kaha tha
@@ -104,27 +106,29 @@ export default function WarSubjectPage() {
         ) : filtered.length === 0 ? (
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
-          <PyqDrill
-            title={`WAR · ${meta?.label || ""}`}
-            list={filtered}
-            subject="gs"
-            resumeKey={resumeKey}
-            renderCard={(q, i, all) => (
-              // Read-only: these live in a static file, so no edit/delete
-              // (both write localStorage). Answering still archives to the
-              // Mistake Notebook, and "save to a chapter" still works.
-              <PyqQuestionCard
-                resumeKey={resumeKey}
-                key={q.id}
-                q={q}
-                index={i}
-                subject="gs"
-                chapterName={`WAR · ${meta.label}`}
-                archiveOnAnswer
-                fileToChapter
-              />
-            )}
-          />
+          <PyqLooks qs={filtered} ns={resumeKey}>
+            <PyqDrill
+              title={`WAR · ${meta?.label || ""}`}
+              list={filtered}
+              subject="gs"
+              resumeKey={resumeKey}
+              renderCard={(q, i, all) => (
+                // Read-only: these live in a static file, so no edit/delete
+                // (both write localStorage). Answering still archives to the
+                // Mistake Notebook, and "save to a chapter" still works.
+                <PyqQuestionCard
+                  resumeKey={resumeKey}
+                  key={q.id}
+                  q={q}
+                  index={i}
+                  subject="gs"
+                  chapterName={`WAR · ${meta.label}`}
+                  archiveOnAnswer
+                  fileToChapter
+                />
+              )}
+            />
+          </PyqLooks>
         )}
       </section>
     </>

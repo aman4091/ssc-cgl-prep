@@ -613,10 +613,11 @@ const COMP = { 1: Flash, 2: Reel, 3: Mcq, 4: Reverse, 5: TypeIt, 6: Hint, 7: Mat
 // Bank ke sawaal → { id, no, raw (asli sawaal), q, a, opts, ai } — sirf jinka jawab pata hai.
 export function toMs(qs) {
   return qs.map((q, i) => {
-    const ai = Number.isInteger(q.answer) ? q.answer : -1;
+    const n = q.answer === "" || q.answer == null ? NaN : Number(q.answer);
+    const ai = Number.isInteger(n) && Array.isArray(q.options) && q.options[n] != null ? n : -1;
     const a = ai >= 0 && Array.isArray(q.options) ? plain(q.options[ai]) : plain(q.answerText || "");
     // no = bank mein asli number (1 se) — chhante ke baad bhi wahi rehta hai.
-    return { id: String(q.id ?? i), no: i + 1, raw: q, q: q.question, a, opts: Array.isArray(q.options) ? q.options.map(plain) : [], ai };
+    return { id: String(q._uid ?? q.id ?? i), no: i + 1, raw: q, q: q.question, a, opts: Array.isArray(q.options) ? q.options.map(plain) : [], ai };
   }).filter((m) => m.q && m.a);
 }
 

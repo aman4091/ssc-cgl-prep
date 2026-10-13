@@ -6,6 +6,8 @@ import { useParams } from "next/navigation";
 import { loadErrorProChapter, errorProChapterMeta } from "@/lib/errorprobank";
 import PyqQuestionCard from "@/components/PyqQuestionCard";
 import PyqDrill from "@/components/PyqReels";
+// GS / English: Medieval wale yaad karne ke tareeke (default 33 · Do pane).
+import PyqLooks from "@/components/PyqLooks";
 
 export default function ErrorProChapterPage() {
   const { chapter } = useParams();
@@ -55,26 +57,28 @@ export default function ErrorProChapterPage() {
         ) : qs.length === 0 ? (
           <div className="placeholder">Is chapter mein koi question nahi. 🤔</div>
         ) : (
-          <PyqDrill
-            title={`Error Pro · ${meta?.label || ""}`}
-            list={qs}
-            subject="english"
-            resumeKey={resumeKey}
-            renderCard={(q, i, all) => (
-              // Read-only: a static bank has nothing to write back to, so no
-              // edit/delete. Answering still archives to the Mistake Notebook.
-              <PyqQuestionCard
-                resumeKey={resumeKey}
-                key={q.id}
-                q={q}
-                index={i}
-                subject="english"
-                chapterName={`Error Pro · ${meta.label}`}
-                archiveOnAnswer
-                fileToChapter
-              />
-            )}
-          />
+          <PyqLooks qs={qs} ns={resumeKey}>
+            <PyqDrill
+              title={`Error Pro · ${meta?.label || ""}`}
+              list={qs}
+              subject="english"
+              resumeKey={resumeKey}
+              renderCard={(q, i, all) => (
+                // Read-only: a static bank has nothing to write back to, so no
+                // edit/delete. Answering still archives to the Mistake Notebook.
+                <PyqQuestionCard
+                  resumeKey={resumeKey}
+                  key={q.id}
+                  q={q}
+                  index={i}
+                  subject="english"
+                  chapterName={`Error Pro · ${meta.label}`}
+                  archiveOnAnswer
+                  fileToChapter
+                />
+              )}
+            />
+          </PyqLooks>
         )}
       </section>
     </>

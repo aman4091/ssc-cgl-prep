@@ -146,7 +146,11 @@ function Clusters({ m }) {
   );
 }
 
-function useResume(key, n) {
+// Page ki pehchaan (PyqLooks ka `ns`) — Medieval par khaali, baaki PYQ par
+// apni, taaki ek page ka "kahan tak padha" doosre par na chale.
+let NS = "";
+function useResume(key0, n) {
+  const key = NS ? `${key0}.${NS}` : key0;
   const [i, setI] = useState(() => { const v = Number(readJ(key, 0)); return Number.isFinite(v) && v >= 0 && v < n ? v : 0; });
   const set = (v) => { const k = ((v % n) + n) % n; setI(k); writeJ(key, k); };
   return [Math.min(i, n - 1), set];
@@ -531,9 +535,12 @@ function useAheadFive(ms, i) {
   const first = useRef(true);
   const pend = useRef([]);
   const last = useRef(0);
+  const list = useRef(null);
   useEffect(() => {
     const m = ms[i];
     if (!m) return;
+    // Nayi list (chapter / filter badla) → phir se shuru wale 1–5.
+    if (list.current !== ms) { list.current = ms; first.current = true; last.current = 0; pend.current = []; }
     // Ginti sawaal ke asli number se (bina jawab wala beech mein ho to bhi 1 → 6).
     if (first.current) { first.current = false; pend.current = ms.filter((x) => x.no > m.no && x.no < m.no + 5); }
     // Thoda aage badhe (≤5) to beech ki ginti bhi — koi chhoote nahi; lambi
@@ -557,6 +564,7 @@ function TwoPane({ ms }) {
   const [detail, setDetail] = useState(false);
   const m = ms[i];
   useAheadFive(ms, i);
+  const opts = m.opts.map((o, k) => <li key={k} className={k === m.ai ? "is-a" : ""}><b>{String.fromCharCode(65 + k)}</b>{o}</li>);
   const listRef = useRef(null);
   // 7000+ button — har naye jawab par dobara na banen.
   const list = useMemo(() => ms.map((x, k) => (
@@ -580,6 +588,8 @@ function TwoPane({ ms }) {
         <button type="button" className="mf33-back" onClick={() => setDetail(false)}>← List</button>
         <small>#{m.no}</small>
         <div className="mf33-q"><Q m={m} /></div>
+        {/* Mobile: options jawab ke UPAR (desktop par daayen alag khaana). */}
+        <ol className="mf33-opts mf33-opts--in">{opts}</ol>
         <h2>{m.a}</h2>
         <Clusters m={m} />
         <Nav i={m.no - 1} n={ms[ms.length - 1].no} go={(d) => setI(i + d)} />
@@ -587,9 +597,7 @@ function TwoPane({ ms }) {
       {/* Jawab wale dabbe ke DAAYEN alag khaana — us sawaal ke options. */}
       <div className="mf33-side">
         <small>Options</small>
-        <ol className="mf33-opts">
-          {m.opts.map((o, k) => <li key={k} className={k === m.ai ? "is-a" : ""}><b>{String.fromCharCode(65 + k)}</b>{o}</li>)}
-        </ol>
+        <ol className="mf33-opts">{opts}</ol>
       </div>
     </div>
   );
@@ -798,7 +806,8 @@ function Trick({ ms }) {
 
 const COMP = { 21: Book, 22: Sticky, 23: Clue, 24: Cloze, 25: Paper, 26: Chat, 27: MindMap, 28: Kosh, 29: WhoseFact, 30: WriteCheck, 31: Today10, 32: Search, 33: TwoPane, 34: Highlight, 35: LetterReel, 36: Recent, 37: ByAnswer, 38: Notes, 39: Swipe, 40: Trick };
 
-export default function MedFacts({ lay, qs }) {
+export default function MedFacts({ lay, qs, ns = "" }) {
+  NS = ns;
   const all = useMemo(() => { LOOK = null; return toMs(qs); }, [qs]);
   const [tick, setTick] = useState(0);
   const ms = all;
@@ -814,5 +823,5 @@ export default function MedFacts({ lay, qs }) {
   const C = COMP[lay];
   if (!C) return null;
   if (!ms.length) return <Empty>Jawab wale sawaal nahi mile.</Empty>;
-  return <div className={`ml mf mf--${lay}`}><C key={lay} ms={ms} tick={tick} /></div>;
+  return <div className={`ml mf mf--${lay}`}><C key={`${lay}:${ns}`} ms={ms} tick={tick} /></div>;
 }
