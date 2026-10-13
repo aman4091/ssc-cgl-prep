@@ -18,6 +18,7 @@ import { simItems, simScore, getPicks, simDays, SIM_PER } from "@/lib/anssim";
 import SimInline, { SimQ, useSimTick } from "./SimInline";
 import { getRun, startFocus, getLog, subjectOfPath, fmtMin } from "@/lib/pomo";
 import Markdown from "./Markdown";
+import AnswersSets from "./AnswersSets";
 import "./answers-play.css";
 
 export const PLAY_LAYOUTS = [
@@ -532,6 +533,16 @@ function Quests({ ctx }) {
 // ✅ Ho gaya dabate hi wo sawaal katar mein sabse neeche, agla upar aur wahi
 // saamne (lib/answersdone ka waqt). Card ka number list wala hi (pakka).
 function SimPair({ ctx }) {
+  // 📖 Padho (Ho gaya wala) | 📝 Sets · Test (25-25, 15 min — components/AnswersSets)
+  const [mode, setMode] = useState(() => readJ("cgl.ans.mode", "sets"));
+  const pickMode = (m) => { setMode(m); writeJ("cgl.ans.mode", m); };
+  const tabs = (
+    <div className="tbx-sec">
+      <span>SECTIONS</span>
+      <button type="button" className={`tbx-tab${mode !== "sets" ? " is-on" : ""}`} onClick={() => pickMode("padho")}>📖 Padho</button>
+      <button type="button" className={`tbx-tab${mode === "sets" ? " is-on" : ""}`} onClick={() => pickMode("sets")}>📝 Sets · Test</button>
+    </div>
+  );
   const order = useMemo(() => {
     const dm = ctx.doneMap || {};
     const not = ctx.list.filter((r) => !dm[r.id]);
@@ -563,6 +574,7 @@ function SimPair({ ctx }) {
     const el = gridRef.current && gridRef.current.querySelector(".is-cur");
     if (el) el.scrollIntoView({ block: "nearest" });
   }, [r && r.id, side]);
+  if (mode === "sets") return <AnswersSets ctx={ctx} tabs={tabs} />;
   if (!r) return null;
   const s = subOf(ctx.bucketOf(r));
   const ch = ctx.chapterOf(r).ch;
@@ -581,7 +593,7 @@ function SimPair({ ctx }) {
       </header>
       <div className="tbx-body">
         <section className="tbx-main">
-          <div className="tbx-sec"><span>SECTIONS</span><b className="tbx-tab">{s.label}</b></div>
+          {tabs}
           <div className="tbx-scroll" ref={scrollRef}>
             <div className="tbx-qh">
               <b>Question No.{numOf(r)}</b>

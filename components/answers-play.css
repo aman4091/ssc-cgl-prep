@@ -381,3 +381,50 @@ body:has(.tbx) { overflow: hidden; }
   body.sa-docked:has(.tbx.is-side) .pomo-btn { left: calc((100% - 300px - var(--sa-w)) / 2); }
   body.sa-docked:has(.tbx:not(.is-side)) .pomo-btn { left: calc((100% - var(--sa-w)) / 2); }
 }
+
+/* ── 📝 Sets · Test (components/AnswersSets) ── */
+.tbx .tbx-tab { margin-left: 12px; border: 1px solid #166a84; cursor: pointer; }
+.tbx .tbx-sec .tbx-tab:first-of-type { margin-left: 40px; }
+.tbx button.tbx-tab:not(.is-on) { background: #ffffff; color: #166a84; }
+.tbx .tbx-tab.is-on, .tbx b.tbx-tab { background: #166a84; color: #ffffff; }
+/* test ke dauraan upar ki menu patti chhupti hai (body.exam-on) — jagah bhi */
+body.exam-on .tbx { top: 0; }
+.tbx-setsbody { flex: 1; min-height: 0; overflow-y: auto; padding: 18px 16px 80px; }
+.tbx-sets .setcard { border-radius: 3px; }
+.tbx .tbx-hbtn { padding: 8px 14px; border-radius: 4px; border: 1px solid rgba(255, 255, 255, 0.35); background: transparent; color: #ffffff; font-size: 14px; cursor: pointer; }
+.tbx .tbx-hbtn:hover { background: rgba(255, 255, 255, 0.12); }
+.tbx-clock b { font-variant-numeric: tabular-nums; font-size: 17px; }
+.tbx-clock.is-low { background: #c0392b; }
+.tbx-badge.is-bad { background: #c0392b; }
+/* test ke dauraan card ke apne button / 👁️ Answer nahi */
+.tbx-test.is-run .ansp__hacts, .tbx-test.is-run .ansp__chatacts { display: none; }
+.tbx-opts { display: grid; gap: 6px; padding: 14px 16px 6px; }
+.tbx-opt { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid transparent; border-radius: 3px; font-size: 16px; color: #333333; cursor: pointer; }
+.tbx-opt:hover { background: #f5f9fc; }
+.tbx-opt input { width: 16px; height: 16px; margin: 0; accent-color: #059ac4; }
+.tbx-opt b { min-width: 14px; font-weight: 700; }
+.tbx-opt.is-pick { background: #d9edf7; }
+.tbx-opt.is-key { background: #e3f5ea; border-color: #27ae60; }
+.tbx-opt.is-bad { background: #f8e1de; border-color: #c0392b; }
+.tbx-opt.is-mine { background: #d9edf7; border-color: #059ac4; }
+.tbx-self { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 8px 16px 20px; padding: 10px 12px; border: 1px solid #fbe0cd; background: #fdf0e4; font-size: 14px; }
+.tbx-self span { flex: 1 1 260px; }
+.tbx .tbx-self button { padding: 6px 12px; border-radius: 3px; border: 1px solid #cccccc; background: #ffffff; color: #333333; font-size: 13px; font-weight: 700; cursor: pointer; }
+.tbx .tbx-self button.is-on.is-ok { background: #27ae60; border-color: #27ae60; color: #ffffff; }
+.tbx .tbx-self button.is-on.is-bad { background: #c0392b; border-color: #c0392b; color: #ffffff; }
+.tbx-foot__acts { display: flex; gap: 8px; }
+.tbx .tbx-submit { background: #27ae60; border-color: #27ae60; color: #ffffff; font-weight: 700; }
+.tbx .tbx-submit:hover:not(:disabled) { background: #219150; }
+.tbx-legend i.is-bad { background: #c0392b; border-color: #c0392b; color: #ffffff; }
+.tbx-legend i.is-mark { background: #8e44ad; border-color: #8e44ad; color: #ffffff; }
+.tbx-legend i.is-ask { background: #ffd03b; border-color: #e0b000; }
+.tbx .tbx-grid button.is-bad { background: #c0392b; border-color: #c0392b; color: #ffffff; border-radius: 0 0 50% 50% / 0 0 60% 60%; }
+.tbx .tbx-grid button.is-mark { background: #8e44ad; border-color: #8e44ad; color: #ffffff; border-radius: 50%; width: 32px; justify-self: center; }
+.tbx .tbx-grid button.is-ask { background: #ffd03b; border-color: #e0b000; }
+.tbx .tbx-grid button.is-bad.is-cur { background: #c0392b; color: #ffffff; }
+.tbx .tbx-grid button.is-mark.is-cur { background: #8e44ad; color: #ffffff; }
+@media (max-width: 700px) {
+  .tbx-foot__acts .tbx-btn { padding: 8px 6px; font-size: 12px; }
+  .tbx .tbx-sec .tbx-tab:first-of-type { margin-left: 10px; }
+  .tbx .tbx-tab { margin-left: 6px; padding: 5px 8px; font-size: 13px; }
+}
