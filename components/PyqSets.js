@@ -79,8 +79,11 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
 
   const [results, setResults] = useState({});
   const [progs, setProgs] = useState({});
+  // Natije padh liye? Tab tak Home ka ?set= set na khole (warna khaali
+  // natije par naya test shuru ho jata tha — owner).
+  const [ready, setReady] = useState(false);
   useEffect(() => {
-    const on = () => { setResults(getChapterResults(rk)); setProgs(progsFor(rk)); };
+    const on = () => { setResults(getChapterResults(rk)); setProgs(progsFor(rk)); setReady(true); };
     on();
     window.addEventListener("cgl:settest-changed", on);
     window.addEventListener("cgl:sync-applied", on);
@@ -125,6 +128,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
 
   // how: "test" (naya) | "resume" (chhoda hua) | "result"
   const start = (i, how) => {
+    if (results[kOf(i)]) how = "result";   // diya hua set dobara nahi — pehla natija hi pakka (owner)
     const prev = how === "result" ? results[kOf(i)] : null;
     const pg = how === "resume" ? progs[kOf(i)] : null;
     if (how === "test") clearProg(rk, kOf(i));
@@ -144,7 +148,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   // (diya hua ho to natija, warna test).
   const autoRef = useRef(false);
   useEffect(() => {
-    if (autoRef.current || !sets.length || typeof window === "undefined") return;
+    if (!ready || autoRef.current || !sets.length || typeof window === "undefined") return;
     const want = new URLSearchParams(window.location.search).get("set");
     if (!want) return;
     const i = sets.findIndex((_, k) => String(kOf(k)) === want);
@@ -152,7 +156,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     autoRef.current = true;
     start(i, results[want] ? "result" : progs[want] ? "resume" : "test");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sets, results, progs]);
+  }, [sets, results, progs, ready]);
 
   // 🩹 Set NUMBER wale purane natije ("#0") → is set ki pehchaan par. Ek
   // chapter-key ka natija usi list ka hota hai, to number se milana theek hai.
@@ -276,8 +280,8 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
               const pg = progs[kOf(i)];
               const L = Math.max(1, chunk.length);
               return (
-                <div key={i} className={`setcard${r ? " is-done" : ""}${pg ? " is-paused" : ""}`}>
-                  <button type="button" className="setcard__open" onClick={() => start(i, pg ? "resume" : r ? "result" : "test")}>
+                <div key={i} className={`setcard${r ? " is-done" : ""}${pg && !r ? " is-paused" : ""}`}>
+                  <button type="button" className="setcard__open" onClick={() => start(i, r ? "result" : pg ? "resume" : "test")}>
                     <span className="setcard__n">{setName} {i + 1}{r ? " ✓" : ""}</span>
                     <span className="setcard__meta">{given ? `${chunk.length} questions` : `Q ${a + 1}–${a + chunk.length} · ${chunk.length} questions`}</span>
                     <span className="setcard__bar setcard__bar--2">
@@ -286,14 +290,12 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
                     </span>
                     {r ? <span className="setcard__score">{fmtMarks(marksOf(r))}/{maxMarks(r.total)} marks · {r.right} sahi · <em className="setcard__wrong">{r.wrong || 0} wrong</em> · {accuracyOf(r)}%</span> : null}
                   </button>
-                  {pg ? (
+                  {pg && !r ? (
                     <span className="setcard__acts">
                       <button type="button" className="btn btn--sm" onClick={() => start(i, "resume")}>Resume</button>
-                      {r ? <button type="button" className="btn btn--ghost btn--sm" onClick={() => start(i, "result")}>📖 Result</button> : null}
                     </span>
                   ) : r ? (
                     <span className="setcard__acts">
-                      <button type="button" className="btn btn--sm" onClick={() => start(i, "test")}>🔁 Attempt again</button>
                       <button type="button" className="btn btn--ghost btn--sm" onClick={() => start(i, "result")}>📖 Result</button>
                     </span>
                   ) : (

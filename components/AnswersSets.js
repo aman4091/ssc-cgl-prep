@@ -10,7 +10,7 @@
 //     "Answer: (c)" jaisa) → apne aap sahi / galat
 //   • pata na ho → tum khud ✓ Sahi / ✗ Galat lagao
 // Natija lib/settests mein ("answers:<subject>#<set>") — set card par dikhta
-// hai, dobara kholne par "Attempt again" / "Result".
+// hai, dobara kholne par sirf "Result" (diya hua set dobara nahi).
 //
 // Set list ke ASLI kram se katte hain (Set 1 = Q 1–25, hamesha wahi) — "ho
 // gaya neeche" wali chhantayi yahan nahi, warna set ke sawaal badalte rehte.
@@ -61,8 +61,11 @@ export default function AnswersSets({ ctx }) {
   const kOf = (i) => sigs[i];
   const [results, setResults] = useState({});
   const [progs, setProgs] = useState({});
+  // Natije padh liye? Tab tak Home ka ?set= set na khole (warna khaali
+  // natije par naya test shuru ho jata tha — owner).
+  const [ready, setReady] = useState(false);
   useEffect(() => {
-    const on = () => { setResults(getChapterResults(rkey)); setProgs(progsFor(rkey)); };
+    const on = () => { setResults(getChapterResults(rkey)); setProgs(progsFor(rkey)); setReady(true); };
     on();
     window.addEventListener("cgl:settest-changed", on);
     window.addEventListener("cgl:sync-applied", on);
@@ -142,6 +145,7 @@ export default function AnswersSets({ ctx }) {
 
   // how: "test" (naya) | "resume" (chhoda hua) | "result"
   const open = (i, how) => {
+    if (results[kOf(i)]) how = "result";   // diya hua set dobara nahi — pehla natija hi pakka (owner)
     const prev = how === "result" ? results[kOf(i)] : null;
     const pg = how === "resume" ? progs[kOf(i)] : null;
     if (how === "test") clearProg(rkey, kOf(i));
@@ -185,7 +189,7 @@ export default function AnswersSets({ ctx }) {
   // 🏠 Home ki report se "▶" — ?set=<pehchaan> se wahi set seedha.
   const autoRef = useRef(false);
   useEffect(() => {
-    if (autoRef.current || !setCount || typeof window === "undefined") return;
+    if (!ready || autoRef.current || !setCount || typeof window === "undefined") return;
     const want = new URLSearchParams(window.location.search).get("set");
     if (!want) return;
     const i = sigs.findIndex((x) => x === want);
@@ -193,7 +197,7 @@ export default function AnswersSets({ ctx }) {
     autoRef.current = true;
     open(i, results[want] ? "result" : progs[want] ? "resume" : "test");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sigs, results, progs]);
+  }, [sigs, results, progs, ready]);
   // ⏸ Chalte test ka haal — chhod do to set par Resume.
   useEffect(() => {
     if (!running) return;
@@ -242,8 +246,8 @@ export default function AnswersSets({ ctx }) {
               const pg = progs[kOf(i)];
               const L = Math.max(1, chunk.length);
               return (
-                <div key={i} className={`setcard${r ? " is-done" : ""}${pg ? " is-paused" : ""}`}>
-                  <button type="button" className="setcard__open" onClick={() => open(i, pg ? "resume" : r ? "result" : "test")}>
+                <div key={i} className={`setcard${r ? " is-done" : ""}${pg && !r ? " is-paused" : ""}`}>
+                  <button type="button" className="setcard__open" onClick={() => open(i, r ? "result" : pg ? "resume" : "test")}>
                     <span className="setcard__n">Set {i + 1}{r ? " ✓" : ""}</span>
                     <span className="setcard__meta">Q {a + 1}–{a + chunk.length} · {chunk.length} questions</span>
                     <span className="setcard__bar setcard__bar--2">
@@ -254,14 +258,12 @@ export default function AnswersSets({ ctx }) {
                       <span className="setcard__score">{fmtMarks(marksOf(r))}/{maxMarks(r.total)} marks · {r.right} sahi · <em className="setcard__wrong">{r.wrong || 0} wrong</em> · {accuracyOf(r)}%{r.ask ? ` · ${r.ask} jaanchna baaki` : ""}</span>
                     ) : null}
                   </button>
-                  {pg ? (
+                  {pg && !r ? (
                     <span className="setcard__acts">
                       <button type="button" className="btn btn--sm" onClick={() => open(i, "resume")}>Resume</button>
-                      {r ? <button type="button" className="btn btn--ghost btn--sm" onClick={() => open(i, "result")}>📖 Result</button> : null}
                     </span>
                   ) : r ? (
                     <span className="setcard__acts">
-                      <button type="button" className="btn btn--sm" onClick={() => open(i, "test")}>🔁 Attempt again</button>
                       <button type="button" className="btn btn--ghost btn--sm" onClick={() => open(i, "result")}>📖 Result</button>
                     </span>
                   ) : (
