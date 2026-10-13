@@ -21,6 +21,8 @@ import PyqQuestionCard from "./PyqQuestionCard";
 import MathQuestionCard from "./MathQuestionCard";
 import ReasonQuestionCard from "./ReasonQuestionCard";
 import TestPage, { clock } from "./TestPage";
+import AnsTestQ, { ansKeyOf } from "./AnsTestQ";
+import { setSavedKey } from "@/lib/anskeys";
 import { getChapterResults, saveSetResult, moveResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import { pushWrong } from "@/lib/wrongsets";
 import { progsFor, saveProg, clearProg } from "@/lib/setprog";
@@ -36,7 +38,8 @@ const SET_SIZE = 25;
 const SET_MIN = 15;
 // Kuch bank (jaise Medieval) mein jawab "2" (text) hai — pehle wo "bina
 // jawab" gina jata tha, isliye galat sawaal Wrong Sets mein nahi jaate the.
-const hasKey = (q) => typeof q?.answer === "number";
+// Answers page ka sawaal (`_ans`) — sahi option tumhara bataya (lib/anskeys).
+const hasKey = (q) => (q?._ans ? ansKeyOf(q) >= 0 : typeof q?.answer === "number");
 const WS_SINCE = "2026-10-12T00:00";   // Wrong Sets ka pehla din (UTC — IST ki subah bhi aaye)
 const normQ = (q) => (q && typeof q.answer === "string" && /^\s*\d+\s*$/.test(q.answer) ? { ...q, answer: Number(q.answer) } : q);
 const SUBS = { maths: "math", math: "math", reasoning: "reasoning", english: "english", gs: "gs" };
@@ -200,6 +203,16 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     saveProg(rk, kOf(open), { picks, review, seen, cur, left, times, path: window.location.pathname + window.location.search, title: `${title} · Set ${(open) + 1}` });
   }, [running, rk, open, picks, review, seen, cur, left, times, sigs, given]);
 
+  // 📖 Answers wale sawaal ka sahi option natije par bataya — hamesha ke liye,
+  // phir isi natije ke marks dobara aur galat nikla to Wrong Sets mein.
+  const [kv, setKv] = useState(0);
+  const tellRef = useRef(null);
+  const tellKey = (i, k) => {
+    setSavedKey(qs[i].id, k);
+    setPicks((p) => (p[i] ? { ...p, [i]: { ...p[i], correct: p[i].opt === k } } : p));
+    tellRef.current = i;
+    setKv((x) => x + 1);
+  };
   const keyed = qs.map((q, i) => (hasKey(q) ? i : -1)).filter((i) => i >= 0);
   const right = keyed.filter((i) => picks[i]?.correct).length;
   const answered = keyed.filter((i) => picks[i]).length;
@@ -217,7 +230,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     });
     // QBoard jaisa hisaab — stats, Mistake Notebook, ho gaya, aaj ki ginti.
     markDoneMany(qs);
-    const rows = qs.map((qq, i) => ({ q: regRef.current[i] || qq, correct: !!picks[i]?.correct, attempted: !!picks[i], i })).filter(({ i }) => hasKey(qs[i]));
+    const rows = qs.map((qq, i) => ({ q: regRef.current[i] || qq, correct: !!picks[i]?.correct, attempted: !!picks[i], i })).filter(({ i }) => hasKey(qs[i]) && !qs[i]._ans);
     const tried = rows.filter((r) => r.attempted);
     if (tried.length) recordAttempts(tried.map(({ q: qq, correct }) => ({ q: qq, correct })));
     recordQuizAttempts(rows.map(({ q: qq, correct }) => ({
@@ -231,6 +244,19 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [running, left, picks, qs, open, rk, sub, title, given, times, sigs]);
   useEffect(() => { if (running && left === 0) submit(); }, [running, left, submit]);
+  useEffect(() => {
+    const i = tellRef.current;
+    if (i == null || !done || open === null) return;
+    tellRef.current = null;
+    const prev = results[kOf(open)] || {};
+    saveSetResult(rk, kOf(open), {
+      ...prev, right, wrong, skipped: keyed.length - answered, total: keyed.length,
+      picks: Object.fromEntries(Object.entries(picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }])),
+    });
+    const qq = qs[i];
+    if (qq && hasKey(qq) && !picks[i]?.correct) pushWrong([{ ...qq, _sub: qq._sub || sub }]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [kv]);
 
   // ───────── parda 1: set chuno ─────────
   if (open === null) {
@@ -308,7 +334,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
       setPicks((p) => ({ ...p, [at]: { opt, correct: ok } }));
     },
   };
-  const card = given || !renderCard ? cardFor(q, base + at, sub, rk) : renderCard(q, base + at, all);
+  const card = q && q._ans ? null : given || !renderCard ? cardFor(q, base + at, sub, rk) : renderCard(q, base + at, all);
   const t = { right, wrong, skipped: keyed.length - answered };
   return (
     <TestPage
@@ -325,7 +351,13 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
       onQuit={back}
     >
       <div key={`${round}-${at}`}>
-        <ExamModeProvider value={slot}>{card}</ExamModeProvider>
+        {q && q._ans ? (
+          <AnsTestQ
+            r={q} done={done} pick={picks[at]?.opt}
+            onPick={(opt) => { if (done) return; setPicks((p) => { const c = { ...p }; if (c[at]?.opt === opt) delete c[at]; else c[at] = { opt, correct: opt === ansKeyOf(q) }; return c; }); }}
+            onTell={(k) => tellKey(at, k)}
+          />
+        ) : <ExamModeProvider value={slot}>{card}</ExamModeProvider>}
       </div>
     </TestPage>
   );

@@ -16,11 +16,12 @@
 // gaya neeche" wali chhantayi yahan nahi, warna set ke sawaal badalte rehte.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { getChapterResults, saveSetResult, moveResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
+import { getChapterResults, saveSetResult, moveResult, markResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import TestPage, { clock } from "./TestPage";
 import { progsFor, saveProg, clearProg } from "@/lib/setprog";
 import { hashStr } from "@/lib/syncitems";
 import { savedKey, setSavedKey } from "@/lib/anskeys";
+import { pushWrong } from "@/lib/wrongsets";
 
 const SET_SIZE = 25;
 const SET_MIN = 15;
@@ -41,6 +42,9 @@ function keyOf(r) {
   }
   return -1;
 }
+// Wrong Sets mein Answers ka sawaal — poora record, nishaan `_ans` ke saath
+// (components/AnsTestQ use dikhata hai).
+const toWrong = (r) => ({ ...r, _ans: true, _sub: r.subject || "math" });
 const optsOf = (r) => {
   const o = r && r.q && Array.isArray(r.q.options) ? r.q.options.filter((x) => x != null && String(x).trim()) : [];
   return o.length >= 2 ? o.slice(0, 4).map(String) : ["", "", "", ""];
@@ -120,7 +124,7 @@ export default function AnswersSets({ ctx }) {
   };
   const save = (pk, sf, s) => {
     const t = tally(pk, sf);
-    saveSetResult(rkey, kOf(setIdx), { ...t, sec: s, picks: pk, self: sf, times: times || {}, path: window.location.pathname + window.location.search.replace(/[?&]set=[^&]*/, "").replace(/^&/, "?"), title: `Answers · Set ${setIdx + 1}` });
+    saveSetResult(rkey, kOf(setIdx), { ...t, sec: s, picks: pk, self: sf, times: times || {}, ws: 1, path: window.location.pathname + window.location.search.replace(/[?&]set=[^&]*/, "").replace(/^&/, "?"), title: `Answers · Set ${setIdx + 1}` });
   };
 
   const submit = useCallback(() => {
@@ -129,6 +133,9 @@ export default function AnswersSets({ ctx }) {
     setSec(s); setDone(true); setCur(0);
     clearProg(rkey, kOf(setIdx));
     save(picks, self, s);
+    // 🔁 Galat + chhode → Wrong Sets (PYQ jaisa). Sahi option pata na ho aur
+    // option laga ho ("jaancho") — wo tab jayega jab tum sahi option bataoge.
+    pushWrong(qs.filter((_, i) => { const v = verdict(i); return v === "bad" || v === "skip"; }).map(toWrong));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [running, left, picks, self, times]);
   useEffect(() => { if (running && left === 0) submit(); }, [running, left, submit]);
@@ -156,6 +163,24 @@ export default function AnswersSets({ ctx }) {
       moveResult(rkey, String(i), sigs[i]);
     }
   }, [results, sigs, setCount, rkey]);
+
+  // 🩹 Is badlaav se PEHLE diye set (13 Oct se) — unke galat / chhode bhi ek
+  // baar Wrong Sets mein (owner: "6 galat nikle, wrong set mein nahi gaye").
+  useEffect(() => {
+    for (let i = 0; i < setCount; i++) {
+      const r = results[sigs[i]];
+      if (!r || r.ws || !(String(r.at || "") >= "2026-10-12T00:00")) continue;
+      const chunk = all.slice(i * SET_SIZE, i * SET_SIZE + SET_SIZE);
+      const pk = r.picks || {};
+      const bad = chunk.filter((rec, j) => {
+        const k = keyOf(rec);
+        if (pk[j] == null) return true;          // chhoda
+        return k >= 0 && pk[j] !== k;            // galat (sahi pata ho tab)
+      });
+      pushWrong(bad.map(toWrong));
+      markResult(rkey, sigs[i], { ws: 1 });
+    }
+  }, [results, sigs, setCount, rkey, all]);
 
   // 🏠 Home ki report se "▶" — ?set=<pehchaan> se wahi set seedha.
   const autoRef = useRef(false);
@@ -185,12 +210,17 @@ export default function AnswersSets({ ctx }) {
   const tellKey = (i, k) => {
     setSavedKey(qs[i].id, k);
     keyDirty.current = true;
+    toldRef.current = i;
     setKv((x) => x + 1);
   };
+  const toldRef = useRef(null);
   useEffect(() => {
     if (!keyDirty.current || !done || setIdx === null) return;
     keyDirty.current = false;
     save(picks, self, sec);
+    const i = toldRef.current;
+    toldRef.current = null;
+    if (i != null && verdict(i) === "bad") pushWrong([toWrong(qs[i])]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [kv]);
 

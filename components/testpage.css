@@ -148,3 +148,7 @@ body:has(.tbt) { overflow: hidden; }
    chhodo. */
 .tbt.is-done { z-index: 420; }
 @media (min-width: 1100px) { body.sa-docked .tbt.is-done { right: var(--sa-w, 440px); } }
+/* Answers ka sawaal (AnsTestQ) — tasveer */
+.tbt-ansimg { display: block; max-width: 100%; margin: 4px 0 10px; border: 1px solid #eeeeee; cursor: zoom-in; }
+.tbt-ansbig { max-width: 96vw; max-height: 92vh; background: #fff; }
+.tbt-ansq__ans { margin-top: 12px; font-size: 15px; }
