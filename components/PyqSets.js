@@ -85,6 +85,10 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   const [seen, setSeen] = useState({});
   const [left, setLeft] = useState(SET_MIN * 60);
   const [sec, setSec] = useState(0);
+  // ⏱ Har sawaal par kitne second (Testbook jaisa "You: 00:11").
+  const [times, setTimes] = useState({});
+  const curRef = useRef(0);
+  curRef.current = cur;
   const [round, setRound] = useState(0);
   const retryRef = useRef(false);
   const regRef = useRef({});
@@ -94,7 +98,11 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
 
   useEffect(() => {
     if (!running) return undefined;
-    const t = setInterval(() => setLeft((s) => (s > 0 ? s - 1 : 0)), 1000);
+    const t = setInterval(() => {
+      setLeft((s) => (s > 0 ? s - 1 : 0));
+      const c = curRef.current;
+      setTimes((x) => ({ ...x, [c]: (x[c] || 0) + 1 }));
+    }, 1000);
     return () => clearInterval(t);
   }, [running]);
   useEffect(() => {
@@ -115,6 +123,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     setCur(pg ? pg.cur || 0 : 0); setReview(pg ? pg.review || {} : {}); setSeen(pg ? pg.seen || { 0: true } : { 0: true });
     setPicks(pg ? pg.picks || {} : prev && prev.picks ? prev.picks : {});
     setSec(prev ? prev.sec || 0 : 0);
+    setTimes(pg ? pg.times || {} : prev ? prev.times || null : {});
     setDone(how === "result");
     setLeft(pg ? Math.max(1, pg.left || 0) : SET_MIN * 60);
     setRound((r) => r + 1);
@@ -154,8 +163,8 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   // ⏸ Chalte test ka haal har badlav par — chhod do to set par Resume.
   useEffect(() => {
     if (!running) return;
-    saveProg(rk, open, { picks, review, seen, cur, left });
-  }, [running, rk, open, picks, review, seen, cur, left]);
+    saveProg(rk, open, { picks, review, seen, cur, left, times });
+  }, [running, rk, open, picks, review, seen, cur, left, times]);
 
   const keyed = qs.map((q, i) => (hasKey(q) ? i : -1)).filter((i) => i >= 0);
   const right = keyed.filter((i) => picks[i]?.correct).length;
@@ -168,7 +177,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     setSec(s); setDone(true); setCur(0);
     clearProg(rk, open);
     saveSetResult(rk, open, {
-      right, wrong, skipped: keyed.length - answered, total: keyed.length, sec: s, ws: 1,
+      right, wrong, skipped: keyed.length - answered, total: keyed.length, sec: s, ws: 1, times,
       picks: Object.fromEntries(Object.entries(picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }])),
     });
     // QBoard jaisa hisaab — stats, Mistake Notebook, ho gaya, aaj ki ginti.
@@ -185,7 +194,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     // 🔁 Galat + chhode → Wrong Sets (wahan bhi — chakkar).
     pushWrong(qs.filter((qq, i) => hasKey(qq) && !picks[i]?.correct).map((qq) => ({ ...qq, _sub: qq._sub || sub })));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [running, left, picks, qs, open, rk, sub, title, given]);
+  }, [running, left, picks, qs, open, rk, sub, title, given, times]);
   useEffect(() => { if (running && left === 0) submit(); }, [running, left, submit]);
 
   // ───────── parda 1: set chuno ─────────
@@ -263,6 +272,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   const t = { right, wrong, skipped: keyed.length - answered };
   return (
     <TestPage
+      qTime={times ? times[at] || 0 : null}
       title={`${title} · ${setName} ${open + 1}`}
       section={`${setName} ${open + 1}`}
       n={n} at={at} onGo={go} numOf={numOf} state={state} left={left} done={done}

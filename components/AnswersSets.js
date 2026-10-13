@@ -15,7 +15,7 @@
 // Set list ke ASLI kram se katte hain (Set 1 = Q 1–25, hamesha wahi) — "ho
 // gaya neeche" wali chhantayi yahan nahi, warna set ke sawaal badalte rehte.
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getChapterResults, saveSetResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import TestPage, { clock } from "./TestPage";
 import { progsFor, saveProg, clearProg } from "@/lib/setprog";
@@ -69,6 +69,10 @@ export default function AnswersSets({ ctx }) {
   const [self, setSelf] = useState({});       // i -> true/false (bina key wale ka apna faisla)
   const [left, setLeft] = useState(SET_MIN * 60);
   const [sec, setSec] = useState(0);
+  // ⏱ Har sawaal par kitne second (Testbook jaisa "You: 00:11").
+  const [times, setTimes] = useState({});
+  const curRef = useRef(0);
+  curRef.current = cur;
   const [seen, setSeen] = useState({});
 
   const qs = useMemo(() => (setIdx === null ? [] : all.slice(setIdx * SET_SIZE, setIdx * SET_SIZE + SET_SIZE)), [all, setIdx]);
@@ -79,7 +83,11 @@ export default function AnswersSets({ ctx }) {
   // Ghadi — 0 par apne aap submit.
   useEffect(() => {
     if (!running) return undefined;
-    const t = setInterval(() => setLeft((s) => (s > 0 ? s - 1 : 0)), 1000);
+    const t = setInterval(() => {
+      setLeft((s) => (s > 0 ? s - 1 : 0));
+      const c = curRef.current;
+      setTimes((x) => ({ ...x, [c]: (x[c] || 0) + 1 }));
+    }, 1000);
     return () => clearInterval(t);
   }, [running]);
   // Test ke dauraan 🚨 / 🍅 chhupe (QBoard jaisa).
@@ -105,7 +113,7 @@ export default function AnswersSets({ ctx }) {
   };
   const save = (pk, sf, s) => {
     const t = tally(pk, sf);
-    saveSetResult(rkey, setIdx, { ...t, sec: s, picks: pk, self: sf });
+    saveSetResult(rkey, setIdx, { ...t, sec: s, picks: pk, self: sf, times: times || {} });
   };
 
   const submit = useCallback(() => {
@@ -115,7 +123,7 @@ export default function AnswersSets({ ctx }) {
     clearProg(rkey, setIdx);
     save(picks, self, s);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [running, left, picks, self]);
+  }, [running, left, picks, self, times]);
   useEffect(() => { if (running && left === 0) submit(); }, [running, left, submit]);
 
   // how: "test" (naya) | "resume" (chhoda hua) | "result"
@@ -128,6 +136,7 @@ export default function AnswersSets({ ctx }) {
     setPicks(pg ? pg.picks || {} : prev ? prev.picks || {} : {});
     setSelf(prev ? prev.self || {} : {});
     setSec(prev ? prev.sec || 0 : 0);
+    setTimes(pg ? pg.times || {} : prev ? prev.times || null : {});
     setDone(how === "result");
     setLeft(pg ? Math.max(1, pg.left || 0) : SET_MIN * 60);
   };
@@ -135,8 +144,8 @@ export default function AnswersSets({ ctx }) {
   // ⏸ Chalte test ka haal — chhod do to set par Resume.
   useEffect(() => {
     if (!running) return;
-    saveProg(rkey, setIdx, { picks, review, seen, cur, left });
-  }, [running, rkey, setIdx, picks, review, seen, cur, left]);
+    saveProg(rkey, setIdx, { picks, review, seen, cur, left, times });
+  }, [running, rkey, setIdx, picks, review, seen, cur, left, times]);
   const setMine = (i, v) => {
     const sf = { ...self, [i]: v };
     setSelf(sf);
@@ -208,6 +217,7 @@ export default function AnswersSets({ ctx }) {
   };
   return (
     <TestPage
+      qTime={times ? times[at] || 0 : null}
       title={`Answers · Set ${setIdx + 1}`}
       section={`Set ${setIdx + 1}`}
       n={n} at={at} onGo={go} numOf={num} state={state} left={left} done={done}

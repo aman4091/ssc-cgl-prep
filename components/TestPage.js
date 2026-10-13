@@ -15,12 +15,14 @@ import { useEffect, useRef, useState } from "react";
 import "./testpage.css";
 
 const two = (n) => String(n).padStart(2, "0");
+const mmss = (s) => `${two(Math.floor(Math.max(0, s) / 60))}:${two(Math.max(0, s) % 60)}`;
 export const clock = (s) => `${two(Math.floor(Math.max(0, s) / 60))} : ${two(Math.max(0, s) % 60)}`;
 
 // state(i): "ans" | "not" | "mark" | "new" (test) — "ok" | "bad" | "skip" | "ask" (natija)
 export default function TestPage({
   title, section = "Test", n, at, onGo, numOf, state, left, done,
   answered, marked, tally, children, onMark, onNext, onSubmit, onBack, onQuit,
+  qTime,                       // abhi wale sawaal par kitne second lage (natije mein dikhta hai)
 }) {
   const [pop, setPop] = useState("");
   // ⛶ Poori screen (owner) — browser ka fullscreen, isi parde ka.
@@ -60,7 +62,8 @@ export default function TestPage({
             </>
           )}
         </div>
-        <button type="button" className="tbt-x" onClick={toggleFs} title="Poori screen">{fs ? "⤡" : "⛶"}</button>
+        {/* ⛶ sirf test ke dauraan — natija dekhte waqt nahi (owner). */}
+        {!done ? <button type="button" className="tbt-x" onClick={toggleFs} title="Poori screen">{fs ? "⤡" : "⛶"}</button> : null}
         {done
           ? <button type="button" className="tbt-x" onClick={onBack}>← Sets</button>
           : <button type="button" className="tbt-x" onClick={onQuit} title="Baad mein — set par Resume milega">✕</button>}
@@ -91,7 +94,11 @@ export default function TestPage({
               )}
             </span>
           </div>
-          <div className="tbt-qno">Question No. {numOf(at)}</div>
+          <div className="tbt-qno">
+            Question No. {numOf(at)}
+            {/* Testbook jaisa — har sawaal par kitna waqt diya. */}
+            {done && qTime != null ? <span className="tbt-you">⏱ You: <b>{mmss(qTime)}</b></span> : null}
+          </div>
           <div className="tbt-qbox">{children}</div>
         </section>
 
@@ -116,7 +123,6 @@ export default function TestPage({
                   <tr><td>Wrong</td><td><b>{tally.wrong}</b></td></tr>
                   <tr><td>Skipped</td><td><b>{tally.skipped}</b></td></tr>
                   {tally.ask ? <tr><td>Khud jaancho</td><td><b>{tally.ask}</b></td></tr> : null}
-                  <tr><td>Time taken</td><td><b>{tally.time}</b></td></tr>
                 </>
               ) : (
                 <>
