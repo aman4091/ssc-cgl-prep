@@ -11,7 +11,7 @@ import Markdown from "./Markdown";
 import Gemini20 from "./Gemini20";
 import "./answers-play.css";
 import { imagesOf } from "@/lib/wrongbook";
-import { simItems, simGroups, makeSimAuto, linkSim, simBusy, getPicks, setPick, SIM_PER } from "@/lib/anssim";
+import { simItems, simGroups, makeSimAuto, linkSim, simBusy, simError, getPicks, setPick, SIM_PER } from "@/lib/anssim";
 
 // Similar ka haal badle (bana / option laga) → dobara padho.
 export function useSimTick() {
@@ -85,7 +85,7 @@ export default function SimInline({ r, title = true, onPick }) {
       ) : null}
       {!linked ? <SimMake r={r} />
         : !items.length ? (
-          <p className="sim-wait">{simBusy() ? `⏳ 🐋 ${SIM_PER} similar ban rahe hain…` : "Abhi bane nahi — "}{!simBusy() ? <SimMake r={r} label="🔁 Dobara banao" /> : null}</p>
+          <p className="sim-wait">{simBusy() ? `⏳ 🐋 ${SIM_PER} similar ban rahe hain…` : `Abhi bane nahi${simError() ? ` (⚠️ ${simError()})` : ""} — `}{!simBusy() ? <SimMake r={r} label="🔁 Dobara banao" /> : null}</p>
         ) : (
           <div className="sim-list">
             {items.map((x, k) => <SimQ key={x.id} x={x} n={k + 1} picks={picks} onPick={onPick} />)}

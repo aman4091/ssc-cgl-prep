@@ -576,9 +576,9 @@ function SimPair({ ctx }) {
             <div className="ap-work__bar" style={{ "--sc": s.c }}>
               <span>{s.icon} {s.label}</span>
               {ch ? <span>· {ch.replace(/-/g, " ")}</span> : null}
+              <button type="button" className="aps1-done" onClick={done}>✅ Ho gaya</button>
             </div>
             {ctx.renderCard(r, ctx.index.get(r.id) ?? 0, false)}
-            <div className="ap-act"><button type="button" className="ap-go" onClick={done}>✅ Ho gaya</button></div>
           </div>
         </div>
         <div className="aps1-r"><SimInline r={r} /></div>
