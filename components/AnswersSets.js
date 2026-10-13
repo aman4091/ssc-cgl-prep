@@ -20,6 +20,7 @@ import { getChapterResults, saveSetResult, moveResult, accuracyOf, marksOf, maxM
 import TestPage, { clock } from "./TestPage";
 import { progsFor, saveProg, clearProg } from "@/lib/setprog";
 import { hashStr } from "@/lib/syncitems";
+import { savedKey, setSavedKey } from "@/lib/anskeys";
 
 const SET_SIZE = 25;
 const SET_MIN = 15;
@@ -27,6 +28,9 @@ const L = "ABCD";
 
 // Sahi option ka number (0–3), ya -1 (pata nahi).
 function keyOf(r) {
+  // Tumhara bataya hua sabse pehle (lib/anskeys).
+  const sv = r && r.id ? savedKey(r.id) : -1;
+  if (sv >= 0) return sv;
   const q = r && r.q;
   if (q && Array.isArray(q.options) && q.options.length >= 2) {
     if (Number.isInteger(q.answer)) return q.answer;
@@ -81,7 +85,10 @@ export default function AnswersSets({ ctx }) {
   const [seen, setSeen] = useState({});
 
   const qs = useMemo(() => (setIdx === null ? [] : all.slice(setIdx * SET_SIZE, setIdx * SET_SIZE + SET_SIZE)), [all, setIdx]);
-  const keys = useMemo(() => qs.map(keyOf), [qs]);
+  // kv — sahi option bataate hi dobara padho.
+  const [kv, setKv] = useState(0);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const keys = useMemo(() => qs.map(keyOf), [qs, kv]);
   const n = qs.length;
   const running = setIdx !== null && !done;
 
@@ -177,6 +184,20 @@ export default function AnswersSets({ ctx }) {
     setSelf(sf);
     save(picks, sf, sec);
   };
+  // "Sahi option kaunsa tha?" — record par hamesha ke liye, phir isi natije
+  // ke marks dobara (neeche wala effect naye keys ke saath save karta hai).
+  const keyDirty = useRef(false);
+  const tellKey = (i, k) => {
+    setSavedKey(qs[i].id, k);
+    keyDirty.current = true;
+    setKv((x) => x + 1);
+  };
+  useEffect(() => {
+    if (!keyDirty.current || !done || setIdx === null) return;
+    keyDirty.current = false;
+    save(picks, self, sec);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [kv]);
 
   // ───────── parda 1: set chuno ─────────
   if (setIdx === null) {
@@ -276,11 +297,14 @@ export default function AnswersSets({ ctx }) {
           );
         })}
       </div>
-      {done && picks[at] != null && keys[at] < 0 ? (
+      {/* Sahi option record mein nahi (ya tumne hi bataya tha) — poochho aur
+          hamesha ke liye yaad rakho. */}
+      {done && (keys[at] < 0 || savedKey(r.id) >= 0) ? (
         <div className="tbx-self">
-          <span>Sahi option record mein nahi — jawab dekh kar khud batao: tumhara <b>{L[picks[at]]}</b></span>
-          <button type="button" className={self[at] === true ? "is-on is-ok" : ""} onClick={() => setMine(at, true)}>✓ Sahi tha</button>
-          <button type="button" className={self[at] === false ? "is-on is-bad" : ""} onClick={() => setMine(at, false)}>✗ Galat tha</button>
+          <span>{keys[at] < 0 ? "Sahi option kaunsa tha? Ek baar batao — aage ke liye yaad rahega, marks bhi isi se." : "Sahi option (tumhara bataya) — badalna ho to dabao:"}{picks[at] != null ? <> · tumhara <b>{L[picks[at]]}</b></> : null}</span>
+          {L.split("").map((ch, k) => (
+            <button key={ch} type="button" className={keys[at] === k ? "is-on is-ok" : ""} onClick={() => tellKey(at, k)}>{ch}</button>
+          ))}
         </div>
       ) : null}
     </TestPage>
