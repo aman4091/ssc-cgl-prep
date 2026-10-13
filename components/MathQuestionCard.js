@@ -12,7 +12,7 @@ import { addReview } from "@/lib/qreview";
 import { mathTq } from "@/lib/imgq";
 import Markdown from "./Markdown";
 import AskElsewhere from "./AskElsewhere";
-import Gemini20 from "./Gemini20";
+import { SimHere } from "./SimInline";
 import OneLinerBtn from "./OneLinerBtn";
 import PasteAnswer from "./PasteAnswer";
 import ClusterButton from "./ClusterButton";
@@ -318,7 +318,7 @@ Options: ${opts}
           )}
           <button className="btn btn--sm q-act--keep" onClick={openStylus} title="Tablet par pen se solve karo">✍️</button>
           {/* 🎯 20 — image copy + Gemini se likha hua question, phir DeepSeek. */}
-          {simLoading ? <button className="btn btn--sm q-act--keep" disabled>…</button> : <Gemini20 q={geminiQ} subject={subject} onDirect={make20} />}
+          {simLoading ? <button className="btn btn--sm q-act--keep" disabled>…</button> : <SimHere q={geminiQ} id={q.id} subject={subject} />}
           {/* Bahar se aaye button (Answers board ka ✅ Ho gaya, 🗑️) —
               wo bhi isi line mein, taaki card par ek hi patti rahe. */}
           {extraActions}

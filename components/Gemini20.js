@@ -7,7 +7,8 @@
 //      tasveer wale question ko padh kar likh do") apne aap copy ho jata hai
 //      (lib/geminiask armPrompt), wo Gemini mein paste karke bhejo.
 //   3. Gemini ka likha hua question yahan paste → 🐋 DeepSeek PEECHHE us
-//      jaise 5 naye banata hai → sab /similar page par jama, mila-jula
+//      jaise 5 naye banata hai (lib/simpool); dikhte wahin hain jahan se
+//      bulaya (components/SimInline) — /similar page hata diya gaya
 //      (lib/simpool). Yahan se kahin jaana nahi padta.
 //
 // Tasveer hi na ho to question ka apna text seedha line mein; text bhi na ho
@@ -52,7 +53,7 @@ export default function Gemini20({ q, subject, onDirect, onGroup, className = "b
       if (!t) { onDirect?.(); return; }
       const g = addSimilar(t, subject);
       onGroup?.(g);
-      toast(`🐋 Iske jaise ${SIM_PER} peechhe ban rahe hain — 🎯 Similar page par milenge`);
+      toast(`🐋 Iske jaise ${SIM_PER} peechhe ban rahe hain`);
       return;
     }
     const ok = await copyQuestionImage(q);
@@ -70,13 +71,13 @@ export default function Gemini20({ q, subject, onDirect, onGroup, className = "b
       const g = addSimilar(text, subject);
       onGroup?.(g);
       setOpen(false);
-      toast(`🐋 Iske jaise ${SIM_PER} peechhe ban rahe hain — 🎯 Similar page par milenge`);
+      toast(`🐋 Iske jaise ${SIM_PER} peechhe ban rahe hain`);
     } catch (e) { setErr(e.message || "Nahi hua — dobara try karo"); }
   };
 
   return (
     <>
-      <button type="button" className={className} onClick={go} title="Image copy + Gemini → likha hua question yahan paste → peechhe 5 similar, 🎯 Similar page par">
+      <button type="button" className={className} onClick={go} title="Image copy + Gemini → likha hua question yahan paste → peechhe 5 similar">
         {label}
       </button>
       {open && typeof document !== "undefined" && createPortal(

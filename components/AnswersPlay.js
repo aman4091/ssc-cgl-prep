@@ -5,7 +5,7 @@
 // ✅ Ho gaya = D0, phir D+1/3/7/14 par 🔁), bas uske upar khel:
 //   1–20  target, streak, XP, timer, boss, bingo, quests …
 //   21–40 har galti ke saath uske 5 SIMILAR wahin (components/SimInline) —
-//         /similar page par jaana nahi padta.
+//         alag page par jaana nahi padta.
 //
 // Sab kuch lib/ansrev (✅ / 🔁 ka asli hisaab, sync hota hai) se nikalta hai —
 // streak, XP, aaj kitne — koi alag ginti nahi. Similar ka din-wise haal

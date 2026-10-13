@@ -26,3 +26,4 @@ Home ke purane roop (A–N + purana Home) commit **`fabaac1`** mein hain
 | 🏠 Home | Sawaal-jawab (koi dropdown nahi) | Purana Home + A–N (B ab `/din` page hai) | commit `fabaac1` |
 | 🏰 PYQ (GS / English, Medieval samet) | **33 · Do pane** FINAL — dropdown hata diya (`components/PyqLooks.js`) | 0 (page ka purana roop / Cover table), 1–20, 21–40 code mein — dropdown commit `afe5157` par | `components/MedLayouts.js`, `components/MedFacts.js` |
 | 🧩 33 · Do pane ka jawab | **19 · Mind map** (upar ⚡ chips) — dropdown hataya | Baaki 19 roop (Dabbe, Saada lekh, Bullet, Table, Timeline, Index card, Highlighter, …) | `components/AnsFormats.js` (`FMT` in `components/MedFacts.js`) |
+| 🪔 Festival / Statics | Naya page `/statics` (menu ka 🪔), 20 yaad karne ke roop — default 1 · Ek-ek padho | — | `app/statics/page.js`, `components/StaticsLayouts.js`, `lib/staticsparse.js` |

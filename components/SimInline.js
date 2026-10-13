@@ -6,6 +6,7 @@
 // Har similar ek chhota MCQ: option dabao → sahi / galat + samjhaana.
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Markdown from "./Markdown";
 import Gemini20 from "./Gemini20";
 import "./answers-play.css";
@@ -92,5 +93,36 @@ export default function SimInline({ r, title = true, onPick }) {
           </div>
         )}
     </section>
+  );
+}
+
+// 🎯 5 — PYQ card par (Maths / Reasoning / GS / English). /similar page hata
+// diya (owner), isliye bane hue 5 YAHIN ek dabbe mein: isi sawaal ke saath
+// jude (lib/anssim, id "pq:<sawaal id>"), dobara kholo to wahi.
+export function SimHere({ q, id, subject, className = "btn btn--sm q-act--keep" }) {
+  const [open, setOpen] = useState(false);
+  useSimTick();
+  const text = String(q?.question || q?.qText || "").trim();
+  const img = q?.qImg || q?.img || "";
+  const r = {
+    id: `pq:${id || text.slice(0, 80)}`,
+    subject: subject === "maths" ? "math" : subject,
+    q: text ? { question: text, options: (q?.options || []).map(String) } : null,
+    images: img ? [{ url: img }] : [],
+  };
+  const made = simItems(r.id).length;
+  return (
+    <>
+      <button type="button" className={className} onClick={() => setOpen(true)} title="Isi type ke 5 naye sawaal — yahin">🎯 {SIM_PER}{made ? <sup>{made}</sup> : null}</button>
+      {open && typeof document !== "undefined" ? createPortal(
+        <div className="si-ov" onClick={() => setOpen(false)}>
+          <div className="si-box sim-box" onClick={(e) => e.stopPropagation()}>
+            <div className="si-hd"><b>🎯 Iske jaise {SIM_PER}</b><button type="button" className="si-x" onClick={() => setOpen(false)} aria-label="Band karo">✕</button></div>
+            <SimInline r={r} title={false} />
+          </div>
+        </div>,
+        document.body,
+      ) : null}
+    </>
   );
 }

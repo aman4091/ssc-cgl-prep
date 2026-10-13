@@ -15,7 +15,7 @@ import QuestionEditor from "./QuestionEditor";
 import AskButtons from "./AskButtons";
 import OneLinerBtn from "./OneLinerBtn";
 import PasteAnswer from "./PasteAnswer";
-import Gemini20 from "./Gemini20";
+import { SimHere } from "./SimInline";
 import ClusterButton from "./ClusterButton";
 import { isDone } from "@/lib/qdone";
 import { useExamMode } from "./ExamMode";
@@ -260,7 +260,7 @@ Options: ${opts}
             <button className="btn btn--sm q-act--keep" onClick={openStylus} title="Tablet par pen se solve karo">✍️</button>
           )}
           {simLoading ? <button className="btn btn--sm q-act--keep" disabled>…</button>
-            : <Gemini20 q={q} subject={subject} onDirect={make20} />}
+            : <SimHere q={q} id={q.id} subject={subject} />}
           {/* Bahar se aaye button (Answers board ka ✅ Ho gaya, 🗑️) —
               wo bhi isi line mein, taaki card par ek hi patti rahe. */}
           {extraActions}
