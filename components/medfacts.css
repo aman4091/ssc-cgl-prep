@@ -203,3 +203,13 @@
 .mf-cl-p .md p { margin: 0 0 6px; }
 .mf-cl-z { margin: 8px 0 0; padding: 6px 10px; border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; background: var(--accent-wash); font-weight: 600; line-height: 1.5; }
 .mf-cl > .mf-send { justify-self: start; }
+
+/* 33 · jawab | options */
+.mf33-ar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 14px; align-items: start; margin: 4px 0 6px; }
+.mf33-ar h2 { margin: 4px 0; }
+.mf33-opts { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.mf33-opts li { display: flex; gap: 8px; align-items: baseline; padding: 6px 10px; border-radius: 9px; border: 1px solid var(--line); background: var(--bg); font-size: 0.9rem; line-height: 1.4; }
+.mf33-opts li b { flex: none; font-size: 0.75rem; color: var(--text-3); }
+.mf33-opts li.is-a { border-color: var(--ok); background: var(--ok-wash); font-weight: 700; }
+.mf33-opts li.is-a b { color: var(--ok); }
+@media (max-width: 420px) { .mf33-ar { gap: 8px; } .mf33-opts li { font-size: 0.82rem; padding: 5px 7px; } }
