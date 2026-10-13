@@ -266,3 +266,10 @@
 button.pomo-chip { border: 0; cursor: pointer; font: inherit; font-weight: 800; font-size: 0.82rem; }
 .pomo-chip.is-paused { background: var(--text-3); }
 @media (max-width: 520px) { .pomo-gate .ap4-bar { grid-template-columns: auto 1fr auto; } .pomo-gate .ap4-bar > span:nth-of-type(1) { display: none; } }
+/* 🍅 neeche ka button — bas Start / Pause */
+.pomo-btn { position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%); z-index: 420; padding: 8px 18px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--text-1); font: inherit; font-weight: 800; font-size: 0.95rem; font-variant-numeric: tabular-nums; cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); }
+.pomo-btn.is-on { background: #e03131; border-color: #e03131; color: #fff; }
+.pomo-btn.is-paused { background: var(--text-3); border-color: var(--text-3); color: #fff; }
+body.exam-on .pomo-btn { display: none; }
+/* Phone par PYQ ki neeche wali "← pichhla / aage →" patti ke upar */
+@media (max-width: 700px) { .pomo-btn { bottom: 72px; } }
