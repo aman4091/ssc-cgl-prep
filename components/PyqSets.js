@@ -36,6 +36,7 @@ const SET_MIN = 15;
 // Kuch bank (jaise Medieval) mein jawab "2" (text) hai — pehle wo "bina
 // jawab" gina jata tha, isliye galat sawaal Wrong Sets mein nahi jaate the.
 const hasKey = (q) => typeof q?.answer === "number";
+const WS_SINCE = "2026-10-13T00:00";   // Wrong Sets ka pehla din
 const normQ = (q) => (q && typeof q.answer === "string" && /^\s*\d+\s*$/.test(q.answer) ? { ...q, answer: Number(q.answer) } : q);
 const SUBS = { maths: "math", math: "math", reasoning: "reasoning", english: "english", gs: "gs" };
 export const SUB_LABEL = { math: "Maths", reasoning: "Reasoning", english: "English", gs: "GS" };
@@ -119,6 +120,37 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     setRound((r) => r + 1);
   };
   const back = () => { setOpen(null); setDone(false); setQs([]); setProgs(progsFor(rk)); };
+
+  // 🩹 Purane natije (fix se pehle) — jin set ke jawab "2" jaise TEXT mein the
+  // (Medieval), unka galat/chhoda Wrong Sets mein gaya hi nahi tha aur ginti
+  // bhi galat bani thi. Sets khulte hi ek baar: chune hue option se dobara
+  // hisaab, galat + chhode Wrong Sets mein, aur natije par nishaan (ws).
+  useEffect(() => {
+    for (const k of Object.keys(results)) {
+      const i = Number(k);
+      const r = results[k];
+      const raw = sets[i];
+      if (!r || r.ws || !r.picks || !raw || !raw.length) continue;
+      // Sirf Wrong Sets aane ke BAAD diye test (13 Oct) — purane saalon ke set
+      // se thaili nahi bharni; ya jinke jawab text mein the (Medieval).
+      const textAns = raw.some((q) => q && typeof q.answer === "string" && /^\s*\d+\s*$/.test(q.answer));
+      if (!textAns && !(String(r.at || "") >= WS_SINCE)) continue;
+      const qq = raw.map(normQ);
+      const picks2 = {};
+      let right2 = 0, wrong2 = 0, keyed2 = 0;
+      qq.forEach((q, j) => {
+        if (!hasKey(q)) return;
+        keyed2++;
+        const p = r.picks[j];
+        if (!p) return;
+        const ok = Number(q.answer) === p.opt;
+        picks2[j] = { opt: p.opt, correct: ok };
+        if (ok) right2++; else wrong2++;
+      });
+      pushWrong(qq.filter((q, j) => hasKey(q) && !picks2[j]?.correct).map((q) => ({ ...q, _sub: q._sub || sub })));
+      saveSetResult(rk, i, { ...r, right: right2, wrong: wrong2, skipped: keyed2 - right2 - wrong2, total: keyed2, picks: picks2, ws: 1 });
+    }
+  }, [results, sets, rk, sub]);
   // ⏸ Chalte test ka haal har badlav par — chhod do to set par Resume.
   useEffect(() => {
     if (!running) return;
@@ -136,7 +168,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     setSec(s); setDone(true); setCur(0);
     clearProg(rk, open);
     saveSetResult(rk, open, {
-      right, wrong, skipped: keyed.length - answered, total: keyed.length, sec: s,
+      right, wrong, skipped: keyed.length - answered, total: keyed.length, sec: s, ws: 1,
       picks: Object.fromEntries(Object.entries(picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }])),
     });
     // QBoard jaisa hisaab — stats, Mistake Notebook, ho gaya, aaj ki ginti.
