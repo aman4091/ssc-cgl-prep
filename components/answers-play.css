@@ -170,7 +170,10 @@
 .ap20-q.is-ok b { text-decoration: line-through; opacity: .7; }
 
 /* ── similar ── */
-.aps1 { display: grid; grid-template-columns: 46px minmax(0, 1.2fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+/* 21 ko poori chaudai — 980 mein number patti ke baad card bheech jata tha. */
+.ap.ap--s1 { max-width: none; }
+.ansp__main:has(> .ap--s1) { max-width: none; }
+.aps1 { display: grid; grid-template-columns: 46px minmax(0, 1.4fr) minmax(0, 1fr); gap: 14px; align-items: start; }
 .aps1-rail { position: sticky; top: calc(var(--mtp-h, 58px) + 8px); max-height: calc(100vh - 150px); overflow-y: auto; display: grid; gap: 4px; align-content: start; padding: 2px; scrollbar-width: thin; }
 .aps1-rail button { padding: 5px 0; border-radius: 8px; border: 1px solid var(--line); background: var(--card); font: inherit; font-size: 0.78rem; font-weight: 700; color: var(--text-2); cursor: pointer; }
 .aps1-rail button.is-done { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 45%, var(--line)); }
