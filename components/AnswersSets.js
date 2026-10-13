@@ -26,23 +26,18 @@ const SET_SIZE = 25;
 const SET_MIN = 15;
 const L = "ABCD";
 
-// Sahi option ka number (0–3), ya -1 (pata nahi).
+// Sahi option ka number (0–3), ya -1 (pata nahi). Owner: "site apni taraf se
+// anumaan na lagaye — main khud bataunga". Isliye sirf: (1) jo tumne bataya
+// (lib/anskeys), (2) sawaal ke apne data ka sahi option (PYQ se aaye text wale
+// sawaal — wo andaza nahi). Jawab ke text mein "Answer: (c)" dhoondhna HATA
+// diya — wahi galat option laga deta tha ("Answer: A train…" → A).
 function keyOf(r) {
-  // Tumhara bataya hua sabse pehle (lib/anskeys).
   const sv = r && r.id ? savedKey(r.id) : -1;
   if (sv >= 0) return sv;
   const q = r && r.q;
   if (q && Array.isArray(q.options) && q.options.length >= 2) {
     if (Number.isInteger(q.answer)) return q.answer;
     if (/^\d+$/.test(String(q.answer ?? ""))) return Number(q.answer);
-  }
-  const t = String((r && (r.detail2 || r.detail)) || (q && q.solution) || "").replace(/\*\*/g, "");
-  const re = /(?:sahi\s*(?:jawab|answer|option|uttar)|correct\s*(?:answer|option)|final\s*answer|answer|ans\.?|उत्तर)\s*(?:is|hai|:|-|–|—|=)?\s*/gi;
-  let m;
-  while ((m = re.exec(t))) {
-    const rest = t.slice(m.index + m[0].length, m.index + m[0].length + 14);
-    const x = /^(?:option\s*)?\(([a-d])\)/i.exec(rest) || /^option\s*([a-d])\b/i.exec(rest) || /^([A-D])(?![a-z])/.exec(rest);
-    if (x) return x[1].toLowerCase().charCodeAt(0) - 97;
   }
   return -1;
 }
@@ -299,9 +294,9 @@ export default function AnswersSets({ ctx }) {
       </div>
       {/* Sahi option record mein nahi (ya tumne hi bataya tha) — poochho aur
           hamesha ke liye yaad rakho. */}
-      {done && (keys[at] < 0 || savedKey(r.id) >= 0) ? (
+      {done ? (
         <div className="tbx-self">
-          <span>{keys[at] < 0 ? "Sahi option kaunsa tha? Ek baar batao — aage ke liye yaad rahega, marks bhi isi se." : "Sahi option (tumhara bataya) — badalna ho to dabao:"}{picks[at] != null ? <> · tumhara <b>{L[picks[at]]}</b></> : null}</span>
+          <span>{keys[at] < 0 ? "Sahi option kaunsa tha? Ek baar batao — aage ke liye yaad rahega, marks bhi isi se." : savedKey(r.id) >= 0 ? "Sahi option (tumhara bataya) — badalna ho to dabao:" : "Sahi option (sawaal ke data se) — galat ho to sahi dabao:"}{picks[at] != null ? <> · tumhara <b>{L[picks[at]]}</b></> : null}</span>
           {L.split("").map((ch, k) => (
             <button key={ch} type="button" className={keys[at] === k ? "is-on is-ok" : ""} onClick={() => tellKey(at, k)}>{ch}</button>
           ))}
