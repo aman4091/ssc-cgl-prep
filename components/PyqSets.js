@@ -23,7 +23,7 @@ import ReasonQuestionCard from "./ReasonQuestionCard";
 import TestPage, { clock } from "./TestPage";
 import AnsTestQ, { ansKeyOf } from "./AnsTestQ";
 import { setSavedKey } from "@/lib/anskeys";
-import { getChapterResults, saveSetResult, moveResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
+import { getSetResults, saveSetResult, moveResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import { pushWrong } from "@/lib/wrongsets";
 import { progsFor, saveProg, clearProg } from "@/lib/setprog";
 import { markDoneMany, doneKeyFor } from "@/lib/qdone";
@@ -83,7 +83,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   // natije par naya test shuru ho jata tha — owner).
   const [ready, setReady] = useState(false);
   useEffect(() => {
-    const on = () => { setResults(getChapterResults(rk)); setProgs(progsFor(rk)); setReady(true); };
+    const on = () => { setResults(getSetResults(rk)); setProgs(progsFor(rk)); setReady(true); };
     on();
     window.addEventListener("cgl:settest-changed", on);
     window.addEventListener("cgl:sync-applied", on);
@@ -104,7 +104,6 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   const curRef = useRef(0);
   curRef.current = cur;
   const [round, setRound] = useState(0);
-  const retryRef = useRef(false);
   const regRef = useRef({});
   const register = useCallback((i, qq) => { regRef.current[i] = qq; }, []);
   const running = open !== null && !done;
@@ -128,11 +127,13 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
 
   // how: "test" (naya) | "resume" (chhoda hua) | "result"
   const start = (i, how) => {
-    if (results[kOf(i)]) how = "result";   // diya hua set dobara nahi — pehla natija hi pakka (owner)
-    const prev = how === "result" ? results[kOf(i)] : null;
-    const pg = how === "resume" ? progs[kOf(i)] : null;
+    // Seedha store se (state purana ho sakta hai — dropdown badalte hi). Diya
+    // hua set — kisi bhi list mein — dobara test nahi, pehla natija hi pakka (owner).
+    const done = getSetResults(rk)[kOf(i)];
+    if (done) how = "result";
+    const prev = how === "result" ? done : null;
+    const pg = how === "resume" ? progsFor(rk)[kOf(i)] : null;
     if (how === "test") clearProg(rk, kOf(i));
-    retryRef.current = how !== "result" && !!results[kOf(i)];
     regRef.current = {};
     setQs((sets[i] || []).map(normQ)); setOpen(i);
     setCur(pg ? pg.cur || 0 : 0); setReview(pg ? pg.review || {} : {}); setSeen(pg ? pg.seen || { 0: true } : { 0: true });
@@ -152,9 +153,14 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     const want = new URLSearchParams(window.location.search).get("set");
     if (!want) return;
     const i = sets.findIndex((_, k) => String(kOf(k)) === want);
-    if (i < 0) return;
+    // Ek hi baar (mile ya na mile) — URL se ?set= hata do, warna dropdown
+    // badalte hi wo set apne aap khul jata tha (owner).
     autoRef.current = true;
-    start(i, results[want] ? "result" : progs[want] ? "resume" : "test");
+    const u = new URL(window.location.href);
+    u.searchParams.delete("set");
+    window.history.replaceState(window.history.state, "", u.pathname + u.search + u.hash);
+    if (i < 0) return;
+    start(i, getSetResults(rk)[want] ? "result" : progsFor(rk)[want] ? "resume" : "test");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sets, results, progs, ready]);
 
@@ -224,6 +230,9 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
 
   const submit = useCallback(() => {
     if (!running) return;
+    // Ye set pehle (kisi aur tab / list mein) ho chuka? Pehla natija hi pakka —
+    // naya na likho, wahi dikhao.
+    if (getSetResults(rk)[kOf(open)]) { clearProg(rk, kOf(open)); start(open, "result"); return; }
     const s = SET_MIN * 60 - left;
     setSec(s); setDone(true); setCur(0);
     clearProg(rk, kOf(open));
@@ -240,7 +249,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     recordQuizAttempts(rows.map(({ q: qq, correct }) => ({
       q: qq, correct, subject: qq?._subject || sub, source: "chapter",
       category: qq?._chapter || title, sec: 0,
-      onlyExisting: retryRef.current || !!given, fromPyq: true,
+      onlyExisting: !!given, fromPyq: true,
     })));
     for (const qq of qs) countMark(doneKeyFor(qq), qq?._subject || sub, true);
     // 🔁 Galat + chhode → Wrong Sets (wahan bhi — chakkar).

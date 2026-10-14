@@ -16,7 +16,7 @@
 // gaya neeche" wali chhantayi yahan nahi, warna set ke sawaal badalte rehte.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { getChapterResults, saveSetResult, moveResult, markResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
+import { getSetResults, saveSetResult, moveResult, markResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import TestPage, { clock } from "./TestPage";
 import { progsFor, saveProg, clearProg } from "@/lib/setprog";
 import { hashStr } from "@/lib/syncitems";
@@ -65,7 +65,7 @@ export default function AnswersSets({ ctx }) {
   // natije par naya test shuru ho jata tha — owner).
   const [ready, setReady] = useState(false);
   useEffect(() => {
-    const on = () => { setResults(getChapterResults(rkey)); setProgs(progsFor(rkey)); setReady(true); };
+    const on = () => { setResults(getSetResults(rkey)); setProgs(progsFor(rkey)); setReady(true); };
     on();
     window.addEventListener("cgl:settest-changed", on);
     window.addEventListener("cgl:sync-applied", on);
@@ -132,6 +132,9 @@ export default function AnswersSets({ ctx }) {
 
   const submit = useCallback(() => {
     if (!running) return;
+    // Ye set pehle (kisi aur tab / list mein) ho chuka? Pehla natija hi pakka —
+    // naya na likho, wahi dikhao.
+    if (getSetResults(rkey)[kOf(setIdx)]) { clearProg(rkey, kOf(setIdx)); open(setIdx, "result"); return; }
     const s = SET_MIN * 60 - left;
     setSec(s); setDone(true); setCur(0);
     clearProg(rkey, kOf(setIdx));
@@ -145,9 +148,12 @@ export default function AnswersSets({ ctx }) {
 
   // how: "test" (naya) | "resume" (chhoda hua) | "result"
   const open = (i, how) => {
-    if (results[kOf(i)]) how = "result";   // diya hua set dobara nahi — pehla natija hi pakka (owner)
-    const prev = how === "result" ? results[kOf(i)] : null;
-    const pg = how === "resume" ? progs[kOf(i)] : null;
+    // Seedha store se (state purana ho sakta hai — dropdown badalte hi). Diya
+    // hua set — kisi bhi list mein — dobara test nahi, pehla natija hi pakka (owner).
+    const done = getSetResults(rkey)[kOf(i)];
+    if (done) how = "result";
+    const prev = how === "result" ? done : null;
+    const pg = how === "resume" ? progsFor(rkey)[kOf(i)] : null;
     if (how === "test") clearProg(rkey, kOf(i));
     setSetIdx(i);
     setCur(pg ? pg.cur || 0 : 0); setReview(pg ? pg.review || {} : {}); setSeen(pg ? pg.seen || { 0: true } : { 0: true });
@@ -193,9 +199,14 @@ export default function AnswersSets({ ctx }) {
     const want = new URLSearchParams(window.location.search).get("set");
     if (!want) return;
     const i = sigs.findIndex((x) => x === want);
-    if (i < 0) return;
+    // Ek hi baar (mile ya na mile) — URL se ?set= hata do, warna dropdown
+    // badalte hi wo set apne aap khul jata tha (owner).
     autoRef.current = true;
-    open(i, results[want] ? "result" : progs[want] ? "resume" : "test");
+    const u = new URL(window.location.href);
+    u.searchParams.delete("set");
+    window.history.replaceState(window.history.state, "", u.pathname + u.search + u.hash);
+    if (i < 0) return;
+    open(i, getSetResults(rkey)[want] ? "result" : progsFor(rkey)[want] ? "resume" : "test");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sigs, results, progs, ready]);
   // ⏸ Chalte test ka haal — chhod do to set par Resume.

@@ -32,12 +32,24 @@ export default function AllSubjectPage() {
   useEffect(() => {
     if (!meta) return undefined;
     let alive = true;
-    setQs([]); setReady(false); setSrc(""); setChapter(""); setQuery("");
+    // Chhaanti URL se (?src= &ch= &q=) — Home ka "▶" wahi list khole jismein
+    // set diya tha (warna "Saare bank" ki list mein wo set milta hi nahi).
+    const sp = new URLSearchParams(window.location.search);
+    setQs([]); setReady(false); setSrc(sp.get("src") || ""); setChapter(sp.get("ch") || ""); setQuery(sp.get("q") || "");
     setProg({ done: 0, total: 0 });
     loadAllSubject(meta.slug, (done, total) => { if (alive) setProg({ done, total }); })
       .then((list) => { if (!alive) return; setQs(list); setReady(true); });
     return () => { alive = false; };
   }, [meta]);
+  // Chhaanti badli → URL mein bhi (natije ka `path` isi se banta hai).
+  useEffect(() => {
+    if (!ready) return;
+    const u = new URL(window.location.href);
+    const put = (k, v) => (v ? u.searchParams.set(k, v) : u.searchParams.delete(k));
+    put("src", src); put("ch", chapter); put("q", query.trim());
+    const next = u.pathname + u.search + u.hash;
+    if (next !== window.location.pathname + window.location.search + window.location.hash) window.history.replaceState(window.history.state, "", next);
+  }, [ready, src, chapter, query]);
 
   // Bank ki list — jo asli mein aaye hain, ginti ke saath.
   const banks = useMemo(() => {
