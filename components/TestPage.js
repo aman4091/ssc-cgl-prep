@@ -23,6 +23,7 @@ export default function TestPage({
   title, section = "Test", n, at, onGo, numOf, state, left, done,
   answered, marked, tally, children, onMark, onNext, onSubmit, onBack, onQuit,
   qTime,                       // abhi wale sawaal par kitne second lage (natije mein dikhta hai)
+  side,                        // natije par numbers ke neeche (abhi wale sawaal ke 🎯 similar)
 }) {
   const [pop, setPop] = useState("");
   // ⛶ Poori screen (owner) — browser ka fullscreen, isi parde ka.
@@ -114,6 +115,7 @@ export default function TestPage({
               <button key={i} type="button" className={`is-${state(i)}${i === at ? " is-cur" : ""}`} onClick={() => onGo(i)}>{numOf(i)}</button>
             ))}
           </div>
+          {done && side ? side : null}
           <table className="tbt-ana">
             <thead><tr><th colSpan={2}>PART-A Analysis</th></tr></thead>
             <tbody>

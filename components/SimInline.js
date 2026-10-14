@@ -12,6 +12,7 @@ import Gemini20 from "./Gemini20";
 import "./answers-play.css";
 import { imagesOf } from "@/lib/wrongbook";
 import { simItems, simGroups, makeSimAuto, linkSim, simBusy, simError, getPicks, setPick, SIM_PER } from "@/lib/anssim";
+import { useExamMode } from "./ExamMode";
 
 // Similar ka haal badle (bana / option laga) → dobara padho.
 export function useSimTick() {
@@ -99,21 +100,32 @@ export default function SimInline({ r, title = true, onPick }) {
 // 🎯 5 — PYQ card par (Maths / Reasoning / GS / English). /similar page hata
 // diya (owner), isliye bane hue 5 YAHIN ek dabbe mein: isi sawaal ke saath
 // jude (lib/anssim, id "pq:<sawaal id>"), dobara kholo to wahi.
-export function SimHere({ q, id, subject, className = "btn btn--sm q-act--keep" }) {
-  const [open, setOpen] = useState(false);
-  useSimTick();
+// PYQ sawaal → similar ka record (id "pq:<sawaal id>"). Wahi sawaal kahin
+// bhi aaye (chapter, set, Wrong Set) — similar wahi jude hue.
+export function simRecOf(q, id, subject) {
   const text = String(q?.question || q?.qText || "").trim();
   const img = q?.qImg || q?.img || "";
-  const r = {
+  return {
     id: `pq:${id || text.slice(0, 80)}`,
     subject: subject === "maths" ? "math" : subject,
     q: text ? { question: text, options: (q?.options || []).map(String) } : null,
     images: img ? [{ url: img }] : [],
   };
+}
+
+export function SimHere({ q, id, subject, className = "btn btn--sm q-act--keep" }) {
+  const [open, setOpen] = useState(false);
+  const exam = useExamMode();
+  useSimTick();
+  const r = simRecOf(q, id, subject);
   const made = simItems(r.id).length;
+  // Set test chal raha — similar nahi (owner: "result screen par hi, test par nahi").
+  if (exam && exam.locked) return null;
+  // Natije ke parde par: dabao → 5 aur, daayen numbers ke neeche (SimSide).
+  const click = exam && exam.simSide ? () => { makeSimAuto(r).catch(() => {}); } : () => setOpen(true);
   return (
     <>
-      <button type="button" className={className} onClick={() => setOpen(true)} title="Isi type ke 5 naye sawaal — yahin">🎯 {SIM_PER}{made ? <sup>{made}</sup> : null}</button>
+      <button type="button" className={className} onClick={click} title="Isi type ke 5 naye sawaal — yahin">🎯 {SIM_PER}{made ? <sup>{made}</sup> : null}</button>
       {open && typeof document !== "undefined" ? createPortal(
         <div className="si-ov" onClick={() => setOpen(false)}>
           <div className="si-box sim-box" onClick={(e) => e.stopPropagation()}>
@@ -124,5 +136,35 @@ export function SimHere({ q, id, subject, className = "btn btn--sm q-act--keep" 
         document.body,
       ) : null}
     </>
+  );
+}
+
+// 🎯 Set ke NATIJE par daayen, numbers ke neeche — sirf abhi wale sawaal ke
+// similar (owner). Har baar "5 similar" → 5 aur, pehle walon ke neeche.
+export function SimSide({ r, n }) {
+  useSimTick();
+  const [err, setErr] = useState("");
+  const [busy, setBusy] = useState("");
+  const items = simItems(r.id);
+  const picks = getPicks();
+  const right = items.filter((x) => picks[x.id] === x.answer).length;
+  const want = simGroups(r.id).length * SIM_PER;
+  const waiting = simBusy() && items.length < want;
+  const go = async () => {
+    setErr(""); setBusy("…");
+    try { await makeSimAuto(r, (p) => setBusy(`📖 ${Math.round(p * 100)}%`)); } catch (e) { setErr(e.message || "Nahi bana"); }
+    setBusy("");
+  };
+  return (
+    <section className="tbt-sim">
+      <div className="tbt-sim__h">
+        <b>🎯 Similar · Q{n}</b>
+        {items.length ? <small>✓ {right}/{items.length}</small> : null}
+      </div>
+      {items.length ? <div className="sim-list">{items.map((x, k) => <SimQ key={x.id} x={x} n={k + 1} picks={picks} />)}</div> : null}
+      {waiting ? <p className="sim-wait">⏳ 🐋 ban rahe hain…</p> : null}
+      {err || (!waiting && simError() && items.length < want) ? <p className="sim-err">⚠️ {err || simError()}</p> : null}
+      <button type="button" className="tbt-sim__go" onClick={go} disabled={!!busy}>{busy || (items.length ? `🎯 ${SIM_PER} aur similar` : `🎯 ${SIM_PER} similar`)}</button>
+    </section>
   );
 }

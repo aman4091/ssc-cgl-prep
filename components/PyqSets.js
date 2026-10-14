@@ -22,6 +22,7 @@ import MathQuestionCard from "./MathQuestionCard";
 import ReasonQuestionCard from "./ReasonQuestionCard";
 import TestPage, { clock } from "./TestPage";
 import AnsTestQ, { ansKeyOf } from "./AnsTestQ";
+import { SimSide, simRecOf } from "./SimInline";
 import { setSavedKey } from "@/lib/anskeys";
 import { getSetResults, saveSetResult, moveResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import { pushWrong } from "@/lib/wrongsets";
@@ -367,7 +368,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     return seen[i] ? "not" : "new";
   };
   const slot = {
-    locked: !done, revealAll: done, index: at, register,
+    locked: !done, revealAll: done, index: at, register, simSide: done,
     pick: picks[at]?.opt,
     // Wahi option dobara chuno to saaf (owner). Card apna chuna hua mount par
     // padhta hai — saaf karne par naya key (round) dekar dobara banta hai.
@@ -393,6 +394,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
       onSubmit={submit}
       onBack={back}
       onQuit={back}
+      side={q ? <SimSide key={at} n={at + 1} r={q._ans ? q : simRecOf(q, q.id, q._sub || q._subject || sub)} /> : null}
     >
       <div key={`${round}-${at}`}>
         {q && q._ans ? (

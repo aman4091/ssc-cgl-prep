@@ -152,3 +152,19 @@ body:has(.tbt) { overflow: hidden; }
 .tbt-ansimg { display: block; max-width: 100%; margin: 4px 0 10px; border: 1px solid #eeeeee; cursor: zoom-in; }
 .tbt-ansbig { max-width: 96vw; max-height: 92vh; background: #fff; }
 .tbt-ansq__ans { margin-top: 12px; font-size: 15px; }
+
+/* 🎯 Natije par numbers ke neeche — abhi wale sawaal ke similar (SimSide) */
+.tbt-sim { margin: -24px 0 18px; padding: 10px; border: 1px solid #d9d9d9; background: #fafafa; font-size: 13px; }
+.tbt-sim__h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.tbt-sim__h small { color: #009900; font-weight: 700; }
+.tbt-sim .sim-list { margin-bottom: 8px; }
+.tbt-sim .sim-q { background: #ffffff; border-radius: 4px; padding: 8px; }
+.tbt .tbt-sim .sim-q__o button { min-height: 0; padding: 3px 8px; border-radius: 4px; font-size: 12px; line-height: 1.4; }
+.tbt .tbt-sim .sim-q__t, .tbt .tbt-sim .sim-q__t * { font-size: 13px; }
+.tbt .tbt-sim .sim-q__o button * { font-size: 12px; }
+.tbt .tbt-sim .sim-q__x * { font-size: 12px; }
+.tbt-sim .sim-q__x { font-size: 12px; padding: 4px 8px; }
+.tbt-sim .sim-wait, .tbt-sim .sim-err { margin: 0 0 8px; font-size: 12px; }
+.tbt-sim .sim-err { color: #cc0000; }
+.tbt .tbt-sim__go { width: 100%; padding: 7px 10px; border: 1px solid #0a8ab8; border-radius: 3px; background: #0a8ab8; color: #ffffff; font-size: 13px; font-weight: 700; }
+.tbt .tbt-sim__go:disabled { opacity: .6; }

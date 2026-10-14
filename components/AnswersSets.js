@@ -18,6 +18,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getSetResults, saveSetResult, moveResult, markResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import TestPage, { clock } from "./TestPage";
+import { SimSide } from "./SimInline";
 import { progsFor, saveProg, clearProg } from "@/lib/setprog";
 import { hashStr } from "@/lib/syncitems";
 import { savedKey, setSavedKey } from "@/lib/anskeys";
@@ -318,6 +319,7 @@ export default function AnswersSets({ ctx }) {
       onSubmit={submit}
       onBack={back}
       onQuit={back}
+      side={r ? <SimSide key={at} n={at + 1} r={r} /> : null}
     >
       <div className="tbt-ansq">
         {ctx.renderCard(r, ctx.index.get(r.id) ?? 0, false, done ? {} : { chatLook: true, savedPick: null, savedHidden: false })}

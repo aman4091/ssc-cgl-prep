@@ -252,7 +252,8 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
               ho to tasveer apne aap padh kar (lib/anssim makeSimAuto), phir
               🐋 DeepSeek ke 5. Galti se jud jaate hain — Answers ke 21–40 roop
               mein wahin. Purana 🎯 20 quiz: make20. */}
-          {(rec.q && rec.q.question) || rec.ocrText || imagesOf(rec).length ? (
+          {/* Set ka test chal raha (chatLook) — similar nahi; natije par haan. */}
+          {!chatLook && ((rec.q && rec.q.question) || rec.ocrText || imagesOf(rec).length) ? (
             <SimMake r={rec} label="🎯 5" className="ansp__btn" onDone={() => onFlash("🐋 5 similar ban rahe hain — Answers ke 21–40 roop mein milenge")} />
           ) : null}
           <button className="ansp__btn" onClick={() => onDelete(rec)} title="Hatao">🗑️</button>
