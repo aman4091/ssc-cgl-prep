@@ -448,3 +448,6 @@ body.exam-on .tbx { top: 0; }
 .setcard__bar--2 i { flex: none; }
 .setcard__bar--2 i.is-bad { background: #e00000; }
 .setcard__wrong { font-style: normal; color: #e00000; }
+
+/* Wrong Sets — adhoora set normal list mein (components/PyqSets NormalSet) */
+.ws-normal { display: flex; flex-direction: column; gap: 14px; }

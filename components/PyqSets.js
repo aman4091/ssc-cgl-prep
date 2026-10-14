@@ -55,7 +55,33 @@ function cardFor(q, i, sub0, rk) {
   return <PyqQuestionCard key={doneKeyFor(q)} q={q} index={i} subject={sub} resumeKey={rk} chapterName={name} />;
 }
 
-export default function PyqSets({ list, sets: given, sub: subIn, subject, resumeKey, title = "PYQ", renderCard, setName = "Set", empty }) {
+// Adhoora set (Wrong Sets — `minTest` se kam sawaal) — test nahi, normal
+// sawaal-list (owner): "25 aa jayenge tab set ban jayega, phir test format".
+function NormalSet({ name, qs, sub, rk, need, onBack }) {
+  const [pk, setPk] = useState({});
+  const [, bump] = useState(0);
+  return (
+    <div className="tbx tbx-inline tbx-sets">
+      <header className="tbx-head">
+        <div className="tbx-title"><b>{name}</b><small>{qs.length}/{need} sawaal — {need} poore hote hi ye set test ban jayega</small></div>
+        <div className="tbx-head__r"><button type="button" className="btn btn--ghost btn--sm" onClick={onBack}>← Sets</button></div>
+      </header>
+      <div className="tbx-setsbody ws-normal">
+        {qs.map((q, i) => (q && q._ans ? (
+          <div key={q.id || i} className="card">
+            <AnsTestQ
+              r={q} done={pk[i] != null} pick={pk[i]}
+              onPick={(k) => setPk((p) => ({ ...p, [i]: k }))}
+              onTell={(k) => { setSavedKey(q.id, k); bump((x) => x + 1); }}
+            />
+          </div>
+        ) : cardFor(normQ(q), i, sub, rk)))}
+      </div>
+    </div>
+  );
+}
+
+export default function PyqSets({ list, sets: given, sub: subIn, subject, resumeKey, title = "PYQ", renderCard, setName = "Set", empty, minTest = 0 }) {
   const path = usePathname() || "";
   const sub = subIn || SUBS[subject] || SUBS[subjectOfPath(path)] || "gs";
   const all = useMemo(() => list || [], [list]);
@@ -91,6 +117,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   }, [rk]);
 
   const [open, setOpen] = useState(null);      // set ka number
+  const [view, setView] = useState(null);      // adhoora set — normal list
   const [qs, setQs] = useState([]);
   const [done, setDone] = useState(false);
   const [cur, setCur] = useState(0);
@@ -271,6 +298,10 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [kv]);
 
+  if (open === null && view !== null && sets[view]) {
+    return <NormalSet name={`${title} · ${setName} ${view + 1}`} qs={sets[view]} sub={sub} rk={rk} need={minTest} onBack={() => setView(null)} />;
+  }
+
   // ───────── parda 1: set chuno ─────────
   if (open === null) {
     const doneSets = sets.filter((_, i) => results[kOf(i)]).length;
@@ -290,7 +321,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
               const L = Math.max(1, chunk.length);
               return (
                 <div key={i} className={`setcard${r ? " is-done" : ""}${pg && !r ? " is-paused" : ""}`}>
-                  <button type="button" className="setcard__open" onClick={() => start(i, r ? "result" : pg ? "resume" : "test")}>
+                  <button type="button" className="setcard__open" onClick={() => (!r && chunk.length < minTest ? setView(i) : start(i, r ? "result" : pg ? "resume" : "test"))}>
                     <span className="setcard__n">{setName} {i + 1}{r ? " ✓" : ""}</span>
                     <span className="setcard__meta">{given ? `${chunk.length} questions` : `Q ${a + 1}–${a + chunk.length} · ${chunk.length} questions`}</span>
                     <span className="setcard__bar setcard__bar--2">
@@ -299,7 +330,9 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
                     </span>
                     {r ? <span className="setcard__score">{fmtMarks(marksOf(r))}/{maxMarks(r.total)} marks · {r.right} sahi · <em className="setcard__wrong">{r.wrong || 0} wrong</em> · {accuracyOf(r)}%</span> : null}
                   </button>
-                  {pg && !r ? (
+                  {!r && chunk.length < minTest ? (
+                    <span className="setcard__go">📖 Normal kholo · {chunk.length}/{minTest} — {minTest} hone par test</span>
+                  ) : pg && !r ? (
                     <span className="setcard__acts">
                       <button type="button" className="btn btn--sm" onClick={() => start(i, "resume")}>Resume</button>
                     </span>
