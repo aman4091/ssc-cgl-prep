@@ -132,7 +132,7 @@ export default function AnswersSets({ ctx }) {
 
   const submit = useCallback(() => {
     if (!running) return;
-    // Ye set pehle (kisi aur tab / list mein) ho chuka? Pehla natija hi pakka —
+    // Ye set pehle (kisi aur tab mein) ho chuka? Pehla natija hi pakka —
     // naya na likho, wahi dikhao.
     if (getSetResults(rkey)[kOf(setIdx)]) { clearProg(rkey, kOf(setIdx)); open(setIdx, "result"); return; }
     const s = SET_MIN * 60 - left;
@@ -149,7 +149,7 @@ export default function AnswersSets({ ctx }) {
   // how: "test" (naya) | "resume" (chhoda hua) | "result"
   const open = (i, how) => {
     // Seedha store se (state purana ho sakta hai — dropdown badalte hi). Diya
-    // hua set — kisi bhi list mein — dobara test nahi, pehla natija hi pakka (owner).
+    // hua set (isi list ka) dobara test nahi, pehla natija hi pakka (owner).
     const done = getSetResults(rkey)[kOf(i)];
     if (done) how = "result";
     const prev = how === "result" ? done : null;

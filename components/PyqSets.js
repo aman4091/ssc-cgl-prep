@@ -128,7 +128,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   // how: "test" (naya) | "resume" (chhoda hua) | "result"
   const start = (i, how) => {
     // Seedha store se (state purana ho sakta hai — dropdown badalte hi). Diya
-    // hua set — kisi bhi list mein — dobara test nahi, pehla natija hi pakka (owner).
+    // hua set (isi list ka) dobara test nahi, pehla natija hi pakka (owner).
     const done = getSetResults(rk)[kOf(i)];
     if (done) how = "result";
     const prev = how === "result" ? done : null;
@@ -230,7 +230,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
 
   const submit = useCallback(() => {
     if (!running) return;
-    // Ye set pehle (kisi aur tab / list mein) ho chuka? Pehla natija hi pakka —
+    // Ye set pehle (kisi aur tab mein) ho chuka? Pehla natija hi pakka —
     // naya na likho, wahi dikhao.
     if (getSetResults(rk)[kOf(open)]) { clearProg(rk, kOf(open)); start(open, "result"); return; }
     const s = SET_MIN * 60 - left;
