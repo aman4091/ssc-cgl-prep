@@ -31,6 +31,9 @@ export function useSimTick() {
 export function SimMake({ r, label = `🎯 ${SIM_PER} similar banao`, className = "ansp__btn ansp__btn--go", onDone }) {
   const [busy, setBusy] = useState("");
   const [err, setErr] = useState("");
+  useSimTick();
+  // Ban gaye (line khaali) → "ban rahe hain" ki likhawat hatao.
+  const shownBusy = busy && (busy.startsWith("📖") || busy === "…" || simBusy()) ? busy : "";
   const go = async () => {
     setErr(""); setBusy("…");
     try {
@@ -42,7 +45,7 @@ export function SimMake({ r, label = `🎯 ${SIM_PER} similar banao`, className 
   return (
     <span className="sim-make">
       <button type="button" className={className} onClick={go} disabled={!!busy && busy !== `🐋 ${SIM_PER} ban rahe hain…`} title="Isi type ke 5 naye sawaal — yahin">{busy && busy.startsWith("📖") ? "📖…" : label}</button>
-      {busy ? <small>{busy}</small> : null}
+      {shownBusy ? <small>{shownBusy}</small> : null}
       {err ? <><small className="sim-err">{err}</small><Gemini20 q={{ images: imagesOf(r) }} subject={r.subject} onGroup={(g) => linkSim(r.id, g)} className={className} label="✨ Gemini se" /></> : null}
     </span>
   );

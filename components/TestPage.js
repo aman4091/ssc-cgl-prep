@@ -115,7 +115,6 @@ export default function TestPage({
               <button key={i} type="button" className={`is-${state(i)}${i === at ? " is-cur" : ""}`} onClick={() => onGo(i)}>{numOf(i)}</button>
             ))}
           </div>
-          {done && side ? side : null}
           <table className="tbt-ana">
             <thead><tr><th colSpan={2}>PART-A Analysis</th></tr></thead>
             <tbody>
@@ -135,6 +134,7 @@ export default function TestPage({
               )}
             </tbody>
           </table>
+          {done && side ? side : null}
         </aside>
       </div>
 

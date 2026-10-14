@@ -153,8 +153,8 @@ body:has(.tbt) { overflow: hidden; }
 .tbt-ansbig { max-width: 96vw; max-height: 92vh; background: #fff; }
 .tbt-ansq__ans { margin-top: 12px; font-size: 15px; }
 
-/* 🎯 Natije par numbers ke neeche — abhi wale sawaal ke similar (SimSide) */
-.tbt-sim { margin: -24px 0 18px; padding: 10px; border: 1px solid #d9d9d9; background: #fafafa; font-size: 13px; }
+/* 🎯 Natije par Analysis ke neeche — abhi wale sawaal ke similar (SimSide) */
+.tbt-sim { margin: 14px 0 18px; padding: 10px; border: 1px solid #d9d9d9; background: #fafafa; font-size: 13px; }
 .tbt-sim__h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
 .tbt-sim__h small { color: #009900; font-weight: 700; }
 .tbt-sim .sim-list { margin-bottom: 8px; }
