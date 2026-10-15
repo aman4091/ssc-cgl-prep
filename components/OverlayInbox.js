@@ -18,6 +18,7 @@ import { getHardSet, isHard, toggleHard } from "@/lib/hardq";
 import { countMark } from "@/lib/qcounter";
 import { aiSiteUrl, aiSiteLabel } from "@/lib/aisites";
 import { shedOldQuizzes, getSettings } from "@/lib/storage";
+import { isNotReady, storeReady } from "@/lib/bigstore";
 
 // localStorage full hone par purane generated quizzes shed karke retry — wahi
 // self-heal jo saveQuiz mein hai, warna yaha addWrong chupchaap fail hota
@@ -25,7 +26,7 @@ import { shedOldQuizzes, getSettings } from "@/lib/storage";
 function withSpace(fn) {
   for (;;) {
     try { return fn(); }
-    catch (e) { if (!shedOldQuizzes()) throw e; }
+    catch (e) { if (isNotReady(e) || !shedOldQuizzes()) throw e; }
   }
 }
 
@@ -62,7 +63,8 @@ export default function OverlayInbox() {
     if (h === "localhost" || h === "0.0.0.0" || h === "::1" || h.endsWith(".local")
       || /^(10\.|127\.|192\.168\.|169\.254\.|172\.(1[6-9]|2\d|3[01])\.)/.test(h)) return undefined;
     const tick = async () => {
-      if (busy.current) return;
+      // Data (IndexedDB) abhi khula nahi — khaali book par likhna sab mita deta.
+      if (busy.current || !storeReady()) return;
       busy.current = true;
       try {
         for (const port of PORTS) {

@@ -29,7 +29,10 @@ export default function StoreGate({ children }) {
       .then(() => { runOneTimeReset(); runResetV3(); clearOldGeminiPrompt(); clearStaleQuizzes(); applyAnswerPrompts(ANSWER_PROMPTS); applyGsClusterPrompt(ANSWER_PROMPTS.gs); applyGsPromptV2(ANSWER_PROMPTS.gs); fixMisfiledEnglishMocks(); fixMissionStart(DEFAULT_START); clearOldMissionDone(); applyGsPromptV7(ANSWER_PROMPTS.gs); importGeminiAnswers().catch(() => {}); try { dedupeUserQuestions(); } catch { /* ignore */ } })
       .catch(() => {})
       .finally(finish);
-    const t = setTimeout(finish, 2000);
+    // 2s bahut kam tha: PC par bada data (tasveerein) padhne mein zyada lagta,
+    // UI khul jaata aur khaali store par likhai ho jaati (Answers ke sawaal
+    // aise gaye). Ab lambi rukaavat — aur bigstore khud bhi tab tak likhne nahi deta.
+    const t = setTimeout(finish, 12000);
     // Tab band/hide hote waqt pending writes turant likh do.
     const flush = () => { storeFlush(); };
     document.addEventListener("visibilitychange", flush);

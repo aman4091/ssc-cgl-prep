@@ -20,13 +20,14 @@ import { useEffect, useRef } from "react";
 import { TYPES, nextUp, totalDays, getDayTypeItems, getDayProgress, getMine, setMine, addNewWord } from "@/lib/vocab";
 import { addOneLiner } from "@/lib/oneliners";
 import { shedOldQuizzes } from "@/lib/storage";
+import { isNotReady } from "@/lib/bigstore";
 
 // localStorage full → purane generated quizzes shed karke retry (OverlayInbox
 // wala hi self-heal) — meaning kabhi chupchaap na khoye.
 function withSpace(fn) {
   for (;;) {
     try { return fn(); }
-    catch (e) { if (!shedOldQuizzes()) throw e; }
+    catch (e) { if (isNotReady(e) || !shedOldQuizzes()) throw e; }
   }
 }
 
