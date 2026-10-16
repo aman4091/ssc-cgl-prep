@@ -245,6 +245,9 @@ function SolveInner() {
   }, []);
   const toggleTrace = () => setTrace((v) => { try { localStorage.setItem("ink.trace", v ? "0" : "1"); } catch { /* ignore */ } return !v; });
   const putTraceOp = (o) => { setTraceOp(o); try { localStorage.setItem("ink.traceOp", String(o)); } catch { /* ignore */ } };
+  // Trace kis page par: solution par hamesha; ⭐ IMP par sirf GS / English
+  // (owner: wahan jawab dekh-dekh kar IMP baatein likhni hain).
+  const traceHere = page === "sol" || (page === "imp" && (rec?.subject === "gs" || rec?.subject === "english"));
   const traceMd = rec && !rec._quiz
     ? cleanAnswer(rec.detail2 || "") || cleanAnswer(rec.detail || "") || cleanAnswer(rec.q?.solution || "")
     : "";
@@ -1075,7 +1078,7 @@ function SolveInner() {
             <InkCanvas
               ref={inkRef}
               readOnly={!canWrite}
-              underlay={trace && page === "sol" && !quizId && traceMd ? <div style={{ opacity: traceOp }}><Markdown>{traceMd}</Markdown></div> : null}
+              underlay={trace && traceHere && !quizId && traceMd ? <div style={{ opacity: traceOp }}><Markdown>{traceMd}</Markdown></div> : null}
               initialDoc={doc}
               tool={tool}
               colorIdx={colorIdx}
@@ -1092,12 +1095,12 @@ function SolveInner() {
           <>
             <button
               className="btn btn--ghost btn--sm"
-              aria-pressed={trace && page === "sol"}
+              aria-pressed={trace && traceHere}
               onClick={toggleTrace}
-              disabled={page !== "sol" || !traceMd}
+              disabled={!traceHere || !traceMd}
               title={traceMd ? "Jawab kaagaz ke neeche halka — upar likho" : "Is sawaal ka likha hua jawab nahi hai"}
             >👻 Trace</button>
-            {trace && page === "sol" && traceMd ? (
+            {trace && traceHere && traceMd ? (
               <input
                 type="range" min="0.05" max="0.6" step="0.01" value={traceOp}
                 onChange={(e) => putTraceOp(Number(e.target.value))}
