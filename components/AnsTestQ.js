@@ -10,6 +10,7 @@ import Markdown from "./Markdown";
 import { imagesOf } from "@/lib/wrongbook";
 import { useImageUrls } from "@/lib/wrongimages";
 import { savedKey } from "@/lib/anskeys";
+import ImpView from "./ImpView";
 
 const L = "ABCD";
 
@@ -33,9 +34,15 @@ export default function AnsTestQ({ r, done, pick, onPick, onTell }) {
   const ans = String(r.detail2 || r.detail || (r.q && r.q.solution) || "").trim();
   return (
     <div className="tbt-ansq">
-      {r.q && r.q.question ? <div className="qcard__stem"><Markdown>{r.q.question}</Markdown></div> : null}
-      {urls.map((u, i) => <img key={u} src={u} alt={`sawaal ${i + 1}`} className="tbt-ansimg" onClick={() => setBig(u)} />)}
-      {missing ? <p className="h20-dim">📷 {missing} tasveer is device par nahi hai.</p> : null}
+      <div className={done ? "ansp__qrow" : "ansp__qwrap"}>
+        <div className="ansp__qimgs">
+          {r.q && r.q.question ? <div className="qcard__stem"><Markdown>{r.q.question}</Markdown></div> : null}
+          {urls.map((u, i) => <img key={u} src={u} alt={`sawaal ${i + 1}`} className="tbt-ansimg" onClick={() => setBig(u)} />)}
+          {missing ? <p className="h20-dim">📷 {missing} tasveer is device par nahi hai.</p> : null}
+        </div>
+        {/* ⭐ IMP — sirf natije par (lib/impink) */}
+        {done ? <ImpView rec={r} /> : null}
+      </div>
       <div className="tbt-opts">
         {opts.map((o, k) => {
           const cls = done ? (key === k ? " is-key" : "") + (pick === k ? (key >= 0 ? (key === k ? "" : " is-bad") : " is-mine") : "") : "";

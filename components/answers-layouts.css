@@ -68,7 +68,7 @@ body.examskin:has(.al14) main.container { max-width: 1560px; }
 .al14-main { min-width: 0; display: grid; gap: 12px; scroll-margin-top: 80px; }
 /* Question ki tasveer poori window bhar le — OCR wali screenshot apne aap
    mein chhoti hoti hai, aur "max-width: 100%" use bada nahi karta tha. */
-.al14-main .ansp__card > img { width: 100%; }   /* > taaki lightbox ki tasveer na chhue */
+.al14-main .ansp__card .ansp__qimgs > img { width: 100%; }   /* > taaki lightbox ki tasveer na chhue */
 .al14-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.9rem; }
 .al14-tl { display: grid; grid-template-columns: repeat(5, 1fr); position: relative; padding: 10px 0; border-radius: 14px; background: var(--tb-page); border: 1px solid var(--tb-line); }
 .al14-tl::before { content: ""; position: absolute; left: 10%; right: 10%; top: 19px; height: 3px; background: var(--tb-line-hard); }

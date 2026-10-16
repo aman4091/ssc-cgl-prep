@@ -168,3 +168,18 @@ body:has(.tbt) { overflow: hidden; }
 .tbt-sim .sim-err { color: #cc0000; }
 .tbt .tbt-sim__go { width: 100%; padding: 7px 10px; border: 1px solid #0a8ab8; border-radius: 3px; background: #0a8ab8; color: #ffffff; font-size: 13px; font-weight: 700; }
 .tbt .tbt-sim__go:disabled { opacity: .6; }
+
+/* ⭐ IMP (components/ImpView) — natije mein. Desktop (mouse, chaudi screen):
+   sawaal ke bagal mein; phone/tablet: sawaal aur jawab ke beech. */
+.ansp__qrow { display: flex; flex-direction: column; gap: 12px; }
+.ansp__qrow > .ansp__qimgs { min-width: 0; }
+@media (min-width: 1024px) and (pointer: fine) {
+  .ansp__qrow { flex-direction: row; align-items: flex-start; }
+  .ansp__qrow > .ansp__qimgs { flex: 1 1 60%; }
+  .ansp__qrow > .imp-box { flex: 0 1 40%; position: sticky; top: 8px; }
+}
+.imp-box { display: block; padding: 8px 10px 10px; border: 2px solid #f2b705; border-radius: 6px; background: #fffdf3; }
+.imp-box__h { display: block; margin-bottom: 6px; font-size: 13px; color: #7a5a00; }
+.imp-box--wait small { margin-left: 8px; color: #777777; }
+.imp-ink { width: 100%; }
+.imp-ink canvas { display: block; }

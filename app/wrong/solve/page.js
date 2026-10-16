@@ -1,10 +1,11 @@
 "use client";
 
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { impRec, inkSetter, inkRecord } from "@/lib/impink";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   getWrongBook, getWrongById, isSubject, imagesOf, dayKey, dayLabel,
-  subjectLabel, setInk, setOcrText,
+  subjectLabel, setOcrText,
   displayOrder,
 } from "@/lib/wrongbook";
 import { TAGS, getTag, setTag, autoTagBySecs, tagMeta } from "@/lib/qtags";
@@ -216,6 +217,12 @@ function SolveInner() {
   const cloudT = useRef(null);
   const recRef = useRef(null);
   recRef.current = rec;
+  // ⭐ IMP (lib/impink): "sol" = solution wali writing, "imp" = alag IMP page.
+  // Sab save/upload/load isi se tay hota hai ki abhi kaunsa page khula hai.
+  const [page, setPage] = useState("sol");
+  const pageRef = useRef("sol");
+  pageRef.current = page;
+  const tgt = (r) => (r && pageRef.current === "imp" ? impRec(r) : r);
 
   const { urls, missing } = useImageUrls(rec ? imagesOf(rec) : []);
 
@@ -258,7 +265,7 @@ function SolveInner() {
 
   // Ruki hui uploads — khulte hi aur online wapas aate hi.
   useEffect(() => {
-    const flush = () => { flushInkQueue(getWrongById, setInk).catch(() => {}); };
+    const flush = () => { flushInkQueue(inkRecord, inkSetter).catch(() => {}); };
     flush();
     window.addEventListener("online", flush);
     return () => window.removeEventListener("online", flush);
@@ -274,17 +281,18 @@ function SolveInner() {
     setShown(always);
     setConflict(null);
     (async () => {
-      const r = await openInk(rec).catch(() => null);
+      const t = tgt(rec);
+      const r = await openInk(t).catch(() => null);
       if (!alive) return;
       const next = r?.doc || emptyDoc();
       liveDoc.current = next;
       setDoc(next);
       setLoading(false);
-      if (r?.conflict) setConflict(await getConflictInk(rec.id).catch(() => null));
+      if (r?.conflict) setConflict(await getConflictInk(t.id).catch(() => null));
     })();
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rec?.id, always]);
+  }, [rec?.id, always, page]);
 
   // ── saving ────────────────────────────────────────────────────────────────
 
@@ -311,7 +319,7 @@ function SolveInner() {
     if (deferIfDrawing(() => flushLocal(), localT)) return;
     clearTimeout(localT.current);
     try {
-      await saveLocalInk(r.id, liveDoc.current);
+      await saveLocalInk(tgt(r).id, liveDoc.current);
       setState("saved");
     } catch {
       setState("offline");
@@ -327,8 +335,16 @@ function SolveInner() {
     if (!r || !liveDoc.current) return;
     if (deferIfDrawing(() => flushCloud(), cloudT, 600)) return;
     clearTimeout(cloudT.current);
-    try { await pushInk(r, liveDoc.current, setInk); } catch { /* device-local */ }
+    try { await pushInk(tgt(r), liveDoc.current, inkSetter); } catch { /* device-local */ }
   }, [deferIfDrawing]);
+
+  // ⭐ IMP / ✍️ solution ke beech — pehle abhi wale page ka kaam bacha lo.
+  const switchPage = useCallback(async (p) => {
+    if (p === pageRef.current) return;
+    await flushLocal();
+    flushCloud();
+    setPage(p);
+  }, [flushLocal, flushCloud]);
 
   const onChange = useCallback((next) => {
     liveDoc.current = next;
@@ -365,6 +381,7 @@ function SolveInner() {
     if (!target) return;
     await flushLocal();
     flushCloud();
+    setPage("sol");   // agla sawaal hamesha solution wale page par khule
     // URL ko naye sire se MAT banao — sirf `id` badlo.
     //
     // Pehle yahan poora pata dobara likha jata tha (`?quiz=..&id=..`), aur usme
@@ -1106,7 +1123,8 @@ function SolveInner() {
           )}
         </div>
 
-        <div className="inkv__ink">
+        <div className={`inkv__ink${page === "imp" ? " is-imp" : ""}`}>
+          {page === "imp" ? <div className="inkv__imphd">⭐ IMP — jo zaroori hai yahan likho · natije mein sawaal ke saath dikhega</div> : null}
           {conflict && (
             <div className="answer-box" style={{ position: "absolute", inset: "8px 8px auto", zIndex: 3 }}>
               <p style={{ fontSize: "0.84rem", fontWeight: 600 }}>
@@ -1119,7 +1137,7 @@ function SolveInner() {
                     liveDoc.current = conflict.doc;
                     setDoc(conflict.doc);
                     onChange(conflict.doc);
-                    clearConflictInk(rec.id);
+                    clearConflictInk(tgt(rec).id);
                     setConflict(null);
                   }}
                 >
@@ -1127,7 +1145,7 @@ function SolveInner() {
                 </button>
                 <button
                   className="btn btn--ghost btn--sm"
-                  onClick={() => { clearConflictInk(rec.id); setConflict(null); }}
+                  onClick={() => { clearConflictInk(tgt(rec).id); setConflict(null); }}
                 >
                   Rehne do
                 </button>
@@ -1151,6 +1169,12 @@ function SolveInner() {
       </div>
 
       <div className="inkv__tools">
+        {!quizId && (
+          <>
+            <button className="btn btn--ghost btn--sm inkv__imp" aria-pressed={page === "imp"} onClick={() => switchPage(page === "imp" ? "sol" : "imp")} title="Alag IMP page — natije mein sawaal ke saath dikhta hai">{page === "imp" ? "✍️ Solution" : "⭐ IMP"}</button>
+            <span className="inkv__sep" />
+          </>
+        )}
         <button className="btn btn--ghost btn--sm" aria-pressed={tool === "pen"} onClick={() => setTool("pen")} title="Pen">✏️</button>
         <button className="btn btn--ghost btn--sm" aria-pressed={tool === "hl"} onClick={() => setTool("hl")} title="Highlighter">🖍️</button>
         <button className="btn btn--ghost btn--sm" aria-pressed={tool === "eraser"} onClick={toggleEraser} title="Eraser — pen ka NEECHE wala button bhi yahi karta hai">🧽</button>

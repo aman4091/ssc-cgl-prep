@@ -35,6 +35,7 @@ import AnswersLayoutsAll from "./AnswersLayoutsAll";
 import AnswersPlay, { isPlayLayout } from "./AnswersPlay";
 import { markDoneRev } from "@/lib/ansrev";
 import { SimMake } from "./SimInline";
+import ImpView from "./ImpView";
 import "./answers-layouts.css";
 
 // Answers — mock test ke screenshot, aur unke jawab.
@@ -106,7 +107,7 @@ const bucketOf = (r) => (KNOWN.has(r.subject) ? r.subject : "other");
 const labelOf = (k) =>
   k === "other" ? "Other" : (SUBJECTS.find((s) => s.key === k) || ALL_SUBJ).label;
 
-function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard, chatLook, savedPick, savedHidden, onPickSave, onClearSave, onHideSave }) {
+function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, onArm, onFlash, highlight, isHardQ, onToggleHard, chatLook, savedPick, savedHidden, onPickSave, onClearSave, onHideSave, impSlot }) {
   // 💬 chat wali window (components/QChatFeed): jawab pehle chhupa; 👁️ khole,
   // 🙈 chhupaye, 🧹 sab hataye — teeno yaad rehte hain.
   const ansOpen = !chatLook || (savedPick != null && !savedHidden);
@@ -260,15 +261,22 @@ function AnsCard({ rec, n, fresh, onDone, onDelete, onOpen, onChange, prompt, on
         </span>
       </h2>
 
-      {urls.map((u, i) => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img key={i} src={u} alt={`question ${n}`} onClick={() => setLb(i)} title="Tap to enlarge" />
-      ))}
-      {missing > 0 && (
-        <p className="ansp__note">
-          📷 {missing} image is device par nahi hai — R2 par upload nahi hui thi.
-        </p>
-      )}
+      {/* ⭐ IMP (set ke natije mein — impSlot): desktop par sawaal ke bagal
+          mein, phone/tablet par sawaal aur jawab ke beech (.ansp__qrow). */}
+      <div className={impSlot ? "ansp__qrow" : "ansp__qwrap"}>
+        <div className="ansp__qimgs">
+          {urls.map((u, i) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={i} src={u} alt={`question ${n}`} onClick={() => setLb(i)} title="Tap to enlarge" />
+          ))}
+          {missing > 0 && (
+            <p className="ansp__note">
+              📷 {missing} image is device par nahi hai — R2 par upload nahi hui thi.
+            </p>
+          )}
+        </div>
+        {impSlot ? <ImpView rec={rec} /> : null}
+      </div>
 
       {pasteOpen && (
         <div className="ansp__paste">

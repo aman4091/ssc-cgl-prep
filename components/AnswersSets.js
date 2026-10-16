@@ -322,7 +322,7 @@ export default function AnswersSets({ ctx }) {
       side={r ? <SimSide key={at} n={at + 1} r={r} /> : null}
     >
       <div className="tbt-ansq">
-        {ctx.renderCard(r, ctx.index.get(r.id) ?? 0, false, done ? {} : { chatLook: true, savedPick: null, savedHidden: false })}
+        {ctx.renderCard(r, ctx.index.get(r.id) ?? 0, false, done ? { impSlot: true } : { chatLook: true, savedPick: null, savedHidden: false })}
       </div>
       <div className="tbt-opts">
         {opts.map((o, k) => {
