@@ -268,6 +268,17 @@ function SolveInner() {
     };
   }, []);
 
+  // ⛶ Poori screen se bahar aa gaye (app background mein gayi, notification…)
+  // to wapas jaane ka button (owner). Upar wala effect sirf khulte waqt maangta hai.
+  const [isFs, setIsFs] = useState(true);
+  useEffect(() => {
+    const on = () => setIsFs(!!document.fullscreenElement);
+    on();
+    document.addEventListener("fullscreenchange", on);
+    return () => document.removeEventListener("fullscreenchange", on);
+  }, []);
+  const goFs = () => { try { document.documentElement.requestFullscreen?.().catch(() => {}); } catch { /* ignore */ } };
+
   // Jab tak yahan likh rahe ho, background sync band. Uska poora-localStorage
   // hash main thread par chalta hai aur stroke ke beech aa jaye to nib rok deta
   // hai. Bahar niklte hi wapas chalu — tab wo pointer bhi le jayega.
@@ -890,6 +901,9 @@ function SolveInner() {
         )}
 
         {/* ⏱ chain timer hataya (owner: "timer bhi hta de") — logic neeche pada hai, chalta nahi. */}
+        {!isFs && typeof document !== "undefined" && document.fullscreenEnabled ? (
+          <button className="inkv__pill inkv__fs" onClick={goFs} title="Poori screen par wapas">⛶ Full screen</button>
+        ) : null}
         <span className="inkv__pill">{idx + 1}/{list.length}</span>
       </div>
 
