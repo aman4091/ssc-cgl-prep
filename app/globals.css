@@ -4309,3 +4309,12 @@ body.exam-on .hresume { display: none; }
 /* 📔 Notes: chapter ke aakhir mein pichhla / agla chapter */
 .nt-chapnav { display: flex; justify-content: space-between; gap: 10px; margin: 18px 0 8px; flex-wrap: wrap; }
 .nt-chapnav a { max-width: 48%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* ⭐ IMP dabba (components/ImpView) — slide par bhi (Fact log / Vocab). */
+.imp-box { display: block; padding: 8px 10px 10px; border: 2px solid #f2b705; border-radius: 6px; background: #fffdf3; }
+.imp-box__h { display: block; margin-bottom: 6px; font-size: 13px; color: #7a5a00; }
+.imp-ink { width: 100%; }
+.imp-ink canvas { display: block; }
+.imp-box--slide { margin-top: 6px; }
+.ol14-imp { align-self: flex-end; padding: 4px 12px; border: 1px solid #f2b705; border-radius: 999px; background: #fff4cc; color: #7a5a00; font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
+.ol14-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }

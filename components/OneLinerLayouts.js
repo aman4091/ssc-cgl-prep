@@ -26,6 +26,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Markdown from "./Markdown";
 import { parseOneLiner } from "@/lib/onelinerfmt";
+import { useRouter } from "next/navigation";
+import { ImpNoteBox } from "./ImpView";
+import { noteKey, putImpCtx } from "@/lib/impnotes";
+import { isInkWriter } from "@/lib/inkdevice";
 
 export const OL_LAYOUTS = [
   { id: "1", name: "Reel — ek line bade mein" },
@@ -327,8 +331,29 @@ function MindMap({ secs }) {
 // ─── 14 · Slides ─── FINAL (owner) — Notesliner, Fact log, One-liners teeno
 // mein yahi. Chhote ‹ › button (aur ← → keys) se ek slide aage-peeche.
 // secs: [{ key, title, kind, points: [{ text, star }], meta? | note+book }]
-export function SlideRow({ secs, empty = "Koi slide nahi.", onAt, start = 0 }) {
+// impKind ("fact" / "vocab") — har slide par ⭐ IMP: tablet par button (stylus
+// page /imp), aur likha hua IMP slide par hi (har device par dikhta hai).
+export function SlideRow({ secs, empty = "Koi slide nahi.", onAt, start: start0 = 0, impKind = "" }) {
   const box = useRef(null);
+  const router = useRouter();
+  // IMP likh kar laute — usi slide par (sessionStorage, sirf isi page ke liye).
+  const [start] = useState(() => {
+    if (typeof window === "undefined") return start0;
+    try {
+      const b = JSON.parse(sessionStorage.getItem("slide.back") || "null");
+      // URL se nahi (naya page URL badalne se PEHLE banta hai) — slide ki kism se.
+      if (impKind && b && b.kind === impKind) return b.at || 0;   // mitana tab, jab slide par pahunch jayein
+    } catch { /* ignore */ }
+    return start0;
+  });
+  const [writer, setWriter] = useState(false);
+  useEffect(() => { setWriter(isInkWriter()); }, []);
+  const openImp = (s, k) => {
+    const nk = noteKey(impKind, s.key);
+    putImpCtx(nk, { title: s.title, points: s.points.map((p) => p.text) });
+    try { sessionStorage.setItem("slide.back", JSON.stringify({ kind: impKind, at: k })); } catch { /* ignore */ }
+    router.push(`/imp?k=${encodeURIComponent(nk)}&back=${encodeURIComponent(window.location.pathname + window.location.search)}`);
+  };
   const [cur, setCur] = useState(start);
   // Jahan chhoda tha wahin se (Vocab) — pehli baar khulte hi us slide par.
   const placed = useRef(false);
@@ -336,10 +361,18 @@ export function SlideRow({ secs, empty = "Koi slide nahi.", onAt, start = 0 }) {
     const el = box.current;
     if (placed.current || !el || !secs.length) return;
     placed.current = true;
+    if (impKind) { try { sessionStorage.removeItem("slide.back"); } catch { /* ignore */ } }
     if (start > 0) {
-      const f = el.firstElementChild;
-      const w = f ? f.getBoundingClientRect().width + 16 : 0;
-      if (w) el.scrollLeft = Math.min(start, secs.length - 1) * w;
+      // Layout abhi bana na ho (chaudai 0) to thoda ruk kar dobara — warna
+      // slide pehli par hi reh jaati thi.
+      let tries = 0;
+      const place = () => {
+        const f = el.firstElementChild;
+        const w = f ? f.getBoundingClientRect().width + 16 : 0;
+        if (w && el.scrollWidth > el.clientWidth) { el.scrollLeft = Math.min(start, secs.length - 1) * w; setCur(Math.min(start, secs.length - 1)); }
+        else if (tries++ < 20) setTimeout(place, 100);
+      };
+      place();
     }
   }, [secs.length, start]);
   const step = () => {
@@ -373,9 +406,13 @@ export function SlideRow({ secs, empty = "Koi slide nahi.", onAt, start = 0 }) {
       <div className="ol14" ref={box}>
         {secs.map((s, k) => (
           <section key={s.key} className={`ol14-s${s.kind === "warn" ? " is-warn" : ""}`}>
-            <span className="ol14-n">{k + 1} / {secs.length}</span>
+            <span className="ol14-top">
+              <span className="ol14-n">{k + 1} / {secs.length}</span>
+              {impKind && writer ? <button type="button" className="ol14-imp" onClick={() => openImp(s, k)} title="Stylus se IMP likho">⭐ IMP ✍️</button> : null}
+            </span>
             <h3>{s.kind === "warn" ? "⚠️ " : ""}{s.title}</h3>
             <ul>{s.points.map((p, i) => <li key={i} className={p.star ? "is-star" : ""}><M t={p.text} /></li>)}</ul>
+            {impKind ? <ImpNoteBox k={noteKey(impKind, s.key)} /> : null}
             {s.meta != null ? (s.meta ? <span className="olx-meta">{s.meta}</span> : null) : <Meta sec={s} />}
             {s.act ? <span className="ol14-act">{s.act}</span> : null}
           </section>

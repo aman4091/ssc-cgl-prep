@@ -105,7 +105,7 @@ function VocabSlides({ pool }) {
       meta: TYPE_LABEL[p.type] || "",
     };
   });
-  return <SlideRow secs={secs} onAt={onAt} start={start} empty="Abhi koi word nahi." />;
+  return <SlideRow secs={secs} onAt={onAt} start={start} empty="Abhi koi word nahi." impKind="vocab" />;
 }
 
 export default function VocabPage() {

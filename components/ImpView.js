@@ -8,7 +8,8 @@
 // ghera) utna, dabbe ki chaudai mein fit. Isliye chhota likha bhi padhne layak.
 
 import { useEffect, useRef, useState } from "react";
-import { viewInk, isEmptyDoc } from "@/lib/ink";
+import { viewInk, isEmptyDoc, localInkCounts } from "@/lib/ink";
+import { getImpNote, noteRec } from "@/lib/impnotes";
 import { impRec, hasImp } from "@/lib/impink";
 import { getWrongById } from "@/lib/wrongbook";
 import { isInkWriter } from "@/lib/inkdevice";
@@ -34,7 +35,7 @@ function bboxOf(doc) {
   return { x0: Math.max(0, x0 - 12), y0: Math.max(0, y0 - 12), x1: x1 + 12, y1: y1 + 12 };
 }
 
-function InkStatic({ doc }) {
+export function InkStatic({ doc }) {
   const ref = useRef(null);
   const boxRef = useRef(null);
   const [w, setW] = useState(0);
@@ -122,5 +123,35 @@ export default function ImpView({ rec }) {
       <b className="imp-box__h">⭐ IMP</b>
       <InkStatic doc={doc} />
     </aside>
+  );
+}
+
+// ⭐ Fact log / Vocab ki slide ka IMP (lib/impnotes) — slide par hi, sirf dekhne
+// ko. Jis slide ka IMP hai hi nahi (na pata, na is device par likha) uske liye
+// IndexedDB tak nahi jaate — Vocab mein hazaaron slides hain.
+export function ImpNoteBox({ k }) {
+  const [p, setP] = useState(null);
+  const [doc, setDoc] = useState(null);
+  useEffect(() => {
+    const on = () => setP(getImpNote(k));
+    on();
+    window.addEventListener("cgl:impnotes", on);
+    window.addEventListener("cgl:sync-applied", on);
+    return () => { window.removeEventListener("cgl:impnotes", on); window.removeEventListener("cgl:sync-applied", on); };
+  }, [k]);
+  const rev = p?.impRev || 0;
+  useEffect(() => {
+    let alive = true;
+    const r = noteRec(k);
+    if (!r.inkUrl && !(localInkCounts()[r.id] > 0)) { setDoc(null); return undefined; }
+    viewInk(r, { preferLocal: isInkWriter() }).then((d) => { if (alive) setDoc(d || null); }).catch(() => {});
+    return () => { alive = false; };
+  }, [k, rev]);
+  if (!doc || isEmptyDoc(doc)) return null;
+  return (
+    <div className="imp-box imp-box--slide">
+      <b className="imp-box__h">⭐ IMP</b>
+      <InkStatic doc={doc} />
+    </div>
   );
 }

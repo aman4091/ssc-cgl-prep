@@ -173,7 +173,7 @@ export default function MissionFactsPage() {
     return (
       <section className="section">
         <div className="fl-bar">{revBtn}</div>
-        <SlideRow secs={factSecs(facts)} onAt={factStep} empty="Abhi koi fact nahi." />
+        <SlideRow secs={factSecs(facts)} onAt={factStep} empty="Abhi koi fact nahi." impKind="fact" />
       </section>
     );
   }
