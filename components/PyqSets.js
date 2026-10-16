@@ -177,10 +177,14 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   // 🏠 Home ki report se "▶" — ?set=<pehchaan> se wahi set seedha khule
   // (diya hua ho to natija, warna test).
   const autoRef = useRef(false);
+  // Sirf KHULTE waqt ka URL — baad mein natija khud ?set= likhta hai (lib/seturl),
+  // use dobara padha to "← Sets" dabate hi natija phir khul jata tha.
+  const initUrl = useRef(null);
+  if (initUrl.current === null && typeof window !== "undefined") initUrl.current = readSetUrl();
   useEffect(() => {
     if (!ready || autoRef.current || !sets.length || typeof window === "undefined") return;
-    const { set: want, at: wantAt } = readSetUrl();
-    if (!want) return;
+    const { set: want, at: wantAt } = initUrl.current || {};
+    if (!want) { autoRef.current = true; return; }
     const i = sets.findIndex((_, k) => String(kOf(k)) === want);
     // Ek hi baar (mile ya na mile) — URL se ?set= hata do, warna dropdown
     // badalte hi wo set apne aap khul jata tha (owner).

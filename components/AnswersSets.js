@@ -207,10 +207,14 @@ export default function AnswersSets({ ctx }) {
 
   // 🏠 Home ki report se "▶" — ?set=<pehchaan> se wahi set seedha.
   const autoRef = useRef(false);
+  // Sirf KHULTE waqt ka URL — baad mein natija khud ?set= likhta hai (lib/seturl),
+  // use dobara padha to "← Sets" dabate hi natija phir khul jata tha.
+  const initUrl = useRef(null);
+  if (initUrl.current === null && typeof window !== "undefined") initUrl.current = readSetUrl();
   useEffect(() => {
     if (!ready || autoRef.current || !setCount || typeof window === "undefined") return;
-    const { set: want, at: wantAt } = readSetUrl();
-    if (!want) return;
+    const { set: want, at: wantAt } = initUrl.current || {};
+    if (!want) { autoRef.current = true; return; }
     const i = sigs.findIndex((x) => x === want);
     // Ek hi baar (mile ya na mile) — URL se ?set= hata do, warna dropdown
     // badalte hi wo set apne aap khul jata tha (owner).
