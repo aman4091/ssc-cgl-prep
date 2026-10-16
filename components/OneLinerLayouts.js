@@ -351,6 +351,13 @@ export function SlideRow({ secs, empty = "Koi slide nahi.", onAt, start: start0 
   const openImp = (s, k) => {
     const nk = noteKey(impKind, s.key);
     putImpCtx(nk, { title: s.title, points: s.points.map((p) => p.text) });
+    // Poori list — IMP page par ‹ › se agli / pichhli slide (sessionStorage).
+    try {
+      sessionStorage.setItem("imp.list", JSON.stringify({
+        kind: impKind,
+        items: secs.map((x) => ({ k: noteKey(impKind, x.key), title: x.title, points: x.points.map((p) => p.text) })),
+      }));
+    } catch { /* bahut badi list / quota — tab bas ek slide */ }
     try { sessionStorage.setItem("slide.back", JSON.stringify({ kind: impKind, at: k })); } catch { /* ignore */ }
     router.push(`/imp?k=${encodeURIComponent(nk)}&back=${encodeURIComponent(window.location.pathname + window.location.search)}`);
   };

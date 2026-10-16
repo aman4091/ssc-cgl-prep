@@ -2820,6 +2820,7 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
   padding: 3px 10px; border-radius: 999px; background: #fff4cc; color: #7a5a00; font-size: 12px; font-weight: 700; white-space: nowrap;
 }
 .inkv__trace { width: 110px; accent-color: #555555; }
+.inkv__nav { display: inline-flex; align-items: center; gap: 6px; flex: none; }
 .inkv__fs { cursor: pointer; font-weight: 700; border-color: var(--accent); color: var(--accent); }
 .inkv__ro { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--text-2); }
 .inkv .btn.inkv__imp[aria-pressed="true"] { border-color: #f2b705; color: #7a5a00; background: #fff4cc; }

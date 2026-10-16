@@ -28,7 +28,16 @@ function ImpInner() {
   const k = sp.get("k") || "";
   const back = sp.get("back") || "/";
   const [ctx, setCtx] = useState(null);
-  useEffect(() => { setCtx(getImpCtx(k)); }, [k]);
+  // ‹ › — Fact log / Vocab ki poori list (slide ne jaate waqt rakhi, sessionStorage).
+  const [list, setList] = useState(null);
+  useEffect(() => {
+    try { const l = JSON.parse(sessionStorage.getItem("imp.list") || "null"); if (l && Array.isArray(l.items)) setList(l); } catch { /* ignore */ }
+  }, []);
+  const pos = list ? list.items.findIndex((x) => x.k === k) : -1;
+  useEffect(() => {
+    const it = list && pos >= 0 ? list.items[pos] : null;
+    setCtx(it ? { title: it.title, points: it.points } : getImpCtx(k));
+  }, [k, list, pos]);
 
   const [writer, setWriter] = useState(null);
   useEffect(() => { setWriter(isInkWriter()); }, []);
@@ -133,6 +142,14 @@ function ImpInner() {
   }, [flushLocal, flushCloud]);
 
   const exit = async () => { await flushLocal(); flushCloud(); router.push(back); };
+  // Agli / pichhli slide ka IMP — pehle abhi wala bacha lo; lautne par wahi slide khule.
+  const goTo = async (i) => {
+    if (!list || i < 0 || i >= list.items.length) return;
+    await flushLocal();
+    flushCloud();
+    try { sessionStorage.setItem("slide.back", JSON.stringify({ kind: list.kind, at: i })); } catch { /* ignore */ }
+    router.replace(`/imp?k=${encodeURIComponent(list.items[i].k)}&back=${encodeURIComponent(back)}`);
+  };
 
   const prevTool = useRef("pen");
   const toggleEraser = () => setTool((t) => { if (t === "eraser") return prevTool.current || "pen"; prevTool.current = t; return "eraser"; });
@@ -147,6 +164,8 @@ function ImpInner() {
         if (e.key === "PageDown") toggleEraser(); else inkRef.current?.undo();
         return;
       }
+      if (e.key === "ArrowRight" && pos >= 0) { goTo(pos + 1); return; }
+      if (e.key === "ArrowLeft" && pos >= 0) { goTo(pos - 1); return; }
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z") { e.preventDefault(); if (e.shiftKey) inkRef.current?.redo(); else inkRef.current?.undo(); }
     };
     window.addEventListener("keydown", onKey);
@@ -159,6 +178,13 @@ function ImpInner() {
         <button className="btn btn--ghost btn--sm" onClick={exit} title="Wapas slide par">←</button>
         <span className="inkv__title">⭐ IMP · {ctx?.title || ""}</span>
         <span style={{ marginLeft: "auto" }} />
+        {list && pos >= 0 ? (
+          <span className="inkv__nav">
+            <button className="btn btn--ghost btn--sm" onClick={() => goTo(pos - 1)} disabled={pos <= 0} title="Pichhli slide ka IMP">‹ Pichhla</button>
+            <span className="inkv__pill">{pos + 1}/{list.items.length}</span>
+            <button className="btn btn--ghost btn--sm" onClick={() => goTo(pos + 1)} disabled={pos >= list.items.length - 1} title="Agli slide ka IMP">Agla ›</button>
+          </span>
+        ) : null}
         {can ? <span className="inkv__pill">{state === "saved" ? "💾 saved" : state === "dirty" ? "✍️ …" : "⚠️ offline"}</span> : null}
         {!isFs && typeof document !== "undefined" && document.fullscreenEnabled ? (
           <button className="inkv__pill inkv__fs" onClick={goFs} title="Poori screen par wapas">⛶ Full screen</button>
