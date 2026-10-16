@@ -33,6 +33,7 @@ import { recordQuizAttempts } from "@/lib/qreview";
 import { recordAttempts } from "@/lib/qstats";
 import { subjectOfPath } from "@/lib/pomo";
 import { hashStr } from "@/lib/syncitems";
+import { readSetUrl, putSetUrl, dropSetUrl, pagePath } from "@/lib/seturl";
 import "./answers-play.css";
 
 const SET_SIZE = 25;
@@ -178,19 +179,31 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
   const autoRef = useRef(false);
   useEffect(() => {
     if (!ready || autoRef.current || !sets.length || typeof window === "undefined") return;
-    const want = new URLSearchParams(window.location.search).get("set");
+    const { set: want, at: wantAt } = readSetUrl();
     if (!want) return;
     const i = sets.findIndex((_, k) => String(kOf(k)) === want);
     // Ek hi baar (mile ya na mile) — URL se ?set= hata do, warna dropdown
     // badalte hi wo set apne aap khul jata tha (owner).
     autoRef.current = true;
-    const u = new URL(window.location.href);
-    u.searchParams.delete("set");
-    window.history.replaceState(window.history.state, "", u.pathname + u.search + u.hash);
+    dropSetUrl();
     if (i < 0) return;
-    start(i, getSetResults(rk)[want] ? "result" : progsFor(rk)[want] ? "resume" : "test");
+    const how = getSetResults(rk)[want] ? "result" : progsFor(rk)[want] ? "resume" : "test";
+    start(i, how);
+    // Stylus se laute — natije mein usi sawaal par.
+    if (how === "result" && wantAt) setCur(wantAt);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sets, results, progs, ready]);
+
+  // 🔗 Natija khula hai to URL mein ?set=&at= (lib/seturl) — ✍️ stylus se
+  // lautne par wahi natija, wahi sawaal. Pehle se URL mein pada ?set= (Home /
+  // stylus se aaye) upar wala auto-open padhta hai, isliye yahan tabhi hatao
+  // jab humne khud likha ho.
+  const wroteUrl = useRef(false);
+  useEffect(() => {
+    if (open !== null && done) { putSetUrl(kOf(open), cur); wroteUrl.current = true; }
+    else if (wroteUrl.current) { dropSetUrl(); wroteUrl.current = false; }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, done, cur]);
 
   // 🩹 Set NUMBER wale purane natije ("#0") → is set ki pehchaan par. Ek
   // chapter-key ka natija usi list ka hota hai, to number se milana theek hai.
@@ -266,7 +279,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     clearProg(rk, kOf(open));
     saveSetResult(rk, kOf(open), {
       right, wrong, skipped: keyed.length - answered, total: keyed.length, sec: s, ws: 1, times,
-      path: window.location.pathname + window.location.search.replace(/[?&]set=[^&]*/, "").replace(/^&/, "?"), title: `${title} · ${setName} ${open + 1}`,
+      path: pagePath(), title: `${title} · ${setName} ${open + 1}`,
       picks: Object.fromEntries(Object.entries(picks).map(([k, v]) => [k, { opt: v.opt, correct: v.correct }])),
     });
     // QBoard jaisa hisaab — stats, Mistake Notebook, ho gaya, aaj ki ginti.

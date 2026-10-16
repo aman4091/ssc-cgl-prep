@@ -21,6 +21,7 @@ import TestPage, { clock } from "./TestPage";
 import { SimSide } from "./SimInline";
 import { progsFor, saveProg, clearProg } from "@/lib/setprog";
 import { hashStr } from "@/lib/syncitems";
+import { readSetUrl, putSetUrl, dropSetUrl, pagePath } from "@/lib/seturl";
 import { savedKey, setSavedKey } from "@/lib/anskeys";
 import { pushWrong } from "@/lib/wrongsets";
 
@@ -128,7 +129,7 @@ export default function AnswersSets({ ctx }) {
   };
   const save = (pk, sf, s) => {
     const t = tally(pk, sf);
-    saveSetResult(rkey, kOf(setIdx), { ...t, sec: s, picks: pk, self: sf, times: times || {}, ws: 1, path: window.location.pathname + window.location.search.replace(/[?&]set=[^&]*/, "").replace(/^&/, "?"), title: `Answers · Set ${setIdx + 1}` });
+    saveSetResult(rkey, kOf(setIdx), { ...t, sec: s, picks: pk, self: sf, times: times || {}, ws: 1, path: pagePath(), title: `Answers · Set ${setIdx + 1}` });
   };
 
   const submit = useCallback(() => {
@@ -166,6 +167,17 @@ export default function AnswersSets({ ctx }) {
     setLeft(pg ? Math.max(1, pg.left || 0) : SET_MIN * 60);
   };
   const back = () => { setSetIdx(null); setDone(false); setProgs(progsFor(rkey)); };
+  // 🔗 Natija khula hai to URL mein ?set=&at= (lib/seturl) — ✍️ stylus se
+  // lautne par wahi natija, wahi sawaal. Pehle se URL mein pada ?set= (Home /
+  // stylus se aaye) upar wala auto-open padhta hai, isliye yahan tabhi hatao
+  // jab humne khud likha ho.
+  const wroteUrl = useRef(false);
+  useEffect(() => {
+    if (setIdx !== null && done) { putSetUrl(kOf(setIdx), cur); wroteUrl.current = true; }
+    else if (wroteUrl.current) { dropSetUrl(); wroteUrl.current = false; }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setIdx, done, cur]);
+
   // 🩹 Set NUMBER wale purane natije ("#0", 13 Oct se) → set ki nayi pehchaan.
   useEffect(() => {
     for (let i = 0; i < setCount; i++) {
@@ -197,17 +209,18 @@ export default function AnswersSets({ ctx }) {
   const autoRef = useRef(false);
   useEffect(() => {
     if (!ready || autoRef.current || !setCount || typeof window === "undefined") return;
-    const want = new URLSearchParams(window.location.search).get("set");
+    const { set: want, at: wantAt } = readSetUrl();
     if (!want) return;
     const i = sigs.findIndex((x) => x === want);
     // Ek hi baar (mile ya na mile) — URL se ?set= hata do, warna dropdown
     // badalte hi wo set apne aap khul jata tha (owner).
     autoRef.current = true;
-    const u = new URL(window.location.href);
-    u.searchParams.delete("set");
-    window.history.replaceState(window.history.state, "", u.pathname + u.search + u.hash);
+    dropSetUrl();
     if (i < 0) return;
-    open(i, getSetResults(rkey)[want] ? "result" : progsFor(rkey)[want] ? "resume" : "test");
+    const how = getSetResults(rkey)[want] ? "result" : progsFor(rkey)[want] ? "resume" : "test";
+    open(i, how);
+    // Stylus se laute — natije mein usi sawaal par.
+    if (how === "result" && wantAt) setCur(wantAt);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sigs, results, progs, ready]);
   // ⏸ Chalte test ka haal — chhod do to set par Resume.

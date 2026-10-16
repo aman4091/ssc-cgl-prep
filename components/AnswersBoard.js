@@ -875,8 +875,11 @@ export default function AnswersBoard({ defaultSrc = "all", defaultSubject = "mat
   // din tak sikud jati (har baar "1/1", aur timer khatam hone par agla
   // question hota hi nahi). Bina `d` ke wahi poori shelf milti hai jo yahan
   // dikh rahi hai.
+  // `back` — wapas isi page par, jaise khula tha (set ka natija ho to wahi
+  // natija, wahi sawaal: lib/seturl ka ?set=&at= URL mein pada hota hai).
   const onOpen = (rec) => {
-    router.push(`/wrong/solve?subject=${rec.subject}&id=${rec.id}`);
+    const back = encodeURIComponent(window.location.pathname + window.location.search);
+    router.push(`/wrong/solve?subject=${rec.subject}&id=${rec.id}&back=${back}`);
   };
 
   // Paste = question add. Wahi flow jo pehle /wrong par tha — overlay band ho to
