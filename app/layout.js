@@ -24,6 +24,7 @@ import FocusEnforcer from "@/components/FocusEnforcer";
 import SyncManager from "@/components/SyncManager";
 import Toast from "@/components/Toast";
 import OverlayInbox from "@/components/OverlayInbox";
+import InkHeal from "@/components/InkHeal";
 import VocabFeeder from "@/components/VocabFeeder";
 import StoreGate from "@/components/StoreGate";
 import SWRegister from "@/components/SWRegister";
@@ -127,6 +128,7 @@ export default function RootLayout({ children }) {
           <Toast />
           <SWRegister />
           <OverlayInbox />
+          <InkHeal />
           <VocabFeeder />
           {/* Beech mein chhoda hua quiz — floating "jahan chhoda tha" chip. */}
           {/* 🚨 Har page par — motivation gayi to ek tap, videos shuru. */}
