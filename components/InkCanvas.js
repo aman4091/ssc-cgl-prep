@@ -110,7 +110,7 @@ function bboxOf(stroke) {
 }
 
 const InkCanvas = forwardRef(function InkCanvas(
-  { initialDoc, tool, colorIdx, sizeIdx, onChange, onStats },
+  { initialDoc, tool, colorIdx, sizeIdx, onChange, onStats, underlay },
   ref
 ) {
   const surfaceRef = useRef(null);
@@ -130,6 +130,19 @@ const InkCanvas = forwardRef(function InkCanvas(
 
   const [, bump] = useState(0);           // toolbar ke undo/redo enable karne ke liye
   const rerender = () => bump((n) => n + 1);
+  // 👻 Trace — kaagaz ke NEECHE halka jawab (solve view deta hai). Kaagaz ki
+  // lakeeron (34px) ke saath bichha: ek line jawab, neeche ek line khaali.
+  // Likhawat ke saath scroll hota hai (lakeerein bhi tab saath chalti hain).
+  const underRef = useRef(null);
+  const [underH, setUnderH] = useState(0);
+  useEffect(() => {
+    const el = underRef.current;
+    if (!el) { setUnderH(0); return undefined; }
+    const ro = new ResizeObserver(() => setUnderH(el.offsetHeight));
+    ro.observe(el);
+    setUnderH(el.offsetHeight);
+    return () => ro.disconnect();
+  }, [underlay]);
 
   // tool/color/size ko ref mein bhi rakho — native listeners closure mein purani
   // value pakad lete hain warna, aur listeners dobara bandhna mehnga hai.
@@ -606,7 +619,7 @@ const InkCanvas = forwardRef(function InkCanvas(
   useEffect(() => {
     measure();
     redrawDone();
-    const ro = new ResizeObserver(() => { measure(); redrawDone(); });
+    const ro = new ResizeObserver(() => { measure(); redrawDone(); rerender(); });
     if (surfaceRef.current) ro.observe(surfaceRef.current);
     const onRot = () => { setTimeout(() => { measure(); redrawDone(); }, 120); };
     window.addEventListener("orientationchange", onRot);
@@ -688,15 +701,20 @@ const InkCanvas = forwardRef(function InkCanvas(
 
   const d = docRef.current;
   const { unitPx } = viewRef.current;
-  const pxH = Math.max(1, d.h * (unitPx || 1));
+  // 👻 Trace (underlay) lamba ho to utna scroll bhi mile — doc ko badhaye bina
+  // (doc badhana = "badla" = upload; sirf dekhne se kuch upload nahi hona chahiye).
+  const pxH = Math.max(1, d.h * (unitPx || 1), underH + 200);
   const pxW = UNIT_W * (unitPx || 1);
 
   return (
-    <div className="ink-surface" ref={surfaceRef}>
+    <div className={`ink-surface${underlay ? " is-trace" : ""}`} ref={surfaceRef}>
       {/* Spacer scroll deta hai; canvases sticky reh kar sirf viewport ka hissa
           dikhate hain. Ruled lines CSS gradient se — canvas par khinchte to har
           scroll par dobara banani padti. */}
       <div className="ink-spacer" style={{ height: pxH, width: pxW }}>
+        {underlay ? (
+          <div ref={underRef} className="ink-under" style={{ width: pxW }}>{underlay}</div>
+        ) : null}
         <div className="ink-stack">
           <canvas ref={doneRef} className="ink-c" />
           <canvas ref={liveRef} className="ink-c" />

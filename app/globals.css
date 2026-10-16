@@ -2819,6 +2819,7 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
   position: absolute; top: 6px; left: 50%; transform: translateX(-50%); z-index: 2; pointer-events: none;
   padding: 3px 10px; border-radius: 999px; background: #fff4cc; color: #7a5a00; font-size: 12px; font-weight: 700; white-space: nowrap;
 }
+.inkv__trace { width: 110px; accent-color: #555555; }
 .inkv .btn.inkv__imp[aria-pressed="true"] { border-color: #f2b705; color: #7a5a00; background: #fff4cc; }
 
 /* Landscape / bada tablet: question baayen, likhne ki jagah dayen. Right-hand
@@ -2855,6 +2856,21 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .ink-spacer { position: relative; }
 .ink-stack { position: sticky; top: 0; left: 0; width: 0; height: 0; }
 .ink-c { position: absolute; top: 0; left: 0; touch-action: none; }
+/* 👻 Trace — jawab kaagaz ke neeche halka. Lakeerein har 34px par; line ka
+   dabba 68px (= do lakeerein): akshar upar wali pankti mein, neeche wali pankti
+   poori khaali — wahan apna step likho. Lakeerein bhi likhawat ke saath scroll. */
+.ink-surface.is-trace { background-attachment: local; }
+.ink-under {
+  position: absolute; top: -17px; left: 0; pointer-events: none; user-select: none;
+  box-sizing: border-box; padding: 0 24px 120px; color: #1a1a1e; font-size: 18px; line-height: 68px;
+}
+.ink-under p, .ink-under li, .ink-under h1, .ink-under h2, .ink-under h3, .ink-under h4,
+.ink-under ul, .ink-under ol, .ink-under blockquote, .ink-under pre { margin: 0; font-size: 18px; line-height: 68px; }
+.ink-under ul, .ink-under ol { padding-left: 1.4em; }
+.ink-under hr { display: none; }
+.ink-under img { display: none; }
+.ink-under table { border-collapse: collapse; }
+.ink-under td, .ink-under th { padding: 0 10px; border: 1px solid currentColor; }
 
 /* ───────────────────────────────────────────────────────────────────────────
    📖 Answers page — overlay (F:\over) wala Catppuccin look, site par

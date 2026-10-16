@@ -6,9 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import {
   getWrongBook, getWrongById, isSubject, imagesOf, dayKey, dayLabel,
   subjectLabel, setOcrText,
-  displayOrder,
+  displayOrder, cleanAnswer,
 } from "@/lib/wrongbook";
-import { TAGS, getTag, setTag, autoTagBySecs, tagMeta } from "@/lib/qtags";
 import {
   openInk, saveLocalInk, pushInk, emptyDoc, flushInkQueue, dropLocalInk,
   getConflictInk, clearConflictInk,
@@ -223,6 +222,24 @@ function SolveInner() {
   const pageRef = useRef("sol");
   pageRef.current = page;
   const tgt = (r) => (r && pageRef.current === "imp" ? impRec(r) : r);
+
+  // 👻 Trace (experiment, owner): jawab kaagaz ke NEECHE halka — dekh-dekh kar
+  // upar hi likho. Har line ke neeche ek khaali line (CSS .ink-under). Is
+  // device ki pasand (chalu/band, kitna halka) yaad rehti hai.
+  const [trace, setTrace] = useState(false);
+  const [traceOp, setTraceOp] = useState(0.22);
+  useEffect(() => {
+    try {
+      setTrace(localStorage.getItem("ink.trace") === "1");
+      const o = Number(localStorage.getItem("ink.traceOp"));
+      if (o >= 0.05 && o <= 0.6) setTraceOp(o);
+    } catch { /* ignore */ }
+  }, []);
+  const toggleTrace = () => setTrace((v) => { try { localStorage.setItem("ink.trace", v ? "0" : "1"); } catch { /* ignore */ } return !v; });
+  const putTraceOp = (o) => { setTraceOp(o); try { localStorage.setItem("ink.traceOp", String(o)); } catch { /* ignore */ } };
+  const traceMd = rec && !rec._quiz
+    ? cleanAnswer(rec.detail2 || "") || cleanAnswer(rec.detail || "") || cleanAnswer(rec.q?.solution || "")
+    : "";
 
   const { urls, missing } = useImageUrls(rec ? imagesOf(rec) : []);
 
@@ -698,81 +715,8 @@ function SolveInner() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rec?.id]);
 
-  // ── ⏱️ Har question ki apni ghadi + 🏷️ tag ──────────────────────────────
-  // Pehle yahan ✅ "Ho gaya" tha. Wo hata diya gaya: us nishaan se ye pata
-  // hi nahi chalta tha ki sawaal AATA hai ya nahi, bas itna ki chhua tha.
-  //
-  // Ab har question par ghadi chalti hai, aur question chhodte hi uska tag
-  // khud lag jata hai (lib/qtags):
-  //     45 second ke neeche      → ⚡ t45
-  //     45 – 90 second           → 🟢 easy90
-  //     90 se upar               → kuch nahi (owner khud tag karega)
-  //     ⏭ Skip dabaya            → ⛔ permanent skip
-  // Haath se lagaya hua tag pakka hai — ghadi use kabhi nahi badalti.
-  const [tag, setTagV] = useState("");
-  const [spent, setSpent] = useState(0);
-  const [paused, setPaused] = useState(false);
-  // acc = ab tak jama waqt, t0 = chalu daur kab se. Ruki hui ghadi mein t0 = 0.
-  const clockRef = useRef({ rec: null, t0: 0, acc: 0 });
-  const spentOf = () => {
-    const c = clockRef.current;
-    return c.acc + (c.t0 ? (Date.now() - c.t0) / 1000 : 0);
-  };
-
-  useEffect(() => {
-    const on = () => setTagV(rec && !rec._quiz ? getTag(rec) : "");
-    on();
-    // Doosre device (site) par tag badla ho to yahan bhi wahi dikhe.
-    window.addEventListener("cgl:qtags", on);
-    window.addEventListener("cgl:sync-applied", on);
-    return () => {
-      window.removeEventListener("cgl:qtags", on);
-      window.removeEventListener("cgl:sync-applied", on);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rec?.id]);
-
-  // Ghadi: question khulte hi shuru, chhodte hi faisla.
-  //
-  // Beech mein ROKI ja sakti hai — jab sahi jawab hi na pata ho aur sochne
-  // ke bajay dekh kar chunna ho, tab wo waqt is question ka nahi hai. Ruki
-  // hui ghadi ka waqt tag ke hisaab mein bhi nahi jata.
-  useEffect(() => {
-    if (!rec || rec._quiz) return undefined;
-    clockRef.current = { rec, t0: Date.now(), acc: 0 };
-    setSpent(0);
-    setPaused(false);
-    const tick = setInterval(() => setSpent(Math.round(spentOf())), 500);
-    return () => {
-      clearInterval(tick);
-      const { rec: r0 } = clockRef.current;
-      if (r0) autoTagBySecs(r0, spentOf());
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rec?.id]);
-
-  // ⏸ / ▶️ — ghadi rok kar jawab dekh lo, phir wahin se chalu.
-  const togglePause = () => {
-    const c = clockRef.current;
-    if (c.t0) { c.acc += (Date.now() - c.t0) / 1000; c.t0 = 0; setPaused(true); }
-    else { c.t0 = Date.now(); setPaused(false); }
-    setSpent(Math.round(spentOf()));
-  };
-
-  const putTag = (k) => {
-    if (!rec) return;
-    setTag(rec, k, { secs: spent });
-    setTagV(k);
-  };
-
-  // ⏭ Skip — "ise permanent skip mein daal do" aur agla question.
-  const skipNow = () => {
-    if (!rec) return;
-    setTag(rec, "skip", { secs: spent });
-    setTagV("skip");
-    clockRef.current = { rec: null, t0: 0, acc: 0 };   // ghadi ka faisla ab na lage
-    if (idx < list.length - 1) go(idx + 1);
-  };
+  // ⏱️ Har question ki ghadi + 🏷️ tag + ⏭ Skip — hataye (owner). Tag ka data
+  // (lib/qtags) pada hai, bas yahan na dikhta hai na apne aap lagta hai.
 
   // Eraser toggle karte waqt wapas usi tool par jaana hai jispar tha (pen ya
   // highlighter), isliye pichhla tool yaad rakhte hain.
@@ -930,37 +874,7 @@ function SolveInner() {
           </span>
         )}
 
-        {/* ⏱️ — band ho to ghadi ka nishaan, chalu ho to bacha hua waqt.
-            Dabate hi waqt chunne ka chhota panel khulta hai. */}
-        <div className="inkv__timer">
-          <button
-            className={`inkv__pill inkv__tbtn${running ? " is-on" : ""}${running && left <= 10 ? " is-low" : ""}`}
-            onClick={() => setTOpen((v) => !v)}
-            title="Har question ke liye waqt set karo"
-          >
-            {running ? `⏱ ${mmss(left)}` : "⏱"}
-          </button>
-          {tOpen && (
-            <div className="inkv__tmenu">
-              <span className="inkv__tnote">Har question ko itna waqt — phir agla apne aap</span>
-              <div className="row" style={{ gap: 6 }}>
-                {TIMER_PRESETS.map((s) => (
-                  <button
-                    key={s}
-                    className={`btn btn--ghost btn--sm${dur === s && running ? " is-on" : ""}`}
-                    onClick={() => startTimer(s)}
-                  >
-                    {s}s
-                  </button>
-                ))}
-              </div>
-              {running && (
-                <button className="btn btn--ghost btn--sm btn--block mt-8" onClick={stopTimer}>⏹ Rok do</button>
-              )}
-            </div>
-          )}
-        </div>
-
+        {/* ⏱ chain timer hataya (owner: "timer bhi hta de") — logic neeche pada hai, chalta nahi. */}
         <span className="inkv__pill">{idx + 1}/{list.length}</span>
       </div>
 
@@ -1028,33 +942,7 @@ function SolveInner() {
                 {hideAns ? "👁️ Answers dikhao" : "🙈 Answers chhupao"}
               </button>
             )}
-            {/* Quiz ke pseudo-record wrong book mein hain hi nahi — unpar
-                ghadi aur tag ka koi matlab nahi. */}
-            {!quizId && (
-              <>
-                <button
-                  className={`inkv__spent${paused ? " is-paused" : ""}`}
-                  style={{ marginLeft: "auto" }}
-                  onClick={togglePause}
-                  title={paused ? "Ghadi chalu karo" : "Ghadi roko — jawab dekhne ka waqt is question ka nahi"}
-                >
-                  {paused ? "▶️" : "⏸"} {spent < 45 ? "⚡" : spent <= 90 ? "🟢" : "🟡"} {spent}s
-                </button>
-                <select
-                  className="inkv__tag"
-                  value={tag}
-                  onChange={(e) => putTag(e.target.value)}
-                  title="Ye question mere liye kaisa hai"
-                  style={tagMeta(tag) ? { borderColor: tagMeta(tag).c, color: tagMeta(tag).c } : undefined}
-                >
-                  <option value="">🏷️ tag</option>
-                  {TAGS.map((t) => <option key={t.k} value={t.k}>{t.label}</option>)}
-                </select>
-                <button className="btn btn--ghost btn--sm" onClick={skipNow} title="Permanent skip — aage badho">
-                  ⏭ Skip
-                </button>
-              </>
-            )}
+            {/* 🏷️ tag, ghadi aur ⏭ Skip hataye (owner: "stylus mein tag vala system hta de") */}
           </div>
 
           {!slim && (
@@ -1157,6 +1045,7 @@ function SolveInner() {
           ) : (
             <InkCanvas
               ref={inkRef}
+              underlay={trace && page === "sol" && !quizId && traceMd ? <div style={{ opacity: traceOp }}><Markdown>{traceMd}</Markdown></div> : null}
               initialDoc={doc}
               tool={tool}
               colorIdx={colorIdx}
@@ -1171,6 +1060,20 @@ function SolveInner() {
       <div className="inkv__tools">
         {!quizId && (
           <>
+            <button
+              className="btn btn--ghost btn--sm"
+              aria-pressed={trace && page === "sol"}
+              onClick={toggleTrace}
+              disabled={page !== "sol" || !traceMd}
+              title={traceMd ? "Jawab kaagaz ke neeche halka — upar likho" : "Is sawaal ka likha hua jawab nahi hai"}
+            >👻 Trace</button>
+            {trace && page === "sol" && traceMd ? (
+              <input
+                type="range" min="0.05" max="0.6" step="0.01" value={traceOp}
+                onChange={(e) => putTraceOp(Number(e.target.value))}
+                className="inkv__trace" title="Kitna halka" aria-label="Trace kitna halka"
+              />
+            ) : null}
             <button className="btn btn--ghost btn--sm inkv__imp" aria-pressed={page === "imp"} onClick={() => switchPage(page === "imp" ? "sol" : "imp")} title="Alag IMP page — natije mein sawaal ke saath dikhta hai">{page === "imp" ? "✍️ Solution" : "⭐ IMP"}</button>
             <span className="inkv__sep" />
           </>
