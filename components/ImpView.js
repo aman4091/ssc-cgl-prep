@@ -8,9 +8,10 @@
 // ghera) utna, dabbe ki chaudai mein fit. Isliye chhota likha bhi padhne layak.
 
 import { useEffect, useRef, useState } from "react";
-import { openInk, isEmptyDoc } from "@/lib/ink";
+import { viewInk, isEmptyDoc } from "@/lib/ink";
 import { impRec, hasImp } from "@/lib/impink";
 import { getWrongById } from "@/lib/wrongbook";
+import { isInkWriter } from "@/lib/inkdevice";
 import { PALETTE } from "./InkCanvas";
 
 function widthOf(st, pr) {
@@ -108,7 +109,8 @@ export default function ImpView({ rec }) {
     let alive = true;
     setDoc(null);
     if (!live?.id) return undefined;
-    openInk(impRec(live)).then((r) => { if (alive) setDoc(r?.doc || null); }).catch(() => {});
+    // Sirf dekhna — device par kuch nahi likhte (likhna sirf tablet par).
+    viewInk(impRec(live), { preferLocal: isInkWriter() }).then((d) => { if (alive) setDoc(d || null); }).catch(() => {});
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [live?.id, rev]);

@@ -110,7 +110,7 @@ function bboxOf(stroke) {
 }
 
 const InkCanvas = forwardRef(function InkCanvas(
-  { initialDoc, tool, colorIdx, sizeIdx, onChange, onStats, underlay },
+  { initialDoc, tool, colorIdx, sizeIdx, onChange, onStats, underlay, readOnly = false },
   ref
 ) {
   const surfaceRef = useRef(null);
@@ -154,6 +154,9 @@ const InkCanvas = forwardRef(function InkCanvas(
   // render par listeners dobara bandhte — beech mein chal raha stroke toot jata.
   const cbRef = useRef({ onChange, onStats });
   cbRef.current = { onChange, onStats };
+  // 👁 Sirf dekhna (lib/inkdevice) — ungli se scroll/zoom, likhna nahi.
+  const roRef = useRef(readOnly);
+  roRef.current = readOnly;
 
   const colorOf = useCallback((idx) => (PALETTE[idx] || PALETTE[0]).hex, []);
 
@@ -409,7 +412,7 @@ const InkCanvas = forwardRef(function InkCanvas(
       // Palm rejection: jis din is device par pen chala, us din se ungli sirf
       // navigation hai. Pen se pehle ungli likh sakti hai, warna bina-stylus
       // device par feature hi mar jata.
-      if (e.pointerType === "touch" && penSeen.get()) {
+      if (e.pointerType === "touch" && (penSeen.get() || roRef.current)) {
         const t = touchRef.current;
         if (!t) {
           touchRef.current = { ids: [e.pointerId], y: e.clientY, x: e.clientX, top: surface.scrollTop, left: surface.scrollLeft };
@@ -422,6 +425,7 @@ const InkCanvas = forwardRef(function InkCanvas(
         return;
       }
       if (!pen && !mouse && !(e.pointerType === "touch")) return;
+      if (roRef.current) return;   // 👁 sirf dekhna
 
       e.preventDefault();
       try { stack.setPointerCapture(e.pointerId); } catch { /* ignore */ }

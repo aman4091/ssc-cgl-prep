@@ -2,6 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { impRec, inkSetter, inkRecord } from "@/lib/impink";
+import { isInkWriter, setInkWriter } from "@/lib/inkdevice";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   getWrongBook, getWrongById, isSubject, imagesOf, dayKey, dayLabel,
@@ -9,7 +10,7 @@ import {
   displayOrder, cleanAnswer,
 } from "@/lib/wrongbook";
 import {
-  openInk, saveLocalInk, pushInk, emptyDoc, flushInkQueue, dropLocalInk,
+  openInk, viewInk, saveLocalInk, pushInk, emptyDoc, flushInkQueue, dropLocalInk,
   getConflictInk, clearConflictInk,
 } from "@/lib/ink";
 import { useImageUrls } from "@/lib/wrongimages";
@@ -222,6 +223,13 @@ function SolveInner() {
   const pageRef = useRef("sol");
   pageRef.current = page;
   const tgt = (r) => (r && pageRef.current === "imp" ? impRec(r) : r);
+  // ✍️ Likhna sirf tablet par (lib/inkdevice) — baaki device par sirf dekhna.
+  // Quiz ka rough kaam har device par (wo isi device ka hai, sync nahi hota).
+  const [writer, setWriter] = useState(null);   // null = abhi pata nahi
+  useEffect(() => { setWriter(isInkWriter()); }, []);
+  const canWrite = !!quizId || writer === true;
+  const canWriteRef = useRef(false);
+  canWriteRef.current = canWrite;
 
   // 👻 Trace (experiment, owner): jawab kaagaz ke NEECHE halka — dekh-dekh kar
   // upar hi likho. Har line ke neeche ek khaali line (CSS .ink-under). Is
@@ -282,7 +290,7 @@ function SolveInner() {
 
   // Ruki hui uploads — khulte hi aur online wapas aate hi.
   useEffect(() => {
-    const flush = () => { flushInkQueue(inkRecord, inkSetter).catch(() => {}); };
+    const flush = () => { if (isInkWriter()) flushInkQueue(inkRecord, inkSetter).catch(() => {}); };
     flush();
     window.addEventListener("online", flush);
     return () => window.removeEventListener("online", flush);
@@ -291,6 +299,7 @@ function SolveInner() {
   // ── current record ka ink load ────────────────────────────────────────────
   useEffect(() => {
     if (!rec) { setLoading(false); return undefined; }
+    if (writer === null && !quizId) return undefined;   // pehle pata chale ki likhne wala device hai ya nahi
     let alive = true;
     setLoading(true);
     // Naya question: answer wapas chhup jata hai — chhod kar tab, jab tumne
@@ -298,8 +307,11 @@ function SolveInner() {
     setShown(always);
     setConflict(null);
     (async () => {
-      const t = tgt(rec);
-      const r = await openInk(t).catch(() => null);
+      const t = tgt(rec._quiz ? rec : getWrongById(rec.id) || rec);
+      // Tablet: device ki copy hi final. Baaki device: cloud ka latest, sirf dekhne ko.
+      const r = rec._quiz ? await openInk(t).catch(() => null)
+        : writer ? await openInk(t, { localFirst: true }).catch(() => null)
+          : { doc: await viewInk(t).catch(() => null) };
       if (!alive) return;
       const next = r?.doc || emptyDoc();
       liveDoc.current = next;
@@ -309,7 +321,7 @@ function SolveInner() {
     })();
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rec?.id, always, page]);
+  }, [rec?.id, always, page, writer]);
 
   // ── saving ────────────────────────────────────────────────────────────────
 
@@ -332,7 +344,7 @@ function SolveInner() {
 
   const flushLocal = useCallback(async () => {
     const r = recRef.current;
-    if (!r || !liveDoc.current) return;
+    if (!r || !liveDoc.current || !canWriteRef.current) return;
     if (deferIfDrawing(() => flushLocal(), localT)) return;
     clearTimeout(localT.current);
     try {
@@ -349,10 +361,12 @@ function SolveInner() {
   const flushCloud = useCallback(async () => {
     if (!pushInk) return;
     const r = recRef.current;
-    if (!r || !liveDoc.current) return;
+    if (!r || !liveDoc.current || !canWriteRef.current) return;
     if (deferIfDrawing(() => flushCloud(), cloudT, 600)) return;
     clearTimeout(cloudT.current);
-    try { await pushInk(tgt(r), liveDoc.current, inkSetter); } catch { /* device-local */ }
+    // List wala record purana ho sakta hai (inkUrl/inkRev) — store se taaza lo.
+    const fresh = r._quiz ? r : getWrongById(r.id) || r;
+    try { await pushInk(tgt(fresh), liveDoc.current, inkSetter); } catch { /* device-local */ }
   }, [deferIfDrawing]);
 
   // ⭐ IMP / ✍️ solution ke beech — pehle abhi wale page ka kaam bacha lo.
@@ -364,6 +378,7 @@ function SolveInner() {
   }, [flushLocal, flushCloud]);
 
   const onChange = useCallback((next) => {
+    if (!canWriteRef.current) return;   // 👁 sirf dekhna
     liveDoc.current = next;
     setState((s) => (s === "offline" ? s : "dirty"));
     clearTimeout(localT.current);
@@ -1045,6 +1060,7 @@ function SolveInner() {
           ) : (
             <InkCanvas
               ref={inkRef}
+              readOnly={!canWrite}
               underlay={trace && page === "sol" && !quizId && traceMd ? <div style={{ opacity: traceOp }}><Markdown>{traceMd}</Markdown></div> : null}
               initialDoc={doc}
               tool={tool}
@@ -1078,6 +1094,8 @@ function SolveInner() {
             <span className="inkv__sep" />
           </>
         )}
+        {canWrite ? (
+          <>
         <button className="btn btn--ghost btn--sm" aria-pressed={tool === "pen"} onClick={() => setTool("pen")} title="Pen">✏️</button>
         <button className="btn btn--ghost btn--sm" aria-pressed={tool === "hl"} onClick={() => setTool("hl")} title="Highlighter">🖍️</button>
         <button className="btn btn--ghost btn--sm" aria-pressed={tool === "eraser"} onClick={toggleEraser} title="Eraser — pen ka NEECHE wala button bhi yahi karta hai">🧽</button>
@@ -1113,6 +1131,13 @@ function SolveInner() {
         </button>
         <button className="btn btn--ghost btn--sm" onClick={() => inkRef.current?.grow()} title="Aur jagah jodo">➕ jagah</button>
 
+          </>
+        ) : writer === false ? (
+          <span className="inkv__ro">
+            👁 Sirf dekhna — likhna / mitana tablet par
+            <button className="btn btn--ghost btn--sm" onClick={() => { if (confirm("Is device par likhna chalu karu? Yahan ka likha bhi final maana jayega.")) { setInkWriter(true); setWriter(true); } }} title="Galat pehchaana? Ye mera tablet hai">✍️ Ye mera tablet hai</button>
+          </span>
+        ) : null}
         <span className="inkv__sep" />
         {/* Peeche jaana = chain todna (tera niyam). Aage jaana chain ka hissa
             hai, isliye wo timer nahi rokta — bas nayi ghadi shuru ho jati hai. */}
