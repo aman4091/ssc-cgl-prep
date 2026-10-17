@@ -1,0 +1,18 @@
+/* 📄 Meri PDFs (app/pdfs) */
+.pdfs-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.pdfs-head h1 { margin: 0 0 4px; font-size: 1.5rem; }
+.pdfs-acts { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.pdfs-busy { font-weight: 700; color: var(--accent); }
+.pdfs-err { font-weight: 700; color: var(--bad, #cc0000); }
+.pdfs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+.pdfs-card { display: flex; flex-direction: column; gap: 6px; padding: 10px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); min-width: 0; }
+.pdfs-thumb { display: grid; place-items: center; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 8px; background: #f3f3f3; border: 1px solid var(--line); font-size: 2.4rem; text-decoration: none; }
+.pdfs-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.pdfs-name { font-size: 0.92rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pdfs-meta { color: var(--text-3); font-size: 0.78rem; }
+.pdfs-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.pdfs-impgroup { margin-bottom: 22px; }
+.pdfs-impgroup h2 { font-size: 1.1rem; margin: 0 0 10px; }
+.pdfs-impgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
+.pdfs-imp { display: flex; flex-direction: column; gap: 4px; }
+.pdfs-imp__p { font-weight: 700; font-size: 0.85rem; text-decoration: none; color: var(--accent); }

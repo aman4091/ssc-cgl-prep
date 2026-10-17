@@ -110,7 +110,7 @@ function bboxOf(stroke) {
 }
 
 const InkCanvas = forwardRef(function InkCanvas(
-  { initialDoc, tool, colorIdx, sizeIdx, onChange, onStats, underlay, readOnly = false },
+  { initialDoc, tool, colorIdx, sizeIdx, onChange, onStats, underlay, underlayClass = "", readOnly = false },
   ref
 ) {
   const surfaceRef = useRef(null);
@@ -717,7 +717,7 @@ const InkCanvas = forwardRef(function InkCanvas(
           scroll par dobara banani padti. */}
       <div className="ink-spacer" style={{ height: pxH, width: pxW }}>
         {underlay ? (
-          <div ref={underRef} className="ink-under" style={{ width: pxW }}>{underlay}</div>
+          <div ref={underRef} className={`ink-under${underlayClass ? ` ${underlayClass}` : ""}`} style={{ width: pxW }}>{underlay}</div>
         ) : null}
         <div className="ink-stack">
           <canvas ref={doneRef} className="ink-c" />

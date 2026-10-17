@@ -2870,6 +2870,9 @@ ul.nt-pts li b { color: var(--accent); font-weight: 700; }
 .ink-under p, .ink-under li, .ink-under h1, .ink-under h2, .ink-under h3, .ink-under h4,
 .ink-under ul, .ink-under ol, .ink-under blockquote, .ink-under pre { margin: 0; font-size: 18px; line-height: 68px; }
 .ink-under ul, .ink-under ol { padding-left: 1.4em; }
+/* 📄 PDF ka page (app/pdfs/view) — tasveer, poori chaudai, upar se. */
+.ink-under.ink-under--img { top: 0; padding: 0; line-height: normal; }
+.ink-under.ink-under--img img { display: block; width: 100%; height: auto; }
 .ink-under hr { display: none; }
 .ink-under img { display: none; }
 .ink-under table { border-collapse: collapse; }
