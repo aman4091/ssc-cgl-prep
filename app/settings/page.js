@@ -5,6 +5,7 @@ import { getSettings, saveSettings, DEFAULT_SETTINGS } from "@/lib/storage";
 import { exportAll, exportDataOnly, importAll, downloadBlob } from "@/lib/backup";
 import { getDaysOverview } from "@/lib/vocab";
 import { syncOnce, resyncAll, listRescue, restoreRescue, getSyncLog, SETUP_SQL } from "@/lib/sync";
+import { storeGet } from "@/lib/bigstore";
 import PyqManager from "@/components/PyqManager";
 import CaRushSetting from "@/components/CaRushSetting";
 import { getTheme, setTheme } from "@/lib/theme";
@@ -78,6 +79,27 @@ export default function SettingsPage() {
   const [syncMsg, setSyncMsg] = useState("");
   const [showSql, setShowSql] = useState(false);
   const [rescue, setRescue] = useState([]);
+  // Gin kar dikhane wali line (upar) — har store ka size nahi, bas wahi cheezein
+  // jo roz badalti hain aur jinke number dono device par barabar hone chahiye.
+  const [deviceTally, setDeviceTally] = useState("…");
+  useEffect(() => {
+    const count = (k) => {
+      try {
+        const v = JSON.parse(storeGet(k) || "null");
+        if (Array.isArray(v)) return v.length;
+        if (v && typeof v === "object") return Object.keys(v).length;
+        return 0;
+      } catch { return 0; }
+    };
+    const on = () => setDeviceTally(
+      `🧠 ${count("cgl.mission.facts")} fact · 📝 ${count("cgl.oneliners")} one-liner · `
+      + `⭐ ${count("cgl.impnotes")} IMP · 📖 ${count("cgl.wrongbook")} question · 🏷️ ${count("cgl.qtags")} tag`,
+    );
+    on();
+    window.addEventListener("cgl:sync-applied", on);
+    const iv = setInterval(on, 5000);
+    return () => { window.removeEventListener("cgl:sync-applied", on); clearInterval(iv); };
+  }, []);
   const [showRescue, setShowRescue] = useState(false);
 
   const [log, setLog] = useState([]);
@@ -617,6 +639,13 @@ export default function SettingsPage() {
             <input className="input" type="text" placeholder="e.g. aman-9x7k2p-secret-2026" value={settings.syncCode || ""}
               onChange={(e) => update("syncCode", e.target.value)} spellCheck={false} />
           </div>
+          {/* 📊 Is device par kitna maal hai — doosre device par yahi line
+              kholo aur milaa lo. Ginti alag dikhe to pata chal jata hai ki
+              kaun peechhe hai (pehle sirf andaza lagta tha). */}
+          <p className="hint mt-16" style={{ fontSize: "0.82rem" }}>
+            📊 Is device par: {deviceTally}
+          </p>
+
           <div className="row mt-16" style={{ gap: 10, flexWrap: "wrap" }}>
             <button className="btn btn--primary" onClick={doSync} disabled={syncBusy || !(settings.supabaseUrl && settings.supabaseAnonKey && settings.syncCode)}>🔄 Sync now</button>
             {settings.syncLastAt && <span className="muted" style={{ fontSize: "0.8rem", alignSelf: "center" }}>Last sync: {new Date(settings.syncLastAt).toLocaleString("en-IN")}</span>}
