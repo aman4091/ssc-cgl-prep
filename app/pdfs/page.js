@@ -2,11 +2,12 @@
 
 // 📄 Meri PDFs (owner) — jitni chahe upload karo, grid mein. Kholo → tablet par
 // har page stylus se (app/pdfs/view: ✍️ Notes + ⭐ IMP + 👻 Trace). Har PDF ke
-// IMP aur saare IMP ek saath: app/pdfs/imp. Data: lib/pdfstore (sync).
+// IMP aur saare IMP ek saath: app/pdfs/imp. PDFs mein sirf ⭐ IMP likha jata
+// hai. Data: lib/pdfstore (sync).
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { listPdfs, addPdf, removePdf, hasPdfHere } from "@/lib/pdfstore";
+import { listPdfs, addPdf, removePdf, hasPdfHere, movePdfNotesToImp } from "@/lib/pdfstore";
 import { isInkWriter } from "@/lib/inkdevice";
 import { storeGet } from "@/lib/bigstore";
 import "./pdfs.css";
@@ -32,7 +33,12 @@ export default function PdfsPage() {
   const inp = useRef(null);
   // PDF sirf tablet par — upload bhi wahin; PC par list + likha / IMP.
   const [writer, setWriter] = useState(false);
-  useEffect(() => { setWriter(isInkWriter()); }, []);
+  useEffect(() => {
+    const w = isInkWriter();
+    setWriter(w);
+    // Purane "✍️ Notes" (PDF) → ⭐ IMP — sirf tablet par, ek baar.
+    if (w) movePdfNotesToImp().then(() => setImps(impCounts())).catch(() => {});
+  }, []);
   const [here, setHere] = useState({});
   useEffect(() => {
     let alive = true;

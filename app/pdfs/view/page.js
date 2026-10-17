@@ -2,8 +2,9 @@
 
 // 📄 PDF ka ek page — stylus se (owner). Page 👻 Trace ki tarah kaagaz ke NEECHE
 // (halkapan slider se, poora gaadha bhi — seedha page par likho), baayen wahi
-// page saaf. "✍️ Notes" aur "⭐ IMP" do alag kaagaz (lib/impnotes:
-// pdfink:<id>:<page> / pdfimp:<id>:<page>). ‹ › se agla / pichhla page.
+// page saaf. Sirf ⭐ IMP ka kaagaz (owner: "normal vaala rehne de") —
+// lib/impnotes pdfimp:<id>:<page>; purana "Notes" (pdfink) IMP mein jud jata
+// hai (lib/pdfstore movePdfNotesToImp). ‹ › se agla / pichhla page.
 // Likhna sirf tablet par (lib/inkdevice); baaki device par sirf dekhna. PDF
 // khud sirf tablet par hoti hai — PC par page ki jagah sirf likha / IMP.
 
@@ -13,7 +14,7 @@ import InkCanvas, { PALETTE, PEN_SIZES } from "@/components/InkCanvas";
 import { openInk, viewInk, saveLocalInk, pushInk, emptyDoc, flushInkQueue } from "@/lib/ink";
 import { inkRecord, inkSetter } from "@/lib/impink";
 import { noteRec } from "@/lib/impnotes";
-import { getPdf, getPdfBlob, openPdfDoc, renderPage, pdfInkKey, pdfImpKey } from "@/lib/pdfstore";
+import { getPdf, getPdfBlob, openPdfDoc, renderPage, pdfImpKey, movePdfNotesToImp } from "@/lib/pdfstore";
 import { isInkWriter, setInkWriter } from "@/lib/inkdevice";
 import { setSyncPaused } from "@/lib/sync";
 import { storeFlush } from "@/lib/bigstore";
@@ -27,10 +28,7 @@ function ViewInner() {
   const router = useRouter();
   const id = sp.get("id") || "";
   const p = Math.max(1, Number(sp.get("p")) || 1);
-  const [mode, setMode] = useState("ink");     // "ink" (✍️ Notes) | "imp" (⭐ IMP)
-  const modeRef = useRef("ink");
-  modeRef.current = mode;
-  const keyOf = (m = modeRef.current) => (m === "imp" ? pdfImpKey(id, p) : pdfInkKey(id, p));
+  const keyOf = () => pdfImpKey(id, p);
 
   const [rec, setRec] = useState(null);
   useEffect(() => { setRec(getPdf(id)); }, [id]);
@@ -126,7 +124,8 @@ function ViewInner() {
     let alive = true;
     setLoading(true);
     (async () => {
-      const kk = keyOf(mode);
+      if (writer) await movePdfNotesToImp().catch(() => {});   // purane Notes → IMP (ek baar)
+      const kk = keyOf();
       const r = noteRec(kk);
       const d = writer ? (await openInk(r, { localFirst: true }).catch(() => null))?.doc : await viewInk(r).catch(() => null);
       if (!alive) return;
@@ -138,7 +137,7 @@ function ViewInner() {
     })();
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, p, mode, writer]);
+  }, [id, p, writer]);
 
   const flushLocal = useCallback(async () => {
     const kk = docKey.current;
@@ -177,10 +176,8 @@ function ViewInner() {
   const goPage = async (n) => {
     if (n < 1 || n > pages) return;
     await save();
-    setMode("ink");
     router.replace(`/pdfs/view?id=${encodeURIComponent(id)}&p=${n}`);
   };
-  const switchMode = async (m) => { if (m === modeRef.current) return; await save(); setMode(m); };
 
   const prevTool = useRef("pen");
   const toggleEraser = () => setTool((t) => { if (t === "eraser") return prevTool.current || "pen"; prevTool.current = t; return "eraser"; });
@@ -230,8 +227,8 @@ function ViewInner() {
           <button className="btn btn--ghost btn--sm" onClick={() => setSlim((v) => !v)} style={{ marginBottom: 8 }}>{slim ? "▼" : "▲ Chhupao"}</button>
           {!slim ? (img ? <img src={img} alt={`page ${p}`} /> : <p className="hint">{msg || "…"}</p>) : null}
         </div>
-        <div className={`inkv__ink${mode === "imp" ? " is-imp" : ""}`}>
-          {mode === "imp" ? <div className="inkv__imphd">⭐ IMP — page {p} · jo zaroori hai yahan likho</div> : null}
+        <div className="inkv__ink is-imp">
+          <div className="inkv__imphd">⭐ IMP — page {p} · jo zaroori hai yahan likho</div>
           {loading ? (
             <div className="placeholder" style={{ margin: 16 }}>Khul raha hai… ✍️</div>
           ) : (
@@ -253,7 +250,6 @@ function ViewInner() {
       <div className="inkv__tools">
         <button className="btn btn--ghost btn--sm" aria-pressed={trace} onClick={toggleTrace} title="PDF ka page kaagaz ke neeche">👻 Trace</button>
         {trace ? <input type="range" min="0.05" max="1" step="0.01" value={traceOp} onChange={(e) => putTraceOp(Number(e.target.value))} className="inkv__trace" aria-label="Page kitna gaadha" /> : null}
-        <button className="btn btn--ghost btn--sm inkv__imp" aria-pressed={mode === "imp"} onClick={() => switchMode(mode === "imp" ? "ink" : "imp")}>{mode === "imp" ? "✍️ Notes" : "⭐ IMP"}</button>
         <span className="inkv__sep" />
         {can ? (
           <>
