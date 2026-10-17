@@ -12,6 +12,7 @@
 // lib/anssim mein. Card wahi AnswersBoard ka renderCard.
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { storeSet } from "@/lib/bigstore";
 import { dayKey } from "@/lib/wrongbook";
 import { getRevMap, markDoneRev, unmarkToday, revPlan, addDaysKey } from "@/lib/ansrev";
 import { simItems, simScore, getPicks, simDays, SIM_PER } from "@/lib/anssim";
@@ -914,7 +915,7 @@ function SimRetry({ ctx }) {
   const weak = ctx.list.filter((r) => { const s = simScore(r.id); return s.made && s.tried >= s.made && s.right < 3; });
   const r = weak[0];
   if (!r) return <div><p className="ap-dim">Koi aisi galti nahi jiske similar mein 3 se kam sahi hon 👍</p><SimEmpty ctx={ctx} /></div>;
-  const reset = () => { const p = getPicks(); for (const x of simItems(r.id)) delete p[x.id]; try { localStorage.setItem("cgl.qfeed.similar", JSON.stringify(p)); } catch { /* quota */ } window.dispatchEvent(new CustomEvent("cgl:simpool")); };
+  const reset = () => { const p = getPicks(); for (const x of simItems(r.id)) delete p[x.id]; try { storeSet("cgl.qfeed.similar", JSON.stringify(p)); } catch { /* quota */ } window.dispatchEvent(new CustomEvent("cgl:simpool")); };
   return (
     <div className="aps18">
       <p className="aps2-gate">🔁 {weak.length} galtiyan jinke similar mein 3 se kam sahi — phir se karo</p>

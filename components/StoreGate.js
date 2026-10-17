@@ -11,6 +11,7 @@
 import { useEffect, useState } from "react";
 import { hydrateStore, storeFlush } from "@/lib/bigstore";
 import { importGeminiAnswers } from "@/lib/geminiimport";
+import { healOnce } from "@/lib/selfheal";
 import { runOneTimeReset, runResetV3, clearOldGeminiPrompt, clearStaleQuizzes, applyAnswerPrompts, applyGsClusterPrompt, applyGsPromptV2, fixMisfiledEnglishMocks, fixMissionStart, clearOldMissionDone, applyGsPromptV7 } from "@/lib/resetonce";
 import { ANSWER_PROMPTS } from "@/lib/answerprompts";
 import { DEFAULT_START } from "@/lib/mission";
