@@ -30,3 +30,9 @@
 .imps-card--only { padding: 0; border: 0; background: transparent; }
 .imps-subj { align-self: flex-start; padding: 2px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--text-2); font-size: 0.78rem; font-weight: 700; }
 .imps-pdf { font-weight: 700; font-size: 0.9rem; text-decoration: none; color: var(--text-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.imps-pdfname { text-align: left; cursor: pointer; font: inherit; color: var(--text-1); }
+.imps-pdfname b { font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.imps-pdfname small { color: #7a5a00; font-weight: 700; }
+.imps-pdfname:hover { border-color: #f2b705; }
+.imps-pdfhead { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; }
+.imps-pdfhead b { font-size: 1.05rem; }

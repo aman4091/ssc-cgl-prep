@@ -5,7 +5,7 @@
 
 import Link from "next/link";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Markdown from "@/components/Markdown";
 import ImpView, { ImpNoteBox } from "@/components/ImpView";
 import { allImpNotes } from "@/lib/impnotes";
@@ -62,8 +62,23 @@ function AnsQ({ r }) {
 
 function ImpsInner() {
   const sp = useSearchParams();
-  const router = useRouter();
-  const tab = TABS.some((t) => t.k === sp.get("t")) ? sp.get("t") : "fact";
+  // Tab aur chuna hua group page ki apni state mein, URL sirf yaad ke liye —
+  // router par bharosa nahi (kuch chaudai par push / replace se URL badla hi nahi).
+  const tabOf = (v) => (TABS.some((t) => t.k === v) ? v : "fact");
+  const [tab, setTabS] = useState(() => tabOf(sp.get("t")));
+  const [sel, setSelS] = useState(() => sp.get("g") || "");
+  useEffect(() => { setTabS(tabOf(sp.get("t"))); setSelS(sp.get("g") || ""); }, [sp]);
+  const putUrl = (t, g) => {
+    try {
+      const u = new URL(window.location.href);
+      u.searchParams.set("t", t);
+      if (g) u.searchParams.set("g", g); else u.searchParams.delete("g");
+      u.searchParams.delete("pdf");
+      window.history.replaceState(window.history.state, "", u.pathname + u.search);
+    } catch { /* ignore */ }
+  };
+  const setTab = (t) => { setTabS(t); setSelS(""); putUrl(t, ""); };
+  const setSel = (g) => { setSelS(g); putUrl(tab, g); try { window.scrollTo(0, 0); } catch { /* ignore */ } };
   const [tick, setTick] = useState(0);
   useEffect(() => {
     const on = () => setTick((x) => x + 1);
@@ -101,6 +116,22 @@ function ImpsInner() {
   }, [ready, tick]);
 
   const list = data[tab] || [];
+  // Answers / PYQ: pehle subject, PDFs: pehle PDF ka naam (owner) — dabao to
+  // sirf uske IMP.
+  const groupOf = (x) => (tab === "pdf" ? x.id : tab === "ans" ? (x.subject || "other") : (x.meta?.sub || "other"));
+  const groups = useMemo(() => {
+    if (!["ans", "pyq", "pdf"].includes(tab)) return [];
+    const m = new Map();
+    for (const x of list) {
+      const g = groupOf(x);
+      if (!m.has(g)) m.set(g, { g, label: tab === "pdf" ? `📄 ${x.name}` : subjOf(g) || "📝 Other", n: 0 });
+      m.get(g).n++;
+    }
+    return [...m.values()];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [list, tab]);
+  const grouped = ["ans", "pyq", "pdf"].includes(tab);
+  const shown = grouped ? (sel ? list.filter((x) => groupOf(x) === sel) : []) : list;
   return (
     <section className="section pdfs">
       <header className="pdfs-head">
@@ -112,13 +143,25 @@ function ImpsInner() {
       </header>
       <div className="imps-tabs">
         {TABS.map((t) => (
-          <button key={t.k} type="button" className={`imps-tab${t.k === tab ? " is-on" : ""}`} onClick={() => router.replace(`/imps?t=${t.k}`)}>
+          <button key={t.k} type="button" className={`imps-tab${t.k === tab ? " is-on" : ""}`} onClick={() => setTab(t.k)}>
             {t.label} <small>{(data[t.k] || []).length}</small>
           </button>
         ))}
       </div>
       {ready && !list.length ? <p className="hint">Abhi yahan koi IMP nahi — tablet par ⭐ IMP likho.</p> : null}
       <div className="pdfs-impgrid">
+        {grouped && !sel && groups.map((x) => (
+          <button key={x.g} type="button" className="imps-card imps-pdfname" onClick={() => setSel(x.g)}>
+            <b>{x.label}</b>
+            <small>⭐ {x.n} IMP ›</small>
+          </button>
+        ))}
+        {grouped && sel ? (
+          <div className="imps-pdfhead">
+            <button type="button" className="btn btn--ghost btn--sm" onClick={() => setSel("")}>← {tab === "pdf" ? "Saari PDFs" : "Saare subject"}</button>
+            <b>{(groups.find((x) => x.g === sel) || {}).label || ""}</b>
+          </div>
+        ) : null}
         {tab === "fact" && list.map((s) => (
           // Fact log / Vocab: sirf IMP (owner) — fact / word ka text nahi.
           <article key={s.key} className="imps-card imps-card--only">
@@ -130,13 +173,13 @@ function ImpsInner() {
             <Lazy><ImpNoteBox k={`vocab:${w.id}`} /></Lazy>
           </article>
         ))}
-        {tab === "ans" && list.map((r) => (
+        {tab === "ans" && shown.map((r) => (
           <article key={r.id} className="imps-card">
             <Lazy h={200}><AnsQ r={r} /><ImpView rec={r} /></Lazy>
             {subjOf(r.subject) ? <span className="imps-subj">{subjOf(r.subject)}</span> : null}
           </article>
         ))}
-        {tab === "pyq" && list.map((x) => (
+        {tab === "pyq" && shown.map((x) => (
           <article key={x.k} className="imps-card">
             {x.meta?.src ? <span className="imps-sub">{x.meta.src}</span> : null}
             {x.meta?.img ? <img src={x.meta.img} alt="" className="imps-img" /> : x.meta?.title ? <div className="imps-q"><Markdown>{x.meta.title}</Markdown></div> : null}
@@ -145,9 +188,9 @@ function ImpsInner() {
             {x.meta?.href ? <Link href={x.meta.href} className="pdfs-imp__p">PYQ kholo ›</Link> : null}
           </article>
         ))}
-        {tab === "pdf" && list.map((x) => (
+        {tab === "pdf" && shown.map((x) => (
           <article key={x.k} className="imps-card">
-            <Link href={`/pdfs/view?id=${encodeURIComponent(x.id)}&p=${x.p}`} className="imps-pdf">📄 {x.name} · page {x.p} ›</Link>
+            <Link href={`/pdfs/view?id=${encodeURIComponent(x.id)}&p=${x.p}`} className="imps-pdf">Page {x.p} ›</Link>
             <Lazy><ImpNoteBox k={x.k} /></Lazy>
           </article>
         ))}
