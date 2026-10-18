@@ -39,21 +39,6 @@
 .imps-pend { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; padding: 10px 12px; border-radius: 10px; border: 1px solid #f2b705; background: #fff8e0; color: #5a4300; font-size: 0.9rem; }
 .imps-pend small { flex-basis: 100%; font-weight: 700; }
 
-/* ⭐ Ek page par kai IMP — unki patti (sar ke daayen). */
-.inkv__imphd { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.inkv__slots { margin-left: auto; display: flex; gap: 4px; }
-.inkv__slots button {
-  min-width: 26px;
-  height: 26px;
-  padding: 0 7px;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--text-2);
-  font-family: inherit;
-  font-size: 0.78rem;
-  font-weight: 800;
-  cursor: pointer;
-}
-.inkv__slots button.is-on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-.inkv__slots button.is-add { border-style: dashed; }
+/* ⭐ Is page ke IMP — upar wali patti mein (wahin jahan page ke button). */
+.inkv__slots { flex-wrap: wrap; }
+.inkv__slots .btn { min-width: 44px; }

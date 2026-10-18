@@ -257,6 +257,22 @@ function ViewInner() {
           <span className="inkv__pill">{p}/{pages}</span>
           <button className="btn btn--ghost btn--sm" onClick={() => goPage(p + 1)} disabled={p >= pages}>Agla ›</button>
         </span>
+        {/* ⭐ Is page ke IMP — pehle ye IMP ke sar par thi, par wahan canvas ke
+            neeche dab jati thi aur tap pahunchta hi nahi tha (owner: "plus
+            dab hi nahi raha"). Ab wahin jahan page ke button hain. */}
+        <span className="inkv__nav inkv__slots">
+          {Array.from({ length: slots }, (_, i) => i + 1).map((x) => (
+            <button
+              key={x}
+              className={`btn btn--sm ${x === n ? "btn--primary" : "btn--ghost"}`}
+              onClick={() => goSlot(x)}
+              title={`IMP ${x}`}
+            >⭐{x}</button>
+          ))}
+          {can ? (
+            <button className="btn btn--ghost btn--sm" onClick={() => goSlot(slots + 1)} title="Is page par ek aur IMP">➕ IMP</button>
+          ) : null}
+        </span>
         {can ? <span className="inkv__pill">{state === "saved" ? "💾 saved" : state === "dirty" ? "✍️ …" : "⚠️ offline"}</span> : null}
         {!isFs && typeof document !== "undefined" && document.fullscreenEnabled ? (
           <button className="inkv__pill inkv__fs" onClick={goFs} title="Poori screen par wapas">⛶ Full screen</button>
@@ -269,17 +285,7 @@ function ViewInner() {
           {!slim ? (img ? <img src={img} alt={`page ${p}`} /> : <p className="hint">{msg || "…"}</p>) : null}
         </div>
         <div className="inkv__ink is-imp">
-          <div className="inkv__imphd">
-            <span>⭐ IMP — page {p} · jo zaroori hai yahan likho</span>
-            {/* Ek page par jitne chaahe IMP — har ek apna alag kaagaz, aur
-                "Saare IMP" mein bhi alag-alag. */}
-            <span className="inkv__slots">
-              {Array.from({ length: slots }, (_, i) => i + 1).map((x) => (
-                <button key={x} type="button" className={x === n ? "is-on" : ""} onClick={() => goSlot(x)} title={`IMP ${x}`}>{x}</button>
-              ))}
-              {can ? <button type="button" className="is-add" onClick={() => goSlot(slots + 1)} title="Is page par ek aur IMP">➕</button> : null}
-            </span>
-          </div>
+          <div className="inkv__imphd">⭐ IMP {n > 1 ? `${n} ` : ""}— page {p} · jo zaroori hai yahan likho</div>
           {loading ? (
             <div className="placeholder" style={{ margin: 16 }}>Khul raha hai… ✍️</div>
           ) : (
