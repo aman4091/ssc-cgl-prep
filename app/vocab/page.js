@@ -125,6 +125,7 @@ export default function VocabPage() {
         <div className="row between" style={{ gap: 10, flexWrap: "wrap" }}>
           <span className="ca-eyebrow">🔤 Vocab · {pool.length} word · Slides (random)</span>
           <Link href="/vocab/manage" className="btn btn--sm btn--ghost">⚙️ Import / din</Link>
+          <Link href="/imps?t=vocab" className="btn btn--sm btn--ghost">⭐ Saare IMP</Link>
         </div>
       </section>
 

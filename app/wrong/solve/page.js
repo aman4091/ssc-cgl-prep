@@ -2,6 +2,7 @@
 
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { impRec, inkSetter, inkRecord } from "@/lib/impink";
+import { noteRec, setImpNoteMeta } from "@/lib/impnotes";
 import { isInkWriter, setInkWriter } from "@/lib/inkdevice";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -222,12 +223,21 @@ function SolveInner() {
   const [page, setPage] = useState("sol");
   const pageRef = useRef("sol");
   pageRef.current = page;
-  const tgt = (r) => (r && pageRef.current === "imp" ? impRec(r) : r);
+  // PYQ ka ek sawaal (card ka ✍️ → quiz source "stylus") — uska ⭐ IMP
+  // lib/impnotes mein "pyq:<quiz id>" (quiz id sawaal ki id se banti hai, pakki).
+  const pyqImpKey = quizId ? `pyq:${quizId}` : "";
+  const pyqImpRef = useRef(false);
+  const tgt = (r) => {
+    if (!r || pageRef.current !== "imp") return r;
+    if (r._quiz) return pyqImpRef.current ? noteRec(pyqImpKey) : r;
+    return impRec(r);
+  };
   // ✍️ Likhna sirf tablet par (lib/inkdevice) — baaki device par sirf dekhna.
   // Quiz ka rough kaam har device par (wo isi device ka hai, sync nahi hota).
   const [writer, setWriter] = useState(null);   // null = abhi pata nahi
   useEffect(() => { setWriter(isInkWriter()); }, []);
-  const canWrite = !!quizId || writer === true;
+  // Quiz ka rough kaam har device par; ⭐ IMP (PYQ ka bhi) sirf tablet par.
+  const canWrite = (!!quizId && page !== "imp") || writer === true;
   const canWriteRef = useRef(false);
   canWriteRef.current = canWrite;
 
@@ -323,7 +333,7 @@ function SolveInner() {
     (async () => {
       const t = tgt(rec._quiz ? rec : getWrongById(rec.id) || rec);
       // Tablet: device ki copy hi final. Baaki device: cloud ka latest, sirf dekhne ko.
-      const r = rec._quiz ? await openInk(t).catch(() => null)
+      const r = rec._quiz && pageRef.current !== "imp" ? await openInk(t).catch(() => null)
         : writer ? await openInk(t, { localFirst: true }).catch(() => null)
           : { doc: await viewInk(t).catch(() => null) };
       if (!alive) return;
@@ -386,10 +396,22 @@ function SolveInner() {
   // ⭐ IMP / ✍️ solution ke beech — pehle abhi wale page ka kaam bacha lo.
   const switchPage = useCallback(async (p) => {
     if (p === pageRef.current) return;
+    // Saare IMP wale page ke liye — PYQ sawaal ki pehchaan (tasveer / text, wapas ka link).
+    if (p === "imp" && pyqImpRef.current && recRef.current) {
+      const r0 = recRef.current;
+      setImpNoteMeta(pyqImpKey, {
+        title: String(r0.q?.question || "").slice(0, 300) || qMeta?.title || "PYQ",
+        img: (r0.images && r0.images[0] && r0.images[0].url) || "",
+        sub: r0.subject || qMeta?.subject || "",
+        src: qMeta?.title || "",
+        href: back || "",
+      });
+    }
     await flushLocal();
     flushCloud();
     setPage(p);
-  }, [flushLocal, flushCloud]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flushLocal, flushCloud, qMeta, back]);
 
   const onChange = useCallback((next) => {
     if (!canWriteRef.current) return;   // 👁 sirf dekhna
@@ -505,6 +527,8 @@ function SolveInner() {
   // Wahi yahan bhi chahiye: kholte hi sahi/galat dikhe (test dobara shuru na
   // ho), aur submit par uske question notebook mein DOBARA na chadhein.
   const prior = qMeta?.setKey ? getSetResult(qMeta.setKey, qMeta.setIdx) : null;
+  const pyqImp = !!quizId && qMeta?.source === "stylus" && list.length === 1;
+  pyqImpRef.current = pyqImp;
   // Review mode = pehle ka natija saamne hai. 🙈 dabate hi ye band ho jata hai
   // aur set phir se khud solve karne ke liye khul jata hai.
   const [hideAns, setHideAns] = useState(false);
@@ -1091,8 +1115,9 @@ function SolveInner() {
       </div>
 
       <div className="inkv__tools">
-        {!quizId && (
+        {(!quizId || pyqImp) && (
           <>
+            {!quizId && (<>
             <button
               className="btn btn--ghost btn--sm"
               aria-pressed={trace && traceHere}
@@ -1107,6 +1132,7 @@ function SolveInner() {
                 className="inkv__trace" title="Kitna halka" aria-label="Trace kitna halka"
               />
             ) : null}
+            </>)}
             <button className="btn btn--ghost btn--sm inkv__imp" aria-pressed={page === "imp"} onClick={() => switchPage(page === "imp" ? "sol" : "imp")} title="Alag IMP page — natije mein sawaal ke saath dikhta hai">{page === "imp" ? "✍️ Solution" : "⭐ IMP"}</button>
             <span className="inkv__sep" />
           </>

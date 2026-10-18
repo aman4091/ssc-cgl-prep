@@ -451,3 +451,4 @@ body.exam-on .tbx { top: 0; }
 
 /* Wrong Sets — adhoora set normal list mein (components/PyqSets NormalSet) */
 .ws-normal { display: flex; flex-direction: column; gap: 14px; }
+.tbx-head__r a.tbx-today { color: inherit; text-decoration: none; }

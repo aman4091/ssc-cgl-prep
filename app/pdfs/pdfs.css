@@ -16,3 +16,14 @@
 .pdfs-impgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 14px; }
 .pdfs-imp { display: flex; flex-direction: column; gap: 4px; }
 .pdfs-imp__p { font-weight: 700; font-size: 0.85rem; text-decoration: none; color: var(--accent); }
+
+/* ⭐ Saare IMP (app/imps) */
+.imps-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.imps-tab { padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--text-1); font: inherit; font-size: 0.9rem; font-weight: 700; cursor: pointer; }
+.imps-tab small { color: var(--text-3); margin-left: 4px; }
+.imps-tab.is-on { background: #fff4cc; border-color: #f2b705; color: #7a5a00; }
+.imps-card { display: flex; flex-direction: column; gap: 6px; padding: 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); min-width: 0; }
+.imps-card ul { margin: 0; padding-left: 18px; }
+.imps-sub { color: var(--text-3); font-size: 0.85rem; }
+.imps-q { font-size: 0.92rem; }
+.imps-img { max-width: 100%; border-radius: 6px; border: 1px solid var(--line); background: #ffffff; }

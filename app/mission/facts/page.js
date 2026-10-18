@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import "@/app/carev.css";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FACT_SECS, factView, getFacts, removeFact } from "@/lib/missionfacts";
@@ -172,7 +173,7 @@ export default function MissionFactsPage() {
   if (lay === "sl") {
     return (
       <section className="section">
-        <div className="fl-bar">{revBtn}</div>
+        <div className="fl-bar">{revBtn}<Link href="/imps?t=fact" className="btn btn--ghost btn--sm">⭐ Saare IMP</Link></div>
         <SlideRow secs={factSecs(facts)} onAt={factStep} empty="Abhi koi fact nahi." impKind="fact" />
       </section>
     );
@@ -180,7 +181,7 @@ export default function MissionFactsPage() {
   if (lay !== "0") {
     return (
       <section className="section">
-        <div className="fl-bar">{revBtn}</div>
+        <div className="fl-bar">{revBtn}<Link href="/imps?t=fact" className="btn btn--ghost btn--sm">⭐ Saare IMP</Link></div>
         <FactLayouts2 lay={lay} facts={facts} onChange={load} />
       </section>
     );

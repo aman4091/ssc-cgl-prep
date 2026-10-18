@@ -15,6 +15,7 @@
 // Set list ke ASLI kram se katte hain (Set 1 = Q 1–25, hamesha wahi) — "ho
 // gaya neeche" wali chhantayi yahan nahi, warna set ke sawaal badalte rehte.
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getSetResults, saveSetResult, moveResult, markResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import TestPage, { clock } from "./TestPage";
@@ -264,7 +265,7 @@ export default function AnswersSets({ ctx }) {
       <div className="tbx tbx-inline tbx-sets">
         <header className="tbx-head">
           <div className="tbx-title"><b>Answers · Sets</b><small>{all.length} sawaal — 25-25 ke {setCount} set · har set {SET_MIN} minute</small></div>
-          <div className="tbx-head__r"><span className="tbx-today">✅ Set ho gaye: <b>{doneSets}</b> / {setCount}</span></div>
+          <div className="tbx-head__r"><Link href="/imps?t=ans" className="tbx-today">⭐ Saare IMP</Link><span className="tbx-today">✅ Set ho gaye: <b>{doneSets}</b> / {setCount}</span></div>
         </header>
         <div className="tbx-setsbody">
           <div className="setgrid">

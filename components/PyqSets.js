@@ -14,6 +14,7 @@
 // Wrong Sets wala page bhi yahi component chalata hai (`sets` + `sub` dekar),
 // to wahan ka galat/chhoda phir agle wrong set mein — chakkar chalta rehta.
 
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ExamModeProvider } from "./ExamMode";
@@ -327,7 +328,7 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
       <div className="tbx tbx-inline tbx-sets">
         <header className="tbx-head">
           <div className="tbx-title"><b>{title} · Sets</b><small>{total} sawaal — {sets.length} set · har set {SET_MIN} minute</small></div>
-          <div className="tbx-head__r"><span className="tbx-today">✅ Set ho gaye: <b>{doneSets}</b> / {sets.length}</span></div>
+          <div className="tbx-head__r">{!given ? <Link href="/imps?t=pyq" className="tbx-today">⭐ Saare IMP</Link> : null}<span className="tbx-today">✅ Set ho gaye: <b>{doneSets}</b> / {sets.length}</span></div>
         </header>
         <div className="tbx-setsbody">
           {!sets.length ? <p className="tbx-empty">{empty || "Abhi koi set nahi."}</p> : null}
