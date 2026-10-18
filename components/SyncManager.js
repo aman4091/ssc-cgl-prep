@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { getSettings } from "@/lib/storage";
-import { syncReady, syncOnce, hasRemoteChanges, localHash, isSyncPaused } from "@/lib/sync";
+import { syncReady, syncOnce, hasRemoteChanges, localHash, isSyncPaused, auditStores } from "@/lib/sync";
 
 // Apne aap chalne wala sync — koi button nahi, aur ab koi RELOAD bhi nahi.
 //
@@ -32,7 +32,14 @@ export default function SyncManager() {
         const dirty = localHash() !== (getSettings().syncPushedHash || "");
         // Dono taraf kuch nahi badla to poora chakkar chalane ka matlab nahi.
         // hasRemoteChanges ek row bhi nahi kheenchta — sirf "kuch hai kya" poochta hai.
-        if (!dirty && !(await hasRemoteChanges())) return;
+        //
+        // "Kuch nahi badla" ka matlab "sab theek hai" NAHI hai: ho sakta hai
+        // is device ke paas kuch aaya hi na ho aur use pata bhi na ho (PC
+        // Chrome par 23 IMP pade the, cloud mein 41 — aur sync ko lagta raha
+        // sab shaant hai, isliye wo kuch maangta hi nahi tha). Isliye shaant
+        // cycle par bhi ginti ka milan — wo khud ghante mein ek baar se zyada
+        // nahi chalta, aur peeche wala store wahin se utar leta hai.
+        if (!dirty && !(await hasRemoteChanges())) { await auditStores(); return; }
         const r = await syncOnce();
         if (r.applied && !stopped) {
           window.dispatchEvent(new CustomEvent("cgl:sync-applied", { detail: r }));
