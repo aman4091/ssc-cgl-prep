@@ -168,8 +168,11 @@ function ViewInner() {
       setLoading(false);
     })();
     return () => { alive = false; };
+    // `n` bhi: ek page par kai IMP hain, aur slot badalne par naya kaagaz
+    // khulna chahiye. Ye chhoot gaya tha — ➕ dabane par URL to badal jata
+    // tha par kaagaz wahi purana rehta (owner: "2 nahi aa raha, wahi 1 hai").
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, p, writer]);
+  }, [id, p, n, writer]);
 
   const flushLocal = useCallback(async () => {
     const kk = docKey.current;
