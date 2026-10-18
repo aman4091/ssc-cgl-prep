@@ -417,7 +417,11 @@ export default function Home20() {
   const d = useHomeData();
   return (
     <section className="section h20">
-      <div className="h20-top"><span className="h20-title">🏠 Home</span>{d ? <Days d={d} /> : null}</div>
+      <div className="h20-top">
+        <span className="h20-title">🏠 Home</span>{d ? <Days d={d} /> : null}
+        {/* ⭐ Stylus se likhe saare IMP — ek jagah (owner). */}
+        <Link href="/imps" className="h20-imps">⭐ Saare IMP</Link>
+      </div>
       {d ? <div className="h20-body h20--final"><Final d={d} /></div> : <p className="h20-dim">…</p>}
     </section>
   );

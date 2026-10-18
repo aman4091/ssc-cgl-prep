@@ -3,6 +3,7 @@
 .h20 a { text-decoration: none; color: inherit; }
 .h20-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
 .h20-title { font-size: 1.15rem; font-weight: 800; color: var(--text-1); }
+.h20-imps { margin-left: auto; padding: 6px 14px; border-radius: 999px; border: 1px solid #f2b705; background: #fff4cc; color: #7a5a00; font-size: 0.85rem; font-weight: 700; text-decoration: none; }
 .h20-pick select { padding: 6px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--card); color: var(--text-1); font: inherit; font-size: 0.85rem; }
 .h20-body { display: grid; gap: 14px; }
 .h20-dim { color: var(--text-3); font-size: 0.85rem; margin: 4px 0; }
