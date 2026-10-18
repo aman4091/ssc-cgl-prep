@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 import Markdown from "@/components/Markdown";
 import ImpView, { ImpNoteBox } from "@/components/ImpView";
 import { allImpNotes } from "@/lib/impnotes";
-import { localInkCounts, pendingInk, healInk } from "@/lib/ink";
+import { localInkCounts, allLocalInkIds, pendingInk, healInk } from "@/lib/ink";
 import { inkRecord, inkSetter } from "@/lib/impink";
 import { isInkWriter } from "@/lib/inkdevice";
 import { getWrongBook, imagesOf } from "@/lib/wrongbook";
@@ -43,10 +43,15 @@ function Lazy({ children, h = 140 }) {
   return <div ref={ref} style={on ? undefined : { minHeight: h }}>{on ? children : null}</div>;
 }
 
-// Is pate ka IMP hai? (cloud par pata, ya is device par likha)
-const hasNote = (notes, local, k) => {
+// Is pate ka IMP hai? (cloud par uska pata, ya is device par likha hua kaagaz)
+//
+// `docs` IndexedDB ke asli kaagaz hain. Pehle sirf ink.counts dekhi jati thi —
+// wo localStorage mein hai aur bhare hone par uska write chupchaap fail ho
+// jata hai, to naya IMP banane ke baad bhi list use dekh nahi paati thi
+// (owner: "dono IMP nahi dikh rahe, sirf pehla").
+const hasNote = (notes, docs, k) => {
   const v = notes[k];
-  return !!((v && (v.impUrl || v.impStrokes)) || local[`imp:${k}`] > 0);
+  return !!((v && (v.impUrl || v.impStrokes)) || docs.has(`imp:${k}`));
 };
 
 function AnsQ({ r }) {
@@ -88,26 +93,40 @@ function ImpsInner() {
   }, []);
   const [ready, setReady] = useState(false);
   useEffect(() => { setReady(true); }, []);
+  // Is device par pade hue saare ink doc (IndexedDB se) — ginti wali list se
+  // nahi, kyunki wo gir sakti hai.
+  const [docs, setDocs] = useState(() => new Set());
+  useEffect(() => {
+    let alive = true;
+    const load = async () => {
+      const ids = await allLocalInkIds().catch(() => []);
+      const counts = Object.keys(localInkCounts()).filter((k) => localInkCounts()[k] > 0);
+      if (alive) setDocs(new Set([...ids, ...counts]));
+    };
+    load();
+    window.addEventListener("cgl:impnotes", load);
+    window.addEventListener("cgl:sync-applied", load);
+    return () => { alive = false; window.removeEventListener("cgl:impnotes", load); window.removeEventListener("cgl:sync-applied", load); };
+  }, [tick]);
 
   const data = useMemo(() => {
     if (!ready) return { fact: [], vocab: [], ans: [], pyq: [], pdf: [] };
     const notes = allImpNotes();
-    const local = localInkCounts();
     // Fact log / Vocab: seedhe IMP ke pate se — fact / word ki list se NAHI.
     // Pehle list se banta tha: kisi device par word / fact kam hon (ya id alag)
     // to unka IMP chupchaap gayab — tablet 41, PC 22 (owner).
     const keysOf = (pre) => {
-      const ks = new Set(Object.keys(notes).filter((k) => k.startsWith(pre) && hasNote(notes, local, k)));
-      for (const id of Object.keys(local)) if (id.startsWith(`imp:${pre}`) && local[id] > 0) ks.add(id.slice(4));
+      const ks = new Set(Object.keys(notes).filter((k) => k.startsWith(pre) && hasNote(notes, docs, k)));
+      for (const id of docs) if (id.startsWith(`imp:${pre}`)) ks.add(id.slice(4));
       return [...ks].sort((a, b) => String(notes[b]?.impAt || "9").localeCompare(String(notes[a]?.impAt || "9")));
     };
     const fact = keysOf("fact:").map((k) => ({ k }));
     const vocab = keysOf("vocab:").map((k) => ({ k }));
-    const ans = getWrongBook().filter((r) => r.impUrl || r.impStrokes || local[`${r.id}~imp`] > 0);
+    const ans = getWrongBook().filter((r) => r.impUrl || r.impStrokes || docs.has(`${r.id}~imp`));
     const pyq = Object.entries(notes)
       .filter(([k, v]) => k.startsWith("pyq:") && v && (v.impUrl || v.impStrokes))
       .map(([k, v]) => ({ k, ...v }))
-      .concat(Object.keys(local).filter((id) => id.startsWith("imp:pyq:") && local[id] > 0 && !notes[id.slice(4)]?.impUrl)
+      .concat([...docs].filter((id) => id.startsWith("imp:pyq:") && !notes[id.slice(4)]?.impUrl)
         .map((id) => ({ k: id.slice(4), ...(notes[id.slice(4)] || {}) })))
       .sort((a, b) => String(b.impAt || "").localeCompare(String(a.impAt || "")));
     // 📄 PDFs — HAR IMP apni line. Ek page par kai IMP ho sakte hain
@@ -116,10 +135,8 @@ function ImpsInner() {
     // hain (owner).
     const pdfName = {};
     for (const r of listPdfs()) pdfName[r.id] = r.name;
-    const pdfKeys = new Set(Object.keys(notes).filter((k) => k.startsWith("pdfimp:") && hasNote(notes, local, k)));
-    for (const idk of Object.keys(local)) {
-      if (idk.startsWith("imp:pdfimp:") && local[idk] > 0) pdfKeys.add(idk.slice(4));
-    }
+    const pdfKeys = new Set(Object.keys(notes).filter((k) => k.startsWith("pdfimp:") && hasNote(notes, docs, k)));
+    for (const idk of docs) if (idk.startsWith("imp:pdfimp:")) pdfKeys.add(idk.slice(4));
     const pdf = [...pdfKeys]
       .map((k) => ({ k, ...(pdfImpParse(k) || {}) }))
       .filter((x) => x.id)
@@ -127,7 +144,7 @@ function ImpsInner() {
       .sort((a, b) => (a.name || "").localeCompare(b.name || "") || a.p - b.p || a.n - b.n);
     return { fact, vocab, ans, pyq, pdf };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, tick]);
+  }, [ready, tick, docs]);
 
   const list = data[tab] || [];
   // 📤 Tablet par: kitne IMP / writing abhi sirf yahin hain (cloud par nahi
