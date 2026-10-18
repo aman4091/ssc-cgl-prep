@@ -9,10 +9,9 @@ import { useSearchParams } from "next/navigation";
 import Markdown from "@/components/Markdown";
 import ImpView, { ImpNoteBox } from "@/components/ImpView";
 import { allImpNotes } from "@/lib/impnotes";
-import { localInkCounts } from "@/lib/ink";
-import { getFacts } from "@/lib/missionfacts";
-import { factSecs } from "@/lib/factslides";
-import { vocabPool } from "@/lib/vocabpool";
+import { localInkCounts, pendingInk, healInk } from "@/lib/ink";
+import { inkRecord, inkSetter } from "@/lib/impink";
+import { isInkWriter } from "@/lib/inkdevice";
 import { getWrongBook, imagesOf } from "@/lib/wrongbook";
 import { listPdfs } from "@/lib/pdfstore";
 
@@ -94,8 +93,16 @@ function ImpsInner() {
     if (!ready) return { fact: [], vocab: [], ans: [], pyq: [], pdf: [] };
     const notes = allImpNotes();
     const local = localInkCounts();
-    const fact = factSecs(getFacts()).filter((s) => hasNote(notes, local, `fact:${s.key}`));
-    const vocab = vocabPool().filter((w) => hasNote(notes, local, `vocab:${w.id}`));
+    // Fact log / Vocab: seedhe IMP ke pate se — fact / word ki list se NAHI.
+    // Pehle list se banta tha: kisi device par word / fact kam hon (ya id alag)
+    // to unka IMP chupchaap gayab — tablet 41, PC 22 (owner).
+    const keysOf = (pre) => {
+      const ks = new Set(Object.keys(notes).filter((k) => k.startsWith(pre) && hasNote(notes, local, k)));
+      for (const id of Object.keys(local)) if (id.startsWith(`imp:${pre}`) && local[id] > 0) ks.add(id.slice(4));
+      return [...ks].sort((a, b) => String(notes[b]?.impAt || "9").localeCompare(String(notes[a]?.impAt || "9")));
+    };
+    const fact = keysOf("fact:").map((k) => ({ k }));
+    const vocab = keysOf("vocab:").map((k) => ({ k }));
     const ans = getWrongBook().filter((r) => r.impUrl || r.impStrokes || local[`${r.id}~imp`] > 0);
     const pyq = Object.entries(notes)
       .filter(([k, v]) => k.startsWith("pyq:") && v && (v.impUrl || v.impStrokes))
@@ -116,6 +123,26 @@ function ImpsInner() {
   }, [ready, tick]);
 
   const list = data[tab] || [];
+  // 📤 Tablet par: kitne IMP / writing abhi sirf yahin hain (cloud par nahi
+  // pahunche) — aur turant bhejne ka button, galti ho to uska sandesh.
+  const [writer, setWriter] = useState(false);
+  const [pend, setPend] = useState(0);
+  const [sendMsg, setSendMsg] = useState("");
+  const [sending, setSending] = useState(false);
+  useEffect(() => {
+    const w = isInkWriter();
+    setWriter(w);
+    if (w) pendingInk(inkRecord).then((xs) => setPend(xs.length)).catch(() => {});
+  }, [tick]);
+  const sendNow = async () => {
+    setSending(true); setSendMsg("⬆️ bhej raha…");
+    const r = await healInk(inkRecord, inkSetter).catch((e) => ({ sent: 0, failed: 1, err: e.message }));
+    const left = (await pendingInk(inkRecord).catch(() => [])).length;
+    setPend(left);
+    setSendMsg(r.failed ? `⚠️ ${r.sent} gaye, ${r.failed} nahi gaye — ${r.err}` : `✅ ${r.sent} cloud par gaye${left ? ` · ${left} baaki` : ""} — ab sync hone par PC par dikhenge`);
+    setSending(false);
+    try { window.dispatchEvent(new CustomEvent("cgl:sync-kick")); } catch { /* SSR */ }
+  };
   // Answers / PYQ: pehle subject, PDFs: pehle PDF ka naam (owner) — dabao to
   // sirf uske IMP.
   const groupOf = (x) => (tab === "pdf" ? x.id : tab === "ans" ? (x.subject || "other") : (x.meta?.sub || "other"));
@@ -141,6 +168,13 @@ function ImpsInner() {
         </div>
         <div className="pdfs-acts"><Link href="/pdfs" className="btn btn--ghost btn--sm">📄 Meri PDFs</Link></div>
       </header>
+      {writer && (pend > 0 || sendMsg) ? (
+        <div className="imps-pend">
+          {pend > 0 ? <span>📤 <b>{pend}</b> IMP / writing abhi sirf is tablet par hain — cloud par nahi gaye, isliye PC par nahi dikhte.</span> : null}
+          {pend > 0 ? <button type="button" className="btn btn--primary btn--sm" onClick={sendNow} disabled={sending}>⬆️ Abhi bhejo</button> : null}
+          {sendMsg ? <small>{sendMsg}</small> : null}
+        </div>
+      ) : null}
       <div className="imps-tabs">
         {TABS.map((t) => (
           <button key={t.k} type="button" className={`imps-tab${t.k === tab ? " is-on" : ""}`} onClick={() => setTab(t.k)}>
@@ -162,15 +196,10 @@ function ImpsInner() {
             <b>{(groups.find((x) => x.g === sel) || {}).label || ""}</b>
           </div>
         ) : null}
-        {tab === "fact" && list.map((s) => (
+        {(tab === "fact" || tab === "vocab") && list.map((x) => (
           // Fact log / Vocab: sirf IMP (owner) — fact / word ka text nahi.
-          <article key={s.key} className="imps-card imps-card--only">
-            <Lazy><ImpNoteBox k={`fact:${s.key}`} /></Lazy>
-          </article>
-        ))}
-        {tab === "vocab" && list.map((w) => (
-          <article key={w.id} className="imps-card imps-card--only">
-            <Lazy><ImpNoteBox k={`vocab:${w.id}`} /></Lazy>
+          <article key={x.k} className="imps-card imps-card--only">
+            <Lazy><ImpNoteBox k={x.k} /></Lazy>
           </article>
         ))}
         {tab === "ans" && shown.map((r) => (
