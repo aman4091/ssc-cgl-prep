@@ -15,6 +15,8 @@ import { openInk, viewInk, saveLocalInk, pushInk, emptyDoc, flushInkQueue } from
 import { inkRecord, inkSetter } from "@/lib/impink";
 import { noteRec } from "@/lib/impnotes";
 import { getPdf, getPdfBlob, openPdfDoc, renderPage, pdfImpKey, movePdfNotesToImp } from "@/lib/pdfstore";
+import { allImpNotes } from "@/lib/impnotes";
+import { localInkCounts } from "@/lib/ink";
 import { isInkWriter, setInkWriter } from "@/lib/inkdevice";
 import { setSyncPaused } from "@/lib/sync";
 import { storeFlush } from "@/lib/bigstore";
@@ -28,10 +30,40 @@ function ViewInner() {
   const router = useRouter();
   const id = sp.get("id") || "";
   const p = Math.max(1, Number(sp.get("p")) || 1);
-  const keyOf = () => pdfImpKey(id, p);
+  // ⭐ Ek page par kai IMP — kaunsa khula hai (1, 2, 3…). URL mein hai, isliye
+  // reload / wapas aane par wahi khulta hai.
+  const n = Math.max(1, Number(sp.get("n")) || 1);
+  const keyOf = () => pdfImpKey(id, p, n);
 
   const [rec, setRec] = useState(null);
   useEffect(() => { setRec(getPdf(id)); }, [id]);
+
+  // Is page par kitne IMP ban chuke hain (jiska pata cloud par hai ya jiska
+  // kaagaz is device par pada hai). Saath mein ek khaali jagah aur — ➕.
+  const [slots, setSlots] = useState(1);
+  useEffect(() => {
+    const scan = () => {
+      const pre = pdfImpKey(id, p);
+      let top = 1;
+      const seen = (k, has) => {
+        if (!has || !k.startsWith(pre)) return;
+        const tail = k.slice(pre.length);
+        if (tail === "") top = Math.max(top, 1);
+        else if (/^#\d+$/.test(tail)) top = Math.max(top, Number(tail.slice(1)));
+      };
+      try {
+        const notes = allImpNotes();
+        for (const k of Object.keys(notes)) seen(k, !!(notes[k] && (notes[k].impUrl || notes[k].impStrokes)));
+        const local = localInkCounts();
+        for (const idk of Object.keys(local)) if (idk.startsWith("imp:")) seen(idk.slice(4), local[idk] > 0);
+      } catch { /* ignore */ }
+      setSlots(Math.max(top, n));
+    };
+    scan();
+    window.addEventListener("cgl:impnotes", scan);
+    window.addEventListener("cgl:sync-applied", scan);
+    return () => { window.removeEventListener("cgl:impnotes", scan); window.removeEventListener("cgl:sync-applied", scan); };
+  }, [id, p, n]);
   const pages = rec?.pages || 1;
 
   // Page ki tasveer
@@ -173,10 +205,16 @@ function ViewInner() {
 
   const save = async () => { await flushLocal(); flushCloud(); };
   const exit = async () => { await save(); router.push("/pdfs"); };
-  const goPage = async (n) => {
-    if (n < 1 || n > pages) return;
+  const goPage = async (x) => {
+    if (x < 1 || x > pages) return;
     await save();
-    router.replace(`/pdfs/view?id=${encodeURIComponent(id)}&p=${n}`);
+    router.replace(`/pdfs/view?id=${encodeURIComponent(id)}&p=${x}`);   // naye page par pehla IMP
+  };
+  // Usi page ka doosra IMP — pehle jo likha hai wo sambhal kar.
+  const goSlot = async (x) => {
+    if (x === n) return;
+    await save();
+    router.replace(`/pdfs/view?id=${encodeURIComponent(id)}&p=${p}&n=${x}`);
   };
 
   const prevTool = useRef("pen");
@@ -228,7 +266,17 @@ function ViewInner() {
           {!slim ? (img ? <img src={img} alt={`page ${p}`} /> : <p className="hint">{msg || "…"}</p>) : null}
         </div>
         <div className="inkv__ink is-imp">
-          <div className="inkv__imphd">⭐ IMP — page {p} · jo zaroori hai yahan likho</div>
+          <div className="inkv__imphd">
+            <span>⭐ IMP — page {p} · jo zaroori hai yahan likho</span>
+            {/* Ek page par jitne chaahe IMP — har ek apna alag kaagaz, aur
+                "Saare IMP" mein bhi alag-alag. */}
+            <span className="inkv__slots">
+              {Array.from({ length: slots }, (_, i) => i + 1).map((x) => (
+                <button key={x} type="button" className={x === n ? "is-on" : ""} onClick={() => goSlot(x)} title={`IMP ${x}`}>{x}</button>
+              ))}
+              {can ? <button type="button" className="is-add" onClick={() => goSlot(slots + 1)} title="Is page par ek aur IMP">➕</button> : null}
+            </span>
+          </div>
           {loading ? (
             <div className="placeholder" style={{ margin: 16 }}>Khul raha hai… ✍️</div>
           ) : (

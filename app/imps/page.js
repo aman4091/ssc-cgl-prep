@@ -13,7 +13,7 @@ import { localInkCounts, pendingInk, healInk } from "@/lib/ink";
 import { inkRecord, inkSetter } from "@/lib/impink";
 import { isInkWriter } from "@/lib/inkdevice";
 import { getWrongBook, imagesOf } from "@/lib/wrongbook";
-import { listPdfs } from "@/lib/pdfstore";
+import { listPdfs, pdfImpParse } from "@/lib/pdfstore";
 
 // Card ke neeche subject (owner) — Maths / Reasoning / GS / English.
 const SUBJ = { math: "🧮 Maths", maths: "🧮 Maths", reasoning: "🧠 Reasoning", gs: "🌍 GS", english: "📘 English" };
@@ -110,14 +110,21 @@ function ImpsInner() {
       .concat(Object.keys(local).filter((id) => id.startsWith("imp:pyq:") && local[id] > 0 && !notes[id.slice(4)]?.impUrl)
         .map((id) => ({ k: id.slice(4), ...(notes[id.slice(4)] || {}) })))
       .sort((a, b) => String(b.impAt || "").localeCompare(String(a.impAt || "")));
-    // 📄 PDFs — har page ka IMP, PDF ke naam ke saath (PDF ke kram mein, page badhte kram mein).
-    const pdf = [];
-    for (const r of listPdfs()) {
-      for (let p = 1; p <= (r.pages || 0); p++) {
-        const k = `pdfimp:${r.id}:${p}`;
-        if (hasNote(notes, local, k)) pdf.push({ k, id: r.id, name: r.name, p });
-      }
+    // 📄 PDFs — HAR IMP apni line. Ek page par kai IMP ho sakte hain
+    // (pdfimp:<id>:<page> aur uske baad #2, #3…), isliye yahan page ginne ke
+    // bajay seedha IMP ki keys dekhte hain — paanch banaye to paanch dikhte
+    // hain (owner).
+    const pdfName = {};
+    for (const r of listPdfs()) pdfName[r.id] = r.name;
+    const pdfKeys = new Set(Object.keys(notes).filter((k) => k.startsWith("pdfimp:") && hasNote(notes, local, k)));
+    for (const idk of Object.keys(local)) {
+      if (idk.startsWith("imp:pdfimp:") && local[idk] > 0) pdfKeys.add(idk.slice(4));
     }
+    const pdf = [...pdfKeys]
+      .map((k) => ({ k, ...(pdfImpParse(k) || {}) }))
+      .filter((x) => x.id)
+      .map((x) => ({ ...x, name: pdfName[x.id] || "PDF" }))
+      .sort((a, b) => (a.name || "").localeCompare(b.name || "") || a.p - b.p || a.n - b.n);
     return { fact, vocab, ans, pyq, pdf };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, tick]);
@@ -219,7 +226,10 @@ function ImpsInner() {
         ))}
         {tab === "pdf" && shown.map((x) => (
           <article key={x.k} className="imps-card">
-            <Link href={`/pdfs/view?id=${encodeURIComponent(x.id)}&p=${x.p}`} className="imps-pdf">Page {x.p} ›</Link>
+            <Link
+              href={`/pdfs/view?id=${encodeURIComponent(x.id)}&p=${x.p}${x.n > 1 ? `&n=${x.n}` : ""}`}
+              className="imps-pdf"
+            >Page {x.p}{x.n > 1 ? ` · IMP ${x.n}` : ""} ›</Link>
             <Lazy><ImpNoteBox k={x.k} /></Lazy>
           </article>
         ))}
