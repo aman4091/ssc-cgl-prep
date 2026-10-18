@@ -106,16 +106,13 @@ function ImpsInner() {
       {ready && !list.length ? <p className="hint">Abhi yahan koi IMP nahi — tablet par ⭐ IMP likho.</p> : null}
       <div className="pdfs-impgrid">
         {tab === "fact" && list.map((s) => (
-          <article key={s.key} className="imps-card">
-            <b>{s.title}</b>
-            <ul>{s.points.map((p, i) => <li key={i}><Markdown>{p.text}</Markdown></li>)}</ul>
+          // Fact log / Vocab: sirf IMP (owner) — fact / word ka text nahi.
+          <article key={s.key} className="imps-card imps-card--only">
             <Lazy><ImpNoteBox k={`fact:${s.key}`} /></Lazy>
           </article>
         ))}
         {tab === "vocab" && list.map((w) => (
-          <article key={w.id} className="imps-card">
-            <b>{w.word}</b>
-            {w.meaning ? <span className="imps-sub">{w.meaning}</span> : null}
+          <article key={w.id} className="imps-card imps-card--only">
             <Lazy><ImpNoteBox k={`vocab:${w.id}`} /></Lazy>
           </article>
         ))}
