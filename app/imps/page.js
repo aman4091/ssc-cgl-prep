@@ -14,6 +14,8 @@ import { inkRecord, inkSetter } from "@/lib/impink";
 import { isInkWriter } from "@/lib/inkdevice";
 import { getWrongBook, imagesOf } from "@/lib/wrongbook";
 import { listPdfs, pdfImpParse } from "@/lib/pdfstore";
+import { getFacts } from "@/lib/missionfacts";
+import { factSecs } from "@/lib/factslides";
 
 // Card ke neeche subject (owner) — Maths / Reasoning / GS / English.
 const SUBJ = { math: "🧮 Maths", maths: "🧮 Maths", reasoning: "🧠 Reasoning", gs: "🌍 GS", english: "📘 English" };
@@ -113,12 +115,25 @@ function ImpsInner() {
     // Fact log / Vocab: seedhe IMP ke pate se — fact / word ki list se NAHI.
     // Pehle list se banta tha: kisi device par word / fact kam hon (ya id alag)
     // to unka IMP chupchaap gayab — tablet 41, PC 22 (owner).
-    const keysOf = (pre) => {
+    // `order` ho to USI kram mein (fact log ka apna kram), warna naya IMP upar.
+    const keysOf = (pre, order) => {
       const ks = new Set(Object.keys(notes).filter((k) => k.startsWith(pre) && hasNote(notes, docs, k)));
       for (const id of docs) if (id.startsWith(`imp:${pre}`)) ks.add(id.slice(4));
-      return [...ks].sort((a, b) => String(notes[b]?.impAt || "9").localeCompare(String(notes[a]?.impAt || "9")));
+      const list = [...ks];
+      if (order) {
+        const at = (k) => (order.has(k) ? order.get(k) : Number.MAX_SAFE_INTEGER);
+        return list.sort((a, b) => at(a) - at(b)
+          || String(notes[a]?.impAt || "").localeCompare(String(notes[b]?.impAt || "")));
+      }
+      return list.sort((a, b) => String(notes[b]?.impAt || "9").localeCompare(String(notes[a]?.impAt || "9")));
     };
-    const fact = keysOf("fact:").map((k) => ({ k }));
+    // 🧠 Fact log ka IMP usi kram mein jis kram mein fact log khud chalta hai:
+    // pehla fact sabse upar, aakhri sabse neeche (owner). Fact log ka kram
+    // har device par ek hi hai (lib/missionfacts `at` se sorted), isliye ye
+    // list bhi har jagah ek jaisi rehti hai.
+    const factOrder = new Map();
+    try { factSecs(getFacts()).forEach((s0, i) => factOrder.set(`fact:${s0.key}`, i)); } catch { /* ignore */ }
+    const fact = keysOf("fact:", factOrder).map((k) => ({ k }));
     const vocab = keysOf("vocab:").map((k) => ({ k }));
     const ans = getWrongBook().filter((r) => hasInk({ impUrl: r.impUrl, impStrokes: r.impStrokes }) || docs.has(`${r.id}~imp`));
     const pyq = Object.entries(notes)
@@ -220,7 +235,7 @@ function ImpsInner() {
         ) : null}
         {(tab === "fact" || tab === "vocab") && list.map((x) => (
           // Fact log / Vocab: sirf IMP (owner) — fact / word ka text nahi.
-          <article key={x.k} className="imps-card imps-card--only">
+          <article key={x.k} data-k={x.k} className="imps-card imps-card--only">
             <Lazy><ImpNoteBox k={x.k} /></Lazy>
           </article>
         ))}
