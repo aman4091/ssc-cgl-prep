@@ -53,7 +53,7 @@ function ViewInner() {
       };
       try {
         const notes = allImpNotes();
-        for (const k of Object.keys(notes)) seen(k, !!(notes[k] && (notes[k].impUrl || notes[k].impStrokes)));
+        for (const k of Object.keys(notes)) { const v = notes[k]; seen(k, !!(v && (v.impStrokes > 0 || (v.impUrl && v.impStrokes === undefined)))); }
         const local = localInkCounts();
         for (const idk of Object.keys(local)) if (idk.startsWith("imp:")) seen(idk.slice(4), local[idk] > 0);
       } catch { /* ignore */ }

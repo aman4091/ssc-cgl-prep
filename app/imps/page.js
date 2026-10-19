@@ -49,10 +49,8 @@ function Lazy({ children, h = 140 }) {
 // wo localStorage mein hai aur bhare hone par uska write chupchaap fail ho
 // jata hai, to naya IMP banane ke baad bhi list use dekh nahi paati thi
 // (owner: "dono IMP nahi dikh rahe, sirf pehla").
-const hasNote = (notes, docs, k) => {
-  const v = notes[k];
-  return !!((v && (v.impUrl || v.impStrokes)) || docs.has(`imp:${k}`));
-};
+const hasInk = (v) => !!(v && (v.impStrokes > 0 || (v.impUrl && v.impStrokes === undefined)));
+const hasNote = (notes, docs, k) => hasInk(notes[k]) || docs.has(`imp:${k}`);
 
 function AnsQ({ r }) {
   const { urls } = useImageUrls(imagesOf(r));
@@ -122,9 +120,9 @@ function ImpsInner() {
     };
     const fact = keysOf("fact:").map((k) => ({ k }));
     const vocab = keysOf("vocab:").map((k) => ({ k }));
-    const ans = getWrongBook().filter((r) => r.impUrl || r.impStrokes || docs.has(`${r.id}~imp`));
+    const ans = getWrongBook().filter((r) => hasInk({ impUrl: r.impUrl, impStrokes: r.impStrokes }) || docs.has(`${r.id}~imp`));
     const pyq = Object.entries(notes)
-      .filter(([k, v]) => k.startsWith("pyq:") && v && (v.impUrl || v.impStrokes))
+      .filter(([k, v]) => k.startsWith("pyq:") && hasInk(v))
       .map(([k, v]) => ({ k, ...v }))
       .concat([...docs].filter((id) => id.startsWith("imp:pyq:") && !notes[id.slice(4)]?.impUrl)
         .map((id) => ({ k: id.slice(4), ...(notes[id.slice(4)] || {}) })))
