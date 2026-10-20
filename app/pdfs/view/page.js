@@ -25,6 +25,83 @@ const LOCAL_MS = 700;
 const docCache = new Map();   // pdf id → pdf.js doc (is tab mein)
 const pageCache = new Map();  // "<id>:<p>" → dataURL
 
+// 📑 Saare page ki list — 200 page ki PDF mein 129 par jaane ke liye ek-ek
+// "Agla" dabana na pade (owner). Chhoti tasveer (thumbnail) sirf tab banti
+// hai jab wo page list mein saamne aata hai, aur ek baar bani to yaad rehti
+// hai. PDF is device par na ho (PC) to sirf number dikhte hain.
+const thumbCache = new Map();
+function Thumb({ rec, id, n }) {
+  const ref = useRef(null);
+  const ck = `${id}:${n}`;
+  const [src, setSrc] = useState(() => thumbCache.get(ck) || "");
+  useEffect(() => {
+    if (src || !rec) return undefined;
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return undefined;
+    let alive = true;
+    const io = new IntersectionObserver(async (es) => {
+      if (!es.some((e) => e.isIntersecting)) return;
+      io.disconnect();
+      try {
+        let doc = docCache.get(id);
+        if (!doc) { doc = await openPdfDoc(await getPdfBlob(rec)); docCache.set(id, doc); }
+        const url = await renderPage(doc, n, 180);
+        thumbCache.set(ck, url);
+        if (alive) setSrc(url);
+      } catch { /* PDF yahan nahi — sirf number */ }
+    }, { rootMargin: "300px" });
+    io.observe(el);
+    return () => { alive = false; io.disconnect(); };
+  }, [src, rec, id, n, ck]);
+  return <span ref={ref} className="pgl__img">{src ? <img src={src} alt="" /> : null}</span>;
+}
+
+function PageList({ rec, id, pages, cur, impPages, onPick, onClose }) {
+  const [q, setQ] = useState("");
+  const box = useRef(null);
+  // Khulte hi abhi wala page saamne.
+  useEffect(() => {
+    const el = box.current?.querySelector(`[data-pg="${cur}"]`);
+    if (el) el.scrollIntoView({ block: "center" });
+  }, [cur]);
+  const go = (e) => {
+    e.preventDefault();
+    const x = Math.round(Number(q));
+    if (x >= 1 && x <= pages) onPick(x);
+  };
+  return (
+    <div className="pgl" onClick={onClose}>
+      <div className="pgl__box" onClick={(e) => e.stopPropagation()}>
+        <div className="pgl__hd">
+          <b>📑 Saare page · {pages}</b>
+          <form onSubmit={go} className="pgl__go">
+            <input
+              type="number" inputMode="numeric" min="1" max={pages}
+              value={q} onChange={(e) => setQ(e.target.value)} placeholder="Page no."
+            />
+            <button type="submit" className="btn btn--primary btn--sm">Jao</button>
+          </form>
+          <button type="button" className="btn btn--ghost btn--sm" onClick={onClose}>✕</button>
+        </div>
+        <div className="pgl__grid" ref={box}>
+          {Array.from({ length: pages }, (_, i) => i + 1).map((x) => (
+            <button
+              key={x}
+              type="button"
+              data-pg={x}
+              className={`pgl__it${x === cur ? " is-cur" : ""}`}
+              onClick={() => onPick(x)}
+            >
+              <Thumb rec={rec} id={id} n={x} />
+              <span className="pgl__n">{x}{impPages.has(x) ? " ⭐" : ""}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ViewInner() {
   const sp = useSearchParams();
   const router = useRouter();
@@ -41,6 +118,8 @@ function ViewInner() {
   // Is page par kitne IMP ban chuke hain (jiska pata cloud par hai ya jiska
   // kaagaz is device par pada hai). Saath mein ek khaali jagah aur — ➕.
   const [slots, setSlots] = useState(1);
+  const [listOpen, setListOpen] = useState(false);
+  const [impPages, setImpPages] = useState(() => new Set());
   useEffect(() => {
     const scan = () => {
       const pre = pdfImpKey(id, p);
@@ -58,6 +137,17 @@ function ViewInner() {
         for (const idk of Object.keys(local)) if (idk.startsWith("imp:")) seen(idk.slice(4), local[idk] > 0);
       } catch { /* ignore */ }
       setSlots(Math.max(top, n));
+      // List ke liye: is PDF ke kin page par IMP hai
+      try {
+        const pre2 = `pdfimp:${id}:`;
+        const got = new Set();
+        const mark = (k, has) => { if (has && k.startsWith(pre2)) { const pg = Number(k.slice(pre2.length).split("#")[0]); if (pg) got.add(pg); } };
+        const notes = allImpNotes();
+        for (const k of Object.keys(notes)) { const v = notes[k]; mark(k, !!(v && (v.impStrokes > 0 || (v.impUrl && v.impStrokes === undefined)))); }
+        const local = localInkCounts();
+        for (const idk of Object.keys(local)) if (idk.startsWith("imp:")) mark(idk.slice(4), local[idk] > 0);
+        setImpPages(got);
+      } catch { /* ignore */ }
     };
     scan();
     window.addEventListener("cgl:impnotes", scan);
@@ -248,13 +338,20 @@ function ViewInner() {
 
   return (
     <div className="inkv">
+      {listOpen ? (
+        <PageList
+          rec={rec} id={id} pages={pages} cur={p} impPages={impPages}
+          onPick={(x) => { setListOpen(false); if (x !== p) goPage(x); }}
+          onClose={() => setListOpen(false)}
+        />
+      ) : null}
       <div className="inkv__top">
         <button className="btn btn--ghost btn--sm" onClick={exit} title="PDFs par wapas">←</button>
         <span className="inkv__title">📄 {rec.name} · page {p}</span>
         <span style={{ marginLeft: "auto" }} />
         <span className="inkv__nav">
           <button className="btn btn--ghost btn--sm" onClick={() => goPage(p - 1)} disabled={p <= 1}>‹ Pichhla</button>
-          <span className="inkv__pill">{p}/{pages}</span>
+          <button className="btn btn--ghost btn--sm" onClick={() => setListOpen(true)} title="Saare page — kisi par bhi seedha jao">📑 {p}/{pages}</button>
           <button className="btn btn--ghost btn--sm" onClick={() => goPage(p + 1)} disabled={p >= pages}>Agla ›</button>
         </span>
         {/* ⭐ Is page ke IMP — pehle ye IMP ke sar par thi, par wahan canvas ke

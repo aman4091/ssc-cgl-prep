@@ -42,3 +42,16 @@
 /* ⭐ Is page ke IMP — upar wali patti mein (wahin jahan page ke button). */
 .inkv__slots { flex-wrap: wrap; }
 .inkv__slots .btn { min-width: 44px; }
+
+/* 📑 Saare page ki list — canvas ke UPAR (z-index), warna tap pahunchta nahi. */
+.pgl { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,.55); display: grid; place-items: center; padding: 12px; }
+.pgl__box { width: min(980px, 100%); height: min(90vh, 100%); display: flex; flex-direction: column; background: var(--bg-1, #111); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.pgl__hd { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.pgl__go { display: flex; gap: 6px; margin-left: auto; }
+.pgl__go input { width: 100px; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-2, #1a1a1a); color: var(--text-1, #fff); font: inherit; }
+.pgl__grid { flex: 1; overflow-y: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; padding: 12px; align-content: start; }
+.pgl__it { display: grid; gap: 4px; padding: 6px; border-radius: 10px; border: 1px solid var(--line); background: transparent; color: var(--text-1, #fff); cursor: pointer; font: inherit; }
+.pgl__it.is-cur { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+.pgl__img { display: block; aspect-ratio: 3 / 4; background: rgba(255,255,255,.06); border-radius: 6px; overflow: hidden; }
+.pgl__img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.pgl__n { font-size: 0.82rem; font-weight: 800; }
