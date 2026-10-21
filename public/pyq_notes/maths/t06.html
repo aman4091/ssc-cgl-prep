@@ -1,0 +1,972 @@
+<!-- ===================== MATHS · AVERAGE (part 1: basics + speed methods) ===================== -->
+<section class="chap" id="mav-basics">
+  <div class="eyebrow">Maths · 312 questions</div>
+  <h2>Average: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, MTS, Selection Post XIV, Delhi Police, GD 2026) · sabse zyada: koi aaya / koi gaya, consecutive numbers, beech wala number, do group ka average</div>
+
+  <h3>Pehle ek chhoti si kahani: 4 dost, 40 toffee</h3>
+  <p>Chaar dost hain. Kisi ke paas 6 toffee, kisi ke 9, kisi ke 11, kisi ke 14. Ladai na ho, isliye sab toffee ek jagah rakh do.</p>
+  <ul>
+    <li>Kul toffee = 6 + 9 + 11 + 14 = <b>40</b>.</li>
+    <li>Ab 4 logon mein barabar baanto: 40 ÷ 4 = <b>10</b> har ek ko.</li>
+  </ul>
+  <p>Bas yahi <b>average</b> hai: sab kuch mila do, phir barabar baant do. Average ka matlab hai "agar sab barabar hote, toh har ek ke paas kitna hota".</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Four bars of 6, 9, 11 and 14 drawn to scale with a dashed average line at 10. The 11 and 14 bars stick out above the line by 1 and 4. The 6 and 9 bars fall short by 4 and 1. Extra above equals shortfall below.">
+      <rect x="20" y="10" width="14" height="12" style="fill:var(--ch)"/>
+      <text x="40" y="20" class="sm">average se upar ka extra</text>
+      <rect x="230" y="10" width="14" height="12" class="paper" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <text x="250" y="20" class="sm">average tak pahunchne ki kami</text>
+      <line x1="90" y1="220" x2="620" y2="220" class="ln"/>
+      <!-- bars, 12 px per toffee -->
+      <rect x="120" y="148" width="80" height="72" class="chf"/><rect x="120" y="148" width="80" height="72" class="chs"/>
+      <rect x="250" y="112" width="80" height="108" class="chf"/><rect x="250" y="112" width="80" height="108" class="chs"/>
+      <rect x="380" y="100" width="80" height="120" class="chf"/><rect x="380" y="100" width="80" height="120" class="chs"/>
+      <rect x="510" y="100" width="80" height="120" class="chf"/><rect x="510" y="100" width="80" height="120" class="chs"/>
+      <rect x="380" y="88" width="80" height="12" style="fill:var(--ch)"/>
+      <rect x="510" y="52" width="80" height="48" style="fill:var(--ch)"/>
+      <rect x="120" y="100" width="80" height="48" class="paper" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <rect x="250" y="100" width="80" height="12" class="paper" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <line x1="90" y1="100" x2="620" y2="100" class="ln" stroke-dasharray="6 4"/>
+      <text x="626" y="104" class="lbl" style="fill:var(--ch)">avg 10</text>
+      <g text-anchor="middle" class="lbl">
+        <text x="160" y="128">−4</text><text x="290" y="96">−1</text><text x="420" y="82">+1</text><text x="550" y="46">+4</text>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="160" y="240">6</text><text x="290" y="240">9</text><text x="420" y="240">11</text><text x="550" y="240">14</text>
+      </g>
+      <text x="350" y="262" text-anchor="middle" class="sm">upar ka extra (+1 +4 = 5) = neeche ki kami (4 + 1 = 5) · isliye kul farq hamesha 0</text>
+    </svg>
+    </div>
+    <figcaption>Average ek "level" hai. Upar wale bars apna extra neeche wale gaddhon mein daal dete hain, aur sab 10 par aa jaate hain.</figcaption>
+  </figure>
+
+  <h3>3 baatein jinse poora chapter banta hai</h3>
+  <div class="box"><span class="k">Idea 1 · Total sab kuch hai</span>
+    <b>Total = Average × ginti.</b> 5 logon ka average 20 hai, toh kul = 100. Average ke sawaal mein jab bhi atko, total bana lo.
+  </div>
+  <div class="box"><span class="k">Idea 2 · Average se farq (deviation) ka jod hamesha 0</span>
+    Upar picture mein: −4, −1, +1, +4. Jod = 0. Yahi sabse bada shortcut hai. Bade-bade number jodne ki zaroorat nahi, bas average se kitna upar ya neeche hai, wo jodo.
+  </div>
+  <div class="box"><span class="k">Idea 3 · Total mein jo badla, wo sab mein barabar baant jaata hai</span>
+    Total 30 badha aur log 30 hain, toh average 1 badha. <b>Average ka badlaav = total ka badlaav ÷ ginti.</b> Naya aaya, koi gaya, galat number likha, sab isi se hal hote hain.
+  </div>
+  <p>Paper mein ek sawaal ke liye lagbhag <b>36 second</b> milte hain. Neeche 11 tareeke hain. Har ek rough mein, bina lambi jod ke chalta hai.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Total nikaalo (Sum = Avg × n)</h3>
+  <p><b>Kab use karo:</b> jab ginti aur average diye hon, aur kuch hata ya jod raha ho. Ya jab "total" hi pucha ho.</p>
+  <div class="box"><span class="k">Demo · 10 numbers ka avg 50, pehle 6 ka 45. Baaki 4 ka avg? · <i>~10 sec</i></span>
+    Total = 500. Pehle 6 = 270. Baaki 4 = 230 → 230 ÷ 4 = <b>57.5</b>.
+  </div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · "Maan lo average" (deviation method)</h3>
+  <p><b>Kab use karo:</b> jab 4–6 bade number diye hon (5456, 5972 …) ya marks jaise 72, 68, 74. Jodna mat, average se farq likho.</p>
+  <p><b>Soch aise:</b> ek aasaan number maan lo (jaise 70). Har number us se kitna upar ya neeche hai, wo likho. Farq ka jod ÷ ginti = asli average ka sudhaar.</p>
+  <div class="box"><span class="k">Demo · 99, 75, 52, 97, 34 ka average · <i>~12 sec</i></span>
+    70 maano. Farq: +29, +5, −18, +27, −36. Jod = +61 − 54 = <b>+7</b>.<br>
+    Average = 70 + 7/5 = <b>71.4</b>.
+  </div>
+  <div class="box"><span class="k">Demo · Missing number: 72, 68, 74, 70, x ka avg 71 · <i>~8 sec</i></span>
+    71 se farq: +1, −3, +3, −1 = 0. Kul farq 0 hona chahiye, toh x ka farq bhi 0 → x = <b>71</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "Target average" wale sawaal (5th din kitna bechein ki avg 130 ho) mein target ko hi maan lo. Jitni kami ab tak hai, utna 5th number mein extra daalo.</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Koi naya aaya (teacher, next innings)</h3>
+  <p><b>Soch aise:</b> 19 bachchon ka avg 17. Teacher aayi, avg 18 ho gaya. Matlab har bachche ko 1 saal "mila". Ye 19 saal teacher ne diye. Aur teacher ke paas khud ka naya average 18 bhi bacha. Toh teacher = 18 + 19 = <b>37</b>.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Teacher joins 19 students of average 17 and the average becomes 18. Teacher's bar of 37 is split into 18, her own share at the new average, and 19, one year given to each of the 19 students.">
+      <defs>
+        <marker id="mav-basics-j-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <line x1="40" y1="210" x2="170" y2="210" class="ln"/>
+      <rect x="60" y="138" width="90" height="72" class="chf"/><rect x="60" y="138" width="90" height="72" class="chs"/>
+      <rect x="60" y="62" width="90" height="76" style="fill:var(--ch)"/>
+      <text x="105" y="178" text-anchor="middle" class="lbl">18</text>
+      <text x="105" y="194" text-anchor="middle" class="sm">apna hissa</text>
+      <text x="105" y="104" text-anchor="middle" class="lbl" style="fill:var(--paper)">19</text>
+      <text x="105" y="120" text-anchor="middle" class="sm" style="fill:var(--paper)">baantne ko</text>
+      <text x="105" y="52" text-anchor="middle" class="lbl">Teacher = 37</text>
+      <text x="105" y="232" text-anchor="middle" class="sm">naya avg + n × badhat</text>
+      <line x1="154" y1="100" x2="226" y2="150" class="ln" marker-end="url(#mav-basics-j-arr)"/>
+      <text x="232" y="96" class="lbl">19 bachche: avg 17 se 18 hua</text>
+      <text x="232" y="114" class="sm">har ek ko +1 chahiye → 19 × 1 = 19 saal</text>
+      <g class="chf">
+        <rect x="232" y="150" width="20" height="22"/><rect x="256" y="150" width="20" height="22"/><rect x="280" y="150" width="20" height="22"/><rect x="304" y="150" width="20" height="22"/><rect x="328" y="150" width="20" height="22"/><rect x="352" y="150" width="20" height="22"/><rect x="376" y="150" width="20" height="22"/><rect x="400" y="150" width="20" height="22"/><rect x="424" y="150" width="20" height="22"/><rect x="448" y="150" width="20" height="22"/>
+        <rect x="472" y="150" width="20" height="22"/><rect x="496" y="150" width="20" height="22"/><rect x="520" y="150" width="20" height="22"/><rect x="544" y="150" width="20" height="22"/><rect x="568" y="150" width="20" height="22"/><rect x="592" y="150" width="20" height="22"/><rect x="616" y="150" width="20" height="22"/><rect x="640" y="150" width="20" height="22"/><rect x="664" y="150" width="20" height="22"/>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="242" y="165">+1</text><text x="266" y="165">+1</text><text x="290" y="165">+1</text><text x="314" y="165">+1</text><text x="338" y="165">+1</text><text x="362" y="165">+1</text><text x="386" y="165">+1</text><text x="410" y="165">+1</text><text x="434" y="165">+1</text><text x="458" y="165">+1</text>
+        <text x="482" y="165">+1</text><text x="506" y="165">+1</text><text x="530" y="165">+1</text><text x="554" y="165">+1</text><text x="578" y="165">+1</text><text x="602" y="165">+1</text><text x="626" y="165">+1</text><text x="650" y="165">+1</text><text x="674" y="165">+1</text>
+      </g>
+      <text x="232" y="200" class="sm">Ghata ho toh ulta: naya aadmi apne hisse se kam laya.</text>
+      <text x="232" y="218" class="sm">40 kg wala 39 mein aaya, avg 0.5 gira → naya avg = 40 + 39 × 0.5 = 59.5</text>
+    </svg>
+    </div>
+    <figcaption>Naya aadmi = (naya average) + (purane log × badhat). Badhat ki jagah giravat ho toh minus.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 40 workers ka avg ₹24,000. Supervisor aaya, avg ₹24,500. Supervisor ki salary? · <i>~6 sec</i></span>
+    Naya avg 24,500 + 40 × 500 = 24,500 + 20,000 = <b>₹44,500</b>.
+  </div>
+  <div class="box"><span class="k">Demo · Batsman: 25 innings ka avg 48. 26th mein kitne run ki avg 50 ho? · <i>~6 sec</i></span>
+    50 + 25 × 2 = <b>100</b>. (Same formula: naya avg + purani innings × badhat.)
+  </div>
+  <div class="trick"><b>Trick:</b> Ulta bhi chalta hai. Naya score diya, naya avg pucha → badhat = (score − purana avg) ÷ (nayi ginti). 9 innings avg 55, 10th mein 145 → (145 − 55)/10 = 9 → <b>64</b>.</div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Koi chala gaya (removed number)</h3>
+  <p><b>Soch aise:</b> 9 numbers ka avg 56. Ek gaya, baaki 8 ka avg 54. Matlab baaki 8 mein se har ek 2 kam hai. Ye 8 × 2 = 16 "extra" jaane wala le gaya. Toh gaya hua = 56 + 16 = <b>72</b>.</p>
+  <div class="box"><span class="k">Formula · ~5 sec</span>
+    Avg <b>gira</b>: gaya hua = purana avg + (bache hue × giravat).<br>
+    Avg <b>badha</b>: gaya hua = purana avg − (bache hue × badhat).<br>
+    6 numbers ka avg P, ek gaya, avg P + 5 → gaya hua = P − 5 × 5 = <b>P − 25</b>.
+  </div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Replacement (ek gaya, ek aaya)</h3>
+  <p><b>Soch aise:</b> ginti wahi rahi. Toh total ka badlaav = ginti × avg ka badlaav. <b>Naya − purana = n × badlaav.</b></p>
+  <div class="box"><span class="k">Demo · 9 logon ka avg 3.5 kg badha jab 67 kg wale ki jagah naya aaya · <i>~6 sec</i></span>
+    Naya = 67 + 9 × 3.5 = 67 + 31.5 = <b>98.5 kg</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> Do gaye, do aaye? Do ka <b>jod</b> badlega: naye do ka jod = purane do ka jod + n × badhat. Phir ÷ 2.</div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Galat entry (misread / wrongly entered)</h3>
+  <p><b>Soch aise:</b> galti sirf ek number mein hai. Total mein (sahi − galat) ka farq aaya, aur wo sab mein baant gaya.</p>
+  <div class="box"><span class="k">Formula · ~6 sec</span>
+    <b>Sahi avg = galat avg + (sahi − galat) ÷ n.</b><br>
+    40 bachche, avg 72, 39 ki jagah 93 likha: (39 − 93)/40 = −54/40 = −1.35 → <b>70.65</b>.<br>
+    Ulta: 39 ki jagah 89 likha, avg ½ badha → 50 ÷ n = ½ → n = <b>100</b>.
+  </div>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Do group ka average (alligation cross)</h3>
+  <p><b>Kab use karo:</b> "30 clerks ka avg 12,000, 10 officers ka 20,000" type. Ya ulta: kul avg diya, ginti puchi.</p>
+  <p><b>Soch aise:</b> combined average hamesha dono ke <b>beech</b> mein hota hai, aur jis group mein log zyada, uske paas khisakta hai. Ginti ka ratio = <b>ulte</b> farq ka ratio.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Alligation cross. Officers average 28,000, non-officers 10,000, overall 16,000. Distances: 28 minus 16 is 12, 16 minus 10 is 6. So officers to non-officers is 6 to 12, or 1 to 2. With 15 officers there are 30 non-officers.">
+      <rect x="60" y="20" width="160" height="50" rx="8" class="chf"/><rect x="60" y="20" width="160" height="50" rx="8" class="chs"/>
+      <rect x="340" y="20" width="160" height="50" rx="8" class="chf"/><rect x="340" y="20" width="160" height="50" rx="8" class="chs"/>
+      <text x="140" y="42" text-anchor="middle" class="lbl">Officers</text><text x="140" y="60" text-anchor="middle" class="sm">avg 28 (hazaar)</text>
+      <text x="420" y="42" text-anchor="middle" class="lbl">Non-officers</text><text x="420" y="60" text-anchor="middle" class="sm">avg 10</text>
+      <rect x="200" y="110" width="160" height="44" rx="22" style="fill:var(--ch)"/>
+      <text x="280" y="137" text-anchor="middle" class="lbl" style="fill:var(--paper)">Kul avg 16</text>
+      <g class="ln">
+        <line x1="150" y1="72" x2="410" y2="196"/>
+        <line x1="410" y1="72" x2="150" y2="196"/>
+      </g>
+      <rect x="60" y="196" width="160" height="44" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <rect x="340" y="196" width="160" height="44" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="140" y="223" text-anchor="middle" class="lbl">16 − 10 = 6</text>
+      <text x="420" y="223" text-anchor="middle" class="lbl">28 − 16 = 12</text>
+      <text x="140" y="258" text-anchor="middle" class="sm">officers ka hissa</text>
+      <text x="420" y="258" text-anchor="middle" class="sm">non-officers ka hissa</text>
+      <text x="530" y="120" class="lbl">6 : 12 = 1 : 2</text>
+      <text x="530" y="142" class="sm">15 officers → 30 non-officers</text>
+      <text x="530" y="164" class="sm">(CGL · 15 Sep 2025)</text>
+    </svg>
+    </div>
+    <figcaption>Cross ke neeche wale number <b>ulte</b> group ke hain: officers ke neeche 16 − 10, jo non-officers wale side ka farq hai. Ye 1 : 2 hi ginti ka ratio hai.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Combined average ka 8 second wala formula</span>
+    <b>Kul avg = chhota avg + farq × (bade wale group ka hissa).</b><br>
+    30 clerks 12,000 + 10 officers 20,000: farq 8,000, officers ka hissa 10/40 = ¼ → 12,000 + 2,000 = <b>14,000</b>.<br>
+    35% women 72,000, baaki men 68,000: 68,000 + 4,000 × 0.35 = <b>69,400</b>.
+  </div>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · Beech wala number (pehle k ka avg, aakhri k ka avg)</h3>
+  <p><b>Kab use karo:</b> "11 numbers ka avg 68, pehle 5 ka 63, aakhri 5 ka 72, 6th number?" Ye sabse zyada aane wala sawaal hai.</p>
+  <p><b>Soch aise:</b> sabka farq (deviation) nikaalo. Pehle 5: 5 × (63 − 68) = −25. Aakhri 5: 5 × (72 − 68) = +20. Kul farq 0 hona chahiye. Toh bacha hua 6th number +5 laaya → 68 + 5 = 73.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Two cases. Gap case: 11 numbers, first 5 and last 5 bracketed, 6th is left out, so middle = average minus sum of group deviations. Overlap case: 11 numbers, first 6 and last 6 bracketed, the 6th is counted twice, so middle = average plus sum of group deviations.">
+      <text x="10" y="22" class="lbl">Case 1 · Gap: 5 + 5 = 10, ek number bahar (6th)</text>
+      <g>
+        <rect x="40" y="50" width="48" height="34" rx="4" class="chf"/><rect x="92" y="50" width="48" height="34" rx="4" class="chf"/><rect x="144" y="50" width="48" height="34" rx="4" class="chf"/><rect x="196" y="50" width="48" height="34" rx="4" class="chf"/><rect x="248" y="50" width="48" height="34" rx="4" class="chf"/>
+        <rect x="300" y="50" width="48" height="34" rx="4" style="fill:var(--ch)"/>
+        <rect x="352" y="50" width="48" height="34" rx="4" class="chf"/><rect x="404" y="50" width="48" height="34" rx="4" class="chf"/><rect x="456" y="50" width="48" height="34" rx="4" class="chf"/><rect x="508" y="50" width="48" height="34" rx="4" class="chf"/><rect x="560" y="50" width="48" height="34" rx="4" class="chf"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="64" y="72">1</text><text x="116" y="72">2</text><text x="168" y="72">3</text><text x="220" y="72">4</text><text x="272" y="72">5</text><text x="376" y="72">7</text><text x="428" y="72">8</text><text x="480" y="72">9</text><text x="532" y="72">10</text><text x="584" y="72">11</text></g>
+      <text x="324" y="72" text-anchor="middle" class="lbl" style="fill:var(--paper)">6</text>
+      <path d="M40,96 L40,104 L296,104 L296,96" class="chs"/>
+      <path d="M352,96 L352,104 L608,104 L608,96" class="chs"/>
+      <text x="168" y="122" text-anchor="middle" class="sm">pehle 5 · avg 63 · farq 5 × (−5) = −25</text>
+      <text x="480" y="122" text-anchor="middle" class="sm">aakhri 5 · avg 72 · farq 5 × (+4) = +20</text>
+      <text x="350" y="142" text-anchor="middle" class="lbl" style="fill:var(--ch)">6th = avg − (−25 + 20) = 68 + 5 = 73</text>
+      <line x1="20" y1="158" x2="680" y2="158" class="ln" stroke-dasharray="3 4"/>
+      <text x="10" y="180" class="lbl">Case 2 · Overlap: 6 + 6 = 12 · upar bracket pehle 6, neeche aakhri 6 · 6th do baar gina</text>
+      <path d="M40,200 L40,192 L348,192 L348,200" class="chs"/>
+      <g>
+        <rect x="40" y="206" width="48" height="34" rx="4" class="chf"/><rect x="92" y="206" width="48" height="34" rx="4" class="chf"/><rect x="144" y="206" width="48" height="34" rx="4" class="chf"/><rect x="196" y="206" width="48" height="34" rx="4" class="chf"/><rect x="248" y="206" width="48" height="34" rx="4" class="chf"/>
+        <rect x="300" y="206" width="48" height="34" rx="4" style="fill:var(--ch)"/>
+        <rect x="352" y="206" width="48" height="34" rx="4" class="chf"/><rect x="404" y="206" width="48" height="34" rx="4" class="chf"/><rect x="456" y="206" width="48" height="34" rx="4" class="chf"/><rect x="508" y="206" width="48" height="34" rx="4" class="chf"/><rect x="560" y="206" width="48" height="34" rx="4" class="chf"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="64" y="228">1</text><text x="116" y="228">2</text><text x="168" y="228">3</text><text x="220" y="228">4</text><text x="272" y="228">5</text><text x="376" y="228">7</text><text x="428" y="228">8</text><text x="480" y="228">9</text><text x="532" y="228">10</text><text x="584" y="228">11</text></g>
+      <text x="324" y="228" text-anchor="middle" class="lbl" style="fill:var(--paper)">6</text>
+      <path d="M300,246 L300,254 L608,254 L608,246" class="chs"/>
+      <text x="350" y="274" text-anchor="middle" class="lbl" style="fill:var(--ch)">6th = avg + (dono group ke farq ka jod)</text>
+    </svg>
+    </div>
+    <figcaption>Gap ho (number bahar reh gaya) toh <b>minus</b>. Overlap ho (number do baar gina gaya) toh <b>plus</b>. Bas group ke farq jodo, total banane ki zaroorat nahi.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 11 ka avg 61, pehle 6 ka 57, aakhri 6 ka 65. 6th? · <i>~8 sec</i></span>
+    6 + 6 = 12 &gt; 11 → overlap. Farq: 6 × (−4) = −24, 6 × (+4) = +24. Jod 0.<br>
+    6th = 61 + 0 = <b>61</b>.
+  </div>
+
+  <!-- ========== METHOD 9 ========== -->
+  <h3>Speed method 9 · Consecutive numbers aur series (average = beech wala)</h3>
+  <p><b>Soch aise:</b> 31, 33, 35, 37, 39. Beech wala 35. Baayein wale jitne kam, daayein wale utne zyada. Toh average = <b>beech wala</b> = (pehla + aakhri) ÷ 2. Ye har barabar-gap wali series (AP) par chalta hai.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 190" role="img" aria-label="Number line with 31, 33, 35, 37, 39. Middle 35 is the average. Left numbers are 4 and 2 less, right numbers 2 and 4 more. Smallest = average minus 4, largest = average plus 4.">
+      <defs>
+        <marker id="mav-basics-n-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <line x1="60" y1="90" x2="640" y2="90" class="ln"/>
+      <g>
+        <circle cx="110" cy="90" r="20" class="chf"/><circle cx="230" cy="90" r="20" class="chf"/>
+        <circle cx="350" cy="90" r="24" style="fill:var(--ch)"/>
+        <circle cx="470" cy="90" r="20" class="chf"/><circle cx="590" cy="90" r="20" class="chf"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="110" y="95">31</text><text x="230" y="95">33</text><text x="470" y="95">37</text><text x="590" y="95">39</text></g>
+      <text x="350" y="95" text-anchor="middle" class="lbl" style="fill:var(--paper)">35</text>
+      <g text-anchor="middle" class="sm"><text x="110" y="132">−4</text><text x="230" y="132">−2</text><text x="350" y="132">0</text><text x="470" y="132">+2</text><text x="590" y="132">+4</text></g>
+      <path d="M126,60 Q350,10 574,60" class="ln" fill="none" marker-end="url(#mav-basics-n-arr)"/>
+      <text x="350" y="30" text-anchor="middle" class="sm">pehla + aakhri = 31 + 39 = 70 = 2 × average</text>
+      <text x="350" y="160" text-anchor="middle" class="lbl">5 consecutive odd, avg 35 → sabse chhota = 35 − 4, sabse bada = 35 + 4</text>
+      <text x="350" y="180" text-anchor="middle" class="sm">gap 2 ho toh: chhota = avg − (n − 1), bada = avg + (n − 1)</text>
+    </svg>
+    </div>
+    <figcaption>Barabar gap wali kisi bhi list mein average = beech wala number. Even ginti ho toh do beech walon ka aadha.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Series</th><th>Average</th><th>Yaad aise rakho</th></tr>
+    <tr><td>1, 2, 3 … n (pehle n natural)</td><td class="n">(n + 1)/2</td><td>pehla + aakhri ka aadha</td></tr>
+    <tr><td>2, 4, 6 … (pehle n even)</td><td class="n">n + 1</td><td>pehle 25 even → 26</td></tr>
+    <tr><td>1, 3, 5 … (pehle n odd)</td><td class="n">n</td><td>pehle 21 odd → 21</td></tr>
+    <tr><td>k, 2k … nk (pehle n multiples of k)</td><td class="n">k(n + 1)/2</td><td>17 ke pehle 28 → 17 × 14.5</td></tr>
+    <tr><td>1², 2² … n² <span class="tag x">CGL+</span></td><td class="n">(n + 1)(2n + 1)/6</td><td>14 tak → 15 × 29/6 = 72.5</td></tr>
+    <tr><td>1³, 2³ … n³ <span class="tag x">CGL+</span></td><td class="n">n(n + 1)²/4</td><td>sum = (n(n + 1)/2)²</td></tr>
+    <tr><td>"a se b ke beech" multiples</td><td class="n">(pehla + aakhri)/2</td><td>pehla aur aakhri multiple dhoondo</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> Pehle 25 prime ka avg = 1060/25 = <b>42.4</b>. Pehle 10 prime: 2 … 29, jod 129, avg 12.9. <span class="tag x">CGL+</span> Ye do number ratt lo.</div>
+
+  <!-- ========== METHOD 10 ========== -->
+  <h3>Speed method 10 · Jode wale sawaal (A + B, B + C …)</h3>
+  <p><b>Soch aise:</b> teeno ka total aur do-do ke jod diye hon, toh <b>B = (A + B) + (B + C) − (A + B + C)</b>. B do baar gina, baaki ek baar.</p>
+  <div class="box"><span class="k">Demo · A, B, C ka avg 30; A, B ka 34; B, C ka 28. B? · <i>~8 sec</i></span>
+    Total 90. A + B = 68, B + C = 56. B = 68 + 56 − 90 = <b>34</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "l, m ka avg aur m, n ka avg ka farq 17" → m kat jaata hai → l − n = 2 × 17 = <b>34</b>. Teeno equation diye hon toh sab <b>jod do</b>.</div>
+
+  <!-- ========== METHOD 11 ========== -->
+  <h3>Speed method 11 · Har number par same kaam</h3>
+  <p><b>Soch aise:</b> sab mein 5 joda → average mein bhi 5 juda. Sab ko 2 se guna → average bhi 2 guna. Jo kaam har number par, wahi average par.</p>
+  <div class="box"><span class="k">Demo · 15 numbers ka avg 28. Har ek ko double karke 5 joda · <i>~4 sec</i></span>
+    28 × 2 + 5 = <b>61</b>. Aadhe +4, aadhe −6 → avg mein (4 − 6)/2 = −1.
+  </div>
+
+  <!-- ========== METHOD 12 ========== -->
+  <h3>Speed method 12 · Average speed (yahan average ka jaal hai)</h3>
+  <p><b>Soch aise:</b> 40 km 20 km/h se (2 ghante) aur 40 km 40 km/h se (1 ghanta). Kul 80 km, 3 ghante → 26.67. Seedha (20 + 40)/2 = 30 <b>galat</b>, kyunki dheemi speed par zyada waqt laga.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Equal distance of 40 km each way. At 20 km/h the trip takes 2 hours, at 40 km/h it takes 1 hour. Total 80 km in 3 hours equals 26.67 km/h, not 30.">
+      <text x="10" y="22" class="lbl">Time (1 ghanta = 150 px)</text>
+      <text x="10" y="62" class="lbl">40 km @ 20</text>
+      <rect x="140" y="44" width="300" height="30" class="chf"/><rect x="140" y="44" width="300" height="30" class="chs"/>
+      <text x="290" y="64" text-anchor="middle" class="lbl">2 ghante</text>
+      <text x="10" y="112" class="lbl">40 km @ 40</text>
+      <rect x="140" y="94" width="150" height="30" style="fill:var(--ch)"/>
+      <text x="215" y="114" text-anchor="middle" class="lbl" style="fill:var(--paper)">1 ghanta</text>
+      <line x1="140" y1="36" x2="140" y2="136" class="ln"/>
+      <text x="460" y="64" class="sm">dheemi speed = zyada waqt</text>
+      <text x="460" y="114" class="sm">tez speed = kam waqt</text>
+      <text x="350" y="160" text-anchor="middle" class="lbl" style="fill:var(--ch)">Avg speed = kul doori ÷ kul time = 80 ÷ 3 = 26.67 km/h</text>
+      <text x="350" y="184" text-anchor="middle" class="sm">barabar doori par shortcut: 2xy/(x + y) = 2 × 20 × 40 / 60 = 26.67</text>
+    </svg>
+    </div>
+    <figcaption>Average speed hamesha dheemi speed ki taraf jhukti hai, kyunki uspar zyada ghante lage.</figcaption>
+  </figure>
+
+  <!-- ========== OPTION TRICKS ========== -->
+  <h3>Speed method 13 · Option se pakdo</h3>
+  <ul>
+    <li><b>Range check:</b> combined average hamesha dono averages ke beech. 12,000 aur 20,000 ka mix 14,000 ho sakta hai, 21,000 kabhi nahi.</li>
+    <li><b>Zyada log wale ki taraf jhukta hai:</b> 30 clerks + 10 officers → answer 12,000 ke paas, 16,000 se neeche.</li>
+    <li><b>Average speed &lt; seedha average</b> (alag speed par barabar doori). 20 aur 40 → 30 se kam wala option.</li>
+    <li><b>Consecutive odd/even:</b> 4 consecutive odd ka average hamesha even hota hai (1, 3, 5, 7 → 4). 5 consecutive even ka average even hota hai.</li>
+    <li><b>Parcel, marks, din</b> ka average sabse bade aur sabse chhote ke beech hi hoga. 1.5 … 2.7 kg ka average 4 kg nahi ho sakta.</li>
+  </ul>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 500" role="img" aria-label="Flowchart for picking a method in average questions. Check in order: speeds given, consecutive or series, someone joined, someone left, replaced, wrong entry, two groups, first k and last k, pair averages. The first yes gives the method.">
+      <defs>
+        <marker id="mav-basics-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="6" width="320" height="30" rx="15" class="chf"/>
+      <text x="180" y="26" text-anchor="middle" class="lbl">Sawaal padho: kya hua?</text>
+      <text x="400" y="26" class="sm">pehla "haan" = tumhara method</text>
+      <g>
+        <rect x="20" y="50" width="320" height="36" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="100" width="320" height="36" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="150" width="320" height="36" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="200" width="320" height="36" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="250" width="320" height="36" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="300" width="320" height="36" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="350" width="320" height="36" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="400" width="320" height="36" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="450" width="320" height="36" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="73">km/h, speed diye hain?</text>
+        <text x="180" y="123">Consecutive / pehle n / multiples?</text>
+        <text x="180" y="173">Koi naya aaya (teacher, innings)?</text>
+        <text x="180" y="223">Koi chala gaya / hataya?</text>
+        <text x="180" y="273">Ek gaya, uski jagah naya aaya?</text>
+        <text x="180" y="323">Galat likha / misread?</text>
+        <text x="180" y="373">Do group, alag averages?</text>
+        <text x="180" y="423">Pehle k ka, aakhri k ka avg?</text>
+        <text x="180" y="473">A+B, B+C ke averages?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="86" x2="180" y2="98" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="180" y1="136" x2="180" y2="148" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="180" y1="186" x2="180" y2="198" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="180" y1="236" x2="180" y2="248" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="180" y1="286" x2="180" y2="298" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="180" y1="336" x2="180" y2="348" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="180" y1="386" x2="180" y2="398" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="180" y1="436" x2="180" y2="448" marker-end="url(#mav-basics-fc-arr)"/>
+      </g>
+      <g class="ln">
+        <line x1="340" y1="68" x2="396" y2="68" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="340" y1="118" x2="396" y2="118" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="340" y1="168" x2="396" y2="168" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="340" y1="218" x2="396" y2="218" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="340" y1="268" x2="396" y2="268" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="340" y1="318" x2="396" y2="318" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="340" y1="368" x2="396" y2="368" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="340" y1="418" x2="396" y2="418" marker-end="url(#mav-basics-fc-arr)"/>
+        <line x1="340" y1="468" x2="396" y2="468" marker-end="url(#mav-basics-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="62">haan</text><text x="368" y="112">haan</text><text x="368" y="162">haan</text><text x="368" y="212">haan</text><text x="368" y="262">haan</text><text x="368" y="312">haan</text><text x="368" y="362">haan</text><text x="368" y="412">haan</text><text x="368" y="462">haan</text></g>
+      <g>
+        <rect x="400" y="50" width="290" height="36" rx="6" class="chf"/><rect x="400" y="100" width="290" height="36" rx="6" class="chf"/><rect x="400" y="150" width="290" height="36" rx="6" class="chf"/>
+        <rect x="400" y="200" width="290" height="36" rx="6" class="chf"/><rect x="400" y="250" width="290" height="36" rx="6" class="chf"/><rect x="400" y="300" width="290" height="36" rx="6" class="chf"/>
+        <rect x="400" y="350" width="290" height="36" rx="6" class="chf"/><rect x="400" y="400" width="290" height="36" rx="6" class="chf"/><rect x="400" y="450" width="290" height="36" rx="6" class="chf"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="73">Kul doori ÷ kul time · 2xy/(x + y)</text>
+        <text x="410" y="123">Avg = beech wala = (pehla + aakhri)/2</text>
+        <text x="410" y="173">Naya avg + purane × badhat</text>
+        <text x="410" y="223">Purana avg + bache × giravat</text>
+        <text x="410" y="273">Naya = purana + n × badlaav</text>
+        <text x="410" y="323">Avg + (sahi − galat)/n</text>
+        <text x="410" y="373">Alligation cross / chhota + farq × hissa</text>
+        <text x="410" y="423">Farq jodo: gap → −, overlap → +</text>
+        <text x="410" y="473">Sab jodo · B = do jod − total</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Kuch bhi match na ho toh: total banao (method 1) ya average maan ke farq jodo (method 2). Ye do kabhi fail nahi hote.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet (ratta maar lo)</span>
+    Total = avg × n · Average ka badlaav = total ka badlaav ÷ n<br>
+    Aaya: x = naya avg + n<sub>purane</sub> × badhat · Gaya: x = purana avg + n<sub>bache</sub> × giravat<br>
+    Replace: naya = purana + n × badhat · Galat entry: avg + (sahi − galat)/n<br>
+    Do group: kul avg = chhota + farq × (bade wale ki ginti ÷ kul ginti)<br>
+    Consecutive (gap d): chhota = avg − (n − 1)d/2 · pehla + aakhri = 2 × avg<br>
+    Pehle n: natural (n + 1)/2 · even n + 1 · odd n · squares (n + 1)(2n + 1)/6<br>
+    Avg speed (barabar doori): 2xy/(x + y) · teen barabar doori <span class="tag x">CGL+</span>: 3xyz/(xy + yz + zx)<br>
+    Pehle 25 prime ka jod 1060 (avg 42.4) · pehle 10 prime ka jod 129
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>15 bachchon ka avg 40. Teacher aayi, avg 42 ho gaya. Teacher ke marks?</summary><p>42 + 15 × 2 = 72.</p></details>
+    <details><summary>9 numbers ka avg 50. Pehle 5 ka 48, aakhri 5 ka 53. 5th number?</summary><p>5 + 5 = 10 &gt; 9 → overlap. Farq: −10 + 15 = +5. 5th = 50 + 5 = 55.</p></details>
+    <details><summary>7 consecutive even numbers ka avg 30. Sabse bada?</summary><p>30 + (7 − 1) = 36.</p></details>
+    <details><summary>60 km/h jaana, 40 km/h wapas. Average speed?</summary><p>2 × 60 × 40 / 100 = 48 km/h.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · AVERAGE (Maths · PYQ types 1–9) ===================== -->
+<section class="chap" id="mav-types1">
+  <div class="eyebrow">Maths · PYQ types 1–9</div>
+  <h2>Average: 17 type ke sawaal (part 1) · aaya, gaya, badla</h2>
+  <div class="meta">Bank mein 312 sawaal · sab yahan · har sawaal ke aage uska method likha hai · part 1 mein 175, part 2 mein 137</div>
+
+  <h3>Type 1 · Seedha average ya total (25 Qs)</h3>
+  <p><b>Samjho:</b> ye free marks hain. Total = avg × n. Number bade hon toh average maan ke farq jodo (method 2).</p>
+  <div class="box"><span class="k">Worked · Sundar ke marks 99, 75, 52, 97, 34 · average? <span class="tag p">PYQ</span> <small>MTS · 18 Feb 2025</small></span>
+    <b>Method:</b> maan lo 70 · <i>~12 sec</i><br>
+    70 se farq: +29, +5, −18, +27, −36 → +61 − 54 = +7.<br>Average = 70 + 7/5 = 70 + 1.4 = <mark>71.4</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Parcels 1.5, 2.0, 1.8, 2.7 kg · average? <span class="tag p">PYQ</span> <small>DP Const · 24 Dec 2025</small></span>
+    <b>Method:</b> seedha jod · <i>~8 sec</i><br>
+    1.5 + 2.7 = 4.2, 2.0 + 1.8 = 3.8 → kul 8.0 kg → 8 ÷ 4 = <mark>2 kg</mark>.<br>Range check: average 1.5 aur 2.7 ke beech hi hoga. Key ka "4 kg" ho hi nahi sakta (note neeche).
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 5 families ka kharcha 250, 400, 350, 500, 300: avg, avg se upar kaun, max − min → <b>maan lo 350</b>: −100, +50, 0, +150, −50 = +50 → 350 + 10 = 360; upar B (400), D (500); 500 − 250 = 250 → <mark>Avg $360, B aur D, $250</mark> <small>CGL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> 3, 5, 7 ka avg, phir 2 badha → <b>beech wala</b> 5 → 5 + 2 → <mark>7</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10, 20, 30, 40, 50 ka avg → <b>beech wala</b> → <mark>30</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 fruits, har ek ka avg ₹40, total? → <b>avg × n</b> → <mark>₹200</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3.25, 2½, 4.75 ka avg → <b>jode banao</b>: 3.25 + 4.75 = 8, + 2.5 = 10.5 → ÷ 3 → <mark>3.5</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 numbers ka avg 20, sum? → <b>avg × n</b> → <mark>100</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7 boxes ka avg 12 kg, kul? → <b>avg × n</b> → <mark>84 kg</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 34, 36, 38, 40, 42 ka avg → <b>beech wala</b> → <mark>38</mark> <small>DP Const · 22 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 men ka avg 70 kg, kul? → <b>avg × n</b> → <mark>560</mark> <small>DP Const · 29 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 subjects ka avg 60, kul marks? → <b>avg × n</b> → <mark>300</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Wages 100, 120, 140 → <b>beech wala</b> → <mark>120</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 employees ka avg ₹8,000, kul? → <b>avg × n</b> → <mark>₹40,000</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 50, 60, 70 cupcakes → <b>beech wala</b> → <mark>60</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Marks 45, 32, 48, 25, 40 → <b>maan lo 40</b>: +5, −8, +8, −15, 0 = −10 → 40 − 2 → <mark>38</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10, 20 ka avg 15; teesra 30 → <b>beech wala</b> (10, 20, 30) → <mark>20</mark> <small>DP Const · 2 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 12 matches ka avg 45, kul run? → <b>avg × n</b> → <mark>540</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> ₹8,000, 9,000, 10,000 → <b>beech wala</b> → <mark>9,000</mark> <small>DP HCM · 7 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 34, 46, X, 22, 55, 25, Y; X, Y ka avg 17.5 → <b>total</b>: 182 + 35 = 217 → ÷ 7 → <mark>31</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20a + 20b = 160 → a + b = 8 → <b>÷ 2</b> → <mark>4</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> −80, −20, 30, 40, 50 → <b>jod</b> = 20 → ÷ 5 → <mark>4</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 80%, 75%, 85% → <b>beech wala</b> (75, 80, 85) → <mark>80%</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25, 35, 45, 55, 65 → <b>beech wala</b> → <mark>45</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4, 8, 12, 16 → <b>(pehla + aakhri)/2</b> = 20/2 → <mark>10</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP Const · 24 Dec 2025 (parcels 1.5, 2.0, 1.8, 2.7 kg): book ki key <b>4 kg</b> kehti hai. Ye galat hai. Jod 8 kg hai aur 4 parcel hain, toh sahi average <b>2 kg</b> hai (pehla option). 4 kg toh sabse bhaari parcel (2.7) se bhi zyada hai, jo average ho hi nahi sakta. Exam mein 2 kg lagao.</div>
+
+  <h3>Type 2 · Missing number (baaki sab diye hain) (23 Qs)</h3>
+  <p><b>Samjho:</b> target average ko hi "maan lo" bana do. Diye gaye numbers ka farq jodo. Jitni kami hai, missing number utna upar hoga.</p>
+  <div class="box"><span class="k">Worked · Grocer: 5456, 5972, 5857, 5235, 5526. 6th mahine kitna ki avg 6400 ho? <span class="tag p">PYQ</span> <small>MTS · 17 Feb 2025</small></span>
+    <b>Method:</b> maan lo 6400 · <i>~20 sec</i><br>
+    6400 se farq: −944, −428, −543, −1165, −874.<br>Jod: 944 + 428 = 1372, + 543 = 1915, + 1165 = 3080, + 874 = 3954 → kami 3954.<br>6th = 6400 + 3954 = <mark>₹10,354</mark>. (Option ka last digit 4 bhi match: 6400 + …54.)
+  </div>
+  <div class="box"><span class="k">Worked · 7 players ka avg 60. Pehle 6: 125, 50, 18, 36, 40, 42. Kitne players ne 7th se kam banaye? <span class="tag p">PYQ</span> <small>GD · 19 May 2026</small></span>
+    <b>Method:</b> total · <i>~15 sec</i><br>
+    Total = 420. Pehle 6 ka jod = 125 + 50 + 18 + 36 + 40 + 42 = 311.<br>7th = 420 − 311 = 109. 109 se kam: 50, 18, 36, 40, 42 → <mark>5</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 5 dost, 4 ne ₹200 diye, 5th ne x; avg 210 → <b>maan lo 210</b>: 4 log 10-10 kam = 40 → x = 210 + 40 → <mark>₹250</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4, 6, x, 10 ka avg 8 → <b>farq</b>: −4, −2, +2 = −4 → x = 8 + 4 → <mark>12</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 120, 150, 130, 100; 5th din kitna ki avg 130 → <b>farq</b>: −10, +20, 0, −30 = −20 → 130 + 20 → <mark>150</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Calories 2100, 2200, 2000, 2300, 2400, 2100; weekly avg 2200 → <b>farq</b>: −100, 0, −200, +100, +200, −100 = −100 → <mark>2,300</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 45, 60, 55, 40; 5th mein kitne ki avg 55 → <b>farq</b>: −10, +5, 0, −15 = −20 → 55 + 20 → <mark>75</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 72, 68, 74, 70, ?; avg 71 → <b>farq</b>: +1, −3, +3, −1 = 0 → <mark>71</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 scores ka avg 10; 6, 9, 11 → <b>farq</b>: −4, −1, +1 = −4 → 10 + 4 → <mark>14</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 ka avg 25; 20, 30 → <b>farq</b> −5 + 5 = 0 → <mark>25</mark> <small>DP Const · 22 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 dost avg 24; 21, 25, 26, 22 → <b>farq</b>: −3, +1, +2, −2 = −2 → 24 + 2 → <mark>26 years</mark> <small>DP Const · 22 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 din ka avg ₹200; pehle 4 din ₹700 → <b>total</b>: 1000 − 700 → <mark>₹300</mark> <small>DP Const · 3 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 3 match ka avg 30; 20 aur 40 → <b>farq</b> −10 + 10 = 0 → <mark>30</mark> <small>DP HCM · 9 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 5 din avg ₹120; 50, 105, 95, 160 → <b>farq</b>: −70, −15, −25, +40 = −70 → 120 + 70 → <mark>190</mark> <small>GD · 5 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> E + F = 50, E, F, G ka avg 40 → <b>total</b>: 120 − 50 → <mark>70</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> E + F = 96, avg 50 → <b>total</b>: 150 − 96 → <mark>54</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 5 din avg ₹150; 100, 155, 70, 200 → <b>farq</b>: −50, +5, −80, +50 = −75 → 150 + 75 → <mark>225</mark> <small>GD · 25 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> X, Y, Z ka avg 90; X = 86, Z = 68; Y + Z? → <b>total − X</b>: 270 − 86 → <mark>184</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> X, Y, Z ka avg 34; X = 16, Z = 20; Y + Z? → <b>total − X</b>: 102 − 16 → <mark>86</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 16, 28, 30, x, 34 ka avg 30 → <b>farq</b>: −14, −2, 0, +4 = −12 → 30 + 12 → <mark>42</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4, 11, 7, 9, 16, 13, 8, 19, 18, 21, 12, x ka mean 12 → <b>farq</b>: −21 (minus wale) + 27 (plus wale) = +6 → x = 12 − 6 → <mark>6</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6435, 6927, 6855, 7230, 6562; avg 6500 chahiye → <b>farq</b>: −65 + 427 + 355 + 730 + 62 = +1509 → 6500 − 1509 → <mark>4991</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 ka avg 62; 58, 65, 60, 67 → <b>farq</b>: −4, +3, −2, +5 = +2 → 62 − 2 → <mark>60</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 3 · Kul − hissa = baaki (ek group nikaal ke baaki ka average) (21 Qs)</h3>
+  <p><b>Samjho:</b> ek hissa average se jitna upar hai, baaki ko utna hi neeche jaana padega (Idea 2). Total banane ki zaroorat nahi, bas farq ko baaki logon mein baanto.</p>
+  <div class="box"><span class="k">Worked · 75 employees ka avg ₹1.8 lakh; 30 juniors ka ₹1.2 lakh. Seniors ka avg? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> farq baanto · <i>~10 sec</i><br>
+    Juniors har ek 0.6 kam → 30 × 0.6 = 18 lakh ki kami.<br>Ye kami 45 seniors poori karenge → har ek 18/45 = 0.4 zyada.<br>Seniors = 1.8 + 0.4 = <mark>₹2.2 lakh</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 25 students ka avg 68; top 5 ka 80, neeche ke 5 ka 50. Baaki 15? <span class="tag p">PYQ</span> <small>CGL · 23 Sep 2025</small></span>
+    <b>Method:</b> farq baanto · <i>~10 sec</i><br>
+    Top 5: 5 × (+12) = +60. Neeche 5: 5 × (−18) = −90. Kul −30.<br>Baaki 15 ko +30 laana hai → har ek +2 → <mark>70</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 24 ka avg ₹40,000; 8 seniors ₹60,000 → <b>farq</b>: 8 × 20,000 = +1.6 lakh → 16 baaki har ek −10,000 → <mark>₹30,000</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 employees + 1 supervisor ka avg ₹15,000; supervisor ₹25,000 → <b>farq</b>: +10,000 → 8 par −1,250 → <mark>₹13,750</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 80 ka avg ₹62,000; 30 ka ₹72,000 → <b>farq</b>: 30 × 10,000 = 3 lakh → 50 par −6,000 → <mark>₹56,000</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 boxes avg 15.5; sabse bhaari 21, halka 10 → <b>farq</b>: +5.5 − 5.5 = 0 → <mark>15.5 kg</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 students ne ₹1200 kharche, ek ne 300 → <b>total</b>: 900 ÷ 5 → <mark>₹180</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 ka avg 24, sabse chhota 15 → <b>farq</b> −9 → baaki 4 par +2.25 → <mark>26.25</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 ka avg 50, pehle 6 ka 45 → <b>farq</b>: −30 → aakhri 4 par +7.5 → <mark>57.5</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7 ka avg ₹120; 4 boys ka 150 → <b>farq</b>: +120 → 3 girls par −40 → <mark>₹80</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 ka avg 18; 14 aur 22 hataye → <b>farq</b>: −4 + 4 = 0 → <mark>18</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 ka avg 40; pehle 10 ka jod 380 → <b>total</b>: 800 − 380 = 420 → <mark>42</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 trees avg 15 ft; 18 ka 16 → <b>farq</b>: +18 → 12 par −1.5 → <mark>13.5 feet</mark> <small>DP Const · 20 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 ka avg 20; ek 40 → <b>farq</b>: +20 → 5 par −4 → <mark>16</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 12 ka avg 46; 20, 8, 12, 40 hataye → <b>total</b>: 552 − 80 = 472 → ÷ 8 → <mark>59</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15 ka avg 55; 25, 12, 15, 36 hataye → <b>total</b>: 825 − 88 = 737 → ÷ 11 → <mark>67</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 ka avg 72; top 5 ka 86, aakhri 5 ka 54 → <b>farq</b>: +70 − 90 = −20 → 20 par +1 → <mark>73</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 ka avg 42; pehle 4 ka 38, aakhri 3 ka 48 → <b>farq</b>: −16 + 18 = +2 → beech ke 3 par −2/3 → <mark>41.33</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 ka avg 45; pehle 4 ka 40, 5th 50 → <b>farq</b>: −20 + 5 = −15 → 6th = 45 + 15 → <mark>60</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 24 workers + manager ka avg ₹5000; manager 11,000 → <b>farq</b>: +6000 → 24 par −250 → <mark>₹4750</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 ka avg 24; ek number 24 hi hai → <b>farq 0</b> → <mark>24</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+  </ul>
+
+  <h3>Type 4 · Ek naya aaya: uski value ya naya average (26 Qs)</h3>
+  <p><b>Yaad karo:</b> naya aadmi = naya avg + (purane log × badhat). Avg gira toh minus. Naya avg pucha ho toh: badhat = (naye ki value − purana avg) ÷ nayi ginti.</p>
+  <div class="box"><span class="k">Worked · 19 students ka avg 17; teacher aayi, avg 18. Teacher ki umar? <span class="tag p">PYQ</span> <small>CGL · 16 Sep 2025</small></span>
+    <b>Method:</b> aaya formula · <i>~5 sec</i><br>
+    Naya avg 18 + 19 × 1 = <mark>37</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 40 kg ka student 39 ki class mein aaya, avg 0.5 kg gira. Naya avg? <span class="tag p">PYQ</span> <small>GD · 6 May 2026</small></span>
+    <b>Method:</b> aaya formula (ulta) · <i>~10 sec</i><br>
+    Naya student = naya avg − 39 × 0.5 → 40 = naya avg − 19.5.<br>Naya avg = <mark>59.5</mark>. (Check: purana 60, 39 × 60 + 40 = 2380, ÷ 40 = 59.5 ✔)
+  </div>
+  <div class="box"><span class="k">Worked · Ek 30 kg ka student aaya, avg 1 kg badha. Doosra 30 kg ka aaya, avg kul 1.5 badha. Purana avg? <span class="tag p">PYQ</span> <small>CHSL · 22 Nov 2025</small></span>
+    <b>Method:</b> aaya formula do baar · <i>~25 sec</i><br>
+    n students, avg A. Pehla: 30 = (A + 1) + n × 1 → A = 29 − n.<br>Do aaye (60 kg): 60 = 2(A + 1.5) + n × 1.5 → 60 = 2A + 3 + 1.5n.<br>A = 29 − n daalo: 60 = 61 − 0.5n → n = 2 → A = <mark>27 kg</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 40 ka avg 16; naya aaya, +0.2 → <b>aaya formula</b>: 16.2 + 40 × 0.2 → <mark>24.2</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40 workers ₹24,000; supervisor se 24,500 → <b>aaya formula</b>: 24,500 + 20,000 → <mark>₹44,500</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 stocks ka avg 8%, paanchon ka 9% → <b>aaya formula</b>: 9 + 4 × 1 → <mark>13%</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 students; 30 saal ki teacher se avg +1 → <b>aaya formula</b>: 30 = (A + 1) + 10 → <mark>19</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Mon–Fri ka avg 40°, Sat 45° → <b>badhat</b> = 5/6 = 0.83 → <mark>40.83° C</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 ka avg 60 kg; teacher se 61 → <b>aaya formula</b>: 61 + 30 → <mark>91 kg</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Avg ₹20,000; ₹50,000 wala aaya, avg +500 → <b>aaya formula</b>: 50,000 = 20,500 + n × 500 → <mark>59</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 24 ka avg 15; teacher 1 se +1, teacher 2 se +1 aur → <b>aaya formula do baar</b>: T1 = 16 + 24 = 40; T2 = 17 + 25 → <mark>42 years</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 49 ka avg 70; 50th se 71 → <b>aaya formula</b>: 71 + 49 → <mark>120</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 ka avg 15; teacher se 16 → <b>aaya formula</b>: 16 + 30 → <mark>46</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 ka avg 45; teacher se 47 → <b>aaya formula</b>: 47 + 10 × 2 → <mark>67</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25 ka avg 40; teacher 70 → <b>badhat</b>: 30/26 ≈ 1.15 → <mark>41</mark> (≈ 41.15) <small>DP Const · 24 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40 ka avg ₹20,000; manager se +500 → <b>aaya formula</b>: 20,500 + 40 × 500 → <mark>₹40,500</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 ka avg 15; 20 saal ka aaya → <b>badhat</b>: 5/11 ≈ 0.45 → <mark>≈ 15.5</mark> (15.45) <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 ka avg 25; 6th se 27 → <b>aaya formula</b>: 27 + 5 × 2 → <mark>37</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 ka avg 8; 7th se 9 → <b>aaya formula</b>: 9 + 6 → <mark>15</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 ka avg 64; naye se 65 → <b>aaya formula</b>: 65 + 6 → <mark>71 kg</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 14 ka avg 13; 15th se avg wahi → <b>badhat 0</b> → naya = avg → <mark>13</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40 ka avg 52; teacher se 52.5 → <b>aaya formula</b>: 52.5 + 40 × 0.5 → <mark>72.5 kg</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12 ka avg ₹15,000; manager se 16,000 → <b>aaya formula</b>: 16,000 + 12 × 1,000 → <mark>₹28,000</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 39 ka avg 30; 130 kg wala aaya → <b>badhat</b>: 100/40 = 2.5 → <mark>32.5</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 ka avg 45; 51 kg wala → <b>badhat</b>: 6/4 = 1.5 → <mark>46.5 kg</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 ka avg 20; naye se 18 → <b>aaya formula (giravat)</b>: 18 − 5 × 2 → <mark>8 years</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 5 · Batsman / test: next innings mein kitna, ya naya average (15 Qs)</h3>
+  <p><b>Samjho:</b> ye Type 4 hi hai, bas "teacher" ki jagah "next innings". Runs = naya avg + purani innings × badhat.</p>
+  <div class="box"><span class="k">Worked · Avg 44 tha. Next innings mein 132, avg 48. Pehle kitni innings? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span>
+    <b>Method:</b> aaya formula ulta · <i>~8 sec</i><br>
+    132 = 48 + n × 4 → 4n = 84 → n = <mark>21</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 25 innings ka avg 48. 26th mein kitne ki avg 50 ho? <span class="tag p">PYQ</span> <small>DP Const · 24 Dec 2025</small></span>
+    <b>Method:</b> aaya formula · <i>~5 sec</i><br>
+    50 + 25 × 2 = <mark>100</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 7 tests ka avg 72, 8 ke baad 73 → <b>aaya formula</b>: 73 + 7 → <mark>80</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 innings avg 40; next 80 → <b>badhat</b>: 40/9 = 4.44 → <mark>44.44</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 innings avg 40; avg 2 badhana → <b>aaya formula</b>: 42 + 20 × 2 → <mark>82</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 subjects avg 75; 78 chahiye → <b>aaya formula</b>: 78 + 4 × 3 → <mark>90</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 tests avg 70; 75 chahiye → <b>aaya formula</b>: 75 + 4 × 5 → <mark>95</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 matches avg 55; 10th mein 145 → <b>badhat</b>: 90/10 = 9 → <mark>64</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 innings avg 32; 10th mein 52 → <b>badhat</b>: 20/10 = 2 → <mark>34</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 matches avg 50; 5th mein 70 → <b>badhat</b>: 20/5 = 4 → <mark>54</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 subjects mein 67%; 71% chahiye → <b>aaya formula</b>: 71 + 5 × 4 → <mark>91</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 19 innings avg 54; 56 chahiye → <b>aaya formula</b>: 56 + 19 × 2 → <mark>94</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 innings avg 32; 34 chahiye → <b>aaya formula</b>: 34 + 10 × 2 → <mark>54</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 subjects avg 70; 75 chahiye → <b>aaya formula</b>: 75 + 4 × 5 → <mark>95</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 innings avg 30; 10th ke baad 31 → <b>aaya formula</b>: 31 + 9 → <mark>40</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+  </ul>
+
+  <h3>Type 6 · Poora group aaya (10 Qs)</h3>
+  <p><b>Samjho:</b> k log aaye. Unka avg = naya avg + (purane log × badhat) ÷ k. Ginti puchi ho toh alligation cross.</p>
+  <div class="box"><span class="k">Worked · 20 students ka avg 18. 5 naye aaye, avg 20. Naye 5 ka avg? <span class="tag p">PYQ</span> <small>CHSL · 13 Nov 2025</small></span>
+    <b>Method:</b> group aaya formula · <i>~8 sec</i><br>
+    Purane 20 ko +2 chahiye → 40 saal. Ye 5 naye baantenge → har ek 8 extra.<br>Naye = 20 + 8 = <mark>28</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 120 students avg 20. Naya batch (avg 18) aaya, kul avg 19.5. Batch mein kitne? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small></span>
+    <b>Method:</b> alligation cross · <i>~10 sec</i><br>
+    Cross: purane 20, naye 18, kul 19.5. Farq: 19.5 − 18 = 1.5 (purane ka hissa), 20 − 19.5 = 0.5 (naye ka).<br>Purane : naye = 1.5 : 0.5 = 3 : 1 → 120 : <mark>40</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 60 ka avg 75; 5 naye se +1 → <b>group formula</b>: 76 + 60/5 → <mark>88</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 36 ka avg 40; 12 naye, avg 44 → <b>group formula</b>: 44 + 36 × 4/12 → <mark>56</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Avg ₹40,000; 4 naye (₹25,000) aaye, avg 3,000 gira → <b>farq</b>: naya avg 37,000, naye har ek 12,000 kam → 48,000 = n × 3,000 → <mark>16</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 14 ka avg X; 5 naye, avg wahi → <b>badhat 0</b> → har naya X → <mark>5X</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 100 ka avg 53.5; 50 naye, avg 74.1 → <b>total</b>: 150 × 74.1 − 5350 = 11,115 − 5,350 → <mark>5765</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 9 workers avg 42.75; 3 naye, 12 ka avg 45.5; do naye 52.2, 48.4 → <b>group formula</b>: naye 3 ka avg = 45.5 + 9 × 2.75/3 = 53.75 → jod 161.25 − 100.6 → <mark>60.65</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15 ka avg 72.4; 5 naye, avg 74.6; teen ke 76.2, 78.5, 80.4, baaki do barabar → <b>group formula</b>: naye 5 ka avg = 74.6 + 15 × 2.2/5 = 81.2 → jod 406 − 235.1 = 170.9 → ÷ 2 → <mark>85.45</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 dost avg 24; 25 aur 30 wale aaye → <b>farq</b>: +1 + 6 = +7, ÷ 7 = +1 → <mark>25 years</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+  </ul>
+
+  <h3>Type 7 · Koi gaya (ya hataya): kaun gaya / naya average (24 Qs)</h3>
+  <p><b>Yaad karo:</b> gaya hua = purana avg + (bache hue × giravat). Avg badh gaya ho toh minus. Do gaye toh "do ka jod" nikalta hai.</p>
+  <div class="box"><span class="k">Worked · 10 innings avg 58; highest hatao, avg 54. Highest? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span>
+    <b>Method:</b> gaya formula · <i>~5 sec</i><br>
+    58 + 9 × 4 = 58 + 36 = <mark>94</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 9 ka avg 72; max − min = 54; max hatane par baaki 8 ka avg 3 gira. Min? <span class="tag p">PYQ</span> <small>CHSL · 22 Nov 2025</small></span>
+    <b>Method:</b> gaya formula · <i>~10 sec</i><br>
+    Max = 72 + 8 × 3 = 96. Min = 96 − 54 = <mark>42</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 8 ka avg P; ek hataya, avg P + 2. Kaun hataya? <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small></span>
+    <b>Method:</b> gaya formula (badha) · <i>~5 sec</i><br>
+    Avg badha toh minus: P − 7 × 2 = <mark>P − 14</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 12 ka avg 65; ek gaya, 64.5 → <b>gaya formula</b>: 65 + 11 × 0.5 → <mark>70.5</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 ka avg 56; ek hataya, 54 → <b>gaya formula</b>: 56 + 8 × 2 → <mark>72</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 ka avg 60; ek gaya, 59.5 → <b>gaya formula</b>: 60 + 29 × 0.5 → <mark>74.5 kg</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 engineers ₹60,000; ek gaya, 58,000 → <b>gaya formula</b>: 60,000 + 4 × 2,000 → <mark>₹68,000</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 ka avg 63; ek hataya, 60 → <b>gaya formula</b>: 63 + 8 × 3 → <mark>87</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12 ka avg 75; top 2 hatao, 72 → <b>do gaye</b>: jod = 2 × 75 + 10 × 3 = 180 → <mark>90</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 innings avg 42; 120 hatao → <b>giravat</b>: (120 − 42)/19 = 78/19 ≈ 4.11 → <mark>37.89</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 ka avg 56; do hataye, 54 → <b>do gaye</b>: jod = 2 × 56 + 6 × 2 = 124 → <mark>62</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 ka avg 26; ek hataya, 25 → <b>gaya formula</b>: 26 + 7 → <mark>33</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 ka avg 48; ek gaya, 45 → <b>gaya formula</b>: 48 + 4 × 3 → <mark>60</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> I: 6 ka avg 42, ek hataya, 40 → 52? II: 38 hatao toh 43? → <b>gaya formula</b>: I: 42 + 5 × 2 = 52 ✔; II: (42 − 38)/5 = +0.8 → 42.8 ✘ → <mark>Only I</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 ka avg 10; ek hataya, 9 → <b>gaya formula</b>: 10 + 5 → <mark>15</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 boys avg 60; 75 wala gaya → <b>giravat</b>: 15/4 = 3.75 → <mark>56.25 kg</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 28 boys avg 19; x aur 21 gaye, avg wahi → <b>do gaye, avg same</b>: jod = 2 × 19 = 38 → 38 − 21 → <mark>17</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 5 ka avg 38; ek hataya, 30 → <b>gaya formula</b>: 38 + 4 × 8 → <mark>70</mark> <small>MTS · 4 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 28 boys avg 23; x aur 27 gaye, avg same → <b>jod = 46</b> → 46 − 27 → <mark>19</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 ka avg 40; ek hataya, 36 → <b>gaya formula</b>: 40 + 4 × 4 → <mark>56</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 28 boys avg 13; x aur 21 gaye, avg same → <b>jod = 26</b> → 26 − 21 → <mark>5</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 ka avg P; ek hataya, P + 5 → <b>gaya formula (badha)</b>: P − 5 × 5 → <mark>P − 25</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 24 ka avg 15; 9 saal wala gaya → <b>badhat</b>: 6/23 ≈ 0.26 → <mark>15.26</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 ka avg 28; ek hataya, 25 → <b>gaya formula</b>: 28 + 4 × 3 → <mark>40</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 8 · Replacement (ek gaya, ek aaya) (18 Qs)</h3>
+  <p><b>Yaad karo:</b> ginti wahi → naya − purana = n × badlaav. Do-do badle toh jod badlega. Ginti bhi badli ho toh total method.</p>
+  <div class="box"><span class="k">Worked · 9 members ka avg 3 badha jab 42 aur 44 saal ke do aadmi ki jagah do auratein aayi. Auraton ka avg? <span class="tag p">PYQ</span> <small>CGL · 16 Sep 2025</small></span>
+    <b>Method:</b> replacement (do ka jod) · <i>~8 sec</i><br>
+    Naye do ka jod = (42 + 44) + 9 × 3 = 86 + 27 = 113 → avg <mark>56.5 years</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 15 players ka avg wahi hai jo 4 saal pehle tha, kyunki 5 players (abhi avg 28) badle gaye. Naye 5 ka avg? <span class="tag p">PYQ</span> <small>CHSL · 18 Nov 2025</small></span>
+    <b>Method:</b> replacement + time · <i>~15 sec</i><br>
+    4 saal mein total 15 × 4 = 60 badhna chahiye tha, par nahi badha.<br>Matlab naye 5 ne total 60 kam kiya → har ek 12 chhota.<br>Naye = 28 − 12 = <mark>16 years</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 7 crates ka avg 84.5; 79.2 kg wala badla, avg 87.1. Phir 3 aur crates aaye. Naya crate? <span class="tag p">PYQ</span> <small>CHSL · 25 Nov 2025</small></span>
+    <b>Method:</b> replacement · <i>~8 sec</i><br>
+    Badhat 2.6 → naya = 79.2 + 7 × 2.6 = 79.2 + 18.2 = <mark>97.4 kg</mark>.<br>Baad mein aaye 3 crates faltu jaankari hai (jaal).
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 30 ka avg 18; 5 gaye (avg 20.4), 5 aaye, avg 17.2 → <b>replacement</b>: total 30 × 0.8 = 24 gira → naye jod = 102 − 24 = 78 → <mark>15.6 years</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 ka avg 55; 40 wale ki jagah 70 → <b>badlaav</b>: +30/30 = +1 → <mark>56</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12 ka avg 46; 72, 84 nikle, 3 naye aaye, 13 ka avg 48 → <b>total</b>: 624 − (552 − 156) = 624 − 396 = 228 → ÷ 3 → <mark>76</mark> <small>CHSL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> 15 ka avg 32; 3 (avg 30) ki jagah 3 naye, avg 33 → <b>replacement</b>: naye jod = 90 + 15 = 105 → <mark>35</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 ka avg 30; 20 ki jagah naya, avg 42 → <b>replacement</b>: 20 + 8 × 12 → <mark>116</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 10 ka avg X; 30 ki jagah 10 → <b>badlaav</b>: −20/10 → <mark>X − 2</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 4 ka avg 28; 24 ki jagah naya, avg 34 → <b>replacement</b>: 24 + 4 × 6 → <mark>48</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 10 ka avg X; 70 ki jagah 30 → <b>badlaav</b>: −40/10 → <mark>X − 4</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 ka avg X; 54 ki jagah 20 → <b>badlaav</b>: −34/10 → <mark>X − 3.4</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7 ka avg 28; 22 ki jagah naya, avg 30 → <b>replacement</b>: 22 + 7 × 2 → <mark>36</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 16 boys avg 24; 19 aur 18 gaye, 43 aaya → <b>total</b>: 384 − 37 + 43 = 390 → ÷ 15 → <mark>26</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 ka avg 3.5 badha; 67 kg wale ki jagah → <b>replacement</b>: 67 + 31.5 → <mark>98.5 kg</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 ka avg 2 badha; 14 saal wale ki jagah → <b>replacement</b>: 14 + 16 → <mark>30</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 parcels avg 1.5 → 1.6; 2.5 kg wala badla → <b>replacement</b>: 2.5 + 10 × 0.1 → <mark>3.5 kg</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 ka avg 36; 48 ki jagah 24 → <b>badlaav</b>: −24/8 = −3 → <mark>33</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 9 · Galat entry (misread / wrongly recorded) (13 Qs)</h3>
+  <p><b>Yaad karo:</b> sahi avg = galat avg + (sahi − galat) ÷ n. Kai kadam ho toh har kadam par total sambhalo.</p>
+  <div class="box"><span class="k">Worked · 40 boys ka avg 160 cm; ek ki height 165 likhi, asal 156. Sahi avg? <span class="tag p">PYQ</span> <small>CGL · 17 Sep 2025</small></span>
+    <b>Method:</b> galat entry · <i>~6 sec</i><br>
+    (156 − 165)/40 = −9/40 = −0.225 → 160 − 0.225 = <mark>159.775 cm</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 89 ki jagah 39 hona tha; isse avg aadha mark badh gaya. Class mein kitne? <span class="tag p">PYQ</span> <small>MTS · 16 Feb 2025</small></span>
+    <b>Method:</b> galat entry ulta · <i>~5 sec</i><br>
+    Farq 50. 50 ÷ n = ½ → n = <mark>100</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 15 ka avg 64; 85 ki jagah 58 liya. Phir naya student aaya jiske marks naye avg se 10% zyada. Final avg? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small></span>
+    <b>Method:</b> galat entry + aaya · <i>~25 sec</i><br>
+    Sudhaar: +27/15 = +1.8 → 65.8.<br>Naya student 65.8 se 10% zyada → 6.58 zyada → badhat = 6.58/16 ≈ 0.41.<br>Final = 65.8 + 0.41 = <mark>66.21</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 30 ka avg 62; 62 ki jagah 82 likha → <b>galat entry</b>: −20/30 = −0.67 → <mark>61.33</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 50 ka avg 38; 23, 17 ki jagah 33, 27 → <b>galat entry</b>: −20/50 = −0.4 → <mark>37.6</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15 ka avg 72.4; 86.3 ki jagah 68.9 → <b>galat entry</b>: +17.4/15 = 1.16 → <mark>73.56</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12 ka avg 63.5; 65 ki jagah 56; phir ek hataya, 11 ka avg 64.2 → <b>total</b>: 762 + 9 = 771; 11 × 64.2 = 706.2 → <mark>64.8</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 events avg 152.5, 2 events 198.5; ek mein +12, ek mein −9 → <b>total</b>: 305 + 397 = 702, + 3 = 705 → ÷ 4 → <mark>176.25</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 240, 300, 280, 260, 320; 260 asal 360 → <b>galat entry</b>: purana avg 280, + 100/5 → <mark>300</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25 ka avg 48; 5 naye (60 each); 40 ki jagah 70 → <b>total</b>: 1200 + 300 + 30 = 1530 → ÷ 30 → <mark>51</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40 ka avg 72; 39 ki jagah 93 → <b>galat entry</b>: −54/40 = −1.35 → <mark>70.65</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Top 6 avg 84.5, neeche 6 avg 72.75; 85.2 ki jagah 58.2 → <b>avg + sudhaar</b>: (84.5 + 72.75)/2 = 78.625, + 27/12 = 2.25 → <mark>80.875</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 ka avg 50; 60 ki jagah 40 → <b>galat entry</b>: +20/10 = +2 → <mark>52 kg</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+  </ul>
+</section>
+
+<!-- ===================== MATHS · AVERAGE (Maths · PYQ types 10–17) ===================== -->
+<section class="chap" id="mav-types2">
+  <div class="eyebrow">Maths · PYQ types 10–17</div>
+  <h2>Average: 17 type ke sawaal (part 2) · beech wala, group, series, speed</h2>
+  <div class="meta">Part 2 · 137 sawaal · beech wala number, jode, do group, consecutive, series, har number par kaam, average speed, tricky</div>
+
+  <h3>Type 10 · Beech wala number (pehle k aur aakhri k ka average) (13 Qs)</h3>
+  <p><b>Yaad karo (method 8):</b> dono group ka farq nikaalo. <b>Gap</b> (beech wala bahar reh gaya) → beech wala = avg − farq ka jod. <b>Overlap</b> (beech wala do baar gina) → beech wala = avg + farq ka jod.</p>
+  <div class="box"><span class="k">Worked · 11 ka avg 68; pehle 5 ka 63, aakhri 5 ka 72. 6th? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> gap rule · <i>~8 sec</i><br>
+    5 + 5 = 10 &lt; 11 → gap. Farq: 5 × (−5) = −25, 5 × (+4) = +20. Jod = −5.<br>6th = 68 − (−5) = <mark>73</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 11 ka avg 61; pehle 6 ka 57, aakhri 6 ka 65. 6th? <span class="tag p">PYQ</span> <small>CGL · 21 Sep 2025</small></span>
+    <b>Method:</b> overlap rule · <i>~6 sec</i><br>
+    6 + 6 = 12 &gt; 11 → overlap. Farq: −24 + 24 = 0 → 6th = 61 + 0 = <mark>61</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 13 ka avg 70; pehle 5 ka 60; agle 5 ka 25% zyada; 11th = 13th − 6, 12th = 13th + 4. 11th aur 12th ka avg? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span>
+    <b>Method:</b> total + baaki 3 · <i>~25 sec</i><br>
+    Total 910. Pehle 5 = 300. Agle 5 ka avg 75 → 375. Aakhri 3 = 910 − 675 = 235.<br>13th = t: (t − 6) + (t + 4) + t = 235 → 3t = 237 → t = 79.<br>11th = 73, 12th = 83 → avg <mark>78</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 11 ka avg 50; pehle 6 ka 49, aakhri 6 ka 52 → <b>overlap</b>: −6 + 12 = +6 → <mark>56</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 ka avg 63; pehle 4 ka 60, aakhri 4 ka 66 → <b>gap</b>: −12 + 12 = 0 → <mark>63</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 ka avg 44; pehle do ka 40, pehla 36 → <b>jod</b>: 80 − 36 → <mark>44</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15 ka avg 20; pehle 9 ka 18, aakhri 7 ka 24 → <b>overlap</b> (16 &gt; 15): −18 + 28 = +10 → 9th = <mark>30</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7 ka avg 81; pehle 3 ka 87, aakhri 3 ka 78 → <b>gap</b>: +18 − 9 = +9 → 81 − 9 → <mark>72</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15 ka avg 38; pehle 7 ka 41, aakhri 7 ka 35 → <b>gap</b>: +21 − 21 = 0 → <mark>38</mark> <small>CHSL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> 10 ka avg 16; pehle 4 ka 14, aakhri 4 ka 18 → <b>gap</b>: −8 + 8 = 0 → beech ke do ka avg <mark>16</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 30 ka avg 60; pehle 15 ka 62, aakhri 16 ka 55 → <b>overlap</b> (31 &gt; 30): +30 − 80 = −50 → 15th = 60 − 50 → <mark>10</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 ka avg 72; pehle 3 ka 70, aakhri 3 ka 75 → <b>overlap</b>: −6 + 9 = +3 → 3rd = <mark>75</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 11 ka avg 45; pehle 5 ka 42, aakhri 5 ka 46 → <b>gap</b>: −15 + 5 = −10 → 45 + 10 → <mark>55</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 11 · Jode ke average (A + B, B + C, A + C) (13 Qs)</h3>
+  <p><b>Yaad karo (method 10):</b> beech wala = do jod − total. Teeno jod diye hon toh sab jodo, har number do baar aata hai.</p>
+  <div class="box"><span class="k">Worked · A, B, C ka avg 30; A, B ka 34; B, C ka 28. B? <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small></span>
+    <b>Method:</b> do jod − total · <i>~8 sec</i><br>
+    Total 90. A + B = 68, B + C = 56. B = 68 + 56 − 90 = <mark>34</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Kisi do ka avg + teesra: 180, 168, 150. Teeno ka avg? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span>
+    <b>Method:</b> sab jodo · <i>~10 sec</i><br>
+    Har line = (do ka aadha) + teesra. Teeno jodo: har number 1 baar poora + 2 baar aadha = 2 baar.<br>2 × total = 498 → total = 249 → avg <mark>83</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Test 1+2 ka avg 82.6, 2+3 ka 84.2, 1+3 ka 80.4. Test 2? <span class="tag p">PYQ</span> <small>CHSL · 21 Nov 2025</small></span>
+    <b>Method:</b> sab jodo · <i>~12 sec</i><br>
+    Jod: 165.2, 168.4, 160.8 → sab jodo = 494.4 = 2 × total → total 247.2.<br>Test 2 = 247.2 − (1 + 3) = 247.2 − 160.8 = <mark>86.4</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Do ka jod + teesre ka aadha: 210, 198, 192 → <b>sab jodo</b>: har number 2.5 baar → 2.5 × total = 600 → total 240 → <mark>80</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> x, y ka avg 30; x, y, z ka 40; x, y, 2z ka avg? → <b>total</b>: x + y = 60, z = 60 → 180/3 → <mark>60</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> N1, N2, N3 ka avg 30; N2, N3, N4 ka 26; N1 = 28 → <b>N2 + N3 kat jaata</b>: N1 − N4 = 3 × 4 = 12 → <mark>16</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Fiction + Non-fic avg 1275; Non-fic + Children 1450; total 3900 → <b>do jod − total</b>: 2550 + 2900 − 3900 → <mark>1550</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> l, m ke avg aur m, n ke avg ka farq 17 → <b>m kat jaata</b>: l − n = 2 × 17 → <mark>34</mark> (sawaal Hindi + English scan mein tha) <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Wahi, farq 23 → <b>m kat jaata</b>: 2 × 23 → <mark>46</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A, B, C ka avg 30; A, B ka 32; B, C ka 38 → <b>do jod − total</b>: 64 + 76 − 90 → <mark>50</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> P, Q, R ka avg 45; P, Q ka 40; Q, R ka 43; R? → <b>total − (P + Q)</b>: 135 − 80 → <mark>55 kg</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A, B, C ka avg 65; A, B ka 50; B, C ka 53 → <b>do jod − total</b>: 100 + 106 − 195 → <mark>11 kg</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A, B, C ka avg 48; A, B ka 45; B, C ka 49 → <b>do jod − total</b>: 90 + 98 − 144 → <mark>44</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CHSL · 21 Nov 2025 (online tests): key ka <b>86.4</b> sahi hai. Par sawaal ki aakhri line ("test 3 mein test 1 se 2.5 kam") jodon se mel nahi khaati. Jodon se test 3, test 1 se 3.2 <b>zyada</b> aata hai. Wo line faltu hai, use chhod do. Teeno jod hi kaafi hain.</div>
+
+  <h3>Type 12 · Do (ya teen) group ka combined average (21 Qs)</h3>
+  <p><b>Yaad karo (method 7):</b> kul avg = chhota avg + farq × (bade avg wale group ka hissa). Ginti ya avg ulta pucha ho toh alligation cross.</p>
+  <div class="box"><span class="k">Worked · Kul avg ₹16,000; officers ₹28,000, non-officers ₹10,000; 15 officers. Non-officers? <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small></span>
+    <b>Method:</b> alligation cross · <i>~8 sec</i><br>
+    Farq: 16 − 10 = 6 (officers ka hissa), 28 − 16 = 12 (non-officers ka).<br>Officers : non = 6 : 12 = 1 : 2 → 15 : <mark>30</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Teen groups ka avg 18, 20, 22; ginti 2 : 3 : 5. Kul avg? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> maan lo 20 · <i>~8 sec</i><br>
+    20 se farq × ginti: (−2) × 2 + 0 × 3 + (+2) × 5 = −4 + 10 = +6.<br>Kul 10 hisse → +0.6 → <mark>20.6</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 80 employees, 35% women (₹72,000), men ₹68,000. Kul avg (₹1000 mein)? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span>
+    <b>Method:</b> chhota + farq × hissa · <i>~6 sec</i><br>
+    68 + 4 × 0.35 = 68 + 1.4 = <mark>69.4</mark>. (80 ka koi kaam nahi, sirf % chahiye.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 5 juniors ₹30,000, 4 seniors ₹60,000 → <b>chhota + farq × hissa</b>: 30,000 + 30,000 × 4/9 → <mark>₹43,333.33</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 departments × 45 + naya 90; 40 ka transfer andar-andar → <b>total</b>: 180 + 90 = 270 → ÷ 5 → <mark>54</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Stack A 12 × 112.5, B 8 × 118.75, C 16 × 107.25 → <b>total</b>: 1350 + 950 + 1716 = 4016 → ÷ 36 → <mark>111.55 kg</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 600 faculty, 40% female (160), male 170 → <b>bada − farq × hissa</b>: 170 − 10 × 0.4 → <mark>166 cm</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 ka avg 40, 40 ka x, kul 50 → <b>cross</b>: ginti 1 : 2 → farq 10 : 5 → x = 50 + 5 → <mark>55</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 ka avg 20, 20 ka x, kul 34 → <b>cross</b>: ginti 1 : 2 → farq 14 : 7 → x = 34 + 7 → <mark>41</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A: 20 × 80, +10% → 88; B: 30 × 100, −5% → 95 → <b>chhota + farq × hissa</b>: 88 + 7 × 3/5 → <mark>92.2 units</mark> <small>CHSL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> 30 clerks ₹12,000, 10 officers ₹20,000 → <b>chhota + farq × hissa</b>: 12,000 + 8,000 × ¼ → <mark>₹14,000</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 mahine ₹17,000, 3 mahine ₹19,000 → <b>chhota + farq × hissa</b>: 17,000 + 2,000 × ⅓ → <mark>₹17,666.67</mark> <small>DP HCM · 7 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 14 ka avg m; 5 ka 23, baaki 9 ka 37 → <b>chhota + farq × hissa</b>: 23 + 14 × 9/14 → <mark>32</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 8 ka avg 57; pehle 4 ka avg aakhri 4 ka double → <b>parts</b>: total 456 = 2 + 1 = 3 parts → <mark>152</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 12 boys 15 saal, 8 girls 10 saal → <b>chhota + farq × hissa</b>: 10 + 5 × 12/20 → <mark>13</mark> <small>GD · 25 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 5 boys 15, 10 girls 12 → <b>chhota + farq × hissa</b>: 12 + 3 × 5/15 → <mark>13</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 girls 60 kg, 16 girls 45 kg → <b>chhota + farq × hissa</b>: 45 + 15 × 20/36 = 45 + 8.33 → <mark>53.33 kg</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 parents avg 32, 3 bachche avg 5 → <b>total</b>: 64 + 15 = 79 → ÷ 5 → <mark>15.8 years</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 ka avg 54; pehle 5 ka avg aakhri 5 ka double → <b>parts</b>: 540 = 3 parts → <mark>180</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40% workers ₹390, 60% executives ₹420 → <b>chhota + farq × hissa</b>: 390 + 30 × 0.6 → <mark>408</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 boys 70, 20 girls 75 → <b>chhota + farq × hissa</b>: 70 + 5 × 20/50 → <mark>72</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 13 · Consecutive numbers (average = beech wala) (41 Qs)</h3>
+  <p><b>Yaad karo (method 9):</b> gap d wali list: chhota = avg − (n − 1)d/2, bada = avg + (n − 1)d/2. Consecutive odd/even mein d = 2, toh chhota = avg − (n − 1). Pehla + aakhri = 2 × avg.</p>
+  <div class="box"><span class="k">Worked · 14 consecutive even ka avg 107. Sabse chhota? <span class="tag p">PYQ</span> <small>CHSL · 13 Nov 2025</small></span>
+    <b>Method:</b> avg − (n − 1) · <i>~5 sec</i><br>
+    107 − 13 = <mark>94</mark>. (Check: 94 … 120, beech ka 107 ✔)
+  </div>
+  <div class="box"><span class="k">Worked · 23 consecutive natural numbers; aakhri 11 ka avg 34. Sab 23 ka avg? <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small></span>
+    <b>Method:</b> beech wala khisakao · <i>~10 sec</i><br>
+    Aakhri 11 = 13th se 23rd. Unka beech wala = 18th = 34.<br>Sab 23 ka beech wala = 12th = 34 − 6 = <mark>28</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 5 consecutive even (avg E) aur 4 consecutive odd (avg O); E = O + 5; even ka jod odd ke jod se 30 zyada. O? <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small></span>
+    <b>Method:</b> total · <i>~15 sec</i><br>
+    5E = 4O + 30 aur E = O + 5 → 5O + 25 = 4O + 30 → O = <mark>5</mark>.<br><i>Note:</i> 4 consecutive odd ka avg hamesha even hota hai (1, 3, 5, 7 → 4), toh 5 asal mein ho nahi sakta. Exam mein algebra wala answer 5 hi lagao.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 6 consecutive (avg A) aur 5 consecutive (avg A + 2); 5 wale ka jod 4 zyada → <b>total</b>: 5(A + 2) = 6A + 4 → <mark>6</mark> (Type 13 ke 16 jaisa: 6 consecutive integers ka avg .5 par khatam hota hai, par key 6 hi) <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> x, x + 2, x + 4 ka avg 10 → <b>beech wala</b>: x + 2 = 10 → <mark>8</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 consecutive even ka avg 41; chhota + bada → <b>2 × avg</b> → <mark>82</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 consecutive even avg 46; agle 3 jode → <b>beech wala</b>: 42 … 56 (8 numbers) → (42 + 56)/2 → <mark>49</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 consecutive even avg 24; bada → <b>avg + 4</b> → <mark>28</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 11 se shuru 8 consecutive odd → <b>(pehla + aakhri)/2</b>: aakhri 11 + 14 = 25 → 36/2 → <mark>18</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×3</span> 5 consecutive odd ka avg 37 / 27 / 47; pichhle 5 jode, naye 5 ka avg → <b>har ek 10 peeche</b> (5 × 2) → <mark>27</mark> / <mark>17</mark> / <mark>37</mark> <small>CHSL · 28 Nov 2025; CHSL · 28 Nov 2025; CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 consecutive even avg 27; bada → <b>avg + 3</b>: 24, 26, 28, 30 → <mark>30</mark> <small>DP Const · 29 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 consecutive odd avg 35; chhota → <b>avg − 4</b> → <mark>31</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7 consecutive odd avg 63; chhota → <b>avg − 6</b> → <mark>57</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 consecutive odd avg 35; bada → <b>avg + 4</b> → <mark>39</mark> <small>DP HCM · 9 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 13 se shuru 21 odd integers → <b>(pehla + aakhri)/2</b>: aakhri 13 + 40 = 53 → <mark>33</mark> <small>DP HCM · 9 Jan 2026</small></li>
+    <li><span class="tag p">PYQ ×3</span> 17 / 19 / 11 consecutive natural ka avg A; chhota + bada? → <b>2 × avg</b> → <mark>2A</mark> <small>GD · 7 May 2026; MTS · 6 Feb 2025; MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 consecutive odd avg 40; ek pehle wala aur ek baad wala joda → <b>dono taraf barabar</b> → <mark>40</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 8 consecutive even avg 57; teesra → <b>chhota = avg − 7 = 50</b> → 50, 52, 54 → <mark>54</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 19 consecutive natural; aakhri 7 ka avg 25 → <b>beech wala khisakao</b>: aakhri 7 = 13th–19th, 16th = 25 → 10th = 25 − 6 → <mark>19</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> a se shuru 17 consecutive ka avg x; a + 6 se shuru → <b>sab 6 khiske</b> → <mark>x + 6</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 consecutive odd avg 24; chhota → <b>avg − 7</b> → <mark>17</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 consecutive natural avg 17.5; aakhri 3 ka avg → <b>bada = 17.5 + 4.5 = 22</b> → 20, 21, 22 → <mark>21</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 17 consecutive natural avg 30; pichhle 5 jode; sabse chhota → <b>avg − 8</b> = 22 → 5 aur peeche → <mark>17</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 consecutive odd avg 18; chhota → <b>avg − 5</b> → <mark>13</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 consecutive natural avg 12.5; aakhri 3 ka avg → <b>bada = 12.5 + 3.5 = 16</b> → 14, 15, 16 → <mark>15</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 consecutive even avg 10 (2 … 18); agle 3 ka jod → <b>beech wala × 3</b>: 20, 22, 24 → 3 × 22 → <mark>66</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7 consecutive odd avg 21; chhota → <b>avg − 6</b> → <mark>15</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7 consecutive even avg 12 (6 … 18); agle 4 ka jod → <b>beech wala × 4</b>: 20 … 26, avg 23 → 4 × 23 → <mark>92</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 consecutive even avg 20 (18, 20, 22); agle 5 ka jod → <b>beech wala × 5</b>: 24 … 32, beech 28 → <mark>140</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 consecutive natural avg 7.5 (6 … 9); aakhri 3 → <b>beech wala</b> (7, 8, 9) → <mark>8</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 consecutive even avg 25; teesra → <b>chhota = 25 − 5 = 20</b> → 20, 22, 24 → <mark>24</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 consecutive odd (avg O), 3 consecutive even (avg E); O = E − 6; even ka jod 16 kam → <b>total</b>: 3E = 4(E − 6) − 16 → E = 40 → <mark>34</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 consecutive odd mean 61; chhota → <b>avg − 4</b> → <mark>57</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 consecutive even mean 68; bada → <b>avg + 4</b> → <mark>72</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 consecutive even avg 76; bada → <b>avg + 4</b> → <mark>80</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 consecutive odd avg 39; bada → <b>avg + 4</b> → <mark>43</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 se shuru 8 consecutive → <b>(pehla + aakhri)/2</b>: (10 + 17)/2 → <mark>13.5</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 14 · Series: pehle n, multiples, AP, primes, squares (19 Qs)</h3>
+  <p><b>Yaad karo:</b> formula table (method 9). "Beech mein" (between) ho toh pehla aur aakhri multiple khud dhoondo, phir (pehla + aakhri)/2.</p>
+  <div class="box"><span class="k">Worked · Saare 3-digit numbers jo 23 se divide hon, unka avg? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span>
+    <b>Method:</b> pehla + aakhri · <i>~15 sec</i><br>
+    Pehla: 23 × 5 = 115. Aakhri: 23 × 43 = 989 (23 × 44 = 1012, 4-digit).<br>Avg = (115 + 989)/2 = 1104/2 = <mark>552</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Pehle 14 natural numbers ke squares ka avg? <span class="tag p">PYQ</span> <small>MTS · 12 Feb 2025</small></span>
+    <b>Method:</b> square formula · <i>~10 sec</i><br>
+    (n + 1)(2n + 1)/6 = 15 × 29/6 = 435/6 = <mark>72.5</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Pehle 25 prime numbers ka avg? <span class="tag p">PYQ</span> <small>MTS · 6 Feb 2025</small></span>
+    <b>Method:</b> yaad wala jod · <i>~5 sec</i><br>
+    100 tak 25 prime hain, unka jod <b>1060</b>. Avg = 1060/25 = <mark>42.4</mark>. (Note neeche: key 64.25 kehti hai.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 300 aur 450 ke beech 13 se divide → <b>pehla + aakhri</b>: 312 (13 × 24), 442 (13 × 34) → 754/2 → <mark>377</mark> <small>CGL · 12 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1000 aur 1300 ke beech 25 se divide → <b>pehla + aakhri</b>: 1025, 1275 → <mark>1150</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pehle 10 odd → <b>avg = n</b> → <mark>10</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 se N tak even, avg 36 → <b>(2 + N)/2 = 36</b> → <mark>70</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pehle N even ka avg 55 → <b>n + 1 = 55</b> → <mark>54</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 aur 44 ke beech odd → <b>pehla + aakhri</b>: (7 + 43)/2 → <mark>25</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 17 ke pehle 28 multiples → <b>k(n + 1)/2</b>: 17 × 14.5 → <mark>246.5</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 se N tak consecutive, avg 44 → <b>(20 + N)/2 = 44</b> → <mark>68</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pehle N odd ka avg 21 → <b>avg = n</b> → <mark>21</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 aur 30 ke beech odd → <b>pehla + aakhri</b>: (9 + 29)/2 → <mark>19</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pehle N odd ka avg 27 → <b>avg = n</b> → <mark>27</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 ke pehle N multiples ka avg 66 → <b>3(N + 1)/2 = 66</b> → N + 1 = 44 → <mark>43</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ ×3</span> 7 / 12 / 9 numbers AP mein; pehle aur aakhri ka avg 9 / 16 / 13 → <b>AP ka avg = (pehla + aakhri)/2</b> → <mark>9</mark> / <mark>16</mark> / <mark>13</mark> <small>MTS · 12 Feb 2025; MTS · 13 Feb 2025; MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pehle 25 even → <b>n + 1</b> → <mark>26</mark> <small>MTS · 13 Feb 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>MTS · 6 Feb 2025 (pehle 25 prime ka avg): book ki key <b>64.25</b> kehti hai. Ye galat hai. Pehle 25 prime 2 se 97 tak hain, jod 1060, avg <b>42.4</b> (doosra option). 64.25 toh 25 prime mein se aadhe se zyada se bada hai, average ho hi nahi sakta. Exam mein 42.4 lagao.</div>
+
+  <h3>Type 15 · Har number par same kaam (+, −, ×, ÷) (12 Qs)</h3>
+  <p><b>Yaad karo (method 11):</b> jo har number par hua, wahi average par. Sirf kuch numbers badle toh total ka badlaav ÷ n.</p>
+  <div class="box"><span class="k">Worked · 15 ka avg 28; har ek double, phir +5. Naya avg? <span class="tag p">PYQ</span> <small>CHSL · 18 Nov 2025</small></span>
+    <b>Method:</b> same kaam avg par · <i>~4 sec</i><br>
+    28 × 2 + 5 = <mark>61</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 20 ka avg 45; aadhe +4, aadhe −6. Naya avg? <span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small></span>
+    <b>Method:</b> aadha-aadha · <i>~5 sec</i><br>
+    Average badlaav = (4 − 6)/2 = −1 → <mark>44</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Avg 45; har ek mein +5 → <b>same kaam</b> → <mark>50</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> 8 ka avg 45; pehle 4 mein +5, aakhri 4 mein −3 → <b>aadha-aadha</b>: (5 − 3)/2 = +1 → <mark>46</mark> (CHSL ke do din wahi sawaal) <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 ka avg 45; har ek −7 → <b>same kaam</b> → <mark>38</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7 ka avg 21; ek number +14 → <b>total ÷ n</b>: 14/7 → <mark>2</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 24 ka avg 34; har ek − M, avg 29 → <b>same kaam</b>: M = 5 → <mark>5</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 30 ka avg N; har ek ÷ 6 → <b>same kaam</b> → <mark>N/6</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 35 ka avg N; har ek − 5 → <b>same kaam</b> → <mark>N − 5</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 20 balls ka avg 33; har ek +6 → <b>same kaam</b> → <mark>39</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 300 balls ka avg 13; har ek +3 → <b>same kaam</b> → <mark>16</mark> <small>MTS · 17 Feb 2025</small></li>
+  </ul>
+
+  <h3>Type 16 · Average speed (8 Qs)</h3>
+  <p><b>Yaad karo (method 12):</b> kul doori ÷ kul time. Barabar doori, do speed → 2xy/(x + y). Speed ka seedha average kabhi nahi.</p>
+  <div class="box"><span class="k">Worked · 40 km 20 km/h, 40 km 40 km/h. Avg speed? <span class="tag p">PYQ</span> <small>DP Const · 27 Dec 2025</small></span>
+    <b>Method:</b> 2xy/(x + y) · <i>~6 sec</i><br>
+    2 × 20 × 40 / 60 = 1600/60 = <mark>26.6 km/h</mark> (26.67).
+  </div>
+  <div class="box"><span class="k">Worked · 60 km @ 30, 40 km @ 20, 100 km @ 50. Avg speed? <span class="tag p">PYQ</span> <small>DP Const · 31 Dec 2025</small></span>
+    <b>Method:</b> kul doori ÷ kul time · <i>~10 sec</i><br>
+    Time: 2 + 2 + 2 = 6 ghante. Doori 200.<br>200 ÷ 6 = 33.3 → <mark>≈ 33 km/h</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 10 km 2 ghante mein, phir 5 km 30 min mein → <b>doori ÷ time</b>: 15 ÷ 2.5 → <mark>6 km/h</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 120 km 2 ghante mein jaana, 3 mein wapas → <b>doori ÷ time</b>: 240 ÷ 5 → <mark>48 km/h</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 km @ 12 jaana, @ 15 wapas → <b>2xy/(x + y)</b>: 360/27 → <mark>13.3 km/h</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Aadhi doori @ 20, aadhi @ 10 → <b>2xy/(x + y)</b>: 400/30 → <mark>≈ 13 km/h</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 km @ 5 jaana, @ 6 wapas → <b>2xy/(x + y)</b>: 60/11 → <mark>5.45 km/h</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 10 km @ 5, phir 20 km @ 10 → <b>doori ÷ time</b>: 2 + 2 = 4 ghante, 30 km → <mark>7.5</mark> <small>DP HCM · 7 Jan 2026</small></li>
+  </ul>
+
+  <h3>Type 17 · Tricky: ratio, %, logic (10 Qs)</h3>
+  <p><b>Samjho:</b> pehle sab ko ek hi cheez (x, ya parts) mein likho. Phir total = avg × n lagao.</p>
+  <div class="box"><span class="k">Worked · Q = 2.5P, S = Q se 40% kam, R = chaaron ka avg, P + R = 4800. R? <span class="tag p">PYQ</span> <small>CHSL · 19 Nov 2025</small></span>
+    <b>Method:</b> sab P mein · <i>~20 sec</i><br>
+    Q = 2.5P, S = 0.6 × 2.5P = 1.5P. Chaaron ka avg R → 4R = P + 2.5P + 1.5P + R → 3R = 5P → R = 5P/3.<br>P + 5P/3 = 8P/3 = 4800 → P = 1800 → R = <mark>₹3000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 500 real numbers ka avg 0. Zyada se zyada kitne negative? <span class="tag p">PYQ</span> <small>CHSL · 25 Nov 2025</small></span>
+    <b>Method:</b> logic · <i>~5 sec</i><br>
+    Jod 0 hona chahiye. 499 negative ho sakte hain, aur 1 bada positive sabko barabar kar de (jaise 499 baar −1 aur ek +499).<br>Sab 500 negative ho toh jod 0 nahi ho sakta → <mark>499</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Teen ka avg 35; pehla doosre se 20% zyada, teesra 20% kam → <b>sab doosre mein</b>: 1.2x + x + 0.8x = 3x → x = avg → <mark>35</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Machines ka defect 1.8%, 2.4%, 1.6%; production barabar; kul defect 4.12, 4th ka 0.92 → <b>parts</b>: pehli teen ka 3.2 = 5.8% of N → 4th = 0.92 × 5.8/3.2 ≈ 1.667 → <mark>1.667%</mark> (runtime wali line faltu) <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 innings avg 50; max − min = 30; baaki 48, 52 → <b>total</b>: max + min = 200 − 100 = 100 → (100 + 30)/2 → <mark>65</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do numbers ka avg 8, ratio 1 : 3 → <b>parts</b>: jod 16 = 4 parts → 4, 12 → guna → <mark>48</mark> <small>DP Const · 20 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 rope ka avg 12, ratio 2 : 3 : 4 → <b>parts</b>: 36 = 9 parts → 4 each → 4 × 4 → <mark>16 m</mark> <small>DP Const · 19 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Avg p, sabse chhota 22. I: p = 35? II: sabse bada 50? → <b>logic</b>: na p fix hai na bada number → <mark>Neither I nor II</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Pehla doosre ka aadha, avg 66 → <b>parts</b>: 1 + 2 = 3 parts = 132 → <mark>44</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Teen ka avg 50; pehla = teesre ka aadha; teesra = doosra + 30 → <b>sab teesre mein</b>: c/2 + (c − 30) + c = 150 → 2.5c = 180 → c = 72 → <mark>36</mark> <small>MTS · 11 Feb 2025</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Teacher aayi, avg 1 badha → teacher = purana avg + 1</td><td>Teacher = naya avg + <b>purane log × badhat</b>. 19 bachche, +1 → 18 + 19 = 37.</td></tr>
+    <tr><td>Koi gaya, avg gira → gaya hua = purana avg − giravat</td><td>Gaya hua = purana avg + <b>bache hue × giravat</b>. Avg gira matlab jaane wala bada tha.</td></tr>
+    <tr><td>Replacement mein n ki jagah (n − 1) se guna</td><td>Ginti wahi rehti hai → <b>n</b> × badlaav.</td></tr>
+    <tr><td>Beech wale number mein overlap aur gap ulat dena</td><td>k<sub>1</sub> + k<sub>2</sub> &gt; n → overlap → <b>plus</b>. k<sub>1</sub> + k<sub>2</sub> &lt; n → gap → <b>minus</b>.</td></tr>
+    <tr><td>Do group ka avg = (a + b)/2</td><td>Ginti dekho. 30 clerks + 10 officers → clerks ki taraf jhukta hai.</td></tr>
+    <tr><td>Speeds ka seedha average (20 aur 40 → 30)</td><td>Kul doori ÷ kul time → 26.67.</td></tr>
+    <tr><td>"Previous 5 odd numbers" ka avg pucha, sab 10 ka avg de diya</td><td>Sawaal "naye wale" ka avg puchta hai → 5 × 2 = 10 peeche.</td></tr>
+    <tr><td>"4 saal pehle bhi wahi avg" mein time bhool jaana</td><td>Har saal sabki umar 1 badhti hai. 15 log × 4 saal = 60 ka farq naye players ne khaya.</td></tr>
+    <tr><td>Faltu jaankari mein ulajhna (baad mein aaye 3 crates, runtime)</td><td>Jo pucha hai, sirf usse jude numbers lo.</td></tr>
+    <tr><td>Galat entry mein sign ulta</td><td>(sahi − galat). Sahi bada → avg badhega.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 312 sawaal, <b>sab use hue</b>, koi nahi chhoda. 9 sawaal scan (image) wale the (166, 176, 184, 187, 194, 203, 205, 278, 296); sab image se padh kar hal kiye. #194 Hindi + English mein tha, English wala hissa use kiya. CHSL 13 Nov aur 14 Nov 2025 mein ek hi sawaal do baar aaya (Type 15, PYQ ×2). Do key galat mili (Type 1 aur Type 14 ke notes). Teen sawaal ki language mein chhoti gadbad hai (Type 11 aur Type 13 ke notes), par key wala answer hi sahi option hai.
+  </div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 · CHSL = CHSL 2025 Tier 1 · CPO = CPO 2025 · MTS = MTS 2024 exam (Feb 2025 shifts) · SP-XIV = Selection Post Phase XIV 2025 · DP Const / DP HCM = Delhi Police Constable / Head Constable (Dec 2025–Jan 2026) · GD = GD Constable (May 2026). Saari dates shift ki dates hain.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>20 ka avg 30. Ek gaya, baaki ka avg 29. Kaun gaya?</summary><p>30 + 19 × 1 = 49.</p></details>
+    <details><summary>8 ka avg 40. 32 ki jagah naya aaya, avg 42. Naya?</summary><p>32 + 8 × 2 = 48.</p></details>
+    <details><summary>13 ka avg 50; pehle 7 ka 48, aakhri 7 ka 53. 7th?</summary><p>7 + 7 = 14 &gt; 13 → overlap. −14 + 21 = +7 → 57.</p></details>
+    <details><summary>40 ladke 60 kg, 20 ladkiyan 51 kg. Kul avg?</summary><p>51 + 9 × 40/60 = 51 + 6 = 57 kg.</p></details>
+    <details><summary>50 bachchon ka avg 60; 74 ki jagah 47 likha. Sahi avg?</summary><p>(74 − 47)/50 = 0.54 → 60.54.</p></details>
+  </div>
+</section>

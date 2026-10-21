@@ -120,7 +120,7 @@ export default function ImpView({ rec }) {
   }
   return (
     <aside className="imp-box">
-      <b className="imp-box__h">⭐ IMP</b>
+      <b className="imp-box__h">{label}</b>
       <InkStatic doc={doc} />
     </aside>
   );
@@ -129,7 +129,7 @@ export default function ImpView({ rec }) {
 // ⭐ Fact log / Vocab ki slide ka IMP (lib/impnotes) — slide par hi, sirf dekhne
 // ko. Jis slide ka IMP hai hi nahi (na pata, na is device par likha) uske liye
 // IndexedDB tak nahi jaate — Vocab mein hazaaron slides hain.
-export function ImpNoteBox({ k }) {
+export function ImpNoteBox({ k, label = "⭐ IMP" }) {
   const [p, setP] = useState(null);
   const [doc, setDoc] = useState(null);
   useEffect(() => {

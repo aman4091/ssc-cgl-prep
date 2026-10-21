@@ -1,0 +1,839 @@
+<!-- ===================== MATHS · TIME AND WORK (part 1: basics + speed methods) ===================== -->
+<section class="chap" id="mtw-basics">
+  <div class="eyebrow">Maths · 245 questions</div>
+  <h2>Time and Work: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, Selection Post XIV, MTS, Delhi Police, GD 2026) · sabse zyada: "saath kitne din", "ek ka time nikaalo", "beech mein koi chala gaya", man-days</div>
+
+  <h3>Pehle ek chhoti si kahani: 60 eentein</h3>
+  <p>Maan lo ek deewar mein <b>60 eentein</b> lagni hain. Ramesh akela 20 din mein lagata hai. Suresh akela 30 din mein.</p>
+  <ul>
+    <li>Ramesh roz kitni eent lagata hai? 60 ÷ 20 = <b>3 eent roz</b>.</li>
+    <li>Suresh roz? 60 ÷ 30 = <b>2 eent roz</b>.</li>
+    <li>Dono saath lagayen toh roz 3 + 2 = <b>5 eent</b>. Toh 60 eent lagengi 60 ÷ 5 = <b>12 din</b> mein.</li>
+  </ul>
+  <p>Bas. Poora chapter isi ek kahani mein hai. Sawaal mein deewar ki eentein nahi di hoti, sirf din diye hote hain. Toh <b>eentein hum khud maan lete hain</b>. Kitni? Itni ki sabke din usmein poore-poore baith jaayen. Yaani dino ka <b>LCM</b>. 20 aur 30 ka LCM = 60.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="A wall of 60 units. Ramesh lays 3 units a day, so 20 day-blocks fill it. Suresh lays 2 a day, 30 day-blocks. Together 5 a day, 12 day-blocks. Drawn to scale.">
+      <text x="390" y="20" text-anchor="middle" class="lbl">Kul kaam = 60 units (20 aur 30 ka LCM) · har khana = 1 din ka kaam</text>
+      <!-- scale: 9 px per unit, x 120..660 -->
+      <text x="10" y="62" class="lbl">Ramesh</text><text x="10" y="78" class="sm">3 units/din</text>
+      <rect x="120" y="48" width="540" height="30" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <line x1="120" y1="63" x2="660" y2="63" style="stroke:var(--ch);opacity:.45" stroke-width="30" stroke-dasharray="27 27"/>
+      <text x="664" y="94" text-anchor="end" class="sm">20 khane = 20 din</text>
+      <text x="10" y="132" class="lbl">Suresh</text><text x="10" y="148" class="sm">2 units/din</text>
+      <rect x="120" y="118" width="540" height="30" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <line x1="120" y1="133" x2="660" y2="133" style="stroke:var(--ch);opacity:.45" stroke-width="30" stroke-dasharray="18 18"/>
+      <text x="664" y="164" text-anchor="end" class="sm">30 khane = 30 din</text>
+      <text x="10" y="202" class="lbl">Saath</text><text x="10" y="218" class="sm">3 + 2 = 5/din</text>
+      <rect x="120" y="188" width="540" height="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <line x1="120" y1="203" x2="660" y2="203" style="stroke:var(--ch);opacity:.7" stroke-width="30" stroke-dasharray="45 45"/>
+      <text x="664" y="234" text-anchor="end" class="lbl" style="fill:var(--ch)">12 khane = 12 din</text>
+      <text x="350" y="260" text-anchor="middle" class="sm">Bar ki lambai teeno mein same hai (kaam same). Jitna mota khana, utne kam din.</text>
+    </svg>
+    </div>
+    <figcaption>Ek hi deewar, teen tareeke se. Khane ki chaudai = roz ka kaam (efficiency). Khano ki ginti = din.</figcaption>
+  </figure>
+
+  <h3>Teen baatein jinse saara chapter banta hai</h3>
+  <div class="box"><span class="k">Ye teen line ratt lo</span>
+    <b>1. Kaam = roz ka kaam × din.</b> (60 = 3 × 20.) Isi ko <b>efficiency × time</b> bolte hain.<br>
+    <b>2. Kaam same ho toh efficiency aur time ulte chalte hain.</b> 2 guna tez → aadha time. Time ka ratio 2 : 3 → efficiency 3 : 2.<br>
+    <b>3. Saath kaam karo toh roz ka kaam JUDTA hai, din nahi.</b> 3 + 2 = 5 roz. 20 + 30 din jodna bilkul galat hai.
+  </div>
+  <p>Kitaab ye sab 1/20 + 1/30 = 1/12 likh kar karti hai. Wahi baat hai, par fraction jodne mein 15 second jaate hain. Units mein 3 second. Isliye neeche har jagah units.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · LCM units (sabse zaroori)</h3>
+  <p><b>Kab use karo:</b> jab bhi alag-alag logon ke "itne din" diye hon. 90% sawaal yahi hain.</p>
+  <ul>
+    <li><b>Step 1:</b> sab dino ka LCM = kul kaam (units).</li>
+    <li><b>Step 2:</b> har aadmi ka roz ka kaam = LCM ÷ uske din.</li>
+    <li><b>Step 3:</b> jo pucha hai, units mein jodo-ghatao. Aakhir mein units ÷ roz ka kaam = din.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · A 12, B 15, C 20 din. Teeno saath? · <i>~10 sec</i></span>
+    LCM 60 → A 5, B 4, C 3 → roz 12 → 60 ÷ 12 = <b>5 din</b>.
+  </div>
+  <div class="box"><span class="k">Demo · A+B 10 din, B akela 15. A akela? · <i>~8 sec</i></span>
+    LCM 30 → (A+B) 3, B 2 → A = 3 − 2 = 1 → 30 ÷ 1 = <b>30 din</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "Din ka LCM = kaam, kaam ÷ din = speed." Kisi ek ka time nikaalna ho toh speeds ghatao, din kabhi mat ghatao.</div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Do logon ka "guna ÷ jod"</h3>
+  <p><b>Kab use karo:</b> sirf do log, aur numbers chhote. LCM likhne ki bhi zaroorat nahi.</p>
+  <ul>
+    <li><b>Saath ka time = a × b ÷ (a + b).</b> 12 aur 8 → 96 ÷ 20 = 4.8 din.</li>
+    <li><b>Ek ka time (saath t, doosra a) = a × t ÷ (a − t).</b> Saath 10, B 15 → 150 ÷ 5 = 30 din.</li>
+    <li><b>Teen log?</b> Ye formula mat lagao. Method 1 (LCM) hi chalao.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · A 12, B 36. Saath? · <i>~5 sec</i></span>
+    12 × 36 ÷ 48 = 432 ÷ 48 = <b>9 din</b>. (Ya: 36 = 3 × 12, toh A = 3 B. Kul 4 B ki speed → 36 ÷ 4 = 9.)
+  </div>
+  <div class="trick"><b>Trick:</b> saath ka time hamesha <b>sabse tez aadmi se kam</b> hota hai. A 12, B 36 → answer 12 se neeche hi hoga. Iske upar wale options seedha kaato.</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Efficiency ulta time (ratio flip)</h3>
+  <p><b>Kab use karo:</b> "2 guna tez", "25% zyada efficient", "time ka ratio 3 : 2", "30 din kam leta hai".</p>
+  <p><b>Soch aise:</b> kaam same hai. Kaam = speed × din. Speed dugni toh din aadhe. Bas ratio ulat do.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Area picture: A works 3 units a day for 20 days, B works 2 units a day for 30 days. Both rectangles have the same area of 60 units, so efficiency ratio 3 to 2 means time ratio 2 to 3.">
+      <line x1="120" y1="230" x2="560" y2="230" class="ln"/>
+      <line x1="120" y1="30" x2="120" y2="230" class="ln"/>
+      <text x="340" y="250" text-anchor="middle" class="sm">din → (12 px = 1 din)</text>
+      <text x="112" y="40" text-anchor="end" class="sm">speed ↑</text>
+      <!-- A: 20 days x 3 units: width 240, height 90 -->
+      <rect x="120" y="40" width="240" height="90" class="chf"/><rect x="120" y="40" width="240" height="90" class="chs"/>
+      <text x="240" y="80" text-anchor="middle" class="lbl">A: 3 roz × 20 din</text>
+      <text x="240" y="100" text-anchor="middle" class="sm">area = 60 units</text>
+      <!-- B: 30 days x 2 units: width 360, height 60 -->
+      <rect x="120" y="160" width="360" height="60" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 3"/>
+      <text x="300" y="188" text-anchor="middle" class="lbl">B: 2 roz × 30 din</text>
+      <text x="300" y="206" text-anchor="middle" class="sm">area = 60 units</text>
+      <text x="580" y="70" class="lbl">speed</text><text x="580" y="88" class="lbl" style="fill:var(--ch)">3 : 2</text>
+      <text x="580" y="160" class="lbl">time</text><text x="580" y="178" class="lbl" style="fill:var(--ch)">2 : 3</text>
+      <text x="580" y="204" class="sm">ulta!</text>
+    </svg>
+    </div>
+    <figcaption>Do rectangle, area (kaam) barabar. Jo upar se mota hai (tez), wo chhota chalta hai (kam din).</figcaption>
+  </figure>
+  <p><b>% wala efficiency fraction mein badlo.</b> Ye table yaad kar lo:</p>
+  <div class="tbl"><table>
+    <tr><th>Sawaal mein</th><th>Speed ratio (naya : purana)</th><th>Time kitna</th><th>PYQ example</th></tr>
+    <tr><td>20% zyada tez</td><td class="n">6 : 5</td><td>time × 5/6</td><td><span class="tag x">CGL+</span> 30 → 25</td></tr>
+    <tr><td>25% zyada tez</td><td class="n">5 : 4</td><td>time × 4/5</td><td>A ka hissa 5/9 = 55.56%</td></tr>
+    <tr><td>33⅓% zyada tez</td><td class="n">4 : 3</td><td>time × 3/4</td><td>S 24 → R 18</td></tr>
+    <tr><td>40% zyada tez</td><td class="n">7 : 5</td><td>time × 5/7</td><td>S 35 → R 25</td></tr>
+    <tr><td>50% zyada tez</td><td class="n">3 : 2</td><td>time × 2/3</td><td>A 15 → B 10</td></tr>
+    <tr><td>60% zyada tez</td><td class="n">8 : 5</td><td>time × 5/8</td><td>16 → 10</td></tr>
+    <tr><td>20% kam tez</td><td class="n">4 : 5</td><td>time × 5/4</td><td>Sonu : Monu = 4 : 5</td></tr>
+    <tr><td>25% kam tez</td><td class="n">3 : 4</td><td>time × 4/3</td><td><span class="tag x">CGL+</span> 15 → 20</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · A, B se 3 guna tez, aur 60 din kam leta hai. Saath? · <i>~12 sec</i></span>
+    Speed 3 : 1 → time 1 : 3. Farq 3 − 1 = 2 parts = 60 → 1 part = 30.<br>
+    A = 30, B = 90. Saath: speed 3 + 1 = 4, kaam = 3 × 30 = 90 → 90 ÷ 4 = <b>22.5 din</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "k guna tez, saath t din" → kaam = (k + 1) × t. Dheema akela = (k + 1) × t din. Tez akela = (k + 1) × t ÷ k. 2 guna, saath 12 → B 36, A 18.</div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Man-days (aadmi × din × ghante = kaam)</h3>
+  <p><b>Kab use karo:</b> "15 aadmi 20 din", "9 ghante roz", "khana 60 din chalega", "6 aadmi chale gaye".</p>
+  <p><b>Soch aise:</b> 1 aadmi 1 din = 1 unit. 12 aadmi 20 din = 240 units. Kaam ka size badla nahi, toh aadmi kam honge toh din badhenge.</p>
+  <div class="box"><span class="k">Formula (ek hi): M₁ × D₁ × H₁ ÷ W₁ = M₂ × D₂ × H₂ ÷ W₂</span>
+    M = aadmi, D = din, H = roz ke ghante, W = kitna kaam. Jo nahi diya, use hata do.
+  </div>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Man-days rectangle. Plan: 12 workers for 20 days, 240 units. Actual: 12 workers for 5 days, 60 units, then 9 workers for 20 more days, 180 units. Total time 25 days.">
+      <!-- scale: 20 px per day (x from 120), 12 px per worker (baseline y=200) -->
+      <line x1="120" y1="200" x2="640" y2="200" class="ln"/>
+      <line x1="120" y1="40" x2="120" y2="200" class="ln"/>
+      <rect x="120" y="56" width="400" height="144" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <text x="470" y="50" text-anchor="middle" class="sm">plan: 12 × 20 = 240</text>
+      <rect x="120" y="56" width="100" height="144" class="chf"/><rect x="120" y="56" width="100" height="144" class="chs"/>
+      <text x="170" y="122" text-anchor="middle" class="lbl">12 × 5</text>
+      <text x="170" y="140" text-anchor="middle" class="lbl">= 60</text>
+      <rect x="220" y="92" width="400" height="108" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="420" y="142" text-anchor="middle" class="lbl">9 aadmi × ? din = 180 bacha</text>
+      <text x="420" y="162" text-anchor="middle" class="lbl" style="fill:var(--ch)">? = 180 ÷ 9 = 20 din</text>
+      <text x="112" y="60" text-anchor="end" class="sm">12</text>
+      <text x="112" y="96" text-anchor="end" class="sm">9</text>
+      <text x="112" y="204" text-anchor="end" class="sm">0</text>
+      <text x="40" y="130" class="sm">aadmi</text>
+      <g text-anchor="middle" class="sm"><text x="120" y="218">0</text><text x="220" y="218">5</text><text x="520" y="218">20</text><text x="620" y="218">25 din</text></g>
+      <text x="350" y="242" text-anchor="middle" class="sm">3 aadmi gaye: jo patti kati (3 × 15 = 45), wo aage 5 din aur kheench kar poori hui</text>
+    </svg>
+    </div>
+    <figcaption>Area = aadmi × din = kaam. PYQ (CGL 14 Oct 2025): 12 worker 20 din, 5 din baad 3 nikaale → aur 20 din.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 40 aadmi, 9 ghante, 50 din. 6 ghante, 75 din mein kitne aadmi? · <i>~10 sec</i></span>
+    40 × 9 × 50 = M × 6 × 75. Kaato: 9 × 50 = 450, 6 × 75 = 450 → barabar → M = <b>40</b>.
+  </div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Bacha kaam (koi gaya, koi aaya)</h3>
+  <p><b>Kab use karo:</b> "4 din baad A chala gaya", "B baad mein juda", "baaki C ne 5 din mein kiya".</p>
+  <ul>
+    <li>Units mein kaam lo. Jitne din jo team chali, uska kaam ghata do.</li>
+    <li><b>Bacha kaam ÷ nayi team ki speed = aur din.</b></li>
+    <li>Ulta sawaal (kisi ka time pucha): bacha kaam ÷ din = nayi team ki speed → usmein se jaane-pehchaane logon ki speed ghatao.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · A 12, B 18. Saath shuru, 4 din baad B gaya. A aur kitne din? · <i>~10 sec</i></span>
+    LCM 36 → A 3, B 2. 4 din × 5 = 20. Bacha 16 → 16 ÷ 3 = <b>5⅓ din</b>.
+  </div>
+  <div class="trick"><b>Trick (ulta sawaal):</b> "A+B 30 din. A 16 din, phir B ne 44 din." B ke 44 din ko todo: 16 din A ke saath + 28 din akela. 16 din saath = 16/30. Baaki 14/30 B ne 28 din mein → B poora 60 din. Jo aadmi <b>poore time</b> raha, uske din pehle gino.</div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Jodiyan (A+B, B+C, C+A) → sab jodo, aadha karo</h3>
+  <p><b>Kab use karo:</b> teen jodiyon ka time diya ho.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Pairs picture with A = 2, B = 3, C = 1 units per day on 60 units. A+B = 5, B+C = 4, C+A = 3. Adding the three pairs gives every person twice: 12. Half is 6, which is A+B+C.">
+      <text x="10" y="20" class="sm">A+B 12 din, B+C 15, C+A 20 · LCM 60 · har chhota khana = 1 unit roz (40 px)</text>
+      <!-- A = chf, B = paper dashed, C = solid ch -->
+      <text x="10" y="58" class="lbl">A+B = 5</text>
+      <rect x="120" y="40" width="80" height="30" class="chf"/><rect x="120" y="40" width="80" height="30" class="chs"/>
+      <rect x="200" y="40" width="120" height="30" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="160" y="60" text-anchor="middle" class="lbl">A</text><text x="260" y="60" text-anchor="middle" class="lbl">B</text>
+      <text x="10" y="108" class="lbl">B+C = 4</text>
+      <rect x="120" y="90" width="120" height="30" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="240" y="90" width="40" height="30" style="fill:var(--ch)"/>
+      <text x="180" y="110" text-anchor="middle" class="lbl">B</text><text x="260" y="110" text-anchor="middle" class="lbl" style="fill:var(--paper)">C</text>
+      <text x="10" y="158" class="lbl">C+A = 3</text>
+      <rect x="120" y="140" width="40" height="30" style="fill:var(--ch)"/>
+      <rect x="160" y="140" width="80" height="30" class="chf"/><rect x="160" y="140" width="80" height="30" class="chs"/>
+      <text x="140" y="160" text-anchor="middle" class="lbl" style="fill:var(--paper)">C</text><text x="200" y="160" text-anchor="middle" class="lbl">A</text>
+      <line x1="120" y1="186" x2="620" y2="186" class="ln"/>
+      <text x="10" y="214" class="lbl">Jod = 12</text>
+      <rect x="120" y="196" width="160" height="30" class="chf"/><rect x="120" y="196" width="160" height="30" class="chs"/>
+      <rect x="280" y="196" width="240" height="30" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="520" y="196" width="80" height="30" style="fill:var(--ch)"/>
+      <text x="200" y="216" text-anchor="middle" class="lbl">A A (4)</text><text x="400" y="216" text-anchor="middle" class="lbl">B B (6)</text><text x="560" y="216" text-anchor="middle" class="lbl" style="fill:var(--paper)">C C</text>
+      <text x="350" y="256" text-anchor="middle" class="lbl" style="fill:var(--ch)">har aadmi do baar aaya → 12 ÷ 2 = 6 = A+B+C · A = 6 − 4 = 2 → 30 din</text>
+    </svg>
+    </div>
+    <figcaption>Teen jodiyan jodo toh har aadmi do baar ginta hai. Aadha karo = teeno saath. Phir jo chahiye uski jodi ghata do.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · A+B 8, B+C 12, C+A 16. A akela? · <i>~15 sec</i></span>
+    LCM 48 → 6, 4, 3 → jod 13 → teeno 6.5. A = 6.5 − (B+C) 4 = 2.5 → 48 ÷ 2.5 = <b>19.2 din</b>.
+  </div>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Baari-baari aur chakkar (cycle)</h3>
+  <p><b>Kab use karo:</b> "alternate days", "har teesre din B madad karta hai", "B har teesre din gayab".</p>
+  <ul>
+    <li>Ek chakkar (2 din, 3 din …) ka kul kaam nikaalo.</li>
+    <li>Poore chakkar chalao jab tak kaam lagbhag khatam na ho. Phir bacha hua din-ba-din bharo.</li>
+    <li><b>Dhyaan:</b> aakhri chakkar se pehle ruko. Jo pehle aata hai (A) wo akele kaam khatam kar sakta hai.</li>
+  </ul>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Alternate days: P does 3 units, Q does 1 unit, total 15. Day by day: 3, 4, 7, 8, 11, 12, 15. Work finishes on day 7 by P, not after 7.5 days.">
+      <text x="350" y="20" text-anchor="middle" class="lbl">P 5 din, Q 15 din · LCM 15 · P = 3, Q = 1 · baari-baari, P pehle</text>
+      <!-- scale 36 px per unit, x from 80 to 620 -->
+      <rect x="80" y="70" width="540" height="40" fill="none" stroke="var(--muted)" stroke-width="1.2"/>
+      <rect x="80" y="70" width="108" height="40" class="chf"/><rect x="80" y="70" width="108" height="40" class="chs"/>
+      <rect x="188" y="70" width="36" height="40" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="224" y="70" width="108" height="40" class="chf"/><rect x="224" y="70" width="108" height="40" class="chs"/>
+      <rect x="332" y="70" width="36" height="40" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="368" y="70" width="108" height="40" class="chf"/><rect x="368" y="70" width="108" height="40" class="chs"/>
+      <rect x="476" y="70" width="36" height="40" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="512" y="70" width="108" height="40" style="fill:var(--ch)"/>
+      <g text-anchor="middle" class="sm">
+        <text x="134" y="60">din 1</text><text x="206" y="60">2</text><text x="278" y="60">din 3</text><text x="350" y="60">4</text><text x="422" y="60">din 5</text><text x="494" y="60">6</text><text x="566" y="60">din 7</text>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="134" y="95">P +3</text><text x="206" y="95">Q</text><text x="278" y="95">P +3</text><text x="350" y="95">Q</text><text x="422" y="95">P +3</text><text x="494" y="95">Q</text><text x="566" y="95" style="fill:var(--paper)">P +3</text>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="188" y="130">3</text><text x="224" y="130">4</text><text x="332" y="130">7</text><text x="368" y="130">8</text><text x="476" y="130">11</text><text x="512" y="130">12</text><text x="620" y="130">15 ✔</text>
+      </g>
+      <text x="350" y="166" text-anchor="middle" class="sm">jodi (2 din) = 4 units · 3 jodi = 12 (6 din) · bache 3 → din 7 ko P akela poora kar deta hai</text>
+      <text x="350" y="194" text-anchor="middle" class="lbl" style="fill:var(--ch)">Answer 7 din. "15 ÷ 4 × 2 = 7.5" galat hai.</text>
+    </svg>
+    </div>
+    <figcaption>PYQ (CHSL 24 Nov 2025). Chakkar ginte waqt aakhri din kaun aata hai, wo dekho.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · Paise (wages) = kiye gaye kaam ke hisaab se</h3>
+  <ul>
+    <li>Sab saath shuru-khatam karein → paise <b>efficiency ke ratio</b> mein. A 25, B 30 → speed 6 : 5.</li>
+    <li>Alag din kaam kiya → paise <b>speed × din</b> ke ratio mein. A 6 din × 3, B 4 din × 5 → 18 : 20.</li>
+    <li>C ka hissa (teeno t din mein) → C ka kaam = kul − (A + B) ka kaam. Hissa = C units ÷ kul units.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · A 12, B 18, ₹7,200. C ke saath 5 din. C ko? · <i>~12 sec</i></span>
+    LCM 180 → A 15, B 10. Teeno 180 ÷ 5 = 36 → C = 11. C ka hissa 11/36 × 7,200 = 11 × 200 = <b>₹2,200</b>.
+  </div>
+
+  <!-- ========== METHOD 9 ========== -->
+  <h3>Speed method 9 · Option se pakdo</h3>
+  <ul>
+    <li><b>Saath ka time &lt; sabse tez akele ka time.</b> Aur &gt; (sabse tez ka time ÷ logon ki ginti).</li>
+    <li><b>Ek ka time nikala?</b> Wo "saath" wale time se zyada hi hoga.</li>
+    <li><b>Fraction answer:</b> denominator = (speeds ka jod). 12, 15, 20 → speed jod 12 → answer x/12 jaisa. 72/13 dikhe toh speed jod 13 tha.</li>
+    <li><b>Ghante-minute wale options:</b> 1/7 din = 24/7 ghante ≈ 3 ghante 26 min. 0.2 din = 4.8 ghante = 4 ghante 48 min.</li>
+  </ul>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing a method in time and work. Check in order: men, hours or food; times faster or percent more efficient; pair times; alternate days or cycles; someone leaves or joins; wages; otherwise LCM units.">
+      <defs>
+        <marker id="mtw-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya diya hai?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mtw-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">Aadmi / auratein / ghante / khana?</text>
+        <text x="180" y="141">"Guna tez", "% zyada", "din kam"?</text>
+        <text x="180" y="197">Jodiyan: A+B, B+C, C+A?</text>
+        <text x="180" y="253">Baari-baari / har n-ve din?</text>
+        <text x="180" y="309">Koi gaya, aaya, ya "baaki" kaam?</text>
+        <text x="180" y="365">Paise / wages / hissa?</text>
+        <text x="180" y="421">Baaki sab: "A x din, B y din"</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mtw-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mtw-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Man-days (M × D × H)</text>
+        <text x="410" y="132">Ratio ulta karo</text>
+        <text x="410" y="188">Sab jodo, aadha karo</text>
+        <text x="410" y="244">Chakkar method</text>
+        <text x="410" y="300">Bacha kaam ÷ nayi speed</text>
+        <text x="410" y="356">Kaam ke ratio mein baanto</text>
+        <text x="410" y="412">LCM units</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">aadmi kam → din zyada · ulta ratio</text>
+        <text x="410" y="149">2 guna, saath 12 → kaam 3 × 12 = 36</text>
+        <text x="410" y="205">LCM lo, jodiyon ka jod ÷ 2 = teeno</text>
+        <text x="410" y="261">aakhri din kaun aata hai, dekho</text>
+        <text x="410" y="317">poore time wale ko pehle gino</text>
+        <text x="410" y="373">speed × din = units = paise ka ratio</text>
+        <text x="410" y="429">LCM = kaam, LCM ÷ din = speed</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow ek baar rough mein chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / values yaad karne wale</span>
+    Saath (2 log) = ab/(a + b) · ek ka time = at/(a − t) · teen log: LCM units.<br>
+    k guna tez, saath t → dheema (k + 1)t, tez (k + 1)t/k.<br>
+    Jodiyan: (A+B) + (B+C) + (C+A) = 2(A+B+C).<br>
+    M₁D₁H₁/W₁ = M₂D₂H₂/W₂ · khana: log × din = fixed.<br>
+    1 din = 24 ghante: ⅓ din = 8 ghante, ⅙ = 4 ghante, 1/7 ≈ 3 ghante 26 min, 0.2 = 4 ghante 48 min.<br>
+    <span class="tag x">CGL+</span> Pipe aur cistern bhi yahi chapter hai: bharne wala nal = kaam karne wala (+), khaali karne wala = todne wala (−).
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>A 10 din, B 15 din. Saath kitne din? Units mein.</summary><p>LCM 30 → 3 + 2 = 5 roz → 30 ÷ 5 = 6 din.</p></details>
+    <details><summary>A+B 12 din, A 20 din. B akela?</summary><p>LCM 60 → (A+B) 5, A 3 → B 2 → 30 din.</p></details>
+    <details><summary>A, B se 50% zyada tez. B 30 din leta hai. A?</summary><p>Speed 3 : 2 → time 2 : 3 → 30 × 2/3 = 20 din.</p></details>
+    <details><summary>10 aadmi 12 din. 5 din baad 2 aadmi chale gaye. Aur kitne din?</summary><p>120 − 50 = 70 bacha. 70 ÷ 8 = 8.75 din.</p></details>
+    <details><summary>A+B 10, B+C 15, C+A 30. Teeno saath?</summary><p>LCM 30 → 3 + 2 + 1 = 6 → teeno 3 roz → 10 din.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · TIME AND WORK (part 2: types 1–7) ===================== -->
+<section class="chap" id="mtw-types1">
+  <div class="eyebrow">Maths · PYQ types 1–7</div>
+  <h2>Time and Work: type 1–7, topper ki rough ke saath</h2>
+  <div class="meta">Saath ka time, ek ka time, efficiency, A = B + C, jodiyan, kaam ka hissa, koi gaya-aaya · har sawaal ke aage uska method likha hai</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 (Tier-2 alag likha hai) · CHSL = CHSL 2025 Tier 1 · CPO = CPO 2025 · SP-XIV = Selection Post Phase XIV 2025 · MTS = MTS 2025 · DP Const / DP HCM = Delhi Police Constable / Head Constable · GD = GD Constable 2026. Saari dates shift ki dates hain.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Saath kitne din? (17 Qs)</h3>
+  <div class="box"><span class="k">Worked · A 12 din, B 18 din. Saath? <span class="tag p">PYQ</span> <small>CPO · 10 Dec 2025</small></span><!--w:99:T1-->
+    <b>Method:</b> LCM units · <i>~6 sec</i><br>
+    LCM 36 → A 3, B 2 → roz 5 → 36 ÷ 5 = <mark>7.2 days</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Ashmit 15, Bhuwan 20, Chandar 30. Teeno saath? <span class="tag p">PYQ</span> <small>DP HCM · 9 Jan 2026</small></span><!--w:123:T1-->
+    <b>Method:</b> LCM units · <i>~8 sec</i><br>
+    LCM 60 → 4 + 3 + 2 = 9 roz → 60 ÷ 9 = <mark>20/3 days</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> A 15, B 20, saath? → <b>LCM 60</b>: 4 + 3 = 7 → 60/7 = 8 4/7 → key <mark>8.5 days</mark> (note dekho) <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 12, B 36 → <b>a×b/(a+b)</b>: 432/48 → <mark>9 days</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 8, B 16 → <b>a×b/(a+b)</b>: 128/24 → <mark>5⅓ days</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A 12, B 8 → <b>a×b/(a+b)</b>: 96/20 → <mark>4.8 days</mark> <small>CHSL · 21 Nov 2025; SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> X 2, Y 4 → <b>a×b/(a+b)</b>: 8/6 → <mark>4/3 days</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Amit 30, Babli 45 → <b>LCM 90</b>: 3 + 2 = 5 → <mark>18 days</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 18, B 27 → <b>LCM 54</b>: 3 + 2 = 5 → 54/5 → <mark>10.8 days</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A 8, B 12, C 24 → <b>LCM 24</b>: 3 + 2 + 1 = 6 → <mark>4 days</mark> <small>DP Const · 20 Dec 2025; GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 9, B 12, C 18 → <b>LCM 36</b>: 4 + 3 + 2 = 9 → <mark>4 days</mark> <small>GD · 4 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 14, B 21, C 42 → <b>LCM 42</b>: 3 + 2 + 1 = 6 → <mark>7 days</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 20, B 30, C 60 → <b>LCM 60</b>: 3 + 2 + 1 = 6 → <mark>10 days</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> P+Q 12, R 18 → <b>LCM 36</b>: 3 + 2 = 5 → 36/5 → <mark>7.2 days</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> P+Q 20, R 30 → <b>LCM 60</b>: 3 + 2 = 5 → <mark>12 days</mark> <small>GD · 8 May 2026</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CGL 25 Sep 2025 (A 15, B 20): asli answer 60/7 = <b>8 4/7 ≈ 8.57 din</b> hai. Options mein 8.5 sabse paas hai, isliye key 8.5. Exam mein 8.5 hi lagao.</div>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Saath ka time diya, ek ka time nikaalo (21 Qs)</h3>
+  <p><b>Samjho:</b> team ki speed − jaane-pehchaane ki speed = bache hue ki speed. Din kabhi mat ghatao.</p>
+  <div class="box"><span class="k">Worked · Dhaval + Dhiraj 12 din, Dhaval 20 din. Dhiraj? <span class="tag p">PYQ</span> <small>CGL · 22 Sep 2025</small></span><!--w:26:T2-->
+    <b>Method:</b> LCM units · <i>~6 sec</i><br>
+    LCM 60 → team 5, Dhaval 3 → Dhiraj 2 → 60 ÷ 2 = <mark>30</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · A 16, B 12, A+B+C 4 din. C? <span class="tag p">PYQ</span> <small>DP HCM · 7 Jan 2026</small></span><!--w:127:T2-->
+    <b>Method:</b> LCM units · <i>~10 sec</i><br>
+    LCM 48 → A 3, B 4, teeno 12 → C = 12 − 7 = 5 → 48 ÷ 5 = <mark>9.6</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ ×4</span> A+B 10, B 15; A? → <b>LCM 30</b>: 3 − 2 = 1 → <mark>30 days</mark> <small>CHSL · 12 Nov 2025; CHSL · 21 Nov 2025; CPO · 12 Dec 2025; SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A+B (Raju+Pintu) 10, ek 15; doosra? → <b>LCM 30</b>: 3 − 2 = 1 → <mark>30</mark> <small>CHSL · 22 Nov 2025; CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 8, A 16; B? → <b>LCM 16</b>: 2 − 1 = 1 → <mark>16 days</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 6, A 12; B? → <b>LCM 12</b>: 2 − 1 = 1 → <mark>12 days</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A+B 15, ek 25; doosra? → <b>LCM 75</b>: 5 − 3 = 2 → 75/2 → <mark>37.5 days</mark> <small>CHSL · 19 Nov 2025; SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 9, A 18; B? → <b>LCM 18</b>: 2 − 1 = 1 → <mark>18 days</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 6, A 9; B? → <b>LCM 18</b>: 3 − 2 = 1 → <mark>18 days</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 8, B 12; A? → <b>LCM 24</b>: 3 − 2 = 1 → <mark>24 days</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 6, B 15; A? → <b>LCM 30</b>: 5 − 2 = 3 → <mark>10 days</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B+C 6, A 12, B 18; C? → <b>LCM 36</b>: 6 − 3 − 2 = 1 → <mark>36 days</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B+C 10, A 20, B 30; C? → <b>LCM 60</b>: 6 − 3 − 2 = 1 → <mark>60 days</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Railway track: A 16, B 12, teeno 4; C? → <b>LCM 48</b>: 12 − 3 − 4 = 5 → 48/5 → <mark>9⅗ days</mark> (option mein fraction chhapa nahi) <small>CGL · 13 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B+C 18, A+B 24; C? → <b>LCM 72</b>: 4 − 3 = 1 → <mark>72</mark> <small>GD · 28 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> A+B+C 20, A+B 25; C ko 4/9 kaam? → <b>LCM 100</b>: 5 − 4 = 1 → C 100 din → 100 × 4/9 → <mark>400/9</mark> <small>MTS · 20 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Efficiency: "guna tez", "% zyada", "din kam" (25 Qs)</h3>
+  <p><b>Samjho:</b> speed ka ratio likho, time ka ratio ulta. "Saath t din" diya ho toh kaam = (speeds ka jod) × t.</p>
+  <div class="box"><span class="k">Worked · A, B se 3 guna tez, 60 din kam. Saath? <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small></span><!--w:10:T3-->
+    <b>Method:</b> ratio ulta · <i>~12 sec</i><br>
+    Time 1 : 3, farq 2 parts = 60 → A 30, B 90. Kaam = 3 × 30 = 90, saath speed 4 → <mark>22.5 days</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Sameer 16 din. Ajay 60% zyada tez. Ajay? <span class="tag p">PYQ</span> <small>CGL · 21 Sep 2025</small></span><!--w:21:T3-->
+    <b>Method:</b> % → fraction · <i>~5 sec</i><br>
+    60% zyada = 8/5 speed → time × 5/8 → 16 × 5/8 = <mark>10 days</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> P : Q = 5 : 2, P 12 din; Q? → <b>units</b>: kaam 5 × 12 = 60 → 60 ÷ 2 → <mark>30 days</mark> <small>CGL · 12 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Time A : B = 3 : 2, B 18 ghante → A 27 → <b>LCM 54</b>: 2 + 3 = 5 → <mark>10.8 hours</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A+B 12 din, A 25% zyada tez; A ka hissa? → <b>% → fraction</b>: A : B = 5 : 4 → 5/9 → <mark>55.56%</mark> <small>CGL · 20 Sep 2025; CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Aditya 2 guna tez, 30 din kam → <b>time ulta</b> 1 : 2, farq 1 part = 30 → 30 aur 60 → saath <mark>20 days</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 4 guna tez, 45 din kam → <b>time ulta</b> 1 : 4, farq 3 parts = 45 → 15 aur 60 → saath <mark>12 days</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 1/3 kaam 10 din, B 1/4 kaam 5 din → <b>poora time</b>: A 30, B 20 → eff 2 : 3 → <mark>B 50% zyada tez</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A 2 guna B, saath 12 din; A? → <b>units</b>: 3 × 12 = 36 → 36 ÷ 2 → <mark>18 days</mark> <small>CHSL · 28 Nov 2025; SP-XIV · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A 2 guna B, saath 12 din; B? → <b>units</b>: 36 ÷ 1 → <mark>36 days</mark> <small>DP Const · 20 Dec 2025; SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 2 guna tez, A 10 din; B? → <b>time ulta</b> → <mark>20 days</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Prakash 15, Jayesh 2 guna tez → <b>units</b>: kaam 15, saath 1 + 2 = 3 → <mark>5 days</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ashutosh 3 guna Sonali, saath 15 → <b>units</b>: 4 × 15 = 60 → Sonali <mark>60 days</mark> <small>DP HCM · 9 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 3 guna B, saath 12 → <b>units</b>: 4 × 12 = 48 → B <mark>48 days</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 6 guna B, saath 18 → <b>units</b>: 7 × 18 = 126 → B <mark>126</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 4 guna B, saath 20 → <b>units</b>: 5 × 20 = 100 → B <mark>100</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> R 40% zyada tez, S 35 → <b>40% = 7/5</b>: time × 5/7 → 35 × 5/7 → <mark>25</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> R 33.33% zyada tez, S 24 → <b>33⅓% = 4/3</b>: 24 × 3/4 → <mark>18</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> B 50% zyada tez, A 15 → <b>50% = 3/2</b>: 15 × 2/3 → <mark>10 days</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> P 6 guna tez R se; time P : R? → <b>time ulta</b> → <mark>1 : 6</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sonu 20% kam tez Monu se, saath 30; Sonu ko 40% kaam? → <b>20% kam = 4/5</b>: 4 : 5, kaam 9 × 30 = 270 → 40% = 108 ÷ 4 → <mark>27 days</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Painter 16 ghante, assistant dugna time → 16 × 2 → <mark>32</mark> <small>DP HCM · 7 Jan 2026</small></li>
+  </ul>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · "A = B + C" aur "Q + R = k × P" (9 Qs)</h3>
+  <p><b>Samjho:</b> "A utne mein karta hai jitne mein B aur C milkar" = A ki speed = B + C. "Q + R, P se 3 guna efficient" = Q + R = 3P. Kaam ko <b>P ki ikaai</b> mein likh do.</p>
+  <div class="box"><span class="k">Worked · Athar = Baban + Chetan. Athar + Baban 10 din, Chetan 50. Baban? <span class="tag p">PYQ</span> <small>CGL · 22 Sep 2025</small></span><!--w:28:T4-->
+    <b>Method:</b> LCM units · <i>~15 sec</i><br>
+    LCM 50 → (A + B) = 5, C = 1. A = B + 1 → (B + 1) + B = 5 → B = 2 → 50 ÷ 2 = <mark>25 days</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Q + R = 3P, P + R = 2.5Q. Q + R 60 din. P? <span class="tag p">PYQ</span> <small>GD · 5 May 2026</small></span><!--w:132:T4-->
+    <b>Method:</b> P ki ikaai · <i>~8 sec</i><br>
+    Q + R ki speed = 3P. Kaam = 3P × 60 = 180 P-din → P akela <mark>180</mark>. (Doosri line ki zaroorat hi nahi.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> A = B + C, A+B 10, C 40; A? → <b>LCM 40</b>: A + B = 4, A − B = C = 1 → 2A = 5 → A = 2.5 → 40/2.5 → <mark>16 days</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A = B + C, A+B 10, B 25; C? → <b>LCM 50</b>: A + B = 5, B = 2 → A = 3 → C = 3 − 2 = 1 → <mark>50 days</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Q+R = 5P, Q+R 45 din; P? → <b>P ki ikaai</b>: kaam = 5 × 45 = 225 → <mark>225</mark> <small>GD · 5 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Q+R = 2P, Q+R 90 din; P? → kaam = 2 × 90 → <mark>180</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Q+R = 8P, P+R = 5Q, teeno 10 din; Q? → <b>kul = 6Q</b> (Q + 5Q) → Q akela 6 × 10 → <mark>60</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A dugna time B se, A 60 → B 30; C = A+B wala time = 20 → <b>LCM 60</b>: 1 + 2 + 3 = 6 → <mark>10</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A chaar guna time B se, A 80 → B 20; C = 16 → <b>LCM 80</b>: 1 + 4 + 5 = 10 → <mark>8</mark> <small>GD · 18 May 2026</small></li>
+  </ul>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Jodiyan: A+B, B+C, C+A (13 Qs)</h3>
+  <div class="box"><span class="k">Worked · A+B 12, B+C 15, C+A 20. A akela? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span><!--w:2:T5-->
+    <b>Method:</b> sab jodo, aadha · <i>~10 sec</i><br>
+    LCM 60 → 5 + 4 + 3 = 12 → teeno 6. A = 6 − (B+C) 4 = 2 → <mark>30 days</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · A+B 8, B+C 12, C+A 16. A? <span class="tag p">PYQ</span> <small>CPO · 11 Dec 2025</small></span><!--w:101:T5-->
+    <b>Method:</b> sab jodo, aadha · <i>~15 sec</i><br>
+    LCM 48 → 6 + 4 + 3 = 13 → teeno 6.5. A = 6.5 − 4 = 2.5 → 48 ÷ 2.5 = <mark>19.2</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Wahi numbers (A+B 12, B+C 15, C+A 20), teeno ka alag time? → <b>sab jodo</b>: A 2, B 3, C 1 → <mark>A = 30, B = 20, C = 60</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 12, B+C 15, A+B+C 10; A+C? → <b>LCM 60</b>: C = 6 − 5 = 1, A = 6 − 4 = 2 → A + C = 3 → <mark>20 days</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> M+R 8, R+P 6, P+M 12; 3 din mein kitna? → <b>LCM 24</b>: 3 + 4 + 2 = 9 → teeno 4.5/din → 13.5/24 → <mark>9/16</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> M+R 20, R+P 30, P+M 60; 5 din mein? → <b>LCM 60</b>: 3 + 2 + 1 = 6 → teeno 3/din → 15/60 → <mark>1/4</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> M+R 18, R+P 24, P+M 36; P? → <b>LCM 72</b>: 4 + 3 + 2 = 9 → teeno 4.5 → P = 4.5 − 4 = 0.5 → <mark>144</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 18, B+C 24, C+A 36; B? → <b>LCM 72</b>: teeno 4.5 → B = 4.5 − 2 = 2.5 → <mark>28.8 days</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 10, B+C 12, A+C 15; C? → <b>LCM 60</b>: 6 + 5 + 4 = 15 → 7.5 → C = 7.5 − 6 = 1.5 → <mark>40 days</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 20, B+C 15, C+A 30; teeno? → <b>LCM 60</b>: 3 + 4 + 2 = 9 → 4.5 → 60/4.5 → <mark>13⅓ days</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 6, B+C 8, A+C 12; A? → <b>LCM 24</b>: 4 + 3 + 2 = 9 → 4.5 → A = 4.5 − 3 = 1.5 → <mark>16 days</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B+C 8, A+B 12 (B+C 16 faltu); C? → <b>LCM 48</b>: 6 − 4 = 2 → <mark>24 days</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Data sufficiency: Q+R 10, P+R 15; P+Q+R? → do jodiyan, teesri jodi ya kisi ek ka time nahi → <mark>dono milkar bhi kaafi nahi</mark> <small>CGL · 25 Sep 2025</small></li>
+  </ul>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · Kitna kaam hua / bacha, ya "kuch hissa" kitne din mein (22 Qs)</h3>
+  <p><b>Samjho:</b> units mein: roz ka kaam × din = hua. Kul − hua = bacha. "% kaam itne din mein" diya ho toh <b>roz ka %</b> nikaalo.</p>
+  <div class="box"><span class="k">Worked · Pehle din 2/3 kaam, doosre din baaki ka 1/4. Ab 20 units bacha. Kul? <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small></span><!--w:139:T6-->
+    <b>Method:</b> baaki ka hissa · <i>~8 sec</i><br>
+    Bacha 1/3. Uska 1/4 kiya → 3/4 bacha → 1/3 × 3/4 = 1/4 kaam = 20 → kul <mark>80</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · R 24, S 36. 8 din saath. Kitna bacha? <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small></span><!--w:152:T6-->
+    <b>Method:</b> LCM units · <i>~8 sec</i><br>
+    LCM 72 → 3 + 2 = 5 roz → 8 din = 40 → bacha 32/72 = <mark>4/9</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> A 8, B 12, 3 din saath; bacha? → <b>LCM 24</b>: 5 × 3 = 15 → 9/24 → <mark>3/8</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sujit 4, Rakesh 8, 2 din; bacha? → <b>LCM 8</b>: 3 × 2 = 6 → 2/8 → <mark>25%</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 15, B 20, 5 din; bacha? → <b>LCM 60</b>: 7 × 5 = 35 → 25/60 → <mark>5/12</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A 20, B 30, 5 din; bacha? → <b>LCM 60</b>: 5 × 5 = 25 → 35/60 → <mark>7/12</mark> <small>CHSL · 28 Nov 2025; SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> M 40, N 80, 8 din mein kitna %? → <b>LCM 80</b>: 3 × 8 = 24 → 24/80 → <mark>30%</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 10, B 15, 2 din mein kitna? → <b>LCM 30</b>: 5 × 2 = 10 → <mark>1/3</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40% kaam 8 din; 15 din mein? → <b>% per din</b>: 5% roz → <mark>75%</mark> <small>GD · 4 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 30% kaam 6 din; 10 din mein? → 5% roz → <mark>50%</mark> <small>GD · 5 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 50% kaam 10 din; 7 din mein? → 5% roz → <mark>35%</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 25% kaam 20 din; 60% kitne din? → <b>% per din</b>: 60/25 = 2.4 guna → <mark>48</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> S 2/3 kaam 16 din; R 4 guna tez; R? → S poora 24 → 24 ÷ 4 → <mark>6</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> S 7/8 kaam 21 din; R 2 guna tez; R? → S poora 24 → 24 ÷ 2 → <mark>12</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pehle din 7/10, phir baaki ka 2/3; kul 90 units, bacha? → <b>baaki ka hissa</b>: 3/10 ka 1/3 = 1/10 → <mark>9</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> P+Q 12, R 18; teeno 1/3 kaam? → <b>LCM 36</b>: 5/din → poora 7.2 → 7.2/3 → <mark>2.4</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> P+Q 8, R 16; teeno 1/2 kaam? → <b>LCM 16</b>: 3/din → poora 16/3 → aadha → <mark>8/3</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> P+Q 9, R 18; teeno 1/6 kaam? → <b>LCM 18</b>: 3/din → poora 6 din → <mark>1 din</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 10, B 15, C 30; teeno 30% kaam? → <b>LCM 30</b>: 6/din → poora 5 din → 30% → <mark>3/2</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 18, B 27, C 36; teeno 2/3 kaam? → <b>LCM 108</b>: 6 + 4 + 3 = 13 → 72 units ÷ 13 → <mark>72/13</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 12, B 15, C 20; teeno 20% kaam? → <b>LCM 60</b>: 12/din → poora 5 din → <mark>1</mark> <small>MTS · 17 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Koi beech mein gaya ya baad mein aaya (26 Qs)</h3>
+  <p><b>Samjho:</b> team badalte hi speed badalti hai. Har team ka kaam alag gino, bacha ÷ nayi speed.</p>
+  <div class="box"><span class="k">Worked · A 10, B 15, C 30. Teeno 3 din, phir A gaya. Aur kitne din? <span class="tag p">PYQ</span> <small>CHSL · 22 Nov 2025</small></span><!--w:68:T7-->
+    <b>Method:</b> bacha kaam · <i>~10 sec</i><br>
+    LCM 30 → 3 + 2 + 1 = 6 → 3 din = 18. Bacha 12 ÷ (B + C = 3) = <mark>4 days</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · A deewar 8 din mein banata hai, B 3 din mein todta hai. A 4 din, phir 2 din dono. Baaki A akela? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span><!--w:4:T7-->
+    <b>Method:</b> LCM units, todne wala minus · <i>~15 sec</i><br>
+    LCM 24 → A +3, B −8. 4 din: 12. Agle 2 din: (3 − 8) × 2 = −10 → bacha bana hua 2.<br>
+    Baaki 22 ÷ 3 = <mark>7⅓ days</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> A 12, B 18; B 4 din baad gaya; A aur kitne din? → <b>LCM 36</b>: 5 × 4 = 20 → 16 ÷ 3 = 5⅓ → key <mark>5 days</mark> (note dekho) <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A 15, B 30; A 5 din baad gaya → <b>LCM 30</b>: 3 × 5 = 15 → 15 ÷ 1 → <mark>15 days</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 12, B 24; 4 din baad A gaya → <b>LCM 24</b>: 3 × 4 = 12 → 12 ÷ 1 → <mark>12 days</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 18, B 27; 6 din baad A gaya → <b>LCM 54</b>: 5 × 6 = 30 → 24 ÷ 2 → <mark>12 days</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 12, B 16; 4 din baad A gaya → <b>LCM 48</b>: 7 × 4 = 28 → 20 ÷ 3 → <mark>6⅔ days</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 20, B 30; 6 din baad A gaya → <b>LCM 60</b>: 5 × 6 = 30 → 30 ÷ 2 → <mark>15 days</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 18, B 24; 6 din baad A gaya → <b>LCM 72</b>: 7 × 6 = 42 → 30 ÷ 3 → <mark>10</mark> <small>CHSL Tier-2</small></li>
+    <li><span class="tag p">PYQ ×2</span> A 10, B 15; 3 din baad A gaya → <b>LCM 30</b>: 5 × 3 = 15 → 15 ÷ 2 → <mark>7.5 days</mark> aur; kul (GD wale mein) <mark>10.5 days</mark> <small>DP Const · 20 Dec 2025; GD · 25 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 18, B 9; 4 din baad A gaya → <b>LCM 18</b>: 3 × 4 = 12 → 6 ÷ 2 → <mark>3 days</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 10, B 15; A akela 4 din, phir B aaya; kul? → <b>LCM 30</b>: 3 × 4 = 12 → 18 ÷ 5 = 3.6 → <mark>7.6 days</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Wahi, par "aur kitne din" → 18 ÷ 5 → <mark>3.6 days</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 12, B 16; A akela 3 din; kul? → <b>LCM 48</b>: 4 × 3 = 12 → 36 ÷ 7 = 5.14 → <mark>8.14 days</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 16, B 12; B 8 din karke gaya; A? → <b>LCM 48</b>: 4 × 8 = 32 → 16 ÷ 3 = 5⅓ din → <mark>5 days 8 hours</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 24, B 36; B akela 18 din; A baaki? → <b>LCM 72</b>: 2 × 18 = 36 → 36 ÷ 3 → <mark>12</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 15, B 25; B akela 10 din; A baaki? → <b>LCM 75</b>: 3 × 10 = 30 → 45 ÷ 5 → <mark>9</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 12, B 18, C 24; C 4 din baad gaya → <b>LCM 72</b>: 13 × 4 = 52 → 20 ÷ 10 → <mark>2 days</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 12, B 18, C 36; A 3 din baad gaya → <b>LCM 36</b>: 6 × 3 = 18 → 18 ÷ 3 → <mark>6 days</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 15, B 20, C 30; B 2 din baad gaya → <b>LCM 60</b>: 9 × 2 = 18 → 42 ÷ 6 → <mark>7</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 15, B 20, C 30; C 5 din baad gaya → <b>LCM 60</b>: 9 × 5 = 45 → 15 ÷ 7 = 2 1/7 din; 1/7 din = 24/7 ≈ 3.43 ghante → <mark>2 days, 3 hours, 26 minutes</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Eff 2 : 3 : 5, A 40 din; 5 din baad C gaya → <b>units</b>: kaam 80, 10 × 5 = 50 → 30 ÷ 5 → <mark>6 days</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 12, B 15, C 20; 4 din saath, phir A gaya, B aur C 3/4 ghante → <b>LCM 60</b>: 12 × 4 = 48 → 12 bacha; B + C = 7 × 3/4 = 21/4 → 12 × 4/21 = 16/7 → <mark>2 2/7 days</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 15, B 25, C 50; A, B 5 din baad gaye → <b>LCM 150</b>: 19 × 5 = 95 → 55 ÷ 3 → <mark>55/3</mark> <small>GD · 6 May 2026</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CGL 15 Sep 2025 (A 12, B 18, B 4 din baad gaya): asli answer <b>5⅓ din</b> hai (16 units ÷ 3). Options 5, 2, 1, 8 mein 5⅓ nahi hai. Key 5 days deti hai, jo sabse paas hai. Exam mein 5 lagao.</div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>A+B+C 10 din, A 30, B 20. C?</summary><p>LCM 60 → teeno 6, A 2, B 3 → C 1 → 60 din.</p></details>
+    <details><summary>A, B se 2 guna tez. Saath 10 din. A akela?</summary><p>Kaam 3 × 10 = 30, A ki speed 2 → 15 din.</p></details>
+    <details><summary>A+B 15, B+C 20, C+A 30. Teeno?</summary><p>LCM 60 → 4 + 3 + 2 = 9 → teeno 4.5 → 60 ÷ 4.5 = 13⅓ din.</p></details>
+    <details><summary>A 20, B 30. 6 din saath, phir A gaya. Kul kitne din lage?</summary><p>LCM 60 → 30 hua, 30 bacha ÷ 2 = 15 → kul 6 + 15 = 21 din.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · TIME AND WORK (part 3: types 8–15) ===================== -->
+<section class="chap" id="mtw-types2">
+  <div class="eyebrow">Maths · PYQ types 8–15</div>
+  <h2>Time and Work: type 8–15, aadmi-din, chakkar aur paise</h2>
+  <div class="meta">Bacha kaam se teesra aadmi, ulta sawaal, baari-baari, man-days, contractor, aadmi-aurat-ladke, wages, rate aur khana · bank ke saare 245 sawaal in teen hisson mein</div>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · Bacha kaam kisi naye ne kiya → uska time (8 Qs)</h3>
+  <div class="box"><span class="k">Worked · A+B 12, B+C 16. A 5 din, B 7 din, phir C ne 13 din. C akela? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span><!--w:7:T8-->
+    <b>Method:</b> jodiyan bana kar · <i>~20 sec</i><br>
+    A5 + B7 + C13 ko todo: (A+B) 5 din + (B+C) 2 din + C 11 din.<br>
+    LCM 48 → (A+B) 4, (B+C) 3 → 20 + 6 = 26. Bacha 22 = C ke 11 din → C 2 roz → <mark>24 days</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · P 20, Q 30. 6 din saath, phir Q ki jagah R; P + R ne 8 din mein khatam. R ko 60% kaam? <span class="tag p">PYQ</span> <small>CGL Tier-2</small></span><!--w:40:T8-->
+    <b>Method:</b> bacha kaam ÷ din · <i>~15 sec</i><br>
+    LCM 60 → P 3, Q 2. 6 din × 5 = 30. Bacha 30 ÷ 8 = 3.75 → R = 0.75.<br>
+    60% = 36 units ÷ 0.75 = <mark>48 days</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ ×2</span> Lalit (Amit) 15, Laxman (Baban) 25, 5 din saath; baaki 4 din mein Lalit + Deven → <b>LCM 75</b>: 8 × 5 = 40 → 35 ÷ 4 = 8.75 → Deven 8.75 − 5 = 3.75 → 75/3.75 → <mark>20 days</mark> <small>CGL · 26 Sep 2025; CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 30, B 40, 10 din; C aaya, baaki 5 din mein → <b>LCM 120</b>: 7 × 10 = 70 → 50 ÷ 5 = 10 → C 3 → <mark>40 days</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 20, 8 din; baaki C ne 4 din → <b>bacha kaam</b>: 2/5 hua, 3/5 C ne 4 din → poora 4 × 5/3 → <mark>6.67 days</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rani 24; 6 din baad behen aayi, 10 din aur → <b>LCM 24</b>: Rani 1/din → 6; 18 ÷ 10 = 1.8 → behen 0.8 → 24/0.8 → <mark>30</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 60% kaam 18 din; baaki B ke saath 4 din → A poora 30; 40% saath 4 din → saath poora 10 → <b>LCM 30</b>: 3 − 1 = 2 → <mark>15 days</mark> <small>CHSL · 18 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · Ulta sawaal: kaun kitne din raha? (10 Qs)</h3>
+  <p><b>Samjho:</b> jo aadmi <b>poore time</b> raha, uska kaam pehle gino. Jo bacha, wo doosre ne kiya.</p>
+  <div class="box"><span class="k">Worked · A 28, B 35. Saath shuru, A beech mein gaya, B ne aakhri 17 din akele. A kitne din raha? <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small></span><!--w:14:T9-->
+    <b>Method:</b> poore time wala pehle · <i>~10 sec</i><br>
+    LCM 140 → A 5, B 4. B akela 17 din = 68. Bacha 72 saath (9 roz) → <mark>8 days</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · P 24, Q 30, R 40. P 8 din baad gaya, Q aakhri 6 din pehle gaya. Kul? <span class="tag p">PYQ</span> <small>CHSL · 28 Nov 2025</small></span><!--w:87:T9-->
+    <b>Method:</b> har aadmi ke din gino · <i>~20 sec</i><br>
+    LCM 120 → P 5, Q 4, R 3. Kul din T: P 8 din = 40, Q (T − 6) din, R poore T din.<br>
+    40 + 4(T − 6) + 3T = 120 → 7T = 104 → <mark>104/7</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> A+B 30; A 16 din, B ne baaki 44 din → <b>B ke 44 = 16 saath + 28 akela</b> → 16/30 saath, 14/30 B ne 28 din → B 1/60 roz → <mark>60 days</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> P+Q 24; 8 din saath, Q ne 20 din aur → 1/3 hua, 2/3 Q ne 20 din → Q 30 → <b>LCM 120</b>: 5 − 4 = 1 → P <mark>120</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 20; A 15 din, B ne baaki 42 → 15 saath = 3/4; B ke 27 akele din = 1/4 → B <mark>108</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 18; 12 din saath, A ne baaki 10 din → 2/3 hua, 1/3 A ne 10 din → <mark>30 days</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 20; 12 din saath, B ne baaki 10 → 3/5 hua, 2/5 B ne 10 → B 25 → <b>LCM 100</b>: 5 − 4 = 1 → A <mark>100 days</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A+B 18, A 30; kul 20 din, A beech mein gaya; saath kitne din? → <b>LCM 90</b>: A 3, B 2. B poore 20 din = 40 → A ne 50 → 50/3 → <mark>16⅔ days</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> P 15, Q 20, R 30; P 4 din baad gaya, Q aakhri 6 din pehle gaya → <b>LCM 60</b>: 16 + 3(T − 6) + 2T = 60 → 5T = 62 → <mark>62/5</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 30, B 40; kul 18 din, A aakhri 5 din pehle gaya; A ne kitne din? → seedha 18 − 5 → <mark>13 days</mark> (data note dekho) <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+  <p><span class="tag x">CGL+</span> "A 30, B 40. A kaam khatam hone se 5 din pehle chala gaya. Kul din?" → LCM 120, A 4, B 3. Maan lo A bhi aakhir tak raha: tab 5 din × 4 = 20 units extra hote. Toh 7T = 120 + 20 → T = 20 din.</p>
+  <div class="box"><span class="k">⚠ Data note</span>SP-XIV 31 Jul 2025 (A 30, B 40, kul 18 din): answer seedha 18 − 5 = 13 hai. Par check karo: 13 × 4 + 18 × 3 = 106, kaam 120 hai. Yaani data aapas mein nahi milta. Sawaal sirf "18 − 5" pooch raha hai, wahi lagao.</div>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · Baari-baari aur har n-ve din madad (16 Qs)</h3>
+  <div class="box"><span class="k">Worked · P 5, Q 15. Baari-baari, P pehle. Kitne din? <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small></span><!--w:72:T10-->
+    <b>Method:</b> chakkar · <i>~10 sec</i><br>
+    LCM 15 → P 3, Q 1. Jodi = 4. 3 jodi = 12 (6 din). Bache 3 → din 7 P akela poora → <mark>7</mark>. (Upar picture dekho.)
+  </div>
+  <div class="box"><span class="k">Worked · A 30, B 45, C 90. A roz, B aur C har 5ve din. Kitne din? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span><!--w:0:T10-->
+    <b>Method:</b> chakkar · <i>~12 sec</i><br>
+    LCM 90 → A 3, B 2, C 1. 5 din = 4 × 3 + 6 = 18. 90 ÷ 18 = 5 chakkar → <mark>25 days</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · A 36, B 48. Har teesre din B madad. Kitne din? <span class="tag p">PYQ</span> <small>SP-XIV · 25 Jul 2025</small></span><!--w:204:T10-->
+    <b>Method:</b> chakkar + aakhri din · <i>~20 sec</i><br>
+    LCM 144 → A 4, B 3. 3 din = 4 + 4 + 7 = 15. 9 chakkar = 135 (27 din). Bache 9: din 28 → 4, din 29 → 4 (bache 1), din 30 A + B = 7 → 1/7 din.<br>
+    Kul <mark>29 1/7 days</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> P 12, Q 24, baari-baari, P pehle → <b>LCM 24</b>: jodi (2 din) = 3 → 8 jodi = 24 → <mark>16</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> P 9, Q 18, baari-baari → <b>LCM 18</b>: jodi = 3 → 6 jodi → <mark>12</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A 10, B 12, baari-baari, A pehle → <b>LCM 60</b>: jodi 11 → 5 jodi = 55 (10 din) → 5 bache, A (6/din) → 5/6 → <mark>10⅚ days (10.83)</mark> <small>CHSL · 27 Nov 2025; CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 15, B 20, baari-baari → <b>LCM 60</b>: jodi 7 → 8 jodi = 56 (16 din) → 4 bache = A ka poora din → <mark>17 days</mark> <small>DP Const · 29 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 20, B 30, baari-baari → <b>LCM 60</b>: jodi 5 → 12 jodi → <mark>24</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 12, B 18, baari-baari → <b>LCM 36</b>: jodi 5 → 7 jodi = 35 (14 din) → 1 bacha, A 3/din → ⅓ → <mark>14⅓ days</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 20, B 30, C 60; har teesre din B, C madad → <b>LCM 60</b>: A3, B2, C1 → 3 din = 3 + 3 + 6 = 12 → 5 chakkar → <mark>15 days</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 20, B 30, C 50; har doosre din madad → <b>LCM 300</b>: A15, B10, C6 → 2 din = 15 + 31 = 46 → 6 chakkar = 276 (12 din) → din 13: 291 → din 14 mein 9/31 → 13 9/31 ≈ 13.3 → key <mark>13 days</mark> (note) <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 24, B 36, C 72; har chauthe din madad → <b>LCM 72</b>: 4 din = 9 + 6 = 15 → 4 chakkar = 60 (16 din) → din 17–19: 69 → din 20 (6/din) mein 3 → ½ → <mark>19.5 days</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 12, B 15, C 20; ek-ek din baari → <b>LCM 60</b>: 3 din = 5 + 4 + 3 = 12 → 5 chakkar → <mark>15 days</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 15, B 20; B har teesre din gayab → <b>LCM 60</b>: 3 din = 7 + 7 + 4 = 18 → 3 chakkar = 54 (9 din) → din 10: 6 bache, 7/din → <mark>9 6/7 days</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Machine: +15 box, phir −5 → <b>chakkar</b>: 2 min = +10 → 80 tak 16 min → 17th min +15 = 95 → <mark>17 minutes</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CPO 12 Dec 2025 (A 20, B 30, C 50, har doosre din madad): poora hisaab 13 9/31 din (≈ 13.3) deta hai. Agar madad din 1 se ho (1, 3, 5 …) toh 12 24/31 aata hai. Dono soorat mein 13 sabse paas hai. Key 13 days.</div>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · Man-days: aadmi × din × ghante (24 Qs)</h3>
+  <div class="box"><span class="k">Worked · 40 aadmi, 9 ghante, 50 din. 75 din, 6 ghante mein kitne aadmi? <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small></span><!--w:147:T11-->
+    <b>Method:</b> M × D × H · <i>~8 sec</i><br>
+    40 × 50 × 9 = M × 75 × 6 → 450 = 450 → M = <mark>40</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · R1 18 din × 6 ghante, R2 12 din × 9 ghante. Saath, 6 ghante roz, kitne din? <span class="tag p">PYQ</span> <small>GD · 25 May 2026</small></span><!--w:166:T11-->
+    <b>Method:</b> kaam = ghante · <i>~12 sec</i><br>
+    R1 = 108 ghante, R2 = 108 ghante. Dono barabar → saath 54 ghante → 54 ÷ 6 = <mark>9</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · R 6 din × 5 ghante, S 4 din × 8 ghante. 3 din mein saath, roz kitne ghante? <span class="tag p">PYQ</span> <small>MTS · 16 Feb 2025</small></span><!--w:183:T11-->
+    <b>Method:</b> kaam = ghante + LCM · <i>~20 sec</i><br>
+    R 30 ghante, S 32 ghante. LCM 480 → R 16, S 15 per ghanta → saath 31 → 480/31 ghante kul → ÷ 3 = <mark>160/31</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 35 aadmi 8 din; 16 aadmi, 4 guna kaam → <b>man-days</b>: 280 × 4 = 1120 ÷ 16 → <mark>70 days</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 38 aadmi 10 din; 10 aadmi, 3 guna kaam → 380 × 3 = 1140 ÷ 10 → <mark>114 days</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15 ladke 20 din; 20 ladke? → 300 ÷ 20 → <mark>15</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 aadmi 45 din; 60 aadmi 6 din mein kitna %? → 900 mein se 360 → <mark>40%</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 66 auratein 79 din; 6 auratein 1/11 kaam? → 66/11 = 6 aurat ka kaam, wahi 79 din → <mark>79</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 aadmi 14 din; 12 aadmi? → 112 ÷ 12 → <mark>9.33 days</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 worker 10 din; 4 worker? → 80 ÷ 4 → <mark>20 days</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 worker 8 din; 4 aur aaye (10) → 48 ÷ 10 → <mark>4.8 days</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 46 aadmi 16 din; 32 aadmi? → 46 × 16 ÷ 32 = 46 ÷ 2 → <mark>23 days</mark> <small>DP HCM · 12 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 30 aadmi, 9 ghante, 40 din; 6 ghante, 60 din? → <b>M × H × D</b>: 30 × 9 × 40 = M × 360 → <mark>30</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 50 aadmi, 6 ghante, 30 din; 4 ghante, 45 din? → 50 × 180 = M × 180 → <mark>50</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 15 aadmi 40 din; 1/2 kaam 20 din mein? → 600 ka aadha 300 ÷ 20 → <mark>15</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 16 aadmi 3/4 kaam 12 din; 1/2 kaam 8 din? → 192 = 3/4 → poora 256 → aadha 128 ÷ 8 → <mark>16</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 aadmi 30 din; 1/2 kaam 15 din? → 150 ÷ 15 → <mark>10</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 24 aadmi 90 din; 36 aadmi 50% kaam? → 2160 ka aadha 1080 ÷ 36 → <mark>30</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 16 aadmi 20 din; 20 aadmi? → 320 ÷ 20 → <mark>16</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 16 aadmi 15 din; 10 din mein kitne? → 240 ÷ 10 → <mark>24 men</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 aadmi 12 din; 6 din mein? → 96 ÷ 6 → <mark>16</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 aadmi 20 din; 12 aadmi? → 120 ÷ 12 → <mark>10 days</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 aadmi 16 din; 12 din mein? → 96 ÷ 12 → <mark>8</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> R 10 din × 3 ghante, S 6 din × 5 ghante; saath 4 din mein roz kitne ghante? → <b>kaam = ghante</b>: dono 30 ghante → saath 15 ghante → 15 ÷ 4 → <mark>3.75</mark> <small>GD · 29 Apr 2026</small></li>
+  </ul>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · Beech mein aadmi aaye-gaye, contractor (15 Qs)</h3>
+  <p><b>Samjho:</b> kul man-days − jo ho gaye = bache. Bache ÷ naye aadmi = din. Contractor wale mein: bache ÷ bache din = chahiye aadmi.</p>
+  <div class="box"><span class="k">Worked · 15 aadmi, 24 din, 8 ghante. 6 din baad 5 aur, par ghante 6. Aur kitne din? <span class="tag p">PYQ</span> <small>CGL · 20 Sep 2025</small></span><!--w:16:T12-->
+    <b>Method:</b> man-hours · <i>~15 sec</i><br>
+    Kul 15 × 24 × 8 = 2,880. 6 din mein 15 × 6 × 8 = 720. Bacha 2,160.<br>
+    Naya roz 20 × 6 = 120 → 2,160 ÷ 120 = <mark>18</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 40 din, 80 worker. 10 din baad sirf 60 bache. 20 din aur ke baad kitne aur rakhein? <span class="tag p">PYQ</span> <small>SP-XIV · 28 Jul 2025</small></span><!--w:216:T12-->
+    <b>Method:</b> man-days · <i>~15 sec</i><br>
+    Kul 3,200. Hua 80 × 10 + 60 × 20 = 2,000. Bacha 1,200 in 10 din → 120 chahiye → 120 − 60 = <mark>60</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 12 worker 20 din; 5 din baad 3 nikaale → <b>man-days</b>: 240 − 60 = 180 ÷ 9 → <mark>20 days</mark> <small>CGL · 14 Oct 2025</small></li>
+    <li><span class="tag p">PYQ</span> 18 aadmi 20 din; 10 din baad 6 gaye → 360 − 180 = 180 ÷ 12 → <mark>15 days</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 18 auratein 10 din; 4 din baad 6 gayi → 180 − 72 = 108 ÷ 12 → <mark>9</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7 developer 12 din; 5 din baad 2 gaye → 84 − 35 = 49 ÷ 5 = 9.8 → key <mark>8</mark> (note dekho) <small>DP HCM · 9 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 12 aadmi 15 din; 6 din baad 4 gaye → 180 − 72 = 108 ÷ 8 → <mark>13.5 days</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 12 aadmi 15 din; 5 din baad 4 gaye → 180 − 60 = 120 ÷ 8 → <mark>15 days</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15 aadmi 12 din; 6 din baad 5 aur aaye → 180 − 90 = 90 ÷ 20 → <mark>4.5 days</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 32 aadmi 12 din; 3 din baad 10 aur → 384 − 96 = 288 ÷ 42 → <mark>6.85</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60 din, 48 worker; 30 din mein aadha → baaki aadha bhi 30 din mein, wahi 48 kaafi → <mark>0</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 120 din, 75 worker; 80 din mein aadha → baaki aadha 40 din mein → 75 × 80 ÷ 40 = 150 → <mark>75</mark> aur <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 auratein aadha kaam 20 din; baaki 4 din mein? → 200 ÷ 4 = 50 → <mark>40</mark> aur <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 180 din ka plan, sirf 60% din kaam ke → 108 din → speed 180/108 = 5/3 → <mark>66.67%</mark> badhao <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 36 aadmi 36 din; har 7th din 6 chhodte → <b>man-days</b>: 252 + 210 + 168 + 126 + 84 + 42 = 882 &lt; 1296, kaam kabhi poora nahi hota → key <mark>111</mark> (note dekho) <small>SP-XIV · 28 Jul 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>
+    <b>DP HCM 9 Jan 2026 (7 developer):</b> 84 − 35 = 49 dev-din bacha, 5 log → <b>9.8 din</b>. Key 8 deti hai, jo galat hai. Options mein 9 sabse paas hai.<br>
+    <b>SP-XIV 28 Jul 2025 (36 aadmi, har 7th din 6 gaye):</b> 6 hafte mein sab chale jaate hain aur kul sirf 882 man-days banta hai, kaam 1,296 ka hai. Sawaal jaisa chhapa hai, kaam kabhi poora nahi hota. Key 111 kisi seedhe hisaab se nahi aata. Ise chhod do, ya exam mein key wala 111 yaad rakho.
+  </div>
+
+  <!-- TYPE 13 -->
+  <h3>Type 13 · Aadmi, aurat, ladke ek saath (13 Qs)</h3>
+  <p><b>Samjho:</b> do equation diye hon toh dono ko "kaam" ke barabar rakho: din × (team) = din × (team). Ek ko doosre ki ikaai mein badlo.</p>
+  <div class="box"><span class="k">Worked · 6W + 4M 10 din, 4W + 5M 10 din. 8 auratein? <span class="tag p">PYQ</span> <small>CGL · 20 Sep 2025</small></span><!--w:17:T13-->
+    <b>Method:</b> ikaai badlo · <i>~12 sec</i><br>
+    Din barabar → 6W + 4M = 4W + 5M → 2W = M. Kaam = 10 × (6W + 8W) = 140W-din → 140 ÷ 8 = <mark>17.5 days</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 6 aadmi 18, 8 auratein 12, 5 ladke 20 din. 10 ladke + 12 aadmi + 16 auratein? <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small></span><!--w:148:T13-->
+    <b>Method:</b> group ka hissa roz · <i>~20 sec</i><br>
+    10 ladke = 2 × (5 ladke) → roz 2/20 = 1/10. 12 aadmi = 2 × 6 → 2/18 = 1/9. 16 auratein = 2 × 8 → 2/12 = 1/6.<br>
+    1/10 + 1/9 + 1/6 = (9 + 10 + 15)/90 = 34/90 = 17/45 → <mark>45/17</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 20 auratein 16 din = 10 aadmi 12 din; man : woman? → 320 W = 120 M → <mark>8 : 3</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 ladkiyan 16 din = 16 ladke 15 din; boy : girl? → 320 G = 240 B → <mark>4 : 3</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 aadmi ya 12 auratein 70 din; dono saath? → do group = dugni speed → <mark>35 days</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 aadmi ya 15 auratein 170 din; 20M + 20W? → M = 1.5W → kaam 2550 W-din ÷ 50W → <mark>51 days</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 aadmi ya 8 auratein 12 din; 10M + 4W? → M = 1.6W → 96 ÷ (16 + 4) → <mark>4.8 days</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4B + 6G 8 din, 3B + 7G 10 din; 10G? → 32B + 48G = 30B + 70G → B = 11G → kaam 8 × 50 = 400 ÷ 10 → <mark>40 days</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6M + 8B 10 din, 26M + 48B 2 din; 15M + 20B? → 60M + 80B = 52M + 96B → M = 2B → kaam 200B ÷ 50B → <mark>4 days</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4W + 6G 12 din, 24W + 46G 2 din; 15W + 20G? → 48W + 72G = 48W + 92G → G = 0 (!) → kaam 48W ÷ 15W = 3.2 din → <mark>3 days 4 hours 48 min</mark> (note dekho) <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 packer + 2 helper = 3 × (1 packer + 1 helper) → 2P = H → <mark>1 : 2</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 3 aadmi 12, 4 auratein 8, 6 ladke 18; 12B + 6M + 8W? → <b>ek ka time</b>: M 36, W 32, B 108 → 1/9 + 1/6 + 1/4 = 19/36 → <mark>36/19</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 5 aadmi 15, 6 auratein 10, 4 ladke 12; 8B + 10M + 12W? → M 75, W 60, B 48 → 1/6 + 2/15 + 1/5 = 1/2 → <mark>2</mark> <small>GD · 30 Apr 2026</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CHSL 15 Nov 2025 (4W + 6G, 24W + 46G): data se 20 G = 0 aata hai, yaani ladkiyaan kuch kaam hi nahi karti. Aisa asli zindagi mein nahi hota, sawaal galat bana hai. Phir bhi key ka 3 din 4 ghante 48 min isi se aata hai: kaam 48W ÷ 15W = 3.2 din.</div>
+
+  <!-- TYPE 14 -->
+  <h3>Type 14 · Paise (wages) ka batwara (17 Qs)</h3>
+  <div class="box"><span class="k">Worked · A 12, B 18, ₹7,200. C ke saath 5 din. C ko? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span><!--w:8:T14-->
+    <b>Method:</b> C ka kaam ÷ kul · <i>~12 sec</i><br>
+    LCM 180 → A 15, B 10. Teeno 36 → C 11 → 11/36 × 7,200 = <mark>₹2,200</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹840. A poore time, B 25% kaam ke baad juda. B = 2A. B ka hissa? <span class="tag p">PYQ</span> <small>CGL · 19 Sep 2025</small></span><!--w:15:T14-->
+    <b>Method:</b> kaam ka hissa · <i>~12 sec</i><br>
+    Pehla 25% sirf A. Baaki 75% mein A : B = 1 : 2 → B ne 50%, A ne 25% + 25% = 50%.<br>
+    B = 840 ka aadha = <mark>₹420</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> A 8, B 10, ₹3,600; C ke saath 4 din → <b>LCM 40</b>: A5, B4, teeno 10 → C 1 → 3600/10 → <mark>₹360</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 15, B 20, ₹18,000; C ke saath 6 din → <b>LCM 60</b>: 4 + 3 = 7, teeno 10 → C 3 → 3/10 → <mark>₹5,400</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 6, B 8, ₹3,200; C ke saath 3 din → <b>LCM 24</b>: 4 + 3 = 7, teeno 8 → C 1 → <mark>₹400</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Aadmi = 2 × ladka, ₹600 for 5 din → roz 120 = 3 parts → ladka <mark>₹40</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> Mohit (A) 25, Rohit (B) 30, ₹6,600 → <b>eff 6 : 5</b> → 11 parts → 1 part = 600 → farq <mark>₹600</mark> <small>CHSL · 24 Nov 2025; GD · 4 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 21, B 28, ₹4,200 → eff 4 : 3 → 1 part 600 → farq <mark>₹600</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> M 20, S 25, ₹4,500 → 5 : 4 → 1 part 500 → M <mark>₹2,500</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 6 din × 3, B 4 din × 5 = 18 : 20; ₹4,408 → 38 parts → 116 → farq 2 × 116 → <mark>₹232</mark> <small>GD · 4 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 7 × 2 = 14, B 5 × 4 = 20; A ko ₹4,900 → 1 part 350 → B <mark>₹7,000</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> X 10, Y 15, Z 30 → 3 : 2 : 1; X ₹8,000 → Y + Z bhi 3 parts → <mark>₹8,000</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> X 15, Y 20, Z 30 → 4 : 3 : 2; X ₹6,000 → 1 part 1,500 → Y + Z = 5 parts → <mark>₹7,500</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> X 12, Y 18, Z 36 → 3 : 2 : 1; X ₹7,200 → Y + Z = 3 parts → <mark>₹7,200</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> X 12, Y 18, Z 36; X ₹4,800 → 1 part 1,600 → (Y+Z) − (X+Z) = Y − X = 1 part → <mark>₹1,600</mark> <small>GD · 28 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> A 5, B 10, C 15; roz ₹650 → <b>LCM 30</b>: 6 : 3 : 2 → C 2/11 × 650 → <mark>₹118.18</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+  </ul>
+
+  <!-- TYPE 15 -->
+  <h3>Type 15 · Rate (unitary) aur khana (9 Qs)</h3>
+  <div class="box"><span class="k">Worked · 900 log, 60 din ka khana. 6 din baad 300 gaye. Baaki khana kitne din? <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small></span><!--w:142:T15-->
+    <b>Method:</b> log × din = fixed · <i>~8 sec</i><br>
+    Bacha 900 × 54. Ab 600 log → 900 × 54 ÷ 600 = 3/2 × 54 = <mark>81</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Sudarshan 50 page 10 ghante; dono saath 300 page 40 ghante. Prakash 25 page? <span class="tag p">PYQ</span> <small>CGL · 24 Sep 2025</small></span><!--w:32:T15-->
+    <b>Method:</b> rate ghatao · <i>~10 sec</i><br>
+    Sudarshan 5/ghanta, saath 7.5/ghanta → Prakash 2.5/ghanta → 25 ÷ 2.5 = <mark>10 hours</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 120 bottle 6 min; 14 min? → <b>unitary</b>: 20/min → <mark>280</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2.4 item/second; 2 minute? → 2.4 × 120 = 288 → key <mark>360</mark> (note dekho) <small>CPO · 9 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sudhir 40 page 8 ghante; saath 350 page 35 ghante; Prakash 40 page? → 5/ghanta, saath 10 → Prakash 5 → <mark>8 hours</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> 52.50 kamaaye 3.5 ghante mein; hourly fraction mein? → 525/35 = 15 → <mark>15/1</mark> <small>CGL · 21 Sep 2025; CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1000 log, 60 din khana; 10 din baad 500 gaye → <b>man-days</b>: 1000 × 50 ÷ 500 → <mark>100</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Gehun 200 log 30 din; 50 aur aaye → 6000 ÷ 250 → <mark>24 days</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CPO 9 Dec 2025 (2.4 item/second, 2 minute): 2.4 × 120 = <b>288</b>. Ye option mein nahi hai. Key ka 360 tab aata jab rate 3 item/second hota. Sawaal mein typo hai, key 360.</div>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>A 20, B 30 → saath (20 + 30)/2 = 25 din</td><td>Speed judti hai, din nahi. 3 + 2 = 5 roz → 12 din. Saath ka time sabse tez se bhi kam.</td></tr>
+    <tr><td>A+B 10, B 15 → A = 15 − 10 = 5 din</td><td>Speed ghatao: 3 − 2 = 1 → 30 din.</td></tr>
+    <tr><td>"2 guna tez" → time bhi 2 guna</td><td>Ulta: 2 guna tez = aadha time.</td></tr>
+    <tr><td>"25% zyada tez" → time 25% kam</td><td>Speed 5 : 4 → time 4 : 5 → sirf 20% kam.</td></tr>
+    <tr><td>Baari-baari mein seedha (kaam ÷ jodi) × 2</td><td>Aakhri din kaun aata hai, dekho. P 5, Q 15 → 7 din, 7.5 nahi.</td></tr>
+    <tr><td>"Aur kitne din" pucha, kul din likh diya (ya ulta)</td><td>Options mein dono hote hain (3.6 aur 7.6). Aakhri line dobara padho.</td></tr>
+    <tr><td>Aadmi gaye, toh purane din se seedha ratio</td><td>Pehle ho chuka kaam ghatao. Sirf bache kaam par naye aadmi lagao.</td></tr>
+    <tr><td>Ghante roz badle, sirf aadmi × din gina</td><td>Aadmi × din × ghante. 8 ghante se 6 ghante = speed 3/4.</td></tr>
+    <tr><td>Wages mein seedha 1/2 – 1/2</td><td>Paise kaam ke hisaab se: speed × din ka ratio.</td></tr>
+    <tr><td>Todne wala (B deewar todta hai) bhi plus</td><td>Todne wala minus: A +3, B −8.</td></tr>
+    <tr><td>1/7 din = 1 ghanta 7 min jaisa jhatpat</td><td>1 din = 24 ghante. 1/7 din = 24/7 ≈ 3 ghante 26 min.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 245 sawaal, sab yahan hain, koi nahi chhoda. 20 sawaal scan wale the (fraction ya Hindi). Unke page crop padh kar hal kiye hain. Kuch sawaal do baar aaye (alag shift ya alag exam mein). Unhe ek hi line mein ×2, ×4 se jod diya hai. Chhe jagah key aur asli hisaab mein farq hai (8.5, 5 din, 13 din, 8, 111, 360), aur do jagah data hi aapas mein nahi milta (ladkiyaan = 0 wala, aur 18 − 5 = 13 wala). Har ek ke paas ⚠ box hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>A 6 din, B 12 din, baari-baari, A pehle. Kitne din?</summary><p>LCM 12 → A 2, B 1. Jodi 3 → 4 jodi = 12 → 8 din.</p></details>
+    <details><summary>20 aadmi 15 din. 5 din baad 10 aur aaye. Aur kitne din?</summary><p>300 − 100 = 200 bacha ÷ 30 = 6⅔ din.</p></details>
+    <details><summary>2 aadmi = 3 auratein. 4 aadmi 15 din. 6 auratein kitne din?</summary><p>4 aadmi = 6 auratein → wahi team → 15 din.</p></details>
+    <details><summary>A 10, B 15. ₹5,000 mein saath kaam. A ko kitna?</summary><p>Speed 3 : 2 → A 3/5 × 5,000 = ₹3,000.</p></details>
+    <details><summary>500 log, 40 din ka khana. 10 din baad 100 aur aaye. Baaki kitne din?</summary><p>500 × 30 ÷ 600 = 25 din.</p></details>
+  </div>
+</section>

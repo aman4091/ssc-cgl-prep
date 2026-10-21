@@ -1,0 +1,1104 @@
+<!-- ===================== MATHS · MENSURATION 3D (part 1: basics + formula sheet + speed methods) ===================== -->
+<section class="chap" id="m3a-basics">
+  <div class="eyebrow">Maths · 256 questions (bank ka pehla hissa)</div>
+  <h2>Mensuration 3D: thos cheezein, unka volume aur surface, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO) · sabse zyada: pighla kar naya banana, % badhna-ghatna, prism aur pyramid, cone ka kata hua tukda</div>
+
+  <h3>Pehle ek chhoti si kahani: cheeni ke cube</h3>
+  <p>Maan lo tumhare paas 1 cm ke chhote cheeni ke cube hain. Ek dabba hai: 4 cm lamba, 3 cm chauda, 2 cm ooncha.</p>
+  <ul>
+    <li><b>Neeche ki ek tah (layer)</b> mein kitne cube aayenge? 4 × 3 = <b>12</b>. Ye tah ka area hai.</li>
+    <li>Aisi kitni tah? Oonchai 2 hai, toh <b>2 tah</b>. Kul 12 × 2 = <b>24 cube</b>. Yahi <b>volume</b> hai: 24 cm³.</li>
+    <li>Ab dabbe ko bahar se kaagaz mein lapetna hai. 6 deewarein hain: upar-neeche 4 × 3 = 12 (do baar), aage-peeche 4 × 2 = 8 (do baar), daayen-baayen 3 × 2 = 6 (do baar). Kul 2 × (12 + 8 + 6) = <b>52 cm²</b>. Yahi <b>surface area</b> hai.</li>
+  </ul>
+  <p>Bas itni si baat hai. <b>Volume = andar kitna samaata hai</b> (cm³, litre). <b>Surface area = bahar kitna kaagaz ya rang lagta hai</b> (cm²). Pura chapter isi do sawaal ka hai.</p>
+
+  <div class="box"><span class="k">Teen badi baatein jinse saare formula nikalte hain</span>
+    <b>1. Seedhe khade solids</b> (cuboid, cylinder, prism): volume = <b>neeche ka area × oonchai</b>. Tah ke upar tah. Cuboid = lb × h, cylinder = πr² × h, prism = B × h.<br>
+    <b>2. Nukeele solids</b> (cone, pyramid): usi base aur oonchai wale seedhe solid ka <b>ek-tihaai (⅓)</b>. Cone = ⅓πr²h, pyramid = ⅓ × B × h.<br>
+    <b>3. Gol solids</b>: sphere = (4/3)πr³, hemisphere = aadha = (2/3)πr³. Surface: sphere 4πr², hemisphere ka gol hissa 2πr², flat dhakkan πr² aur.<br>
+    Surface ke liye solid ko <b>khol kar (unfold)</b> socho: cylinder ki deewar khulti hai toh ek rectangle banti hai, lambai 2πr aur chaudai h. Isliye CSA = 2πrh.
+  </div>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Four round solids with labels: cylinder with radius r and height h, cone with radius r, height h and slant height l, sphere with radius r, hemisphere with radius r. Formulas for volume and surface area are written under each.">
+      <g text-anchor="middle" class="lbl"><text x="90" y="26">Cylinder</text><text x="265" y="26">Cone</text><text x="440" y="26">Sphere</text><text x="610" y="26">Hemisphere</text></g>
+      <!-- cylinder -->
+      <path d="M35,60 L35,190 A55,14 0 0 0 145,190 L145,60 Z" class="chf"/>
+      <path d="M35,60 L35,190 A55,14 0 0 0 145,190 L145,60" class="chs"/>
+      <path d="M35,190 A55,14 0 0 1 145,190" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <ellipse cx="90" cy="60" rx="55" ry="14" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <line x1="90" y1="60" x2="145" y2="60" class="ln"/>
+      <circle cx="90" cy="60" r="2.5" style="fill:var(--ch)"/>
+      <text x="117" y="54" text-anchor="middle" class="lbl">r</text>
+      <text x="156" y="130" class="lbl">h</text>
+      <!-- cone -->
+      <path d="M205,190 L265,50 L325,190 A60,15 0 0 1 205,190 Z" class="chf"/>
+      <path d="M205,190 L265,50 L325,190 A60,15 0 0 1 205,190" class="chs" fill="none"/>
+      <path d="M205,190 A60,15 0 0 1 325,190" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <line x1="265" y1="50" x2="265" y2="190" class="ln" stroke-dasharray="4 3"/>
+      <line x1="265" y1="190" x2="325" y2="190" class="ln"/>
+      <path d="M265,180 L275,180 L275,190" class="ln" fill="none"/>
+      <text x="258" y="130" text-anchor="end" class="lbl">h</text>
+      <text x="295" y="206" text-anchor="middle" class="lbl">r</text>
+      <text x="304" y="112" class="lbl" style="fill:var(--ch)">l</text>
+      <!-- sphere -->
+      <circle cx="440" cy="120" r="68" class="chf"/><circle cx="440" cy="120" r="68" class="chs"/>
+      <path d="M372,120 A68,17 0 0 1 508,120" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <path d="M372,120 A68,17 0 0 0 508,120" class="ln" fill="none"/>
+      <line x1="440" y1="120" x2="508" y2="120" class="ln"/>
+      <circle cx="440" cy="120" r="2.5" style="fill:var(--ch)"/>
+      <text x="474" y="113" text-anchor="middle" class="lbl">r</text>
+      <!-- hemisphere -->
+      <path d="M542,175 A68,68 0 0 1 678,175 A68,17 0 0 1 542,175 Z" class="chf"/>
+      <path d="M542,175 A68,68 0 0 1 678,175 A68,17 0 0 1 542,175" class="chs" fill="none"/>
+      <path d="M542,175 A68,17 0 0 1 678,175" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <line x1="610" y1="175" x2="678" y2="175" class="ln"/>
+      <circle cx="610" cy="175" r="2.5" style="fill:var(--ch)"/>
+      <text x="644" y="168" text-anchor="middle" class="lbl">r</text>
+      <!-- formulas -->
+      <g text-anchor="middle">
+        <text x="90" y="230" class="lbl">V = πr²h</text>
+        <text x="90" y="248" class="sm">CSA = 2πrh</text>
+        <text x="90" y="264" class="sm">TSA = 2πr(r + h)</text>
+        <text x="265" y="230" class="lbl">V = ⅓πr²h</text>
+        <text x="265" y="248" class="sm">CSA = πrl</text>
+        <text x="265" y="264" class="sm">TSA = πr(r + l)</text>
+        <text x="265" y="280" class="sm" style="fill:var(--ch)">l² = r² + h²</text>
+        <text x="440" y="230" class="lbl">V = (4/3)πr³</text>
+        <text x="440" y="248" class="sm">SA = 4πr²</text>
+        <text x="610" y="230" class="lbl">V = (2/3)πr³</text>
+        <text x="610" y="248" class="sm">CSA = 2πr²</text>
+        <text x="610" y="264" class="sm">TSA = 3πr²</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Gol solids. Dashed line = peeche chhupa hissa. Cone mein h, r aur l ek right triangle banate hain, isliye l² = r² + h².</figcaption>
+  </figure>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 320" role="img" aria-label="Three flat-faced solids. A cuboid with length l, breadth b, height h and space diagonal d. A triangular prism with base area B and length h. A square pyramid with height h, base side a and slant height l, where h, half of a and l form a right triangle.">
+      <g text-anchor="middle" class="lbl"><text x="130" y="40">Cuboid</text><text x="350" y="40">Prism</text><text x="565" y="40">Pyramid</text></g>
+      <!-- cuboid -->
+      <polygon points="30,110 180,110 230,75 80,75" class="chf"/>
+      <polygon points="180,110 230,75 230,175 180,210" class="chf"/>
+      <rect x="30" y="110" width="150" height="100" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <polygon points="30,110 180,110 230,75 80,75" class="chs" fill="none"/>
+      <polygon points="180,110 230,75 230,175 180,210" class="chs" fill="none"/>
+      <g class="ln" stroke-dasharray="4 3"><line x1="30" y1="210" x2="80" y2="175"/><line x1="80" y1="175" x2="230" y2="175"/><line x1="80" y1="175" x2="80" y2="75"/></g>
+      <line x1="30" y1="210" x2="230" y2="75" stroke="var(--ch)" stroke-width="2" stroke-dasharray="6 3"/>
+      <text x="105" y="228" text-anchor="middle" class="lbl">l</text>
+      <text x="20" y="165" text-anchor="middle" class="lbl">h</text>
+      <text x="216" y="206" class="lbl">b</text>
+      <text x="120" y="160" class="lbl" style="fill:var(--ch)">d</text>
+      <!-- prism -->
+      <g class="ln" stroke-dasharray="4 3"><line x1="270" y1="210" x2="320" y2="175"/><line x1="320" y1="175" x2="430" y2="175"/><line x1="320" y1="175" x2="360" y2="95"/></g>
+      <polygon points="310,130 380,210 430,175 360,95" class="chf"/>
+      <polygon points="310,130 380,210 430,175 360,95" class="chs" fill="none"/>
+      <polygon points="270,210 380,210 310,130" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="320" y="196" text-anchor="middle" class="sm">base B</text>
+      <text x="414" y="210" class="lbl">h</text>
+      <!-- pyramid -->
+      <polygon points="480,210 600,210 650,175 565,70" class="chf"/>
+      <g class="ln" stroke-dasharray="4 3"><line x1="565" y1="70" x2="530" y2="175"/><line x1="480" y1="210" x2="530" y2="175"/><line x1="530" y1="175" x2="650" y2="175"/></g>
+      <polygon points="480,210 600,210 650,175 565,70" class="chs" fill="none"/>
+      <line x1="600" y1="210" x2="565" y2="70" class="chs"/>
+      <line x1="565" y1="70" x2="565" y2="192.5" class="ln" stroke-dasharray="4 3"/>
+      <line x1="565" y1="192.5" x2="540" y2="210" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <line x1="565" y1="70" x2="540" y2="210" stroke="var(--ch)" stroke-width="2.5"/>
+      <text x="571" y="150" class="lbl">h</text>
+      <text x="536" y="140" text-anchor="end" class="lbl" style="fill:var(--ch)">l</text>
+      <text x="540" y="226" text-anchor="middle" class="lbl">a</text>
+      <!-- formulas -->
+      <g text-anchor="middle">
+        <text x="130" y="252" class="lbl">V = l × b × h</text>
+        <text x="130" y="270" class="sm">TSA = 2(lb + bh + hl)</text>
+        <text x="130" y="286" class="sm" style="fill:var(--ch)">d = √(l² + b² + h²)</text>
+        <text x="130" y="302" class="sm">Cube: a³ · 6a² · d = a√3</text>
+        <text x="350" y="252" class="lbl">V = B × h</text>
+        <text x="350" y="270" class="sm">LSA = base perimeter × h</text>
+        <text x="350" y="286" class="sm">TSA = LSA + 2B</text>
+        <text x="565" y="252" class="lbl">V = ⅓ × B × h</text>
+        <text x="565" y="270" class="sm">LSA = ½ × perimeter × l</text>
+        <text x="565" y="286" class="sm" style="fill:var(--ch)">l² = h² + (a/2)²</text>
+        <text x="565" y="302" class="sm">TSA = LSA + B</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Flat deewaron wale solids. Pyramid mein gehri line = slant height (l): chotti se base ki side ke beech tak. h, a/2 aur l ka right triangle hamesha yaad rakho.</figcaption>
+  </figure>
+
+  <h3>Formula / value sheet to memorise</h3>
+  <div class="tbl"><table>
+    <tr><th>Solid</th><th>Volume</th><th>Gol / side wala surface (CSA / LSA)</th><th>Kul surface (TSA)</th><th>Khaas baat</th></tr>
+    <tr><td>Cube (side a)</td><td>a³</td><td>4a²</td><td>6a²</td><td>diagonal a√3</td></tr>
+    <tr><td>Cuboid (l, b, h)</td><td>lbh</td><td>2h(l + b)</td><td>2(lb + bh + hl)</td><td>d = √(l² + b² + h²) · edges = 4(l + b + h)</td></tr>
+    <tr><td>Cylinder (r, h)</td><td>πr²h</td><td>2πrh</td><td>2πr(r + h)</td><td>CSA : TSA = h : (h + r)</td></tr>
+    <tr><td>Hollow cylinder / pipe (R, r)</td><td>π(R² − r²)h = π(R + r)(R − r)h</td><td>2π(R + r)h</td><td>CSA + 2π(R² − r²)</td><td>R − r = motaai</td></tr>
+    <tr><td>Cone (r, h, l)</td><td>⅓πr²h</td><td>πrl</td><td>πr(r + l)</td><td>l² = r² + h² · CSA = ½ × gher × l</td></tr>
+    <tr><td>Frustum (R, r, h)</td><td>⅓πh(R² + r² + Rr)</td><td>π(R + r)l</td><td>CSA + πR² + πr²</td><td>l² = h² + (R − r)² <span class="tag x">CGL+</span></td></tr>
+    <tr><td>Sphere (r)</td><td>(4/3)πr³</td><td colspan="2">4πr²</td><td>V ÷ SA = r/3</td></tr>
+    <tr><td>Hemisphere (r)</td><td>(2/3)πr³</td><td>2πr²</td><td>3πr²</td><td>V ÷ TSA = 2r/9 <span class="tag x">CGL+</span></td></tr>
+    <tr><td>Spherical shell (R, r)</td><td>(4/3)π(R³ − r³)</td><td colspan="2">bahar 4πR², andar 4πr²</td><td>hemisphere shell: (2/3)π(R³ − r³)</td></tr>
+    <tr><td>Prism (base B, perimeter P)</td><td>B × h</td><td>P × h</td><td>Ph + 2B</td><td>height = lambai</td></tr>
+    <tr><td>Pyramid (base B, perimeter P)</td><td>⅓ × B × h</td><td>½ × P × l</td><td>½Pl + B</td><td>square: l² = h² + (a/2)²</td></tr>
+  </table></div>
+  <div class="tbl"><table>
+    <tr><th>Base ka area (prism / pyramid ke liye)</th><th>Formula</th><th>Ratta values</th></tr>
+    <tr><td>Equilateral triangle (side a)</td><td>(√3/4)a²</td><td>a = 6 → 9√3 · 10 → 25√3 · 12 → 36√3 · 18 → 81√3</td></tr>
+    <tr><td>Regular hexagon (side a)</td><td>6 × (√3/4)a² = (3√3/2)a²</td><td>a = 4 → 24√3 · 6 → 54√3 · 10 → 150√3</td></tr>
+    <tr><td>Trapezium</td><td>½ × (a + b) × oonchai</td><td>— </td></tr>
+    <tr><td>Koi bhi triangle (3 side)</td><td>Heron: √(s(s − a)(s − b)(s − c))</td><td>13-14-15 → 84 · 9-10-17 → 36 · 5-12-13 → 30</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Units: yahan log phisalte hain</span>
+    1 litre = 1000 cm³ · 1 m³ = 1000 litre = 1 kilolitre · 1 m = 100 cm, toh 1 m² = 10,000 cm² aur 1 m³ = 10,00,000 cm³.<br>
+    Pehle saari lambai <b>ek hi unit</b> mein lao, phir guna karo. 50 × 40 × 30 cm = 60,000 cm³ = <b>60 litre</b>.
+  </div>
+
+  <p>Ab asli baat. Paper mein ek sawaal ke liye lagbhag <b>36 second</b> milte hain. Yahan koi 22/7 × 21 × 21 × 21 lamba guna nahi karega. Neeche 9 tareeke hain jo rough mein jaldi chalte hain.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · 3 : 1 : 2 ka parivaar (cylinder, cone, sphere)</h3>
+  <p><b>Kab use karo:</b> jab do solids ka "same radius, same height" ya "equal volume" diya ho.</p>
+  <p><b>Soch aise:</b> ek cylinder lo jiski oonchai 2r hai, aur usme bilkul fit hone wala ek cone aur ek sphere. Volume dekho:</p>
+  <ul>
+    <li>Cylinder = πr² × 2r = <b>2πr³</b></li>
+    <li>Sphere = (4/3)πr³</li>
+    <li>Cone = ⅓ × πr² × 2r = (2/3)πr³</li>
+  </ul>
+  <p>Teeno ko (2/3)πr³ se baanto: <b>cylinder : sphere : cone = 3 : 2 : 1</b>. Aur hemisphere (2/3)πr³ hai, yaani hemisphere = cone jiski oonchai 2r ho.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Cylinder, cone and sphere of the same radius r and height 2r. Their volumes are 2 pi r cubed, two-thirds pi r cubed and four-thirds pi r cubed, in the ratio 3 to 1 to 2. Bars drawn to scale: cylinder 3 parts, sphere 2 parts, cone 1 part, hemisphere 1 part.">
+      <!-- cylinder -->
+      <path d="M30,50 L30,150 A50,12 0 0 0 130,150 L130,50 Z" class="chf"/>
+      <path d="M30,50 L30,150 A50,12 0 0 0 130,150 L130,50" class="chs" fill="none"/>
+      <path d="M30,150 A50,12 0 0 1 130,150" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <ellipse cx="80" cy="50" rx="50" ry="12" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <!-- cone -->
+      <path d="M160,150 L210,50 L260,150 A50,12 0 0 1 160,150 Z" class="chf"/>
+      <path d="M160,150 L210,50 L260,150 A50,12 0 0 1 160,150" class="chs" fill="none"/>
+      <path d="M160,150 A50,12 0 0 1 260,150" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <!-- sphere -->
+      <circle cx="340" cy="100" r="50" class="chf"/><circle cx="340" cy="100" r="50" class="chs"/>
+      <path d="M290,100 A50,12 0 0 0 390,100" class="ln" fill="none"/>
+      <g text-anchor="middle">
+        <text x="80" y="185" class="lbl">Cylinder</text><text x="80" y="203" class="sm">πr² × 2r = 2πr³</text>
+        <text x="210" y="185" class="lbl">Cone</text><text x="210" y="203" class="sm">⅓πr² × 2r</text>
+        <text x="340" y="185" class="lbl">Sphere</text><text x="340" y="203" class="sm">(4/3)πr³</text>
+      </g>
+      <text x="80" y="230" text-anchor="middle" class="lbl" style="fill:var(--ch)">3 hisse</text>
+      <text x="210" y="230" text-anchor="middle" class="lbl" style="fill:var(--ch)">1 hissa</text>
+      <text x="340" y="230" text-anchor="middle" class="lbl" style="fill:var(--ch)">2 hisse</text>
+      <!-- bars -->
+      <line x1="460" y1="30" x2="460" y2="210" class="ln"/>
+      <text x="455" y="56" text-anchor="end" class="sm">cyl</text>
+      <rect x="460" y="40" width="210" height="26" class="chf"/><rect x="460" y="40" width="210" height="26" class="chs"/>
+      <text x="455" y="101" text-anchor="end" class="sm">sphere</text>
+      <rect x="460" y="85" width="140" height="26" class="chf"/><rect x="460" y="85" width="140" height="26" class="chs"/>
+      <text x="455" y="146" text-anchor="end" class="sm">cone</text>
+      <rect x="460" y="130" width="70" height="26" class="chf"/><rect x="460" y="130" width="70" height="26" class="chs"/>
+      <text x="455" y="191" text-anchor="end" class="sm">hemi</text>
+      <rect x="460" y="175" width="70" height="26" style="fill:var(--ch)"/>
+      <g class="lbl"><text x="678" y="58">3</text><text x="608" y="103">2</text><text x="538" y="148">1</text><text x="538" y="193">1</text></g>
+      <text x="350" y="262" text-anchor="middle" class="sm">Sab ka radius r, cylinder aur cone ki oonchai 2r · bars scale par · hemisphere = cone (h = 2r)</text>
+    </svg>
+    </div>
+    <figcaption>Archimedes wala rishta. Ek baar ye tasveer dimaag mein baith gayi toh "cylinder mein sphere, khaali jagah kitni" jaise sawaal 5 second ke hain: khaali = 3 − 2 = 1 hissa = sphere ka aadha.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Same radius r, aur ye barabar ho</th><th>Toh</th></tr>
+    <tr><td>Cone ka volume = hemisphere ka volume</td><td>cone ki h = <b>2r</b></td></tr>
+    <tr><td>Cylinder ka volume = hemisphere ka volume</td><td>cylinder ki h = <b>(2/3)r</b></td></tr>
+    <tr><td>Cone ka volume = cylinder ka volume</td><td>cone ki h = <b>3 ×</b> cylinder ki h</td></tr>
+    <tr><td>Cone ka CSA = hemisphere ka CSA</td><td>πrl = 2πr² → <b>l = 2r</b>, h = √3 r</td></tr>
+    <tr><td>Cylinder ka TSA = hemisphere ka TSA</td><td>2πr² + 2πrh = 3πr² → <b>h = r/2</b></td></tr>
+    <tr><td>Cylinder ka CSA = do base ka area</td><td>2πrh = 2πr² → <b>h = r</b></td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · Same r, cone aur cylinder ka volume barabar; cylinder 5 cm ooncha. Cone? · <i>~5 sec</i></span>
+    Cone mein ⅓ hai, cylinder mein nahi. Barabar karne ke liye cone ko 3 guna ooncha hona padega → <b>15 cm</b>.
+  </div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Lambai k guna → area k² guna → volume k³ guna</h3>
+  <p><b>Kab use karo:</b> "radius 20% badha, volume kitna badha", "surface 44% badha toh radius?", "radius aadha toh volume?".</p>
+  <p><b>Soch aise:</b> ek 1 cm ka cube lo. Har side 2 guna karo. Ab ek face mein 2 × 2 = 4 chhote squares hain (area 4 guna). Aur poore cube mein 2 × 2 × 2 = 8 chhote cube (volume 8 guna).</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="A unit cube next to a cube of side 2 made of 8 unit cubes. Side doubles, each face has 4 squares, volume is 8 cubes. Table on the right: side times 1.1 gives area 1.21 and volume 1.331; 1.2 gives 1.44 and 1.728; 1.3 gives 1.69 and 2.197; 2 gives 4 and 8; one half gives one quarter and one eighth.">
+      <!-- small cube -->
+      <polygon points="60,140 100,140 120,125 80,125" class="chf"/><polygon points="100,140 120,125 120,165 100,180" class="chf"/>
+      <rect x="60" y="140" width="40" height="40" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <polygon points="60,140 100,140 120,125 80,125" class="chs" fill="none"/><polygon points="100,140 120,125 120,165 100,180" class="chs" fill="none"/>
+      <text x="80" y="200" text-anchor="middle" class="sm">side 1</text>
+      <text x="80" y="216" text-anchor="middle" class="sm">V = 1</text>
+      <!-- big cube -->
+      <polygon points="180,100 260,100 300,70 220,70" class="chf"/><polygon points="260,100 300,70 300,150 260,180" class="chf"/>
+      <rect x="180" y="100" width="80" height="80" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <polygon points="180,100 260,100 300,70 220,70" class="chs" fill="none"/><polygon points="260,100 300,70 300,150 260,180" class="chs" fill="none"/>
+      <g class="ln"><line x1="220" y1="100" x2="220" y2="180"/><line x1="180" y1="140" x2="260" y2="140"/>
+        <line x1="220" y1="100" x2="260" y2="70"/><line x1="200" y1="85" x2="280" y2="85"/>
+        <line x1="260" y1="140" x2="300" y2="110"/><line x1="280" y1="85" x2="280" y2="165"/></g>
+      <text x="220" y="200" text-anchor="middle" class="sm">side 2 · face = 4 squares</text>
+      <text x="220" y="216" text-anchor="middle" class="lbl" style="fill:var(--ch)">V = 8 cubes</text>
+      <!-- table -->
+      <g class="lbl"><text x="370" y="30">side ×</text><text x="470" y="30">area ×</text><text x="580" y="30">volume ×</text></g>
+      <line x1="365" y1="38" x2="690" y2="38" class="ln"/>
+      <g class="sm">
+        <text x="370" y="60">1.1 (+10%)</text><text x="470" y="60">1.21 (+21%)</text><text x="580" y="60">1.331 (+33.1%)</text>
+        <text x="370" y="85">1.2 (+20%)</text><text x="470" y="85">1.44 (+44%)</text><text x="580" y="85">1.728 (+72.8%)</text>
+        <text x="370" y="110">1.3 (+30%)</text><text x="470" y="110">1.69 (+69%)</text><text x="580" y="110">2.197 (+119.7%)</text>
+        <text x="370" y="135">2</text><text x="470" y="135">4 (+300%)</text><text x="580" y="135">8 (+700%)</text>
+        <text x="370" y="160">½</text><text x="470" y="160">¼ (−75%)</text><text x="580" y="160">⅛ (−87.5%)</text>
+        <text x="370" y="185">0.8 (−20%)</text><text x="470" y="185">0.64 (−36%)</text><text x="580" y="185">0.512 (−48.8%)</text>
+      </g>
+      <text x="530" y="214" text-anchor="middle" class="sm">Ye niyam har solid par chalta hai: sphere, cone, cube, sab</text>
+    </svg>
+    </div>
+    <figcaption>Side 2 guna: face par 4, andar 8. Daayen wali table ratta maar lo. Ulta bhi padho: area +44% → side +20% → volume +72.8%.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Jab r aur h alag-alag badlein: a + b + ab/100 do-teen baar · <i>~15 sec</i></span>
+    Cylinder V ∝ r² × h. Radius +10% → r² mein 10 + 10 + 1 = +21%. Phir height −20%: 21 − 20 − (21 × 20)/100 = 1 − 4.2 = <b>−3.2%</b>.<br>
+    Cone mein bhi wahi, kyunki ⅓ toh dono taraf kat jaata hai.
+  </div>
+  <div class="trick"><b>Trick:</b> "Sirf ek cheez badli?" Volume us cheez ki power ke hisaab se badhta hai. Prism ki height +50% → volume +50% (power 1). Radius +50% → cylinder ka volume × 2.25 (power 2). Sphere ka radius +50% → × 3.375 (power 3).</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Pighlana = volume wahi rehta hai (π aur 4/3 pehle kaato)</h3>
+  <p><b>Kab use karo:</b> "melted and recast", "kitni goliyan banengi", "naye solid ki oonchai".</p>
+  <p><b>Soch aise:</b> lohe ka gola pighla, toh loha na badha na ghata. Bas shakal badli. Toh <b>purana volume = naya volume (sab milakar)</b>. Ab chaalaaki: dono taraf π hai, kaat do. Dono taraf 4/3 hai, kaat do. Sirf r³ bachta hai.</p>
+  <ul>
+    <li><b>Sphere → chhote spheres:</b> n = (R/r)³. 12 → 2: (6)³ = 216.</li>
+    <li><b>Sphere → hemispheres:</b> ek sphere = do hemisphere. n = 2 × (R/r)³.</li>
+    <li><b>Kai spheres → ek sphere:</b> R³ = r₁³ + r₂³ + r₃³. 3, 4, 5 → 27 + 64 + 125 = 216 → <b>6</b>. Yaad rakho: <b>3³ + 4³ + 5³ = 6³</b>.</li>
+    <li><b>Cone → chhote cones:</b> n = (R/r)² × (H/h). Radius ¼ aur height ¼ → 16 × 4 = 64.</li>
+    <li><b>Total surface area:</b> ek sphere ko n barabar spheres mein todo → kul surface <b>∛n guna</b>. 8 tukde → 2 guna.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · Sphere r = 6 pighla kar cylinder banaya, oonchai 8. Radius? · <i>~10 sec</i></span>
+    (4/3) × 6³ = r² × 8 (π kaata). (4/3) × 216 = 288. → r² = 288 ÷ 8 = 36 → <b>r = 6</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> cube numbers 1 se 15 tak yaad karo (1, 8, 27, 64, 125, 216, 343, 512, 729, 1000, 1331, 1728, 2197, 2744, 3375). 728 dikhe toh turant "9³ = 729 ke paas" → answer 9.</div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Paani ka uthna = solid ka volume ÷ bartan ka base</h3>
+  <p><b>Kab use karo:</b> "ball daala, paani kitna utha", "paani 3 cm utha, bartan ka radius?", "kitna paani bahar gira".</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Side view of a tank. Water was at the dashed level. A ball is dropped and sinks. The water rises by delta h. The thin slab of water between the old and new level has exactly the volume of the ball.">
+      <rect x="60" y="120" width="240" height="100" class="chf"/>
+      <rect x="60" y="120" width="240" height="30" style="fill:var(--ch);opacity:.45"/>
+      <path d="M60,30 L60,220 L300,220 L300,30" class="chs" fill="none"/>
+      <line x1="60" y1="150" x2="300" y2="150" class="ln" stroke-dasharray="5 4"/>
+      <circle cx="180" cy="190" r="28" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="180" y="195" text-anchor="middle" class="sm">ball</text>
+      <path d="M312,120 L320,120 L320,150 L312,150" class="ln" fill="none"/>
+      <text x="326" y="140" class="lbl" style="fill:var(--ch)">Δh</text>
+      <text x="40" y="154" text-anchor="end" class="sm">pehle</text>
+      <text x="40" y="124" text-anchor="end" class="sm">baad</text>
+      <text x="180" y="240" text-anchor="middle" class="sm">base area = A (cylinder mein πR²)</text>
+      <g class="lbl"><text x="380" y="60">Ball ka volume = gehri patti</text></g>
+      <g class="sm">
+        <text x="380" y="85">patti = base area × Δh</text>
+        <text x="380" y="110">toh Δh = V(solid) ÷ A</text>
+        <text x="380" y="140">Cylinder: Δh = V ÷ πR²  (π kat jaata hai)</text>
+        <text x="380" y="165">Ulta: A = V ÷ Δh  → bartan ka radius</text>
+        <text x="380" y="190">Bartan pehle se bhara ho: bahar gira paani = V(solid)</text>
+        <text x="380" y="215">Bartan ki oonchai aksar sirf bhatkaane ke liye hoti hai</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Paani ki jo nayi patti bani, wahi ball ki jagah hai. Isliye "kitna paani hata" = ball ka volume, bartan kuch bhi ho.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · Cylinder R = 6 cm, usme sphere r = 3 cm dooba. Paani kitna utha? · <i>~8 sec</i></span>
+    Sphere = (4/3)π × 27 = 36π. Base = π × 36. → Δh = 36π ÷ 36π = <b>1 cm</b>.
+  </div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Triplet se slant height aur diagonal</h3>
+  <p><b>Kab use karo:</b> cone mein l, pyramid mein l ya h, cuboid ka diagonal. Har jagah ek right triangle chhupa hai.</p>
+  <ul>
+    <li><b>Cone:</b> r, h, l → l² = r² + h².</li>
+    <li><b>Square pyramid:</b> h, (a/2), l → l² = h² + (a/2)². Dhyan: <b>aadhi side</b>, poori nahi.</li>
+    <li><b>Cuboid:</b> d² = l² + b² + h².</li>
+  </ul>
+  <div class="tbl"><table>
+    <tr><th>Triplet</th><th>Guna wale</th><th>Kahan aaya</th></tr>
+    <tr><td class="n">3-4-5</td><td>6-8-10 · 9-12-15 · 12-16-20</td><td>cone 3, 4 · pyramid 6, 4</td></tr>
+    <tr><td class="n">5-12-13</td><td>10-24-26</td><td>cone 5, 12 · pyramid a = 10, h = 12</td></tr>
+    <tr><td class="n">7-24-25</td><td>14-48-50</td><td>cone 7, 24</td></tr>
+    <tr><td class="n">8-15-17</td><td>16-30-34</td><td>cuboid ka base diagonal 17</td></tr>
+    <tr><td class="n">20-21-29</td><td>—</td><td><span class="tag x">CGL+</span></td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · Square pyramid, side 16, height 15. Slant height? · <i>~8 sec</i></span>
+    Aadhi side = 8. 8 aur 15 → triplet 8-15-17 → <b>l = 17</b>.
+  </div>
+  <div class="box"><span class="k">Cuboid ke 4 jaadu (cube bhi)</span>
+    <b>1.</b> Teen faces ke area x, y, z diye → V = √(x × y × z). Har face = do dimensions ka guna.<br>
+    <b>2.</b> Teen face-diagonals ke square diye → jodo, aadha karo = l² + b² + h². Phir har ek nikaalo.<br>
+    <b>3.</b> (l + b + h)² = d² + TSA. Do diye ho toh teesra free. <span class="tag x">CGL+</span><br>
+    <b>4.</b> Saare edges ka jod = 4(l + b + h). Ratio 2 : 3 : 4 ho toh 9k.<br>
+    <span class="tag x">CGL+</span> Cube ko n × n × n tukdon mein kaatna: kam se kam <b>3(n − 1)</b> cut. 8 tukde → 3, 27 → 6, 64 → 9.
+  </div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Cone ko kaata: 1 : 8 : 27 ki seedhi</h3>
+  <p><b>Kab use karo:</b> "cone ko base ke parallel kaata", "frustum", "upar ka hissa 1/8 volume".</p>
+  <p><b>Soch aise:</b> upar ka chhota cone bilkul bade cone jaisa hai, bas chhota. Agar uski height poori height ki ⅓ hai, toh uska radius bhi ⅓, aur volume (⅓)³ = 1/27. Yahi method 2 hai, bas cone par.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Side view of a cone of height 3 units cut by two planes at heights 1 and 2 from the vertex. The three pieces have volumes 1, 7 and 19 parts. Cumulative cones from the top are 1, 8 and 27 parts, which are 1 cubed, 2 cubed and 3 cubed.">
+      <polygon points="180,30 140,110 220,110" class="chf"/>
+      <polygon points="140,110 220,110 260,190 100,190" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+      <polygon points="100,190 260,190 300,270 60,270" class="chf"/>
+      <polygon points="180,30 300,270 60,270" class="chs" fill="none"/>
+      <line x1="140" y1="110" x2="220" y2="110" class="chs"/>
+      <line x1="100" y1="190" x2="260" y2="190" class="chs"/>
+      <g text-anchor="middle" class="lbl"><text x="180" y="95">1</text><text x="180" y="160">7</text><text x="180" y="240">19</text></g>
+      <g class="ln"><line x1="30" y1="30" x2="30" y2="270"/><line x1="25" y1="30" x2="35" y2="30"/><line x1="25" y1="110" x2="35" y2="110"/><line x1="25" y1="190" x2="35" y2="190"/><line x1="25" y1="270" x2="35" y2="270"/></g>
+      <g class="sm" text-anchor="end"><text x="22" y="74">h</text><text x="22" y="154">h</text><text x="22" y="234">h</text></g>
+      <g class="sm"><text x="232" y="114">upar se 1/3</text><text x="272" y="194">upar se 2/3</text></g>
+      <text x="420" y="40" class="lbl">Upar se ginti (kul cone)</text>
+      <g class="sm">
+        <text x="420" y="64">1/3 tak: 1 = 1³</text>
+        <text x="420" y="84">2/3 tak: 1 + 7 = 8 = 2³</text>
+        <text x="420" y="104">poora: 1 + 7 + 19 = 27 = 3³</text>
+      </g>
+      <text x="420" y="140" class="lbl">Yaad rakho</text>
+      <g class="sm">
+        <text x="420" y="164">beech se kata (½): cone : frustum = 1 : 7</text>
+        <text x="420" y="184">upar se ⅓ par kata: 1 : 26</text>
+        <text x="420" y="204">do cut (⅓, ⅔): 1 : 7 : 19</text>
+        <text x="420" y="224">upar ka hissa 1/8 volume → height ½</text>
+        <text x="420" y="244">radius bhi usi ratio mein kat-ta hai</text>
+      </g>
+      <text x="420" y="272" class="lbl" style="fill:var(--ch)">height ratio k → volume k³</text>
+    </svg>
+    </div>
+    <figcaption>Cone ko barabar oonchai ke 3 hisson mein kaato: upar se 1, 7, 19. Ye seedhe cubes ke farq hain: 8 − 1 = 7, 27 − 8 = 19.</figcaption>
+  </figure>
+  <p><b>Dhyan do:</b> "base se 10 cm ki oonchai par kaata" aur "vertex (chotti) se 10 cm" alag baatein hain. Hamesha chotti se naapo, kyunki chhota cone wahin hai.</p>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Prism aur pyramid: B × h, perimeter × h</h3>
+  <p><b>Kab use karo:</b> koi bhi prism (triangle, trapezium, hexagon, pentagon base) ya pyramid.</p>
+  <ul>
+    <li><b>Prism volume</b> = base ka area × height. Base kuch bhi ho, bas uska area nikaalo.</li>
+    <li><b>Prism ki side deewarein (LSA)</b> = base ka perimeter × height. Kyunki har deewar ek rectangle hai: side × h. Sab jodo toh (sab sides) × h.</li>
+    <li><b>Pyramid volume</b> = ⅓ × base × h. <b>Pyramid LSA</b> = ½ × perimeter × slant height (har deewar ek triangle).</li>
+    <li><b>"Tah" (layers) wale sawaal</b> (heights AP mein): kul height = tah ki ginti × (pehli + aakhri) ÷ 2. Phir × base area.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · Prism, equilateral base side 6, height 10. Volume? · <i>~8 sec</i></span>
+    Base = (√3/4) × 36 = 9√3. Volume = 9√3 × 10 = <b>90√3</b> ≈ 155.9 cm³.
+  </div>
+  <div class="box"><span class="k">Demo · Tah wali heights 3, 5, 7, 9 cm, base 20 cm². Volume? · <i>~6 sec</i></span>
+    Kul height = 4 × (3 + 9) ÷ 2 = 24. Volume = 20 × 24 = <b>480 cm³</b>.
+  </div>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · Andar fit (inscribed): kaun kisko chhoota hai?</h3>
+  <ul>
+    <li><b>Sphere cube ke andar</b> (sab faces chhoo raha): diameter = side → r = a/2.</li>
+    <li><b>Cube / cuboid sphere ke andar</b> (kone sphere par): cube ka diagonal = sphere ka diameter → a√3 = 2R.</li>
+    <li><b>Cylinder sphere ke andar:</b> h² + (2r)² = D².</li>
+    <li><b>Sabse badi ball dabbe mein:</b> diameter = dabbe ki <b>sabse chhoti</b> side.</li>
+    <li><b>Sphere cone ke andar:</b> cone ka beech se kata triangle lo. r = triangle ka area ÷ (perimeter ka aadha).</li>
+    <li><b>Hemisphere cube ke andar</b> (flat face neeche): r = a/2.</li>
+  </ul>
+  <div class="trick"><b>Trick:</b> sphere cube mein → sphere = cube ka <b>π/6 ≈ 52.4%</b>. Khaali jagah ≈ <b>47.6%</b>. Sphere cylinder mein (h = 2r) → sphere = cylinder ka ⅔.</div>
+
+  <!-- ========== METHOD 9 ========== -->
+  <h3>Speed method 9 · 22/7 se dosti, aur option se pakdo</h3>
+  <p><b>Kab use karo:</b> radius 7, 14, 21, 3.5, 10.5 ho. Ye number 22/7 ke 7 ko kaatne ke liye hi diye jaate hain.</p>
+  <div class="tbl"><table>
+    <tr><th>r</th><th>2πr (gher)</th><th>πr²</th><th>Sphere (4/3)πr³</th><th>Hemisphere CSA 2πr²</th></tr>
+    <tr><td class="n">3.5</td><td>22</td><td>38.5</td><td>179.67</td><td>77</td></tr>
+    <tr><td class="n">7</td><td>44</td><td>154</td><td>1437.33</td><td>308</td></tr>
+    <tr><td class="n">10.5</td><td>66</td><td>346.5</td><td>4851</td><td>693</td></tr>
+    <tr><td class="n">14</td><td>88</td><td>616</td><td>11498.67</td><td>1232</td></tr>
+    <tr><td class="n">21</td><td>132</td><td>1386</td><td>38808</td><td>2772</td></tr>
+  </table></div>
+  <ul>
+    <li><b>Answer mein π bacha ho</b> (36π, 250π/3): toh π ko chhod kar hi hal karo. Shuru se π mat lagao.</li>
+    <li><b>"Approx" options:</b> π ≈ 3.14, √3 ≈ 1.732, √2 ≈ 1.414. Sabse paas wala option lo.</li>
+    <li><b>Units dekh kar kaato:</b> volume ka answer cm³, area ka cm². Kuch options galat unit mein chhapte hain, par number dekho.</li>
+    <li><b>"Kitne poore banenge"</b>: answer decimal aaye (73.5, 13.5) toh <b>neeche</b> wala poora number.</li>
+  </ul>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing a method. Check in order: melted and recast, water level rise, percentage change, cone cut parallel to base, one solid inside another, slant height or diagonal needed, prism or pyramid. Each yes leads to its method.">
+      <defs>
+        <marker id="m3a-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya pucha hai?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#m3a-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">"Melted and recast" / kitne bane?</text>
+        <text x="180" y="141">Kuch dooba, paani utha / gira?</text>
+        <text x="180" y="197">r, h, side % mein badla?</text>
+        <text x="180" y="253">Cone base ke parallel kata?</text>
+        <text x="180" y="309">Ek solid doosre ke andar fit?</text>
+        <text x="180" y="365">Slant height / diagonal chahiye?</text>
+        <text x="180" y="421">Prism ya pyramid?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#m3a-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#m3a-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Volume barabar (method 3)</text>
+        <text x="410" y="132">Δh = V ÷ base (method 4)</text>
+        <text x="410" y="188">k, k², k³ (method 2)</text>
+        <text x="410" y="244">1 : 8 : 27 seedhi (method 6)</text>
+        <text x="410" y="300">Kaun kisko chhoota? (method 8)</text>
+        <text x="410" y="356">Triplet (method 5)</text>
+        <text x="410" y="412">B × h, ⅓Bh, P × h (method 7)</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">π, 4/3 kaato · n = (R/r)³ · hemi ×2</text>
+        <text x="410" y="149">bhare bartan se gira = V(solid)</text>
+        <text x="410" y="205">r² × h mein a + b + ab/100</text>
+        <text x="410" y="261">chotti se naapo · ½ → 1 : 7</text>
+        <text x="410" y="317">r = a/2 · a√3 = 2R · sabse chhoti side</text>
+        <text x="410" y="373">3-4-5 · 5-12-13 · 7-24-25 · 8-15-17</text>
+        <text x="410" y="429">AP tah: ginti × (pehli + aakhri) ÷ 2</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Upar se neeche chalo. Kuch na mile toh seedha formula sheet: "equal volume" wale sawaal method 1 (3 : 1 : 2) se.</figcaption>
+  </figure>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Same radius, cone ka volume = hemisphere ka volume. Cone ki height?</summary><p>2r. ⅓πr²h = (2/3)πr³ → h = 2r.</p></details>
+    <details><summary>Sphere ka radius 10% badha. Volume kitna badha?</summary><p>1.1³ = 1.331 → 33.1%. (10 + 10 + 1 = 21, phir 21 + 10 + 2.1 = 33.1.)</p></details>
+    <details><summary>Gola r = 9, chhote gole r = 3. Kitne banenge? Hemisphere banane ho toh?</summary><p>(9/3)³ = 27 gole. Hemisphere 2 × 27 = 54.</p></details>
+    <details><summary>Cone ko chotti se aadhi height par kaata. Chhota cone : frustum?</summary><p>(½)³ = 1/8 → 1 : 7.</p></details>
+    <details><summary>Prism ka base perimeter 24, height 10. Side deewaron ka area?</summary><p>24 × 10 = 240 cm².</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · MENSURATION 3D (part 2: PYQ types 1–6) ===================== -->
+<section class="chap" id="m3a-types1">
+  <div class="eyebrow">Maths · PYQ types 1–6</div>
+  <h2>Mensuration 3D: cone, cylinder, sphere, khokhle solids, barabar volume, % badlaav</h2>
+  <div class="meta">98 sawaal · har sawaal ke aage uska method likha hai · sabse zyada: % badlaav (28) aur sphere / hemisphere (23)</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 (Tier-2 alag likha hai) · CHSL = CHSL 2025 Tier 1 (Tier-2 alag) · CPO = CPO 2025. Saari dates shift ki dates hain.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Cone: slant height, CSA, TSA, volume (11 Qs)</h3>
+  <p><b>Samjho:</b> cone mein teen lambaai hain: r, h, l. Inka right triangle hai. Do diye hain toh teesra triplet se. CSA ke liye ek chhota jaadu: <b>CSA = ½ × base ka gher × l</b> (kyunki πrl = ½ × 2πr × l).</p>
+  <div class="box"><span class="k">Worked · Cone r = 7, h = 24. Slant height? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> triplet · <i>~3 sec</i><br>
+    7 aur 24 → triplet 7-24-25 → <mark>25 cm</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Cone ka volume 231 cm³, r = 3.5. Slant height? <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small></span>
+    <b>Method:</b> 22/7 dosti (r = 3.5 → πr² = 38.5) · <i>~15 sec</i><br>
+    ⅓ × 38.5 × h = 231 → h = 231 × 3 ÷ 38.5 = 18.<br>
+    l = √(18² + 3.5²) = √(324 + 12.25) = √336.25 ≈ <mark>18.3 cm</mark> (18.3² = 334.9, bilkul paas).
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Base ka area = CSA; l? → <b>barabar karo</b>: πr² = πrl → <mark>l = r</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Gher 44, l = 14; CSA? → <b>½ × gher × l</b> = ½ × 44 × 14 → <mark>308 cm²</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Circle ka gher 132 = cone ka radius, h = 12; V? → <b>22/7 dosti</b>: 132 → r = 21, πr² = 1386 → ⅓ × 1386 × 12 = 1386 × 4 → <mark>5544 cm³</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> V = 462, h = 14; r? → <b>ulta formula</b>: ⅓ × 22/7 × r² × 14 = 462 → (44/3)r² = 462 → r² = 31.5 → 5.6² = 31.36 → <mark>5.61 cm</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 100 ice-cream cone, r 2, l 5, bahar rang → <b>πrl</b> = 10π ≈ 31.4 → × 100 → <mark>3140 cm²</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> h 12, r 5; l aur CSA → <b>triplet 5-12-13</b>: l 13, CSA = 65π ≈ <mark>13 cm, 204.2 cm²</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> TSA 314, r 7; l? → <b>π ≈ 3.14</b>: 3.14 × 7 × (7 + l) = 314 → 7 + l ≈ 14.3 → l ≈ 7.3 → <mark>7.2 cm</mark> (sabse paas option) <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Tent h 4, r 3; hawa sirf side par → <b>triplet 3-4-5</b>: l 5 → πrl → <mark>15π m²</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> r 9, l 15; h +50%, naya l? → <b>triplet 9-12-15</b>: h 12 → 18 → √(81 + 324) = √405 → <mark>20.12 cm</mark> <small>CHSL · 30 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Cylinder: volume, CSA, TSA, ratio (9 Qs)</h3>
+  <p><b>Samjho:</b> cylinder ki deewar kholo toh rectangle: lambai = gher 2πr, chaudai = h. Kaagaz lapet kar cylinder banaya ho toh <b>jo side gol mudi wo gher</b>, doosri side height. Aur <b>CSA : TSA = h : (h + r)</b> (2πr dono mein kat jaata hai).</p>
+  <div class="box"><span class="k">Worked · 44 × 10 cm kaagaz mod kar cylinder; 10 cm = height. Volume? <span class="tag p">PYQ</span> <small>CHSL · 12 Nov 2025</small></span>
+    <b>Method:</b> unfold + 22/7 dosti · <i>~8 sec</i><br>
+    Gher = 44 → r = 7 → πr² = 154.<br>
+    V = 154 × 10 = 1540 ≈ <mark>1541 cm³</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · CSA : TSA = 7 : 10, V = 12672. CSA? <span class="tag p">PYQ</span> <small>CHSL · 18 Nov 2025</small></span>
+    <b>Method:</b> ratio + "maan lo k" · <i>~25 sec</i><br>
+    h : (h + r) = 7 : 10 → h : r = 7 : 3. Maan lo r = 3k, h = 7k.<br>
+    V = 22/7 × 9k² × 7k = 198k³ = 12672 → k³ = 64 → k = 4 → r 12, h 28.<br>
+    CSA = 2 × 22/7 × 12 × 28 = 44 × 48 = <mark>2112 cm²</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> h = diameter, r 5; V? → <b>seedha</b>: π × 25 × 10 → <mark>250π cm³</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Can par label, r 5, h 12 → <b>CSA 2πrh</b> → <mark>120π cm²</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> r 10.5, V 6237; CSA? → <b>22/7 dosti</b>: πr² = 346.5 → h = 18; 2πr = 66 → 66 × 18 → <mark>1188 cm²</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> CSA = 2 × base area → 2πrh = 2πr² → <mark>h = r</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Capsule r 0.4, h 1.5; TSA → <b>2πr(r + h)</b> = 0.8π × 1.9 = 1.52π → <mark>4.77 cm²</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> TSA = V; rishta? → <b>barabar karo</b>: 2πr(r + h) = πr²h → 2r + 2h = rh → <mark>h = 2r/(r − 2)</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> r : h = 3 : 4, π = 3; (V, TSA − CSA) ke kaunse jode sahi? → <b>maan lo k</b>: V = 108k³, TSA − CSA = 2πr² = 54k². A: 2916 → k 3 → 486 ✔. B: 864 → k 2 → 216 ✘. C: 6912 → k 4 → 864 ✔. D: 13500 → k 5 → 1350 ✘ → <mark>Only A and C</mark> <small>CHSL · 29 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Sphere aur hemisphere: seedhe formula, aur jode hue solids (23 Qs)</h3>
+  <p><b>Samjho:</b> hemisphere ke do surface hain: gol (2πr²) aur flat dhakkan (πr²). "Curved" ya "outer" bole toh sirf 2πr². "Total" bole toh 3πr². Sphere ko do mein kaato toh do naye dhakkan bante hain: 4πr² se 6πr².</p>
+  <div class="box"><span class="k">Worked · Radius 7 badha toh surface 4312 badha. Purana volume? <span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small></span>
+    <b>Method:</b> (a + b)² − a² ka farq + 22/7 · <i>~20 sec</i><br>
+    4π[(r + 7)² − r²] = 4312 → 4 × 22/7 × (14r + 49) = 4312 → 14r + 49 = 343 → r = 21.<br>
+    r = 21 ka sphere = <mark>38808 cm³</mark> (table wala number, ratta maaro).
+  </div>
+  <div class="box"><span class="k">Worked · Hemisphere ke base ka area 308. Volume? <span class="tag p">PYQ</span> <small>CPO · 09 Dec 2025</small></span>
+    <b>Method:</b> 22/7 dosti · <i>~20 sec</i><br>
+    πr² = 308 = 2 × 154 → r² = 98 → r = 7√2 → r³ = 98 × 7√2 = 686√2.<br>
+    V = ⅔ × 22/7 × 686√2 = ⅔ × 2156√2 = <mark>1437.33√2 cm³</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Gumbad, diameter 20 → <b>CSA 2πr²</b> = 200π → <mark>628 m²</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere V = 4 × CSA → <b>V ÷ CSA = r/3</b> → r/3 = 4 → <mark>12 cm</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere CSA 154; diameter? → <b>2πr² = 154</b> → r² = 24.5 → r ≈ 4.95 → <mark>9.9 cm</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere V = SA (number mein) → <b>V ÷ SA = r/3</b> = 1 → <mark>3 units</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> Hemisphere TSA 300π; V? → <b>3πr² = 300π</b> → r 10 → ⅔π × 1000 → <mark>2000π/3 cm³</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere V = TSA → <b>V ÷ TSA = 2r/9</b> = 1 → <mark>4.5 units</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere TSA = sphere V (same r) → 3πr² = (4/3)πr³ → r = 9/4 → <mark>2.25 units</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere tank 36π; r? → <b>cube pehchano</b>: (4/3)r³ = 36 → r³ = 27 → <mark>3 m</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere ghanti r 2, polish ₹0.75/cm², outer → <b>CSA 2πr²</b> = 8π ≈ 25.13 → × 0.75 → <mark>₹18.85</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere r 7, CSA → <b>table</b> → <mark>308 cm²</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere V = 396/7; TSA? → <b>22/7</b>: ⅔ × 22/7 × r³ = 396/7 → r³ = 27 → r 3 → 3 × 22/7 × 9 → <mark>84.85 cm²</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere TSA 462; r? → 3πr² = 462 → πr² = 154 → <mark>7 cm</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere r 5, V? → ⅔π × 125 → <mark>250π/3 cm³</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere : hemisphere (same r) volume → <mark>2 : 1</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere ko do hemisphere mein kaata; TSA kitna % badha? → <b>4πr² se 6πr²</b> → 2/4 → <mark>50%</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do hemisphere jode; flat faces sphere ke surface ka kitna %? → 2πr² ÷ 4πr² → <mark>50%</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere r 21 ke 8 barabar tukde (3 cut); ek tukde ka TSA → <b>⅛ gol + 3 chauthai circle</b>: ⅛ × 4π × 441 = 220.5π, 3 × ¼ × π × 441 = 330.75π → <mark>551.25π cm²</mark> <small>CGL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere tank r 2.1 m, 7 L/sec; aadha khaali kab? → <b>22/7</b>: ⅔ × 22/7 × 9.261 = 19.404 m³ = 19,404 L → aadha 9,702 ÷ 7 = 1,386 sec → <mark>23 minutes</mark> <small>CGL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> Ice-cream: hemisphere (V 144π) cone par, cone h 8; TSA? → <b>jode solid = sirf bahar dikhne wale surface</b>: ⅔r³ = 144 → r 6; 6-8-10 → l 10 → 2π × 36 + π × 6 × 10 = 72π + 60π → <mark>132π cm²</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere cylinder par chipka (flat se flat); TSA? → <b>jod wali jagah gayab</b>: hemi 2πr² + cylinder deewar 2πrh + neeche ka base πr² → <mark>3πr² + 2πrh</mark> <small>CHSL · 24 Nov 2025</small></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> do solid jode toh jahan wo chipke, wo do surface (har solid ka ek) gin-ti se hata do. Volume seedha jod do.</div>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Khokhle solids: shell, pipe, bowl, chhed (11 Qs)</h3>
+  <p><b>Samjho:</b> khokhla = bada solid − andar wala. Pipe: π(R² − r²)h. Yahan <b>R² − r² = (R + r)(R − r)</b> use karo, guna chhota ho jaata hai. Shell: (4/3)π(R³ − r³), bowl (hemisphere shell): (2/3)π(R³ − r³). <b>Motaai</b> (thickness) = R − r.</p>
+  <div class="box"><span class="k">Worked · Lohe ki khokhli rod: bahar ka diameter 8.4, motaai 28 mm, lambai 30 cm, 1 cm³ = 0.5 kg. Wazan? <span class="tag p">PYQ</span> <small>CHSL · 29 Nov 2025</small></span>
+    <b>Method:</b> (R + r)(R − r) · <i>~20 sec</i><br>
+    R = 4.2, motaai 2.8 → r = 1.4. R + r = 5.6, R − r = 2.8.<br>
+    V = 22/7 × 5.6 × 2.8 × 30 = 17.6 × 2.8 × 30 = 1478.4 cm³ → × 0.5 = <mark>739.2 kg</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Spherical shell: bahar ka diameter 20, motaai 1, π = 3.14. Dhaatu? <span class="tag p">PYQ</span> <small>CGL · 24 Sep 2025</small></span>
+    <b>Method:</b> cubes ka farq · <i>~15 sec</i><br>
+    R = 10, r = 9 → 1000 − 729 = 271.<br>
+    V = (4/3) × 3.14 × 271 ≈ 4.187 × 271 ≈ <mark>1134.6 cm³</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Cylinder r 5 mein 4 chhed r 1; kitna % nikla? → <b>π aur h kaato</b>: 4 × 1 ÷ 25 → <mark>16%</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder r 4 mein chhed r 2 → (2/4)² → <mark>25%</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder r 5, h 10, chhed r 3; bacha? → <b>(R + r)(R − r)</b> = 8 × 2 = 16 → 160π → <mark>502 cm³</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Khokhla hemisphere, R = 2r; bahar : andar CSA → <b>area ∝ r²</b> → <mark>4 : 1</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere shell r 7, R 14 → ⅔π(2744 − 343) = ⅔π × 2401 ≈ 5029 → <mark>5026.09 cm³</mark> (sabse paas) <small>CGL · 18 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Khokhla dabba 12 × 10 × 8, motaai 1 → <b>bahar − andar</b>: andar har taraf se 2 kam = 10 × 8 × 6 = 480; 960 − 480 → <mark>480 cm³</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere shell r 12, R 13 → ⅔π(2197 − 1728) = ⅔π × 469 → <mark>938π/3 cm³</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Bowl andar r 3, motaai 0.5 → R 3.5: 42.875 − 27 = 15.875 → ⅔π × 15.875 → <mark>127π/12 cm³</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pipe 1.2 m, r 3, R 4 → <b>(R + r)(R − r)</b> = 7 × 1 → 7 × 120 → <mark>840π cm³</mark> <small>CHSL · 28 Nov 2025</small></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> khokhli cheez mein "andar ka naap = bahar ka naap − 2 × motaai" (dono taraf deewar hai). Sirf open-top dabbe mein oonchai se ek hi baar kam karo.</div>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Barabar volume / barabar surface: rishta nikaalo (16 Qs)</h3>
+  <p><b>Samjho:</b> method 1 ki 3 : 1 : 2 wali soch. Same radius ho toh volume sirf "coefficient × height" par tika hai: cylinder 1 × h, cone ⅓ × h, hemisphere ⅔ × r.</p>
+  <div class="box"><span class="k">Worked · Hemisphere, cone, cylinder: same r, same volume. Cylinder ki height 3h. Cone ki height? <span class="tag p">PYQ</span> <small>CGL · 14 Oct 2025</small></span>
+    <b>Method:</b> coefficient ka khel · <i>~5 sec</i><br>
+    Cone mein ⅓ hai, cylinder mein 1. Volume barabar → cone 3 guna ooncha.<br>
+    Cone = 3 × 3h = <mark>9h</mark>. (Hemisphere ki zaroorat hi nahi padi.)
+  </div>
+  <div class="box"><span class="k">Worked · Cone aur hemisphere: same r, same CSA. Volume ka ratio? <span class="tag p">PYQ</span> <small>CPO · 09 Dec 2025</small></span>
+    <b>Method:</b> table + 1-√3-2 triangle · <i>~15 sec</i><br>
+    πrl = 2πr² → l = 2r. Triangle r, h, 2r → h = √3 r (30-60-90 wala).<br>
+    Cone : hemisphere = ⅓r²(√3r) : ⅔r³ = √3 : 2 → <mark>√3 : 2</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Cone = hemisphere (same r, V); h : r → <b>table</b> → <mark>2 : 1</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Wahi, radius R → <mark>2R</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Wahi, engineer wala → <mark>2r</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder = hemisphere (V), kul oonchai 30; r? → <b>table</b>: cylinder h = ⅔r → ⅔r + r = 30 → <mark>18 cm</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone (h = 2r) = sphere (V); r_cone : R → ⅔r³ = (4/3)R³ → r³ = 2R³ → <mark>∛2 : 1</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere TSA = cylinder TSA (same r); h : r → 3πr² = 2πr² + 2πrh → <mark>1 : 2</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone CSA = hemisphere CSA (r); l? → <b>table</b> → <mark>l = 2r</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder : cone (same r, h) → <mark>3 : 1</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone cylinder ke andar (same base, h); cone : cylinder → <mark>1 : 3</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Flask r 5, h 12, cylinder mein fit → numbers bhatkaane ke liye → <mark>1 : 3</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cube aur cylinder same height, cylinder r = side/2 → πa³/4 : a³ → <mark>π : 4</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone V = 80% cylinder, cylinder h 50% zyada, cone r 36; cylinder R? → ⅓ × 1296 × h = 0.8 × 1.5h × R² → 432 = 1.2R² → R² = 360 → <mark>6√10 cm</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere aur cone, same r, same height (h = r) → ⅔ : ⅓ → <mark>2 : 1</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone r 2, h 6; cylinder r aur h dono double; cone : cylinder → <b>guna ginti</b>: r² se 4, h se 2, ⅓ se 3 → 4 × 2 × 3 → <mark>1 : 24</mark> <small>CPO · 09 Dec 2025</small></li>
+  </ul>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · Radius / height % mein badla: volume, surface (28 Qs)</h3>
+  <p><b>Samjho:</b> method 2. Sphere, cube: sab kuch k guna, area k², volume k³. Cylinder, cone: V ∝ r² × h, toh radius ka % do baar, height ka % ek baar (a + b + ab/100 se).</p>
+  <div class="box"><span class="k">Worked · Cone: radius +20%, height −10%. Volume? <span class="tag p">PYQ</span> <small>CGL · 17 Sep 2025</small></span>
+    <b>Method:</b> a + b + ab/100 · <i>~10 sec</i><br>
+    r² → 20 + 20 + 4 = +44%. Phir h −10%: 44 − 10 − 4.4 = <mark>29.6% increase</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Cylinder: height +96%, radius −25%. Volume? <span class="tag p">PYQ</span> <small>CHSL · 29 Nov 2025</small></span>
+    <b>Method:</b> fraction se guna · <i>~15 sec</i><br>
+    r × ¾ → r² × 9/16. h × 1.96 = 49/25.<br>
+    9/16 × 49/25 = 441/400 = 1.1025 → <mark>10% increase</mark> (paas wala poora number).
+  </div>
+  <div class="box"><span class="k">Worked · Cylinder aadha bhara. Radius double, height aadhi. Liquid kitni gehraai tak (% mein)? <span class="tag p">PYQ</span> <small>CPO · 09 Dec 2025</small></span>
+    <b>Method:</b> liquid ka volume wahi · <i>~15 sec</i><br>
+    Liquid = ½ × πr²h. Naya base = π(2r)² = 4πr² → gehraai = ½πr²h ÷ 4πr² = h/8.<br>
+    Naya cylinder h/2 ooncha → (h/8) ÷ (h/2) = <mark>25%</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Prism h +50%, base wahi → <b>power 1</b> → <mark>50%</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Prism base +25% → <mark>25%</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Prism h teen guna → <mark>Tripled</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Prism 960 → 1200, base 80; height kitna % → <b>V ∝ h</b>: 240/960 → <mark>25%</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere r double → <b>k², k³</b> → <mark>4 : 1 aur 8 : 1</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone h × 3, r × ½ → 3 × ¼ → <mark>three-fourths</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cuboid teeno side +10% → 1.1³ → <mark>33.1%</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Gubbara r +10%; surface → 1.1² → <mark>21%</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere 144π, r double; volume kitna % badha → 8 guna → <mark>700%</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere 288π, r double; naya V → × 8 → <mark>2304π cm³</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere SA +21% → r +10% → <mark>33.1%</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder r aadha → <mark>one-fourth</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do cylinder V 2 : 3, r 1 : 2; h? → <b>V ∝ r²h</b>: h₁/h₂ = (2/3) ÷ (1/4) → <mark>8 : 3</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> Sphere r +20% → 1.2³ = 1.728 → <mark>72.8</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere SA +44% → r +20% → V <mark>72.8%</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ball ka diameter 50% kam → ⅛ bacha → <mark>87.5%</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do cylinder same h, diameter 1 : 2 → r² → <mark>1 : 4</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere garam, r +10% → <mark>33.1%</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone bowl, sab naap +10% → <b>k³</b> (r, h ke numbers bhatkaane ke liye) → <mark>33.1%</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Gubbara r 5 → 10; surface → 4 guna → <mark>300%</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere SA +44%; radius? → √1.44 = 1.2 → <mark>20%</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder r +10%, h wahi → <mark>21</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder r −20%, h +50% → 0.64 × 1.5 = 0.96 → <mark>4% decrease</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere r +30%; surface → 30 + 30 + 9 → <mark>69%</mark> <small>CPO · 09 Dec 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">Note on duplicates</span>
+    Bank mein do sawaal do-do baar hain, same text ke saath: "radius +20%, volume?" (13 Nov aur 14 Nov ki entry) aur "hemisphere TSA 300π" (13 Nov aur 14 Nov ki entry). Text mein dono jagah 13 Nov Shift-2 likha hai, toh shayad ek hi sawaal do baar chhap gaya. Yahan dono ko ek line mein ×2 likha hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Cone r 6, h 8. CSA kitna (π mein)?</summary><p>6-8-10 → l = 10. CSA = π × 6 × 10 = 60π.</p></details>
+    <details><summary>Cylinder CSA : TSA = 3 : 5. h : r?</summary><p>h : (h + r) = 3 : 5 → h : r = 3 : 2.</p></details>
+    <details><summary>Pipe: R 5, r 3, lambai 10. Volume?</summary><p>π(5 + 3)(5 − 3) × 10 = 160π.</p></details>
+    <details><summary>Cylinder radius −10%, height +20%. Volume?</summary><p>r²: −10 −10 + 1 = −19%. Phir +20%: −19 + 20 − 3.8 = −2.8%. Yaani 2.8% kam.</p></details>
+    <details><summary>Hemisphere ka V numerically CSA ke barabar. r?</summary><p>⅔πr³ = 2πr² → r = 3.</p></details>
+  </div>
+</section>
+
+
+<!-- ===================== MATHS · MENSURATION 3D (part 3: PYQ types 7–14) ===================== -->
+<section class="chap" id="m3a-types2">
+  <div class="eyebrow">Maths · PYQ types 7–14</div>
+  <h2>Mensuration 3D: pighlana, paani uthna, andar fit, frustum, cuboid, prism, pyramid</h2>
+  <div class="meta">158 sawaal · sabse zyada: melting &amp; recasting (35), pyramid (28), cuboid (25), prism ka volume (24)</div>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Melting &amp; recasting: pighla kar naya banaya (35 Qs)</h3>
+  <p><b>Samjho:</b> method 3. Purana volume = naya volume. Pehle π kaato, phir 4/3 ya ⅓ ya ⅔ jo dono taraf ho. Phir cube numbers se pehchano.</p>
+  <div class="tbl"><table>
+    <tr><th>Kya se kya</th><th>Shortcut</th></tr>
+    <tr><td>Sphere R → n spheres r</td><td>n = (R/r)³</td></tr>
+    <tr><td>Sphere R → n hemispheres r</td><td>n = 2 × (R/r)³</td></tr>
+    <tr><td>Hemisphere R → n hemispheres r</td><td>n = (R/r)³</td></tr>
+    <tr><td>Hemisphere R → spheres r</td><td>n = ½ × (R/r)³</td></tr>
+    <tr><td>Do hemisphere → ek sphere (same r)</td><td>r wahi</td></tr>
+    <tr><td>Kai spheres r₁, r₂, r₃ → ek</td><td>R³ = r₁³ + r₂³ + r₃³</td></tr>
+    <tr><td>Cone → chhote cones</td><td>n = (R/r)² × (H/h)</td></tr>
+    <tr><td>Cylinder → cone (same r)</td><td>cone h = 3 × cylinder h</td></tr>
+    <tr><td>Hemisphere → cylinder (same r)</td><td>h = ⅔r · → cone (same r): h = 2r</td></tr>
+    <tr><td>Sphere r → cylinder radius 2r</td><td>(4/3)r³ = 4r²h → h = r/3</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Worked · Khokhla gola, bahar r 10; pighla kar 50 golian r 2. Andar ka radius? <span class="tag p">PYQ</span> <small>CGL · 17 Sep 2025</small></span>
+    <b>Method:</b> 4/3 aur π kaato + cube ka andaaza · <i>~20 sec</i><br>
+    10³ − r³ = 50 × 2³ → 1000 − r³ = 400 → r³ = 600.<br>
+    8³ = 512, 9³ = 729 → 8 aur 9 ke beech, 8 ke paas. 8.4³ ≈ 593 → <mark>8.43 cm</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Sphere r 18 → hemispheres r 6. Saare hemispheres ka kul CSA? <span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small></span>
+    <b>Method:</b> n = 2 × (R/r)³ · <i>~12 sec</i><br>
+    n = 2 × 3³ = 54. Ek ka CSA = 2π × 36 = 72π.<br>
+    Kul = 54 × 72π = <mark>3888π cm²</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Sphere r 30 → hemisphere bowls (bahar r 10, motaai 1). Kitne bowl? <span class="tag p">PYQ</span> <small>CHSL · 25 Nov 2025</small></span>
+    <b>Method:</b> bowl = ⅔(R³ − r³), sphere = (4/3)R³ · <i>~20 sec</i><br>
+    Bowl: 1000 − 729 = 271, × ⅔. Sphere: 27000 × (4/3).<br>
+    n = (4/3 × 27000) ÷ (⅔ × 271) = 2 × 27000 ÷ 271 = 54000 ÷ 271 ≈ <mark>199</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Hemisphere r 9 → cylinder h 6; r? → ⅔ × 729 = r² × 6 → r² = 81 → <mark>9 cm</mark> <small>CGL · 14 Oct 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere r 10 → 8 spheres; SA purana : sab naye → <b>∛8 = 2 guna</b> → <mark>1:2</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere 12 → hemispheres 3 → 4³ → <mark>64</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere r 10 → 2 cones r 5; h? → ⅔ × 1000 = 2 × ⅓ × 25 × h → 2000 = 50h → <mark>40 cm</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere → 8 cones (r 3, h 4); R? → 8 × ⅓ × 9 × 4 = 96 = (4/3)R³ → R³ = 72 → <mark>4.16 cm</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere → cone same R; h? → <b>table</b> → <mark>2R</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemispheres r 6 aur 8 → ek hemisphere → 216 + 512 = 728 ≈ 9³ → <mark>9 cm</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do hemisphere r 21 → sphere → <mark>21 cm</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemispheres r 2 aur 4 → ek; TSA? → R³ = 8 + 64 = 72 → R² ≈ 17.3 → 3πR² ≈ <mark>163 cm²</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone (h, r) → chhota cone (h/2, r/3); kitna bacha (unused)? → <b>r² × h</b>: (1/9)(1/2) = 1/18 → <mark>17/18</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere R → n hemispheres r → <mark>(R/r)³</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Spheres 3, 4, 5 → ek → 27 + 64 + 125 = 216 → <mark>6 cm</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere tank r 6 → cylinders (r 1, h 12) → (4/3) × 216 = 288 ÷ 12 → <mark>24</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone → cone with r/2; h 12 tha → <b>r²h same</b>: ¼ × h = 12 → <mark>48 cm</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Gola diameter 28 → block 44 × 14 × h → (4/3)(22/7)(2744) ÷ 616 = (4 × 22 × 392) ÷ (3 × 616) = 56/3 → <mark>18.67 cm</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere bowl r 21 → botal (d 7, h 9) → ⅔ × 9261 ÷ (12.25 × 9) = 6174 ÷ 110.25 → <mark>56</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder → cone same r; h? → <mark>3h</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere r → cylinder radius 2r; h : r → (4/3)r³ = 4r²h → h = r/3 → <mark>1:3</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone h 24, r 3.5 → goliyan r 1 → ⅓ × 12.25 × 24 = 98 ÷ (4/3) = 73.5 → poori <mark>73</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Tank r 4 → 64 chhote → ∛64 = 4 → 4 ÷ 4 → <mark>1 m</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ball r 24 → hemispheres r 8; kul CSA → n = 2 × 27 = 54, ek = 128π → <mark>6912π cm²</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cuboid 40 × 20 × 10 → cubes 2 → 8000 ÷ 8 → <mark>1000</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ball r 6 → rod h 8 → (4/3) × 216 = 288 = r² × 8 → <mark>6 cm</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere r 12.6 → cylinder, CSA : TSA = 1 : 2 → h : (h + r) = 1 : 2 → h = r → r³ = ⅔ × 12.6³ ≈ 1333.6 ≈ 11³ → <mark>11 cm</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone → cones with ¼ r, ¼ h → 4² × 4 → <mark>64</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere 3 → spheres 1 → <mark>27</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere → cylinder same r; h? → <b>table</b> → <mark>2/3</mark> of r <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere 15 → spheres 5 → ½ × 3³ = 13.5 → poore <mark>13</mark> <small>CHSL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> 3 spheres r → ek → R³ = 3r³ → <mark>r∛3</mark> <small>CHSL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> Sphere 12 → spheres 2 → 6³ → <mark>216</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere d 14 → hemispheres d 7 → 2 × 2³ → <mark>16</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone → cones with ⅓ r, ⅓ h → 3² × 3 → <mark>27</mark> <small>CPO · 09 Dec 2025</small></li>
+  </ul>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · Paani mein daala: level kitna utha / kitna gira (9 Qs)</h3>
+  <p><b>Samjho:</b> method 4. Δh = solid ka volume ÷ bartan ka base area. Bartan ki poori oonchai aksar bekaar ka number hai.</p>
+  <div class="box"><span class="k">Worked · Hemisphere patthar r 7 dooba, tel 3 cm utha. Cylinder ka radius? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> ulta Δh · <i>~15 sec</i><br>
+    ⅔π × 343 = πR² × 3 → R² = 686 ÷ 9 ≈ 76.2.<br>
+    8.7² = 75.7, 8.8² = 77.4 → <mark>8.73 cm</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Tank 100 × 50, 5 gole r 5 doobe. Paani kitna utha? <span class="tag p">PYQ</span> <small>CGL · 23 Sep 2025</small></span>
+    <b>Method:</b> Δh = V ÷ base · <i>~12 sec</i><br>
+    5 × (4/3)π × 125 = 2500π/3. Base = 5000.<br>
+    Δh = 2500π ÷ (3 × 5000) = <mark>π/6 cm</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Ball r 4 dooba; kitna paani hata? → <b>bas ball ka V</b> (bartan ke naap bhatkaav) → (4/3)π × 64 → <mark>256π/3 cm³</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Aquarium 100 × 50, 10 gole d 10 → 10 × 500π/3 ÷ 5000 → <mark>π/3 cm</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pyramid (equilateral base 18) cylinder r 10 mein dooba, paani 25 → 28; h? → 300π ≈ 942.5 = ⅓ × 81√3 × h → 81√3 ≈ 140.3 → h ≈ 3 × 942.5 ÷ 140.3 → <mark>20.14 cm</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Bhara cube, gola r 3 daala; kitna gira? → <b>bhara bartan = V(solid)</b> → <mark>36π</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder d 20, paani 1.5 utha; gola r? → 100 × 1.5 = 150 = (4/3)r³ → r³ = 112.5 → <mark>4.8 cm</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder r 7, paani 40; gola r 7 → (4/3) × 343 ÷ 49 = 28/3 ≈ 9.33 → <mark>49.33 cm</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder r 5, gola r 3 → 36π ÷ 25π → <mark>1.44 cm</mark> <small>CHSL · 26 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · Ek solid doosre ke andar (inscribed) (12 Qs)</h3>
+  <p><b>Samjho:</b> method 8. Pehle pucho "kaun kisko chhoo raha hai", phir woh lambai barabar karo. Beech se kaat kar 2D tasveer bana lo, sab saaf dikhega.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Four cross-sections. Sphere in cube: circle inside a square, r equals a over 2. Cube in sphere: plane through the space diagonal gives a rectangle a by a root 2 with diagonal a root 3 equal to 2R. Cylinder in sphere: rectangle 2r by h inside a circle, h squared plus 2r squared equals D squared. Sphere in cone: incircle of the triangle with base 14 and slant sides 25, radius 5.25.">
+      <!-- panel 1 -->
+      <rect x="27" y="45" width="120" height="120" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <circle cx="87" cy="105" r="60" class="chf"/><circle cx="87" cy="105" r="60" class="chs"/>
+      <line x1="87" y1="105" x2="147" y2="105" class="ln"/>
+      <text x="117" y="99" text-anchor="middle" class="lbl">r</text>
+      <text x="87" y="182" text-anchor="middle" class="sm">side a</text>
+      <text x="87" y="26" text-anchor="middle" class="lbl">Sphere cube mein</text>
+      <text x="87" y="205" text-anchor="middle" class="lbl" style="fill:var(--ch)">r = a/2</text>
+      <!-- panel 2 -->
+      <circle cx="262" cy="105" r="65" class="chf"/><circle cx="262" cy="105" r="65" class="chs"/>
+      <rect x="224.5" y="52" width="75" height="106" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <line x1="224.5" y1="158" x2="299.5" y2="52" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 3"/>
+      <text x="262" y="174" text-anchor="middle" class="sm">a</text>
+      <text x="218" y="109" text-anchor="end" class="sm">a√2</text>
+      <text x="262" y="26" text-anchor="middle" class="lbl">Cube sphere mein</text>
+      <text x="262" y="205" text-anchor="middle" class="lbl" style="fill:var(--ch)">a√3 = 2R</text>
+      <text x="262" y="222" text-anchor="middle" class="sm">(diagonal wala kata hua hissa)</text>
+      <!-- panel 3 -->
+      <circle cx="437" cy="105" r="65" class="chf"/><circle cx="437" cy="105" r="65" class="chs"/>
+      <rect x="398" y="53" width="78" height="104" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <line x1="398" y1="157" x2="476" y2="53" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 3"/>
+      <text x="437" y="172" text-anchor="middle" class="sm">2r</text>
+      <text x="482" y="109" class="sm">h</text>
+      <text x="430" y="100" text-anchor="end" class="lbl" style="fill:var(--ch)">D</text>
+      <text x="437" y="26" text-anchor="middle" class="lbl">Cylinder sphere mein</text>
+      <text x="437" y="205" text-anchor="middle" class="lbl" style="fill:var(--ch)">h² + (2r)² = D²</text>
+      <!-- panel 4: cone 14 base, 24 high, scale 5 -->
+      <polygon points="612,45 577,165 647,165" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <circle cx="612" cy="138.75" r="26.25" class="chf"/><circle cx="612" cy="138.75" r="26.25" class="chs"/>
+      <line x1="612" y1="45" x2="612" y2="165" class="ln" stroke-dasharray="3 3"/>
+      <text x="612" y="180" text-anchor="middle" class="sm">14</text>
+      <text x="657" y="110" class="sm">25</text>
+      <text x="585" y="100" text-anchor="end" class="sm">h 24</text>
+      <text x="612" y="26" text-anchor="middle" class="lbl">Sphere cone mein</text>
+      <text x="612" y="205" text-anchor="middle" class="lbl" style="fill:var(--ch)">r = area ÷ s</text>
+      <text x="612" y="222" text-anchor="middle" class="sm">168 ÷ 32 = 5.25</text>
+    </svg>
+    </div>
+    <figcaption>Har solid ko beech se kaato. Chaaron tasveerein naap ke hisaab se bani hain (panel 4: cone r 7, h 24, scale par).</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · Cone r 7, h 24 ke andar sphere (base aur deewar chhoota). r? <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small></span>
+    <b>Method:</b> triangle ka incircle · <i>~15 sec</i><br>
+    Beech se kaato: triangle ki sides 25, 25, 14. Area = ½ × 14 × 24 = 168. s = (25 + 25 + 14) ÷ 2 = 32.<br>
+    r = 168 ÷ 32 = <mark>5.25 cm</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Cube ka diagonal = sphere ka radius. Cube sphere ka kitna %? <span class="tag p">PYQ</span> <small>CHSL · 28 Nov 2025</small></span>
+    <b>Method:</b> maan lo R = √3 · <i>~20 sec</i><br>
+    R = √3 maano → a√3 = √3 → a = 1 → cube = 1.<br>
+    Sphere = (4/3)π(√3)³ = (4/3)π × 3√3 = 4√3π ≈ 4 × 1.732 × 3.14 ≈ 21.8.<br>
+    1 ÷ 21.8 ≈ <mark>4.6%</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Cuboid sphere (r 13) mein; do side 9, 15; teesri? → <b>d = 2R</b>: 676 − 81 − 225 = 370 → √370 → <mark>19.2 cm</mark> <small>CGL · 14 Oct 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere cylinder mein (h = d); sphere 36π; khaali? → <b>3 : 2</b>: khaali = ½ × sphere → <mark>18π cm³</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Golia r 4 cube 10 mein; khaali → 1000 − (4/3)π × 64 ≈ 1000 − 268 → <mark>732.06 cm³</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere cube mein (sab faces); khaali % → <b>1 − π/6</b> ≈ 47.6 → <mark>47.67%</mark> (sabse paas) <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hemisphere cube 6 mein → r = 3 → ⅔π × 27 = 18π → <mark>56.55 cm³</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pyramid cube 12 mein (same base, chotti upar ke beech) → ⅓ × 144 × 12 → <mark>576</mark> (option mein unit cm² chhapa hai, asli cm³) <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sphere cube (1728) mein; SA? → a 12 → r 6 → 4π × 36 → <mark>144π cm²</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cube 8, sabse bada sphere; khaali → r 4 → <mark>512 − 256π/3 cm³</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Tank 12 × 10 × 6, sabse badi ball → <b>sabse chhoti side</b> 6 → r 3 → <mark>(720 − 36π) cm³</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder (r, h) sphere (D) mein → <b>h² + (2r)² = D²</b> → <mark>h = √(D² − 4r²)</mark> <small>CHSL · 14 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · Cone ko base ke parallel kaata: frustum (9 Qs)</h3>
+  <p><b>Samjho:</b> method 6. Chotti se height ka hissa k → chhota cone = k³ × poora. Frustum = baaki.</p>
+  <div class="box"><span class="k">Worked · Cone h 30, base se 10 aur 20 par do cut. Teeno hisson ka ratio (upar se)? <span class="tag p">PYQ</span> <small>CGL · 19 Sep 2025</small></span>
+    <b>Method:</b> 1 : 8 : 27 · <i>~8 sec</i><br>
+    Base se 10, 20 = chotti se 20, 10. Toh chotti se 10, 20, 30 → 1 : 2 : 3 → cones 1, 8, 27.<br>
+    Hisse = 1, 8 − 1, 27 − 8 = <mark>1 : 7 : 19</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Cone r 9, h 12, chotti se 4 cm par kaata. Frustum? <span class="tag p">PYQ</span> <small>CGL · 26 Sep 2025</small></span>
+    <b>Method:</b> k³ · <i>~12 sec</i><br>
+    Poora = ⅓π × 81 × 12 = 324π. k = 4/12 = ⅓ → chhota = 324π ÷ 27 = 12π.<br>
+    Frustum = 324π − 12π = <mark>312π cm³</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> h 30, chotti se 10 par cut; frustum : poora → 1/27 → <mark>26:27</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Upar ka hissa 1/8 volume; heights? → ∛(1/8) → <mark>1 : 2</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Frustum : chhota cone = 7 : 1; heights (chhota : frustum)? → kul 8 → k = ½ → <mark>1:1</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Balti upar se ⅓ par kati; upar : neeche → 1 : 26 → <mark>1 : 26</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cone h 12, r 6, aadhi height par → chhota cone r 3, h 6 → ⅓π × 9 × 6 → <mark>18π cm³</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Barabar height ke do hisse; chhota cone : frustum → <mark>1 : 7</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Chhota cone height ⅓; volume ratio → <mark>1 : 27</mark> <small>CPO · 09 Dec 2025</small></li>
+  </ul>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · Cuboid aur cube (25 Qs)</h3>
+  <p><b>Samjho:</b> cuboid ke 4 jaadu (method 5 ke box mein) aur units (litre). "Ratio mein dimensions" ho toh 2k, 3k, 4k maano.</p>
+  <div class="box"><span class="k">Worked · Teen faces 48, 54, 72. Volume? <span class="tag p">PYQ</span> <small>CGL · 14 Oct 2025</small></span>
+    <b>Method:</b> faces ko todo · <i>~10 sec</i><br>
+    48 = 6 × 8, 54 = 6 × 9, 72 = 8 × 9 → sides 6, 8, 9.<br>
+    V = 6 × 8 × 9 = <mark>432 cm³</mark>. (Ya √(48 × 54 × 72).)
+  </div>
+  <div class="box"><span class="k">Worked · Base diagonal 17, height 15, base area 120. TSA? <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small></span>
+    <b>Method:</b> (l + b)² = l² + b² + 2lb · <i>~15 sec</i><br>
+    l² + b² = 289, lb = 120 → (l + b)² = 289 + 240 = 529 → l + b = 23. (Ya 8-15-17 se l, b = 15, 8.)<br>
+    TSA = 2 × 120 + 2 × 15 × 23 = 240 + 690 = <mark>930 cm²</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Cuboid ke 8 barabar tukde; kam se kam cut → har disha mein 1 → <mark>3</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cake ke 64 cubes → 4 × 4 × 4 → <b>3(n − 1)</b> = 9 → <mark>9</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 : 5 : 6, V 960 → 120k³ = 960 → k 2 → <mark>12 cm</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Tank 50 × 40 × 3 m → 6000 m³ = <b>1 m³ = 1 kL</b> → <mark>6,000 kL</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Balti 6.25 L, tank 1 m³ = 1000 L → 1000 ÷ 6.25 → <mark>160</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Dabba 50 × 40 × 30 cm → 60,000 cm³ → <mark>60</mark> litre <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Open dabba 2.5 × 1.8 × 1.2 m, farsh + 4 deewar, kapda 50 cm squares, 15% extra → 4.5 + 2 × 1.2 × 4.3 = 14.82 → × 1.15 ≈ 17.04 → ÷ 0.25 ≈ 68.2 → <mark>69</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> TSA 468, ratio 2 : 3 : 4 → 2(6 + 12 + 8)k² = 52k² → k 3 → 6 × 9 × 12 → <mark>648 cm³</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> V 350, l = 2h, b 7 → 14h² = 350 → h 5 → <mark>10 × 7 × 5</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sides AP mein, jod 21, V 168 → beech wala 7 → (7 − d)(7 + d) = 24 → d 5 → <b>option check</b> → <mark>2, 7, 12</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Face diagonals √5, √10, √13 → jodo 28 ÷ 2 = 14 → a² 4, b² 1, c² 9 → 2 × 1 × 3 → <mark>6 cm³</mark> <small>CGL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> 2 : 3 : 4, edges ka jod 108 → 4 × 9k = 108 → k 3 → <mark>648 cubic cm</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 80 × 50 × 40 → <mark>160000</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 × 2 × 1.5 m bahar rang ₹15/m² → 2(6 + 3 + 4.5) = 27 → <mark>₹405</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 × 1.5 × 1.2 m → 3.6 m³ → <mark>3600 L</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Boxes 10 × 5 × 2 carton 50 × 25 × 20 mein → 5 × 5 × 10 → <mark>250</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Van 4 × 2.5 × 2 = 20 m³, sofa 2.5 m³ → <mark>8</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Drone 6 × 8 × 10 kone se kone → √200 → <mark>14.1 m</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25 × 20 × 15 = 7500 cm³ → <mark>7.5 liters</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cube 30 par 6 cm ke kaagaz → 6 × 900 ÷ 36 → <mark>150</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Diagonal 13, do side 3, 4 → 169 − 9 − 16 = 144 → <mark>12 cm</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 : 3 : 4, V 768 → 24k³ = 768 → k³ = 32 → k ≈ 3.17 → 2k → <mark>6.34 cm</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Tank 100 × 80 × 50 cm, poora dhakna, tiles 20 cm → 2(8000 + 4000 + 5000) = 34000 ÷ 400 → <mark>85</mark> <small>CPO · 09 Dec 2025</small></li>
+  </ul>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · Prism ka volume (base × height, tah wale bhi) (24 Qs)</h3>
+  <p><b>Samjho:</b> method 7. Base ki shakal pehchano, uska area nikaalo, height se guna. Hexagon = 6 equilateral triangles. Tah wale sawaal mein heights ka jod (AP) lo.</p>
+  <div class="box"><span class="k">Worked · Hexagon prism side 10; 4 tah, heights 5, 7, 9, 11. Volume? <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small></span>
+    <b>Method:</b> hexagon = 6 triangle + AP jod · <i>~12 sec</i><br>
+    Base = 6 × (√3/4) × 100 = 150√3. Kul height = 4 × (5 + 11) ÷ 2 = 32.<br>
+    V = 150√3 × 32 = <mark>4800√3 cm³</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Hexagon prism side 6, h 10, beech mein 2 × 2 ka square chhed. Bacha? <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small></span>
+    <b>Method:</b> bada − chhed · <i>~15 sec</i><br>
+    Base = 54√3 ≈ 54 × 1.732 = 93.53 → × 10 = 935.3. Chhed = 4 × 10 = 40.<br>
+    Bacha = <mark>895.3 cm³</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Base 25, height 10 → +20% → 25 × 12 → <mark>300 cm³</mark> <small>CGL · 12 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hexagon side 6, h 10 → 54√3 × 10 → <mark>540√3 cm³</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Tent prism, base 20, h 6 → <mark>120 m³</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cylinder r 3, 5 tah 2 se 10 tak → jod 30 → 3.14 × 9 × 30 → <mark>847.8 cm³</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Equilateral side 4, tah 5, 6, 7, 8, 9 → 4√3 ≈ 6.928 × 35 → <mark>242.48 cm³</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square 5, tah 4 se 16 (4 tah) → 4, 8, 12, 16 = 40 → 25 × 40 → <mark>1000 cm³</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Trapezium 10, 6, h 4; prism 15 → 32 × 15 → <mark>480 cm³</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square base, V 1024, h 16 → 64 → <mark>8 cm</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Tank: triangle prism 60 cm² × 120 cm + 40 × 30 × 80 cm → 7.2 L + 96 L → <mark>103.2 L</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hexagon 6 vs square 6, same h → 54√3 : 36 → <mark>3√3 : 2</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rectangle l = 2w, perimeter 30 → 10 × 5 = 50; tah 15, 13, 11, 9 = 48 → <mark>2400 cm³</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Base 45, h 14, 10% khokhla → 630 × 0.9 → <mark>567 cm³</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Base 24, h 10 → <mark>240 cm³</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square prism 2 m ooncha, 500 L → 0.5 m³ ÷ 2 = 0.25 m² → <mark>50 cm</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Triangle 13, 14, 15, h 20, ₹0.75/cm³ → <b>13-14-15 = 84</b> → 1680 × 0.75 → <mark>₹1260</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Trapezium 18, 12, beech 10; h 50; 25 tank → 150 × 50 × 25 → <mark>1,87,500 cm³</mark> (sawaal "glass ka volume" kehta hai, par hisaab andar ki jagah ka hai) <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Equilateral 6, lambai 40 → 9√3 ≈ 15.59 × 40 → <mark>623.5 cm³</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> V 1800, h 20 → <mark>90 cm²</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Trapezium 6, 10, h 4; prism 12 → 32 × 12 → <mark>384 cm³</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Triangle 9, 10, 17; h 25; 20 models → <b>Heron</b>: s 18 → √(18 × 9 × 8 × 1) = 36 → 900 × 20 → <mark>18000 cm³</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Beam: right triangle 0.6, 0.8; 4.5 m; 0.75 g/cm³ → 0.24 × 4.5 = 1.08 m³; 0.75 g/cm³ = 750 kg/m³ → <mark>810 kg</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> V 600, base 30 → <mark>20 cm</mark> <small>CPO · 09 Dec 2025</small></li>
+  </ul>
+
+  <!-- TYPE 13 -->
+  <h3>Type 13 · Prism ka surface: LSA = perimeter × h (16 Qs)</h3>
+  <div class="box"><span class="k">Worked · Isosceles trapezium base (10, 20, 13, 13), V 3240. TSA? <span class="tag p">PYQ</span> <small>CGL Tier-2</small></span>
+    <b>Method:</b> triplet + P × h · <i>~25 sec</i><br>
+    Trapezium ki oonchai: (20 − 10) ÷ 2 = 5 → 5-12-13 → 12. Area = ½ × 30 × 12 = 180.<br>
+    h = 3240 ÷ 180 = 18. LSA = (10 + 20 + 13 + 13) × 18 = 56 × 18 = 1008.<br>
+    TSA = 1008 + 2 × 180 = <mark>1368 cm²</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 25 dabbe: equilateral base 12, h 25. Sabka TSA? <span class="tag p">PYQ</span> <small>CHSL · 28 Nov 2025</small></span>
+    <b>Method:</b> 2B + P × h · <i>~20 sec</i><br>
+    B = 36√3 → 2B = 72 × 1.732 = 124.70. LSA = 36 × 25 = 900. Ek dabba = 1024.70.<br>
+    25 dabbe = 1024.70 × 25 = <mark>25617.6 cm²</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> LSA 240, h 8; perimeter → <mark>30 cm</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Right triangle 3, 4 base; sabse badi : sabse chhoti deewar → hypotenuse 5 → <mark>5:3</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> LSA 384, h 12 (base area bhatkaav) → <mark>32 cm</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 : 12 : 13, perimeter 60, h 8 → LSA = 60 × 8 → <mark>480 cm²</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> P 30, h 7, TSA 282; dono base → 282 − 210 → <mark>72 cm²</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Triangle 5, 6, 7; h 10 → 18 × 10 → <mark>180 cm²</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Chhat: triangle 6, 8, 10, lambai 12; upar + side → 24 × 12 + 24 (ek triangle) → <mark>312 cm²</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hexagon 5.5, h 12, ₹22.5/cm² → 33 × 12 = 396 → <mark>₹8,910</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hexagon 4, h 6 → 24 × 6 → <mark>144 cm²</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pentagon 6.2, h 10.5, base 66.43 → 132.86 + 31 × 10.5 = 132.86 + 325.5 → <mark>458.36 cm²</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Hexagon 7.5, h 18, base 146.30 → 292.6 + 45 × 18 = 292.6 + 810 → <mark>1102.60 cm²</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rectangle 6.5 × 4.2, h 12 → 2(27.3) + 10.7 × 2 × 12 = 54.6 + 256.8 → <mark>311.4 cm²</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Triangle 9, 12, 15; h 10 → 36 × 10 → <mark>360 cm²</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Triangle 5, 6, 7; h 8 → 18 × 8 → <mark>144</mark> (unit cm² hona chahiye) <small>CPO · 09 Dec 2025</small></li>
+  </ul>
+
+  <!-- TYPE 14 -->
+  <h3>Type 14 · Pyramid: volume, slant height, surface (28 Qs)</h3>
+  <p><b>Samjho:</b> V = ⅓ × base × h. LSA = ½ × perimeter × slant height. Square pyramid mein h, a/2, l ka triangle. "Keeda (insect / ant) chal raha hai" jaisi kahani aksar sirf bhatkaav hoti hai, pucha bas l ya LSA jaata hai.</p>
+  <div class="box"><span class="k">Worked · Square side 12, slant height 10. Volume? <span class="tag p">PYQ</span> <small>CGL · 16 Sep 2025</small></span>
+    <b>Method:</b> triplet + ⅓Bh · <i>~10 sec</i><br>
+    Aadhi side 6, l 10 → 6-8-10 → h = 8.<br>
+    V = ⅓ × 144 × 8 = 48 × 8 = <mark>384 cm³</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Square side 16, h 30. Slant height aur TSA? <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small></span>
+    <b>Method:</b> pyramid triangle (h, a/2, l) · <i>~15 sec</i><br>
+    Aadhi side 8, h 30 → √(64 + 900) = √964 ≈ 31.05. Yahan triplet nahi banta, toh √ ka andaaza: 31² = 961, bas thoda upar.<br>
+    LSA = ½ × 64 × 31.05 = 993.6 → TSA = 993.6 + 256 = <mark>31.05 cm, 1249.6 cm²</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Square 10, h 12; l? → 5-12-13 → <mark>13 cm</mark> <small>CGL · 14 Oct 2025</small></li>
+    <li><span class="tag p">PYQ</span> Base 60, h 9 → ⅓ × 540 → <mark>180 cm³</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Perimeter 40, l 10; LSA → ½ × 40 × 10 → <mark>200 cm²</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> LSA = 2 × base, side 6 → ½ × 24 × l = 72 → <mark>6 cm</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Surface 48 m², 2 m²/L, 5% extra → 24 × 1.05 → <mark>25.2 litres</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Chocolate box: square 10, h 12, 90% bhara, ₹0.50/cm³ → 400 × 0.9 × 0.5 → <mark>₹180</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Equilateral 10, h 14 pyramid + cube 10 → ⅓ × 25√3 × 14 ≈ 202.07 + 1000 → <mark>1202.07 cm³</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 turrets, square 4, h 6, × 1.25 → 32 × 1.25 × 4 → <mark>160 m³</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Equilateral 10, h 24 → ⅓ × 25√3 × 24 → <mark>200√3 cm³</mark> <small>CGL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> Square ka diagonal √512, h 8 → side² = 512 ÷ 2 = 256 → ⅓ × 256 × 8 ≈ <mark>683 m³</mark> <small>CGL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> Rectangle 12 × 8, l 18 (dono taraf same diya) → ½ × 40 × 18 → <mark>360 m²</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square 6, gehraai 4 → ⅓ × 36 × 4 → <mark>48 cm³</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pyramid (h 1.5) cuboid 1.2 × 1.2 × 0.5 par → 0.5 + 1.5 = 2 m; 0.72 + 0.72 → <mark>2 m, 1.44 m³</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Equilateral 12, h 8 → ⅓ × 36√3 × 8 → <mark>96√3 cm³</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> l 13, side 10; h? → 5-12-13 → <mark>12 m</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Tent square 10, l 6, base bhi dhako → 120 + 100 → <mark>220 m²</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Tent square 4, h 3 → ⅓ × 16 × 3 → <mark>16 m³</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Equilateral 12, h 10 → 120√3 → <mark>207.8 cm³</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Isosceles base 25, 25, 30; l 40 → base: 15-20-25 → 300; LSA ½ × 80 × 40 = 1600 → <mark>1900 cm²</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do pyramid jode (bhatkaav), square 6, h 4 → 3-4-5 → <mark>5 cm</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Triangle base 6, oonchai 4, pyramid h 9 → ⅓ × 12 × 9 → <mark>36 cm³</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square 8, h 15, keede wali kahani; l? → √(225 + 16) = √241 → <mark>15.52 cm</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square 14, h 9, cheenti wali kahani; LSA? → l = √(81 + 49) = √130 ≈ 11.40 → ½ × 56 × 11.40 → <mark>319.25 cm²</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square 12, l 8 → h = √(64 − 36) = √28 ≈ 5.29 → 48 × 5.29 → <mark>254 cm³</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square 6, V 144 → 12h = 144 → <mark>12 cm</mark> <small>CPO · 09 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Base 100, LSA 260 → side 10, ½ × 40 × l = 260 → l 13 → 5-12-13 → <mark>12 cm</mark> <small>CPO · 09 Dec 2025</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Pyramid ki slant height mein poori side lena</td><td>l² = h² + (a/2)². <b>Aadhi side</b>. Side 10, h 12 → 13, na ki √244.</td></tr>
+    <tr><td>Cone / pyramid mein ⅓ bhool jaana</td><td>Nukeela solid = ⅓ × seedha solid. Volume 3 guna aa raha hai toh ⅓ chhoota.</td></tr>
+    <tr><td>Hemisphere "outer / curved" mein 3πr² lagana</td><td>Curved = 2πr². Total (dhakkan ke saath) = 3πr².</td></tr>
+    <tr><td>Sphere → hemispheres mein n = (R/r)³</td><td>Ek sphere = 2 hemisphere → <b>2 × (R/r)³</b>.</td></tr>
+    <tr><td>Radius 20% badha → volume 60% badha</td><td>Volume k³: 1.2³ = 1.728 → 72.8%. Area k²: 44%.</td></tr>
+    <tr><td>"Base se 10 cm par kaata" ko chotti se maan lena</td><td>Hamesha chotti se naapo. h 30, base se 10 → chotti se 20 → k = ⅔.</td></tr>
+    <tr><td>Frustum ka volume pucha, chhota cone de diya</td><td>Frustum = poora − chhota. ½ par cut → 7/8 frustum.</td></tr>
+    <tr><td>Paani wale sawaal mein bartan ki oonchai use karna</td><td>Δh = V(solid) ÷ base area. Oonchai bas check ke liye (paani bahar to nahi gira).</td></tr>
+    <tr><td>Khokhle dabbe mein andar ka naap = bahar − motaai</td><td>Dono taraf deewar → bahar − <b>2 × motaai</b>.</td></tr>
+    <tr><td>cm aur m mila kar guna</td><td>Pehle ek unit. 1 m³ = 1000 L, 1 L = 1000 cm³.</td></tr>
+    <tr><td>"Kitne poore banenge" mein 73.5 → 74</td><td>Aadha gola nahi banta → <b>73</b> (neeche wala).</td></tr>
+    <tr><td>Sabse badi ball dabbe mein: sabse lambi side lena</td><td>Diameter = <b>sabse chhoti</b> side.</td></tr>
+    <tr><td>Prism LSA mein base area ko height se guna</td><td>LSA = <b>perimeter</b> × h. Volume = area × h.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">⚠ Answer-key note</span>
+    Key ka koi answer galat nahi mila. Bas kuch jagah options gol (rounded) hain ya unit galat chhapi hai:<br>
+    · CGL 22 Sep 2025 (pyramid cube mein) aur CPO 9 Dec 2025 (prism LSA 144): options mein volume ke saath cm², aur area ke saath cm likha hai. Number sahi hai.<br>
+    · CHSL 27 Nov 2025 (cone TSA 314, r 7): asli l ≈ 7.29 cm. Key 7.2 sabse paas wala option hai.<br>
+    · CGL 18 Sep 2025 (golia cube mein, 732.06) aur hemisphere shell 7/14 (5026.09), CGL 19 Sep 2025 (47.67%): π ki alag value se thoda farq. Sabse paas wala option hi lagao.
+  </div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Is note mein bank ke pehle 256 sawaal (array 0–255) hain. <b>256 mein se 256 use hue, 0 chhode.</b> 31 sawaal scan (photo) wale the. Unke fraction aur √ photo se padh kar hal kiye. Ek sawaal (hemisphere R → n hemispheres r) ke options text mein khaali the, par sawaal saaf tha: (R/r)³. Do sawaal do-do baar chhape hain (Type 3 aur Type 6 mein ×2).
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Sphere r 8 se hemispheres r 2. Kitne?</summary><p>2 × (8/2)³ = 2 × 64 = 128.</p></details>
+    <details><summary>Cylinder R 4, usme cone (r 3, h 8) dooba. Paani kitna utha?</summary><p>⅓π × 9 × 8 = 24π. Base 16π. Δh = 1.5 cm.</p></details>
+    <details><summary>Cone h 24, chotti se 8 cm par kaata. Frustum : poora?</summary><p>k = ⅓ → chhota 1/27 → frustum 26 : 27.</p></details>
+    <details><summary>Square pyramid side 12, h 8. Slant height aur LSA?</summary><p>Aadhi side 6, h 8 → 6-8-10 → l = 10. LSA = ½ × 48 × 10 = 240 cm².</p></details>
+    <details><summary>Cuboid ke faces 12, 15, 20. Volume?</summary><p>12 = 3 × 4, 15 = 3 × 5, 20 = 4 × 5 → 3 × 4 × 5 = 60.</p></details>
+  </div>
+</section>
+

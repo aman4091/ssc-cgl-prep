@@ -1,0 +1,2043 @@
+<!-- ===================== MATHS · SIMPLE INTEREST (part 1: basics + speed methods + types 1-4) ===================== -->
+<section class="chap" id="msi-basics">
+  <div class="eyebrow">Maths · 181 questions</div>
+  <h2>Simple Interest: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, MTS, Selection Post XIV, Delhi Police) · sabse zyada: seedha SI, "dugna kab", do amount se P, do hisson wala sawaal</div>
+
+  <h3>Pehle ek chhoti si kahani: ₹1000 ka udhaar</h3>
+  <p>Tumne dost ko ₹1000 udhaar diye. Dost kehta hai, har saal 10% kiraya dunga. Paise ka kiraya hi <b>interest</b> hai.</p>
+  <ul>
+    <li><b>Saal 1:</b> 1000 ka 10% = <b>100</b>.</li>
+    <li><b>Saal 2:</b> phir se 1000 ka 10% = <b>100</b>. Kyunki udhaar abhi bhi 1000 hi hai.</li>
+    <li><b>Saal 3, 4, 5:</b> har baar wahi <b>100</b>.</li>
+  </ul>
+  <p>Bas yahi Simple Interest hai. <b>Har saal ek jaisa tukda.</b> Interest par interest kabhi nahi lagta (wo Compound Interest mein hota hai). Isliye SI ka graph ek seedhi line hai, sidhi seedhi ki tarah.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Rs 1000 at 10 percent simple interest for 5 years. Each year adds the same block of 100. Amounts 1100, 1200, 1300, 1400, 1500 lie on a straight line.">
+      <rect x="80" y="10" width="14" height="12" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <text x="100" y="20" class="sm">mool ₹1000 (P)</text>
+      <rect x="250" y="10" width="14" height="12" class="chf"/><rect x="250" y="10" width="14" height="12" class="chs" style="stroke-width:1"/>
+      <text x="270" y="20" class="sm">har saal ka interest = 100 (hamesha same)</text>
+      <line x1="60" y1="260" x2="640" y2="260" class="ln"/>
+      <!-- base P bars: 1000 = 150px -->
+      <g>
+        <rect x="80" y="110" width="70" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="190" y="110" width="70" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="300" y="110" width="70" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="410" y="110" width="70" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="520" y="110" width="70" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      </g>
+      <g class="sm" text-anchor="middle"><text x="115" y="190">1000</text><text x="225" y="190">1000</text><text x="335" y="190">1000</text><text x="445" y="190">1000</text><text x="555" y="190">1000</text></g>
+      <!-- interest blocks: 100 = 15px -->
+      <g>
+        <rect x="80" y="95" width="70" height="15" class="chf"/><rect x="80" y="95" width="70" height="15" class="chs"/>
+        <rect x="190" y="95" width="70" height="15" class="chf"/><rect x="190" y="95" width="70" height="15" class="chs"/>
+        <rect x="190" y="80" width="70" height="15" class="chf"/><rect x="190" y="80" width="70" height="15" class="chs"/>
+        <rect x="300" y="95" width="70" height="15" class="chf"/><rect x="300" y="95" width="70" height="15" class="chs"/>
+        <rect x="300" y="80" width="70" height="15" class="chf"/><rect x="300" y="80" width="70" height="15" class="chs"/>
+        <rect x="300" y="65" width="70" height="15" class="chf"/><rect x="300" y="65" width="70" height="15" class="chs"/>
+        <rect x="410" y="95" width="70" height="15" class="chf"/><rect x="410" y="95" width="70" height="15" class="chs"/>
+        <rect x="410" y="80" width="70" height="15" class="chf"/><rect x="410" y="80" width="70" height="15" class="chs"/>
+        <rect x="410" y="65" width="70" height="15" class="chf"/><rect x="410" y="65" width="70" height="15" class="chs"/>
+        <rect x="410" y="50" width="70" height="15" class="chf"/><rect x="410" y="50" width="70" height="15" class="chs"/>
+        <rect x="520" y="95" width="70" height="15" class="chf"/><rect x="520" y="95" width="70" height="15" class="chs"/>
+        <rect x="520" y="80" width="70" height="15" class="chf"/><rect x="520" y="80" width="70" height="15" class="chs"/>
+        <rect x="520" y="65" width="70" height="15" class="chf"/><rect x="520" y="65" width="70" height="15" class="chs"/>
+        <rect x="520" y="50" width="70" height="15" class="chf"/><rect x="520" y="50" width="70" height="15" class="chs"/>
+        <rect x="520" y="35" width="70" height="15" class="chf"/><rect x="520" y="35" width="70" height="15" class="chs"/>
+      </g>
+      <line x1="115" y1="95" x2="555" y2="35" style="stroke:var(--ch)" stroke-width="2" stroke-dasharray="6 4"/>
+      <g text-anchor="middle" class="lbl">
+        <text x="115" y="88">1100</text><text x="225" y="73">1200</text><text x="335" y="58">1300</text><text x="445" y="43">1400</text><text x="600" y="30">1500</text>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="115" y="280">Saal 1</text><text x="225" y="280">Saal 2</text><text x="335" y="280">Saal 3</text><text x="445" y="280">Saal 4</text><text x="555" y="280">Saal 5</text>
+      </g>
+      <text x="350" y="297" text-anchor="middle" class="sm">tops ek seedhi line par hain · 5 saal mein interest = 5 × 100 = 500 = P ka 50%</text>
+    </svg>
+    </div>
+    <figcaption>₹1000 par 10% SI, scale par. Har saal bas ek naya 100 ka block judta hai. Amount seedhi line mein badhta hai.</figcaption>
+  </figure>
+
+  <h3>Do baatein jinse poora chapter banta hai</h3>
+  <ul>
+    <li><b>Baat 1 · % matlab "har 100 mein".</b> 10% = har 100 rupaye par 10 rupaye. Toh 1000 par 100, 5000 par 500.</li>
+    <li><b>Baat 2 · Rate × Time = kul %.</b> 10% har saal, 5 saal = P ka <b>50%</b>. 8% har saal, 3 saal = P ka <b>24%</b>. Bas ek guna, aur SI "P ka kitna %" ban gaya.</li>
+  </ul>
+  <div class="box"><span class="k">Ab naam rakh dete hain</span>
+    Udhaar ki rakam = <b>P</b> (principal). Har saal ka % = <b>R</b>. Saal = <b>T</b>. Kul interest = <b>SI</b>. Aakhir mein milne wala = <b>A</b> (amount) = P + SI.<br>
+    Kitaab ka formula SI = P × R × T / 100 yahi "R × T = kul %" wali baat hai. Formula ratta mat maaro, "kul %" socho.
+  </div>
+  <p>Paper mein ek sawaal ke liye lagbhag <b>36 second</b> milte hain. Neeche 8 tareeke hain jo rough mein, haath se, jaldi chalte hain.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · "Kul %" banao, phir 1% nikaalo</h3>
+  <p><b>Kab use karo:</b> P, R, T mein se teeno diye hain, SI ya amount pucha hai. 2025 mein sabse zyada yahi aaya.</p>
+  <p><b>Soch aise:</b> P ko 100 dabbon mein baanto. Har dabba = P ka 1%. Ab "kul %" jitne dabbe utha lo.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="A 10 by 10 grid of 100 small squares stands for the principal. 8 squares are shaded for year 1, 8 for year 2 and 8 for year 3, so 24 squares equal 24 percent of P. With P 5000, one square is 50 and SI is 1200.">
+      <text x="130" y="28" text-anchor="middle" class="lbl">P = 100 dabbe (har dabba 1%)</text>
+<rect x="40" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="58" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="76" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="94" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="112" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="130" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="148" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="166" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="184" y="40" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="202" y="40" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/>
+<rect x="40" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="58" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="76" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="94" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="112" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="130" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="148" y="58" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="166" y="58" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="184" y="58" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="202" y="58" width="16" height="16" rx="2" style="fill:var(--ch)"/>
+<rect x="40" y="76" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="58" y="76" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="76" y="76" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="94" y="76" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="112" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+      <text x="130" y="240" text-anchor="middle" class="sm">8% × 3 saal = 24 dabbe</text>
+      <rect x="270" y="50" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/>
+      <text x="294" y="63" class="sm">saal 1 ke 8 dabbe (8%)</text>
+      <rect x="270" y="76" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/>
+      <text x="294" y="89" class="sm">saal 2 ke 8 dabbe (8%)</text>
+      <rect x="270" y="102" width="16" height="16" rx="2" style="fill:var(--ch)"/>
+      <text x="294" y="115" class="sm">saal 3 ke 8 dabbe (8%)</text>
+      <line x1="262" y1="138" x2="680" y2="138" class="ln"/>
+      <text x="270" y="162" class="lbl">P = ₹5,000 → 1 dabba = 5,000 ÷ 100 = ₹50</text>
+      <text x="270" y="186" class="lbl">SI = 24 dabbe = 24 × 50 = ₹1,200</text>
+      <text x="270" y="210" class="lbl" style="fill:var(--ch)">Amount = 124 dabbe = 124 × 50 = ₹6,200</text>
+      <text x="270" y="234" class="sm">koi formula nahi: bas "kul %" × "1% ki keemat"</text>
+    </svg>
+    </div>
+    <figcaption>P = 100 dabbe. R × T jitne dabbe = SI. Amount = 100 + R × T dabbe.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · ₹1,450 par 9%, 3 saal ka SI · <i>~8 sec</i></span>
+    Kul % = 9 × 3 = 27%. 1% = 14.5.<br>
+    14.5 × 27 = 14.5 × 30 − 14.5 × 3 = 435 − 43.5 = <b>₹391.50</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> 1% nikaalna = do jagah decimal khiskao. 1,450 → 14.5. 20,000 → 200. Phir "kul %" se guna. Bade numbers mein 10% pehle nikaalo, phir aadha ya double karo.</div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Ulta chalo: amount ya SI se P</h3>
+  <p><b>Kab use karo:</b> SI ya amount diya hai, P pucha hai.</p>
+  <ul>
+    <li><b>SI diya:</b> SI = kul % dabbe. Toh 1 dabba = SI ÷ kul %. P = 100 dabbe.</li>
+    <li><b>Amount diya:</b> Amount = (100 + kul %) dabbe. Toh 1 dabba = Amount ÷ (100 + kul %).</li>
+  </ul>
+  <div class="box"><span class="k">Demo · 8% par 15 saal ka SI ₹58,410. P? · <i>~10 sec</i></span>
+    Kul % = 8 × 15 = 120%. 1% = 58,410 ÷ 120 = 486.75.<br>
+    P = 100 × 486.75 = <b>₹48,675</b>. (Shortcut: 120% = 6/5, toh P = 58,410 × 5/6 = 9,735 × 5.)
+  </div>
+  <div class="box"><span class="k">Demo · 10% par 2 saal mein ₹8,800 bana. P? · <i>~8 sec</i></span>
+    Amount = 120% = 6/5 of P. P = 8,800 × 5/6 = <b>₹7,333.33</b>.
+  </div>
+  <p>Ye fraction yaad rakho. "Kul %" agar inmein se ek ho, toh division ki zaroorat hi nahi:</p>
+  <div class="tbl"><table>
+    <tr><th>Kul %</th><th>Fraction</th><th>Amount = P ka</th><th>Toh P = Amount ×</th></tr>
+    <tr><td class="n">12½%</td><td>1/8</td><td>9/8</td><td>8/9</td></tr>
+    <tr><td class="n">20%</td><td>1/5</td><td>6/5</td><td>5/6</td></tr>
+    <tr><td class="n">25%</td><td>1/4</td><td>5/4</td><td>4/5</td></tr>
+    <tr><td class="n">30%</td><td>3/10</td><td>13/10</td><td>10/13</td></tr>
+    <tr><td class="n">40%</td><td>2/5</td><td>7/5</td><td>5/7</td></tr>
+    <tr><td class="n">50%</td><td>1/2</td><td>3/2</td><td>2/3</td></tr>
+    <tr><td class="n">60%</td><td>3/5</td><td>8/5</td><td>5/8</td></tr>
+  </table></div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Mahine aur tareekh ko saal ka hissa banao</h3>
+  <p><b>Kab use karo:</b> "18 mahine", "3 saal 4 mahine", ya "15 March se 15 September".</p>
+  <ul>
+    <li>Time hamesha <b>saal</b> mein chahiye. 6 mahine = ½, 4 mahine = ⅓, 8 mahine = ⅔, 3 mahine = ¼, 9 mahine = ¾, 18 mahine = 3/2.</li>
+    <li>Tareekh wale sawaal mein, agar din same hai (15 se 15), toh bas mahine gin lo. 1 April se 1 September = Apr, May, Jun, Jul, Aug = <b>5 mahine</b>.</li>
+    <li>Phir kul % = R × (mahine/12). 9% for 5 mahine = 9 × 5/12 = 3.75%.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · ₹4,800 par 6%, 3 saal 4 mahine · <i>~8 sec</i></span>
+    3 saal 4 mahine = 3⅓ = 10/3 saal. Kul % = 6 × 10/3 = 20%.<br>
+    20% of 4,800 = <b>₹960</b>.
+  </div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Do amount diye: farq hi SI hai</h3>
+  <p><b>Kab use karo:</b> "2 saal mein ₹6,600 aur 4 saal mein ₹7,200" type sawaal.</p>
+  <p><b>Soch aise:</b> 2 saal se 4 saal ke beech P toh wahi hai. Jo badha wo sirf 2 saal ka SI hai. SI har saal same hota hai, toh utna hi peeche jaakar P mil jaayega.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Number line of years 0, 2 and 4. Amount 6600 at year 2 and 7200 at year 4. The rise of 600 over 2 years is 300 per year. Going back 2 years from 6600 gives P equal to 6000. Rate is 300 over 6000, which is 5 percent.">
+      <defs>
+        <marker id="msi-amt-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ch)"/></marker>
+        <marker id="msi-amt-arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <line x1="60" y1="140" x2="650" y2="140" class="ln" stroke-width="2"/>
+      <g class="ln" stroke-width="2"><line x1="90" y1="132" x2="90" y2="148"/><line x1="350" y1="132" x2="350" y2="148"/><line x1="610" y1="132" x2="610" y2="148"/></g>
+      <g text-anchor="middle" class="sm"><text x="90" y="166">saal 0</text><text x="350" y="166">saal 2</text><text x="610" y="166">saal 4</text></g>
+      <rect x="40" y="176" width="100" height="30" rx="6" class="chf"/><rect x="40" y="176" width="100" height="30" rx="6" class="chs"/>
+      <text x="90" y="196" text-anchor="middle" class="lbl">P = 6,000</text>
+      <rect x="300" y="176" width="100" height="30" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="350" y="196" text-anchor="middle" class="lbl">6,600</text>
+      <rect x="560" y="176" width="100" height="30" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="610" y="196" text-anchor="middle" class="lbl">7,200</text>
+      <path d="M355,128 Q480,50 605,128" fill="none" class="ln" stroke-width="2" marker-end="url(#msi-amt-arr2)"/>
+      <text x="480" y="66" text-anchor="middle" class="lbl">+600 = 2 saal ka SI</text>
+      <text x="480" y="84" text-anchor="middle" class="sm">→ 1 saal = 300</text>
+      <path d="M345,128 Q220,50 95,128" fill="none" style="stroke:var(--ch)" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#msi-amt-arr)"/>
+      <text x="220" y="66" text-anchor="middle" class="lbl" style="fill:var(--ch)">−600 (wahi 2 saal)</text>
+      <text x="220" y="84" text-anchor="middle" class="sm">6,600 − 600 = 6,000</text>
+      <text x="350" y="24" text-anchor="middle" class="lbl">Rate = 1 saal ka SI ÷ P = 300 ÷ 6,000 = 5%</text>
+    </svg>
+    </div>
+    <figcaption>Aage ka farq = SI. Utna hi peeche chalo, P mil jaata hai. CGL 23 Sep 2025 ka sawaal yahi tha.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Ek line ka formula (jab gap ajeeb ho)</span>
+    t<sub>1</sub> saal mein A<sub>1</sub>, t<sub>2</sub> saal mein A<sub>2</sub>. Toh 1 saal ka SI = (A<sub>2</sub> − A<sub>1</sub>) ÷ (t<sub>2</sub> − t<sub>1</sub>). P = A<sub>1</sub> − t<sub>1</sub> × (1 saal ka SI).<br>
+    Rate seedha: R = (A<sub>2</sub> − A<sub>1</sub>) × 100 ÷ (A<sub>1</sub>t<sub>2</sub> − A<sub>2</sub>t<sub>1</sub>). <span class="tag x">CGL+</span>
+  </div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · "x guna" = (x − 1) P ka interest</h3>
+  <p><b>Kab use karo:</b> "dugna", "teen guna", "5 times", "240% of itself".</p>
+  <p><b>Soch aise:</b> paisa 2 guna hua matlab interest = 1P. 5 guna matlab interest = 4P (ek P toh apna tha). SI har saal same, toh interest aur saal <b>seedhe anupaat</b> mein chalte hain.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Money doubles in 8 years under simple interest. Each 8 years adds one more P. 2 times at 8 years, 3 times at 16, 4 times at 24, 5 times at 32 years.">
+      <rect x="40" y="40" width="110" height="40" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="95" y="65" text-anchor="middle" class="lbl">P (apna)</text>
+      <rect x="150" y="40" width="120" height="40" class="chf"/><rect x="150" y="40" width="120" height="40" class="chs"/>
+      <rect x="270" y="40" width="120" height="40" class="chf"/><rect x="270" y="40" width="120" height="40" class="chs"/>
+      <rect x="390" y="40" width="120" height="40" class="chf"/><rect x="390" y="40" width="120" height="40" class="chs"/>
+      <rect x="510" y="40" width="120" height="40" class="chf"/><rect x="510" y="40" width="120" height="40" class="chs"/>
+      <g text-anchor="middle" class="lbl"><text x="210" y="65">+1P</text><text x="330" y="65">+1P</text><text x="450" y="65">+1P</text><text x="570" y="65">+1P</text></g>
+      <g text-anchor="middle" class="sm"><text x="210" y="30">8 saal</text><text x="330" y="30">8 saal</text><text x="450" y="30">8 saal</text><text x="570" y="30">8 saal</text></g>
+      <g class="ln"><line x1="270" y1="84" x2="270" y2="104"/><line x1="390" y1="84" x2="390" y2="104"/><line x1="510" y1="84" x2="510" y2="104"/><line x1="630" y1="84" x2="630" y2="104"/></g>
+      <g text-anchor="middle" class="lbl"><text x="270" y="122">2 guna</text><text x="390" y="122">3 guna</text><text x="510" y="122">4 guna</text><text x="630" y="122">5 guna</text></g>
+      <g text-anchor="middle" class="sm"><text x="270" y="140">8 saal</text><text x="390" y="140">16 saal</text><text x="510" y="140">24 saal</text><text x="630" y="140">32 saal</text></g>
+      <text x="350" y="176" text-anchor="middle" class="lbl" style="fill:var(--ch)">x guna → interest = (x − 1) P → saal = (x − 1) × 8</text>
+      <text x="350" y="200" text-anchor="middle" class="sm">rate = 100% ÷ 8 = 12.5% · CI ki tarah "power" nahi, SI mein seedha jod hai</text>
+    </svg>
+    </div>
+    <figcaption>Har 8 saal mein ek naya P judta hai. 5 guna = 4 naye P = 4 × 8 = 32 saal.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 2.5 guna in 5 saal. 5 guna kab? · <i>~8 sec</i></span>
+    2.5 guna → interest 1.5P in 5 saal. 5 guna → interest 4P.<br>
+    Saal = 5 × 4/1.5 = 5 × 8/3 = 40/3 = <b>13⅓ saal</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> Rate = (x − 1) × 100 ÷ saal. Dugna in T saal → rate = 100/T. Yaad rakho: dugna in 8 → 12.5%, 10 → 10%, 5 → 20%, 15 → 6⅔%, 20 → 5%.</div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Do hisse, do rate: alligation ka cross</h3>
+  <p><b>Kab use karo:</b> "₹10,000 do hisson mein, 7% aur 12% par, kul interest ₹900".</p>
+  <p><b>Soch aise:</b> poore 10,000 par average rate kya bana? 900/10,000 = 9%. Ab 7 aur 12 ke beech 9 kahan hai? 9, 7 se 2 door hai aur 12 se 3 door. Jo rate paas hai, uska hissa bada.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Alligation cross. Rates 7 percent and 12 percent at top, average 9 percent in the middle. Differences 12 minus 9 equals 3 under 7 percent, and 9 minus 7 equals 2 under 12 percent. So the money splits 3 to 2: 6000 at 7 percent and 4000 at 12 percent.">
+      <rect x="110" y="20" width="120" height="44" rx="8" class="chf"/><rect x="110" y="20" width="120" height="44" rx="8" class="chs"/>
+      <text x="170" y="47" text-anchor="middle" class="lbl">7%</text>
+      <rect x="470" y="20" width="120" height="44" rx="8" class="chf"/><rect x="470" y="20" width="120" height="44" rx="8" class="chs"/>
+      <text x="530" y="47" text-anchor="middle" class="lbl">12%</text>
+      <rect x="280" y="104" width="140" height="48" rx="24" style="fill:var(--ch)"/>
+      <text x="350" y="126" text-anchor="middle" class="lbl" style="fill:var(--paper)">average 9%</text>
+      <text x="350" y="143" text-anchor="middle" class="sm" style="fill:var(--paper)">900 ÷ 10,000</text>
+      <g class="ln" stroke-width="2"><line x1="210" y1="66" x2="490" y2="194"/><line x1="490" y1="66" x2="210" y2="194"/></g>
+      <rect x="110" y="196" width="120" height="44" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="170" y="216" text-anchor="middle" class="lbl">12 − 9 = 3</text>
+      <text x="170" y="232" text-anchor="middle" class="sm">7% wala hissa</text>
+      <rect x="470" y="196" width="120" height="44" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="530" y="216" text-anchor="middle" class="lbl">9 − 7 = 2</text>
+      <text x="530" y="232" text-anchor="middle" class="sm">12% wala hissa</text>
+      <text x="350" y="262" text-anchor="middle" class="lbl" style="fill:var(--ch)">3 : 2 → ₹6,000 at 7% aur ₹4,000 at 12%</text>
+    </svg>
+    </div>
+    <figcaption>Cross mein farq ulta baithta hai: 12 wala farq 7 ke neeche, 7 wala farq 12 ke neeche.</figcaption>
+  </figure>
+  <p><b>Doosra tareeka (bina cross ke, ~10 sec):</b> maan lo saara paisa 7% par hai → 700. Asal mein 900 hai, toh 200 zyada. Ye 200 us hisse se aaya jo 12% par tha, aur har rupaye par 5% zyada deta hai. 200 = 5% of x → x = <b>4,000</b>. Isko <b>"sab ek rate par maan lo"</b> bolo.</p>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Barabar interest → rakam ulti rate ke anupaat mein</h3>
+  <p><b>Kab use karo:</b> "teeno schemes se same interest mila" ya "A ka 4 saal ka SI = B ka 6 saal ka SI".</p>
+  <ul>
+    <li>Interest same hai toh <b>rakam × rate × time</b> same hai. Toh rakam ∝ 1 ÷ (rate × time).</li>
+    <li>4%, 5%, 10% par same interest → rakam 1/4 : 1/5 : 1/10. LCM 20 se guna → <b>5 : 4 : 2</b>.</li>
+    <li>A 4 saal, B 6 saal, same rate, same SI → A : B = 6 : 4 = <b>3 : 2</b>.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · ₹2,200 teen jagah 4%, 5%, 10% par, interest barabar. 5% wala? · <i>~10 sec</i></span>
+    1/4 : 1/5 : 1/10 = 5 : 4 : 2 → 11 parts = 2,200 → 1 part = 200.<br>
+    5% wala = 4 parts = <b>₹800</b>.
+  </div>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · Option se pakdo</h3>
+  <ul>
+    <li><b>Amount &gt; P hamesha.</b> SI pucha ho aur option mein amount bhi ho, toh dono milte-julte dikhte hain. Aakhri line padho.</li>
+    <li><b>Kul % se andaaza.</b> 6840 = 127% of P. 5,400 × 1.27 = 6,858, thoda zyada. Toh P thoda kam → <b>5,385.83</b>.</li>
+    <li><b>Last digit / paise.</b> 1,450 × 27% → .50 par khatam. Jis option ka ant .50 nahi, kaat do.</li>
+    <li><b>SI linear hai.</b> Rate 2% badha toh SI P ka (2 × T)% badha. Bas itna hi socho, poora naya SI mat nikaalo.</li>
+  </ul>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for SI. Check in order: months or dates, two amounts, x times, two or three parts at different rates, equal interest, rate changed or difference of SI, otherwise plain P R T. Each yes leads to its method.">
+      <defs>
+        <marker id="msi-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya diya, kya pucha?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#msi-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">Mahine / tareekh / 2½ saal?</text>
+        <text x="180" y="141">Do alag saal ke do amount?</text>
+        <text x="180" y="197">"Dugna", "x guna", "240% of itself"?</text>
+        <text x="180" y="253">Rakam 2–3 hisson mein, alag rate?</text>
+        <text x="180" y="309">Sabse barabar interest mila?</text>
+        <text x="180" y="365">Rate badla / do SI ka farq?</text>
+        <text x="180" y="421">Baaki: P, R, T mein se do diye</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#msi-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#msi-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#msi-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#msi-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#msi-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#msi-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#msi-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Mahine ÷ 12 (method 3)</text>
+        <text x="410" y="132">Farq = SI, peeche chalo (method 4)</text>
+        <text x="410" y="188">Interest = (x − 1)P (method 5)</text>
+        <text x="410" y="244">Alligation / sab ek rate (method 6)</text>
+        <text x="410" y="300">Rakam ∝ 1/rate (method 7)</text>
+        <text x="410" y="356">Sirf badla hua % lagao</text>
+        <text x="410" y="412">Kul % + 1% (methods 1, 2)</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">6m = ½ · 4m = ⅓ · 18m = 3/2</text>
+        <text x="410" y="149">1 saal ka SI = farq ÷ saalon ka gap</text>
+        <text x="410" y="205">dugna in T saal → rate = 100/T</text>
+        <text x="410" y="261">farq ulta baithta hai</text>
+        <text x="410" y="317">4%, 5%, 10% → 5 : 4 : 2</text>
+        <text x="410" y="373">2% zyada × 5 saal = P ka 10%</text>
+        <text x="410" y="429">8% × 3 = 24% → 1% × 24</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Pehle ye 7 sawaal mann mein poocho. Jahan "haan" mila, wahi method chalao.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet (yaad karo)</span>
+    SI = P × R × T / 100 · A = P + SI = P × (100 + RT)/100.<br>
+    Dugna in T saal → R = 100/T. x guna in T saal → R = (x − 1) × 100/T.<br>
+    R = T ho aur SI = P ka k% → R² = k (jaise 36% → R = 6).<br>
+    Mahine → saal: 3m = ¼ · 4m = ⅓ · 6m = ½ · 8m = ⅔ · 9m = ¾ · 18m = 3/2 · 30m = 5/2.<br>
+    Same sum, same rate: SI ∝ time (6 aur 9 saal → 2 : 3).<br>
+    <span class="tag x">CGL+</span> Kisht (SI, n barabar saalana kisht x): jo rakam n saal baad deni hai = n·x + x·R·(1 + 2 + … + (n − 1))/100. Pehli kisht sabse zyada saal interest kamaati hai.
+  </div>
+
+  <!-- ===================== TYPES 1-4 ===================== -->
+  <h3>Exam ke short naam</h3>
+  <div class="box"><span class="k">Short naam</span>
+    CGL = CGL 2025 Tier 1 · CHSL = CHSL 2025 Tier 1 · CPO = CPO 2025 · MTS = MTS 2025 (Feb 2025) · SP-XIV = Selection Post Phase XIV 2025 · DP Const = Delhi Police Constable (Dec 2025 – Jan 2026) · DP HCM = Delhi Police Head Constable (Jan 2026). Saari dates shift ki dates hain.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Seedha SI ya amount, poore saal (21 Qs)</h3>
+  <div class="box"><span class="k">Worked · ₹1,450 par 9%, 3 saal ka SI <span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small></span><!--si74-->
+    <b>Method:</b> kul % + 1% · <i>~8 sec</i><br>
+    Kul % = 27. 1% = 14.5. 14.5 × 27 = 435 − 43.5 = <mark>₹391.50</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹2,000 at 6% aur ₹3,000 at 5%, 3 saal ka kul SI <span class="tag p">PYQ</span> <small>SP-XIV · 24 Jul 2025</small></span><!--si160-->
+    <b>Method:</b> kul % alag-alag · <i>~10 sec</i><br>
+    2,000 × 18% = 360. 3,000 × 15% = 450. Kul = <mark>₹810</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · A: $5,000 at 5%, 4 saal · B: $4,000 at 6%, 3 saal. Zyada kaun? <span class="tag p">PYQ</span> <small>CPO · 10 Dec 2025</small></span><!--si99-->
+    <b>Method:</b> kul % · <i>~8 sec</i><br>
+    A = 20% of 5,000 = 1,000. B = 18% of 4,000 = 720. <mark>A earns more</mark>.
+  </div>
+  <ul>
+    <li><!--si34--><span class="tag p">PYQ</span> 1,500, 6%, 3 saal ka amount → <b>kul % 18</b> → 15 × 18 = 270 → <mark>₹1,770</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--si43--><span class="tag p">PYQ</span> 20,000, 8%, 3 saal ka SI → <b>kul % 24</b> → 200 × 24 → <mark>₹4,800</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><!--si51--><span class="tag p">PYQ</span> 5,000, 6%, 3 saal ka amount → <b>kul % 18</b> → 900 → <mark>₹5,900</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><!--si56--><span class="tag p">PYQ</span> Loan 25,000, 5%, 2 saal, kul chukana → <b>kul % 10</b> → <mark>₹27,500</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><!--si68--><span class="tag p">PYQ</span> 1,600, 2%, 8 saal → <b>kul % 16</b> → 16 × 16 → <mark>₹256</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--si77--><span class="tag p">PYQ</span> 1,300, 6%, 4 saal → <b>kul % 24</b> → 13 × 24 → <mark>₹312</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--si80--><span class="tag p">PYQ</span> 5,000, 5%, 2 saal → <b>kul % 10</b> → <mark>₹500</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><!--si93--><span class="tag p">PYQ</span> 1,900, 9%, 3 saal → <b>kul % 27</b> → 19 × 27 → <mark>₹513</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><!--si94--><span class="tag p">PYQ</span> 8,000, 7%, 3 saal: SI aur total → <b>kul % 21</b> → <mark>SI ₹1,680; total ₹9,680</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><!--si95--><span class="tag p">PYQ</span> 6,000, 5%, 5 saal: SI aur total → <b>kul % 25</b> → <mark>SI ₹1,500; total ₹7,500</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><!--si101--><span class="tag p">PYQ</span> 1,600, 8%, 5 saal → <b>kul % 40</b> → 16 × 40 → <mark>₹640</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><!--si104--><span class="tag p">PYQ</span> $5,000, 6%, 4 saal: SI aur total → <b>kul % 24</b> → <mark>SI $1,200; total $6,200</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><!--si114--><span class="tag p">PYQ</span> 480, 10%, 3 saal → <b>kul % 30</b> → 4.8 × 30 → <mark>₹144</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><!--si116--><span class="tag p">PYQ</span> 500, 8%, 1 saal → <b>1% = 5</b> → <mark>₹40</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><!--si120--><span class="tag p">PYQ</span> 200, 6%, 2 saal → <b>kul % 12</b> → <mark>₹24</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><!--si125--><span class="tag p">PYQ</span> 1,000, 5%, 1 saal → <b>1% = 10</b> → <mark>₹50</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><!--si129--><span class="tag p">PYQ</span> 400, 9%, 1 saal (number scan se padhe) → <b>1% = 4</b> → <mark>₹36</mark> <small>DP Const · 3 Jan 2026</small></li>
+    <li><!--si174--><span class="tag p">PYQ</span> 5,000, 6%, 3 saal → <b>kul % 18</b> → <mark>₹900</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Mahine, tareekh aur aadha saal (10 Qs)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="A strip of 12 months. From 1 April to 1 September covers April, May, June, July and August: 5 months, which is 5 by 12 of a year. Below, common month fractions: 3 months one quarter, 4 months one third, 6 months one half, 8 months two thirds, 9 months three quarters, 18 months three halves.">
+      <g>
+        <rect x="20" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="74" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="128" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="182" y="30" width="54" height="40" class="chf"/><rect x="182" y="30" width="54" height="40" class="chs"/>
+        <rect x="236" y="30" width="54" height="40" class="chf"/><rect x="236" y="30" width="54" height="40" class="chs"/>
+        <rect x="290" y="30" width="54" height="40" class="chf"/><rect x="290" y="30" width="54" height="40" class="chs"/>
+        <rect x="344" y="30" width="54" height="40" class="chf"/><rect x="344" y="30" width="54" height="40" class="chs"/>
+        <rect x="398" y="30" width="54" height="40" class="chf"/><rect x="398" y="30" width="54" height="40" class="chs"/>
+        <rect x="452" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="506" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="560" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="614" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="47" y="55">Jan</text><text x="101" y="55">Feb</text><text x="155" y="55">Mar</text><text x="209" y="55">Apr</text><text x="263" y="55">May</text><text x="317" y="55">Jun</text><text x="371" y="55">Jul</text><text x="425" y="55">Aug</text><text x="479" y="55">Sep</text><text x="533" y="55">Oct</text><text x="587" y="55">Nov</text><text x="641" y="55">Dec</text>
+      </g>
+      <g class="ln" stroke-width="2"><line x1="182" y1="22" x2="182" y2="78"/><line x1="452" y1="22" x2="452" y2="78"/></g>
+      <text x="182" y="16" text-anchor="middle" class="sm">1 Apr</text>
+      <text x="452" y="16" text-anchor="middle" class="sm">1 Sep</text>
+      <text x="317" y="96" text-anchor="middle" class="lbl" style="fill:var(--ch)">5 mahine = 5/12 saal</text>
+      <g>
+        <rect x="20" y="124" width="100" height="50" rx="6" class="chf"/>
+        <rect x="132" y="124" width="100" height="50" rx="6" class="chf"/>
+        <rect x="244" y="124" width="100" height="50" rx="6" class="chf"/><rect x="244" y="124" width="100" height="50" rx="6" class="chs"/>
+        <rect x="356" y="124" width="100" height="50" rx="6" class="chf"/>
+        <rect x="468" y="124" width="100" height="50" rx="6" class="chf"/>
+        <rect x="580" y="124" width="100" height="50" rx="6" class="chf"/><rect x="580" y="124" width="100" height="50" rx="6" class="chs"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="70" y="145" class="lbl">3 mahine</text><text x="70" y="164" class="sm">= ¼ saal</text>
+        <text x="182" y="145" class="lbl">4 mahine</text><text x="182" y="164" class="sm">= ⅓ saal</text>
+        <text x="294" y="145" class="lbl">6 mahine</text><text x="294" y="164" class="sm">= ½ saal</text>
+        <text x="406" y="145" class="lbl">8 mahine</text><text x="406" y="164" class="sm">= ⅔ saal</text>
+        <text x="518" y="145" class="lbl">9 mahine</text><text x="518" y="164" class="sm">= ¾ saal</text>
+        <text x="630" y="145" class="lbl">18 mahine</text><text x="630" y="164" class="sm">= 3/2 saal</text>
+      </g>
+      <text x="350" y="194" text-anchor="middle" class="sm">din same ho (1 se 1, 15 se 15) toh sirf mahine gino · outline wale 2025 mein sabse zyada</text>
+    </svg>
+    </div>
+    <figcaption>Tareekh se mahine, mahine se saal ka hissa. Phir kul % = rate × hissa.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · ₹7,500 loan, 9%, 1 April se 1 September 2025 <span class="tag p">PYQ</span> <small>CGL · 20 Sep 2025</small></span><!--si24-->
+    <b>Method:</b> mahine gino + kul % · <i>~15 sec</i><br>
+    Apr se Aug = 5 mahine = 5/12 saal. Kul % = 9 × 5/12 = 3.75%.<br>
+    1% = 75 → 75 × 3.75 = 281.25 → amount = <mark>₹7,781.25</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹22,400, 16%, 20 Jan se 20 May 2023 <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small></span><!--si64-->
+    <b>Method:</b> mahine gino + kul % · <i>~15 sec</i><br>
+    4 mahine = ⅓ saal. Kul % = 16/3%. 1% = 224 → 224 × 16 / 3 = 3,584 / 3 = 1,194.67.<br>
+    Amount = <mark>₹23,594.67</mark>. (Option mein .67 wala sirf ek hai.)
+  </div>
+  <ul>
+    <li><!--si12--><span class="tag p">PYQ</span> 6,000, 10%, 15 Mar se 15 Sep → <b>6 mahine = ½</b> → 5% → 300 → <mark>₹6,300</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--si18--><span class="tag p">PYQ</span> 12,000, 6%, 10 Jan se 10 Jul → <b>6 mahine = ½</b> → 3% → 360 → <mark>₹12,360</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--si106--><span class="tag p">PYQ</span> 25,000, 10%, 18 mahine → <b>3/2 saal</b> → 15% → 3,750 → <mark>₹28,750</mark> <small>DP Const · 22 Dec 2025</small></li>
+    <li><!--si113--><span class="tag p">PYQ</span> 2,000, 12%, 2.5 saal → <b>kul % 30</b> → <mark>₹600</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><!--si140--><span class="tag p">PYQ</span> 4,800, 6%, 3 saal 4 mahine → <b>10/3 saal</b> → 20% → <mark>₹960</mark> <small>DP HCM · 7 Jan 2026</small></li>
+    <li><!--si164--><span class="tag p">PYQ</span> 12,000, 10%, 2½ saal → <b>kul % 25</b> → <mark>₹3,000</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><!--si179--><span class="tag p">PYQ</span> 20,000, 12%, 2.5 saal → <b>kul % 30</b> → <mark>₹6,000</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><!--si32--><span class="tag p">PYQ</span> P 1,500, R 8.5%, T 2.5 → <b>kul % = 8.5 × 2.5 = 21.25</b> → 15 × 21.25 → <mark>₹318.75</mark> <small>CGL · 26 Sep 2025</small></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Amount chukaya, upar se fees / saamaan (8 Qs)</h3>
+  <p><b>Samjho:</b> ye MTS 2025 ka pasandida type hai. Pehle amount nikaalo (P + SI), phir fees jodo ya saamaan ki keemat ghatao. Option mein bina fees wala amount bhi hota hai, jaal wahi hai.</p>
+  <div class="box"><span class="k">Worked · ₹18,000, 10%, 3 saal; ₹12,000 ki motorcycle di, baaki cash <span class="tag p">PYQ</span> <small>MTS · 5 Feb 2025</small></span><!--si144-->
+    <b>Method:</b> kul % + ghatao · <i>~8 sec</i><br>
+    Amount = 130% of 18,000 = 23,400. Cash = 23,400 − 12,000 = <mark>₹11,400</mark>.
+  </div>
+  <ul>
+    <li><!--si145--><span class="tag p">PYQ</span> 10,500, 7%, 2 saal + fee 525 → <b>kul % 14</b> = 1,470 → 11,970 + 525 → <mark>₹12,495</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><!--si146--><span class="tag p">PYQ</span> 8,200, 6.5%, 3 saal + 280 → <b>kul % 19.5</b> = 1,599 → 9,799 + 280 → <mark>₹10,079</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><!--si148--><span class="tag p">PYQ</span> 6,400, 7.5%, 3 saal + 360 → <b>kul % 22.5</b> = 1,440 → 7,840 + 360 → <mark>₹8,200</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><!--si151--><span class="tag p">PYQ</span> 9,000, 8%, 1.5 saal + 240 → <b>kul % 12</b> = 1,080 → 10,080 + 240 → <mark>₹10,320</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><!--si153--><span class="tag p">PYQ</span> 12,000, 5%, 2.5 saal + 350 → <b>kul % 12.5</b> = 1,500 → 13,500 + 350 → <mark>₹13,850</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><!--si154--><span class="tag p">PYQ</span> 9,500, 7%, 4 saal + 350 → <b>kul % 28</b> = 2,660 → 12,160 + 350 → <mark>₹12,510</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><!--si155--><span class="tag p">PYQ</span> 5,500, 9%, 4 saal + penalty 600 → <b>kul % 36</b> = 1,980 → 7,480 + 600 → <mark>₹8,080</mark> <small>MTS · 18 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · SI ya amount diya, P nikaalo (16 Qs)</h3>
+  <div class="box"><span class="k">Worked · 8% par 15 saal ka SI ₹58,410. P? <span class="tag p">PYQ</span> <small>CHSL · 30 Nov 2025</small></span><!--si87-->
+    <b>Method:</b> ulta kul % · <i>~10 sec</i><br>
+    Kul % = 120% = 6/5. P = 58,410 × 5/6 = 9,735 × 5 = <mark>₹48,675</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 10% par 2 saal mein ₹8,800. P? <span class="tag p">PYQ</span> <small>CHSL · 27 Nov 2025</small></span><!--si76-->
+    <b>Method:</b> amount = 120% · <i>~8 sec</i><br>
+    P = 8,800 × 5/6 = 44,000/6 = <mark>₹7,333.33</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 10% par 3 saal mein ₹4,500. P? <span class="tag p">PYQ</span> <small>DP Const · 27 Dec 2025</small></span><!--si111-->
+    <b>Method:</b> amount = 130% + option check · <i>~12 sec</i><br>
+    P = 4,500 × 10/13. 13 × 346 = 4,498, toh 45,000/13 ≈ 3,461.5 → <mark>≈ 3,461</mark>.
+  </div>
+  <ul>
+    <li><!--si72--><span class="tag p">PYQ</span> 6% par 2 saal ka SI 1,200 → <b>12% = 1,200</b> → 1% = 100 → <mark>₹10,000</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><!--si115--><span class="tag p">PYQ</span> 12% par 2 saal ka SI 480 → <b>24% = 480</b> → 1% = 20 → <mark>₹2,000</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><!--si121--><span class="tag p">PYQ</span> 12% par 4 saal ka SI 192 → <b>48% = 192</b> → 1% = 4 → <mark>₹400</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><!--si122--><span class="tag p">PYQ</span> 4% par 8 saal ka SI 800 → <b>32% = 800</b> → 1% = 25 → <mark>₹2,500</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><!--si123--><span class="tag p">PYQ</span> 7% par 4 saal ka SI 2,800 → <b>28% = 2,800</b> → 1% = 100 → <mark>₹10,000</mark> <small>DP Const · 22 Dec 2025</small></li>
+    <li><!--si124--><span class="tag p">PYQ</span> 5% par 3 saal ka SI 180 → <b>15% = 180</b> → 1% = 12 → <mark>₹1,200</mark> <small>DP Const · 20 Dec 2025</small></li>
+    <li><!--si126--><span class="tag p">PYQ</span> 9% par 3 saal ka SI 540 → <b>27% = 540</b> → 1% = 20 → <mark>₹2,000</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><!--si127--><span class="tag p">PYQ</span> 8% par 5 saal ka SI 1,600 → <b>40% = 1,600</b> → 1% = 40 → <mark>₹4,000</mark> <small>DP Const · 19 Dec 2025</small></li>
+    <li><!--si131--><span class="tag p">PYQ</span> 11% par 4 saal ka SI 264 → <b>44% = 264</b> → 1% = 6 → <mark>₹600</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><!--si170--><span class="tag p">PYQ</span> 8% par 5 saal ka SI 2,400 → <b>40% = 2,400</b> → 1% = 60 → <mark>₹6,000</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><!--si175--><span class="tag p">PYQ</span> 10% par 4 saal ka SI 800 → <b>40% = 800</b> → 1% = 20 → <mark>₹2,000</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><!--si78--><span class="tag p">PYQ</span> 9% par 3 saal mein 6,840 → <b>127% + option check</b>: 5,400 × 1.27 = 6,858 (zyada) → thoda kam → <mark>₹5,385.83</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--si119--><span class="tag p">PYQ</span> 8% par 3 saal mein 2,500 → <b>124% + option check</b>: 2,000 × 1.24 = 2,480, baaki 20 ÷ 1.24 ≈ 16 → <mark>≈ ₹2,016</mark> <small>DP Const · 23 Dec 2025</small></li>
+  </ul>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>₹3,600 par 7%, 5 saal ka SI? (10 second)</summary><p>Kul % = 35. 1% = 36. 36 × 35 = 1,260.</p></details>
+    <details><summary>8 mahine ko saal mein likho. 15% par 8 mahine ka kul %?</summary><p>8 mahine = ⅔ saal. 15 × ⅔ = 10%.</p></details>
+    <details><summary>12% par 5 saal mein amount ₹4,800. P?</summary><p>Amount = 160% = 8/5 of P. P = 4,800 × 5/8 = 3,000.</p></details>
+    <details><summary>Paisa 20 saal mein dugna hota hai. Rate?</summary><p>100% ÷ 20 = 5%.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · SIMPLE INTEREST (part 2: question types 5-13) ===================== -->
+<section class="chap" id="msi-types">
+  <div class="eyebrow">Maths · PYQ types</div>
+  <h2>Simple Interest: baaki 9 type, topper ki rough ke saath</h2>
+  <div class="meta">Bank mein 181 sawaal · saare yahan (Type 1–4 pichhle hisse mein) · har sawaal ke aage uska method likha hai</div>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Rate nikaalo (17 Qs)</h3>
+  <p><b>Samjho:</b> pehle SI ko P ka % banao (SI ÷ 1%). Phir saal se bhaag do. Bas.</p>
+  <div class="box"><span class="k">Worked · ₹5,750 par 5 saal ka SI ₹2,620.50. Rate (approx)? <span class="tag p">PYQ</span> <small>CHSL · 21 Nov 2025</small></span><!--si59-->
+    <b>Method:</b> SI ÷ 1% · <i>~15 sec</i><br>
+    1% = 57.5. 2,620.5 ÷ 57.5: 57.5 × 45 = 2,587.5, baaki 33 ≈ 0.57 → 45.57%.<br>
+    Rate = 45.57 ÷ 5 = <mark>9.11%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹1,200, saal = rate, SI ₹432. Rate? <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small></span><!--si14-->
+    <b>Method:</b> R = T → R² = kul % · <i>~8 sec</i><br>
+    Kul % = 432 ÷ 12 = 36. R × R = 36 → <mark>6%</mark>.
+  </div>
+  <ul>
+    <li><!--si35--><span class="tag p">PYQ</span> SI = P ka ¼, saal = rate → <b>R² = 25</b> → <mark>5%</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><!--si20--><span class="tag p">PYQ</span> 2,000 → 2,520 in 4 saal → <b>520 = 26%</b> ÷ 4 → <mark>6.5%</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--si62--><span class="tag p">PYQ</span> 40,000 par 4 saal ka SI 24,000 → <b>60%</b> ÷ 4 → <mark>15%</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--si88--><span class="tag p">PYQ</span> 6,250 par 3 saal ka SI 976.50 → <b>976.5 ÷ 62.5 = 15.62%</b> ÷ 3 → <mark>5.21%</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--si89--><span class="tag p">PYQ</span> 6,500 par 4 saal ka SI 1,602 → <b>1,602 ÷ 65 = 24.65%</b> ÷ 4 → <mark>6.16%</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--si107--><span class="tag p">PYQ</span> 1,200 par 3 saal ka SI 432 → <b>36%</b> ÷ 3 → <mark>12%</mark> <small>DP Const · 29 Dec 2025</small></li>
+    <li><!--si117--><span class="tag p">PYQ</span> 720 par 2 saal ka SI 144 → <b>144 ÷ 7.2 = 20%</b> ÷ 2 → <mark>10%</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><!--si128--><span class="tag p">PYQ</span> 1,200 par 3 saal ka SI 180 (number scan se padhe) → <b>15%</b> ÷ 3 → <mark>5%</mark> <small>DP Const · 2 Jan 2026</small></li>
+    <li><!--si135--><span class="tag p">PYQ</span> 24,000 par 5 saal ka SI 1,200 → <b>5%</b> ÷ 5 → <mark>1%</mark> <small>DP HCM · 12 Jan 2026</small></li>
+    <li><!--si166--><span class="tag p">PYQ</span> 15,000 par 4 saal ka SI 3,600 → <b>24%</b> ÷ 4 → <mark>6%</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><!--si169--><span class="tag p">PYQ</span> 1,200 par 3 saal ka SI 216 → <b>18%</b> ÷ 3 → <mark>6%</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><!--si172--><span class="tag p">PYQ</span> 2,500 → 3,000 in 4 saal → <b>20%</b> ÷ 4 → <mark>5%</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><!--si177--><span class="tag p">PYQ</span> 4,000 par 2 saal ka SI 480 → <b>12%</b> ÷ 2 → <mark>6%</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><!--si178--><span class="tag p">PYQ</span> 1,500 par 3 saal ka SI 360 → <b>24%</b> ÷ 3 → <mark>8%</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><!--si161--><span class="tag p">PYQ</span> 10,000 → 12,500 in 5 saal (bank mein "rate?" chhapa nahi, options rate ke hain) → <b>25%</b> ÷ 5 → <mark>5%</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · Time nikaalo (13 Qs)</h3>
+  <p><b>Samjho:</b> 1 saal ka SI nikaalo (P ka R%). Phir dekho kul SI usme kitni baar aata hai.</p>
+  <div class="box"><span class="k">Worked · ₹3,20,000 par 11.5%; SI ₹18,400 kab? <span class="tag p">PYQ</span> <small>DP HCM · 12 Jan 2026</small></span><!--si136-->
+    <b>Method:</b> 1 saal ka SI · <i>~10 sec</i><br>
+    1% = 3,200 → 11.5% = 36,800 (1 saal). 18,400 iska aadha → <mark>0.5 saal</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹4,800 at 7.5%, kul ₹6,000 wapas mile. Time? <span class="tag p">PYQ</span> <small>MTS · 19 Feb 2025</small></span><!--si158-->
+    <b>Method:</b> kul % ÷ rate · <i>~10 sec</i><br>
+    SI = 1,200 = 25% of 4,800. 25 ÷ 7.5 = 10/3 = <mark>3.33 saal</mark>.
+  </div>
+  <ul>
+    <li><!--si2--><span class="tag p">PYQ</span> 8,000 at 12.5%, SI 3,000 → <b>12.5% = ⅛</b> → 1,000 har saal → <mark>3 saal</mark> <small>CGL · 14 Oct 2025</small></li>
+    <li><!--si67--><span class="tag p">PYQ</span> 14,000 → 20,720 at 6% → <b>6,720 = 48%</b> ÷ 6 → <mark>8 saal</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--si83--><span class="tag p">PYQ</span> 15,000 → 21,000 at 8% → <b>40%</b> ÷ 8 → <mark>5 saal</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><!--si85--><span class="tag p">PYQ</span> 12,000 → 15,600 at 5% → <b>30%</b> ÷ 5 → <mark>6 saal</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><!--si110--><span class="tag p">PYQ</span> 1,500 at 12%, SI 900 → <b>180 har saal</b> → <mark>5 saal</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><!--si130--><span class="tag p">PYQ</span> 4,000 at 20%, SI 3,200 → <b>800 har saal</b> → 3,200 ÷ 800 → <mark>4 saal</mark> (key mein 5, note dekho) <small>DP Const · 30 Dec 2025</small></li>
+    <li><!--si134--><span class="tag p">PYQ</span> 1,600 at 11%, SI 352 → <b>176 har saal</b> → 352 ÷ 176 → <mark>2 saal</mark> (key mein 3, note dekho) <small>DP Const · 31 Dec 2025</small></li>
+    <li><!--si168--><span class="tag p">PYQ</span> 12,000 at 8%, SI 3,840 → <b>960 har saal</b> → <mark>4 saal</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><!--si173--><span class="tag p">PYQ</span> 3,000 → 3,600 at 8% → <b>20%</b> ÷ 8 → <mark>2.5 saal</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><!--si176--><span class="tag p">PYQ</span> 5,000 at 8%, SI 1,000 → <b>400 har saal</b> → <mark>2.5 saal</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><!--si180--><span class="tag p">PYQ</span> 12,000 → 16,800 at 8% → <b>40%</b> ÷ 8 → <mark>5 saal</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>
+    DP Const 30 Dec 2025 (₹4,000 at 20%, SI ₹3,200): 1 saal ka SI 800 hai, toh 3,200 = <b>4 saal</b>. Key 5 saal bolti hai; 5 saal mein SI 4,000 hota. Sahi option 4.<br>
+    DP Const 31 Dec 2025 (₹1,600 at 11%, SI ₹352): 1 saal ka SI 176, toh 352 = <b>2 saal</b>. Key 3 saal bolti hai; 3 saal mein 528 hota. Sahi option 2 yrs.
+  </div>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · "Dugna", "x guna", "240% of itself" (26 Qs, sabse pasandida)</h3>
+  <p><b>Yaad karo:</b> x guna → interest = (x − 1)P. Rate = (x − 1) × 100 ÷ saal. Saal seedhe (x − 1) ke anupaat mein.</p>
+  <div class="box"><span class="k">Worked · 8 saal mein dugna. 5 guna kab? <span class="tag p">PYQ ×2</span> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></span><!--si37--><!--si40-->
+    <b>Method:</b> (x − 1)P · <i>~5 sec</i><br>
+    Dugna = 1P interest in 8 saal. 5 guna = 4P → 4 × 8 = <mark>32 saal</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 8 saal mein 4 guna. 12 guna kab? <span class="tag p">PYQ</span> <small>CGL · 21 Sep 2025</small></span><!--si25-->
+    <b>Method:</b> (x − 1)P · <i>~10 sec</i><br>
+    4 guna = 3P in 8 saal. 12 guna = 11P → 8 × 11/3 = 88/3 = 29⅓ saal → sabse paas option <mark>29 saal</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Teen statement, kaunse sahi? <span class="tag p">PYQ</span> <small>CGL · 14 Oct 2025</small></span><!--si3-->
+    <b>Method:</b> kul % + (x − 1)P · <i>~25 sec</i><br>
+    (1) 10,000 × 45% = 4,500 ✔. (2) Dugna in 5 → 20% → 3 saal mein 60% → 1.6 guna, 1.5 nahi ✘. (3) 4.5 guna = 3.5P in 7 saal → 50% ✔.<br>
+    Answer: <mark>1 aur 3 sahi</mark>.
+  </div>
+  <ul>
+    <li><!--si39--><span class="tag p">PYQ</span> 5 saal mein dugna → <b>100/T</b> → <mark>20%</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><!--si53--><!--si75--><!--si118--><span class="tag p">PYQ ×3</span> 10 saal mein dugna → <b>100/T</b> → <mark>10%</mark> <small>CHSL · 20 Nov 2025; CHSL · 26 Nov 2025; DP Const · 24 Dec 2025</small></li>
+    <li><!--si97--><span class="tag p">PYQ</span> Wahi sawaal (10 saal mein dugna) → <b>100/T</b> → <mark>10%</mark> (key mein 20%, note dekho) <small>CPO · 9 Dec 2025</small></li>
+    <li><!--si167--><!--si171--><span class="tag p">PYQ ×2</span> 8 saal mein dugna → <b>100/T</b> → <mark>12.5%</mark> <small>SP-XIV · 1 Aug 2025; SP-XIV · 26 Jul 2025</small></li>
+    <li><!--si60--><span class="tag p">PYQ</span> 15 saal mein dugna → <b>100/15</b> → <mark>6.67%</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--si69--><span class="tag p">PYQ</span> 5 saal 6 mahine mein dugna → <b>100 ÷ 5.5 = 200/11</b> → <mark>18.18%</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--si86--><span class="tag p">PYQ</span> 4 saal 4 mahine mein dugna → <b>100 ÷ 13/3 = 300/13</b> → <mark>23.07%</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><!--si108--><span class="tag p">PYQ</span> 15% par dugna kab? → <b>100/15</b> → <mark>≈ 6.6 saal</mark> <small>DP Const · 29 Dec 2025</small></li>
+    <li><!--si137--><span class="tag p">PYQ</span> 20 saal mein 7 guna → <b>6P</b> → 600 ÷ 20 → <mark>30%</mark> <small>DP HCM · 9 Jan 2026</small></li>
+    <li><!--si112--><span class="tag p">PYQ</span> SI = 3P at 15% → <b>300 ÷ 15</b> → <mark>20 saal</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><!--si63--><span class="tag p">PYQ</span> 6 saal ka SI = 40% of P; SI = P kab? → <b>40 : 6 = 100 : ?</b> → <mark>15 saal</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><!--si36--><span class="tag p">PYQ</span> 5 saal mein 13/8 guna → <b>interest = 5/8 = 62.5%</b> ÷ 5 → <mark>12.5%</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><!--si84--><span class="tag p">PYQ</span> 5 saal mein 7/5 guna → <b>interest 2/5 = 40%</b> ÷ 5 → <mark>8%</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><!--si46--><span class="tag p">PYQ</span> 8 saal mein 240%; 3,000 ka 3 saal ka SI → <b>140% ÷ 8 = 17.5%</b> → 52.5% of 3,000 → <mark>₹1,575</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><!--si57--><span class="tag p">PYQ</span> 5 saal mein 180%; 2,500 ka 2 saal ka SI → <b>80% ÷ 5 = 16%</b> → 32% of 2,500 → <mark>₹800</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--si22--><span class="tag p">PYQ</span> 5 saal mein 2.5 guna; 5 guna kab? (options scan se padhe) → <b>1.5P : 4P</b> → 5 × 8/3 → <mark>13⅓ saal</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--si52--><span class="tag p">PYQ</span> 20 saal mein 5 guna; 9 guna kab? → <b>4P : 8P</b> → <mark>40 saal</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><!--si98--><span class="tag p">PYQ</span> 6 saal mein dugna; 3 guna kab? → <b>1P : 2P</b> → <mark>12 saal</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><!--si100--><span class="tag p">PYQ</span> 8 saal mein dugna; 4 guna kab? → <b>1P : 3P</b> → <mark>24 saal</mark> <small>CPO · 10 Dec 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>
+    CPO 9 Dec 2025 ("10 saal mein dugna, rate?"): dugna matlab interest = 100% in 10 saal → <b>10%</b>. Key 20% bolti hai, jo 5 saal mein dugne ka rate hai. Bank mein yahi sawaal teen aur jagah 10% key ke saath hai. Sahi option 10%.<br>
+    CGL 21 Sep 2025 (4 guna in 8 → 12 guna): exact answer 29⅓ saal hai. Option mein 29 hi sabse paas hai.
+  </div>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · Do alag saal ke do amount (14 Qs)</h3>
+  <p><b>Yaad karo:</b> amount ka farq ÷ saalon ka gap = 1 saal ka SI. Phir pehle amount se utne saal peeche chalo = P.</p>
+  <div class="box"><span class="k">Worked · 2 saal mein ₹6,600, 4 saal mein ₹7,200. Rate? <span class="tag p">PYQ</span> <small>CGL · 23 Sep 2025</small></span><!--si28-->
+    <b>Method:</b> farq = SI, peeche chalo · <i>~10 sec</i><br>
+    600 in 2 saal → 300 har saal. P = 6,600 − 600 = 6,000. Rate = 300/6,000 = <mark>5%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 4 saal mein ₹18,500, 6 saal mein ₹19,800. Usi rakam par 12%, 5 saal ka SI? <span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small></span><!--si54-->
+    <b>Method:</b> peeche chalo + kul % · <i>~15 sec</i><br>
+    1,300 in 2 saal → 650 har saal. P = 18,500 − 4 × 650 = 15,900.<br>
+    12% × 5 = 60% of 15,900 = 159 × 60 = <mark>₹9,540</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 3 saal mein ₹8,400, 5 saal mein ₹9,600. P aur rate? <span class="tag p">PYQ</span> <small>MTS · 5 Feb 2025</small></span><!--si141-->
+    <b>Method:</b> peeche chalo · <i>~12 sec</i><br>
+    600 har saal. P = 8,400 − 1,800 = 6,600. Rate = 600/6,600 = 1/11 = <mark>P = 6,600, rate 9.091%</mark>.
+  </div>
+  <ul>
+    <li><!--si45--><span class="tag p">PYQ</span> 9,504 (4 saal), 12,384 (9 saal) → <b>2,880 ÷ 5 = 576</b> → P = 9,504 − 2,304 = 7,200 → 576/7,200 → <mark>8%</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><!--si61--><span class="tag p">PYQ</span> 1,260 (2), 1,350 (5) → <b>90 ÷ 3 = 30</b> → P = 1,260 − 60 → <mark>₹1,200</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--si73--><span class="tag p">PYQ</span> 2,000 (2), 2,500 (5) → <b>R = 500 × 100 ÷ (2,000 × 5 − 2,500 × 2)</b> = 50,000 ÷ 5,000 → <mark>10%</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><!--si79--><span class="tag p">PYQ</span> 12,000 (4), 15,000 (7) → <b>1,000 har saal</b> → P = 12,000 − 4,000 → <mark>₹8,000</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><!--si91--><span class="tag p">PYQ</span> 6,720 (4), 7,680 (6) → <b>480 har saal</b> → P = 4,800 → 480/4,800 → <mark>10%</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><!--si92--><span class="tag p">PYQ</span> 12,000 (5), 14,400 (9) → <b>600 har saal</b> → P = 12,000 − 3,000 → <mark>₹9,000</mark> <small>CHSL Tier-2</small></li>
+    <li><!--si96--><span class="tag p">PYQ</span> 11,650 (5), 12,076 (6) → <b>426 har saal</b> → P = 11,650 − 2,130 → <mark>₹9,520</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><!--si103--><span class="tag p">PYQ</span> 800 (3), 920 (4) → <b>120 har saal</b> → P = 800 − 360 → <mark>₹440</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><!--si105--><span class="tag p">PYQ</span> 750 (2), 900 (4) → <b>75 har saal</b> → P = 750 − 150 → <mark>₹600</mark> <small>DP Const · 22 Dec 2025</small></li>
+    <li><!--si109--><span class="tag p">PYQ</span> 650 (2), 700 (3) → <b>50 har saal</b> → P = 650 − 100 → <mark>₹550</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><!--si150--><span class="tag p">PYQ</span> 13,200 (2), 15,600 (5) → <b>800 har saal</b> → P = 11,600 → 800/11,600 → <mark>P = 11,600, rate 6.90%</mark> <small>MTS · 16 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · R × T ka khel: anupaat, farq, rate badla (18 Qs)</h3>
+  <p><b>Samjho:</b> SI = P ka (R × T)%. Isliye agar P same hai, toh SI seedha R × T ke saath chalta hai. Do SI ka farq = sirf badle hue (R × T) ka %.</p>
+  <div class="box"><span class="k">Worked · 6% par 3 saal ka SI ₹360. Usi rakam par 8%, 5 saal ka SI? <span class="tag p">PYQ</span> <small>CGL · 22 Sep 2025</small></span><!--si27-->
+    <b>Method:</b> unitary (kul % se) · <i>~8 sec</i><br>
+    18% = 360 → 1% = 20. Naya kul % = 40 → <mark>₹800</mark>. P nikaalne ki zaroorat hi nahi.
+  </div>
+  <div class="box"><span class="k">Worked · 5% par A ka 4 saal ka SI = B ka 6 saal ka SI; B ne 12,000 kam lagaye. A? <span class="tag p">PYQ</span> <small>CHSL · 18 Nov 2025</small></span><!--si50-->
+    <b>Method:</b> rakam ∝ 1/time · <i>~10 sec</i><br>
+    A : B = 6 : 4 = 3 : 2. Farq 1 part = 12,000. A = 3 parts = <mark>₹36,000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 6 saal mein r% par ₹11,760, (r + 5)% par ₹13,320. P? <span class="tag p">PYQ</span> <small>CHSL · 30 Nov 2025</small></span><!--si90-->
+    <b>Method:</b> sirf badla hua % · <i>~8 sec</i><br>
+    Extra = 5% × 6 = 30% of P = 13,320 − 11,760 = 1,560 → 1% = 52 → P = <mark>₹5,200</mark>.
+  </div>
+  <ul>
+    <li><!--si26--><span class="tag p">PYQ</span> A par 6% × 2 = B par 4% × 3 → <b>12% = 12%</b> → <mark>1 : 1</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><!--si30--><span class="tag p">PYQ</span> Same rakam, 6 saal vs 9 saal ka SI → <b>SI ∝ T</b> → <mark>2 : 3</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--si102--><span class="tag p">PYQ</span> 14 saal vs 18 saal → <b>SI ∝ T</b> → <mark>7 : 9</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><!--si33--><span class="tag p">PYQ</span> 5% × 4 = 20% = 500; 7% × 6 = 42%? → <b>1% = 25</b> → <mark>₹1,050</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--si44--><span class="tag p">PYQ</span> 12,000 → 15,000 at 5% (= 5 saal); usi time mein y at 6% → 10,920 → <b>130% = 10,920</b> → <mark>₹8,400</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><!--si71--><span class="tag p">PYQ</span> 2,400 dugna in 8 (12.5%); Q ka 5 saal ka SI, 2,400 ke 3 saal ke SI (900) se 300 zyada → <b>62.5% of Q = 1,200</b> → <mark>₹1,920</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><!--si65--><span class="tag p">PYQ</span> 12% par 4 aur 7 saal ka farq 72 → <b>3 × 12 = 36% = 72</b> → <mark>₹200</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><!--si70--><span class="tag p">PYQ</span> 10% par 8 aur 10 saal ka farq 80 → <b>20% = 80</b> → <mark>₹400</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--si81--><span class="tag p">PYQ</span> 15% par 6 aur 7 saal ka farq 75 → <b>15% = 75</b> → <mark>₹500</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><!--si132--><span class="tag p">PYQ</span> 1,200 par 3 aur 2 saal ka farq 96 → <b>1 saal = 96 = 8%</b> → <mark>8%</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><!--si159--><span class="tag p">PYQ</span> 5,000 par 3 aur 4 saal ka farq 500 → <b>1 saal = 10%</b> → <mark>10%</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><!--si66--><span class="tag p">PYQ</span> 5 saal: r% par 1,500, (r + 2)% par 1,800 → <b>2 × 5 = 10% = 300</b> → <mark>₹3,000</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--si82--><span class="tag p">PYQ</span> 10,000 → 15,000 in 5 (10%); 2% zyada ho toh SI → <b>12 × 5 = 60%</b> → <mark>₹6,000</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><!--si138--><span class="tag p">PYQ</span> 6 saal, r% vs (r + 4)%, 168 zyada (rate scan se padhe) → <b>4 × 6 = 24% = 168</b> → <mark>₹700</mark> <small>DP HCM · 9 Jan 2026</small></li>
+    <li><!--si162--><span class="tag p">PYQ</span> Do barabar rakam, 6% aur 9%, 4 saal ka farq 150 → <b>3 × 4 = 12% = 150</b> → <mark>₹1,250</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · Rakam do hisson mein, alag rate (18 Qs)</h3>
+  <p><b>Yaad karo:</b> "sab ek rate par maan lo". Jo kami ya zyaadti bachi, wo dono rates ke farq se aayi. Time alag ho toh rate × time (kul %) se socho.</p>
+  <div class="box"><span class="k">Worked · ₹10,000: kuch 7% par, baaki 12% par. Saal ka interest 900. 12% wala? <span class="tag p">PYQ</span> <small>CGL · 17 Sep 2025</small></span><!--si8-->
+    <b>Method:</b> alligation / sab ek rate · <i>~10 sec</i><br>
+    Sab 7% par = 700. Zyada 200 = 5% of x → x = <mark>₹4,000</mark>. (Cross: avg 9% → 3 : 2.)
+  </div>
+  <div class="box"><span class="k">Worked · Aman: ₹30,000, A 9% aur B 6%, 4 saal ka SI 9,600; rakam ulat dete toh 1,200 kam. A se kitna? <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small></span><!--si5-->
+    <b>Method:</b> sab ek rate · <i>~15 sec</i><br>
+    4 saal: 36% aur 24%. Sab 24% par = 7,200. Zyada 2,400 = 12% of x → x = <mark>₹20,000</mark>.<br>
+    Check: ulta karo → 36% of 10,000 + 24% of 20,000 = 3,600 + 4,800 = 8,400 = 1,200 kam ✔.
+  </div>
+  <div class="box"><span class="k">Worked · Rohan: A mein ₹2,400 for 4 saal at r%, B mein (A se 50% kam, yaani 1,600) for 5 saal at (r + 2)%. Kul SI 1,920. r? <span class="tag p">PYQ ×2</span> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></span><!--si38--><!--si41-->
+    <b>Method:</b> 1% ki keemat · <i>~15 sec</i><br>
+    A ka SI = 24 × 4r = 96r. B ka SI = 16 × 5(r + 2) = 80r + 160.<br>
+    176r + 160 = 1,920 → 176r = 1,760 → <mark>r = 10%</mark>.
+  </div>
+  <ul>
+    <li><!--si0--><span class="tag p">PYQ</span> 5,000 for 2 saal + 3,000 for 4 saal, same rate, kul 2,200 → <b>rupaya-saal jodo</b>: 10,000 + 12,000 = 22,000 → 2,200 = 10% → <mark>0.1 (= 10%)</mark> <small>CGL · 12 Sep 2025</small></li>
+    <li><!--si1--><span class="tag p">PYQ</span> 18,000: X 15%, Y 10%, 1 saal ka 2,160 → <b>sab 10%</b> = 1,800 → 360 = 5% of X → <mark>₹7,200</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><!--si10--><span class="tag p">PYQ</span> 5,000: 6% aur 9%, saal ka 390 → <b>sab 9%</b> = 450 → 60 kam = 3% of x → <mark>₹2,000</mark> (6% wala) <small>CGL · 17 Sep 2025</small></li>
+    <li><!--si11--><span class="tag p">PYQ</span> 15,000: X 10%, Y 12%, 3 saal ka 4,950 → <b>alligation</b>: avg 4,950/15,000 ÷ 3 = 11% → 1 : 1 → <mark>₹7,500</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><!--si15--><span class="tag p">PYQ</span> 20,000: 8% aur 10%, 4 saal; doosre ka SI 2,240 zyada → <b>40%y − 32%(20,000 − y) = 2,240</b> → 72% y = 8,640 → <mark>₹12,000</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--si21--><span class="tag p">PYQ</span> 8,000 at 6% + 5,000 at 8%, kul 1,760 → <b>480 + 400 = 880 har saal</b> → <mark>2 saal</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--si29--><span class="tag p">PYQ</span> 8,000: 5% aur 7%, saal ka 500 → <b>sab 5%</b> = 400 → 100 = 2% of x → <mark>₹5,000</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--si42--><span class="tag p">PYQ</span> $25,000: A 4%, B 6.5%, 3 saal, kul 3,975 → <b>kul % 12 aur 19.5</b>; sab B = 4,875 → 900 kam ÷ 7.5% → <mark>$12,000</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><!--si49--><span class="tag p">PYQ</span> 40% at 7.5%, 60% at 11.25%, 2½ saal, kul 6,825 → <b>average rate</b> 3 + 6.75 = 9.75% × 2.5 = 24.375% → 280 × 24.375 = 6,825 → <mark>₹28,000</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><!--si143--><span class="tag p">PYQ</span> 10,000 at 8% + 5,000 at 12%, t saal, kul 5,400 → <b>800 + 600 = 1,400 har saal</b> → 5,400/1,400 → <mark>3.86 saal</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><!--si147--><span class="tag p">PYQ</span> 36,000: 6% × 4 saal aur 9% × 6 saal, kul 16,020 → <b>kul % 24 aur 54</b>; sab 54% = 19,440 → 3,420 kam ÷ 30% → <mark>11,400 at 6%, 24,600 at 9%</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><!--si149--><span class="tag p">PYQ</span> x at 6%, (x + 2,500) at 9%, 3 saal, kul 2,070 → <b>18%x + 27%x + 675</b> → 45% x = 1,395 → <mark>3,100 at 6%, 5,600 at 9%</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><!--si152--><span class="tag p">PYQ</span> 30,000: 7% aur 11%, 5 saal, kul 12,000 → <b>kul % 35 aur 55</b>; sab 55% = 16,500 → 4,500 kam ÷ 20% → <mark>22,500 at 7%, 7,500 at 11%</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><!--si165--><span class="tag p">PYQ</span> 10,000: 5% aur 7%, 2 saal, kul 1,120 → <b>sab 5%</b> × 2 = 1,000 → 120 = 4% of x → <mark>₹7,000 at 5%, ₹3,000 at 7%</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · Teen hisse, ratio wale (11 Qs)</h3>
+  <p><b>Samjho:</b> ratio ko "parts" mein likho. Har part ka interest nikaalo (part × kul %). Sab jodo = 1 part ki keemat milegi.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Ratio bars for Scheme O equal to 180 percent of M and 250 percent of N. Taking O as 90 units gives M 50 units and N 36 units. Interest: M at 10 percent is 5 units, N at 12 percent is 4.32 units, O at 15 percent is 13.5 units. Total 22.82 units equals 2282, so one unit is 100 and N is 3600.">
+      <text x="20" y="22" class="lbl">O = 180% of M = 250% of N → O ko 90 maan lo (9 aur 25 ka bhi saaf hissa)</text>
+      <text x="20" y="62" class="lbl">M</text><text x="20" y="78" class="sm">10%</text>
+      <rect x="70" y="46" width="250" height="34" class="chf"/><rect x="70" y="46" width="250" height="34" class="chs"/>
+      <text x="195" y="68" text-anchor="middle" class="lbl">50 units (90 ÷ 1.8)</text>
+      <text x="336" y="68" class="sm">interest 10% → 5</text>
+      <text x="20" y="112" class="lbl">N</text><text x="20" y="128" class="sm">12%</text>
+      <rect x="70" y="96" width="180" height="34" class="chf"/><rect x="70" y="96" width="180" height="34" class="chs"/>
+      <text x="160" y="118" text-anchor="middle" class="lbl">36 units (90 ÷ 2.5)</text>
+      <text x="266" y="118" class="sm">interest 12% → 4.32</text>
+      <text x="20" y="162" class="lbl">O</text><text x="20" y="178" class="sm">15%</text>
+      <rect x="70" y="146" width="450" height="34" style="fill:var(--ch);opacity:.45"/><rect x="70" y="146" width="450" height="34" class="chs"/>
+      <text x="295" y="168" text-anchor="middle" class="lbl">90 units</text>
+      <text x="536" y="168" class="sm">interest 15% → 13.5</text>
+      <line x1="20" y1="198" x2="680" y2="198" class="ln"/>
+      <text x="350" y="220" text-anchor="middle" class="lbl">5 + 4.32 + 13.5 = 22.82 units = ₹2,282 → 1 unit = ₹100</text>
+      <text x="350" y="242" text-anchor="middle" class="lbl" style="fill:var(--ch)">N = 36 units = ₹3,600</text>
+    </svg>
+    </div>
+    <figcaption>Bars scale par (1 unit = 5 px). Pehle ratio, phir har bar ka interest, phir jod. CGL 15 Sep 2025.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · Schemes M, N, O at 10%, 12%, 15%; O = 180% of M = 250% of N; 1 saal ka kul 2,282. N? <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small></span><!--si6-->
+    <b>Method:</b> ratio bars · <i>~25 sec</i><br>
+    O = 90 → M = 50, N = 36. Interest = 5 + 4.32 + 13.5 = 22.82 units = 2,282 → 1 unit = 100 → N = <mark>₹3,600</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹2,200 teen jagah 4%, 5%, 10% par; saal ka interest barabar. 5% wala? <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small></span><!--si13-->
+    <b>Method:</b> rakam ∝ 1/rate · <i>~10 sec</i><br>
+    1/4 : 1/5 : 1/10 = 5 : 4 : 2 → 11 parts = 2,200 → 5% wala = 4 × 200 = <mark>₹800</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Rohit ne 70% paisa Priya : Meena = 5 : 9 mein diya; 6% aur 10%, 4 saal; SI ka farq 2,304. Kul paisa? <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small></span><!--si47-->
+    <b>Method:</b> parts × kul % · <i>~20 sec</i><br>
+    Priya 5 parts × 24% = 1.2 parts. Meena 9 parts × 40% = 3.6 parts. Farq 2.4 parts = 2,304 → 1 part = 960.<br>
+    14 parts = 13,440 = 70% → kul = <mark>₹19,200</mark>.
+  </div>
+  <ul>
+    <li><!--si23--><span class="tag p">PYQ</span> 1,900 at 2%, 4%, 5%, interest barabar → <b>1/2 : 1/4 : 1/5 = 10 : 5 : 4</b> → 19 parts → <mark>₹500</mark> (4% wala) <small>CGL · 19 Sep 2025</small></li>
+    <li><!--si7--><span class="tag p">PYQ</span> P, Q, R at 7%, 9%, 11%; R = 250% of P = 300% of Q; kul 2,520 → <b>R = 30, P = 12, Q = 10</b> → 0.84 + 0.9 + 3.3 = 5.04 units → 1 unit = 500 → <mark>P = ₹6,000</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><!--si58--><span class="tag p">PYQ</span> 80% paisa Kavya : Aryan = 3 : 5; 9% aur 6%, 6 saal; farq 2,592 → <b>3 × 54% = 1.62, 5 × 36% = 1.8</b> → 0.18 part = 2,592 → 1 part = 14,400 → 8 parts = 1,15,200 = 80% → <mark>₹1,44,000</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--si133--><span class="tag p">PYQ</span> 1 : 2 : 3 at 5%, 10%, 15%, kul 2,400 (1 saal) → <b>0.05 + 0.2 + 0.45 = 0.7 part</b> → 1 part ≈ 3,428.6 → 6 parts ≈ 20,571 → <mark>≈ ₹21,000</mark> <small>DP Const · 20 Dec 2025</small></li>
+    <li><!--si139--><span class="tag p">PYQ</span> ¼ govt = ⅕ company → <b>4 : 5</b>; 2 saal 12% aur 14% → 0.48 + 0.70 = 1.18 part = 354 → 1 part = 300 → 9 parts → <mark>₹2,700</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><!--si142--><span class="tag p">PYQ</span> 2 : 3 : 5, 4 saal, 5%, 6%, 8% → <b>kul % 20, 24, 32</b> → 0.4 + 0.72 + 1.6 = 2.72 parts = 6,800 → 1 part = 2,500 → 10 parts → <mark>₹25,000</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><!--si156--><span class="tag p">PYQ</span> 3 : 4 : 5; 6% × 2, 8% × 3, 10% × 4 → <b>kul % 12, 24, 40</b> → 0.36 + 0.96 + 2.0 = 3.32 parts = 8,300 → 1 part = 2,500 → 12 parts → <mark>₹30,000</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><!--si157--><span class="tag p">PYQ</span> x, x + 2,000, x + 5,000; 5% × 3, 7% × 4, 9% × 5; kul 4,746 → <b>kul % 15, 28, 45</b> → 88% x + 560 + 2,250 = 4,746 → x = 2,200 → <mark>2,200, 4,200, 7,200</mark> <small>MTS · 19 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · Badalta rate, aur trust ke inaam (5 Qs)</h3>
+  <div class="box"><span class="k">Worked · 5% pehle 3 saal, 7% agle 5, 9% uske baad; 10 saal ka kul SI 6,800. P? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span><!--si4-->
+    <b>Method:</b> kul % jodo · <i>~10 sec</i><br>
+    5 × 3 + 7 × 5 + 9 × 2 = 15 + 35 + 18 = 68% = 6,800 → 1% = 100 → <mark>₹10,000</mark>.
+  </div>
+  <ul>
+    <li><!--si55--><span class="tag p">PYQ</span> 6% × 2, 8% × 4, 10% × 3 (9 saal), kul 7,400 → <b>12 + 32 + 30 = 74%</b> → <mark>₹10,000</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><!--si9--><span class="tag p">PYQ</span> 900 at r% (1 saal) + 9 mahine baad 600 at 1.5r (bache 3 mahine), kul 72 → <b>9r + 600 × 1.5r/100 × ¼ = 9r + 2.25r</b> = 11.25r = 72 → <mark>6.4%</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><!--si16--><span class="tag p">PYQ</span> Fund 6,00,000 at 9% = 54,000; inaam 18,000 + ? + 22,000 → <b>54,000 − 40,000</b> → <mark>₹14,000</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--si31--><span class="tag p">PYQ</span> Trust 8,00,000 at 10% = 80,000; ? + 35,000 + 20,000 → <b>80,000 − 55,000</b> → <mark>₹25,000</mark> <small>CGL · 25 Sep 2025</small></li>
+  </ul>
+
+  <!-- TYPE 13 -->
+  <h3>Type 13 · Khaas sawaal: rishta, anupaat, kisht (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · X par 2 saal, 5% ka SI = Y. Y par wahi = Z. Rishta? <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small></span><!--si17-->
+    <b>Method:</b> "maan lo" · <i>~10 sec</i><br>
+    Kul % = 10. X = 100 maano → Y = 10 → Z = 1. Check: Y² = 100 = X × Z ✔ → <mark>Y² = XZ</mark>.
+  </div>
+  <ul>
+    <li><!--si19--><span class="tag p">PYQ</span> B = A ka SI, C = B ka SI (same R, T) → <b>maan lo</b> A = 100, B = 10, C = 1 → B² = AC → key ka option <mark>"B = AC"</mark> (asal mein B² = AC, note dekho) <small>CGL · 19 Sep 2025</small></li>
+    <li><!--si48--><span class="tag p">PYQ</span> 5 saal ka amount = 2 saal ke amount ka 132/115 → <b>(100 + 5r) : (100 + 2r) = 132 : 115</b> → 11,500 + 575r = 13,200 + 264r → 311r = 1,700 → <mark>5.47%</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--si163--><span class="tag p">PYQ</span> ₹12,000 do barabar saalana kisht mein, 5% SI → <b>key ki soch</b>: pehli kisht 1 saal interest kamaati hai → x × 1.05 + x = 12,000 → 2.05x → <mark>₹5,853.66</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>
+    CGL 19 Sep 2025 (A, B, C): sahi rishta <b>B² = AC</b> hai (A = 100, B = 10, C = 1 se check karo: B = AC toh 10 = 100 galat). Bank ka option "B = AC" lagta hai square chhapne mein gir gaya. Exam mein B² = AC wala option chuno.<br>
+    SP-XIV 29 Aug 2025 (kisht): key 5,853.66 tab aata hai jab ₹12,000 ko "2 saal baad ki deni rakam" maana jaaye. Agar 12,000 aaj ka loan ho, toh kisht ≈ 6,439 aati, jo option mein nahi. Isliye key wali soch hi lagao.
+  </div>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>SI pucha, amount likh diya (ya ulta)</td><td>Options mein dono hote hain. Aakhri line dobara padho.</td></tr>
+    <tr><td>MTS wale sawaal mein fee / penalty jodna bhool gaye</td><td>Amount + fee. 11,970 jaisa bina fee wala option jaal hai.</td></tr>
+    <tr><td>"5 guna" ko interest = 5P samajhna</td><td>Interest = (5 − 1)P = 4P. Ek P toh apna tha.</td></tr>
+    <tr><td>Dugna 8 saal mein → 4 guna 16 saal mein</td><td>SI mein 4 guna = 3P → 24 saal. "Power" wala niyam sirf CI mein.</td></tr>
+    <tr><td>Do amount wale sawaal mein pehla amount hi P maan lena</td><td>Pehle 1 saal ka SI nikaalo, phir peeche chalo.</td></tr>
+    <tr><td>18 mahine ko 1.8 saal likhna</td><td>18 mahine = 1.5 saal. 3 saal 4 mahine = 3⅓, 3.4 nahi.</td></tr>
+    <tr><td>Tareekh wale sawaal mein galat mahine ginna</td><td>1 Apr se 1 Sep = 5 mahine (Apr–Aug). Ungli par gino.</td></tr>
+    <tr><td>Teen schemes, barabar interest → rakam rate ke anupaat mein</td><td>Ulta: rakam ∝ 1/rate. 4%, 5%, 10% → 5 : 4 : 2.</td></tr>
+    <tr><td>"B ne A se 12,000 kam lagaye" mein ratio ulta</td><td>Kam saal wale ki rakam zyada. 4 saal : 6 saal → rakam 3 : 2.</td></tr>
+    <tr><td>Option decimal mein (0.1)</td><td>0.1 = 10%. CGL 12 Sep 2025 mein yahi tha.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 181 sawaal, saare yahan. Paanch scan wale sawaal (CGL 19 Sep 2025 ka 2.5 guna, CHSL 13 Nov 2025 ka 13/8, DP Const 2 Jan 2026 aur 3 Jan 2026, DP HCM 9 Jan 2026) ke number page ki photo se padhe. Do sawaal bank mein do baar hain (CHSL 13 Nov aur 14 Nov 2025 wale, "dugna in 8 → 5 guna" aur "Rohan"), unhe ×2 likha hai. Chaar key galat ya adhoori hain, upar note mein.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>3 saal mein ₹1,120, 5 saal mein ₹1,200. P aur rate?</summary><p>80 in 2 saal → 40 har saal. P = 1,120 − 120 = 1,000. Rate = 40/1,000 = 4%.</p></details>
+    <details><summary>Paisa 6 saal mein 1.5 guna. 3 guna kab?</summary><p>1.5 guna = 0.5P in 6 saal. 3 guna = 2P → 4 × 6 = 24 saal.</p></details>
+    <details><summary>₹12,000: kuch 8% par, baaki 10% par; saal ka interest ₹1,080. 10% wala?</summary><p>Sab 8% = 960. Zyada 120 = 2% of x → x = ₹6,000.</p></details>
+    <details><summary>Same rakam, 9% par 4 saal ka SI ₹720. 6% par 5 saal ka?</summary><p>36% = 720 → 1% = 20 → 30% = ₹600.</p></details>
+    <details><summary>3%, 6%, 9% par barabar saal ka interest, kul ₹11,000. 9% wala?</summary><p>1/3 : 1/6 : 1/9 = 6 : 3 : 2 → 11 parts → 1 part = 1,000 → 9% wala ₹2,000.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · PROGRESSION (AP, GP, series sums) ===================== -->
+<section class="chap" id="mpg-series">
+  <div class="eyebrow">Maths · 40 questions</div>
+  <h2>Progression: AP, GP aur series ka jod, bina lambe formula ke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, MTS, SP-XIV, DP AWO/TPO, GD 2026) · sabse zyada: 1 + 2 + … ka jod, squares ka jod, AP ka nth term</div>
+
+  <h3>Pehle ek chhoti si kahani: seedhi ki paidiyan</h3>
+  <p>Ek seedhi socho. Pehli paidi 7 cm oonchi, har agli paidi 4 cm zyada: 7, 11, 15, 19 … Har baar <b>same cheez judti</b> hai. Isko <b>AP</b> (Arithmetic Progression) kehte hain. Jo har baar judta hai wo <b>d</b> (common difference).</p>
+  <p>Ab ek video socho. 5 log share karte hain, har koi 3 naye logon ko bhejta hai: 5, 15, 45, 135 … Yahan har baar <b>same cheez se guna</b> ho raha hai. Isko <b>GP</b> (Geometric Progression) kehte hain. Guna wala number <b>r</b> (common ratio).</p>
+  <div class="box"><span class="k">Teen baatein jinse poora chapter banta hai</span>
+    <b>1. Kadam gino.</b> 15th term tak pahunchne ke liye pehle term se 14 kadam chalne hain. Toh T<sub>15</sub> = a + 14d.<br>
+    <b>2. AP ka jod = terms ki ginti × average.</b> Aur AP ka average = (pehla + aakhri) ÷ 2. Beech wala term bhi yahi average hai.<br>
+    <b>3. GP mein kadam = guna.</b> T<sub>4</sub> = a × r × r × r = a × r³.
+  </div>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Jod = ginti × average (Gauss ki jodi)</h3>
+  <p><b>Kab use karo:</b> koi bhi AP ka jod: 1 + 2 + … + 45, 3 + 6 + … + 300, salary har saal 20,000 badhti hai.</p>
+  <p><b>Soch aise:</b> 1 + 2 + … + 8 likho. Neeche ulta likho: 8 + 7 + … + 1. Upar-neeche ki har jodi = 9. Aisi 8 jodiyan → 72. Ye do baar ka jod hai, toh jod = 36.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Bars of height 1 to 8 with an upside-down copy of 8 to 1 on top. Every column becomes 9 tall, making an 8 by 9 rectangle of 72. The sum 1 to 8 is half of it, 36.">
+      <g>
+        <rect x="60" y="184" width="40" height="16" class="chf"/><rect x="60" y="184" width="40" height="16" class="chs"/>
+        <rect x="108" y="168" width="40" height="32" class="chf"/><rect x="108" y="168" width="40" height="32" class="chs"/>
+        <rect x="156" y="152" width="40" height="48" class="chf"/><rect x="156" y="152" width="40" height="48" class="chs"/>
+        <rect x="204" y="136" width="40" height="64" class="chf"/><rect x="204" y="136" width="40" height="64" class="chs"/>
+        <rect x="252" y="120" width="40" height="80" class="chf"/><rect x="252" y="120" width="40" height="80" class="chs"/>
+        <rect x="300" y="104" width="40" height="96" class="chf"/><rect x="300" y="104" width="40" height="96" class="chs"/>
+        <rect x="348" y="88" width="40" height="112" class="chf"/><rect x="348" y="88" width="40" height="112" class="chs"/>
+        <rect x="396" y="72" width="40" height="128" class="chf"/><rect x="396" y="72" width="40" height="128" class="chs"/>
+      </g>
+      <g class="paper" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="4 3">
+        <rect x="60" y="56" width="40" height="128"/>
+        <rect x="108" y="56" width="40" height="112"/>
+        <rect x="156" y="56" width="40" height="96"/>
+        <rect x="204" y="56" width="40" height="80"/>
+        <rect x="252" y="56" width="40" height="64"/>
+        <rect x="300" y="56" width="40" height="48"/>
+        <rect x="348" y="56" width="40" height="32"/>
+        <rect x="396" y="56" width="40" height="16"/>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="80" y="216">1</text><text x="128" y="216">2</text><text x="176" y="216">3</text><text x="224" y="216">4</text><text x="272" y="216">5</text><text x="320" y="216">6</text><text x="368" y="216">7</text><text x="416" y="216">8</text>
+        <text x="80" y="50">8</text><text x="128" y="50">7</text><text x="176" y="50">6</text><text x="224" y="50">5</text><text x="272" y="50">4</text><text x="320" y="50">3</text><text x="368" y="50">2</text><text x="416" y="50">1</text>
+      </g>
+      <text x="248" y="24" text-anchor="middle" class="sm">dashed = ulta likha hua (8, 7, …, 1)</text>
+      <text x="248" y="238" text-anchor="middle" class="sm">bhara hua = 1, 2, …, 8</text>
+      <text x="460" y="80" class="lbl">har column = 1 + 8 = 9</text>
+      <text x="460" y="104" class="lbl">8 column × 9 = 72</text>
+      <text x="460" y="128" class="sm">ye do baar ka jod hai</text>
+      <text x="460" y="160" class="lbl" style="fill:var(--ch)">jod = 72 ÷ 2 = 36</text>
+      <text x="460" y="190" class="sm">yaani ginti × (pehla + aakhri) ÷ 2</text>
+      <text x="460" y="208" class="sm">= 8 × 4.5</text>
+    </svg>
+    </div>
+    <figcaption>Ulta likh kar jodo, har jodi barabar. Isliye AP ka jod = ginti × average.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Ginti kaise nikaalo (sabse zaroori kadam)</span>
+    Ginti = (aakhri − pehla) ÷ d + 1. Jaise 1, 4, 7, …, 100 → (100 − 1)/3 + 1 = <b>34</b>.<br>
+    Multiples ho toh aur aasaan: 6 + 12 + … + 612 = 6 × (1 + 2 + … + 102). Ginti = 612 ÷ 6 = 102.
+  </div>
+  <div class="box"><span class="k">Demo · 41 + 42 + … + 70 · <i>~8 sec</i></span>
+    Ginti = 70 − 41 + 1 = 30. Average = (41 + 70)/2 = 55.5.<br>
+    Jod = 30 × 55.5 = <b>1,665</b>.
+  </div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Odd numbers ka jod = square</h3>
+  <p><b>Kab use karo:</b> 1 + 3 + 5 + …, ya 1 + 2 + … + n + … + 2 + 1 (pahaad jaisi series).</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="A 5 by 5 square of tiles split into L-shaped layers of 1, 3, 5, 7 and 9 tiles. So the first 5 odd numbers add up to 5 squared, 25.">
+<rect x="40" y="160" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="70" y="160" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="100" y="160" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="130" y="160" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="160" y="160" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/>
+<rect x="40" y="130" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="70" y="130" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="100" y="130" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="130" y="130" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="160" y="130" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/>
+<rect x="40" y="100" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="70" y="100" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="100" y="100" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="130" y="100" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="160" y="100" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/>
+<rect x="40" y="70" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="70" y="70" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="100" y="70" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="130" y="70" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="160" y="70" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/>
+<rect x="40" y="40" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="70" y="40" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="100" y="40" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="130" y="40" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="160" y="40" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/>
+      <text x="114" y="212" text-anchor="middle" class="sm">L-shape: 1, 3, 5, 7, 9 tile</text>
+      <text x="230" y="60" class="lbl">1 + 3 + 5 + 7 + 9 = 25 = 5 × 5</text>
+      <text x="230" y="84" class="sm">har nayi L pichhle square ko ek size bada karti hai</text>
+      <text x="230" y="118" class="lbl">Pehle n odd ka jod = n²</text>
+      <text x="230" y="140" class="sm">toh unka average = n² ÷ n = n (SP-XIV 26 Jul 2025)</text>
+      <text x="230" y="174" class="lbl" style="fill:var(--ch)">1 + 2 + … + 41 + … + 2 + 1 = 41² = 1,681</text>
+      <text x="230" y="196" class="sm">pahaad = (n − 1) tak ka jod do baar + n = n(n − 1) + n = n²</text>
+    </svg>
+    </div>
+    <figcaption>Odd numbers L-shape mein judte hain aur hamesha square banate hain.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Squares aur cubes ka jod: formula + yaad wali values</h3>
+  <p><b>Kab use karo:</b> 1² + 2² + … + n², ya 11² + … + 45² (beech se shuru).</p>
+  <ul>
+    <li>1² + … + n² = <b>n(n + 1)(2n + 1) ÷ 6</b>. Teeno numbers likho, pehle 6 ko kaato, phir guna.</li>
+    <li>1³ + … + n³ = <b>(1 + 2 + … + n)²</b>. Pehle seedha jod nikaalo, phir uska square.</li>
+    <li>Beech se shuru ho: (1 se bada tak) − (1 se chhote tak). 11² … 45² = Σ45 − Σ10.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · 1² + 2² + … + 30² · <i>~10 sec</i></span>
+    30 × 31 × 61 ÷ 6 → 6 ko 30 se kaato → 5 × 31 × 61 = 155 × 61 = 9,300 + 155 = <b>9,455</b>.
+  </div>
+  <div class="tbl"><table>
+    <tr><th>n</th><th>1 + … + n</th><th>1² + … + n²</th><th>1³ + … + n³</th></tr>
+    <tr><td class="n">10</td><td>55</td><td>385</td><td>3,025</td></tr>
+    <tr><td class="n">20</td><td>210</td><td>2,870</td><td>44,100</td></tr>
+    <tr><td class="n">25</td><td>325</td><td>5,525</td><td>1,05,625</td></tr>
+    <tr><td class="n">30</td><td>465</td><td>9,455</td><td>2,16,225</td></tr>
+    <tr><td class="n">45</td><td>1,035</td><td>31,395</td><td>10,71,225</td></tr>
+    <tr><td class="n">50</td><td>1,275</td><td>42,925</td><td>16,25,625</td></tr>
+    <tr><td class="n">100</td><td>5,050</td><td>3,38,350</td><td>2,55,02,500</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> option mein last digit dekho. Σn² ka last digit (n(n+1)(2n+1)/6 ka) jaldi nikal jaata hai. 30 tak: 5 × 31 × 61 → 5 × 1 × 1 = <b>5</b> par khatam. 9,455 hi bachta hai, 9,450 aur 9,350 kat jaate hain.</div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · GP: kadam gino, guna karo</h3>
+  <p><b>Kab use karo:</b> "triple hota hai", "har koi 3 ko bhejta hai", 2, 6, 18, …</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Top row AP: 5, 8, 11, 14, adding 3 each step. Bottom row GP: 5, 15, 45, 135, multiplying by 3 each step. The fourth term is 5 times 3 cubed equals 135.">
+      <defs>
+        <marker id="mpg-gp-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <text x="20" y="56" class="lbl">AP</text><text x="20" y="72" class="sm">+3 har baar</text>
+      <g>
+        <rect x="130" y="36" width="90" height="40" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="270" y="36" width="90" height="40" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="410" y="36" width="90" height="40" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="550" y="36" width="90" height="40" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="175" y="61">5</text><text x="315" y="61">8</text><text x="455" y="61">11</text><text x="595" y="61">14</text></g>
+      <g class="ln"><line x1="222" y1="56" x2="266" y2="56" marker-end="url(#mpg-gp-arr)"/><line x1="362" y1="56" x2="406" y2="56" marker-end="url(#mpg-gp-arr)"/><line x1="502" y1="56" x2="546" y2="56" marker-end="url(#mpg-gp-arr)"/></g>
+      <g text-anchor="middle" class="sm"><text x="245" y="30">+3</text><text x="385" y="30">+3</text><text x="525" y="30">+3</text></g>
+      <text x="20" y="136" class="lbl">GP</text><text x="20" y="152" class="sm">×3 har baar</text>
+      <g>
+        <rect x="130" y="116" width="90" height="40" rx="8" class="chf"/><rect x="130" y="116" width="90" height="40" rx="8" class="chs"/>
+        <rect x="270" y="116" width="90" height="40" rx="8" class="chf"/><rect x="270" y="116" width="90" height="40" rx="8" class="chs"/>
+        <rect x="410" y="116" width="90" height="40" rx="8" class="chf"/><rect x="410" y="116" width="90" height="40" rx="8" class="chs"/>
+        <rect x="550" y="116" width="90" height="40" rx="8" style="fill:var(--ch)"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="175" y="141">5</text><text x="315" y="141">15</text><text x="455" y="141">45</text><text x="595" y="141" style="fill:var(--paper)">135</text></g>
+      <g class="ln"><line x1="222" y1="136" x2="266" y2="136" marker-end="url(#mpg-gp-arr)"/><line x1="362" y1="136" x2="406" y2="136" marker-end="url(#mpg-gp-arr)"/><line x1="502" y1="136" x2="546" y2="136" marker-end="url(#mpg-gp-arr)"/></g>
+      <g text-anchor="middle" class="sm"><text x="245" y="110">×3</text><text x="385" y="110">×3</text><text x="525" y="110">×3</text></g>
+      <g text-anchor="middle" class="sm"><text x="175" y="176">ghanta 1</text><text x="315" y="176">ghanta 2</text><text x="455" y="176">ghanta 3</text><text x="595" y="176">ghanta 4</text></g>
+      <text x="350" y="206" text-anchor="middle" class="lbl">4th term = 5 × 3 × 3 × 3 = 5 × 3³ = 135 (3 kadam, 3 guna)</text>
+    </svg>
+    </div>
+    <figcaption>AP mein kadam par jodo, GP mein kadam par guna karo. DP AWO 20 Jan 2026 ka viral video sawaal.</figcaption>
+  </figure>
+  <ul>
+    <li>T<sub>n</sub> = a × r<sup>n − 1</sup>. 3 ki powers yaad rakho: 3, 9, 27, 81, 243, 729, 2187.</li>
+    <li>GP ka jod = a(r<sup>n</sup> − 1) ÷ (r − 1). Ulta sawaal mein (n pucha ho) options daal kar dekho.</li>
+  </ul>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Fraction series: todo aur kaato (telescoping)</h3>
+  <p><b>Kab use karo:</b> 1/2 + 1/6 + 1/12 + … ya 1/3 + 1/15 + 1/35 + … Neeche wale numbers do lagataar numbers ka guna hain.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="Each fraction 1 over n times n plus 1 splits into 1 over n minus 1 over n plus 1. Writing them one under another, every middle term cancels with the next row. Only 1 and minus 1 over 10 remain, so the sum to 1 over 90 is 9 over 10.">
+      <g class="lbl">
+        <text x="30" y="40">1/2 = 1/(1·2)</text>
+        <text x="30" y="72">1/6 = 1/(2·3)</text>
+        <text x="30" y="104">1/12 = 1/(3·4)</text>
+        <text x="30" y="136">⋮</text>
+        <text x="30" y="168">1/90 = 1/(9·10)</text>
+      </g>
+      <g class="lbl" text-anchor="middle">
+        <text x="220" y="40">=</text><text x="220" y="72">=</text><text x="220" y="104">=</text><text x="220" y="168">=</text>
+        <text x="265" y="40" style="fill:var(--ch)">1</text><text x="310" y="40">−</text><text x="355" y="40" style="fill:var(--muted)">1/2</text>
+        <text x="265" y="72" style="fill:var(--muted)">1/2</text><text x="310" y="72">−</text><text x="355" y="72" style="fill:var(--muted)">1/3</text>
+        <text x="265" y="104" style="fill:var(--muted)">1/3</text><text x="310" y="104">−</text><text x="355" y="104" style="fill:var(--muted)">1/4</text>
+        <text x="265" y="168" style="fill:var(--muted)">1/9</text><text x="310" y="168">−</text><text x="355" y="168" style="fill:var(--ch)">1/10</text>
+      </g>
+      <g class="ln" stroke-dasharray="4 3">
+        <line x1="345" y1="46" x2="275" y2="62"/>
+        <line x1="345" y1="78" x2="275" y2="94"/>
+        <line x1="345" y1="110" x2="275" y2="126"/>
+      </g>
+      <g class="ln"><line x1="340" y1="36" x2="370" y2="36"/><line x1="250" y1="68" x2="280" y2="68"/><line x1="340" y1="68" x2="370" y2="68"/><line x1="250" y1="100" x2="280" y2="100"/><line x1="340" y1="100" x2="370" y2="100"/><line x1="250" y1="164" x2="280" y2="164"/></g>
+      <text x="200" y="212" class="lbl" style="fill:var(--ch)">jod = 1 − 1/10 = 9/10</text>
+      <rect x="420" y="24" width="260" height="160" rx="8" class="chf"/>
+      <text x="436" y="50" class="lbl">Do niyam</text>
+      <text x="436" y="76" class="sm">gap 1: 1/(n(n+1)) = 1/n − 1/(n+1)</text>
+      <text x="436" y="100" class="sm">gap 2: 1/(n(n+2)) = ½ (1/n − 1/(n+2))</text>
+      <text x="436" y="130" class="lbl">1/(1·3) + 1/(3·5) + … + 1/(7·9)</text>
+      <text x="436" y="152" class="sm">= ½ (1 − 1/9) = ½ × 8/9 = 4/9</text>
+      <text x="436" y="174" class="sm">jod = (gap ka ulta) × (pehla − aakhri)</text>
+    </svg>
+    </div>
+    <figcaption>Har tukda agle ka aadha kaat deta hai. Sirf pehla aur aakhri bachte hain.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · S<sub>n</sub> diya, T<sub>n</sub> chahiye</h3>
+  <p><b>Soch aise:</b> 10 terms ka jod − 9 terms ka jod = sirf 10th term. T<sub>n</sub> = S<sub>n</sub> − S<sub>n − 1</sub>.</p>
+  <div class="box"><span class="k">Demo · S<sub>n</sub> = n² + 3n. T<sub>10</sub>? · <i>~8 sec</i></span>
+    S<sub>10</sub> = 100 + 30 = 130. S<sub>9</sub> = 81 + 27 = 108. T<sub>10</sub> = <b>22</b>.<br>
+    Shortcut: S<sub>n</sub> = An² + Bn ho toh T<sub>n</sub> = A(2n − 1) + B = 1 × 19 + 3 = 22.
+  </div>
+
+  <div class="box"><span class="k">Formula / value sheet (yaad karo)</span>
+    AP: T<sub>n</sub> = a + (n − 1)d · S<sub>n</sub> = n × (a + l)/2 = n/2 × [2a + (n − 1)d] · ginti = (l − a)/d + 1.<br>
+    Teen terms AP mein → beech wala = dono ka average (radius, diameter, circumference sab par lagta hai).<br>
+    1 + … + n = n(n + 1)/2 · odd ka jod = n² · even 2 + 4 + … + 2n = n(n + 1).<br>
+    1² + … + n² = n(n + 1)(2n + 1)/6 · 1³ + … + n³ = [n(n + 1)/2]².<br>
+    GP: T<sub>n</sub> = ar<sup>n − 1</sup> · S<sub>n</sub> = a(r<sup>n</sup> − 1)/(r − 1). <span class="tag x">CGL+</span> r &lt; 1 aur anant terms: S = a/(1 − r).
+  </div>
+
+  <!-- ===================== TYPES ===================== -->
+  <h3>Type 1 · AP ka koi term, beech wala term (10 Qs)</h3>
+  <div class="box"><span class="k">Worked · AP ka 18th term 0. 7 × T<sub>7</sub> = ? × T<sub>11</sub> <span class="tag p">PYQ</span> <small>DP AWO · 21 Jan 2026</small></span><!--pg6-->
+    <b>Method:</b> kadam gino · <i>~15 sec</i><br>
+    T<sub>18</sub> = 0. T<sub>7</sub> usse 11 kadam peeche = −11d. T<sub>11</sub> 7 kadam peeche = −7d.<br>
+    7 × (−11d) = 11 × (−7d) → <mark>11</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · T<sub>8</sub> = 3 × T<sub>2</sub>, a = 4. T<sub>5</sub>? <span class="tag p">PYQ</span> <small>DP AWO · 20 Jan 2026</small></span><!--pg8-->
+    <b>Method:</b> kadam gino · <i>~12 sec</i><br>
+    4 + 7d = 3(4 + d) = 12 + 3d → 4d = 8 → d = 2. T<sub>5</sub> = 4 + 4 × 2 = <mark>12</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · S<sub>n</sub> = n² + 3n. T<sub>10</sub>? <span class="tag p">PYQ</span> <small>DP AWO · 16 Jan 2026</small></span><!--pg11-->
+    <b>Method:</b> S<sub>n</sub> − S<sub>n−1</sub> · <i>~8 sec</i><br>
+    130 − 108 = <mark>22</mark>.
+  </div>
+  <ul>
+    <li><!--pg0--><span class="tag p">PYQ</span> Teen circle, diameter AP mein; circumference 6π aur 14π → <b>beech = average</b> (circumference ∝ diameter) → <mark>10π cm</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><!--pg1--><span class="tag p">PYQ</span> Radius AP mein, 7 aur 21 → <b>average</b> → <mark>14 cm</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><!--pg3--><span class="tag p">PYQ</span> Label 1.2 cm, roz +0.3; 10th din → <b>9 kadam</b>: 1.2 + 2.7 → <mark>3.9 cm</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--pg4--><span class="tag p">PYQ</span> 4 numbers AP mein, pehla + aakhri = 64; average? → <b>average = (pehla + aakhri)/2</b> → <mark>32</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><!--pg10--><span class="tag p">PYQ</span> 7, 11, 15, …; 15th term → <b>14 kadam</b>: 7 + 56 → <mark>63</mark> <small>DP AWO · 16 Jan 2026</small></li>
+    <li><!--pg15--><span class="tag p">PYQ</span> 20 terms ka jod 210, a = 3; T<sub>20</sub>? → <b>jod = ginti × average</b>: average 10.5 = (3 + l)/2 → <mark>18</mark> <small>DP AWO · 20 Jan 2026</small></li>
+    <li><!--pg16--><span class="tag p">PYQ</span> 2, 8, 18, 32, … → <b>pattern 2 × n²</b> (2×1, 2×4, 2×9, 2×16) → 2 × 25 → <mark>50</mark> <small>DP AWO · 20 Jan 2026</small></li>
+  </ul>
+
+  <h3>Type 2 · AP ka jod, kahani wale (6 Qs)</h3>
+  <div class="box"><span class="k">Worked · Bus 20 km/h se shuru, har ghante +10 km/h. 270 km kitne ghante mein? <span class="tag p">PYQ</span> <small>GD · 6 May 2026</small></span><!--pg22-->
+    <b>Method:</b> jodte jao (ya option daalo) · <i>~10 sec</i><br>
+    Har ghante ki doori: 20, 30, 40, 50, 60, 70. Jod: 20 → 50 → 90 → 140 → 200 → 270. <mark>6 ghante</mark>.<br>
+    Option se: 6 ghante → 6 × (20 + 70)/2 = 270 ✔.
+  </div>
+  <div class="box"><span class="k">Worked · Pehle hafte ₹100, har hafte +₹20; 20 hafte ka jod <span class="tag p">PYQ</span> <small>DP AWO · 21 Jan 2026</small></span><!--pg5-->
+    <b>Method:</b> ginti × average · <i>~10 sec</i><br>
+    Aakhri = 100 + 19 × 20 = 480. Average = 290. Jod = 20 × 290 = <mark>₹5,800</mark>.
+  </div>
+  <ul>
+    <li><!--pg23--><span class="tag p">PYQ</span> Bus 22 km/h, har ghante +8; 252 km → <b>6 ghante try</b>: 22 … 62, 6 × 42 = 252 → <mark>6</mark> <small>GD · 7 May 2026</small></li>
+    <li><!--pg9--><span class="tag p">PYQ</span> Salary 3,00,000, har saal +20,000, 6 saal ka kul → <b>aakhri 4,00,000, average 3,50,000</b> × 6 → <mark>₹21,00,000</mark> (do option same chhape hain) <small>DP AWO · 16 Jan 2026</small></li>
+    <li><!--pg14--><span class="tag p">PYQ</span> a = 100, d = 25, 8 mahine ka jod (number scan se padhe) → <b>aakhri 275, average 187.5</b> × 8 → <mark>1,500</mark> <small>DP AWO · 20 Jan 2026</small></li>
+    <li><!--pg18--><span class="tag p">PYQ</span> 20 terms ka jod 210, a = 2; d? → <b>average 10.5 → aakhri 19</b> → 19 = 2 + 19d → d = 17/19 → <mark>≈ 0.9</mark> <small>DP AWO · 21 Jan 2026</small></li>
+  </ul>
+
+  <h3>Type 3 · Natural numbers aur multiples ka jod (11 Qs)</h3>
+  <div class="box"><span class="k">Worked · Saare 3-digit numbers jo 7 se kat'te hain, unka jod <span class="tag p">PYQ</span> <small>SP-XIV · 31 Jul 2025</small></span><!--pg38-->
+    <b>Method:</b> ginti × average · <i>~20 sec</i><br>
+    Pehla = 105 (7 × 15), aakhri = 994 (7 × 142). Ginti = 142 − 15 + 1 = 128.<br>
+    Average = (105 + 994)/2 = 549.5. Jod = 128 × 549.5 = 64 × 1,099 = <mark>70,336</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 1 + 4 + 7 + … + 100 <span class="tag p">PYQ</span> <small>GD · 19 May 2026</small></span><!--pg27-->
+    <b>Method:</b> ginti × average · <i>~10 sec</i><br>
+    Ginti = 99/3 + 1 = 34. Average = 101/2. Jod = 17 × 101 = <mark>1,717</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 1 + 2 + … + 40 + 41 + 40 + … + 2 + 1 <span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small></span><!--pg2-->
+    <b>Method:</b> pahaad = n² · <i>~3 sec</i><br>
+    Choti 41 → <mark>41² = 1,681</mark>.
+  </div>
+  <ul>
+    <li><!--pg25--><span class="tag p">PYQ</span> 1 + … + 35 → <b>n(n + 1)/2</b> = 35 × 18 → <mark>630</mark> <small>GD · 9 May 2026</small></li>
+    <li><!--pg37--><span class="tag p">PYQ</span> 1 + … + 45 → <b>n(n + 1)/2</b> = 45 × 23 → <mark>1,035</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><!--pg26--><span class="tag p">PYQ</span> 3 + 6 + … + 300 → <b>3 × (1 + … + 100)</b> = 3 × 5,050 → <mark>15,150</mark> <small>GD · 18 May 2026</small></li>
+    <li><!--pg28--><span class="tag p">PYQ</span> 2 + 4 + … + 496 → <b>n(n + 1), n = 248</b> → 248 × 249 → <mark>61,752</mark> <small>GD · 19 May 2026</small></li>
+    <li><!--pg34--><span class="tag p">PYQ</span> 6 + 12 + … + 612 → <b>6 × (1 + … + 102)</b> = 6 × 5,253 → <mark>31,518</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><!--pg36--><span class="tag p">PYQ</span> 5 + 10 + … + 200 → <b>5 × (1 + … + 40)</b> = 5 × 820 → <mark>4,100</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><!--pg35--><span class="tag p">PYQ</span> 41 + … + 70 → <b>30 × 55.5</b> → <mark>1,665</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><!--pg39--><span class="tag p">PYQ</span> Pehle n odd numbers ka average → <b>jod n² ÷ n</b> → <mark>n</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 4 · Squares aur cubes ka jod (6 Qs)</h3>
+  <div class="box"><span class="k">Worked · 11² + 12² + … + 45² <span class="tag p">PYQ</span> <small>MTS · 6 Feb 2025</small></span><!--pg32-->
+    <b>Method:</b> bada − chhota · <i>~20 sec</i><br>
+    Σ45 = 45 × 46 × 91/6 = 15 × 23 × 91 = 345 × 91 = 31,395. Σ10 = 385.<br>
+    31,395 − 385 = <mark>31,010</mark>.
+  </div>
+  <ul>
+    <li><!--pg33--><span class="tag p">PYQ</span> 1² + … + 25² → <b>25 × 26 × 51/6</b> = 25 × 13 × 17 → <mark>5,525</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><!--pg21--><span class="tag p">PYQ</span> 1² + … + 30² → <b>5 × 31 × 61</b> → <mark>9,455</mark> <small>GD · 6 May 2026</small></li>
+    <li><!--pg24--><span class="tag p">PYQ</span> 1² + … + 60² → <b>10 × 61 × 121</b> = 610 × 121 → <mark>73,810</mark> <small>GD · 8 May 2026</small></li>
+    <li><!--pg29--><span class="tag p">PYQ</span> 21² + … + 50² → <b>Σ50 − Σ20</b> = 42,925 − 2,870 → <mark>40,055</mark> <small>GD · 25 May 2026</small></li>
+    <li><!--pg31--><span class="tag p">PYQ</span> 1³ + … + 45³ → <b>(1 + … + 45)²</b> = 1,035² = 10,00,000 + 70,000 + 1,225 → <mark>10,71,225</mark> <small>MTS · 6 Feb 2025</small></li>
+  </ul>
+
+  <h3>Type 5 · GP (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · GP ka jod 12,276; r = sabse chhota composite (4), a = 12 × sabse chhota odd prime (36). Terms? <span class="tag p">PYQ</span> <small>DP AWO · 20 Jan 2026</small></span><!--pg13-->
+    <b>Method:</b> GP jod + powers pehchano · <i>~20 sec</i><br>
+    36 × (4<sup>n</sup> − 1)/3 = 12(4<sup>n</sup> − 1) = 12,276 → 4<sup>n</sup> − 1 = 1,023 → 4<sup>n</sup> = 1,024 = 4<sup>5</sup> → <mark>5</mark>.
+  </div>
+  <ul>
+    <li><!--pg7--><span class="tag p">PYQ</span> 5 log, har koi 3 naye ko; 4th ghante mein naye → <b>5 × 3³</b> → <mark>135</mark> <small>DP AWO · 20 Jan 2026</small></li>
+    <li><!--pg12--><span class="tag p">PYQ</span> 24 queries, har ghante triple; 7 ghante baad (number scan se padhe) → <b>24 × 3⁷ = 24 × 2,187</b> → <mark>52,488</mark> <small>DP AWO · 16 Jan 2026</small></li>
+    <li><!--pg17--><span class="tag p">PYQ</span> 2, 6, 18, …; 6th term → <b>2 × 3⁵ = 2 × 243</b> → <mark>486</mark> <small>DP AWO · 21 Jan 2026</small></li>
+  </ul>
+
+  <h3>Type 6 · Fraction series, telescoping (3 Qs)</h3>
+  <div class="box"><span class="k">Worked · 1/15 + 1/35 + 1/63 + … + 1/195 <span class="tag p">PYQ</span> <small>MTS · 5 Feb 2025</small></span><!--pg30-->
+    <b>Method:</b> todo aur kaato · <i>~15 sec</i><br>
+    15 = 3·5, 35 = 5·7, …, 195 = 13·15. Gap 2 → ½ (1/3 − 1/15) = ½ × 4/15 = <mark>2/15</mark>.
+  </div>
+  <ul>
+    <li><!--pg19--><span class="tag p">PYQ</span> 1/2 + 1/6 + 1/12 + … + 1/90 (fractions scan se padhe) → <b>gap 1</b>: 1 − 1/10 → <mark>9/10</mark> <small>GD · 4 May 2026</small></li>
+    <li><!--pg20--><span class="tag p">PYQ</span> 1/3 + 1/15 + 1/35 + 1/63 → <b>gap 2</b>: ½ (1 − 1/9) → <mark>4/9</mark> <small>GD · 5 May 2026</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>15th term = a + 15d</td><td>a + 14d. Pehle term se 14 hi kadam.</td></tr>
+    <tr><td>Ginti = (aakhri − pehla)/d</td><td>+1 bhool gaye. 1, 4, …, 100 mein 34 terms, 33 nahi.</td></tr>
+    <tr><td>11² se 45² ke liye Σ45 − Σ11</td><td>Σ45 − Σ<b>10</b>. 11² khud chahiye.</td></tr>
+    <tr><td>Telescoping mein ½ bhool gaye (gap 2 wali series)</td><td>Neeche ke do number mein farq 2 ho toh aage ½ lagao.</td></tr>
+    <tr><td>GP ka 4th term = a × r⁴</td><td>a × r³. Kadam = term − 1.</td></tr>
+    <tr><td>"Next 5 years" salary mein 5 saal ginna</td><td>Pehla saal + agle 5 = 6 saal.</td></tr>
+    <tr><td>3-digit multiples mein 100 ya 999 se shuru karna</td><td>Pehla multiple dhoondo (105) aur aakhri (994).</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 40 sawaal, saare yahan. 19 sawaal ke number/fractions bank ke text mein ud gaye the, unhe page ki photo se padha. DP AWO 16 Jan 2026 (salary) mein do option same chhape hain (₹21,00,000); answer wahi hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>2 + 5 + 8 + … + 59 ka jod?</summary><p>Ginti = 57/3 + 1 = 20. Average = 61/2. Jod = 10 × 61 = 610.</p></details>
+    <details><summary>1² + … + 20² kitna?</summary><p>20 × 21 × 41/6 = 70 × 41 = 2,870.</p></details>
+    <details><summary>1/(1·3) + 1/(3·5) + … + 1/(19·21)?</summary><p>Gap 2: ½ (1 − 1/21) = ½ × 20/21 = 10/21.</p></details>
+    <details><summary>3, 6, 12, …; 8th term?</summary><p>3 × 2⁷ = 3 × 128 = 384.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · ELEMENTARY STATISTICS ===================== -->
+<section class="chap" id="mst-stats">
+  <div class="eyebrow">Maths · 16 questions</div>
+  <h2>Statistics: mean, median, mode aur "faila" kitna hai</h2>
+  <div class="meta">CGL Tier-2, CHSL Tier-2, Selection Post XIV (Graduate) · sabse zyada: SD ke niyam, quartile, skewness, mean deviation</div>
+
+  <h3>Pehle ek chhoti si kahani: 9 bachchon ke marks</h3>
+  <p>Ek test mein 9 bachchon ke marks: 5, 8, 7, 9, 6, 7, 8, 7, 10. Teacher teen sawaal poochti hai.</p>
+  <ul>
+    <li><b>"Class ka aam number kya hai?"</b> Sab jodo, 9 se bhaag do = 67/9 ≈ 7.44. Ye <b>mean</b> (average) hai.</li>
+    <li><b>"Beech wala bachcha kitna laaya?"</b> Line mein lagao: 5, 6, 7, 7, <b>7</b>, 8, 8, 9, 10. Paanchwa = 7. Ye <b>median</b> hai.</li>
+    <li><b>"Sabse zyada baar kaunsa number aaya?"</b> 7 (teen baar). Ye <b>mode</b> hai.</li>
+  </ul>
+  <p>Ab chautha sawaal: <b>marks kitne faile hue hain?</b> Sab 7 ke aas-paas hain, ya koi 0 aur koi 50? Iska naap <b>range, quartile deviation, mean deviation, standard deviation (SD)</b> hai. Aur paanchwa: <b>dher ek taraf jhuka hai kya?</b> Ye <b>skewness</b> hai.</p>
+  <div class="box"><span class="k">Teen baatein jinse poora chapter banta hai</span>
+    <b>1. Median aur quartile ke liye pehle line mein lagao (sort).</b> Bina sort kiye median kabhi mat nikaalo.<br>
+    <b>2. Faila "farq" se naapte hain.</b> Har number mean se kitna door hai, wahi deviation. Sab mein same number jodo toh farq nahi badalta.<br>
+    <b>3. Mean − Mode batata hai jhukaav.</b> Mean = mode → koi jhukaav nahi (skewness 0).
+  </div>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Mean: "maan lo" average (deviation method)</h3>
+  <p><b>Kab use karo:</b> numbers ek doosre ke paas hain.</p>
+  <div class="box"><span class="k">Demo · 5, 8, 7, 9, 6, 7, 8, 7, 10 ka mean · <i>~10 sec</i></span>
+    7 maan lo. Farq: −2, +1, 0, +2, −1, 0, +1, 0, +3 → jod = +4.<br>
+    Mean = 7 + 4/9 ≈ <b>7.44</b>. Isse upar: 8, 9, 8, 10 → <b>4 bachche</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> AP jaise numbers (x + 1, x + 3, …, x + 9) mein mean = median = beech wala. Kuch nikaalna hi nahi.</div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Mean, median, mode ka rishta</h3>
+  <p><b>Kab use karo:</b> "moderately skewed" likha ho aur teen mein se do diye hon.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="A right-skewed histogram with a long tail to the right. Mode sits at the peak, median a little to the right, mean further right, pulled by the tail. Rule: mode equals 3 median minus 2 mean.">
+      <line x1="40" y1="200" x2="470" y2="200" class="ln"/>
+      <g>
+        <rect x="60" y="146" width="50" height="54" class="chf"/><rect x="60" y="146" width="50" height="54" class="chs"/>
+        <rect x="110" y="74" width="50" height="126" class="chf"/><rect x="110" y="74" width="50" height="126" class="chs"/>
+        <rect x="160" y="38" width="50" height="162" class="chf"/><rect x="160" y="38" width="50" height="162" class="chs"/>
+        <rect x="210" y="74" width="50" height="126" class="chf"/><rect x="210" y="74" width="50" height="126" class="chs"/>
+        <rect x="260" y="110" width="50" height="90" class="chf"/><rect x="260" y="110" width="50" height="90" class="chs"/>
+        <rect x="310" y="146" width="50" height="54" class="chf"/><rect x="310" y="146" width="50" height="54" class="chs"/>
+        <rect x="360" y="164" width="50" height="36" class="chf"/><rect x="360" y="164" width="50" height="36" class="chs"/>
+        <rect x="410" y="182" width="50" height="18" class="chf"/><rect x="410" y="182" width="50" height="18" class="chs"/>
+      </g>
+      <line x1="185" y1="24" x2="185" y2="210" style="stroke:var(--ch)" stroke-width="2.5"/>
+      <line x1="226" y1="24" x2="226" y2="210" class="ln" stroke-width="2" stroke-dasharray="5 4"/>
+      <line x1="262" y1="24" x2="262" y2="210" style="stroke:var(--ch)" stroke-width="2" stroke-dasharray="2 3"/>
+      <g text-anchor="middle" class="lbl"><text x="172" y="226">Mode</text><text x="226" y="242">Median</text><text x="275" y="226">Mean</text></g>
+      <text x="400" y="140" text-anchor="middle" class="sm">lambi poonch →</text>
+      <text x="490" y="50" class="lbl">Poonch right mein ho toh:</text>
+      <text x="490" y="70" class="sm">Mode &lt; Median &lt; Mean</text>
+      <text x="490" y="104" class="lbl" style="fill:var(--ch)">Mode = 3 Median − 2 Mean</text>
+      <text x="490" y="124" class="sm">(Karl Pearson ka empirical rishta)</text>
+      <text x="490" y="158" class="lbl">Median hamesha beech mein</text>
+      <text x="490" y="178" class="sm">Mean poonch ki taraf khinchta hai</text>
+      <text x="490" y="210" class="sm">symmetric ho toh teeno barabar</text>
+    </svg>
+    </div>
+    <figcaption>Ek taraf jhuka hua dher. Bade numbers mean ko apni taraf kheench lete hain, mode chhoti pahaadi ke upar rehta hai.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · SD ke do niyam (formula nahi lagana)</h3>
+  <p><b>Kab use karo:</b> "har observation mein 7 ghataya", "2 se guna kiya, phir 5 joda".</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="Three rows of dots on a number line. Original 2, 4, 6 spread 4. After adding 5: 7, 9, 11, spread still 4. After multiplying by 2: 4, 8, 12, spread 8, double.">
+      <line x1="60" y1="214" x2="660" y2="214" class="ln"/>
+      <g class="sm" text-anchor="middle">
+        <text x="60" y="230">0</text><text x="140" y="230">2</text><text x="220" y="230">4</text><text x="300" y="230">6</text><text x="380" y="230">8</text><text x="460" y="230">10</text><text x="540" y="230">12</text><text x="620" y="230">14</text>
+      </g>
+      <text x="12" y="54" class="lbl">asli</text>
+      <circle cx="140" cy="50" r="9" class="chf"/><circle cx="140" cy="50" r="9" class="chs"/>
+      <circle cx="220" cy="50" r="9" class="chf"/><circle cx="220" cy="50" r="9" class="chs"/>
+      <circle cx="300" cy="50" r="9" class="chf"/><circle cx="300" cy="50" r="9" class="chs"/>
+      <line x1="140" y1="70" x2="300" y2="70" class="ln" stroke-width="2"/>
+      <text x="220" y="86" text-anchor="middle" class="sm">faila 4</text>
+      <text x="12" y="120" class="lbl">+5</text>
+      <circle cx="340" cy="116" r="9" class="chf"/><circle cx="340" cy="116" r="9" class="chs"/>
+      <circle cx="420" cy="116" r="9" class="chf"/><circle cx="420" cy="116" r="9" class="chs"/>
+      <circle cx="500" cy="116" r="9" class="chf"/><circle cx="500" cy="116" r="9" class="chs"/>
+      <line x1="340" y1="136" x2="500" y2="136" class="ln" stroke-width="2"/>
+      <text x="420" y="152" text-anchor="middle" class="sm">faila 4 (same) → SD nahi badla</text>
+      <text x="12" y="186" class="lbl">×2</text>
+      <circle cx="220" cy="182" r="9" style="fill:var(--ch)"/>
+      <circle cx="380" cy="182" r="9" style="fill:var(--ch)"/>
+      <circle cx="540" cy="182" r="9" style="fill:var(--ch)"/>
+      <line x1="220" y1="198" x2="540" y2="198" style="stroke:var(--ch)" stroke-width="2"/>
+      <text x="600" y="186" class="sm">faila 8</text>
+      <text x="600" y="202" class="sm">→ SD × 2</text>
+    </svg>
+    </div>
+    <figcaption>Sab ko khiskao (+, −): dher hilta hai, faila wahi. Sab ko guna karo (×): faila bhi utne guna.</figcaption>
+  </figure>
+  <ul>
+    <li><b>Jodna / ghatana:</b> SD, QD, MD, range koi nahi badalta. Mean, median, mode utna hi khisak jaate hain.</li>
+    <li><b>Guna k se:</b> SD × |k|. Variance × k². Mean bhi × k.</li>
+    <li>SD 6, har number × 2 + 5 → SD = 6 × 2 = <b>12</b>. "+5" ko bhool jao.</li>
+  </ul>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Quartile: (n + 1)/4 waali jagah</h3>
+  <p><b>Kab use karo:</b> IQR, quartile deviation (QD).</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Eleven sorted values 3 to 22 on a number line. Q1 is the 3rd value, 6. Median is the 6th value, 12. Q3 is the 9th value, 18. The box from 6 to 18 shows the interquartile range 12.">
+      <line x1="60" y1="190" x2="660" y2="190" class="ln"/>
+      <g class="sm" text-anchor="middle">
+        <text x="60" y="206">0</text><text x="160" y="206">4</text><text x="260" y="206">8</text><text x="360" y="206">12</text><text x="460" y="206">16</text><text x="560" y="206">20</text><text x="660" y="206">24</text>
+      </g>
+      <g style="fill:var(--muted)">
+        <circle cx="135" cy="60" r="6"/><circle cx="185" cy="60" r="6"/><circle cx="260" cy="60" r="6"/><circle cx="310" cy="60" r="6"/><circle cx="410" cy="60" r="6"/><circle cx="460" cy="60" r="6"/><circle cx="560" cy="60" r="6"/><circle cx="610" cy="60" r="6"/>
+      </g>
+      <circle cx="210" cy="60" r="8" style="fill:var(--ch)"/><circle cx="360" cy="60" r="8" style="fill:var(--ch)"/><circle cx="510" cy="60" r="8" style="fill:var(--ch)"/>
+      <g class="sm" text-anchor="middle">
+        <text x="135" y="42">3</text><text x="185" y="42">5</text><text x="210" y="42">6</text><text x="260" y="42">8</text><text x="310" y="42">10</text><text x="360" y="42">12</text><text x="410" y="42">14</text><text x="460" y="42">16</text><text x="510" y="42">18</text><text x="560" y="42">20</text><text x="610" y="42">22</text>
+      </g>
+      <text x="350" y="20" text-anchor="middle" class="sm">11 number, already line mein</text>
+      <line x1="135" y1="120" x2="210" y2="120" class="ln" stroke-width="2"/>
+      <line x1="510" y1="120" x2="610" y2="120" class="ln" stroke-width="2"/>
+      <rect x="210" y="100" width="300" height="40" class="chf"/><rect x="210" y="100" width="300" height="40" class="chs"/>
+      <line x1="360" y1="100" x2="360" y2="140" style="stroke:var(--ch)" stroke-width="3"/>
+      <text x="210" y="160" text-anchor="middle" class="lbl">Q1 = 6</text><text x="210" y="176" text-anchor="middle" class="sm">(11 + 1)/4 = 3rd</text>
+      <text x="360" y="160" text-anchor="middle" class="lbl">Median 12</text><text x="360" y="176" text-anchor="middle" class="sm">6th</text>
+      <text x="510" y="160" text-anchor="middle" class="lbl">Q3 = 18</text><text x="510" y="176" text-anchor="middle" class="sm">3 × 12/4 = 9th</text>
+      <text x="360" y="92" text-anchor="middle" class="lbl" style="fill:var(--ch)">IQR = 18 − 6 = 12 · QD = 6</text>
+    </svg>
+    </div>
+    <figcaption>Box ke andar beech ke aadhe number. Box ki lambaai = IQR. Aadha box = quartile deviation.</figcaption>
+  </figure>
+  <ul>
+    <li>Q1 = (n + 1)/4 th number, Q3 = 3(n + 1)/4 th number. Position decimal mein aaye (2.75) toh do numbers ke beech utna aage chalo.</li>
+    <li>IQR = Q3 − Q1. Quartile deviation (QD) = IQR ÷ 2.</li>
+  </ul>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Grouped data ka median: "kitna aage" socho</h3>
+  <p><b>Kab use karo:</b> class interval (0–10, 10–20 …) aur frequency di ho.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Cumulative frequency bars for marks classes 0-10 to 40-50: 5, 13, 19, 25, 30. Half of 30 is 15, which falls in class 20-30 where 13 students are already counted and 6 are inside. 2 of those 6 are needed, so median is 20 plus 2 by 6 of 10, about 23.33.">
+      <line x1="70" y1="200" x2="600" y2="200" class="ln"/>
+      <g>
+        <rect x="80" y="175" width="100" height="25" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="180" y="135" width="100" height="65" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="280" y="105" width="100" height="95" class="chf"/><rect x="280" y="105" width="100" height="95" class="chs"/>
+        <rect x="380" y="75" width="100" height="125" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="480" y="50" width="100" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="130" y="170">5</text><text x="230" y="130">13</text><text x="330" y="100">19</text><text x="430" y="70">25</text><text x="530" y="45">30</text></g>
+      <g text-anchor="middle" class="sm"><text x="130" y="216">0–10</text><text x="230" y="216">10–20</text><text x="330" y="216">20–30</text><text x="430" y="216">30–40</text><text x="530" y="216">40–50</text></g>
+      <line x1="70" y1="125" x2="600" y2="125" style="stroke:var(--ch)" stroke-width="1.5" stroke-dasharray="6 4"/>
+      <text x="606" y="129" class="sm">N/2 = 15</text>
+      <text x="90" y="30" class="lbl">cumulative (ab tak kitne bachche)</text>
+      <text x="90" y="52" class="sm">15th bachcha 20–30 mein: 13 pehle, 6 andar</text>
+      <text x="90" y="72" class="sm">chahiye 15 − 13 = 2 → 2/6 class aage</text>
+      <text x="350" y="242" text-anchor="middle" class="lbl" style="fill:var(--ch)">Median = 20 + (2/6) × 10 = 23.33</text>
+    </svg>
+    </div>
+    <figcaption>Cumulative bars scale par. Aadhe bachche (N/2) kis class mein aate hain, us class mein utna hi aage chalo.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Formula (wahi baat)</span>
+    Median = L + [(N/2 − cf) ÷ f] × h. L = class ki shuruaat, cf = pichhli classes ka jod, f = is class ki frequency, h = class ki chaudai.
+  </div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Mean deviation aur skewness</h3>
+  <ul>
+    <li><b>Mean deviation (MD):</b> har number ka (mean ya median se) <b>bina minus</b> farq, unka average. Coefficient of MD = MD ÷ (mean ya median, jisse liya).</li>
+    <li><b>Karl Pearson skewness</b> = (Mean − Mode) ÷ SD. Mean = mode ho toh seedha <b>0</b>, SD nikaalne ki zaroorat nahi.</li>
+    <li><b>SD:</b> farq ka square, jodo, n se bhaag (sample ho toh n − 1 se), phir square root.</li>
+  </ul>
+
+  <div class="box"><span class="k">Formula / value sheet (yaad karo)</span>
+    Mean = jod ÷ ginti · Median: n odd → (n + 1)/2 th · n even → n/2 th aur agle ka average.<br>
+    Mode = 3 Median − 2 Mean · Skewness (Karl Pearson) = (Mean − Mode)/SD.<br>
+    Q1 = (n + 1)/4 th · Q3 = 3(n + 1)/4 th · IQR = Q3 − Q1 · QD = IQR/2.<br>
+    MD coefficient = MD ÷ (jisse MD liya). SD: +k se same, ×k se ×|k|.<br>
+    <span class="tag x">CGL+</span> Coefficient of variation = SD ÷ Mean × 100. Coefficient of QD = (Q3 − Q1)/(Q3 + Q1).
+  </div>
+
+  <!-- ===================== TYPES ===================== -->
+  <h3>Type 1 · Mean, median, mode (5 Qs)</h3>
+  <div class="box"><span class="k">Worked · 2, 7, 5, 9, 14, 5 ka mean m. 12, 17, 19, 64, 9, −54, p ka mean m + 5, median q. p + q? <span class="tag p">PYQ</span> <small>SP-XIV · 2 Aug 2025</small></span><!--st6-->
+    <b>Method:</b> jod se gayab number · <i>~25 sec</i><br>
+    m = 42/6 = 7. Naya mean 12 → 7 numbers ka jod 84. Diye hue: 12 + 17 + 19 + 64 + 9 − 54 = 67 → p = 17.<br>
+    Line: −54, 9, 12, 17, 17, 19, 64 → median q = 17. p + q = <mark>34</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Mean (x − 1), median (2x − 4), mode 2x. x? <span class="tag p">PYQ</span> <small>SP-XIV · 25 Jul 2025</small></span><!--st9-->
+    <b>Method:</b> Mode = 3 Median − 2 Mean · <i>~15 sec</i><br>
+    2x = 3(2x − 4) − 2(x − 1) = 4x − 10 → <mark>x = 5</mark>. (Option daal kar bhi: x = 5 → 4, 6, 10 → 3 × 6 − 2 × 4 = 10 ✔.)
+  </div>
+  <ul>
+    <li><!--st3--><span class="tag p">PYQ</span> 5, 8, 7, 9, 6, 7, 8, 7, 10: mode aur average se upar kitne → <b>7 maan lo</b>: mean ≈ 7.44 → <mark>mode 7, 4 bachche</mark> <small>CGL Tier-2</small></li>
+    <li><!--st4--><span class="tag p">PYQ</span> {a, a + 2, a + 4, a + 6, a + 6, a + 6, a + 8} ka mode 26 → <b>a + 6 = 26</b> → <mark>20</mark> <small>CGL Tier-2</small></li>
+    <li><!--st10--><span class="tag p">PYQ</span> (x + 1), (x + 3), …, (x + 9) ka mean 20; median? → <b>AP: median = mean</b> → <mark>20</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 2 · Grouped data ka median (1 Q)</h3>
+  <div class="box"><span class="k">Worked · Marks 0–10: 5, 10–20: 8, 20–30: 6, 30–40: 6, 40–50: 5. Median? <span class="tag p">PYQ</span> <small>CGL Tier-2</small></span><!--st2-->
+    <b>Method:</b> "kitna aage" · <i>~20 sec</i><br>
+    N = 30, N/2 = 15. Cumulative: 5, 13, 19 → 15 wala 20–30 mein. 13 pehle, 2 aur chahiye, class mein 6.<br>
+    20 + (2/6) × 10 = <mark>23.3</mark>.
+  </div>
+
+  <h3>Type 3 · Standard deviation (3 Qs)</h3>
+  <div class="box"><span class="k">Worked · 10 paudhe, mean 11. 9.5, 12, 11.5, 10.5, 13, 10, 11.5, 12, 10.5, 9.5 ka sample SD <span class="tag p">PYQ</span> <small>SP-XIV · 24 Jul 2025</small></span><!--st8-->
+    <b>Method:</b> farq ka square · <i>~35 sec</i><br>
+    Farq: −1.5, 1, 0.5, −0.5, 2, −1, 0.5, 1, −0.5, −1.5. Square: 2.25 + 1 + 0.25 + 0.25 + 4 + 1 + 0.25 + 1 + 0.25 + 2.25 = 12.5.<br>
+    Sample → 12.5 ÷ 9 ≈ 1.39 → √1.39 ≈ <mark>1.18 cm</mark>. (Options mein 1 ke paas sirf 1.18 aur 0.98; 0.98² = 0.96 bahut kam.)
+  </div>
+  <ul>
+    <li><!--st0--><span class="tag p">PYQ</span> SD 5; har x mein se 7 ghataya → <b>khiskana = SD same</b> → <mark>5</mark> <small>CGL Tier-2</small></li>
+    <li><!--st5--><span class="tag p">PYQ</span> SD 6; × 2 phir + 5 → <b>sirf guna lagta hai</b> → 6 × 2 → <mark>12</mark> <small>CHSL Tier-2</small></li>
+  </ul>
+
+  <h3>Type 4 · Quartile, IQR, QD aur mean deviation (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · 27, 3, 28, 40, 28, 30, 36, 27, 25, 27 ka quartile deviation <span class="tag p">PYQ</span> <small>SP-XIV · 30 Jul 2025</small></span><!--st14-->
+    <b>Method:</b> sort + (n + 1)/4 · <i>~30 sec</i><br>
+    Line: 3, 25, 27, 27, 27, 28, 28, 30, 36, 40 (n = 10).<br>
+    Q1 = 2.75th = 25 + 0.75 × 2 = 26.5. Q3 = 8.25th = 30 + 0.25 × 6 = 31.5. QD = 5 ÷ 2 = <mark>2.5</mark>.
+  </div>
+  <ul>
+    <li><!--st13--><span class="tag p">PYQ</span> 3, 5, 6, 8, 10, 12, 14, 16, 18, 20, 22 ka IQR → <b>3rd aur 9th</b>: 18 − 6 → <mark>12</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><!--st12--><span class="tag p">PYQ</span> 100, 70, 200, 250, 360, 490, 500, 590: coefficient of MD (mean se) → <b>mean 2,560/8 = 320</b>; |farq| 220 + 250 + 120 + 70 + 40 + 170 + 180 + 270 = 1,320 → MD 165 → 165/320 → <mark>0.515625</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><!--st15--><span class="tag p">PYQ</span> 100, 150, 200, 250, 360, 490, 500, 600, 671: coefficient of MD (median se) → <b>median 5th = 360</b>; |farq| ka jod 1,561 → MD ≈ 173.4 → ÷ 360 → <mark>0.48</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 5 · Karl Pearson skewness (2 Qs)</h3>
+  <div class="box"><span class="k">Worked · 27, 3, 28, 40, 28, 30, 35, 27, 25, 27 ka skewness <span class="tag p">PYQ</span> <small>SP-XIV · 2 Aug 2025</small></span><!--st7-->
+    <b>Method:</b> mean − mode pehle · <i>~15 sec</i><br>
+    27 maan lo: farq 0, −24, 1, 13, 1, 3, 8, 0, −2, 0 → jod 0 → mean = 27. Mode = 27 (teen baar).<br>
+    Mean − mode = 0 → <mark>0</mark>. SD ki zaroorat hi nahi.
+  </div>
+  <ul>
+    <li><!--st11--><span class="tag p">PYQ</span> 25, 15, 23, 40, 27, 25, 23, 25, 20 → <b>mean 223/9 ≈ 24.78, mode 25</b>; farq −0.22; SD ≈ 6.34 → −0.22/6.34 → <mark>−0.036</mark> (options mein bas decimal ki jagah alag hai: 0.036 hi theek baithta hai) <small>SP-XIV · 28 Jul 2025</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Bina sort kiye median / quartile</td><td>Pehle chhote se bade line mein lagao.</td></tr>
+    <tr><td>"× 2 + 5" mein SD = 6 × 2 + 5 = 17</td><td>Jodne se SD nahi badalta. Sirf 12.</td></tr>
+    <tr><td>Sample SD mein n se bhaag</td><td>"Sample" likha ho toh n − 1 (10 paudhe → 9).</td></tr>
+    <tr><td>Mode = 3 Mean − 2 Median</td><td>Ulta: Mode = 3 <b>Median</b> − 2 <b>Mean</b>.</td></tr>
+    <tr><td>MD mein minus wale farq bhi minus mein jodna</td><td>MD mein sab farq positive lo.</td></tr>
+    <tr><td>Grouped median mein N/2 ki jagah (N + 1)/2</td><td>Grouped data mein N/2.</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 16 sawaal. <b>1 chhoda:</b> CGL Tier-2 ka "age groups ki table se mean age" (bank mein table hi nahi hai, sirf sawaal aur options). Baaki 15 yahan. CGL Tier-2 ke do sawaal (SD 5 wala, mode 26 wala) ke symbols page ki photo se padhe.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>4, 9, 2, 7, 3, 9 ka median?</summary><p>Line: 2, 3, 4, 7, 9, 9. Beech ke do: 4 aur 7 → 5.5.</p></details>
+    <details><summary>Mean 20, median 18. Mode (moderately skewed)?</summary><p>3 × 18 − 2 × 20 = 54 − 40 = 14.</p></details>
+    <details><summary>Variance 9. Har number × 3. Nayi SD?</summary><p>SD = 3 → × 3 = 9. (Variance 81.)</p></details>
+    <details><summary>7 numbers ka Q1 kaunsa number hai?</summary><p>(7 + 1)/4 = 2nd number (sort karne ke baad).</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · PERMUTATION AND COMBINATION ===================== -->
+<section class="chap" id="mpn-pnc">
+  <div class="eyebrow">Maths · 15 questions</div>
+  <h2>Permutation &amp; Combination: dabbe bharo, phir gino</h2>
+  <div class="meta">CPO 2025, DP AWO/TPO Jan 2026 · sabse zyada: committee (kam se kam wala), number banana, letters ka arrangement</div>
+
+  <h3>Pehle ek chhoti si kahani: 3 kursi, 10 bachche</h3>
+  <p>Class mein 10 bachche hain. President, vice-president aur secretary chunne hain. Teen kursiyan socho.</p>
+  <ul>
+    <li><b>Pehli kursi (president):</b> 10 mein se koi bhi → 10 tareeke.</li>
+    <li><b>Doosri kursi (VP):</b> ek baith gaya, 9 bache → 9 tareeke.</li>
+    <li><b>Teesri kursi:</b> 8 tareeke.</li>
+  </ul>
+  <p>Har pehle tareeke ke saath har doosra chal sakta hai, toh <b>guna</b> karo: 10 × 9 × 8 = 720. Yahan kursiyan alag hain (president ≠ secretary), toh <b>kram (order) maayne rakhta hai</b>. Isko <b>Permutation</b> kehte hain.</p>
+  <p>Ab socho, bas "3 logon ki team" chunni hai, koi post nahi. Tab Ram-Shyam-Mohan aur Mohan-Ram-Shyam ek hi team hai. Ek team 3 × 2 × 1 = 6 baar gin li gayi. Toh teams = 720 ÷ 6 = 120. Ye <b>Combination</b> hai.</p>
+  <div class="box"><span class="k">Do baatein jinse poora chapter banta hai</span>
+    <b>1. "Aur" = guna, "ya" = jod.</b> Pehla kaam 3 tareeke AUR doosra 4 → 12. Ya to 3 tareeke YA 4 → 7.<br>
+    <b>2. Order maayne rakhta hai? → P. Sirf chunna hai? → C.</b> nPr = n × (n − 1) × … (r number). nCr = nPr ÷ r!.
+  </div>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Decision chart. Are the items identical? Then divide by factorials of repeats. Does order matter, like posts, digits or seats? Then permutation, fill boxes and multiply. Only choosing a group, like committee, team or triangle? Then combination, nCr.">
+      <defs>
+        <marker id="mpn-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="20" width="250" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="145" y="47" text-anchor="middle" class="lbl">Kuch cheezein same (identical)?</text>
+      <rect x="20" y="92" width="250" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="145" y="119" text-anchor="middle" class="lbl">Order maayne rakhta hai?</text>
+      <rect x="20" y="164" width="250" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="145" y="191" text-anchor="middle" class="lbl">Sirf group chunna hai</text>
+      <g class="ln">
+        <line x1="145" y1="64" x2="145" y2="89" marker-end="url(#mpn-fc-arr)"/>
+        <line x1="145" y1="136" x2="145" y2="161" marker-end="url(#mpn-fc-arr)"/>
+        <line x1="270" y1="42" x2="326" y2="42" marker-end="url(#mpn-fc-arr)"/>
+        <line x1="270" y1="114" x2="326" y2="114" marker-end="url(#mpn-fc-arr)"/>
+        <line x1="270" y1="186" x2="326" y2="186" marker-end="url(#mpn-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="153" y="82">nahi</text><text x="153" y="154">nahi</text><text x="285" y="36">haan</text><text x="285" y="108">haan</text></g>
+      <rect x="330" y="20" width="350" height="44" rx="6" class="chf"/><rect x="330" y="20" width="350" height="44" rx="6" class="chs"/>
+      <text x="340" y="38" class="lbl">n! ÷ (a! b! c!)</text>
+      <text x="340" y="56" class="sm">BANANA = 6!/(3! 2!) · 4 red, 3 blue, 2 green plates</text>
+      <rect x="330" y="92" width="350" height="44" rx="6" class="chf"/><rect x="330" y="92" width="350" height="44" rx="6" class="chs"/>
+      <text x="340" y="110" class="lbl">Permutation: dabbe bharo, guna karo</text>
+      <text x="340" y="128" class="sm">posts, number banana, word banana, line mein bithana</text>
+      <rect x="330" y="164" width="350" height="44" rx="6" style="fill:var(--ch);opacity:.35"/><rect x="330" y="164" width="350" height="44" rx="6" class="chs"/>
+      <text x="340" y="182" class="lbl">Combination: nCr</text>
+      <text x="340" y="200" class="sm">committee, team, balls nikaalna, triangle banana</text>
+    </svg>
+    </div>
+    <figcaption>Har sawaal par ye do sawaal pehle poocho. Galat chunaav = galat answer, chahe guna sahi ho.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Dabbe bharo: jiski shart hai, use pehle bharo</h3>
+  <p><b>Kab use karo:</b> number banana, word banana, "even", "vowel se shuru".</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Four boxes for a 4-digit even number from digits 1 to 6 with repetition. The units box must be 2, 4 or 6, so 3 ways. Other boxes 6 ways each. Total 6 times 6 times 6 times 3 equals 648.">
+      <g>
+        <rect x="80" y="50" width="100" height="70" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="200" y="50" width="100" height="70" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="320" y="50" width="100" height="70" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="440" y="50" width="100" height="70" rx="8" style="fill:var(--ch)"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="130" y="92" class="lbl">6</text><text x="250" y="92" class="lbl">6</text><text x="370" y="92" class="lbl">6</text><text x="490" y="92" class="lbl" style="fill:var(--paper)">3</text>
+        <text x="130" y="40" class="sm">hazaar</text><text x="250" y="40" class="sm">sau</text><text x="370" y="40" class="sm">dahai</text><text x="490" y="40" class="sm">ikai (shart!)</text>
+        <text x="190" y="92" class="lbl">×</text><text x="310" y="92" class="lbl">×</text><text x="430" y="92" class="lbl">×</text>
+        <text x="490" y="140" class="sm">2, 4 ya 6</text>
+        <text x="250" y="140" class="sm">repetition allowed → har baar 6</text>
+      </g>
+      <text x="560" y="92" class="lbl" style="fill:var(--ch)">= 648</text>
+      <text x="350" y="182" text-anchor="middle" class="sm">pehle shart wala dabba (ikai) bharo, phir baaki · bina repetition ke har agla dabba 1 kam</text>
+    </svg>
+    </div>
+    <figcaption>{1, …, 6} se 4-digit even number, repetition ke saath. DP AWO 21 Jan 2026.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · "Saath rahein" = gathri, "alag rahein" = khaali jagah</h3>
+  <ul>
+    <li><b>Saath (together):</b> unhe ek gathri maano. Gathriyon ko arrange karo, phir gathri ke andar arrange karo.</li>
+    <li><b>Alag (no two together):</b> pehle baaki logon ko bithao. Unke beech aur kinaron par khaali jagah banti hain. Shart wale wahin baithte hain.</li>
+  </ul>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Five boys B seated first in 5 factorial ways make 6 gaps, including both ends. The 3 girls go into 3 of the 6 gaps in 6 times 5 times 4 equals 120 ways. Total 120 times 120 equals 14400.">
+      <g>
+        <rect x="95" y="50" width="56" height="50" rx="8" class="chf"/><rect x="95" y="50" width="56" height="50" rx="8" class="chs"/>
+        <rect x="201" y="50" width="56" height="50" rx="8" class="chf"/><rect x="201" y="50" width="56" height="50" rx="8" class="chs"/>
+        <rect x="307" y="50" width="56" height="50" rx="8" class="chf"/><rect x="307" y="50" width="56" height="50" rx="8" class="chs"/>
+        <rect x="413" y="50" width="56" height="50" rx="8" class="chf"/><rect x="413" y="50" width="56" height="50" rx="8" class="chs"/>
+        <rect x="519" y="50" width="56" height="50" rx="8" class="chf"/><rect x="519" y="50" width="56" height="50" rx="8" class="chs"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="123" y="80">B</text><text x="229" y="80">B</text><text x="335" y="80">B</text><text x="441" y="80">B</text><text x="547" y="80">B</text></g>
+      <g class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3">
+        <rect x="52" y="58" width="34" height="34" rx="6"/>
+        <rect x="160" y="58" width="34" height="34" rx="6"/>
+        <rect x="266" y="58" width="34" height="34" rx="6"/>
+        <rect x="372" y="58" width="34" height="34" rx="6"/>
+        <rect x="478" y="58" width="34" height="34" rx="6"/>
+        <rect x="584" y="58" width="34" height="34" rx="6"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="69" y="80">1</text><text x="177" y="80">2</text><text x="283" y="80">3</text><text x="389" y="80">4</text><text x="495" y="80">5</text><text x="601" y="80">6</text></g>
+      <text x="335" y="34" text-anchor="middle" class="sm">pehle 5 ladke: 5! = 120 tareeke</text>
+      <text x="335" y="126" text-anchor="middle" class="sm">dashed = 6 khaali jagah (dono kinare bhi)</text>
+      <text x="335" y="156" text-anchor="middle" class="lbl">3 ladkiyan 6 jagah mein: 6 × 5 × 4 = 120</text>
+      <text x="335" y="186" text-anchor="middle" class="lbl" style="fill:var(--ch)">Kul = 120 × 120 = 14,400</text>
+    </svg>
+    </div>
+    <figcaption>Ladkiyan kabhi saath nahi baith sakti, kyunki har khaali jagah mein bas ek. DP AWO 21 Jan 2026.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Same cheezein: n! ko repeat ke factorial se kaato</h3>
+  <p><b>Soch aise:</b> BANANA ke 3 A ko A1, A2, A3 maano toh 6! arrangement. Par A1-A2-A3 ki adla-badli se naya word nahi banta. Toh 3! se bhaag. Isi tarah 2 N ke liye 2!.</p>
+  <div class="box"><span class="k">Demo · BANANA · <i>~5 sec</i></span>
+    6! ÷ (3! × 2!) = 720 ÷ 12 = <b>60</b>.
+  </div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Committee: "kam se kam" = case todo</h3>
+  <p><b>Kab use karo:</b> "at least 3 females", "not more than 1 singer". Har allowed case alag likho, har case mein C ka guna, phir sab jodo.</p>
+  <div class="box"><span class="k">Demo · 8 M, 6 F; 5 logon ki committee, kam se kam 3 F · <i>~20 sec</i></span>
+    3F 2M: 6C3 × 8C2 = 20 × 28 = 560. 4F 1M: 15 × 8 = 120. 5F: 6. Jod = <b>686</b>.
+  </div>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="A regular hexagon with vertices 1 to 6. One triangle joins vertices 1, 3 and 5. Any 3 of the 6 vertices make a triangle, so the count is 6 choose 3 equals 20.">
+      <polygon points="240,120 195,198 105,198 60,120 105,42 195,42" class="paper" stroke="var(--muted)" stroke-width="2"/>
+      <polygon points="240,120 105,198 105,42" class="chf"/>
+      <polygon points="240,120 105,198 105,42" class="chs"/>
+      <g style="fill:var(--ch)"><circle cx="240" cy="120" r="5"/><circle cx="195" cy="198" r="5"/><circle cx="105" cy="198" r="5"/><circle cx="60" cy="120" r="5"/><circle cx="105" cy="42" r="5"/><circle cx="195" cy="42" r="5"/></g>
+      <g class="sm"><text x="250" y="124">1</text><text x="200" y="216">2</text><text x="92" y="216">3</text><text x="44" y="124">4</text><text x="92" y="34">5</text><text x="200" y="34">6</text></g>
+      <text x="300" y="60" class="lbl">Koi bhi 3 kone chuno → ek triangle</text>
+      <text x="300" y="82" class="sm">(hexagon ke 3 kone kabhi ek line mein nahi)</text>
+      <text x="300" y="116" class="lbl" style="fill:var(--ch)">6C3 = (6 × 5 × 4) ÷ (3 × 2 × 1) = 20</text>
+      <text x="300" y="150" class="lbl">10 point, koi 3 ek line mein nahi</text>
+      <text x="300" y="172" class="sm">10C3 = 720 ÷ 6 = 120 triangle</text>
+      <text x="300" y="206" class="sm">triangle mein order nahi (1-3-5 = 5-3-1), isliye C</text>
+    </svg>
+    </div>
+    <figcaption>Triangle ginti = 3 kone chunna. Hexagon accurate (regular) bana hai; chuna hua triangle 1-3-5.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet (yaad karo)</span>
+    n! values: 3! = 6 · 4! = 24 · 5! = 120 · 6! = 720 · 7! = 5,040 · 8! = 40,320 · 9! = 3,62,880.<br>
+    nPr = n!/(n − r)! · nCr = n!/[r!(n − r)!] · nCr = nC(n − r) (8C6 = 8C2 = 28).<br>
+    Yaad: 5C2 = 10 · 6C3 = 20 · 7C3 = 35 · 8C2 = 28 · 10C3 = 120 · 12C5 = 792 · 20C5 = 15,504.<br>
+    <span class="tag x">CGL+</span> n log gol mez par: (n − 1)!. n point (koi 3 line mein nahi) se lines = nC2. Polygon ke diagonals = nC2 − n.
+  </div>
+
+  <!-- ===================== TYPES ===================== -->
+  <h3>Type 1 · Number aur word banana (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · {1, …, 6}, repetition allowed, 4-digit even numbers <span class="tag p">PYQ</span> <small>DP AWO · 21 Jan 2026</small></span><!--pn1-->
+    <b>Method:</b> dabbe bharo, shart pehle · <i>~8 sec</i><br>
+    Ikai: 2, 4, 6 → 3. Baaki teen: 6 × 6 × 6. Kul = 216 × 3 = <mark>648</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ALGORITHM se 5-letter word, vowel se shuru, consonant par khatam <span class="tag p">PYQ</span> <small>DP AWO · 20 Jan 2026</small></span><!--pn4-->
+    <b>Method:</b> dabbe bharo, shart pehle · <i>~15 sec</i><br>
+    9 alag letters: vowel A, O, I (3), consonant 6. Pehla dabba 3, aakhri 6. Beech ke 3 dabbe bache 7 letters se: 7 × 6 × 5 = 210.<br>
+    3 × 6 × 210 = <mark>3,780</mark>. (Bank mein word ki length chhapi nahi; key sirf 5 letters se milti hai.)
+  </div>
+  <ul>
+    <li><!--pn13--><span class="tag p">PYQ</span> 1, 2, 3, 4 se 3-digit, bina repetition → <b>4 × 3 × 2</b> → <mark>24</mark> <small>DP AWO · 21 Jan 2026</small></li>
+    <li><!--pn11--><span class="tag p">PYQ</span> 10 bachche, President, VP, Secretary → <b>order matters: 10 × 9 × 8</b> → <mark>720</mark> <small>DP AWO · 20 Jan 2026</small></li>
+  </ul>
+
+  <h3>Type 2 · Shart wala arrangement: saath, alag, kinare (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · 5 ladke, 3 ladkiyan ek line mein; ladkiyan alag-alag <span class="tag p">PYQ</span> <small>DP AWO · 21 Jan 2026</small></span><!--pn2-->
+    <b>Method:</b> khaali jagah · <i>~12 sec</i><br>
+    Ladke: 5! = 120. 6 khaali jagah mein 3 ladkiyan: 6 × 5 × 4 = 120. Kul = <mark>14,400</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · SCHOOL ke letters, vowels hamesha saath <span class="tag p">PYQ</span> <small>DP AWO · 16 Jan 2026</small></span><!--pn5-->
+    <b>Method:</b> gathri · <i>~10 sec</i><br>
+    Vowels O, O → ek gathri [OO]. Ab S, C, H, L, [OO] = 5 cheezein → 5! = 120. Gathri ke andar O-O ki adla-badli se kuch nahi badalta (dono same).<br>
+    Kul = <mark>120</mark>.
+  </div>
+  <ul>
+    <li><!--pn3--><span class="tag p">PYQ</span> MAGIC se code, A kabhi shuru ya aakhir mein nahi (length scan mein ud gayi) → <b>5 letter</b>: A beech ki 3 jagah × 4! = 72 · <b>4 letter</b>: 120 − 24 − 24 = 72 → dono se <mark>72</mark> <small>DP AWO · 20 Jan 2026</small></li>
+    <li><!--pn12--><span class="tag p">PYQ</span> 6 tricks mein se 4 dikhane hain (order ke saath), 2 khaas tricks kabhi saath nahi → <b>kul − saath wale</b>: 6P4 = 360; dono saath: 4C2 × 4! = 144 → <mark>216</mark> <small>DP AWO · 20 Jan 2026</small></li>
+  </ul>
+
+  <h3>Type 3 · Same cheezein ka arrangement (2 Qs)</h3>
+  <div class="box"><span class="k">Worked · 4 laal, 3 neeli, 2 hari plates (same rang = same plate), ek line mein <span class="tag p">PYQ</span> <small>DP AWO · 16 Jan 2026</small></span><!--pn7-->
+    <b>Method:</b> n!/(a! b! c!) · <i>~15 sec</i><br>
+    9! ÷ (4! × 3! × 2!) = 3,62,880 ÷ 288 = <mark>1,260</mark>. (Ya: 9C4 × 5C3 = 126 × 10.)
+  </div>
+  <ul>
+    <li><!--pn6--><span class="tag p">PYQ</span> BANANA → <b>6!/(3! 2!)</b> = 720/12 → <mark>60</mark> <small>DP AWO · 16 Jan 2026</small></li>
+  </ul>
+
+  <h3>Type 4 · Committee aur chunaav (5 Qs)</h3>
+  <div class="box"><span class="k">Worked · 5 painter, 4 dancer, 3 singer; 5 ki committee: P ≥ 2, D ≥ 1, S ≤ 1 <span class="tag p">PYQ</span> <small>DP AWO · 16 Jan 2026</small></span><!--pn8-->
+    <b>Method:</b> case todo · <i>~35 sec</i><br>
+    <b>Singer 0:</b> (P, D) = (2, 3): 10 × 4 = 40 · (3, 2): 10 × 6 = 60 · (4, 1): 5 × 4 = 20 → 120.<br>
+    <b>Singer 1</b> (3 tareeke): (2, 2): 10 × 6 = 60 · (3, 1): 10 × 4 = 40 → 100 × 3 = 300.<br>
+    Kul = <mark>420</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 8 M, 6 F; 5 ki committee, kam se kam 3 F <span class="tag p">PYQ</span> <small>DP AWO · 20 Jan 2026</small></span><!--pn9-->
+    <b>Method:</b> case todo · <i>~20 sec</i><br>
+    560 + 120 + 6 = <mark>686</mark>.
+  </div>
+  <ul>
+    <li><!--pn0--><span class="tag p">PYQ</span> Hexagon ke 3 kone se triangle → <b>6C3</b> → <mark>20</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><!--pn10--><span class="tag p">PYQ</span> 10 point, koi 3 line mein nahi, triangles → <b>10C3</b> → <mark>120</mark> <small>DP AWO · 20 Jan 2026</small></li>
+    <li><!--pn14--><span class="tag p">PYQ</span> 7 laal, 5 neeli; 4 balls, kam se kam 3 laal → <b>case todo</b>: 7C3 × 5 = 175, 7C4 = 35 → <mark>210</mark> <small>DP AWO · 21 Jan 2026</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Committee mein P lagana</td><td>Team / committee = C. Posts (president, VP) = P.</td></tr>
+    <tr><td>"Alag baithein" mein kul − saath wale, aur galat "saath" ginna</td><td>Khaali jagah method seedha aur pakka hai.</td></tr>
+    <tr><td>Khaali jagah ginte waqt kinare bhool jaana</td><td>n log → n + 1 jagah.</td></tr>
+    <tr><td>"At least 3" mein sirf 3 wala case</td><td>3, 4, 5 … sab case jodo.</td></tr>
+    <tr><td>Same letters (BANANA) mein bhi 6!</td><td>Repeat ke factorial se bhaag do.</td></tr>
+    <tr><td>Shart wala dabba aakhir mein bharna</td><td>Shart wala (ikai, pehla letter) sabse pehle.</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 15 sawaal, saare yahan. Do sawaal mein letters ki ginti chhapi nahi (MAGIC aur ALGORITHM); dono ki key upar check ki hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>LEVEL ke letters ke kitne arrangement?</summary><p>5!/(2! 2!) = 120/4 = 30.</p></details>
+    <details><summary>0, 1, 2, 3, 4 se 3-digit number, bina repetition?</summary><p>Pehla dabba 0 nahi: 4. Phir 4, phir 3 → 48.</p></details>
+    <details><summary>6 ladke 4 ladkiyan; 3 ki team, kam se kam 1 ladki?</summary><p>Kul 10C3 − sirf ladke 6C3 = 120 − 20 = 100.</p></details>
+    <details><summary>8 point, koi 3 line mein nahi. Kitni seedhi lines?</summary><p>8C2 = 28.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · PROBABILITY ===================== -->
+<section class="chap" id="mpb-prob">
+  <div class="eyebrow">Maths · 9 questions</div>
+  <h2>Probability: "kitne mein se kitne" ka khel</h2>
+  <div class="meta">CGL Tier-2, CHSL Tier-2, Selection Post XIV (Graduate) · sabse zyada: tree wale (machine aur defect), counting wale, conditional</div>
+
+  <h3>Pehle ek chhoti si kahani: ek thaila, 10 goli</h3>
+  <p>Thaile mein 3 laal aur 7 neeli goli. Aankh band karke ek nikaalo. Laal aane ka chance? <b>10 mein se 3</b> = 3/10. Bas yahi probability hai:</p>
+  <div class="box"><span class="k">Ek line</span>
+    Probability = (jo chahiye wale tareeke) ÷ (kul tareeke). Hamesha 0 se 1 ke beech. Kuch hone ka chance + na hone ka chance = 1.
+  </div>
+  <ul>
+    <li><b>"Aur" (dono ek ke baad ek):</b> chances ka guna. Sikka H aur phir H = ½ × ½.</li>
+    <li><b>"Ya" (alag-alag raaste):</b> chances ka jod (agar raaste overlap nahi karte).</li>
+    <li><b>Ulta socho:</b> "kam se kam ek" = 1 − "ek bhi nahi".</li>
+  </ul>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Venn ke dabbe se gino</h3>
+  <p><b>Kab use karo:</b> "6 ya 8 se divisible", "football ya basketball". Pehle overlap nikaalo, phir dabbe bharo.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Venn diagram for numbers 1 to 120. Multiples of 6: 20. Multiples of 8: 15. Both, which are multiples of 24: 5. Only 6: 15, only 8: 10. Divisible by 6 or 8 but not 24: 15 plus 10 equals 25.">
+      <rect x="20" y="20" width="420" height="210" rx="10" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <text x="34" y="42" class="sm">1 se 120</text>
+      <circle cx="175" cy="128" r="85" class="chf"/><circle cx="175" cy="128" r="85" class="chs"/>
+      <circle cx="285" cy="128" r="85" class="chf"/><circle cx="285" cy="128" r="85" class="chs"/>
+      <path d="M230,63 A85,85 0 0,1 230,193 A85,85 0 0,1 230,63 Z" style="fill:var(--ch);opacity:.6"/>
+      <text x="140" y="124" text-anchor="middle" class="lbl">15</text><text x="140" y="142" text-anchor="middle" class="sm">sirf 6</text>
+      <text x="230" y="124" text-anchor="middle" class="lbl">5</text><text x="230" y="142" text-anchor="middle" class="sm">24 ke</text>
+      <text x="322" y="124" text-anchor="middle" class="lbl">10</text><text x="322" y="142" text-anchor="middle" class="sm">sirf 8</text>
+      <text x="120" y="38" class="lbl">6 ke: 120/6 = 20</text>
+      <text x="290" y="38" class="lbl">8 ke: 15</text>
+      <text x="460" y="70" class="lbl">Dono (6 aur 8):</text>
+      <text x="460" y="90" class="sm">LCM 24 → 120/24 = 5</text>
+      <text x="460" y="124" class="lbl">6 ya 8, par 24 nahi:</text>
+      <text x="460" y="144" class="sm">sirf 6 + sirf 8 = 15 + 10</text>
+      <text x="460" y="178" class="lbl" style="fill:var(--ch)">= 25 → 25/120</text>
+      <text x="460" y="204" class="sm">(gehra beech = kaatna hai)</text>
+    </svg>
+    </div>
+    <figcaption>Do ghere, beech ka hissa dono mein. "Ya" = poora milaa hua area, beech ek hi baar.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Tree banao (machine aur defect wale)</h3>
+  <p><b>Kab use karo:</b> "M1 60% banati hai, uske 3% kharab". Har shaakh par guna, jo raaste chahiye unka jod.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="Probability tree. Machine M1 with 0.6 then defective 0.03 gives 0.018. Machine M2 with 0.4 then defective 0.05 gives 0.020. Total defective 0.038. Given defective, chance it came from M1 is 18 over 38, about 0.47.">
+      <circle cx="60" cy="120" r="10" style="fill:var(--ch)"/>
+      <g class="ln" stroke-width="2"><line x1="70" y1="114" x2="200" y2="60"/><line x1="70" y1="126" x2="200" y2="180"/></g>
+      <text x="120" y="76" class="sm">0.6</text><text x="120" y="176" class="sm">0.4</text>
+      <rect x="200" y="42" width="80" height="36" rx="6" class="chf"/><rect x="200" y="42" width="80" height="36" rx="6" class="chs"/>
+      <text x="240" y="65" text-anchor="middle" class="lbl">M1</text>
+      <rect x="200" y="162" width="80" height="36" rx="6" class="chf"/><rect x="200" y="162" width="80" height="36" rx="6" class="chs"/>
+      <text x="240" y="185" text-anchor="middle" class="lbl">M2</text>
+      <g class="ln" stroke-width="2"><line x1="280" y1="56" x2="380" y2="34"/><line x1="280" y1="66" x2="380" y2="90"/><line x1="280" y1="176" x2="380" y2="154"/><line x1="280" y1="186" x2="380" y2="210"/></g>
+      <text x="318" y="36" class="sm">0.03</text><text x="318" y="96" class="sm">0.97</text><text x="318" y="156" class="sm">0.05</text><text x="318" y="216" class="sm">0.95</text>
+      <text x="388" y="38" class="lbl" style="fill:var(--ch)">kharab → 0.6 × 0.03 = 0.018</text>
+      <text x="388" y="94" class="sm">theek</text>
+      <text x="388" y="158" class="lbl" style="fill:var(--ch)">kharab → 0.4 × 0.05 = 0.020</text>
+      <text x="388" y="214" class="sm">theek</text>
+      <text x="388" y="118" class="lbl">Kul kharab = 0.038</text>
+      <text x="388" y="136" class="sm">M1 se, agar kharab mila: 18/38 ≈ 0.47</text>
+    </svg>
+    </div>
+    <figcaption>Shaakh par guna. "Kharab kitna?" = kharab wale raaston ka jod. "Kharab mila, M1 ka hai?" = M1 wala raasta ÷ kul kharab (Bayes).</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> decimals se bachne ke liye 1,000 cheezein maan lo. M1: 600, unme 18 kharab. M2: 400, unme 20 kharab. Kharab 38 mein se 18 M1 ke → 18/38.</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Area wali probability</h3>
+  <p><b>Kab use karo:</b> point square ya circle mein "randomly chuna". Probability = chahiye wala area ÷ kul area.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Unit square from 0 to 1. A quarter circle of radius one half at the origin, and the diagonal X equals Y. The shaded part is inside the quarter circle and below the diagonal, an eighth of a circle of radius one half, area pi over 32.">
+      <rect x="60" y="20" width="240" height="240" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <path d="M60,260 L180,260 A120,120 0 0,0 60,140 Z" class="chf"/>
+      <path d="M60,260 L180,260 A120,120 0 0,0 144.85,175.15 Z" style="fill:var(--ch);opacity:.75"/>
+      <path d="M180,260 A120,120 0 0,0 60,140" fill="none" class="chs"/>
+      <line x1="60" y1="260" x2="300" y2="20" class="ln" stroke-width="1.5" stroke-dasharray="6 4"/>
+      <g class="sm"><text x="52" y="278" text-anchor="middle">0</text><text x="180" y="278" text-anchor="middle">½</text><text x="300" y="278" text-anchor="middle">1</text><text x="44" y="144" text-anchor="middle">½</text><text x="44" y="24" text-anchor="middle">1</text></g>
+      <text x="236" y="70" class="sm">X = Y</text>
+      <text x="340" y="50" class="lbl">Kul area = 1 × 1 = 1</text>
+      <text x="340" y="80" class="lbl">Origin se doori ≤ ½</text>
+      <text x="340" y="98" class="sm">→ radius ½ ka quarter circle = π(½)²/4 = π/16</text>
+      <text x="340" y="132" class="lbl">X &gt; Y → diagonal ke neeche</text>
+      <text x="340" y="150" class="sm">→ quarter ka aadha = π/32</text>
+      <text x="340" y="190" class="lbl" style="fill:var(--ch)">Probability = (π/32) ÷ 1 = π/32</text>
+    </svg>
+    </div>
+    <figcaption>Gehra tukda = dono shartein. Square ka area 1 hai, toh area hi probability hai. SP-XIV 30 Jul 2025.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Darwaze wala sawaal (switch karo)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Five doors. Your door has chance 1 over 5. The other four together have 4 over 5. The host opens 3 of them showing goats, so the whole 4 over 5 moves to the one remaining closed door.">
+      <rect x="40" y="40" width="70" height="100" rx="6" class="chf"/><rect x="40" y="40" width="70" height="100" rx="6" class="chs"/>
+      <text x="75" y="95" text-anchor="middle" class="lbl">1/5</text>
+      <text x="75" y="160" text-anchor="middle" class="sm">tumhara</text>
+      <rect x="170" y="30" width="420" height="120" rx="10" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="6 4"/>
+      <rect x="190" y="40" width="70" height="100" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="290" y="40" width="70" height="100" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="390" y="40" width="70" height="100" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="490" y="40" width="70" height="100" rx="6" style="fill:var(--ch)"/>
+      <g text-anchor="middle" class="sm"><text x="225" y="95">bakri</text><text x="325" y="95">bakri</text><text x="425" y="95">bakri</text></g>
+      <text x="525" y="95" text-anchor="middle" class="lbl" style="fill:var(--paper)">4/5</text>
+      <text x="380" y="22" text-anchor="middle" class="sm">baaki 4 darwaze milkar = 4/5</text>
+      <text x="325" y="160" text-anchor="middle" class="sm">host ne 3 khole (usse pata tha)</text>
+      <text x="350" y="190" text-anchor="middle" class="lbl">Switch karo → jeet ka chance 4/5</text>
+    </svg>
+    </div>
+    <figcaption>Host jaanta hai car kahan hai, isliye wo hamesha bakri hi kholta hai. Baaki 4 ka poora chance bache hue ek darwaze par aa jaata hai.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet (yaad karo)</span>
+    P(A ya B) = P(A) + P(B) − P(dono) · P(kam se kam ek) = 1 − P(ek bhi nahi).<br>
+    Independent: P(A aur B) = P(A) × P(B) · n mein se theek k baar (har baar p): nCk × p<sup>k</sup> × (1 − p)<sup>n − k</sup>.<br>
+    Bayes: P(M1 | kharab) = (M1 wala raasta) ÷ (sab kharab raaste).<br>
+    <span class="tag x">CGL+</span> Do pase: kul 36; jod 7 ke 6 tareeke (sabse zyada). 52 patton mein 4 ikke, 13 har suit, 26 laal. Sikka lagataar n Head tak ki ummeed = 2<sup>n + 1</sup> − 2 (HH → 6).
+  </div>
+
+  <!-- ===================== TYPES ===================== -->
+  <h3>Type 1 · Gin kar probability (2 Qs)</h3>
+  <div class="box"><span class="k">Worked · 1 se 120 mein se ek number; 6 ya 8 se divisible par 24 se nahi <span class="tag p">PYQ</span> <small>CGL Tier-2</small></span><!--pb0-->
+    <b>Method:</b> Venn · <i>~20 sec</i><br>
+    6 ke 20, 8 ke 15, 24 ke 5. "6 ya 8" = 20 + 15 − 5 = 30. Unme se 24 wale 5 hatao = 25.<br>
+    Sahi answer <b>25/120</b>. Bank ki key <mark>23/120</mark> kehti hai (note dekho).
+  </div>
+  <ul>
+    <li><!--pb5--><span class="tag p">PYQ</span> 12 ladke, 8 ladkiyan; 5 ki committee, ladke zyada → <b>case todo</b>: 3B: 220 × 28 = 6,160; 4B: 495 × 8 = 3,960; 5B: 792 → 10,912 ÷ 15,504 → <mark>≈ 0.70</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CGL Tier-2 (1 se 120, 6 ya 8, par 24 nahi): 6 ya 8 se kat'ne wale 30 hain (20 + 15 − 5). Inme 24 ke 5 multiples hain (24, 48, 72, 96, 120). Toh bache <b>25</b> → probability <b>25/120</b>, jo option A hai. Key ka 23/120 kisi bhi tarah nahi banta.</div>
+
+  <h3>Type 2 · Baar-baar ka prayog (2 Qs)</h3>
+  <div class="box"><span class="k">Worked · 4 sensor, har ek 0.75 se sahi; kam se kam 3 sahi chahiye <span class="tag p">PYQ</span> <small>CHSL Tier-2</small></span><!--pb1-->
+    <b>Method:</b> fraction mein socho · <i>~25 sec</i><br>
+    0.75 = 3/4. Theek 3: 4 × (3/4)³ × (1/4) = 4 × 27/256 = 108/256. Saare 4: 81/256.<br>
+    Jod = 189/256 ≈ <mark>0.738</mark>.
+  </div>
+  <ul>
+    <li><!--pb8--><span class="tag p">PYQ</span> Sikka tab tak uchhalo jab tak lagataar HH na aaye; ummeed? → <b>2<sup>n+1</sup> − 2</b> (n = 2) → <mark>6</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 3 · Tree: kul probability aur Bayes (2 Qs)</h3>
+  <div class="box"><span class="k">Worked · M1 60% (3% kharab), M2 40% (5% kharab). Kharab mila; M1 ka hone ka chance? <span class="tag p">PYQ</span> <small>SP-XIV · 2 Aug 2025</small></span><!--pb2-->
+    <b>Method:</b> 1,000 maan lo · <i>~15 sec</i><br>
+    M1: 600 mein 18 kharab. M2: 400 mein 20 kharab. 18/38 ≈ <mark>0.47</mark>.
+  </div>
+  <ul>
+    <li><!--pb6--><span class="tag p">PYQ</span> A 50% (1%), B 30% (2%), C 20% (3%); kharab ka chance → <b>tree jod</b>: 0.005 + 0.006 + 0.006 → <mark>0.017</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 4 · Kadam-dar-kadam (conditional) (2 Qs)</h3>
+  <div class="box"><span class="k">Worked · 3 laal 2 neeli; 2 nikaalo. Alag rang → wapas, +1 laal, phir 2 nikaalo. Pehli baar na ruko, doosri baar ruko? <span class="tag p">PYQ</span> <small>SP-XIV · 24 Jul 2025</small></span><!--pb3-->
+    <b>Method:</b> do kadam ka guna · <i>~25 sec</i><br>
+    Kadam 1, alag rang: 3 × 2 = 6 jodiyan / 5C2 = 10 → 3/5.<br>
+    Kadam 2 (4 laal, 2 neeli), same rang: 4C2 + 2C2 = 7 / 6C2 = 15 → 7/15.<br>
+    3/5 × 7/15 = <mark>7/25</mark> (options scan se padhe).
+  </div>
+  <ul>
+    <li><!--pb4--><span class="tag p">PYQ</span> 5 darwaze, host 3 bakri wale kholta hai; switch karne par jeet → <b>baaki ka poora chance</b> → <mark>4/5</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 5 · Area wali probability (1 Q)</h3>
+  <ul>
+    <li><!--pb7--><span class="tag p">PYQ</span> Unit square mein point; origin se doori ≤ ½ aur X &gt; Y → <b>quarter circle ka aadha</b> = π/16 ÷ 2 → <mark>π/32</mark> (options scan se padhe) <small>SP-XIV · 30 Jul 2025</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>"6 ya 8" mein 20 + 15 = 35</td><td>Dono wale (24 ke) do baar gine gaye. 35 − 5 = 30.</td></tr>
+    <tr><td>Bayes mein seedha 0.6 likh dena</td><td>Kharab mila hai, toh sirf kharab raaston mein dekho: 18/38.</td></tr>
+    <tr><td>"Kam se kam 3" mein sirf theek 3</td><td>3 aur 4 dono jodo.</td></tr>
+    <tr><td>Darwaze wale mein "2 bache, toh ½"</td><td>Host jaanta hai, isliye 4/5 switch par.</td></tr>
+    <tr><td>Quarter circle ko poora circle samajhna</td><td>Square ke andar sirf ¼ circle aata hai.</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 9 sawaal, saare yahan. Teen ke number ya options page ki photo se padhe (1–120 wala, urn wala, square wala). Ek key galat hai, upar note mein.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Do pase phenke. Jod 8 ka chance?</summary><p>(2,6), (3,5), (4,4), (5,3), (6,2) = 5 → 5/36.</p></details>
+    <details><summary>Teen sikke. Kam se kam ek Head?</summary><p>1 − (½)³ = 1 − 1/8 = 7/8.</p></details>
+    <details><summary>1 se 50 mein 3 ya 5 se divisible?</summary><p>16 + 10 − 3 = 23 → 23/50.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · DATA INTERPRETATION ===================== -->
+<section class="chap" id="mdt-di">
+  <div class="eyebrow">Maths · 9 questions</div>
+  <h2>Data Interpretation: table padho, kam se kam hisaab karo</h2>
+  <div class="meta">CGL Sep 2025, Selection Post XIV · sabse zyada: table se average, ratio, percentage</div>
+
+  <h3>Pehle ek baat: DI mein hisaab kam, padhna zyada</h3>
+  <p>DI ke sawaal mein table ya graph diya hota hai. Mushkil maths nahi hoti. Galti tab hoti hai jab galat row ya column padh lete hain. Isliye pehle <b>sawaal padho</b>, phir table mein <b>sirf wahi row</b> dhoondo.</p>
+  <div class="box"><span class="k">Teen baatein</span>
+    <b>1. Average = jod ÷ ginti.</b> Par jod lambe numbers ka mat karo, ek "base" se farq jodo.<br>
+    <b>2. Ratio mein common factor kaato.</b> 70 : 60 = 7 : 6.<br>
+    <b>3. Percentage = mila ÷ kul × 100.</b> Options paas-paas na hon toh andaaza kaafi hai.
+  </div>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Base se farq (average bina bade jod ke)</h3>
+  <p><b>Kab use karo:</b> 4–5 milte-julte numbers ka average.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Worker C wages 220, 230, 215, 225 drawn to scale from a baseline of 200. A base line at 220 shows differences 0, plus 10, minus 5, plus 5, total plus 10, divided by 4 is plus 2.5, so the average is 222.5.">
+      <line x1="80" y1="220" x2="520" y2="220" class="ln"/>
+      <text x="74" y="224" text-anchor="end" class="sm">200</text>
+      <g>
+        <rect x="110" y="140" width="70" height="80" class="chf"/><rect x="110" y="140" width="70" height="80" class="chs"/>
+        <rect x="210" y="100" width="70" height="120" class="chf"/><rect x="210" y="100" width="70" height="120" class="chs"/>
+        <rect x="310" y="160" width="70" height="60" class="chf"/><rect x="310" y="160" width="70" height="60" class="chs"/>
+        <rect x="410" y="120" width="70" height="100" class="chf"/><rect x="410" y="120" width="70" height="100" class="chs"/>
+      </g>
+      <line x1="80" y1="140" x2="520" y2="140" class="ln" stroke-dasharray="4 4"/>
+      <text x="74" y="144" text-anchor="end" class="sm">220</text>
+      <line x1="80" y1="130" x2="520" y2="130" style="stroke:var(--ch)" stroke-width="2"/>
+      <text x="526" y="134" class="lbl" style="fill:var(--ch)">222.5 = average</text>
+      <g text-anchor="middle" class="lbl"><text x="145" y="132">220</text><text x="245" y="92">230</text><text x="345" y="152">215</text><text x="445" y="112">225</text></g>
+      <g text-anchor="middle" class="sm"><text x="145" y="238">Day 1</text><text x="245" y="238">Day 2</text><text x="345" y="238">Day 3</text><text x="445" y="238">Day 4</text></g>
+      <g text-anchor="middle" class="sm"><text x="145" y="190">0</text><text x="245" y="190">+10</text><text x="345" y="190">−5</text><text x="445" y="190">+5</text></g>
+      <text x="300" y="30" text-anchor="middle" class="lbl">Base 220 maano: farq 0 + 10 − 5 + 5 = +10</text>
+      <text x="300" y="52" text-anchor="middle" class="sm">+10 ÷ 4 = +2.5 → average = 220 + 2.5 = 222.5</text>
+      <text x="300" y="256" text-anchor="middle" class="sm">bars 200 se shuru, scale par (1 rupaya = 4 px)</text>
+    </svg>
+    </div>
+    <figcaption>Worker C ki 4 din ki kamaai. Upar-neeche ke tukde ek doosre ko kaat dete hain; bacha hua farq ÷ ginti hi base se upar ka hissa. CGL 13 Sep 2025.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · "Dono" wali table = Venn</h3>
+  <p><b>Kab use karo:</b> "football aur basketball dono", "sirf football". Table ko Venn mein daalo, phir jo pucha wo uthao.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Venn diagram for 120 students. Football only 45, both 25, basketball only 35, neither 15. Football total 70, basketball total 60, ratio 7 to 6.">
+      <rect x="20" y="16" width="420" height="200" rx="10" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <text x="34" y="38" class="sm">120 students</text>
+      <circle cx="175" cy="118" r="80" class="chf"/><circle cx="175" cy="118" r="80" class="chs"/>
+      <circle cx="285" cy="118" r="80" class="chf"/><circle cx="285" cy="118" r="80" class="chs"/>
+      <text x="140" y="122" text-anchor="middle" class="lbl">45</text>
+      <text x="230" y="122" text-anchor="middle" class="lbl">25</text>
+      <text x="322" y="122" text-anchor="middle" class="lbl">35</text>
+      <text x="140" y="140" text-anchor="middle" class="sm">sirf F</text><text x="230" y="140" text-anchor="middle" class="sm">dono</text><text x="322" y="140" text-anchor="middle" class="sm">sirf B</text>
+      <text x="400" y="204" text-anchor="middle" class="sm">koi nahi 15</text>
+      <text x="460" y="70" class="lbl">Football = 45 + 25 = 70</text>
+      <text x="460" y="100" class="lbl">Basketball = 35 + 25 = 60</text>
+      <text x="460" y="138" class="lbl" style="fill:var(--ch)">70 : 60 = 7 : 6</text>
+      <text x="460" y="166" class="sm">check: 45 + 25 + 35 + 15 = 120 ✔</text>
+    </svg>
+    </div>
+    <figcaption>"Dono" wala hissa dono gheron mein ginna hai. CGL 13 Sep 2025.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Do column ki tulna: bas farq dekho</h3>
+  <p><b>Kab use karo:</b> "Section A vs Section B", "kis team ka average zyada". Poora jod mat karo, row-wise farq jodo.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Stacked bars of students shorter than 1.65 metres. Section A: 5, 9 and 11, total 25. Section B: 4, 8 and 13, total 25. Equal, so ratio 1 to 1.">
+      <text x="20" y="64" class="lbl">Section A</text>
+      <rect x="120" y="44" width="50" height="34" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <rect x="170" y="44" width="90" height="34" class="chf"/><rect x="170" y="44" width="90" height="34" class="chs"/>
+      <rect x="260" y="44" width="110" height="34" style="fill:var(--ch);opacity:.5"/>
+      <g text-anchor="middle" class="lbl"><text x="145" y="66">5</text><text x="215" y="66">9</text><text x="315" y="66">11</text></g>
+      <text x="386" y="66" class="lbl">= 25</text>
+      <text x="20" y="134" class="lbl">Section B</text>
+      <rect x="120" y="114" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <rect x="160" y="114" width="80" height="34" class="chf"/><rect x="160" y="114" width="80" height="34" class="chs"/>
+      <rect x="240" y="114" width="130" height="34" style="fill:var(--ch);opacity:.5"/>
+      <g text-anchor="middle" class="lbl"><text x="140" y="136">4</text><text x="200" y="136">8</text><text x="305" y="136">13</text></g>
+      <text x="386" y="136" class="lbl">= 25</text>
+      <g class="sm"><text x="120" y="34">1.55 m</text><text x="185" y="34">1.60 m</text><text x="285" y="34">1.62 m</text></g>
+      <text x="460" y="80" class="lbl">Farq row-wise:</text>
+      <text x="460" y="100" class="sm">A − B = +1, +1, −2 → 0</text>
+      <text x="460" y="134" class="lbl" style="fill:var(--ch)">Ratio = 1 : 1</text>
+      <text x="350" y="190" text-anchor="middle" class="sm">1.65 se kam = 1.55, 1.60, 1.62 wali rows (1.65 khud nahi) · bars scale par (1 student = 10 px)</text>
+    </svg>
+    </div>
+    <figcaption>"Less than 1.65" mein 1.65 wali row shaamil nahi. CGL 14 Sep 2025.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet</span>
+    Average = jod ÷ ginti = base + (farq ka jod ÷ ginti).<br>
+    Percentage = (mila ÷ kul) × 100. 430/600: 600 ka 70% = 420, baaki 10 = 1.67% → 71.67%.<br>
+    <span class="tag x">CGL+</span> % badhat = (naya − purana)/purana × 100. Pie chart: 1% = 3.6°.
+  </div>
+
+  <!-- ===================== TYPES ===================== -->
+  <h3>Type 1 · Table se average (5 Qs)</h3>
+  <div class="box"><span class="k">Worked · Worker C: 220, 230, 215, 225. Average? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span><!--dt0-->
+    <b>Method:</b> base se farq · <i>~8 sec</i><br>
+    Base 220: 0 + 10 − 5 + 5 = 10 → 10/4 = 2.5 → <mark>222.5</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Truck 1: 18, 20, 22, 21, 19 · Truck 2: 25, 24, 26, 23, 24. Dono ka roz ka average <span class="tag p">PYQ</span> <small>CGL · 16 Sep 2025</small></span><!--dt6-->
+    <b>Method:</b> base se farq · <i>~12 sec</i><br>
+    Truck 1 base 20: −2, 0, +2, +1, −1 → 0 → jod 100. Truck 2 base 24: +1, 0, +2, −1, 0 → +2 → jod 122.<br>
+    222 ÷ 10 = <mark>22.2 litre</mark>.
+  </div>
+  <ul>
+    <li><!--dt2--><span class="tag p">PYQ</span> Team A: 42, 38, 40 · Team B: 45, 46, 44 → <b>base 40 aur 45</b>: A = 40, B = 45 → <mark>Team B</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><!--dt4--><span class="tag p">PYQ</span> Units: A 100, 120, 110 · B 90, 85, 95 · C 150, 160, 155 → <b>bina hisaab</b>: C ka har mahina sabse zyada → <mark>C</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><!--dt5--><span class="tag p">PYQ</span> Q: 65, 68, 62, 64 → <b>base 65</b>: 0 + 3 − 3 − 1 = −1 → 65 − 0.25 → <mark>₹64.75</mark> (hazaar mein) <small>CGL · 15 Sep 2025</small></li>
+  </ul>
+
+  <h3>Type 2 · Table se ratio (3 Qs)</h3>
+  <div class="box"><span class="k">Worked · Survey 120: dono 25, sirf F 45, sirf B 35, koi nahi 15. Football : Basketball <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span><!--dt1-->
+    <b>Method:</b> Venn · <i>~10 sec</i><br>
+    F = 45 + 25 = 70, B = 35 + 25 = 60 → <mark>7 : 6</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 1.65 m se chhote: Section A vs Section B <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span><!--dt3-->
+    <b>Method:</b> row-wise farq · <i>~10 sec</i><br>
+    A: 5 + 9 + 11 = 25. B: 4 + 8 + 13 = 25 → <mark>1 : 1</mark>.
+  </div>
+  <ul>
+    <li><!--dt7--><span class="tag p">PYQ</span> Wahi height table (A: 6, 10, 14, 16, 9, 7, 5 · B: 5, 0, 15, 11, 8, 6, 4); bank mein sawaal ki line kati hui hai → <b>key se milao</b>: A ke 1.62 m wale 14 : A ke kul 67 → <mark>14 : 67</mark> <small>CGL · 23 Sep 2025</small></li>
+  </ul>
+
+  <h3>Type 3 · Kul percentage (1 Q)</h3>
+  <div class="box"><span class="k">Worked · Do semester, 4 subject (max 50, 100, 50, 100). Saal bhar ka percentage? <span class="tag p">PYQ</span> <small>SP-XIV · 29 Aug 2025</small></span><!--dt8-->
+    <b>Method:</b> jod + andaaza · <i>~20 sec</i><br>
+    Mile: (40 + 45) + (70 + 80) + (35 + 40) + (55 + 65) = 85 + 150 + 75 + 120 = 430.<br>
+    Kul: 2 × 300 = 600. 430/600 ≈ 71.7% → <mark>72%</mark>.
+  </div>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="Marks over both semesters against maximum, drawn to scale. English 85 of 100, Maths 150 of 200, Science 75 of 100, History 120 of 200. Total 430 of 600, about 71.7 percent.">
+      <g class="lbl"><text x="20" y="50">English</text><text x="20" y="96">Maths</text><text x="20" y="142">Science</text><text x="20" y="188">History</text></g>
+      <g class="paper" stroke="var(--muted)" stroke-width="1.2">
+        <rect x="120" y="32" width="150" height="26"/>
+        <rect x="120" y="78" width="300" height="26"/>
+        <rect x="120" y="124" width="150" height="26"/>
+        <rect x="120" y="170" width="300" height="26"/>
+      </g>
+      <g>
+        <rect x="120" y="32" width="127.5" height="26" class="chf"/><rect x="120" y="32" width="127.5" height="26" class="chs"/>
+        <rect x="120" y="78" width="225" height="26" class="chf"/><rect x="120" y="78" width="225" height="26" class="chs"/>
+        <rect x="120" y="124" width="112.5" height="26" class="chf"/><rect x="120" y="124" width="112.5" height="26" class="chs"/>
+        <rect x="120" y="170" width="180" height="26" class="chf"/><rect x="120" y="170" width="180" height="26" class="chs"/>
+      </g>
+      <g class="sm"><text x="280" y="50">85 / 100</text><text x="430" y="96">150 / 200</text><text x="280" y="142">75 / 100</text><text x="430" y="188">120 / 200</text></g>
+      <text x="120" y="22" class="sm">bhara hua = mile (dono semester) · khaali dabba = maximum · 1 mark = 1.5 px</text>
+      <text x="520" y="96" class="lbl">Mile = 430</text>
+      <text x="520" y="120" class="lbl">Kul = 600</text>
+      <text x="520" y="150" class="lbl" style="fill:var(--ch)">≈ 71.7% → 72%</text>
+      <text x="350" y="228" text-anchor="middle" class="sm">600 ka 70% = 420 · bache 10 = 600 ka 1.67% · toh 71.67%</text>
+    </svg>
+    </div>
+    <figcaption>Har subject ka max alag hai, isliye pehle sab mile jodo aur sab max jodo, phir ek baar %. SP-XIV 29 Aug 2025.</figcaption>
+  </figure>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>"Less than 1.65" mein 1.65 wali row bhi jod li</td><td>"Less than" mein wo number khud nahi aata.</td></tr>
+    <tr><td>Football = sirf 45</td><td>Football khelne wale = sirf F + dono = 70.</td></tr>
+    <tr><td>Max marks ek hi semester ke liye</td><td>Do semester → max bhi dugna (600).</td></tr>
+    <tr><td>Dono trucks ka average = dono averages ka average</td><td>Yahan din barabar hain toh chalega, par safe tareeka: kul jod ÷ kul din.</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 9 sawaal, saare yahan. Table page ki photo se padhi. CGL 23 Sep 2025 wale mein sawaal ki line bank mein nahi hai; sirf table aur options hain. Key 14 : 67 table se tabhi banti hai jab sawaal "Section A mein 1.62 m wale : Section A ke kul" ho, isliye usi tarah likha hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>48, 52, 47, 53, 50 ka average (base se)?</summary><p>Base 50: −2 + 2 − 3 + 3 + 0 = 0 → 50.</p></details>
+    <details><summary>Survey 100: sirf A 30, sirf B 25, dono 20. Koi nahi?</summary><p>100 − (30 + 25 + 20) = 25.</p></details>
+    <details><summary>Mile 540, kul 750. Percentage?</summary><p>540/750 = 72%.</p></details>
+  </div>
+</section>

@@ -1,0 +1,82 @@
+/* 📘 Notes (app/pyq-notes) — notes pages wala hi roop, site ke tokens par
+   (ab site khud notes wali dark theme mein hai). Andar ki classes (chap, box,
+   trick, tbl, tag, quiz, SVG ki chf/chs/ln/sm/lbl) public/pyq_notes ki files
+   mein likhi hain — yahan unka style. */
+.pn {
+  --pn-c1: #7cc3d6; --pn-c2: #e0a274; --pn-c3: #f08aa0;
+  --pn-s1: #1d2c33; --pn-s2: #2f241c; --pn-s3: #2f1e24;
+  --pn-mono: var(--nt-mono, "JetBrains Mono"), ui-monospace, Consolas, monospace;
+  --pn-display: var(--nt-display, "Bricolage Grotesque"), "Segoe UI", system-ui, sans-serif;
+  /* notes ke SVG inline style="fill:var(--muted)" jaise naam padhte hain */
+  --fg: var(--text-1); --muted: var(--text-3); --paper: var(--card);
+  max-width: 880px; margin: 0 auto;
+}
+.pn-head h1 { margin: 0 0 8px; font-family: var(--pn-display); font-weight: 800; }
+.pn-books { display: flex; gap: 2px; overflow-x: auto; border-bottom: 1px solid var(--line); }
+.pn-books button { flex: none; font: 600 0.92rem var(--pn-display); background: none; border: 0; border-bottom: 3px solid transparent; color: var(--text-3); padding: 9px 12px; cursor: pointer; }
+.pn-books button[aria-selected="true"] { color: var(--text-1); border-bottom-color: var(--accent); }
+.pn-sel { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.pn-sel label { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 220px; font: 500 0.68rem var(--pn-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); }
+.pn-sel select { font: 600 0.95rem var(--pn-display); color: var(--text-1); background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 9px 10px; min-width: 0; }
+.pn-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; font-size: 0.82rem; color: var(--text-2); }
+.pn-prog { height: 4px; border-radius: 4px; background: var(--line); margin: 14px 0 12px; overflow: hidden; }
+.pn-prog i { display: block; height: 100%; background: var(--accent); transition: width 0.2s; }
+
+.pn-card { --ch: var(--pn-c1); --soft: var(--pn-s1); box-sizing: border-box; min-height: 380px; padding: 26px 30px; border-radius: 24px; background: var(--card); border: 1px solid var(--line); border-top: 5px solid var(--ch); display: flex; flex-direction: column; gap: 10px; touch-action: pan-y; }
+.pn-card.c2 { --ch: var(--pn-c2); --soft: var(--pn-s2); }
+.pn-card.c3 { --ch: var(--pn-c3); --soft: var(--pn-s3); }
+.pn-top { display: flex; justify-content: space-between; gap: 10px; font: 500 0.72rem var(--pn-mono); letter-spacing: 0.05em; color: var(--text-3); }
+.pn-top b { color: var(--ch); font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; }
+.pn-title { margin: 0; font: 800 1.6rem/1.2 var(--pn-display); text-wrap: balance; }
+.pn-acts { display: flex; flex-wrap: wrap; gap: 8px; }
+.pn .btn.pn-imp { background: #2e2614; border: 1px solid #e6a344; color: #f0c060; }
+.pn-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 14px; font: 700 0.9rem var(--pn-display); color: var(--text-3); }
+.pn-go { width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--text-1); font: 700 1.5rem/1 var(--pn-display); cursor: pointer; }
+.pn-go:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.pn-go:disabled { opacity: 0.35; cursor: default; }
+.pn-hint { text-align: center; }
+@media (max-width: 600px) {
+  .pn-card { padding: 20px 16px; border-radius: 18px; min-height: 300px; }
+  .pn-title { font-size: 1.3rem; }
+}
+
+/* ---- notes ke andar ki classes ---- */
+.pn .tag { display: inline-block; font: 500 0.66rem/1 var(--pn-mono); letter-spacing: 0.03em; padding: 4px 6px 3px; border-radius: 4px; vertical-align: 2px; margin-left: 4px; white-space: nowrap; }
+.pn .tag.p { color: #ff8a7a; border: 1px solid #ff8a7a; }
+.pn .tag.x { color: #93c97f; border: 1px dashed #93c97f; }
+.pn mark { background: #5a4d12; color: inherit; padding: 0 0.15em; border-radius: 3px; }
+.pn-body { font-size: 1.04rem; line-height: 1.68; }
+.pn-body > :first-child { margin-top: 2px; }
+.pn-body p { margin: 0 0 12px; }
+.pn-body ul { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; }
+.pn-body li::marker { color: var(--ch); }
+.pn-body b, .pn-body strong { font-weight: 600; color: var(--text-1); }
+.pn-body .eyebrow { font: 500 0.72rem var(--pn-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ch); }
+.pn-body .meta { font-size: 0.88rem; color: var(--text-3); margin: 4px 0 10px; }
+.pn-body h3, .pn-body h4 { font-family: var(--pn-display); color: var(--ch); margin: 16px 0 8px; }
+.pn-body .box { background: var(--soft); border-radius: 12px; padding: 12px 16px; margin: 12px 0; }
+.pn-body .box .k { display: block; font: 600 0.95rem var(--pn-display); color: var(--ch); margin-bottom: 4px; }
+.pn-body .trick { border-left: 4px solid var(--ch); background: rgba(240, 192, 96, 0.08); padding: 8px 14px; margin: 12px 0; font-style: italic; border-radius: 0 10px 10px 0; }
+.pn-body .trick b { font-style: normal; }
+.pn-body .tbl { overflow-x: auto; margin: 10px 0 14px; }
+.pn-body table { border-collapse: collapse; width: 100%; font-size: 0.92rem; min-width: 520px; }
+.pn-body th, .pn-body td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.pn-body th { font: 600 0.84rem var(--pn-display); color: var(--ch); border-bottom: 2px solid var(--ch); }
+.pn-body tr:nth-child(even) td { background: rgba(255, 255, 255, 0.02); }
+.pn-body td.n { font-size: 0.85rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.pn-body figure { margin: 14px 0 18px; background: #14171d; border: 1px solid var(--line); border-radius: 14px; padding: 14px 12px 10px; }
+.pn-body figure .sv { overflow-x: auto; }
+.pn-body figure svg { display: block; width: 100%; height: auto; min-width: 460px; }
+.pn-body figcaption { font-size: 0.82rem; color: var(--text-3); margin-top: 6px; text-align: center; }
+.pn-body svg text { fill: var(--text-1); font-family: var(--pn-display); }
+.pn-body svg .sm { font-size: 11px; fill: var(--text-3); }
+.pn-body svg .lbl { font-size: 13px; font-weight: 600; }
+.pn-body svg .ln { stroke: var(--text-3); fill: none; stroke-width: 1.5; }
+.pn-body svg .chf { fill: var(--soft); }
+.pn-body svg .chs { stroke: var(--ch); fill: none; stroke-width: 2; }
+.pn-body svg .chtext { fill: var(--ch); }
+.pn-body svg .paper { fill: var(--card); }
+.pn-body .quiz details { border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin: 8px 0; background: #14171d; }
+.pn-body .quiz summary { cursor: pointer; font-weight: 600; }
+.pn-body .quiz details p { margin: 8px 0 0; color: var(--text-2); }
+.pn-body .legend, .pn-body .toc { display: none; }

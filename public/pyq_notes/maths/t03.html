@@ -1,0 +1,675 @@
+<!-- ===================== MATHS · SIMPLIFICATION (part 2: practice by type) ===================== -->
+<section class="chap" id="msb-arith">
+  <div class="eyebrow">Maths · 169 questions</div>
+  <h2>Simplification practice (1): BODMAS ki lambi line, decimal, root aur identity</h2>
+  <div class="meta">GD Constable 2026, MTS 2025, Selection Post XIV · sabse zyada: "93 − 27 + 38 of 1 …" wali lambi line (87 baar!), phir root aur (a ± b)² wale sawaal</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    GD = GD Constable 2026 · MTS = MTS 2025 · SP-XIV Grad / 12th / 10th = Selection Post Phase XIV 2025 (Graduate, 12th, 10th level). Date shift ki date hai. Har sawaal ke aage <b>bold</b> mein method likha hai.
+  </div>
+
+  <div class="box"><span class="k">Methods recap (inhi se saare sawaal bante hain)</span>
+    <b>1. Tokri method</b> (BODMAS line): pehle bracket, "of", ×, ÷. Phir saare plus ek tokri mein, saare minus doosri mein. Ek hi ghatana. ~20 sec.<br>
+    <b>2. Decimal shift</b>: ÷ ho toh dono ko 10, 100 se guna karke decimal hata do. × ho toh decimal places gin kar jodo. ~10 sec.<br>
+    <b>3. Root mein decimal aadha</b>: √ mein places aadhe, ∛ mein ek-tihaai. √0.0225 = 0.15 (4 → 2 places). ~5 sec.<br>
+    <b>4. Identity pehchano</b>: (a+b)² − 4ab = (a − b)², a² − b² = (a + b)(a − b), a³ + b³ + 3ab(a + b) = (a + b)³. Number ko kabhi square mat karo. ~10 sec.<br>
+    <b>5. Surd ko √2, √3, √5 mein todo</b>: √48 = 4√3. Phir like terms jodo. ~10 sec.<br>
+    <b>6. Conjugate</b>: (a + √b)(a − √b) = a² − b. ~10 sec.<br>
+    <b>7. 1 se kitna kam</b> (fractions compare): 11/13 = 1 − 2/13. Jiska gap chhota, wo bada. ~10 sec.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · BODMAS ki lambi line: "93 − 27 + 38 of 1 …" (87 Qs)</h3>
+  <p><b>Samjho:</b> ye sawaal har shift mein aata hai, aur sab ek hi saanche ke hain. Galti sirf do jagah hoti hai: (1) × ya ÷ ko pehle nahi kiya, (2) left se right chalte hue minus bhool gaye. Isliye line ko "chalaao" mat. <b>Tokri</b> banao.</p>
+  <ul>
+    <li><b>Step 1:</b> har bracket, har "of", har × aur ÷ ko pehle ek number bana do. "of" ka matlab ×. "18 of 2" = 36.</li>
+    <li><b>Step 2:</b> ab line mein sirf + aur − bache. Jinke aage + hai (pehla number bhi) wo <b>+ tokri</b> mein. Jinke aage − hai wo <b>− tokri</b> mein.</li>
+    <li><b>Step 3:</b> dono tokri alag jodo, phir ek baar ghatao. Jodna aasaan hai, baar-baar ghatana galti karwata hai.</li>
+  </ul>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Tokri method for 81 + (24 × 1) − 38 + 17 + 44 ÷ 2 − 16. Step 1 turns 24 × 1 into 24 and 44 ÷ 2 into 22. Plus basket holds 81, 24, 17, 22 = 144. Minus basket holds 38 and 16 = 54. Answer 144 − 54 = 90.">
+      <text x="350" y="24" text-anchor="middle" class="lbl">81 + (24 × 1) − 38 + 17 + 44 ÷ 2 − 16 = ?</text>
+      <text x="20" y="62" class="sm">Step 1: × ÷ of bracket</text>
+      <rect x="180" y="44" width="80" height="28" rx="6" class="chf"/><text x="220" y="63" text-anchor="middle" class="lbl">24 × 1</text>
+      <text x="275" y="63" class="sm">→ 24</text>
+      <rect x="330" y="44" width="80" height="28" rx="6" class="chf"/><text x="370" y="63" text-anchor="middle" class="lbl">44 ÷ 2</text>
+      <text x="425" y="63" class="sm">→ 22</text>
+      <text x="20" y="100" class="sm">Step 2: line ab sirf + aur −</text>
+      <text x="350" y="124" text-anchor="middle" class="lbl">+81   +24   −38   +17   +22   −16</text>
+      <path d="M190 132 L150 170" class="ln" style="stroke-width:1.5;fill:none"/>
+      <path d="M520 132 L560 170" class="ln" style="stroke-width:1.5;fill:none"/>
+      <path d="M60 175 L250 175 L230 260 L80 260 Z" class="paper"/><path d="M60 175 L250 175 L230 260 L80 260 Z" class="chs" style="stroke-width:2"/>
+      <text x="155" y="200" text-anchor="middle" class="lbl">+ tokri</text>
+      <text x="155" y="224" text-anchor="middle">81 + 24 + 17 + 22</text>
+      <text x="155" y="248" text-anchor="middle" class="lbl chtext">= 144</text>
+      <path d="M450 175 L640 175 L620 260 L470 260 Z" class="paper"/><path d="M450 175 L640 175 L620 260 L470 260 Z" class="chs" style="stroke-width:2"/>
+      <text x="545" y="200" text-anchor="middle" class="lbl">− tokri</text>
+      <text x="545" y="224" text-anchor="middle">38 + 16</text>
+      <text x="545" y="248" text-anchor="middle" class="lbl chtext">= 54</text>
+      <text x="350" y="222" text-anchor="middle" class="lbl">144 − 54</text>
+      <text x="350" y="248" text-anchor="middle" class="lbl chtext">= 90</text>
+      <text x="350" y="288" text-anchor="middle" class="sm">Step 3: ek hi baar ghatao. Bracket ke aage − ho toh poora bracket − tokri mein.</text>
+    </svg>
+    </div>
+    <figcaption>Tokri method: × ÷ "of" pehle, phir plus aur minus alag-alag jodo. GD 7 May 2026 ka sawaal.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · 81 + (24 × 1) − 38 + 17 + 44 ÷ 2 − 16 <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small></span>
+    <b>Method:</b> tokri · <i>~15 sec</i><br>
+    24 × 1 = 24, 44 ÷ 2 = 22.<br>+ tokri: 81 + 24 + 17 + 22 = 144. − tokri: 38 + 16 = 54.<br>144 − 54 = <mark>90</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · (93 + 14) − 56 × 2 + 33 + 15 <span class="tag p">PYQ</span> <small>MTS · 5 Feb 2025</small></span>
+    <b>Method:</b> tokri · <i>~15 sec</i><br>
+    Bracket 107. 56 × 2 = 112 (ye minus wala hai!).<br>+ tokri: 107 + 33 + 15 = 155. − tokri: 112.<br>155 − 112 = <mark>43</mark>. (Left se chalaate toh 107 − 56 = 51, phir × 2 kar dete: galat.)
+  </div>
+  <div class="box"><span class="k">Worked · 58 + 79 − (31 + 25) × 2 + 61 − 17 <span class="tag p">PYQ</span> <small>MTS · 11 Feb 2025</small></span>
+    <b>Method:</b> tokri · <i>~15 sec</i><br>
+    Bracket 56, × 2 = 112, aur iske aage − hai.<br>+ tokri: 58 + 79 + 61 = 198. − tokri: 112 + 17 = 129.<br>198 − 129 = <mark>69</mark>.
+  </div>
+  <div class="trick"><b>Trick:</b> option ka last digit pehle milao. Saare numbers ke sirf unit digit se jodo-ghatao. 81 + 24 − 38 + 17 + 22 − 16 → 1 + 4 − 8 + 7 + 2 − 6 = 0 → answer 0 pe khatam hoga → 90. Options mein ek hi aisa ho toh 5 second mein khatam.</div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 93 − 27 + 38 of 1 + 19 ÷ 1 − (18 × 1) + 44 → <b>tokri</b> → + tokri 93 + 38 + 19 + 44 = 194; − tokri 27 + 18 = 45 → <mark>149</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 95 + 62 − 69 + (37 + 19) × 2 − 103 → <b>tokri</b> → + tokri 95 + 62 + 112 = 269; − tokri 69 + 103 = 172 → <mark>97</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 96 − 27 + 14 × 2 + 39 ÷ 3 − (28 of 2) + 17 → <b>tokri</b> → + tokri 96 + 28 + 13 + 17 = 154; − tokri 27 + 56 = 83 → <mark>71</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 71 + 56 − (25 + 19) × 2 + 92 − 38 → <b>tokri</b> → + tokri 71 + 56 + 92 = 219; − tokri 88 + 38 = 126 → <mark>93</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 39 + 33 − (27 of 2) + 44 ÷ 4 + 18 of 2 − 36 → <b>tokri</b> → + tokri 39 + 33 + 11 + 36 = 119; − tokri 54 + 36 = 90 → <mark>29</mark> <i>(kisi option mein nahi; key 79 ⚠ neeche note)</i> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 91 − 38 + 27 × 2 + (16) + 44 ÷ 2 − 31 → <b>tokri</b> → + tokri 91 + 54 + 16 + 22 = 183; − tokri 38 + 31 = 69 → <mark>114</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 93 − 47 + 69 − (24 + 17) + 35 × 2 → <b>tokri</b> → + tokri 93 + 69 + 70 = 232; − tokri 47 + 41 = 88 → <mark>144</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 92 + (27 × 1) − 41 + 39 ÷ 3 + 21 − 17 → <b>tokri</b> → + tokri 92 + 27 + 13 + 21 = 153; − tokri 41 + 17 = 58 → <mark>95</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 77 − 33 + 28 of 2 + 46 ÷ 2 − 17 + (29) → <b>tokri</b> → + tokri 77 + 56 + 23 + 29 = 185; − tokri 33 + 17 = 50 → <mark>135</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 66 + 48 − (29 + 15) × 2 + 84 − 33 → <b>tokri</b> → + tokri 66 + 48 + 84 = 198; − tokri 88 + 33 = 121 → <mark>77</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 89 − 42 + 31 × 1 + (18 of 2) + 27 − 19 → <b>tokri</b> → + tokri 89 + 31 + 36 + 27 = 183; − tokri 42 + 19 = 61 → <mark>122</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 66 + 38 − (27 × 1) + 42 ÷ 6 + 33 − 14 → <b>tokri</b> → + tokri 66 + 38 + 7 + 33 = 144; − tokri 27 + 14 = 41 → <mark>103</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 79 + 88 − 54 + (43 + 12) × 2 − 89 → <b>tokri</b> → + tokri 79 + 88 + 110 = 277; − tokri 54 + 89 = 143 → <mark>134</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 68 + (14 × 2) − 22 + 33 ÷ 3 − 19 + 28 → <b>tokri</b> → + tokri 68 + 28 + 11 + 28 = 135; − tokri 22 + 19 = 41 → <mark>94</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 69 + 74 − (31 + 27) × 2 + 88 − 44 → <b>tokri</b> → + tokri 69 + 74 + 88 = 231; − tokri 116 + 44 = 160 → <mark>71</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 83 − 29 + 33 × 1 + 47 ÷ 1 − 36 + (18 of 1) → <b>tokri</b> → + tokri 83 + 33 + 47 + 18 = 181; − tokri 29 + 36 = 65 → <mark>116</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 84 − 56 + 39 × 2 − (31 + 16) → <b>tokri</b> → + tokri 84 + 78 = 162; − tokri 56 + 47 = 103 → <mark>59</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 93 − 28 + 19 + (42 ÷ 2) + 33 − 17 + 26 → <b>tokri</b> → + tokri 93 + 19 + 21 + 33 + 26 = 192; − tokri 28 + 17 = 45 → <mark>147</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 56 + 74 − 52 + (41 + 23) × 2 − 96 → <b>tokri</b> → + tokri 56 + 74 + 128 = 258; − tokri 52 + 96 = 148 → <mark>110</mark> <small>GD · 28 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 72 + 38 − (96 ÷ 12) + 29 of 2 − 14 → <b>tokri</b> → + tokri 72 + 38 + 58 = 168; − tokri 8 + 14 = 22 → <mark>146</mark> <small>GD · 28 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 87 + 62 − 53 + (34 + 18) × 2 − 90 → <b>tokri</b> → + tokri 87 + 62 + 104 = 253; − tokri 53 + 90 = 143 → <mark>110</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 96 − 41 + 27 + 36 ÷ 3 + (19 of 1) − 22 → <b>tokri</b> → + tokri 96 + 27 + 12 + 19 = 154; − tokri 41 + 22 = 63 → <mark>91</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 61 + 45 − 32 + (28 + 17) × 2 − 84 → <b>tokri</b> → + tokri 61 + 45 + 90 = 196; − tokri 32 + 84 = 116 → <mark>80</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 94 − 47 + 31 + (27 ÷ 3) + 28 × 1 − 19 → <b>tokri</b> → + tokri 94 + 31 + 9 + 28 = 162; − tokri 47 + 19 = 66 → <mark>96</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 76 + 85 − 49 + (29 + 19) × 2 − 91 → <b>tokri</b> → + tokri 76 + 85 + 96 = 257; − tokri 49 + 91 = 140 → <mark>117</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 92 − 36 + 28 ÷ 4 + (19 of 2) − 14 + 17 → <b>tokri</b> → + tokri 92 + 7 + 38 + 17 = 154; − tokri 36 + 14 = 50 → <mark>104</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> (45 + 19) − 37 + 26 × 2 − 13 → <b>tokri</b> → + tokri 64 + 52 = 116; − tokri 37 + 13 = 50 → <mark>66</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 94 − 38 + 28 + 33 ÷ 3 + 21 − (18 of 1) → <b>tokri</b> → + tokri 94 + 28 + 11 + 21 = 154; − tokri 38 + 18 = 56 → <mark>98</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 49 + 86 − 58 + (39 + 16) × 2 − 47 → <b>tokri</b> → + tokri 49 + 86 + 110 = 245; − tokri 58 + 47 = 105 → <mark>140</mark> <small>GD · 25 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 88 + 26 − (19 × 1) + 37 ÷ 1 + 32 − 28 + 14 → <b>tokri</b> → + tokri 88 + 26 + 37 + 32 + 14 = 197; − tokri 19 + 28 = 47 → <mark>150</mark> <small>GD · 25 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 77 − 41 + 34 + (21 + 18) × 2 − 55 → <b>tokri</b> → + tokri 77 + 34 + 78 = 189; − tokri 41 + 55 = 96 → <mark>93</mark> <small>MTS · 4 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 91 − 56 + 78 − (31 + 23) + 45 × 2 → <b>tokri</b> → + tokri 91 + 78 + 90 = 259; − tokri 56 + 54 = 110 → <mark>149</mark> <small>MTS · 4 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 92 − 31 + 22 of 2 + 38 ÷ 2 − (29) + 13 → <b>tokri</b> → + tokri 92 + 44 + 19 + 13 = 168; − tokri 31 + 29 = 60 → <mark>108</mark> <small>MTS · 4 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 76 × 2 − (33 + 15) + 58 − 49 + 27 → <b>tokri</b> → + tokri 152 + 58 + 27 = 237; − tokri 48 + 49 = 97 → <mark>140</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 91 − 33 + 42 ÷ 6 + (18 of 3) − 29 + 22 → <b>tokri</b> → + tokri 91 + 7 + 54 + 22 = 174; − tokri 33 + 29 = 62 → <mark>112</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 83 + 46 ÷ 2 − (12 of 3) + 21 − 18 + 32 → <b>tokri</b> → + tokri 83 + 23 + 21 + 32 = 159; − tokri 36 + 18 = 54 → <mark>105</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 55 + 61 − 43 + (28 + 19) × 2 − 57 → <b>tokri</b> → + tokri 55 + 61 + 94 = 210; − tokri 43 + 57 = 100 → <mark>110</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 74 − 48 + 39 of 2 + 27 ÷ 3 − (18 × 1) + 16 → <b>tokri</b> → + tokri 74 + 78 + 9 + 16 = 177; − tokri 48 + 18 = 66 → <mark>111</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 47 + 58 − 39 + 66 × 2 − (29 + 12) → <b>tokri</b> → + tokri 47 + 58 + 132 = 237; − tokri 39 + 41 = 80 → <mark>157</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 71 + 36 − (28 + 14) + 95 − 53 + 24 → <b>tokri</b> → + tokri 71 + 36 + 95 + 24 = 226; − tokri 42 + 53 = 95 → <mark>131</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 91 + (28 × 1) − 34 + 29 + 17 ÷ 1 − 26 → <b>tokri</b> → + tokri 91 + 28 + 29 + 17 = 165; − tokri 34 + 26 = 60 → <mark>105</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 93 + 74 − 58 + (33 + 18) × 2 − 102 → <b>tokri</b> → + tokri 93 + 74 + 102 = 269; − tokri 58 + 102 = 160 → <mark>109</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 88 + 26 − 42 + (17 × 2) + 33 ÷ 3 − 14 → <b>tokri</b> → + tokri 88 + 26 + 34 + 11 = 159; − tokri 42 + 14 = 56 → <mark>103</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 91 − 49 + 84 − (27 + 21) + 38 × 2 → <b>tokri</b> → + tokri 91 + 84 + 76 = 251; − tokri 49 + 48 = 97 → <mark>154</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 84 + 47 − 23 + 19 × 1 + (26 × 1) − 39 → <b>tokri</b> → + tokri 84 + 47 + 19 + 26 = 176; − tokri 23 + 39 = 62 → <mark>114</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 96 + 58 − 63 + (35 + 17) × 2 − 89 → <b>tokri</b> → + tokri 96 + 58 + 104 = 258; − tokri 63 + 89 = 152 → <mark>106</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 72 + 28 − (22 ÷ 2) + 33 × 1 + 19 of 1 − 16 → <b>tokri</b> → + tokri 72 + 28 + 33 + 19 = 152; − tokri 11 + 16 = 27 → <mark>125</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 72 + 18 − (26 + 17) + 44 × 2 − 33 → <b>tokri</b> → + tokri 72 + 18 + 88 = 178; − tokri 43 + 33 = 76 → <mark>102</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 79 + 28 − 44 + 17 × 2 + (33 ÷ 3) + 19 → <b>tokri</b> → + tokri 79 + 28 + 34 + 11 + 19 = 171; − tokri 44 = 44 → <mark>127</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 48 + (72 + 16) − 34 × 2 + 19 + 11 → <b>tokri</b> → + tokri 48 + 88 + 19 + 11 = 166; − tokri 68 = 68 → <mark>98</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 99 − 41 + 18 × 2 + (33 ÷ 3) − 22 + 16 → <b>tokri</b> → + tokri 99 + 36 + 11 + 16 = 162; − tokri 41 + 22 = 63 → <mark>99</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 94 + 61 − 38 + (27 + 21) × 2 − 91 → <b>tokri</b> → + tokri 94 + 61 + 96 = 251; − tokri 38 + 91 = 129 → <mark>122</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 86 + 33 − (29 ÷ 1) + 22 × 1 + 44 − 16 → <b>tokri</b> → + tokri 86 + 33 + 22 + 44 = 185; − tokri 29 + 16 = 45 → <mark>140</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 62 + 71 − 49 + 34 × 2 − (33 + 14) → <b>tokri</b> → + tokri 62 + 71 + 68 = 201; − tokri 49 + 47 = 96 → <mark>105</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 93 − 46 + 72 − (25 + 18) + 33 × 2 → <b>tokri</b> → + tokri 93 + 72 + 66 = 231; − tokri 46 + 43 = 89 → <mark>142</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 83 + (19 × 2) − 44 + 37 ÷ 1 + 26 − 21 → <b>tokri</b> → + tokri 83 + 38 + 37 + 26 = 184; − tokri 44 + 21 = 65 → <mark>119</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 69 + (26 × 2) − 44 + 31 − 18 + 42 ÷ 2 → <b>tokri</b> → + tokri 69 + 52 + 31 + 21 = 173; − tokri 44 + 18 = 62 → <mark>111</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 85 + 69 − 72 + (41 + 28) × 2 − 111 → <b>tokri</b> → + tokri 85 + 69 + 138 = 292; − tokri 72 + 111 = 183 → <mark>109</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 87 + 23 − (48 ÷ 6) + 29 × 1 − 16 + 18 → <b>tokri</b> → + tokri 87 + 23 + 29 + 18 = 157; − tokri 8 + 16 = 24 → <mark>133</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 68 + 91 − 62 + (43 + 26) − 81 + 37 → <b>tokri</b> → + tokri 68 + 91 + 69 + 37 = 265; − tokri 62 + 81 = 143 → <mark>122</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 67 + 42 ÷ 6 + 33 of 1 − 18 + 24 × 2 − (17) → <b>tokri</b> → + tokri 67 + 7 + 33 + 48 = 155; − tokri 18 + 17 = 35 → <mark>120</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 86 − 42 + 97 − (27 + 22) + 49 × 2 → <b>tokri</b> → + tokri 86 + 97 + 98 = 281; − tokri 42 + 49 = 91 → <mark>190</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 87 + (29 × 1) − 36 + 33 ÷ 3 + 14 − 18 → <b>tokri</b> → + tokri 87 + 29 + 11 + 14 = 141; − tokri 36 + 18 = 54 → <mark>87</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 68 + 92 − 41 + (37 + 15) × 2 − 88 → <b>tokri</b> → + tokri 68 + 92 + 104 = 264; − tokri 41 + 88 = 129 → <mark>135</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 88 + (19 × 1) − 33 + 28 + 44 ÷ 2 − 12 → <b>tokri</b> → + tokri 88 + 19 + 28 + 22 = 157; − tokri 33 + 12 = 45 → <mark>112</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 83 + (82 − 3) − 12 + 61 − 54 + 98 − 11 → <b>tokri</b> → + tokri 83 + 79 + 61 + 98 = 321; − tokri 12 + 54 + 11 = 77 → <mark>244</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 45 + 68 − (25 + 17) + 96 × 2 − 48 → <b>tokri</b> → + tokri 45 + 68 + 192 = 305; − tokri 42 + 48 = 90 → <mark>215</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 78 + 25 × 2 − (36 ÷ 3) + 44 − 17 + 11 → <b>tokri</b> → + tokri 78 + 50 + 44 + 11 = 183; − tokri 12 + 17 = 29 → <mark>154</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 91 + 45 − (33 + 26) + 27 × 2 − 19 → <b>tokri</b> → + tokri 91 + 45 + 54 = 190; − tokri 59 + 19 = 78 → <mark>112</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 79 + 25 − 33 + (14 × 2) + 18 − 26 + 31 → <b>tokri</b> → + tokri 79 + 25 + 28 + 18 + 31 = 181; − tokri 33 + 26 = 59 → <mark>122</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 61 + 88 − 24 × 3 + (16 + 8) → <b>tokri</b> → + tokri 61 + 88 + 24 = 173; − tokri 72 = 72 → <mark>101</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 44 + 78 − 62 + (35 + 16) × 2 − 81 → <b>tokri</b> → + tokri 44 + 78 + 102 = 224; − tokri 62 + 81 = 143 → <mark>81</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 65 − 27 + 39 ÷ 3 + (24 of 2) − 13 + 19 → <b>tokri</b> → + tokri 65 + 13 + 48 + 19 = 145; − tokri 27 + 13 = 40 → <mark>105</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 93 + 36 − 29 + 18 + 42 ÷ 6 + 27 → <b>tokri</b> → + tokri 93 + 36 + 18 + 7 + 27 = 181; − tokri 29 = 29 → <mark>152</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 89 + 57 − 43 + (25 + 18) × 2 − 66 → <b>tokri</b> → + tokri 89 + 57 + 86 = 232; − tokri 43 + 66 = 109 → <mark>123</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 77 + 28 of 2 − 36 + 44 ÷ 4 + (13 × 2) − 21 → <b>tokri</b> → + tokri 77 + 56 + 11 + 26 = 170; − tokri 36 + 21 = 57 → <mark>113</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 64 + 97 − 61 + (34 + 22) × 2 − 99 → <b>tokri</b> → + tokri 64 + 97 + 112 = 273; − tokri 61 + 99 = 160 → <mark>113</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 75 + 68 − 47 + (32 + 18) − 44 + 29 → <b>tokri</b> → + tokri 75 + 68 + 50 + 29 = 222; − tokri 47 + 44 = 91 → <mark>131</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 78 + 42 − (27 of 2) + 35 ÷ 5 + 18 × 2 − 24 → <b>tokri</b> → + tokri 78 + 42 + 7 + 36 = 163; − tokri 54 + 24 = 78 → <mark>85</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 61 + (16 of 2) − 18 + 36 ÷ 6 + 25 × 2 − 43 → <b>tokri</b> → + tokri 61 + 32 + 6 + 50 = 149; − tokri 18 + 43 = 61 → <mark>88</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40 × 94 − 61 + 78 − 30 → <b>tokri</b> → + tokri 3760 + 78 = 3838; − tokri 61 + 30 = 91 → <mark>3747</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 84 − 51 + 67 − (34 + 22) + 43 × 2 → <b>tokri</b> → + tokri 84 + 67 + 86 = 237; − tokri 51 + 56 = 107 → <mark>130</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 66 − 48 ÷ 6 + 33 of 2 − 17 + (29 of 1) → <b>tokri</b> → + tokri 66 + 66 + 29 = 161; − tokri 8 + 17 = 25 → <mark>136</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 76 + 41 − 24 + 38 ÷ 2 + (27 of 1) − 36 → <b>tokri</b> → + tokri 76 + 41 + 19 + 27 = 163; − tokri 24 + 36 = 60 → <mark>103</mark> <i>(key 119 galat ⚠)</i> <small>MTS · 5 Feb 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key notes (Type 1)</span>
+    <b>GD 8 May 2026 (Shift 3):</b> 39 + 33 − (27 of 2) + 44 ÷ 4 + 18 of 2 − 36 seedha <b>29</b> aata hai (+ tokri 39 + 33 + 11 + 36 = 119; − tokri 54 + 36 = 90). 29 kisi option mein nahi. Key 79 kehti hai, jo kisi bhi saaf reading se nahi aata. Sawaal chhapne mein galat hai.<br>
+    <b>MTS 5 Feb 2025 (Shift 3):</b> 76 + 41 − 24 + 38 ÷ 2 + 27 − 36 = <b>103</b>, aur 103 option (C) mein hai. Key ka 119 galat hai.<br>
+    <b>Bank text ki galti (key sahi):</b> teen sawaalon mein ek chinh ud kar "+" ban gaya. MTS 5 Feb (Shift 1) mein "42 + 6" asal mein <b>42 ÷ 6</b> hai (tab 112 aata hai). MTS 10 Feb (Shift 1) mein "19 + 1" asal mein <b>19 × 1</b> (tab 114). MTS 10 Feb (Shift 2) mein "(33 + 3)" asal mein <b>(33 ÷ 3)</b> (tab 127). Upar list mein sahi wala roop likha hai.
+  </div>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Decimal: jodna, guna, bhaag (18 Qs)</h3>
+  <p><b>Samjho:</b> decimal se darr tab lagta hai jab point ki jagah bhool jaate hain. Teen chhote niyam:</p>
+  <ul>
+    <li><b>Jodna:</b> point ke neeche point rakho (column). Khaali jagah mein 0 bhar do.</li>
+    <li><b>Guna:</b> point hata kar seedha guna karo. Phir dono numbers ke decimal places jod kar utne place peeche point lagao. 0.007 × 0.005: 7 × 5 = 35, places 3 + 3 = 6 → 0.000035.</li>
+    <li><b>Bhaag:</b> upar-neeche dono ko 10, 100 … se guna karke decimal mita do. 0.12/0.3 = 12/30 = 0.4.</li>
+  </ul>
+  <div class="box"><span class="k">Worked · 0.08/0.4 − 0.024/0.6 <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small></span>
+    <b>Method:</b> decimal shift · <i>~10 sec</i><br>
+    0.08/0.4 = 0.8/4 = 0.2. 0.024/0.6 = 0.24/6 = 0.04.<br>0.2 − 0.04 = <mark>0.16</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 150 + 15.15 + 1.515 + 0.1515 <span class="tag p">PYQ</span> <small>MTS · 17 Feb 2025</small></span>
+    <b>Method:</b> column (unit digit check) · <i>~15 sec</i><br>
+    Point ke neeche point: 150.0000 + 15.1500 + 1.5150 + 0.1515.<br>Aakhri digit sirf 0.1515 se aata hai → answer 5 par khatam hoga: options mein sirf 166.8165 (aur 166.8166 nahi). Jod: <mark>166.8165</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 12.1 − (11.85 − 5.45 − 4.60) → <b>bracket pehle</b> → bracket = 11.85 − 10.05 = 1.8 → 12.1 − 1.8 → <mark>10.3</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 10.5 − (9.75 − 4.25 − 3.50) → <b>bracket pehle</b> → 9.75 − 7.75 = 2 → 10.5 − 2 → <mark>8.5</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.4 × 0.4 + 0.6 − 0.34 → <b>× pehle</b> → 0.16 + 0.6 − 0.34 → <mark>0.42</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 245.36 + 12.475 + 98.24 → <b>column</b> → aakhri digit 5 (sirf 12.475 se) → 356.075 → <mark>356.075</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.0007 + 0.07 + 0.007 + 0.7 → <b>column</b> → har place par ek 7: 0.7777 → <mark>0.7777</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.007 × 0.005 → <b>places jodo</b> → 35, places 3 + 3 = 6 → <mark>0.000035</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 412.58 + 23.415 + 64.007 → <b>column</b> → aakhri digit 2 (sirf 64.007 aur 23.415 ka 5 + 7 = 12) → 500.002 → <mark>500.002</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 470 + 47.008 + 4.7008 + 0.47008 → <b>column</b> → aakhri digit 8 → options mein 522.17888 hi → <mark>522.17888</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.12/0.3 − 0.015/0.5 → <b>decimal shift</b> → 1.2/3 = 0.4, 0.15/5 = 0.03 → 0.4 − 0.03 → <mark>0.37</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.12/0.3 + 0.015/0.5 → <b>decimal shift</b> → 0.4 + 0.03 → <mark>0.43</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.008/0.04 + 0.0024/0.06 → <b>decimal shift</b> → 0.8/4 = 0.2, 0.24/6 = 0.04 → <mark>0.24</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.36 ÷ 0.00036 → <b>decimal shift</b> → dono ko 100000 se guna: 36000 ÷ 36 → <mark>1000</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> (0.64 ÷ 4) ÷ (1.28 − 0.16) → <b>decimal shift</b> → 0.16 ÷ 1.12 = 16/112 → <mark>1/7</mark> <small>SP-XIV Grad · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> [(0.5 × 0.5) + (0.5 × 0.05)] ÷ 0.1375 → <b>common nikaalo</b> → 0.5 × (0.5 + 0.05) = 0.275 → 0.275/0.1375 → <mark>2</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> (0.15 × 0.15 + 0.0075) ÷ (0.1 × 0.1 + 0.005) → <b>decimal shift</b> → 0.0225 + 0.0075 = 0.03; 0.01 + 0.005 = 0.015 → 0.03/0.015 → <mark>2.0</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 × 0.5 + 3.5 × 0.2 + 5 × 0.3 (bank mein "+" ki jagah "÷" chhapa) → <b>× pehle</b> → 2 + 0.7 + 1.5 → <mark>4.2</mark> <small>MTS · 5 Feb 2025</small></li>
+  </ul>
+  <p><span class="tag x">CGL+</span> 1/8 = 0.125, 3/8 = 0.375, 5/8 = 0.625, 7/8 = 0.875. Ye chaar yaad ho toh "0.625 litre = ? ml" jaise sawaal bina likhe ho jaate hain.</p>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Square root, cube root aur squares (32 Qs)</h3>
+  <p><b>Samjho:</b> √ ka matlab: kaunsa number khud se guna hokar ye bana? Decimal mein ek seedha niyam: <b>√ ke andar jitne decimal places, bahar uske aadhe</b>. ∛ mein ek-tihaai. Isliye andar places hamesha even (√) ya 3 ka guna (∛) hone chahiye.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Decimal places in square roots. 210.25 root is 14.5. 0.00021025 has 8 decimal places, so its root has 4 places: 0.0145. 0.0225 has 4 places so root 0.15 has 2. Cube root of 3.375 has 3 places inside so 1 place outside: 1.5.">
+      <text x="350" y="22" text-anchor="middle" class="lbl">Andar ke places ÷ 2 = bahar ke places (√)   ·   ÷ 3 (∛)</text>
+      <rect x="30" y="44" width="300" height="80" rx="10" class="paper"/><rect x="30" y="44" width="300" height="80" rx="10" class="chs" style="stroke-width:1.5"/>
+      <text x="180" y="70" text-anchor="middle" class="lbl">√0.00021025</text>
+      <text x="180" y="92" text-anchor="middle" class="sm">digits 21025 → √ = 145 · places 8</text>
+      <text x="180" y="114" text-anchor="middle" class="lbl chtext">8 ÷ 2 = 4 places → 0.0145</text>
+      <rect x="370" y="44" width="300" height="80" rx="10" class="paper"/><rect x="370" y="44" width="300" height="80" rx="10" class="chs" style="stroke-width:1.5"/>
+      <text x="520" y="70" text-anchor="middle" class="lbl">√0.0225</text>
+      <text x="520" y="92" text-anchor="middle" class="sm">digits 225 → √ = 15 · places 4</text>
+      <text x="520" y="114" text-anchor="middle" class="lbl chtext">4 ÷ 2 = 2 places → 0.15</text>
+      <rect x="30" y="144" width="300" height="80" rx="10" class="paper"/><rect x="30" y="144" width="300" height="80" rx="10" class="chs" style="stroke-width:1.5"/>
+      <text x="180" y="170" text-anchor="middle" class="lbl">∛3.375</text>
+      <text x="180" y="192" text-anchor="middle" class="sm">digits 3375 → ∛ = 15 · places 3</text>
+      <text x="180" y="214" text-anchor="middle" class="lbl chtext">3 ÷ 3 = 1 place → 1.5</text>
+      <rect x="370" y="144" width="300" height="80" rx="10" class="paper"/><rect x="370" y="144" width="300" height="80" rx="10" class="chs" style="stroke-width:1.5"/>
+      <text x="520" y="170" text-anchor="middle" class="lbl">⁴√0.0081</text>
+      <text x="520" y="192" text-anchor="middle" class="sm">digits 81 = 3⁴ · places 4</text>
+      <text x="520" y="214" text-anchor="middle" class="lbl chtext">4 ÷ 4 = 1 place → 0.3</text>
+    </svg>
+    </div>
+    <figcaption>Pehle point bhool kar digits ka root nikaalo, phir places ka hisaab lagao. GD 9 May 2026 ka 0.00021025 wala sawaal yahi hai.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · √210.25 = 14.5 diya hai; √0.00021025 = ? <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small></span>
+    <b>Method:</b> places aadhe · <i>~5 sec</i><br>
+    Digits wahi (21025), toh root ke digits bhi wahi: 145.<br>0.00021025 mein 8 places → root mein 4 → <mark>0.0145</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · √10.89 − √0.1089 + √0.001089 − √0.00001089 − √0.0000001089 <span class="tag p">PYQ</span> <small>MTS · 5 Feb 2025</small></span>
+    <b>Method:</b> places aadhe + column · <i>~25 sec</i><br>
+    Sab ke digits 1089 = 33². Places 2, 4, 6, 8, 10 → roots 3.3, 0.33, 0.033, 0.0033, 0.00033.<br>Chhapi line ke chinh ( − + − − ) se: 3.3 − 0.33 + 0.033 − 0.0033 − 0.00033 = 2.99937. Ye kisi option mein nahi.<br>Key <mark>3.66663</mark> sab "+" lene par aata hai: 3.3 + 0.33 + 0.033 + 0.0033 + 0.00033. ⚠ Sawaal mein chinh galat chhape hain; exam mein 3.66663 lagao.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> √20.25 + √0.36 + √6.25 − √2.25 → <b>places aadhe</b> → 4.5 + 0.6 + 2.5 − 1.5 → <mark>6.1</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> x = √100 ÷ √25 + √64; 2x? → <b>÷ pehle</b> → 10 ÷ 5 + 8 = 10 → <mark>20</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> (√0.0169/1.3) × (0.18/√3.24) × (0.24/√0.0576) → <b>places aadhe</b> → 0.13/1.3 = 0.1, 0.18/1.8 = 0.1, 0.24/0.24 = 1 → <mark>0.01</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> √(0.1225/0.25) → <b>places aadhe</b> → 0.35/0.5 → <mark>0.7</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> √(0.81 × 0.04) → <b>alag-alag root</b> → 0.9 × 0.2 → <mark>0.18</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> √(1.44 × 0.0225) → <b>alag-alag root</b> → 1.2 × 0.15 → <mark>0.18</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> √(2.25 × 0.01) → <b>alag-alag root</b> → 1.5 × 0.1 → <mark>0.15</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> ∛3.375 × √0.81 → <b>places ÷ 3, ÷ 2</b> → 1.5 × 0.9 → <mark>1.35</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> ∛2.197 × √1.21 → <b>places ÷ 3, ÷ 2</b> → 1.3 × 1.1 → <mark>1.43</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> ∛0.512 × √2.25 → <b>places ÷ 3, ÷ 2</b> → 0.8 × 1.5 → <mark>1.2</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> √(√400 + √25) → <b>andar se bahar</b> → √(20 + 5) = √25 → <mark>5</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> (√0.09/0.6) × (0.4/√0.36) × (1.8/√0.36) → <b>places aadhe</b> → 0.3/0.6 = 1/2; 0.4/0.6 = 2/3; 1.8/0.6 = 3 → 1/2 × 2/3 × 3 → <mark>1</mark> <small>GD · 28 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> √(18² + 8 × 8 − 5 × 22 + 11) → <b>tokri, phir √</b> → 324 + 64 + 11 − 110 = 289 → <mark>17</mark> <small>GD · 28 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> √(13² + 9 × 11 − 8 × 18 + 20) → <b>tokri, phir √</b> → 169 + 99 + 20 − 144 = 144 → <mark>12</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √0.09 + ∛0.125 + ⁴√0.0081 − √0.64 → <b>places ÷ 2, 3, 4</b> → 0.3 + 0.5 + 0.3 − 0.8 → <mark>0.3</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> √0.25 − (0.008)^(1/3) + √0.36 + (0.0256)^(1/4) → <b>power 1/3 = ∛, 1/4 = ⁴√</b> → 0.5 − 0.2 + 0.6 + 0.4 → <mark>1.3</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √506.25 = 22.5 diya; √0.00050625? → <b>places aadhe</b> → 8 places → 4: 0.0225 → <mark>0.0225</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √56.25 + √30.25 − √12.25 − √20.25 → <b>x5 ka square</b> → 7.5 + 5.5 − 3.5 − 4.5 → <mark>5</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √(7² × 3² × 5² × 6² × 4²) → <b>square ka root = number</b> → 7 × 3 × 5 × 6 × 4 = 105 × 24 → <mark>2520</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √x = 80/√4900; x? → <b>dono taraf square</b> → √x = 80/70 = 8/7 → x = 64/49 → <mark>64/49</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> X = √144 × √81 + √169; 2X? → <b>× pehle</b> → 12 × 9 + 13 = 121 → <mark>242</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> x = √144 × √81 + √169; x? → <b>× pehle</b> → 108 + 13 → <mark>121</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √0.000625 fraction mein → <b>places aadhe</b> → 6 places → 3: 0.025 = 25/1000 → <mark>1/40</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √64009 → <b>unit digit + bracket</b> → 250² = 62500, 260² = 67600; unit 9 → 3 ya 7 → 253 (253² = 64009) → <mark>253</mark> <small>SP-XIV 10th · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> √0.000324 → <b>places aadhe</b> → √324 = 18, 6 places → 3 → <mark>0.018</mark> <small>SP-XIV 10th · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> √169 → <b>square yaad</b> → 13² → <mark>13</mark> <small>SP-XIV 10th · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 27 × 27 → <b>(a + b)²</b> → (30 − 3)² = 900 − 180 + 9 → <mark>729</mark> <small>SP-XIV 10th · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 19² → <b>(a − b)²</b> → (20 − 1)² = 400 − 40 + 1 → <mark>361</mark> <small>SP-XIV 10th · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 71² → <b>(a + b)²</b> → 4900 + 140 + 1 → <mark>5041</mark> <small>SP-XIV 10th · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60 × (35² + 25² − 1000) → <b>squares yaad</b> → 1225 + 625 − 1000 = 850 → 60 × 850 → <mark>51000</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √[(0.064 × 0.256)/(0.004 × 0.16)] → <b>decimal shift</b> → 0.064/0.004 = 16, 0.256/0.16 = 1.6 → √25.6 ≈ 5.06 → <mark>5.05 (sabse paas) ⚠ key 5.89</mark> <small>GD · 18 May 2026</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>GD 18 May 2026 (Shift 2): √[(0.064 × 0.256)/(0.004 × 0.16)] = √25.6 ≈ <b>5.06</b>. Options mein 5.05 sabse paas hai. Key 5.89 deti hai, jo galat hai (5.89² ≈ 34.7, 25.6 nahi).</div>
+  <div class="trick"><b>Trick:</b> bade number ka √ (jaise 64009): (1) aakhri digit 9 → root ka aakhri digit 3 ya 7. (2) Do square ke beech bracket karo: 250² = 62500 < 64009 < 67600 = 260². (3) 253 ya 257? 255² = 65025 se chhota hai, toh 253.</div>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Number par identity: (a ± b)², a² − b², cube (31 Qs)</h3>
+  <p><b>Samjho:</b> jab sawaal mein (412 − 388)² + 4 × 412 × 388 jaisa bada hisaab dikhe, toh examiner chahta hai ki tum identity pehchano. Square karne baithe toh 2 minute jaayenge. Shape dekho, formula lagao.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 330" role="img" aria-label="Which identity: shape of the question on the left, the shortcut on the right. (a minus b) squared plus 4ab equals (a plus b) squared. (a plus b) squared minus 4ab equals (a minus b) squared. 2 times (a squared plus b squared) minus (a plus b) squared equals (a minus b) squared. a squared minus b squared over (a minus b) gives a plus b. a cubed plus b cubed plus 3ab(a plus b) equals (a plus b) cubed. a to the 4 minus b to the 4 over a squared minus b squared equals a squared plus b squared.">
+      <text x="175" y="22" text-anchor="middle" class="lbl">Sawaal ki shape</text>
+      <text x="530" y="22" text-anchor="middle" class="lbl">Seedha likho</text>
+      <g>
+        <rect x="20" y="34" width="310" height="38" rx="8" class="chf"/><text x="175" y="58" text-anchor="middle">(a − b)² + 4ab</text>
+        <rect x="380" y="34" width="300" height="38" rx="8" class="paper"/><rect x="380" y="34" width="300" height="38" rx="8" class="chs" style="stroke-width:1.5"/><text x="530" y="58" text-anchor="middle" class="lbl">(a + b)²</text>
+        <path d="M332 53 L376 53" class="ln" style="stroke-width:2;fill:none"/>
+      </g>
+      <g>
+        <rect x="20" y="82" width="310" height="38" rx="8" class="chf"/><text x="175" y="106" text-anchor="middle">(a + b)² − 4ab</text>
+        <rect x="380" y="82" width="300" height="38" rx="8" class="paper"/><rect x="380" y="82" width="300" height="38" rx="8" class="chs" style="stroke-width:1.5"/><text x="530" y="106" text-anchor="middle" class="lbl">(a − b)²</text>
+        <path d="M332 101 L376 101" class="ln" style="stroke-width:2;fill:none"/>
+      </g>
+      <g>
+        <rect x="20" y="130" width="310" height="38" rx="8" class="chf"/><text x="175" y="154" text-anchor="middle">2(a² + b²) − (a + b)²</text>
+        <rect x="380" y="130" width="300" height="38" rx="8" class="paper"/><rect x="380" y="130" width="300" height="38" rx="8" class="chs" style="stroke-width:1.5"/><text x="530" y="154" text-anchor="middle" class="lbl">(a − b)²</text>
+        <path d="M332 149 L376 149" class="ln" style="stroke-width:2;fill:none"/>
+      </g>
+      <g>
+        <rect x="20" y="178" width="310" height="38" rx="8" class="chf"/><text x="175" y="202" text-anchor="middle">(a² − b²) ÷ (a − b)  ya  ÷ (a + b)</text>
+        <rect x="380" y="178" width="300" height="38" rx="8" class="paper"/><rect x="380" y="178" width="300" height="38" rx="8" class="chs" style="stroke-width:1.5"/><text x="530" y="202" text-anchor="middle" class="lbl">(a + b)  ya  (a − b)</text>
+        <path d="M332 197 L376 197" class="ln" style="stroke-width:2;fill:none"/>
+      </g>
+      <g>
+        <rect x="20" y="226" width="310" height="38" rx="8" class="chf"/><text x="175" y="250" text-anchor="middle">a³ + b³ + 3ab(a + b)</text>
+        <rect x="380" y="226" width="300" height="38" rx="8" class="paper"/><rect x="380" y="226" width="300" height="38" rx="8" class="chs" style="stroke-width:1.5"/><text x="530" y="250" text-anchor="middle" class="lbl">(a + b)³</text>
+        <path d="M332 245 L376 245" class="ln" style="stroke-width:2;fill:none"/>
+      </g>
+      <g>
+        <rect x="20" y="274" width="310" height="38" rx="8" class="chf"/><text x="175" y="298" text-anchor="middle">(a⁴ − b⁴) ÷ (a² − b²)</text>
+        <rect x="380" y="274" width="300" height="38" rx="8" class="paper"/><rect x="380" y="274" width="300" height="38" rx="8" class="chs" style="stroke-width:1.5"/><text x="530" y="298" text-anchor="middle" class="lbl">a² + b²</text>
+        <path d="M332 293 L376 293" class="ln" style="stroke-width:2;fill:none"/>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye chheh shapes is bank ke 31 sawaalon mein baar-baar aati hain. Left wali shape dikhte hi right wala likh do.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · (412 − 388)² + 4 × 412 × 388 <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small></span>
+    <b>Method:</b> (a − b)² + 4ab = (a + b)² · <i>~5 sec</i><br>
+    a + b = 412 + 388 = 800.<br>800² = <mark>6,40,000</mark>. Koi square nahi kiya, bas jod kar 8² = 64 ke aage chaar zero.
+  </div>
+  <div class="box"><span class="k">Worked · [(6.203)² − (5.797)²] ÷ 0.812 <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small></span>
+    <b>Method:</b> a² − b² = (a + b)(a − b) · <i>~10 sec</i><br>
+    a + b = 12, a − b = 0.406.<br>12 × 0.406 ÷ 0.812 = 12 × ½ = <mark>6</mark>. (0.406 ka dugna 0.812: yahi examiner ka ishara tha.)
+  </div>
+  <div class="box"><span class="k">Worked · [(2.5)³ − (1.5)³ − 0.25] ÷ [(2.5)² + (1.5)² − 7.5] <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small></span>
+    <b>Method:</b> a³ − b³ = (a − b)(a² + ab + b²) · <i>~25 sec</i><br>
+    a − b = 1, toh a³ − b³ = a² + ab + b² = 6.25 + 3.75 + 2.25 = 12.25. Upar: 12.25 − 0.25 = 12.<br>Neeche: 6.25 + 2.25 − 7.5 = 1. Answer <mark>12</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> [(3.452)² − (2.948)²] ÷ 0.504 → <b>a² − b²</b> → (6.4)(0.504) ÷ 0.504 → <mark>6.4</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> (49² − 42²) ÷ 7 → <b>a² − b²</b> → 91 × 7 ÷ 7 → <mark>91</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (92.48)² − (47.52)² → <b>a² − b²</b> → 140 × 44.96 → <mark>6294.40</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 55² + 48² − 51² − 42² → <b>a² − b² do baar</b> → (55² − 51²) + (48² − 42²) = 106 × 4 + 90 × 6 = 424 + 540 → <mark>964</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (325 − 275)² + 4 × 325 × 275 → <b>(a + b)²</b> → 600² → <mark>3,60,000</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> (460 + 240)² − 4 × 460 × 240 → <b>(a − b)²</b> → 220² → <mark>48,400</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> (7.75 + 2.75)² − 4 × 7.75 × 2.75 → <b>(a − b)²</b> → 5² → <mark>25</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 195 × 195 + 105 × 105 + 2 × 195 × 105 → <b>(a + b)²</b> → 300² → <mark>90,000</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> (380 + 120)² − (380 − 120)² → <b>(a + b)² − (a − b)² = 4ab</b> → 4 × 380 × 120 = 760 × 240 → <mark>760 × 240</mark> <small>GD · 25 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> [(12.4 + 3.6)² − (12.4 − 3.6)²] ÷ (12.4 × 3.6) → <b>4ab ÷ ab</b> → <mark>4</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> √[(46 + 38)² − 4 × 46 × 38] → <b>(a − b)²</b> → √(8²) → <mark>8</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (15.6 − 4.4)² + 4 × 15.6 × 4.4 → <b>(a + b)²</b> → 20² → <mark>400</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (512 + 288)² − 4 × 512 × 288 → <b>(a − b)²</b> → 224² = 50176 → <mark>50176</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (395 + 195)² − 4 × 395 × 195 → <b>(a − b)²</b> → 200² → <mark>40,000</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2[(425)² + (375)²] − (425 + 375)² → <b>2(a² + b²) − (a + b)² = (a − b)²</b> → 50² → <mark>2,500</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2[(620)² + (580)²] − (620 + 580)² → <b>(a − b)²</b> → 40² → <mark>1,600</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2[(710)² + (690)²] − (710 + 690)² → <b>(a − b)²</b> → 20² → <mark>400</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> [(4.2 + 3.8)² + (4.2 − 3.8)²] ÷ (4.2² + 3.8²) → <b>(a + b)² + (a − b)² = 2(a² + b²)</b> → <mark>2</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 15³ + 5³ + 3 × 15 × 5 × 20 → <b>(a + b)³</b> → 20³ → <mark>8,000</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 10³ + 6³ + 3 × 10 × 6 × 16 → <b>(a + b)³</b> → 16³ → <mark>4,096</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 60³ − 35³ − 3 × 60 × 35 × 25 → <b>(a − b)³</b> → 25³ → <mark>15,625</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> [8(4.5)³ − 1] ÷ (10² − 9) → <b>8a³ = (2a)³</b> → 9³ − 1 = 728; 728 ÷ 91 → <mark>8</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> [8(1.75)³ + 1] ÷ [(3.5)² − 2.5] → <b>a³ + 1 = (a + 1)(a² − a + 1)</b> → a = 3.5: (4.5)(12.25 − 3.5 + 1) ÷ 9.75 = 4.5 × 9.75 ÷ 9.75 → <mark>4.5</mark> <small>MTS · 4 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> [(0.7)⁴ − (0.3)⁴] ÷ [(0.7)² − (0.3)²] → <b>a² + b²</b> → 0.49 + 0.09 → <mark>0.58</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> [(0.6)⁴ − (0.1)⁴] ÷ [(0.6)² − (0.1)²] → <b>a² + b²</b> → 0.36 + 0.01 → <mark>0.37</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (√[(21 + 11) × (21 − 11)])² → <b>√ aur ² kat jaate</b> → 32 × 10 → <mark>320</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> [(3.5)³ − (0.5)³ − 8.75] ÷ [(3.5)² − (0.5)² − 3.5] (bank mein upar bhi ² chhapa) → <b>a³ − b³</b> → 42.875 − 0.125 − 8.75 = 34; 12.25 − 0.25 − 3.5 = 8.5 → 34 ÷ 8.5 → <mark>4</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> [(0.5)³ − (0.4)³] ÷ [(0.5)² + (0.4)²] → <b>a³ − b³</b> → 0.061 ÷ 0.41 ≈ 0.149 (agar neeche a² + ab + b² = 0.61 ho toh 0.1) → <mark>0.10 ⚠ key 0.09</mark> <small>MTS · 5 Feb 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key notes (Type 4)</span>
+    <b>MTS 5 Feb 2025 (Shift 1), (0.5)³ − (0.4)³ wala:</b> chhape roop se 0.061/0.41 ≈ 0.149, kisi option mein nahi. Standard sawaal mein neeche a² + ab + b² hota hai; tab answer 0.061/0.61 = <b>0.1</b> (option A). Key ka 0.09 kisi reading se nahi aata.<br>
+    <b>MTS 5 Feb 2025 (Shift 3), 3.5 aur 0.5 wala:</b> bank mein upar bhi (3.5)² − (0.5)² chhapa hai. Us roop se 3.25/8.5 ≈ 0.38 aata hai. Key 4 tabhi banti hai jab upar cubes hon: 34 ÷ 8.5 = 4. Exam mein 4 lagao.
+  </div>
+  <p><span class="tag x">CGL+</span> a³ + b³ + c³ − 3abc = (a + b + c)(a² + b² + c² − ab − bc − ca). Agar a + b + c = 0 ho toh a³ + b³ + c³ = 3abc. CGL mein ye bahut aata hai.</p>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>72 + 18 − (26 + 17) + 44 × 2 − 33 = ?</summary><p>+ tokri: 72 + 18 + 88 = 178. − tokri: 43 + 33 = 76. Answer 102.</p></details>
+    <details><summary>√0.0196 = ?</summary><p>√196 = 14. Places 4 → 2. Answer 0.14.</p></details>
+    <details><summary>(250 + 150)² − 4 × 250 × 150 = ?</summary><p>(a − b)² = 100² = 10,000.</p></details>
+    <details><summary>0.06 × 0.004 = ?</summary><p>6 × 4 = 24, places 2 + 3 = 5 → 0.00024.</p></details>
+    <details><summary>(0.8)⁴ − (0.2)⁴ ko (0.8)² − (0.2)² se bhaag do.</summary><p>a² + b² = 0.64 + 0.04 = 0.68.</p></details>
+  </div>
+</section>
+
+<section class="chap" id="msb-surd-frac">
+  <div class="eyebrow">Maths · 104 questions</div>
+  <h2>Simplification practice (2): surd, fraction, recurring decimal aur word problems</h2>
+  <div class="meta">MTS 2025, GD 2026, SP-XIV · sabse zyada: (a + √b)² ± (a − √b)², 1/(a + √b) + 1/(a − √b), aur "sabse bada fraction kaunsa"</div>
+
+  <div class="box"><span class="k">Surd ke 3 niyam (bas itna chahiye)</span>
+    <b>1.</b> √(a × b) = √a × √b. Isse √48 = √(16 × 3) = 4√3. Hamesha sabse bada perfect square bahar nikaalo.<br>
+    <b>2.</b> Sirf "like" surd jud sakte hain: 4√3 + 3√3 = 7√3. Lekin √a + √b ≠ √(a + b).<br>
+    <b>3.</b> (√a + √b)(√a − √b) = a − b. Isi se neeche ka √ gayab hota hai (rationalise).
+  </div>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Surd todo aur jodo: √48 + √27 − √12 (13 Qs)</h3>
+  <div class="box"><span class="k">Worked · √48 + √27 − √12 <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small></span>
+    <b>Method:</b> √ ko √3 mein todo · <i>~10 sec</i><br>
+    48 = 16 × 3 → 4√3. 27 = 9 × 3 → 3√3. 12 = 4 × 3 → 2√3.<br>4 + 3 − 2 = 5 → <mark>5√3</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · √98 m ka pipe 7 barabar tukdon mein; ek tukda rational ya irrational? <span class="tag p">PYQ</span> <small>SP-XIV 12th · 30 Jul 2025</small></span>
+    <b>Method:</b> √ todo · <i>~10 sec</i><br>
+    √98 = √(49 × 2) = 7√2. 7 tukde → har ek <mark>√2 m, irrational</mark>. (√2 kabhi p/q nahi banta.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> (√98 − √147) ÷ (√18 − √27) → <b>√ todo</b> → 7(√2 − √3) ÷ 3(√2 − √3) → <mark>7/3</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> (√8 + √50) ÷ √18 → <b>√ todo</b> → (2√2 + 5√2) ÷ 3√2 → <mark>7/3</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (√32 + √162) ÷ √18 → <b>√ todo</b> → (4√2 + 9√2) ÷ 3√2 → <mark>13/3</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √75 + √48 − √27 → <b>√ todo</b> → 5√3 + 4√3 − 3√3 → <mark>6√3</mark> <small>SP-XIV Grad · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> √32 + √18 − √8 → <b>√ todo</b> → 4√2 + 3√2 − 2√2 → <mark>5√2</mark> <small>SP-XIV Grad · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> √12 + √27 → <b>√ todo</b> → 2√3 + 3√3 → <mark>5√3</mark> <small>SP-XIV 12th · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> (3√5 + 2√20) − (√45 + 4√5) → <b>√ todo</b> → 3√5 + 4√5 − 3√5 − 4√5 → <mark>0</mark> <small>SP-XIV Grad · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> √84 × √3 → <b>√ jodo</b> → √252 = √(36 × 7) → <mark>6√7</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6√12 ÷ 3√2 → <b>√ todo</b> → 12√3 ÷ 3√2 = 4√(3/2) = 2√6 → <mark>2√6</mark> <small>SP-XIV 10th · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> (5√3 × √12) ÷ √2; nature? → <b>√ jodo</b> → 5 × 6 = 30 → 30/√2 = 15√2 → <mark>15√2, irrational</mark> <small>SP-XIV 10th · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Like surd kaunsa nahi: 2√5, −3√5, 4√34, ½√5 → <b>andar ka number dekho</b> → baaki sab √5 hain → <mark>4√34</mark> <small>SP-XIV 12th · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Har a ≠ b ke liye sach kya? → <b>(√a + √b)² kholo</b> → √a + √b ≠ √(a + b) → <mark>(√a + √b)² = a + b + 2√(ab)</mark> <small>SP-XIV 12th · 30 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · (a + √b)² aur (a − √b)² ka jod ya ghataav (19 Qs)</h3>
+  <p><b>Samjho:</b> do hi baatein yaad rakho. <b>Jod</b>: (x + y)² + (x − y)² = 2(x² + y²). Beech wala 2xy kat jaata hai. <b>Ghataav</b>: (x + y)² − (x − y)² = 4xy. Squares kat jaate hain. Kholne ki zaroorat hi nahi.</p>
+  <div class="box"><span class="k">Worked · (6 + √7)² − (6 − √7)² − 4√7 <span class="tag p">PYQ</span> <small>MTS · 19 Feb 2025</small></span>
+    <b>Method:</b> ghataav = 4xy · <i>~8 sec</i><br>
+    4 × 6 × √7 = 24√7. Phir 24√7 − 4√7 = <mark>20√7</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · (6 + √2)² + (6 − √2)² − 50 <span class="tag p">PYQ</span> <small>MTS · 17 Feb 2025</small></span>
+    <b>Method:</b> jod = 2(x² + y²) · <i>~8 sec</i><br>
+    2(36 + 2) = 76. 76 − 50 = <mark>26</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> (1 + √5)² − (1 − √5)² − 14√5 → <b>4xy</b> → 4√5 − 14√5 → <mark>−10√5</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> (3 + √2)² − (3 − √2)² − 12√2 → <b>4xy</b> → 12√2 − 12√2 → <mark>0</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (4 + √2)² − (4 − √2)² − 2√2 → <b>4xy</b> → 16√2 − 2√2 → <mark>14√2</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (√9 + √6)² − (√9 − √6)² → <b>4xy</b> → 4 × 3 × √6 → <mark>12√6</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (1 + √5)² + (1 − √5)² − 6 → <b>2(x² + y²)</b> → 2 × 6 − 6 → <mark>6</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (4 + √2)² + (4 − √2)² − 20 (bank mein dono jagah − chhapa) → <b>2(x² + y²)</b> → 2 × 18 − 20 → <mark>16</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> a = 3 + √2, b = 3 − √2: a² + b² → <b>2(x² + y²)</b> → 2(9 + 2) → <mark>22</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> a = 7 + √2, b = 7 − √2: a² + b² → <b>2(x² + y²)</b> → 2(49 + 2) → <mark>102</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> a = 5 + √6, b = 5 − √6: a² + b² → <b>2(x² + y²)</b> → 2(25 + 6) → <mark>62</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (√8 + √2)² + (√8 − √2)² → <b>2(x² + y²)</b> → 2(8 + 2) → <mark>20</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> [(√10 + √3)² + (√10 − √3)²] ÷ 26 → <b>2(x² + y²)</b> → 2 × 13 ÷ 26 → <mark>1</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> [(√10 + √13)² + (√10 − √13)²] ÷ 8√30 → <b>2(x² + y²)</b> → 46/(8√30) = 23/(4√30) = 23√30/120 → <mark>23√30/120</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> [(√5 + √2)² + (√5 − √2)²] ÷ 6√10 (bank mein dono − chhape) → <b>2(x² + y²)</b> → 14/(6√10) = 7/(3√10) → <mark>7√10/30</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (6 + 7√2)² = 134 + K√2; K? → <b>beech wala 2xy</b> → 2 × 6 × 7 = 84 (36 + 98 = 134 bhi milta hai) → <mark>84</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> (√3 + √5)² → <b>x² + y² + 2xy</b> → 3 + 5 + 2√15 → <mark>8 + 2√15</mark> <small>SP-XIV Grad · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> (√3 + √2)² → <b>x² + y² + 2xy</b> → 3 + 2 + 2√6 → <mark>5 + 2√6</mark> <small>SP-XIV 12th · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> x = (√5 + √3)/(√5 − √3) + (√5 − √3)/(√5 + √3) → <b>common neeche, jod = 2(x² + y²)</b> → [2(5 + 3)] ÷ (5 − 3) = 16 ÷ 2 → <mark>8</mark> <small>SP-XIV 12th · 30 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Neeche √ ho toh: 1/(a + √b) + 1/(a − √b) (9 Qs)</h3>
+  <p><b>Samjho:</b> do fraction jinke neeche (a + √b) aur (a − √b) hain, unka common neeche a² − b ban jaata hai (√ gayab). Jodne par upar 2a bachta hai. Isliye seedha <b>2a ÷ (a² − b)</b>. ~5 sec.</p>
+  <div class="box"><span class="k">Worked · 1/(8 + √7) + 1/(8 − √7) <span class="tag p">PYQ</span> <small>MTS · 6 Feb 2025</small></span>
+    <b>Method:</b> 2a ÷ (a² − b) · <i>~5 sec</i><br>
+    2 × 8 = 16. 64 − 7 = 57. Answer <mark>16/57</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · (3 − √7)/(3 + √7) = a + b√7; a, b? <span class="tag p">PYQ</span> <small>SP-XIV 12th · 26 Jul 2025</small></span>
+    <b>Method:</b> conjugate se guna · <i>~15 sec</i><br>
+    Upar-neeche (3 − √7) se guna: (3 − √7)² ÷ (9 − 7) = (16 − 6√7) ÷ 2 = 8 − 3√7.<br>Toh <mark>a = 8, b = −3</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 1/(6 + √3) + 1/(6 − √3) → <b>2a ÷ (a² − b)</b> → 12 ÷ 33 → <mark>4/11</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1/(9 + √6) + 1/(9 − √6) → <b>2a ÷ (a² − b)</b> → 18 ÷ 75 → <mark>6/25</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1/(5 − √6) + 1/(5 + √6) − 10/(25 − 6) → <b>2a ÷ (a² − b)</b> → 10/19 − 10/19 → <mark>0</mark> <small>SP-XIV Grad · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> (√6 + √2) + 1/(√6 − √2) → <b>conjugate</b> → 1/(√6 − √2) = (√6 + √2)/4 → 1 + ¼ → <mark>(5/4)(√6 + √2)</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> (√3 + √2)² ÷ (√3 − √2) → <b>conjugate</b> → neeche 3 − 2 = 1 → (5 + 2√6)(√3 + √2) = 5√3 + 5√2 + 6√2 + 4√3 → <mark>9√3 + 11√2</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> (3 + √8) + 1/(3 − √8) − (6 + 4√2) → <b>conjugate</b> → 1/(3 − √8) = 3 + √8 (kyunki 9 − 8 = 1) → 6 + 4√2 − 6 − 4√2 → <mark>0</mark> <small>SP-XIV Grad · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> (√3 − √2) ÷ 1/(√3 − √2) (bank roop) → <b>conjugate</b> → chhapa roop (√3 − √2)² = 5 − 2√6 deta hai; key tab banti hai jab sawaal (√3 − √2) + 1/[2(√3 + √2)] ho: (√3 − √2) + ½(√3 − √2) → <mark>(3/2)(√3 − √2) ⚠</mark> <small>MTS · 6 Feb 2025</small></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> a² − b = 1 ho (jaise 3 aur √8, 9 − 8 = 1), toh 1/(3 − √8) seedha 3 + √8. Bas chinh palat do. 2 + √3, 3 + 2√2, √2 + 1 sab aise hi hain.</div>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · √(x + 2√y) ko todna, aur surd ka kram (8 Qs)</h3>
+  <p><b>Samjho:</b> (√m + √n)² = m + n + 2√(mn). Toh √(x + 2√y) mein bas do number dhoondo jo <b>jod mein x</b> aur <b>guna mein y</b> hon. Answer √m + √n.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Square root of 20 plus 2 root 99. Find two numbers whose sum is 20 and product is 99: 11 and 9. So the answer is root 11 plus root 9, which is root 11 plus 3.">
+      <text x="350" y="26" text-anchor="middle" class="lbl">√(20 + 2√99) = ?</text>
+      <rect x="140" y="50" width="160" height="50" rx="10" class="chf"/>
+      <text x="220" y="72" text-anchor="middle" class="lbl">jod = 20</text>
+      <text x="220" y="92" text-anchor="middle" class="sm">2√ ke bahar wala</text>
+      <rect x="400" y="50" width="160" height="50" rx="10" class="chf"/>
+      <text x="480" y="72" text-anchor="middle" class="lbl">guna = 99</text>
+      <text x="480" y="92" text-anchor="middle" class="sm">2√ ke andar wala</text>
+      <path d="M220 102 L330 140" class="ln" style="stroke-width:2;fill:none"/>
+      <path d="M480 102 L370 140" class="ln" style="stroke-width:2;fill:none"/>
+      <rect x="250" y="140" width="200" height="40" rx="10" class="paper"/><rect x="250" y="140" width="200" height="40" rx="10" class="chs" style="stroke-width:2"/>
+      <text x="350" y="166" text-anchor="middle" class="lbl">11 aur 9</text>
+      <text x="350" y="208" text-anchor="middle" class="lbl chtext">Answer: √11 + √9 = √11 + 3</text>
+    </svg>
+    </div>
+    <figcaption>Jod aur guna wali jodi. MTS 16 Feb 2025 ka sawaal. 2 ke bina √y ho (jaise √(7 + 4√3)), toh pehle 4√3 = 2√12 likho.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · √(7 + 4√3) <span class="tag p">PYQ</span> <small>SP-XIV 12th · 29 Jul 2025</small></span>
+    <b>Method:</b> jod-guna jodi · <i>~10 sec</i><br>
+    4√3 = 2√12. Jod 7, guna 12 → 4 aur 3.<br>√4 + √3 = <mark>2 + √3</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · √3, ∛5, ⁶√20 ko chhote se bade kram mein <span class="tag p">PYQ</span> <small>SP-XIV 12th · 29 Aug 2025</small></span>
+    <b>Method:</b> sabka 6th root banao · <i>~15 sec</i><br>
+    LCM(2, 3, 6) = 6. √3 = ⁶√(3³) = ⁶√27. ∛5 = ⁶√(5²) = ⁶√25. ⁶√20 waisa hi.<br>20 < 25 < 27 → <mark>⁶√20, ∛5, √3</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> √(20 + 2√99) → <b>jod-guna jodi</b> → 11 + 9, 11 × 9 → <mark>√11 + 3</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √(17 + 2√72) → <b>jod-guna jodi</b> → 9 + 8, 9 × 8 → <mark>3 + √8</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √(26 + 2√165) → <b>jod-guna jodi</b> → 15 + 11, 15 × 11 → <mark>√15 + √11</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √(18 + 2√80) → <b>jod-guna jodi</b> → 10 + 8, 10 × 8 → <mark>√10 + √8</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √(5 + 2√6) → <b>jod-guna jodi</b> → 3 + 2, 3 × 2 → <mark>√3 + √2</mark> <small>SP-XIV 12th · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> √(5 + 2√6) + √(5 − 2√6) → <b>jod-guna jodi</b> → (√3 + √2) + (√3 − √2) → <mark>2√3</mark> <small>SP-XIV Grad · 24 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · Mixed fraction jodna, aur 1/3 + 1/15 + 1/35 wali series (15 Qs)</h3>
+  <p><b>Samjho:</b> mixed fraction mein <b>poore number alag, fraction alag</b>. 7 3/5 + 6 2/5 − 3 1/5 − 5 4/5: poore 7 + 6 − 3 − 5 = 5, fraction (3 + 2 − 1 − 4)/5 = 0. Answer 5. Improper fraction banane ki zaroorat nahi.</p>
+  <p><b>Series:</b> 1/3, 1/15, 1/35, 1/63, 1/99 ke neeche 1×3, 3×5, 5×7, 7×9, 9×11 chhupe hain. Aur 1/(n × (n + 2)) = ½ [1/n − 1/(n + 2)]. Jodne par beech ke sab kat jaate hain. Bas <b>½ (pehla − aakhri)</b> bachta hai.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Telescoping: 1/3 + 1/15 + 1/35 + 1/63 equals one half times (1 − 1/3 + 1/3 − 1/5 + 1/5 − 1/7 + 1/7 − 1/9). Middle terms cancel, leaving one half times (1 − 1/9) = 4/9.">
+      <text x="350" y="24" text-anchor="middle" class="lbl">1/3 + 1/15 + 1/35 + 1/63 = ?</text>
+      <text x="80" y="62" text-anchor="middle" class="sm">1/(1×3)</text>
+      <text x="250" y="62" text-anchor="middle" class="sm">1/(3×5)</text>
+      <text x="420" y="62" text-anchor="middle" class="sm">1/(5×7)</text>
+      <text x="590" y="62" text-anchor="middle" class="sm">1/(7×9)</text>
+      <rect x="20" y="76" width="120" height="40" rx="8" class="chf"/><text x="80" y="101" text-anchor="middle" class="lbl">1 − 1/3</text>
+      <rect x="190" y="76" width="120" height="40" rx="8" class="chf"/><text x="250" y="101" text-anchor="middle" class="lbl">1/3 − 1/5</text>
+      <rect x="360" y="76" width="120" height="40" rx="8" class="chf"/><text x="420" y="101" text-anchor="middle" class="lbl">1/5 − 1/7</text>
+      <rect x="530" y="76" width="120" height="40" rx="8" class="chf"/><text x="590" y="101" text-anchor="middle" class="lbl">1/7 − 1/9</text>
+      <text x="165" y="101" text-anchor="middle" class="lbl">+</text><text x="335" y="101" text-anchor="middle" class="lbl">+</text><text x="505" y="101" text-anchor="middle" class="lbl">+</text>
+      <path d="M118 128 Q165 152 212 128" class="chs" style="stroke-width:2;fill:none"/>
+      <path d="M288 128 Q335 152 382 128" class="chs" style="stroke-width:2;fill:none"/>
+      <path d="M458 128 Q505 152 552 128" class="chs" style="stroke-width:2;fill:none"/>
+      <text x="165" y="168" text-anchor="middle" class="sm">kat gaye</text><text x="335" y="168" text-anchor="middle" class="sm">kat gaye</text><text x="505" y="168" text-anchor="middle" class="sm">kat gaye</text>
+      <text x="350" y="208" text-anchor="middle" class="lbl chtext">½ × (1 − 1/9) = ½ × 8/9 = 4/9</text>
+    </svg>
+    </div>
+    <figcaption>Har tukda ½ (1/chhota − 1/bada). Beech ke saare kat jaate hain. MTS 17 Feb 2025 mein yahi 4/9 tha.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · 5 1/3 + 55 1/15 + 555 1/35 + 5555 1/63 <span class="tag p">PYQ</span> <small>MTS · 17 Feb 2025</small></span>
+    <b>Method:</b> poore alag + series · <i>~20 sec</i><br>
+    Poore: 5 + 55 + 555 + 5555 = 6170.<br>Fraction: ½ (1 − 1/9) = 4/9. Answer <mark>6170 4/9</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 7 2/7 + 9 1/3 − 5 3/4 <span class="tag p">PYQ</span> <small>GD · 28 Apr 2026</small></span>
+    <b>Method:</b> poore alag · <i>~20 sec</i><br>
+    Poore: 7 + 9 − 5 = 11. Fraction: 2/7 + 1/3 − 3/4, LCM 84 → (24 + 28 − 63)/84 = −11/84.<br>11 − 11/84 = <mark>10 73/84</mark>. (Fraction minus aaye toh poore mein se 1 udhaar lo.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 9 ½ + 99 1/6 + 999 1/12 + 9999 1/20 → <b>series 1/(n(n + 1))</b> → poore 11106; ½ + 1/6 + 1/12 + 1/20 = 1 − 1/5 → <mark>11106 4/5</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 750 1/3 + 750 1/15 + 750 1/35 + … + 750 1/99 → <b>series</b> → 5 term → poore 3750; ½ (1 − 1/11) = 5/11 → <mark>3750 5/11</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 2/3 + 44 2/3 + 444 2/3 + 4444 2/3 → <b>poore alag</b> → 4936 + 8/3 = 4936 + 2 2/3 → <mark>4938 2/3</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 10 2/3 + 3 1/6 − 5 5/6 − 2 1/3 → <b>poore alag</b> → poore 6; (4 + 1 − 5 − 2)/6 = −2/6 → 6 − 1/3 → <mark>5 2/3</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7 3/5 + 6 2/5 − 3 1/5 − 5 4/5 → <b>poore alag</b> → poore 5; (3 + 2 − 1 − 4)/5 = 0 → <mark>5</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 2/3 − 3 1/6 → <b>poore alag</b> → 2 + (4 − 1)/6 = 2 + ½ → <mark>2 1/2</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 5/8 + 4 7/12 (mixed mein) → <b>poore alag</b> → 7 + (15 + 14)/24 = 7 + 29/24 = 8 5/24 → <mark>8 5/24</mark> <small>SP-XIV 10th · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> (4 ½ + 2.75) × (5/8 − 0.25) ÷ (1 1/5 + 3/10) → <b>sab fraction mein</b> → 29/4 × 3/8 ÷ 3/2 = 29/4 × 3/8 × 2/3 → <mark>29/16</mark> <small>SP-XIV Grad · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 125/21 mixed mein → <b>bhaag</b> → 21 × 5 = 105, bacha 20 → <mark>5 20/21</mark> <small>SP-XIV 10th · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3.25 mixed mein → <b>decimal → fraction</b> → 0.25 = 1/4 → <mark>3 1/4</mark> <small>SP-XIV 10th · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2/3 ka reciprocal → <b>ulta karo</b> → <mark>3/2</mark> <small>SP-XIV 10th · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 2/3 + 15 1/3 − 1 1/6 → <b>poore alag</b> → poore 24; 2/3 + 1/3 − 1/6 = 5/6 → 24 5/6 → <mark>24 5/6 ⚠ key 21 5/6</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 99 1/5 + 99 1/5 + 90 1/5 → <b>poore alag</b> → 288 + 3/5 → <mark>288 3/5 ⚠ key 289 1/5</mark> <small>MTS · 5 Feb 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key notes (Type 9)</span>
+    <b>MTS 5 Feb 2025 (Shift 2):</b> 10 2/3 + 15 1/3 − 1 1/6 = <b>24 5/6</b>. Ye options mein nahi. Key 21 5/6 tab aata jab aakhri term 4 1/6 hota. Chhapai ki galti.<br>
+    <b>MTS 5 Feb 2025 (Shift 3):</b> 99 1/5 + 99 1/5 + 90 1/5 = <b>288 3/5</b>. Ye bhi options mein nahi. Key 289 1/5 kisi saaf reading se nahi aata. In dono mein method seekho, key mat ratto.
+  </div>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · Sabse bada, sabse chhota, kram (20 Qs)</h3>
+  <p><b>Samjho:</b> teen tareeke, sawaal dekh kar chuno.</p>
+  <ul>
+    <li><b>1 se kitna kam:</b> jab saare fraction 1 ke paas hon (4/5, 7/9, 9/11, 11/13). 1 − fraction ka gap dekho. Chhota gap = bada fraction.</li>
+    <li><b>Cross guna:</b> do fraction ke liye. 13/15 vs 17/20 → 13 × 20 = 260, 17 × 15 = 255 → 13/15 bada.</li>
+    <li><b>Decimal mein badlo:</b> jab ek number decimal ho ya mixed fraction hon. 29/6 = 4.83, 14/3 = 4.67.</li>
+  </ul>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Gap from 1 for four fractions, drawn to scale. 4/5 is 1/5 = 0.200 short of 1. 7/9 is 2/9 = 0.222 short. 9/11 is 2/11 = 0.182 short. 11/13 is 2/13 = 0.154 short. Smallest gap is 11/13, so it is the largest.">
+      <text x="350" y="22" text-anchor="middle" class="lbl">"1 se kitna kam?" (gap to scale: 0.25 = 400px)</text>
+      <text x="20" y="64" class="lbl">4/5</text><rect x="110" y="48" width="320" height="24" rx="4" class="chf"/><text x="440" y="66" class="sm">gap 1/5 = 0.200</text>
+      <text x="20" y="114" class="lbl">7/9</text><rect x="110" y="98" width="355" height="24" rx="4" class="chf"/><text x="475" y="116" class="sm">gap 2/9 = 0.222 (sabse bada gap)</text>
+      <text x="20" y="164" class="lbl">9/11</text><rect x="110" y="148" width="291" height="24" rx="4" class="chf"/><text x="411" y="166" class="sm">gap 2/11 = 0.182</text>
+      <text x="20" y="214" class="lbl">11/13</text><rect x="110" y="198" width="246" height="24" rx="4" style="fill:var(--ch)"/><text x="366" y="216" class="sm">gap 2/13 = 0.154 → sabse bada fraction</text>
+      <path d="M110 40 L110 232" class="ln" style="stroke-width:1.5"/>
+      <text x="110" y="245" text-anchor="middle" class="sm">1 yahan</text>
+    </svg>
+    </div>
+    <figcaption>Sab 1 ke paas hain, toh gap compare karo. MTS 16 Feb 2025: answer 11/13.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · Sabse bada: 4/5, 7/9, 9/11, 11/13 <span class="tag p">PYQ</span> <small>MTS · 16 Feb 2025</small></span>
+    <b>Method:</b> 1 se kitna kam · <i>~8 sec</i><br>
+    Gap: 1/5, 2/9, 2/11, 2/13. 2/13 sabse chhota (upar 2 same, neeche 13 sabse bada).<br>Toh <mark>11/13</mark> sabse bada.
+  </div>
+  <div class="box"><span class="k">Worked · Sabse chhota: 13/16, 11/14, 15/18, 8/11 <span class="tag p">PYQ</span> <small>GD · 19 May 2026</small></span>
+    <b>Method:</b> 1 se kitna kam · <i>~8 sec</i><br>
+    Gap: 3/16, 3/14, 3/18, 3/11. Upar sab 3. 3/11 sabse bada gap (neeche sabse chhota).<br>Toh <mark>8/11</mark> sabse chhota.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Sabse bada: 7/11, 11/16, 13/19, 15/22 → <b>1 se kitna kam</b> → gap 4/11 = 0.36, 5/16 = 0.31, 6/19 = 0.32, 7/22 = 0.32 → 11/16 ka gap chhota → <mark>11/16</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> Sabse bada: 11/12, 17/18, 23/24, 21/24 → <b>1 se kitna kam</b> → gap 1/12, 1/18, 1/24, 3/24 → <mark>23/24</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabse bada: 17/20, 21/26, 13/15, 9/14 → <b>decimal</b> → 0.85, 0.81, 0.867, 0.64 → <mark>13/15</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabse chhota: 2 2/5, 19/8, 22/9, 2 3/7 → <b>decimal</b> → 2.4, 2.375, 2.44, 2.43 → <mark>19/8</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 13/18 se chhota: 7/9, 5/6, 11/15, 17/24 → <b>decimal</b> → 13/18 = 0.722; 17/24 = 0.708 → <mark>17/24</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 17/24 se chhota: 13/18, 5/7, 7/11, 11/15 → <b>decimal</b> → 17/24 = 0.708; 7/11 = 0.636 → <mark>7/11</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5/6 se bada: 3/4, 2/3, 10/11, 4/5 → <b>1 se kitna kam</b> → 5/6 ka gap 1/6; 10/11 ka gap 1/11 chhota → <mark>10/11</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 84/108 se bada: 42/60, 70/80, 14/25, 21/40 → <b>pehle chhota karo</b> → 84/108 = 7/9 = 0.78; 70/80 = 0.875 → <mark>70/80</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 48/320 se bada: 72/500, 54/390, 24/170, 36/220 → <b>decimal</b> → 48/320 = 0.15; 36/220 = 0.164 (baaki 0.14 ke aas-paas) → <mark>36/220</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3/10 aur 7/10 ke beech: 8/9, 13/17, 10/11, 7/11 → <b>decimal</b> → 7/11 = 0.64; baaki 0.76 se upar → <mark>7/11</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1 3/5 aur 2 1/5 ke beech: 18/11, 14/9, 9/4, 14/6 → <b>decimal</b> → 1.6 se 2.2; 18/11 = 1.64 → <mark>18/11</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sahi tulna: 3/4 > 0.85, 0.5 < 1/3, 5/6 > 0.8, 0.25 > 1/2 → <b>decimal</b> → 5/6 = 0.833 → <mark>5/6 > 0.8</mark> <small>SP-XIV 10th · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ghatte kram: 4 1/3, 14/3, 4 1/2, 29/6 → <b>decimal</b> → 4.33, 4.67, 4.5, 4.83 → <mark>29/6 > 14/3 > 4 1/2 > 4 1/3</mark> <small>GD · 25 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Ghatte kram: 3 5/6, 25/6, 3 1/2, 22/6 → <b>sab /6 mein</b> → 23/6, 25/6, 21/6, 22/6 → <mark>25/6 > 3 5/6 > 22/6 > 3 1/2</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Badhte kram: 3 5/6, 26/6, 2 1/2, 22/6 → <b>sab /6 mein</b> → 23/6, 26/6, 15/6, 22/6 → <mark>2 1/2 < 22/6 < 3 5/6 < 26/6</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Badhte kram: 17/4, 4 1/3, 4 1/2, 19/4 → <b>decimal</b> → 4.25, 4.33, 4.5, 4.75 → <mark>17/4 < 4 1/3 < 4 1/2 < 19/4</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Badhte kram: 2 3/8, 20/7, 2 1/2, 37/14 → <b>decimal</b> → 2.375, 2.86, 2.5, 2.64 → <mark>2 3/8 < 2 1/2 < 37/14 < 20/7</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kiska jod 7/8: 1/8 + 1/2, 1/2 + 3/8, 1/2 + 1/4, 3/4 + 1/4 → <b>sab /8 mein</b> → 4/8 + 3/8 → <mark>1/2 + 3/8</mark> <small>MTS · 9 Feb 2025</small></li>
+  </ul>
+  <p><span class="tag x">CGL+</span> Jab upar-neeche dono barabar badhte hain (1/2, 2/3, 3/4, 4/5 …), toh fraction badhta jaata hai aur 1 ke paas jaata hai. Isliye 23/24 > 17/18 > 11/12.</p>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · Recurring decimal (bar wala) (6 Qs)</h3>
+  <p><b>Samjho:</b> 0.7̄ ka matlab 0.7777… Bar jitne digit par hai, neeche utne 9. 0.4̄9̄ = 49/99. Bar se pehle koi digit bina bar ho toh har aise digit ke liye 9 ke baad ek 0 lagao: 0.26̄3̄ = (263 − 2)/990.</p>
+  <div class="box"><span class="k">Worked · 0.2636363… = p/q <span class="tag p">PYQ</span> <small>SP-XIV 10th · 1 Aug 2025</small></span>
+    <b>Method:</b> 9 aur 0 ka niyam · <i>~15 sec</i><br>
+    Poora 263, bina bar wala hissa 2. Bar par 2 digit → 99, bar se pehle 1 digit → 0. Neeche 990.<br>(263 − 2)/990 = 261/990 = <mark>29/110</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 0.714285… fraction → <b>1/7 ki family yaad</b> → 1/7 = 0.142857…, 5/7 = 0.714285… → <mark>5/7</mark> <small>SP-XIV Grad · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.4̄9̄ − 0.2̄1̄ → <b>dono /99</b> → 49/99 − 21/99 = 28/99 → <mark>0.2̄8̄</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.72 se bada: 0.71̄, 0.73̄, 0.70̄, 0.71̄ → <b>pehle do digit dekho</b> → 0.7333… > 0.72 → <mark>0.73̄</mark> <small>MTS · 4 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.79̄ (0.7999…) se chhota: 0.81̄, 0.88̄, 0.77̄, 0.82̄ → <b>pehle do digit dekho</b> → 0.777… < 0.799… → <mark>0.77̄</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.51̄ se bada: 0.47̄, 0.49̄, 0.49̄, 0.53̄ → <b>pehle do digit dekho</b> → 0.5333… > 0.5111… → <mark>0.53̄</mark> <small>MTS · 11 Feb 2025</small></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> 1/7 = 0.142857 yaad karo. Baaki 2/7, 3/7 … yahi 6 digit ghoom kar aate hain: 2/7 = 0.285714, 3/7 = 0.428571, 5/7 = 0.714285. Pehla digit dekh kar pehchano.</div>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · Rozana ke sawaal: litre, kilo, kapde, kitab (13 Qs)</h3>
+  <p><b>Samjho:</b> ye SP-XIV (10th/12th) mein aate hain. Sab mein ek hi kaam: decimal ko fraction mein ya fraction ko decimal mein badlo, phir jodo-ghatao. 0.25 = 1/4, 0.75 = 3/4, 0.4 = 2/5, 0.125 = 1/8.</p>
+  <div class="box"><span class="k">Worked · 192 kapde; A 1/3, B 1/4, C 1/6 tah karta hai. Sahi kathan? <span class="tag p">PYQ</span> <small>SP-XIV 12th · 31 Jul 2025</small></span>
+    <b>Method:</b> LCM 12 ke parts · <i>~15 sec</i><br>
+    1/3 + 1/4 + 1/6 = (4 + 3 + 2)/12 = 9/12 = 3/4. Bacha 1/4.<br>192 ka 1/4 = 48. Toh <mark>48 kapde baaki rahenge</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Somvaar 0.4 kitab padhi; Mangal ko baaki ka 1/3. Kitni bachi? <span class="tag p">PYQ</span> <small>SP-XIV 12th · 25 Jul 2025</small></span>
+    <b>Method:</b> baaki ka hissa · <i>~10 sec</i><br>
+    Baaki 0.6. Uska 1/3 = 0.2 padha. Bacha 0.6 − 0.2 = 0.4 = <mark>2/5</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 15 m kapda, har grahak ko 0.75 m → <b>0.75 = 3/4</b> → 15 ÷ 3/4 = 15 × 4/3 → <mark>20</mark> <small>SP-XIV 10th · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25 mein 18.75 number, fraction → <b>0.75 = 3/4</b> → 18.75/25 = 0.75 → <mark>3/4</mark> <small>SP-XIV 10th · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.245 ke barabar fraction → <b>/1000 phir kaato</b> → 245/1000 = 49/200 → <mark>49/200</mark> <small>SP-XIV 10th · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.75 ke barabar → <b>yaad</b> → <mark>3/4</mark> <small>SP-XIV 10th · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7/8 decimal mein → <b>1/8 = 0.125</b> → 7 × 0.125 → <mark>0.875</mark> <small>SP-XIV 10th · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 147/8 decimal mein → <b>bhaag + 1/8 ki family</b> → 18 baaki 3 → 3/8 = 0.375 → <mark>18.375</mark> <small>SP-XIV 10th · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.625 litre = ? ml → <b>× 1000</b> → <mark>625 ml</mark> <small>SP-XIV 10th · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 ½ kg aam ₹120 par, 1.75 kg seb ₹150 par → <b>fraction × number</b> → 300 + 262.5 → <mark>₹562.50</mark> <small>SP-XIV 10th · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.75 L subah, 3 ½ L shaam → <b>decimal jodo</b> → 0.75 + 3.5 → <mark>4.25 L</mark> <small>SP-XIV 10th · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12 ½ kg mein se 3.75 kg aur 4 2/3 kg kharch → <b>decimal mein</b> → 12.5 − 3.75 − 4.67 ≈ 4.08 → <mark>4.08 kg</mark> <small>SP-XIV 10th · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15 ¾ m rassi, tukde 1.25 m → <b>÷ phir baaki</b> → 1.25 × 12 = 15 → 12 tukde, 0.75 m bacha → <mark>12 tukde, 0.75 m</mark> <small>SP-XIV 10th · 30 Jul 2025</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>BODMAS line ko left se right chalana: 107 − 56 × 2 ko 51 × 2 samajhna</td><td>× ÷ "of" pehle. Phir + tokri aur − tokri.</td></tr>
+    <tr><td>"− (31 + 25) × 2" mein sirf 31 ko minus maanna</td><td>Bracket ke aage − ho toh poora 112 − tokri mein.</td></tr>
+    <tr><td>√0.0225 = 0.015 likhna</td><td>4 places → 2 places → 0.15. Check: 0.15 × 0.15 = 0.0225.</td></tr>
+    <tr><td>√a + √b = √(a + b) maanna</td><td>Galat. √9 + √16 = 7, lekin √25 = 5.</td></tr>
+    <tr><td>(a + √b)² + (a − √b)² ko khol kar 2 minute lagana</td><td>Jod = 2(a² + b). Ghataav = 4a√b. Seedha.</td></tr>
+    <tr><td>4/5 aur 11/13 mein "bada neeche wala chhota" sochna</td><td>Gap dekho: 1/5 vs 2/13. 11/13 bada.</td></tr>
+    <tr><td>0.4̄9̄ ko 49/100 likhna</td><td>Bar wale digit ke neeche 9: 49/99.</td></tr>
+    <tr><td>Mixed fraction mein fraction minus aaya toh atak jaana</td><td>Poore mein se 1 udhaar: 11 − 11/84 = 10 73/84.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Ye hissa bank ke 286 sawaal (item 285 se 570) cover karta hai. 273 yahan hain (pehle section mein 169, is section mein 104). <b>13 chhode</b> kyunki bank mein sawaal ka text hi nahi hai aur image bhi nahi: GD 7 May 2026 Shift 3 ke chaar ("En:" ke aage kuch nahi), MTS ke chaar "Find the approximate value of:" (9, 10, 11, 13 Feb 2025), aur SP-XIV ke paanch ("Evaluate:", "Find the value of", aur "incorrect relation I, II, III"). Kuch sawaalon mein chhapai se chinh badle the; unka sahi roop list mein likha hai aur ⚠ se mark hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>1/(7 + √5) + 1/(7 − √5) = ?</summary><p>2a ÷ (a² − b) = 14 ÷ 44 = 7/22.</p></details>
+    <details><summary>(5 + √3)² − (5 − √3)² = ?</summary><p>4 × 5 × √3 = 20√3.</p></details>
+    <details><summary>√(12 + 2√35) = ?</summary><p>Jod 12, guna 35 → 7 aur 5. Answer √7 + √5.</p></details>
+    <details><summary>Sabse bada kaunsa: 5/6, 9/10, 13/14?</summary><p>Gap 1/6, 1/10, 1/14. Sabse chhota gap 1/14 → 13/14.</p></details>
+    <details><summary>2 1/4 + 3 5/6 = ?</summary><p>Poore 5. Fraction 3/12 + 10/12 = 13/12 = 1 1/12. Answer 6 1/12.</p></details>
+  </div>
+</section>

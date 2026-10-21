@@ -1,0 +1,1467 @@
+<!-- ===================== MATHS · NUMBER SYSTEM (part 1: number families, decimals, surds) ===================== -->
+<section class="chap" id="mns-basics">
+  <div class="eyebrow">Maths · 217 questions (3 hisson mein)</div>
+  <h2>Number System: numbers ka parivaar, decimal aur surd</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, Selection Post XIV, MTS, DP, GD 2026) · is hisse mein: kaun kis set mein, terminating/recurring, rational + irrational, √ ki tulna</div>
+
+  <h3>Pehle ek kahani: numbers kaise bade hote gaye</h3>
+  <p>Socho ek bachcha pehli baar ginti seekh raha hai. Wo bolta hai: 1, 2, 3, 4… Ye <b>ginti wale</b> numbers hain. Inhe <b>Natural numbers (N)</b> kehte hain.</p>
+  <ul>
+    <li>Phir koi poochta hai: "tokri mein kitne aam hain?" Tokri khaali hai. Jawab <b>0</b>. Ginti mein 0 jod diya, toh bane <b>Whole numbers (W)</b>: 0, 1, 2, 3…</li>
+    <li>Phir sardi aayi. Thermometer −4°C dikha raha hai. Diver samundar mein −30 m par hai. Ab <b>minus</b> wale bhi chahiye. Ye sab mila ke <b>Integers (Z)</b>: …, −2, −1, 0, 1, 2…</li>
+    <li>Phir roti aadhi kaati: 1/2. Teen-chauthai glass: 3/4. Jo bhi number <b>p/q</b> (q ≠ 0, p aur q integers) ki tarah likh sako, wo <b>Rational (Q)</b> hai. 5 bhi rational hai, kyunki 5 = 5/1.</li>
+    <li>Ab ek ajeeb baat. 1 meter ke square ka diagonal = √2. Ye kisi bhi p/q mein fit nahi hota. Iska decimal 1.41421356… na kabhi khatam hota hai, na repeat. Aise numbers <b>Irrational</b> hain: √2, √3, √51, π.</li>
+    <li>Rational + irrational, dono milake number line ka har point bhar dete hain. Ye hai <b>Real numbers (R)</b>.</li>
+    <li>Aur √−7? Kisi bhi real number ka square minus nahi hota. Toh √−7 real nahi hai. Ye <b>Complex</b> parivaar mein jaata hai.</li>
+  </ul>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 360" role="img" aria-label="Nested boxes of number families. Complex contains Real. Real contains Rational and Irrational side by side. Rational contains Integers, which contain Whole numbers, which contain Natural numbers.">
+      <rect x="10" y="10" width="680" height="340" rx="10" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="24" y="32" class="lbl">Complex (C)</text><text x="130" y="32" class="sm">√−7, 2 + 3i · ye real nahi</text>
+      <rect x="30" y="44" width="640" height="290" rx="8" class="chf"/>
+      <text x="42" y="64" class="lbl">Real (R)</text><text x="112" y="64" class="sm">number line ka har point</text>
+      <rect x="46" y="76" width="420" height="212" rx="8" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+      <text x="58" y="96" class="lbl">Rational (Q) = p/q, q ≠ 0</text>
+      <rect x="62" y="108" width="300" height="166" rx="8" class="chf"/><rect x="62" y="108" width="300" height="166" rx="8" class="chs"/>
+      <text x="74" y="128" class="lbl">Integers (Z)</text><text x="170" y="128" class="sm">+ −1, −2, −3 …</text>
+      <rect x="78" y="140" width="200" height="120" rx="8" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+      <text x="90" y="160" class="lbl">Whole (W)</text><text x="168" y="160" class="sm">+ 0</text>
+      <rect x="94" y="172" width="168" height="74" rx="8" style="fill:var(--ch);opacity:.25"/>
+      <text x="106" y="196" class="lbl">Natural (N)</text>
+      <text x="106" y="216" class="sm">1, 2, 3, … (ginti)</text>
+      <text x="106" y="234" class="sm">sabse chhota = 1</text>
+      <g class="sm"><text x="378" y="150">1/2</text><text x="378" y="172">−3/4</text><text x="378" y="194">0.875</text><text x="378" y="216">0.333…</text><text x="378" y="238">1.4363…</text></g>
+      <rect x="482" y="76" width="172" height="212" rx="8" class="paper" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="5 3"/>
+      <text x="494" y="98" class="lbl">Irrational</text>
+      <g class="sm"><text x="494" y="124">√2, √3, √7, √51</text><text x="494" y="146">π, 2 + √3, √27</text><text x="494" y="176">decimal: na khatam,</text><text x="494" y="194">na repeat</text><text x="494" y="224">p/q nahi bana sakte</text></g>
+      <text x="350" y="312" text-anchor="middle" class="lbl">Q ∪ Irrational = R · Q ∩ Irrational = khaali (empty)</text>
+    </svg>
+    </div>
+    <figcaption>Har dabba apne andar ke saare dabbe rakhta hai: N ⊂ W ⊂ Z ⊂ Q ⊂ R ⊂ C. Irrational, Q ke bagal mein hai, andar nahi.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">3 baatein jinse saare sawaal bante hain</span>
+    <b>1. Seedhi (ladder):</b> N → W → Z → Q → R → C. Jo number neeche wale dabbe mein hai, wo upar wale sab dabbon mein bhi hai. 5 natural hai, toh whole, integer, rational, real sab hai.<br>
+    <b>2. Decimal se pehchaan:</b> rational ka decimal ya toh <b>khatam</b> hota hai (terminating) ya <b>repeat</b> hota hai (recurring). Irrational ka na khatam, na repeat.<br>
+    <b>3. Rational aur irrational ka koi common number nahi.</b> Dono ka jod (union) = Real. Dono ka common (intersection) = khaali.
+  </div>
+  <p>Paper mein ek sawaal ke ~36 second milte hain. Is hisse ke zyada sawaal theory wale hain: <b>5 second</b> mein ho jaane chahiye. Neeche ke tareeke wahi speed dete hain.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Seedhi par chadhao (classify karna)</h3>
+  <p><b>Kab use karo:</b> "Which is both integer and whole?", "Which set includes all others?", "TRUE/FALSE statement" type sawaal.</p>
+  <p><b>Soch aise:</b> number ko uske <b>sabse chhote dabbe</b> mein rakho. Phir wo us dabbe ke upar ke sab dabbon mein hai, neeche ke kisi mein nahi.</p>
+  <div class="tbl"><table>
+    <tr><th>Number</th><th>Sabse chhota dabba</th><th>Ye bhi hai</th><th>Ye NAHI hai</th></tr>
+    <tr><td class="n">1</td><td>Natural</td><td>W, Z, Q, R</td><td>Irrational</td></tr>
+    <tr><td class="n">0</td><td>Whole</td><td>Z, Q, R</td><td>Natural</td></tr>
+    <tr><td class="n">−4</td><td>Integer</td><td>Q, R</td><td>N, W</td></tr>
+    <tr><td class="n">1.5, 3/5, 0.875</td><td>Rational</td><td>R</td><td>N, W, Z</td></tr>
+    <tr><td class="n">√2, √7, π</td><td>Irrational</td><td>R</td><td>N, W, Z, Q</td></tr>
+    <tr><td class="n">√−7</td><td>Complex</td><td>sirf C</td><td>R aur uske andar sab</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · "Non-zero number jo Whole, Integer, Rational aur Real, chaaron mein ho" · <i>~5 sec</i></span>
+    Whole mein hona hai toh minus wale (−1) aur √2 bahar. Non-zero hai toh 0 bahar. Bacha <b>1</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "Neeche wala sabka hai, upar wala sabka nahi." Har natural number whole hai, par har whole number natural nahi (0 ki wajah se). Har integer rational hai, par har rational integer nahi (1/2 ki wajah se). Sawaal mein "All X are Y" aaye toh dekho: X neeche hai aur Y upar? Tabhi TRUE.</div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Terminating ya recurring? Neeche ka number dekho</h3>
+  <p><b>Kab use karo:</b> "Which fraction has a terminating decimal?" ya "non-terminating repeating?"</p>
+  <p><b>Soch aise:</b> hamara decimal 10 par chalta hai. 10 = 2 × 5. Toh jis fraction ke neeche (denominator mein) sirf 2 aur 5 hon, wo 10, 100, 1000 bana sakta hai. Wahi decimal <b>khatam</b> hota hai. 3/8 = 375/1000 = 0.375.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Decision flow for decimals. Reduce the fraction to lowest terms. If the denominator has only 2s and 5s, the decimal terminates, like 7/20 = 0.35. Otherwise it recurs, like 11/30 = 0.3666. Irrational numbers neither end nor repeat.">
+      <defs>
+        <marker id="mns-basics-dec-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="14" y="24" width="200" height="56" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="114" y="48" text-anchor="middle" class="lbl">Fraction ko chhota karo</text>
+      <text x="114" y="68" text-anchor="middle" class="sm">(lowest form: 6/30 → 1/5)</text>
+      <line x1="216" y1="52" x2="252" y2="52" class="ln" marker-end="url(#mns-basics-dec-arr)"/>
+      <rect x="256" y="24" width="216" height="56" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="364" y="48" text-anchor="middle" class="lbl">Neeche sirf 2 aur 5 hain?</text>
+      <text x="364" y="68" text-anchor="middle" class="sm">(q = 2ᵃ × 5ᵇ)</text>
+      <line x1="474" y1="52" x2="510" y2="52" class="ln" marker-end="url(#mns-basics-dec-arr)"/>
+      <text x="492" y="44" text-anchor="middle" class="sm">haan</text>
+      <rect x="514" y="24" width="172" height="56" rx="8" class="chf"/><rect x="514" y="24" width="172" height="56" rx="8" class="chs"/>
+      <text x="600" y="48" text-anchor="middle" class="lbl">Terminating</text>
+      <text x="600" y="68" text-anchor="middle" class="sm">7/20 = 0.35 · 3/8 = 0.375</text>
+      <line x1="364" y1="82" x2="364" y2="118" class="ln" marker-end="url(#mns-basics-dec-arr)"/>
+      <text x="374" y="104" class="sm">nahi (3, 7, 9, 11… bhi hai)</text>
+      <rect x="256" y="122" width="216" height="56" rx="8" class="chf"/><rect x="256" y="122" width="216" height="56" rx="8" class="chs"/>
+      <text x="364" y="146" text-anchor="middle" class="lbl">Recurring (repeat)</text>
+      <text x="364" y="166" text-anchor="middle" class="sm">11/30 = 0.3666… · 1/17</text>
+      <rect x="14" y="200" width="320" height="56" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="26" y="222" class="lbl">Pure recurring: 0.333…, 0.123123…</text>
+      <text x="26" y="242" class="sm">point ke turant baad se repeat</text>
+      <rect x="350" y="200" width="336" height="56" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="362" y="222" class="lbl">Mixed recurring: 1.43636…</text>
+      <text x="362" y="242" class="sm">pehle 4 (repeat nahi), phir 36 repeat</text>
+      <text x="14" y="130" class="sm">Terminating + recurring</text>
+      <text x="14" y="148" class="sm">dono = RATIONAL</text>
+      <text x="14" y="174" class="sm">Na khatam na repeat = irrational</text>
+    </svg>
+    </div>
+    <figcaption>Fraction dekhte hi neeche ka number todo. Sirf 2 aur 5 mile toh decimal khatam hoga. Koi aur prime mila toh repeat hoga.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 3/8, 1/6, 2/7, 4/9 mein terminating kaun? · <i>~5 sec</i></span>
+    8 = 2 × 2 × 2 (sirf 2) ✔. 6 mein 3 hai, 7 khud 7 hai, 9 = 3 × 3. Toh sirf <b>3/8</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> pehle fraction ko <b>chhota</b> karo, phir dekho. 3/30 dekhne mein 30 (3 wala) lagta hai, par 3/30 = 1/10, jo terminating hai. <span class="tag x">CGL+</span></div>
+  <p><b>Repeat kitna lamba?</b> 1/p (p prime) ka cycle zyada se zyada p − 1 digit ka hota hai. 1/7 = 0.<b>142857</b> 142857… (6 digit). 1/3, 1/6, 1/9 ka cycle sirf 1 digit. 1/11 = 0.0909… (2 digit). <span class="tag x">CGL+</span> 1/13 ka cycle bhi 6 digit: 0.076923…</p>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Rational aur irrational ka jod-guna</h3>
+  <p><b>Kab use karo:</b> "Rational + Irrational = ?", "Product of rational and irrational is?", "x + y is rational if…"</p>
+  <p><b>Soch aise:</b> irrational ka matlab hai decimal ki ek "kabhi na khatam hone wali gadbad". Usme koi saaf number jodo ya ghatao, gadbad wahi rehti hai. Par do gadbad ek doosre ko kaat sakti hain: √2 + (−√2) = 0.</p>
+  <div class="tbl"><table>
+    <tr><th>Kya kiya</th><th>Answer</th><th>Example</th></tr>
+    <tr><td>Rational + / − / × / ÷ Rational</td><td><b>Hamesha rational</b> (÷ 0 chhod kar)</td><td>1/2 × 4 = 2</td></tr>
+    <tr><td>Rational + Irrational</td><td><b>Hamesha irrational</b></td><td>7/2 + √27, 3 + √2</td></tr>
+    <tr><td>Rational (≠ 0) × Irrational</td><td>Irrational</td><td>2 × √3 = 2√3</td></tr>
+    <tr><td>0 × Irrational</td><td>0, yaani rational</td><td>0 × √2 = 0</td></tr>
+    <tr><td>Irrational + Irrational</td><td><b>Kabhi bhi</b> (dono ho sakta hai)</td><td>√2 + √3 irrational · √2 + (−√2) = 0 rational</td></tr>
+    <tr><td>Irrational × Irrational</td><td>Kabhi bhi</td><td>√2 × √3 = √6 · √2 × √2 = 2</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> "Ek gadbad akeli ho toh kabhi nahi jaati. Do gadbad ho toh kat bhi sakti hain." Isliye rational × irrational ka sahi answer "sometimes" hai, kyunki 0 bhi rational hai.</div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · √ ki tulna (kaun bada?)</h3>
+  <p><b>Kab use karo:</b> "x = √3 + √5, y = √8 + √2, kaun bada?" type.</p>
+  <p><b>Tareeka A, value se:</b> ye 4 value ratta maar lo. Phir sirf jodna hai.</p>
+  <div class="tbl"><table>
+    <tr><th>√2</th><th>√3</th><th>√5</th><th>√6</th><th>√7</th><th>√8 = 2√2</th><th>√10</th></tr>
+    <tr><td class="n">1.414</td><td class="n">1.732</td><td class="n">2.236</td><td class="n">2.449</td><td class="n">2.646</td><td class="n">2.828</td><td class="n">3.162</td></tr>
+  </table></div>
+  <p><b>Tareeka B, square karo:</b> do jod ka square = dono squares ka jod + 2 × guna. (√a + √b)² = a + b + 2√(ab). Jiska andar wala (a + b) barabar ho, wahan √(ab) jiska bada, wo bada.</p>
+  <div class="box"><span class="k">Demo · √3 + √5 ya √8 + √2? · <i>~10 sec</i></span>
+    Square: (√3 + √5)² = 8 + 2√15. (√8 + √2)² = 10 + 2√16 = 10 + 8 = 18.<br>
+    8 + 2√15 se 8 + 2 × 4 = 16 bhi nahi pahunchta. Toh <b>y bada</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> jab √ ke andar wale numbers ka jod barabar ho (√1 + √5 aur √2 + √4: dono mein 1 + 5 = 2 + 4 = 6), tab jo numbers <b>paas-paas</b> hain unka jod bada hota hai: √2 + √4 &gt; √1 + √5. <span class="tag x">CGL+</span></div>
+
+  <!-- ========== TYPES ========== -->
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 · CHSL = CHSL 2025 Tier 1 · CPO = CPO 2025 · SP-XIV = Selection Post Phase XIV 2025 (10th/12th/Graduate) · MTS = MTS 2025 · DP = Delhi Police Constable · GD = GD Constable 2026. Saari dates shift ki dates hain.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Kaun kis set mein, kaunsa statement sahi (45 Qs)</h3>
+  <p><b>Samjho:</b> ye sab ek hi diagram ke sawaal hain. Upar wala dabba-chitra aankh mein rakho. Seedhi par chadho ya utro.</p>
+  <div class="box"><span class="k">Worked · Integers, rational aur real ka sahi rishta? <span class="tag p">PYQ</span> <small>SP-XIV · 29 Jul 2025</small></span>
+    <b>Method:</b> seedhi · <i>~5 sec</i><br>
+    Integer → Q (kyunki −10 = −10/1) → R (number line par hai). Chhota pehle, bada baad mein: <mark>Z ⊆ Q ⊆ R</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Match: A Rational, B Whole, C Prime, D Irrational <span class="tag p">PYQ</span> <small>SP-XIV · 24 Jul 2025</small></span>
+    <b>Method:</b> pakki jodi pehle, phir option kaato · <i>~10 sec</i><br>
+    Rational = "terminating aur recurring decimal" (2). Irrational = "na repeat, na khatam" (4). Whole = "0 + natural" (3).<br>
+    A-2 aur D-4 sirf ek option mein hain: <mark>A-2, B-3, C-1, D-4</mark>. (Line 1 thodi dheeli likhi hai, par baaki teen pakke hain, toh bacha C-1.)
+  </div>
+  <div class="box"><span class="k">Worked · Kaunsa statement FALSE? <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small></span>
+    <b>Method:</b> "All X are Y" check · <i>~5 sec</i><br>
+    "Every integer is real" ✔ (neeche → upar). "Every natural is integer" ✔. "Rational aur irrational real hain" ✔.<br>
+    "<mark>Every irrational number is rational</mark>" ✘. Ye dono dabbe alag hain.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Integer bhi aur whole bhi: −4, 0, 3.5, 1/2 → <b>seedhi</b> → <mark>0</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Integer bhi aur whole bhi: −5, 1, 3/5, √2 → <b>seedhi</b> → <mark>1</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Perfect square aur integer: √5, √9, 3.2, 3.4 → <b>√9 = 3</b> → <mark>Square root of 9</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Real par rational nahi: 3/4, 5, √7, −2 → <b>√ of non-square</b> → <mark>√7</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Non-zero, aur W, Z, Q, R chaaron mein → <b>seedhi</b> → <mark>1</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Real numbers mein kya aata hai → <b>Q ∪ Irrational</b> → <mark>Rational aur irrational dono</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Na rational na integer: −4, 1.5, √2, 7 → <b>irrational pakdo</b> → <mark>√2</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Whole numbers ke baare mein sach → <b>W = 0 + natural</b> → <mark>Zero aur positive integers</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> −5, 0, 6 kis set mein → <b>minus + 0 = Z</b> → <mark>Integers</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kis set mein minus number nahi → <b>N, W mein minus nahi</b> → <mark>Natural numbers</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Natural mein kaun nahi: 2, 0, 1, 9 → <b>N 1 se shuru</b> → <mark>0</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Natural aur integer dono mein → <b>seedhi</b> → <mark>5</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kaunsa TRUE → <b>All X are Y</b> → <mark>All irrational numbers are real</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rational ∩ Irrational → <b>common kuch nahi</b> → <mark>Empty</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kaun real NAHI: √7, √−7, 1/√7, −√7 → <b>√(minus)</b> → <mark>√−7</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do rational ke beech kitne rational → <b>beech ka average baar-baar</b> → <mark>Infinite</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kaunsa FALSE → <b>All X are Y</b> → <mark>Every integer is irrational</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1 aur 2 ke beech irrational kitne → <b>√1.1, √1.2 … ginti khatam nahi</b> → <mark>Infinite</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Real ka subset NAHI → <b>C sabse bahar</b> → <mark>Complex</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kisi bhi prime ka √ → <b>prime square nahi hota</b> → <mark>Irrational</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rational ∪ Irrational → <b>dono milke</b> → <mark>Real numbers</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Real ka subset NAHI (Z, N, W, C) → <b>C sabse bahar</b> → <mark>Complex numbers</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Irrational kaunsa: √64, √121, √51, √169 → <b>51 square nahi</b> → <mark>√51</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rational ka proper subset → <b>N ⊂ Q</b> → <mark>Natural number</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rational bhi aur integer bhi: 1/2, 3, √2, π → <b>seedhi</b> → <mark>3</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabko andar rakhne wala set (Z, Q, W, R) → <b>sabse upar</b> → <mark>Real number</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Integer kaun: 6.28318, −10, 2/3, √12 → <b>√12 = 2√3 irrational</b> → <mark>−10</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Whole = natural + ? → <b>W = N + 0</b> → <mark>Zero</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Number line ka har point → <b>line poori bhari = R</b> → <mark>Real number</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rational aur irrational, dono mein kya → <b>common kuch nahi</b> → <mark>Empty set</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rational number kya nahi ho sakta → <b>alag dabbe</b> → <mark>Irrational</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Integers aur rationals dono ko rakhne wala → <b>upar ka dabba</b> → <mark>Real numbers</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kaunsa TRUE → <b>W ⊂ Q</b> → <mark>All whole numbers are rational</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rational kiska subset → <b>Q ⊂ R</b> → <mark>Real numbers</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Har real ya toh rational ya ___ → <b>R = Q ∪ Irrational</b> → <mark>Irrational</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Positive, negative whole numbers aur zero → <b>Z ki paribhasha</b> → <mark>Integers</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kaunsa TRUE → <b>Q ⊂ R</b> → <mark>All rational numbers are real</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Integers aur whole ka rishta → <b>W ⊂ Z</b> → <mark>All whole numbers are integers</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kaunsi jodi ke elements same → <b>W = N ∪ {0}</b> → <mark>Whole numbers and natural numbers including 0</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Integer nahi: (3³ − 3)/3, √49, 2/√2, (5² − 1)/2 → <b>2/√2 = √2</b> → <mark>2/√2</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Diver −30 m se 18 m upar → <b>integer jod: −30 + 18</b> → <mark>−12 meters</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Subah −4°C, dopahar +9°C; kitna badha → <b>bada − chhota = 9 − (−4)</b> → <mark>13°C</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Terminating, recurring, pure aur mixed (11 Qs)</h3>
+  <div class="box"><span class="k">Worked · Terminating kaunsa: 7/20, 11/30, 13/45, 8/33? <span class="tag p">PYQ</span> <small>CPO · 11 Dec 2025</small></span>
+    <b>Method:</b> neeche ka number todo · <i>~5 sec</i><br>
+    20 = 2² × 5 ✔. 30 = 2 × 3 × 5 (3 hai) ✘. 45 = 3² × 5 ✘. 33 = 3 × 11 ✘. Answer <mark>7/20</mark> (= 0.35).
+  </div>
+  <div class="box"><span class="k">Worked · Sabse lamba repeat: 1/6, 1/7, 1/9, 1/11? <span class="tag p">PYQ</span> <small>SP-XIV · 31 Jul 2025</small></span>
+    <b>Method:</b> 1/p ka cycle ≤ p − 1 · <i>~5 sec</i><br>
+    1/6 = 0.1666… (1 digit), 1/9 = 0.111… (1), 1/11 = 0.0909… (2), 1/7 = 0.142857… (6). Answer <mark>1/7</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Terminating: 3/8, 1/6, 2/7, 4/9 → <b>8 = 2³</b> → <mark>3/8</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.875 kis type ka → <b>terminating = rational (7/8)</b> → <mark>Rational Number</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rational aur terminating: 1/3, 4/5, √3, π → <b>5 sirf 5</b> → <mark>4/5</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rational ka decimal → <b>ya khatam ya repeat</b> → <mark>Terminating or repeating</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Mixed recurring kaunsa → <b>pehle kuch, phir repeat</b> → <mark>1.436363…</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Non-terminating repeating: 1/4, 1/17, 1/10, 1/8 → <b>17 na 2 na 5</b> → <mark>1/17</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Irrational ka decimal → <b>na khatam na repeat</b> → <mark>Non-terminating, non-repeating</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Repeating decimal hamesha → <b>repeat = rational</b> → <mark>Always rational</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pure recurring kab → <b>point ke turant baad repeat</b> → <mark>Repeating digits start immediately after decimal</mark> <small>CHSL · 30 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Rational aur irrational ka jod-guna (10 Qs)</h3>
+  <div class="box"><span class="k">Worked · "Do irrational ka jod hamesha irrational" galat kaise sabit karein? <span class="tag p">PYQ</span> <small>SP-XIV · 26 Jul 2025</small></span>
+    <b>Method:</b> gadbad kaat do · <i>~5 sec</i><br>
+    √2 aur −√2 dono irrational. Jod = 0, jo rational hai. Answer <mark>√2 + (−√2)</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · x = √3, y = 3 − √3. Kaunsa sach? <span class="tag p">PYQ</span> <small>SP-XIV · 25 Jul 2025</small></span>
+    <b>Method:</b> seedha jodo · <i>~10 sec</i><br>
+    x + y = √3 + 3 − √3 = 3. √3 kat gaya. Toh <mark>x + y is rational</mark>.<br>
+    x − y = √3 − 3 + √3 = 2√3 − 3. Ye irrational hai.
+  </div>
+  <div class="box"><span class="k">⚠ Answer-key note</span>SP-XIV 25 Jul 2025 (x = √3, y = 3 − √3): key "x + y rational" sahi hai. Par option D "x − y is irrational" bhi sach hai, kyunki x − y = 2√3 − 3. Sawaal mein do sahi option hain. Exam mein key wala (x + y rational) lagao. Wo seedha aur pakka hai.</div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Rational × irrational → <b>0 × √2 = 0</b> → <mark>Sometimes rational, sometimes irrational</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> x, y irrational: x + y kab rational → <b>kaat do</b> → <mark>Rational if x = −y</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do rational ka guna → <b>Q × Q = Q</b> → <mark>Rational</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Rational + irrational → <b>akeli gadbad</b> → <mark>Irrational number</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> x = 7/2, y = √27; x + y → <b>akeli gadbad</b> → <mark>Irrational</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> √2 + √3 → <b>kuch nahi katta</b> → <mark>Irrational</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> √2 + (3 − √2) → <b>√2 kat gaya → 3</b> → <mark>a rational number</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Irrational, 2 aur 3 ke beech, square bhi "irrational" → <b>options daalo</b> → <mark>√4.5</mark> <small>CHSL · 25 Nov 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CHSL 25 Nov 2025 (2 aur 3 ke beech wala): (√4.5)² = 4.5, jo rational hai. Toh sharat (iii) koi bhi option poori nahi karta. √5 bhi sharat (i) aur (ii) poori karta hai. Lagta hai sawaal ka matlab tha "square <b>integer nahi</b>". Tab sirf √4.5 bachta hai (√5² = 5 integer hai, √7 − 1 &lt; 2 hai, 2.5 rational hai). Exam mein <b>√4.5</b> lagao.</div>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · √ ki tulna (3 Qs)</h3>
+  <div class="box"><span class="k">Worked · x = √3 + √5, y = √8 + √2. Kaun bada? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> square karo · <i>~10 sec</i><br>
+    x² = 8 + 2√15. y² = 10 + 2√16 = 18. 2√15 &lt; 2 × 4 = 8, toh x² &lt; 16 &lt; 18. Answer <mark>y &gt; x</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · a = √7 − √3, b = √5 − √2. Kaunsa sach? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span>
+    <b>Method:</b> ratta wali values · <i>~10 sec</i><br>
+    a = 2.646 − 1.732 = 0.914. b = 2.236 − 1.414 = 0.822. Answer <mark>a &gt; b</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> x = √2 + √3, y = √5 + 1, z = 2√2 + 1 → <b>values: 3.15, 3.24, 3.83</b> → <mark>x &lt; y &lt; z</mark> <small>CGL · 13 Sep 2025</small></li>
+  </ul>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>0 kis kis set mein hai?</summary><p>Whole, Integer, Rational, Real. Natural mein nahi.</p></details>
+    <details><summary>9/40 terminating hai ya recurring?</summary><p>40 = 2³ × 5. Sirf 2 aur 5, toh terminating (0.225).</p></details>
+    <details><summary>5 + √3 rational hai ya irrational?</summary><p>Irrational. Rational + irrational hamesha irrational.</p></details>
+    <details><summary>√2 × √8 kya hai?</summary><p>√16 = 4. Rational. Do irrational ka guna rational bhi ho sakta hai.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · NUMBER SYSTEM (part 2: perfect squares) ===================== -->
+<section class="chap" id="mns-squares">
+  <div class="eyebrow">Maths · Number System · hissa 2</div>
+  <h2>Perfect squares: pehchaan, sabse paas wala square, aur ginti</h2>
+  <div class="meta">46 PYQs · sabse zyada: "kaunsa perfect square ho sakta hai", "kitna jodo / ghatao ki square bane", "beech mein kitne square"</div>
+
+  <h3>Pehle ek kahani: square matlab chaukor</h3>
+  <p>16 sikke lo. Unhe 4 line mein 4-4 rakho. Ek poora chaukor ban gaya. Isliye 16 ek <b>perfect square</b> hai: 16 = 4 × 4 = 4². Ab 17 sikke lo. Chaukor nahi banega, ek sikka bach jaata hai.</p>
+  <p>Ab 4 × 4 ke chaukor ko 5 × 5 banana hai. Kitne naye sikke chahiye? Ek taraf 4, doosri taraf 4, aur kone mein 1. Kul <b>9 = 2 × 4 + 1</b>. Yahi chhoti si baat aadhe sawaal hal kar deti hai.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Left: a 5 by 5 grid of dots. The inner 4 by 4 is light (16), the outer L-shaped border of 9 dots is dark. Right: number line from 16 to 25. The 8 numbers 17 to 24 between them are non-squares.">
+      <g>
+        <circle cx="40" cy="40" r="11" class="chf"/><circle cx="76" cy="40" r="11" class="chf"/><circle cx="112" cy="40" r="11" class="chf"/><circle cx="148" cy="40" r="11" class="chf"/>
+        <circle cx="40" cy="76" r="11" class="chf"/><circle cx="76" cy="76" r="11" class="chf"/><circle cx="112" cy="76" r="11" class="chf"/><circle cx="148" cy="76" r="11" class="chf"/>
+        <circle cx="40" cy="112" r="11" class="chf"/><circle cx="76" cy="112" r="11" class="chf"/><circle cx="112" cy="112" r="11" class="chf"/><circle cx="148" cy="112" r="11" class="chf"/>
+        <circle cx="40" cy="148" r="11" class="chf"/><circle cx="76" cy="148" r="11" class="chf"/><circle cx="112" cy="148" r="11" class="chf"/><circle cx="148" cy="148" r="11" class="chf"/>
+      </g>
+      <g class="chs">
+        <circle cx="40" cy="40" r="11"/><circle cx="76" cy="40" r="11"/><circle cx="112" cy="40" r="11"/><circle cx="148" cy="40" r="11"/>
+        <circle cx="40" cy="76" r="11"/><circle cx="76" cy="76" r="11"/><circle cx="112" cy="76" r="11"/><circle cx="148" cy="76" r="11"/>
+        <circle cx="40" cy="112" r="11"/><circle cx="76" cy="112" r="11"/><circle cx="112" cy="112" r="11"/><circle cx="148" cy="112" r="11"/>
+        <circle cx="40" cy="148" r="11"/><circle cx="76" cy="148" r="11"/><circle cx="112" cy="148" r="11"/><circle cx="148" cy="148" r="11"/>
+      </g>
+      <g style="fill:var(--ch)">
+        <circle cx="184" cy="40" r="11"/><circle cx="184" cy="76" r="11"/><circle cx="184" cy="112" r="11"/><circle cx="184" cy="148" r="11"/>
+        <circle cx="40" cy="184" r="11"/><circle cx="76" cy="184" r="11"/><circle cx="112" cy="184" r="11"/><circle cx="148" cy="184" r="11"/>
+        <circle cx="184" cy="184" r="11"/>
+      </g>
+      <text x="22" y="222" class="lbl">4² = 16 (halke)</text>
+      <text x="22" y="242" class="lbl" style="fill:var(--ch)">naye = 4 + 4 + 1 = 9 (gehre)</text>
+      <text x="22" y="262" class="sm">4² + 9 = 25 = 5²</text>
+      <line x1="236" y1="20" x2="236" y2="250" class="ln"/>
+      <text x="470" y="40" text-anchor="middle" class="lbl">Number line par: 16 se 25 tak</text>
+      <line x1="262" y1="130" x2="684" y2="130" class="ln"/>
+      <circle cx="275" cy="130" r="9" style="fill:var(--ch)"/>
+      <g class="paper" stroke="var(--muted)" stroke-width="1.5">
+        <circle cx="319" cy="130" r="6"/><circle cx="363" cy="130" r="6"/><circle cx="407" cy="130" r="6"/><circle cx="451" cy="130" r="6"/>
+        <circle cx="495" cy="130" r="6"/><circle cx="539" cy="130" r="6"/><circle cx="583" cy="130" r="6"/><circle cx="627" cy="130" r="6"/>
+      </g>
+      <circle cx="671" cy="130" r="9" style="fill:var(--ch)"/>
+      <g text-anchor="middle" class="sm">
+        <text x="275" y="160" class="lbl">16</text><text x="319" y="160">17</text><text x="363" y="160">18</text><text x="407" y="160">19</text><text x="451" y="160">20</text>
+        <text x="495" y="160">21</text><text x="539" y="160">22</text><text x="583" y="160">23</text><text x="627" y="160">24</text><text x="671" y="160" class="lbl">25</text>
+        <text x="275" y="110">4²</text><text x="671" y="110">5²</text>
+      </g>
+      <path d="M312,180 L312,190 L634,190 L634,180" class="ln" fill="none"/>
+      <text x="473" y="212" text-anchor="middle" class="lbl" style="fill:var(--ch)">beech mein 8 = 2 × 4 non-square</text>
+      <text x="473" y="236" text-anchor="middle" class="sm">n² aur (n+1)² ke beech hamesha 2n numbers · 50² aur 51² ke beech 100</text>
+    </svg>
+    </div>
+    <figcaption>Ek square se agle square tak 2n + 1 kadam. Beech ke 2n numbers mein se koi square nahi.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">3 baatein jinse saare sawaal bante hain</span>
+    <b>1. Last digit:</b> square ka last digit sirf 0, 1, 4, 5, 6, 9 ho sakta hai. Kabhi 2, 3, 7, 8 nahi.<br>
+    <b>2. Do squares ka gap:</b> n² se (n+1)² tak 2n + 1. Beech mein 2n numbers, sab non-square.<br>
+    <b>3. Prime factors ki power even:</b> 3600 = 2⁴ × 3² × 5². Har power even, toh square. Isi se "kisse guna karein ki square bane" hal hota hai.
+  </div>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Last digit se kaato (2 second)</h3>
+  <p><b>Kab use karo:</b> "Which can be a perfect square?", "Which is NOT a perfect square?"</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Last digit of n and last digit of n squared: 0 to 0, 1 to 1, 2 to 4, 3 to 9, 4 to 6, 5 to 5, 6 to 6, 7 to 9, 8 to 4, 9 to 1. Squares never end in 2, 3, 7 or 8.">
+      <defs>
+        <marker id="mns-squares-ud-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <text x="10" y="18" class="sm">n ka last digit</text>
+      <g>
+        <rect x="10" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="78" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="146" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="214" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="282" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="350" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="418" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="486" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="554" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="622" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="41" y="51">0</text><text x="109" y="51">1</text><text x="177" y="51">2</text><text x="245" y="51">3</text><text x="313" y="51">4</text><text x="381" y="51">5</text><text x="449" y="51">6</text><text x="517" y="51">7</text><text x="585" y="51">8</text><text x="653" y="51">9</text>
+      </g>
+      <g class="ln">
+        <line x1="41" y1="68" x2="41" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="109" y1="68" x2="109" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="177" y1="68" x2="177" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="245" y1="68" x2="245" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="313" y1="68" x2="313" y2="94" marker-end="url(#mns-squares-ud-arr)"/>
+        <line x1="381" y1="68" x2="381" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="449" y1="68" x2="449" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="517" y1="68" x2="517" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="585" y1="68" x2="585" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="653" y1="68" x2="653" y2="94" marker-end="url(#mns-squares-ud-arr)"/>
+      </g>
+      <g>
+        <rect x="10" y="98" width="62" height="40" rx="6" class="chf"/><rect x="78" y="98" width="62" height="40" rx="6" class="chf"/><rect x="146" y="98" width="62" height="40" rx="6" class="chf"/><rect x="214" y="98" width="62" height="40" rx="6" class="chf"/><rect x="282" y="98" width="62" height="40" rx="6" class="chf"/>
+        <rect x="350" y="98" width="62" height="40" rx="6" class="chf"/><rect x="418" y="98" width="62" height="40" rx="6" class="chf"/><rect x="486" y="98" width="62" height="40" rx="6" class="chf"/><rect x="554" y="98" width="62" height="40" rx="6" class="chf"/><rect x="622" y="98" width="62" height="40" rx="6" class="chf"/>
+      </g>
+      <g text-anchor="middle" class="lbl" style="fill:var(--ch)">
+        <text x="41" y="123">0</text><text x="109" y="123">1</text><text x="177" y="123">4</text><text x="245" y="123">9</text><text x="313" y="123">6</text><text x="381" y="123">5</text><text x="449" y="123">6</text><text x="517" y="123">9</text><text x="585" y="123">4</text><text x="653" y="123">1</text>
+      </g>
+      <text x="10" y="156" class="sm">n² ka last digit · jodiyan: 1 aur 9 → 1 · 2 aur 8 → 4 · 3 aur 7 → 9 · 4 aur 6 → 6 · 5 → 5 · 0 → 0</text>
+      <text x="350" y="188" text-anchor="middle" class="lbl">Neeche ki line mein 2, 3, 7, 8 kahin nahi. Toh inpar khatam hone wala number kabhi square nahi.</text>
+    </svg>
+    </div>
+    <figcaption>Upar number ka last digit, neeche uske square ka last digit. Jodiyan 10 ka jod banati hain: 1 + 9, 2 + 8, 3 + 7, 4 + 6.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 245982, 571536, 496838, 178343 mein square kaun ho sakta hai? · <i>~3 sec</i></span>
+    Last digit: 2 ✘, 6 ✔, 8 ✘, 3 ✘. Bacha sirf <b>571536</b>. (Sach mein 756² = 571536.)
+  </div>
+  <p><b>Teen aur pakki jaanch</b> (jab last digit se kaam na chale):</p>
+  <ul>
+    <li><b>Zeros:</b> square ke end mein zeros hamesha <b>even</b> (0, 2, 4…). 640 mein ek zero → square nahi. 70² = 4900 (2 zeros), 900² = 810000 (4 zeros): number ke zeros × 2.</li>
+    <li><b>5 par khatam:</b> toh last do digit <b>25</b> hone chahiye. 185 ✘, 225 ✔, 625 ✔.</li>
+    <li><b>Digit-sum (digital root):</b> digits jodte jao jab tak ek digit na bache. Square ka ye sirf <b>1, 4, 7, 9</b> hota hai. 4634 → 17 → 8 ✘. 4624 → 16 → 7 ✔ (= 68²). <span class="tag x">CGL+</span></li>
+    <li><b>Even number ka square</b> 4 se divide hota hai. Odd ka square odd.</li>
+  </ul>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Square jaldi banao (3 shortcut)</h3>
+  <p><b>Kab use karo:</b> sabse paas wala square dhoondhna ho, ya option check karna ho.</p>
+  <div class="tbl"><table>
+    <tr><th>Number kaisa hai</th><th>Shortcut</th><th>Demo</th></tr>
+    <tr><td>5 par khatam (n5)</td><td>n × (n+1) likho, peeche 25 lagao</td><td>125² → 12 × 13 = 156 | 25 → <b>15625</b></td></tr>
+    <tr><td>50 ke paas (41–59)</td><td>pehle do digit = n − 25, peeche do digit = (50 − n)²</td><td>48² → 23 | 04 → <b>2304</b> · 42² → 17 | 64 → <b>1764</b></td></tr>
+    <tr><td>100 ke paas</td><td>pehla hissa = n + (n − 100), peeche (n − 100)² do digit mein</td><td>104² → 108 | 16 → <b>10816</b> · 103² → 106 | 09 → <b>10609</b></td></tr>
+  </table></div>
+  <div class="box"><span class="k">Squares ratta maar lo (11 se 32)</span>
+    11² 121 · 12² 144 · 13² 169 · 14² 196 · 15² 225 · 16² 256 · 17² 289 · 18² 324 · 19² 361 · 20² 400 · 21² 441 · 22² 484 · 23² 529 · 24² 576 · 25² 625 · 26² 676 · 27² 729 · 28² 784 · 29² 841 · 30² 900 · 31² 961 · 32² 1024<br>
+    Aur: 316² = 99856 (sabse bada 5-digit square) · 317² = 100489 (sabse chhota 6-digit square) · 99² = 9801 (sabse bada 4-digit) · 32² = 1024 (sabse chhota 4-digit).
+  </div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Sabse paas wala square (jodo ya ghatao)</h3>
+  <p><b>Kab use karo:</b> "smallest number to be added / subtracted to make it a perfect square".</p>
+  <p><b>Soch aise:</b> pehle √ ka andaaza lagao. Number ko peeche se do-do digit mein todo: 10724 → 1 | 07 | 24. Teen tukde, toh root 3 digit ka. Pehle tukde "107" ke liye 10² = 100 ≤ 107, toh root 10_ se shuru. Ab 103², 104² try karo.</p>
+  <ul>
+    <li><b>Jodna hai:</b> agla square − number.</li>
+    <li><b>Ghatana hai:</b> number − pichhla square.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · 2378 mein kitna jodein? · <i>~8 sec</i></span>
+    48² = 23 | 04 = 2304 (50 wala shortcut). 49² = 24 | 01 = 2401. 2401 − 2378 = <b>23</b>.
+  </div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Guna karke square banao (prime powers even karo)</h3>
+  <p><b>Kab use karo:</b> "smallest number by which 640 / 252 must be multiplied to make a perfect square".</p>
+  <p><b>Soch aise:</b> square mein har prime <b>jodi</b> mein aata hai. 36 = (2 × 2) × (3 × 3). Jo prime akela bacha, use ek baar aur guna kar do.</p>
+  <div class="box"><span class="k">Demo · 252 ko kisse guna karein? · <i>~10 sec</i></span>
+    252 = 4 × 63 = 2² × 3² × 7. Jodi mein 2 aur 3 hain. 7 akela. Toh × <b>7</b>. 252 × 7 = 1764 = 42².
+  </div>
+  <div class="trick"><b>Trick:</b> divide karke square banana ho toh akele prime se <b>bhaag</b> do. Guna karke banana ho toh akele prime se <b>guna</b>. Dono mein wahi number aata hai.</div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Beech mein kitne squares / non-squares</h3>
+  <ul>
+    <li><b>n² aur (n+1)² ke beech:</b> 2n natural numbers, sab non-square. 11² aur 12² ke beech 22.</li>
+    <li><b>a aur b ke beech kitne squares:</b> √a ko upar round karo, √b ko neeche round karo. Ginti = bada − chhota + 1. 50 se 1000: √50 → 8, √1000 → 31 → 31 − 8 + 1 = 24.</li>
+    <li><b>Root mein kitne digit:</b> square mein 2n ya 2n − 1 digit → root mein n digit. 1764 (4 digit) → 42 (2 digit).</li>
+  </ul>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Equation wale: option daalo</h3>
+  <p><b>Kab use karo:</b> "number − uska √ = 272", "number + square = 90", "√ ko 40% badhaya toh 21". Equation banane ki zaroorat nahi. Options mein se jo perfect square hai, use daalo.</p>
+  <div class="box"><span class="k">Demo · Number aur uske √ ka jod 132 (3-digit number) · <i>~5 sec</i></span>
+    Option 121 = 11². 121 + 11 = 132 ✔. Answer <b>121</b>. Baaki options (111, 101, 123) square hi nahi.
+  </div>
+
+  <!-- TYPES -->
+  <h3>Type 5 · Perfect square hai ya nahi, last digit, zeros (20 Qs)</h3>
+  <div class="box"><span class="k">Worked · Kaunsa square ho sakta hai: 245982, 571536, 496838, 178343 <span class="tag p">PYQ ×2</span> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></span>
+    <b>Method:</b> last digit · <i>~3 sec</i><br>
+    2, 8, 3 par khatam hone wale kabhi square nahi. Answer <mark>571536</mark>. (Ye sawaal bank mein do baar hai.)
+  </div>
+  <div class="box"><span class="k">Worked · Natural number ka square nahi ho sakta: 30976, 28561, 1057, 2401 <span class="tag p">PYQ</span> <small>SP-XIV · 25 Jul 2025</small></span>
+    <b>Method:</b> last digit · <i>~2 sec</i><br>
+    1057 ka last digit 7. Square kabhi 7 par khatam nahi hota. Answer <mark>1057</mark>. (30976 = 176², 28561 = 169², 2401 = 49².)
+  </div>
+  <div class="box"><span class="k">Worked · 25² = 625; 125² = ? <span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small></span>
+    <b>Method:</b> 5 wala shortcut · <i>~5 sec</i><br>
+    12 × 13 = 156, peeche 25 → <mark>15625</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Square nahi: 900, 441, 729, 640 → <b>ek zero = odd zeros</b> → <mark>640</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 50 aur 70 ke beech square → <b>8² = 64</b> → <mark>64</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Unit digit 2 wale ka square: 124, 144, 134, 154 → <b>2² = 4 par khatam; ratta</b> → <mark>144</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabse bada 3-digit square: 951, 961, 971, 981 → <b>31² = 961, 32² = 1024</b> → <mark>961</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square plot ka area: 861, 841, 881, 891 → <b>29² = 841</b> → <mark>841</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square nahi: 121, 144, 169, 185 → <b>5 par khatam par 25 nahi</b> → <mark>185</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square aur 4 ka multiple: 625, 256, 225, 169 → <b>even ka square</b> → <mark>256</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Square kaun: 1057, 23453, 7928, 2500 → <b>last digit 7, 3, 8 kaato</b> → <mark>2500</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Even number ka square: 81, 144, 121, 169 → <b>even² = even</b> → <mark>144</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2-digit number jiske square ka last digit 8 → <b>8 kabhi nahi</b> → <mark>None of these</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 84² ka unit digit → <b>4² = 16</b> → <mark>6</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kiska square 1 par: 91², 84², 67², 112² → <b>1 aur 9 → 1</b> → <mark>91²</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 900² ke end mein kitne zero → <b>zeros × 2</b> → <mark>4</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 70² aur 500² ke zeros → <b>zeros × 2</b> → <mark>2 zeros in (i), 4 zeros in (ii)</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabse bada 5-digit square → <b>316² (317² 6-digit)</b> → <mark>99856</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabse chhota 6-digit square → <b>317² = 100489</b> → <mark>100489</mark> <small>CGL · 19 Sep 2025</small></li>
+  </ul>
+
+  <h3>Type 6 · Kitna jodo, ghatao ya guna karo ki square bane (10 Qs)</h3>
+  <div class="box"><span class="k">Worked · 10724 mein kya jodein, aur naye square ka √? <span class="tag p">PYQ</span> <small>MTS · 10 Feb 2025</small></span>
+    <b>Method:</b> 100 wala shortcut · <i>~10 sec</i><br>
+    1 | 07 | 24 → root 10_ ka. 103² = 106 | 09 = 10609 (chhota). 104² = 108 | 16 = 10816 (bada).<br>
+    10816 − 10724 = 92. Answer <mark>92, 104</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 640 ko kisse guna karein, aur √? <span class="tag p">PYQ</span> <small>MTS · 16 Feb 2025</small></span>
+    <b>Method:</b> powers even · <i>~10 sec</i><br>
+    640 = 64 × 10 = 2⁶ × 2 × 5 = 2⁷ × 5. Ek 2 aur ek 5 akele → × 10.<br>
+    6400 = 80². Answer <mark>× 10, 6400, √ = 80</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Number 729 aur 784 ke beech; +100 karne par square. Number? <span class="tag p">PYQ</span> <small>CGL · 14 Oct 2025</small></span>
+    <b>Method:</b> range khiskao · <i>~10 sec</i><br>
+    +100 ke baad number 829 aur 884 ke beech. Wahan sirf 29² = 841. Toh number = 841 − 100 = <mark>741</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 2378 mein kya jodein → <b>49² = 2401</b> → <mark>23</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1235 mein kya jodein → <b>35² = 1225, 36² = 1296</b> → <mark>61</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5600 mein kya jodein → <b>75² = 5625</b> → <mark>25</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1234 mein se kya ghatayein → <b>35² = 1225</b> → <mark>9</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3984 paudhe, 15 bache, square banaya; ek line mein → <b>3984 − 15 = 3969 = 63²</b> → <mark>63</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 252 ko kisse guna karein → <b>2² × 3² × 7</b> → <mark>7</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1700–1800 ke beech square jo 9 se divide → <b>42² = 1764</b> → <mark>1764, 42</mark> <small>MTS · 12 Feb 2025</small></li>
+  </ul>
+
+  <h3>Type 7 · Beech mein kitne squares, root ke digit (6 Qs)</h3>
+  <div class="box"><span class="k">Worked · 10,000 aur 20,000 ke beech (dono shamil) kitne squares? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small></span>
+    <b>Method:</b> root round karo · <i>~10 sec</i><br>
+    √10000 = 100. √20000 ≈ 141 (141² = 19881, 142² = 20164).<br>
+    Ginti = 141 − 100 + 1 = <mark>42</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 50² aur 51² ke beech kitne non-square? <span class="tag p">PYQ</span> <small>SP-XIV · 29 Aug 2025</small></span>
+    <b>Method:</b> 2n · <i>~2 sec</i><br>
+    2 × 50 = <mark>100</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 50 aur 1000 ke beech squares → <b>8 se 31 tak</b> → <mark>24</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> √50 aur √500 ke beech natural numbers → <b>√50 ≈ 7.1, √500 ≈ 22.4 → 8 se 22</b> → <mark>15</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 11² aur 12² ke beech natural numbers → <b>2n</b> → <mark>22</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2n digit wale square ke √ mein digit → <b>aadhe</b> → <mark>n</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 8 · Square ya √ wali sharat se number dhoondo (10 Qs)</h3>
+  <div class="box"><span class="k">Worked · Number − uska √ = 272 <span class="tag p">PYQ</span> <small>CPO · 9 Dec 2025</small></span>
+    <b>Method:</b> option daalo · <i>~5 sec</i><br>
+    289 = 17². 289 − 17 = 272 ✔. Answer <mark>289</mark>.<br>
+    (Bina option: n² − n = n(n − 1) = 272 = 17 × 16, toh n = 17.)
+  </div>
+  <div class="box"><span class="k">Worked · √ ko 40% badhaya, mila 21 <span class="tag p">PYQ</span> <small>CPO · 12 Dec 2025</small></span>
+    <b>Method:</b> % ko fraction · <i>~8 sec</i><br>
+    40% badhna = × 7/5. √ × 7/5 = 21 → √ = 15 → number = <mark>225</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> (4052 − x²) × 15 = 41340 → <b>41340 ÷ 15 = 2756; 4052 − 2756 = 1296</b> → <mark>36</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> √x = 0.25 × x → <b>√x = x/4 → √x = 4</b> → <mark>16</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3-digit number + uska √ = 132 → <b>option daalo</b> → <mark>121</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Number + uska square = 90 → <b>9 + 81</b> → <mark>9</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> √(a² + 15²) = 25 → <b>625 − 225 = 400 (3-4-5 ki jodi)</b> → <mark>20</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Number + uska cube = 68 → <b>4 + 64</b> → <mark>4</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> x² + 56 = 225 → <b>169 = 13²</b> → <mark>13</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Number + uska factorial = 726 → <b>6! = 720</b> → <mark>6</mark> <small>MTS · 17 Feb 2025</small></li>
+  </ul>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>52441 square ho sakta hai?</summary><p>Last digit 1 theek hai. Digit-sum 16 → 7 theek hai. Haan, ho sakta hai (229² = 52441).</p></details>
+    <details><summary>47² 5 second mein?</summary><p>47 − 25 = 22, (50 − 47)² = 09 → 2209.</p></details>
+    <details><summary>20² aur 21² ke beech kitne non-square?</summary><p>2 × 20 = 40.</p></details>
+    <details><summary>180 ko kisse guna karein ki square bane?</summary><p>180 = 2² × 3² × 5. Akela 5, toh × 5 → 900 = 30².</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · NUMBER SYSTEM (part 3: divisibility, remainders, consecutive numbers, primes) ===================== -->
+<section class="chap" id="mns-divis">
+  <div class="eyebrow">Maths · Number System · hissa 3</div>
+  <h2>Divisibility, remainder, lagataar numbers, prime aur unit digit</h2>
+  <div class="meta">100 PYQs (zyada MTS 2025 aur GD 2026 ke) · sabse zyada: "58P8 divisible by 9, P = ?", "kaunsa number 9 aur 11 dono se", "teen lagataar odd ka guna"</div>
+
+  <h3>Pehle ek kahani: baantna aur bachna</h3>
+  <p>Tumhare paas 26 laddoo hain. 8 dosto mein barabar baantne hain. Har dost ko 3 mile (24 gaye), 2 bach gaye. Yahi poori kahani hai:</p>
+  <div class="box"><span class="k">Ek line jo yaad rakhni hai</span>
+    <b>Number = bhaajak × bhaagfal + sheshfal</b> (Dividend = Divisor × Quotient + Remainder). 26 = 8 × 3 + 2.<br>
+    Agar sheshfal 0 hai, toh number "divisible" hai. Divisibility ke saare rule bas ye batate hain ki <b>poora bhaag kiye bina</b> sheshfal 0 hai ya nahi.
+  </div>
+  <p>Ye rule kaam kyun karte hain? 10, 100, 1000 ke andar chhupe hain. 100 = 4 × 25, toh 100 ka koi bhi multiple 4 se katega. Isliye 4 ke liye sirf last 2 digit dekhne hain. 1000 = 8 × 125, toh 8 ke liye last 3 digit. Aur 10 = 9 + 1, toh har 10 "9 ka multiple + 1" hai. Isliye 9 aur 3 ke liye digits ka jod.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Divisibility ke 8 card</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Eight cards of divisibility rules. 2: last digit even. 3: digit sum divisible by 3. 4: last two digits. 5: last digit 0 or 5. 6: both 2 and 3. 8: last three digits. 9: digit sum divisible by 9. 11: alternate sum difference is 0 or a multiple of 11.">
+      <g>
+        <rect x="10" y="10" width="166" height="110" rx="8" class="chf"/><rect x="184" y="10" width="166" height="110" rx="8" class="chf"/><rect x="358" y="10" width="166" height="110" rx="8" class="chf"/><rect x="532" y="10" width="166" height="110" rx="8" class="chf"/>
+        <rect x="10" y="130" width="166" height="110" rx="8" class="chf"/><rect x="184" y="130" width="166" height="110" rx="8" class="chf"/><rect x="358" y="130" width="166" height="110" rx="8" class="chf"/><rect x="532" y="130" width="166" height="110" rx="8" class="chf"/>
+      </g>
+      <g class="chs"><rect x="358" y="10" width="166" height="110" rx="8"/><rect x="358" y="130" width="166" height="110" rx="8"/><rect x="532" y="130" width="166" height="110" rx="8"/><rect x="184" y="10" width="166" height="110" rx="8"/></g>
+      <g class="lbl" style="fill:var(--ch)">
+        <text x="22" y="36">÷ 2</text><text x="196" y="36">÷ 3</text><text x="370" y="36">÷ 4</text><text x="544" y="36">÷ 5</text>
+        <text x="22" y="156">÷ 6</text><text x="196" y="156">÷ 8</text><text x="370" y="156">÷ 9</text><text x="544" y="156">÷ 11</text>
+      </g>
+      <g class="sm">
+        <text x="22" y="60">last digit even</text><text x="22" y="76">(0, 2, 4, 6, 8)</text>
+        <text x="196" y="60">digits ka jod</text><text x="196" y="76">3 se kate</text>
+        <text x="370" y="60">last 2 digit</text><text x="370" y="76">4 se kate</text>
+        <text x="544" y="60">last digit</text><text x="544" y="76">0 ya 5</text>
+        <text x="22" y="180">2 bhi aur 3 bhi</text><text x="22" y="196">(even + jod 3 se)</text>
+        <text x="196" y="180">last 3 digit</text><text x="196" y="196">8 se kate</text>
+        <text x="370" y="180">digits ka jod</text><text x="370" y="196">9 se kate</text>
+        <text x="544" y="180">alternate digits ka</text><text x="544" y="196">jod − jod = 0, 11, 22…</text>
+      </g>
+      <g class="lbl">
+        <text x="22" y="106">5678 ✔</text><text x="196" y="106">5448 → 21 ✔</text><text x="370" y="106">4732 → 32 ✔</text><text x="544" y="106">4505 ✔</text>
+        <text x="22" y="226">7342 → jod 16 ✘</text><text x="196" y="226">2736 → 736 ✔</text><text x="370" y="226">4842 → 18 ✔</text><text x="544" y="226">5126 → 7 − 7 ✔</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Outline wale card (3, 4, 8, 9, 11) 2025–26 ke papers mein sabse zyada aaye. 10 = 2 × 5, isliye 2 aur 5 sirf last digit dekhte hain.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Bade numbers ka rule: co-prime tukde</span>
+    6 = 2 × 3 · 12 = 3 × 4 · 24 = 3 × 8 · 36 = 4 × 9 · 72 = 8 × 9 · 99 = 9 × 11 · 18 = 2 × 9.<br>
+    Dono tukdon ka rule lagao. Dhyaan: tukde <b>co-prime</b> hone chahiye (koi common factor nahi). 24 = 4 × 6 se check mat karo: 12 dono se katta hai par 24 se nahi.
+  </div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · 11 ka rule, chitra mein</h3>
+  <p><b>Kab use karo:</b> "95P9 divisible by 11", "remainder when 5837 ÷ 11", "kaunsa 11 se divide".</p>
+  <p><b>Soch aise:</b> digits ko peeche se (right se) <b>+ − + −</b> do. Plus walon ka jod − minus walon ka jod. Ye 0 ya 11 ka multiple ho, toh number 11 se katega. Jo bache, wahi remainder hai.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Digits of 95P9 in boxes with signs from the right: 9 plus, P minus, 5 plus, 9 minus. Plus sum 14, minus sum P plus 9. Difference 5 minus P must be 0, so P equals 5.">
+      <g>
+        <rect x="120" y="40" width="70" height="60" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="200" y="40" width="70" height="60" rx="8" class="chf"/><rect x="200" y="40" width="70" height="60" rx="8" class="chs"/>
+        <rect x="280" y="40" width="70" height="60" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="360" y="40" width="70" height="60" rx="8" class="chf"/><rect x="360" y="40" width="70" height="60" rx="8" class="chs"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="155" y="77">9</text><text x="235" y="77">5</text><text x="315" y="77" style="fill:var(--ch)">P</text><text x="395" y="77">9</text>
+        <text x="155" y="30">−</text><text x="235" y="30" style="fill:var(--ch)">+</text><text x="315" y="30">−</text><text x="395" y="30" style="fill:var(--ch)">+</text>
+      </g>
+      <text x="440" y="30" class="sm">← right se shuru</text>
+      <text x="460" y="66" class="lbl" style="fill:var(--ch)">Plus: 9 + 5 = 14</text>
+      <text x="460" y="88" class="lbl">Minus: P + 9</text>
+      <text x="350" y="140" text-anchor="middle" class="lbl">14 − (P + 9) = 5 − P → isko 0 karna hai → P = 5</text>
+      <text x="350" y="166" text-anchor="middle" class="sm">Check: 9559 → (9 + 5) − (5 + 9) = 0 ✔</text>
+      <text x="350" y="194" text-anchor="middle" class="sm">Remainder ke liye bhi yahi: 5837 → (7 + 8) − (3 + 5) = 7 → 5837 ÷ 11 ka remainder 7</text>
+    </svg>
+    </div>
+    <figcaption>Gehre dabbe = plus wali jagah (1st, 3rd… right se). Halke = minus wali. Farq 0 = divisible.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Missing digit P: rule lagao, options daalo</h3>
+  <p><b>Kab use karo:</b> "36P2 divisible by 6, P = ?" ya "73P2 divisible by 8, P kya NAHI ho sakta?"</p>
+  <ul>
+    <li><b>3 ya 9:</b> baaki digits ka jod nikaalo. P itna jodo ki agla 3 / 9 ka multiple bane. 3 ke liye P ke 3 jawab hote hain (gap 3): jaise 2, 5, 8.</li>
+    <li><b>4:</b> sirf "P aur last digit" wala 2-digit number dekho.</li>
+    <li><b>8:</b> sirf last 3 digit dekho. Options ek-ek karke daalo.</li>
+    <li><b>6:</b> even hai? Phir 3 wala rule.</li>
+    <li><b>"Cannot be" wale mein:</b> jo option rule tod de, wahi answer.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · 58P8 divisible by 9 · <i>~5 sec</i></span>
+    5 + 8 + 8 = 21. Agla 9 ka multiple 27. P = 27 − 21 = <b>6</b>.
+  </div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Remainder aur sabse paas wala multiple</h3>
+  <ul>
+    <li><b>Remainder bina bhaag:</b> ÷ 9 ya 3 → digits ke jod ka remainder. ÷ 8 → last 3 digit ka. ÷ 4 → last 2 ka. ÷ 11 → alternate jod ka farq.</li>
+    <li><b>Kitna ghatayein ki divisible ho:</b> = remainder. <b>Kitna jodein:</b> = bhaajak − remainder.</li>
+    <li><b>Sabse bada 4-digit jo d se kate:</b> 9999 − (9999 ÷ d ka remainder).</li>
+    <li><b>Sabse chhota 4-digit:</b> 1000 + (d − 1000 ÷ d ka remainder). Ya: d ka wo multiple jo pehli baar 1000 paar kare.</li>
+    <li><b>a se b tak d ke kitne multiple:</b> (b ÷ d ka poora bhaag) − ((a − 1) ÷ d ka poora bhaag).</li>
+  </ul>
+  <div class="box"><span class="k">Demo · 101 se 199 tak 6 ke multiple · <i>~8 sec</i></span>
+    199 ÷ 6 → 33 (33 × 6 = 198). 100 ÷ 6 → 16 (16 × 6 = 96). 33 − 16 = <b>17</b>.
+  </div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Lagataar numbers: beech wala pakdo</h3>
+  <p><b>Soch aise:</b> 22, 24, 26 ko dekho. 22 ek kam hai, 26 ek zyada. Dono barabar ho jaate hain. Toh teeno = 24, 24, 24. Isliye <b>beech wala = jod ÷ ginti</b>.</p>
+  <div class="tbl"><table>
+    <tr><th>Kya diya</th><th>Shortcut</th><th>Demo</th></tr>
+    <tr><td>3 lagataar ka jod</td><td>beech wala = jod ÷ 3</td><td>Even, jod 72 → beech 24 → 22, 24, 26</td></tr>
+    <tr><td>2 lagataar odd/even ka guna</td><td>guna + 1 = beech wale ka square</td><td>143 + 1 = 144 = 12² → 11, 13</td></tr>
+    <tr><td>3 lagataar odd ka guna</td><td>beech wala ≈ guna ka cube root; last digit se pakka</td><td>315 → 7³ = 343 paas → 5 × 7 × 9 = 315</td></tr>
+    <tr><td>2 lagataar odd ke squares ka farq</td><td>farq = 2 × jod (kyunki b² − a² = (b − a)(b + a))</td><td>farq 64 → jod 32 → 15, 17</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Cubes ratta maar lo (3 lagataar ke guna ke liye)</span>
+    5³ 125 · 7³ 343 · 9³ 729 · 11³ 1331 · 13³ 2197 · 15³ 3375 · 17³ 4913 · 19³ 6859 · 21³ 9261 · 23³ 12167
+  </div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Prime aur factors</h3>
+  <div class="box"><span class="k">Primes ratta maar lo</span>
+    1–100 mein 25 primes: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97.<br>
+    100–140: 101, 103, 107, 109, 113, 127, 131, 137, 139. <span class="tag x">CGL+</span> 1 prime nahi hai. 2 akela even prime.
+  </div>
+  <ul>
+    <li><b>Prime hai ya nahi:</b> √n tak ke primes se bhaag do. 437: √437 ≈ 21. 19 se: 19 × 23 = 437. Toh prime nahi.</li>
+    <li><b>Kul factors:</b> n = 2ᵃ × 3ᵇ × 5ᶜ… toh factors = (a + 1)(b + 1)(c + 1)…</li>
+    <li><b>Theek 3 factors:</b> sirf prime ka square (p²: factors 1, p, p²). 4, 9, 25, 49…</li>
+    <li><b>Fundamental Theorem of Arithmetic:</b> 1 se bada har natural number primes ka guna hai, aur ye guna ek hi tarah se banta hai. Ye <b>natural numbers</b> ke liye hai, rational ke liye nahi.</li>
+  </ul>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Unit digit: sirf aakhri digit ka khel</h3>
+  <p><b>Soch aise:</b> 562 × 841 × 927 ka last digit sirf 2 × 1 × 7 = 14 ke last digit se aata hai: 4. Baaki digits kabhi last jagah tak nahi pahunchte.</p>
+  <p>Power ho toh: last digit ek <b>chakkar</b> mein ghoomta hai. 7, 49, 343, 2401 → 7, 9, 3, 1, phir wahi.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Unit digit cycles. 2: 2,4,8,6. 3: 3,9,7,1. 7: 7,9,3,1. 8: 8,4,2,6. 4: 4,6. 9: 9,1. 0,1,5,6 stay the same. Example: 7 to the power 103, 103 divided by 4 leaves 3, so the third in the cycle, 3.">
+      <g text-anchor="middle" class="lbl">
+        <text x="190" y="22">power 1</text><text x="280" y="22">power 2</text><text x="370" y="22">power 3</text><text x="460" y="22">power 4</text>
+      </g>
+      <text x="550" y="22" class="sm">phir dobara</text>
+      <g class="lbl"><text x="20" y="54">2 ka chakkar</text><text x="20" y="96">3 ka chakkar</text><text x="20" y="138">7 ka chakkar</text><text x="20" y="180">8 ka chakkar</text></g>
+      <g>
+        <rect x="160" y="34" width="60" height="30" rx="6" class="chf"/><rect x="250" y="34" width="60" height="30" rx="6" class="chf"/><rect x="340" y="34" width="60" height="30" rx="6" class="chf"/><rect x="430" y="34" width="60" height="30" rx="6" class="chf"/>
+        <rect x="160" y="76" width="60" height="30" rx="6" class="chf"/><rect x="250" y="76" width="60" height="30" rx="6" class="chf"/><rect x="340" y="76" width="60" height="30" rx="6" class="chf"/><rect x="430" y="76" width="60" height="30" rx="6" class="chf"/>
+        <rect x="160" y="118" width="60" height="30" rx="6" class="chf"/><rect x="250" y="118" width="60" height="30" rx="6" class="chf"/><rect x="340" y="118" width="60" height="30" rx="6" style="fill:var(--ch)"/><rect x="430" y="118" width="60" height="30" rx="6" class="chf"/>
+        <rect x="160" y="160" width="60" height="30" rx="6" class="chf"/><rect x="250" y="160" width="60" height="30" rx="6" class="chf"/><rect x="340" y="160" width="60" height="30" rx="6" class="chf"/><rect x="430" y="160" width="60" height="30" rx="6" class="chf"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="190" y="54">2</text><text x="280" y="54">4</text><text x="370" y="54">8</text><text x="460" y="54">6</text>
+        <text x="190" y="96">3</text><text x="280" y="96">9</text><text x="370" y="96">7</text><text x="460" y="96">1</text>
+        <text x="190" y="138">7</text><text x="280" y="138">9</text><text x="370" y="138" style="fill:var(--paper)">3</text><text x="460" y="138">1</text>
+        <text x="190" y="180">8</text><text x="280" y="180">4</text><text x="370" y="180">2</text><text x="460" y="180">6</text>
+      </g>
+      <g class="sm"><text x="510" y="54">↺ 4 ka chakkar</text><text x="510" y="96">↺ 4 ka chakkar</text><text x="510" y="138">↺ 4 ka chakkar</text><text x="510" y="180">↺ 4 ka chakkar</text></g>
+      <text x="20" y="216" class="sm">4 aur 9: 2 ka chakkar (4, 6 · 9, 1) · 0, 1, 5, 6: hamesha wahi digit</text>
+      <text x="20" y="244" class="lbl" style="fill:var(--ch)">7¹⁰³: 103 ÷ 4 → remainder 3 → teesra dabba → unit digit 3</text>
+    </svg>
+    </div>
+    <figcaption>Power ko 4 se bhaag do. Remainder 1, 2, 3 → wahi dabba. Remainder 0 → chautha dabba.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · Binary: sirf 1, 2, 4, 8 ka jod</h3>
+  <p><b>Soch aise:</b> binary mein har jagah ki keemat dugni hoti jaati hai, right se: 1, 2, 4, 8, 16, 32, 64, 128. Jahan 1 likha hai, wo keemat jodo.</p>
+  <div class="tbl"><table>
+    <tr><th>128</th><th>64</th><th>32</th><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th><th>Decimal</th></tr>
+    <tr><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">1</td><td class="n">1</td><td class="n">0</td><td class="n">0</td><td class="n">1</td><td>16 + 8 + 1 = <b>25</b></td></tr>
+    <tr><td class="n">1</td><td class="n">1</td><td class="n">1</td><td class="n">1</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">1</td><td>128 + 64 + 32 + 16 + 1 = <b>241</b></td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> saare 1 wala binary = agli keemat − 1. 1111 = 16 − 1 = 15. 11111111 = 256 − 1 = 255.</div>
+
+  <!-- TYPES -->
+  <h3>Type 9 · Kaunsa number divisible hai, kaunsa nahi (20 Qs)</h3>
+  <div class="box"><span class="k">Worked · Na 9 se na 11 se: 4950, 7425, 7623, 7841 <span class="tag p">PYQ</span> <small>GD · 18 May 2026</small></span>
+    <b>Method:</b> pehle 9 ka jod, phir 11 · <i>~10 sec</i><br>
+    Jod: 4950 → 18, 7425 → 18, 7623 → 18. Teeno 9 se kat gaye. 7841 → 20 ✘.<br>
+    7841 ka 11: (1 + 8) − (4 + 7) = −2 ✘. Answer <mark>7841</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 9 aur 11 dono se: 7920, 8250, 8020, 8163 <span class="tag p">PYQ</span> <small>MTS · 11 Feb 2025</small></span>
+    <b>Method:</b> 99 = 9 × 11 · <i>~8 sec</i><br>
+    9 ka jod: 7920 → 18 ✔, 8250 → 15, 8020 → 10, 8163 → 18 ✔.<br>
+    11: 7920 → (0 + 9) − (2 + 7) = 0 ✔. 8163 → (3 + 1) − (6 + 8) = −10 ✘. Answer <mark>7920</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 3 aur 8 dono: 5448, 5240, 5560, 6170 → <b>jod 21 + last 3 "448" = 8 × 56</b> → <mark>5448</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Na 3 na 11: 10019, 9999, 10032, 9042 → <b>jod 11; (9 + 0 + 1) − (1 + 0) = 9</b> → <mark>10019</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Na 9 na 11: 3472, 3168, 3366, 3465 → <b>jod 16; (2 + 4) − (7 + 3) = −4</b> → <mark>3472</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 se nahi: 4844, 4732, 4612, 4951 → <b>odd number</b> → <mark>4951</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Na 3 na 4: 1272, 1236, 3420, 1265 → <b>odd + jod 14</b> → <mark>1265</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 se nahi: 2736, 5237, 4360, 5536 → <b>odd number</b> → <mark>5237</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Na 3 na 11: 3234, 2871, 4567, 3003 → <b>jod 22; (7 + 5) − (6 + 4) = 2</b> → <mark>4567</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 se nahi: 7342, 7482, 7128, 8136 → <b>jod 16, 3 se nahi</b> → <mark>7342</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9003, 6012, 3330, 1001 mein 3 se kitne → <b>jod 12, 9, 9, 2</b> → <mark>3</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 11 se nahi: 1235, 4862, 1254, 1639 → <b>(5 + 2) − (3 + 1) = 3</b> → <mark>1235</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1210, 1331, 1442, 1553 mein 11 se kitne → <b>farq 0, 0, 1, 2</b> → <mark>2</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Na 4 na 9: 3528, 3492, 2363, 3312 → <b>odd + jod 14</b> → <mark>2363</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5001, 6003, 7204, 8400 mein 6 se kitne → <b>odd kaato; 7204 jod 13</b> → <mark>1</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 se nahi: 4762, 4536, 5382, 5211 → <b>jod 19</b> → <mark>4762</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 51, 62, 84, 97 mein 9 se kitne → <b>jod 6, 8, 12, 16</b> → <mark>0</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 se nahi: 1248, 1356, 1473, 1584 → <b>odd number</b> → <mark>1473</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 11 se kaun: 5455, 5235, 5126, 7215 → <b>(6 + 1) − (2 + 5) = 0</b> → <mark>5126</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 se kaun: 4842, 4703, 5487, 5340 → <b>jod 18</b> → <mark>4842</mark> <small>MTS · 20 Feb 2025</small></li>
+  </ul>
+
+  <h3>Type 10 · Missing digit P (16 Qs)</h3>
+  <div class="box"><span class="k">Worked · 95P9 divisible by 11, P = ? <span class="tag p">PYQ</span> <small>MTS · 9 Feb 2025</small></span>
+    <b>Method:</b> 11 ka chitra · <i>~8 sec</i><br>
+    Right se: +9, −P, +5, −9. (9 + 5) − (P + 9) = 5 − P = 0 → <mark>P = 5</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 73P2 divisible by 8; P kya NAHI ho sakta (0, 1, 5, 9)? <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small></span>
+    <b>Method:</b> last 3 digit · <i>~12 sec</i><br>
+    3P2 dekho. 302 = 8 × 37 + 6 ✘. 312 = 8 × 39 ✔. 352 = 8 × 44 ✔. 392 = 8 × 49 ✔. Answer <mark>0</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 36P2 divisible by 6, P = ? (0, 5, 7, 2) <span class="tag p">PYQ</span> <small>GD · 18 May 2026</small></span>
+    <b>Method:</b> even ✔, phir 3 ka jod · <i>~6 sec</i><br>
+    3 + 6 + 2 = 11. 11 + P = 12, 15, 18 → P = 1, 4, 7. Options mein <mark>7</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 58P8 ÷ 9 → <b>21 + P = 27</b> → <mark>6</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 84P6 ÷ 6, P kya nahi (0, 3, 9, 7) → <b>18 + P: P = 0, 3, 6, 9 chalte</b> → <mark>7</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 95P9 ÷ 3 → <b>23 + P = 24, 27, 30 → 1, 4, 7</b> → <mark>7</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 47P6 ÷ 8 → <b>7P6: 736 = 8 × 92</b> → <mark>3</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 39P6 ÷ 3, P kya nahi → <b>18 + P: P = 0, 3, 6, 9</b> → <mark>7</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 62P8 ÷ 4, P kya nahi → <b>P8: 08, 28, 68 ✔, 38 ✘</b> → <mark>3</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 47P5 ÷ 3 → <b>16 + P = 18, 21, 24 → 2, 5, 8</b> → <mark>5</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 28P3 ÷ 11 → <b>(3 + 8) − (P + 2) = 9 − P</b> → <mark>9</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 28P0 ÷ 8, P kya nahi → <b>8P0: 800, 840, 880 ✔, 810 ✘</b> → <mark>1</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 28P3 ÷ 9 → <b>13 + P = 18</b> → <mark>5</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 61P0 ÷ 4 → <b>P0: P even</b> → <mark>8</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 99P0 ÷ 4, P kya nahi → <b>P0: P even chahiye</b> → <mark>1</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 36P6 ÷ 4 → <b>P6: 16 ✔ (06, 26, 46 ✘)</b> → <mark>1</mark> <small>MTS · 18 Feb 2025</small></li>
+  </ul>
+
+  <h3>Type 11 · Remainder, sabse paas wala multiple, ginti (16 Qs)</h3>
+  <div class="box"><span class="k">Worked · Sabse bada 4-digit number jo 72 se kate <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small></span>
+    <b>Method:</b> 9999 − remainder · <i>~12 sec</i><br>
+    72 × 100 = 7200, 72 × 130 = 9360, 72 × 138 = 9936, 72 × 139 = 10008 (5 digit).<br>
+    Answer <mark>9936</mark>. (Option check: 72 = 8 × 9. 9936 → jod 27 ✔, 936 = 8 × 117 ✔.)
+  </div>
+  <div class="box"><span class="k">Worked · B = 4150 − A. B ko 7, 14, 21 se bhaag do toh har baar remainder 5. A = ? <span class="tag p">PYQ</span> <small>MTS · 17 Feb 2025</small></span>
+    <b>Method:</b> LCM + remainder · <i>~15 sec</i><br>
+    LCM(7, 14, 21) = 42. B = 42 ka multiple + 5.<br>
+    4150 ÷ 42: 42 × 98 = 4116, bacha 34. Toh B = 4116 + 5 = 4121. A = 4150 − 4121 = <mark>29</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Do numbers ka farq 1365; bade ÷ chhote = 6, remainder 15. Chhota? <span class="tag p">PYQ</span> <small>SP-XIV · 28 Jul 2025</small></span>
+    <b>Method:</b> Number = bhaajak × bhaagfal + sheshfal · <i>~12 sec</i><br>
+    Bada = 6 × chhota + 15. Farq = 5 × chhota + 15 = 1365 → 5 × chhota = 1350 → chhota = <mark>270</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Sabse chhota 4-digit jo 17 se kate → <b>17 × 60 = 1020 − 17</b> → <mark>1003</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 1349 ÷ 8 ka remainder → <b>349 − 344</b> → <mark>5</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5678 mein se kitna ghatayein ki 6 se kate → <b>jod 26 → 3 se remainder 2; even</b> → <mark>2</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5837 ÷ 11 ka remainder → <b>(7 + 8) − (3 + 5)</b> → <mark>7</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 741 ÷ 9 ka remainder → <b>jod 12 → 1 + 2</b> → <mark>3</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabse chhota 4-digit jo 121 se kate → <b>121 × 9</b> → <mark>1089</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabse chhota 4-digit jo 54 se kate → <b>54 × 19 = 1080 − 54</b> → <mark>1026</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4505 mein se kitna ghatayein ki 8 se kate → <b>505 − 504</b> → <mark>1</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6812 mein se kitna ghatayein ki 9 se kate → <b>jod 17 → remainder 8</b> → <mark>8</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabse bada 4-digit jo 88 se kate → <b>88 × 113 = 9944 (88 × 114 = 10032)</b> → <mark>9944</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1 se 122 tak 8 ke multiple → <b>122 ÷ 8 → 15</b> → <mark>15</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 101 se 199 tak 6 ke multiple → <b>33 − 16</b> → <mark>17</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> B = 3560 − A; B ÷ 8, 12, 16 → remainder 4 → <b>LCM 48; 3560 = 48 × 74 + 8</b> → <mark>4</mark> <small>MTS · 6 Feb 2025</small></li>
+  </ul>
+
+  <h3>Type 12 · Lagataar numbers (29 Qs)</h3>
+  <div class="box"><span class="k">Worked · 3 lagataar odd ka guna 9177; sabse bada? <span class="tag p">PYQ</span> <small>GD · 25 May 2026</small></span>
+    <b>Method:</b> cube root + last digit · <i>~10 sec</i><br>
+    21³ = 9261, bilkul paas. Toh beech wala 21 → 19, 21, 23. Check last digit: 9 × 1 × 3 = 27 → 7 ✔.<br>
+    Answer <mark>23</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 2 lagataar odd ke squares ka farq 88; unka guna? <span class="tag p">PYQ</span> <small>MTS · 12 Feb 2025</small></span>
+    <b>Method:</b> farq = 2 × jod, phir guna = beech² − 1 · <i>~10 sec</i><br>
+    Jod = 88 ÷ 2 = 44 → numbers 21, 23 (beech wala 22).<br>
+    Guna = 22² − 1 = 484 − 1 = <mark>483</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 3 lagataar even ka jod 72; sabse bada? <span class="tag p">PYQ</span> <small>GD · 6 May 2026</small></span>
+    <b>Method:</b> beech wala = jod ÷ 3 · <i>~3 sec</i><br>
+    72 ÷ 3 = 24 → 22, 24, 26. Answer <mark>26</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 3 lagataar odd ka guna 315; jod → <b>7³ = 343 paas → 5, 7, 9</b> → <mark>21</mark> <small>GD · 5 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 3 lagataar odd ka guna 315; sabse bada + chhota → <b>5 + 9 = 2 × beech</b> → <mark>14</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 lagataar odd ka guna 3315; sabse bada → <b>15³ = 3375 → 13, 15, 17</b> → <mark>17</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 3 lagataar odd ka guna 693; bada + chhota → <b>9³ = 729 → 7, 9, 11</b> → <mark>18</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 lagataar odd ka guna 1287; bada + chhota → <b>11³ = 1331 → 9, 11, 13</b> → <mark>22</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 lagataar even ka jod 24; guna → <b>beech 8 → 6, 8, 10</b> → <mark>480</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 3 lagataar even ka jod 54; sabse bada → <b>beech 18</b> → <mark>20</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 3 lagataar even ka jod 60; sabse chhota → <b>beech 20</b> → <mark>18</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 3 lagataar even ka jod 42; sabse chhota → <b>beech 14</b> → <mark>12</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 lagataar even ka jod 18; bada × chhota → <b>beech 6 → 4 × 8</b> → <mark>32</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 lagataar even ka jod 30; bada + chhota → <b>2 × beech = 2 × 10</b> → <mark>20</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 lagataar natural ka jod 18; sabse chhota → <b>beech 6</b> → <mark>5</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabse chhote 3 lagataar natural (jod = do whole ka jod, ek 0) → <b>natural 1 se shuru</b> → <mark>1, 2, 3</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 lagataar odd ka guna 143; bada → <b>143 + 1 = 12² → 11, 13</b> → <mark>13</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 lagataar odd ka guna 255; bada → <b>255 + 1 = 16² → 15, 17</b> → <mark>17</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 lagataar odd ka guna 323; jod → <b>323 + 1 = 18² → 17, 19</b> → <mark>36</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 lagataar even ka guna 624; jod → <b>624 + 1 = 25² → 24, 26</b> → <mark>50</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 ke 2 lagataar multiple ka guna 750; chhota → <b>750 = 25 × 30</b> → <mark>25</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A, B odd, A × B = 9, A &lt; B; A + B → <b>1 × 9</b> → <mark>10</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do lagataar even ka guna + ? = square → <b>n(n + 2) + 1 = (n + 1)²</b> → <mark>1</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Lagataar odd ke squares ka farq 80; jod → <b>80 ÷ 2</b> → <mark>40</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Farq 64; chhota number → <b>jod 32 → 15, 17</b> → <mark>15</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Farq 24; jod → <b>24 ÷ 2</b> → <mark>12</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Farq 56; jod → <b>56 ÷ 2</b> → <mark>28</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Farq 88; chhota → <b>jod 44 → 21, 23</b> → <mark>21</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Farq 64; guna → <b>jod 32 → 16² − 1</b> → <mark>255</mark> <small>MTS · 13 Feb 2025</small></li>
+  </ul>
+
+  <h3>Type 13 · Prime aur factors (9 Qs)</h3>
+  <div class="box"><span class="k">Worked · 3600 ke kul factors <span class="tag p">PYQ</span> <small>SP-XIV · 30 Jul 2025</small></span>
+    <b>Method:</b> (a + 1)(b + 1)(c + 1) · <i>~10 sec</i><br>
+    3600 = 36 × 100 = 2² × 3² × 2² × 5² = 2⁴ × 3² × 5².<br>
+    Factors = 5 × 3 × 3 = <mark>45</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 1 se 100 tak kitne numbers ke theek 3 divisors? <span class="tag p">PYQ</span> <small>CGL Tier-2</small></span>
+    <b>Method:</b> p² pehchano · <i>~8 sec</i><br>
+    Sirf prime ke square: 2² = 4, 3² = 9, 5² = 25, 7² = 49. (11² = 121 bahar.) Answer <mark>4</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 40 aur 50 ke beech primes ka jod → <b>41 + 43 + 47</b> → <mark>131</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 20 aur 40 ke beech primes ka jod → <b>23 + 29 + 31 + 37</b> → <mark>120</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 70 aur 80 ke beech kitne prime → <b>71, 73, 79</b> → <mark>3</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 120 aur 140 ke beech primes ka jod → <b>127 + 131 + 137 + 139</b> → <mark>534</mark> <small>GD · 25 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Do prime ka guna 21; jod → <b>3 × 7</b> → <mark>10</mark> <small>MTS · 10 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do prime ka guna 437; chhota → <b>√437 ≈ 21 → 19 × 23</b> → <mark>19</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A: 1 se bada har whole number primes ka guna. R: FTA har rational par → <b>FTA sirf natural numbers ke liye</b> → <mark>A true, R false</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 14 · Unit digit (3 Qs)</h3>
+  <div class="box"><span class="k">Worked · 7¹⁰³ ka unit digit <span class="tag p">PYQ</span> <small>SP-XIV · 25 Jul 2025</small></span>
+    <b>Method:</b> 4 ka chakkar · <i>~5 sec</i><br>
+    7 → 7, 9, 3, 1. 103 ÷ 4 → remainder 3 → teesra → <mark>3</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 562 × 841 × 927 ka unit digit → <b>2 × 1 × 7 = 14</b> → <mark>4</mark> <small>MTS · 4 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 582 × 645 × 921 ka unit digit → <b>2 × 5 = 10, aage sab 0</b> → <mark>0</mark> <small>MTS · 16 Feb 2025</small></li>
+  </ul>
+
+  <h3>Type 15 · Binary (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · 241 ko binary mein <span class="tag p">PYQ</span> <small>SP-XIV · 29 Jul 2025</small></span>
+    <b>Method:</b> badi keemat se ghatate jao · <i>~12 sec</i><br>
+    241 − 128 = 113 − 64 = 49 − 32 = 17 − 16 = 1 − 1 = 0. Li gayi: 128, 64, 32, 16, 1. Chhodi: 8, 4, 2.<br>
+    1 1 1 1 0 0 0 1 → <mark>11110001</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Binary 11111111 ÷ 1111 (decimal mein) → <b>255 ÷ 15 = 17; 20 se neeche primes 19, 17</b> → <mark>the second highest prime number less than 20</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Binary 11111111 + 10001000 → <b>255 + (128 + 8)</b> → <mark>391</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Binary 11001 → <b>16 + 8 + 1</b> → <mark>25</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+  </ul>
+
+  <h3>Type 16 · Baaki chhote sawaal (3 Qs)</h3>
+  <div class="box"><span class="k">Worked · Digits 6, 0, 3, 5, 9 se number: sabse bade digit ki place value − sabse chhote digit ki place value, sabse zyada <span class="tag p">PYQ</span> <small>DP · 3 Jan 2026</small></span>
+    <b>Method:</b> bada digit sabse aage, chhota sabse peeche · <i>~10 sec</i><br>
+    9 ko sabse badi jagah (ten-thousands): 90,000. 0 ki place value toh hamesha 0. Isliye asli farq "3" se padta hai: use jitna peeche bhejo, utna achha.<br>
+    96530 mein 3 ki value 30. 90356 mein 300. Toh <mark>96,530</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 1.5 × ? = whole number (sabse chhota) → <b>1.5 = 3/2</b> → <mark>2</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1 se 70 mein unit digit 1 ya 9 wale kitne % → <b>har 10 mein 2 → 14 / 70</b> → <mark>20%</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>"0 natural number hai"</td><td>Natural 1 se shuru. 0 sirf whole se aata hai.</td></tr>
+    <tr><td>Rational × irrational = hamesha irrational</td><td>0 × √2 = 0. Isliye "sometimes".</td></tr>
+    <tr><td>Do irrational ka jod hamesha irrational</td><td>√2 + (−√2) = 0. Gadbad kat sakti hai.</td></tr>
+    <tr><td>Terminating check bina fraction chhota kiye</td><td>3/30 = 1/10, terminating hai. Pehle chhota karo.</td></tr>
+    <tr><td>Square ke last digit 2, 3, 7, 8 waale ko check karte rehna</td><td>Seedha kaato. Square kabhi in par khatam nahi hota.</td></tr>
+    <tr><td>"Kitna jodein" mein pichhla square le liya</td><td>Jodna = agla square − number. Ghatana = number − pichhla square.</td></tr>
+    <tr><td>8 ke liye last 2 digit dekhna</td><td>8 → last <b>3</b>. 4 → last 2.</td></tr>
+    <tr><td>24 ko 4 × 6 se check karna</td><td>Co-prime tukde: 3 × 8. 72 = 8 × 9, 99 = 9 × 11.</td></tr>
+    <tr><td>11 ka rule left se lagana aur remainder ulta lena</td><td>Right se +, −, +, −. Remainder ke liye bhi right se shuru.</td></tr>
+    <tr><td>3 lagataar ka jod se "sabse bada" pucha, beech wala likh diya</td><td>Beech wala nikaal kar ek kadam (even/odd mein 2) aage jao.</td></tr>
+    <tr><td>1 ko prime ginna</td><td>1 na prime, na composite. 2 akela even prime.</td></tr>
+    <tr><td>Unit digit chakkar mein remainder 0 ko "pehla" lena</td><td>Remainder 0 → chautha dabba (7⁴ → 1).</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 217 sawaal. <b>2 chhode</b>, kyunki number hi gayab hai (na text mein, na image mein): GD 6 May 2026 Shift 2 ka "What is the unit digit of …" aur SP-XIV 31 Jul 2025 ka "Consider the number …" (complex number wala). Baaki saare 215 teeno hisson mein hain. 14 sawaal image se padhe gaye (√, power, set ke nishaan). CHSL 13 Nov aur 14 Nov 2025 ka "perfect square ho sakta hai" sawaal bank mein do baar hai: ek jagah ×2 likha hai. Teen sawaal mein "⚠ note" hai: x = √3 wala (do sahi option), √4.5 wala (sharat dheeli), aur digits 6, 0, 3, 5, 9 wala (0 ki place value hamesha 0; key 3 ki jagah se samajh aati hai).
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>7P34 divisible by 9 ho, toh P?</summary><p>7 + 3 + 4 = 14. Agla 18. P = 4.</p></details>
+    <details><summary>8526 ÷ 11 ka remainder?</summary><p>Right se: (6 + 5) − (2 + 8) = 1. Remainder 1.</p></details>
+    <details><summary>Do lagataar even ka guna 168. Bada?</summary><p>168 + 1 = 169 = 13². Beech 13 → 12, 14. Bada 14.</p></details>
+    <details><summary>3¹⁰² ka unit digit?</summary><p>3 → 3, 9, 7, 1. 102 ÷ 4 → remainder 2 → 9.</p></details>
+    <details><summary>Binary 101101 decimal mein?</summary><p>32 + 8 + 4 + 1 = 45.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · LCM AND HCF (part 1: basics + speed methods) ===================== -->
+<section class="chap" id="mlh-basics">
+  <div class="eyebrow">Maths · 98 questions</div>
+  <h2>LCM aur HCF: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CHSL, CGL, MTS, DP, GD 2026, Selection Post XIV) · sabse zyada: ratio + HCF/LCM, HCF × LCM = guna, tiles / chocolates (HCF), ghantiyan / traffic light (LCM), remainder wale</div>
+
+  <h3>Pehle do chhoti kahaniyan</h3>
+  <p><b>Kahani 1 · Rassi kaatna.</b> Tumhare paas 12 m aur 18 m ki do rassiyan hain. Dono ko <b>barabar</b> tukdon mein kaatna hai, kuch bachna nahi chahiye. Tukda kitna <b>bada</b> ho sakta hai?</p>
+  <ul>
+    <li>1 m ke tukde? Chalega. 2 m? Chalega. 3 m? Chalega. 6 m? 12 = 6 × 2, 18 = 6 × 3. Chalega.</li>
+    <li>9 m? 12 mein nahi jaata. Toh sabse bada tukda = <b>6 m</b>.</li>
+  </ul>
+  <p>Jo number dono ko poora kaat de, wo <b>common factor</b>. Inmein sabse bada = <b>HCF</b> (Highest Common Factor). HCF(12, 18) = 6.</p>
+  <p><b>Kahani 2 · Gym ka milan.</b> Ravi har 4 din gym jaata hai, Amit har 6 din. Aaj dono saath the. Agli baar saath kab?</p>
+  <ul>
+    <li>Ravi ke din: 4, 8, <b>12</b>, 16, 20, <b>24</b>… Amit ke din: 6, <b>12</b>, 18, <b>24</b>…</li>
+    <li>Pehli baar common = <b>12</b>. Ye dono ka sabse chhota common multiple = <b>LCM</b> (Least Common Multiple).</li>
+  </ul>
+  <div class="box"><span class="k">Ek line mein farq</span>
+    <b>HCF</b> = sabse bada number jo <b>sabko kaate</b> (tukda, naap, baantna). Hamesha sabse chhote number se chhota ya barabar.<br>
+    <b>LCM</b> = sabse chhota number jise <b>sab kaatein</b> (milan, phir saath). Hamesha sabse bade number se bada ya barabar.
+  </div>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Prime factor ka gol-gol chitra</h3>
+  <p><b>Kab use karo:</b> numbers prime powers mein diye hon (2⁴ × 3² × 5…), ya 2 numbers ka HCF aur LCM ek saath chahiye.</p>
+  <p><b>Soch aise:</b> har number primes ki ek thaili hai. 36 = 2 × 2 × 3 × 3. 48 = 2 × 2 × 2 × 2 × 3. Jo primes dono thailiyon mein common hain, wo HCF. Sab primes ek baar (common sirf ek baar), wo LCM.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Venn diagram of prime factors. 36 = 2 times 2 times 3 times 3. 48 = 2 times 2 times 2 times 2 times 3. Common part 2, 2, 3 gives HCF 12. Left only 3, right only 2, 2. LCM = 12 times 3 times 4 = 144.">
+      <circle cx="250" cy="140" r="115" class="chf"/><circle cx="250" cy="140" r="115" class="chs"/>
+      <circle cx="400" cy="140" r="115" class="chf"/><circle cx="400" cy="140" r="115" class="chs"/>
+      <text x="180" y="20" text-anchor="middle" class="lbl">36 = 2² × 3²</text>
+      <text x="470" y="20" text-anchor="middle" class="lbl">48 = 2⁴ × 3</text>
+      <text x="200" y="145" text-anchor="middle" class="lbl">3</text>
+      <text x="200" y="170" text-anchor="middle" class="sm">sirf 36 mein</text>
+      <text x="325" y="120" text-anchor="middle" class="lbl" style="fill:var(--ch)">2, 2, 3</text>
+      <text x="325" y="145" text-anchor="middle" class="sm">dono mein</text>
+      <text x="325" y="170" text-anchor="middle" class="lbl" style="fill:var(--ch)">HCF = 12</text>
+      <text x="455" y="145" text-anchor="middle" class="lbl">2, 2</text>
+      <text x="455" y="170" text-anchor="middle" class="sm">sirf 48 mein</text>
+      <text x="350" y="282" text-anchor="middle" class="lbl">LCM = poora chitra = 3 × (2 × 2 × 3) × (2 × 2) = 3 × 12 × 4 = 144</text>
+      <text x="560" y="90" class="sm">Check:</text>
+      <text x="560" y="110" class="sm">HCF × LCM</text>
+      <text x="560" y="130" class="sm">= 12 × 144 = 1728</text>
+      <text x="560" y="150" class="sm">= 36 × 48 ✔</text>
+    </svg>
+    </div>
+    <figcaption>Beech ka hissa = HCF (har prime ki chhoti power). Poora chitra = LCM (har prime ki badi power).</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th></th><th>Kaunse primes</th><th>Kaunsi power</th><th>Example: 2⁴ × 3² × 5³ × 7 aur 23 × 5 × 7 × 11</th></tr>
+    <tr><td><b>HCF</b></td><td>sirf common</td><td>chhoti</td><td>common sirf 5 aur 7 → 5 × 7 = <b>35</b></td></tr>
+    <tr><td><b>LCM</b></td><td>sab</td><td>badi</td><td>2⁴ × 3² × 5³ × 7 × 11 × 23</td></tr>
+  </table></div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · LCM: sabse bade number ke multiples chalao</h3>
+  <p><b>Kab use karo:</b> chhote numbers ka LCM (14, 21, 28 ya 90, 120, 150). Factor karne se tez hai.</p>
+  <p><b>Soch aise:</b> LCM sabse bade number ka hi koi multiple hoga. Toh bade number ke multiples likhte jao: jo baaki sab se kat jaaye, wahi LCM.</p>
+  <div class="box"><span class="k">Demo · LCM(14, 21, 28) · <i>~5 sec</i></span>
+    28 → 21 se nahi. 56 → 21 se nahi. 84 → 14 ✔, 21 ✔. LCM = <b>84</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> jo number kisi doosre ka factor hai, use hata do. LCM(3, 6, 9, 12, 15, 18): 3, 6, 9 hata do (18 aur 12 mein aa gaye). Bacha LCM(12, 15, 18) = 180. Saath mein zero hon toh pehle zero hatao: LCM(90, 120, 150) = LCM(9, 12, 15) × 10 = 180 × 10 = 1800.</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · HCF: farq nikaalo (Euclid ka jaadu)</h3>
+  <p><b>Kab use karo:</b> bade numbers ka HCF (378 aur 525), aur "same remainder" wale sawaal.</p>
+  <p><b>Soch aise:</b> agar 21 dono rassiyon ko kaatta hai, toh unke <b>farq</b> ko bhi kaatega. Kyunki farq = (kuch 21) − (kuch 21). Toh HCF hamesha farq ka bhi factor hai. Bade numbers chhote farq mein badal jaate hain.</p>
+  <div class="box"><span class="k">Demo · HCF(378, 525) · <i>~12 sec</i></span>
+    Farq = 525 − 378 = 147 = 3 × 49 = 3 × 7 × 7.<br>
+    Ab 147 ke factors ko 378 par aazmao: 378 ÷ 7 = 54 ✔, 54 ÷ 3 = 18 ✔, 18 ÷ 7 ✘. Toh HCF = 7 × 3 = <b>21</b>.
+  </div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Ratio wala chakra: numbers = H × a aur H × b</h3>
+  <p><b>Kab use karo:</b> "ratio 3 : 4, LCM 120", "ratio 5 : 8, HCF 6", "HCF 12, LCM 480, jod 156".</p>
+  <p><b>Soch aise:</b> dono numbers mein HCF chhupa hai. Usko bahar nikaalo: number = H × a, H × b. Ab a aur b mein koi common nahi bacha (co-prime).</p>
+  <div class="box"><span class="k">4 formule jo isi se nikalte hain</span>
+    Numbers = <b>H·a, H·b</b> · LCM = <b>H × a × b</b> · Jod = <b>H × (a + b)</b> · Farq = <b>H × (a − b)</b>
+  </div>
+  <div class="box"><span class="k">Demo · Ratio 3 : 4, LCM 120. Jod? · <i>~5 sec</i></span>
+    LCM = H × 3 × 4 = 12H = 120 → H = 10. Jod = 10 × 7 = <b>70</b>.
+  </div>
+  <div class="box"><span class="k">Demo · HCF 12, LCM 480, jod 156 · <i>~12 sec</i></span>
+    a × b = 480 ÷ 12 = 40. a + b = 156 ÷ 12 = 13. Do number jinka guna 40, jod 13 → 5 aur 8.<br>
+    Numbers = <b>60 aur 96</b>.
+  </div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · HCF × LCM = dono numbers ka guna</h3>
+  <p><b>Soch aise:</b> chitra dekho. Do numbers ka guna = dono thailiyon ke saare primes. LCM + HCF mein bhi wahi saare primes hain (common wale ek baar LCM mein, ek baar HCF mein). Isliye barabar.</p>
+  <div class="box"><span class="k">Demo · HCF 11, LCM 7700, ek number 275. Doosra? · <i>~8 sec</i></span>
+    Doosra = 11 × 7700 ÷ 275. 275 = 11 × 25, toh 11 kat gaya: 7700 ÷ 25 = <b>308</b>.
+  </div>
+  <ul>
+    <li>Ye sirf <b>do</b> numbers ke liye. Teen numbers par nahi chalta.</li>
+    <li><b>HCF hamesha LCM ko kaatta hai.</b> HCF 12 hai toh LCM 12 ka multiple hi hoga (144 ✔, 130 ✘). LCM 90 hai toh HCF 90 ka factor (15 ✔, 24 ✘).</li>
+  </ul>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Remainder wale: LCM ke aage ya peeche</h3>
+  <p><b>Soch aise:</b> LCM ke multiples "saaf" jagah hain, jahan sab bhaajak poore kat jaate hain. Remainder wala number inke <b>thoda aage</b> ya <b>thoda peeche</b> hota hai.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Number line from 0 to 125 for divisors 12, 15 and 20, whose LCM is 60. Multiples 60 and 120 are marked. 64 and 124 are 4 ahead: same remainder 4. 53 and 113 are 7 behind: remainders 5, 8, 13 where divisor minus remainder is always 7.">
+      <defs>
+        <marker id="mlh-basics-rem-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <text x="350" y="20" text-anchor="middle" class="lbl">Bhaajak 12, 15, 20 · LCM = 60</text>
+      <line x1="40" y1="110" x2="660" y2="110" class="ln" marker-end="url(#mlh-basics-rem-arr)"/>
+      <line x1="40" y1="96" x2="40" y2="124" class="ln"/>
+      <rect x="324" y="90" width="8" height="40" style="fill:var(--ch)"/>
+      <rect x="612" y="90" width="8" height="40" style="fill:var(--ch)"/>
+      <g text-anchor="middle" class="lbl"><text x="40" y="148">0</text><text x="328" y="148" style="fill:var(--ch)">60</text><text x="616" y="148" style="fill:var(--ch)">120</text></g>
+      <circle cx="294" cy="110" r="7" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <circle cx="582" cy="110" r="7" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <circle cx="347" cy="110" r="7" class="chf"/><circle cx="347" cy="110" r="7" class="chs"/>
+      <circle cx="635" cy="110" r="7" class="chf"/><circle cx="635" cy="110" r="7" class="chs"/>
+      <g text-anchor="middle" class="sm"><text x="282" y="80">53</text><text x="570" y="80">113</text><text x="360" y="80">64</text><text x="648" y="80">124</text></g>
+      <rect x="40" y="166" width="300" height="54" rx="8" class="paper" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="5 3"/>
+      <text x="52" y="188" class="lbl">Peeche: LCM − d</text>
+      <text x="52" y="208" class="sm">remainders 5, 8, 13 → 12−5 = 15−8 = 20−13 = 7</text>
+      <rect x="360" y="166" width="300" height="54" rx="8" class="chf"/><rect x="360" y="166" width="300" height="54" rx="8" class="chs"/>
+      <text x="372" y="188" class="lbl">Aage: LCM + r</text>
+      <text x="372" y="208" class="sm">har baar remainder 4 → 60 + 4 = 64, 124…</text>
+    </svg>
+    </div>
+    <figcaption>Number line scale par hai. Dark patti = LCM ke multiple. Khaali gola = LCM − 7. Bhara gola = LCM + 4.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Sawaal kya kehta hai</th><th>Answer</th><th>Demo</th></tr>
+    <tr><td>Har bhaajak se <b>same remainder r</b></td><td>LCM × k + r</td><td>9, 12, 15 se 4 bache → 180 + 4 = 184</td></tr>
+    <tr><td>Remainder alag, par <b>bhaajak − remainder</b> same (= d)</td><td>LCM × k − d</td><td>12, 15, 20 se 5, 8, 13 → 60 − 7 = 53</td></tr>
+    <tr><td>Sabse bada number jo kai numbers ko <b>same remainder</b> de</td><td>HCF of <b>farq</b></td><td>103, 121, 139, 157 → farq 18 → 18</td></tr>
+    <tr><td>Kitna jodein ki sabse kate</td><td>LCM ka agla multiple − number</td><td>1000, LCM(8, 10, 12) = 120 → 1080 − 1000 = 80</td></tr>
+    <tr><td>Sabse bada 4-digit, remainder r</td><td>9999 se neeche LCM ka sabse bada multiple + r</td><td>4, 7, 13 (LCM 364) → 9828 + 3 = 9831</td></tr>
+  </table></div>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Fraction aur decimal ka HCF / LCM</h3>
+  <p><b>Soch aise:</b> fraction ka HCF bhi ek chhota sa "naap" hai. Upar wale (numerator) ka HCF lo, aur neeche wale ko itna bada karo ki sab fractions ko naap sake: neeche ka LCM.</p>
+  <div class="box"><span class="k">Ratta formula (ulta-pulta yaad rakho)</span>
+    <b>HCF</b> = HCF(upar) ÷ <b>LCM</b>(neeche) · <b>LCM</b> = LCM(upar) ÷ <b>HCF</b>(neeche)<br>
+    Pehle har fraction ko chhota (lowest form) karo. 8/14 = 4/7, 12/21 = 4/7.<br>
+    Decimal: sabko ek jaise decimal places mein likho, phir integers ki tarah. 0.25, 0.50, 0.75 → 25, 50, 75 → HCF 25 → <b>0.25</b>.
+  </div>
+  <div class="box"><span class="k">Demo · LCM of 3/5, 4/15, 8/25 · <i>~8 sec</i></span>
+    LCM(3, 4, 8) = 24. HCF(5, 15, 25) = 5. LCM = <b>24/5</b>.
+  </div>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · "Sabse chhota square jo sabse kate"</h3>
+  <p><b>Soch aise:</b> pehle LCM nikaalo. Phir LCM ki har prime power ko <b>even</b> karo (Number System wala square rule).</p>
+  <div class="box"><span class="k">Demo · 8, 12, 20 se katne wala sabse chhota square · <i>~10 sec</i></span>
+    LCM = 120 = 2³ × 3 × 5. Even banao: 2⁴ × 3² × 5² = 16 × 9 × 25 = <b>3600</b>.
+  </div>
+
+  <!-- ========== METHOD 9 ========== -->
+  <h3>Speed method 9 · Word problem: HCF ya LCM? Shabd se pehchano</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Two columns of clue words. HCF: largest piece, cut, tiles, distribute equally, maximum students or boxes, rows of same trees, groups. LCM: when together again, bells, traffic lights, running laps, least number divisible by all, remainder questions.">
+      <rect x="250" y="10" width="200" height="44" rx="22" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="350" y="37" text-anchor="middle" class="lbl">Sawaal ke shabd padho</text>
+      <line x1="300" y1="54" x2="190" y2="76" class="ln"/><line x1="400" y1="54" x2="510" y2="76" class="ln"/>
+      <rect x="20" y="78" width="320" height="200" rx="10" class="chf"/><rect x="20" y="78" width="320" height="200" rx="10" class="chs"/>
+      <rect x="360" y="78" width="320" height="200" rx="10" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="180" y="104" text-anchor="middle" class="lbl" style="fill:var(--ch)">HCF · "bada tukda, barabar baanto"</text>
+      <text x="520" y="104" text-anchor="middle" class="lbl" style="fill:var(--ch)">LCM · "phir kab milenge"</text>
+      <g class="sm">
+        <text x="36" y="132">• largest / greatest / longest size</text>
+        <text x="36" y="154">• rassi, pipe, rod ko barabar kaatna</text>
+        <text x="36" y="176">• sabse bade square tiles (phir gino)</text>
+        <text x="36" y="198">• maximum students / boxes / boys</text>
+        <text x="36" y="220">• har line mein same tree, groups</text>
+        <text x="36" y="242">• same remainder dene wala bada number</text>
+        <text x="36" y="264" class="lbl">Answer chhota hota hai (≤ chhota number)</text>
+        <text x="376" y="132">• ghantiyan, traffic light, saath mein</text>
+        <text x="376" y="154">• gol track par phir starting point</text>
+        <text x="376" y="176">• least number divisible by sab</text>
+        <text x="376" y="198">• remainder wala sabse chhota number</text>
+        <text x="376" y="220">• kitni baar saath bajti hain</text>
+        <text x="376" y="242">• sabse chhota square jo sab se kate</text>
+        <text x="376" y="264" class="lbl">Answer bada hota hai (≥ bada number)</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Do sawaal: "tukda / baantna?" → HCF. "Milan / saath?" → LCM. Answer ka size bhi check karo.</figcaption>
+  </figure>
+
+  <h3>Do picture-sawaal jo har saal aate hain</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 320" role="img" aria-label="A 720 by 540 centimetre floor drawn to scale, divided into 180 centimetre square tiles: 4 across and 3 down, 12 tiles in all.">
+      <rect x="40" y="30" width="360" height="270" class="chf"/>
+      <g class="chs">
+        <rect x="40" y="30" width="360" height="270"/>
+        <line x1="130" y1="30" x2="130" y2="300"/><line x1="220" y1="30" x2="220" y2="300"/><line x1="310" y1="30" x2="310" y2="300"/>
+        <line x1="40" y1="120" x2="400" y2="120"/><line x1="40" y1="210" x2="400" y2="210"/>
+      </g>
+      <text x="220" y="20" text-anchor="middle" class="lbl">720 cm</text>
+      <text x="30" y="170" text-anchor="middle" class="lbl" transform="rotate(-90 30 170)">540 cm</text>
+      <text x="85" y="80" text-anchor="middle" class="sm">180 × 180</text>
+      <g text-anchor="middle" class="lbl" style="fill:var(--ch)"><text x="85" y="100">1</text><text x="175" y="80">2</text><text x="265" y="80">3</text><text x="355" y="80">4</text><text x="85" y="170">5</text><text x="355" y="260">12</text></g>
+      <text x="420" y="60" class="lbl">Tile ka side = HCF(540, 720)</text>
+      <text x="420" y="82" class="sm">720 − 540 = 180 → 540 = 3 × 180 ✔</text>
+      <text x="420" y="104" class="lbl" style="fill:var(--ch)">side = 180 cm</text>
+      <text x="420" y="144" class="lbl">Tiles kitne?</text>
+      <text x="420" y="166" class="sm">lambai mein 720 ÷ 180 = 4</text>
+      <text x="420" y="188" class="sm">chaudai mein 540 ÷ 180 = 3</text>
+      <text x="420" y="210" class="lbl" style="fill:var(--ch)">4 × 3 = 12 tiles</text>
+      <text x="420" y="250" class="sm">Chhota tile (90 cm) lo toh 8 × 6 = 48.</text>
+      <text x="420" y="270" class="sm">Sabse bada tile = sabse kam tiles.</text>
+    </svg>
+    </div>
+    <figcaption>540 × 720 cm ka farsh, scale par. Sabse bada square tile HCF hai. Ginti = (lambai ÷ HCF) × (chaudai ÷ HCF).</figcaption>
+  </figure>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Timeline from 0 to 360 seconds, to scale. Bell A rings every 18 seconds, bell B every 24 seconds, bell C every 30 seconds. Their ticks line up again only at 360 seconds, which is 6 minutes.">
+      <g class="lbl"><text x="10" y="54">18 s</text><text x="10" y="104">24 s</text><text x="10" y="154">30 s</text></g>
+      <line x1="58.5" y1="50" x2="683" y2="50" style="stroke:var(--ch)" stroke-width="16" stroke-dasharray="3 28"/>
+      <line x1="58.5" y1="100" x2="683" y2="100" style="stroke:var(--ch)" stroke-width="16" stroke-dasharray="3 38.333"/>
+      <line x1="58.5" y1="150" x2="683" y2="150" style="stroke:var(--ch)" stroke-width="16" stroke-dasharray="3 48.667"/>
+      <line x1="60" y1="185" x2="680" y2="185" class="ln"/>
+      <g class="ln"><line x1="60" y1="180" x2="60" y2="190"/><line x1="163.3" y1="180" x2="163.3" y2="190"/><line x1="266.7" y1="180" x2="266.7" y2="190"/><line x1="370" y1="180" x2="370" y2="190"/><line x1="473.3" y1="180" x2="473.3" y2="190"/><line x1="576.7" y1="180" x2="576.7" y2="190"/><line x1="680" y1="180" x2="680" y2="190"/></g>
+      <g text-anchor="middle" class="sm"><text x="60" y="204">0</text><text x="163.3" y="204">60</text><text x="266.7" y="204">120</text><text x="370" y="204">180</text><text x="473.3" y="204">240</text><text x="576.7" y="204">300</text><text x="680" y="204">360 s</text></g>
+      <rect x="672" y="30" width="16" height="138" rx="4" class="paper" stroke="var(--ch)" stroke-width="2" style="fill-opacity:0"/>
+      <text x="660" y="22" text-anchor="end" class="lbl" style="fill:var(--ch)">LCM = 360 s = 6 min: teeno saath</text>
+      <text x="350" y="236" text-anchor="middle" class="sm">Har patti = ek ghanti bajna · beech mein do-do kabhi kabhi milti hain (72 s par 18 aur 24), teeno sirf 360 par</text>
+    </svg>
+    </div>
+    <figcaption>Ghantiyan 18, 24, 30 second par. Timeline scale par hai. Teeno pattiyan pehli baar 360 second par ek line mein aati hain.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> "kitni baar saath bajengi (shuru wali bhi)" → (kul samay ÷ LCM) + 1. 24 min mein, LCM 3 min → 8 + 1 = 9.</div>
+
+  <div class="box"><span class="k">Formula / value sheet</span>
+    HCF × LCM = A × B (sirf do numbers) · numbers = H·a, H·b (a, b co-prime) · LCM = H·a·b<br>
+    Same remainder r → LCM·k + r · Gap d same → LCM·k − d · Same remainder dene wala sabse bada → HCF(farq)<br>
+    Fraction: HCF = HCF(upar)/LCM(neeche) · LCM = LCM(upar)/HCF(neeche)<br>
+    Tiles = (L ÷ HCF) × (B ÷ HCF) · Ghantiyan saath = (T ÷ LCM) + 1<br>
+    <span class="tag x">CGL+</span> Co-prime numbers ka HCF = 1 aur LCM = unka guna (8 aur 9 → 72). Lagataar do numbers hamesha co-prime.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>HCF(60, 84) farq se?</summary><p>Farq 24. 24 ke factors 60 par aazmao: 12 ✔ (60 = 5 × 12, 84 = 7 × 12). 24 ✘. HCF = 12.</p></details>
+    <details><summary>Ratio 2 : 5, HCF 7. LCM?</summary><p>H × a × b = 7 × 2 × 5 = 70.</p></details>
+    <details><summary>Kya HCF 8 aur LCM 60 ho sakta hai?</summary><p>Nahi. 60, 8 ka multiple nahi hai.</p></details>
+    <details><summary>Sabse chhota number jo 6, 8, 12 se bhaag dene par har baar 5 bachaye?</summary><p>LCM 24 + 5 = 29.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · LCM AND HCF (part 2: question types) ===================== -->
+<section class="chap" id="mlh-types">
+  <div class="eyebrow">Maths · PYQ types</div>
+  <h2>LCM aur HCF: 12 type ke sawaal, topper ki rough ke saath</h2>
+  <div class="meta">Bank mein 98 sawaal · 98 yahan (12 image se padhe) · har sawaal ke aage uska method likha hai</div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Seedha LCM ya HCF (7 Qs)</h3>
+  <div class="box"><span class="k">Worked · HCF of 2⁴ × 3² × 5³ × 7 aur 23 × 5 × 7 × 11 <span class="tag p">PYQ ×2</span> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></span>
+    <b>Method:</b> prime chitra · <i>~5 sec</i><br>
+    Common primes sirf 5 aur 7 (23 khud ek prime hai, 2 nahi). Chhoti power: 5¹, 7¹. HCF = <mark>35</mark>. (Bank mein do baar.)
+  </div>
+  <div class="box"><span class="k">Worked · 14, 21, 28 ka LCM <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small></span>
+    <b>Method:</b> bade ke multiples · <i>~5 sec</i><br>
+    28, 56 (21 se nahi), 84 ✔. Answer <mark>84</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 5, 7, 9, 21 se katne wala sabse chhota → <b>21 mein 7 aa gaya → 5 × 9 × 7</b> → <mark>315</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 6, 9, 12, 15 ka LCM → <b>15 ke multiples: 180 pe sab</b> → <mark>180</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> a = 2⁴·3²·5, b = 2²·3·7³; kya sach → <b>badi powers</b> → <mark>LCM = 2⁴·3²·5·7³</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> (a² − b²) aur (a − b) ka LCM → <b>a² − b² = (a − b)(a + b), pehle wala doosre ko rakhta hai</b> → <mark>a² − b²</mark> <small>DP · 26 Dec 2025</small></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Sabse chhota square jo sabse kate (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · 8, 12, 20 se katne wala sabse chhota square <span class="tag p">PYQ</span> <small>CGL · 26 Sep 2025</small></span>
+    <b>Method:</b> LCM, phir powers even · <i>~10 sec</i><br>
+    LCM = 120 = 2³ × 3 × 5 → 2⁴ × 3² × 5² = <mark>3600</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 16 aur 36 se katne wala sabse chhota square → <b>LCM 144 = 12², pehle se square</b> → <mark>144</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3, 5, 12, 15 se katne wala sabse chhota square → <b>LCM 60 = 2² × 3 × 5 → 900 (option mein nahi)</b> → <mark>3600</mark> <small>CGL · 14 Oct 2025</small></li>
+    <li><span class="tag p">PYQ</span> 16, 20, 24 se katne wala sabse chhota (options 1600, 3600, 6400, 14400) → <b>LCM 240 → square banao</b> → <mark>3600</mark> <small>CHSL · 26 Nov 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>
+    <b>CGL 14 Oct 2025 (3, 5, 12, 15):</b> LCM = 60 = 2² × 3 × 5. Sabse chhota square = 2² × 3² × 5² = <b>900</b>, jo options mein hai hi nahi. Options mein sirf 3600 hi sab se katta hai (2304, 3364, 4489 mein 5 nahi). Exam mein 3600 lagao.<br>
+    <b>CHSL 26 Nov 2025 (16, 20, 24):</b> sawaal "least number" bolta hai, uska sahi answer LCM = <b>240</b> hai, jo options mein nahi. Key 3600 "least <b>square</b>" ka answer hai (240 = 2⁴ × 3 × 5 → 2⁴ × 3² × 5² = 3600). Lagta hai "perfect square" shabd chhoot gaya. Exam mein 3600 lagao.
+  </div>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · HCF × LCM = guna (7 Qs)</h3>
+  <div class="box"><span class="k">Worked · HCF 11, LCM 7700, ek number 275. Doosra? <span class="tag p">PYQ</span> <small>DP · 31 Dec 2025</small></span>
+    <b>Method:</b> HCF × LCM ÷ diya hua · <i>~8 sec</i><br>
+    275 = 11 × 25. Toh 11 × 7700 ÷ (11 × 25) = 7700 ÷ 25 = <mark>308</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · HCF 12. LCM kya ho sakta hai: 130, 110, 144, 95? <span class="tag p">PYQ</span> <small>GD · 4 May 2026</small></span>
+    <b>Method:</b> HCF hamesha LCM ko kaate · <i>~3 sec</i><br>
+    Sirf 144 = 12 × 12 hi 12 se katta hai. Answer <mark>144</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> HCF × LCM = 6930, ek number 154 → <b>6930 ÷ 154</b> → <mark>45</mark> <small>GD · 4 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> HCF 18, LCM 540, ek 90 → <b>18 × 540 ÷ 90 = 18 × 6</b> → <mark>108</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> HCF 14, LCM 168, ek 42 → <b>14 × 168 ÷ 42 = 14 × 4</b> → <mark>56</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> HCF 15, LCM 360; guna → <b>15 × 360</b> → <mark>5400</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> LCM 90; HCF kya ho sakta hai: 28, 24, 36, 15 → <b>HCF LCM ka factor</b> → <mark>15</mark> <small>GD · 28 Apr 2026</small></li>
+  </ul>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Ratio aur HCF ya LCM (12 Qs)</h3>
+  <div class="box"><span class="k">Worked · Ratio 3 : 4, LCM 120. Jod? <span class="tag p">PYQ</span> <small>CHSL · 13 Nov 2025</small></span>
+    <b>Method:</b> H × a × b · <i>~5 sec</i><br>
+    12H = 120 → H = 10 → 30, 40 → jod <mark>70</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · HCF 12, LCM 180, ratio 5 : 3. Jod? <span class="tag p">PYQ</span> <small>GD · 30 Apr 2026</small></span>
+    <b>Method:</b> H·a + H·b · <i>~5 sec</i><br>
+    Numbers 60 aur 36. Check: LCM = 12 × 5 × 3 = 180 ✔. Jod = 12 × 8 = <mark>96</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> LCM 84, HCF 21, ratio 1 : 4; bada → <b>21 × 1, 21 × 4</b> → <mark>84</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ratio 2 : 3, LCM 60; numbers → <b>6H = 60 → H = 10</b> → <mark>20, 30</mark> <small>GD · 4 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Ratio 7 : 9, HCF 3 → <b>3 × 7, 3 × 9</b> → <mark>21, 27</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Ratio 3 : 7, HCF 5 → <b>5 × 3, 5 × 7</b> → <mark>15, 35</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Ratio 4 : 5, LCM 180; jod → <b>20H = 180 → H = 9 → 9 × 9</b> → <mark>81</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> Ratio 3 : 5, LCM 120; jod → <b>15H = 120 → H = 8 → 8 × 8</b> → <mark>64</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> Ratio 5 : 8, HCF 6 → <b>6 × 5, 6 × 8</b> → <mark>30, 48</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ratio 5 : 8, HCF 4 → <b>4 × 5, 4 × 8</b> → <mark>20, 32</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ratio 3 : 4, HCF 5; jod → <b>5 × 7</b> → <mark>35</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ratio 5 : 9, HCF 7; jod → <b>7 × 14</b> → <mark>98</mark> <small>MTS · 19 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · HCF, LCM aur jod ya farq diya → numbers (7 Qs)</h3>
+  <div class="box"><span class="k">Worked · HCF 80, LCM 3600, farq 320 <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small></span>
+    <b>Method:</b> a × b aur a − b · <i>~12 sec</i><br>
+    a × b = 3600 ÷ 80 = 45. a − b = 320 ÷ 80 = 4. Guna 45, farq 4 → 9 aur 5.<br>
+    Numbers = <mark>720 aur 400</mark>.
+  </div>
+  <div class="trick"><b>Trick:</b> option se bhi 5 second: dono numbers HCF se katne chahiye, aur unka farq / jod dena chahiye. 720 − 400 = 320 ✔, 720 ÷ 80 = 9 ✔.</div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Jod 84, HCF 12, LCM : HCF = 12 : 1 → <b>a × b = 12, a + b = 7 → 3, 4</b> → <mark>36 and 48</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> HCF 12, LCM 480, jod 156 → <b>a × b = 40, a + b = 13 → 5, 8</b> → <mark>60 and 96</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> HCF 24, LCM 360, farq 48 → <b>a × b = 15, a − b = 2 → 5, 3</b> → <mark>120, 72</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> HCF 18, LCM 540, jod 198 → <b>a × b = 30, a + b = 11 → 5, 6</b> → <mark>90 and 108</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Jod 156, HCF 13, LCM 455 → <b>a × b = 35, a + b = 12 → 5, 7</b> → <mark>65, 91</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> HCF 6, LCM 36, jod 30 → <b>a × b = 6, a + b = 5 → 2, 3</b> → <mark>12 and 18</mark> <small>GD · 9 May 2026</small></li>
+  </ul>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · Remainder wale: LCM + r, LCM − d, jodna (13 Qs)</h3>
+  <div class="box"><span class="k">Worked · 12, 15, 20 se bhaag dene par remainder 5, 8, 13. Sabse chhota number? <span class="tag p">PYQ</span> <small>CHSL · 13 Nov 2025</small></span>
+    <b>Method:</b> LCM − d · <i>~8 sec</i><br>
+    12 − 5 = 15 − 8 = 20 − 13 = 7. Har baar 7 kam. LCM = 60. Number = 60 − 7 = <mark>53</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Sabse bada 4-digit jo 4, 7, 13 se har baar 3 bachaye <span class="tag p">PYQ</span> <small>CHSL · 14 Nov 2025</small></span>
+    <b>Method:</b> LCM ka sabse bada multiple + r · <i>~15 sec</i><br>
+    LCM = 4 × 7 × 13 = 364. 364 × 27 = 9828 (364 × 28 = 10192, 5 digit).<br>
+    9828 + 3 = <mark>9831</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Sabse bada 4-digit jo 4, 6, 8, 10 se 3, 5, 7, 9 bachaye <span class="tag p">PYQ</span> <small>MTS · 16 Feb 2025</small></span>
+    <b>Method:</b> LCM − d · <i>~12 sec</i><br>
+    Har baar bhaajak − remainder = 1. LCM = 120. 120 × 83 = 9960 (120 × 84 = 10080).<br>
+    9960 − 1 = <mark>9959</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 9, 12, 15 se har baar 4 bache → <b>180 + 4</b> → <mark>184</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 11, 13, 17, 22 se har baar 4 → <b>22 mein 11 → 2 × 11 × 13 × 17 = 4862, +4</b> → <mark>4866</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2, 3, 4, 5, 6, 7 se har baar 1 → <b>LCM 420 + 1</b> → <mark>421</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5, 7, 8 se har baar 3 → <b>280 + 3</b> → <mark>283</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20, 25, 35, 40 se 14, 19, 29, 34 → <b>gap 6 → LCM 1400 − 6</b> → <mark>1394</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 jodne par 27, 35, 25, 21 se kate → <b>LCM 27 × 25 × 7 = 4725, −3</b> → <mark>4722</mark> <small>DP · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> B = 700 − A; B ÷ 3, 4, 5 → remainder 1 → <b>LCM 60; 700 = 660 + 40 → B = 661</b> → <mark>39</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 1812 mein kitna jodein ki 7, 11, 14 se kate → <b>LCM 154; 154 × 12 = 1848</b> → <mark>36</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1000 mein kitna jodein ki 8, 10, 12 se kate → <b>LCM 120 → 1080</b> → <mark>80</mark> <small>DP · 31 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabse bada 4-digit jo 12, 18, 21, 28 se kate → <b>LCM 252; 252 × 40 = 10080 − 252</b> → <mark>9828</mark> <small>CHSL · 19 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Same remainder dene wala sabse bada number: HCF of farq (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · 13511, 13903, 14589 ko sabse bada n se bhaago, har baar remainder m. n + m? <span class="tag p">PYQ</span> <small>CHSL · 12 Nov 2025</small></span>
+    <b>Method:</b> farq ka HCF · <i>~25 sec</i><br>
+    Farq: 13903 − 13511 = 392, 14589 − 13903 = 686. 392 = 2³ × 7², 686 = 2 × 7³ → HCF = 2 × 49 = 98. So n = 98.<br>
+    m: 98 × 138 = 13524, thoda zyada. 98 × 137 = 13426. 13511 − 13426 = 85.<br>
+    n + m = 98 + 85 = <mark>183</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 103, 121, 139, 157 ko same remainder → <b>har farq 18</b> → <mark>18</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 38, 50, 74, 98 ko same remainder → <b>farq 12, 24, 24 → HCF</b> → <mark>12</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 63527 aur 60784 ko 3-digit number se same remainder; digit sum → <b>farq 2743 = 13 × 211 → 211</b> → <mark>4</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · HCF ke word problems: kaatna, tiles, baantna (15 Qs)</h3>
+  <div class="box"><span class="k">Worked · Aangan 3.78 m × 5.25 m, sabse bada square tile <span class="tag p">PYQ</span> <small>CHSL · 14 Nov 2025</small></span>
+    <b>Method:</b> cm mein badlo, phir farq · <i>~15 sec</i><br>
+    378 aur 525 cm. Farq 147 = 3 × 7 × 7. 378 = 2 × 3³ × 7 → common 3 × 7.<br>
+    Tile = <mark>21 cm</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Farsh 540 × 720 cm, sabse bade square tiles kitne? <span class="tag p">PYQ</span> <small>MTS · 6 Feb 2025</small></span>
+    <b>Method:</b> HCF + ginti (upar ka chitra) · <i>~8 sec</i><br>
+    HCF = 180. Tiles = 3 × 4 = <mark>12</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 84 chocolate aur 108 candy, zyada se zyada students mein barabar <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small></span>
+    <b>Method:</b> HCF, phir har ek ka hissa · <i>~8 sec</i><br>
+    Farq 24. 12 dono ko kaatta hai (84 = 7 × 12, 108 = 9 × 12), 24 nahi. <mark>12 students; 7 chocolates and 9 candies</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 24, 36, 48 ped; har line mein same, ek hi kism → <b>HCF</b> → <mark>12</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Pipe 1.5 m aur 1.2 m, sabse bada barabar tukda → <b>150, 120 cm → HCF 30</b> → <mark>0.3 meter</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Farsh 525 × 700 cm; tiles → <b>HCF 175 → 3 × 4</b> → <mark>12</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 210 chips, 294 toffee; har ladke ko chips → <b>HCF 42 → 210 ÷ 42</b> → <mark>5</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 156 chips, 234 toffee; har ladke ko chips → <b>HCF 78 → 156 ÷ 78</b> → <mark>2</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 198 chips, 330 toffee; har ladke ko chips → <b>HCF 66 → 198 ÷ 66</b> → <mark>3</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 144, 180, 216; zyada se zyada dabbe → <b>farq 36 → HCF 36</b> → <mark>36</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Loha 90, 75, 105 cm; sabse lambi rod → <b>farq 15, 30 → 15</b> → <mark>15</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Loha 60, 48, 36 cm; sabse lambi rod → <b>farq 12</b> → <mark>12</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Class 30, 45, 75; har group mein zyada se zyada → <b>HCF</b> → <mark>15</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Class 42, 63, 84; har group mein zyada se zyada → <b>HCF</b> → <mark>21</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Farsh 336 × 420 cm; tiles → <b>HCF 84 → 4 × 5</b> → <mark>20</mark> <small>MTS · 16 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · LCM ke word problems: ghantiyan, lights, daud (9 Qs)</h3>
+  <div class="box"><span class="k">Worked · Traffic lights 90, 120, 150 second; 5:20 pm ko saath. Agli baar? <span class="tag p">PYQ</span> <small>GD · 5 May 2026</small></span>
+    <b>Method:</b> zero hatao, LCM, phir minute · <i>~10 sec</i><br>
+    LCM(9, 12, 15) = 180 → × 10 = 1800 s = 30 min. 5:20 + 30 min = <mark>5:50</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 6 ghantiyan 3, 6, 9, 12, 15, 18 s par; 24 min mein kitni baar saath (shuru wali bhi)? <span class="tag p">PYQ</span> <small>GD · 19 May 2026</small></span>
+    <b>Method:</b> (T ÷ LCM) + 1 · <i>~12 sec</i><br>
+    3, 6, 9 hata do → LCM(12, 15, 18) = 180 s = 3 min. 24 ÷ 3 = 8. Shuru wali jodo → <mark>9</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Ghantiyan 18, 24, 30 s; kitne min baad → <b>LCM 360 s</b> → <mark>6 minutes</mark> <small>GD · 5 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Track par 180, 270, 360 s; kitne min baad → <b>LCM 1080 s</b> → <mark>18</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Lights 30, 45, 60 s; 7:00 am ke baad → <b>LCM 180 s = 3 min</b> → <mark>7:03</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Track par 100, 250, 300 s; kitne min → <b>LCM 1500 s</b> → <mark>25</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ghantiyan 5, 10, 15, 20 s; kitne min baad → <b>LCM 60 s</b> → <mark>1</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Lights 50, 75, 100 s; 9:15 am ke baad → <b>LCM 300 s = 5 min</b> → <mark>9:20</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Aman 20 min, Priya 15 min ka chakkar → <b>LCM</b> → <mark>60 minutes</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+  </ul>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · Fraction aur decimal ka HCF / LCM (7 Qs)</h3>
+  <div class="box"><span class="k">Worked · 3/8, 5/12, 7/18 ka HCF aur LCM <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small></span>
+    <b>Method:</b> ulta-pulta formula · <i>~15 sec</i><br>
+    Upar 3, 5, 7: HCF 1, LCM 105. Neeche 8, 12, 18: HCF 2, LCM 72.<br>
+    HCF = 1/72, LCM = 105/2. Answer <mark>HCF 1/72, LCM 105/2</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 0.75 aur 25/30 ka LCM <span class="tag p">PYQ</span> <small>GD · 30 Apr 2026</small></span>
+    <b>Method:</b> pehle fraction chhota karo · <i>~10 sec</i><br>
+    0.75 = 3/4. 25/30 = 5/6. LCM = LCM(3, 5) ÷ HCF(4, 6) = 15/2. Answer <mark>15/2</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 4/7, 8/14, 12/21 ka LCM → <b>teeno = 4/7</b> → <mark>4/7</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 3/5, 4/15, 8/25 ka LCM → <b>LCM(3, 4, 8) ÷ HCF(5, 15, 25)</b> → <mark>24/5</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 16/45, 24/60, 32/75 ka HCF → <b>HCF(16, 24, 32) ÷ LCM(45, 60, 75) = 8/900</b> → <mark>2/225</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9/14, 27/35, 45/70 ka HCF → <b>HCF(9, 27, 45) ÷ LCM(14, 35, 70)</b> → <mark>9/70</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.25, 0.50, 0.75 ka HCF → <b>25, 50, 75 → 25</b> → <mark>0.25</mark> <small>MTS · 19 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · A, B, C ka LCM / HCF (7 Qs)</h3>
+  <p><b>Samjho:</b> LCM(A, B, C) = LCM(LCM(A, B), C). HCF(A, B, C) = HCF(HCF(A, B), C). Do ka nikaal kar teesre ke saath dobara.</p>
+  <div class="box"><span class="k">Worked · LCM(A, B) = 36, C = 24. LCM(A, B, C)? <span class="tag p">PYQ</span> <small>GD · 4 May 2026</small></span>
+    <b>Method:</b> do ka LCM, phir teesra · <i>~5 sec</i><br>
+    LCM(36, 24): 36, 72 → 24 se ✔. Answer <mark>72</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · HCF(A, B) = 60, C = 24. HCF(A, B, C)? <span class="tag p">PYQ</span> <small>MTS · 17 Feb 2025</small></span>
+    <b>Method:</b> do ka HCF, phir teesra · <i>~5 sec</i><br>
+    HCF(60, 24): farq 36, phir 24 aur 36 ka farq 12 → <mark>12</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> LCM(A, B) = B, LCM(B, C) = C → <b>A, B ko kaatta, B, C ko → sab C mein</b> → <mark>C</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> HCF(A, B) = 36, C = 18 → <b>HCF(36, 18)</b> → <mark>18</mark> <small>GD · 5 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> LCM(A, B) = 20, LCM(C, D) = 30 → <b>LCM(20, 30)</b> → <mark>60</mark> <small>GD · 28 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> LCM(A, B) = 40, C = 18 → <b>LCM(40, 18) = 8 × 9 × 5</b> → <mark>360</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> HCF(A, B) = 54, C = 18 → <b>18 ne 54 ko kaata</b> → <mark>18</mark> <small>MTS · 18 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · Do-teen numbers se ek saath divisible (6 Qs)</h3>
+  <p><b>Samjho:</b> "3 aur 4 dono se" = 12 se. Co-prime numbers ka LCM = guna. Isliye dono rule alag-alag lagao (Number System wale card).</p>
+  <div class="box"><span class="k">Worked · Saare 2-digit numbers jo 4 aur 6 dono se katein, unka jod <span class="tag p">PYQ</span> <small>SP-XIV · 24 Jul 2025</small></span>
+    <b>Method:</b> LCM + jod ka shortcut · <i>~12 sec</i><br>
+    LCM(4, 6) = 12 (24 nahi!). 2-digit multiples: 12, 24, … 96 → 8 numbers.<br>
+    Jod = (pehla + aakhri) × ginti ÷ 2 = 108 × 8 ÷ 2 = <mark>432</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 3 aur 4 dono se: 8235, 8491, 10320, 7582 → <b>20 ÷ 4 ✔, jod 6 ✔</b> → <mark>10320</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 aur 8 dono se: 4260, 4016, 4128, 3412 → <b>128 = 8 × 16, jod 15</b> → <mark>4128</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 aur 11 dono se: 3455, 3366, 4491, 4244 → <b>jod 18; (6 + 3) − (6 + 3) = 0</b> → <mark>3366</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3, 7, 13 se: 2731, 2729, 2730, 2733 → <b>3 × 7 × 13 = 273 → 2730</b> → <mark>2730</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 aur 9 dono se: 1940, 1981, 2016, 2090 → <b>16 ÷ 4 ✔, jod 9 ✔</b> → <mark>2016</mark> <small>MTS · 20 Feb 2025</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Tiles / rod / baantne mein LCM lagana</td><td>Kaatna, baantna, sabse bada tukda = HCF. Answer chhote number se bada nahi ho sakta.</td></tr>
+    <tr><td>Ghanti / light mein HCF lagana</td><td>Phir kab saath = LCM. Answer bade number se chhota nahi ho sakta.</td></tr>
+    <tr><td>HCF × LCM = guna, teen numbers par</td><td>Sirf do numbers par chalta hai.</td></tr>
+    <tr><td>LCM(4, 6) = 24 maan lena</td><td>4 × 6 sirf co-prime mein. LCM(4, 6) = 12.</td></tr>
+    <tr><td>Remainder alag-alag dekh kar "LCM + remainder" karna</td><td>Remainder same → + r. Bhaajak − remainder same → − d.</td></tr>
+    <tr><td>Same remainder wale "sabse bade" mein numbers ka HCF lena</td><td>Numbers ka nahi, unke <b>farq</b> ka HCF.</td></tr>
+    <tr><td>Fraction mein HCF = HCF(upar)/HCF(neeche)</td><td>Ulta-pulta: HCF ke neeche LCM, LCM ke neeche HCF.</td></tr>
+    <tr><td>Fraction chhota kiye bina formula</td><td>8/14 = 4/7 pehle. Warna galat answer.</td></tr>
+    <tr><td>Units alag (3.78 m aur cm wale options)</td><td>Pehle cm mein badlo, phir HCF.</td></tr>
+    <tr><td>"Kitni baar saath bajengi" mein +1 bhoolna</td><td>Shuru wali baar bhi ginni hai: (T ÷ LCM) + 1.</td></tr>
+    <tr><td>Seconds ko minutes mein badalna bhoolna</td><td>1800 s = 30 min. Time wale options ghadi mein hote hain.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 98 sawaal, saare yahan. 12 sawaal image se padhe (prime powers, fractions, Hindi-English GD wale). CHSL 13 Nov aur 14 Nov 2025 ka "2⁴ × 3² × 5³ × 7 aur 23 × 5 × 7 × 11" bank mein do baar hai (×2). Do sawaal ki key option ke hisaab se hai, sawaal ke hisaab se nahi: upar Type 2 ka ⚠ note dekho.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Rassi 4.8 m aur 3.6 m. Sabse bada barabar tukda?</summary><p>480 aur 360 cm. Farq 120, aur 120 dono ko kaatta hai. 1.2 m.</p></details>
+    <details><summary>Ratio 4 : 7, LCM 336. Chhota number?</summary><p>28H = 336 → H = 12 → 48.</p></details>
+    <details><summary>Sabse chhota number jo 15, 20, 25 se 8, 13, 18 bachaye?</summary><p>Gap 7 har baar. LCM 300 − 7 = 293.</p></details>
+    <details><summary>2/3, 4/9, 8/15 ka HCF?</summary><p>HCF(2, 4, 8) ÷ LCM(3, 9, 15) = 2/45.</p></details>
+    <details><summary>Ghantiyan 6, 8, 12 min par. 2 ghante mein kitni baar saath (shuru wali bhi)?</summary><p>LCM 24 min. 120 ÷ 24 = 5, +1 = 6.</p></details>
+  </div>
+</section>
+

@@ -1,0 +1,1312 @@
+<!-- ===================== PHYSICS 1. MOTION ===================== -->
+<section class="chap" id="ph-motion">
+  <div class="eyebrow">Physics · 9 questions</div>
+  <h2>Motion</h2>
+  <div class="meta">2025 asked: distance vs displacement, circular motion, rigid-body rotation, one numerical on maximum height</div>
+
+  <h3>Distance, displacement, speed, velocity</h3>
+  <div class="tbl"><table>
+    <tr><th>Quantity</th><th>Type</th><th>Meaning</th><th>SI unit</th></tr>
+    <tr><td>Distance</td><td>Scalar</td><td>Total path length covered</td><td class="n">m</td></tr>
+    <tr><td>Displacement</td><td>Vector</td><td>Shortest straight line from start to end, <b>with direction</b></td><td class="n">m</td></tr>
+    <tr><td>Speed</td><td>Scalar</td><td>Distance ÷ time</td><td class="n">m/s</td></tr>
+    <tr><td>Velocity</td><td>Vector</td><td>Displacement ÷ time</td><td class="n">m/s</td></tr>
+    <tr><td>Acceleration</td><td>Vector</td><td>Change in velocity ÷ time</td><td class="n">m/s²</td></tr>
+  </table></div>
+  <ul>
+    <li>Displacement <mark>includes direction; distance does not</mark>. <span class="tag p">PYQ</span></li>
+    <li>Unequal distances in equal time intervals = <mark>non-uniform</mark> motion. Equal distances in equal times = uniform motion. <span class="tag p">PYQ</span></li>
+    <li>In <b>one-dimensional</b> (straight-line) motion, velocity and acceleration <mark>lie along the same line, in the same or opposite direction</mark>. Same direction = speeding up; opposite = slowing down (retardation). They can never be perpendicular in 1-D. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Displacement can be zero when distance is not (one full round of a track). Distance ≥ |displacement| always.</li>
+    <li><span class="tag x">CGL+</span> Speedometer measures <b>speed</b>; odometer measures <b>distance</b>.</li>
+  </ul>
+
+  <h3>Velocity–time graphs</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Three velocity-time graphs: uniform velocity flat line, uniform acceleration rising line, uniform retardation falling line">
+      <defs>
+        <marker id="ph-motion-ax" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <!-- panel 1 -->
+      <path d="M40 200 V50" class="ln" marker-end="url(#ph-motion-ax)"/><path d="M40 200 H210" class="ln" marker-end="url(#ph-motion-ax)"/>
+      <rect x="40" y="110" width="150" height="90" class="chf"/>
+      <line x1="40" y1="110" x2="190" y2="110" class="chs"/>
+      <text x="125" y="30" text-anchor="middle" class="lbl">Uniform velocity</text>
+      <text x="125" y="100" text-anchor="middle" class="sm">flat line: a = 0</text>
+      <!-- panel 2 -->
+      <path d="M270 200 V50" class="ln" marker-end="url(#ph-motion-ax)"/><path d="M270 200 H440" class="ln" marker-end="url(#ph-motion-ax)"/>
+      <path d="M270 200 L420 70 L420 200 Z" class="chf"/>
+      <line x1="270" y1="200" x2="420" y2="70" class="chs"/>
+      <text x="355" y="30" text-anchor="middle" class="lbl">Uniform acceleration</text>
+      <text x="320" y="110" text-anchor="end" class="sm">slope = a</text>
+      <!-- panel 3 -->
+      <path d="M500 200 V50" class="ln" marker-end="url(#ph-motion-ax)"/><path d="M500 200 H670" class="ln" marker-end="url(#ph-motion-ax)"/>
+      <path d="M500 70 L650 200 L500 200 Z" class="chf"/>
+      <line x1="500" y1="70" x2="650" y2="200" class="chs"/>
+      <text x="585" y="30" text-anchor="middle" class="lbl">Uniform retardation</text>
+      <text x="590" y="110" class="sm">slope negative</text>
+      <!-- axis labels -->
+      <g class="sm">
+        <text x="30" y="56" text-anchor="end">v</text><text x="210" y="218" text-anchor="end">t</text>
+        <text x="260" y="56" text-anchor="end">v</text><text x="440" y="218" text-anchor="end">t</text>
+        <text x="490" y="56" text-anchor="end">v</text><text x="670" y="218" text-anchor="end">t</text>
+      </g>
+      <text x="350" y="248" text-anchor="middle" class="sm">Shaded area under a v–t graph = displacement · slope of a v–t graph = acceleration</text>
+    </svg>
+    </div>
+    <figcaption>Read a v–t graph: <b>slope → acceleration</b>, <b>area → displacement</b>. On a distance–time graph, slope → speed. <span class="tag x">CGL+</span></figcaption>
+  </figure>
+
+  <h3>Equations of motion (uniform acceleration)</h3>
+  <div class="tbl"><table>
+    <tr><th>Equation</th><th>Use it when you don't know</th></tr>
+    <tr><td class="n">v = u + at</td><td>distance s</td></tr>
+    <tr><td class="n">s = ut + ½at²</td><td>final velocity v</td></tr>
+    <tr><td class="n">v² = u² + 2as</td><td>time t</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Solved PYQ: ball thrown straight up at 10 m/s <span class="tag p">PYQ</span></span>
+    At the top, v = 0. Use v² = u² − 2gh → 0 = 10² − 2 × 9.8 × h → h = 100 ÷ 19.6 = <mark>5.10 m</mark>.<br>
+    Shortcut: <b>h<sub>max</sub> = u² / 2g</b>. Time to reach top = u / g. <span class="tag x">CGL+</span>
+  </div>
+  <div class="trick"><b>Trick:</b> "Upar jaate waqt v = 0" — at the highest point velocity is zero, but acceleration is still g (downward).</div>
+
+  <h3>Circular motion and rotation</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Uniform circular motion: velocity along tangent, acceleration towards centre; rotating disc where all points share the same angular velocity">
+      <defs>
+        <marker id="ph-motion-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+        <marker id="ph-motion-am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <!-- circle path -->
+      <circle cx="180" cy="135" r="90" class="ln" stroke-dasharray="4 4"/>
+      <circle cx="180" cy="135" r="4" style="fill:var(--muted)"/>
+      <text x="180" y="156" text-anchor="middle" class="sm">centre</text>
+      <!-- stone at top -->
+      <circle cx="180" cy="45" r="8" style="fill:var(--ch)"/>
+      <path d="M190 45 H270" class="chs" marker-end="url(#ph-motion-ar)"/>
+      <text x="276" y="40" class="sm">v (tangent)</text>
+      <path d="M180 55 V105" class="ln" marker-end="url(#ph-motion-am)"/>
+      <text x="186" y="88" class="sm">a → centre</text>
+      <!-- stone at right -->
+      <circle cx="270" cy="135" r="8" style="fill:var(--ch)"/>
+      <path d="M270 125 V60" class="chs" marker-end="url(#ph-motion-ar)"/>
+      <path d="M260 135 H215" class="ln" marker-end="url(#ph-motion-am)"/>
+      <text x="180" y="248" text-anchor="middle" class="lbl">Speed same, direction changes</text>
+      <!-- disc -->
+      <circle cx="530" cy="130" r="95" class="chf"/><circle cx="530" cy="130" r="95" class="chs"/>
+      <circle cx="530" cy="130" r="4" style="fill:var(--fg)"/>
+      <line x1="530" y1="130" x2="625" y2="130" class="ln"/>
+      <circle cx="577" cy="130" r="6" style="fill:var(--ch)"/>
+      <circle cx="625" cy="130" r="6" style="fill:var(--ch)"/>
+      <path d="M577 122 V95" class="chs" marker-end="url(#ph-motion-ar)"/>
+      <path d="M625 122 V68" class="chs" marker-end="url(#ph-motion-ar)"/>
+      <text x="560" y="150" class="sm">r → v</text>
+      <text x="610" y="150" class="sm">2r → 2v</text>
+      <text x="530" y="248" text-anchor="middle" class="lbl">Rigid body: same ω for all points</text>
+      <text x="530" y="22" text-anchor="middle" class="sm">v = ω r (linear speed grows with r)</text>
+    </svg>
+    </div>
+    <figcaption>Left: a stone on a string. Right: a spinning disc — every point turns through the same angle in the same time.</figcaption>
+  </figure>
+  <ul>
+    <li>Stone in a circle at constant speed: it <mark>has an acceleration directed towards the centre</mark> (centripetal). Speed is constant but velocity keeps changing, because direction changes. <span class="tag p">PYQ</span></li>
+    <li>Uniform circular motion is <b>accelerated motion</b>. Centripetal acceleration = <b>v²/r</b>. If the string breaks, the stone flies off along the <b>tangent</b>. <span class="tag x">CGL+</span></li>
+    <li>For a rigid body rotating about an axis, angular velocity ω is <mark>the same for all particles</mark>. Linear speed v = ωr differs. <span class="tag p">PYQ</span></li>
+    <li><b>Moment of inertia</b> = rotational version of mass (how hard it is to change rotation). Its value <mark>depends on the axis</mark> and on how mass is spread around that axis. <span class="tag p">PYQ</span> SI unit kg·m². <span class="tag x">CGL+</span></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note (moment of inertia)</span>Book says "a tensor quantity, independent of the axis". That cannot be right: moment of inertia always <b>depends on the axis</b> (the book's own explanation says so). About a given axis it is a single number, so the best option is <b>"a scalar, dependent on the axis"</b>. In advanced physics the full description is a tensor, but never "independent of the axis".</div>
+
+  <h3>Relative motion</h3>
+  <ul>
+    <li>Things you look at seem to move opposite to your own motion (trees seem to run backwards from a moving train).</li>
+    <li>Merry-go-round turning <b>anti-clockwise</b>, watching a tree: book's answer is <mark>Right to Left</mark>. <span class="tag p">PYQ</span></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note (merry-go-round)</span>Book says the tree appears from the right and exits to the left. Check it: on an anti-clockwise ride your seat keeps turning to <b>your left</b>, exactly like turning your head left. When you turn left, the scene slides the other way, so a far-off tree enters your view from the <b>left</b> and leaves on the <b>right</b>. By this reasoning the answer should be <b>Left to Right</b>. Remember the book's key, but know the logic.</div>
+
+  <h3>Physics in sports (asked with motion)</h3>
+  <ul>
+    <li>Long jump: the run-up builds <mark>maximum momentum before take-off</mark> — true. Take-off is from the <b>stronger</b> foot, not the weaker one. So <mark>only statement 1</mark> is correct. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Four phases of long jump: approach run → take-off → flight → landing.</li>
+  </ul>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Is uniform circular motion accelerated?</summary><p>Yes. Direction keeps changing, so velocity changes. Acceleration points to the centre.</p></details>
+    <details><summary>Ball thrown up at 20 m/s (g = 10). Maximum height?</summary><p>u²/2g = 400/20 = 20 m.</p></details>
+    <details><summary>What do the slope and the area of a v–t graph give?</summary><p>Slope = acceleration. Area = displacement.</p></details>
+    <details><summary>Two points on a spinning wheel: which is the same for both, ω or v?</summary><p>ω (angular velocity). v = ωr is larger for the outer point.</p></details>
+  </div>
+</section>
+
+<!-- ===================== PHYSICS 2. FORCE & LAWS OF MOTION ===================== -->
+<section class="chap" id="ph-force">
+  <div class="eyebrow">Physics · 23 questions</div>
+  <h2>Force &amp; Laws of Motion</h2>
+  <div class="meta">Most asked: Newton's 3rd law (rockets, recoil), pressure = force/area, inertia, friction</div>
+
+  <h3>Newton's three laws on one card each</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Three cards for Newton's laws: inertia, F equals ma, action equals reaction, with examples">
+      <rect x="10" y="10" width="216" height="230" rx="10" class="chf"/>
+      <rect x="242" y="10" width="216" height="230" rx="10" class="chf"/>
+      <rect x="474" y="10" width="216" height="230" rx="10" class="chf"/>
+      <g text-anchor="middle">
+        <text x="118" y="38" class="lbl chtext" style="fill:var(--ch)">1st LAW · Inertia</text>
+        <text x="118" y="60" class="sm">A body stays at rest or in</text>
+        <text x="118" y="75" class="sm">uniform straight-line motion</text>
+        <text x="118" y="90" class="sm">unless an unbalanced force acts</text>
+        <text x="350" y="38" class="lbl chtext" style="fill:var(--ch)">2nd LAW · F = ma</text>
+        <text x="350" y="60" class="sm">Force = rate of change</text>
+        <text x="350" y="75" class="sm">of momentum</text>
+        <text x="350" y="90" class="sm">F = Δp / Δt</text>
+        <text x="582" y="38" class="lbl chtext" style="fill:var(--ch)">3rd LAW · Action-Reaction</text>
+        <text x="582" y="60" class="sm">Every action has an equal</text>
+        <text x="582" y="75" class="sm">and opposite reaction,</text>
+        <text x="582" y="90" class="sm">acting on TWO different bodies</text>
+      </g>
+      <!-- icons -->
+      <!-- bus with person leaning -->
+      <g class="chs">
+        <rect x="68" y="110" width="100" height="44" rx="6"/>
+        <circle cx="90" cy="160" r="7"/><circle cx="146" cy="160" r="7"/>
+        <line x1="120" y1="148" x2="132" y2="122"/><circle cx="135" cy="118" r="5"/>
+      </g>
+      <text x="118" y="190" text-anchor="middle" class="sm">bus brakes → you jerk forward</text>
+      <text x="118" y="206" text-anchor="middle" class="sm">dusting a carpet · heavy box</text>
+      <text x="118" y="222" text-anchor="middle" class="sm">hard to start AND to stop</text>
+      <!-- hands catching ball -->
+      <g class="chs">
+        <circle cx="320" cy="132" r="10"/>
+        <path d="M345 118 q20 14 0 28"/>
+        <line x1="360" y1="132" x2="395" y2="132"/><path d="M388 126 l8 6 l-8 6"/>
+      </g>
+      <text x="350" y="190" text-anchor="middle" class="sm">cricketer pulls hands back:</text>
+      <text x="350" y="206" text-anchor="middle" class="sm">more time → less force</text>
+      <text x="350" y="222" text-anchor="middle" class="sm">(also sand pit in high jump)</text>
+      <!-- rocket -->
+      <g class="chs">
+        <path d="M582 108 l14 18 v28 h-28 v-28 z"/>
+        <line x1="572" y1="160" x2="566" y2="176"/><line x1="582" y1="160" x2="582" y2="178"/><line x1="592" y1="160" x2="598" y2="176"/>
+      </g>
+      <text x="582" y="190" text-anchor="middle" class="sm">gas pushed down → rocket up</text>
+      <text x="582" y="206" text-anchor="middle" class="sm">gun recoil · swimming</text>
+      <text x="582" y="222" text-anchor="middle" class="sm">walking (push ground back)</text>
+    </svg>
+    </div>
+    <figcaption>1st law defines force, 2nd law measures it, 3rd law says forces come in pairs.</figcaption>
+  </figure>
+
+  <h3>First law and inertia</h3>
+  <ul>
+    <li>"An object stays at rest or in uniform motion in a straight line unless compelled by a force" = <mark>First law of motion</mark> (law of inertia). <span class="tag p">PYQ</span></li>
+    <li>Inertia = <mark>the tendency of an object to resist any change in its state of motion</mark>. <span class="tag p">PYQ</span></li>
+    <li>Heavy box: hard to start and hard to stop → <mark>property of inertia</mark>. <span class="tag p">PYQ</span> <b>Mass is the measure of inertia</b>. <span class="tag x">CGL+</span></li>
+    <li>A change in speed <b>or</b> direction means <mark>a change in its state of motion</mark>. <span class="tag p">PYQ</span></li>
+    <li>Unbalanced force → change in speed or direction (✔). Balanced force cannot accelerate a body (✘). So <mark>only statement I</mark> is right. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Three kinds: inertia of <b>rest</b> (passengers fall back when bus starts), of <b>motion</b> (fall forward when it stops), of <b>direction</b> (pushed outward on a turn). Galileo first gave the idea of inertia.</li>
+  </ul>
+
+  <h3>Second law and momentum</h3>
+  <ul>
+    <li>Momentum <b>p = mv</b> (vector, kg·m/s). Force = rate of change of momentum, so <b>F = ma</b>. Unit: newton (N) = kg·m/s². <span class="tag x">CGL+</span></li>
+    <li>Cricketer moves hands back while catching <mark>to reduce the force by increasing the time over which momentum changes</mark>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Same idea: cushions/sand pits for jumpers, airbags in cars, shock absorbers. <b>Impulse</b> = F × t = change in momentum.</li>
+    <li><b>Conservation of momentum</b>: with no outside force, total momentum stays the same. Best example: <mark>a gun recoils backward when a bullet is fired</mark>. <span class="tag p">PYQ</span> Before firing total momentum = 0, so after firing bullet's forward momentum = gun's backward momentum.</li>
+  </ul>
+
+  <h3>Third law</h3>
+  <ul>
+    <li>Statement: <mark>for every action there is an equal and opposite reaction</mark>. <span class="tag p">PYQ ×2</span> Not "opposite but greater" — always equal.</li>
+    <li>Rockets and satellite launch vehicles work on <mark>Newton's third law</mark>. <span class="tag p">PYQ ×2</span> (Also explained by conservation of momentum.)</li>
+    <li>Walking on sand is hard because <mark>sand gives way (is displaced), so the ground pushes back less</mark>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Action and reaction act on <b>different bodies</b>, so they never cancel each other.</li>
+  </ul>
+
+  <h3>Free-body diagram: a box being pushed</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Free body diagram of a box on a floor: applied force right, friction left, weight down, normal force up">
+      <defs>
+        <marker id="ph-force-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <line x1="60" y1="190" x2="460" y2="190" class="ln"/>
+      <g class="ln" stroke-dasharray="2 4"><line x1="60" y1="198" x2="460" y2="198"/></g>
+      <rect x="200" y="110" width="120" height="80" rx="4" class="chf"/><rect x="200" y="110" width="120" height="80" rx="4" class="chs"/>
+      <circle cx="260" cy="150" r="4" style="fill:var(--fg)"/>
+      <path d="M264 150 H400" class="chs" marker-end="url(#ph-force-ar)"/>
+      <text x="408" y="154" class="lbl">F (push)</text>
+      <path d="M200 186 H100" class="chs" marker-end="url(#ph-force-ar)"/>
+      <text x="96" y="176" text-anchor="end" class="lbl">f (friction)</text>
+      <path d="M260 154 V235" class="chs" marker-end="url(#ph-force-ar)"/>
+      <text x="268" y="236" class="lbl">W = mg</text>
+      <path d="M260 146 V30" class="chs" marker-end="url(#ph-force-ar)"/>
+      <text x="268" y="34" class="lbl">N (normal)</text>
+      <!-- right notes -->
+      <rect x="480" y="30" width="210" height="190" rx="8" class="paper"/><rect x="480" y="30" width="210" height="190" rx="8" class="chs"/>
+      <text x="585" y="56" text-anchor="middle" class="lbl">Read it</text>
+      <text x="494" y="82" class="sm">N = W → no up/down motion</text>
+      <text x="494" y="104" class="sm">F = f → balanced:</text>
+      <text x="494" y="120" class="sm">  no change in motion</text>
+      <text x="494" y="142" class="sm">F > f → unbalanced:</text>
+      <text x="494" y="158" class="sm">  box accelerates</text>
+      <text x="494" y="180" class="sm">Friction always opposes</text>
+      <text x="494" y="196" class="sm">the motion (or its start)</text>
+    </svg>
+    </div>
+    <figcaption>Draw each force as an arrow from the body. Only the <b>unbalanced</b> (net) force changes motion.</figcaption>
+  </figure>
+
+  <h3>Friction</h3>
+  <ul>
+    <li><b>Contact</b> vs non-contact: friction is a contact force; electrostatic force acts from a distance. So <mark>only II (friction)</mark>. <span class="tag p">PYQ</span></li>
+    <li>Fluid friction is also called <b>drag</b>, and it depends on the speed of the object relative to the fluid → <mark>both I and II</mark> correct. <span class="tag p">PYQ</span></li>
+    <li>Matchstick lights because <mark>friction produces heat</mark>. <span class="tag p">PYQ</span></li>
+    <li>Disadvantage of friction: <mark>wear and tear of materials</mark> (also heat and energy loss). <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Order: <b>static &gt; sliding (kinetic) &gt; rolling</b>. That is why wheels and ball bearings help. Reduce friction with lubricants, polishing, ball bearings; streamlined shapes cut drag (fish, birds, aeroplanes). Increase friction with treaded tyres, spiked shoes.</li>
+  </ul>
+
+  <h3>Thrust and pressure</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Same brick lying flat on a large face gives low pressure, standing on a small face gives high pressure">
+      <line x1="30" y1="160" x2="670" y2="160" class="ln"/>
+      <!-- brick flat -->
+      <rect x="70" y="120" width="200" height="40" rx="3" class="chf"/><rect x="70" y="120" width="200" height="40" rx="3" class="chs"/>
+      <text x="170" y="145" text-anchor="middle" class="sm">same weight</text>
+      <text x="170" y="185" text-anchor="middle" class="lbl">Large area → LOW pressure</text>
+      <text x="170" y="202" text-anchor="middle" class="sm">wide school-bag straps, sleepers under rails</text>
+      <!-- brick standing -->
+      <rect x="470" y="40" width="40" height="120" rx="3" class="chf"/><rect x="470" y="40" width="40" height="120" rx="3" class="chs"/>
+      <text x="520" y="100" class="sm">same weight</text>
+      <text x="490" y="185" text-anchor="middle" class="lbl">Small area → HIGH pressure</text>
+      <text x="490" y="202" text-anchor="middle" class="sm">sharp knife, nail tip, pin</text>
+      <text x="350" y="40" text-anchor="middle" class="lbl chtext" style="fill:var(--ch)">P = F / A</text>
+      <text x="350" y="60" text-anchor="middle" class="sm">force (thrust) ÷ area</text>
+    </svg>
+    </div>
+    <figcaption>Force stays the same; only the area touching the ground changes.</figcaption>
+  </figure>
+  <ul>
+    <li>Force acting on unit area = <mark>pressure</mark>. Formula: <mark>Pressure = Force / Area</mark> = <mark>Thrust / Area</mark>. <span class="tag p">PYQ ×3</span></li>
+    <li>SI unit of pressure: <mark>pascal (Pa)</mark> = 1 N/m². <span class="tag p">PYQ</span> (Newton = force, watt = power, ampere = current.)</li>
+    <li>Area reduced, force same → pressure <mark>increases</mark>. <span class="tag p">PYQ</span></li>
+    <li>We are not crushed by air because <mark>the pressure inside our body balances the outside pressure</mark>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> <b>Thrust</b> = force acting perpendicular to a surface (unit N). Atmospheric pressure at sea level ≈ 1.013 × 10⁵ Pa = 76 cm of mercury. It falls as you go up.</li>
+    <li><span class="tag x">CGL+</span> Liquid pressure = <b>hρg</b>: grows with depth, so dams are thicker at the bottom.</li>
+  </ul>
+
+  <h3>One odd one out (sports rule)</h3>
+  <p>Field hockey: players may hit the ball only with the flat (left) face of the stick, for <mark>better control and reduced injury risk</mark>. <span class="tag p">PYQ</span></p>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Rocket and gun recoil — which law and which conservation principle?</summary><p>Newton's third law; conservation of linear momentum.</p></details>
+    <details><summary>Why are dams wider at the base?</summary><p>Liquid pressure increases with depth (P = hρg).</p></details>
+    <details><summary>Which is larger: static or rolling friction?</summary><p>Static. Order: static &gt; sliding &gt; rolling.</p></details>
+    <details><summary>What measures inertia?</summary><p>Mass. More mass, more inertia.</p></details>
+  </div>
+</section>
+
+<!-- ===================== PHYSICS 3. GRAVITATION, WORK, ENERGY, POWER ===================== -->
+<section class="chap" id="ph-gravity">
+  <div class="eyebrow">Physics · 23 questions</div>
+  <h2>Gravitation, Work, Energy &amp; Power</h2>
+  <div class="meta">Most asked: satellites (orbital velocity, geostationary), weight numericals, KE/PE in free fall, simple work &amp; power sums</div>
+
+  <h3>Universal law of gravitation</h3>
+  <div class="box"><span class="k">F = G m₁m₂ / r²</span>
+    Every mass attracts every other mass. Force ∝ product of masses, ∝ 1/(distance)². <b>G = 6.67 × 10⁻¹¹ N·m²/kg²</b> (a universal constant). <span class="tag x">CGL+</span> Given by <b>Newton</b>.
+  </div>
+  <ul>
+    <li>Force that runs planets, stars and galaxies: <mark>gravitational force</mark> (infinite range, always attractive). <span class="tag p">PYQ</span></li>
+    <li>The law explains <mark>both</mark> the motion of planets round the Sun and the tides due to Moon and Sun. <span class="tag p">PYQ</span></li>
+    <li>Under gravity alone, an orbiting body keeps <mark>angular momentum and mechanical energy</mark> conserved (central force → no torque; gravity is a conservative force). <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Four fundamental forces, strongest to weakest: <b>strong nuclear &gt; electromagnetic &gt; weak nuclear &gt; gravitational</b>.</li>
+  </ul>
+
+  <h3>Kepler's three laws</h3>
+  <div class="tbl"><table>
+    <tr><th>Law</th><th>Says</th></tr>
+    <tr><td class="n">1 · Orbits</td><td>Planets move in <b>ellipses</b>, Sun at one focus <span class="tag x">CGL+</span></td></tr>
+    <tr><td class="n">2 · Areas</td><td>Line Sun–planet sweeps <b>equal areas in equal times</b> → planet is fastest when nearest the Sun <span class="tag x">CGL+</span></td></tr>
+    <tr><td class="n">3 · Periods</td><td><b>T² ∝ a³</b>: square of time period ∝ <mark>cube of the semi-major axis</mark> <span class="tag p">PYQ</span></td></tr>
+  </table></div>
+
+  <h3>g, mass and weight</h3>
+  <div class="tbl"><table>
+    <tr><th></th><th>Mass</th><th>Weight</th></tr>
+    <tr><td>Meaning</td><td>Amount of matter</td><td>Force of gravity on it, W = mg</td></tr>
+    <tr><td>Type</td><td>Scalar</td><td><b>Vector</b>, acts vertically downward</td></tr>
+    <tr><td>Unit</td><td>kg</td><td>newton (N)</td></tr>
+    <tr><td>On Moon</td><td>Same</td><td>1/6 of Earth value</td></tr>
+  </table></div>
+  <ul>
+    <li>Weight has magnitude and direction; it acts vertically down → <mark>only II</mark> correct. <span class="tag p">PYQ</span></li>
+    <li>Weight 441 N on Earth → mass = 441 ÷ 9.8 = <mark>45 kg</mark>. <span class="tag p">PYQ</span></li>
+    <li>18 N on Earth → on Moon 18 ÷ 6 = <mark>3 N</mark>. <span class="tag p">PYQ</span></li>
+    <li><b>g = GM/R²</b>. Radius down by 1%, mass same → g goes up by about <mark>2%</mark> (g ∝ 1/R², so % change ≈ −2 × % change in R). <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> g ≈ 9.8 m/s². g is <b>maximum at the poles</b>, minimum at the equator, and <b>zero at Earth's centre</b>. It falls as you go up or deep down.</li>
+  </ul>
+  <div class="trick"><b>Trick:</b> Mass "kabhi nahi badalta" — only weight changes from Earth to Moon. Moon = 1/6.</div>
+
+  <h3>Satellites</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Earth with a low orbit and a geostationary orbit at about 36,000 km, with key facts">
+      <circle cx="135" cy="135" r="118" class="ln" stroke-dasharray="5 4"/>
+      <circle cx="135" cy="135" r="64" class="ln" stroke-dasharray="2 3"/>
+      <circle cx="135" cy="135" r="42" class="chf"/><circle cx="135" cy="135" r="42" class="chs"/>
+      <line x1="93" y1="135" x2="177" y2="135" class="ln"/>
+      <text x="135" y="131" text-anchor="middle" class="lbl">Earth</text>
+      <text x="135" y="151" text-anchor="middle" class="sm">equator</text>
+      <rect x="248" y="129" width="12" height="12" style="fill:var(--ch)"/>
+      <circle cx="199" cy="135" r="5" style="fill:var(--ch)"/>
+      <text x="135" y="14" text-anchor="middle" class="sm">GEO ~36,000 km</text>
+      <text x="135" y="88" text-anchor="middle" class="sm">LEO</text>
+      <!-- cards -->
+      <rect x="290" y="14" width="400" height="118" rx="8" class="chf"/>
+      <text x="304" y="38" class="lbl chtext" style="fill:var(--ch)">Geostationary orbit</text>
+      <text x="304" y="60" class="sm">• ~36,000 km above the equator, 0° inclination</text>
+      <text x="304" y="78" class="sm">• period 24 h, moves west → east like Earth</text>
+      <text x="304" y="96" class="sm">• looks fixed in the sky → TV, communication, weather</text>
+      <text x="304" y="114" class="sm">• dish antennas need not move</text>
+      <rect x="290" y="142" width="400" height="118" rx="8" class="paper"/><rect x="290" y="142" width="400" height="118" rx="8" class="chs"/>
+      <text x="304" y="166" class="lbl">Low / polar / Sun-synchronous orbit</text>
+      <text x="304" y="188" class="sm">• a few hundred km up; polar orbit passes over both poles</text>
+      <text x="304" y="206" class="sm">• used for remote sensing, mapping, spy imaging</text>
+      <text x="304" y="224" class="sm">• orbital speed near Earth ≈ 7.9 km/s</text>
+      <text x="304" y="242" class="sm">• escape velocity from Earth = 11.2 km/s</text>
+    </svg>
+    </div>
+    <figcaption>Not to scale. Square = geostationary satellite, dot = low-orbit satellite.</figcaption>
+  </figure>
+  <ul>
+    <li>A satellite stays in orbit without engines because of its <mark>orbital velocity</mark>: it keeps "falling" round the Earth. <span class="tag p">PYQ ×2</span></li>
+    <li>Satellite with a 24-hour period <mark>appears stationary</mark> (if it is over the equator, moving with Earth). <span class="tag p">PYQ</span></li>
+    <li>Equatorial plane, 0° inclination, ~36,000 km high → <mark>geostationary orbit</mark>. <span class="tag p">PYQ</span></li>
+    <li>Lagrange points are also called <mark>Libration points</mark>. <span class="tag p">PYQ</span> There are five, L1–L5, where a small body can stay fixed relative to two big bodies. <span class="tag x">CGL+</span> ISRO's solar mission <b>Aditya-L1</b> sits at the Sun–Earth L1 point. <span class="tag x">CGL+</span></li>
+    <li><span class="tag x">CGL+</span> Orbital speed does <b>not</b> depend on the satellite's mass. Astronauts feel weightless because they are in free fall.</li>
+  </ul>
+
+  <h3>Work, energy and power: formula sheet</h3>
+  <div class="tbl"><table>
+    <tr><th>Quantity</th><th>Formula</th><th>SI unit</th><th>Note</th></tr>
+    <tr><td>Work</td><td class="n">W = F × s (cos θ)</td><td>joule (J)</td><td>Zero if force ⟂ motion <span class="tag x">CGL+</span></td></tr>
+    <tr><td>Kinetic energy</td><td class="n">KE = ½ m v²</td><td>J</td><td>Energy of motion</td></tr>
+    <tr><td>Potential energy</td><td class="n">PE = m g h</td><td>J</td><td>Energy of position</td></tr>
+    <tr><td>Power</td><td class="n">P = W / t</td><td>watt (W)</td><td>1 HP = 746 W <span class="tag x">CGL+</span></td></tr>
+    <tr><td>Commercial energy</td><td class="n">1 kWh</td><td>= 3.6 × 10⁶ J</td><td>"1 unit" of electricity <span class="tag x">CGL+</span></td></tr>
+  </table></div>
+  <ul>
+    <li>10 N force, 2 m displacement along the force → W = 10 × 2 = <mark>20 J</mark>. <span class="tag p">PYQ</span></li>
+    <li>Velocity tripled → KE becomes 3² = <mark>9 times</mark> (KE ∝ v²). <span class="tag p">PYQ</span></li>
+    <li>Girl, 50 kg, climbs 5 m in 25 s → work = 50 × 9.8 × 5 = 2450 J; power = 2450 ÷ 25 = <mark>98 W</mark>. <span class="tag p">PYQ</span></li>
+    <li>Gravitational PE = <mark>energy stored due to position above the ground</mark>. <span class="tag p">PYQ</span></li>
+    <li>Mechanical energy has <mark>2</mark> types: kinetic + potential. <span class="tag p">PYQ</span></li>
+    <li>Conservation of energy: energy only changes form (✔); it cannot be destroyed (✘) → <mark>only I</mark>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Work done is zero for: a satellite in circular orbit, a coolie walking on level ground with a load on his head, pushing a fixed wall.</li>
+  </ul>
+
+  <h3>Free fall: PE turns into KE</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="A falling ball at three heights with bars showing potential energy falling and kinetic energy rising, total constant">
+      <line x1="70" y1="225" x2="130" y2="225" class="ln"/>
+      <line x1="100" y1="40" x2="100" y2="215" class="ln" stroke-dasharray="3 4"/>
+      <circle cx="100" cy="45" r="11" class="chf"/><circle cx="100" cy="45" r="11" class="chs"/>
+      <circle cx="100" cy="130" r="11" class="chf"/><circle cx="100" cy="130" r="11" class="chs"/>
+      <circle cx="100" cy="212" r="11" class="chf"/><circle cx="100" cy="212" r="11" class="chs"/>
+      <text x="140" y="49" class="sm">top (h)</text><text x="140" y="134" class="sm">half way</text><text x="140" y="216" class="sm">ground</text>
+      <!-- bars: PE soft fill, KE ink fill. full = 300 px -->
+      <rect x="250" y="32" width="300" height="26" class="chf"/><rect x="250" y="32" width="300" height="26" class="chs"/>
+      <text x="400" y="50" text-anchor="middle" class="sm">PE 100%</text>
+      <rect x="250" y="117" width="150" height="26" class="chf"/>
+      <rect x="400" y="117" width="150" height="26" style="fill:var(--ch)" opacity=".55"/>
+      <rect x="250" y="117" width="300" height="26" class="chs"/>
+      <text x="325" y="135" text-anchor="middle" class="sm">PE 50%</text><text x="475" y="135" text-anchor="middle" class="sm">KE 50%</text>
+      <rect x="250" y="199" width="300" height="26" style="fill:var(--ch)" opacity=".55"/><rect x="250" y="199" width="300" height="26" class="chs"/>
+      <text x="400" y="217" text-anchor="middle" class="sm">KE 100%</text>
+      <text x="570" y="50" class="sm">KE = 0</text>
+      <text x="570" y="217" class="sm">PE = 0</text>
+      <text x="400" y="88" text-anchor="middle" class="lbl">Total PE + KE stays the same</text>
+      <text x="400" y="176" text-anchor="middle" class="sm">(air resistance ignored)</text>
+    </svg>
+    </div>
+    <figcaption>Bars drawn to scale. Light part = potential energy, dark part = kinetic energy.</figcaption>
+  </figure>
+  <p>During free fall, <mark>potential energy decreases while kinetic energy increases</mark>. <span class="tag p">PYQ</span></p>
+
+  <h3>Fluids: buoyancy and Bernoulli</h3>
+  <ul>
+    <li>Buoyant force depends on the <mark>density</mark> of the fluid (and volume displaced). <span class="tag p">PYQ</span> <b>Archimedes' principle</b>: upthrust = weight of fluid displaced. <span class="tag x">CGL+</span></li>
+    <li><span class="tag x">CGL+</span> A body floats if its density is less than the liquid's. Ice floats on water; swimming is easier in sea water (denser). Lactometer and hydrometer work on this principle.</li>
+  </ul>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Fluid in a pipe that narrows: in the narrow part speed is higher and pressure lower, shown by a shorter liquid column">
+      <defs>
+        <marker id="ph-gravity-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <path d="M40 100 H250 L330 130 H450 L530 100 H660 V200 H530 L450 170 H330 L250 200 H40 Z" class="chf"/>
+      <path d="M40 100 H250 L330 130 H450 L530 100 H660" class="chs"/>
+      <path d="M40 200 H250 L330 170 H450 L530 200 H660" class="chs"/>
+      <!-- gauge tubes -->
+      <rect x="140" y="40" width="20" height="60" class="chf"/>
+      <line x1="140" y1="20" x2="140" y2="100" class="ln"/><line x1="160" y1="20" x2="160" y2="100" class="ln"/>
+      <line x1="136" y1="40" x2="164" y2="40" class="chs"/>
+      <rect x="380" y="100" width="20" height="30" class="chf"/>
+      <line x1="380" y1="20" x2="380" y2="130" class="ln"/><line x1="400" y1="20" x2="400" y2="130" class="ln"/>
+      <line x1="376" y1="100" x2="404" y2="100" class="chs"/>
+      <!-- flow arrows -->
+      <path d="M110 150 H170" class="chs" marker-end="url(#ph-gravity-ar)"/>
+      <path d="M345 150 H445" class="chs" marker-end="url(#ph-gravity-ar)"/>
+      <text x="170" y="34" class="sm">tall column</text>
+      <text x="410" y="96" class="sm">short column</text>
+      <text x="145" y="228" text-anchor="middle" class="lbl">Wide: slow, HIGH pressure</text>
+      <text x="390" y="228" text-anchor="middle" class="lbl">Narrow: fast, LOW pressure</text>
+      <text x="595" y="228" text-anchor="middle" class="sm">A₁v₁ = A₂v₂</text>
+    </svg>
+    </div>
+    <figcaption>Continuity: less area → more speed. Bernoulli: more speed → less pressure.</figcaption>
+  </figure>
+  <p>Ideal fluid in a narrowing horizontal pipe: <mark>speed increases, pressure decreases</mark>. <span class="tag p">PYQ</span>
+  <span class="tag x">CGL+</span> Bernoulli also explains lift on an aeroplane wing, roofs blown off in a storm, and the sprayer (atomiser).</p>
+
+  <h3>Material choice in sport</h3>
+  <p>High-jump crossbar of fibreglass, not metal: fibreglass is <mark>light, flexible and safer</mark>. <span class="tag p">PYQ</span> <span class="tag x">CGL+</span> Pole-vault poles are also fibreglass / carbon fibre: they bend, store elastic energy and give it back.</p>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Momentum doubled, mass same. What happens to KE?</summary><p>Velocity doubles, so KE becomes 4 times.</p></details>
+    <details><summary>Where is g maximum on Earth — equator or poles?</summary><p>Poles (radius is smallest there).</p></details>
+    <details><summary>Kepler's 2nd law is really which conservation?</summary><p>Conservation of angular momentum (equal areas in equal times).</p></details>
+    <details><summary>A 2 kW motor runs 3 hours. Energy in units?</summary><p>2 × 3 = 6 kWh = 6 units.</p></details>
+  </div>
+</section>
+
+<!-- ===================== PHYSICS 4. HEAT, GASES & MEASUREMENT ===================== -->
+<section class="chap" id="ph-heat">
+  <div class="eyebrow">Physics · 7 questions</div>
+  <h2>Heat, Gases &amp; Measurement</h2>
+  <div class="meta">2025 asked: pressure cooker, steam burns, ideal gas, heat engines, barometer, dimensional analysis. Plus the SI-unit and instrument tables SSC loves.</div>
+
+  <h3>Boiling point and pressure</h3>
+  <ul>
+    <li>Pressure cooker: <b>I ✘</b> (it raises pressure, not lowers), <b>II ✔</b> (water boils above 100 °C), <b>III ✔</b> (hot steam passes heat fast) → <mark>only II and III</mark>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> More pressure → higher boiling point (cooker ≈ 120 °C). Less pressure → lower boiling point, so food cooks slowly on hills.</li>
+    <li>Copper-bottom utensils: <mark>copper is a good conductor of heat</mark>, so heat spreads fast and evenly. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Three ways heat travels: <b>conduction</b> (solids), <b>convection</b> (liquids, gases; sea breeze), <b>radiation</b> (no medium needed; Sun's heat).</li>
+  </ul>
+
+  <h3>Latent heat: why steam burns more</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Heating curve of water, to scale: short melting plateau at 0 degrees, rise to 100, very long boiling plateau at 100 degrees">
+      <defs>
+        <marker id="ph-heat-ax" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <path d="M70 240 V24" class="ln" marker-end="url(#ph-heat-ax)"/>
+      <path d="M70 240 H680" class="ln" marker-end="url(#ph-heat-ax)"/>
+      <line x1="70" y1="203" x2="660" y2="203" class="ln" stroke-dasharray="2 5"/>
+      <line x1="70" y1="67" x2="660" y2="67" class="ln" stroke-dasharray="2 5"/>
+      <text x="62" y="207" text-anchor="end" class="sm">0 °C</text>
+      <text x="62" y="71" text-anchor="end" class="sm">100 °C</text>
+      <text x="62" y="30" text-anchor="end" class="sm">T</text>
+      <path d="M80 230 L88 203 L148 203 L224 67 L633 67 L641 40" style="fill:none;stroke:var(--ch);stroke-width:3"/>
+      <text x="118" y="222" text-anchor="middle" class="sm">melting</text>
+      <text x="118" y="236" text-anchor="middle" class="sm">≈ 334 J/g</text>
+      <text x="196" y="150" class="sm">water warms</text>
+      <text x="196" y="164" class="sm">≈ 420 J/g</text>
+      <text x="428" y="56" text-anchor="middle" class="lbl">boiling: latent heat of vaporisation ≈ 2260 J/g</text>
+      <text x="428" y="92" text-anchor="middle" class="sm">temperature stays 100 °C while all this heat goes in</text>
+      <text x="650" y="36" class="sm">steam</text>
+      <text x="680" y="258" text-anchor="end" class="sm">heat added per gram →  (drawn to scale)</text>
+    </svg>
+    </div>
+    <figcaption>Turning 1 g of water at 100 °C into steam takes about 5 times the heat needed to warm it from 0 to 100 °C.</figcaption>
+  </figure>
+  <ul>
+    <li>Steam at 100 °C burns worse than water at 100 °C because <mark>steam carries extra latent heat of vaporisation</mark>; it gives this out when it condenses on skin. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Latent heat: fusion of ice ≈ 334 J/g (80 cal/g), vaporisation of water ≈ 2260 J/g (540 cal/g). Water has a very high <b>specific heat</b> (≈ 4186 J/kg·K), so it is used in hot-water bags and car radiators.</li>
+    <li><span class="tag x">CGL+</span> Water is densest at <b>4 °C</b> (anomalous expansion) — lakes freeze from the top, fish survive below.</li>
+    <li><span class="tag x">CGL+</span> Scales: K = °C + 273; °F = (9/5)°C + 32; −40 is the same on °C and °F. Normal body temperature 37 °C = 98.6 °F.</li>
+  </ul>
+
+  <h3>Ideal gas and thermodynamics</h3>
+  <ul>
+    <li>Ideal gas: molecules have <b>negligible volume</b> ✔, <b>no</b> attraction between them (so "strong attraction" ✘), collisions <b>perfectly elastic</b> ✔ → <mark>1 and 3 only</mark>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Real gases act most like ideal gases at <b>high temperature and low pressure</b>. Ideal gas equation: PV = nRT.</li>
+    <li>Heat-engine statements: ideal-engine efficiency depends only on reservoir temperatures ✔; heat goes cold → hot only with outside work ✔; "irreversible expansion gives more work than quasi-static" ✘ (reversible gives the most) → <mark>2 and 3 only</mark>. <span class="tag p">PYQ</span></li>
+  </ul>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Heat engine takes heat from hot source, gives work and rejects heat to cold sink; refrigerator uses work to move heat from cold to hot">
+      <defs>
+        <marker id="ph-heat-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <!-- engine -->
+      <rect x="60" y="14" width="200" height="40" rx="6" class="chf"/><text x="160" y="39" text-anchor="middle" class="lbl">Hot source T₁</text>
+      <circle cx="160" cy="130" r="34" class="paper"/><circle cx="160" cy="130" r="34" class="chs"/><text x="160" y="135" text-anchor="middle" class="lbl">Engine</text>
+      <rect x="60" y="206" width="200" height="40" rx="6" class="chf"/><text x="160" y="231" text-anchor="middle" class="lbl">Cold sink T₂</text>
+      <path d="M160 56 V94" class="chs" marker-end="url(#ph-heat-ar)"/><text x="168" y="80" class="sm">Q₁ in</text>
+      <path d="M160 166 V204" class="chs" marker-end="url(#ph-heat-ar)"/><text x="168" y="190" class="sm">Q₂ out</text>
+      <path d="M196 130 H270" class="chs" marker-end="url(#ph-heat-ar)"/><text x="232" y="122" text-anchor="middle" class="sm">work W</text>
+      <!-- fridge -->
+      <rect x="440" y="14" width="200" height="40" rx="6" class="chf"/><text x="540" y="39" text-anchor="middle" class="lbl">Hot room</text>
+      <circle cx="540" cy="130" r="34" class="paper"/><circle cx="540" cy="130" r="34" class="chs"/><text x="540" y="135" text-anchor="middle" class="lbl">Fridge</text>
+      <rect x="440" y="206" width="200" height="40" rx="6" class="chf"/><text x="540" y="231" text-anchor="middle" class="lbl">Cold inside</text>
+      <path d="M540 204 V166" class="chs" marker-end="url(#ph-heat-ar)"/><text x="548" y="190" class="sm">heat taken</text>
+      <path d="M540 94 V56" class="chs" marker-end="url(#ph-heat-ar)"/><text x="548" y="80" class="sm">heat given</text>
+      <path d="M420 130 H504" class="chs" marker-end="url(#ph-heat-ar)"/><text x="450" y="122" text-anchor="middle" class="sm">work in</text>
+      <text x="350" y="140" text-anchor="middle" class="sm">reverse</text>
+      <text x="350" y="156" text-anchor="middle" class="sm">→</text>
+    </svg>
+    </div>
+    <figcaption>Ideal (Carnot) efficiency η = 1 − T₂/T₁ (kelvin). A fridge moves heat "uphill" only because work is supplied.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Law of thermodynamics <span class="tag x">CGL+</span></th><th>In one line</th></tr>
+    <tr><td>Zeroth</td><td>Thermal equilibrium → defines temperature</td></tr>
+    <tr><td>First</td><td>Energy conservation: heat given = rise in internal energy + work done</td></tr>
+    <tr><td>Second</td><td>No engine is 100% efficient; heat flows by itself only hot → cold</td></tr>
+    <tr><td>Third</td><td>Absolute zero (0 K = −273.15 °C) cannot be reached</td></tr>
+  </table></div>
+
+  <h3>Measurement: dimensions and instruments</h3>
+  <ul>
+    <li>Correct statement: <mark>trigonometric and log functions work only on dimensionless quantities</mark>. <span class="tag p">PYQ</span> Refractive index has no dimensions (ratio of speeds). Dimensional analysis cannot check numbers like ½, and a dimensionally correct equation can still be wrong.</li>
+    <li>Barometer measures <mark>pressure</mark> (atmospheric). <span class="tag p">PYQ</span> <span class="tag x">CGL+</span> Invented by Torricelli. Sudden fall → storm; steady rise → fair weather.</li>
+  </ul>
+  <div class="tbl"><table>
+    <tr><th>Instrument <span class="tag x">CGL+</span></th><th>Measures</th><th>Instrument</th><th>Measures</th></tr>
+    <tr><td>Barometer</td><td>Atmospheric pressure</td><td>Hygrometer</td><td>Humidity</td></tr>
+    <tr><td>Manometer</td><td>Gas pressure</td><td>Anemometer</td><td>Wind speed</td></tr>
+    <tr><td>Hydrometer</td><td>Density of liquids</td><td>Lactometer</td><td>Purity of milk</td></tr>
+    <tr><td>Pyrometer</td><td>Very high temperature</td><td>Sphygmomanometer</td><td>Blood pressure</td></tr>
+    <tr><td>Ammeter</td><td>Current (in series)</td><td>Voltmeter</td><td>Voltage (in parallel)</td></tr>
+    <tr><td>Galvanometer</td><td>Small current</td><td>Seismograph</td><td>Earthquake waves</td></tr>
+  </table></div>
+
+  <h3>SI units master table</h3>
+  <div class="tbl"><table>
+    <tr><th>Quantity</th><th>SI unit</th><th>Quantity</th><th>SI unit</th></tr>
+    <tr><td><b>Length</b> (base)</td><td>metre (m)</td><td>Force</td><td>newton (N)</td></tr>
+    <tr><td><b>Mass</b> (base)</td><td>kilogram (kg)</td><td>Pressure</td><td>pascal (Pa)</td></tr>
+    <tr><td><b>Time</b> (base)</td><td>second (s)</td><td>Work / energy</td><td>joule (J)</td></tr>
+    <tr><td><b>Electric current</b> (base)</td><td>ampere (A)</td><td>Power</td><td>watt (W)</td></tr>
+    <tr><td><b>Temperature</b> (base)</td><td>kelvin (K)</td><td>Frequency</td><td>hertz (Hz)</td></tr>
+    <tr><td><b>Amount of substance</b> (base)</td><td>mole (mol)</td><td>Charge</td><td>coulomb (C)</td></tr>
+    <tr><td><b>Luminous intensity</b> (base)</td><td>candela (cd)</td><td>Potential difference</td><td>volt (V)</td></tr>
+    <tr><td>Momentum</td><td>kg·m/s</td><td>Resistance</td><td>ohm (Ω)</td></tr>
+    <tr><td>Acceleration</td><td>m/s²</td><td>Resistivity</td><td>ohm-metre (Ω·m)</td></tr>
+    <tr><td>Power of lens</td><td>dioptre (D) = m⁻¹</td><td>Magnetic field</td><td>tesla (T)</td></tr>
+    <tr><td>Magnetic flux</td><td>weber (Wb)</td><td>Radioactivity</td><td>becquerel (Bq)</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> 7 base units — "<b>M</b>ere <b>K</b>aka <b>S</b>ab <b>A</b>chhe <b>K</b>aam <b>M</b>an se <b>C</b>arte": m, kg, s, A, K, mol, cd.</div>
+  <p><span class="tag x">CGL+</span> Big-distance units: <b>light year</b> (distance light covers in a year ≈ 9.46 × 10¹² km), <b>parsec</b> (≈ 3.26 light years), <b>astronomical unit</b> (Earth–Sun distance ≈ 1.5 × 10⁸ km). All three are units of <b>distance</b>, not time.</p>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Why does food cook slowly on mountains?</summary><p>Low air pressure lowers the boiling point of water.</p></details>
+    <details><summary>Light year measures time or distance?</summary><p>Distance.</p></details>
+    <details><summary>Which temperature reads the same in °C and °F?</summary><p>−40.</p></details>
+    <details><summary>When does a real gas behave most like an ideal gas?</summary><p>At high temperature and low pressure.</p></details>
+  </div>
+</section>
+
+<!-- ===================== PHYSICS 5. SOUND ===================== -->
+<section class="chap" id="ph-sound">
+  <div class="eyebrow">Physics · 10 questions</div>
+  <h2>Sound</h2>
+  <div class="meta">Doppler effect asked 3 times; also v = fλ, what changes from air to water, loudness vs pitch, audible range</div>
+
+  <h3>The sound wave, labelled</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 265" role="img" aria-label="Longitudinal sound wave: particles crowd at compressions and spread at rarefactions; pressure graph below shows wavelength and amplitude">
+      <path d="M72.0 34 V84 M77.8 34 V84 M83.2 34 V84 M88.1 34 V84 M92.7 34 V84 M97.1 34 V84 M101.1 34 V84 M105.0 34 V84 M108.8 34 V84 M112.5 34 V84 M116.3 34 V84 M120.2 34 V84 M124.4 34 V84 M128.8 34 V84 M133.5 34 V84 M138.6 34 V84 M144.1 34 V84 M150.0 34 V84 M156.4 34 V84 M163.1 34 V84 M170.3 34 V84 M177.8 34 V84 M185.6 34 V84 M193.6 34 V84 M201.8 34 V84 M210.0 34 V84 M218.2 34 V84 M226.4 34 V84 M234.4 34 V84 M242.2 34 V84 M249.7 34 V84 M256.9 34 V84 M263.6 34 V84 M270.0 34 V84 M275.9 34 V84 M281.4 34 V84 M286.5 34 V84 M291.2 34 V84 M295.6 34 V84 M299.8 34 V84 M303.7 34 V84 M307.5 34 V84 M311.2 34 V84 M315.0 34 V84 M318.9 34 V84 M322.9 34 V84 M327.3 34 V84 M331.9 34 V84 M336.8 34 V84 M342.2 34 V84 M348.0 34 V84 M354.2 34 V84 M360.8 34 V84 M367.9 34 V84 M375.3 34 V84 M382.9 34 V84 M390.9 34 V84 M399.0 34 V84 M407.2 34 V84 M415.5 34 V84 M423.7 34 V84 M431.8 34 V84 M439.6 34 V84 M447.2 34 V84 M454.5 34 V84 M461.4 34 V84 M467.9 34 V84 M474.0 34 V84 M479.6 34 V84 M484.9 34 V84 M489.7 34 V84 M494.2 34 V84 M498.4 34 V84 M502.4 34 V84 M506.2 34 V84 M510.0 34 V84 M513.8 34 V84 M517.6 34 V84 M521.6 34 V84 M525.8 34 V84 M530.3 34 V84 M535.1 34 V84 M540.4 34 V84 M546.0 34 V84 M552.1 34 V84 M558.6 34 V84 M565.5 34 V84 M572.8 34 V84 M580.4 34 V84 M588.2 34 V84 M596.3 34 V84 M604.5 34 V84 M612.8 34 V84 M621.0 34 V84 M629.1 34 V84 M637.1 34 V84 M644.7 34 V84 M652.1 34 V84 M659.2 34 V84" class="chs" style="stroke-width:1.4"/>
+      <g text-anchor="middle" class="sm">
+        <text x="110" y="24">C</text><text x="210" y="24">R</text><text x="310" y="24">C</text><text x="410" y="24">R</text><text x="510" y="24">C</text><text x="610" y="24">R</text>
+      </g>
+      <line x1="60" y1="170" x2="660" y2="170" class="ln" stroke-dasharray="3 4"/>
+      <path d="M60 170.0 L65 162.2 L70 154.5 L75 147.3 L80 140.6 L85 134.6 L90 129.5 L95 125.4 L100 122.4 L105 120.6 L110 120.0 L115 120.6 L120 122.4 L125 125.4 L130 129.5 L135 134.6 L140 140.6 L145 147.3 L150 154.5 L155 162.2 L160 170.0 L165 177.8 L170 185.5 L175 192.7 L180 199.4 L185 205.4 L190 210.5 L195 214.6 L200 217.6 L205 219.4 L210 220.0 L215 219.4 L220 217.6 L225 214.6 L230 210.5 L235 205.4 L240 199.4 L245 192.7 L250 185.5 L255 177.8 L260 170.0 L265 162.2 L270 154.5 L275 147.3 L280 140.6 L285 134.6 L290 129.5 L295 125.4 L300 122.4 L305 120.6 L310 120.0 L315 120.6 L320 122.4 L325 125.4 L330 129.5 L335 134.6 L340 140.6 L345 147.3 L350 154.5 L355 162.2 L360 170.0 L365 177.8 L370 185.5 L375 192.7 L380 199.4 L385 205.4 L390 210.5 L395 214.6 L400 217.6 L405 219.4 L410 220.0 L415 219.4 L420 217.6 L425 214.6 L430 210.5 L435 205.4 L440 199.4 L445 192.7 L450 185.5 L455 177.8 L460 170.0 L465 162.2 L470 154.5 L475 147.3 L480 140.6 L485 134.6 L490 129.5 L495 125.4 L500 122.4 L505 120.6 L510 120.0 L515 120.6 L520 122.4 L525 125.4 L530 129.5 L535 134.6 L540 140.6 L545 147.3 L550 154.5 L555 162.2 L560 170.0 L565 177.8 L570 185.5 L575 192.7 L580 199.4 L585 205.4 L590 210.5 L595 214.6 L600 217.6 L605 219.4 L610 220.0 L615 219.4 L620 217.6 L625 214.6 L630 210.5 L635 205.4 L640 199.4 L645 192.7 L650 185.5 L655 177.8 L660 170.0" style="fill:none;stroke:var(--ch);stroke-width:2.5"/>
+      <!-- wavelength -->
+      <line x1="110" y1="104" x2="310" y2="104" class="ln"/>
+      <line x1="110" y1="98" x2="110" y2="110" class="ln"/><line x1="310" y1="98" x2="310" y2="110" class="ln"/>
+      <text x="210" y="100" text-anchor="middle" class="lbl">wavelength λ</text>
+      <!-- amplitude -->
+      <line x1="520" y1="120" x2="520" y2="170" class="ln"/>
+      <line x1="514" y1="120" x2="526" y2="120" class="ln"/>
+      <text x="530" y="150" class="lbl">amplitude A</text>
+      <text x="350" y="245" text-anchor="middle" class="sm">C = compression (particles crowd, pressure high) · R = rarefaction (particles spread, pressure low)</text>
+      <text x="350" y="260" text-anchor="middle" class="sm">Sound in air is longitudinal: particles move back and forth along the direction of travel</text>
+    </svg>
+    </div>
+    <figcaption>Distance from one compression to the next = one wavelength. Height of the pressure graph = amplitude.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Feature of wave</th><th>Decides</th><th>Unit</th></tr>
+    <tr><td>Amplitude</td><td><mark>Loudness</mark> (loudness ∝ A²) <span class="tag p">PYQ</span></td><td>decibel (dB) for loudness <span class="tag x">CGL+</span></td></tr>
+    <tr><td>Frequency</td><td><b>Pitch</b> — the brain's reading of frequency is called <mark>pitch</mark> <span class="tag p">PYQ</span></td><td>hertz (Hz)</td></tr>
+    <tr><td>Waveform</td><td>Quality / timbre (tells a flute from a violin) <span class="tag x">CGL+</span></td><td>—</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> "<b>A</b>mplitude = <b>A</b>waaz kitni tez (loudness); <b>F</b>requency = <b>F</b>ine/patli awaaz (pitch)". Women's and children's voices have higher pitch.</div>
+
+  <h3>v = f λ and changing medium</h3>
+  <ul>
+    <li>Speed 340 m/s, frequency 680 Hz → λ = 340 ÷ 680 = <mark>0.5 m</mark>. <span class="tag p">PYQ</span></li>
+    <li>Sound going from air into water: <mark>frequency stays the same, wavelength changes</mark>. <span class="tag p">PYQ</span> Frequency is fixed by the source.</li>
+    <li>Air → water: <mark>speed increases and wavelength increases</mark> (λ = v/f, f fixed). <span class="tag p">PYQ</span></li>
+    <li>Sound is faster in steel than in air <b>because</b> particles in solids are closely packed with strong forces (high elasticity) → <mark>A and R both true, R explains A</mark>. <span class="tag p">PYQ</span></li>
+  </ul>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Bar chart of speed of sound: air 343, water 1480, steel 5960 metres per second, to scale">
+      <g class="lbl"><text x="110" y="40" text-anchor="end">Air</text><text x="110" y="90" text-anchor="end">Water</text><text x="110" y="140" text-anchor="end">Steel</text></g>
+      <rect x="120" y="22" width="29" height="26" style="fill:var(--ch)" opacity=".55"/>
+      <rect x="120" y="72" width="124" height="26" style="fill:var(--ch)" opacity=".55"/>
+      <rect x="120" y="122" width="500" height="26" style="fill:var(--ch)" opacity=".55"/>
+      <text x="157" y="40" class="sm">≈ 343 m/s (20 °C)</text>
+      <text x="252" y="90" class="sm">≈ 1480 m/s</text>
+      <text x="612" y="140" text-anchor="end" class="sm">≈ 5960 m/s</text>
+      <line x1="120" y1="14" x2="120" y2="156" class="ln"/>
+    </svg>
+    </div>
+    <figcaption>To scale. Order: <b>solid &gt; liquid &gt; gas</b>; no sound at all in a vacuum. <span class="tag x">CGL+</span></figcaption>
+  </figure>
+  <p><span class="tag x">CGL+</span> Speed of sound rises with <b>temperature</b> and <b>humidity</b>; pressure alone does not change it. Light (3 × 10⁸ m/s) is far faster — that is why lightning is seen before thunder is heard.</p>
+
+  <h3>Doppler effect</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Moving source: wavefronts bunch up ahead giving higher pitch and spread out behind giving lower pitch">
+      <defs>
+        <marker id="ph-sound-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <circle cx="200" cy="150" r="140" class="ln"/>
+      <circle cx="225" cy="150" r="105" class="ln"/>
+      <circle cx="250" cy="150" r="70" class="ln"/>
+      <circle cx="275" cy="150" r="35" class="ln"/>
+      <circle cx="300" cy="150" r="9" style="fill:var(--ch)"/>
+      <path d="M312 150 H372" class="chs" marker-end="url(#ph-sound-ar)"/>
+      <text x="300" y="178" text-anchor="middle" class="sm">siren moving →</text>
+      <!-- listener ahead -->
+      <circle cx="430" cy="150" r="10" class="chf"/><circle cx="430" cy="150" r="10" class="chs"/>
+      <text x="450" y="140" class="lbl">Ahead: waves bunched</text>
+      <text x="450" y="158" class="sm">shorter λ → higher frequency</text>
+      <text x="450" y="174" class="sm">→ HIGHER pitch (approaching)</text>
+      <!-- listener behind -->
+      <circle cx="30" cy="150" r="10" class="chf"/><circle cx="30" cy="150" r="10" class="chs"/>
+      <text x="8" y="40" class="lbl">Behind:</text>
+      <text x="8" y="56" class="sm">waves spread</text>
+      <text x="8" y="72" class="sm">→ LOWER pitch</text>
+      <text x="560" y="250" text-anchor="middle" class="sm">No relative motion → no change</text>
+    </svg>
+    </div>
+    <figcaption>Each circle was sent out when the source was at that circle's centre. The source moves right, so circles crowd on the right.</figcaption>
+  </figure>
+  <ul>
+    <li>Doppler effect = change in heard frequency due to relative motion of source and listener. Sound example: <mark>pitch of an ambulance siren changes as it passes</mark>. <span class="tag p">PYQ</span> Train whistle changing pitch as it passes the platform → <mark>Doppler effect</mark>. <span class="tag p">PYQ</span></li>
+    <li>Source and listener moving at the same speed in the same direction → no relative motion → frequency <mark>remains unchanged</mark>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Doppler is used in police speed radar, Doppler ultrasound (blood flow), weather radar. For light, it shows up as <b>redshift</b> (galaxy moving away) and blueshift.</li>
+  </ul>
+
+  <h3>Hearing range</h3>
+  <div class="tbl"><table>
+    <tr><th>Range</th><th>Frequency</th><th>Who / where</th></tr>
+    <tr><td>Infrasonic</td><td class="n">&lt; 20 Hz</td><td>Elephants, whales, earthquakes <span class="tag x">CGL+</span></td></tr>
+    <tr><td>Audible (humans)</td><td class="n"><mark>20 Hz – 20,000 Hz</mark></td><td>Healthy human ear <span class="tag p">PYQ</span></td></tr>
+    <tr><td>Ultrasonic</td><td class="n">&gt; 20 kHz</td><td>Bats, dolphins, dogs; SONAR, ultrasound scans, cleaning <span class="tag x">CGL+</span></td></tr>
+  </table></div>
+  <p><span class="tag x">CGL+</span> Echo needs the reflecting wall at least ~17.2 m away (sound must take 0.1 s, the persistence of hearing). <b>SONAR</b> = Sound Navigation And Ranging. Bats find their way by echolocation.</p>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Which property does NOT change when sound enters water?</summary><p>Frequency. Speed and wavelength both increase.</p></details>
+    <details><summary>Loudness depends on ___, pitch depends on ___.</summary><p>Amplitude; frequency.</p></details>
+    <details><summary>Can sound travel on the Moon's surface?</summary><p>No. There is no air (vacuum); sound needs a medium.</p></details>
+    <details><summary>v = 330 m/s, λ = 1.5 m. Frequency?</summary><p>330 ÷ 1.5 = 220 Hz.</p></details>
+  </div>
+</section>
+
+<!-- ===================== PHYSICS 6. LIGHT & THE HUMAN EYE ===================== -->
+<section class="chap" id="ph-light">
+  <div class="eyebrow">Physics · 13 questions</div>
+  <h2>Light &amp; the Human Eye</h2>
+  <div class="meta">2025 asked: concave mirror images, total internal reflection, rainbow, eclipses, interference &amp; diffraction, myopia (−2.5 D asked twice)</div>
+
+  <h3>Reflection: spherical mirrors</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Concave mirror ray diagram: object at centre of curvature forms a real, inverted, same-size image at the centre of curvature">
+      <defs>
+        <marker id="ph-light-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+        <marker id="ph-light-am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <line x1="40" y1="150" x2="600" y2="150" class="ln"/>
+      <path d="M533 40 A240 240 0 0 1 533 260" style="fill:none;stroke:var(--fg);stroke-width:3"/>
+      <!-- points -->
+      <circle cx="320" cy="150" r="3.5" style="fill:var(--fg)"/><text x="306" y="168" text-anchor="end" class="lbl">C</text>
+      <circle cx="438" cy="150" r="3.5" style="fill:var(--fg)"/><text x="438" y="168" text-anchor="middle" class="lbl">F</text>
+      <text x="572" y="168" class="lbl">P</text>
+      <!-- object and image -->
+      <path d="M320 150 V94" class="chs" style="stroke-width:3" marker-end="url(#ph-light-ar)"/>
+      <path d="M320 150 V206" class="chs" style="stroke-width:3" stroke-dasharray="6 3" marker-end="url(#ph-light-ar)"/>
+      <text x="300" y="98" text-anchor="end" class="sm">object at C</text>
+      <text x="300" y="214" text-anchor="end" class="sm">image at C: real,</text>
+      <text x="300" y="228" text-anchor="end" class="sm">inverted, same size</text>
+      <!-- rays -->
+      <path d="M322 90 H552 L322 209" class="ln" style="stroke-width:1.6"/>
+      <path d="M322 90 L552 209 H322" class="ln" style="stroke-width:1.6"/>
+      <path d="M400 90 H430" class="ln" marker-end="url(#ph-light-am)"/>
+      <path d="M470 209 H440" class="ln" marker-end="url(#ph-light-am)"/>
+      <text x="390" y="30" text-anchor="middle" class="sm">Ray 1: parallel to axis → reflects through F</text>
+      <text x="390" y="46" text-anchor="middle" class="sm">Ray 2: through F → reflects parallel to axis</text>
+      <text x="40" y="262" class="sm">f = R / 2 · two rays are enough to locate any image</text>
+    </svg>
+    </div>
+    <figcaption>Object at C of a concave mirror. Where the two reflected rays meet, the image forms.</figcaption>
+  </figure>
+  <ul>
+    <li>Object at C of a concave mirror → image <mark>real, inverted, same size</mark> (also at C). <span class="tag p">PYQ</span></li>
+    <li>Minimum rays needed to locate an image: <mark>two</mark>. <span class="tag p">PYQ</span></li>
+    <li>Solar furnace uses a <mark>concave</mark> mirror (it converges sunlight to the focus). <span class="tag p">PYQ</span></li>
+  </ul>
+  <div class="tbl"><table>
+    <tr><th>Object (concave mirror) <span class="tag x">CGL+</span></th><th>Image position</th><th>Nature &amp; size</th></tr>
+    <tr><td>At infinity</td><td>At F</td><td>Real, inverted, point-sized</td></tr>
+    <tr><td>Beyond C</td><td>Between F and C</td><td>Real, inverted, smaller</td></tr>
+    <tr><td>At C</td><td>At C</td><td>Real, inverted, same size</td></tr>
+    <tr><td>Between C and F</td><td>Beyond C</td><td>Real, inverted, bigger</td></tr>
+    <tr><td>At F</td><td>At infinity</td><td>Real, inverted, very large</td></tr>
+    <tr><td>Between F and P</td><td>Behind the mirror</td><td>Virtual, erect, bigger</td></tr>
+  </table></div>
+  <div class="tbl"><table>
+    <tr><th>Mirror <span class="tag x">CGL+</span></th><th>Uses</th></tr>
+    <tr><td>Concave (converging)</td><td>Solar furnace, torch &amp; headlight reflector, shaving/make-up mirror, dentist's mirror</td></tr>
+    <tr><td>Convex (diverging)</td><td>Rear-view mirror in vehicles (wide view, always virtual, erect, smaller image), street-corner mirrors</td></tr>
+    <tr><td>Plane</td><td>Image virtual, erect, same size, laterally inverted; periscope uses two plane mirrors</td></tr>
+  </table></div>
+
+  <h3>Refraction and total internal reflection</h3>
+  <ul>
+    <li>Light entering a new medium: speed and wavelength change, <mark>frequency</mark> stays constant. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Refractive index n = c / v (no unit). Water ≈ 1.33, glass ≈ 1.5, diamond ≈ 2.42. Light bends <b>towards</b> the normal entering a denser medium.</li>
+  </ul>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Three cases of light going from water to air: below critical angle it refracts, at critical angle it grazes, above it totally reflects">
+      <defs>
+        <marker id="ph-light-tr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <rect x="10" y="130" width="680" height="95" class="chf"/>
+      <line x1="10" y1="130" x2="690" y2="130" class="ln"/>
+      <text x="16" y="22" class="sm">air (rarer)</text><text x="16" y="218" class="sm">water (denser)</text>
+      <!-- normals -->
+      <line x1="115" y1="40" x2="115" y2="222" class="ln" stroke-dasharray="3 4"/>
+      <line x1="345" y1="40" x2="345" y2="222" class="ln" stroke-dasharray="3 4"/>
+      <line x1="575" y1="40" x2="575" y2="222" class="ln" stroke-dasharray="3 4"/>
+      <!-- panel 1 -->
+      <path d="M69 210 L113 133" class="chs" marker-end="url(#ph-light-tr)"/>
+      <path d="M115 130 L183 54" class="chs" marker-end="url(#ph-light-tr)"/>
+      <!-- panel 2 -->
+      <path d="M254 210 L342 133" class="chs" marker-end="url(#ph-light-tr)"/>
+      <path d="M345 128 L448 128" class="chs" marker-end="url(#ph-light-tr)"/>
+      <!-- panel 3 -->
+      <path d="M468 180 L572 132" class="chs" marker-end="url(#ph-light-tr)"/>
+      <path d="M577 131 L680 178" class="chs" marker-end="url(#ph-light-tr)"/>
+      <g text-anchor="middle">
+        <text x="115" y="246" class="lbl">i &lt; c</text><text x="115" y="262" class="sm">refracts, bends away from normal</text>
+        <text x="345" y="246" class="lbl">i = c</text><text x="345" y="262" class="sm">grazes the surface (r = 90°)</text>
+        <text x="575" y="246" class="lbl">i &gt; c</text><text x="575" y="262" class="sm">total internal reflection</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Critical angle of water ≈ 49°, of glass ≈ 42°, of diamond ≈ 24°.</figcaption>
+  </figure>
+  <ul>
+    <li>TIR happens when light goes <mark>from a denser to a rarer medium at an angle greater than the critical angle</mark>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> TIR examples: <b>sparkling diamond</b>, <b>optical fibres</b>, <b>mirage</b> in deserts, a glass prism in binoculars/periscopes.</li>
+  </ul>
+
+  <h3>Wave nature: interference, diffraction, rainbow</h3>
+  <div class="tbl"><table>
+    <tr><th>Effect</th><th>What it is</th><th>Example</th></tr>
+    <tr><td>Interference</td><td>Two waves overlap and add up — a result of the <mark>superposition principle</mark> <span class="tag p">PYQ</span></td><td>Colours of soap bubbles, oil film on water <span class="tag x">CGL+</span></td></tr>
+    <tr><td>Diffraction</td><td>Bending of a wave through a narrow slit / around an edge — <mark>diffraction</mark> <span class="tag p">PYQ</span></td><td>Coloured rings around a street light seen through fog <span class="tag x">CGL+</span></td></tr>
+    <tr><td>Polarisation <span class="tag x">CGL+</span></td><td>Proves light is a <b>transverse</b> wave</td><td>Polaroid sunglasses</td></tr>
+    <tr><td>Dispersion <span class="tag x">CGL+</span></td><td>White light splits into VIBGYOR</td><td>Prism, rainbow; violet bends most, red least</td></tr>
+    <tr><td>Scattering <span class="tag x">CGL+</span></td><td>Small particles scatter blue most</td><td>Blue sky, red sunset, red danger lights (scatter least)</td></tr>
+  </table></div>
+  <ul>
+    <li>Secondary rainbow: colour order is <mark>reversed compared to the primary</mark> (violet outside, red inside). <span class="tag p">PYQ</span> It forms by two internal reflections and is fainter.</li>
+    <li><span class="tag x">CGL+</span> Rainbow = refraction + dispersion + internal reflection in raindrops. You see it with the Sun <b>behind</b> you. Primary rainbow: red on the outside.</li>
+  </ul>
+
+  <h3>Eclipses</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Solar eclipse: Sun, Moon, Earth in a line at new moon. Lunar eclipse: Sun, Earth, Moon in a line at full moon">
+      <text x="10" y="22" class="lbl chtext" style="fill:var(--ch)">Solar eclipse · New Moon</text>
+      <circle cx="80" cy="75" r="36" class="chf"/><circle cx="80" cy="75" r="36" class="chs"/><text x="80" y="80" text-anchor="middle" class="lbl">Sun</text>
+      <polygon points="340,66 340,84 534,79 534,71" style="fill:var(--muted)" opacity=".35"/>
+      <circle cx="335" cy="75" r="10" style="fill:var(--fg)"/><text x="335" y="110" text-anchor="middle" class="sm">Moon (in middle)</text>
+      <circle cx="565" cy="75" r="32" class="paper"/><circle cx="565" cy="75" r="32" class="chs"/><text x="565" y="122" text-anchor="middle" class="sm">Earth — Moon's shadow falls here</text>
+      <line x1="118" y1="75" x2="322" y2="75" class="ln" stroke-dasharray="3 4"/>
+      <text x="10" y="152" class="lbl chtext" style="fill:var(--ch)">Lunar eclipse · Full Moon</text>
+      <circle cx="80" cy="205" r="36" class="chf"/><circle cx="80" cy="205" r="36" class="chs"/><text x="80" y="210" text-anchor="middle" class="lbl">Sun</text>
+      <polygon points="335,175 335,235 600,220 600,190" style="fill:var(--muted)" opacity=".35"/>
+      <circle cx="335" cy="205" r="30" class="paper"/><circle cx="335" cy="205" r="30" class="chs"/><text x="335" y="210" text-anchor="middle" class="sm">Earth</text>
+      <circle cx="565" cy="205" r="10" style="fill:var(--fg)"/><text x="565" y="244" text-anchor="middle" class="sm">Moon inside Earth's shadow</text>
+      <line x1="118" y1="205" x2="303" y2="205" class="ln" stroke-dasharray="3 4"/>
+    </svg>
+    </div>
+    <figcaption>Not to scale. Whatever is in the <b>middle</b> casts the shadow.</figcaption>
+  </figure>
+  <p>Solar eclipse statement ✔ (Moon between Sun and Earth). Lunar eclipse "during new moon" ✘ — it happens only at <b>full moon</b>. So <mark>1 only</mark>. <span class="tag p">PYQ</span> <span class="tag x">CGL+</span> Never look at a solar eclipse with naked eyes.</p>
+
+  <h3>The human eye</h3>
+  <div class="tbl"><table>
+    <tr><th>Part <span class="tag x">CGL+</span></th><th>Job</th></tr>
+    <tr><td>Cornea</td><td>Clear front window; most of the bending of light happens here</td></tr>
+    <tr><td>Iris</td><td>Coloured ring; controls the size of the pupil</td></tr>
+    <tr><td>Pupil</td><td>Hole that lets light in</td></tr>
+    <tr><td>Eye lens + ciliary muscles</td><td>Convex lens; muscles change its focal length (<b>accommodation</b>)</td></tr>
+    <tr><td>Retina</td><td>Screen; image is <b>real and inverted</b>. Rods (dim light), cones (colour)</td></tr>
+    <tr><td>Optic nerve</td><td>Carries signals to the brain; where it leaves = <b>blind spot</b></td></tr>
+  </table></div>
+  <ul>
+    <li>Low light → pupil <mark>expands to let more light in</mark>. <span class="tag p">PYQ</span> Bright light → it contracts.</li>
+    <li>Least distance of distinct vision (near point) = <mark>25 cm</mark>. <span class="tag p">PYQ</span> Far point of a normal eye = infinity. <span class="tag x">CGL+</span></li>
+    <li>Power = 1 / f (f in metres), unit <b>dioptre</b>. Negative power = concave lens. So −2.5 D means <mark>myopia, diverging lens</mark>. <span class="tag p">PYQ ×2</span> (f = −1/2.5 = −0.4 m = −40 cm.)</li>
+  </ul>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 340" role="img" aria-label="Myopia: image forms in front of retina, corrected by concave lens. Hypermetropia: image forms behind retina, corrected by convex lens">
+      <text x="10" y="24" class="lbl chtext" style="fill:var(--ch)">Myopia (near-sightedness): far things blurred</text>
+      <!-- eye 1 defect -->
+      <circle cx="190" cy="100" r="45" class="chf"/><circle cx="190" cy="100" r="45" class="chs"/>
+      <ellipse cx="152" cy="100" rx="6" ry="20" class="paper"/><ellipse cx="152" cy="100" rx="6" ry="20" class="ln"/>
+      <path d="M40 80 H150 L210 100 L235 108 M40 120 H150 L210 100 L235 92" class="ln" style="stroke-width:1.6"/>
+      <circle cx="210" cy="100" r="4" style="fill:var(--ch)"/>
+      <text x="190" y="165" text-anchor="middle" class="sm">image forms IN FRONT of retina</text>
+      <!-- eye 2 corrected -->
+      <circle cx="540" cy="100" r="45" class="chf"/><circle cx="540" cy="100" r="45" class="chs"/>
+      <ellipse cx="502" cy="100" rx="6" ry="20" class="paper"/><ellipse cx="502" cy="100" rx="6" ry="20" class="ln"/>
+      <path d="M444 70 Q450 100 444 130 L456 130 Q450 100 456 70 Z" class="paper"/><path d="M444 70 Q450 100 444 130 L456 130 Q450 100 456 70 Z" class="chs"/>
+      <path d="M370 80 H450 L500 74 L585 100 M370 120 H450 L500 126 L585 100" class="ln" style="stroke-width:1.6"/>
+      <circle cx="585" cy="100" r="4" style="fill:var(--ch)"/>
+      <text x="520" y="165" text-anchor="middle" class="sm">concave lens (negative power) → focus on retina</text>
+      <text x="335" y="104" text-anchor="middle" class="lbl">fix →</text>
+
+      <text x="10" y="196" class="lbl chtext" style="fill:var(--ch)">Hypermetropia (far-sightedness): near things blurred</text>
+      <!-- eye 3 defect -->
+      <circle cx="190" cy="265" r="45" class="chf"/><circle cx="190" cy="265" r="45" class="chs"/>
+      <ellipse cx="152" cy="265" rx="6" ry="20" class="paper"/><ellipse cx="152" cy="265" rx="6" ry="20" class="ln"/>
+      <path d="M40 245 H150 L235 260 M40 285 H150 L235 270" class="ln" style="stroke-width:1.6"/>
+      <path d="M235 260 L265 265 M235 270 L265 265" class="ln" stroke-dasharray="3 3"/>
+      <circle cx="265" cy="265" r="4" style="fill:var(--ch)"/>
+      <text x="190" y="330" text-anchor="middle" class="sm">image would form BEHIND retina</text>
+      <!-- eye 4 corrected -->
+      <circle cx="540" cy="265" r="45" class="chf"/><circle cx="540" cy="265" r="45" class="chs"/>
+      <ellipse cx="502" cy="265" rx="6" ry="20" class="paper"/><ellipse cx="502" cy="265" rx="6" ry="20" class="ln"/>
+      <path d="M450 235 Q462 265 450 295 Q438 265 450 235 Z" class="paper"/><path d="M450 235 Q462 265 450 295 Q438 265 450 235 Z" class="chs"/>
+      <path d="M370 245 H450 L500 252 L585 265 M370 285 H450 L500 278 L585 265" class="ln" style="stroke-width:1.6"/>
+      <circle cx="585" cy="265" r="4" style="fill:var(--ch)"/>
+      <text x="520" y="330" text-anchor="middle" class="sm">convex lens (positive power) → focus on retina</text>
+      <text x="335" y="269" text-anchor="middle" class="lbl">fix →</text>
+    </svg>
+    </div>
+    <figcaption>The back of each circle is the retina. Dot = where the rays meet. The lens on the left of the corrected eye is the spectacle lens.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Defect <span class="tag x">CGL+</span></th><th>Can't see</th><th>Cause</th><th>Correction</th></tr>
+    <tr><td>Myopia</td><td>Far objects</td><td>Eyeball too long / lens too strong</td><td>Concave lens (− power)</td></tr>
+    <tr><td>Hypermetropia</td><td>Near objects</td><td>Eyeball too short / lens too weak</td><td>Convex lens (+ power)</td></tr>
+    <tr><td>Presbyopia</td><td>Near (old age)</td><td>Ciliary muscles weaken</td><td>Bifocal lens</td></tr>
+    <tr><td>Astigmatism</td><td>Blurred in one direction</td><td>Uneven cornea</td><td>Cylindrical lens</td></tr>
+    <tr><td>Cataract</td><td>Cloudy vision</td><td>Eye lens turns opaque</td><td>Surgery (new lens)</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> "Myopia — <b>M</b>inus" (concave, negative). "Hyper — <b>H</b>igh plus" (convex, positive). Persistence of vision ≈ 1/16 s makes movies look continuous. <span class="tag x">CGL+</span></div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Which mirror is used as a rear-view mirror and why?</summary><p>Convex — it gives a wide field of view with an erect image.</p></details>
+    <details><summary>A diamond sparkles because of…?</summary><p>Total internal reflection (very small critical angle, about 24°).</p></details>
+    <details><summary>Lens power +2 D: which lens, which defect?</summary><p>Convex, f = 50 cm; corrects hypermetropia.</p></details>
+    <details><summary>Lunar eclipse can happen on which moon phase?</summary><p>Full moon only.</p></details>
+  </div>
+</section>
+
+<!-- ===================== PHYSICS 7. ELECTRICITY & MAGNETISM ===================== -->
+<section class="chap" id="ph-elec">
+  <div class="eyebrow">Physics · 13 questions</div>
+  <h2>Electricity &amp; Magnetism</h2>
+  <div class="meta">Most asked: resistance (length, area, temperature), Ohm's law, nichrome, cost of electricity, transformer, Lenz's law</div>
+
+  <h3>Formula sheet</h3>
+  <div class="tbl"><table>
+    <tr><th>Idea</th><th>Formula</th><th>Unit</th></tr>
+    <tr><td>Ohm's law</td><td class="n">V = I R</td><td>V in volt, I in ampere, R in ohm</td></tr>
+    <tr><td>Resistance of a wire</td><td class="n">R = ρ L / A</td><td>ρ = resistivity (Ω·m)</td></tr>
+    <tr><td>Electric power</td><td class="n">P = V I = I²R = V²/R</td><td>watt</td></tr>
+    <tr><td>Heating (Joule's law)</td><td class="n">H = I² R t</td><td>joule</td></tr>
+    <tr><td>Energy bill</td><td class="n">units = kW × hours</td><td>1 unit = 1 kWh</td></tr>
+    <tr><td>Charge</td><td class="n">Q = I t</td><td>coulomb; one electron = 1.6 × 10⁻¹⁹ C <span class="tag x">CGL+</span></td></tr>
+  </table></div>
+
+  <h3>Resistance</h3>
+  <ul>
+    <li>Length doubled and area halved → R = ρ(2L)/(A/2) = <mark>4 times</mark>. <span class="tag p">PYQ</span></li>
+    <li>Metal conductor heated → resistance <mark>increases</mark> (ions vibrate more, electrons collide more). <span class="tag p">PYQ</span> <span class="tag x">CGL+</span> In semiconductors (silicon, germanium) resistance <b>falls</b> with temperature.</li>
+    <li>R doubled, V same → current <mark>halves</mark> (I = V/R). <span class="tag p">PYQ</span></li>
+    <li>Wire of resistance R cut into two halves (R/2 each), joined in parallel → <mark>R/4</mark>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Resistivity depends only on the <b>material and temperature</b>, not on length or thickness. Silver is the best conductor; copper and aluminium are used for wires.</li>
+  </ul>
+
+  <h3>Series vs parallel</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Series circuit with two resistors in one loop and parallel circuit with two resistors on separate branches">
+      <g class="chs">
+        <!-- series loop -->
+        <path d="M40 104 V50 H90 M150 50 H200 M260 50 H310 V190 H40 V122"/>
+        <rect x="90" y="40" width="60" height="20" rx="3"/>
+        <rect x="200" y="40" width="60" height="20" rx="3"/>
+        <!-- parallel -->
+        <path d="M390 104 V40 H460 V150 M460 70 H510 M570 70 H620 M460 150 H510 M570 150 H620 M620 70 V190 H390 V122"/>
+        <rect x="510" y="60" width="60" height="20" rx="3"/>
+        <rect x="510" y="140" width="60" height="20" rx="3"/>
+      </g>
+      <!-- batteries -->
+      <g style="stroke:var(--fg);stroke-width:3">
+        <line x1="26" y1="104" x2="54" y2="104"/><line x1="33" y1="122" x2="47" y2="122"/>
+        <line x1="376" y1="104" x2="404" y2="104"/><line x1="383" y1="122" x2="397" y2="122"/>
+      </g>
+      <g class="lbl" text-anchor="middle">
+        <text x="120" y="32">R₁</text><text x="230" y="32">R₂</text>
+        <text x="540" y="54">R₁</text><text x="540" y="134">R₂</text>
+      </g>
+      <text x="175" y="125" text-anchor="middle" class="lbl chtext" style="fill:var(--ch)">SERIES</text>
+      <text x="540" y="112" text-anchor="middle" class="lbl chtext" style="fill:var(--ch)">PARALLEL</text>
+      <g class="sm">
+        <text x="40" y="216">• same current through each</text>
+        <text x="40" y="232">• R = R₁ + R₂ (total goes up)</text>
+        <text x="40" y="248">• one bulb fails → all go off</text>
+        <text x="40" y="264">• decorative lights, fuse with circuit</text>
+        <text x="390" y="216">• same voltage across each</text>
+        <text x="390" y="232">• 1/R = 1/R₁ + 1/R₂ (total goes down)</text>
+        <text x="390" y="248">• smaller R → bigger current (I = V/R)</text>
+        <text x="390" y="264">• house wiring is parallel</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Long plate of the battery = positive terminal. Ammeter goes in series, voltmeter in parallel. <span class="tag x">CGL+</span></figcaption>
+  </figure>
+  <p>Parallel, R₁ &lt; R₂, same voltage → <mark>current through R₁ is greater</mark>. <span class="tag p">PYQ</span></p>
+
+  <h3>Heating effect and the bill</h3>
+  <ul>
+    <li>Heating element needs mainly <mark>high resistivity</mark> (more heat, H = I²Rt). <span class="tag p">PYQ</span></li>
+    <li><b>Nichrome</b> (nickel + chromium alloy) is used because of <mark>high resistivity and high melting point</mark>. <span class="tag p">PYQ</span></li>
+    <li>Kettle 2.2 kW for 30 min = 2.2 × 0.5 = 1.1 kWh; at ₹4/unit → <mark>₹4.4</mark>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Bulb filament: <b>tungsten</b> (melting point ≈ 3380 °C); bulbs filled with argon/nitrogen. <b>Fuse</b> wire: low melting point (tin–lead alloy), placed in series with the live wire. Indian domestic supply: <b>220 V, 50 Hz AC</b>.</li>
+  </ul>
+
+  <h3>Who carries the current?</h3>
+  <div class="tbl"><table>
+    <tr><th>Medium</th><th>Charge carriers</th></tr>
+    <tr><td>A. Metal</td><td>Free <b>electrons</b> (3)</td></tr>
+    <tr><td>B. Ionised gas</td><td><b>Electrons and positive ions</b> (2)</td></tr>
+    <tr><td>C. Electrolyte</td><td><b>Positive and negative ions</b> (1)</td></tr>
+  </table></div>
+  <p>Answer: <mark>A-3, B-2, C-1</mark>. <span class="tag p">PYQ</span> <span class="tag x">CGL+</span> In semiconductors: electrons and holes.</p>
+
+  <h3>Electromagnetic induction</h3>
+  <ul>
+    <li><b>Faraday</b>: changing magnetic flux through a coil induces an EMF. <span class="tag x">CGL+</span></li>
+    <li><b>Lenz's law</b>: induced current flows <mark>to oppose the change in flux that causes it</mark>. <span class="tag p">PYQ</span> It follows from conservation of energy. <span class="tag x">CGL+</span></li>
+    <li>Rotating coil gives maximum EMF <mark>when the coil's plane is parallel to the field lines</mark> (flux is zero there, but changing fastest). <span class="tag p">PYQ</span></li>
+  </ul>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Coil seen edge-on in a magnetic field: plane perpendicular to field gives maximum flux and zero EMF; plane parallel to field gives zero flux and maximum EMF">
+      <defs>
+        <marker id="ph-elec-am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <g class="ln" marker-end="url(#ph-elec-am)">
+        <path d="M30 50 H320"/><path d="M30 85 H320"/><path d="M30 120 H320"/><path d="M30 155 H320"/>
+        <path d="M380 50 H670"/><path d="M380 85 H670"/><path d="M380 120 H670"/><path d="M380 155 H670"/>
+      </g>
+      <text x="175" y="30" text-anchor="middle" class="sm">magnetic field B →</text>
+      <text x="525" y="30" text-anchor="middle" class="sm">magnetic field B →</text>
+      <line x1="175" y1="58" x2="175" y2="148" style="stroke:var(--ch);stroke-width:7;stroke-linecap:round"/>
+      <line x1="470" y1="102" x2="580" y2="102" style="stroke:var(--ch);stroke-width:7;stroke-linecap:round"/>
+      <text x="175" y="184" text-anchor="middle" class="lbl">Plane ⟂ field: flux MAX</text>
+      <text x="175" y="202" text-anchor="middle" class="sm">rate of change 0 → EMF = 0</text>
+      <text x="525" y="184" text-anchor="middle" class="lbl">Plane ∥ field: flux ZERO</text>
+      <text x="525" y="202" text-anchor="middle" class="sm">flux changing fastest → EMF MAX</text>
+    </svg>
+    </div>
+    <figcaption>The thick bar is the coil seen from its edge. As it spins, it passes through both positions every half turn — that is why a generator gives AC.</figcaption>
+  </figure>
+
+  <h3>Transformer and other devices</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Transformer: soft iron core with primary coil of few turns and secondary coil of more turns">
+      <path d="M220 30 H480 V200 H220 Z M260 70 V160 H440 V70 Z" class="chf" fill-rule="evenodd"/>
+      <path d="M220 30 H480 V200 H220 Z" class="chs"/><path d="M260 70 H440 V160 H260 Z" class="chs"/>
+      <g style="fill:none;stroke:var(--fg);stroke-width:2">
+        <ellipse cx="240" cy="85" rx="32" ry="6"/><ellipse cx="240" cy="103" rx="32" ry="6"/><ellipse cx="240" cy="121" rx="32" ry="6"/><ellipse cx="240" cy="139" rx="32" ry="6"/>
+        <ellipse cx="460" cy="62" rx="32" ry="5"/><ellipse cx="460" cy="76" rx="32" ry="5"/><ellipse cx="460" cy="90" rx="32" ry="5"/><ellipse cx="460" cy="104" rx="32" ry="5"/><ellipse cx="460" cy="118" rx="32" ry="5"/><ellipse cx="460" cy="132" rx="32" ry="5"/><ellipse cx="460" cy="146" rx="32" ry="5"/><ellipse cx="460" cy="160" rx="32" ry="5"/>
+      </g>
+      <text x="190" y="100" text-anchor="end" class="lbl">Primary</text>
+      <text x="190" y="118" text-anchor="end" class="sm">fewer turns, AC in</text>
+      <text x="510" y="100" class="lbl">Secondary</text>
+      <text x="510" y="118" class="sm">more turns, AC out</text>
+      <text x="350" y="122" text-anchor="middle" class="sm">soft iron core</text>
+      <text x="350" y="216" text-anchor="middle" class="sm">Vs / Vp = Ns / Np · this one is step-UP (more secondary turns) · frequency does not change</text>
+    </svg>
+    </div>
+    <figcaption>No wire joins the two coils — the changing flux in the core links them (mutual induction).</figcaption>
+  </figure>
+  <ul>
+    <li>Transformer changes AC voltage without changing frequency, using <mark>mutual induction</mark>. <span class="tag p">PYQ</span> It does <b>not</b> work on DC.</li>
+    <li>Correct pair: <mark>electric bell — uses the magnetic effect of current</mark>. <span class="tag p">PYQ</span> Wrong pairs: generator converts <b>mechanical → electrical</b>; transformer needs AC; an electromagnet is a <b>temporary</b> magnet.</li>
+  </ul>
+  <div class="tbl"><table>
+    <tr><th>Device <span class="tag x">CGL+</span></th><th>Converts / works on</th><th>Rule</th></tr>
+    <tr><td>Electric motor</td><td>Electrical → mechanical</td><td>Fleming's <b>left</b>-hand rule</td></tr>
+    <tr><td>Generator (dynamo)</td><td>Mechanical → electrical</td><td>Fleming's <b>right</b>-hand rule</td></tr>
+    <tr><td>Transformer</td><td>Mutual induction, AC only</td><td>Vs/Vp = Ns/Np</td></tr>
+    <tr><td>Electromagnet</td><td>Soft-iron core + current</td><td>Temporary magnet</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> "<b>M</b>otor = <b>L</b>eft (ML), <b>G</b>enerator = <b>R</b>ight (GR)". Magnetic effect of current was discovered by <b>Oersted</b>; induction by <b>Faraday</b>. <span class="tag x">CGL+</span></div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Three 6 Ω resistors in parallel. Total?</summary><p>6 ÷ 3 = 2 Ω.</p></details>
+    <details><summary>100 W bulb runs 10 hours. How many units?</summary><p>0.1 kW × 10 h = 1 unit (1 kWh).</p></details>
+    <details><summary>Why is a fuse wire made of a low-melting alloy?</summary><p>So it melts and breaks the circuit when too much current flows.</p></details>
+    <details><summary>Does a transformer change frequency?</summary><p>No. It changes only the voltage (and current).</p></details>
+  </div>
+</section>
+
+<!-- ===================== PHYSICS 8. ATOMS, NUCLEI & SPACE ===================== -->
+<section class="chap" id="ph-modern">
+  <div class="eyebrow">Physics · 15 questions</div>
+  <h2>Atoms, Nuclei &amp; Space</h2>
+  <div class="meta">Steno and CGL 2025 loved this: Rutherford, Bohr, photoelectric effect, alpha/beta decay (asked 4 times), Big Bang, stars, galaxies</div>
+
+  <h3>Rutherford's gold-foil experiment</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="Alpha particles fired at gold atoms: most pass straight, a few deflect slightly, very few bounce back from the nucleus">
+      <defs>
+        <marker id="ph-modern-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <g class="ln" stroke-dasharray="3 4">
+        <circle cx="300" cy="60" r="34"/><circle cx="300" cy="128" r="34"/><circle cx="300" cy="196" r="34"/>
+      </g>
+      <circle cx="300" cy="60" r="3.5" style="fill:var(--fg)"/><circle cx="300" cy="128" r="3.5" style="fill:var(--fg)"/><circle cx="300" cy="196" r="3.5" style="fill:var(--fg)"/>
+      <text x="300" y="20" text-anchor="middle" class="sm">gold atoms (mostly empty)</text>
+      <rect x="20" y="104" width="50" height="48" rx="4" class="chf"/><text x="45" y="132" text-anchor="middle" class="lbl">α</text>
+      <g class="chs" style="stroke-width:1.6" marker-end="url(#ph-modern-ar)">
+        <path d="M70 45 H440"/>
+        <path d="M70 94 H440"/>
+        <path d="M70 162 H440"/>
+        <path d="M70 216 H440"/>
+        <path d="M70 116 H285 Q310 112 440 82"/>
+        <path d="M70 128 H290 Q296 136 90 152"/>
+      </g>
+      <g class="sm">
+        <text x="452" y="49">most go straight</text>
+        <text x="452" y="65">→ atom is mostly empty</text>
+        <text x="452" y="86">a few bend slightly</text>
+        <text x="452" y="102">→ positive charge inside</text>
+        <text x="452" y="166">~1 in 20,000 bounce back</text>
+        <text x="452" y="182">→ all + charge and mass in a</text>
+        <text x="452" y="198">tiny dense NUCLEUS</text>
+      </g>
+      <text x="96" y="176" class="sm">rebound</text>
+    </svg>
+    </div>
+    <figcaption>Thin gold foil was used. The bounce-back of a tiny fraction was the surprise.</figcaption>
+  </figure>
+  <p>The observation that proved positive charge is packed in a tiny region: <mark>a very small fraction of α-particles rebounded almost backwards</mark>. <span class="tag p">PYQ</span></p>
+  <div class="tbl"><table>
+    <tr><th>Model / discovery <span class="tag x">CGL+</span></th><th>By</th></tr>
+    <tr><td>Electron; "plum pudding" model</td><td>J.J. Thomson</td></tr>
+    <tr><td>Nucleus (gold foil, α-particles)</td><td>Ernest Rutherford (1911)</td></tr>
+    <tr><td>Fixed orbits / energy levels</td><td>Niels Bohr (1913)</td></tr>
+    <tr><td>Neutron</td><td>James Chadwick (1932)</td></tr>
+    <tr><td>Photoelectric effect explained (Nobel 1921)</td><td>Albert Einstein</td></tr>
+  </table></div>
+
+  <h3>Bohr model: energy levels</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Hydrogen energy levels drawn to scale: minus 13.6, minus 3.4, minus 1.51, minus 0.85 electronvolt, gaps shrinking upward; electron dropping down emits a photon">
+      <defs>
+        <marker id="ph-modern-dn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <g style="stroke:var(--fg);stroke-width:2">
+        <line x1="200" y1="240" x2="500" y2="240"/>
+        <line x1="200" y1="90" x2="500" y2="90"/>
+        <line x1="200" y1="62" x2="500" y2="62"/>
+        <line x1="200" y1="52.5" x2="500" y2="52.5"/>
+      </g>
+      <line x1="200" y1="40" x2="500" y2="40" class="ln" stroke-dasharray="4 4"/>
+      <g class="sm" text-anchor="end">
+        <text x="192" y="244">n = 1 · −13.6 eV</text>
+        <text x="192" y="94">n = 2 · −3.4 eV</text>
+        <text x="192" y="66">n = 3 · −1.51 eV</text>
+      </g>
+      <g class="sm">
+        <text x="508" y="56">n = 4 · −0.85 eV</text>
+        <text x="508" y="42">n = ∞ · 0 (free)</text>
+      </g>
+      <path d="M290 64 V86" class="chs" marker-end="url(#ph-modern-dn)"/>
+      <path d="M380 92 V236" class="chs" marker-end="url(#ph-modern-dn)"/>
+      <path d="M296 76 q6 -6 12 0 t12 0 t12 0" class="chs" style="stroke-width:1.5"/>
+      <path d="M386 160 q6 -6 12 0 t12 0 t12 0" class="chs" style="stroke-width:1.5"/>
+      <text x="426" y="164" class="sm">photon out: 10.2 eV</text>
+      <text x="284" y="80" text-anchor="end" class="sm">photon 1.89 eV</text>
+      <text x="560" y="150" class="lbl">Gaps shrink</text>
+      <text x="560" y="168" class="sm">1→2: 10.2 eV</text>
+      <text x="560" y="184" class="sm">2→3: 1.89 eV</text>
+      <text x="560" y="200" class="sm">3→4: 0.66 eV</text>
+      <text x="350" y="264" text-anchor="middle" class="sm">E = −13.6 / n² eV (hydrogen) · drawn to scale</text>
+    </svg>
+    </div>
+    <figcaption>Falling down a level = photon given out. Jumping up = photon absorbed.</figcaption>
+  </figure>
+  <ul>
+    <li>Electron jumps from a higher to a lower orbit → <mark>a photon equal to the energy difference is emitted</mark>. <span class="tag p">PYQ</span></li>
+    <li>Going to higher levels, the energy gap between successive levels <mark>decreases continuously</mark>. <span class="tag p">PYQ</span></li>
+  </ul>
+
+  <h3>Photoelectric effect</h3>
+  <ul>
+    <li>Statements: KE rises with intensity ✘ (KE depends on <b>frequency</b>); shows particle nature of light ✔; threshold frequency exists ✔ → <mark>2 and 3 only</mark>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> More intensity → <b>more</b> electrons, not faster ones. Photon energy E = hν (h = Planck's constant). Used in solar cells, automatic doors, light meters.</li>
+    <li><span class="tag x">CGL+</span> Light shows both natures: interference/diffraction (wave), photoelectric effect (particle) — "wave–particle duality".</li>
+  </ul>
+
+  <h3>Electromagnetic spectrum</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Electromagnetic spectrum from radio waves to gamma rays: wavelength decreases, frequency and energy increase">
+      <defs>
+        <marker id="ph-modern-ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <g class="chf">
+        <rect x="8" y="20" width="92" height="60" rx="6"/><rect x="106" y="20" width="92" height="60" rx="6"/><rect x="204" y="20" width="92" height="60" rx="6"/>
+        <rect x="302" y="20" width="92" height="60" rx="6"/><rect x="400" y="20" width="92" height="60" rx="6"/><rect x="498" y="20" width="92" height="60" rx="6"/>
+      </g>
+      <rect x="596" y="20" width="96" height="60" rx="6" style="fill:var(--ch)" opacity=".45"/>
+      <g text-anchor="middle">
+        <text x="54" y="46" class="lbl">Radio</text><text x="54" y="66" class="sm">radio, TV</text>
+        <text x="152" y="46" class="lbl">Microwave</text><text x="152" y="66" class="sm">oven, radar</text>
+        <text x="250" y="46" class="lbl">Infrared</text><text x="250" y="66" class="sm">remote, heat</text>
+        <text x="348" y="46" class="lbl">Visible</text><text x="348" y="66" class="sm">VIBGYOR</text>
+        <text x="446" y="46" class="lbl">Ultraviolet</text><text x="446" y="66" class="sm">sterilising</text>
+        <text x="544" y="46" class="lbl">X-rays</text><text x="544" y="66" class="sm">bone images</text>
+        <text x="644" y="46" class="lbl">Gamma</text><text x="644" y="66" class="sm">cancer therapy</text>
+      </g>
+      <path d="M20 110 H680" class="chs" marker-end="url(#ph-modern-ar2)"/>
+      <text x="350" y="134" text-anchor="middle" class="lbl">frequency &amp; energy increase →</text>
+      <text x="350" y="156" text-anchor="middle" class="sm">wavelength decreases → (all travel at 3 × 10⁸ m/s in vacuum)</text>
+    </svg>
+    </div>
+    <figcaption>Trick order: "<b>R</b>am <b>M</b>arried <b>I</b>ndian <b>V</b>illage <b>U</b>gly <b>X</b> <b>G</b>irl".</figcaption>
+  </figure>
+  <p>Shortest wavelength: <mark>gamma rays</mark>. <span class="tag p">PYQ</span> <span class="tag x">CGL+</span> Longest: radio waves. Ozone layer absorbs most UV. X-rays discovered by Röntgen.</p>
+
+  <h3>Radioactivity and nuclear energy</h3>
+  <div class="tbl"><table>
+    <tr><th>Decay</th><th>What leaves</th><th>Atomic no. Z</th><th>Mass no. A</th></tr>
+    <tr><td>Alpha (α)</td><td>Helium nucleus (2p + 2n) — <mark>helium</mark> <span class="tag p">PYQ</span></td><td class="n">−2</td><td class="n">−4</td></tr>
+    <tr><td>Beta-minus (β⁻)</td><td>Electron (neutron → proton)</td><td class="n"><mark>+1</mark></td><td class="n">same</td></tr>
+    <tr><td>Beta-plus (β⁺)</td><td>Positron (proton → neutron)</td><td class="n"><mark>−1</mark></td><td class="n">same</td></tr>
+    <tr><td>Gamma (γ)</td><td>High-energy EM wave</td><td class="n">same</td><td class="n">same</td></tr>
+  </table></div>
+  <ul>
+    <li>Changes atomic number but not mass → <mark>beta decay</mark>. <span class="tag p">PYQ</span></li>
+    <li>Z goes up by 1, mass same → <mark>beta-minus decay</mark>. <span class="tag p">PYQ</span></li>
+    <li>Beta-plus decay → <mark>proton number decreases by 1, mass unchanged</mark>. <span class="tag p">PYQ</span></li>
+    <li>Nuclear fission: total mass of products is <mark>less than the reactants</mark>; the lost mass becomes energy, <b>E = mc²</b>. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> Penetrating power: γ &gt; β &gt; α; ionising power the reverse. Radioactivity discovered by <b>Henri Becquerel</b>.</li>
+    <li><span class="tag x">CGL+</span> <b>Fission</b> (heavy nucleus splits, e.g. U-235): nuclear reactors, atom bomb. <b>Fusion</b> (light nuclei join, hydrogen → helium): energy of the Sun and stars, hydrogen bomb. Reactor moderator: heavy water or graphite; control rods: cadmium or boron.</li>
+  </ul>
+  <div class="trick"><b>Trick:</b> "β-minus = Z plus" — signs flip. Alpha = "ek Helium nikal gaya": Z − 2, A − 4.</div>
+
+  <h3>Universe: Big Bang, stars, galaxies</h3>
+  <ul>
+    <li>Evidence for the Big Bang: <mark>redshift of galaxies</mark> (galaxies moving away → universe expanding; Edwin Hubble). <span class="tag p">PYQ</span> <span class="tag x">CGL+</span> Other proof: cosmic microwave background radiation. Universe age ≈ 13.8 billion years. Theory first proposed by Georges Lemaître.</li>
+  </ul>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Life cycle of stars: nebula, protostar, main sequence; Sun-like stars become red giant then white dwarf; massive stars become red supergiant, supernova, then neutron star or black hole">
+      <defs>
+        <marker id="ph-modern-fl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <g class="chf">
+        <rect x="8" y="95" width="92" height="40" rx="8"/><rect x="118" y="95" width="100" height="40" rx="8"/><rect x="236" y="95" width="120" height="40" rx="8"/>
+        <rect x="390" y="25" width="110" height="40" rx="8"/><rect x="520" y="25" width="170" height="40" rx="8"/>
+        <rect x="380" y="165" width="122" height="40" rx="8"/><rect x="514" y="165" width="84" height="40" rx="8"/><rect x="608" y="165" width="84" height="40" rx="8"/>
+      </g>
+      <rect x="236" y="95" width="120" height="40" rx="8" class="chs"/>
+      <rect x="520" y="25" width="170" height="40" rx="8" class="chs"/>
+      <g text-anchor="middle">
+        <text x="54" y="120" class="lbl">Nebula</text>
+        <text x="168" y="120" class="lbl">Protostar</text>
+        <text x="296" y="114" class="lbl">Main sequence</text><text x="296" y="128" class="sm">H → He fusion</text>
+        <text x="445" y="50" class="lbl">Red giant</text>
+        <text x="605" y="44" class="lbl">White dwarf</text><text x="605" y="58" class="sm">(sheds planetary nebula)</text>
+        <text x="441" y="190" class="lbl">Red supergiant</text>
+        <text x="556" y="190" class="lbl">Supernova</text>
+        <text x="650" y="182" class="sm">Neutron star</text><text x="650" y="198" class="sm">or Black hole</text>
+      </g>
+      <g class="ln" marker-end="url(#ph-modern-fl)">
+        <path d="M100 115 H116"/><path d="M218 115 H234"/>
+        <path d="M356 105 L388 55"/><path d="M500 45 H518"/>
+        <path d="M356 125 L378 175"/><path d="M502 185 H512"/><path d="M598 185 H606"/>
+      </g>
+      <text x="380" y="92" class="sm chtext" style="fill:var(--ch)">Sun-like star</text>
+      <text x="380" y="150" class="sm chtext" style="fill:var(--ch)">much heavier star</text>
+    </svg>
+    </div>
+    <figcaption>Outlined boxes = the path of our Sun. 2025 asked this order: Main Sequence → Red Giant → White Dwarf.</figcaption>
+  </figure>
+  <ul>
+    <li>Sun-like star: <mark>Main Sequence → Red Giant → White Dwarf</mark>. <span class="tag p">PYQ</span> <span class="tag x">CGL+</span> Upper mass limit of a white dwarf ≈ 1.44 Suns = <b>Chandrasekhar limit</b>.</li>
+    <li>Pulsars are rapidly rotating neutron stars ✔. Black holes do not emit X-rays from the event horizon ✘ (X-rays come from hot gas in the disc outside it) → <mark>statement 2 only</mark>. <span class="tag p">PYQ</span></li>
+    <li>Galaxy with no regular shape, rich in gas and dust: <mark>irregular galaxy</mark>. <span class="tag p">PYQ</span></li>
+  </ul>
+  <div class="tbl"><table>
+    <tr><th>Galaxy type <span class="tag x">CGL+</span></th><th>Look</th><th>Example</th></tr>
+    <tr><td>Spiral</td><td>Flat disc with arms</td><td>Milky Way, Andromeda</td></tr>
+    <tr><td>Elliptical</td><td>Oval, old stars, little gas</td><td>—</td></tr>
+    <tr><td>Irregular</td><td>No shape, gas + dust, new stars</td><td>Large &amp; Small Magellanic Clouds</td></tr>
+  </table></div>
+
+  <h3>The Sun and Earth's magnetism</h3>
+  <ul>
+    <li>Disturbs Earth's magnetic field: <mark>solar flares</mark> (with coronal mass ejections) → geomagnetic storms, radio/GPS trouble, auroras. <span class="tag p">PYQ</span></li>
+    <li><span class="tag x">CGL+</span> <b>Sunspots</b> are cooler, darker patches; they follow an ~11-year cycle. Sun's layers outward: core → radiative zone → convective zone → <b>photosphere</b> (visible surface) → chromosphere → <b>corona</b> (seen in total solar eclipse).</li>
+    <li><span class="tag x">CGL+</span> Auroras: <b>Aurora Borealis</b> (north), <b>Aurora Australis</b> (south).</li>
+  </ul>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Which radiation is a helium nucleus?</summary><p>Alpha particle.</p></details>
+    <details><summary>Energy of the Sun comes from fission or fusion?</summary><p>Fusion (hydrogen → helium).</p></details>
+    <details><summary>Does brighter light give photoelectrons more speed?</summary><p>No. Brighter light gives more electrons; higher frequency gives faster ones.</p></details>
+    <details><summary>What will our Sun finally become?</summary><p>A white dwarf (after the red giant stage).</p></details>
+  </div>
+</section>

@@ -1,0 +1,918 @@
+<!-- ===================== MATHS · TIME, SPEED & DISTANCE (part 1: basics + speed methods) ===================== -->
+<section class="chap" id="mts-basics">
+  <div class="eyebrow">Maths · 210 questions</div>
+  <h2>Time, Speed aur Distance: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, MTS, Selection Post XIV, Delhi Police, GD 2026) · sabse zyada: unit badlo, average speed, aamne-saamne milna, speed badli to time ka farq</div>
+
+  <h3>Pehle ek chhoti si kahani: cycle ki sawaari</h3>
+  <p>Maan lo tum cycle chala rahe ho. Har ghante tum 12 km aage badhte ho.</p>
+  <ul>
+    <li><b>1 ghanta:</b> 12 km.</li>
+    <li><b>2 ghante:</b> 12 + 12 = 24 km.</li>
+    <li><b>3 ghante:</b> 36 km.</li>
+  </ul>
+  <p>Ye "har ghante 12 km" hi tumhari <b>speed</b> hai. Kitni der chale = <b>time</b>. Kul kitna chale = <b>distance</b>. Upar ki ginti se seedha dikhta hai: distance = speed × time. 12 × 3 = 36.</p>
+  <p>Poora chapter bas teen baaton se banta hai. Inhe pakad lo, baaki sab tareeke inhi se nikalte hain.</p>
+  <div class="box"><span class="k">3 asli baatein</span>
+    <b>1. D = S × T.</b> Teen mein se do pata hon, teesra nikal jaata hai.<br>
+    <b>2. Ratio ka khel.</b> Time same ho toh distance speed ke saath badhta hai (seedha). Distance same ho toh time speed ka <b>ulta</b> chalta hai: speed dugni, time aadha.<br>
+    <b>3. Do log saath chalein toh "relative speed".</b> Aamne-saamne aayein toh speed jodo. Ek doosre ke peeche bhaagein toh speed ghatao.
+  </div>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Left: the D S T triangle, D on top, S and T below. Right: one 120 km road at four speeds, bars show time to scale: 20 km/h takes 6 hours, 30 takes 4, 40 takes 3, 60 takes 2.">
+      <polygon points="90,30 15,200 165,200" class="chf"/>
+      <polygon points="90,30 15,200 165,200" class="chs"/>
+      <line x1="52" y1="116" x2="128" y2="116" class="chs"/>
+      <line x1="90" y1="116" x2="90" y2="200" class="chs"/>
+      <text x="90" y="96" text-anchor="middle" class="lbl">D</text>
+      <text x="64" y="168" text-anchor="middle" class="lbl">S</text>
+      <text x="116" y="168" text-anchor="middle" class="lbl">T</text>
+      <g text-anchor="middle" class="sm">
+        <text x="90" y="224">D = S × T</text>
+        <text x="90" y="242">S = D ÷ T</text>
+        <text x="90" y="260">T = D ÷ S</text>
+        <text x="90" y="282">jo chahiye, use ungli se dhako</text>
+      </g>
+      <text x="250" y="26" class="lbl">Ek hi raasta, 120 km · bar = time (scale par)</text>
+      <g text-anchor="end" class="lbl">
+        <text x="240" y="65">20 km/h</text><text x="240" y="117">30 km/h</text><text x="240" y="169">40 km/h</text><text x="240" y="221">60 km/h</text>
+      </g>
+      <rect x="250" y="44" width="420" height="32" class="chf"/><rect x="250" y="44" width="420" height="32" class="chs"/>
+      <rect x="250" y="96" width="280" height="32" class="chf"/><rect x="250" y="96" width="280" height="32" class="chs"/>
+      <rect x="250" y="148" width="210" height="32" class="chf"/><rect x="250" y="148" width="210" height="32" class="chs"/>
+      <rect x="250" y="200" width="140" height="32" style="fill:var(--ch)"/>
+      <g class="lbl">
+        <text x="260" y="65">6 ghante</text><text x="260" y="117">4 ghante</text><text x="260" y="169">3 ghante</text><text x="260" y="221" style="fill:var(--paper)">2 ghante</text>
+      </g>
+      <line x1="250" y1="246" x2="670" y2="246" class="ln"/>
+      <g class="ln">
+        <line x1="250" y1="242" x2="250" y2="250"/><line x1="320" y1="242" x2="320" y2="250"/><line x1="390" y1="242" x2="390" y2="250"/><line x1="460" y1="242" x2="460" y2="250"/><line x1="530" y1="242" x2="530" y2="250"/><line x1="600" y1="242" x2="600" y2="250"/><line x1="670" y1="242" x2="670" y2="250"/>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="250" y="264">0</text><text x="320" y="264">1</text><text x="390" y="264">2</text><text x="460" y="264">3</text><text x="530" y="264">4</text><text x="600" y="264">5</text><text x="670" y="264">6 h</text>
+      </g>
+      <text x="460" y="288" text-anchor="middle" class="sm">Speed 3 guna (20 → 60), toh time 1/3 (6 → 2). Isi ko "ulta ratio" kehte hain.</text>
+    </svg>
+    </div>
+    <figcaption>Left: D-S-T ka tikona. Right: distance same rakho, speed badhao, time utna hi ghatta hai. Bars scale par hain.</figcaption>
+  </figure>
+
+  <p>Ab asli baat. Paper mein ek sawaal ke liye lagbhag <b>36 second</b> milte hain. Wahan koi equation bana kar x nahi dhoondhta. Neeche 8 tareeke hain jo rough mein, haath se, jaldi chalte hain.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Unit badlo: 5/18 aur 18/5</h3>
+  <p><b>Kab use karo:</b> jab speed km/h mein ho aur jawab m/s mein chahiye, ya ulta. Ya jab sawaal mein metre aur second hon.</p>
+  <p><b>Soch aise:</b> 1 km = 1000 m aur 1 ghanta = 3600 second. Toh 1 km/h = 1000/3600 m/s = <b>5/18 m/s</b>. Ulta, 1 m/s = <b>18/5 = 3.6 km/h</b>.</p>
+  <p>Ek jodi yaad karo: <b>18 km/h = 5 m/s</b>. Baaki sab isi ke guna hain. 36 = 2 × 18 → 10 m/s. 54 = 3 × 18 → 15 m/s. 72 → 20. 90 → 25.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Conversion ladder. km/h on top, m/s below: 18 to 5, 36 to 10, 45 to 12.5, 54 to 15, 72 to 20, 90 to 25, 108 to 30, 216 to 60, 270 to 75, 360 to 100.">
+      <defs>
+        <marker id="mts-cv-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <text x="8" y="22" class="lbl">km/h → m/s: × 5/18 (÷ 3.6)</text>
+      <text x="692" y="22" text-anchor="end" class="lbl">m/s → km/h: × 18/5 (× 3.6)</text>
+      <text x="8" y="66" class="lbl">km/h</text>
+      <text x="8" y="166" class="lbl">m/s</text>
+      <g>
+        <rect x="52" y="42" width="56" height="38" rx="6" class="chf"/><rect x="52" y="42" width="56" height="38" rx="6" class="chs"/>
+        <rect x="115" y="42" width="56" height="38" rx="6" class="chf"/><rect x="115" y="42" width="56" height="38" rx="6" class="chs"/>
+        <rect x="178" y="42" width="56" height="38" rx="6" class="chf"/><rect x="178" y="42" width="56" height="38" rx="6" class="chs"/>
+        <rect x="241" y="42" width="56" height="38" rx="6" class="chf"/><rect x="241" y="42" width="56" height="38" rx="6" class="chs"/>
+        <rect x="304" y="42" width="56" height="38" rx="6" class="chf"/><rect x="304" y="42" width="56" height="38" rx="6" class="chs"/>
+        <rect x="367" y="42" width="56" height="38" rx="6" class="chf"/><rect x="367" y="42" width="56" height="38" rx="6" class="chs"/>
+        <rect x="430" y="42" width="56" height="38" rx="6" class="chf"/><rect x="430" y="42" width="56" height="38" rx="6" class="chs"/>
+        <rect x="493" y="42" width="56" height="38" rx="6" class="chf"/><rect x="493" y="42" width="56" height="38" rx="6" class="chs"/>
+        <rect x="556" y="42" width="56" height="38" rx="6" class="chf"/><rect x="556" y="42" width="56" height="38" rx="6" class="chs"/>
+        <rect x="619" y="42" width="56" height="38" rx="6" class="chf"/><rect x="619" y="42" width="56" height="38" rx="6" class="chs"/>
+      </g>
+      <g>
+        <rect x="52" y="142" width="56" height="38" rx="6" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+        <rect x="115" y="142" width="56" height="38" rx="6" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+        <rect x="178" y="142" width="56" height="38" rx="6" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+        <rect x="241" y="142" width="56" height="38" rx="6" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+        <rect x="304" y="142" width="56" height="38" rx="6" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+        <rect x="367" y="142" width="56" height="38" rx="6" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+        <rect x="430" y="142" width="56" height="38" rx="6" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+        <rect x="493" y="142" width="56" height="38" rx="6" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+        <rect x="556" y="142" width="56" height="38" rx="6" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+        <rect x="619" y="142" width="56" height="38" rx="6" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+      </g>
+      <g class="ln">
+        <line x1="80" y1="84" x2="80" y2="138" marker-start="url(#mts-cv-arr)" marker-end="url(#mts-cv-arr)"/>
+        <line x1="143" y1="84" x2="143" y2="138" marker-start="url(#mts-cv-arr)" marker-end="url(#mts-cv-arr)"/>
+        <line x1="206" y1="84" x2="206" y2="138" marker-start="url(#mts-cv-arr)" marker-end="url(#mts-cv-arr)"/>
+        <line x1="269" y1="84" x2="269" y2="138" marker-start="url(#mts-cv-arr)" marker-end="url(#mts-cv-arr)"/>
+        <line x1="332" y1="84" x2="332" y2="138" marker-start="url(#mts-cv-arr)" marker-end="url(#mts-cv-arr)"/>
+        <line x1="395" y1="84" x2="395" y2="138" marker-start="url(#mts-cv-arr)" marker-end="url(#mts-cv-arr)"/>
+        <line x1="458" y1="84" x2="458" y2="138" marker-start="url(#mts-cv-arr)" marker-end="url(#mts-cv-arr)"/>
+        <line x1="521" y1="84" x2="521" y2="138" marker-start="url(#mts-cv-arr)" marker-end="url(#mts-cv-arr)"/>
+        <line x1="584" y1="84" x2="584" y2="138" marker-start="url(#mts-cv-arr)" marker-end="url(#mts-cv-arr)"/>
+        <line x1="647" y1="84" x2="647" y2="138" marker-start="url(#mts-cv-arr)" marker-end="url(#mts-cv-arr)"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="80" y="66">18</text><text x="143" y="66">36</text><text x="206" y="66">45</text><text x="269" y="66">54</text><text x="332" y="66">72</text>
+        <text x="395" y="66">90</text><text x="458" y="66">108</text><text x="521" y="66">216</text><text x="584" y="66">270</text><text x="647" y="66">360</text>
+        <text x="80" y="166">5</text><text x="143" y="166">10</text><text x="206" y="166">12.5</text><text x="269" y="166">15</text><text x="332" y="166">20</text>
+        <text x="395" y="166">25</text><text x="458" y="166">30</text><text x="521" y="166">60</text><text x="584" y="166">75</text><text x="647" y="166">100</text>
+      </g>
+      <text x="350" y="208" text-anchor="middle" class="sm">Yaad rakho sirf 18 → 5. Baaki: 54 = 3 × 18, toh 3 × 5 = 15. 270 = 15 × 18, toh 15 × 5 = 75.</text>
+      <text x="350" y="232" text-anchor="middle" class="sm">m/min ke liye: 6 km/h = 100 m/min · 3.6 km/h = 1 m/s = 60 m/min · 30 km/h = 500 m/min</text>
+    </svg>
+    </div>
+    <figcaption>Upar km/h, neeche m/s. Ye das jodiyan 2025–26 ke papers mein seedhe aayi hain.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 300 m, 24 second mein. Speed km/h mein? · <i>~8 sec</i></span>
+    300 ÷ 24 = 12.5 m/s. 12.5 × 18/5 = 2.5 × 18 = <b>45 km/h</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "m/s ko km/h banana ho toh 18 se guna, 5 se bhaag." Pehle 5 se kaato, phir 18 se guna. 25 m/s → 5 × 18 = 90. m/min se km/h: × 6/100. 140 m/min → 8.4 km/h.</div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Minute ko ghante ka fraction banao</h3>
+  <p><b>Kab use karo:</b> jab time minute mein ho (40 min, 48 min, 4 ghante 48 min). Decimal (0.666…) mat banao. Fraction lo.</p>
+  <div class="tbl"><table>
+    <tr><th>Minute</th><th>6</th><th>12</th><th>15</th><th>20</th><th>24</th><th>30</th><th>36</th><th>40</th><th>45</th><th>48</th></tr>
+    <tr><td>Ghanta</td><td class="n">1/10</td><td class="n">1/5</td><td class="n">1/4</td><td class="n">1/3</td><td class="n">2/5</td><td class="n">1/2</td><td class="n">3/5</td><td class="n">2/3</td><td class="n">3/4</td><td class="n">4/5</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · 12 km, 40 minute mein. Speed? · <i>~5 sec</i></span>
+    40 min = 2/3 ghanta. Speed = 12 ÷ 2/3 = 12 × 3/2 = <b>18 km/h</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "x minute mein y km" ho toh speed = y × 60/x. 7.2 km 48 min mein → 7.2 × 60/48 = 7.2 × 5/4 = 9 km/h.</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Ratio parts: speed ulta, time ulta</h3>
+  <p><b>Kab use karo:</b> distance same hai, speed badli, aur time ka farq (ya naya time) pucha hai.</p>
+  <p><b>Soch aise:</b> speed 20 se 18 hui. Speed ka ratio 10 : 9. Distance same, toh time ka ratio ulta: <b>9 : 10</b>. Time 1 part badha. Wahi 1 part = jo extra minute diye.</p>
+  <div class="box"><span class="k">Demo · Speed 20 se 18 km/h, 8 minute zyada lage. Distance? · <i>~12 sec</i></span>
+    Speed 10 : 9 → time 9 : 10. Farq 1 part = 8 min → purana time 9 × 8 = 72 min = 6/5 ghanta.<br>
+    Distance = 20 × 6/5 = <b>24 km</b>.
+  </div>
+  <div class="box"><span class="k">Demo · Usual speed ka 60% par chala, 18 min late. Usual time? · <i>~8 sec</i></span>
+    60% = 3/5 → speed 5 : 3 → time 3 : 5. Farq 2 parts = 18 → 1 part = 9.<br>
+    Usual = 3 parts = <b>27 min</b>.
+  </div>
+  <p><b>Doosra roop: u(u + k) wala jodi tareeka.</b> "180 km, speed 15 badhao toh 1 ghanta kam." Yahan seedha jodi dhoondho: u × (u + 15) = 180 × 15 ÷ 1 = 2700. 2700 = 45 × 60. Toh u = <b>45</b>. Ya options daal kar dekho: 45 par 4 ghante, 60 par 3 ghante. Farq 1. Ho gaya.</p>
+  <div class="trick"><b>Trick:</b> "Speed ka ratio a : b, toh time ka b : a." Farq ke parts = diya hua farq. Bas 1 part ki value nikaalo. Kabhi x wali equation mat banao.</div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Relative speed: jodo ya ghatao</h3>
+  <p><b>Kab use karo:</b> do gaadiyan, do log, chor-police. Jab bhi do cheezein ek saath chal rahi hon.</p>
+  <p><b>Soch aise:</b> do bus aamne-saamne aa rahi hain, 50 aur 70 km/h. Ek ghante mein pehli 50 km aage aayi, doosri 70 km. Beech ka gap 120 km kam hua. Toh gap <b>a + b</b> ki speed se ghatta hai. Agar dono ek hi disha mein hon, police 20 aur chor 15, toh gap sirf 5 km har ghante ghatta hai: <b>a − b</b>.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Top: two buses facing each other, 50 and 70 km/h, 300 km apart; gap closes at 120 km/h so they meet in 2.5 hours. Bottom: police at 20 km/h chasing a thief at 15 km/h who is 1.5 km ahead; gap closes at 5 km/h so the catch takes 0.3 hours and the thief runs 4.5 km.">
+      <defs>
+        <marker id="mts-rel-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <text x="20" y="24" class="lbl">Aamne-saamne: speed JODO</text>
+      <line x1="30" y1="92" x2="670" y2="92" class="ln"/>
+      <rect x="40" y="62" width="76" height="28" rx="6" class="chf"/><rect x="40" y="62" width="76" height="28" rx="6" class="chs"/>
+      <rect x="584" y="62" width="76" height="28" rx="6" class="chf"/><rect x="584" y="62" width="76" height="28" rx="6" class="chs"/>
+      <text x="78" y="81" text-anchor="middle" class="lbl">Bus 1</text>
+      <text x="622" y="81" text-anchor="middle" class="lbl">Bus 2</text>
+      <line x1="120" y1="76" x2="180" y2="76" style="stroke:var(--ch);stroke-width:2.5" marker-end="url(#mts-rel-arr)"/>
+      <line x1="580" y1="76" x2="520" y2="76" style="stroke:var(--ch);stroke-width:2.5" marker-end="url(#mts-rel-arr)"/>
+      <text x="78" y="54" text-anchor="middle" class="sm">50 km/h</text>
+      <text x="622" y="54" text-anchor="middle" class="sm">70 km/h</text>
+      <g class="ln"><line x1="116" y1="104" x2="584" y2="104"/><line x1="116" y1="98" x2="116" y2="110"/><line x1="584" y1="98" x2="584" y2="110"/></g>
+      <text x="350" y="122" text-anchor="middle" class="lbl">gap 300 km</text>
+      <text x="350" y="140" text-anchor="middle" class="sm">har ghante gap 50 + 70 = 120 km ghatta hai → 300 ÷ 120 = 2.5 ghante mein milenge</text>
+      <line x1="20" y1="154" x2="680" y2="154" class="ln" stroke-dasharray="3 4"/>
+      <text x="20" y="176" class="lbl">Peecha (ek hi disha): speed GHATAO</text>
+      <line x1="30" y1="232" x2="670" y2="232" class="ln"/>
+      <rect x="40" y="202" width="80" height="28" rx="6" class="chf"/><rect x="40" y="202" width="80" height="28" rx="6" class="chs"/>
+      <rect x="300" y="202" width="80" height="28" rx="6" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="80" y="221" text-anchor="middle" class="lbl">Police</text>
+      <text x="340" y="221" text-anchor="middle" class="lbl">Chor</text>
+      <line x1="124" y1="216" x2="176" y2="216" style="stroke:var(--ch);stroke-width:2.5" marker-end="url(#mts-rel-arr)"/>
+      <line x1="384" y1="216" x2="436" y2="216" style="stroke:var(--ch);stroke-width:2.5" marker-end="url(#mts-rel-arr)"/>
+      <text x="80" y="194" text-anchor="middle" class="sm">20 km/h</text>
+      <text x="340" y="194" text-anchor="middle" class="sm">15 km/h</text>
+      <g class="ln"><line x1="120" y1="246" x2="300" y2="246"/><line x1="120" y1="240" x2="120" y2="252"/><line x1="300" y1="240" x2="300" y2="252"/></g>
+      <text x="210" y="266" text-anchor="middle" class="lbl">gap 1.5 km</text>
+      <text x="460" y="212" class="sm">gap ghatta hai 20 − 15 = 5 km/h</text>
+      <text x="460" y="230" class="sm">pakadne ka time = 1.5 ÷ 5 = 0.3 h</text>
+      <text x="460" y="248" class="sm">chor bhaaga = 15 × 0.3 = 4.5 km</text>
+      <text x="350" y="290" text-anchor="middle" class="sm">Short-cut: chor kitna bhaaga = gap × (chor ki speed ÷ farq) = 1.5 × 15/5 = 4.5 km</text>
+    </svg>
+    </div>
+    <figcaption>Gap kis speed se ghat raha hai, bas yahi socho. Aamne-saamne: jodo. Peecha: ghatao.</figcaption>
+  </figure>
+  <ul>
+    <li><b>Milne ki jagah:</b> dono ne same time chala, toh distance ka ratio = speed ka ratio. 450 km, 50 aur 40 → 5 : 4 → pehla 250 km chalega.</li>
+    <li><b>Ek der se nikla:</b> pehle akele wale ka "head start" nikaalo (jo usne akele chala). Bacha gap ÷ (a + b). Phir clock time jodo.</li>
+    <li><b>"Chor kitna bhaaga":</b> gap × chor ki speed ÷ farq. "Police kitna bhaagi": gap × police ki speed ÷ farq.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · Chor 10:00 baje 20 km/h se bhaaga. Police 10:30 par 30 km/h se. Kab pakdega? · <i>~10 sec</i></span>
+    10:30 tak chor 20 × 1/2 = 10 km aage. Gap ghatta hai 30 − 20 = 10 km/h.<br>
+    10 ÷ 10 = 1 ghanta → <b>11:30</b>.
+  </div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Average speed: kabhi seedha average mat lo</h3>
+  <p><b>Soch aise:</b> 120 km jaana 40 km/h se (3 ghante), wapas 60 km/h se (2 ghante). Kul 240 km, 5 ghante. Average = 240 ÷ 5 = <b>48</b>. (40 + 60)/2 = 50 nahi. Kyun? Dheemi speed par zyada time beeta.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 236" role="img" aria-label="Round trip of 120 km: going at 40 km/h takes 3 hours, returning at 60 km/h takes 2 hours, drawn to scale. Of the 5 hours, 3 are at the slower speed, so the average is 48, not 50.">
+      <text x="10" y="22" class="lbl">120 km jaana 40 se, wapas 60 se · bar = time (scale par)</text>
+      <g text-anchor="end" class="lbl"><text x="190" y="61">Jaana · 40 km/h</text><text x="190" y="111">Aana · 60 km/h</text><text x="190" y="161">Poora safar</text></g>
+      <rect x="200" y="40" width="270" height="32" class="chf"/><rect x="200" y="40" width="270" height="32" class="chs"/>
+      <rect x="200" y="90" width="180" height="32" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="200" y="140" width="270" height="32" class="chf"/><rect x="200" y="140" width="270" height="32" class="chs"/>
+      <rect x="470" y="140" width="180" height="32" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <g class="lbl"><text x="210" y="61">3 ghante</text><text x="210" y="111">2 ghante</text><text x="210" y="161">40 par 3 ghante</text><text x="480" y="161">60 par 2 ghante</text></g>
+      <line x1="425" y1="132" x2="425" y2="182" class="ln" stroke-dasharray="3 3"/>
+      <text x="425" y="196" text-anchor="middle" class="sm">aadha time yahan</text>
+      <text x="350" y="224" text-anchor="middle" class="sm">Average = 240 ÷ 5 = 48, 50 nahi. 5 mein se 3 ghante 40 par beete, isliye average 40 ki taraf jhukta hai.</text>
+    </svg>
+    </div>
+    <figcaption>Average speed hamesha "kul distance ÷ kul time" hai. Seedha average sirf tab chalta hai jab dono speed par <b>time</b> barabar ho.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Halat</th><th>Tareeka</th><th>Example</th></tr>
+    <tr><td>Do barabar distance (jaana-aana)</td><td><b>2ab ÷ (a + b)</b></td><td>40, 60 → 2 × 40 × 60 ÷ 100 = 48</td></tr>
+    <tr><td>Teen barabar distance</td><td><b>Distance = LCM maan lo</b>, phir time jodo</td><td>30, 45, 90 → LCM 90 → 3 + 2 + 1 = 6 h → 270 ÷ 6 = 45</td></tr>
+    <tr><td>Barabar time</td><td>seedha average (a + b)/2</td><td>2 h 30 par, 2 h 50 par → 40</td></tr>
+    <tr><td>Kuch bhi alag</td><td>kul D ÷ kul T</td><td>2 h 5 par + 1 h 8 par → 18 ÷ 3 = 6</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · 3 barabar hisse: 30, 60, 90 km/h. Average? · <i>~12 sec</i></span>
+    LCM 180 maan lo har hissa. Time: 6 + 3 + 2 = 11 ghante. Kul 540 km.<br>
+    540 ÷ 11 = <b>49.09 km/h</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "Average speed hamesha chhoti speed ki taraf jhukta hai." 40 aur 60 ka jawab 50 se kam hoga. Jo option 50 ya upar hai, kaat do.</div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Late aur early: ek line ka formula</h3>
+  <p><b>Kab use karo:</b> "S1 se chalo toh late, S2 se chalo toh early. Distance?"</p>
+  <p><b>Soch aise:</b> dono speed se pahunchne ke time mein kul farq = late + early. Distance same hai. Toh D ÷ S1 − D ÷ S2 = farq. Isko seedha likho: <b>D = S1 × S2 ÷ (S2 − S1) × farq</b>.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Time line. At 50 km/h he arrives 1 hour early, at 30 km/h 1 hour late. The total gap between the two arrivals is 2 hours. Distance = 50 times 30 divided by 20, times 2 = 150 km.">
+      <line x1="60" y1="90" x2="640" y2="90" class="ln"/>
+      <circle cx="200" cy="90" r="7" class="chf"/><circle cx="200" cy="90" r="7" class="chs"/>
+      <circle cx="350" cy="90" r="7" style="fill:var(--muted)"/>
+      <circle cx="500" cy="90" r="7" style="fill:var(--ch)"/>
+      <g text-anchor="middle">
+        <text x="200" y="62" class="lbl">50 km/h se pahuncha</text><text x="200" y="76" class="sm">1 ghanta early</text>
+        <text x="350" y="62" class="lbl">sahi time</text>
+        <text x="500" y="62" class="lbl">30 km/h se pahuncha</text><text x="500" y="76" class="sm">1 ghanta late</text>
+      </g>
+      <g class="ln"><line x1="200" y1="112" x2="500" y2="112"/><line x1="200" y1="106" x2="200" y2="118"/><line x1="500" y1="106" x2="500" y2="118"/></g>
+      <text x="350" y="134" text-anchor="middle" class="lbl">kul farq = 1 + 1 = 2 ghante</text>
+      <text x="350" y="162" text-anchor="middle" class="lbl" style="fill:var(--ch)">D = (50 × 30) ÷ (50 − 30) × 2 = 75 × 2 = 150 km</text>
+      <text x="350" y="188" text-anchor="middle" class="sm">late + early ho toh JODO · dono late (ya dono early) ho toh GHATAO</text>
+    </svg>
+    </div>
+    <figcaption>Do pahunchne ke time ke beech ka gap hi asli "farq" hai. Minute ho toh ghante mein badlo.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 4 km/h par 15 min late, 6 km/h par 5 min early. Distance? · <i>~10 sec</i></span>
+    Farq = 15 + 5 = 20 min = 1/3 ghanta. 4 × 6 ÷ 2 = 12.<br>
+    D = 12 × 1/3 = <b>4 km</b>.
+  </div>
+  <p><b>Usi formula ka bhai (jaana-aana, kul time diya):</b> D = kul time × ab ÷ (a + b). 30 se gaya, 20 se aaya, kul 5 ghante → 5 × 600 ÷ 50 = <b>60 km</b>.</p>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Gol track</h3>
+  <p><b>Soch aise:</b> gol track par milna = tez wale ne dheeme wale par ek poora chakkar "extra" bana liya (ek disha), ya dono ne mil kar ek poora chakkar pura kiya (ulti disha). Toh "gap" = track ki lambai.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Two circular tracks. Left, opposite directions: 1.2 km track, speeds 5 and 7 add to 12 km/h, they meet every 6 minutes, fifth meeting at 30 minutes. Right, same direction: 3500 m track, 35 and 21 m/s, difference 14, first meeting after 250 seconds.">
+      <defs>
+        <marker id="mts-trk-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <text x="170" y="20" text-anchor="middle" class="lbl">Ulti disha: track ÷ (a + b)</text>
+      <circle cx="170" cy="140" r="90" class="chf"/><circle cx="170" cy="140" r="90" class="chs"/>
+      <circle cx="170" cy="50" r="6" style="fill:var(--ch)"/>
+      <path d="M170,38 A102,102 0 0 1 258.3,89" fill="none" style="stroke:var(--ch);stroke-width:2.5" marker-end="url(#mts-trk-arr)"/>
+      <path d="M170,38 A102,102 0 0 0 81.7,89" fill="none" style="stroke:var(--ch);stroke-width:2.5" marker-end="url(#mts-trk-arr)"/>
+      <text x="266" y="80" class="sm">A 5 km/h</text>
+      <text x="74" y="80" text-anchor="end" class="sm">B 7 km/h</text>
+      <g text-anchor="middle">
+        <text x="170" y="128" class="lbl">1.2 km</text>
+        <text x="170" y="148" class="sm">5 + 7 = 12 km/h</text>
+        <text x="170" y="166" class="sm">har 1.2 ÷ 12 = 0.1 h</text>
+        <text x="170" y="182" class="sm">= 6 min mein milan</text>
+        <text x="170" y="256" class="lbl">5va milan = 5 × 6 = 30 min</text>
+      </g>
+      <text x="520" y="20" text-anchor="middle" class="lbl">Ek disha: track ÷ (a − b)</text>
+      <circle cx="520" cy="140" r="90" class="chf"/><circle cx="520" cy="140" r="90" class="chs"/>
+      <circle cx="520" cy="50" r="6" style="fill:var(--ch)"/>
+      <path d="M520,38 A102,102 0 0 1 622,140" fill="none" style="stroke:var(--ch);stroke-width:2.5" marker-end="url(#mts-trk-arr)"/>
+      <path d="M520,64 A76,76 0 0 1 585.8,102" fill="none" style="stroke:var(--muted);stroke-width:2.5" marker-end="url(#mts-trk-arr)"/>
+      <text x="632" y="176" class="sm">A 35</text>
+      <text x="632" y="190" class="sm">m/s</text>
+      <text x="520" y="96" text-anchor="middle" class="sm">B 21</text>
+      <g text-anchor="middle">
+        <text x="520" y="136" class="lbl">3500 m</text>
+        <text x="520" y="156" class="sm">35 − 21 = 14 m/s</text>
+        <text x="520" y="174" class="sm">3500 ÷ 14 = 250 s</text>
+        <text x="520" y="256" class="lbl">A ek chakkar extra lagaye, tab milan</text>
+      </g>
+      <text x="350" y="282" text-anchor="middle" class="sm">Sab ke sab start point par kab? Har ek ke ek chakkar ke time ka LCM.</text>
+    </svg>
+    </div>
+    <figcaption>Gol track par "gap" hamesha ek poora chakkar hai. Baaki wahi relative speed.</figcaption>
+  </figure>
+  <ul>
+    <li><b>Kitni baar mile, T time mein?</b> T × relative speed ÷ track. Jo poora number aaye wahi (0.75 wala tukda gino mat).</li>
+    <li><b>Teeno start point par kab?</b> Har ek ka ek chakkar ka time nikaalo, phir LCM. 12, 10, 8 min → LCM 120 min.</li>
+  </ul>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · Option se pakdo</h3>
+  <ul>
+    <li><b>Average speed</b> dono speed ke beech hi hoga, aur seedhe average se kam. 40 aur 60 ka jawab 40 aur 50 ke beech.</li>
+    <li><b>"Speed badhao toh 1 ghanta kam" type:</b> options daalo. Jis option par dono time ka farq sahi baithe, wahi. Equation se tez hai.</li>
+    <li><b>√x jaise sawaal:</b> options daalo. 2 × √4 = 4 = x. Bas.</li>
+    <li><b>Seedhe sawaal mein bhi galti mat karo:</b> 150 ÷ 50 = 3. Is bank mein chaar seedhe sawaalon ki key galat hai (neeche note). Apni ginti par bharosa rakho.</li>
+  </ul>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing a method. Check in order: unit change, two movers, circular track, average speed, late and early, speed changed with time difference, plain D S T. Each yes leads to its method.">
+      <defs>
+        <marker id="mts-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya pucha hai?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mts-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">km/h ↔ m/s ya m/min badalna hai?</text>
+        <text x="180" y="141">Do log: aamne-saamne ya peecha?</text>
+        <text x="180" y="197">Gol track par milna?</text>
+        <text x="180" y="253">Average speed pucha hai?</text>
+        <text x="180" y="309">Ek speed par late, doosri par early?</text>
+        <text x="180" y="365">Speed badli, time ka farq diya?</text>
+        <text x="180" y="421">Bas D, S, T mein se do diye?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mts-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mts-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mts-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mts-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mts-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mts-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mts-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mts-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mts-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mts-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mts-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mts-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mts-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">× 5/18 ya × 18/5</text>
+        <text x="410" y="132">Relative speed</text>
+        <text x="410" y="188">Track ÷ relative speed</text>
+        <text x="410" y="244">2ab ÷ (a + b) ya LCM</text>
+        <text x="410" y="300">S1 × S2 ÷ (S2 − S1) × farq</text>
+        <text x="410" y="356">Ratio parts ya u(u + k)</text>
+        <text x="410" y="412">D = S × T, minute = fraction</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">18 → 5 · 36 → 10 · 54 → 15 · 72 → 20</text>
+        <text x="410" y="149">aamne: jodo · peecha: ghatao · pehle head start</text>
+        <text x="410" y="205">sab start par: lap time ka LCM</text>
+        <text x="410" y="261">barabar time ho toh seedha average</text>
+        <text x="410" y="317">late + early ho toh farq jodo</text>
+        <text x="410" y="373">speed a : b → time b : a</text>
+        <text x="410" y="429">40 min = 2/3 h · 48 min = 4/5 h</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow ek baar rough mein chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet (ratta)</span>
+    18 km/h = 5 m/s · 1 m/s = 3.6 km/h · 6 km/h = 100 m/min · 1 km/h = 50/3 m/min.<br>
+    Barabar do distance: 2ab ÷ (a + b). Jaana-aana kul time T: D = T × ab ÷ (a + b).<br>
+    Late/early: D = S1 × S2 ÷ (S2 − S1) × farq. Speed ka ratio a : b → time ka b : a.<br>
+    Aamne-saamne: gap ÷ (a + b). Peecha: gap ÷ (a − b). Gol track: track ÷ (a ± b).<br>
+    <span class="tag x">CGL+</span> Do log aamne-saamne mile, phir milne ke baad A ko t<sub>1</sub> aur B ko t<sub>2</sub> time laga: S<sub>A</sub> : S<sub>B</sub> = √t<sub>2</sub> : √t<sub>1</sub>.<br>
+    <span class="tag x">CGL+</span> 90° par alag hue (ek uttar, ek poorab): doori = √(a² + b²). Triplet 3-4-5, 5-12-13 yaad rakho.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>90 km/h ko m/s mein badlo. 5 second mein.</summary><p>90 = 5 × 18 → 5 × 5 = 25 m/s.</p></details>
+    <details><summary>Speed 4 : 5 ho gayi. Same distance par time ka ratio?</summary><p>Ulta: 5 : 4.</p></details>
+    <details><summary>30 se gaye, 20 se aaye. Average speed?</summary><p>2 × 30 × 20 ÷ 50 = 24 km/h. 25 nahi.</p></details>
+    <details><summary>Police 1 km peeche, 60 aur 50 km/h, ek hi disha. Kitne min mein pakdegi?</summary><p>Gap 1 km, farq 10 km/h → 1/10 ghanta = 6 min.</p></details>
+    <details><summary>48 minute ko ghante ke fraction mein likho.</summary><p>4/5 ghanta.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · TSD (part 2: types 1-6) ===================== -->
+<section class="chap" id="mts-types1">
+  <div class="eyebrow">Maths · PYQ types 1–6</div>
+  <h2>Time, Speed aur Distance: Type 1–6, topper ki rough ke saath</h2>
+  <div class="meta">Bank mein 210 sawaal · sab 210 yahan · is hisse mein 112 (unit, seedha D = S × T, unitary, ulta ratio, speed badli, late/early)</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 · CHSL = CHSL 2025 Tier 1 · CPO = CPO 2025 · MTS = MTS 2025 (Feb) · SP-XIV = Selection Post Phase XIV 2025 · DP Const / DP HCM = Delhi Police Constable / Head Constable (Dec 2025 – Jan 2026) · GD = GD Constable 2026. Saari dates shift ki dates hain.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Unit badlo: km/h ↔ m/s, m/min (23 Qs)</h3>
+  <div class="box"><span class="k">Worked · 300 m race 24 second mein. km/h? <span class="tag p">PYQ</span> <small>CGL · 21 Sep 2025</small></span>
+    <b>Method:</b> 18/5 · <i>~8 sec</i><br>
+    300 ÷ 24 = 12.5 m/s. 12.5 × 18/5 = 2.5 × 18 = <mark>45 km/h</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 108 km/h ko m/s mein <span class="tag p">PYQ</span> <small>GD · 6 May 2026</small></span>
+    <b>Method:</b> 18 → 5 jodi · <i>~4 sec</i><br>
+    108 = 6 × 18 → 6 × 5 = <mark>30 m/s</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Ladka 54 km/h se bhaagta hai, pul 6 minute mein paar. Pul kitne metre? <span class="tag p">PYQ</span> <small>GD · 29 Apr 2026</small></span>
+    <b>Method:</b> 5/18 + D = S × T · <i>~10 sec</i><br>
+    54 km/h = 15 m/s. 6 min = 360 s. 15 × 360 = <mark>5,400 m</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 500 m street 5 min mein; km/h? → <b>m/min × 6/100</b>: 100 m/min → <mark>6 km/h</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 300 m race 25 s mein; km/h? → <b>18/5</b>: 12 m/s × 3.6 → <mark>43.2 km/h</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 100 m chaudi sadak 50 s mein; km/h? → <b>18/5</b>: 2 m/s × 3.6 → <mark>7.2 km/h</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 700 m street 5 min mein; km/h? → <b>m/min × 6/100</b>: 140 m/min → <mark>8.4 km/h</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 km/h par 72 s mein kitna? → <b>m/min</b>: 30 km/h = 500 m/min, 72 s = 1.2 min → <mark>600 m</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 90 m/min se 2.7 km kitni der? → <b>seedha</b>: 2700 ÷ 90 → <mark>30 min</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1 km 15 min mein; km/h? → <b>fraction</b>: 15 min = 1/4 h → <mark>4 km/h</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 54 km/h par 20 s mein kitne metre? → <b>5/18</b>: 15 m/s × 20 → <mark>300 m</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 m/s par 2 min mein? → <b>seedha</b>: 20 × 120 → <mark>2,400 m</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 m/s ko km/h → <b>× 3.6</b> → <mark>36</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> 100 m, 12 s mein; km/h? → <b>18/5</b>: 100/12 × 18/5 = 1800/60 → <mark>30</mark> <small>DP Const · 22 Dec 2025; DP Const · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Bike 150 m, 10 s mein; km/h? → <b>18/5</b>: 15 m/s → <mark>54</mark> <small>DP Const · 2 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 100 m, 20 s mein; km/h? → <b>18/5</b>: 5 m/s → <mark>18</mark> <small>DP Const · 3 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 18 km/h se pul 8 min mein paar; pul? → <b>18 → 5</b>: 5 m/s × 480 s → <mark>2,400 m</mark> <small>GD · 5 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 90 km/h → m/s → <b>18 → 5 jodi</b>: 5 × 5 → <mark>25</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 270 km/h → m/s → <b>18 → 5 jodi</b>: 15 × 5 → <mark>75</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 100 m/s → km/h → <b>× 3.6</b> → <mark>360</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 216 km/h → m/s → <b>18 → 5 jodi</b>: 12 × 5 → <mark>60</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 72 km/h → m/s → <b>18 → 5 jodi</b>: 4 × 5 → <mark>20 m/s</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Seedha D = S × T (43 Qs)</h3>
+  <p><b>Samjho:</b> ye sabse aasaan marks hain. Bas do baatein: minute ko fraction banao (Method 2), aur do hisson wale safar mein dono hisse alag nikaal kar jodo.</p>
+  <div class="box"><span class="k">Worked · 80 km mein se 4 ghante 48 min mein 4/5 hissa kiya. Speed? <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small></span>
+    <b>Method:</b> fraction · <i>~10 sec</i><br>
+    4/5 of 80 = 64 km. 48 min = 4/5 h → 4 4/5 = 24/5 h.<br>
+    64 ÷ 24/5 = 64 × 5/24 = 40/3 = <mark>13.33 km/h</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 36 km mein se 2½ ghante baad jo chala wo baaki ka 3/5 hai. Speed? <span class="tag p">PYQ</span> <small>CHSL · 19 Nov 2025</small></span>
+    <b>Method:</b> ratio parts · <i>~12 sec</i><br>
+    Chala : baaki = 3 : 5 → kul 8 parts = 36 → 1 part = 4.5 → chala = 13.5 km.<br>
+    13.5 ÷ 5/2 = 13.5 × 2/5 = <mark>5.4 km/h</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 1 km paidal 10 min, cycle se 5 min. 12 km mein aadha-aadha. Kul time? <span class="tag p">PYQ</span> <small>DP Const · 2 Jan 2026</small></span>
+    <b>Method:</b> unitary · <i>~6 sec</i><br>
+    6 km cycle = 6 × 5 = 30 min. 6 km paidal = 6 × 10 = 60 min. Kul <mark>90 min</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 7.2 km 48 min mein; km/h? → <b>fraction</b>: 7.2 × 5/4 → <mark>9 km/h</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 90 km 30 par, phir 20% tez (36) se 60 km; kul time? → <b>seedha</b>: 3 h + 1⅔ h → <mark>4 h 40 min</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 55 km/h, 4 h → <b>S × T</b> → <mark>220 km</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Car 45 × 4.6 + bus 37.5 × 4.2 → <b>do hisse jodo</b>: 207 + 157.5 → <mark>364.5 km</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 150 km, 75 km/h → <b>D ÷ S</b> → <mark>2 h</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 300 km, 50 km/h → <b>D ÷ S</b> → <mark>6 h</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 km, 2 h → <b>D ÷ T</b> → <mark>5 km/h</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 h, 12 km/h → <b>S × T</b> → <mark>60 km</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 h 30 par + 3 h 40 par → <b>do hisse</b>: 60 + 120 → <mark>180 km</mark> <small>DP Const · 29 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 100 km, 25 km/h → <b>D ÷ S</b> → <mark>4 h</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 km, 3 h → <b>D ÷ T</b> → <mark>3 km/h</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60 km, 1.5 h → <b>D ÷ T</b> → <mark>40 km/h</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 km/h, 2.5 h → <b>S × T</b> → <mark>15 km</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 18 km, 12 km/h → <b>D ÷ S</b> → <mark>1.5 h</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12 km, 40 min → <b>fraction</b>: 12 × 3/2 → <mark>18 km/h</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 90 km, 45 km/h → <b>D ÷ S</b> → <mark>2 hours</mark> (key 1.5 h galat, note dekho) <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 180 km, 3 h → <b>D ÷ T</b> → <mark>60 km/h</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 150 km, 50 km/h → <b>D ÷ S</b> → <mark>3 hrs</mark> (key 2.5 h galat, note dekho) <small>DP Const · 24 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12 km/h, 40 min → <b>fraction</b>: 12 × 2/3 → <mark>8 km</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9 km, 1.5 h → <b>D ÷ T</b> → <mark>6 km/h</mark> <small>DP Const · 22 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 75 km at 25 + 75 km at 50 → <b>do hisse</b>: 3 + 1.5 → <mark>4.5 h</mark> <small>DP Const · 22 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 km/h, 4 h → <b>S × T</b> → <mark>12 km</mark> <small>DP Const · 20 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15 km, 5 km/h → <b>D ÷ S</b> → <mark>3 h</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2.5 km, 10 km/h → <b>fraction</b>: 1/4 h → <mark>15 min</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 72 km, 36 km/h → <b>D ÷ S</b> → <mark>2 hrs</mark> (key 1.5 h galat, note dekho) <small>DP Const · 19 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 km, 4 km/h → <b>D ÷ S</b> → <mark>2.5 h</mark> <small>DP Const · 2 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 100 km, 2 h 30 min → <b>D ÷ T</b>: 100 ÷ 5/2 → <mark>40 km/h</mark> <small>DP Const · 3 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 10 km/h, 36 min → <b>fraction</b>: 10 × 3/5 → <mark>6 km</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 200 km, 50 km/h → <b>D ÷ S</b> → <mark>4 h</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 km/h, 2 h → <b>S × T</b> → <mark>10 km</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 540 km aur 225 km, dono 15 km/h; time ka farq? → <b>sirf farq ka distance</b>: 315 ÷ 15 → <mark>21 h</mark> <small>GD · 4 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Bus 10 h × 80 = 800; train 900 km, 15 h mein → <b>D ÷ T</b> → <mark>60 km/h</mark> <small>GD · 5 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 36 + 42 km, kul 6 h, same speed → <b>kul D ÷ kul T</b>: 78 ÷ 6 → <mark>13 km/h</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 143 aur 77 km, 11 km/h; time farq → <b>farq ka distance</b>: 66 ÷ 11 → <mark>6 h</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 135 aur 60 km, 15 km/h; time farq → <b>farq ka distance</b>: 75 ÷ 15 → <mark>5 h</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 70 × 7 + 60 × 5 → <b>do hisse</b>: 490 + 300 → <mark>790 km</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40 km/h, 2.5 h → <b>S × T</b> → <mark>100 km</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 180 km, 60 km/h → <b>D ÷ S</b> → <mark>3 h</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 150 km, 3 h → <b>D ÷ T</b> → <mark>50 km/h</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 400 m track ke 5 chakkar 8 km/h par → <b>fraction</b>: 2 km ÷ 8 = 1/4 h → <mark>15 min</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>Bank ki key in teen seedhe sawaalon mein galat hai. Khud ginti karo:<br>
+    DP Const 23 Dec 2025 (90 km, 45 km/h): 90 ÷ 45 = <b>2 ghante</b>. Key 1.5 ghante kehti hai.<br>
+    DP Const 24 Dec 2025 (150 km, 50 km/h): 150 ÷ 50 = <b>3 ghante</b>. Key 2.5 ghante kehti hai.<br>
+    DP Const 19 Dec 2025 (72 km, 36 km/h): 72 ÷ 36 = <b>2 ghante</b>. Key 1.5 ghante kehti hai.<br>
+    Teeno mein sahi option list mein maujood hai. Exam mein wahi lagao.
+  </div>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Same speed, naya distance ya time (unitary) (11 Qs)</h3>
+  <p><b>Samjho:</b> speed same hai toh distance aur time saath-saath badhte hain. Speed nikaalne ki zaroorat bhi nahi. Bas guna: "kitne guna distance, utne guna time".</p>
+  <div class="box"><span class="k">Worked · Ek safar ka 2/5 hissa 2 ghante mein. Baaki kitne mein? <span class="tag p">PYQ</span> <small>CHSL · 13 Nov 2025</small></span>
+    <b>Method:</b> unitary · <i>~4 sec</i><br>
+    2/5 → 2 h, toh 1/5 → 1 h. Baaki 3/5 → <mark>3 ghante</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 0.875 km har minute. 1 ghanta 45 min mein kitna? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> 0.875 = 7/8 · <i>~10 sec</i><br>
+    105 min × 7/8 = 735/8 = <mark>91.875 km</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 132 km 1 h mein; 88 km? → <b>unitary</b>: 88 = 2/3 of 132 → <mark>40 min</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 km 2 h mein; 75 km? → <b>guna</b>: 2.5 guna → <mark>5 h</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 km 2 h mein; 25 km? → <b>guna</b>: 2.5 guna → <mark>5 h</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 24 km 2 h mein; 60 km? → <b>guna</b>: 2.5 guna → <mark>5 h</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 64 km 2 h mein; 5 h mein? → <b>guna</b>: 64 × 5/2 → <mark>160 km</mark> <small>DP Const · 19 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 km 2 h mein; 5 h mein? → <b>guna</b>: 8 × 5/2 → <mark>20 km</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 180 km 3 h mein; 720 km? → <b>guna</b>: 4 guna → <mark>12 h</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 180 km 3 h mein; 240 km? → <b>guna</b>: 4/3 guna → <mark>4 h</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 180 km 3 h mein; 5 h mein? → <b>guna</b>: 180 × 5/3 → <mark>300 km</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+  </ul>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Distance same: time speed ka ulta (17 Qs)</h3>
+  <p><b>Samjho:</b> speed ko jis fraction se guna kiya, time ko uske ulte se guna karo. Speed × 5/4 → time × 4/5. Speed ka ratio 2 : 9 → time ka 9 : 2.</p>
+  <div class="box"><span class="k">Worked · 60 km/h par 1 h 45 min. Traffic se 15 min zyada. Speed kitne % ghatani padi? <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small></span>
+    <b>Method:</b> ulta ratio · <i>~10 sec</i><br>
+    Time 7/4 h se 8/4 h → time 7 : 8 → speed 8 : 7.<br>
+    8 mein se 1 ghata = 1/8 = <mark>12.5%</mark> (option mein 0.125 likha hai).
+  </div>
+  <div class="box"><span class="k">Worked · 48 km, 72 min mein. Speed 10 km/h kam karo. Naya time? <span class="tag p">PYQ</span> <small>GD · 18 May 2026</small></span>
+    <b>Method:</b> ulta ratio · <i>~8 sec</i><br>
+    72 min = 6/5 h → speed 48 ÷ 6/5 = 40. Naya 30. Speed 4 : 3 → time 3 : 4.<br>
+    72 × 4/3 = <mark>96 min</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Speed 8 aur 36 km/h. Same distance par time ka ratio? <span class="tag p">PYQ</span> <small>GD · 18 May 2026</small></span>
+    <b>Method:</b> ulta ratio · <i>~3 sec</i><br>
+    Speed 8 : 36 = 2 : 9 → time <mark>9 : 2</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 240 km/h par 5 h; 1 h mein karna → <b>ulta</b>: time 1/5 → speed × 5 → <mark>1200 km/h</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 km/h, 4 h; 2.5 h mein → <b>ulta</b>: 20 × 4/2.5 = 32 → <mark>12 km/h</mark> badhao <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 50 par 8 h; 40 par? → <b>ulta</b>: 8 × 5/4 → <mark>10 h</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1200 km 2 h mein; 3 h mein karna → <b>ulta</b>: speed × 2/3 → <mark>33.33%</mark> kam <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 km/h par 40 min; 4 km/h par? → <b>ulta</b>: 40 × 6/4 → <mark>60 min</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 48 par 50 min; 60 par? → <b>ulta</b>: 50 × 4/5 → <mark>40 min</mark> <small>DP Const · 29 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 75 par 6 h; 5 h mein → <b>ulta</b>: 75 × 6/5 → <mark>90 km/h</mark> <small>DP HCM · 9 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> Speed 14 aur 38; time ratio → <b>ulta</b>: 7 : 19 → <mark>19 : 7</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Speed 10 aur 20; time ratio → <b>ulta</b> → <mark>2 : 1</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 8 km/h par 4½ h; cycle 4 h mein → <b>ulta</b>: 8 × 4.5/4 → <mark>9 km/h</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 80 par 4½ h; 30 par? → <b>ulta</b>: 4.5 × 8/3 → <mark>12 h</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 100 par 2½ h; 50 par? → <b>ulta</b>: speed aadhi, time dugna → <mark>5 h</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 300 km 6 h (50); speed +10 = 60 → <b>ulta</b>: 6 × 5/6 → <mark>5 h</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 240 km 4 h (60); +25% = 75; 300 km? → <b>D ÷ S</b>: 300 ÷ 75 → <mark>4 h</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Speed badli, time ka farq diya (13 Qs)</h3>
+  <p><b>Samjho:</b> speed ka ratio likho, time ka ulta karo. Time ke ratio mein farq kitne parts ka hai? Wahi parts = diya hua minute. Ye Method 3 hai.</p>
+  <div class="box"><span class="k">Worked · 20 se 18 km/h, 8 min zyada. Distance? <span class="tag p">PYQ</span> <small>CGL · 23 Sep 2025</small></span>
+    <b>Method:</b> ratio parts · <i>~12 sec</i><br>
+    Speed 10 : 9 → time 9 : 10 → 1 part = 8 min → purana time 72 min = 6/5 h.<br>
+    20 × 6/5 = <mark>24 km</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Usual speed ka 60%, 18 min late. Usual time? <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small></span>
+    <b>Method:</b> ratio parts · <i>~8 sec</i><br>
+    Speed 5 : 3 → time 3 : 5 → farq 2 parts = 18 → 1 part 9 → usual <mark>27 min</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 180 km. Speed 15 badhao toh 1 ghanta kam. Asli speed? <span class="tag p">PYQ</span> <small>CPO · 12 Dec 2025</small></span>
+    <b>Method:</b> u(u + k) jodi · <i>~10 sec</i><br>
+    u(u + 15) = 180 × 15 ÷ 1 = 2700 = 45 × 60 → <mark>45 km/h</mark>.<br>
+    Check: 180/45 = 4 h, 180/60 = 3 h ✔.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 10 aur 12 km/h, 36 min ka farq → <b>ratio parts</b>: time 6 : 5, 1 part = 36 min → 5 parts = 3 h × 12 → <mark>36 km</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 150 km, 30 min late, +25 km/h → <b>u(u + k)</b>: u(u + 25) = 150 × 25 × 2 = 7500 = 75 × 100 → <mark>75 km/h</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 se 8 km/h, 30 min kam → <b>ratio parts</b>: time 8 : 5, 3 parts = 30 → 8 parts = 80 min = 4/3 h × 5 → <mark>6.67 km</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 h; 5 km/h tez par 1.5 h → <b>ratio parts</b>: time 4 : 3 → speed 3 : 4, 1 part = 5 → <mark>15 km/h</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> +10 par 1 h kam, +20 par 1¾ h kam → <b>option daalo</b>: 420 km: 60 → 7 h, 70 → 6 h, 80 → 5¼ h ✔ → <mark>420 km</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 300 km, speed 10 kam to 1 h zyada → <b>u(u − k)</b>: u(u − 10) = 3000 = 60 × 50 → <mark>60 km/h</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Speed 4 : 7, A ko 30 min zyada → <b>ratio parts</b>: time 7 : 4, 3 parts = 30 → <mark>70 min</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Usual ka 40%, 15 min late → <b>ratio parts</b>: time 2 : 5, 3 parts = 15 → usual 2 parts → <mark>10 min</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 5 h; +12 km/h par 4 h → <b>ratio parts</b>: speed 4 : 5, 1 part = 12 → <mark>48 km/h</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 h; +10 km/h par 1.6 h → <b>ratio parts</b>: time 5 : 4 → speed 4 : 5, 1 part = 10 → <mark>40 km/h</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+  </ul>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · Ek speed par late, doosri par early (5 Qs)</h3>
+  <div class="trick"><b>Trick:</b> D = S1 × S2 ÷ (S2 − S1) × farq. Late + early ho toh farq jodo. Farq ghante mein likho.</div>
+  <div class="box"><span class="k">Worked · 50 par 1 h early, 30 par 1 h late. Distance? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span>
+    <b>Method:</b> late/early formula · <i>~8 sec</i><br>
+    50 × 30 ÷ 20 = 75. Farq 2 h. D = 75 × 2 = <mark>150 km</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 5 km/h par train 7 min se chhooti, 6 km/h par 5 min pehle pahuncha <span class="tag p">PYQ</span> <small>SP-XIV · 26 Jul 2025</small></span>
+    <b>Method:</b> late/early formula · <i>~8 sec</i><br>
+    5 × 6 ÷ 1 = 30. Farq 7 + 5 = 12 min = 1/5 h. D = 30 × 1/5 = <mark>6 km</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 4 par 15 min late, 6 par 5 min early → <b>formula</b>: 12 × 1/3 → <mark>4 km</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 par 5 min late, 6 par 5 min early → <b>formula</b>: 30 × 1/6 → <mark>5 km</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40 par 15 min late, 60 par 10 min early → <b>formula</b>: 40 × 60 ÷ 20 = 120 × 5/12 → <mark>50 km</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+  </ul>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>36 km/h par 25 second mein kitne metre?</summary><p>36 → 10 m/s. 10 × 25 = 250 m.</p></details>
+    <details><summary>Speed 25% badhi. Time kitna % ghata?</summary><p>Speed × 5/4 → time × 4/5 → 20% kam.</p></details>
+    <details><summary>Speed 3/4 kar di, 20 min late hua. Usual time?</summary><p>Time 3 : 4, farq 1 part = 20 → usual 60 min.</p></details>
+    <details><summary>3 km/h par 10 min late, 4 km/h par 10 min early. Distance?</summary><p>3 × 4 ÷ 1 = 12. Farq 20 min = 1/3 h → 4 km.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · TSD (part 3: types 7-13) ===================== -->
+<section class="chap" id="mts-types2">
+  <div class="eyebrow">Maths · PYQ types 7–13</div>
+  <h2>Time, Speed aur Distance: Type 7–13 (ratio, average, milna, peecha, gol track)</h2>
+  <div class="meta">Is hisse mein 98 sawaal · sabse zyada: average speed (27), aamne-saamne milna (21)</div>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Speed ka ratio diya (11 Qs)</h3>
+  <p><b>Samjho:</b> jiski speed pata hai, uski nikaalo. Phir ratio se doosre ki. Ratio ko parts samjho: 3 : 4 mein bus = 4 parts.</p>
+  <div class="box"><span class="k">Worked · Do jahaz, speed 11 : 18. Pehla 1650 km 3 h mein. Doosre ki speed m/s mein? <span class="tag p">PYQ</span> <small>DP Const · 23 Dec 2025</small></span>
+    <b>Method:</b> ratio + 5/18 · <i>~12 sec</i><br>
+    Pehla = 550 km/h = 11 parts → 1 part 50 → doosra 18 × 50 = 900 km/h.<br>
+    900 = 50 × 18 → 50 × 5 = <mark>250 m/s</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Bus 180 km 6 h. Car bus se 20% tez, bike car se 25% tez. Bus se 50% zyada distance par bike aur car ke time ka farq? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small></span>
+    <b>Method:</b> % = fraction · <i>~20 sec</i><br>
+    Bus 30, car 30 × 6/5 = 36, bike 36 × 5/4 = 45. Distance 270.<br>
+    Car 270/36 = 7.5 h, bike 270/45 = 6 h. Farq 1.5 h = <mark>90 min</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Car : bus = 3 : 4, bus 80 → <b>ratio</b> → <mark>60 km/h</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Car : bus = 5 : 3, bus 360 km 6 h → <b>time ulta</b>: 6 × 3/5 → <mark>3.6 h</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Bike : car = 4 : 5, bike 40 → car 50 × 5 h → <mark>250 km</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Car : bus = 3 : 2, car 60 → bus 40 × 2 h → <mark>80 km</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Cycle 12 km/h, moped 250% = 30; 2½ h → <b>% = 5/2</b> → <mark>75 km</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Speed 2 : 3, A 200 m 40 s mein → <b>time ulta</b>: 40 × 2/3 = 26.67 → <mark>≈ 27 s</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Bus = 150% car; car 60 → bus 90 × 4 → <mark>360 km</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 : 7, dheema 60 → <b>ratio</b>: 12 × 7 → <mark>84 km/h</mark> <small>DP Const · 20 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 50 km/h aur 30 m/s, 1 h ka distance ratio → <b>18/5</b>: 30 m/s = 108 → 50 : 108 → <mark>25 : 54</mark> <small>GD · 18 May 2026</small></li>
+  </ul>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · Average speed (27 Qs, sabse zyada)</h3>
+  <p><b>Yaad karo:</b> do barabar distance → 2ab ÷ (a + b). Teen barabar → LCM ko distance maano. Alag-alag → kul D ÷ kul T. % mein hisse ho toh distance 100 ya LCM maan lo.</p>
+  <div class="box"><span class="k">Worked · 120 km 40 par, wapas 60 par. Average? <span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small></span>
+    <b>Method:</b> 2ab ÷ (a + b) · <i>~5 sec</i><br>
+    2 × 40 × 60 ÷ 100 = 4800 ÷ 100 = <mark>48 km/h</mark>. (120 km dekhna bhi nahi pada.)
+  </div>
+  <div class="box"><span class="k">Worked · Teen barabar hisse 30, 60, 90 km/h. Average? <span class="tag p">PYQ</span> <small>CGL · 20 Sep 2025</small></span>
+    <b>Method:</b> LCM distance · <i>~12 sec</i><br>
+    Har hissa 180 km maano. Time 6 + 3 + 2 = 11 h. 540 ÷ 11 = <mark>49.09 km/h</mark>.
+  </div>
+  <div class="box"><span class="k">Worked (ulta) · 234 km: 78 km 52 par, 78 km 39 par, baaki 78 km x par. Average 46.8. x? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small></span>
+    <b>Method:</b> kul time se bacha time · <i>~15 sec</i><br>
+    Kul time = 234 ÷ 46.8 = 5 h. Pehle do: 78/52 = 1.5 h, 78/39 = 2 h.<br>
+    Bacha 1.5 h mein 78 km → x = <mark>52 km/h</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 40% 20 par, 60% 30 par → <b>D = 100 maano</b>: 2 h + 2 h → 100 ÷ 4 → <mark>25 km/h</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Aadha 12, aadha 3 → <b>2ab ÷ (a + b)</b>: 72 ÷ 15 → <mark>4.8 km/h</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6 km at 5, 8 km at 6 → <b>kul D ÷ kul T</b>: 14 ÷ (6/5 + 4/3 = 38/15) = 210/38 → <mark>5.53 km/h</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1/4 at 20, 1/4 at 10, 1/2 at 70 → <b>D = 140 maano</b>: 1.75 + 3.5 + 1 = 6.25 h → <mark>22.4 km/h</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Teen barabar 30, 45, 90 → <b>LCM 90</b>: 3 + 2 + 1 = 6 h → 270/6 → <mark>45 km/h</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 480 km, 75% car 80 par, baaki bike 40 par → <b>kul D ÷ kul T</b>: 4.5 + 3 = 7.5 h → <mark>64 km/h</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 km at 4, 3 km at 6 → <b>2ab ÷ (a + b)</b>: 48 ÷ 10 → <mark>4.8 km/h</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 80 at 40, 120 at 60, 100 at 50 → <b>kul D ÷ kul T</b>: har hissa 2 h → 300 ÷ 6 → <mark>50 km/h</mark> <small>MTS · 4 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60 at 30, 90 at 45, 120 at z, average 60 → <b>kul time</b>: 270/60 = 4.5 h, 2 + 2 gaye → 0.5 h mein 120 → <mark>240 km/h</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60 at 30, 90 at 45, 150 at z, average 60 → <b>kul time</b>: 5 h, 2 + 2 gaye → 1 h mein 150 → <mark>150 km/h</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A → B 40, wapas 60 → <b>2ab ÷ (a + b)</b> → <mark>48</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Teen barabar 10, 20, 30 → <b>LCM 60</b>: 6 + 3 + 2 = 11 → <mark>180/11</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Teen barabar 10, 15, 40 → <b>LCM 120</b>: 12 + 8 + 3 = 23 → <mark>360/23</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Jaana 10, aana 20 → <b>2ab ÷ (a + b)</b>: 400 ÷ 30 → <mark>40/3</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 h at 20, 3 h at 10 → <b>kul D ÷ kul T</b>: 130 ÷ 8 → <mark>65/4</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 150 at 60, 120 at 50, 90 at 40 → <b>kul D ÷ kul T</b>: 2.5 + 2.4 + 2.25 = 7.15 h → 360/7.15 ≈ 50.3 → <mark>50 km/h</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30 km at 5, wapas 6 → <b>2ab ÷ (a + b)</b>: 60/11 → <mark>5.45 km/h</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Jaana 80, aana 60 → <b>2ab ÷ (a + b)</b>: 9600/140 = 480/7 → <mark>68.57 km/h</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60 km at 15, wapas 10 → <b>2ab ÷ (a + b)</b>: 300/25 → <mark>12 km/h</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 120 km at 20, wapas 30 → <b>2ab ÷ (a + b)</b>: 1200/50 → <mark>24 km/h</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Jaana 5, aana 4 → <b>2ab ÷ (a + b)</b>: 40/9 = 4.44 → <mark>4.4 km/h</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 90 km 2 h mein, wapas 3 h mein → <b>kul D ÷ kul T</b>: 180 ÷ 5 → <mark>36 km/h</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 90 at 45, 90 at 85 → <b>2ab ÷ (a + b)</b>: 7650/130 → <mark>58.85 km/h</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 h at 5, 1 h at 8 → <b>kul D ÷ kul T</b>: 18 ÷ 3 → <mark>6 km/h</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · Jaana-aana, kul time diya, distance nikaalo (9 Qs)</h3>
+  <div class="trick"><b>Trick:</b> D = kul time × ab ÷ (a + b). Ye average speed ka hi aadha hai: average = 2ab/(a + b), aur ek taraf ka distance = average × T ÷ 2.</div>
+  <div class="box"><span class="k">Worked · 30 se gaya, 20 se aaya, kul 5 h. Ek taraf ka distance? <span class="tag p">PYQ</span> <small>CHSL · 12 Nov 2025</small></span>
+    <b>Method:</b> T × ab ÷ (a + b) · <i>~6 sec</i><br>
+    5 × 30 × 20 ÷ 50 = 5 × 12 = <mark>60 km</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 3.8 km/h se gaya, 2.6 se aaya, kul 5 h <span class="tag p">PYQ</span> <small>CGL · 24 Sep 2025</small></span>
+    <b>Method:</b> T × ab ÷ (a + b) + option · <i>~15 sec</i><br>
+    5 × 3.8 × 2.6 ÷ 6.4. 3.8 × 2.6 = 9.88. 5 × 9.88 = 49.4. 49.4 ÷ 6.4 ≈ 7.7 → <mark>7.72 km</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Bike 25, paidal wapas 4, kul 5 h 48 min → <b>formula</b>: 5.8 × 100/29 → <mark>20 km</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 aur 3, kul 2 h → <b>formula</b>: 2 × 15/8 → <mark>3.75 km</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8 aur 4, kul 1.5 h → <b>formula</b>: 1.5 × 32/12 → <mark>4 km</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 aur 2, kul 4 h → <b>formula</b>: 4 × 8/6 = 16/3 → <mark>5.33 km</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 km/h dono taraf, park mein 30 min, kul 1.5 h → <b>pehle rukna ghatao</b>: chalne ka 1 h → 4 km aana-jaana → <mark>2 km</mark> (key 1.5 km galat, note dekho) <small>DP HCM · 7 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 4 aur 6, kul 1 h → <b>formula</b>: 24/10 → <mark>2.4 km</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60 aur 40, kul 5 h → <b>formula</b>: 5 × 2400/100 → <mark>120 km</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP HCM 7 Jan 2026 (Sarah, 4 km/h, park mein 30 min, kul 1.5 h): chalne ka time 1 ghanta hai. 4 km/h par 1 ghante mein 4 km, yaani 2 km jaana + 2 km aana. Jawab <b>2 km</b> hai. Bank ki key 1.5 km kehti hai, jo galat hai. 1.5 km par chalne mein sirf 45 min lagte.</div>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · Aamne-saamne: milna (21 Qs)</h3>
+  <p><b>Samjho:</b> gap ÷ (a + b) = milne ka time. Distance ka ratio = speed ka ratio. Koi der se nikla ho toh pehle uska head start ghatao.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 186" role="img" aria-label="Road from City M to City N, 450 km, drawn to scale. Car from M at 50 km/h, car from N at 40 km/h. They meet after 5 hours, 250 km from M and 200 km from N, in the ratio 5 to 4.">
+      <text x="80" y="40" text-anchor="middle" class="lbl">City M</text>
+      <text x="620" y="40" text-anchor="middle" class="lbl">City N</text>
+      <text x="380" y="40" text-anchor="middle" class="lbl" style="fill:var(--ch)">Milan</text>
+      <rect x="80" y="60" width="300" height="22" class="chf"/><rect x="80" y="60" width="300" height="22" class="chs"/>
+      <rect x="380" y="60" width="240" height="22" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <line x1="380" y1="46" x2="380" y2="92" style="stroke:var(--ch);stroke-width:2.5"/>
+      <g text-anchor="middle">
+        <text x="230" y="106" class="lbl">250 km</text><text x="230" y="122" class="sm">50 km/h · 5 parts</text>
+        <text x="500" y="106" class="lbl">200 km</text><text x="500" y="122" class="sm">40 km/h · 4 parts</text>
+        <text x="350" y="150" class="sm">Dono ne same 5 ghante chala, toh distance ka ratio = speed ka ratio = 5 : 4</text>
+        <text x="350" y="172" class="sm">450 ko 9 parts mein baanto: 1 part = 50 → M se 5 × 50 = 250 km (scale par)</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Milne ki jagah = kul raasta, speed ke ratio mein bata hua. Time nikaalne ki zaroorat hi nahi.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · 450 km, 50 aur 40 km/h, aamne-saamne. M se kitni door milenge? <span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small></span>
+    <b>Method:</b> ratio baanto · <i>~6 sec</i><br>
+    5 : 4 → 9 parts = 450 → 1 part 50 → <mark>250 km</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Bus 1:00 PM se 50 par, car 2:30 PM se 80 par, 450 km. Kab milenge? <span class="tag p">PYQ</span> <small>SP-XIV · 29 Aug 2025</small></span>
+    <b>Method:</b> head start + relative speed · <i>~20 sec</i><br>
+    1:00–2:30 mein bus akeli 50 × 1.5 = 75 km. Bacha 375 km, speed 130.<br>
+    375/130 ≈ 2.88 h ≈ 2 h 53 min. 2:30 + 2:53 = <mark>5:23 PM</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Van 1 Jaipur → Agra 5:00–9:00. Van 2 Agra → Jaipur 7:00–10:30. Kab cross? <span class="tag p">PYQ</span> <small>DP HCM · 12 Jan 2026</small></span>
+    <b>Method:</b> distance LCM maan lo · <i>~20 sec</i><br>
+    Time 4 h aur 3½ h. Distance 28 maano → speed 7 aur 8.<br>
+    7:00 tak van 1 ne 14 chala, bacha 14. 14 ÷ 15 h = 56 min → <mark>7:56 a.m.</mark>
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 300 km, 50 + 70 → <b>gap ÷ (a + b)</b>: 300/120 → <mark>2.5 h</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 24 km, 4 + 8 → <b>gap ÷ (a + b)</b>: 24/12 → <mark>2 h</mark> (key 1.5 h galat, note dekho) <small>DP Const · 29 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 180 km, 20 + 25 → <b>gap ÷ (a + b)</b>: 180/45 → <mark>4 h</mark> <small>DP Const · 3 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 390 km, 3 h mein mile, G 80 → <b>jod ulta</b>: 390/3 = 130 − 80 → <mark>50 km/h</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 50 aur 30 km/h, milne tak distance ratio → <b>ratio = speed ratio</b> → <mark>5 : 3</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 500 km, 5 h mein mile, G 60 → <b>jod ulta</b>: 100 − 60 → <mark>40 km/h</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 54 aur 27 km/h, distance ratio → <b>ratio = speed ratio</b> → <mark>2 : 1</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 150 km, A 6:00 se 20 par, B 7:00 se, 9:00 milan → <b>head start</b>: A ne 3 h × 20 = 60 → B ne 90 km 2 h mein → <mark>45 km/h</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 210 km, 28 aur 32; milne ke baad B ko A tak → <b>B ka bacha = A ka chala</b>: 3.5 h × 28 = 98 → 98/32 → <mark>3.06 h</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 180 km, 40 aur 50, A 45 min pehle → <b>head start</b>: 30 km, 150/90 = 1⅔ h → 0.75 + 1.67 → <mark>2.42 h</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 720 m pool, 48 aur 60 m/min, A 5 min pehle → <b>head start</b>: 240 m, 480/108 = 4.44 min → 9.44 min → <mark>9 min 26 s</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 210 km, runner 6:00 se 6 par, scooter 7:30 se 42 par → <b>head start</b>: 9 km, 201/48 = 4 h 11¼ min → <mark>11:41:15 a.m.</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 240 km, A 7:00 se 60, B 7:45 se 80 → <b>head start</b>: 45 km, 195/140 ≈ 1 h 23½ min → <mark>9:08 a.m.</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 320 km, car 7:00 se 64, truck 7:30 se 56 → <b>head start</b>: 32 km, 288/120 = 2.4 h = 2 h 24 → 9:54; car ne 64 × 2.9 → <mark>9:54 a.m.; 185.60 km</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 400 km, 40 + 60 → <b>gap ÷ (a + b)</b> → <mark>4 h</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 260 km, car 6:00 se 60, 10:00 milan → <b>bacha distance</b>: car 240, truck 20 km ÷ 50 = 24 min → <mark>9:36 a.m.</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 150 km, 3 h mein mile, ek 25 → <b>jod ulta</b>: 50 − 25 → <mark>25 km/h</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 120 km, 2 h mein mile, ek 50 → <b>jod ulta</b>: 60 − 50 → <mark>10 km/h</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP Const 29 Dec 2025 (24 km door, 4 aur 8 km/h, aamne-saamne): 24 ÷ (4 + 8) = <b>2 ghante</b>. Key 1.5 ghante kehti hai, jo galat hai. 1.5 ghante mein sirf 18 km ka gap bharta.</div>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · Peecha: chor-police, ek hi disha (13 Qs)</h3>
+  <p><b>Samjho:</b> gap ÷ (a − b) = pakadne ka time. "Chor kitna bhaaga" = gap × chor ki speed ÷ farq. Der se nikla ho toh pehle head start = gap.</p>
+  <div class="box"><span class="k">Worked · Chor 10:00 se 20 par, police 10:30 se 30 par. Kab pakdegi? <span class="tag p">PYQ ×2</span> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></span>
+    <b>Method:</b> head start + farq · <i>~10 sec</i><br>
+    Head start 10 km. Farq 10 km/h. 1 h → <mark>11:30 AM</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Gap 1,500 m. Police 20, chor 15 km/h. Chor kitna bhaagega? <span class="tag p">PYQ</span> <small>CHSL · 30 Nov 2025</small></span>
+    <b>Method:</b> gap × chor ÷ farq · <i>~6 sec</i><br>
+    1500 × 15/5 = 1500 × 3 = <mark>4,500 m</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 500 m door. Ek disha mein 10 min mein pakda, aamne-saamne 2 min mein mile. Chor ki speed? <span class="tag p">PYQ</span> <small>CGL · 20 Sep 2025</small></span>
+    <b>Method:</b> jod aur farq · <i>~12 sec</i><br>
+    Farq = 500/10 = 50 m/min. Jod = 500/2 = 250 m/min.<br>
+    Chor = (250 − 50)/2 = <mark>100 m/min</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Speed 5 : 3, dheema 12 (24 km aage) → <b>gap × tez ÷ farq</b>: tez 20 → 24 × 20/8 → <mark>60 km</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 aur 5 km/h, ek disha, 2 h → <b>farq × T</b>: 1 × 2 → <mark>2 km</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2000 m aage, 20 aur 12 m/s → <b>gap ÷ farq</b>: 2000/8 → <mark>250 s</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Car 12 km aage, bike 96, car 60; a min mein pakda; (a − 16) h mein bike? → <b>gap ÷ farq</b>: 12/36 h = 20 min → 4 h × 96 → <mark>384 km</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Khargosh 200 m aage, kutta 25, khargosh 20 m/s → <b>gap × chor ÷ farq</b>: 200 × 20/5 → <mark>800 m</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1200 m aage, chor 2.5, police 3.75 km/h → <b>gap × chor ÷ farq</b>: 1200 × 2.5/1.25 → <mark>2,400 m</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60 aur 90, ek disha, 45 km door kab? → <b>gap ÷ farq</b>: 45/30 → <mark>1 h 30 min</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1 km aage, police 100, chor 80; 90 s baad gap? → <b>farq × T</b>: 20 km/h × 1/40 h = 0.5 km kam → <mark>500 m</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Aadmi 4 km/h; 6 h baad cyclist ne pakda, jo 2 h baad chala → <b>same distance</b>: 24 km, 4 h mein → <mark>6 km/h</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · Gol track (7 Qs)</h3>
+  <div class="box"><span class="k">Worked · Track 1.5 km. SUV 600 m aage, car 15 m/s, SUV 10 m/s. Pehli baar overtake tak car kitna chali? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> peecha (gap = 600 m) · <i>~8 sec</i><br>
+    Farq 5 m/s → 600/5 = 120 s. Car = 15 × 120 = <mark>1,800 m</mark>.<br>
+    (Pehli baar ke liye bas 600 m ka gap bharna hai. Poora chakkar nahi.)
+  </div>
+  <div class="box"><span class="k">Worked · Track 2 km. X, Y, Z: 10, 12, 15 km/h, 9:00 se 1:00 tak. Teeno start par kitni baar? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span>
+    <b>Method:</b> lap time ka LCM · <i>~15 sec</i><br>
+    Ek chakkar: 2/10 h = 12 min, 2/12 h = 10 min, 2/15 h = 8 min. LCM = 120 min.<br>
+    4 h = 240 min → 120 aur 240 par → <mark>2 times</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Track 1.2 km, ulti disha, 5 aur 7 km/h, 6:00 se. 5va milan? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span>
+    <b>Method:</b> track ÷ (a + b) · <i>~8 sec</i><br>
+    1.2 ÷ 12 = 0.1 h = 6 min. 5 × 6 = 30 min → <mark>6:30 AM</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 3500 m, ek disha, 35 aur 21 m/s; pehla milan → <b>track ÷ farq</b>: 3500/14 → <mark>250 s</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2 km, ulti disha, 8 + 12 = 20; 10va milan, 7:00 se → <b>track ÷ jod</b>: 6 min each → 60 min → <mark>8:00 a.m.</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 400 m, ek disha, 10 aur 7 m/s, 15 min mein kitni baar? → <b>T × farq ÷ track</b>: 900 × 3/400 = 6.75 → <mark>6</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 800 m, ek disha, 12 aur 9 km/h, 4 h → <b>T × farq ÷ track</b>: 4 × 3 = 12 km ÷ 0.8 → <mark>15 times</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+  </ul>
+
+  <!-- TYPE 13 -->
+  <h3>Type 13 · Mile-jule: escalator, race, 90° raaste, fuel (10 Qs)</h3>
+  <div class="box"><span class="k">Worked · Chalti (upar jaati) escalator par upar chadha 30 s mein, neeche utra 90 s mein. Ruki escalator par upar? <span class="tag p">PYQ</span> <small>CHSL · 14 Nov 2025</small></span>
+    <b>Method:</b> LCM length + jod/farq · <i>~15 sec</i><br>
+    Lambai 90 maano. Aadmi + escalator = 90/30 = 3. Aadmi − escalator = 90/90 = 1.<br>
+    Aadmi = (3 + 1)/2 = 2 → 90/2 = <mark>45 s</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Do jahaz, distance 3 : 2, speed 40 aur 60, time mein 1 h ka farq. Dono ka kul distance? <span class="tag p">PYQ</span> <small>SP-XIV · 28 Jul 2025</small></span>
+    <b>Method:</b> parts · <i>~15 sec</i><br>
+    Distance 3x, 2x. Time 3x/40 aur 2x/60 = x/30. Farq x(3/40 − 1/30) = x × 5/120 = x/24 = 1 → x = 24.<br>
+    Kul 5x = <mark>120 km</mark>. (Option check: 72 km at 40 = 1.8 h, 48 km at 60 = 0.8 h ✔.)
+  </div>
+  <div class="box"><span class="k">Worked · Ek uttar 60 par, ek poorab 80 par, 2 h baad doori? <span class="tag p">PYQ</span> <small>SP-XIV · 1 Aug 2025</small></span>
+    <b>Method:</b> triplet 3-4-5 · <i>~5 sec</i><br>
+    120 aur 160 = 40 × (3, 4) → 40 × 5 = <mark>200 km</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 18.4 km, 2½ L → <b>÷ 5/2 = × 2/5</b>: 36.8/5 → <mark>7.36 km/L</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 13.5 km, 1.8 L → <b>dono × 10</b>: 135/18 → <mark>7.5 km</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 200 m race, Ravi 25 s, Raj 30 s → <b>Raj 25 s mein</b>: 200 × 25/30 = 166.67 → <mark>33.33 m</mark> se haara <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> √x km/h, 2 h mein x km → <b>option daalo</b>: 2√4 = 4 → <mark>4</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Bada jahaz 0.2 L/km × 500, chhota 0.15 × 400 → <b>seedha</b>: 100 + 60 = 160 L × 110 → <mark>Rs 17,600</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Poorab 50, uttar 70, 2 h → <b>√(a² + b²)</b>: √(100² + 140²) = 20√74 ≈ 20 × 8.6 → <mark>172.05 km</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 400 m track ke 5⅓ chakkar, har chakkar 1.6 min → <b>seedha</b>: 2133 m, 8.53 min → <mark>2.13 km, 8.5 min</mark> (key wala option) <small>SP-XIV · 25 Jul 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>SP-XIV 25 Jul 2025 (5⅓ chakkar): asli time 5⅓ × 1.6 = <b>8.53 min</b> hai. Key ka option "2.13 km, 8.5 minutes" time ko gol kar deta hai. "2.14 km, 8.53 min" wala option distance galat deta hai (2.133 km → 2.13). Isliye key wala option hi sabse sahi hai.</div>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Average speed = (a + b)/2</td><td>Barabar distance ho toh 2ab ÷ (a + b). 40 aur 60 → 48, 50 nahi.</td></tr>
+    <tr><td>km/h aur m/s mila kar ginti</td><td>Pehle sab ek unit mein. 30 m/s = 108 km/h.</td></tr>
+    <tr><td>40 min = 0.4 h likhna</td><td>40 min = 2/3 h. Minute ÷ 60, fraction rakho.</td></tr>
+    <tr><td>Late/early mein sirf ek farq lena</td><td>Late + early = kul farq. 15 min late, 5 min early → 20 min.</td></tr>
+    <tr><td>Der se nikalne wale ka head start bhoolna</td><td>Pehle akele wale ka chala hua ghatao, phir relative speed.</td></tr>
+    <tr><td>Peeche bhaagne mein speed jodna</td><td>Ek disha = ghatao. Aamne-saamne = jodo.</td></tr>
+    <tr><td>Gol track par "kitni baar mile" mein 6.75 → 7</td><td>Poore milan hi gino: 6.</td></tr>
+    <tr><td>"Chor kitna bhaaga" ki jagah police ka distance likhna</td><td>Gap × chor ki speed ÷ farq. Police wala isse gap jitna zyada hota hai.</td></tr>
+    <tr><td>Park mein ruke time ko chalne mein gin lena</td><td>Pehle rukna ghatao, phir bacha time chalne ka.</td></tr>
+    <tr><td>Speed % badhi to time utna hi % ghata maan lena</td><td>Speed +25% (× 5/4) → time × 4/5 = 20% kam. +50% → 33⅓% kam.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 210 sawaal, sab yahan hain, koi nahi chhoda. 18 sawaalon mein fraction ya unit scan mein toot gaye the (jaise "4/5 th", "2½ hours", "18 km/hr"). Unhe asli page ki photo se padh kar hal kiya. Do sawaal bank mein do baar hain (chor-police 10:00 wala, aur 100 m 12 s wala). Unhe ×2 likha hai. 5 sawaalon ki key galat hai (upar ⚠ note), aur 1 mein gol kiya hua option hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Jaana 20, aana 30, kul 10 h. Ek taraf ka distance?</summary><p>10 × 20 × 30 ÷ 50 = 120 km.</p></details>
+    <details><summary>360 km, 40 aur 50 km/h aamne-saamne. Pehle wale ne kitna chala?</summary><p>4 : 5 → 9 parts = 360 → 1 part 40 → 160 km.</p></details>
+    <details><summary>Gap 600 m, police 10 m/s, chor 8 m/s. Chor kitna bhaaga?</summary><p>600 × 8/2 = 2,400 m.</p></details>
+    <details><summary>Teen barabar hisse 20, 30, 60 km/h. Average?</summary><p>LCM 60: 3 + 2 + 1 = 6 h, 180 km → 30 km/h.</p></details>
+    <details><summary>Gol track 600 m, ulti disha, 4 aur 6 m/s. Milan kitni der mein?</summary><p>600 ÷ 10 = 60 s.</p></details>
+  </div>
+</section>

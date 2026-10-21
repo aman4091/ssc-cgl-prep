@@ -1,0 +1,244 @@
+"use client";
+
+// 📘 Notes — PYQ Notes 2025-26, GS Hot 22, Maths, English Grammar aur Vocab
+// (claude.ai par bane notes, owner ne site par maange). Har book → topic →
+// slides, Fact log jaisa: ek card, ‹ › / swipe / ← →. HTML public/pyq_notes
+// mein hai (book/tNN.html + index.json); har <section class="chap"> har <h3>
+// par kat kar slide banta hai.
+//
+// ⭐ IMP ✍️ — Fact log wala hi stylus page (/imp), kind "pn" — Saare IMP ke
+// "📘 Notes" tab mein dikhta hai. Maths mein saath mein ✍️ Rough (owner:
+// "imp ke saath normal bhi") — kind "pnr", likha hua slide ke neeche dikhta
+// hai par Saare IMP mein nahi jaata. Likhna sirf tablet par (lib/inkdevice).
+
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ImpNoteBox } from "@/components/ImpView";
+import { noteKey, putImpCtx, setImpNoteMeta } from "@/lib/impnotes";
+import { isInkWriter } from "@/lib/inkdevice";
+import "./pn.css";
+
+const BASE = "/pyq_notes";
+const POS = "cgl.pn.pos";
+const loadPos = () => { try { return JSON.parse(localStorage.getItem(POS) || "{}") || {}; } catch { return {}; } };
+const savePos = (v) => { try { localStorage.setItem(POS, JSON.stringify(v)); } catch { /* quota */ } };
+
+// Ek topic ka HTML → slides. Chapter ka kholne wala hissa (sirf eyebrow / meta)
+// akela patla lagta hai — use pehli asli slide ke saath jod dete hain.
+function cut(html) {
+  const doc = new DOMParser().parseFromString(`<div>${html}</div>`, "text/html");
+  const out = [];
+  [...doc.querySelectorAll("section.chap")].forEach((sec, ci) => {
+    const h2 = sec.querySelector("h2");
+    const chap = h2 ? h2.textContent : "";
+    const c = `c${(ci % 3) + 1}`;
+    let n = 0;
+    let cur = { chap, title: chap, c, nodes: [], key: `${sec.id}.0` };
+    for (const el of [...sec.children]) {
+      if (el.tagName === "H3") {
+        const thin = cur.nodes.every((x) => /(^| )(eyebrow|meta)( |$)/.test(x.className || ""));
+        if (cur.nodes.length && !thin) out.push(cur);
+        n += 1;
+        cur = { chap, title: el.textContent, c, nodes: thin ? cur.nodes : [], key: `${sec.id}.${n}` };
+      } else if (el !== h2) cur.nodes.push(el);
+    }
+    if (cur.nodes.length) out.push(cur);
+  });
+  return out.map((s) => {
+    const body = s.nodes.map((x) => x.outerHTML).join("");
+    // Stylus page par upar dikhne wala text (aur 👻 Trace) — slide ki lines.
+    const lines = [];
+    for (const x of s.nodes) {
+      x.querySelectorAll("li, p, tr, .box, .trick, figcaption").forEach((y) => {
+        if (y.closest("li, tr") && y.closest("li, tr") !== y) return;
+        const t = y.textContent.replace(/\s+/g, " ").trim();
+        if (t && lines.length < 40) lines.push(t);
+      });
+    }
+    return { key: s.key, chap: s.chap, title: s.title, c: s.c, body, points: lines };
+  });
+}
+
+function NotesInner() {
+  const sp = useSearchParams();
+  const router = useRouter();
+  const [idx, setIdx] = useState(null);
+  const [book, setBook] = useState("");
+  const [topic, setTopic] = useState("");
+  const [slides, setSlides] = useState([]);
+  const [at, setAt] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [writer, setWriter] = useState(false);
+  const posRef = useRef({});
+  const want = useRef(null);   // ?b=&t=&s= se aaye (Saare IMP ka "Notes kholo")
+
+  useEffect(() => { setWriter(isInkWriter()); }, []);
+  useEffect(() => {
+    posRef.current = loadPos();
+    const b = sp.get("b"), t = sp.get("t"), s = sp.get("s");
+    if (b && t) want.current = { b, t, s: s == null ? null : +s };
+    fetch(`${BASE}/index.json`).then((r) => r.json()).then((j) => {
+      setIdx(j);
+      const p = posRef.current;
+      const bk = want.current?.b || p.book || j.books[0].key;
+      const B = j.books.find((x) => x.key === bk) || j.books[0];
+      setBook(B.key);
+      setTopic(want.current?.t || p[`t:${B.key}`] || B.topics[0].id);
+    }).catch(() => setIdx({ books: [] }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const B = useMemo(() => idx?.books.find((x) => x.key === book) || null, [idx, book]);
+  const T = useMemo(() => B?.topics.find((x) => x.id === topic) || null, [B, topic]);
+
+  useEffect(() => {
+    if (!B || !topic) return undefined;
+    let alive = true;
+    setLoading(true);
+    fetch(`${BASE}/${B.key}/${topic}.html`).then((r) => r.text()).then((h) => {
+      if (!alive) return;
+      const ss = cut(h);
+      setSlides(ss);
+      const w = want.current;
+      const saved = posRef.current[`s:${B.key}:${topic}`] || 0;
+      const start = w && w.b === B.key && w.t === topic && w.s != null ? w.s : saved;
+      want.current = null;
+      setAt(Math.max(0, Math.min(start, ss.length - 1)));
+      setLoading(false);
+    }).catch(() => { if (alive) { setSlides([]); setLoading(false); } });
+    return () => { alive = false; };
+  }, [B, topic]);
+
+  // Jagah yaad — book, topic aur har topic ki slide.
+  useEffect(() => {
+    if (!B || !topic || !slides.length) return;
+    const p = posRef.current;
+    p.book = B.key; p[`t:${B.key}`] = topic; p[`s:${B.key}:${topic}`] = at;
+    savePos(p);
+  }, [B, topic, at, slides.length]);
+
+  const go = useCallback((d) => {
+    setAt((a) => {
+      const n = a + d;
+      return n < 0 || n >= slides.length ? a : n;
+    });
+  }, [slides.length]);
+  useEffect(() => {
+    const k = (e) => {
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
+      if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+    };
+    window.addEventListener("keydown", k);
+    return () => window.removeEventListener("keydown", k);
+  }, [go]);
+  const card = useRef(null);
+  useEffect(() => {
+    const r = card.current?.getBoundingClientRect();
+    if (r && r.top < 0) window.scrollTo({ top: window.scrollY + r.top - 70 });
+  }, [at]);
+  const touch = useRef(null);
+  const onTs = (e) => {
+    if (e.target.closest(".tbl, .sv, details")) { touch.current = null; return; }
+    touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  };
+  const onTe = (e) => {
+    const t0 = touch.current; touch.current = null;
+    if (!t0) return;
+    const dx = e.changedTouches[0].clientX - t0.x, dy = e.changedTouches[0].clientY - t0.y;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1);
+  };
+
+  const cur = slides[at];
+  const chapters = useMemo(() => {
+    const seen = new Set();
+    return slides.map((s, i) => ({ s, i })).filter(({ s }) => (seen.has(s.chap) ? false : (seen.add(s.chap), true)));
+  }, [slides]);
+  const chapAt = chapters.reduce((a, c) => (c.i <= at ? c.i : a), 0);
+
+  const openNote = (kind) => {
+    if (!cur || !B || !T) return;
+    const nk = noteKey(kind, `${B.key}.${cur.key}`);
+    putImpCtx(nk, { title: cur.title, points: cur.points });
+    if (kind === "pn") {
+      setImpNoteMeta(nk, {
+        title: cur.title, src: `${B.name} · ${T.name}`, book: B.key, bookName: `${B.icon} ${B.name}`,
+        href: `/pyq-notes?b=${B.key}&t=${T.id}&s=${at}`,
+      });
+    }
+    // ‹ › stylus page par — poore topic ki slides (sessionStorage).
+    try {
+      sessionStorage.setItem("imp.list", JSON.stringify({
+        kind, items: slides.map((x) => ({ k: noteKey(kind, `${B.key}.${x.key}`), title: x.title, points: x.points })),
+      }));
+    } catch { /* bahut badi list — tab bas ek slide */ }
+    router.push(`/imp?k=${encodeURIComponent(nk)}&back=${encodeURIComponent(`/pyq-notes?b=${B.key}&t=${T.id}&s=${at}`)}`);
+  };
+
+  if (!idx) return <div className="placeholder">Loading…</div>;
+  return (
+    <section className="section pn">
+      <header className="pn-head">
+        <h1>📘 Notes</h1>
+        <div className="pn-books" role="tablist">
+          {idx.books.map((x) => (
+            <button key={x.key} type="button" role="tab" aria-selected={x.key === book}
+              onClick={() => { setBook(x.key); setTopic(posRef.current[`t:${x.key}`] || x.topics[0].id); }}>
+              {x.icon} {x.name}
+            </button>
+          ))}
+        </div>
+        {B ? (
+          <div className="pn-sel">
+            <label>Topic
+              <select value={topic} onChange={(e) => setTopic(e.target.value)}>
+                {B.topics.map((x, i) => <option key={x.id} value={x.id}>{i + 1}. {x.name}</option>)}
+              </select>
+            </label>
+            <label>Chapter
+              <select value={chapAt} onChange={(e) => setAt(+e.target.value)}>
+                {chapters.map(({ s, i }) => <option key={i} value={i}>{s.chap}</option>)}
+              </select>
+            </label>
+          </div>
+        ) : null}
+        <div className="pn-legend">
+          <span><span className="tag p">PYQ</span> exam mein aaya</span>
+          <span><span className="tag x">CGL+</span> juda fact</span>
+          <span><mark>highlight</mark> = answer</span>
+        </div>
+      </header>
+      <div className="pn-prog"><i style={{ width: slides.length ? `${((at + 1) / slides.length) * 100}%` : 0 }} /></div>
+      {loading ? <p className="hint">Notes khul rahe hain…</p> : null}
+      {!loading && cur ? (
+        <article ref={card} className={`pn-card ${cur.c}`} onTouchStart={onTs} onTouchEnd={onTe}>
+          <div className="pn-top">
+            <b>{cur.chap}</b>
+            <span>{at + 1} / {slides.length}</span>
+          </div>
+          <h2 className="pn-title">{cur.title}</h2>
+          {writer ? (
+            <div className="pn-acts">
+              <button type="button" className="btn btn--sm pn-imp" onClick={() => openNote("pn")} title="Stylus se IMP likho">⭐ IMP ✍️</button>
+              {B?.rough ? <button type="button" className="btn btn--sm btn--ghost" onClick={() => openNote("pnr")} title="Stylus se rough / hal likho">✍️ Rough</button> : null}
+            </div>
+          ) : null}
+          <div className="pn-body" dangerouslySetInnerHTML={{ __html: cur.body }} />
+          <ImpNoteBox k={noteKey("pn", `${B.key}.${cur.key}`)} />
+          {B?.rough ? <ImpNoteBox k={noteKey("pnr", `${B.key}.${cur.key}`)} label="✍️ Rough" /> : null}
+        </article>
+      ) : null}
+      {!loading && !cur ? <p className="hint">Is topic mein abhi koi slide nahi.</p> : null}
+      <div className="pn-nav">
+        <button type="button" className="pn-go" onClick={() => go(-1)} disabled={at <= 0} aria-label="Pichhli slide">‹</button>
+        <span>{slides.length ? `${at + 1} / ${slides.length}` : ""}</span>
+        <button type="button" className="pn-go" onClick={() => go(1)} disabled={at >= slides.length - 1} aria-label="Agli slide">›</button>
+      </div>
+      <p className="hint pn-hint">Swipe karo ya ← → keys.</p>
+    </section>
+  );
+}
+
+export default function PyqNotesPage() {
+  return <Suspense fallback={<div className="placeholder">Loading…</div>}><NotesInner /></Suspense>;
+}

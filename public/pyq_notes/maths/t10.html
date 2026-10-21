@@ -1,0 +1,748 @@
+<!-- ===================== MATHS · COMPOUND INTEREST (part 1: basics + speed methods) ===================== -->
+<section class="chap" id="mci-basics">
+  <div class="eyebrow">Maths · 100 questions</div>
+  <h2>Compound Interest: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, Selection Post XIV, MTS, Delhi Police) · sabse zyada: do amount se rate, CI − SI, "x guna kitne saal mein"</div>
+
+  <h3>Pehle ek chhoti si kahani: ₹1000 ka safar</h3>
+  <p>Maan lo tumne bank mein ₹1000 rakhe. Bank kehta hai, har saal 10% dunga.</p>
+  <ul>
+    <li><b>Saal 1:</b> 1000 ka 10% = <b>100</b>. Ab tumhare paas 1100 hain.</li>
+    <li><b>Saal 2:</b> ab bank 1100 par 10% deta hai, sirf 1000 par nahi. 1100 ka 10% = <b>110</b>. Paas mein 1210.</li>
+    <li><b>Saal 3:</b> 1210 ka 10% = <b>121</b>. Paas mein 1331.</li>
+  </ul>
+  <p>Dekho, interest har saal badh raha hai: 100, 110, 121. Kyun? Kyunki pichhle saal ka interest bhi ab paise ka hissa ban gaya. Uspar bhi interest lag raha hai.</p>
+  <p>Agar bank har saal sirf 1000 par hi 10% deta, toh har saal 100 hi milta: 100, 100, 100. Isi ko <b>Simple Interest (SI)</b> kehte hain. Aur jo pehla wala tareeka tha, jismein interest par bhi interest lagta hai, wo hai <b>Compound Interest (CI)</b>.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Rs 1000 at 10 percent: interest earned each year. SI gives 100, 100, 100. CI gives 100, 110, 121. The extra part of CI is interest on interest: 0, 10, 21.">
+      <rect x="80" y="10" width="14" height="12" class="chf"/><rect x="80" y="10" width="14" height="12" class="chs" style="stroke-width:1"/>
+      <text x="100" y="20" class="sm">mool ₹1000 par interest (har saal 100)</text>
+      <rect x="370" y="10" width="14" height="12" style="fill:var(--ch)"/>
+      <text x="390" y="20" class="sm">interest par interest (sirf CI mein)</text>
+      <line x1="60" y1="90" x2="590" y2="90" class="ln" stroke-dasharray="3 4"/>
+      <text x="56" y="94" text-anchor="end" class="sm">100</text>
+      <line x1="60" y1="250" x2="590" y2="250" class="ln"/>
+      <text x="56" y="254" text-anchor="end" class="sm">0</text>
+      <rect x="80" y="90" width="60" height="160" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="150" y="90" width="60" height="160" class="chf"/><rect x="150" y="90" width="60" height="160" class="chs"/>
+      <text x="110" y="82" text-anchor="middle" class="lbl">100</text>
+      <text x="180" y="82" text-anchor="middle" class="lbl">100</text>
+      <rect x="260" y="90" width="60" height="160" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="330" y="90" width="60" height="160" class="chf"/><rect x="330" y="90" width="60" height="160" class="chs"/>
+      <rect x="330" y="74" width="60" height="16" style="fill:var(--ch)"/>
+      <text x="290" y="82" text-anchor="middle" class="lbl">100</text>
+      <text x="360" y="66" text-anchor="middle" class="lbl">110 = 100 + 10</text>
+      <rect x="440" y="90" width="60" height="160" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="510" y="90" width="60" height="160" class="chf"/><rect x="510" y="90" width="60" height="160" class="chs"/>
+      <rect x="510" y="56" width="60" height="34" style="fill:var(--ch)"/>
+      <text x="470" y="82" text-anchor="middle" class="lbl">100</text>
+      <text x="540" y="48" text-anchor="middle" class="lbl">121 = 100 + 21</text>
+      <g text-anchor="middle" class="sm">
+        <text x="110" y="266">SI</text><text x="180" y="266">CI</text>
+        <text x="290" y="266">SI</text><text x="360" y="266">CI</text>
+        <text x="470" y="266">SI</text><text x="540" y="266">CI</text>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="145" y="288">Saal 1</text><text x="325" y="288">Saal 2</text><text x="505" y="288">Saal 3</text>
+      </g>
+      <text x="604" y="150" class="sm">SI kul = 300</text>
+      <text x="604" y="170" class="sm">CI kul = 331</text>
+      <text x="604" y="194" class="lbl" style="fill:var(--ch)">farq = 31</text>
+    </svg>
+    </div>
+    <figcaption>₹1000 par 10%: har saal ka interest, scale par. Gehre tukde = interest par interest: 0, phir 10, phir 21.</figcaption>
+  </figure>
+
+  <h3>"Interest par interest" kahan se aaya?</h3>
+  <ul>
+    <li>Saal 2 ke 110 ko todo: <b>100</b> toh mool 1000 ka hai. Baaki <b>10</b> kahan se aaya? Saal 1 ke 100 rupaye par 10%. Yahi hai interest par interest.</li>
+    <li>Saal 3 ke 121 ko todo: 100 mool ka. 20 aaya pichhle do saal ke 100 + 100 par. Aur 1 aaya us 10 par jo khud interest ka interest tha.</li>
+    <li>Isliye <b>pehle saal CI aur SI hamesha barabar</b> hote hain. Farq saal 2 se shuru hota hai. <span class="tag p">PYQ ×2</span> <small>CHSL · 29 Nov, 30 Nov 2025</small></li>
+    <li>Isliye <b>CI hamesha SI se zyada</b> hota hai (2 saal ya usse zyada mein). Option chunte waqt ye yaad rakhna.</li>
+  </ul>
+  <div class="box"><span class="k">Ab naam rakh dete hain</span>
+    Jo paisa shuru mein rakha = <b>P</b> (principal). Aakhir mein jo mila = <b>A</b> (amount). A − P = <b>CI</b>. Rate = <b>r%</b> har saal. Saal = <b>n</b>.<br>
+    Population ka badhna bhi yahi kahani hai. Machine ki keemat ka girna (depreciation) bhi yahi hai, bas har saal % <b>ghatta</b> hai.
+  </div>
+  <p>Ab asli baat. Paper mein ek sawaal ke liye lagbhag <b>36 second</b> milte hain. Wahan koi saal-dar-saal decimal guna nahi karega. Neeche 7 tareeke hain jo haath se, rough mein, jaldi chalte hain.</p>
+
+  <!-- ========== METHOD A ========== -->
+  <h3>Speed method 1 · Rate ko fraction banao (ratio method)</h3>
+  <p><b>Kab use karo:</b> jab rate ek saaf fraction ban jaye. 10% = 1/10, 20% = 1/5, 25% = 1/4, 12½% = 1/8, 16⅔% = 1/6, 5% = 1/20.</p>
+  <p><b>Soch aise:</b> 10% = 1/10 ka matlab hai, 10 rupaye par 1 rupaya interest. Toh ek saal mein 10 rupaye 11 ban jaate hain. Yaani <b>P : A = 10 : 11</b>.</p>
+  <p>Do saal? Wahi kaam do baar: 10 × 10 = 100 aur 11 × 11 = 121. Toh <b>P : A = 100 : 121</b>. Teen saal: <b>1000 : 1331</b>. Ab koi decimal nahi, sirf "parts".</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Ratio ladder. 10 percent: 10 to 11, then 100 to 121, then 1000 to 1331. 20 percent: 5 to 6, 25 to 36, 125 to 216. 12.5 percent: 8 to 9, 64 to 81, 512 to 729. CI parts shown under each.">
+      <defs>
+        <marker id="mci-lad-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <g text-anchor="middle" class="lbl">
+        <text x="225" y="24">1 saal</text><text x="415" y="24">2 saal</text><text x="605" y="24">3 saal</text>
+      </g>
+      <!-- row 10% -->
+      <text x="12" y="62" class="lbl">10% = 1/10</text><text x="12" y="78" class="sm">P : A</text>
+      <rect x="150" y="44" width="150" height="40" rx="6" class="chf"/><rect x="150" y="44" width="150" height="40" rx="6" class="chs"/>
+      <rect x="340" y="44" width="150" height="40" rx="6" class="chf"/><rect x="340" y="44" width="150" height="40" rx="6" class="chs"/>
+      <rect x="530" y="44" width="150" height="40" rx="6" class="chf"/><rect x="530" y="44" width="150" height="40" rx="6" class="chs"/>
+      <g class="ln"><line x1="302" y1="64" x2="336" y2="64" marker-end="url(#mci-lad-arr)"/><line x1="492" y1="64" x2="526" y2="64" marker-end="url(#mci-lad-arr)"/></g>
+      <g text-anchor="middle">
+        <text x="225" y="69" class="lbl">10 : 11</text><text x="415" y="69" class="lbl">100 : 121</text><text x="605" y="69" class="lbl">1000 : 1331</text>
+        <text x="225" y="100" class="sm">CI = 1 part</text><text x="415" y="100" class="sm">CI = 21 parts</text><text x="605" y="100" class="sm">CI = 331 parts</text>
+      </g>
+      <!-- row 20% -->
+      <text x="12" y="142" class="lbl">20% = 1/5</text><text x="12" y="158" class="sm">P : A</text>
+      <rect x="150" y="124" width="150" height="40" rx="6" class="chf"/><rect x="150" y="124" width="150" height="40" rx="6" class="chs"/>
+      <rect x="340" y="124" width="150" height="40" rx="6" class="chf"/><rect x="340" y="124" width="150" height="40" rx="6" class="chs"/>
+      <rect x="530" y="124" width="150" height="40" rx="6" class="chf"/><rect x="530" y="124" width="150" height="40" rx="6" class="chs"/>
+      <g class="ln"><line x1="302" y1="144" x2="336" y2="144" marker-end="url(#mci-lad-arr)"/><line x1="492" y1="144" x2="526" y2="144" marker-end="url(#mci-lad-arr)"/></g>
+      <g text-anchor="middle">
+        <text x="225" y="149" class="lbl">5 : 6</text><text x="415" y="149" class="lbl">25 : 36</text><text x="605" y="149" class="lbl">125 : 216</text>
+        <text x="225" y="180" class="sm">CI = 1 part</text><text x="415" y="180" class="sm">CI = 11 parts</text><text x="605" y="180" class="sm">CI = 91 parts</text>
+      </g>
+      <!-- row 12.5% -->
+      <text x="12" y="222" class="lbl">12½% = 1/8</text><text x="12" y="238" class="sm">P : A</text>
+      <rect x="150" y="204" width="150" height="40" rx="6" class="chf"/><rect x="150" y="204" width="150" height="40" rx="6" class="chs"/>
+      <rect x="340" y="204" width="150" height="40" rx="6" class="chf"/><rect x="340" y="204" width="150" height="40" rx="6" class="chs"/>
+      <rect x="530" y="204" width="150" height="40" rx="6" class="chf"/><rect x="530" y="204" width="150" height="40" rx="6" class="chs"/>
+      <g class="ln"><line x1="302" y1="224" x2="336" y2="224" marker-end="url(#mci-lad-arr)"/><line x1="492" y1="224" x2="526" y2="224" marker-end="url(#mci-lad-arr)"/></g>
+      <g text-anchor="middle">
+        <text x="225" y="229" class="lbl">8 : 9</text><text x="415" y="229" class="lbl">64 : 81</text><text x="605" y="229" class="lbl">512 : 729</text>
+        <text x="225" y="260" class="sm">CI = 1 part</text><text x="415" y="260" class="sm">CI = 17 parts</text><text x="605" y="260" class="sm">CI = 217 parts</text>
+      </g>
+      <text x="350" y="284" text-anchor="middle" class="sm">Har kadam par: left wala left se guna, right wala right se guna (10% mein 10 aur 11 se)</text>
+    </svg>
+    </div>
+    <figcaption>Ratio ki seedhi. CI = right − left. Ye teen seedhiyan zubaani yaad kar lo.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Demo · 10% par 2 saal ka CI ₹2100 hai. P kitna? · <i>~10 sec</i></span>
+    10% → 100 : 121. CI = 121 − 100 = <b>21 parts</b>.<br>
+    21 parts = 2100 → 1 part = 100 → P = 100 parts = <b>₹10,000</b>.
+  </div>
+  <div class="box"><span class="k">Demo · ₹2500 par 20%, 3 saal ka amount? · <i>~10 sec</i></span>
+    20% → 125 : 216. P = 125 parts = 2500 → 1 part = 20.<br>
+    A = 216 × 20 = <b>₹4,320</b>.
+  </div>
+
+  <p>Ye rates ke fraction yaad kar lo. Har card mein: rate, uska fraction, aur 1 saal ka P : A.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Sixteen common rates with their fractions and one-year principal to amount ratio">
+      <g text-anchor="middle">
+        <rect x="8" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="94" y="10" width="82" height="72" rx="6" class="chf"/><rect x="94" y="10" width="82" height="72" rx="6" class="chs"/>
+        <rect x="180" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="266" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="352" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="438" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="524" y="10" width="82" height="72" rx="6" class="chf"/><rect x="524" y="10" width="82" height="72" rx="6" class="chs"/>
+        <rect x="610" y="10" width="82" height="72" rx="6" class="chf"/>
+        <text x="49" y="32" class="lbl">4%</text><text x="49" y="52" class="lbl" style="fill:var(--ch)">1/25</text><text x="49" y="70" class="sm">25 : 26</text>
+        <text x="135" y="32" class="lbl">5%</text><text x="135" y="52" class="lbl" style="fill:var(--ch)">1/20</text><text x="135" y="70" class="sm">20 : 21</text>
+        <text x="221" y="32" class="lbl">6¼%</text><text x="221" y="52" class="lbl" style="fill:var(--ch)">1/16</text><text x="221" y="70" class="sm">16 : 17</text>
+        <text x="307" y="32" class="lbl">8%</text><text x="307" y="52" class="lbl" style="fill:var(--ch)">2/25</text><text x="307" y="70" class="sm">25 : 27</text>
+        <text x="393" y="32" class="lbl">8⅓%</text><text x="393" y="52" class="lbl" style="fill:var(--ch)">1/12</text><text x="393" y="70" class="sm">12 : 13</text>
+        <text x="479" y="32" class="lbl">100/11 %</text><text x="479" y="52" class="lbl" style="fill:var(--ch)">1/11</text><text x="479" y="70" class="sm">11 : 12</text>
+        <text x="565" y="32" class="lbl">10%</text><text x="565" y="52" class="lbl" style="fill:var(--ch)">1/10</text><text x="565" y="70" class="sm">10 : 11</text>
+        <text x="651" y="32" class="lbl">100/9 %</text><text x="651" y="52" class="lbl" style="fill:var(--ch)">1/9</text><text x="651" y="70" class="sm">9 : 10</text>
+        <rect x="8" y="92" width="82" height="72" rx="6" class="chf"/>
+        <rect x="94" y="92" width="82" height="72" rx="6" class="chf"/><rect x="94" y="92" width="82" height="72" rx="6" class="chs"/>
+        <rect x="180" y="92" width="82" height="72" rx="6" class="chf"/>
+        <rect x="266" y="92" width="82" height="72" rx="6" class="chf"/>
+        <rect x="352" y="92" width="82" height="72" rx="6" class="chf"/><rect x="352" y="92" width="82" height="72" rx="6" class="chs"/>
+        <rect x="438" y="92" width="82" height="72" rx="6" class="chf"/><rect x="438" y="92" width="82" height="72" rx="6" class="chs"/>
+        <rect x="524" y="92" width="82" height="72" rx="6" class="chf"/><rect x="524" y="92" width="82" height="72" rx="6" class="chs"/>
+        <rect x="610" y="92" width="82" height="72" rx="6" class="chf"/>
+        <text x="49" y="114" class="lbl">12%</text><text x="49" y="134" class="lbl" style="fill:var(--ch)">3/25</text><text x="49" y="152" class="sm">25 : 28</text>
+        <text x="135" y="114" class="lbl">12½%</text><text x="135" y="134" class="lbl" style="fill:var(--ch)">1/8</text><text x="135" y="152" class="sm">8 : 9</text>
+        <text x="221" y="114" class="lbl">100/7 %</text><text x="221" y="134" class="lbl" style="fill:var(--ch)">1/7</text><text x="221" y="152" class="sm">7 : 8</text>
+        <text x="307" y="114" class="lbl">15%</text><text x="307" y="134" class="lbl" style="fill:var(--ch)">3/20</text><text x="307" y="152" class="sm">20 : 23</text>
+        <text x="393" y="114" class="lbl">16⅔%</text><text x="393" y="134" class="lbl" style="fill:var(--ch)">1/6</text><text x="393" y="152" class="sm">6 : 7</text>
+        <text x="479" y="114" class="lbl">20%</text><text x="479" y="134" class="lbl" style="fill:var(--ch)">1/5</text><text x="479" y="152" class="sm">5 : 6</text>
+        <text x="565" y="114" class="lbl">25%</text><text x="565" y="134" class="lbl" style="fill:var(--ch)">1/4</text><text x="565" y="152" class="sm">4 : 5</text>
+        <text x="651" y="114" class="lbl">33⅓%</text><text x="651" y="134" class="lbl" style="fill:var(--ch)">1/3</text><text x="651" y="152" class="sm">3 : 4</text>
+        <text x="350" y="188" class="sm">neeche ki line = 1 saal ka P : A · n saal ke liye dono ko n baar guna karo</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>16 rates, 16 fractions. Outline wale (5%, 10%, 12½%, 16⅔%, 20%, 25%) 2025 ke papers mein sabse zyada aaye.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> "Rate 1/x hai toh P = x, A = x + 1." 2 saal ho toh dono ka square, 3 saal ho toh dono ka cube. Phir CI = A − P parts. Bas 1 part ki value nikaalo. Kabhi decimal mat banao.</div>
+  <p><b>Ghatne wala rate (depreciation):</b> 10% girna → P : A = 10 : <b>9</b>. 2 saal = 100 : 81, 3 saal = 1000 : 729.</p>
+
+  <!-- ========== METHOD B ========== -->
+  <h3>Speed method 2 · Effective rate (2 aur 3 saal ka "ek jhatka")</h3>
+  <p><b>Kab use karo:</b> jab rate fraction mein saaf na baithe (jaise 12%, 15%, 9%), aur time 2 ya 3 saal ho.</p>
+  <p><b>Soch aise:</b> 2 saal ka CI ek hi baar ka % bana do. 10% par 2 saal = 21%. Yaani P ka 21% hi CI hai. Phir bas "P ka itna %" nikaalna hai.</p>
+  <div class="box"><span class="k">5 second wala formula: a + b + ab/100</span>
+    Do baar a% aur b% badha, toh kul badhat = <b>a + b + (a × b)/100</b>.<br>
+    12% do saal: 12 + 12 + (12 × 12)/100 = 24 + 1.44 = <b>25.44%</b>.<br>
+    9% do saal: 9 + 9 + 0.81 = <b>18.81%</b>. Alag rate 8% phir 10%: 8 + 10 + 0.8 = <b>18.8%</b>.
+  </div>
+  <p>Ye table ratta maar lo. Paper mein seedha kaam aayegi.</p>
+  <div class="tbl"><table>
+    <tr><th>Rate</th><th>2 saal ka CI %</th><th>3 saal ka CI %</th><th>2 saal CI − SI (P ka %)</th></tr>
+    <tr><td class="n">4%</td><td>8.16%</td><td>12.4864%</td><td>0.16%</td></tr>
+    <tr><td class="n">5%</td><td>10.25%</td><td>15.7625%</td><td>0.25%</td></tr>
+    <tr><td class="n">10%</td><td>21%</td><td>33.1%</td><td>1%</td></tr>
+    <tr><td class="n">12%</td><td>25.44%</td><td>40.4928%</td><td>1.44%</td></tr>
+    <tr><td class="n">15%</td><td>32.25%</td><td>52.0875%</td><td>2.25%</td></tr>
+    <tr><td class="n">20%</td><td>44%</td><td>72.8%</td><td>4%</td></tr>
+    <tr><td class="n">25%</td><td>56.25%</td><td>95.3125%</td><td>6.25%</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · ₹15,000 par 8%, 2 saal ka amount · <i>~12 sec</i></span>
+    8 + 8 + 0.64 = 16.64%. P ka 1% = 150. 150 × 16.64 = 2,496.<br>
+    A = 15,000 + 2,496 = <b>₹17,496</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "% of P" ko aise nikaalo: pehle 1% nikaalo (P ÷ 100), phir us 1% ko % wale number se guna karo. 6000 ka 18.81% = 60 × 18.81.</div>
+
+  <!-- ========== METHOD C ========== -->
+  <h3>Speed method 3 · 1-3-3-1 ka ped (3 saal, kisi bhi rate par)</h3>
+  <p><b>Kab use karo:</b> 3 saal, aur rate ganda hai (12%, 15%, 6%, 4%). Yahi wo jagah hai jahan log decimal ka cube karne baith jaate hain. Uski zaroorat nahi.</p>
+  <p><b>Soch aise:</b> ₹1000 par 12%. Pehla tukda = 1000 ka 12% = 120. Ye har saal aata hai, toh 3 baar. Doosra tukda = 120 ka 12% = 14.4 (interest par interest). Ye 3 baar banta hai. Teesra tukda = 14.4 ka 12% = 1.728. Ye sirf 1 baar. Ginti 1-3-3-1 Pascal ki seedhi se aati hai.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 320" role="img" aria-label="Pascal rows 1-1, 1-2-1, 1-3-3-1, 1-4-6-4-1. For Rs 1000 at 12 percent over 3 years: three pieces of 120, three pieces of 14.4 and one piece of 1.728. CI = 360 + 43.2 + 1.728 = 404.928.">
+      <text x="120" y="26" text-anchor="middle" class="lbl">Pascal ki seedhi</text>
+      <g class="sm"><text x="12" y="64">1 saal</text><text x="12" y="98">2 saal</text><text x="12" y="132">3 saal</text><text x="12" y="166">4 saal</text></g>
+      <g text-anchor="middle" class="lbl">
+        <text x="140" y="64">1   1</text>
+        <text x="140" y="98">1   2   1</text>
+        <text x="140" y="132" style="fill:var(--ch)">1   3   3   1</text>
+        <text x="140" y="166">1   4   6   4   1</text>
+      </g>
+      <text x="120" y="200" text-anchor="middle" class="sm">pehla 1 = P khud</text>
+      <text x="120" y="216" text-anchor="middle" class="sm">baaki = tukdon ki ginti</text>
+      <line x1="232" y1="16" x2="232" y2="240" class="ln"/>
+      <!-- row 1 -->
+      <text x="250" y="34" class="sm">Tukda 1 = 1000 ka 12% = 120 (3 baar)</text>
+      <rect x="250" y="42" width="66" height="32" rx="5" class="chf"/><rect x="250" y="42" width="66" height="32" rx="5" class="chs"/>
+      <rect x="324" y="42" width="66" height="32" rx="5" class="chf"/><rect x="324" y="42" width="66" height="32" rx="5" class="chs"/>
+      <rect x="398" y="42" width="66" height="32" rx="5" class="chf"/><rect x="398" y="42" width="66" height="32" rx="5" class="chs"/>
+      <g text-anchor="middle" class="lbl"><text x="283" y="63">120</text><text x="357" y="63">120</text><text x="431" y="63">120</text></g>
+      <text x="482" y="63" class="lbl">3 × 120 = 360</text>
+      <text x="482" y="80" class="sm">(yahi SI hai)</text>
+      <!-- row 2 -->
+      <text x="250" y="114" class="sm">Tukda 2 = 120 ka 12% = 14.4 (3 baar)</text>
+      <rect x="250" y="122" width="66" height="32" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="324" y="122" width="66" height="32" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="398" y="122" width="66" height="32" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <g text-anchor="middle" class="lbl"><text x="283" y="143">14.4</text><text x="357" y="143">14.4</text><text x="431" y="143">14.4</text></g>
+      <text x="482" y="143" class="lbl">3 × 14.4 = 43.2</text>
+      <text x="482" y="160" class="sm">(interest par interest)</text>
+      <!-- row 3 -->
+      <text x="250" y="194" class="sm">Tukda 3 = 14.4 ka 12% = 1.728 (1 baar)</text>
+      <rect x="250" y="202" width="66" height="32" rx="5" style="fill:var(--ch)"/>
+      <text x="283" y="223" text-anchor="middle" class="lbl" style="fill:var(--paper)">1.728</text>
+      <text x="482" y="223" class="lbl">1 × 1.728 = 1.728</text>
+      <!-- totals -->
+      <text x="350" y="272" text-anchor="middle" class="lbl">CI (3 saal) = 360 + 43.2 + 1.728 = 404.928</text>
+      <text x="350" y="296" text-anchor="middle" class="sm">2 saal ho toh: 2 × 120 + 1 × 14.4 = 254.4 · CI − SI (3 saal) = 43.2 + 1.728 = 44.928</text>
+    </svg>
+    </div>
+    <figcaption>Ped ka matlab: har tukda apna 12% ek naya chhota tukda paida karta hai. Har tukda pichhle ka 12% hai, toh har agla tukda bas "12% of pichhla" hai.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · ₹25,000 par 10%, 3 saal ka CI · <i>~12 sec</i></span>
+    Tukde: 10% of 25,000 = 2500 → 10% of 2500 = 250 → 10% of 250 = 25.<br>
+    CI = 3 × 2500 + 3 × 250 + 1 × 25 = 7500 + 750 + 25 = <b>₹8,275</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> 4 saal ke liye seedhi 1-4-6-4-1. ₹30,000 par 10%: 4 × 3000 + 6 × 300 + 4 × 30 + 1 × 3 = 13,923. Pehla tukda (4 × 3000) hi SI hai.</div>
+
+  <!-- ========== METHOD D ========== -->
+  <h3>Speed method 4 · CI − SI (sabse pasandida sawaal)</h3>
+  <p><b>Soch aise:</b> 2 saal mein SI aur CI mein farq sirf ek hi cheez ka hai. Saal 1 ka interest jo bacha tha, us par saal 2 mein jo interest laga. Bas wahi ek chhota kona.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Area picture for Rs 10,000 at 10 percent for 2 years. Big square P = 10,000. Two thin strips of 1,000 each are the simple interest. A small corner square of 100 is interest on interest, which is CI minus SI.">
+      <rect x="40" y="30" width="180" height="180" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="130" y="116" text-anchor="middle" class="lbl">P = 10,000</text>
+      <text x="130" y="134" text-anchor="middle" class="sm">(asal paisa)</text>
+      <rect x="220" y="30" width="18" height="180" class="chf"/><rect x="220" y="30" width="18" height="180" class="chs"/>
+      <rect x="40" y="210" width="180" height="18" class="chf"/><rect x="40" y="210" width="180" height="18" class="chs"/>
+      <rect x="220" y="210" width="18" height="18" style="fill:var(--ch)"/>
+      <text x="140" y="246" text-anchor="middle" class="sm">neeche patti: saal 2, P par 10% = 1,000</text>
+      <g class="ln">
+        <line x1="240" y1="90" x2="296" y2="60"/>
+        <line x1="240" y1="222" x2="296" y2="166"/>
+      </g>
+      <text x="300" y="58" class="lbl">Right patti: saal 1 mein P par 10% = 1,000</text>
+      <text x="300" y="76" class="sm">dono pattiyan mil kar = SI = 2,000</text>
+      <text x="300" y="164" class="lbl" style="fill:var(--ch)">Chhota kona: saal 1 ke 1,000 par 10% = 100</text>
+      <text x="300" y="182" class="sm">yahi "interest par interest" hai · SI mein ye hota hi nahi</text>
+      <text x="300" y="222" class="sm">CI = pattiyan + kona = 2,100</text>
+      <text x="350" y="284" text-anchor="middle" class="lbl">CI − SI = sirf kona = P × (r/100) × (r/100) = 10,000 × 1/10 × 1/10 = 100</text>
+    </svg>
+    </div>
+    <figcaption>Bada square = P. Har patti = P ka r%. Kona = r% ka r%. Kona chhota hai, isliye CI bas thoda sa zyada hota hai SI se.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Time</th><th>CI − SI</th><th>Haath se kaise</th></tr>
+    <tr><td class="n">2 saal</td><td>D = P × (r/100)²</td><td>10% → P ÷ 100 · 20% → P ÷ 25 · 5% → P ÷ 400 · 15% → P × 9/400</td></tr>
+    <tr><td class="n">3 saal</td><td>D = P × (r/100)² × (3 + r/100)</td><td>pehle 2-saal wala D, phir use 3 + r/100 se guna. 10%: D<sub>2</sub> × 3.1</td></tr>
+    <tr><td class="n">4 saal</td><td>ped 1-4-6-4-1 mein pehla tukda chhod kar baaki sab</td><td>6 × (doosra tukda) + 4 × (teesra) + 1 × (chautha)</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · ₹10,000 par 10%, 2 saal: CI − SI · <i>~5 sec</i></span>
+    10% = 1/10 → kona = 10,000 × 1/10 × 1/10 = <b>₹100</b>.<br>
+    3 saal hota toh: 100 × (3 + 1/10) = 100 × 3.1 = <b>₹310</b>.
+  </div>
+
+  <!-- ========== METHOD E ========== -->
+  <h3>Speed method 5 · "x guna, t saal mein"</h3>
+  <p><b>Kab use karo:</b> "paisa 2 guna ho jata hai 3 saal mein, 8 guna kab hoga?" type sawaal.</p>
+  <p><b>Soch aise:</b> 3 saal mein 2 guna. Agle 3 saal mein wo 2 guna phir 2 guna hoga = 4 guna. Agle 3 mein 8 guna. Toh guna <b>power</b> mein badhta hai, saal <b>jod</b> mein.</p>
+  <div class="tbl"><table>
+    <tr><th>Guna</th><th>2</th><th>4 = 2²</th><th>8 = 2³</th><th>16 = 2⁴</th></tr>
+    <tr><td>Saal (agar 2 guna 3 saal mein)</td><td class="n">3</td><td class="n">6</td><td class="n">9</td><td class="n">12</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> "Times ka power, saalon ka guna." 8 = 2³ toh saal × 3. Ulta bhi chalta hai: 27 guna 9 saal mein → 3 guna 3 saal mein.</div>
+
+  <!-- ========== METHOD F ========== -->
+  <h3>Speed method 6 · Half-yearly, quarterly, 8-monthly</h3>
+  <p><b>Soch aise:</b> half-yearly matlab bank saal mein 2 baar interest jodta hai. Toh har baar aadha rate milta hai, aur jodne ke mauke dugne ho jaate hain.</p>
+  <ul>
+    <li><b>Half-yearly:</b> rate ÷ 2, time × 2. 20% for 1½ saal → 10% for 3 baar → ratio 1000 : 1331.</li>
+    <li><b>Quarterly:</b> rate ÷ 4, time × 4. 20% for 9 mahine → 5% for 3 baar → ratio 8000 : 9261.</li>
+    <li><b>Har 8 mahine:</b> rate × 8/12, baar = kul mahine ÷ 8. 15% for 2 saal → 10% for 3 baar. <span class="tag p">PYQ ×2</span></li>
+    <li>Rate badal gaya, phir wahi purane tareeke: ratio, table ya ped.</li>
+  </ul>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Interest on Rs 10,000 at 20 percent for one year: yearly 2000, half-yearly 2100, quarterly 2155.06, monthly 2193.91, drawn to scale">
+      <line x1="200" y1="20" x2="200" y2="215" class="ln"/>
+      <line x1="560" y1="20" x2="560" y2="215" class="ln" stroke-dasharray="3 4"/>
+      <text x="10" y="45" class="lbl">Yearly</text><text x="10" y="61" class="sm">20% × 1 baar</text>
+      <rect x="200" y="32" width="360" height="30" class="chf"/><rect x="200" y="32" width="360" height="30" class="chs"/>
+      <text x="572" y="52" class="lbl">₹2,000</text>
+      <text x="10" y="95" class="lbl">Half-yearly</text><text x="10" y="111" class="sm">10% × 2 baar</text>
+      <rect x="200" y="82" width="378" height="30" class="chf"/><rect x="200" y="82" width="378" height="30" class="chs"/>
+      <text x="590" y="102" class="lbl">₹2,100</text>
+      <text x="10" y="145" class="lbl">Quarterly</text><text x="10" y="161" class="sm">5% × 4 baar</text>
+      <rect x="200" y="132" width="388" height="30" class="chf"/><rect x="200" y="132" width="388" height="30" class="chs"/>
+      <text x="598" y="152" class="lbl">₹2,155.06</text>
+      <text x="10" y="195" class="lbl">Monthly</text><text x="10" y="211" class="sm">1⅔% × 12 baar</text>
+      <rect x="200" y="182" width="395" height="30" class="chf"/><rect x="200" y="182" width="395" height="30" class="chs"/>
+      <text x="605" y="202" class="lbl">₹2,193.91</text>
+      <text x="350" y="240" text-anchor="middle" class="sm">₹10,000 par 20% saalana, 1 saal · bars scale par · dashed line = yearly wala level</text>
+    </svg>
+    </div>
+    <figcaption>Jitni baar jodo, utna zyada interest. Par har baar badhat kam hoti jaati hai. 20% half-yearly = saal ka 21% (10 + 10 + 1). <span class="tag x">CGL+</span></figcaption>
+  </figure>
+
+  <!-- ========== METHOD G ========== -->
+  <h3>Speed method 7 · Option se pakdo</h3>
+  <ul>
+    <li><b>CI &gt; SI hamesha</b> (2 saal ya zyada). SI pehle nikaalo (bas r × n %). Jo option SI se chhota ya barabar hai, kaat do.</li>
+    <li><b>CI bahut zyada bhi nahi hota.</b> 2 saal mein CI − SI = P ka (r/100)². 10% par ye sirf P ka 1% hai. Toh CI SI se thoda hi upar hoga.</li>
+    <li><b>Last digit / paise dekho.</b> ₹1000 par 10%, 3 saal → 331, poora number. ₹25,000 → 25 × 331, last digit 5. ₹2,320.5 jaisa answer aadhe rupaye par khatam hota hai, kyunki 5000 × 4641/10000.</li>
+    <li><b>Divisibility:</b> 20% 3 saal → P 125 ka multiple aur A 216 ka multiple hona chahiye (jab answer poora ho).</li>
+    <li><b>"Approx" likha ho ya rate ganda ho:</b> sabse paas ka saaf rate lo, answer ka andaaza lagao, sabse kareeb wala option chuno.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · 3 saal mein 3 guna. Rate? Options 44.2%, 66.7%, 100%, 33.3% · <i>~20 sec</i></span>
+    50% = 1/2 → 2 : 3 → 3 saal 8 : 27 → 27/8 = 3.4 guna (thoda zyada).<br>
+    40% = 2/5 → 5 : 7 → 3 saal 125 : 343 → lagbhag 2.7 guna (thoda kam).<br>
+    Toh rate 40 aur 50 ke beech → <b>44.2%</b>.
+  </div>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing a method. Read the question, then check in order: half-yearly or quarterly, CI minus SI, x times, clean fraction rate, only 2 years, 3 years with an awkward rate, approx. Each yes leads to its method.">
+      <defs>
+        <marker id="mci-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya pucha hai?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mci-fc-arr)"/>
+      <!-- decision boxes -->
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">Half-yearly / quarterly / 8-monthly?</text>
+        <text x="180" y="141">CI − SI ka farq pucha hai?</text>
+        <text x="180" y="197">"x guna" (2×, 4×, 8×) wala sawaal?</text>
+        <text x="180" y="253">Rate saaf fraction? (10, 20, 12½, 25%…)</text>
+        <text x="180" y="309">Sirf 2 saal, rate kuch bhi?</text>
+        <text x="180" y="365">3 saal, rate 12 / 15 / 6 / 4%?</text>
+        <text x="180" y="421">Number gande ya "approx" likha?</text>
+      </g>
+      <!-- nahi arrows -->
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mci-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mci-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mci-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mci-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mci-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mci-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <!-- haan arrows -->
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mci-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <!-- method boxes -->
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Rate ÷ 2, time × 2</text>
+        <text x="410" y="132">CI − SI shortcut</text>
+        <text x="410" y="188">Times ka power, saalon ka guna</text>
+        <text x="410" y="244">Ratio method</text>
+        <text x="410" y="300">a + b + ab/100 (table)</text>
+        <text x="410" y="356">1-3-3-1 ka ped</text>
+        <text x="410" y="412">Saaf rate + option check</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">quarterly ÷ 4, × 4 · phir neeche wale rows</text>
+        <text x="410" y="149">2 saal: P × (r/100)² · 3 saal: × (3 + r/100)</text>
+        <text x="410" y="205">2× in 5 saal → 8× in 15 saal</text>
+        <text x="410" y="261">10 : 11 · 5 : 6 · 8 : 9 · 6 : 7 · 20 : 21</text>
+        <text x="410" y="317">P ka 1% × (kul %)</text>
+        <text x="410" y="373">3 × tukda1 + 3 × tukda2 + 1 × tukda3</text>
+        <text x="410" y="429">CI &gt; SI · last digit · sabse paas wala</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow ek baar rough mein chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula chahiye toh (bas pehchaan ke liye)</span>
+    Kitaab ka formula A = P(1 + r/100)<sup>n</sup> wahi baat hai jo ratio method karta hai. 10% par (1 + 1/10) = 11/10, yaani 10 : 11. Isliye formula ratta mat maaro, ratio ki seedhi samjho.<br>
+    Half-yearly ka saal bhar ka asli rate = r + r²/400. 9% half-yearly → 4.5 + 4.5 + 0.2025 = 9.2025%. <span class="tag p">PYQ</span><br>
+    <span class="tag x">CGL+</span> Rule of 72: paisa lagbhag 72 ÷ r saal mein dugna hota hai. 8% → ~9 saal. Sirf andaaze ke liye.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>12½% ko fraction mein likho. 2 saal ka P : A kya hoga?</summary><p>1/8. Ek saal 8 : 9, toh 2 saal 64 : 81. CI = 17 parts.</p></details>
+    <details><summary>2 saal ke ped mein "r% ka r%" wale tukde kitne hote hain?</summary><p>Sirf ek. Wahi ek tukda CI − SI hai, yaani P × (r/100)².</p></details>
+    <details><summary>15% par 2 saal ka CI kitne % banta hai? 5 second mein.</summary><p>15 + 15 + 225/100 = 32.25%.</p></details>
+    <details><summary>Paisa 3 guna hota hai 4 saal mein. 27 guna kab?</summary><p>27 = 3³, toh 3 × 4 = 12 saal.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · COMPOUND INTEREST (part 2: question types from PYQs) ===================== -->
+<section class="chap" id="mci-types">
+  <div class="eyebrow">Maths · PYQ types</div>
+  <h2>Compound Interest: 12 type ke sawaal, topper ki rough ke saath</h2>
+  <div class="meta">Bank mein 103 sawaal · 100 yahan · 3 chhode (scan mein number ud gaye) · har sawaal ke aage uska method likha hai</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 (Tier-2 alag likha hai) · CHSL = CHSL 2025 Tier 1 · CPO = CPO 2025 · SP-XIV = Selection Post Phase XIV 2025 · MTS = MTS 2025 · DP = Delhi Police (Jan 2026). Saari dates shift ki dates hain.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Seedha CI ya amount, poore saal (15 Qs)</h3>
+  <div class="box"><span class="k">Worked · ₹25,000 par 10%, 3 saal ka CI <span class="tag p">PYQ</span> <small>CGL · 22 Sep 2025</small></span>
+    <b>Method:</b> ratio 10 : 11 · <i>~10 sec</i><br>
+    3 saal → 1000 : 1331 → CI = 331 parts. P = 1000 parts = 25,000 → 1 part = 25.<br>
+    CI = 331 × 25 = <mark>₹8,275</mark>. (Ped se bhi: 7500 + 750 + 25.)
+  </div>
+  <div class="box"><span class="k">Worked · ₹22,500 par 4%, 2 saal ka amount <span class="tag p">PYQ</span> <small>CPO · 10 Dec 2025</small></span>
+    <b>Method:</b> a + b + ab/100 · <i>~12 sec</i><br>
+    4 + 4 + 0.16 = 8.16%. 1% = 225 → 225 × 8 = 1,800, 225 × 0.16 = 36 → 1,836.<br>
+    A = 22,500 + 1,836 = <mark>₹24,336</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹60,000 par 15%, umar 20 se 24 tak (4 saal) <span class="tag p">PYQ</span> <small>CHSL · 25 Nov 2025</small></span>
+    <b>Method:</b> ped 1-4-6-4-1 · <i>~30 sec</i><br>
+    Tukde: 15% of 60,000 = 9,000 → 15% of 9,000 = 1,350 → 15% of 1,350 = 202.5 → 15% of 202.5 = 30.375.<br>
+    CI = 4 × 9,000 + 6 × 1,350 + 4 × 202.5 + 30.375 = 36,000 + 8,100 + 810 + 30.375 = 44,940.375.<br>
+    A = <mark>₹1,04,940.38</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> CI on 8,000, 10%, 2 saal → <b>table 21%</b> → 80 × 21 → <mark>₹1,680</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Amount on 4,500, 10%, 5 saal → <b>har saal 10% jodo</b> (10% = ek digit khiskao): 4,950 → 5,445 → 5,989.5 → 6,588.45 → 7,247.30 → <mark>₹7,247.3</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Amount on 6,000, 4%, 3 saal → <b>ped 1-3-3-1</b>: tukde 240, 9.6, 0.384 → 720 + 28.8 + 0.384 = 749.18 → <mark>₹6,749.18</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5,000 par 10% munafa, wapas lagaya, 2 saal baad → <b>ratio 100 : 121</b> → 50 × 121 → <mark>₹6,050</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> FD 6,000, 5%, 3 saal, maturity → <b>ped 1-3-3-1</b>: tukde 300, 15, 0.75 → 900 + 45 + 0.75 = 945.75 → <mark>₹6,945.75</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Amount on 8,000, 10%, 3 saal → <b>ratio 1000 : 1331</b> → 8 × 1331 → <mark>₹10,648</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> CI on 1,000, 10%, 3 saal → <b>ratio 1000 : 1331</b> → <mark>₹331</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> CI on 5,000, 8%, 1 saal → <b>pehla saal CI = SI</b> → <mark>₹400</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> CI on 2,000, 10%, 1 saal → <b>pehla saal CI = SI</b> → <mark>₹200</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Amount on 6,000, 9%, 2 saal → <b>a + b + ab/100</b> = 18.81% → 60 × 18.81 = 1,128.6 → <mark>₹7,128.60</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> CI on 50,000, 5%, 3 saal → <b>ped 1-3-3-1</b>: tukde 2,500, 125, 6.25 → 7,500 + 375 + 6.25 → <mark>₹7,881.25</mark> <small>DP · 9 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> Loan 15,000, 8%, 2 saal, kul chukana → <b>table 16.64%</b> → 150 × 16.64 = 2,496 → <mark>₹17,496</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Saal ke saath tukda (2½ saal, 3 saal 4 mahine), yearly compounding (6 Qs)</h3>
+  <p><b>Samjho:</b> poore saal par CI lagta hai. Bacha hua tukda (jaise 4 mahine) us waqt tak bane amount par <b>simple</b> interest leta hai. Toh bas ek aur "a + b + ab/100" jod do.</p>
+  <div class="box"><span class="k">Worked · ₹8,000 par 12%, 3 saal 4 mahine ka CI <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> table + a + b + ab/100 · <i>~25 sec</i><br>
+    3 saal 12% = <b>40.49%</b> (table se). 4 mahine = 1/3 saal → 12 × 1/3 = <b>4%</b> simple.<br>
+    Jodo: 40.49 + 4 + (40.49 × 4)/100 ≈ 40.49 + 4 + 1.62 = 46.11%.<br>
+    CI = 80 × 46.11 ≈ <mark>₹3,689</mark>. (Options mein 3,689 hi sabse paas hai.)
+  </div>
+  <div class="box"><span class="k">Worked (ulta) · 20% par 2½ saal ka CI ₹2,920 hai; P? <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small></span>
+    <b>Method:</b> ratio · <i>~15 sec</i><br>
+    2 saal 20% → 25 : 36. Aadha saal 10% → 10 : 11. Dono jodo: 250 : 396.<br>
+    CI = 396 − 250 = 146 parts = 2,920 → 1 part = 20 → P = 250 × 20 = <mark>₹5,000</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> CI on 10,000, 10%, 2 saal 6 mahine → <b>table 21%, phir +5%</b>: 21 + 5 + 1.05 = 27.05% → <mark>₹2,705</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> CI on 7,000, 9%, 1 saal 8 mahine → <b>9% phir 6%</b>: 9 + 6 + 0.54 = 15.54% → 70 × 15.54 → <mark>₹1,087.80</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 18% par 1½ saal (yearly) ka CI 2,862; P? → <b>18% phir 9%</b>: 18 + 9 + 1.62 = 28.62% → 28.62% of P = 2,862 → <mark>₹10,000</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Wahi sawaal dobara (bank mein "1 years" chhapa hai; 1½ hi hona chahiye, kyunki 1 saal par 18% se 1,800 aata) → <b>18 + 9 + 1.62</b> → <mark>₹10,000</mark> <small>CGL · 13 Sep 2025</small></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Half-yearly, quarterly, 8-monthly aur effective rate (10 Qs)</h3>
+  <div class="box"><span class="k">Worked · ₹12,500 par 15%, 2 saal, har 8 mahine compounding <span class="tag p">PYQ</span> <small>CGL · 20 Sep 2025</small></span>
+    <b>Method:</b> rate badlo + ratio · <i>~12 sec</i><br>
+    Rate = 15 × 8/12 = <b>10%</b>. Baar = 24 ÷ 8 = <b>3</b>. → 1000 : 1331, CI 331 parts.<br>
+    12,500 = 1000 parts → 1 part = 12.5 → CI = 331 × 12.5 = <mark>₹4,137.50</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹15,625 → ₹19,683, 1½ saal, half-yearly. Rate? <span class="tag p">PYQ</span> <small>CGL Tier-2</small></span>
+    <b>Method:</b> cube pehchano + ratio · <i>~15 sec</i><br>
+    15,625 = 25³ aur 19,683 = 27³ (cubes yaad rakho). 3 half-year hain, toh har half-year 25 : 27.<br>
+    25 par 2 badha = 2/25 = 8% har chhe mahine → saal ka <mark>16%</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> CI on 16,000, 20%, 9 mahine, quarterly → <b>5% × 3 baar, ratio 8000 : 9261</b> → CI 1261 parts, 1 part = 2 → <mark>₹2,522</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> CI on 5,000, 20%, 2 saal, half-yearly → <b>10% × 4 baar, ratio 10000 : 14641</b> → 4641 ÷ 2 → <mark>₹2,320.5</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> CI on 8,000, 20%, 1½ saal, half-yearly → <b>10% × 3, ratio 1000 : 1331</b> → 8 × 331 → <mark>₹2,648</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> CI on 60,000, 20%, 18 mahine, har 6 mahine → <b>10% × 3, ratio</b> → 60 × 331 → <mark>₹19,860</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> CI on 85,000, 24%, 1½ saal, half-yearly → <b>12% × 3, ped</b>: tukde 10,200, 1,224, 146.88 → 30,600 + 3,672 + 146.88 → <mark>₹34,418.88</mark> <small>DP · 9 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> Amount on 6,000, 8%, 2 saal, half-yearly → <b>4% × 4, ped 1-4-6-4-1</b>: tukde 240, 9.6, 0.384 → 960 + 57.6 + 1.54 + 0.02 = 1,019.15 → <mark>₹7,019.15</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> CI on 37,500, 12% saalana, har 8 mahine (time scan mein ud gaya; key 1⅓ saal se milti hai) → <b>8% × 2, table 16.64%</b> → 375 × 16.64 → <mark>₹6,240</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9% half-yearly ka saal bhar ka effective rate → <b>a + b + ab/100</b>: 4.5 + 4.5 + 0.2025 → <mark>9.20%</mark> (poora 9.2025%) <small>SP-XIV · 24 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Amount diya, principal nikaalo (5 Qs)</h3>
+  <p><b>Samjho:</b> ye ratio method ka sabse aasaan use hai. Amount = right wala number. Use parts mein baanto, phir left wala number utha lo.</p>
+  <div class="box"><span class="k">Worked · Kaunsi rakam 10% par 3 saal mein ₹23,958 banti hai? <span class="tag p">PYQ</span> <small>CHSL · 27 Nov 2025</small></span>
+    <b>Method:</b> ratio 1000 : 1331 · <i>~10 sec</i><br>
+    1331 parts = 23,958 → 1 part = 18.<br>
+    P = 1000 parts = <mark>₹18,000</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 12% par 2 saal mein amount 3,136; rakam ka 140%? → <b>ratio 25 : 28 → 625 : 784</b> → 1 part = 4 → P = 2,500 → <mark>₹3,500</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> 10% par 2 saal mein 12,100; P? → <b>ratio 100 : 121</b> → 1 part = 100 → <mark>₹10,000</mark> <small>CGL · 16 Sep 2025; CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12% par 2 saal mein 39,200; P? → <b>ratio 625 : 784</b> → 1 part = 50 → 625 × 50 → <mark>₹31,250</mark> <small>CHSL · 19 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Rate ya time nikaalo (9 Qs)</h3>
+  <p><b>Samjho:</b> P aur A ko chhota karo (common se kaato). Jo bacha, use pehchano: 100 : 121, 1000 : 1331, 625 : 729 … ye sab ratio ki seedhi ke number hain.</p>
+  <div class="box"><span class="k">Worked · ₹6,250 → ₹7,290, 2 saal mein. Rate? <span class="tag p">PYQ</span> <small>CHSL · 27 Nov 2025</small></span>
+    <b>Method:</b> ratio pehchano · <i>~10 sec</i><br>
+    10 se kaato: 625 : 729 = 25² : 27². Ek saal 25 : 27.<br>
+    25 par 2 badha = 2/25 = <mark>8%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Paisa 3 saal mein 3 guna. Rate? <span class="tag p">PYQ</span> <small>CGL · 22 Sep 2025</small></span>
+    <b>Method:</b> option bracket · <i>~20 sec</i><br>
+    50% (2 : 3) par 3 saal mein 27/8 ≈ 3.4 guna. 40% (5 : 7) par 343/125 ≈ 2.7 guna.<br>
+    Toh rate 40 aur 50 ke beech → <mark>44.2%</mark>. (66.7% ya 100% SI wali soch hai, galat.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 1,00,000 → 1,33,100 at 10%; saal? → <b>ratio</b>: 1000 : 1331 → <mark>3</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 50,000 → 66,550 at 10%; saal? → <b>ratio</b>: 50 se kaato → 1000 : 1331 → <mark>3</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5,000 → 6,050, 2 saal; rate? → <b>ratio</b>: 50 se kaato → 100 : 121 → <mark>10%</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> P = 450, A = 600, 1 saal; rate? → <b>seedha</b>: 150/450 = 1/3 → <mark>33.33%</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8,000 → 8,816, 2 saal; rate? → <b>table</b>: 816/8,000 = 10.2%, aur 5% ka 2-saal = 10.25% (sabse paas) → <mark>5%</mark> <small>DP · 16 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 40,000 → 56,244, 2 saal; rate? → <b>table + option</b>: 16,244/40,000 ≈ 40.6%. 18% → 39.24%, 19% → 41.61%, toh beech mein → <mark>18.5%</mark> (sabse paas wala option, note dekho) <small>DP · 10 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 2 saal mein 16 guna; rate? → <b>ratio</b>: 16 = 4 × 4, toh har saal 1 : 4 → 3 guna interest → <mark>300%</mark> <small>CHSL · 18 Nov 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP 10 Jan 2026 (40,000 → 56,244): asli rate lagbhag <b>18.58%</b> banta hai. 18.5% lagao toh amount 56,169 aata hai, 56,244 nahi. Phir bhi options mein 18.5% hi sabse paas hai. Wahi lagao, bas yaad rakho ki ye andaaze wala answer hai.</div>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · "x guna, t saal mein" (9 Qs)</h3>
+  <div class="trick"><b>Trick:</b> guna ko power mein likho. 15 saal mein 2 guna, 8 = 2³ → 3 × 15 = 45 saal. Times ka power, saalon ka guna.</div>
+  <div class="box"><span class="k">Worked · 15 saal mein dugna. 8 guna kab? <span class="tag p">PYQ</span> <small>CGL · 23 Sep 2025</small></span>
+    <b>Method:</b> x guna rule · <i>~5 sec</i><br>
+    8 = 2³ → 3 × 15 = <mark>45 saal</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 6,400 → 8,100 in 8 saal; 2,240 par 4 saal baad amount? <span class="tag p">PYQ</span> <small>CHSL · 21 Nov 2025</small></span>
+    <b>Method:</b> ratio + aadha time · <i>~15 sec</i><br>
+    100 se kaato: 64 : 81 = 8² : 9². 8 saal mein 64 : 81 hai, toh aadhe time (4 saal) mein 8 : 9.<br>
+    Amount = 2,240 × 9/8 = 280 × 9 = <mark>₹2,520</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ ×2</span> 6 saal mein 4 guna → 16 = 4² → <b>x guna rule</b> → <mark>12 saal</mark> <small>CGL · 16 Sep 2025; CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10 saal mein 5 guna → 25 = 5² → <b>x guna rule</b> → <mark>20 saal</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4 saal mein 2 guna → 8 = 2³ → <b>x guna rule</b> → <mark>12 saal</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 saal mein 2 guna → 8 = 2³ → <b>x guna rule</b> → <mark>15 saal</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12,000 dugna 5 saal mein; 20 saal baad? → 20 = 4 × 5 → 2⁴ = 16 guna → <b>x guna rule</b> → <mark>₹1,92,000</mark> <small>DP · 20 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 8 saal mein 3 guna → 9 = 3² → <b>x guna rule</b> → <mark>16 saal</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Do amount (ya do interest) diye → rate aur principal (11 Qs)</h3>
+  <p><b>Samjho:</b> saal 2 ka amount aur saal 3 ka amount diya hai. Beech mein jo badha, wo sirf <b>ek saal ka interest hai, saal 2 wale amount par</b>. Toh rate = badhat ÷ pehla amount. Agar 2 saal ka gap ho, toh ratio 100 : 121 jaisa dikhega.</p>
+  <div class="box"><span class="k">Worked · 2 saal baad ₹9,680, 3 saal baad ₹10,648. P? <span class="tag p">PYQ</span> <small>CHSL · 14 Nov 2025</small></span>
+    <b>Method:</b> badhat ÷ pehla + ratio · <i>~12 sec</i><br>
+    Badhat = 968 = 9,680 ka 10% → rate <b>10%</b>.<br>
+    2 saal → 100 : 121. 9,680 = 121 parts → 1 part = 80 → P = <mark>₹8,000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 3 saal baad ₹10,648, 5 saal baad ₹12,884.08. P? <span class="tag p">PYQ</span> <small>CHSL · 27 Nov 2025</small></span>
+    <b>Method:</b> 1331 pehchano · <i>~15 sec</i><br>
+    10,648 = 8 × 1331. Ye 1331 dekh kar hi 10% ka shak hota hai. Check: 10,648 ka 21% = 2,236.08 → 12,884.08 ✔ (2 saal ka 21%).<br>
+    3 saal 1000 : 1331 → P = 8 × 1000 = <mark>₹8,000</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 6,400 (2 saal), 7,040 (3 saal) → <b>badhat ÷ pehla</b>: 640/6,400 → <mark>10%</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12,000 (2 saal), 13,200 (3 saal) → <b>badhat ÷ pehla</b>: 1,200/12,000 → <mark>0.1 (= 10%)</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1,600 (2 saal), 2,000 (3 saal) → <b>badhat ÷ pehla</b>: 400/1,600 → <mark>25%</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4,232 (2 saal), 4,655.20 (3 saal) → <b>badhat ÷ pehla</b>: 423.2 = 4,232 ka 10% → <mark>10%</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Saal 1 ka interest 2,000, saal 2 ka 2,400; rakam ka 50%? → <b>badhat ÷ pehla</b>: 400 = 2,000 ka 20% → P ka 20% = 2,000 → P = 10,000 → <mark>₹5,000</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15,972 (2 saal), 17,888.64 (3 saal) → <b>badhat ÷ pehla</b>: 1,916.64. 10% = 1,597.2, 2% = 319.44, jodo = 1,916.64 → <mark>12%</mark> <small>CHSL Tier-2</small></li>
+    <li><span class="tag p">PYQ</span> 1,000 (3 saal), 1,200 (4 saal) → <b>badhat ÷ pehla</b>: 200/1,000 → <mark>20%</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5,324 (3 saal), 6,442.04 (5 saal) → <b>1331 pehchano</b>: 5,324 = 4 × 1331 → 10% → P = 4 × 1000 → <mark>₹4,000</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15,972 (3 saal), 19,326.12 (5 saal) → <b>1331 pehchano</b>: 15,972 = 12 × 1331 → P = 12 × 1000 → <mark>₹12,000</mark> <small>CHSL · 29 Nov 2025</small></li>
+  </ul>
+  <p><span class="tag x">CGL+</span> n saal baad A<sub>1</sub> aur 2n saal baad A<sub>2</sub> diya ho, toh P = A<sub>1</sub> × A<sub>1</sub> ÷ A<sub>2</sub>. Kyunki P, A<sub>1</sub>, A<sub>2</sub> ek hi ratio mein badhte hain. Example: 1,210 (2 saal) aur 1,464.10 (4 saal) → P = 1,000.</p>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · Kisi ek saal ka interest, aur amounts ka ratio (5 Qs)</h3>
+  <p><b>Samjho:</b> har saal ka interest pichhle saal ke interest se r% zyada hota hai. 10% par: 100, 110, 121. Toh <b>do lagataar saalon ke interest ka farq = pehle wale interest ka r%</b>. Isko "interest ki seedhi" bolo.</p>
+  <div class="box"><span class="k">Worked · ₹4,000 par 15%: saal 2 aur saal 3 ke CI ka farq <span class="tag p">PYQ</span> <small>CHSL · 28 Nov 2025</small></span>
+    <b>Method:</b> interest ki seedhi · <i>~12 sec</i><br>
+    Saal 1 = 15% of 4,000 = 600. Saal 2 = 600 + 15% of 600 = 600 + 90 = 690.<br>
+    Saal 3 − saal 2 = 690 ka 15% = 69 + 34.5 = <mark>₹103.5</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 6,000 par 20%: saal 2 vs saal 3 ka interest → <b>interest ki seedhi</b>: 1,200 → 1,440 → farq = 1,440 ka 20% → <mark>₹288</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 74,000 par 12%: sirf saal 3 ka interest → <b>interest ki seedhi</b>: 8,880 → +1,065.6 = 9,945.6 → +1,193.47 = 11,139.07 → <mark>₹11,139.07</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10%: saal 1 ke baad amount : saal 2 ke baad amount → <b>ratio</b> → <mark>10 : 11</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12.5%: saal 1 ke baad amount : saal 2 ke baad amount → <b>ratio 1/8</b> → <mark>8 : 9</mark> <small>CHSL · 28 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · CI − SI (13 Qs, sabse pasandida)</h3>
+  <p><b>Yaad karo:</b> 2 saal mein farq = sirf kona = P × (r/100)². 3 saal = wahi kona × (3 + r/100). 4 saal = ped mein pehla tukda chhod kar sab.</p>
+  <div class="box"><span class="k">Worked · 2 saal, 15%, CI − SI = ₹360. P? <span class="tag p">PYQ</span> <small>CHSL · 12 Nov 2025</small></span>
+    <b>Method:</b> CI − SI (2 saal) · <i>~10 sec</i><br>
+    15% = 3/20 → kona = P × 9/400.<br>
+    P × 9/400 = 360 → P = 40 × 400 = <mark>₹16,000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹25,000, 12%, 3 saal: CI − SI? <span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small></span>
+    <b>Method:</b> CI − SI (3 saal) · <i>~15 sec</i><br>
+    12% = 3/25 → 2-saal kona = 25,000 × 9/625 = 40 × 9 = 360.<br>
+    3 saal = 360 × (3 + 3/25) = 1,080 + 43.2 = <mark>₹1,123.2</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> CI − SI = 15, 2 saal, 10%; rakam? → <b>kona</b>: 10% par kona = P ka 1% → <mark>₹1,500</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 18,000 par 15%, 2 saal: CI − SI → <b>kona</b> 9/400: 45 × 9 → <mark>₹405</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 18,000, 2 saal, CI − SI = 405; rate? → <b>kona ulta</b>: 405/18,000 = 9/400 = (3/20)² → <mark>15%</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7,500, 2 saal, CI − SI = 108; rate? → <b>kona ulta</b>: 108/7,500 = 36/2,500 = (6/50)² → <mark>12%</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12,000, 2 saal, CI − SI = 216; rate? → <b>kona ulta + option</b>: 216/12,000 = 180/10,000 → r² = 180. 13² = 169, 14² = 196 → 13 aur 14 ke beech → <mark>13.42%</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10,000 par 5%, 2 saal: CI − SI → <b>kona</b>: 5% par P ÷ 400 → <mark>₹25</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30,000 par 10%, 4 saal: CI − SI → <b>ped 1-4-6-4-1</b>, pehla tukda chhodo: 6 × 300 + 4 × 30 + 3 → <mark>₹1,923</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20% par 3 saal ka CI 864; SI? → <b>ratio 125 : 216</b>: CI = 91 parts, SI = 3 × 25 = 75 parts → SI = 864 × 75/91 ≈ 9.5 × 75 → <mark>₹712.09</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12½% par 2 saal ka CI 265.625; SI? → <b>ratio 64 : 81</b>: CI 17 parts, SI 2 × 8 = 16 parts → 1 part = 15.625 → <mark>₹250</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3 saal ka CI 1,270; SI? (rate scan mein ud gaya; 16⅔% = 1/6 hai) → <b>ratio 216 : 343</b>: CI 127 parts → 1 part = 10; SI = 3 × 36 = 108 parts → <mark>₹1,080</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1½ saal, 10% half-yearly, CI − SI = 183; P? → <b>5% × 3, ratio 8000 : 9261</b>: CI 1261 parts, SI 3 × 400 = 1200 parts, farq 61 parts = 183 → 1 part = 3 → <mark>₹24,000</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+  </ul>
+  <p><span class="tag x">CGL+</span> 2 saal ka SI aur CI dono diye ho (SI = 200, CI = 210): ek saal ka SI = 100, farq 10 = 100 ka 10% → rate 10%. P = 100 ÷ 10% = 1,000.</p>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · SI aur CI ek saath (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · SI on (x + 500) at 32% for 4 saal : CI on (x − 500) at 20% for 2 saal = 64 : 11; x? <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small></span>
+    <b>Method:</b> SI % + table 44% · <i>~25 sec</i><br>
+    SI = 128% of (x + 500). CI (20%, 2 saal) = 44% of (x − 500).<br>
+    128 : 44 = 32 : 11. Toh (32/11) × (x + 500)/(x − 500) = 64/11 → (x + 500) = 2(x − 500).<br>
+    x = <mark>₹1,500</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 12,000 par 8% SI, 4 saal → 32% → 15,840; phir 5% CI, 2 saal → <b>table 10.25%</b> → 158.4 × 10.25 = 1,623.6 → <mark>₹17,463.6</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> z par 13% SI 4 saal vs z par 12% CI 2 saal, SI wala amount 78 zyada → <b>SI 52%, table 25.44%</b>: farq 26.56% of z = 78 → z ≈ 7,800 ÷ 26.56 → <mark>₹293.66</mark> (poora 293.67) <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Gaurav x par 10% CI, 3 saal; Prem 18,000 par 15% SI, 4 saal (= 10,800) → <b>ratio 1000 : 1331</b> → key <mark>₹1,986</mark> (x = 6,000) <small>CHSL · 17 Nov 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CHSL 17 Nov 2025 (Gaurav aur Prem): sawaal ko seedha padho ("Gaurav ka interest = Prem ka interest − (2x − 1,200)") toh x ≈ 5,148 aur Gaurav ka interest ≈ <b>₹1,704</b> aata hai, jo kisi option mein nahi hai. Key ka ₹1,986 doosri reading se aata hai: <b>2x − 1,200 = Prem ka interest (10,800)</b> → x = 6,000 → CI = 6 × 331 = 1,986. Sawaal galat likha hai. Exam mein 1,986 lagao.</div>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · Rate badla, paisa nikala ya jama kiya, kishtein (9 Qs)</h3>
+  <p><b>Samjho:</b> saal-dar-saal chalo. Jab bhi balance badle, naya balance hi naya P hai. Har kadam par ratio ya table lagao.</p>
+  <div class="box"><span class="k">Worked · Loan ₹8,000, 10%, 3 saal; saal 1 ke baad 4,000 lautaye, baaki saal 3 ke end mein. Kul interest? <span class="tag p">PYQ</span> <small>CHSL · 25 Nov 2025</small></span>
+    <b>Method:</b> 10% jodo + table 21% · <i>~20 sec</i><br>
+    Saal 1 ke end: 8,000 + 800 = 8,800 → 4,000 diye → 4,800 bache.<br>
+    Agle 2 saal 21%: 4,800 + 1,008 = 5,808.<br>
+    Kul diya = 4,000 + 5,808 = 9,808 → interest = <mark>₹1,808</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · TV: cash 19,650, ya 3,100 down + 3 barabar saalana kisht, 10% par <span class="tag p">PYQ</span> <small>CGL · 16 Sep 2025</small></span>
+    <b>Method:</b> ratio 1000 : 1331 · <i>~25 sec</i><br>
+    Loan = 19,650 − 3,100 = 16,550. Har kisht = 1331 parts maan lo.<br>
+    Aaj ki keemat: 1 saal door wali = 1210, 2 saal door = 1100, 3 saal door = 1000 parts. Kul = 3310 parts.<br>
+    3310 parts = 16,550 → 1 part = 5 → kisht = 1331 × 5 = <mark>₹6,655</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 2,00,000 par 10%, saal 1 ke baad 20,000 nikale → <b>10% jodo</b>: 2,20,000 − 20,000 = 2,00,000 → +10% → <mark>₹2,20,000</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1,50,000 par 10%, saal 1 ke interest ka aadha (7,500) nikala → <b>10% jodo</b>: 1,57,500 + 15,750 → <mark>₹1,73,250</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10,000 par 10%, 12.5%, 8% → <b>har saal % jodo</b>: 11,000 → +1,375 = 12,375 → +990 = 13,365 → CI <mark>₹3,365</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8% phir 10%, kul CI 1,872; P? → <b>a + b + ab/100</b> = 18.8%. 10,000 par 1,880 aata, humein 8 kam chahiye → P thoda sa 10,000 se kam → <mark>₹9,957.45</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 68,000 par 20%, 2 saal → <b>table 44%</b> → 97,920; 16,000 jode → 1,13,920 + 20% (22,784) → <mark>₹1,36,704</mark> <small>DP · 12 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 20,000 par 6%; 18 mahine baad 10,000 aur; 3 saal baad kul → <b>ped</b> 20,000: 3 × 1,200 + 3 × 72 + 4.32 = 3,820.32 → 23,820.32. 10,000 ke liye 6% phir aadha saal 3%: 10,600 + 318 = 10,918 → <mark>₹34,738.32</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 50,000 par 10%, 3 saal → <b>ratio</b> 50 × 1331 = 66,550; phir 12%, 2 saal → <b>table 25.44%</b>: 665.5 × 25.44 = 16,930.32 → 83,480.32 → CI <mark>₹33,480.32</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+  <p><span class="tag x">CGL+</span> 10% par 2 barabar kisht: kisht = 121 parts maano. Aaj ki keemat 110 + 100 = 210 parts. Toh kisht = Loan × 121/210.</p>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · Population badhna aur keemat girna (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · Machine har saal 10% girti hai; abhi ₹72,900 ki hai. 2 saal pehle? <span class="tag p">PYQ</span> <small>SP-XIV · 2 Aug 2025</small></span>
+    <b>Method:</b> ratio 10 : 9 · <i>~10 sec</i><br>
+    2 saal → 100 : 81. Abhi ki keemat = 81 parts = 72,900 → 1 part = 900.<br>
+    Pehle = 100 parts = <mark>₹90,000</mark>. (Do baar 10% jod doge toh 88,209 aayega: galat.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Machine 80,000, 10% saalana girawat, 3 saal baad → <b>ratio 1000 : 729</b> → 80 × 729 → <mark>₹58,320</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Abaadi 49,000, +2% saalana, 2 saal baad → <b>a + b + ab/100</b> = 4.04% → 490 × 4.04 = 1,979.6 → <mark>50,980</mark> <small>DP · 21 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> Abaadi 43,000, +13% saalana, 3 saal baad (approx) → <b>ped</b>: 3 × 13 + 3 × 1.69 + 0.22 ≈ 44.29% → 430 × 44.29 ≈ 19,045 → <mark>62,047</mark> (sabse paas) <small>MTS · 11 Feb 2025</small></li>
+  </ul>
+  <p><span class="tag x">CGL+</span> Pehle +10% phir −10%: 10 − 10 − 1 = −1%. Yaani 1% ka nuksaan, zero nahi.</p>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>"2 saal 6 mahine, yearly" mein aadhe saal ko bhi compound karna</td><td>Poore saal compound. Aadha saal simple: 10% par bas +5% jodo (a + b + ab/100 se).</td></tr>
+    <tr><td>Half-yearly mein rate aadha kiya, par time wahi rakha</td><td>Rate aadha <b>aur</b> baar dugne. 8-monthly: rate × 8/12, baar = mahine ÷ 8.</td></tr>
+    <tr><td>CI pucha, amount likh diya (ya ulta)</td><td>Options mein dono hote hain. Sawaal ki aakhri line dobara padho.</td></tr>
+    <tr><td>"Saal 3 ka interest" ko 3 saal ka CI samajhna</td><td>Saal 3 ka interest = interest ki seedhi ka teesra kadam.</td></tr>
+    <tr><td>4 saal mein 2 guna → 8 guna 16 saal mein</td><td>8 = 2³ → 3 × 4 = 12 saal. Power, seedha guna nahi.</td></tr>
+    <tr><td>3 saal mein 3 guna → rate 66.7% ya 100%</td><td>Options ko 40% aur 50% se bracket karo → 44.2%.</td></tr>
+    <tr><td>Girawat mein peeche jaane ke liye 10% do baar jodna</td><td>Ratio 10 : 9 → 100 : 81. Abhi ki keemat = 81 parts.</td></tr>
+    <tr><td>Paisa nikalne ya jama karne ke baad purana balance chalana</td><td>Har badlaav ke baad naya balance hi naya P.</td></tr>
+    <tr><td>3 saal ya half-yearly mein bhi P × (r/100)² lagana</td><td>3 saal: × (3 + r/100). Half-yearly: CI aur SI dono parts mein nikaalo.</td></tr>
+    <tr><td>Option decimal mein (0.1)</td><td>0.1 = 10%. CGL 15 Sep 2025 mein yahi tha.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 103 sawaal. <b>3 chhode</b> kyunki scan mein number ud gaye: DP 9 Jan 2026 Shift 1 ke do ("do saal baad aur … saal baad rakam", aur "do saal mein SI aur CI … rate") aur SP-XIV 29 Aug 2025 (14% SI aur 7% CI, farq ₹392). Chaar aur scan wale sawaal options se dobara banaye (1½ saal wala, 16⅔% wala, 1⅓ saal wala, aur half-yearly CI − SI wala). Har ek upar mark hai. CHSL 24 Nov 2025 ka ek sawaal "same annual simple interest rate" bolta hai par asal mein seedha CI hai. Use CI ki tarah hi hal kiya hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>₹20,000 par 10%, 2 saal 6 mahine, yearly compounding. CI?</summary><p>2 saal = 21%. Phir aadha saal 5%: 21 + 5 + 1.05 = 27.05%. 200 × 27.05 = ₹5,410.</p></details>
+    <details><summary>₹5,000 par 8%, 2 saal: CI − SI?</summary><p>Kona = 5,000 × 8/100 × 8/100 = 5,000 × 64/10,000 = ₹32.</p></details>
+    <details><summary>Rakam 9 saal mein 27 guna hoti hai. 3 guna kitne saal mein?</summary><p>27 = 3³, toh 3 guna 9 ÷ 3 = 3 saal mein.</p></details>
+    <details><summary>2 saal baad ₹2,420, 3 saal baad ₹2,662. Rate aur P?</summary><p>Badhat 242 = 2,420 ka 10% → 10%. 2,420 = 121 parts → 1 part = 20 → P = ₹2,000.</p></details>
+    <details><summary>₹40,000 par 20%, 6 mahine, quarterly. CI?</summary><p>5% × 2 baar → 5 + 5 + 0.25 = 10.25% → 400 × 10.25 = ₹4,100.</p></details>
+  </div>
+</section>

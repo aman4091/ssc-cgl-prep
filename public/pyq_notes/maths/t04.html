@@ -1,0 +1,919 @@
+<!-- ===================== MATHS · PERCENTAGE (part 1: basics + speed methods) ===================== -->
+<section class="chap" id="mpc-basics">
+  <div class="eyebrow">Maths · 260 questions</div>
+  <h2>Percentage: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, Selection Post XIV, MTS, Delhi Police, GD 2026) · sabse zyada: badhna-ghatna lagataar, "kitna % kam/zyada", income-kharcha-bachat, % se number</div>
+
+  <h3>Pehle ek chhoti si kahani: 100 dabbe</h3>
+  <p>Ek class mein 100 bachche hain. Unmein 25 ladkiyan hain. Toh har 100 mein 25 ladkiyan. Bas, isi ko <b>25 percent</b> kehte hain. "Percent" ka matlab hi hai <b>"har 100 mein"</b>.</p>
+  <p>Ab class mein 100 nahi, 4 bachche hain, aur 1 ladki hai. Har 4 mein 1. Agar 4 ko 25 se guna karo toh 100 ban jaata hai, aur 1 bhi 25 ban jaata hai. Toh yahan bhi har 100 mein 25 hi hai. Yaani <b>1/4 aur 25% ek hi baat hai</b>.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="A 10 by 10 grid of 100 small boxes. A 5 by 5 block of 25 boxes in one corner is shaded, which is one quarter of the square. So 25 percent equals 25 over 100 equals 1 over 4 equals 0.25.">
+      <rect x="40" y="20" width="100" height="100" class="chf"/>
+      <path d="M40,20 V220 M60,20 V220 M80,20 V220 M100,20 V220 M120,20 V220 M140,20 V220 M160,20 V220 M180,20 V220 M200,20 V220 M220,20 V220 M240,20 V220 M40,20 H240 M40,40 H240 M40,60 H240 M40,80 H240 M40,100 H240 M40,120 H240 M40,140 H240 M40,160 H240 M40,180 H240 M40,200 H240 M40,220 H240" class="ln" fill="none"/>
+      <rect x="40" y="20" width="100" height="100" class="chs" style="stroke-width:2.5"/>
+      <rect x="40" y="20" width="200" height="200" fill="none" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="140" y="240" text-anchor="middle" class="sm">poora square = 100 dabbe = 100%</text>
+      <text x="280" y="50" class="lbl">Rangeen dabbe = 25 (har 100 mein 25)</text>
+      <text x="280" y="90" class="lbl" style="fill:var(--ch)">25%  =  25/100  =  1/4  =  0.25</text>
+      <text x="280" y="114" class="sm">chaaron ek hi cheez hain, bas likhne ka tareeka alag</text>
+      <text x="280" y="152" class="lbl">Dekho: rangeen hissa square ka ek-chauthai hai</text>
+      <text x="280" y="176" class="sm">isliye "x% of y" = y ko fraction se guna karna</text>
+      <text x="280" y="196" class="sm">25% of 640 = 640 × 1/4 = 160 · koi decimal nahi</text>
+    </svg>
+    </div>
+    <figcaption>100 dabbon ka square. 25 rangeen = 25%. Wahi hissa square ka 1/4 bhi hai.</figcaption>
+  </figure>
+
+  <h3>Teen baatein, jinse saara chapter nikalta hai</h3>
+  <ul>
+    <li><b>1. Percent = per 100 = fraction.</b> 20% = 20/100 = 1/5. 12½% = 1/8. Toh "% of" ka matlab hai "fraction se guna".</li>
+    <li><b>2. Har % kisi ka hota hai (base).</b> "20% zyada" kis par? Jis se tulna ho rahi hai, wahi base hai, wahi 100 maano. Aadhi galtiyan yahin hoti hain.</li>
+    <li><b>3. Badhna = guna karna.</b> 20% badha = 100 se 120 = <b>× 6/5</b>. 20% ghata = 100 se 80 = <b>× 4/5</b>. Do baar badla? Bas do baar guna karo.</li>
+  </ul>
+  <div class="box"><span class="k">Ab naam rakh dete hain</span>
+    Jo shuru mein tha = <b>original (base)</b>. Jitna badla = <b>change</b>. Change ÷ original × 100 = <b>% change</b>.<br>
+    Badhne ke baad ka guna (6/5, 4/5) = <b>multiplying factor</b>. Isi ek cheez se successive %, population, depreciation, sab chalta hai.
+  </div>
+  <p>Paper mein ek sawaal ke liye lagbhag <b>36 second</b> milte hain. Neeche 9 tareeke hain. Sab haath se, rough mein, bina lambe decimal ke chalte hain.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Fraction ↔ % table (sabse zaroori)</h3>
+  <p><b>Kab use karo:</b> jab % "ajeeb" dikhe: 12½, 16⅔, 33⅓, 37½, 62½, 66⅔, 87½. Ye sab saaf fraction hain. Fraction se guna karna 2 second ka kaam hai.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Sixteen cards: fraction and its percent. 1/2 50, 1/3 33 and a third, 1/4 25, 1/5 20, 1/6 16 and two thirds, 1/7 about 14.28, 1/8 12.5, 1/9 about 11.11, 1/10 10, 1/11 about 9.09, 1/12 8 and a third, 1/15 6 and two thirds, 1/16 6.25, 1/20 5, 3/8 37.5, 2/3 66 and two thirds.">
+      <g text-anchor="middle">
+        <rect x="8" y="10" width="82" height="72" rx="6" class="chf"/><rect x="8" y="10" width="82" height="72" rx="6" class="chs"/>
+        <rect x="94" y="10" width="82" height="72" rx="6" class="chf"/><rect x="94" y="10" width="82" height="72" rx="6" class="chs"/>
+        <rect x="180" y="10" width="82" height="72" rx="6" class="chf"/><rect x="180" y="10" width="82" height="72" rx="6" class="chs"/>
+        <rect x="266" y="10" width="82" height="72" rx="6" class="chf"/><rect x="266" y="10" width="82" height="72" rx="6" class="chs"/>
+        <rect x="352" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="438" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="524" y="10" width="82" height="72" rx="6" class="chf"/><rect x="524" y="10" width="82" height="72" rx="6" class="chs"/>
+        <rect x="610" y="10" width="82" height="72" rx="6" class="chf"/>
+        <text x="49" y="38" class="lbl">1/2</text><text x="49" y="62" class="lbl" style="fill:var(--ch)">50%</text>
+        <text x="135" y="38" class="lbl">1/3</text><text x="135" y="62" class="lbl" style="fill:var(--ch)">33⅓%</text>
+        <text x="221" y="38" class="lbl">1/4</text><text x="221" y="62" class="lbl" style="fill:var(--ch)">25%</text>
+        <text x="307" y="38" class="lbl">1/5</text><text x="307" y="62" class="lbl" style="fill:var(--ch)">20%</text>
+        <text x="393" y="38" class="lbl">1/6</text><text x="393" y="62" class="lbl" style="fill:var(--ch)">16⅔%</text>
+        <text x="479" y="38" class="lbl">1/7</text><text x="479" y="62" class="lbl" style="fill:var(--ch)">14 2/7%</text>
+        <text x="565" y="38" class="lbl">1/8</text><text x="565" y="62" class="lbl" style="fill:var(--ch)">12½%</text>
+        <text x="651" y="38" class="lbl">1/9</text><text x="651" y="62" class="lbl" style="fill:var(--ch)">11 1/9%</text>
+        <rect x="8" y="92" width="82" height="72" rx="6" class="chf"/><rect x="8" y="92" width="82" height="72" rx="6" class="chs"/>
+        <rect x="94" y="92" width="82" height="72" rx="6" class="chf"/>
+        <rect x="180" y="92" width="82" height="72" rx="6" class="chf"/>
+        <rect x="266" y="92" width="82" height="72" rx="6" class="chf"/>
+        <rect x="352" y="92" width="82" height="72" rx="6" class="chf"/>
+        <rect x="438" y="92" width="82" height="72" rx="6" class="chf"/><rect x="438" y="92" width="82" height="72" rx="6" class="chs"/>
+        <rect x="524" y="92" width="82" height="72" rx="6" class="chf"/><rect x="524" y="92" width="82" height="72" rx="6" class="chs"/>
+        <rect x="610" y="92" width="82" height="72" rx="6" class="chf"/><rect x="610" y="92" width="82" height="72" rx="6" class="chs"/>
+        <text x="49" y="120" class="lbl">1/10</text><text x="49" y="144" class="lbl" style="fill:var(--ch)">10%</text>
+        <text x="135" y="120" class="lbl">1/11</text><text x="135" y="144" class="lbl" style="fill:var(--ch)">9 1/11%</text>
+        <text x="221" y="120" class="lbl">1/12</text><text x="221" y="144" class="lbl" style="fill:var(--ch)">8⅓%</text>
+        <text x="307" y="120" class="lbl">1/15</text><text x="307" y="144" class="lbl" style="fill:var(--ch)">6⅔%</text>
+        <text x="393" y="120" class="lbl">1/16</text><text x="393" y="144" class="lbl" style="fill:var(--ch)">6¼%</text>
+        <text x="479" y="120" class="lbl">1/20</text><text x="479" y="144" class="lbl" style="fill:var(--ch)">5%</text>
+        <text x="565" y="120" class="lbl">3/8</text><text x="565" y="144" class="lbl" style="fill:var(--ch)">37½%</text>
+        <text x="651" y="120" class="lbl">2/3</text><text x="651" y="144" class="lbl" style="fill:var(--ch)">66⅔%</text>
+        <text x="350" y="188" class="sm">upar fraction, neeche uska % · outline wale 2025–26 ke papers mein seedhe aaye</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>16 jodiyan. Inhe dono taraf se ratta maaro: 1/8 dekho toh 12½% bolo, 12½% dekho toh 1/8.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Parivaar</th><th>Fraction → %</th></tr>
+    <tr><td class="n">1/8 wale</td><td>1/8 = 12½ · 3/8 = 37½ · 5/8 = 62½ · 7/8 = 87½</td></tr>
+    <tr><td class="n">1/6 wale</td><td>1/6 = 16⅔ · 5/6 = 83⅓ · 1/3 = 33⅓ · 2/3 = 66⅔</td></tr>
+    <tr><td class="n">1/5, 1/4 wale</td><td>2/5 = 40 · 3/5 = 60 · 4/5 = 80 · 3/4 = 75 · 5/4 = 125 · 6/5 = 120</td></tr>
+    <tr><td class="n">1/9, 1/11, 1/12</td><td>1/9 = 11.11 · 1/11 = 9.09 · 1/12 = 8.33 · 1/7 = 14.28 · 3/7 = 42.86</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · 87½% of 640 · <i>~5 sec</i></span>
+    87½% = 7/8. 640 ÷ 8 = 80. 80 × 7 = <b>560</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "1 ka n-va hissa" ko % banane ke liye 100 ko n se bhaag do. 1/16 → 100 ÷ 16 = 6¼. Ulta, 6¼% dekho toh socho "100 ÷ 6¼ = 16", yaani 1/16.</div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · 10% aur 1% se todo</h3>
+  <p><b>Kab use karo:</b> jab % saaf fraction na ho (35%, 18%, 11%, 8%).</p>
+  <ul>
+    <li><b>10%</b> = number ka ek digit peeche khiskao. 460 ka 10% = 46.</li>
+    <li><b>5%</b> = 10% ka aadha. <b>1%</b> = do digit khiskao. 460 ka 1% = 4.6.</li>
+    <li>Baaki sab inhi ka jod: 35% = 3 × 10% + 5%. 18% = 20% − 2%. 11% = 10% + 1%.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · 35% of 460 · <i>~8 sec</i></span>
+    10% = 46 → 30% = 138. 5% = 23. Jodo: 138 + 23 = <b>161</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> <b>x% of y = y% of x</b>. 16% of 25 mushkil lage, toh 25% of 16 = 4. 2.5% of 200 = 200% of 2.5 = 5.</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Ulta chalo: "x% = value" toh number?</h3>
+  <p><b>Kab use karo:</b> "60% of a number is 48", "16% mixture mein 64 kg", "75% beche, 720 bache".</p>
+  <p><b>Soch aise:</b> x% ki keemat pata hai. Usse 1% nikaalo (value ÷ x). Phir jo % chahiye, utne se guna. Pura number = 1% × 100.</p>
+  <div class="box"><span class="k">Demo · 35% = 140. Number? Aur 80%? · <i>~8 sec</i></span>
+    1% = 140 ÷ 35 = 4. Number = 4 × 100 = <b>400</b>. 80% = 4 × 80 = <b>320</b>.<br>
+    Fraction se bhi: 60% = 3/5 hai, toh "60% = 48" → number = 48 × 5/3 = 80.
+  </div>
+  <div class="trick"><b>Trick:</b> "Do % ka farq diya" (45% − 30% = 0.9) toh farq wala % hi value ke barabar hai: 15% = 0.9. Number nikaalne ke liye number ko kabhi "x" mat likho.</div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · % change aur "kis ke mukaable" (base)</h3>
+  <p><b>Formula ek hi:</b> % change = change ÷ <b>shuru wala</b> × 100. 400 se 500 hua: change 100, shuru 400 → 25%.</p>
+  <p><b>Ab asli khel:</b> "A, B se 25% zyada hai. B, A se kitna kam?" Log 25% bol dete hain. Galat. Picture dekho.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Two bars to scale. B is 100 units long. A is 125 units long. The extra 25 is shaded. Compared with B the extra 25 is 25 out of 100, so 25 percent more. Compared with A the same 25 is 25 out of 125, so 20 percent less.">
+      <text x="20" y="54" class="lbl">B = 100</text>
+      <rect x="120" y="34" width="400" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="320" y="56" text-anchor="middle" class="sm">100</text>
+      <text x="20" y="120" class="lbl">A = 125</text>
+      <rect x="120" y="100" width="400" height="34" class="chf"/><rect x="120" y="100" width="400" height="34" class="chs"/>
+      <rect x="520" y="100" width="100" height="34" style="fill:var(--ch)"/>
+      <text x="320" y="122" text-anchor="middle" class="sm">100</text>
+      <text x="570" y="122" text-anchor="middle" class="lbl" style="fill:var(--paper)">+25</text>
+      <line x1="520" y1="26" x2="520" y2="150" class="ln" stroke-dasharray="3 4"/>
+      <text x="20" y="182" class="lbl">A, B se zyada:</text>
+      <text x="150" y="182" class="lbl" style="fill:var(--ch)">25 ÷ 100 (B ka) = 25%</text>
+      <text x="20" y="210" class="lbl">B, A se kam:</text>
+      <text x="150" y="210" class="lbl" style="fill:var(--ch)">25 ÷ 125 (A ka) = 1/5 = 20%</text>
+      <text x="20" y="238" class="sm">farq wahi 25 hai · bas "kis ka hissa" badal gaya · jiske baad "se" aata hai, wahi base</text>
+    </svg>
+    </div>
+    <figcaption>Scale par: B = 400px, A = 500px. Gehra tukda dono jagah wahi 25 hai, par base alag.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Do formule (picture se hi nikle)</span>
+    A, B se r% <b>zyada</b> → B, A se <b>r/(100 + r)</b> × 100 % kam. 25% → 25/125 = 20%.<br>
+    A, B se r% <b>kam</b> → B, A se <b>r/(100 − r)</b> × 100 % zyada. 40% → 40/60 = 66⅔%.
+  </div>
+  <div class="tbl"><table>
+    <tr><th>Zyada (r%)</th><th>10</th><th>20</th><th>25</th><th>33⅓</th><th>50</th><th>100</th></tr>
+    <tr><td>Ulta kam</td><td class="n">9 1/11</td><td class="n">16⅔</td><td class="n">20</td><td class="n">25</td><td class="n">33⅓</td><td class="n">50</td></tr>
+    <tr><th>Kam (r%)</th><th>10</th><th>20</th><th>25</th><th>40</th><th>50</th><th>75</th></tr>
+    <tr><td>Ulta zyada</td><td class="n">11 1/9</td><td class="n">25</td><td class="n">33⅓</td><td class="n">66⅔</td><td class="n">100</td><td class="n">300</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick (fraction wala):</b> 25% zyada = 1/4 zyada. Ulta = 1/(4 + 1) = <b>1/5 kam</b>. 20% kam = 1/5 kam. Ulta = 1/(5 − 1) = <b>1/4 zyada</b>. Bas neeche wale number mein 1 jodo ya ghatao.</div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Multiplying factor (fraction guna)</h3>
+  <p><b>Kab use karo:</b> 3–4 kadam ek ke baad ek (A, B se 20% zyada, B, C se 30% zyada …), ya population 3 saal, ya machine ki keemat girna.</p>
+  <p><b>Soch aise:</b> har % ko "100 se kitna" bana do, phir fraction. +20% = 120/100 = 6/5. −10% = 9/10. +25% = 5/4. −30% = 7/10. Phir sab guna, aur kaat-peet pehle karo.</p>
+  <div class="box"><span class="k">Demo · 40,000 par +20%, −10%, +25% · <i>~10 sec</i></span>
+    40,000 × 6/5 × 9/10 × 5/4. 5 aur 5 kat gaye → 40,000 × 6 × 9/40 = 1000 × 54 = <b>54,000</b>.
+  </div>
+  <div class="tbl"><table>
+    <tr><th>Badlaav</th><th>+10%</th><th>+20%</th><th>+25%</th><th>+50%</th><th>−10%</th><th>−20%</th><th>−25%</th><th>−30%</th></tr>
+    <tr><td>Guna</td><td class="n">11/10</td><td class="n">6/5</td><td class="n">5/4</td><td class="n">3/2</td><td class="n">9/10</td><td class="n">4/5</td><td class="n">3/4</td><td class="n">7/10</td></tr>
+  </table></div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Do baar badla: a + b + ab/100</h3>
+  <p><b>Kab use karo:</b> sirf do kadam ho aur net % poocha ho. Ye 5 second ka formula hai, is chapter ka raja.</p>
+  <p><b>Soch aise:</b> daam 20% badha, phir naye daam par 10%. Doosra 10% sirf purane 100 par nahi, us 20 par bhi lagta hai. Wahi chhota kona hai.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Area picture of plus 20 percent then plus 10 percent. Big square is the original 100. A right strip is the first 20 percent. A bottom strip is the second 10 percent on the original. A small corner is 10 percent of the extra 20, which is 2. Total change 20 plus 10 plus 2 equals 32 percent.">
+      <rect x="40" y="20" width="200" height="200" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="140" y="116" text-anchor="middle" class="lbl">Original = 100</text>
+      <rect x="240" y="20" width="40" height="200" class="chf"/><rect x="240" y="20" width="40" height="200" class="chs"/>
+      <rect x="40" y="220" width="200" height="20" class="chf"/><rect x="40" y="220" width="200" height="20" class="chs"/>
+      <rect x="240" y="220" width="40" height="20" style="fill:var(--ch)"/>
+      <text x="260" y="124" text-anchor="middle" class="lbl">a</text>
+      <text x="140" y="260" text-anchor="middle" class="sm">neeche patti b = 100 ka 10% = 10</text>
+      <g class="ln">
+        <line x1="282" y1="60" x2="330" y2="50"/>
+        <line x1="282" y1="232" x2="330" y2="176"/>
+      </g>
+      <text x="334" y="48" class="lbl">Right patti a = pehla badlaav = 20</text>
+      <text x="334" y="68" class="sm">(original 100 ka 20%)</text>
+      <text x="334" y="174" class="lbl" style="fill:var(--ch)">Kona = 20 ka 10% = 2 = a × b / 100</text>
+      <text x="334" y="194" class="sm">yahi "badhe hue par bhi badha" wala hissa</text>
+      <text x="350" y="282" text-anchor="middle" class="lbl">Net = a + b + ab/100 = 20 + 10 + 2 = 32%</text>
+    </svg>
+    </div>
+    <figcaption>Bada square = 100. Do pattiyan = a aur b. Kona = ab/100. Ghatne wala % ho toh uska sign minus lagao: +40 aur −30 → 40 − 30 − 12 = −2%.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Do badlaav</th><th>Haath se</th><th>Net</th></tr>
+    <tr><td>+20, −20</td><td>0 − 4</td><td class="n">4% kam</td></tr>
+    <tr><td>+25, −20</td><td>5 − 5</td><td class="n">0</td></tr>
+    <tr><td>+40, −30</td><td>10 − 12</td><td class="n">2% kam</td></tr>
+    <tr><td>+50, −30</td><td>20 − 15</td><td class="n">5% zyada</td></tr>
+    <tr><td>−10, −20</td><td>−30 + 2</td><td class="n">28% kam</td></tr>
+    <tr><td>−x, +x</td><td>−x²/100</td><td class="n">hamesha kam</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> Pehle badhe ya pehle ghate, jawab same. +20 phir −10 = −10 phir +20 = 8% zyada. Aur "pehle x% badha phir x% ghata" mein hamesha <b>x²/100 % ka nuksaan</b>.</div>
+  <p><b>Wapas laana:</b> 30% badha, ab kitna ghatayein ki wapas aaye? Method 4 wala hi: 30/130 = 23.08%. 12% gira, kitna badhayein? 12/88 = 13.6%.</p>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Guna same rakhna (daam × khapat, lambai × chaudai)</h3>
+  <p><b>Kab use karo:</b> "daam 25% badha, kharcha same rakhna hai, khapat kitni ghatao?" ya "lambai 25% badhi, area same, chaudai kitni ghatao?"</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Two rectangles with the same area of 20 squares. First is 4 wide and 5 tall. Second is 5 wide and 4 tall. Width went up by one quarter, 25 percent. Height went down by one fifth, 20 percent.">
+      <g class="ln" fill="none">
+        <path d="M70,30 V180 M100,30 V180 M130,30 V180 M40,60 H160 M40,90 H160 M40,120 H160 M40,150 H160"/>
+        <path d="M290,60 V180 M320,60 V180 M350,60 V180 M380,60 V180 M260,90 H410 M260,120 H410 M260,150 H410"/>
+      </g>
+      <rect x="40" y="30" width="120" height="150" class="chf" style="opacity:.6"/><rect x="40" y="30" width="120" height="150" class="chs"/>
+      <rect x="260" y="60" width="150" height="120" class="chf" style="opacity:.6"/><rect x="260" y="60" width="150" height="120" class="chs"/>
+      <text x="100" y="202" text-anchor="middle" class="lbl">L = 4, B = 5</text>
+      <text x="100" y="222" text-anchor="middle" class="sm">area = 20</text>
+      <text x="335" y="202" text-anchor="middle" class="lbl">L = 5, B = 4</text>
+      <text x="335" y="222" text-anchor="middle" class="sm">area = 20</text>
+      <text x="460" y="60" class="lbl">L: 4 → 5</text>
+      <text x="460" y="80" class="sm">1/4 badhi = 25% zyada</text>
+      <text x="460" y="120" class="lbl" style="fill:var(--ch)">B: 5 → 4</text>
+      <text x="460" y="140" class="sm">1/5 ghati = 20% kam</text>
+      <text x="460" y="180" class="lbl">+1/x  →  −1/(x + 1)</text>
+      <text x="460" y="200" class="sm">+1/3 → −1/4 · +1/5 → −1/6</text>
+      <text x="350" y="250" text-anchor="middle" class="sm">dono rectangle mein 20 hi chhote dabbe hain · daam × khapat = kharcha bhi aisa hi hai</text>
+    </svg>
+    </div>
+    <figcaption>Lambai 4 se 5 (+25%). Area same rakhne ko chaudai 5 se 4 (−20%). Wahi ulta-formula r/(100 + r).</figcaption>
+  </figure>
+  <div class="box"><span class="k">"Daam ghata, utne paise mein x kg zyada" · <i>~10 sec</i></span>
+    Daam 20% gira, ₹200 mein 5 kg zyada aaya. Socho: 200 ka 20% = ₹40 bache. Inhi 40 se 5 kg aaya. Toh <b>naya daam</b> = 40 ÷ 5 = ₹8.<br>
+    Purana daam = 8 × 5/4 = <b>₹10</b> (20% kam = 4/5, toh ulta 5/4). Koi equation nahi.
+  </div>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · "100 maan lo" (income, kharcha, bachat)</h3>
+  <p><b>Kab use karo:</b> jab asli number na diya ho, sirf %. Income = Kharcha + Bachat. Income 100 maano, ek chhoti table banao.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Income 100 split into expense 70 and savings 30. After income rises 10 percent to 110 and expense rises 5 percent to 73.5, savings become 36.5. Savings rose by 6.5 on 30, about 21.67 percent.">
+      <text x="20" y="40" class="lbl">Pehle</text>
+      <rect x="110" y="20" width="280" height="34" class="chf"/><rect x="110" y="20" width="280" height="34" class="chs"/>
+      <rect x="390" y="20" width="120" height="34" style="fill:var(--ch)"/>
+      <text x="250" y="42" text-anchor="middle" class="lbl">Kharcha 70</text>
+      <text x="450" y="42" text-anchor="middle" class="lbl" style="fill:var(--paper)">Bachat 30</text>
+      <text x="520" y="42" class="sm">Income 100</text>
+      <text x="20" y="110" class="lbl">Baad mein</text>
+      <rect x="110" y="90" width="294" height="34" class="chf"/><rect x="110" y="90" width="294" height="34" class="chs"/>
+      <rect x="404" y="90" width="146" height="34" style="fill:var(--ch)"/>
+      <text x="257" y="112" text-anchor="middle" class="lbl">Kharcha 73.5</text>
+      <text x="477" y="112" text-anchor="middle" class="lbl" style="fill:var(--paper)">Bachat 36.5</text>
+      <text x="560" y="112" class="sm">Income 110</text>
+      <line x1="510" y1="14" x2="510" y2="134" class="ln" stroke-dasharray="3 4"/>
+      <text x="20" y="168" class="sm">Income +10% (100 → 110) · Kharcha +5% (70 → 73.5) · Bachat = 110 − 73.5 = 36.5</text>
+      <text x="20" y="196" class="lbl" style="fill:var(--ch)">Bachat ka badlaav = 6.5 ÷ 30 = 21.67%</text>
+      <text x="20" y="226" class="sm">bars scale par (4px = 1) · dashed line = purani income ka kinaara</text>
+    </svg>
+    </div>
+    <figcaption>Income 100 maano, toh sab kuch "parts" mein aa jaata hai. Bachat ka % hamesha <b>purani bachat</b> par.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th></th><th>Income</th><th>Kharcha</th><th>Bachat</th></tr>
+    <tr><td>Pehle</td><td class="n">100</td><td class="n">70</td><td class="n">30</td></tr>
+    <tr><td>Baad mein</td><td class="n">110</td><td class="n">73.5</td><td class="n">36.5</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> Table mein 3 khaane, 2 bhar do, teesra apne aap. Jo badlaav nahi diya, wahi minus se nikalta hai.</div>
+
+  <!-- ========== METHOD 9 ========== -->
+  <h3>Speed method 9 · Baaki ki chain, aur "farq ka %"</h3>
+  <ul>
+    <li><b>Baaki ki chain:</b> "20% gaye, phir baaki ka 25% gaye" → bache = 80% × 75% = 60%. Kabhi 20 + 25 = 45 mat jodo. Baaki % ko guna karo.</li>
+    <li><b>Farq ka %:</b> exam aur election mein do baatein diye hon (30% par 12 se fail, 44% par 16 se paas), toh % ka farq = marks ka farq. 14% = 28 → 1% = 2.</li>
+    <li><b>Kam se kam ek (sets):</b> A + B − dono. 60% English, 70% Maths, 45% dono → kam se kam ek = 85%.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · 30% matric, baaki ka 60% graduate, baaki 84 PG. Matric? · <i>~12 sec</i></span>
+    Baaki 70%. Uska 40% PG (kyunki 60% graduate) → 70 × 40/100 = 28%.<br>
+    28% = 84 → 1% = 3 → matric 30% = <b>90</b>.
+  </div>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 560" role="img" aria-label="Flowchart for choosing a method. Check in order: percent of a number or what percent; a percent equals a value; from one value to another; A more or less than B; two or more changes; product kept same; income expense savings; remaining of remaining; election or exam with two conditions. Each yes leads to its method.">
+      <defs>
+        <marker id="mpc-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya pucha hai?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mpc-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="452" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="508" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">"x% of y" ya "kitna %"?</text>
+        <text x="180" y="141">"x% = value", number chahiye?</text>
+        <text x="180" y="197">Ek value se doosri (from → to)?</text>
+        <text x="180" y="253">"A, B se r% zyada/kam"?</text>
+        <text x="180" y="309">Do ya zyada badlaav lagataar?</text>
+        <text x="180" y="365">Guna same (kharcha / area)?</text>
+        <text x="180" y="421">Income, kharcha, bachat?</text>
+        <text x="180" y="477">"Baaki ka x%" (chain)?</text>
+        <text x="180" y="533">Election / exam, do sharten?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="180" y1="436" x2="180" y2="449" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="180" y1="492" x2="180" y2="505" marker-end="url(#mpc-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text><text x="188" y="447">nahi</text><text x="188" y="503">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="340" y1="472" x2="396" y2="472" marker-end="url(#mpc-fc-arr)"/>
+        <line x1="340" y1="528" x2="396" y2="528" marker-end="url(#mpc-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text><text x="368" y="466">haan</text><text x="368" y="522">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="452" width="290" height="40" rx="6" class="chf"/><rect x="400" y="452" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="508" width="290" height="40" rx="6" class="chf"/><rect x="400" y="508" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Fraction table / 10% wala</text>
+        <text x="410" y="132">Ulta: 1% nikaalo</text>
+        <text x="410" y="188">Change ÷ shuru wala</text>
+        <text x="410" y="244">r/(100 ± r) · base pehchano</text>
+        <text x="410" y="300">a + b + ab/100 · fraction guna</text>
+        <text x="410" y="356">+1/x → −1/(x + 1)</text>
+        <text x="410" y="412">100 maan lo, table</text>
+        <text x="410" y="468">Baaki % ka guna</text>
+        <text x="410" y="524">Farq ka % = farq ki value</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">37½% = 3/8 · 35% = 3 × 10% + 5%</text>
+        <text x="410" y="149">35% = 140 → 1% = 4 → 400</text>
+        <text x="410" y="205">400 → 500 = 100/400 = 25%</text>
+        <text x="410" y="261">25% zyada ↔ 20% kam</text>
+        <text x="410" y="317">+40, −30 → 10 − 12 = −2%</text>
+        <text x="410" y="373">daam +25% → khapat −20%</text>
+        <text x="410" y="429">I = K + B, teesra minus se</text>
+        <text x="410" y="485">80% × 75% = 60% bache</text>
+        <text x="410" y="541">44% − 30% = 14% = 16 + 12</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow rough mein ek baar chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet (yaad karo)</span>
+    % change = change ÷ shuru wala × 100 · x% of y = y% of x · x% of x = x²/100<br>
+    r% zyada ↔ r/(100 + r) kam · r% kam ↔ r/(100 − r) zyada<br>
+    Do badlaav: a + b + ab/100 · x% badha phir x% ghata = x²/100 % nuksaan<br>
+    Guna same: +1/x → −1/(x + 1) · Sets: kam se kam ek = A + B − dono · koi nahi = 100 − (kam se kam ek)<br>
+    Squares: 11² = 121, 12² = 144, 13² = 169, 14² = 196, 15² = 225, 25² = 625, 26² = 676, 27² = 729 <span class="tag x">CGL+</span><br>
+    <span class="tag x">CGL+</span> 1 m³ = 10,00,000 cm³ · 1 kL = 1000 L · 1 kg = 1000 g · 1 ghanta = 60 min. Unit hamesha pehle same karo.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>62½% of 480 kitna? 5 second mein.</summary><p>62½% = 5/8. 480 ÷ 8 = 60, × 5 = 300.</p></details>
+    <details><summary>A, B se 50% zyada hai. B, A se kitna kam?</summary><p>50/150 = 1/3 = 33⅓%. (Fraction: +1/2 → −1/3.)</p></details>
+    <details><summary>Daam 30% badha phir 20% ghata. Net?</summary><p>30 − 20 − 6 = 4% zyada.</p></details>
+    <details><summary>Daam 1/3 badh gaya. Kharcha same rakhne ko khapat kitni ghatao?</summary><p>+1/3 → −1/4 = 25%.</p></details>
+    <details><summary>Income 100, kharcha 60. Income 20% badhi, kharcha 10% badha. Bachat kitni % badhi?</summary><p>Income 120, kharcha 66, bachat 54 (pehle 40). 14/40 = 35%.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · PERCENTAGE (part 2: types 1-6) ===================== -->
+<section class="chap" id="mpc-types-a">
+  <div class="eyebrow">Maths · PYQ types 1–6</div>
+  <h2>Percentage: seedhe sawaal, topper ki rough ke saath</h2>
+  <div class="meta">Bank mein 260 sawaal · sab yahan · is hisse mein type 1–6 (% nikaalna, ulta, change, galti, ratio) · har sawaal ke aage method</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 · CHSL = CHSL 2025 Tier 1 (Tier-2 alag likha hai) · CPO = CPO 2025 · SP-XIV = Selection Post Phase XIV 2025 · MTS = MTS (Feb 2025) · DP = Delhi Police Constable (Dec 2025 – Jan 2026) · DP HCM = Delhi Police Head Constable (Jan 2026) · GD = GD Constable (Apr–May 2026). Saari dates shift ki dates hain.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Seedha "x% of y" aur % ki chain (21 Qs)</h3>
+  <div class="box"><span class="k">Worked · 80% of 350 − 37½% of 160 + 11% of 500 <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small></span>
+    <b>Method:</b> fraction table + 10% wala · <i>~12 sec</i><br>
+    80% = 4/5 → 350 × 4/5 = 280. 37½% = 3/8 → 160 ÷ 8 × 3 = 60. 11% of 500 = 50 + 5 = 55.<br>
+    280 − 60 + 55 = <mark>275</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Petrol 5% mehnga (₹82 tha), 3045 km/maheena, 15 km/litre. Kharcha kitna badha? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> pehle litre, phir sirf badhat · <i>~15 sec</i><br>
+    Litre = 3045 ÷ 15 = 203. Har litre par badhat = 82 ka 5% = 4.1.<br>
+    203 × 4.1 = 812 + 20.3 = 832.3 → <mark>₹832</mark>. (Poora naya kharcha nikaalne ki zaroorat hi nahi.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 12½% of 560 + 66⅔% of 240 → <b>fraction table</b>: 560 ÷ 8 = 70, 240 × 2/3 = 160 → <mark>230 km</mark> <small>CGL · 12 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2.5% of 200 → <b>x% of y = y% of x</b>: 200% of 2.5 = 2 × 2.5 → <mark>5</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40% of 350 + 20% of 600 → <b>10% wala</b>: 140 + 120 → <mark>260</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> X = 40% of 60, Y = 50% of 40; X + Y → <b>10% wala</b>: 24 + 20 → <mark>44</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 40% of 60% of 6800 → <b>% ka guna</b>: 0.4 × 0.6 = 24% → 68 × 24 → <mark>1632</mark> <small>GD · 5 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 40% of 80% of 5/8 of 4800 → <b>fraction chain</b>: 4800 × 5/8 = 3000 → 80% = 2400 → 40% → <mark>960</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 30% of 20% of 2/5 of 4500 → <b>fraction chain</b>: 1800 → 360 → 30% → <mark>108</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 60% of 800 se 30% kam → <b>% ka guna</b>: 480 ka 70% → <mark>336</mark> <small>GD · 25 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 40% of 900 se 50% kam → <b>aadha karo</b>: 360 ÷ 2 → <mark>180</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 450 mein se 4/5 bikte hain (options "× 3" mein) → <b>fraction</b>: 450 × 4/5 = 360 = 120 × 3 → <mark>120 times of 3</mark> <small>DP HCM · 7 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 200 hiran, 30% par GPS collar → <b>10% wala</b>: 20 × 3 → <mark>60</mark> <small>DP HCM · 12 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 600 workers, 40% auratein → <b>10% wala</b>: 60 × 4 → <mark>240</mark> <small>DP · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 500 students, 60% girls, unka 25% football → <b>% ka guna</b>: 60% × 25% = 15% → 5 × 15 → <mark>75</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 600 marks ka 75% → <b>fraction 3/4</b>: 600 × 3/4 → <mark>450</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 100 students × (15% of 100) + 10 chaperones × (25% of 100) → <b>10% wala</b>: 100 × 15 + 10 × 25 = 1500 + 250 → <mark>1750</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Sabse chhota: 18% of 450, 20% of 380, 25% of 300, 30% of 240 → <b>1% wala</b>: 81, 76, 75, 72 → <mark>30% of 240</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Tel 8% mehnga, 150/litre, 12 litre/maheena; saal ka extra kharcha → <b>1% wala</b>: 8% of 150 = 12 per litre → 12 × 12 × 12 → <mark>₹1,728</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Roz 18.75 L; Mon 2/3, Tue Mon se 25% zyada; dono din → <b>fraction</b>: Mon 12.5, Tue 12.5 × 5/4 = 15.625 → <mark>28.125 liters</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 36% paani, 40% doodh, baaki cheeni; 1 kg mein → <b>1% = 10 g</b>: 360 g, 400 g, baaki 240 g → <mark>360 g, 400 g, 240 g</mark> <small>MTS · 17 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · "Kitna %?" (part ÷ whole) (24 Qs)</h3>
+  <p><b>Samjho:</b> % = hissa ÷ poora × 100. Pehle fraction ko chhota karo, phir table se pehchano. 45/300 = 3/20 = 15%.</p>
+  <div class="box"><span class="k">Worked · Prithvi ke 3600 hisson mein 18 iron. Kitna %? <span class="tag p">PYQ</span> <small>MTS · 18 Feb 2025</small></span>
+    <b>Method:</b> fraction chhota karo · <i>~6 sec</i><br>
+    18/3600 = 1/200. × 100 = 100/200 = <mark>1/2 percent</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Science 14.75/20, Maths 17½/25. Kis mein % zyada? <span class="tag p">PYQ</span> <small>SP-XIV · 1 Aug 2025</small></span>
+    <b>Method:</b> neeche wala 100 banao · <i>~10 sec</i><br>
+    20 × 5 = 100 → Science = 14.75 × 5 = 73.75%. 25 × 4 = 100 → Maths = 17.5 × 4 = 70%.<br>
+    Zyada = <mark>Science</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Rs 300 ka kitna % Rs 45? → <b>part ÷ whole</b>: 45/300 = 15/100 → <mark>15%</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 240 ka kitna % 72? → <b>part ÷ whole</b>: 72/240 = 3/10 → <mark>30%</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Salary 1000, kharcha 200; kitna % kharch → <b>part ÷ whole</b>: 200/1000 → <mark>20%</mark> <small>DP · 22 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 200 mein se 140 → <b>part ÷ whole</b>: 140/200 = 70/100 → <mark>70%</mark> <small>DP · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Income 400, kharcha 300; kitna % bachat → <b>part ÷ whole</b>: bachat 100/400 = 1/4 → <mark>25%</mark> <small>DP · 27 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1000 logon mein 400 auratein → <b>part ÷ whole</b>: 400/1000 → <mark>40%</mark> <small>DP · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2000 mein 800 auratein → <b>part ÷ whole</b>: 800/2000 = 2/5 → <mark>40%</mark> <small>DP · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 300 mein se 270 → <b>part ÷ whole</b>: 270/300 = 9/10 → <mark>90%</mark> <small>DP · 24 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kamaai 500, bachat 100 → <b>part ÷ whole</b>: 100/500 = 1/5 → <mark>20%</mark> <small>DP · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20 mein 18 sahi → <b>part ÷ whole</b>: 18/20 = 9/10 → <mark>90%</mark> <small>DP · 24 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kamaai 1000, bachat 200; kitna % kharch → <b>part ÷ whole</b>: kharch 800/1000 → <mark>80%</mark> <small>DP · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 50 mein se 25 (options decimal mein) → <b>part ÷ whole</b>: 1/2 = 50% = 0.5 → <mark>0.5</mark> <small>DP · 20 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 500 mein 300 auratein (options decimal mein) → <b>part ÷ whole</b>: 3/5 = 60% = 0.6 → <mark>0.6</mark> <small>DP · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Kamaai 6000, kharch 4800; bachat % → <b>part ÷ whole</b>: 1200/6000 = 1/5 → <mark>20%</mark> <small>DP · 19 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 100 mein 25 kharab → <b>part ÷ whole</b>: 25/100 → <mark>25%</mark> <small>DP · 2 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 600 mein se 450 kharch → <b>part ÷ whole</b>: 450/600 = 3/4 → <mark>75%</mark> <small>DP · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 1800 mein se 1080 → <b>part ÷ whole</b>: 1080/1800 = 6/10 → <mark>60%</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 350 mein se 168 → <b>part ÷ whole</b>: 168/350 = 24/50 = 48/100 → <mark>48%</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 600 ki cheez par 30 tax → <b>part ÷ whole</b>: 30/600 = 1/20 → <mark>5 percent</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 2400 mein 20 hissa iron → <b>part ÷ whole</b>: 20/2400 = 1/120 → 100/120 → <mark>5/6 percent</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 0.05 m³ ka kitna % 25,000 cm³ → <b>unit same karo</b>: 0.05 m³ = 50,000 cm³ → 1/2 → <mark>50%</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Tank 0.005 kL = 5 L, paani 3.5 L; khaali % → <b>unit same karo</b>: bhara 70% → khaali → <mark>30%</mark> <small>CGL · 13 Sep 2025</small></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> Options decimal mein ho (0.5, 0.6), toh % ko 100 se bhaag do. 50% = 0.5. Option galat nahi hai, bas likhne ka tareeka alag.</div>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · % se number nikaalo (ulta) (35 Qs)</h3>
+  <p><b>Samjho:</b> jo % ki value pata hai, usse 1% nikaalo. Do % ka farq ya jod diya ho, toh farq/jod wala % hi us value ke barabar hai.</p>
+  <div class="box"><span class="k">Worked · 75% of N, N ke 2/3 se 15 zyada. N? <span class="tag p">PYQ</span> <small>CGL · 16 Sep 2025</small></span>
+    <b>Method:</b> fraction ka farq · <i>~8 sec</i><br>
+    75% = 3/4. 3/4 − 2/3 = 9/12 − 8/12 = 1/12.<br>
+    N ka 1/12 = 15 → N = <mark>180</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · A% of A = 676. A² kitna? <span class="tag p">PYQ</span> <small>GD · 30 Apr 2026</small></span>
+    <b>Method:</b> x% of x = x²/100 · <i>~3 sec</i><br>
+    A × A/100 = 676 → A² = 676 × 100 = <mark>67600</mark>. A nikaalne ki zaroorat hi nahi (waise A = 26 × 10 = 260).
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 45% − 30% = 0.9 → <b>farq wala %</b>: 15% = 0.9 → 1% = 0.06 → <mark>6</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> 20% − 10% = 120 → <b>farq wala %</b>: 10% = 120 → <mark>1200</mark> <small>CGL · 22 Sep 2025; CGL · 26 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30% − 20% = 40 → <b>farq wala %</b>: 10% = 40 → <mark>400</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25% − 15% = 50 → <b>farq wala %</b>: 10% = 50 → <mark>500</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40% − 25% = 75; 30%? → <b>farq wala %</b>: 15% = 75 → 1% = 5 → 30% → <mark>150</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 4% + 11% = 1845 → <b>jod wala %</b>: 15% = 1845 → 1% = 123 → <mark>12300</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25% + 40% = 325; 120%? → <b>jod wala %</b>: 65% = 325 → 1% = 5 → <mark>600</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25% = 80; 40%? → <b>1% nikaalo</b>: 1% = 3.2 → 40 × 3.2 → <mark>128</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20% = 34; 50%? → <b>1% nikaalo</b>: 10% = 17 → 50% → <mark>85</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60% = 75; 180%? → <b>1% nikaalo</b>: 180% = 3 × 60% = 3 × 75 → <mark>225</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 30% = 90; 120%? → <b>1% nikaalo</b>: 120% = 4 × 30% → <mark>360</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 20% = 80; 160%? → <b>1% nikaalo</b>: 160% = 8 × 20% → <mark>640</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> 25% = 45; 75%? → <b>1% nikaalo</b>: 75% = 3 × 25% → <mark>135</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 7% = 21; number − 25%? → <b>1% nikaalo</b>: 1% = 3 → 300 → 75% → <mark>225</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60% = 48 → <b>1% nikaalo</b>: 10% = 8 → <mark>80</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30% = 180 → <b>1% nikaalo</b>: 10% = 60 → <mark>600</mark> <small>DP · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25% = 60 → <b>fraction 1/4</b>: 60 × 4 → <mark>240</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 72 = 60% of total → <b>fraction 3/5</b>: 72 × 5/3 → <mark>120</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 16% = 64 kg → <b>1% nikaalo</b>: 1% = 4 → <mark>400 kg</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 20% = 120 kg → <b>fraction 1/5</b>: 120 × 5 → <mark>600 kg</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 18% = 90 kg → <b>1% nikaalo</b>: 1% = 5 → <mark>500 kg</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 50% of 30% = 15% = 150; 40%? → <b>% ka guna</b>: 1% = 10 → <mark>400</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 70% of 60% = 42% = 420; 10%? → <b>% ka guna</b>: 1% = 10 → <mark>100</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 2/5 of 60% = 420 → <b>% ka guna</b>: 2/5 × 60% = 24% = 420 → 1% = 17.5 → <mark>1750</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> N = 70 + 30% of N → <b>baaki %</b>: 70% = 70 → <mark>100</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> N = 90 + 25% of N → <b>baaki %</b>: 75% = 90 → <mark>120</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 30% of 500 = A se 50% zyada → <b>ulta (÷ 150%)</b>: 150 = 3/2 A → <mark>100</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 25% of 500 = A se 25% zyada → <b>ulta (÷ 125%)</b>: 125 = 5/4 A → <mark>100</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> x% of x = 225 → <b>square</b>: x²/100 = 225 → x² = 22500 → <mark>150</mark> <small>GD · 28 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> (fraction bank mein ud gaya) of N, 25% se 15 zyada → <b>options se</b>: key 40 se: 15/40 = 37.5% → fraction = 25 + 37.5 = 62½% = 5/8 → <mark>40</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> Farq = bade ka 80%, chhota 1500 → <b>baaki %</b>: chhota = bade ka 20% = 1500 → <mark>7500</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10% badh kar 55,000; pehle? → <b>ulta (÷ 11/10)</b>: 55,000 × 10/11 → <mark>₹50,000</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">Scan wala sawaal</span>SP-XIV 31 Jul 2025 ("… of a number exceeds 25% of the same number by 15") mein fraction chhapte waqt ud gaya. Key ka answer 40 hai. Usse ulta: 15/40 = 37½%, toh fraction = 25% + 37½% = 62½% = <b>5/8</b>. Isi ko sawaal maan kar upar hal kiya hai.</div>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · % change: from → to, aur "r% badhao" (20 Qs)</h3>
+  <p><b>Samjho:</b> change ÷ <b>shuru wala</b>. Ghata ho ya badha, neeche hamesha purani value.</p>
+  <div class="box"><span class="k">Worked · Keemat ₹8000 se ₹7200. % kami? <span class="tag p">PYQ</span> <small>DP · 3 Jan 2026</small></span>
+    <b>Method:</b> change ÷ original · <i>~4 sec</i><br>
+    Change = 800. 800/8000 = 1/10 = <mark>10%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Bottles 16,000 se 26,000, 2 saal mein. Saalana dar? <span class="tag p">PYQ</span> <small>CGL · 26 Sep 2025</small></span>
+    <b>Method:</b> option check + a + b + ab/100 · <i>~20 sec</i><br>
+    Kul badhat = 10,000/16,000 = 62.5%. Ab option daalo: 27.5% do baar → 27.5 + 27.5 + (27.5 × 27.5)/100 ≈ 55 + 7.56 = 62.56% ✔.<br>
+    26.47% do baar ≈ 52.9 + 7 = 60% (kam). 28.47% ≈ 56.9 + 8.1 = 65% (zyada). Toh <mark>27.5%</mark> (asli 27.48%, isliye "approx").
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 200 → 150 → <b>change ÷ original</b>: 50/200 → <mark>25%</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 400 → 500 → <b>change ÷ original</b>: 100/400 → <mark>25%</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20,000 → 23,000 → <b>change ÷ original</b>: 3000/20000 → <mark>15%</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 400 → 450 → <b>change ÷ original</b>: 50/400 = 1/8 → <mark>12.5%</mark> <small>DP · 31 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12,000 → 13,200 → <b>change ÷ original</b>: 1200/12000 → <mark>10%</mark> <small>DP · 29 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40 → 50 → <b>change ÷ original</b>: 10/40 → <mark>25%</mark> <small>DP · 29 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 500 → 425 → <b>change ÷ original</b>: 75/500 → <mark>15%</mark> <small>DP · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 200 → 240 → <b>change ÷ original</b>: 40/200 → <mark>20%</mark> <small>DP · 24 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 70 → 84 → <b>change ÷ original</b>: 14/70 = 1/5 → <mark>20%</mark> <small>DP · 24 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 200 → 220 → <b>change ÷ original</b>: 20/200 → <mark>10%</mark> <small>DP · 22 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 3000 → 2700 → <b>change ÷ original</b>: 300/3000 → <mark>10%</mark> <small>DP · 3 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 600 → 660 → <b>change ÷ original</b>: 60/600 → <mark>10%</mark> <small>DP · 26 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 500 par 10% badha → <b>10% wala</b>: 500 + 50 → <mark>₹550</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 80 par 8% badha → <b>1% wala</b>: 80 + 6.4 → <mark>₹86.40</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20,000 par 10% badha → <b>10% wala</b>: 20,000 + 2,000 → <mark>22,000</mark> <small>DP · 30 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 120 par 25% badha → <b>fraction 1/4</b>: 120 + 30 → <mark>150</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> Physics 72, Maths 20% zyada → <b>fraction 1/5</b>: 72 + 14.4 → <mark>86.4</mark> <small>CGL · 20 Sep 2025; CPO · 10 Dec 2025</small></li>
+  </ul>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Galti wala % (error %) (8 Qs)</h3>
+  <p><b>Samjho:</b> error % = (galat − sahi) ÷ <b>sahi</b> × 100. Base hamesha sahi value. Unit pehle same karo (ghante → minute, m → cm, kg → g).</p>
+  <div class="box"><span class="k">Worked · 19/18 se guna karna tha, 9/8 se kar diya. Error %? <span class="tag p">PYQ</span> <small>MTS · 9 Feb 2025</small></span>
+    <b>Method:</b> LCM se same neeche · <i>~15 sec</i><br>
+    LCM 72: sahi = 76/72, galat = 81/72. Error = 5 parts, sahi = 76 parts.<br>
+    5/76 ≈ thoda sa 5/75 (= 6.67%) se kam → <mark>6.58%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 20% ghatana tha, galti se 25% badha diya. Sahi se kitna % zyada? <span class="tag p">PYQ</span> <small>CGL · 21 Sep 2025</small></span>
+    <b>Method:</b> 100 maan lo · <i>~8 sec</i><br>
+    Galat = 125, sahi = 80. Farq 45. Base = sahi = 80.<br>
+    45/80 = 9/16 = <mark>56.25%</mark>. (9/16 = 9 × 6¼.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 200 ml ko 198 naapa → <b>error ÷ sahi</b>: 2/200 → <mark>1%</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> 8 h 20 min ko 8 h 40 min → <b>minute mein badlo</b>: 20/500 → <mark>4 percent</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 4.70 m ko 3.52 m → <b>error ÷ sahi</b>: 118/470 ≈ 0.2511 → <mark>25.11 percent</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 6.6 kg ko 7.59 kg → <b>error ÷ sahi</b>: 0.99/6.6 = 99/660 = 3/20 → <mark>15 percent</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 500 par 10% ghatana tha, badha diya → <b>galat ÷ sahi</b>: 550 vs 450 → 100/450 = 2/9 → <mark>22.22%</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25% badhana tha; 25% ghata kar phir 25% badhaya → <b>a + b + ab/100</b>: −25 + 25 − 6.25 = −6.25% (original se) → <mark>6.25%</mark> <small>MTS · 12 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · % se ratio (17 Qs)</h3>
+  <p><b>Samjho:</b> "15% of a = 25% of b" → jiska % chhota, wo number bada. Ratio <b>ulta</b>: a : b = 25 : 15. Teen ho toh har % ka ulta (1/x) lo.</p>
+  <div class="box"><span class="k">Worked · 20% of (P + Q) = 50% of (P − Q). P : Q? <span class="tag p">PYQ</span> <small>CGL · 17 Sep 2025</small></span>
+    <b>Method:</b> ulta ratio + jod-ghata · <i>~8 sec</i><br>
+    (P + Q) : (P − Q) = 50 : 20 = 5 : 2.<br>
+    P = (5 + 2)/2, Q = (5 − 2)/2 → P : Q = <mark>7 : 3</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 40% of A = 0.5 of B = 1/4 of C. A : B : C? <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small></span>
+    <b>Method:</b> 1/x lo · <i>~10 sec</i><br>
+    A : B : C = 1/0.4 : 1/0.5 : 1/0.25 = 2.5 : 2 : 4.<br>
+    × 2 → <mark>5 : 4 : 8</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 15% of a = 25% of b → <b>ulta ratio</b>: a : b = 25 : 15 → <mark>5 : 3</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30% of m = 18% of n → <b>ulta ratio</b>: m : n = 18 : 30 → <mark>3 : 5</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12.5% of p = 50% of q → <b>ulta ratio</b>: p : q = 50 : 12.5 → <mark>4 : 1</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25% of (P + Q) = 75% of (P − Q) → <b>jod-ghata ratio</b>: P + Q = 3(P − Q) → 2P = 4Q → <mark>2 : 1</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25% A = 20% B = 10% C → <b>ulta ratio (1/x)</b>: 1/25 : 1/20 : 1/10, × 100 → 4 : 5 : 10 → <mark>4 : 5 : 10</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> Doosra = pehle ka 150%, teesra = doosre ka 80% → <b>maan lo 10</b>: 10, 15, 12 → <mark>5:6</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 6% a + 4% b = 2(2% a + 5% b) → <b>seedha jodo</b>: 6a + 4b = 4a + 10b → 2a = 6b → <mark>3:1</mark> <small>GD · 25 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> x% of y = 1500, y% of z = 2000 → <b>xy aur yz</b>: xy : yz = 15 : 20 → x : z = 3 : 4 → <mark>4x = 3z</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20% of x = y; y% of 20? → <b>x% of y = y% of x</b>: y% of 20 = 20% of y = 20% of 20% of x = 4% → <mark>4% of x</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> ¼ × 70% of a = ⅕ × 50% of b; farq 240; 150% of jod → <b>ulta ratio</b>: 17.5a = 10b → a : b = 4 : 7 → 3 parts = 240, 1 = 80 → jod 880 × 1.5 → <mark>1320</mark> <small>GD · 4 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 50% P + 40% Q = 80% Q → <b>seedha jodo</b>: 50% P = 40% Q → P = 4/5 Q → <mark>80 percent</mark> <small>GD · 19 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A = 4X, B = 9X; B, A ka kitna % → <b>ratio → %</b>: 9/4 = 2.25 → <mark>225 percent</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A = 2X, B = 5X; B, A ka kitna % → <b>ratio → %</b>: 5/2 = 2.5 → <mark>250 percent</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> Jod = pehle ka 35/20 → <b>ratio → %</b>: 35/20 = 1.75 → doosra 0.75 → <mark>75</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Jod = pehle ka 45/20 → <b>ratio → %</b>: 45/20 = 2.25 → doosra 1.25 → <mark>125 percent</mark> <small>GD · 7 May 2026</small></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> "(P + Q) : (P − Q) = m : n" ho toh seedha P : Q = (m + n) : (m − n). 25% (P + Q) = 75% (P − Q) → 3 : 1 → P : Q = 4 : 2 = 2 : 1.</div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>37½% of 480 + 12½% of 320?</summary><p>3/8 × 480 = 180. 1/8 × 320 = 40. Kul 220.</p></details>
+    <details><summary>45% − 20% of a number = 50. Number?</summary><p>25% = 50 → number 200.</p></details>
+    <details><summary>Keemat 250 se 300. % badhat?</summary><p>50/250 = 1/5 = 20%.</p></details>
+    <details><summary>2 ghante ko 2 ghante 6 minute naapa. Error %?</summary><p>6/120 = 1/20 = 5%.</p></details>
+    <details><summary>20% of x = 30% of y. x : y?</summary><p>Ulta: 30 : 20 = 3 : 2.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · PERCENTAGE (part 3: types 7-14) ===================== -->
+<section class="chap" id="mpc-types-b">
+  <div class="eyebrow">Maths · PYQ types 7–14</div>
+  <h2>Percentage: zyada-kam, lagataar badlaav, bachat, election</h2>
+  <div class="meta">Is hisse mein type 7–14 · sabse zyada aaye: lagataar badlaav (32 Qs) aur "A, B se kitna zyada/kam" (28 Qs)</div>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · "A, B se r% zyada/kam" aur unki chain (28 Qs)</h3>
+  <p><b>Samjho:</b> har "zyada/kam" ko fraction guna mein badlo. Ek se zyada log ho toh sabse neeche wale ko 100 maan lo.</p>
+  <div class="box"><span class="k">Worked · A, B se 20% zyada; B, C se 30% zyada; C, D se 10% kam; D, E se 30% kam. A, E se? <span class="tag p">PYQ</span> <small>CHSL · 25 Nov 2025</small></span>
+    <b>Method:</b> fraction guna · <i>~20 sec</i><br>
+    E = 100 maano. D = 70. C = 70 ka 90% = 63. B = 63 + 30% = 63 + 18.9 = 81.9. A = 81.9 + 20% = 81.9 + 16.38 = 98.28.<br>
+    100 se 1.72 kam → <mark>1.72 percent less</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · A + B, C + D se 300% zyada; C, D se 50% zyada; A, B se 200% zyada; D = 200. A? <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small></span>
+    <b>Method:</b> "r% zyada" = (100 + r)/100 guna · <i>~15 sec</i><br>
+    C = 300, C + D = 500. 300% zyada = 4 guna → A + B = 2000.<br>
+    200% zyada = 3 guna → A = 3B → A : B = 3 : 1 → A = 2000 × 3/4 = <mark>1500</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> A, B se 25% zyada; B, C se 20% zyada; A : C → <b>fraction guna</b>: 5/4 × 6/5 = 3/2 → <mark>3 : 2</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> A, B se 20% zyada; B, C se 25% zyada; A, C se kitna zyada → <b>fraction guna</b>: 6/5 × 5/4 = 3/2 → <mark>50 percent</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A, B se 40% kam; B, A se kitna zyada → <b>r/(100 − r)</b>: 40/60 = 2/3 → <mark>66.67%</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> A, B se 20% zyada; B, A se kitna kam → <b>r/(100 + r)</b>: 20/120 = 1/6 → <mark>16.66%</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A, B se 25% zyada; B, A se kitna kam → <b>r/(100 + r)</b>: 25/125 = 1/5 → <mark>20%</mark> <small>DP · 24 Dec 2025; SP-XIV · 29 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A, B se 20% kam; B, A se kitna zyada → <b>r/(100 − r)</b>: 20/80 = 1/4 → <mark>25 percent</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A, B se 50% kam; B, A se kitna zyada → <b>r/(100 − r)</b>: 50/50 → <mark>100 percent</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> A = B ka 1/4; A, B se kitna kam → <b>fraction</b>: 3/4 → <mark>75 percent</mark> <small>GD · 4 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A, B se "5 guna zyada"; B, A se kitna kam → <b>guna + 1 (note dekho)</b>: A = 6B → 5/6 → <mark>83.33</mark> <small>GD · 4 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A, B se "4 guna zyada"; B, A se kitna kam → <b>guna + 1 (note dekho)</b>: A = 5B → 4/5 → <mark>80 percent</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A, B se 30% kam, A = 630 → <b>ulta (÷ 70%)</b>: 70% = 630 → 10% = 90 → <mark>900</mark> <small>GD · 4 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> A, B se 20% kam, A = 480 → <b>ulta (÷ 80%)</b>: 80% = 480 → 10% = 60 → <mark>600</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Science, Maths se 25% zyada; Science 240 → <b>ulta (÷ 5/4)</b>: 240 × 4/5 → <mark>192</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> A, B se 25% zyada; B, C se 20% kam; A = 9000 → <b>fraction guna</b>: 5/4 × 4/5 = 1 → A = C → <mark>9000</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> B, A se 30% zyada; C, B se 20% kam; A, C ka kitna % → <b>maan lo 100</b>: A 100, B 130, C 104 → 100/104 → <mark>96.15 percent</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> P, Q se 20% zyada; R, Q se 20% kam; P, R se kitna zyada → <b>maan lo 100</b>: 120 vs 80 → 40/80 → <mark>50%</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> A, B se 50% zyada; C = (A + B) se 30% kam; C, A ka kitna % → <b>maan lo B = 2</b>: A 3, jod 5, C 3.5 → 3.5/3 = 7/6 → <mark>116.67%</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> X, Y se 80% zyada; Z = (X + Y) se 25% kam; Y = 45,000 → <b>fraction guna</b>: X + Y = 2.8Y = 1,26,000 → × 3/4 → <mark>94500</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> A + B, C + D se 100% zyada; C, D se 20% zyada; A, B se 200% zyada; D = 500 → <b>parts</b>: C 600, C + D 1100 → A + B 2200 → A : B = 3 : 1 → <mark>1650</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Same, 150% zyada; C, D se 25% zyada; A, B se 100% zyada; D = 400 → <b>parts</b>: C + D 900 → A + B 2250 → A : B = 2 : 1 → <mark>1500</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> P, Q se 25% kam; R, Q se 40% kam; P + Q + R = 1410; Q − R → <b>maan lo Q = 100</b>: 75 + 100 + 60 = 235 parts → 1 part = 6 → 40 parts → <mark>240</mark> <small>GD · 28 Apr 2026</small></li>
+    <li><span class="tag p">PYQ</span> Table, chair se 5000 mehngi; 16T + 14C = 2,00,000; chair kitna kam → <b>seedha</b>: 30C + 80,000 = 2,00,000 → C 4000, T 9000 → 5000/9000 → <mark>55.56%</mark> <small>MTS · 12 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Maths, Science se 20% zyada; average 66 → <b>parts</b>: S 5, M 6 parts → 11 parts = 132 → 1 part = 12 → <mark>60</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> A, B se 40% zyada; B +20%, A +x%; naya A, naya B se 25% zyada → <b>maan lo 100</b>: B 100 → 120, naya A = 150; A 140 → 150, 10/140 = 1/14 → <mark>7.14%</mark> <small>CGL · 23 Sep 2025; CGL · 25 Sep 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>GD 4 May 2026 ("A, B se 5 guna adhik") aur GD 18 May 2026 ("A is 4 times more than B"): key ne <b>"x guna zyada" = (x + 1) guna</b> maana hai. 5 guna zyada → A = 6B → B, A se 5/6 = 83.33% kam. 4 guna zyada → A = 5B → 80% kam. Agar A = 5B maano toh 80% aata hai, jo pehle sawaal mein bhi option hai. Is exam ki key ka niyam yaad rakho: "x times more" mein 1 jodo.</div>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · Lagataar badlaav: net %, population, depreciation (32 Qs)</h3>
+  <p><b>Samjho:</b> do badlaav → a + b + ab/100. Teen ya zyada → fraction guna. Peeche jaana ho (2 saal pehle) → ulta guna.</p>
+  <div class="box"><span class="k">Worked · Machine ₹10,000: −10%, −20%, −30%. 3 saal baad? <span class="tag p">PYQ</span> <small>CGL · 22 Sep 2025</small></span>
+    <b>Method:</b> fraction guna · <i>~10 sec</i><br>
+    10,000 × 9/10 × 8/10 × 7/10 = 10 × 9 × 8 × 7 = 10 × 504 = <mark>₹5040</mark>.<br>
+    (Galti: 10 + 20 + 30 = 60% ghata kar 4000 likhna.)
+  </div>
+  <div class="box"><span class="k">Worked · Daam x% ghata, phir x% badha; ant mein 10% kam. x? <span class="tag p">PYQ ×2</span> <small>CGL · 23 Sep 2025; CGL · 24 Sep 2025</small></span>
+    <b>Method:</b> −x, +x = −x²/100 · <i>~10 sec</i><br>
+    x²/100 = 10 → x² = 1000. 31² = 961, 32² = 1024 → x ≈ 31.6 → <mark>31.6</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> +25%, −20%, +10% → <b>fraction guna</b>: 5/4 × 4/5 × 11/10 = 11/10 → <mark>10% gain</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> +20% phir −10%, ant mein 59,400; shuru? → <b>a + b + ab/100</b>: 20 − 10 − 2 = 8% → 108% = 59,400 → 1% = 550 → <mark>55,000</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> +25% phir −20% → <b>a + b + ab/100</b>: 25 − 20 − 5 → <mark>0%</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> 40,000; +20%, −10%, +25% → <b>fraction guna</b>: 40,000 × 6/5 × 9/10 × 5/4 → <mark>54,000</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do barabar badhat, 156.25% → <b>square pehchano</b>: 156.25 = 1.25² → <mark>25%</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Birth 12%, death 7% (net 5%/saal), 2,40,000, 3 saal → <b>1-3-3-1 ped</b>: tukde 12,000, 600, 30 → 36,000 + 1,800 + 30 → <mark>2,77,830</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> +40% phir −30% → <b>a + b + ab/100</b>: 40 − 30 − 12 → <mark>2% decrease</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><span class="tag p">PYQ ×3</span> +20% phir −20% → <b>a + b + ab/100</b>: 20 − 20 − 4 → <mark>4% decrease</mark> <small>CHSL · 24 Nov 2025; DP · 22 Dec 2025; SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> +30% phir −30% → <b>a + b + ab/100</b>: −9 → <mark>9% decrease</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> +40% phir −30% → <b>a + b + ab/100</b>: 40 − 30 − 12 → <mark>2% decrease</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 200; +10% phir −5% → <b>a + b + ab/100</b>: 10 − 5 − 0.5 = 4.5% → <mark>Rs209</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5000; +20% tees ghante, −10%, +25% → <b>fraction guna</b>: 5000 × 216/125 = 8640 → × 9/10 = 7776 → × 5/4 → <mark>9,720</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> +20% phir +10% → <b>a + b + ab/100</b>: 20 + 10 + 2 → <mark>32%</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> +25% phir +40% → <b>a + b + ab/100</b>: 25 + 40 + 10 → <mark>75 percent</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> −12% phir +15% → <b>a + b + ab/100</b>: −12 + 15 − 1.8 → <mark>1.2% increase</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10,000; +10% phir +20% → <b>a + b + ab/100</b>: 10 + 20 + 2 = 32% → <mark>13200</mark> <small>DP · 23 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 10,000; −10% phir +15% → <b>a + b + ab/100</b>: −10 + 15 − 1.5 = 3.5% → <mark>10350</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> +40% phir −25% → <b>a + b + ab/100</b>: 40 − 25 − 10 → <mark>5% vriddhi (increase)</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> +25% phir −40% → <b>a + b + ab/100</b>: 25 − 40 − 10 → <mark>25 percent decrease</mark> <small>GD · 9 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> +50% phir −30% → <b>a + b + ab/100</b>: 50 − 30 − 15 → <mark>5 percent increase</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> −10% phir −20% → <b>a + b + ab/100</b>: −10 − 20 + 2 → <mark>28%</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12,000; +10% phir −5% → <b>a + b + ab/100</b>: 4.5% → 12,000 + 540 → <mark>12540</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 12,000; +10%, −20%, +15% → <b>fraction guna</b>: 12,000 × 11/10 = 13,200 → × 4/5 = 10,560 → + 15% (1,584) → <mark>12144</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 8% saalana, abhi 58,320; 2 saal pehle → <b>ratio 25 : 27</b>: 625 : 729 → 58,320 ÷ 729 = 80 → <mark>50000</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> +30%, wapas laane ko kitna −% → <b>r/(100 + r)</b>: 30/130 = 3/13 → <mark>23.08%</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> −12%, wapas laane ko kitna +% → <b>r/(100 − r)</b>: 12/88 = 3/22 → <mark>13.6%</mark> <small>CHSL · 18 Nov 2025</small></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> Birth rate 12%, death rate 7% → har saal net +5%. Phir 3 saal ka ped (1-3-3-1): 2,40,000 par tukde 12,000, 600, 30 → 3 × 12,000 + 3 × 600 + 30 = 37,830.</div>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · Daam badla: khapat, area, aur "zyada kg" (8 Qs)</h3>
+  <div class="box"><span class="k">Worked · Cheeni 15% sasti, ₹272 mein 2 kg zyada. Naya daam? <span class="tag p">PYQ</span> <small>SP-XIV · 24 Jul 2025</small></span>
+    <b>Method:</b> bachat ÷ extra kg · <i>~8 sec</i><br>
+    272 ka 15% = 27.2 + 13.6 = 40.8 rupaye bache. Inhi se 2 kg aaya.<br>
+    Naya daam = 40.8 ÷ 2 = <mark>Rs20.40</mark>. (Purana pucha hota toh × 20/17 = 24.)
+  </div>
+  <div class="box"><span class="k">Worked · Lambai 25% badhi. Area same rakhne ko chaudai kitni ghatao? <span class="tag p">PYQ</span> <small>CHSL · 29 Nov 2025</small></span>
+    <b>Method:</b> +1/x → −1/(x + 1) · <i>~4 sec</i><br>
+    25% = 1/4 badha → 1/5 ghatao = <mark>20%</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ ×2</span> Daam 25% badha; kharcha same, khapat kitni kam → <b>r/(100 + r)</b>: 25/125 = 1/5 → <mark>20%</mark> <small>CHSL · 28 Nov 2025; DP · 20 Dec 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> Cheeni 20% sasti, 200 mein 5 kg zyada; pehla daam → <b>bachat ÷ extra kg</b>: 20% of 200 = 40 → naya daam 40/5 = 8 → × 5/4 → <mark>Rs. 10</mark> <small>CGL · 26 Sep 2025; CPO · 10 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> Notebook 25% sasti, 200 mein 5 zyada; naya daam → <b>bachat ÷ extra</b>: 25% of 200 = 50 → 50/5 → <mark>10</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Aata 25% sasta, 360 mein 3 kg zyada; pehla daam → <b>bachat ÷ extra kg</b>: 90/3 = 30 naya → × 4/3 → <mark>Rs40</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · Income, kharcha, bachat (16 Qs)</h3>
+  <p><b>Samjho:</b> Income = Kharcha + Bachat. Income 100 maano. Table ke 3 khaanon mein se jo diya hai bharo, baaki minus se.</p>
+  <div class="box"><span class="k">Worked · 70% kharch; income +10%, kharcha +5%. Bachat kitni % badhi? <span class="tag p">PYQ</span> <small>CGL · 25 Sep 2025</small></span>
+    <b>Method:</b> 100 maan lo (upar wali picture) · <i>~12 sec</i><br>
+    Pehle: 100 = 70 + 30. Baad: 110 = 73.5 + 36.5.<br>
+    6.5/30 = 13/60 ≈ <mark>21.67%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 50% kharch; income +40%, bachat +20%. Kharcha kitna % badha? <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small></span>
+    <b>Method:</b> 100 maan lo · <i>~10 sec</i><br>
+    Pehle: 100 = 50 + 50. Baad: income 140, bachat 60 → kharcha 80.<br>
+    30/50 = <mark>60%</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ ×2</span> 80% kharch; income +25%, kharch same → <b>100 maan lo</b>: I 100, E 80, S 20 → I 125, E 80, S 45 → 25/20 → <mark>125%</mark> <small>CGL · 21 Sep 2025; CPO · 10 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 75% kharch; kharch +20%, income +10% → <b>100 maan lo</b>: S 25 → I 110, E 90, S 20 → 5/25 → <mark>20% decrease</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 83% kharch; income +23%, kharch +13% → <b>100 maan lo</b>: S 17 → I 123, E 83 + 10.79 = 93.79, S 29.21 → 12.21/17 ≈ 0.718 → <mark>71.82%</mark> <small>MTS · 9 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> I 45,000, E 27,000; I +21%, E +9% → <b>1% wala</b>: naya I 54,450, E 29,430, S 25,020 vs 18,000 → 7,020/18,000 → <mark>39%</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> I 80,000, E 45,000; I +15%, E +20% → <b>1% wala</b>: 92,000 − 54,000 → <mark>Rs. 38000</mark> <small>MTS · 19 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 70% kharch; income +30%, bachat +40%; kharch? → <b>100 maan lo</b>: I 130, S 30 → 42, E 88 → 18/70 → <mark>25.71 percent</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 40% kharch; income +50%, bachat +50%; kharch? → <b>100 maan lo</b>: I 150, S 60 → 90, E 60 → 20/40 → <mark>50 percent</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 50% kharch; income +40%, kharch +30%; "badhi hui bachat" 7500 → <b>100 maan lo</b>: I 100 → 140, E 50 → 65, S 50 → 75. Naya S 75 parts = 7500 (note dekho) → <mark>10000</mark> <small>GD · 18 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> Deepak 75%, Karan 80% kharch, dono 7,500 bachate; Sanjay = jod ka 1/3, 7/9 kharch → <b>bachat % se income</b>: D 30,000, K 37,500 → S 22,500 × 2/9 → <mark>Rs. 5,000</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 75% kharch, bachat 25,000; kharcha? → <b>bachat %</b>: 25% = 25,000 → 75% → <mark>Rs75,000</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 80% kharch, bachat 17,000; income? → <b>bachat %</b>: 20% = 17,000 → <mark>Rs. 85,000</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><span class="tag p">PYQ ×2</span> 30 + 20 + 25 = 75% kharch, bachat 9,000 → <b>bachat %</b>: 25% = 9,000 → <mark>Rs. 36,000</mark> <small>CGL · 26 Sep 2025; CPO · 11 Dec 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>GD 18 May 2026 (50% kharch, income +40%, kharcha +30%, "increased savings is Rs. 7500"): bachat 50 se 75 parts hui. Agar 7,500 ko <b>badhat</b> (25 parts) maano toh income ₹30,000 aati hai, jo option mein nahi. Key ka ₹10,000 tab aata hai jab 7,500 = <b>nayi bachat</b> (75 parts). Exam mein 10,000 lagao.</div>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · Baaki ka hissa aur baaki ki chain (22 Qs)</h3>
+  <p><b>Samjho:</b> "baaki" = 100 − jo nikla. "Baaki ka x%" = baaki % × x/100. Aakhri bacha hissa ka % nikaalo, wahi value ke barabar.</p>
+  <div class="box"><span class="k">Worked · 20% matric, baaki ka 40% graduate, baaki 144 PG. Matric? <span class="tag p">PYQ</span> <small>GD · 5 May 2026</small></span>
+    <b>Method:</b> baaki % ka guna · <i>~12 sec</i><br>
+    Baaki 80%. PG = 80% ka 60% = 48%.<br>
+    48% = 144 → 1% = 3 → matric 20% = <mark>60</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Roz 60% phal bechta hai, baaki ka 30% raat ko sad jaate hain; pehli raat 48 sade. Pehle din kitne beche? <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small></span>
+    <b>Method:</b> baaki % ka guna · <i>~10 sec</i><br>
+    Baaki 40%. Sade = 40% ka 30% = 12% = 48 → 1% = 4.<br>
+    Beche = 60% = <mark>240</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ ×2</span> 60% ghar, 15% bachat, baaki? → <b>100 − jod</b>: 100 − 75 → <mark>25%</mark> <small>CGL · 23 Sep 2025; CPO · 9 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 45%, B 30%, baaki? → <b>100 − jod</b>: 100 − 75 → <mark>25%</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60% seb, 25% santra, baaki aam → <b>100 − jod</b>: 100 − 85 → <mark>15%</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25% laal, 35% hare, 40 neele → <b>baaki % = value</b>: neele 40% = 40 → <mark>100</mark> <small>CGL · 14 Oct 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20% laal, 30% hare, 80 neele → <b>baaki % = value</b>: neele 50% = 80 → <mark>160</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 70% beche, 720 bache → <b>baaki % = value</b>: 30% = 720 → <mark>2400</mark> <small>MTS · 13 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60% beche, 380 bache → <b>baaki % = value</b>: 40% = 380 → <mark>950 Orange</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 15,500 + 20,500 laga diye, baaki 40% → <b>baaki % = value</b>: 36,000 = 60% → <mark>Rs60,000</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Theory 75% = 450, 25% practical; kul → <b>baaki % = value</b>: 75% = 450 → <mark>600</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60% ladke, 480 ladkiyan; ladke? → <b>baaki % = value</b>: 40% = 480 → 10% = 120 → <mark>720</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30% matric, baaki ka 60% graduate, baaki 84 PG → <b>baaki ki chain</b>: PG = 70% × 40% = 28% = 84 → N = 300 → 30% → <mark>90</mark> <small>GD · 6 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 50% matric, baaki ka 20% graduate, baaki 120 PG → <b>baaki ki chain</b>: PG = 50% × 80% = 40% = 120 → N = 300 → <mark>150</mark> <small>MTS · 20 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 40% beche, baaki ka 10% sade, 36 sade → <b>baaki ki chain</b>: sade = 60% × 10% = 6% = 36 → N = 600 → 40% → <mark>240</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 30% beche, baaki ka 20% sade, 28 sade → <b>baaki ki chain</b>: sade = 70% × 20% = 14% = 28 → N = 200 → 30% → <mark>60</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20% gaye, phir baaki ka 25% gaye; 48,000 bache → <b>baaki ki chain</b>: 80% × 75% = 60% = 48,000 → <mark>80,000</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><span class="tag p">PYQ</span> 20% daan, baaki ka 40% invest, baaki 7 : 5; travel 6000 → <b>baaki ki chain</b>: 80% × 60% = 48% → travel 5/12 = 20% = 6000 → <mark>Rs30,000</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 200 mein 20% fail; baaki ka 20% distinction; ratio → <b>baaki ki chain</b>: pass 160 → 32 : 128 → <mark>1:4</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 65% umar 35+, unka 20% auratein = 1560; kul → <b>baaki ki chain</b>: 65% × 20% = 13% = 1560 → 1% = 120 → <mark>12000</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 34, 22, 18, 12%, baaki travel; ent − travel = 3600; food? → <b>100 − jod</b>: travel 14% → 20% = 3600 → 1% = 180 → 22% → <mark>Rs. 3,960</mark> <small>DP HCM · 9 Jan 2026</small></li>
+  </ul>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · Election (7 Qs)</h3>
+  <p><b>Samjho:</b> teen parat: kul voter → jinhone vote diya → valid vote. Har parat ka % guna karo. Do candidate ho toh jeet ka margin = dono ke % ka farq.</p>
+  <div class="box"><span class="k">Worked · 80% ne vote diya, unka 5% invalid; winner ko valid ka 60% = 11,400. Kul voter? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span>
+    <b>Method:</b> % ka guna · <i>~15 sec</i><br>
+    Valid = 80% × 95% = 76% of voter. Winner = 60% of 76% = 45.6% of voter.<br>
+    Ya seedha: valid = 11,400 × 5/3 = 19,000. 76% = 19,000 → 1% = 250 → <mark>25000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 1,780 invalid; winner ko valid ka 82%, jeet 80 vote se. Kul vote? <span class="tag p">PYQ</span> <small>MTS · 4 Feb 2025</small></span>
+    <b>Method:</b> farq ka % · <i>~10 sec</i><br>
+    Loser 18%. Margin = 82 − 18 = 64% of valid = 80 → valid = 80 × 100/64 = 125.<br>
+    Kul = 125 + 1,780 = <mark>1905</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 25% ne vote nahi diya, 20% invalid, winner 60% valid, jeet 2400 → <b>% ka guna</b>: valid = 75% × 80% = 60% of V; jeet = 20% of valid = 12% of V = 2400 → <mark>20,000</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do candidate, ek ko 40%, haar 4,65,104 se → <b>farq ka %</b>: 60 − 40 = 20% = 4,65,104 → × 5 → <mark>23,25,520</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> Do candidate, ek ko 30%, haar 3,65,104 se → <b>farq ka %</b>: 70 − 30 = 40% = 3,65,104 → × 5/2 → <mark>912760</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 9000 vote, 20% invalid, ek ko 55% valid; doosre ko? → <b>% ka guna</b>: valid 7,200 → 45% → <mark>3240</mark> <small>MTS · 11 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> A 45%, B 30%, baaki 15,000 invalid → <b>baaki % = value</b>: 25% = 15,000 → <mark>60000</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 13 -->
+  <h3>Type 13 · Exam, pass marks, sahi jawab (12 Qs)</h3>
+  <p><b>Samjho:</b> do student, ek fail ek paas → <b>% ka farq = (fail ke kam marks + paas ke zyada marks)</b>. Pass marks beech mein hai.</p>
+  <div class="box"><span class="k">Worked · 30% par 12 se fail; 44% par pass se 16 zyada. Max marks? <span class="tag p">PYQ</span> <small>CHSL Tier-2</small></span>
+    <b>Method:</b> farq ka % · <i>~8 sec</i><br>
+    44% − 30% = 14% = 12 + 16 = 28 → 1% = 2 → max = <mark>200</mark>. (Pass = 60 + 12 = 72.)
+  </div>
+  <div class="box"><span class="k">Worked · 33⅓% par 20 se fail; 50% par 10 se paas. Total? <span class="tag p">PYQ</span> <small>CPO · 10 Dec 2025</small></span>
+    <b>Method:</b> farq ka % + fraction table · <i>~8 sec</i><br>
+    50% − 33⅓% = 16⅔% = 1/6. Ye = 20 + 10 = 30.<br>
+    Total = 30 × 6 = <mark>180</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 30% par 13 se fail, 44% par 15 se paas → <b>farq ka %</b>: 14% = 28 → 1% = 2 → <mark>200</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 72 laaye, 8 se fail, pass 40% → <b>pass marks</b>: 40% = 80 → <mark>200</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><span class="tag p">PYQ</span> 120 Qs: GK 20 ka 70%, Reasoning 50 ka 50%, English 50 ka 30%; pass 60% → <b>1% wala</b>: 14 + 25 + 15 = 54; chahiye 72 → <mark>18</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 200 Qs, 75% attempt, unka 80% sahi, baaki ka 10% grace → <b>% ka guna</b>: 150 ka 80% = 120; 50 ka 10% = 5 → <mark>125</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5 subject × 200, kul 60%; subject 1 = obtained ka 25% → <b>% ka guna</b>: 600 ka 25% → <mark>150</mark> <small>GD · 8 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 70% jeet x match mein; 20 haare, 50% reh gaya → <b>jeet same rehti hai</b>: 0.7x = 0.5(x + 20) → 0.2x = 10 → <mark>50</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ek ke marks doosre se 75 zyada, aur jod ke 80% → <b>parts</b>: 80 : 20 = 4 : 1 → 3 parts = 75 → <mark>25 and 100</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><span class="tag p">PYQ</span> 50% paas, 20,000 fail → <b>baaki % = value</b>: fail 50% = 20,000 → <mark>20000</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 30% paas, 42,000 fail → <b>baaki % = value</b>: 70% = 42,000 → 10% = 6,000 → 30% → <mark>18000</mark> <small>GD · 7 May 2026</small></li>
+    <li><span class="tag p">PYQ</span> 67% paas, 165 fail → <b>baaki % = value</b>: 33% = 165 → 1% = 5 → <mark>500</mark> <small>MTS · 10 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 14 -->
+  <h3>Type 14 · Do group: sets (Venn) aur mila-jula % (10 Qs)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Venn diagram. English 60 percent, Maths 70 percent, both 45 percent. Only English 15, only Maths 25, both 45. At least one is 60 plus 70 minus 45 equals 85 percent. Neither is 15 percent.">
+      <rect x="20" y="14" width="440" height="230" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="32" y="34" class="sm">sab students = 100%</text>
+      <circle cx="190" cy="134" r="92" class="chf" style="opacity:.55"/><circle cx="190" cy="134" r="92" class="chs"/>
+      <circle cx="290" cy="134" r="92" class="chf" style="opacity:.55"/><circle cx="290" cy="134" r="92" class="chs"/>
+      <text x="150" y="62" text-anchor="middle" class="lbl">English 60</text>
+      <text x="330" y="62" text-anchor="middle" class="lbl">Maths 70</text>
+      <text x="145" y="140" text-anchor="middle" class="lbl">sirf E</text><text x="145" y="158" text-anchor="middle" class="lbl">15</text>
+      <text x="240" y="140" text-anchor="middle" class="lbl" style="fill:var(--ch)">dono</text><text x="240" y="158" text-anchor="middle" class="lbl" style="fill:var(--ch)">45</text>
+      <text x="335" y="140" text-anchor="middle" class="lbl">sirf M</text><text x="335" y="158" text-anchor="middle" class="lbl">25</text>
+      <text x="420" y="234" text-anchor="end" class="sm">koi nahi = 15</text>
+      <text x="480" y="80" class="lbl">Kam se kam ek</text>
+      <text x="480" y="100" class="sm">= 60 + 70 − 45 = 85</text>
+      <text x="480" y="140" class="lbl">Dono baar gine</text>
+      <text x="480" y="160" class="sm">"dono" wale E mein bhi,</text>
+      <text x="480" y="176" class="sm">M mein bhi gine gaye,</text>
+      <text x="480" y="192" class="sm">isliye ek baar ghatao</text>
+      <text x="480" y="230" class="lbl" style="fill:var(--ch)">15 + 45 + 25 + 15 = 100 ✔</text>
+    </svg>
+    </div>
+    <figcaption>Do gol, beech mein "dono". Jodne par beech wala do baar gina jaata hai, isliye ek baar ghatao.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · 60% English, 70% Maths, 45% dono mein paas. Kam se kam ek mein? <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small></span>
+    <b>Method:</b> A + B − dono · <i>~4 sec</i><br>
+    60 + 70 − 45 = <mark>85%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Shahar 75,000, aadhe male (35% padhe-likhe); kul 45% padhe-likhe. Female mein kitne %? <span class="tag p">PYQ</span> <small>MTS · 10 Feb 2025</small></span>
+    <b>Method:</b> barabar group = seedha average · <i>~6 sec</i><br>
+    Male aur female barabar (50–50), toh kul % = dono ka average.<br>
+    (35 + f)/2 = 45 → f = <mark>55%</mark>. 75,000 wale number ko chhuna hi nahi.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Physics 50% fail, Chemistry 40% fail, dono 10%; dono pass? → <b>A + B − both</b>: kam se kam ek fail = 50 + 40 − 10 = 80 → <mark>20%</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><span class="tag p">PYQ</span> English 75%, Hindi 55% paas, sab kisi ek mein paas; dono 1560 → <b>A + B − both</b>: both = 75 + 55 − 100 = 30% = 1560 → <mark>5200</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> 800 students: Maths 55%, Physics 45%, dono 30%; baaki ka 25% CS → <b>A + B − both</b>: ek bhi = 70% → baaki 30% = 240 → 75% → <mark>180</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 25,000 log; males −5%, females +10%, ab 25,250 → <b>maan lo sab female</b>: sab female → +2,500; asal +250, har male 15% ka farq → 2,250 ÷ 15% → <mark>15,000</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 60% ladke (40% paas), 40% ladkiyan (50% paas) → <b>weighted</b>: 0.6 × 40 + 0.4 × 50 = 24 + 20 → <mark>44%</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><span class="tag p">PYQ</span> Ek mein 80%, doosre mein 60%, barabar max marks → <b>seedha average</b>: (80 + 60)/2 → <mark>70%</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><span class="tag p">PYQ</span> 35% MF (+20%), 25% FD (+10%), 40% RD (+15%) → <b>weighted</b>: 7 + 2.5 + 6 → <mark>15.5%</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><span class="tag p">PYQ</span> 5,00,000: 60% material +12.5%, 25% labour +10%, baaki same → <b>weighted</b>: material 3,00,000 → +37,500; labour 1,25,000 → +12,500 → +50,000 → <mark>Rs5,50,000</mark> <small>CHSL · 30 Nov 2025</small></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> Group barabar na ho toh weighted: 60% ladke (40% paas) + 40% ladkiyan (50% paas) = 0.6 × 40 + 0.4 × 50 = 44%. Answer hamesha 40 aur 50 ke beech, aur bade group (ladke) ki taraf jhuka hua.</div>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>A, B se 25% zyada → B, A se 25% kam</td><td>Base badla. 25/125 = 20% kam.</td></tr>
+    <tr><td>+20% phir −20% = 0</td><td>a + b + ab/100 = −4%. Hamesha nuksaan.</td></tr>
+    <tr><td>−10%, −20%, −30% = −60%</td><td>Fraction guna: 9/10 × 8/10 × 7/10 = 50.4% bacha.</td></tr>
+    <tr><td>"20% gaye, phir baaki ka 25%" = 45% gaye</td><td>Baaki ka guna: 80% × 75% = 60% bache, 40% gaye.</td></tr>
+    <tr><td>% change mein naye number se bhaag dena</td><td>Hamesha shuru wale (purane) se. 500 → 425: 75/500.</td></tr>
+    <tr><td>Error % mein galat value se bhaag dena</td><td>Base = sahi value. 4.70 m ko 3.52 m: 118/470.</td></tr>
+    <tr><td>Bachat ka % income par lena</td><td>Bachat ki badhat ÷ <b>purani bachat</b>.</td></tr>
+    <tr><td>Daam ghata, "zyada kg" mein purana daam nikaal dena</td><td>Bachat ÷ extra kg = <b>naya</b> daam. Purana chahiye toh ulta guna.</td></tr>
+    <tr><td>Unit alag hi chhod dena (m³ aur cm³, kL aur mL, ghanta aur minute)</td><td>Pehle unit same, phir %.</td></tr>
+    <tr><td>Sets mein "dono" ko do baar ginna</td><td>Kam se kam ek = A + B − dono.</td></tr>
+    <tr><td>"4 times more" = 4 guna</td><td>Is bank ki key mein (x + 1) guna. 4 times more → 5B.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 260 sawaal, sab yahan hain. 18 sawaal page crop wale the (fraction ya Hindi). Unhe crop dekh kar padha. Ek sawaal (SP-XIV 31 Jul 2025) mein fraction chhapne mein ud gaya tha. Use key se dobara banaya, upar note hai. 9 sawaal do alag shift mein hubahu dobara aaye, unhe ×2 ke saath ek jagah rakha hai. Key ka koi answer galat nahi mila. Teen jagah key ne ek khaas reading li hai ("x times more" aur "increased savings"), unke ⚠ note upar hain.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>A, B se 20% kam. B, A se kitna % zyada?</summary><p>20/80 = 1/4 = 25%.</p></details>
+    <details><summary>Population 50,000: pehle saal +10%, doosre −10%. Ab?</summary><p>10 − 10 − 1 = −1% → 49,500.</p></details>
+    <details><summary>Chawal 20% sasta, ₹400 mein 4 kg zyada. Naya daam?</summary><p>400 ka 20% = 80 bache → 80 ÷ 4 = ₹20.</p></details>
+    <details><summary>Do candidate. Ek ko 35%, wo 6,000 se haara. Kul vote?</summary><p>65 − 35 = 30% = 6,000 → 20,000.</p></details>
+    <details><summary>40% par 10 se fail, 50% par 15 se paas. Max marks?</summary><p>10% = 25 → 250.</p></details>
+  </div>
+</section>

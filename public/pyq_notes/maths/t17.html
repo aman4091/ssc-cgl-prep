@@ -1,0 +1,1044 @@
+<!-- ===================== MATHS · GEOMETRY part 2 · section 1: lines, angles, triangles ===================== -->
+<section class="chap" id="mgb-lines">
+  <div class="eyebrow">Maths · 130 questions</div>
+  <h2>Geometry (part 2): rekha, kon aur triangle, figure dekh kar 20 second mein</h2>
+  <div class="meta">2025–26 SSC PYQs (CHSL, CPO, MTS, Selection Post XIV, Delhi Police, GD) · sabse zyada: complement wale kon, parallel lines ke figure, similar triangle ka ratio, triangle ke centre</div>
+
+  <h3>Pehle ek chhoti si kahani: ek seedhi line aur ek chakkar</h3>
+  <p>Ek seedhi line lo. Uspar kahin bhi khade ho kar ek taraf se doosri taraf ghoomo. Tum aadha chakkar ghoome. Aadha chakkar = <b>180°</b>. Poora chakkar = <b>360°</b>.</p>
+  <ul>
+    <li>Seedhi line par ek point se jitne bhi kon bane, sab ka jod <b>180°</b>. Isse "linear pair" kehte hain.</li>
+    <li>Ek point ke chaaron taraf ke saare kon: <b>360°</b>.</li>
+    <li>Do lines ek doosre ko kaatein toh "X" banta hai. Aamne-saamne ke kon barabar (vertically opposite). Bagal wale ka jod 180°.</li>
+  </ul>
+  <p>Bas yahi teen baatein poore chapter ki jad hain. Triangle ka 180° bhi isi se aata hai: triangle ke ek kone par, saamne wali side ke parallel ek line kheencho. Teeno kon us seedhi line par aa kar baith jaate hain.</p>
+  <div class="box"><span class="k">Ab naam rakh dete hain</span>
+    Jod 90° ho toh dono kon <b>complementary</b>. Jod 180° ho toh <b>supplementary</b>. 90° se chhota = acute, 90° = right, 90° aur 180° ke beech = obtuse.<br>
+    Paper mein ek sawaal ke liye lagbhag <b>36 second</b> milte hain. Geometry mein zyada time figure samajhne mein jaata hai. Neeche wale tareeke figure ko 5 second mein "padhna" sikhaate hain.
+  </div>
+
+  <!-- METHOD 1 -->
+  <h3>Speed method 1 · Complement ka ek-line formula</h3>
+  <p><b>Kab use karo:</b> "angle apne complement ka 3 guna hai", "complement angle se 12° zyada hai" jaise sawaal. 2025 ke CPO aur Selection Post mein ye har shift mein aaya.</p>
+  <p><b>Soch aise:</b> angle = x, toh complement = 90 − x. Agar x = 3 × complement, toh 90 ko 3 : 1 mein baanto. x ko 3 hisse, complement ko 1 hissa. 90 ÷ 4 = 22.5, x = 3 × 22.5 = 67.5°. Koi equation nahi, sirf hisse.</p>
+  <div class="box"><span class="k">Ek line ka formula</span>
+    x = k × (90 − x) + c &nbsp;→&nbsp; <b>x = (90k + c) ÷ (k + 1)</b><br>
+    "Complement = x ÷ 4" ka matlab x = 4 × complement, yaani k = 4 → 360 ÷ 5 = 72°.<br>
+    Do complementary kon ka farq D ho: bada = (90 + D) ÷ 2, chhota = (90 − D) ÷ 2.
+  </div>
+  <div class="box"><span class="k">Demo · angle apne complement ke 2 guna se 10° zyada hai · <i>~8 sec</i></span>
+    k = 2, c = +10 → (180 + 10) ÷ 3 = 190 ÷ 3 = <b>63.33°</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "k guna" wale sawaal mein 90 ko (k + 1) hisson mein baanto. Supplement ho toh 90 ki jagah 180. Option check: angle + complement = 90 hona hi chahiye.</div>
+
+  <!-- METHOD 2 -->
+  <h3>Speed method 2 · Parallel lines: sirf do size ke kon</h3>
+  <p><b>Soch aise:</b> do parallel lines ko ek tirchhi line (transversal) kaate, toh 8 kon bante hain. Par unke size sirf <b>do</b> hote hain: ek chhota (a) aur ek bada (b). Aur a + b = 180°. Bas ye dekho ki tumhara kon chhota dikhta hai ya bada.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Two parallel lines AB and CD cut by a transversal. At each crossing there are four angles: two acute angles a of 53 degrees and two obtuse angles b of 127 degrees. Rules listed on the right.">
+      <line x1="40" y1="70" x2="400" y2="70" class="chs" stroke-width="2"/>
+      <line x1="40" y1="190" x2="400" y2="190" class="chs" stroke-width="2"/>
+      <line x1="130" y1="10" x2="310" y2="250" class="ln" stroke-width="2"/>
+      <circle cx="175" cy="70" r="3" style="fill:var(--ch)"/><circle cx="265" cy="190" r="3" style="fill:var(--ch)"/>
+      <g class="lbl"><text x="44" y="62">A</text><text x="392" y="62" text-anchor="end">B</text><text x="44" y="182">C</text><text x="392" y="182" text-anchor="end">D</text></g>
+      <g text-anchor="middle" class="lbl">
+        <text x="200" y="90" style="fill:var(--ch)">a</text><text x="149" y="62" style="fill:var(--ch)">a</text>
+        <text x="190" y="50">b</text><text x="161" y="100">b</text>
+        <text x="290" y="210" style="fill:var(--ch)">a</text><text x="239" y="182" style="fill:var(--ch)">a</text>
+        <text x="280" y="170">b</text><text x="251" y="220">b</text>
+      </g>
+      <text x="430" y="40" class="lbl">Yahan a = 53°, b = 127°</text>
+      <text x="430" y="62" class="sm">a + b = 180° (seedhi line par)</text>
+      <text x="430" y="96" class="lbl">F shape (corresponding): a = a</text>
+      <text x="430" y="124" class="lbl">Z shape (alternate): a = a</text>
+      <text x="430" y="152" class="lbl">C / U (co-interior): a + b = 180</text>
+      <text x="430" y="180" class="lbl">X (vertically opposite): a = a</text>
+      <text x="430" y="214" class="sm">Naam bhool jao to bhi chalega:</text>
+      <text x="430" y="232" class="sm">chhota = chhota, bada = bada, jod = 180</text>
+    </svg>
+    </div>
+    <figcaption>Transversal 53° par jhuki hai, isliye har crossing par do kon 53° aur do 127°. Figure mein jo kon chhota dikhe, wo a. Jo bada dikhe, wo b.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · AB ∥ CD, ∠PRB = 74°. ∠DSQ? · <i>~6 sec</i></span>
+    ∠PRB upar-right wala kon hai, chhota (a = 74). ∠DSQ neeche-right wala, bada dikhta hai → b = 180 − 74 = <b>106°</b>.
+  </div>
+
+  <!-- METHOD 3 -->
+  <h3>Speed method 3 · Parallel lines ke beech ya bahar ek point</h3>
+  <p><b>Kab use karo:</b> MTS ka sabse pasandida figure. Do parallel lines, aur ek point E (ya P) jisse dono lines tak rekha jaati hai. Teen hi shape aate hain:</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Three figures. One: point E between parallel lines, angle ABE 64, angle CDE 32, angle BED equals 96, the sum. Two: point P outside the lines, angle PAB 55, angle DCP 115, angle APC equals 60, the difference. Three: bow-tie, lines AC and BD cross at E between parallel lines, alternate angles equal.">
+      <g text-anchor="middle" class="lbl"><text x="115" y="22">1 · Point beech mein</text><text x="355" y="22">2 · Point bahar</text><text x="587" y="22">3 · Bow-tie (X)</text></g>
+      <!-- panel 1 -->
+      <line x1="20" y1="60" x2="225" y2="60" class="chs" stroke-width="2"/>
+      <line x1="20" y1="220" x2="225" y2="220" class="chs" stroke-width="2"/>
+      <line x1="25" y1="158.9" x2="220" y2="158.9" class="ln" stroke-dasharray="4 4"/>
+      <polyline points="150,60 101.8,158.9 199.6,220" fill="none" class="ln" stroke-width="2"/>
+      <g class="lbl"><text x="24" y="52">A</text><text x="150" y="52" text-anchor="middle">B</text><text x="24" y="238">C</text><text x="200" y="238" text-anchor="middle">D</text><text x="90" y="163" text-anchor="end">E</text></g>
+      <g text-anchor="middle" class="lbl"><text x="124" y="80">64°</text><text x="152" y="212">32°</text><text x="130" y="152" style="fill:var(--ch)">x</text></g>
+      <!-- panel 2 -->
+      <line x1="245" y1="120" x2="465" y2="120" class="chs" stroke-width="2"/>
+      <line x1="245" y1="220" x2="465" y2="220" class="chs" stroke-width="2"/>
+      <polyline points="259.9,120 316,40 400,220" fill="none" class="ln" stroke-width="2"/>
+      <circle cx="353.3" cy="120" r="2.5" style="fill:var(--muted)"/>
+      <g class="lbl"><text x="326" y="46">P</text><text x="252" y="138" text-anchor="middle">A</text><text x="458" y="112" text-anchor="end">B</text><text x="400" y="238" text-anchor="middle">C</text><text x="458" y="238" text-anchor="end">D</text></g>
+      <g text-anchor="middle" class="lbl"><text x="289" y="112">55°</text><text x="420" y="202">115°</text><text x="314" y="74" style="fill:var(--ch)">x</text></g>
+      <text x="374" y="106" class="sm">115°</text>
+      <!-- panel 3 -->
+      <line x1="485" y1="60" x2="690" y2="60" class="chs" stroke-width="2"/>
+      <line x1="485" y1="220" x2="690" y2="220" class="chs" stroke-width="2"/>
+      <line x1="520" y1="60" x2="594.7" y2="220" class="ln" stroke-width="2"/>
+      <line x1="600" y1="60" x2="507.6" y2="220" class="ln" stroke-width="2"/>
+      <g class="lbl"><text x="514" y="52" text-anchor="middle">A</text><text x="606" y="52" text-anchor="middle">B</text><text x="602" y="238" text-anchor="middle">C</text><text x="502" y="238" text-anchor="middle">D</text><text x="570" y="141">E</text></g>
+      <g text-anchor="middle" class="lbl"><text x="544" y="80">65°</text><text x="579" y="80">60°</text><text x="557" y="116">55°</text><text x="536" y="211" style="fill:var(--ch)">60°</text></g>
+      <!-- formulas -->
+      <g text-anchor="middle" class="lbl" style="fill:var(--ch)"><text x="115" y="262">x = 64 + 32 = 96°</text><text x="355" y="262">x = 115 − 55 = 60°</text><text x="587" y="262">∠CDE = ∠ABE = 60°</text></g>
+      <g text-anchor="middle" class="sm"><text x="115" y="280">beech mein: jod</text><text x="355" y="280">bahar: bada − chhota</text><text x="587" y="280">Z shape: alternate barabar</text></g>
+    </svg>
+    </div>
+    <figcaption>Teeno figure asli kon se bane hain. Panel 1 ki dashed line E se parallel kheenchi hai: upar wala hissa 64° (Z), neeche wala 32° (Z). Panel 2 mein PC line AB ko kaat kar wahan bhi 115° banati hai (F), phir triangle ka bahar wala kon.</figcaption>
+  </figure>
+  <ul>
+    <li><b>Point beech mein (arrow / M shape):</b> E par bana kon = dono lines par bane kon ka <b>jod</b>. ~5 sec.</li>
+    <li><b>Point bahar:</b> P par bana kon = <b>bada − chhota</b>. ~5 sec.</li>
+    <li><b>Bow-tie:</b> AC aur BD, E par katti hain. Upar wale triangle ka kon neeche wale ke Z-partner ke barabar. Pehle upar wale triangle ka teesra kon nikaalo (180 − do kon), phir wahi neeche. ~10 sec.</li>
+  </ul>
+  <div class="trick"><b>Trick:</b> Dekho ki point lines ke <b>beech</b> hai ya <b>bahar</b>. Beech = plus, bahar = minus. Option mein dono hote hain (96 aur 32), isliye ye ek nazar zaroori hai.</div>
+
+  <!-- METHOD 4 -->
+  <h3>Speed method 4 · Do aur MTS figures: barabar sides aur bahar ka zig-zag</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Left: AB parallel to CD, Q on AB, P and R on CD, PQ equals QR, line PQ extended to S. Angle BQS 72 so angle QPR 72 and angle PRQ 72. Right: AB parallel to DE, C below both lines, angle ABC 120, angle EDC 120, angle BCD 60.">
+      <!-- panel A -->
+      <line x1="30" y1="80" x2="320" y2="80" class="chs" stroke-width="2"/>
+      <line x1="30" y1="210" x2="320" y2="210" class="chs" stroke-width="2"/>
+      <line x1="189" y1="21.5" x2="127.8" y2="210" class="ln" stroke-width="2"/>
+      <line x1="170" y1="80" x2="212.2" y2="210" class="ln" stroke-width="2"/>
+      <g class="ln" stroke-width="2"><line x1="144.1" y1="143.5" x2="153.7" y2="146.5"/><line x1="186.3" y1="146.5" x2="195.9" y2="143.5"/></g>
+      <g class="lbl"><text x="34" y="72">A</text><text x="312" y="72" text-anchor="end">B</text><text x="34" y="228">C</text><text x="312" y="228" text-anchor="end">D</text>
+        <text x="157" y="72" text-anchor="middle">Q</text><text x="198" y="22">S</text><text x="124" y="228" text-anchor="middle">P</text><text x="215" y="228" text-anchor="middle">R</text></g>
+      <g text-anchor="middle" class="lbl"><text x="197" y="66">72°</text><text x="153" y="197">72°</text><text x="189" y="197" style="fill:var(--ch)">x</text><text x="196" y="103" style="fill:var(--ch)">y</text></g>
+      <text x="146" y="104" text-anchor="middle" class="sm">72°</text>
+      <text x="175" y="252" text-anchor="middle" class="lbl">PQ = QR → x = 72°, aur y = x = 72° (Z)</text>
+      <!-- panel B -->
+      <line x1="360" y1="50" x2="600" y2="50" class="chs" stroke-width="2"/>
+      <line x1="440" y1="110.6" x2="690" y2="110.6" class="chs" stroke-width="2"/>
+      <line x1="430" y1="171.2" x2="610" y2="171.2" class="ln" stroke-dasharray="4 4"/>
+      <polyline points="420,50 490,171.2 525,110.6" fill="none" class="ln" stroke-width="2"/>
+      <g class="lbl"><text x="366" y="42">A</text><text x="420" y="40" text-anchor="middle">B</text><text x="527" y="102" text-anchor="middle">D</text><text x="684" y="102" text-anchor="end">E</text><text x="490" y="192" text-anchor="middle">C</text></g>
+      <g text-anchor="middle" class="lbl"><text x="400" y="80">120°</text><text x="548" y="140">120°</text><text x="490" y="152" style="fill:var(--ch)">x</text></g>
+      <g class="sm"><text x="452" y="186">60°</text><text x="512" y="186">60°</text></g>
+      <text x="525" y="252" text-anchor="middle" class="lbl">x = 120 + 120 − 180 = 60°</text>
+    </svg>
+    </div>
+    <figcaption>Ye do figure bank mein chhape nahi the. Inhe MTS ke sawaalon ke numbers se banaya hai. Jo answer yahan se aata hai, wahi key mein hai, har baar. Right figure mein C dono lines ke neeche hai. Dashed line C se parallel hai, dono taraf 180 − 120 = 60° (C shape).</figcaption>
+  </figure>
+  <ul>
+    <li><b>PQ = QR wala figure:</b> ∠BQS ka vertical partner ∠AQP hai. Wo ∠QPR ka Z-partner hai. Phir PQ = QR se ∠PRQ = ∠QPR. Matlab <b>answer = diya hua kon</b>. ∠RQB bhi wahi hai (∠QRP ka Z-partner). ~5 sec.</li>
+    <li><b>Zig-zag, C dono lines ke bahar:</b> ∠BCD = ∠ABC + ∠EDC − 180. ~5 sec.</li>
+  </ul>
+
+  <!-- METHOD 5 -->
+  <h3>Speed method 5 · Triangle ka bahar wala kon</h3>
+  <p><b>Soch aise:</b> triangle ki ek side ko aage badhao. Bahar jo kon bana, wo andar wale kon ka 180 − partner hai. Aur andar ke teeno ka jod bhi 180 hai. Toh <b>bahar wala kon = door wale do andar ke kon ka jod</b>.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Left: triangle ABC with BC extended to D. Angle B 65, angle A 55, exterior angle ACD 120 equals 65 plus 55. Right: square ABCD, E on BC with angle DEC 75, DE cuts diagonal AC at F, angle EFA 120.">
+      <!-- panel A -->
+      <polygon points="120.5,47.6 40,220 220,220" fill="none" class="chs" stroke-width="2"/>
+      <line x1="220" y1="220" x2="300" y2="220" class="ln" stroke-width="2" stroke-dasharray="5 4"/>
+      <g class="lbl"><text x="120" y="38" text-anchor="middle">A</text><text x="30" y="238">B</text><text x="220" y="240" text-anchor="middle">C</text><text x="300" y="240" text-anchor="middle">D</text></g>
+      <g text-anchor="middle" class="lbl"><text x="68" y="210">65°</text><text x="122" y="84">55°</text><text x="244" y="200" style="fill:var(--ch)">120°</text></g>
+      <text x="194" y="210" text-anchor="middle" class="sm">60°</text>
+      <text x="170" y="262" text-anchor="middle" class="lbl">bahar ka kon = 65 + 55 = 120°</text>
+      <!-- panel B -->
+      <rect x="390" y="30" width="200" height="200" fill="none" class="chs" stroke-width="2"/>
+      <line x1="390" y1="30" x2="590" y2="230" class="ln" stroke-width="1.5"/>
+      <line x1="390" y1="230" x2="590" y2="176.4" class="ln" stroke-width="2"/>
+      <circle cx="547.7" cy="187.7" r="3" style="fill:var(--ch)"/>
+      <g class="lbl"><text x="382" y="26" text-anchor="end">A</text><text x="598" y="26">B</text><text x="598" y="246">C</text><text x="382" y="246" text-anchor="end">D</text><text x="598" y="181">E</text><text x="530" y="186" text-anchor="middle">F</text></g>
+      <g text-anchor="middle" class="lbl"><text x="574" y="202">75°</text><text x="557" y="164" style="fill:var(--ch)">120°</text></g>
+      <g text-anchor="middle" class="sm"><text x="553" y="220">45°</text><text x="452" y="226">15°</text></g>
+    </svg>
+    </div>
+    <figcaption>Left: bahar ka 120° = andar ke door wale 65° + 55°. Right (MTS ka square wala figure, bank mein chhapa nahi tha): triangle DEC mein C par 90°, toh ∠EDC = 90 − 75 = 15°. Triangle DFC mein 15 + 45 + ∠DFC = 180, toh ∠DFC = 120°. ∠EFA uska vertical partner hai.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> Square + diagonal + ek line ho, toh diagonal hamesha 45° deta hai. Upar ke figure mein ∠EFA = ∠DEC + 45° (75 → 120, 65 → 110).</div>
+
+  <!-- METHOD 6 -->
+  <h3>Speed method 6 · Congruent aur similar: kaun sa rule chalega</h3>
+  <p><b>Soch aise:</b> <b>congruent</b> = bilkul ek jaisa, photocopy. <b>Similar</b> = ek jaisi shape, size alag (photo ka zoom). Similar mein kon barabar hote hain, sides ek hi ratio mein.</p>
+  <div class="tbl"><table>
+    <tr><th>Congruent ke rule (chalte hain)</th><th>Kya chahiye</th><th>Similar ke rule</th></tr>
+    <tr><td class="n">SSS</td><td>teeno sides barabar</td><td>SSS: teeno sides ek ratio mein</td></tr>
+    <tr><td class="n">SAS</td><td>do sides aur <b>unke beech</b> ka kon</td><td>SAS: do sides ek ratio mein + beech ka kon barabar</td></tr>
+    <tr><td class="n">ASA / AAS</td><td>do kon aur ek side</td><td>AA (ya AAA): do kon barabar, bas</td></tr>
+    <tr><td class="n">RHS</td><td>right angle + hypotenuse + ek side</td><td>—</td></tr>
+    <tr><td>✗ SSA, ✗ AAA</td><td>congruence <b>nahi</b> deti</td><td>AAA sirf similar deta hai</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Similar ka sabse kaam ka niyam</span>
+    Sides ka ratio k ho, toh perimeter, median, altitude, inradius sab ka ratio bhi <b>k</b>. Par area ka ratio <b>k²</b>.<br>
+    Ulta: area ka ratio diya ho, toh pehle uska square root lo. 121 : 36 → 11 : 6.
+  </div>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Left: triangle ABC with DE parallel to BC. AD 3, DB 2, AE 4.5, EC 3. Right: squares of side 3 and 5 drawn to scale with grids, area 9 and 25.">
+      <polygon points="150,30 40,230 300,230" fill="none" class="chs" stroke-width="2"/>
+      <line x1="84" y1="150" x2="240" y2="150" class="ln" stroke-width="2.5"/>
+      <g class="lbl"><text x="150" y="22" text-anchor="middle">A</text><text x="30" y="246">B</text><text x="306" y="246">C</text><text x="76" y="154" text-anchor="end">D</text><text x="248" y="154">E</text></g>
+      <g class="lbl"><text x="108" y="94" text-anchor="end">3</text><text x="54" y="196" text-anchor="end">2</text><text x="204" y="94">4.5</text><text x="280" y="196" style="fill:var(--ch)">EC = 3</text></g>
+      <text x="162" y="144" text-anchor="middle" class="sm">DE ∥ BC</text>
+      <text x="530" y="30" text-anchor="middle" class="lbl">Side 3 : 5 → area 9 : 25</text>
+      <rect x="400" y="100" width="60" height="60" class="chf"/><rect x="400" y="100" width="60" height="60" class="chs"/>
+      <g class="ln"><line x1="420" y1="100" x2="420" y2="160"/><line x1="440" y1="100" x2="440" y2="160"/><line x1="400" y1="120" x2="460" y2="120"/><line x1="400" y1="140" x2="460" y2="140"/></g>
+      <rect x="520" y="60" width="100" height="100" class="chf"/><rect x="520" y="60" width="100" height="100" class="chs"/>
+      <g class="ln"><line x1="540" y1="60" x2="540" y2="160"/><line x1="560" y1="60" x2="560" y2="160"/><line x1="580" y1="60" x2="580" y2="160"/><line x1="600" y1="60" x2="600" y2="160"/><line x1="520" y1="80" x2="620" y2="80"/><line x1="520" y1="100" x2="620" y2="100"/><line x1="520" y1="120" x2="620" y2="120"/><line x1="520" y1="140" x2="620" y2="140"/></g>
+      <g text-anchor="middle"><text x="430" y="180" class="lbl">side 3</text><text x="430" y="198" class="sm">area 9 khaane</text><text x="570" y="180" class="lbl">side 5</text><text x="570" y="198" class="sm">area 25 khaane</text></g>
+      <text x="530" y="236" text-anchor="middle" class="sm">area ratio = (side ratio)² · side ratio = √(area ratio)</text>
+    </svg>
+    </div>
+    <figcaption>Left: DE ∥ BC toh AD : DB = AE : EC (Basic Proportionality Theorem). 3 : 2 = 4.5 : EC → EC = 3. Right: side 5/3 guna hui, toh area (5/3)² guna. Khaane gin lo: 9 aur 25.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> DE ∥ BC wale sawaal mein chhota triangle ADE aur bada ABC similar hain. Ratio hamesha <b>AD : AB</b> (poori side) lo, AD : DB nahi, jab area ya DE : BC pucha ho.</div>
+
+  <!-- METHOD 7 -->
+  <h3>Speed method 7 · Pythagoras ke ready-made jode</h3>
+  <p><b>Kab use karo:</b> jab bhi right angle dikhe. Square root nikaalne se pehle dekho, kahin ye koi jaana-pehchaana jodi toh nahi.</p>
+  <div class="tbl"><table>
+    <tr><th>Triplet</th><th>Guna wale bhi</th></tr>
+    <tr><td class="n">3, 4, 5</td><td>6-8-10 · 9-12-15 · 12-16-20 · 15-20-25</td></tr>
+    <tr><td class="n">5, 12, 13</td><td>10-24-26</td></tr>
+    <tr><td class="n">8, 15, 17</td><td>16-30-34</td></tr>
+    <tr><td class="n">7, 24, 25</td><td>14-48-50</td></tr>
+    <tr><td class="n">9, 40, 41</td><td>12-35-37 · 20-21-29 · 11-60-61 <span class="tag x">CGL+</span></td></tr>
+  </table></div>
+  <ul>
+    <li><b>Right triangle mein right angle se hypotenuse par altitude:</b> AD = (do chhoti sides ka guna) ÷ hypotenuse. 15, 20, 25 → 300 ÷ 25 = 12.</li>
+    <li><b>Altitude par koi bhi point O:</b> XY² − XZ² = OY² − OZ². Kyunki dono taraf se altitude ka square kat jaata hai.</li>
+    <li><b>Sides se type:</b> c² = a² + b² → right. c² &lt; a² + b² → acute. c² &gt; a² + b² → obtuse (c = sabse badi side). <span class="tag x">CGL+</span></li>
+  </ul>
+
+  <!-- METHOD 8 -->
+  <h3>Speed method 8 · Triangle ke chaar centre</h3>
+  <div class="tbl"><table>
+    <tr><th>Centre</th><th>Kin lines ka milan</th><th>Khaas baat</th></tr>
+    <tr><td class="n">Centroid (G)</td><td>medians</td><td>har median ko 2 : 1 mein baanta (vertex ki taraf 2). Hamesha andar.</td></tr>
+    <tr><td class="n">Incentre (I)</td><td>angle bisectors</td><td>teeno <b>sides</b> se barabar door. Hamesha andar. r = Area ÷ s.</td></tr>
+    <tr><td class="n">Circumcentre (O)</td><td>sides ke perpendicular bisectors</td><td>teeno <b>vertices</b> se barabar door (R). Right triangle mein hypotenuse ka midpoint.</td></tr>
+    <tr><td class="n">Orthocentre (H)</td><td>altitudes</td><td>right triangle mein right angle wala vertex. Obtuse mein bahar.</td></tr>
+  </table></div>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Left: triangle ABC with three medians meeting at centroid G. On median AM, AG is 2 parts and GM is 1 part. Right: right triangle XYZ with right angle at Y. Midpoint M of hypotenuse XZ is the circumcentre; dashed circle passes through X, Y and Z. Y is the orthocentre.">
+      <polygon points="110,30 30,230 260,230" fill="none" class="chs" stroke-width="2"/>
+      <line x1="110" y1="30" x2="145" y2="230" class="ln" stroke-width="2"/>
+      <g class="ln" stroke-dasharray="4 4"><line x1="30" y1="230" x2="185" y2="130"/><line x1="260" y1="230" x2="70" y2="130"/></g>
+      <circle cx="133.3" cy="163.3" r="4" style="fill:var(--ch)"/>
+      <g class="lbl"><text x="110" y="22" text-anchor="middle">A</text><text x="22" y="248">B</text><text x="266" y="248">C</text><text x="145" y="250" text-anchor="middle">M</text><text x="144" y="160">G</text></g>
+      <text x="170" y="92" class="sm">AG = 2 bhaag</text>
+      <text x="150" y="215" class="sm">GM = 1 bhaag</text>
+      <circle cx="510" cy="150" r="108.2" fill="none" class="ln" stroke-dasharray="5 4"/>
+      <polygon points="420,90 420,210 600,210" fill="none" class="chs" stroke-width="2"/>
+      <path d="M420,198 L432,198 L432,210" fill="none" class="ln"/>
+      <line x1="510" y1="150" x2="420" y2="210" class="ln" stroke-dasharray="3 3"/>
+      <circle cx="510" cy="150" r="4" style="fill:var(--ch)"/>
+      <g class="lbl"><text x="412" y="86" text-anchor="end">X</text><text x="412" y="226" text-anchor="end">Y</text><text x="608" y="226">Z</text><text x="518" y="146">M</text></g>
+      <text x="518" y="130" class="sm" style="fill:var(--ch)">M = circumcentre</text>
+      <text x="330" y="252" class="sm">Y = orthocentre</text>
+      <text x="530" y="28" text-anchor="middle" class="sm">MX = MY = MZ = aadha hypotenuse</text>
+    </svg>
+    </div>
+    <figcaption>Left: AM = 9 ho toh AG = 6, GM = 3. Right: right triangle ka circumcircle hypotenuse ko diameter bana leta hai, isliye uska centre hypotenuse ke beech mein. Equilateral triangle mein chaaron centre ek hi jagah.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Formula / value sheet (triangle)</span>
+    Heron: s = (a + b + c) ÷ 2, Area = √(s(s − a)(s − b)(s − c)). 13-14-15 → s = 21, area = 84 (yaad kar lo).<br>
+    Inradius r = Area ÷ s. Right triangle: <b>r = (a + b − c) ÷ 2</b>.<br>
+    Circumradius R = abc ÷ (4 × Area). Equilateral: R = a ÷ √3, r = a ÷ (2√3), R = 2r.<br>
+    Angle bisector theorem: AD ne ∠A ko baanta toh <b>BD : DC = AB : AC</b>.<br>
+    Medians se bana triangle = original ka <b>3/4</b> area. Teen medians original ko 6 barabar area mein baantti hain. <span class="tag x">CGL+</span><br>
+    ∠Q &gt; ∠R ho toh altitude aur bisector ke beech ka kon = (∠Q − ∠R) ÷ 2.
+  </div>
+
+  <!-- ================= TYPES ================= -->
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CHSL = CHSL 2025 Tier 1 · CPO = CPO 2025 · MTS = MTS 2024 (Feb 2025 mein hua) · SP-XIV = Selection Post Phase XIV 2025 (Grad / 12th / 10th) · DP AWO, DP HCM = Delhi Police 2026 · GD = GD Constable 2026. Saari dates shift ki dates hain.
+  </div>
+
+  <h3>Type 1 · Complement wale kon (16 Qs)</h3>
+  <div class="box"><span class="k">Worked · Angle apne complement ke do guna se 10° zyada hai. Angle? <span class="tag p">PYQ</span> <small>CPO · 9 Dec 2025</small><!--q319--></span>
+    <b>Method:</b> ek-line formula · <i>~8 sec</i><br>
+    k = 2, c = +10 → x = (2 × 90 + 10) ÷ 3 = 190 ÷ 3 = <mark>63.33°</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Complement, angle ke do guna se 12° zyada hai. Angle? <span class="tag p">PYQ ×2</span> <small>CPO · 10 Dec 2025; SP-XIV Grad · 25 Jul 2025</small><!--q338,q499--></span>
+    <b>Method:</b> 90 mein se hisse · <i>~10 sec</i><br>
+    Angle = 1 hissa, complement = 2 hisse + 12. Kul 3 hisse + 12 = 90 → 3 hisse = 78 → 1 hissa = <mark>26°</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Ek kon doosre ka do guna, complementary → <b>90 ko 2 : 1</b> → <mark>30°, 60°</mark> <small>CPO · 9 Dec 2025</small><!--q318--></li>
+    <li><span class="tag p">PYQ</span> Angle = 3 × complement → <b>90 × 3/4</b> → <mark>67.5°</mark> <small>CPO · 9 Dec 2025</small><!--q320--></li>
+    <li><span class="tag p">PYQ</span> ∠A, ∠B complementary, ∠A = 40° → <b>90 − 40</b> → <mark>50°</mark> <small>CPO · 10 Dec 2025</small><!--q337--></li>
+    <li><span class="tag p">PYQ</span> Angle = 4 × complement → <b>90 × 4/5</b> → <mark>72°</mark> <small>CPO · 10 Dec 2025</small><!--q339--></li>
+    <li><span class="tag p">PYQ</span> Complement, angle se 5° kam → <b>farq formula</b> (90 + 5) ÷ 2 → <mark>47.5°</mark> <small>CPO · 11 Dec 2025</small><!--q345--></li>
+    <li><span class="tag p">PYQ</span> Angle = 2 × complement − 15 → <b>(180 − 15) ÷ 3</b> → <mark>55°</mark> <small>CPO · 11 Dec 2025</small><!--q350--></li>
+    <li><span class="tag p">PYQ ×2</span> Complement = angle ka ¼ → angle = 4 × complement → <b>90 × 4/5</b> → <mark>72°</mark> <small>CPO · 11 Dec 2025; SP-XIV Grad · 31 Jul 2025</small><!--q351,q512--></li>
+    <li><span class="tag p">PYQ</span> Angle = 3 × complement − 5 → <b>(270 − 5) ÷ 4</b> → <mark>66.25°</mark> <small>CPO · 12 Dec 2025</small><!--q359--></li>
+    <li><span class="tag p">PYQ</span> Do complementary kon, farq 36° → <b>(90 ± 36) ÷ 2</b> → <mark>63°, 27°</mark> <small>SP-XIV Grad · 24 Jul 2025</small><!--q496--></li>
+    <li><span class="tag p">PYQ</span> Angle − complement = 18° → <b>(90 + 18) ÷ 2</b> → <mark>54°</mark> <small>SP-XIV Grad · 28 Jul 2025</small><!--q502--></li>
+    <li><span class="tag p">PYQ</span> Complement = x + 10 → <b>(90 − 10) ÷ 2</b> → <mark>40°</mark> <small>SP-XIV Grad · 29 Jul 2025</small><!--q505--></li>
+    <li><span class="tag p">PYQ</span> Angle = apna complement → <b>90 ÷ 2</b> → <mark>45°</mark> <small>SP-XIV Grad · 30 Jul 2025</small><!--q509--></li>
+  </ul>
+
+  <h3>Type 2 · Do lines katein, ya transversal (5 Qs)</h3>
+  <div class="box"><span class="k">Worked · AB ∥ CD, transversal PQ, ∠PRB = 82°. ∠QSC? <span class="tag p">PYQ</span> <small>MTS · 6 Feb 2025</small><!--q442--></span>
+    <b>Method:</b> chhota-bada · <i>~5 sec</i><br>
+    R par upar-right ka kon 82° (chhota). S par neeche-left ka kon uska X-partner ka F-partner hai, wo bhi chhota → <mark>82°</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> CD, AB, O par katein, ∠AOD = 75° → ∠AOC → <b>linear pair</b> 180 − 75 → <mark>105°</mark> <small>MTS · 9 Feb 2025</small><!--q446--></li>
+    <li><span class="tag p">PYQ</span> Wahi, ∠AOD = 80° → <b>linear pair</b> → <mark>100°</mark> <small>MTS · 10 Feb 2025</small><!--q454--></li>
+    <li><span class="tag p">PYQ</span> AB ∥ CD, ∠PRB = 74° → ∠DSQ (bada) → <b>chhota-bada</b> 180 − 74 → <mark>106°</mark> <small>MTS · 6 Feb 2025</small><!--q444--></li>
+    <li><span class="tag p">PYQ</span> AB ∥ CD, ∠ARP = 115° → ∠DSQ → ∠ARP aur ∠DSQ dono bade → <b>chhota-bada</b> → <mark>115°</mark> <small>MTS · 18 Feb 2025</small><!--q484--></li>
+  </ul>
+
+  <h3>Type 3 · Parallel lines ke beech ya bahar ka point (11 Qs)</h3>
+  <p>Bank mein in sawaalon ka figure nahi chhapa. Neeche jo hal hai, wo MTS ka standard figure maan kar hai (upar Speed method 3 ki picture). Har ek ka answer key se milta hai.</p>
+  <div class="box"><span class="k">Worked · AB ∥ CD, ∠ABE = 64°, ∠CDE = 32°. ∠BED? <span class="tag p">PYQ</span> <small>MTS · 12 Feb 2025</small><!--q467--></span>
+    <b>Method:</b> beech mein = jod · <i>~5 sec</i><br>
+    E dono lines ke beech → ∠BED = 64 + 32 = <mark>96°</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · AB ∥ CD, ∠PAB = 55°, ∠DCP = 115°. ∠APC? <span class="tag p">PYQ</span> <small>MTS · 9 Feb 2025</small><!--q447--></span>
+    <b>Method:</b> bahar = bada − chhota · <i>~5 sec</i><br>
+    P lines ke bahar → 115 − 55 = <mark>60°</mark>. (PC line AB par bhi 115° banati hai. Wahan triangle ka bahar wala kon 115 = 55 + x.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> ∠ABE = 75°, ∠CDE = 60°, ∠BED? → <b>jod</b> → <mark>135°</mark> <small>MTS · 19 Feb 2025</small><!--q487--></li>
+    <li><span class="tag p">PYQ</span> ∠ABE = 80°, ∠BED = 125°, ∠CDE? → <b>jod ulta</b> 125 − 80 → <mark>45°</mark> <small>MTS · 16 Feb 2025</small><!--q477--></li>
+    <li><span class="tag p">PYQ</span> ∠BED = 130°, ∠CDE = 55°, ∠ABE? → <b>jod ulta</b> → <mark>75°</mark> <small>MTS · 17 Feb 2025</small><!--q478--></li>
+    <li><span class="tag p">PYQ</span> ∠BED = 125°, ∠CDE = 65°, ∠ABE? → <b>jod ulta</b> → <mark>60°</mark> <small>MTS · 19 Feb 2025</small><!--q485--></li>
+    <li><span class="tag p">PYQ</span> ∠ABE = 65°, ∠BED = 105°, ∠CDE? → <b>jod ulta</b> → <mark>40°</mark> <small>MTS · 20 Feb 2025</small><!--q491--></li>
+    <li><span class="tag p">PYQ</span> ∠PAB = 70°, ∠DCP = 110°, ∠APC? → <b>bada − chhota</b> → <mark>40°</mark> <small>MTS · 9 Feb 2025</small><!--q450--></li>
+    <li><span class="tag p">PYQ</span> ∠PAB = 65°, ∠DCP = 110°, ∠APC? → <b>bada − chhota</b> → <mark>45°</mark> <small>MTS · 12 Feb 2025</small><!--q464--></li>
+    <li><span class="tag p">PYQ</span> ∠PAB = 70°, ∠APC = 30°, ∠DCP? → <b>bada = chhota + x</b> → <mark>100°</mark> <small>MTS · 10 Feb 2025</small><!--q456--></li>
+    <li><span class="tag p">PYQ</span> DE ∥ BC, ∠ABC = 40°, ∠ADE = 130°, ∠BAD? → A lines ke bahar → <b>bada − chhota</b> → <mark>90°</mark> <small>MTS · 11 Feb 2025</small><!--q458--></li>
+  </ul>
+
+  <h3>Type 4 · Bow-tie, PQ = QR aur zig-zag (12 Qs)</h3>
+  <div class="box"><span class="k">Worked · AB ∥ CD, ∠BAE = 65°, ∠BEA = 55°. ∠CDE? <span class="tag p">PYQ</span> <small>MTS · 10 Feb 2025</small><!--q452--></span>
+    <b>Method:</b> bow-tie · <i>~8 sec</i><br>
+    Upar ke triangle ABE mein ∠ABE = 180 − 65 − 55 = 60. B–E–D ek line, AB ∥ CD → Z shape → ∠CDE = <mark>60°</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · AB ∥ DE, ∠ABC = 105°, ∠EDC = 135°. ∠BCD? <span class="tag p">PYQ</span> <small>MTS · 13 Feb 2025</small><!--q473--></span>
+    <b>Method:</b> zig-zag (C bahar) · <i>~6 sec</i><br>
+    ∠BCD = 105 + 135 − 180 = <mark>60°</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> ∠BAE = 55°, ∠BEA = 45°, ∠ECD? → ∠ECD aur ∠BAE Z-partner → <b>bow-tie</b> → <mark>55°</mark> <small>MTS · 17 Feb 2025</small><!--q479--></li>
+    <li><span class="tag p">PYQ</span> ∠BAE = 45°, ∠BEA = 65°, ∠CDE? → ∠ABE = 70 → <b>bow-tie</b> → <mark>70°</mark> <small>MTS · 19 Feb 2025</small><!--q488--></li>
+    <li><span class="tag p">PYQ</span> ∠BAE = 72°, ∠BEA = 65°, ∠ECD? → seedha Z-partner → <b>bow-tie</b> → <mark>72°</mark> <small>MTS · 20 Feb 2025</small><!--q492--></li>
+    <li><span class="tag p">PYQ</span> PQ = QR, ∠BQS = 82°, ∠PRQ? → <b>PQ = QR figure</b> → <mark>82°</mark> <small>MTS · 5 Feb 2025</small><!--q439--></li>
+    <li><span class="tag p">PYQ</span> PQ = QR, ∠BQS = 72°, ∠PRQ? → <b>PQ = QR figure</b> → <mark>72°</mark> <small>MTS · 16 Feb 2025</small><!--q476--></li>
+    <li><span class="tag p">PYQ</span> PQ = QR, ∠BQS = 80°, ∠RQB? → <b>PQ = QR figure</b> → <mark>80°</mark> <small>MTS · 18 Feb 2025</small><!--q483--></li>
+    <li><span class="tag p">PYQ</span> PQ = QR, ∠BQS = 85°, ∠RQB? → <b>PQ = QR figure</b> → <mark>85°</mark> <small>MTS · 19 Feb 2025</small><!--q486--></li>
+    <li><span class="tag p">PYQ</span> ∠ABC = 120°, ∠EDC = 120°, ∠BCD? → <b>zig-zag</b> 240 − 180 → <mark>60°</mark> <small>MTS · 6 Feb 2025</small><!--q445--></li>
+    <li><span class="tag p">PYQ</span> ∠ABC = 110°, ∠EDC = 140°, ∠BCD? → <b>zig-zag</b> 250 − 180 → <mark>70°</mark> <small>MTS · 13 Feb 2025</small><!--q474--></li>
+    <li><span class="tag p">PYQ</span> Triangle mein PQ ∥ BC (P on AB), ∠CPQ = 45°, ∠APQ = 75°, ∠CPB? → ∠B = 75 (F), ∠PCB = 45 (Z) → <b>180 − 75 − 45</b> → <mark>60°</mark> <small>MTS · 9 Feb 2025</small><!--q451--></li>
+  </ul>
+
+  <h3>Type 5 · Triangle ke andar aur bahar ke kon (18 Qs)</h3>
+  <div class="box"><span class="k">Worked · Triangle ke bahar wale kon 2x, 3x, 4x. Sabse chhota andar ka kon? <span class="tag p">PYQ</span> <small>CPO · 12 Dec 2025</small><!--q362--></span>
+    <b>Method:</b> bahar ke kon ka jod 360 · <i>~10 sec</i><br>
+    9x = 360 → x = 40. Bahar: 80, 120, 160. Andar = 180 − bahar: 100, 60, 20 → sabse chhota <mark>20°</mark>. (Sabse bade bahar wale ka partner sabse chhota.)
+  </div>
+  <div class="box"><span class="k">Worked · ABCD square, ∠DEC = 75°. ∠EFA? <span class="tag p">PYQ</span> <small>MTS · 12 Feb 2025</small><!--q468--></span>
+    <b>Method:</b> square ka 45° · <i>~10 sec</i><br>
+    Figure bank mein nahi tha (upar Speed method 5 ki right picture). ∠EDC = 15, diagonal ka 45 → ∠DFC = 120 → ∠EFA (vertical) = <mark>120°</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Angles 2 : 3 : 4 → <b>180 ÷ 9 = 20</b> → <mark>40°, 60°, 80°</mark> <small>SP-XIV 10th · 1 Aug 2025</small><!--q543--></li>
+    <li><span class="tag p">PYQ</span> Do kon 65°, 45° → <b>180 − 110</b> → <mark>70°</mark> <small>SP-XIV 10th · 1 Aug 2025</small><!--q544--></li>
+    <li><span class="tag p">PYQ</span> Kon 90°, 45° → <b>180 − 135</b> → <mark>45°</mark> <small>SP-XIV 10th · 29 Jul 2025</small><!--q557--></li>
+    <li><span class="tag p">PYQ</span> Kon 60°, 60°, 60° → <mark>equilateral</mark> <small>SP-XIV 10th · 25 Jul 2025</small><!--q552--></li>
+    <li><span class="tag p">PYQ</span> Isosceles, AB = AC, B par bahar ka kon 130° → ∠B = 50 = ∠C → <b>180 − 100</b> → <mark>80°</mark> <small>CPO · 11 Dec 2025</small><!--q347--></li>
+    <li><span class="tag p">PYQ</span> Bahar ka kon 120°, ek door wala andar ka kon 40° → <b>bahar = jod</b> → <mark>80°</mark> <small>SP-XIV 10th · 31 Jul 2025</small><!--q560--></li>
+    <li><span class="tag p">PYQ</span> ∠BCD = 155° (bahar), ∠ABC = 85° → ∠BAC → <b>bahar = jod</b> 155 − 85 → <mark>70°</mark> <small>MTS · 5 Feb 2025</small><!--q440--></li>
+    <li><span class="tag p">PYQ</span> ∠BCD = 145°, ∠ABC = 70° → <b>bahar = jod</b> → <mark>75°</mark> <small>MTS · 13 Feb 2025</small><!--q472--></li>
+    <li><span class="tag p">PYQ</span> ∠ABC = 65°, ∠ACD = 120° → <b>bahar = jod</b> → <mark>55°</mark> <small>MTS · 11 Feb 2025</small><!--q460--></li>
+    <li><span class="tag p">PYQ</span> ∠ABC = 40°, ∠BCA = 65° → ∠ACD (bahar) → <b>180 − 65</b> (ya 40 + 75) → <mark>115°</mark> <small>MTS · 13 Feb 2025</small><!--q469--></li>
+    <li><span class="tag p">PYQ</span> AB = AC, ∠BAC = 50° → ∠ACD → ∠C = 65 → <b>180 − 65</b> → <mark>115°</mark> <small>MTS · 17 Feb 2025</small><!--q480--></li>
+    <li><span class="tag p">PYQ</span> ∠DBA = 125° (bahar), ∠ACB = 55° → ∠B = 55 → <b>180 − 110</b> → <mark>70°</mark> <small>MTS · 18 Feb 2025</small><!--q482--></li>
+    <li><span class="tag p">PYQ</span> ∠ABD = 110°, ∠ACE = 125° (dono bahar) → andar 70, 55 → <b>180 − 125</b> → <mark>55°</mark> <small>MTS · 12 Feb 2025</small><!--q466--></li>
+    <li><span class="tag p">PYQ</span> ∠PSQ = 125°, ∠PRT = 110° (Q, S, R, T ek line par) → andar 55, 70 → <b>180 − 125</b> → <mark>55°</mark> <small>MTS · 5 Feb 2025</small><!--q441--></li>
+    <li><span class="tag p">PYQ</span> Square, ∠DEC = 65°, ∠EFA → <b>DEC + 45</b> → <mark>110°</mark> <small>MTS · 17 Feb 2025</small><!--q481--></li>
+    <li><span class="tag p">PYQ</span> ∠A = 50°, ∠B = 60°, side AB = 10 → "kaunsa kon diye hue sides ke beech" → key <mark>∠C</mark> (note dekho) <small>SP-XIV 10th · 1 Aug 2025</small><!--q545--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>SP-XIV 1 Aug 2025 (∠A = 50°, ∠B = 60°, AB = 10): sawaal ulta chhapa hai. Di hui side AB, ∠A aur ∠B ke <b>beech</b> hai (ASA). ∠C us side ke <b>saamne</b> hai. Key ∠C kehti hai, yaani unka matlab "kaunsa kon diya nahi hai / side ke saamne hai". Exam mein ∠C hi lagao, par rule yaad rakho: ASA mein side do kon ke beech hoti hai.</div>
+
+  <h3>Type 6 · Congruence ke rule (13 Qs)</h3>
+  <div class="box"><span class="k">Worked · ΔABC ≅ ΔFED. Kaunsa sach hai? AB = DE / BC = EF / CA = FD / ∠A = ∠E <span class="tag p">PYQ</span> <small>SP-XIV 12th · 28 Jul 2025</small><!--q525--></span>
+    <b>Method:</b> letters ko kram se jodo · <i>~8 sec</i><br>
+    A↔F, B↔E, C↔D. Toh AB = FE, BC = ED, CA = DF, ∠A = ∠F. Options mein sirf <mark>CA = FD</mark> sahi.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Do triangle tukde, teeno sides barabar → <mark>Yes, by SSS</mark> <small>CHSL · 28 Nov 2025</small><!--q285--></li>
+    <li><span class="tag p">PYQ</span> Congruent ho toh medians, inradius, altitudes → <b>photocopy</b> → <mark>All of these</mark> <small>CHSL · 30 Nov 2025</small><!--q304--></li>
+    <li><span class="tag p">PYQ</span> Do sides aur unke beech ka kon barabar → <mark>congruent</mark> (SAS) <small>DP AWO · 21 Jan 2026</small><!--q370--></li>
+    <li><span class="tag p">PYQ</span> Do khidkiyan, teeno sides barabar → <mark>congruent</mark> (SSS) <small>DP AWO · 20 Jan 2026</small><!--q373--></li>
+    <li><span class="tag p">PYQ</span> AB = DE, BC = EF, ∠B = ∠E → beech ka kon → <mark>SAS</mark> <small>DP AWO · 20 Jan 2026</small><!--q374--></li>
+    <li><span class="tag p">PYQ</span> PQ = XY, ∠Q = ∠Y, par PR ≠ XZ → ek side alag toh photocopy nahi → <mark>No</mark> <small>DP AWO · 20 Jan 2026</small><!--q391--></li>
+    <li><span class="tag p">PYQ</span> Right triangle, hypotenuse aur ek leg barabar → <mark>RHS</mark> <small>DP AWO · 20 Jan 2026</small><!--q397--></li>
+    <li><span class="tag p">PYQ</span> Right triangle, hypotenuse aur ek acute kon barabar → <b>AAS / RHS</b> → <mark>congruent</mark> <small>DP AWO · 21 Jan 2026</small><!--q403--></li>
+    <li><span class="tag p">PYQ</span> Sides 7, 8, 10 aur 10, 8, 7 → wahi teen number → <mark>Congruent by SSS</mark> <small>DP HCM · 8 Jan 2026</small><!--q428--></li>
+    <li><span class="tag p">PYQ</span> Dono ke kon 40°, 60°, 80°, sides alag → AAA congruence nahi deta → <mark>Not congruent</mark> <small>DP HCM · 7 Jan 2026</small><!--q432--></li>
+    <li><span class="tag p">PYQ</span> Kaunsa rule congruence ki guarantee <b>nahi</b> deta → <mark>SSA</mark> <small>SP-XIV 12th · 30 Jul 2025</small><!--q539--></li>
+    <li><span class="tag p">PYQ</span> Do right triangle, AB = DE, BC = EF, par AC alag → key <mark>similar but not congruent</mark> (note dekho) <small>DP AWO · 21 Jan 2026</small><!--q372--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP AWO 21 Jan 2026 (AB = DE, BC = EF, AC alag): agar dono similar hote, toh do barabar sides ka matlab ratio 1, yaani poore congruent, aur AC bhi barabar hota. Isliye "similar but not congruent" ho hi nahi sakta. Sahi baat: <b>dono mein se kuch nahi (neither)</b>. Jaise ek mein 3, 4 legs (hypotenuse 5) aur doosre mein 3 leg, 4 hypotenuse. Key A kehti hai; exam mein key wala lagana ho toh lagao, par samajh sahi rakho.</div>
+
+  <h3>Type 7 · Similar triangles: rule, ratio aur DE ∥ BC (22 Qs)</h3>
+  <div class="box"><span class="k">Worked · D on BC, DE ∥ AB (E on AC). CD = 6, BD = 3, area CDE = 54. Area ABC? <span class="tag p">PYQ</span> <small>CHSL Tier-2</small><!--q312--></span>
+    <b>Method:</b> ratio ka square · <i>~12 sec</i><br>
+    CDE ~ CBA. Ratio = CD : CB = 6 : 9 = 2 : 3 (poori side lo!). Area ratio 4 : 9.<br>
+    4 hisse = 54 → 1 hissa = 13.5 → ABC = 9 × 13.5 = <mark>121.5 cm²</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Right angle B, AB = 20, BC = 15. D = AB ka midpoint, DE ⟂ AC. Area ΔAED? <span class="tag p">PYQ</span> <small>SP-XIV 12th · 25 Jul 2025</small><!--q530--></span>
+    <b>Method:</b> chhota similar triangle · <i>~20 sec</i><br>
+    AC = 25 (3-4-5 × 5). ΔAED ~ ΔACB (∠A common, dono mein 90°). AD = 10 hypotenuse hai, AC = 25 hypotenuse. Ratio 10 : 25 = 2 : 5.<br>
+    Area ABC = ½ × 20 × 15 = 150 → AED = 150 × 4/25 = <mark>24 cm²</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Similarity ke liye kaafi: AAA, SSS, SAS → <mark>All of these</mark> <small>CHSL · 29 Nov 2025</small><!--q289--></li>
+    <li><span class="tag p">PYQ</span> Area ka ratio = ? → <mark>sides ke ratio ka square</mark> <small>CHSL · 29 Nov 2025</small><!--q294--></li>
+    <li><span class="tag p">PYQ</span> ΔPQR ~ ΔXYZ, ∠P = 40°, ∠Q = 60° → ∠Y = ∠Q → <mark>60°</mark> <small>CHSL · 30 Nov 2025</small><!--q299--></li>
+    <li><span class="tag p">PYQ</span> Sides 3 : 4 ratio mein, beech ka kon barabar → <b>SAS similarity</b> → <mark>similar</mark> <small>DP AWO · 21 Jan 2026</small><!--q371--></li>
+    <li><span class="tag p">PYQ</span> Do kon barabar → <b>AA</b> → <mark>similar</mark> <small>DP AWO · 20 Jan 2026</small><!--q396--></li>
+    <li><span class="tag p">PYQ</span> Sides 7, 8, 9 aur 14, 16, 18 → sab × 2 → <mark>Yes, by SSS similarity</mark> <small>DP AWO · 20 Jan 2026</small><!--q398--></li>
+    <li><span class="tag p">PYQ</span> 50° ke beech sides 8, 12 aur 4, 6 → ratio 2, beech ka kon → <mark>Similar by SAS</mark> <small>DP HCM · 7 Jan 2026</small><!--q434--></li>
+    <li><span class="tag p">PYQ</span> Sides proportional → <mark>SSS similarity</mark> <small>SP-XIV 12th · 26 Jul 2025</small><!--q523--></li>
+    <li><span class="tag p">PYQ</span> Do sides proportional aur ek kon barabar → key <mark>similar</mark> (sahi tab hai jab wo kon dono sides ke <b>beech</b> ho) <small>DP AWO · 16 Jan 2026</small><!--q387--></li>
+    <li><span class="tag p">PYQ</span> ΔABC ~ ΔDEF, DEF isosceles, alag wala kon ∠EDF = 70° → baaki do (180 − 70) ÷ 2 → ∠ACB = ∠DFE → <mark>55°</mark> <small>DP HCM · 9 Jan 2026</small><!--q419--></li>
+    <li><span class="tag p">PYQ</span> Areas 121 : 36, bade ka perimeter 55 → <b>√ → 11 : 6</b> → <mark>30</mark> <small>CHSL · 28 Nov 2025</small><!--q288--></li>
+    <li><span class="tag p">PYQ</span> Area 75, sides ⅓ → <b>area ÷ 9</b> → <mark>8.33 m²</mark> <small>CHSL · 29 Nov 2025</small><!--q292--></li>
+    <li><span class="tag p">PYQ</span> Side 6 → 18 (× 3), area 20 → <b>× 9</b> → <mark>180 cm²</mark> <small>CHSL · 29 Nov 2025</small><!--q297--></li>
+    <li><span class="tag p">PYQ</span> Ek tile doosri se "double size", side 7 → key sides double maanti hai → <mark>14 cm</mark> <small>DP AWO · 16 Jan 2026</small><!--q381--></li>
+    <li><span class="tag p">PYQ</span> Side ratio 5 : 7, bade ka perimeter 35 → <b>perimeter bhi 5 : 7</b> → <mark>25 cm</mark> <small>DP HCM · 12 Jan 2026</small><!--q408--></li>
+    <li><span class="tag p">PYQ</span> Sides 3 : 5 → area → <b>square</b> → <mark>9 : 25</mark> <small>DP HCM · 8 Jan 2026</small><!--q430--></li>
+    <li><span class="tag p">PYQ</span> Line ∥ YZ, XA = 2, AZ = 6, XB = 3 → <b>BPT</b> 2 : 6 = 3 : BY → <mark>9 cm</mark> <small>CPO · 9 Dec 2025</small><!--q325--></li>
+    <li><span class="tag p">PYQ</span> DE ∥ BC, AD = 3, DB = 2, AE = 4.5 → <b>BPT</b> → <mark>3 cm</mark> <small>DP AWO · 16 Jan 2026</small><!--q385--></li>
+    <li><span class="tag p">PYQ</span> ∠ADE = ∠ABC, AB = 20, AD = 8, AC = 25 → CE? → DE ∥ BC → AE = 25 × 8/20 = 10 → <mark>15 cm</mark> <small>DP HCM · 12 Jan 2026</small><!--q415--></li>
+    <li><span class="tag p">PYQ</span> EF ∥ BC, AE = 8, AB = 15, AC = 22.5 → AF = 22.5 × 8/15 → <mark>12 cm</mark> <small>SP-XIV 12th · 31 Jul 2025</small><!--q538--></li>
+  </ul>
+
+  <h3>Type 8 · Pythagoras aur right triangle ki lambai (7 Qs)</h3>
+  <div class="box"><span class="k">Worked · ∠B = 90°, BC = 9, AC = 41. D on AB, AD = 28. CD? <span class="tag p">PYQ</span> <small>DP AWO · 16 Jan 2026</small><!--q386--></span>
+    <b>Method:</b> triplet 9-40-41 · <i>~12 sec</i><br>
+    AB = 40 (triplet). BD = 40 − 28 = 12. Triangle CBD: 9, 12 → 3-4-5 × 3 → CD = <mark>15 cm</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Altitude XP par point O. XY = 12, OY = 5, OZ = 9. XZ? <span class="tag p">PYQ</span> <small>SP-XIV 12th · 30 Jul 2025</small><!--q541--></span>
+    <b>Method:</b> altitude-farq trick · <i>~12 sec</i><br>
+    XY² − XZ² = OY² − OZ² → 144 − XZ² = 25 − 81 = −56 → XZ² = 200 → <mark>10√2 cm</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Sides 6, 8, 10 → 3-4-5 × 2 → <mark>right-angled</mark> <small>SP-XIV 10th · 24 Jul 2025</small><!--q548--></li>
+    <li><span class="tag p">PYQ</span> Poles 6 m aur 11 m, feet 12 m door → tops ka farq 5 aur 12 → <b>5-12-13</b> → <mark>13 m</mark> <small>SP-XIV 12th · 28 Jul 2025</small><!--q527--></li>
+    <li><span class="tag p">PYQ</span> Square ki side 5 → diagonal = <b>side × √2</b> → <mark>5√2 cm</mark> <small>DP AWO · 20 Jan 2026</small><!--q399--></li>
+    <li><span class="tag p">PYQ</span> ∠A = 90°, AB = 15, AC = 20, altitude AD → <b>15 × 20 ÷ 25</b> → <mark>12 cm</mark> <small>CPO · 11 Dec 2025</small><!--q353--></li>
+    <li><span class="tag p">PYQ</span> AD ⟂ BC, AB = 16, BD = 4, CD = 8 → AD² = 256 − 16 = 240 → AC² = 240 + 64 = 304 → <mark>4√19 cm</mark> <small>DP HCM · 9 Jan 2026</small><!--q425--></li>
+  </ul>
+
+  <h3>Type 9 · Triangle ke centre (26 Qs)</h3>
+  <div class="box"><span class="k">Worked · Triangle 13, 14, 15 mein sprinkler teeno sides ko chhoota hai. Radius? <span class="tag p">PYQ</span> <small>CHSL · 28 Nov 2025</small><!--q281--></span>
+    <b>Method:</b> r = Area ÷ s · <i>~10 sec</i><br>
+    "Teeno sides ko chhoo" = incircle. s = 21, Area = 84 (yaad wala). r = 84 ÷ 21 = <mark>4 m</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Circumradius 12, area 48. Teeno sides ka guna? <span class="tag p">PYQ</span> <small>SP-XIV Grad · 2 Aug 2025</small><!--q494--></span>
+    <b>Method:</b> R = abc ÷ 4Δ ulta · <i>~6 sec</i><br>
+    abc = 4 × R × Area = 4 × 12 × 48 = <mark>2304</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Sides 7, 24, 25 ka inradius → right triangle → <b>(7 + 24 − 25) ÷ 2</b> → <mark>3 cm</mark> <small>SP-XIV Grad · 31 Jul 2025</small><!--q513--></li>
+    <li><span class="tag p">PYQ</span> Legs 5, 12 mein incircle; do legs aur do radius se bana chaukor → r = (5 + 12 − 13) ÷ 2 = 2 → <b>square 2 × 2</b> → <mark>4</mark> <small>CPO · 9 Dec 2025</small><!--q322--></li>
+    <li><span class="tag p">PYQ</span> Incentre se vertices 5, 6, 7 cm → inradius → key <mark>3 cm</mark> (asli ≈ 2.93, note dekho) <small>SP-XIV Grad · 29 Jul 2025</small><!--q506--></li>
+    <li><span class="tag p">PYQ</span> Median 9, centroid se vertex → <b>⅔ × 9</b> → <mark>6 cm</mark> <small>CHSL · 30 Nov 2025</small><!--q298--></li>
+    <li><span class="tag p">PYQ</span> AM = 9, centroid G se M tak → <b>⅓ × 9</b> → sahi 3 cm; key <mark>4.5 cm</mark> (galat, note dekho) <small>DP AWO · 16 Jan 2026</small><!--q384--></li>
+    <li><span class="tag p">PYQ</span> AB = 10, AC = 8, median AD = 7 → A se centroid → <b>⅔ × 7</b> = 4.67 → <mark>4.6 m</mark> <small>DP AWO · 20 Jan 2026</small><!--q395--></li>
+    <li><span class="tag p">PYQ</span> Medians se bana triangle → <mark>3/4</mark> <small>DP AWO · 20 Jan 2026</small><!--q393--></li>
+    <li><span class="tag p">PYQ</span> Circumradius 7 → circumcentre se vertex → <b>wahi R</b> → <mark>7 cm</mark> <small>CPO · 11 Dec 2025</small><!--q352--></li>
+    <li><span class="tag p">PYQ</span> Equilateral, side 24 → R = 24 ÷ √3 = 8√3 → <mark>13.86 cm</mark> <small>CPO · 12 Dec 2025</small><!--q366--></li>
+    <li><span class="tag p">PYQ</span> Right triangle, hypotenuse ka midpoint → <mark>circumcentre</mark> <small>DP AWO · 20 Jan 2026</small><!--q377--></li>
+    <li><span class="tag p">PYQ</span> ∠Y = 90°, M = XZ ka midpoint → <mark>M is the circumcenter</mark> <small>SP-XIV 12th · 26 Jul 2025</small><!--q521--></li>
+    <li><span class="tag p">PYQ</span> Right triangle ka orthocentre → <mark>right angle wala vertex</mark> <small>CPO · 12 Dec 2025</small><!--q368--></li>
+    <li><span class="tag p">PYQ</span> Orthocentre aur centroid ek jagah → <mark>equilateral</mark> <small>CPO · 9 Dec 2025</small><!--q324--></li>
+    <li><span class="tag p">PYQ</span> Equilateral mein incentre aur centroid ki doori → <mark>zero</mark> <small>DP AWO · 16 Jan 2026</small><!--q388--></li>
+    <li><span class="tag p">PYQ</span> Equilateral ka orthocentre kis ke saath → <mark>All of these</mark> <small>DP AWO · 20 Jan 2026</small><!--q400--></li>
+    <li><span class="tag p">PYQ</span> Equilateral mein kaun se points ek → <mark>centroid, incentre, circumcentre, orthocentre</mark> <small>SP-XIV 12th · 29 Aug 2025</small><!--q531--></li>
+    <li><span class="tag p">PYQ</span> Incentre kis se barabar door → <mark>sides</mark> <small>DP AWO · 16 Jan 2026</small><!--q383--></li>
+    <li><span class="tag p">PYQ</span> Har triangle mein andar rehne wala centre → <mark>incentre</mark> <small>DP AWO · 21 Jan 2026</small><!--q404--></li>
+    <li><span class="tag p">PYQ</span> A: incentre hamesha andar. R: bisectors andar milte hain → <mark>dono sach, R sahi wajah</mark> <small>DP HCM · 12 Jan 2026</small><!--q409--></li>
+    <li><span class="tag p">PYQ</span> HG = 6, AG = 9 → AH? → H, G, vertex A ek line par zaroori nahi → <mark>not determinable</mark> <small>DP AWO · 20 Jan 2026</small><!--q394--></li>
+    <li><span class="tag p">PYQ</span> PS bisector, PT ⟂ QR, ∠Q &gt; ∠R → ∠TPS → <mark>(∠Q − ∠R)/2</mark> <small>CHSL · 28 Nov 2025</small><!--q282--></li>
+    <li><span class="tag p">PYQ</span> Bisector AD, AB = 10, AC = 12, BC = 11 → BD = 11 × 10/22 → <mark>5 cm</mark> <small>CPO · 10 Dec 2025</small><!--q330--></li>
+    <li><span class="tag p">PYQ</span> AB = 28, AC = 42, BC = 50 → BD = 50 × 28/70 → <mark>20 cm</mark> <small>MTS · 6 Feb 2025</small><!--q443--></li>
+    <li><span class="tag p">PYQ</span> Bisector BC ko AB : AC mein baante → <mark>Angle Bisector Theorem</mark> <small>DP AWO · 20 Jan 2026</small><!--q375--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP AWO 16 Jan 2026 (AM = 9, GM = ?): centroid median ko <b>2 : 1</b> mein baantta hai, vertex ki taraf 2. Toh AG = 6 aur <b>GM = 3 cm</b> (option B). Key 4.5 cm kehti hai, jo aadha-aadha baantne se aata hai. Wo galat hai.<br>
+  SP-XIV 29 Jul 2025 (5, 6, 7): r "cannot be determined" nahi hai. Har vertex par sin(aadha kon) = r ÷ doori, aur teeno aadhe kon ka jod 90°. Isse r ≈ <b>2.93 cm</b> aata hai. Sabse paas option 3 cm, wahi lagao.</div>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Point lines ke bahar hai, phir bhi dono kon jod diye</td><td>Beech = jod, bahar = bada − chhota. Pehle figure dekho.</td></tr>
+    <tr><td>DE ∥ BC mein area ke liye AD : DB ka square</td><td>AD : AB (poori side) ka square. 6 aur 3 → 6 : 9, 6 : 3 nahi.</td></tr>
+    <tr><td>Area ratio ko seedha perimeter ratio maan liya</td><td>Pehle square root: 121 : 36 → 11 : 6.</td></tr>
+    <tr><td>Centroid se midpoint ki doori = aadha median</td><td>GM = ⅓ median, AG = ⅔ median.</td></tr>
+    <tr><td>SSA ya AAA se congruent maan liya</td><td>Dono congruence nahi dete. AAA sirf similar.</td></tr>
+    <tr><td>SAS mein koi bhi kon le liya</td><td>Kon dono sides ke <b>beech</b> ka hona chahiye.</td></tr>
+    <tr><td>Incentre aur circumcentre ki "barabar doori" ulti yaad</td><td>Incentre → sides se. Circumcentre → vertices se.</td></tr>
+    <tr><td>ΔABC ≅ ΔFED mein AB = DE likh diya</td><td>Letters ke kram se: A↔F, B↔E, C↔D → AB = FE.</td></tr>
+  </table></div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Angle apne complement ka 5 guna hai. Angle?</summary><p>90 × 5/6 = 75°.</p></details>
+    <details><summary>AB ∥ CD, E beech mein, ∠ABE = 40°, ∠CDE = 35°. ∠BED?</summary><p>Beech mein = jod = 75°.</p></details>
+    <details><summary>Do similar triangles ki sides 2 : 3. Areas ka ratio?</summary><p>4 : 9.</p></details>
+    <details><summary>Median 12 cm hai. Centroid se vertex ki doori?</summary><p>⅔ × 12 = 8 cm.</p></details>
+    <details><summary>Legs 8 aur 15 wale right triangle ka inradius?</summary><p>Hypotenuse 17. r = (8 + 15 − 17) ÷ 2 = 3.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · GEOMETRY part 2 · section 2: circles ===================== -->
+<section class="chap" id="mgb-circle">
+  <div class="eyebrow">Maths · 102 questions</div>
+  <h2>Circle: chord, tangent aur kon, ek right triangle se sab</h2>
+  <div class="meta">2025–26 SSC PYQs · sabse zyada: tangent ki lambai (5-12-13), chord ki centre se doori, kendra ka kon = 2 × paridhi ka kon, do circles ke common tangent</div>
+
+  <h3>Pehle kahani: circle mein chhupa hua right triangle</h3>
+  <p>Circle ke centre O se ek chord par seedha (perpendicular) neeche aao. Wo line chord ko theek beech se kaat-ti hai. Ab O, chord ka midpoint, aur chord ka ek sira. Ye teen points ek <b>right triangle</b> banate hain.</p>
+  <p>Tangent mein bhi yahi hai. Tangent jahan circle ko chhoota hai, wahan radius aur tangent mein <b>90°</b>. Toh centre, chhoone wala point aur bahar ka point P, phir ek right triangle.</p>
+  <div class="box"><span class="k">Poore chapter ki 3 jad</span>
+    1. Centre se chord par perpendicular → chord aadhi, aur <b>r² = d² + (aadhi chord)²</b>.<br>
+    2. Tangent ⟂ radius → <b>(tangent)² = OP² − r²</b>.<br>
+    3. Ek hi chord ka kon: <b>centre par = 2 × circle par</b>.
+  </div>
+
+  <!-- METHOD 1 -->
+  <h3>Speed method 1 · Chord, doori aur radius: triplet pehchano</h3>
+  <p><b>Kab use karo:</b> radius, chord ki lambai, centre se doori: in mein se do diye hain, teesra pucha hai. 90% baar ye 3-4-5, 5-12-13 ya 8-15-17 nikalta hai.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Left: circle radius 13 with chord AB of 24 at distance 5 from centre O. OM is perpendicular, MB is 12, OB is 13. Right: circle radius 10 with chords 16 and 12 at distances 6 and 8 on the same side, gap 2; a dashed copy of the 16 chord on the other side gives gap 14.">
+      <circle cx="160" cy="135" r="104" fill="none" class="chs" stroke-width="2"/>
+      <line x1="64" y1="175" x2="256" y2="175" class="ln" stroke-width="2"/>
+      <line x1="160" y1="135" x2="160" y2="175" style="stroke:var(--ch)" stroke-width="2"/>
+      <line x1="160" y1="135" x2="256" y2="175" class="ln" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <path d="M160,165 L170,165 L170,175" fill="none" class="ln"/>
+      <circle cx="160" cy="135" r="3" style="fill:var(--ch)"/>
+      <g class="lbl"><text x="150" y="131" text-anchor="end">O</text><text x="58" y="180" text-anchor="end">A</text><text x="262" y="180">B</text><text x="160" y="194" text-anchor="middle">M</text></g>
+      <text x="154" y="160" text-anchor="end" class="lbl" style="fill:var(--ch)">d = 5</text>
+      <text x="214" y="150" class="lbl">r = 13</text>
+      <text x="208" y="193" text-anchor="middle" class="lbl">12</text>
+      <text x="160" y="262" text-anchor="middle" class="sm">r² = d² + (aadhi chord)² · 169 = 25 + 144</text>
+      <circle cx="500" cy="135" r="100" fill="none" class="chs" stroke-width="2"/>
+      <line x1="420" y1="195" x2="580" y2="195" class="ln" stroke-width="2"/>
+      <line x1="440" y1="215" x2="560" y2="215" style="stroke:var(--ch)" stroke-width="2"/>
+      <line x1="420" y1="75" x2="580" y2="75" class="ln" stroke-width="2" stroke-dasharray="6 4"/>
+      <line x1="500" y1="75" x2="500" y2="215" class="ln" stroke-dasharray="3 3"/>
+      <circle cx="500" cy="135" r="3" style="fill:var(--ch)"/>
+      <text x="490" y="131" text-anchor="end" class="lbl">O</text>
+      <g class="sm"><text x="588" y="199">16 (d = 6)</text><text x="568" y="226">12 (d = 8)</text><text x="588" y="79">16 (d = 6)</text></g>
+      <text x="500" y="256" text-anchor="middle" class="sm">same side: 8 − 6 = 2 · opposite side: 8 + 6 = 14</text>
+    </svg>
+    </div>
+    <figcaption>Dono figure scale par hain. Right: radius 10. Chord 16 ki doori √(100 − 64) = 6, chord 12 ki √(100 − 36) = 8. Ek hi taraf → farq. Alag taraf → jod.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · radius 10, chord 16 aur 12, ek hi taraf. Beech ki doori? · <i>~10 sec</i></span>
+    6-8-10 jodi. Chord 16 → aadhi 8 → doori 6. Chord 12 → aadhi 6 → doori 8. Ek taraf → 8 − 6 = <b>2 cm</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> Chord 90° banaye centre par → chord = r√2, aur doori = chord ÷ 2. Chord = radius → centre par 60° (equilateral triangle). Sabse lambi chord = diameter.</div>
+
+  <!-- METHOD 2 -->
+  <h3>Speed method 2 · Circle ke kon: teen niyam</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Three circles. One: chord AB makes 70 degrees at centre O and 35 degrees at point C on the circle. Two: PQ is a diameter, angle PRQ is 90 degrees. Three: cyclic quadrilateral ABCD with angle A 100 and angle C 80, sum 180.">
+      <g text-anchor="middle" class="lbl"><text x="115" y="20">Kendra = 2 × paridhi</text><text x="350" y="20">Semicircle mein 90°</text><text x="585" y="20">Cyclic: aamne-saamne 180°</text></g>
+      <circle cx="115" cy="140" r="85" fill="none" class="chs" stroke-width="2"/>
+      <polyline points="66.2,209.6 115,55 163.8,209.6" fill="none" class="ln" stroke-width="2"/>
+      <polyline points="66.2,209.6 115,140 163.8,209.6" fill="none" style="stroke:var(--ch)" stroke-width="2"/>
+      <circle cx="115" cy="140" r="3" style="fill:var(--ch)"/>
+      <g class="lbl"><text x="115" y="48" text-anchor="middle">C</text><text x="60" y="226" text-anchor="end">A</text><text x="170" y="226">B</text><text x="124" y="137">O</text></g>
+      <text x="115" y="90" text-anchor="middle" class="lbl">35°</text>
+      <text x="115" y="176" text-anchor="middle" class="lbl" style="fill:var(--ch)">70°</text>
+      <circle cx="350" cy="140" r="85" fill="none" class="chs" stroke-width="2"/>
+      <line x1="265" y1="140" x2="435" y2="140" class="ln" stroke-width="2"/>
+      <polyline points="265,140 392.5,66.4 435,140" fill="none" class="ln" stroke-width="2"/>
+      <path d="M383.8,71.4 L388.8,80.1 L397.5,75.1" fill="none" style="stroke:var(--ch)" stroke-width="1.5"/>
+      <circle cx="350" cy="140" r="3" style="fill:var(--ch)"/>
+      <g class="lbl"><text x="259" y="145" text-anchor="end">P</text><text x="441" y="145">Q</text><text x="396" y="58">R</text><text x="350" y="158" text-anchor="middle">O</text></g>
+      <text x="392" y="100" text-anchor="middle" class="lbl" style="fill:var(--ch)">90°</text>
+      <circle cx="585" cy="140" r="85" fill="none" class="chs" stroke-width="2"/>
+      <polygon points="501.3,125.2 614.1,60.1 668.7,154.8 530.4,205.1" fill="none" class="ln" stroke-width="2"/>
+      <g class="lbl"><text x="494" y="128" text-anchor="end">A</text><text x="618" y="52">B</text><text x="676" y="160">C</text><text x="524" y="222" text-anchor="end">D</text></g>
+      <text x="530" y="134" text-anchor="middle" class="lbl" style="fill:var(--ch)">100°</text>
+      <text x="645" y="156" text-anchor="middle" class="lbl" style="fill:var(--ch)">80°</text>
+      <g text-anchor="middle" class="sm"><text x="115" y="250">70 = 2 × 35</text><text x="350" y="250">diameter → 90° (kahin bhi R ho)</text><text x="585" y="250">100 + 80 = 180</text></g>
+    </svg>
+    </div>
+    <figcaption>Teeno scale par. Left: A aur B centre se 70° door rakhe hain, C par apne aap 35° bana. Ek hi arc par jitne bhi points lo, sab par wahi 35° (same segment).</figcaption>
+  </figure>
+  <ul>
+    <li><b>Kendra = 2 × paridhi.</b> Paridhi wala point <b>badi arc</b> par ho tab. Chhoti arc par ho toh 180 − (kendra ÷ 2).</li>
+    <li><b>Same segment ke kon barabar.</b> Ek chord, ek taraf ke saare points → ek hi kon.</li>
+    <li><b>Cyclic quadrilateral:</b> aamne-saamne ka jod 180°. ∠A + ∠C = 180, ∠B + ∠D = 180.</li>
+    <li><b>Chords andar katein (E par):</b> ∠AEC = (∠AOC + ∠BOD) ÷ 2. <b>Bahar milein (K par):</b> ∠K = (badi arc − chhoti arc) ÷ 2.</li>
+    <li><b>Tangent aur chord ka kon</b> = doosri taraf ke segment ka kon (alternate segment). Tangent-chord 30° → chord centre par 60°.</li>
+  </ul>
+  <div class="trick"><b>Trick:</b> Equilateral triangle circle mein ho, toh har side centre par 120° banati hai. Badi arc par 60°, chhoti arc par 120°.</div>
+
+  <!-- METHOD 3 -->
+  <h3>Speed method 3 · Bahar ke point se do tangent</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Circle centre O radius 5. External point P at distance 13. Tangents PA and PB of length 12. Right angles at A and B. Angle APB about 45 degrees and angle AOB about 135 degrees, sum 180. Rules on the right.">
+      <circle cx="150" cy="140" r="60" fill="none" class="chs" stroke-width="2"/>
+      <polyline points="173.1,84.6 306,140 173.1,195.4" fill="none" class="ln" stroke-width="2"/>
+      <polyline points="173.1,84.6 150,140 173.1,195.4" fill="none" style="stroke:var(--ch)" stroke-width="2"/>
+      <line x1="150" y1="140" x2="306" y2="140" class="ln" stroke-dasharray="5 4"/>
+      <line x1="173.1" y1="84.6" x2="173.1" y2="195.4" class="ln" stroke-dasharray="2 3"/>
+      <path d="M170,92 L177.4,95.1 L180.5,87.7" fill="none" class="ln"/>
+      <path d="M170,188 L177.4,184.9 L180.5,192.3" fill="none" class="ln"/>
+      <circle cx="150" cy="140" r="3" style="fill:var(--ch)"/><circle cx="306" cy="140" r="3" style="fill:var(--ch)"/>
+      <g class="lbl"><text x="142" y="145" text-anchor="end">O</text><text x="314" y="145">P</text><text x="170" y="74" text-anchor="middle">A</text><text x="170" y="215" text-anchor="middle">B</text></g>
+      <text x="148" y="108" text-anchor="end" class="lbl" style="fill:var(--ch)">r = 5</text>
+      <g class="lbl"><text x="246" y="104">12</text><text x="246" y="186">12</text><text x="236" y="134">13</text></g>
+      <text x="278" y="156" class="sm">≈45°</text>
+      <text x="182" y="132" class="sm">≈135°</text>
+      <g class="lbl"><text x="350" y="40">Radius ⟂ tangent (A, B par 90°)</text><text x="350" y="68">PA = PB (dono tangent barabar)</text><text x="350" y="96">PA² = OP² − r² = 169 − 25 = 144</text><text x="350" y="124">∠APB + ∠AOB = 180°</text><text x="350" y="152">OP, ∠APB ko aadha karta hai</text></g>
+      <g class="sm"><text x="350" y="180">Kite PAOB ka area = r × PA = 5 × 12 = 60</text><text x="350" y="200">Perimeter = 2 × (r + PA)</text><text x="350" y="220">Chord AB (dotted) = 2 × r × PA ÷ OP</text><text x="350" y="240">∠APB = 60° → OP = 2r · 90° → OP = r√2 · 120° → OP = 2r/√3</text></g>
+    </svg>
+    </div>
+    <figcaption>Figure scale par: r = 5, OP = 13, PA = 12. Ye 5-12-13 jodi SSC ka sabse pasandida number hai. Saath mein 6-8-10, 7-24-25, 9-12-15, 12-35-37 bhi aaye.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> P tak "sabse chhoti doori" di ho (circle se), toh OP = r + wo doori. Phir (r + d)² = r² + t² → r = (t² − d²) ÷ 2d.</div>
+
+  <!-- METHOD 4 -->
+  <h3>Speed method 4 · Chords katein: guna barabar</h3>
+  <p><b>Kab use karo:</b> do chords ek point par katein (andar ya bahar), ya tangent aur secant.</p>
+  <ul>
+    <li><b>Andar E par:</b> AE × EB = CE × ED. 3 × 2 = 6 × ED → ED = 1. ~5 sec.</li>
+    <li><b>Bahar P par:</b> PA × PB = PC × PD (P se dono sire tak, poori lambai). ~5 sec.</li>
+    <li><b>Tangent + secant:</b> PT² = PR × PS. ~8 sec.</li>
+  </ul>
+  <p><b>Concentric circles:</b> bade circle ki chord chhote ko chhooye, toh chhoone ka point chord ka midpoint. Aadhi chord = √(R² − r²).</p>
+
+  <!-- METHOD 5 -->
+  <h3>Speed method 5 · Do circles: kitne common tangent, aur kitne lambe</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Five pairs of circles: far apart has 4 common tangents, touching outside 3, cutting 2, touching inside 1, one inside the other 0.">
+      <circle cx="35" cy="70" r="22" fill="none" class="chs" stroke-width="2"/><circle cx="100" cy="70" r="15" fill="none" class="chs" stroke-width="2"/>
+      <circle cx="185" cy="70" r="25" fill="none" class="chs" stroke-width="2"/><circle cx="228" cy="70" r="18" fill="none" class="chs" stroke-width="2"/>
+      <circle cx="330" cy="70" r="25" fill="none" class="chs" stroke-width="2"/><circle cx="365" cy="70" r="20" fill="none" class="chs" stroke-width="2"/>
+      <circle cx="490" cy="70" r="35" fill="none" class="chs" stroke-width="2"/><circle cx="507" cy="70" r="18" fill="none" class="chs" stroke-width="2"/>
+      <circle cx="630" cy="70" r="35" fill="none" class="chs" stroke-width="2"/><circle cx="635" cy="70" r="12" fill="none" class="chs" stroke-width="2"/>
+      <g text-anchor="middle" class="lbl" style="fill:var(--ch)"><text x="70" y="130">4 tangent</text><text x="210" y="130">3 tangent</text><text x="350" y="130">2 tangent</text><text x="490" y="130">1 tangent</text><text x="630" y="130">0 tangent</text></g>
+      <g text-anchor="middle" class="sm"><text x="70" y="152">d &gt; r1 + r2</text><text x="210" y="152">d = r1 + r2</text><text x="350" y="152">katte hain</text><text x="490" y="152">d = r1 − r2</text><text x="630" y="152">d &lt; r1 − r2</text></g>
+    </svg>
+    </div>
+    <figcaption>d = centres ki doori. Bahar se chhoo rahe hon toh 2 direct + 1 transverse (chhoone wale point par). Katne par transverse tangent hota hi nahi.</figcaption>
+  </figure>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Two circles radius 10 and 6, centres M and N 26 apart, drawn to scale. Solid direct common tangent of length root 660. Dashed transverse common tangent of length root 420 crossing between the circles.">
+      <circle cx="130" cy="150" r="80" fill="none" class="chs" stroke-width="2"/>
+      <circle cx="338" cy="150" r="48" fill="none" class="chs" stroke-width="2"/>
+      <line x1="130" y1="150" x2="338" y2="150" class="ln" stroke-dasharray="3 3"/>
+      <line x1="142.3" y1="71" x2="345.4" y2="102.6" style="stroke:var(--ch)" stroke-width="2.5"/>
+      <line x1="179.2" y1="87" x2="308.5" y2="187.8" class="ln" stroke-width="2" stroke-dasharray="6 4"/>
+      <g class="ln"><line x1="130" y1="150" x2="142.3" y2="71"/><line x1="338" y1="150" x2="345.4" y2="102.6"/></g>
+      <circle cx="130" cy="150" r="3" style="fill:var(--ch)"/><circle cx="338" cy="150" r="3" style="fill:var(--ch)"/>
+      <g class="lbl"><text x="130" y="168" text-anchor="middle">M</text><text x="338" y="168" text-anchor="middle">N</text><text x="185" y="144" text-anchor="middle">d = 26</text><text x="128" y="112" text-anchor="end">10</text><text x="348" y="130">6</text></g>
+      <text x="250" y="78" text-anchor="middle" class="lbl" style="fill:var(--ch)">direct</text>
+      <text x="268" y="206" class="sm">transverse (dashed)</text>
+      <g class="lbl"><text x="420" y="50">Direct: √(d² − (r1 − r2)²)</text><text x="420" y="78">Transverse: √(d² − (r1 + r2)²)</text></g>
+      <g class="sm"><text x="420" y="106">Yaad: direct mein MINUS, transverse mein PLUS</text><text x="420" y="128">(beech se cross karti hai, radius judte hain)</text><text x="420" y="156">Yahan: direct = √(676 − 16) = √660 = 2√165</text><text x="420" y="176">transverse = √(676 − 256) = √420</text><text x="420" y="204">Transverse tabhi jab d &gt; r1 + r2</text><text x="420" y="224">Andar se chhooyein: direct = 0</text></g>
+    </svg>
+    </div>
+    <figcaption>Scale par: 1 cm = 8 px. Direct tangent dono circles ke ek hi taraf rehti hai. Transverse beech se tirchhi guzarti hai. Isliye transverse chhoti hai.</figcaption>
+  </figure>
+
+  <!-- ================= TYPES ================= -->
+  <h3>Type 1 · Chord, centre se doori aur radius (24 Qs)</h3>
+  <div class="box"><span class="k">Worked · Radius 17, do parallel chords 23 cm door, ek chord 30. Doosri? <span class="tag p">PYQ</span> <small>CHSL · 29 Nov 2025</small><!--q290--></span>
+    <b>Method:</b> triplet 8-15-17 · <i>~15 sec</i><br>
+    Chord 30 → aadhi 15 → doori 8 (8-15-17). Doosri ki doori = 23 − 8 = 15 (dono alag taraf, kyunki 23 &gt; 17).<br>
+    Doori 15 → aadhi chord 8 → chord = <mark>16 cm</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Chords 24 aur 10, alag taraf, beech mein 17. Diameter? <span class="tag p">PYQ</span> <small>CHSL · 30 Nov 2025</small><!--q301--></span>
+    <b>Method:</b> option se r maano · <i>~15 sec</i><br>
+    Option 26 → r = 13. Chord 24 → doori 5. Chord 10 → doori 12. 5 + 12 = 17 ✔ → <mark>26 cm</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> r = 10, chord 16 → doori → <b>6-8-10</b> → <mark>6 cm</mark> <small>CPO · 9 Dec 2025</small><!--q316--></li>
+    <li><span class="tag p">PYQ</span> r = 15, chord 24 → <b>9-12-15</b> → <mark>9 cm</mark> <small>CPO · 10 Dec 2025</small><!--q334--></li>
+    <li><span class="tag p">PYQ</span> r = 8, doori 4 → aadhi chord √48 = 4√3 → <mark>8√3 cm</mark> <small>CHSL · 30 Nov 2025</small><!--q302--></li>
+    <li><span class="tag p">PYQ</span> Chord 16, doori 6 → <b>6-8-10</b> → <mark>10 cm</mark> <small>CHSL · 12 Nov 2025</small><!--q308--></li>
+    <li><span class="tag p">PYQ</span> Chord 8, doori 3 → <b>3-4-5</b> → <mark>5 cm</mark> <small>CPO · 12 Dec 2025</small><!--q367--></li>
+    <li><span class="tag p">PYQ</span> Chord 12, doori 5 → √(36 + 25) → <mark>√61 cm</mark> <small>SP-XIV 10th · 30 Jul 2025</small><!--q559--></li>
+    <li><span class="tag p">PYQ</span> r = 3, sabse lambi chord → <b>diameter</b> → <mark>6 cm</mark> <small>CPO · 12 Dec 2025</small><!--q360--></li>
+    <li><span class="tag p">PYQ</span> AB, CD centre se barabar door, AB = 12 → <b>barabar doori = barabar chord</b> → <mark>12 cm</mark> <small>CPO · 11 Dec 2025</small><!--q346--></li>
+    <li><span class="tag p">PYQ</span> Barabar chords centre par x°, y° → <mark>x = y</mark> <small>SP-XIV 12th · 26 Jul 2025</small><!--q522--></li>
+    <li><span class="tag p">PYQ</span> Match: centre se bisect → ⟂; barabar chords → barabar kon; doori → lambai ki tulna; perpendicular → bisect → <mark>A-4, B-2, C-3, D-1</mark> <small>SP-XIV 12th · 2 Aug 2025</small><!--q517--></li>
+    <li><span class="tag p">PYQ</span> A: centre se chord ko aadha karne wali line ⟂. R: har chord radius ke saath 90° → <mark>A sach, R galat</mark> <small>DP HCM · 8 Jan 2026</small><!--q426--></li>
+    <li><span class="tag p">PYQ</span> Chord AB centre se guzarti hai, uska midpoint → <mark>centre</mark> (yaani AB diameter) <small>DP HCM · 9 Jan 2026</small><!--q421--></li>
+    <li><span class="tag p">PYQ</span> Chord = radius → centre par → <b>equilateral</b> → <mark>60°</mark> <small>CHSL · 30 Nov 2025</small><!--q305--></li>
+    <li><span class="tag p">PYQ</span> Chord 24, centre par 90° → <b>chord = r√2</b> → <mark>12√2 cm</mark> <small>CPO · 9 Dec 2025</small><!--q321--></li>
+    <li><span class="tag p">PYQ</span> Chord 20, centre par 90° → r = 10√2, doori = 20 ÷ 2 → <mark>10√2 cm, 10 cm</mark> <small>MTS · 9 Feb 2025</small><!--q448--></li>
+    <li><span class="tag p">PYQ</span> Chord 30, doori 12 → r = √369 ≈ 19.2; chord 24 → √(369 − 144) = √225 → <mark>19.2 cm, 15 cm</mark> <small>MTS · 10 Feb 2025</small><!--q453--></li>
+    <li><span class="tag p">PYQ</span> Chord 24, doori 5 → r = 13; chord 18 → √(169 − 81) = √88 → <mark>13 cm, 2√22 cm</mark> <small>MTS · 11 Feb 2025</small><!--q459--></li>
+    <li><span class="tag p">PYQ</span> Chord 24, doori 9 → r = 15 (9-12-15); chord 18 → <b>9-12-15</b> → <mark>15 cm, 12 cm</mark> <small>MTS · 13 Feb 2025</small><!--q471--></li>
+    <li><span class="tag p">PYQ</span> r = 17, doori 8 aur 15 → chords 30 aur 16 → <b>8-15-17 do baar</b> → <mark>14 cm</mark> <small>CHSL Tier-2</small><!--q313--></li>
+    <li><span class="tag p">PYQ</span> r = 10, chords 12 aur 16, ek hi taraf → doori 8, 6 → <mark>2 cm</mark> <small>CHSL · 28 Nov 2025</small><!--q287--></li>
+    <li><span class="tag p">PYQ</span> r = 10, centre beech mein, chords 14 door, ek chord 12 (doori 8) → doosri doori 6 → <b>6-8-10</b> → <mark>16 cm</mark> <small>SP-XIV 12th · 29 Aug 2025</small><!--q532--></li>
+    <li><span class="tag p">PYQ</span> r = 13, AB = 24 (OC = 5), CF = 5 + 4√5 → OF = 4√5 → aadhi DE = √(169 − 80) = √89 → <mark>2√89 cm</mark> <small>DP HCM · 12 Jan 2026</small><!--q406--></li>
+  </ul>
+
+  <h3>Type 2 · Circle ke andar ke kon (20 Qs)</h3>
+  <div class="box"><span class="k">Worked · PR diameter. PQ aur RS badha kar K par milein, ∠PKS = 66°. ∠QOS? <span class="tag p">PYQ</span> <small>MTS · 12 Feb 2025</small><!--q465--></span>
+    <b>Method:</b> semicircle 90° + kendra = 2 × paridhi · <i>~20 sec</i><br>
+    PR diameter → ∠PQR = 90° → ∠RQK = 90°. Triangle RQK: ∠QRK = 180 − 90 − 66 = 24°.<br>
+    ∠QRS = 24° circle par → centre par ∠QOS = 2 × 24 = <mark>48°</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Chords AB, CD andar E par katein. ∠AEC = 95°, ∠AOD = 110°. ∠BOC? <span class="tag p">PYQ</span> <small>SP-XIV 12th · 31 Jul 2025</small><!--q535--></span>
+    <b>Method:</b> andar ka kon = arcs ka aadha jod · <i>~12 sec</i><br>
+    ∠AED = 180 − 95 = 85. ∠AED = (∠AOD + ∠BOC) ÷ 2 → 170 = 110 + ∠BOC → <mark>60°</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Circle par 35° → centre par → <b>× 2</b> → <mark>70°</mark> <small>CHSL · 28 Nov 2025</small><!--q283--></li>
+    <li><span class="tag p">PYQ</span> Wahi, chord AB circle par 35° → <b>× 2</b> → <mark>70°</mark> <small>CPO · 10 Dec 2025</small><!--q331--></li>
+    <li><span class="tag p">PYQ</span> Centre par 80° → circle par → <b>÷ 2</b> → <mark>40°</mark> <small>CPO · 9 Dec 2025</small><!--q326--></li>
+    <li><span class="tag p">PYQ</span> Centre par 60° → baaki circle par → <b>÷ 2</b> → <mark>30°</mark> <small>SP-XIV 12th · 30 Jul 2025</small><!--q540--></li>
+    <li><span class="tag p">PYQ</span> ∠AOB = 130°, C arc par → <b>÷ 2</b> → <mark>65°</mark> <small>SP-XIV 10th · 1 Aug 2025</small><!--q542--></li>
+    <li><span class="tag p">PYQ</span> ∠POQ = 100°, ∠POR = 80° → ∠PSQ → <b>100 ÷ 2</b> (80 sirf bhatkaane ke liye) → <mark>50°</mark> <small>SP-XIV Grad · 25 Jul 2025</small><!--q500--></li>
+    <li><span class="tag p">PYQ</span> Chord = radius → badi arc par → 60 ÷ 2 → <mark>30°</mark> <small>SP-XIV 12th · 28 Jul 2025</small><!--q526--></li>
+    <li><span class="tag p">PYQ</span> Hamesha sach → <mark>centre ka kon = 2 × circumference ka</mark> <small>SP-XIV 12th · 25 Jul 2025</small><!--q529--></li>
+    <li><span class="tag p">PYQ</span> AB = AC chords, AB centre par 50° → <b>barabar chord barabar kon</b> → <mark>50°</mark> <small>CPO · 11 Dec 2025</small><!--q354--></li>
+    <li><span class="tag p">PYQ</span> ∠QPR = 54°, ∠QOR → <b>× 2</b> → <mark>108°</mark> <small>DP HCM · 9 Jan 2026</small><!--q422--></li>
+    <li><span class="tag p">PYQ</span> Equilateral ABC circle mein, D chhoti arc BC par → ∠BDC → <b>180 − 60</b> → <mark>120°</mark> <small>SP-XIV 12th · 31 Jul 2025</small><!--q536--></li>
+    <li><span class="tag p">PYQ</span> Equilateral PQR, T badi arc par, S chhoti arc par → <mark>60°, 120°</mark> <small>SP-XIV Grad · 29 Jul 2025</small><!--q507--></li>
+    <li><span class="tag p">PYQ</span> PQ diameter, R, S, T semicircle par → ∠PRQ = 90° aur ∠PTQ = 90° → <mark>Both 1 and 2</mark> <small>SP-XIV Grad · 30 Jul 2025</small><!--q510--></li>
+    <li><span class="tag p">PYQ</span> AB diameter ∥ CD, figure mein ∠BEC = 66° → ∠BAC = 66 (same segment), ∠ACB = 90 → ∠ABC = 24 → Z → ∠BCD = <mark>24°</mark> <small>DP HCM · 9 Jan 2026</small><!--q424--></li>
+    <li><span class="tag p">PYQ</span> QT diameter, ∠TQR = 49° → ∠QTR = 41, ∠QSR = 41, ∠QPR → key <mark>221°</mark> (note dekho) <small>SP-XIV Grad · 28 Jul 2025</small><!--q503--></li>
+    <li><span class="tag p">PYQ</span> Bisectors circumcircle ko P, Q, R par milein, ∠P = 72° → ∠P = (∠B + ∠C) ÷ 2 → B + C = 144 → <mark>36°</mark> <small>SP-XIV Grad · 31 Jul 2025</small><!--q514--></li>
+    <li><span class="tag p">PYQ</span> Cyclic, ∠A = (3x + 10)°, ∠C = (5x − 30)° → <b>jod 180</b> → 8x = 200 → <mark>25</mark> <small>CHSL Tier-2</small><!--q314--></li>
+    <li><span class="tag p">PYQ</span> Cyclic, ∠A = 70°, ∠C = 110° → ∠B + ∠D → <mark>180°</mark> <small>SP-XIV 12th · 25 Jul 2025</small><!--q528--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>SP-XIV 28 Jul 2025 (∠QTR + ∠QSR + ∠QPR): QT diameter hai, toh ∠QRT = 90 aur ∠QTR = 41°. Chhapi hui figure mein S aur P dono us arc par hain jismein T hai. Tab teeno kon 41° hote, jod 123°. Ye kisi option mein nahi. Key 221 = 41 + 41 + <b>139</b> maanti hai, yaani P doosri (chhoti) arc QR par hai, jahan kon 180 − 41 = 139. Exam mein 221° lagao.</div>
+
+  <h3>Type 3 · Tangent ki lambai, radius aur doori (24 Qs)</h3>
+  <div class="box"><span class="k">Worked · r = 5, OP = 13. Quadrilateral PAOB ka area? <span class="tag p">PYQ</span> <small>CHSL · 30 Nov 2025</small><!--q307--></span>
+    <b>Method:</b> 5-12-13 + kite area · <i>~8 sec</i><br>
+    PA = 12. Kite = do right triangles, har ek ½ × 5 × 12 = 30. Area = <mark>60 sq units</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Tangent 8 cm, P se circle tak sabse chhoti doori 4 cm. Radius? <span class="tag p">PYQ</span> <small>SP-XIV Grad · 24 Jul 2025</small><!--q498--></span>
+    <b>Method:</b> OP = r + 4 · <i>~12 sec</i><br>
+    (r + 4)² = r² + 64 → 8r + 16 = 64 → r = <mark>6 cm</mark>. (Check: 6-8-10.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> r = 5, OP = 13 → <b>5-12-13</b> → <mark>12 cm</mark> <small>CHSL · 28 Nov 2025</small><!--q286--></li>
+    <li><span class="tag p">PYQ</span> r = 5, OP = 13, har tangent → <b>5-12-13</b> → <mark>12 cm</mark> <small>DP HCM · 8 Jan 2026</small><!--q431--></li>
+    <li><span class="tag p">PYQ</span> OP = 13, r = 5, PA → <b>5-12-13</b> → <mark>12 cm</mark> <small>SP-XIV 12th · 28 Jul 2025</small><!--q524--></li>
+    <li><span class="tag p">PYQ</span> OP = 13, tangent 12 → radius → <b>5-12-13</b> → <mark>5 cm</mark> <small>CPO · 9 Dec 2025</small><!--q327--></li>
+    <li><span class="tag p">PYQ</span> r = 6, tangent 8 → OA → <b>6-8-10</b> → <mark>10 cm</mark> <small>CHSL · 29 Nov 2025</small><!--q291--></li>
+    <li><span class="tag p">PYQ</span> r = 6, tangent 8 → OP → <b>6-8-10</b> → <mark>10 cm</mark> <small>DP HCM · 9 Jan 2026</small><!--q420--></li>
+    <li><span class="tag p">PYQ</span> r = 12, OP = 37 → <b>12-35-37</b> → <mark>35 cm</mark> <small>CHSL Tier-2</small><!--q311--></li>
+    <li><span class="tag p">PYQ</span> r = 12, OP = 15 → <b>9-12-15</b> → <mark>9 cm</mark> <small>CPO · 12 Dec 2025</small><!--q369--></li>
+    <li><span class="tag p">PYQ</span> r = 9, OP = 15 → <b>9-12-15</b> → <mark>12 cm</mark> <small>SP-XIV 10th · 24 Jul 2025</small><!--q549--></li>
+    <li><span class="tag p">PYQ</span> r = 7, OP = 25 → <b>7-24-25</b> → <mark>24 cm</mark> <small>DP HCM · 8 Jan 2026</small><!--q427--></li>
+    <li><span class="tag p">PYQ</span> r = 7, OY = 25 → XY → <b>7-24-25</b> → <mark>24</mark> <small>SP-XIV 10th · 28 Jul 2025</small><!--q554--></li>
+    <li><span class="tag p">PYQ</span> Tangent 9, OP = 12 → diameter? r = √(144 − 81) = √63 ≈ 7.94 → key <mark>7.92 m</mark> (ye radius hai, note dekho) <small>CPO · 10 Dec 2025</small><!--q340--></li>
+    <li><span class="tag p">PYQ</span> r = 10, PR = 14 → perimeter ORPS → <b>2 × (10 + 14)</b> → <mark>48 cm</mark> <small>DP HCM · 12 Jan 2026</small><!--q407--></li>
+    <li><span class="tag p">PYQ</span> Tangent = radius → OP aur radius ke beech kon → <b>isosceles right triangle</b> → <mark>45°</mark> <small>DP HCM · 9 Jan 2026</small><!--q418--></li>
+    <li><span class="tag p">PYQ</span> Do tangent ek doosre par ⟂ → OP = ? → <b>square OAPB</b> → <mark>√2 × radius</mark> <small>DP HCM · 9 Jan 2026</small><!--q423--></li>
+    <li><span class="tag p">PYQ</span> Robot ka raasta aur chhoone wale point ka radius → <mark>90°</mark> <small>DP HCM · 8 Jan 2026</small><!--q429--></li>
+    <li><span class="tag p">PYQ</span> Bahar ke point se kitne tangent → <mark>2</mark> <small>DP HCM · 10 Jan 2026</small><!--q416--></li>
+    <li><span class="tag p">PYQ</span> Bahar ke point se do tangent ki lambai → <mark>barabar</mark> <small>SP-XIV Grad · 2 Aug 2025</small><!--q495--></li>
+    <li><span class="tag p">PYQ</span> Ek circle ke kitne tangent ho sakte hain → <mark>infinitely many</mark> <small>SP-XIV 10th · 26 Jul 2025</small><!--q550--></li>
+    <li><span class="tag p">PYQ</span> Tangent aur circle ka common point → <mark>point of tangency</mark> <small>SP-XIV 10th · 25 Jul 2025</small><!--q553--></li>
+    <li><span class="tag p">PYQ</span> Circle ko do points par kaatne wali line → <mark>secant</mark> <small>SP-XIV 10th · 29 Jul 2025</small><!--q558--></li>
+    <li><span class="tag p">PYQ</span> Chord AB 16, A aur B ke tangent parallel → AB diameter → <mark>16 cm</mark> <small>CHSL · 29 Nov 2025</small><!--q296--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CPO 10 Dec 2025 (tangent 9 m, doori 12 m): radius = √(144 − 81) = √63 ≈ 7.94 m, toh <b>diameter ≈ 15.87 m</b>. Ye options mein nahi hai. Key 7.92 m radius ka andaaza hai. Exam mein key wala option (7.92) hi bachta hai, par yaad rakho ki sawaal ne diameter pucha tha.</div>
+
+  <h3>Type 4 · Tangents ke beech ka kon (10 Qs)</h3>
+  <div class="box"><span class="k">Worked · C chhoti arc AB par, ∠ACB = 108°. A, B ke tangent P par milein. ∠APB? <span class="tag p">PYQ</span> <small>CHSL · 30 Nov 2025</small><!--q306--></span>
+    <b>Method:</b> cyclic + 180 rule · <i>~12 sec</i><br>
+    Badi arc par kon = 180 − 108 = 72. Centre par ∠AOB = 144. ∠APB = 180 − 144 = <mark>36°</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · OP = 17, har tangent 15. Chhoone wale do points ki doori? <span class="tag p">PYQ</span> <small>DP HCM · 7 Jan 2026</small><!--q435--></span>
+    <b>Method:</b> 8-15-17 + chord of contact · <i>~15 sec</i><br>
+    r = 8. Chord AB = 2 × r × t ÷ OP = 2 × 8 × 15 ÷ 17 = 240 ÷ 17 ≈ <b>14.1 m</b>. Sabse paas option 14.4 m. Key <mark>18.8 m</mark> kehti hai (note dekho).
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> r = 6, ∠APB = 60° → <b>OP = 2r</b> → <mark>12 cm</mark> <small>CPO · 10 Dec 2025</small><!--q332--></li>
+    <li><span class="tag p">PYQ</span> r = 10, ∠APB = 120° → aadha 60 → OP = 10 ÷ sin 60 = 20/√3 → <mark>11.5 cm</mark> <small>CPO · 11 Dec 2025</small><!--q355--></li>
+    <li><span class="tag p">PYQ</span> Tangent A par chord AB se 30° → <b>alternate segment</b>: circle par 30 → centre par → <mark>60°</mark> <small>CPO · 11 Dec 2025</small><!--q348--></li>
+    <li><span class="tag p">PYQ ×2</span> B se tangents BA, BC, ∠ABC = 50° → ∠AOC → <b>180 − 50</b> → <mark>130°</mark> <small>DP HCM · 12 Jan 2026; DP HCM · 10 Jan 2026</small><!--q410,q417--></li>
+    <li><span class="tag p">PYQ</span> Chord AB badi arc par 70° → centre par 140 → <b>180 − 140</b> → <mark>40°</mark> <small>DP HCM · 12 Jan 2026</small><!--q414--></li>
+    <li><span class="tag p">PYQ</span> Tangents ke beech ka kon aur paridhi ka kon → key <mark>ek doosre ka do guna</mark> (centre ka kon = 2 × paridhi ka) <small>SP-XIV Grad · 24 Jul 2025</small><!--q497--></li>
+    <li><span class="tag p">PYQ</span> Do circles bahar se P par chhooyein, AB direct tangent, ∠PAB = 22° → ∠APB = 90° hamesha → <b>90 − 22</b> → <mark>68°</mark> <small>SP-XIV 12th · 24 Jul 2025</small><!--q519--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP HCM 7 Jan 2026 (17 m, 15 m): r = 8 (8-15-17). Chord of contact = 2 × 8 × 15 ÷ 17 ≈ <b>14.1 m</b>, sabse paas option <b>14.4 m</b>. Key ka 18.8 m kisi bhi seedhe tareeke se nahi aata.<br>
+  SP-XIV 24 Jul 2025 (tangents ka kon): sawaal ka pehla hissa galat hai. Tangents ke beech ka kon aur centre ka kon <b>barabar nahi</b>, unka jod 180° hota hai. Key ka answer ("do guna") centre aur paridhi ke kon ka rishta hai.</div>
+
+  <h3>Type 5 · Chords katein, tangent-secant, concentric circles (8 Qs)</h3>
+  <div class="box"><span class="k">Worked · Tangent PQ = 16, secant PRS, PR = 8. Chord RS? <span class="tag p">PYQ</span> <small>DP HCM · 12 Jan 2026</small><!--q411--></span>
+    <b>Method:</b> PT² = PR × PS · <i>~8 sec</i><br>
+    256 = 8 × PS → PS = 32 → RS = 32 − 8 = <mark>24 cm</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Concentric 12 aur 18. Badi ki chord AB chhoti ko C par chhooye. AD diameter. CD? <span class="tag p">PYQ</span> <small>SP-XIV 12th · 29 Jul 2025</small><!--q533--></span>
+    <b>Method:</b> coordinates jaisa socho · <i>~25 sec</i><br>
+    OC = 12 ⟂ AB, AC = √(324 − 144) = √180. D, A ke bilkul ulta. C se D: side ki taraf √180, upar-neeche 12 + 12 = 24.<br>
+    CD² = 180 + 576 = 756 → <mark>√756 cm</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Andar, AE = 3, EB = 2, CE = 6 → <b>guna barabar</b> → <mark>1 cm</mark> <small>CPO · 10 Dec 2025</small><!--q341--></li>
+    <li><span class="tag p">PYQ</span> Andar O par, AO = 8, OB = 12, CO = 6 → 96 ÷ 6 → <mark>16 cm</mark> <small>SP-XIV Grad · 2 Aug 2025</small><!--q493--></li>
+    <li><span class="tag p">PYQ</span> Bahar P par, AP = 6, BP = 3, CP = 4 → 18 ÷ 4 → <mark>4.5 cm</mark> <small>MTS · 20 Feb 2025</small><!--q489--></li>
+    <li><span class="tag p">PYQ</span> Concentric 12.5, 7.5 → aadhi chord √(156.25 − 56.25) = 10 → <mark>20 cm</mark> <small>CPO · 12 Dec 2025</small><!--q361--></li>
+    <li><span class="tag p">PYQ</span> Concentric 5, 12 → 2√(144 − 25) = 2√119 → <mark>21.8 cm</mark> <small>SP-XIV Grad · 30 Jul 2025</small><!--q511--></li>
+    <li><span class="tag p">PYQ</span> Concentric, badi ki chord chhoti ko chhooye → <mark>chhoone ke point par chord aadhi ho jaati hai</mark> <small>SP-XIV 10th · 2 Aug 2025</small><!--q547--></li>
+  </ul>
+
+  <h3>Type 6 · Do circles: tangent ginti aur lambai (16 Qs)</h3>
+  <div class="box"><span class="k">Worked · Radii 29, 19, d = 73. Transverse tangent? <span class="tag p">PYQ</span> <small>SP-XIV 12th · 29 Jul 2025</small><!--q534--></span>
+    <b>Method:</b> plus wala formula · <i>~12 sec</i><br>
+    r1 + r2 = 48. √(73² − 48²) = √((73 − 48)(73 + 48)) = √(25 × 121) = 5 × 11 = <mark>55 cm</mark>.
+  </div>
+  <div class="trick"><b>Trick:</b> d² − k² ko <b>(d − k)(d + k)</b> likho. 73² − 48² = 25 × 121. Bada square banana hi nahi padta.</div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Bahar se chhooyein → internal (transverse) tangent kitne → <mark>1</mark> <small>CHSL · 30 Nov 2025</small><!--q303--></li>
+    <li><span class="tag p">PYQ</span> Andar se chhooyein → common tangent → <mark>1</mark> <small>SP-XIV 12th · 2 Aug 2025</small><!--q518--></li>
+    <li><span class="tag p">PYQ</span> A: alag circles ke 4 common tangent. R: 2 direct + 2 transverse → <mark>dono sach, R sahi wajah</mark> <small>SP-XIV 12th · 24 Jul 2025</small><!--q520--></li>
+    <li><span class="tag p">PYQ</span> Radii 10, 2, d = 15 → 15 &gt; 12 → <mark>4</mark> <small>DP AWO · 20 Jan 2026</small><!--q389--></li>
+    <li><span class="tag p">PYQ</span> Radii 6, 12, d = 20 → 20 &gt; 18 → <mark>4</mark> <small>DP AWO · 20 Jan 2026</small><!--q390--></li>
+    <li><span class="tag p">PYQ</span> Radii 4, 9, d = 26 → 26 &gt; 13 → <mark>4</mark> <small>DP AWO · 21 Jan 2026</small><!--q401--></li>
+    <li><span class="tag p">PYQ</span> Radii 9, 4, d = 10 (katte) → <mark>transverse tangent nahi hota</mark> <small>DP AWO · 16 Jan 2026</small><!--q380--></li>
+    <li><span class="tag p">PYQ</span> Radii 10, 6, d = 12 (overlap) → <mark>No transverse tangent</mark> <small>DP HCM · 7 Jan 2026</small><!--q433--></li>
+    <li><span class="tag p">PYQ</span> Radii 10, 3, andar se chhooyein, d = 7 → direct = √(49 − 49) → <mark>0 cm</mark> <small>DP AWO · 21 Jan 2026</small><!--q402--></li>
+    <li><span class="tag p">PYQ</span> Andar se chhooyein, jod 15, d = 13 → <b>d = r1 − r2</b> → <mark>13 cm</mark> <small>DP AWO · 21 Jan 2026</small><!--q405--></li>
+    <li><span class="tag p">PYQ</span> Radii 5, 3, andar se chhooyein → <b>d = r1 − r2</b> → <mark>2 cm</mark> <small>SP-XIV Grad · 25 Jul 2025</small><!--q501--></li>
+    <li><span class="tag p">PYQ</span> Radii 8, 6, d = 30, transverse → √(900 − 196) = √704 → <mark>26.54</mark> (option mein "cm" chhapa, asal mein m) <small>DP AWO · 16 Jan 2026</small><!--q379--></li>
+    <li><span class="tag p">PYQ</span> Radii 6, 10, d = 26, direct → √(676 − 16) = √660 → <mark>2√165 cm</mark> <small>DP HCM · 12 Jan 2026</small><!--q413--></li>
+    <li><span class="tag p">PYQ</span> Radii 10, 6, d = 13, direct → √(169 − 16) = √153 → <mark>3√17 cm</mark> <small>MTS · 20 Feb 2025</small><!--q490--></li>
+    <li><span class="tag p">PYQ</span> Radii 10, 6, d = 20, direct (approx) → √(400 − 16) = √384 ≈ 19.6 → <mark>20 cm</mark> <small>SP-XIV Grad · 28 Jul 2025</small><!--q504--></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Poori chord ko triangle ki side bana diya</td><td>Right triangle mein <b>aadhi</b> chord jaati hai.</td></tr>
+    <tr><td>Do parallel chords: hamesha doori jod di</td><td>Ek taraf → farq. Alag taraf (ya doori &gt; r) → jod.</td></tr>
+    <tr><td>Paridhi wala point chhoti arc par, phir bhi kendra ÷ 2</td><td>Chhoti arc par: 180 − (kendra ÷ 2).</td></tr>
+    <tr><td>∠APB aur ∠AOB barabar maan liye</td><td>Jod 180°. 50° → 130°.</td></tr>
+    <tr><td>Direct aur transverse formula mein + − ulat gaye</td><td>Direct = minus (r1 − r2), transverse = plus (r1 + r2).</td></tr>
+    <tr><td>Katte circles mein transverse tangent nikaala</td><td>d &lt; r1 + r2 → transverse hota hi nahi.</td></tr>
+    <tr><td>Diameter pucha, radius likh diya</td><td>Aakhri line dobara padho. Options mein dono hote hain.</td></tr>
+  </table></div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>r = 25, chord 48. Centre se doori?</summary><p>Aadhi 24 → 7-24-25 → 7.</p></details>
+    <details><summary>Centre par 140°. Badi arc par kon? Chhoti arc par?</summary><p>70° aur 110°.</p></details>
+    <details><summary>Tangents ke beech 70°. Chord of contact centre par?</summary><p>180 − 70 = 110°.</p></details>
+    <details><summary>Radii 7 aur 3, d = 20. Direct tangent?</summary><p>√(400 − 16) = √384 = 8√6.</p></details>
+    <details><summary>Radii 9 aur 4, d = 13. Kitne common tangent?</summary><p>d = r1 + r2 → bahar se chhoote hain → 3.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · GEOMETRY part 2 · section 3: quadrilaterals & polygons ===================== -->
+<section class="chap" id="mgb-poly">
+  <div class="eyebrow">Maths · 38 questions</div>
+  <h2>Quadrilateral aur polygon: bahar ka kon pakdo, sab nikal aayega</h2>
+  <div class="meta">2025–26 SSC PYQs · sabse zyada: interior/exterior angle se sides, diagonals ginna, circle ke bahar quadrilateral (AB + CD = BC + DA)</div>
+
+  <h3>Pehle kahani: polygon ke kinare-kinare chalo</h3>
+  <p>Ek regular pentagon ke kinare par chalna shuru karo. Har kone par tum thoda mudte ho. Poora chakkar laga kar wahin pahunchte ho jahan se chale the. Yaani kul milakar <b>360°</b> mude.</p>
+  <p>Ye mudna hi <b>exterior angle</b> hai. 5 kone, toh har kone par 360 ÷ 5 = 72°. Aur andar ka kon = 180 − 72 = 108°. Kisi bhi polygon mein yahi.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Regular pentagon with one side extended to show exterior angle 72 and interior angle 108. Cards on the right list exterior and interior angles for 5, 6, 8, 9, 10, 12, 18 and 24 sides.">
+      <polygon points="150,50 64.4,112.2 97.1,212.8 202.9,212.8 235.6,112.2" class="chf"/>
+      <polygon points="150,50 64.4,112.2 97.1,212.8 202.9,212.8 235.6,112.2" fill="none" class="chs" stroke-width="2"/>
+      <line x1="235.6" y1="112.2" x2="251" y2="64.6" class="ln" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="206" y="126" text-anchor="middle" class="lbl">108°</text>
+      <text x="228" y="91" text-anchor="middle" class="lbl" style="fill:var(--ch)">72°</text>
+      <text x="150" y="246" text-anchor="middle" class="sm">har kone par 72° mudo · 5 × 72 = 360</text>
+      <g>
+        <rect x="320" y="30" width="88" height="84" rx="6" class="paper" stroke="var(--muted)" stroke-width="1"/>
+        <rect x="414" y="30" width="88" height="84" rx="6" class="paper" stroke="var(--muted)" stroke-width="1"/>
+        <rect x="508" y="30" width="88" height="84" rx="6" class="paper" stroke="var(--muted)" stroke-width="1"/>
+        <rect x="602" y="30" width="88" height="84" rx="6" class="paper" stroke="var(--muted)" stroke-width="1"/>
+        <rect x="320" y="130" width="88" height="84" rx="6" class="paper" stroke="var(--muted)" stroke-width="1"/>
+        <rect x="414" y="130" width="88" height="84" rx="6" class="paper" stroke="var(--muted)" stroke-width="1"/>
+        <rect x="508" y="130" width="88" height="84" rx="6" class="paper" stroke="var(--muted)" stroke-width="1"/>
+        <rect x="602" y="130" width="88" height="84" rx="6" class="paper" stroke="var(--muted)" stroke-width="1"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="364" y="54">n = 5</text><text x="458" y="54">n = 6</text><text x="552" y="54">n = 8</text><text x="646" y="54">n = 9</text>
+        <text x="364" y="154">n = 10</text><text x="458" y="154">n = 12</text><text x="552" y="154">n = 18</text><text x="646" y="154">n = 24</text>
+      </g>
+      <g text-anchor="middle" class="lbl" style="fill:var(--ch)">
+        <text x="364" y="78">bahar 72°</text><text x="458" y="78">bahar 60°</text><text x="552" y="78">bahar 45°</text><text x="646" y="78">bahar 40°</text>
+        <text x="364" y="178">bahar 36°</text><text x="458" y="178">bahar 30°</text><text x="552" y="178">bahar 20°</text><text x="646" y="178">bahar 15°</text>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="364" y="100">andar 108°</text><text x="458" y="100">andar 120°</text><text x="552" y="100">andar 135°</text><text x="646" y="100">andar 140°</text>
+        <text x="364" y="200">andar 144°</text><text x="458" y="200">andar 150°</text><text x="552" y="200">andar 160°</text><text x="646" y="200">andar 165°</text>
+      </g>
+      <text x="505" y="240" text-anchor="middle" class="sm">bahar = 360 ÷ n · andar = 180 − bahar · n = 360 ÷ bahar</text>
+    </svg>
+    </div>
+    <figcaption>Pentagon scale par hai. Dashed line ek side ko aage badhati hai. Wahan bana 72° hi "mudna" hai. Cards ratta maar lo: 2025 ke papers mein 8, 9, 10, 12, 18, 24 sab aaye.</figcaption>
+  </figure>
+
+  <!-- METHOD 1 -->
+  <h3>Speed method 1 · Hamesha bahar ka kon nikaalo</h3>
+  <p><b>Kab use karo:</b> polygon ka koi bhi sawaal. Andar ka kon diya ho, ratio diya ho, farq diya ho, sab ko pehle <b>bahar ke kon</b> mein badlo. Phir n = 360 ÷ bahar.</p>
+  <ul>
+    <li><b>Andar diya:</b> bahar = 180 − andar. 160° → 20° → n = 18. ~5 sec.</li>
+    <li><b>Andar : bahar = k : 1:</b> 180 ko (k + 1) hisson mein baanto. Bahar = 180 ÷ (k + 1). 5 : 1 → 30° → n = 12. ~5 sec.</li>
+    <li><b>Andar − bahar = D:</b> bahar = (180 − D) ÷ 2. D = 150 → 15° → n = 24. ~5 sec.</li>
+    <li><b>Andar ke kon ka jod S:</b> n = S ÷ 180 + 2. 2520 → 14 + 2 = 16. ~5 sec.</li>
+  </ul>
+  <div class="box"><span class="k">Formula / value sheet (polygon)</span>
+    Andar ke kon ka jod = (n − 2) × 180. Bahar ke kon ka jod = <b>360° = 2π</b>, hamesha.<br>
+    Diagonals = n(n − 3) ÷ 2. Yaad: 5 → 5, 6 → 9, 8 → 20, 9 → 27, 10 → 35, 11 → 44, 12 → 54, 16 → 104.<br>
+    Regular hexagon ki side = uske circumcircle ka radius (6 equilateral triangle).<br>
+    Centre par saare kon ka jod = 360°, polygon kitna bhi bada ho.
+  </div>
+  <div class="trick"><b>Trick:</b> Diagonals se n nikaalna ho, toh upar ki list se seedha milao. 35 → 10, 44 → 11. Na mile toh 2 × diagonals ke paas ka n(n − 3) dhoondo: 88 = 11 × 8.</div>
+
+  <!-- METHOD 2 -->
+  <h3>Speed method 2 · Quadrilateral ke 5 niyam</h3>
+  <div class="tbl"><table>
+    <tr><th>Shape</th><th>Pehchaan</th><th>Diagonals</th></tr>
+    <tr><td class="n">Koi bhi quadrilateral</td><td>kon ka jod 360°</td><td>—</td></tr>
+    <tr><td class="n">Parallelogram</td><td>aamne-saamne sides barabar, ∥; bagal ke kon ka jod 180°</td><td>ek doosre ko aadha karte hain</td></tr>
+    <tr><td class="n">Rhombus</td><td>chaaron sides barabar</td><td>aadha + 90° par katte hain → side² = (d1/2)² + (d2/2)²</td></tr>
+    <tr><td class="n">Rectangle / square</td><td>chaaron kon 90°</td><td>barabar; square mein diagonal = side × √2</td></tr>
+    <tr><td class="n">Cyclic</td><td>circle par chaaron kone</td><td>aamne-saamne kon ka jod 180°</td></tr>
+  </table></div>
+
+  <!-- METHOD 3 -->
+  <h3>Speed method 3 · Circle ke bahar quadrilateral: aamne-saamne sides ka jod barabar</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Quadrilateral PQRS drawn around a circle, touching it at four points. From each corner the two tangent pieces are equal, labelled a, b, c, d. So PQ plus RS equals QR plus SP.">
+      <circle cx="150" cy="130" r="70" fill="none" class="ln" stroke-width="2"/>
+      <polygon points="63.7,43.7 244.3,75.5 195.7,209.2 89.6,190.4" fill="none" class="chs" stroke-width="2"/>
+      <g style="fill:var(--ch)"><circle cx="162.2" cy="61.1" r="3"/><circle cx="215.8" cy="153.9" r="3"/><circle cx="137.8" cy="198.9" r="3"/><circle cx="81.1" cy="142.2" r="3"/></g>
+      <g class="lbl"><text x="56" y="38" text-anchor="end">P</text><text x="252" y="72">Q</text><text x="200" y="228">R</text><text x="82" y="204" text-anchor="end">S</text></g>
+      <g class="lbl" style="fill:var(--ch)"><text x="110" y="44">a</text><text x="60" y="96" text-anchor="end">a</text><text x="204" y="60">b</text><text x="240" y="118">b</text><text x="216" y="188">c</text><text x="168" y="222">c</text><text x="112" y="214">d</text><text x="74" y="170" text-anchor="end">d</text></g>
+      <g class="lbl"><text x="320" y="44">Har kone se do tangent tukde barabar</text><text x="320" y="72">PQ = a + b, RS = c + d</text><text x="320" y="96">QR = b + c, SP = d + a</text><text x="320" y="124" style="fill:var(--ch)">PQ + RS = QR + SP</text></g>
+      <g class="sm"><text x="320" y="152">(dono taraf a + b + c + d)</text><text x="320" y="178">Demo: PQ 15, QR 12, PS 10 → RS = 12 + 10 − 15 = 7</text><text x="320" y="200">Perimeter = 2 × (PQ + RS)</text><text x="320" y="222">Parallelogram mein circle fit ho → rhombus hi hoga</text></g>
+    </svg>
+    </div>
+    <figcaption>Circle chaaron sides ko chhoota hai (dots). Upar wale tangent niyam (PA = PB) ko chaar baar lagaya. Bas.</figcaption>
+  </figure>
+
+  <!-- TYPES -->
+  <h3>Type 1 · Quadrilateral ke kon aur sides (9 Qs)</h3>
+  <div class="box"><span class="k">Worked · Rhombus ki side 10, ek diagonal 12. Doosra? <span class="tag p">PYQ</span> <small>CPO · 10 Dec 2025</small><!--q335--></span>
+    <b>Method:</b> aadhe diagonals + 6-8-10 · <i>~6 sec</i><br>
+    Aadha diagonal 6, side 10 → doosra aadha 8 → diagonal = <mark>16 cm</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> ∠A = 98°, ∠B = 82°, ∠C = 110° → <b>360 − 290</b> → <mark>70°</mark> <small>CHSL Tier-2</small><!--q309--></li>
+    <li><span class="tag p">PYQ</span> Parallelogram, AO = 6, BO = 8 → <b>diagonals aadhe hote hain</b> → <mark>AC = 12, BD = 16</mark> <small>CHSL Tier-2</small><!--q310--></li>
+    <li><span class="tag p">PYQ</span> Rhombus diagonals 24, 10 → aadhe 12, 5 → <b>5-12-13</b> → <mark>13 cm</mark> <small>DP AWO · 20 Jan 2026</small><!--q392--></li>
+    <li><span class="tag p">PYQ</span> Parallelogram ke bagal wale kon 1 : 3 → <b>180 ÷ 4 = 45</b> → <mark>135°</mark> <small>GD · 29 Apr 2026</small><!--q436--></li>
+    <li><span class="tag p">PYQ</span> Parallelogram ka ek kon 45° → bagal wala → <b>180 − 45</b> → <mark>135°</mark> <small>GD · 30 Apr 2026</small><!--q437--></li>
+    <li><span class="tag p">PYQ</span> Rhombus ke baare mein sach → <mark>chaaron sides barabar</mark> <small>SP-XIV 10th · 2 Aug 2025</small><!--q546--></li>
+    <li><span class="tag p">PYQ</span> (I) base 15, height 12 → 180 ✔. (II) octagon ke kon ka jod 900° ✗ (asli 1080) → <mark>Only I</mark> <small>CHSL · 30 Nov 2025</small><!--q300--></li>
+    <li><span class="tag p">PYQ</span> Cube, rectangular box ka khaas roop kyun → <mark>saare edges barabar</mark> <small>SP-XIV 10th · 26 Jul 2025</small><!--q551--></li>
+  </ul>
+
+  <h3>Type 2 · Circle ke bahar bana quadrilateral (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · AB = 10, BC = 12, perimeter 40. CD? <span class="tag p">PYQ</span> <small>SP-XIV Grad · 31 Jul 2025</small><!--q515--></span>
+    <b>Method:</b> aadha perimeter · <i>~6 sec</i><br>
+    AB + CD = BC + DA = 40 ÷ 2 = 20 → CD = 20 − 10 = <mark>10 cm</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> PQ = 15, QR = 12, PS = 10 → RS = 12 + 10 − 15 → <mark>7 cm</mark> <small>CHSL · 29 Nov 2025</small><!--q295--></li>
+    <li><span class="tag p">PYQ</span> AB = 6, BC = 7, CD = 8 → AD = 6 + 8 − 7 → <mark>7 cm</mark> <small>SP-XIV Grad · 29 Jul 2025</small><!--q508--></li>
+    <li><span class="tag p">PYQ</span> Parallelogram ke andar circle chaaron sides chhooye → aamne-saamne barabar + jod barabar → sab sides barabar → <mark>rhombus</mark> <small>SP-XIV 12th · 2 Aug 2025</small><!--q516--></li>
+  </ul>
+
+  <h3>Type 3 · Polygon ke kon se sides (17 Qs)</h3>
+  <div class="box"><span class="k">Worked · Andar ka kon, bahar wale se 150° zyada. Sides? <span class="tag p">PYQ</span> <small>CPO · 10 Dec 2025</small><!--q333--></span>
+    <b>Method:</b> bahar = (180 − D) ÷ 2 · <i>~6 sec</i><br>
+    Bahar = (180 − 150) ÷ 2 = 15° → n = 360 ÷ 15 = <mark>24</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Do regular polygons ki sides 4 : 3, bahar ke kon ka farq 10°. Sides? <span class="tag p">PYQ</span> <small>CPO · 12 Dec 2025</small><!--q365--></span>
+    <b>Method:</b> option daal kar dekho · <i>~10 sec</i><br>
+    Option 12, 9 (ratio 4 : 3 ✔). Bahar: 360/9 = 40, 360/12 = 30. Farq 10 ✔ → <mark>12, 9</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Regular decagon ka andar ka kon → bahar 36 → <mark>144°</mark> <small>CHSL · 29 Nov 2025</small><!--q293--></li>
+    <li><span class="tag p">PYQ</span> Nonagon (9) ka andar ka kon → bahar 40 → <mark>140°</mark> <small>DP AWO · 16 Jan 2026</small><!--q378--></li>
+    <li><span class="tag p">PYQ</span> Andar 160° → bahar 20 → <mark>18</mark> <small>CPO · 9 Dec 2025</small><!--q317--></li>
+    <li><span class="tag p">PYQ</span> Andar 150° → bahar 30 → <mark>12</mark> <small>DP AWO · 16 Jan 2026</small><!--q382--></li>
+    <li><span class="tag p">PYQ ×2</span> Andar : bahar = 5 : 1 → bahar 180 ÷ 6 = 30 → <mark>12</mark> <small>CPO · 10 Dec 2025; SP-XIV 12th · 31 Jul 2025</small><!--q328,q537--></li>
+    <li><span class="tag p">PYQ</span> Andar − bahar = 60° → bahar (180 − 60) ÷ 2 = 60 → <mark>6</mark> <small>CPO · 12 Dec 2025</small><!--q357--></li>
+    <li><span class="tag p">PYQ</span> Andar = bahar → dono 90 → <mark>4</mark> <small>CPO · 12 Dec 2025</small><!--q363--></li>
+    <li><span class="tag p">PYQ</span> Andar ka jod = bahar ka jod (360) → (n − 2) × 180 = 360 → <mark>4</mark> <small>CPO · 11 Dec 2025</small><!--q343--></li>
+    <li><span class="tag p">PYQ</span> n sides ke bahar ke kon ka jod → 360° → <mark>2π</mark> <small>CPO · 9 Dec 2025</small><!--q323--></li>
+    <li><span class="tag p">PYQ</span> 15 sides wale polygon ke centre par saare kon → <mark>360°</mark> <small>CHSL · 28 Nov 2025</small><!--q284--></li>
+    <li><span class="tag p">PYQ</span> Octagon ke andar ke kon ka jod → 6 × 180 → <mark>1080°</mark> <small>DP AWO · 20 Jan 2026</small><!--q376--></li>
+    <li><span class="tag p">PYQ</span> Andar ka jod 1260° → 1260 ÷ 180 = 7, + 2 → <mark>9</mark> <small>SP-XIV 10th · 29 Aug 2025</small><!--q555--></li>
+    <li><span class="tag p">PYQ</span> Hexagon side 6, circle mein → <b>side = radius</b> → <mark>6 cm</mark> <small>CPO · 10 Dec 2025</small><!--q329--></li>
+    <li><span class="tag p">PYQ</span> Equilateral triangle aur square, perimeter barabar → kiski side lambi → P ÷ 3 &gt; P ÷ 4 → <mark>triangle</mark> <small>CPO · 10 Dec 2025</small><!--q336--></li>
+  </ul>
+
+  <h3>Type 4 · Diagonals ginna (8 Qs)</h3>
+  <div class="box"><span class="k">Worked · Har bahar ka kon 51 3/7°. Diagonals : sides? <span class="tag p">PYQ</span> <small>CPO · 9 Dec 2025</small><!--q315--></span>
+    <b>Method:</b> 360 ÷ bahar · <i>~10 sec</i><br>
+    51 3/7 = 360/7 → n = 7. Diagonals = 7 × 4 ÷ 2 = 14. 14 : 7 = <mark>2 : 1</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 44 diagonals → list se → <mark>11</mark> <small>CPO · 11 Dec 2025</small><!--q342--></li>
+    <li><span class="tag p">PYQ</span> 35 diagonals → <mark>10</mark> <small>CPO · 12 Dec 2025</small><!--q364--></li>
+    <li><span class="tag p">PYQ</span> 35 diagonals → n = 10 → andar ka kon → bahar 36 → <mark>144°</mark> <small>CPO · 12 Dec 2025</small><!--q358--></li>
+    <li><span class="tag p">PYQ</span> Andar ka jod 2520° → n = 16 → 16 × 13 ÷ 2 → <mark>16 sides, 104 diagonals</mark> <small>CPO · 11 Dec 2025</small><!--q344--></li>
+    <li><span class="tag p">PYQ</span> Andar ka jod 1080° → n = 8 → 8 × 5 ÷ 2 → <mark>20</mark> <small>CPO · 11 Dec 2025</small><!--q349--></li>
+    <li><span class="tag p">PYQ</span> Bahar ka kon 45° → n = 8 → <mark>20</mark> <small>CPO · 12 Dec 2025</small><!--q356--></li>
+    <li><span class="tag p">PYQ</span> Nonagon ke diagonals → 9 × 6 ÷ 2 → <mark>27</mark> <small>SP-XIV 10th · 29 Aug 2025</small><!--q556--></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Andar ke kon se seedha n = 360 ÷ andar</td><td>Pehle bahar banao: 180 − andar. Phir 360 ÷ bahar.</td></tr>
+    <tr><td>Andar ka jod n × 180</td><td>(n − 2) × 180. Octagon = 1080, 900 nahi (900 heptagon ka).</td></tr>
+    <tr><td>Diagonals = n(n − 1) ÷ 2</td><td>Wo saari lines (sides bhi) hain. Diagonals = n(n − 3) ÷ 2.</td></tr>
+    <tr><td>Rhombus mein poore diagonals se Pythagoras</td><td>Aadhe diagonals legs hain, side hypotenuse.</td></tr>
+    <tr><td>Circle ke bahar quadrilateral mein bagal wali sides jodi</td><td>Aamne-saamne: AB + CD = BC + DA.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein (geometry.json, items 281–560)</span>
+    Is hisse mein 280 sawaal. <b>270 upar aa gaye.</b> <b>10 chhode</b>, kyunki un MTS / DP sawaalon ka figure bank mein hai hi nahi aur text mein koi number nahi: MTS 5 Feb (x + y + z), 9 Feb (AB ∥ CD, x), 10 Feb (∠ACD, chaar kon wala), 11 Feb (x, aur Q), 11 Feb (AB ∥ EF, ED ∥ CB, ∠EQC), 12 Feb (∠BEC), 13 Feb (Q), 16 Feb (x + y + z), aur DP HCM 12 Jan ("PB = 24, PC = 16, AC?"). 37 aur "given figure" wale sawaalon (parallel lines, PQ = QR, square, bahar ke kon) ka figure bhi nahi tha, par text ke numbers kaafi the. Unhe standard figure maan kar hal kiya; har ek ka answer key se mila. 45 sawaal page crop se padhe.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Regular polygon ka andar ka kon 156°. Sides?</summary><p>Bahar 24 → 360 ÷ 24 = 15.</p></details>
+    <details><summary>Andar : bahar = 7 : 2. Sides?</summary><p>Bahar = 180 × 2/9 = 40 → 9.</p></details>
+    <details><summary>Dodecagon (12) ke diagonals?</summary><p>12 × 9 ÷ 2 = 54.</p></details>
+    <details><summary>Rhombus diagonals 16 aur 30. Side?</summary><p>Aadhe 8, 15 → 8-15-17 → 17.</p></details>
+    <details><summary>Circle ke bahar ABCD: AB 9, BC 11, CD 13. DA?</summary><p>9 + 13 − 11 = 11.</p></details>
+  </div>
+</section>

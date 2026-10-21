@@ -1,0 +1,1551 @@
+<!-- ===================== MATHS · MIXTURE & ALLIGATION (part 1: basics + speed methods + types 1–5) ===================== -->
+<section class="chap" id="mmx-basics">
+  <div class="eyebrow">Maths · 153 questions</div>
+  <h2>Mixture &amp; Alligation: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, SP-XIV, MTS, Delhi Police, GD) · sabse zyada: paani milao to ratio badlo, nikaalo-aur-bharo, profit wala alligation</div>
+
+  <h3>Pehle ek chhoti si kahani: do bori chawal</h3>
+  <p>Ek dukaandaar ke paas do chawal hain. Ek ₹40 kilo, doosra ₹60 kilo.</p>
+  <ul>
+    <li>1 kg sasta + 1 kg mehnga milaya. 2 kg ka kharcha 40 + 60 = 100. Toh 1 kg mix = <b>₹50</b>. Theek beech mein.</li>
+    <li>Ab 3 kg sasta + 1 kg mehnga. Kharcha 120 + 60 = 180, maal 4 kg. 1 kg = <b>₹45</b>. Sasta zyada tha, toh price saste ki taraf khisak gaya.</li>
+    <li>1 kg sasta + 3 kg mehnga: 40 + 180 = 220 ÷ 4 = <b>₹55</b>. Ab mehnge ki taraf.</li>
+  </ul>
+  <p>Teen baatein dikhi. Mix ka price <b>hamesha dono ke beech</b> rahta hai. Jiska maal zyada, price uski taraf jhukta hai. Aur 50 se 45 tak aane ke liye kitna "jhukna" hai, wo ratio se tay hota hai. Bas, poora chapter yahi hai.</p>
+
+  <div class="box"><span class="k">Ab naam rakh dete hain</span>
+    Mix ka price = <b>mean price</b> (weighted average). Ratio diya, mean nikaalna = <b>mixture</b> wala sawaal.<br>
+    Mean diya, ratio nikaalna = ulta kaam. Isi ulte kaam ke shortcut ko <b>alligation</b> kehte hain.<br>
+    Price ki jagah % bhi ho sakta hai: 30% acid aur 60% acid. Ya ratio: doodh-paani 3 : 2 matlab doodh 3/5 = 60%. Kaam wahi.
+  </div>
+
+  <h3>Saare sawaal 4 bade idea se nikalte hain</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Idea</th><th>Ek line mein</th></tr>
+    <tr><td class="n">1</td><td>Mean hamesha beech mein</td><td>Weighted average. Zyada maal wali taraf jhukta hai.</td></tr>
+    <tr><td class="n">2</td><td>Alligation = doori ka ulta</td><td>Mean se jo jitna door, uska maal utna <b>kam</b>.</td></tr>
+    <tr><td class="n">3</td><td>Jo nahi chheda, wo nahi badla</td><td>Paani daalo toh doodh utna hi rehta hai. Usi ko pakdo.</td></tr>
+    <tr><td class="n">4</td><td>Nikaalne se ratio nahi badalta</td><td>Mix ka 1/5 nikaala, toh har cheez 1/5 kam hui. Ratio wahi. Badlav sirf bharne se aata hai.</td></tr>
+  </table></div>
+  <p>Paper mein ek sawaal ke liye lagbhag <b>36 second</b> milte hain. Neeche 8 tareeke hain jo rough mein, bina lambi equation ke, chalte hain.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Mean price: "sabse saste se kitna upar"</h3>
+  <p><b>Kab use karo:</b> ratio diya hai, mix ka price ya % pucha hai.</p>
+  <p><b>Soch aise:</b> 40 aur 60 ko 3 : 2 mein milaya. Sab maal kam se kam ₹40 ka toh hai. Upar ka "extra" sirf mehnge maal mein hai: 20 rupaye, aur wo maal kul ka 2/5 hai. Toh mean = 40 + 20 × 2/5 = 40 + 8 = <b>48</b>. Koi lamba jod-guna nahi.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Number line from 40 to 60 rupees. 3 kg at 40 and 2 kg at 60 give a mean of 48. The distance from 40 to 48 is 8 and from 48 to 60 is 12. Distances 8 to 12 are in ratio 2 to 3, the reverse of the quantities 3 to 2.">
+      <line x1="100" y1="120" x2="600" y2="120" class="ln" style="stroke-width:3"/>
+      <g class="ln"><line x1="100" y1="110" x2="100" y2="130"/><line x1="600" y1="110" x2="600" y2="130"/></g>
+      <line x1="300" y1="100" x2="300" y2="140" style="stroke:var(--ch);stroke-width:3"/>
+      <text x="100" y="152" text-anchor="middle" class="lbl">₹40</text>
+      <text x="600" y="152" text-anchor="middle" class="lbl">₹60</text>
+      <text x="300" y="92" text-anchor="middle" class="lbl" style="fill:var(--ch)">mean ₹48</text>
+      <!-- weights -->
+      <rect x="40" y="30" width="120" height="50" rx="6" class="chf"/><rect x="40" y="30" width="120" height="50" rx="6" class="chs"/>
+      <text x="100" y="60" text-anchor="middle" class="lbl">3 kg sasta</text>
+      <rect x="560" y="44" width="80" height="36" rx="6" class="chf"/><rect x="560" y="44" width="80" height="36" rx="6" class="chs"/>
+      <text x="600" y="67" text-anchor="middle" class="lbl">2 kg</text>
+      <line x1="100" y1="80" x2="100" y2="110" class="ln"/><line x1="600" y1="80" x2="600" y2="110" class="ln"/>
+      <!-- distances -->
+      <g class="ln"><line x1="104" y1="176" x2="296" y2="176"/><line x1="304" y1="176" x2="596" y2="176"/></g>
+      <text x="200" y="196" text-anchor="middle" class="lbl">doori 8</text>
+      <text x="450" y="196" text-anchor="middle" class="lbl">doori 12</text>
+      <text x="350" y="228" text-anchor="middle" class="sm">doori 8 : 12 = 2 : 3 · maal 3 : 2 · yaani doori ka ulta = maal ka ratio</text>
+    </svg>
+    </div>
+    <figcaption>Taraazu jaisa socho. Bhaari taraf (3 kg) mean paas khisakta hai. Doori aur maal hamesha ulte ratio mein.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 3 kg ₹16 wala + 5 kg ₹24 wala. Mean? · <i>~8 sec</i></span>
+    Base 16. Extra 8 rupaye, sirf 5/8 maal mein → 8 × 5/8 = 5.<br>
+    Mean = 16 + 5 = <b>₹21</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "Base + farq × (mehnge ka hissa)". % mein bhi chalta hai: 25% fat ke 4 L + 40% fat ke 6 L → 25 + 15 × 6/10 = 34%.</div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Alligation cross (mean diya, ratio nikaalo)</h3>
+  <p><b>Kab use karo:</b> do cheezein, unka price (ya %), aur mix ka price diya hai. Ratio pucha hai. Ya ek quantity di hai, doosri puchi hai.</p>
+  <p><b>Soch aise:</b> picture wali baat ulti chalao. Mean se mehnga jitna door, utna sasta lo. Mean se sasta jitna door, utna mehnga lo. Bas cross mein ghata do.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Alligation cross. Cheaper 16 at top left, dearer 21 at top right, mean 18 in the middle. Crossing lines give 21 minus 18 = 3 under the cheaper and 18 minus 16 = 2 under the dearer. Ratio cheaper to dearer = 3 to 2.">
+      <rect x="110" y="16" width="150" height="48" rx="8" class="chf"/><rect x="110" y="16" width="150" height="48" rx="8" class="chs"/>
+      <rect x="440" y="16" width="150" height="48" rx="8" class="chf"/><rect x="440" y="16" width="150" height="48" rx="8" class="chs"/>
+      <text x="185" y="38" text-anchor="middle" class="lbl">Sasta</text><text x="185" y="56" text-anchor="middle" class="lbl">₹16</text>
+      <text x="515" y="38" text-anchor="middle" class="lbl">Mehnga</text><text x="515" y="56" text-anchor="middle" class="lbl">₹21</text>
+      <circle cx="350" cy="130" r="34" style="fill:var(--ch)"/>
+      <text x="350" y="126" text-anchor="middle" class="lbl" style="fill:var(--paper)">Mix</text>
+      <text x="350" y="143" text-anchor="middle" class="lbl" style="fill:var(--paper)">₹18</text>
+      <g class="ln" style="stroke-width:2">
+        <line x1="240" y1="66" x2="322" y2="110"/><line x1="378" y1="150" x2="470" y2="196"/>
+        <line x1="460" y1="66" x2="378" y2="110"/><line x1="322" y1="150" x2="230" y2="196"/>
+      </g>
+      <rect x="110" y="196" width="150" height="48" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <rect x="440" y="196" width="150" height="48" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="185" y="218" text-anchor="middle" class="sm">21 − 18</text><text x="185" y="236" text-anchor="middle" class="lbl">3 hissa sasta</text>
+      <text x="515" y="218" text-anchor="middle" class="sm">18 − 16</text><text x="515" y="236" text-anchor="middle" class="lbl">2 hissa mehnga</text>
+      <text x="350" y="264" text-anchor="middle" class="lbl" style="fill:var(--ch)">Sasta : Mehnga = 3 : 2</text>
+    </svg>
+    </div>
+    <figcaption>Cross ka niyam: neeche likho "mehnga − mix" sasta ke neeche, aur "mix − sasta" mehnge ke neeche. Hamesha bada − chhota.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 30% acid aur 60% acid se 50% banana hai. Ratio? · <i>~6 sec</i></span>
+    30 ke neeche 60 − 50 = 10. 60 ke neeche 50 − 30 = 20.<br>
+    30% : 60% = 10 : 20 = <b>1 : 2</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> Paani = ₹0 ya 0% maan lo. Pure cheez = 100%. Phir kisi bhi "paani milao" ya "pure daalo" sawaal par bhi cross chal jaata hai. ₹30 juice + paani → ₹24: 30 ke neeche 24, paani ke neeche 6 → juice : paani = 4 : 1.</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Profit diya hai? Pehle SP ko CP banao</h3>
+  <p><b>Kab use karo:</b> "mix ko ₹X mein becha aur Y% munafa hua". Alligation hamesha <b>cost price</b> par lagta hai, selling price par nahi.</p>
+  <p><b>Soch aise:</b> 20% munafa matlab 100 ka maal 120 mein. Toh CP = SP × 100/120 = SP × 5/6. Ye guna fraction se karo:</p>
+  <div class="tbl"><table>
+    <tr><th>Munafa</th><th>10%</th><th>12½%</th><th>16⅔%</th><th>20%</th><th>25%</th><th>Nuksaan 10%</th></tr>
+    <tr><td>CP = SP ×</td><td class="n">10/11</td><td class="n">8/9</td><td class="n">6/7</td><td class="n">5/6</td><td class="n">4/5</td><td class="n">10/9</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · ₹60 aur ₹90 ki daal mili, mix ₹84 mein becha, 20% munafa. Ratio? · <i>~10 sec</i></span>
+    CP = 84 × 5/6 = <b>70</b>. Cross: 60 ke neeche 90 − 70 = 20, 90 ke neeche 70 − 60 = 10.<br>
+    60 wali : 90 wali = <b>2 : 1</b>.
+  </div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Teen ya zyada cheezein: "kul paisa" method</h3>
+  <p><b>Kab use karo:</b> 3 varieties ka ratio diya, ek ka price nahi pata. Cross 2 cheezon ke liye hai, isliye yahan seedha kul paisa barabar karo.</p>
+  <p><b>Soch aise:</b> ratio 1 : 1 : 2 hai, toh 4 kg ka mix. Mix ₹150 kilo, toh 4 kg ka kul paisa = 600. Pehle do ka paisa ghatao, jo bacha wo teesre ka.</p>
+  <div class="box"><span class="k">Demo · ₹120, ₹130, x ko 1 : 1 : 2 mein milaya, mix ₹150. x? · <i>~10 sec</i></span>
+    Kul = 4 × 150 = 600. Pehle do = 120 + 130 = 250. Bacha 350, ye 2 kg ka.<br>
+    x = <b>₹175</b>.
+  </div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Ratio ko % banao (mixtures ke mixture)</h3>
+  <p><b>Kab use karo:</b> do bartan hain, har ek mein doodh-paani alag ratio mein. Unko milana hai.</p>
+  <p><b>Soch aise:</b> 3 : 2 matlab doodh 3/5 = 60%. 4 : 1 matlab doodh 80%. Ab ye bas do % hain. Barabar maatra milao toh 70% → 7 : 3. Ratio puchha ho toh cross lagao.</p>
+  <div class="tbl"><table>
+    <tr><th>Ratio (A : B)</th><th>1 : 1</th><th>2 : 1</th><th>3 : 1</th><th>3 : 2</th><th>4 : 1</th><th>5 : 3</th><th>7 : 3</th></tr>
+    <tr><td>A ka hissa</td><td class="n">50%</td><td class="n">66⅔%</td><td class="n">75%</td><td class="n">60%</td><td class="n">80%</td><td class="n">62½%</td><td class="n">70%</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> Bartan alag size ke hain (jaise 3 : 4 : 5)? Har bartan ko "litre" maan lo jo denominators se kat jaaye. X (3 parts, 1 : 2) mein juice 1, Y (4 parts, 3 : 1) mein 3, Z (5 parts, 2 : 3) mein 2. Kul juice 6, kul 12 → 1 : 1.</div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Jo nahi chheda, use pakdo (paani ya doodh daala)</h3>
+  <p><b>Kab use karo:</b> "x litre paani mila diya, ratio badal gaya". Ek hi cheez daali gayi.</p>
+  <p><b>Soch aise:</b> 7 : 4 mein 12 L paani daala, ratio 7 : 6 ho gaya. Alcohol ko kisi ne chhua hi nahi, wo dono ratio mein 7 hai. Paani 4 se 6 hua, yaani 2 hisse badhe = 12 L. Toh 1 hissa = 6 L.</p>
+  <p>Agar dono ratio mein unchhui cheez ka number alag ho (5 : 3 se 7 : 3), toh pehle use barabar kar lo (LCM). Neeche picture dekho.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Alcohol 7 parts stays the same. Water goes from 4 parts to 6 parts after adding 12 litres. The 2 new parts equal 12 litres, so one part is 6 litres and the original mixture is 11 parts = 66 litres.">
+      <text x="10" y="44" class="lbl">Pehle 7 : 4</text>
+      <text x="10" y="134" class="lbl">Baad 7 : 6</text>
+      <g>
+        <rect x="130" y="24" width="40" height="34" class="chf"/><rect x="172" y="24" width="40" height="34" class="chf"/><rect x="214" y="24" width="40" height="34" class="chf"/><rect x="256" y="24" width="40" height="34" class="chf"/><rect x="298" y="24" width="40" height="34" class="chf"/><rect x="340" y="24" width="40" height="34" class="chf"/><rect x="382" y="24" width="40" height="34" class="chf"/>
+        <rect x="430" y="24" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="472" y="24" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="514" y="24" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="556" y="24" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g>
+        <rect x="130" y="114" width="40" height="34" class="chf"/><rect x="172" y="114" width="40" height="34" class="chf"/><rect x="214" y="114" width="40" height="34" class="chf"/><rect x="256" y="114" width="40" height="34" class="chf"/><rect x="298" y="114" width="40" height="34" class="chf"/><rect x="340" y="114" width="40" height="34" class="chf"/><rect x="382" y="114" width="40" height="34" class="chf"/>
+        <rect x="430" y="114" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="472" y="114" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="514" y="114" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="556" y="114" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="598" y="114" width="40" height="34" style="fill:var(--ch)"/><rect x="640" y="114" width="40" height="34" style="fill:var(--ch)"/>
+      </g>
+      <text x="276" y="80" text-anchor="middle" class="sm">alcohol: 7 hisse (badla hi nahi)</text>
+      <text x="513" y="80" text-anchor="middle" class="sm">paani: 4 hisse</text>
+      <text x="639" y="170" text-anchor="middle" class="lbl" style="fill:var(--ch)">naye 2 hisse</text>
+      <text x="639" y="188" text-anchor="middle" class="lbl" style="fill:var(--ch)">= 12 L</text>
+      <text x="350" y="222" text-anchor="middle" class="lbl">1 hissa = 6 L → shuru ka mix = 7 + 4 = 11 hisse = 66 L</text>
+      <text x="350" y="242" text-anchor="middle" class="sm">CGL 17 Sep 2025 ka sawaal, bina equation ke</text>
+    </svg>
+    </div>
+    <figcaption>Gehre dabbe = jo daala gaya. Baaki sab wahi ka wahi. Isliye "jo nahi chheda" usko pehle barabar karo.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 56 L mein doodh : paani 5 : 3. Kitna doodh daalein ki 7 : 3 ho? · <i>~8 sec</i></span>
+    Paani dono mein 3 hai. Toh doodh 5 → 7, 2 hisse badhe. 56 L = 8 hisse → 1 hissa 7 L.<br>
+    Daalo = 2 × 7 = <b>14 L</b>.
+  </div>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Nikaalo aur bharo (replacement)</h3>
+  <p><b>Ek baar:</b> mix ka 1/5 nikaala, toh har cheez 4/5 bachi. Phir jo bhara wo jod do. 60 L (7 : 3 = 42 + 18) mein se 12 L (1/5) nikaala → 33.6 + 14.4. 12 L doodh daala → 45.6 : 14.4 = <b>19 : 6</b>.</p>
+  <p><b>Baar-baar (sirf paani bhara):</b> har baar doodh usi fraction se ghatta hai. Toh <b>bacha doodh = shuru ka × (1 − nikaala/kul)<sup>baar</sup></b>. Fraction ko seedhi ki tarah yaad karo:</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="64 litres of spirit, 8 litres removed and replaced with water three times. Spirit left: 64, 56, 49, 42.875 litres. Each step keeps 7 out of 8 of the spirit. Bars drawn to scale.">
+      <text x="10" y="20" class="sm">64 L spirit · har baar 8 L nikaalo (1/8), paani bharo · bacha spirit = 7/8 har baar</text>
+      <g>
+        <rect x="120" y="40" width="512" height="34" class="chf"/><rect x="120" y="40" width="512" height="34" class="chs"/>
+        <rect x="120" y="88" width="448" height="34" class="chf"/><rect x="120" y="88" width="448" height="34" class="chs"/>
+        <rect x="568" y="88" width="64" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="120" y="136" width="392" height="34" class="chf"/><rect x="120" y="136" width="392" height="34" class="chs"/>
+        <rect x="512" y="136" width="120" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="120" y="184" width="343" height="34" class="chf"/><rect x="120" y="184" width="343" height="34" class="chs"/>
+        <rect x="463" y="184" width="169" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g class="lbl"><text x="10" y="62">Shuru</text><text x="10" y="110">1 baar</text><text x="10" y="158">2 baar</text><text x="10" y="206">3 baar</text></g>
+      <g text-anchor="middle" class="lbl">
+        <text x="376" y="62">64 L spirit</text>
+        <text x="344" y="110">56</text>
+        <text x="316" y="158">49</text>
+        <text x="291" y="206" style="fill:var(--ch)">42.875</text>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="600" y="110">paani 8</text><text x="572" y="158">paani 15</text><text x="547" y="206">paani 21.125</text></g>
+      <text x="660" y="110" class="sm">×7/8</text><text x="660" y="158" class="sm">×7/8</text><text x="660" y="206" class="sm">×7/8</text>
+      <text x="350" y="242" text-anchor="middle" class="sm">64 × 7/8 × 7/8 × 7/8 = 64 × 343/512 = 343/8 = 42.875 · bars scale par</text>
+    </svg>
+    </div>
+    <figcaption>Har baar spirit ka 1/8 hi niklta hai, isliye girawat chhoti hoti jaati hai: 8, phir 7, phir 6.125. Ye CI ke "ghatne wale rate" jaisa hai.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Nikaala (kul ka)</th><th>Bacha (1 baar)</th><th>2 baar</th><th>3 baar</th><th>4 baar</th></tr>
+    <tr><td class="n">1/10</td><td>9/10</td><td>81/100</td><td>729/1000</td><td>6561/10000</td></tr>
+    <tr><td class="n">1/5</td><td>4/5</td><td>16/25</td><td>64/125</td><td>256/625</td></tr>
+    <tr><td class="n">1/8</td><td>7/8</td><td>49/64</td><td>343/512</td><td>—</td></tr>
+    <tr><td class="n">1/3</td><td>2/3</td><td>4/9</td><td>8/27</td><td>16/81</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · 60 L doodh, 12 L nikaal kar paani, 3 baar. Doodh? · <i>~8 sec</i></span>
+    12/60 = 1/5 → bacha 4/5, 3 baar → 64/125.<br>
+    60 × 64/125 = 12 × 64/25 = 768/25 = <b>30.72 L</b>.
+  </div>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · Option se pakdo</h3>
+  <ul>
+    <li><b>Mean beech mein hi hoga.</b> ₹350 aur ₹450 ka mix, 6 hissa mehnga → 400 se upar, 450 se neeche → 410 hi bachta hai.</li>
+    <li><b>Ratio ka jod kul se kate.</b> 90 L ka 7 : 2 ho toh 9 hisse, 1 hissa 10 L. Option jo 9 parts mein na baithe, shak karo.</li>
+    <li><b>Zyada maal wali taraf.</b> Mean jis price ke paas hai, ratio mein wahi bada hoga. 4% aur 8% se 7% → 8% wala zyada → 3 : 1, 1 : 3 nahi.</li>
+    <li><b>Ulta ratio jaal.</b> Options mein 1 : 4 aur 4 : 1 dono hote hain. Sawaal "paani : doodh" puchhe ya "doodh : paani", aakhri line dobara padho.</li>
+  </ul>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 400" role="img" aria-label="Flowchart for mixture questions. Check in order: profit or loss given, ratio given and mean asked, mean given and ratio asked, one thing added, some removed and refilled once, removed and refilled many times, three things. Each yes points to a method.">
+      <defs>
+        <marker id="mmx-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="30" rx="15" class="chf"/>
+      <text x="180" y="28" text-anchor="middle" class="lbl">Sawaal padho: kya pucha hai?</text>
+      <text x="400" y="28" class="sm">pehla "haan" = tumhara method</text>
+      <g>
+        <rect x="20" y="50" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="100" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="150" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="200" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="250" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="300" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="350" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="75">"Becha, munafa / nuksaan" likha hai?</text>
+        <text x="180" y="125">Ratio diya, mix ka price / % pucha?</text>
+        <text x="180" y="175">Mix ka price diya, ratio / maatra pucha?</text>
+        <text x="180" y="225">Sirf ek cheez daali (paani / doodh)?</text>
+        <text x="180" y="275">Ek baar nikaala aur bhara?</text>
+        <text x="180" y="325">Wahi kaam 2, 3, 4 baar?</text>
+        <text x="180" y="375">3 cheezein / teen bartan?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="90" x2="180" y2="98" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="180" y1="140" x2="180" y2="148" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="180" y1="190" x2="180" y2="198" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="180" y1="240" x2="180" y2="248" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="180" y1="290" x2="180" y2="298" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="180" y1="340" x2="180" y2="348" marker-end="url(#mmx-fc-arr)"/>
+      </g>
+      <g class="ln">
+        <line x1="340" y1="70" x2="396" y2="70" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="120" x2="396" y2="120" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="170" x2="396" y2="170" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="220" x2="396" y2="220" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="270" x2="396" y2="270" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="320" x2="396" y2="320" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="370" x2="396" y2="370" marker-end="url(#mmx-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="64">haan</text><text x="368" y="114">haan</text><text x="368" y="164">haan</text><text x="368" y="214">haan</text><text x="368" y="264">haan</text><text x="368" y="314">haan</text><text x="368" y="364">haan</text></g>
+      <g>
+        <rect x="400" y="50" width="290" height="40" rx="6" class="chf"/><rect x="400" y="50" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="100" width="290" height="40" rx="6" class="chf"/><rect x="400" y="100" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="150" width="290" height="40" rx="6" class="chf"/><rect x="400" y="150" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="200" width="290" height="40" rx="6" class="chf"/><rect x="400" y="200" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="250" width="290" height="40" rx="6" class="chf"/><rect x="400" y="250" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="300" width="290" height="40" rx="6" class="chf"/><rect x="400" y="300" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="350" width="290" height="40" rx="6" class="chf"/><rect x="400" y="350" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="66">SP → CP pehle (method 3)</text>
+        <text x="410" y="116">Base + farq × hissa (method 1)</text>
+        <text x="410" y="166">Alligation cross (method 2)</text>
+        <text x="410" y="216">Unchhui cheez pakdo (method 6)</text>
+        <text x="410" y="266">Har cheez × (1 − f), phir jodo</text>
+        <text x="410" y="316">(1 − f)^n ki seedhi (method 7)</text>
+        <text x="410" y="366">Kul paisa / kul maatra (method 4, 5)</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="83">phir cross ya mean, CP par</text>
+        <text x="410" y="133">ratio wala ho toh pehle % banao</text>
+        <text x="410" y="183">paani = 0%, pure = 100%</text>
+        <text x="410" y="233">dono ratio mein uska number barabar karo</text>
+        <text x="410" y="283">ratio wahi rehta hai jab tak bharo nahi</text>
+        <text x="410" y="333">1/5 → 4/5 → 16/25 → 64/125</text>
+        <text x="410" y="383">denominators ka LCM le kar litre maano</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ek baar ye flow rough mein chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 · CHSL = CHSL 2025 Tier 1 (Tier-2 alag likha hai) · CPO = CPO 2025 · SP-XIV = Selection Post Phase XIV 2025 · MTS = MTS 2025 · DP Const = Delhi Police Constable (Dec 2025) · DP HCM = Delhi Police Head Constable (Jan 2026) · GD = GD Constable 2026. Saari dates shift ki dates hain.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Ratio diya, mix ka price ya % nikaalo (11 Qs)</h3>
+  <div class="box"><span class="k">Worked · 60 L antiseptic: A (₹45) aur B (₹30) 2 : 3 mein. 1 litre ka kharcha? <span class="tag p">PYQ</span> <small>CGL · 21 Sep 2025</small><!--q:07-033--></span>
+    <b>Method:</b> base + farq × hissa · <i>~6 sec</i><br>
+    Base 30 (sasta). Farq 15, mehnga 2/5 hissa → 15 × 2/5 = 6.<br>
+    Mean = 30 + 6 = <mark>₹36</mark>. (60 L ka jikr bekaar hai, mean litre par nahi tika.)
+  </div>
+  <div class="box"><span class="k">Worked · 5 tarah ke chawal, 2 : 3 : 4 : 5 : 6, price ₹40, 42, 45, 48, 50. Mean? <span class="tag p">PYQ</span> <small>CGL · 22 Sep 2025</small><!--q:07-037--></span>
+    <b>Method:</b> base + "extra" · <i>~20 sec</i><br>
+    Base 40. Extra: 2 kg × 0 + 3 × 2 + 4 × 5 + 5 × 8 + 6 × 10 = 0 + 6 + 20 + 40 + 60 = 126. Kul 20 kg.<br>
+    126 ÷ 20 = 6.3 → mean = <mark>₹46.3</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ ×2</span> 4 L (25% fat) + 6 L (40% fat) → <b>base + farq × hissa</b>: 25 + 15 × 6/10 → <mark>34%</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small><!--q:07-051--><!--q:07-053--></li>
+    <li><span class="tag p">PYQ</span> Gehun ₹16 aur ₹24, 3 : 5 → <b>base + farq × hissa</b>: 16 + 8 × 5/8 → <mark>₹21</mark> <small>CHSL · 15 Nov 2025</small><!--q:07-058--></li>
+    <li><span class="tag p">PYQ</span> Chai ₹350 aur ₹450, 4 : 6 → <b>base + farq × hissa</b>: 350 + 100 × 6/10 → <mark>₹410</mark> <small>CHSL · 17 Nov 2025</small><!--q:07-063--></li>
+    <li><span class="tag p">PYQ</span> 72% oil aur 48% oil, 6 : 16 → <b>base + farq × hissa</b>: 48 + 24 × 6/22 = 48 + 6.55 → <mark>54.55%</mark> <small>CHSL · 25 Nov 2025</small><!--q:07-082--></li>
+    <li><span class="tag p">PYQ</span> 2 kg ₹40 + 3 kg ₹50 → <b>base + farq × hissa</b>: 40 + 10 × 3/5 → <mark>₹46</mark> <small>CHSL · 28 Nov 2025</small><!--q:07-093--></li>
+    <li><span class="tag p">PYQ</span> Aam ₹60 aur ₹40 barabar maatra → <b>seedha beech</b> → <mark>₹50</mark> <small>CPO · 11 Dec 2025</small><!--q:07-107--></li>
+    <li><span class="tag p">PYQ</span> ₹2,00,000 teen fund mein 3 : 2 : 5, return 12%, 8%, 10% → <b>kul return</b>: (36 + 16 + 50) ÷ 10 → <mark>10.2%</mark> (photo se: ratio aur % scan mein ude the) <small>DP HCM · 07 Jan 2026</small><!--q:07-120--></li>
+    <li><span class="tag p">PYQ</span> Gold : copper 4 : 7 (wazan), copper ka bhaav gold ka 1/10, copper ka kharcha ₹28,000 → <b>hisse mein paisa</b>: 7 hisse copper = 28,000 → 1 hissa copper = 4,000, gold ka 1 hissa = 40,000 × 4 = 1,60,000 → <mark>₹1,88,000</mark> <small>CHSL · 25 Nov 2025</small><!--q:07-083--></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Do ya teen bartan milao, naya ratio (12 Qs)</h3>
+  <p><b>Samjho:</b> har bartan ka ratio % mein badlo (method 5). Barabar maatra ho toh % ka seedha average. Alag maatra ho toh litre maan kar jodo.</p>
+  <div class="box"><span class="k">Worked · Bartan P, Q, R ki capacity 2 : 3 : 5. Alcohol : paani = 1 : 1, 2 : 1, 3 : 1. Sab milaya. Ratio? <span class="tag p">PYQ</span> <small>CHSL · 29 Nov 2025</small><!--q:07-096--></span>
+    <b>Method:</b> litre maano · <i>~20 sec</i><br>
+    Denominators 2, 3, 4 → P = 2 L (alcohol 1), Q = 3 L (alcohol 2), R = 5 L (alcohol 3.75).<br>
+    Alcohol = 6.75, paani = 3.25 → 675 : 325 = <mark>27 : 13</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 20 L (3 : 2) aur 30 L (4 : 1) doodh-paani milaye. Ratio? <span class="tag p">PYQ</span> <small>CHSL · 18 Nov 2025</small><!--q:07-068--></span>
+    <b>Method:</b> litre mein todo · <i>~10 sec</i><br>
+    20 L → 12 doodh, 8 paani. 30 L → 24 doodh, 6 paani.<br>
+    36 : 14 = <mark>18 : 7</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Do barabar bartan 40% aur 50% paani se bhare, baaki doodh. Milaya → <b>% ka average</b>: doodh 60% aur 50% → <mark>55%</mark> (option mein 0.55 likha hai) <small>CGL · 14 Sep 2025</small><!--q:07-017--></li>
+    <li><span class="tag p">PYQ</span> Barabar bartan, doodh : paani 2 : 3 aur 3 : 2 → <b>% ka average</b>: 40% aur 60% → 50% → <mark>1 : 1</mark> <small>CGL · 18 Sep 2025</small><!--q:07-030--></li>
+    <li><span class="tag p">PYQ</span> Barabar bartan, 3 : 2 aur 4 : 1 → <b>% ka average</b>: 60% aur 80% → 70% → <mark>7 : 3</mark> <small>CHSL · 19 Nov 2025</small><!--q:07-067--></li>
+    <li><span class="tag p">PYQ</span> A (4 : 1) se 10 L, B (5 : 2) se 14 L → <b>litre mein todo</b>: alcohol 8 + 10 = 18, paani 2 + 4 = 6 → <mark>3 : 1</mark> <small>CGL · 16 Sep 2025</small><!--q:07-026--></li>
+    <li><span class="tag p">PYQ</span> Bartan X, Y, Z = 3 : 4 : 5; juice : paani 1 : 2, 3 : 1, 2 : 3 → <b>litre maano</b>: juice 1 + 3 + 2 = 6 of 12 → <mark>1 : 1</mark> <small>CHSL · 28 Nov 2025</small><!--q:07-092--></li>
+    <li><span class="tag p">PYQ</span> Alloy copper : zinc 3 : 2 aur 5 : 3, barabar wazan → <b>% ka average</b>: copper (3/5 + 5/8) ÷ 2 = (24 + 25)/80 → <mark>49 : 31</mark> <small>CPO · 10 Dec 2025</small><!--q:07-106--></li>
+    <li><span class="tag p">PYQ</span> Alloy gold : copper 4 : 1 aur 1 : 4, milaya 2 : 3 → <b>litre maano</b> (5 kg ke hisse): gold 2 × 4/5 + 3 × 1/5 = 11/5 of 5 → <mark>11 : 14</mark> <small>MTS · 13 Feb 2025</small><!--q:07-138--></li>
+    <li><span class="tag p">PYQ</span> Alloy A (x : y = 3 : 2), B (5 : 6), C = A : B 4 : 3 → <b>% ka weighted average</b>: 4 × 3/5 + 3 × 5/11 = 2.4 + 1.364 = 3.764 of 7 → <mark>53.77%</mark> <small>CHSL · 26 Nov 2025</small><!--q:07-085--></li>
+    <li><span class="tag p">PYQ</span> Ek alloy Zn : Cu : Sn = 3 : 2 : 2 (lead nahi), doosra Cu : Sn : Pb = 2 : 3 : 5 (lead aadha), barabar wazan → <b>% ka average</b>: (0 + 1/2) ÷ 2 → <mark>0.25 kg</mark> per kg <small>CHSL · 15 Nov 2025</small><!--q:07-057--></li>
+    <li><span class="tag p">PYQ</span> A (1 : 3) aur B (3 : 1) 1 : 1 mein, 400 ml mein kitna paani daalo ki 1 : 2 ho → <b>% ka average</b> → 1 : 1 → 200 + 200; <b>unchhui cheez</b>: alcohol 200 → paani 400 chahiye → <mark>200 ml</mark> <small>CHSL · 26 Nov 2025</small><!--q:07-087--></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Alligation: mean diya, ratio ya maatra nikaalo (16 Qs)</h3>
+  <div class="box"><span class="k">Worked · Daal ₹16 aur ₹21 kilo. ₹18 ka mix chahiye. Ratio? <span class="tag p">PYQ</span> <small>CHSL · 25 Nov 2025</small><!--q:07-080--></span>
+    <b>Method:</b> alligation cross · <i>~5 sec</i><br>
+    16 ke neeche 21 − 18 = 3. 21 ke neeche 18 − 16 = 2. → <mark>3 : 2</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Doodh-paani 3 : 2 aur 7 : 3 wale bartan. Kis ratio mein milaayein ki 5 : 3 bane? <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small><!--q:07-056--></span>
+    <b>Method:</b> ratio → %, phir cross · <i>~15 sec</i><br>
+    Doodh: 3/5 = 60%, 7/10 = 70%, 5/8 = 62.5%.<br>
+    60 ke neeche 70 − 62.5 = 7.5. 70 ke neeche 62.5 − 60 = 2.5. → 7.5 : 2.5 = <mark>3 : 1</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Jar J1 120 ml (honey : paani 3 : 1), J2 80 ml (1 : 3). J1 se kitna J2 mein daalein ki J2 1 : 1 ho jaaye? <span class="tag p">PYQ</span> <small>MTS · 04 Feb 2025</small><!--q:07-125--></span>
+    <b>Method:</b> cross · <i>~10 sec</i><br>
+    Honey 75% aur 25%, chahiye 50%. Dono 25 door → 1 : 1. Toh J2 jitna hi (80 ml) daalo → <mark>80 ml</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Chai ₹300, ₹240 → ₹270 (na munafa na nuksaan) → <b>cross</b>: 30 : 30 → <mark>1 : 1</mark> <small>CGL · 22 Sep 2025</small><!--q:07-040--></li>
+    <li><span class="tag p">PYQ</span> 30% acid + 60% acid → 50% → <b>cross</b>: 10 : 20 → <mark>1 : 2</mark> <small>CHSL · 21 Nov 2025</small><!--q:07-076--></li>
+    <li><span class="tag p">PYQ</span> Gehun ₹20, ₹32 → ₹28 → <b>cross</b>: 4 : 8 → <mark>1 : 2</mark> <small>CHSL · 29 Nov 2025</small><!--q:07-097--></li>
+    <li><span class="tag p">PYQ</span> Cheeni ₹30, ₹50 → ₹40 → <b>cross</b>: 10 : 10 → <mark>1 : 1</mark> <small>CHSL · 30 Nov 2025</small><!--q:07-101--></li>
+    <li><span class="tag p">PYQ</span> Juice ₹30 + paani (₹0) → ₹24 → <b>cross, paani = 0</b>: juice 24, paani 6 → <mark>4 : 1</mark> <small>CPO · 12 Dec 2025</small><!--q:07-112--></li>
+    <li><span class="tag p">PYQ</span> Khaad 40% aur 25% nitrogen → 30% → <b>cross</b>: 5 : 10 → <mark>1 : 2</mark> <small>DP HCM · 12 Jan 2026</small><!--q:07-113--></li>
+    <li><span class="tag p">PYQ</span> Cheeni ₹25, ₹30 → ₹28 → <b>cross</b>: 2 : 3 → <mark>2 : 3</mark> <small>DP HCM · 10 Jan 2026</small><!--q:07-117--></li>
+    <li><span class="tag p">PYQ</span> 30 topi, neeli avg ₹70, laal ₹50, sab ka avg ₹60 → <b>cross</b>: 10 : 10 → barabar → laal <mark>15</mark> <small>GD · 19 May 2026</small><!--q:07-123--></li>
+    <li><span class="tag p">PYQ</span> 24 topi, neeli ₹65, laal ₹35, avg ₹50 → <b>cross</b>: 15 : 15 → laal <mark>12</mark> <small>MTS · 11 Feb 2025</small><!--q:07-134--></li>
+    <li><span class="tag p">PYQ</span> Rejection i10 4%, i20 8%, dono mila 7% → <b>cross</b>: i10 ke neeche 1, i20 ke neeche 3 → i20 : i10 = <mark>3 : 1</mark> <small>SP-XIV · 31 Jul 2025</small><!--q:07-153--></li>
+    <li><span class="tag p">PYQ</span> Doodh-paani 3 : 1 aur 5 : 3 se 4 : 2 banana → <b>ratio → %, cross</b>: 75%, 62.5%, chahiye 66.67% → 4.17 : 8.33 → <mark>1 : 2</mark> <small>GD · 25 May 2026</small><!--q:07-124--></li>
+    <li><span class="tag p">PYQ ×2</span> Alloy tin : copper 5 : 3 aur 3 : 1; 20 kg doosra; naya 4 : 2 → <b>cross</b>: tin 5/8, 3/4, chahiye 2/3 → 1/12 : 1/24 = 2 : 1 → pehla 2 × 20 → <mark>40 kg</mark> <small>CGL · 22 Sep 2025; GD · 19 May 2026</small><!--q:07-038--><!--q:07-122--></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> Topi wale sawaal mein mean theek beech mein ho (60 = 70 aur 50 ka beech) toh dono barabar. Kul ka aadha. Cross bhi nahi chahiye.</div>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Alligation jahan munafa diya hai (11 Qs)</h3>
+  <p><b>Samjho:</b> pehle SP ko CP banao (method 3 ki table). Phir wahi cross. Ek quantity di ho toh ratio se doosri.</p>
+  <div class="box"><span class="k">Worked · 25 kg cheeni ₹32 wali. ₹45 wali kitni milaayein ki ₹43.70 mein bech kar 15% munafa ho? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small><!--q:07-003--></span>
+    <b>Method:</b> SP → CP, cross · <i>~15 sec</i><br>
+    CP = 43.70 ÷ 1.15 = <b>38</b> (check: 38 + 15% = 38 + 5.7 = 43.7 ✔).<br>
+    Cross: ₹32 ke neeche 45 − 38 = 7, ₹45 ke neeche 38 − 32 = 6 → 32 wali : 45 wali = 7 : 6.<br>
+    7 hisse = 25 kg → 6 hisse = 21.4 → lagbhag <mark>21 kg</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 40 kg chawal ₹55 + kuch ₹85 wala. ₹70 mein becha, 16⅔% munafa. Mehnga kitna? <span class="tag p">PYQ</span> <small>SP-XIV · 02 Aug 2025</small><!--q:07-142--></span>
+    <b>Method:</b> SP × 6/7, cross · <i>~10 sec</i><br>
+    CP = 70 × 6/7 = <b>60</b>. Cross: 55 ke neeche 25, 85 ke neeche 5 → 5 : 1.<br>
+    Mehnga = 40 ÷ 5 = <mark>8 kg</mark>. (Munafa ka % photo se padha.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Daal ₹60, ₹90; ₹84 mein 20% munafa → <b>SP × 5/6</b> = 70 → cross 20 : 10 → <mark>2 : 1</mark> <small>CGL · 15 Sep 2025</small><!--q:07-022--></li>
+    <li><span class="tag p">PYQ</span> Chawal ₹80, ₹120; ₹132 mein 20% → <b>SP × 5/6</b> = 110 → cross 10 : 30 → <mark>1 : 3</mark> <small>CGL · 16 Sep 2025</small><!--q:07-027--></li>
+    <li><span class="tag p">PYQ</span> Chawal ₹40, ₹60; ₹55 mein 10% → <b>SP × 10/11</b> = 50 → <mark>1 : 1</mark> <small>CGL · 21 Sep 2025</small><!--q:07-034--></li>
+    <li><span class="tag p">PYQ</span> Chai ₹120, ₹150; ₹168 mein 20% → <b>SP × 5/6</b> = 140 → cross 10 : 20 → <mark>1 : 2</mark> <small>CHSL · 20 Nov 2025</small><!--q:07-073--></li>
+    <li><span class="tag p">PYQ</span> Chai ₹18, ₹20; ₹21 mein 10% → <b>SP × 10/11</b> = 210/11 → cross (10/11) : (12/11) → <mark>5 : 6</mark> <small>SP-XIV · 24 Jul 2025</small><!--q:07-143--></li>
+    <li><span class="tag p">PYQ</span> Daal ₹50, ₹60; ₹70 mein 20% → <b>SP × 5/6</b> = 58⅓ → cross 1⅔ : 8⅓ → <mark>1 : 5</mark> <small>SP-XIV · 30 Jul 2025</small><!--q:07-151--></li>
+    <li><span class="tag p">PYQ</span> 40 kg ₹65 + x kg ₹80; ₹75 mein 10% → <b>SP × 10/11</b> = 750/11 → cross: 65 ke neeche 130/11, 80 ke neeche 35/11 → 26 : 7 → x = 40 × 7/26 → <mark>10.77 kg</mark> <small>CGL · 14 Sep 2025</small><!--q:07-014--></li>
+    <li><span class="tag p">PYQ</span> 20 kg ₹8 + x kg ₹10; ₹10 mein 10% → <b>SP × 10/11</b> = 100/11 → cross 10/11 : 12/11 = 5 : 6 → x = 20 × 6/5 → <mark>24 kg</mark> <small>CHSL · 30 Nov 2025</small><!--q:07-099--></li>
+    <li><span class="tag p">PYQ</span> 60 kg coffee ₹90 + mehnga ₹120; ₹110 mein 10% → <b>SP × 10/11</b> = 100 → cross 20 : 10 = 2 : 1 → mehnga 60 ÷ 2 → <mark>30 kg</mark> <small>SP-XIV · 25 Jul 2025</small><!--q:07-144--></li>
+  </ul>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Teesre ka price ya doosre ka % nikaalo (8 Qs)</h3>
+  <p><b>Samjho:</b> mix ka price × kul hisse = kul paisa. Jo pata hai wo ghatao. 2 cheezon mein cross ulta bhi chala sakte ho.</p>
+  <div class="box"><span class="k">Worked · Chawal ₹40, ₹50, x; ratio 2 : 3 : 5. Mix ₹55 mein becha, 10% munafa. x? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small><!--q:07-009--></span>
+    <b>Method:</b> SP → CP, kul paisa · <i>~15 sec</i><br>
+    CP = 55 × 10/11 = <b>50</b>. 10 kg ka kul = 500.<br>
+    Pehle do = 2 × 40 + 3 × 50 = 230. Bacha 270, 5 kg ka → x = <mark>₹54</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Cheeni ₹45, ₹60, x; 1 : 2 : 3; mix ₹55 → <b>kul paisa</b>: 6 × 55 = 330 − (45 + 120) = 165 ÷ 3 → <mark>₹55</mark> <small>CGL · 13 Sep 2025</small><!--q:07-011--></li>
+    <li><span class="tag p">PYQ</span> Chai ₹150 aur x, 4 : 5, mix ₹130 → <b>kul paisa</b>: 9 × 130 = 1,170 − 600 = 570 ÷ 5 → <mark>₹114</mark> <small>CGL · 15 Sep 2025</small><!--q:07-024--></li>
+    <li><span class="tag p">PYQ</span> Chawal ₹120, ₹130, x; 1 : 1 : 2; mix ₹150 → <b>kul paisa</b>: 600 − 250 = 350 ÷ 2 → <mark>₹175</mark> <small>CHSL · 25 Nov 2025</small><!--q:07-084--></li>
+    <li><span class="tag p">PYQ</span> Coffee ₹126, ₹135, x; 1 : 1 : 2; mix ₹153 → <b>kul paisa</b>: 612 − 261 = 351 ÷ 2 → <mark>₹175.5</mark> <small>DP HCM · 08 Jan 2026</small><!--q:07-118--></li>
+    <li><span class="tag p">PYQ</span> 22% ethanol aur a%, 6 : 7, mix 15% → <b>kul %</b>: 13 × 15 = 195 − 132 = 63 ÷ 7 → <mark>9%</mark> <small>CHSL · 24 Nov 2025</small><!--q:07-077--></li>
+    <li><span class="tag p">PYQ</span> 35% doodh aur m%, barabar, mix 50% → <b>beech</b>: 50 − 35 = 15 upar → <mark>65%</mark> <small>CHSL · 25 Nov 2025</small><!--q:07-081--></li>
+    <li><span class="tag p">PYQ</span> 18% methanol aur b%, 4 : 5, mix 16% → <b>kul %</b>: 9 × 16 = 144 − 72 = 72 ÷ 5 → <mark>14.4%</mark> <small>CHSL · 17 Nov 2025</small><!--q:07-062--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CHSL 17 Nov 2025 (methanol): sawaal mein "another mixture containing 6%" bhi likha hai, jo galat chhapa hai. Agar doosra sach mein 6% hota toh mix 11.3% banta, 16% nahi. Key ka 14.4% tabhi aata hai jab doosre ka % hi "b" ho. Exam mein 14.4% lagao.</div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>₹40 aur ₹70 ka chawal 2 : 1 mein. Mix ka price?</summary><p>Base 40 + 30 × 1/3 = 40 + 10 = ₹50.</p></details>
+    <details><summary>20% aur 50% acid se 30% banana hai. Ratio?</summary><p>20 ke neeche 50 − 30 = 20, 50 ke neeche 30 − 20 = 10. Toh 2 : 1.</p></details>
+    <details><summary>Mix ₹66 mein becha, 10% munafa. Alligation kis number par lagega?</summary><p>CP par: 66 × 10/11 = ₹60.</p></details>
+    <details><summary>Barabar bartan, doodh-paani 1 : 1 aur 3 : 1. Milane par ratio?</summary><p>Doodh 50% aur 75% → average 62.5% → 5 : 3.</p></details>
+  </div>
+</section>
+
+
+<!-- ===================== MATHS · MIXTURE & ALLIGATION (part 2: types 6–12) ===================== -->
+<section class="chap" id="mmx-types">
+  <div class="eyebrow">Maths · PYQ types</div>
+  <h2>Mixture &amp; Alligation: paani milao, nikaalo-bharo, aur munafa</h2>
+  <div class="meta">Bank mein 153 sawaal · saare 153 yahan (part 1 mein 58, yahan 95) · har sawaal ke aage uska method likha hai</div>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · Mix becha: munafa ya nuksaan kitna? (10 Qs)</h3>
+  <p><b>Samjho:</b> pehle 1 unit ka CP nikaalo (method 1 ya kul paisa). "3 ka ₹15" jaisa ho toh pehle 1 ka bhaav likho. Phir SP se tulna.</p>
+  <div class="box"><span class="k">Worked · Toffee: laal 3 ka ₹15, neeli 4 ka ₹18, hari 5 ka ₹22. Milaya 1 : 1 : 2. Becha 2 ka ₹10. Munafa? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small><!--q:07-001--></span>
+    <b>Method:</b> 1 ka bhaav, kul paisa · <i>~20 sec</i><br>
+    1 ka CP: 5, 4.5, 4.4. 4 toffee = 5 + 4.5 + 2 × 4.4 = 18.3. SP 4 toffee = 20.<br>
+    Munafa 1.7 on 18.3 ≈ 9.3% → <mark>9.29% munafa</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Chai A ₹150 mein bechi, 25% nuksaan; chai B ₹200 mein, 20% nuksaan. Barabar milaya, ₹175 mein becha. Result? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small><!--q:07-004--></span>
+    <b>Method:</b> SP → CP · <i>~12 sec</i><br>
+    A ka CP = 150 × 4/3 = 200. B ka CP = 200 × 5/4 = 250. Barabar → CP 225.<br>
+    SP 175 → nuksaan 50/225 = 2/9 → <mark>22.22% nuksaan</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 15 kg ₹300 + 25 kg ₹240, sab ₹260 mein → <b>kul paisa</b>: 4,500 + 6,000 = 10,500 vs 40 × 260 = 10,400 → <mark>₹100 nuksaan</mark> <small>CGL · 13 Sep 2025</small><!--q:07-007--></li>
+    <li><span class="tag p">PYQ</span> Coffee ₹120, ₹180; 1 : 2; ₹152 mein → <b>base + farq × hissa</b>: 120 + 60 × 2/3 = 160 → 8/160 → <mark>5% nuksaan</mark> <small>CGL · 13 Sep 2025</small><!--q:07-010--></li>
+    <li><span class="tag p">PYQ</span> Daal 1: ₹72 mein 20% munafa, daal 2: ₹60 mein 25%; 2 : 1; ₹70 mein → <b>SP → CP</b>: 60 aur 48 → mean (120 + 48)/3 = 56 → 14/56 → <mark>25% munafa</mark> <small>CGL · 14 Sep 2025</small><!--q:07-012--></li>
+    <li><span class="tag p">PYQ</span> Aam 4 ka ₹10, 5 ka ₹12, 2 ka ₹5; 2 : 3 : 1; becha 3 ka ₹7 → <b>1 ka bhaav</b>: 2.5, 2.4, 2.5 → 6 aam = 5 + 7.2 + 2.5 = 14.7 → 1 = 2.45; SP 2.33 → 0.1167/2.45 = 1/21 → <mark>4.76% nuksaan</mark> <small>CGL · 14 Sep 2025</small><!--q:07-015--></li>
+    <li><span class="tag p">PYQ</span> Copy 5 ka ₹20, 2 ka ₹9, 10 ka ₹45; 3 : 4 : 3; becha 4 ka ₹19 → <b>1 ka bhaav</b>: 4, 4.5, 4.5 → 10 copy = 43.5 → 1 = 4.35; SP 4.75 → 0.4/4.35 → <mark>9.2% munafa</mark> <small>CGL · 15 Sep 2025</small><!--q:07-023--></li>
+    <li><span class="tag p">PYQ</span> Chawal ₹30, ₹50; 3 : 2; 10% nuksaan par SP → <b>base + farq × hissa</b>: 30 + 20 × 2/5 = 38 → 38 × 0.9 → <mark>₹34.20</mark> <small>CPO · 09 Dec 2025</small><!--q:07-104--></li>
+    <li><span class="tag p">PYQ</span> Cheeni ₹30, ₹50; 3 : 2; 25% munafa ke liye SP → mean 38 → <b>38 × 5/4</b> → <mark>₹47.50</mark> <small>MTS · 10 Feb 2025</small><!--q:07-133--></li>
+    <li><span class="tag p">PYQ</span> Chawal ₹63, ₹87; 3 : 2; ₹79 mein → <b>base + farq × hissa</b>: 63 + 24 × 2/5 = 72.6 → 6.4/72.6 → <mark>8.82% munafa</mark> <small>MTS · 18 Feb 2025</small><!--q:07-140--></li>
+  </ul>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Doodh mein paani, aur "cost price par hi becha" (3 Qs)</h3>
+  <p><b>Samjho:</b> paani muft hai. 5 L doodh mein 1 L paani daala aur 6 L ko doodh ke bhaav becha. Kharcha 5 L ka, kamaai 6 L ki. Munafa = 1/5 = 20%. Yaani <b>paani : doodh = munafa% : 100</b>.</p>
+  <div class="box"><span class="k">Worked · Doodh wala CP par bechta hai, par 25% munafa kamata hai. Paani : doodh? <span class="tag p">PYQ</span> <small>CHSL · 19 Nov 2025</small><!--q:07-072--></span>
+    <b>Method:</b> paani : doodh = munafa : 100 · <i>~3 sec</i><br>
+    25 : 100 = <mark>1 : 4</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Juice wala CP par bechta hai, 20% munafa → <b>munafa : 100</b>: 20 : 100 → paani : juice = <mark>1 : 5</mark> <small>CGL · 13 Sep 2025</small><!--q:07-006--></li>
+    <li><span class="tag p">PYQ</span> 5.25 L doodh mein 0.75 L paani → <b>paani ÷ doodh</b>: 0.75/5.25 = 1/7 → <mark>14.28%</mark> <small>SP-XIV · 29 Aug 2025</small><!--q:07-146--></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> Munafa "paani ÷ doodh" par hota hai, "paani ÷ kul mix" par nahi. 1 : 7 wale mein jawab 1/7 = 14.28%, 1/8 = 12.5% nahi.</div>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · Ek cheez daali, ratio badla (25 Qs, sabse zyada)</h3>
+  <p><b>Samjho:</b> method 6. Jo cheez nahi daali, uska number dono ratio mein barabar karo. Phir farq wale hisse = daali gayi maatra.</p>
+  <div class="box"><span class="k">Worked · Acid : paani 5 : 3. 4 L paani daala, 5 : 4 hua. Acid shuru mein? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small><!--q:07-018--></span>
+    <b>Method:</b> unchhui cheez · <i>~5 sec</i><br>
+    Acid dono mein 5. Paani 3 → 4, 1 hissa = 4 L.<br>
+    Acid = 5 × 4 = <mark>20 L</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Doodh : paani 7 : 5. Is mix ke 10 L mein kitna paani daalein ki 9 : 7 ho? <span class="tag p">PYQ</span> <small>MTS · 13 Feb 2025</small><!--q:07-139--></span>
+    <b>Method:</b> doodh barabar karo (LCM) · <i>~20 sec</i><br>
+    Doodh 7 aur 9 → LCM 63. 7 : 5 = 63 : 45. 9 : 7 = 63 : 49. Paani 4 hisse badha.<br>
+    10 L = 63 + 45 = 108 hisse → 4 hisse = 40/108 = <mark>10/27 L</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 90 L, doodh : paani 7 : 2. Dono x L daale, 5 : 2 hua. x? <span class="tag p">PYQ</span> <small>CGL · 16 Sep 2025</small><!--q:07-028--></span>
+    <b>Method:</b> "farq nahi badalta" · <i>~12 sec</i><br>
+    70 aur 20. Dono mein x jodo toh <b>farq 50 wahi</b> rehta hai. 5 : 2 mein farq 3 hisse = 50 → 1 hissa 50/3.<br>
+    Paani = 2 × 50/3 = 33.33 → x = 33.33 − 20 = <mark>13.33 L</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Alcohol : paani 7 : 4, 12 L paani → 7 : 6 → <b>unchhui cheez</b>: 2 hisse = 12 → 11 × 6 → <mark>66 L</mark> <small>CGL · 17 Sep 2025</small><!--q:07-029--></li>
+    <li><span class="tag p">PYQ</span> 80 L juice-soda, soda 30; juice : soda 1 : 2 chahiye → juice 50 → soda 100 → <mark>70 L</mark> <small>CGL · 20 Sep 2025</small><!--q:07-032--></li>
+    <li><span class="tag p">PYQ</span> 45 L kerosene : diesel 4 : 5 → 4 : 6 → <b>unchhui cheez</b>: 1 hissa = 5 → <mark>5 L</mark> <small>CGL · 22 Sep 2025</small><!--q:07-036--></li>
+    <li><span class="tag p">PYQ</span> 50 L acid : paani 3 : 2 → 1 : 1 → acid 30, paani 30 chahiye → <mark>10 L</mark> <small>CGL · 23 Sep 2025</small><!--q:07-041--></li>
+    <li><span class="tag p">PYQ</span> 30 L oil : kerosene 2 : 1 → 1 : 2 → oil 20 → kerosene 40 → <mark>30 L</mark> <small>CGL · 24 Sep 2025</small><!--q:07-044--></li>
+    <li><span class="tag p">PYQ</span> 80 L acid : paani 7 : 9, 8 L acid daala → 35 + 8 = 43, paani 45 → <mark>43 : 45</mark> <small>CHSL · 14 Nov 2025</small><!--q:07-054--></li>
+    <li><span class="tag p">PYQ</span> 60 L wine : paani 1 : 2 → 1 : 3 → wine 20 → paani 60 → <mark>20 L</mark> <small>CHSL · 18 Nov 2025</small><!--q:07-066--></li>
+    <li><span class="tag p">PYQ</span> 40 L acid : paani 7 : 3 → 4 : 1 → paani 12 → acid 48 → <mark>20 L</mark> <small>CHSL · 20 Nov 2025</small><!--q:07-069--></li>
+    <li><span class="tag p">PYQ</span> 70 L doodh : paani 4 : 3 → 2 : 3 → doodh 40 → paani 60 → <mark>30 L</mark> <small>CHSL · 19 Nov 2025</small><!--q:07-070--></li>
+    <li><span class="tag p">PYQ</span> 60 L doodh : paani 2 : 1, 12 L paani → 40 : 32 → <mark>5 : 4</mark> <small>CHSL · 28 Nov 2025</small><!--q:07-094--></li>
+    <li><span class="tag p">PYQ</span> 35 L doodh : paani 2 : 3 → 1 : 3 → doodh 14 → paani 42 → 42 − 21 → <mark>21 L</mark> <small>CHSL · 30 Nov 2025</small><!--q:07-100--></li>
+    <li><span class="tag p">PYQ</span> Namak : paani 5 : 3, 16 L paani → 5 : 4 → <b>unchhui cheez</b>: 1 hissa = 16 → 8 × 16 → <mark>128 L</mark> <small>CPO · 11 Dec 2025</small><!--q:07-108--></li>
+    <li><span class="tag p">PYQ</span> 36 L doodh : paani 2 : 1 → 1 : 1 → doodh 24 → paani 24 → <mark>12 L</mark> <small>CPO · 12 Dec 2025</small><!--q:07-111--></li>
+    <li><span class="tag p">PYQ</span> 56 L doodh : paani 5 : 3 → 7 : 3 → <b>unchhui cheez</b>: 2 hisse × 7 → <mark>14 L</mark> <small>DP HCM · 12 Jan 2026</small><!--q:07-114--></li>
+    <li><span class="tag p">PYQ</span> Alcohol : paani 5 : 2, 15 L paani → 5 : 4 → <b>unchhui cheez</b>: 2 hisse = 15 → 7 × 7.5 → <mark>52.5 L</mark> <small>GD · 19 May 2026</small><!--q:07-121--></li>
+    <li><span class="tag p">PYQ</span> Angoor juice : paani 5 : 2, 15 L juice → 8 : 3 → <b>paani barabar (LCM 6)</b>: 15 : 6 → 16 : 6, 1 hissa = 15 → 21 hisse → <mark>315 L</mark> <small>MTS · 06 Feb 2025</small><!--q:07-130--></li>
+    <li><span class="tag p">PYQ</span> 60 g zinc : copper 2 : 1 → 1 : 2 → zinc 40 → copper 80 → <mark>60 g</mark> <small>MTS · 13 Feb 2025</small><!--q:07-137--></li>
+    <li><span class="tag p">PYQ</span> 40 L juice : paani 5 : 3 → 2 : 3 → juice 25 → paani 37.5 → 37.5 − 15 → <mark>22.5 L</mark> (ratio photo se) <small>SP-XIV · 29 Aug 2025</small><!--q:07-147--></li>
+    <li><span class="tag p">PYQ</span> Orange : paani 9 : 7, 15 L orange → 3 : 2 → <b>paani barabar (LCM 14)</b>: 18 : 14 → 21 : 14, 3 hisse = 15 → 1 = 5 → juice 105, paani 70 → farq <mark>35 L</mark> <small>SP-XIV · 30 Jul 2025</small><!--q:07-149--></li>
+    <li><span class="tag p">PYQ</span> Juice : paani 5 : 2, 10 L paani → 2 : 1 → <b>juice barabar (LCM 10)</b>: 10 : 4 → 10 : 5, 1 hissa = 10 → 14 hisse → <mark>140 L</mark> <small>SP-XIV · 31 Jul 2025</small><!--q:07-150--></li>
+    <li><span class="tag p">PYQ</span> Doodh-paani mein 20 L paani → doodh 40%; phir 10 L doodh → 50% → <b>do kadam</b>: doodh M, kul T + 20 = 2.5M aur M + 10 = (T + 30)/2 → M = 20, T = 30 → paani 10 → paani : doodh <mark>1 : 2</mark> <small>CHSL · 27 Nov 2025</small><!--q:07-088--></li>
+    <li><span class="tag p">PYQ</span> A : B : C = 2 : 3 : 5; 6 L A, 12 L B, kuch C daala → 3 : 5 : 8 → <b>A, B se hissa</b>: (2k + 6)/(3k + 12) = 3/5 → k = 6 → A 18, B 30 → naya 1 hissa 6 → C = 48 − 30 → <mark>18 L</mark> <small>CGL · 15 Sep 2025</small><!--q:07-020--></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> Dono cheezein barabar maatra mein daalo (x aur x) toh unka <b>farq</b> nahi badalta. Farq ko pakdo, jaise CGL 16 Sep wale sawaal mein.</div>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · % wala mix: paani daalo, pure daalo, sukhaao (17 Qs)</h3>
+  <p><b>Samjho:</b> wahi "jo nahi chheda" wala idea, bas % mein. 60 L mein 20% paani = 12 L. Alcohol daala, paani 12 hi raha. Ab 12 L ko 15% banna hai → kul 80 L. Daala 20 L.</p>
+  <div class="box"><span class="k">Worked · 60 L alcohol-paani mein 20% paani. Kitna alcohol daalein ki paani 15% ho? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small><!--q:07-013--></span>
+    <b>Method:</b> unchhui cheez · <i>~8 sec</i><br>
+    Paani 12 L, ye 15% hona chahiye → kul = 12 × 100/15 = 80.<br>
+    Daalo = 80 − 60 = <mark>20 L</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 100 L mein 60% namak. Paani daal kar 40%, phir namak daal kar 50%. Kitna? <span class="tag p">PYQ</span> <small>CGL · 23 Sep 2025</small><!--q:07-042--></span>
+    <b>Method:</b> do baar unchhui cheez · <i>~15 sec</i><br>
+    Namak 60. 40% ke liye kul 150 → <b>50 L paani</b>. Ab paani 90. 50% ke liye paani bhi 50% → kul 180 → namak 90 → <b>30 L namak</b>.<br>
+    → <mark>50 L paani, phir 30 L namak</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 80 L mein 60% doodh, 20 L paani → 48/100 → <mark>48%</mark> <small>CGL · 22 Sep 2025</small><!--q:07-039--></li>
+    <li><span class="tag p">PYQ</span> 40 kg alloy, 10% zinc; 20% chahiye → <b>copper unchhua</b>: 36 = 80% → kul 45 → <mark>5 kg</mark> <small>CHSL · 12 Nov 2025</small><!--q:07-049--></li>
+    <li><span class="tag p">PYQ</span> 70 L mein 10% paani; 25% chahiye → <b>doodh unchhua</b>: 63 = 75% → kul 84 → <mark>14 L</mark> <small>CHSL · 14 Nov 2025</small><!--q:07-055--></li>
+    <li><span class="tag p">PYQ</span> 6 L syrup = mix ka 20% → kul 30 → doodh <mark>24 L</mark> <small>CHSL · 15 Nov 2025</small><!--q:07-060--></li>
+    <li><span class="tag p">PYQ</span> 20 L, 80% acid; 50% chahiye → acid 16 → kul 32 → <mark>12 L</mark> <small>CHSL · 28 Nov 2025</small><!--q:07-089--></li>
+    <li><span class="tag p">PYQ</span> 3 L lime syrup = 5% → kul 60 → paani <mark>57 L</mark> <small>CHSL · 28 Nov 2025</small><!--q:07-090--></li>
+    <li><span class="tag p">PYQ</span> 40 L, 25% namak; sukhaa kar 40% → namak 10 → kul 25 → udaao <mark>15 L</mark> <small>CHSL · 28 Nov 2025</small><!--q:07-091--></li>
+    <li><span class="tag p">PYQ</span> 2.5 L doodh + 1.75 L paani; paani ka fraction → 1.75/4.25 = 175/425 → <mark>7/17</mark> (options photo se) <small>CPO · 11 Dec 2025</small><!--q:07-109--></li>
+    <li><span class="tag p">PYQ</span> 60 L mein 75% kerosene → petrol 25% → <mark>15 L</mark> <small>CPO · 12 Dec 2025</small><!--q:07-110--></li>
+    <li><span class="tag p">PYQ</span> 80 L, 20% acid → 10% → acid 16 → kul 160 → <mark>80 L</mark> paani <small>DP HCM · 12 Jan 2026</small><!--q:07-115--></li>
+    <li><span class="tag p">PYQ</span> 40 L, 60% doodh; 75% chahiye → <b>paani unchhua</b>: 16 = 25% → kul 64 → <mark>24 L</mark> <small>MTS · 05 Feb 2025</small><!--q:07-126--></li>
+    <li><span class="tag p">PYQ</span> 15% A, 85% B; A daal kar 35% → <b>B unchhua</b>: 85 = 65% → kul 130.77 → A 45.77, badha 30.77 on 15 → <mark>205.13%</mark> <small>MTS · 06 Feb 2025</small><!--q:07-129--></li>
+    <li><span class="tag p">PYQ</span> 120 L, 25% namak, 30 L paani → 30/150 → <mark>20%</mark> <small>MTS · 11 Feb 2025</small><!--q:07-135--></li>
+    <li><span class="tag p">PYQ</span> 120 L, 40% acid; 60% chahiye → <b>paani unchhua</b>: 72 = 40% → kul 180 → <mark>60 L</mark> <small>SP-XIV · 28 Jul 2025</small><!--q:07-145--></li>
+    <li><span class="tag p">PYQ</span> 1200 g, 30% S; 300 g S daala → 660/1500 → <mark>44%</mark> <small>SP-XIV · 31 Jul 2025</small><!--q:07-152--></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> Pure cheez daalo toh <b>doosri</b> cheez unchhui. Paani daalo ya sukhaao toh <b>asli cheez</b> unchhui. Pehle 2 second soch lo kaun unchhua hai.</div>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · Ek baar nikaalo aur bharo (27 Qs)</h3>
+  <p><b>Samjho:</b> method 7. Nikaalna = har cheez ko (1 − f) se guna, ratio wahi. Phir jo bhara, use jod do. Ulta sawaal ho ("kitna nikaala?"), toh wo cheez pakdo jo <b>sirf ghati</b>, bhari nahi gayi.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="60 litres of milk and water 7 to 3: milk 42, water 18. Remove 12 litres, which is one fifth: milk 33.6, water 14.4, ratio still 7 to 3. Add 12 litres milk: milk 45.6, water 14.4, ratio 19 to 6. Bars drawn to scale, 8 pixels per litre.">
+      <g class="lbl"><text x="10" y="44">Shuru</text><text x="10" y="114">1/5 nikaala</text><text x="10" y="184">12 L doodh</text></g>
+      <rect x="130" y="22" width="336" height="34" class="chf"/><rect x="130" y="22" width="336" height="34" class="chs"/>
+      <rect x="466" y="22" width="144" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="298" y="44" text-anchor="middle" class="lbl">doodh 42</text><text x="538" y="44" text-anchor="middle" class="lbl">paani 18</text>
+      <rect x="130" y="92" width="269" height="34" class="chf"/><rect x="130" y="92" width="269" height="34" class="chs"/>
+      <rect x="399" y="92" width="115" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="514" y="92" width="96" height="34" class="paper" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"/>
+      <text x="264" y="114" text-anchor="middle" class="lbl">33.6</text><text x="456" y="114" text-anchor="middle" class="lbl">14.4</text>
+      <text x="562" y="114" text-anchor="middle" class="sm">khaali 12</text>
+      <text x="620" y="114" class="sm">7 : 3 hi</text>
+      <rect x="130" y="162" width="269" height="34" class="chf"/><rect x="130" y="162" width="269" height="34" class="chs"/>
+      <rect x="399" y="162" width="96" height="34" style="fill:var(--ch)"/>
+      <rect x="495" y="162" width="115" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="264" y="184" text-anchor="middle" class="lbl">33.6</text>
+      <text x="447" y="184" text-anchor="middle" class="lbl" style="fill:var(--paper)">+12</text>
+      <text x="552" y="184" text-anchor="middle" class="lbl">14.4</text>
+      <text x="620" y="184" class="lbl" style="fill:var(--ch)">19 : 6</text>
+      <text x="350" y="222" text-anchor="middle" class="sm">doodh 45.6 : paani 14.4 = 456 : 144 = 19 : 6 · scale: 8 px = 1 L</text>
+    </svg>
+    </div>
+    <figcaption>Beech wali line dekho: nikaalne ke baad bhi 7 : 3 hi hai. Ratio sirf aakhri kadam (bharne) se badla.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · 100 L acid : paani 3 : 2. Kuch nikaal kar pure acid bhara, 7 : 3 hua. Kitna? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small><!--q:07-002--></span>
+    <b>Method:</b> jo sirf ghati (paani) · <i>~10 sec</i><br>
+    Paani 40 L tha. Ant mein 3/10 × 100 = 30 L. Paani sirf nikla, bhara nahi gaya → 3/4 bacha → 1/4 nikla.<br>
+    1/4 × 100 = <mark>25 L</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · A : B = 7 : 5. 9 L nikaal kar B bhara, 7 : 9 hua. A shuru mein? <span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small><!--q:07-074--></span>
+    <b>Method:</b> A ka hissa · <i>~12 sec</i><br>
+    A pehle 7/12, baad mein 7/16 (kul wahi). A sirf ghata: 7/16 ÷ 7/12 = 3/4 bacha → 1/4 nikla = 9 L.<br>
+    Kul 36 → A = 7/12 × 36 = <mark>21 L</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Doodh : paani 7 : 5, 9 L nikaal kar paani bhara → 7 : 9 → upar wala hi → <mark>21 L</mark> <small>CHSL · 20 Nov 2025</small><!--q:07-075--></li>
+    <li><span class="tag p">PYQ</span> 75 L doodh : paani 3 : 2 (45 + 30); 15 L (1/5) nikaal kar 10 L doodh → 36 + 10 : 24 → <mark>23 : 12</mark> <small>CGL · 13 Sep 2025</small><!--q:07-008--></li>
+    <li><span class="tag p">PYQ ×2</span> 60 L cheeni : paani 5 : 1 (50 + 10); 12 L (1/5) nikaal kar paani → 40 : 8 + 12 → <mark>2 : 1</mark> <small>CGL · 20 Sep 2025; MTS · 10 Feb 2025</small><!--q:07-031--><!--q:07-132--></li>
+    <li><span class="tag p">PYQ</span> 150 L acid : paani 2 : 3; 30 L (1/5) nikaal kar paani → acid 60 × 4/5 = 48 → <mark>32%</mark> <small>CGL · 21 Sep 2025</small><!--q:07-035--></li>
+    <li><span class="tag p">PYQ ×2</span> 120 L, 30% alcohol (36); 30 L (1/4) nikaal kar 50% wala → 27 + 15 = 42/120 → <mark>35%</mark> <small>CGL · 26 Sep 2025; MTS · 06 Feb 2025</small><!--q:07-047--><!--q:07-127--></li>
+    <li><span class="tag p">PYQ ×2</span> 40 L acid : paani 3 : 1 (30 + 10); 8 L nikaal kar 1 : 3 wala → 24 + 2 : 8 + 6 → <mark>13 : 7</mark> <small>CGL · 26 Sep 2025; MTS · 09 Feb 2025</small><!--q:07-048--><!--q:07-131--></li>
+    <li><span class="tag p">PYQ</span> 90 L doodh : paani 8 : 7 (48 + 42); 15 L (1/6) nikaal kar doodh → 40 + 15 : 35 → <mark>11 : 7</mark> <small>CHSL · 13 Nov 2025</small><!--q:07-050--></li>
+    <li><span class="tag p">PYQ</span> 70 L wine : paani 5 : 2 (50 + 20); 14 L (1/5) nikaal kar paani → 40 : 16 + 14 → <mark>4 : 3</mark> <small>CHSL · 18 Nov 2025</small><!--q:07-064--></li>
+    <li><span class="tag p">PYQ</span> 60 L doodh : paani 7 : 3; 12 L nikaal kar doodh → picture wala → <mark>19 : 6</mark> <small>CHSL · 24 Nov 2025</small><!--q:07-079--></li>
+    <li><span class="tag p">PYQ</span> 60 L doodh : paani 2 : 1 (40 + 20); 10 L (1/6) nikaal kar paani → 33.3 : 16.7 + 10 → <mark>5 : 4</mark> <small>CHSL · 26 Nov 2025</small><!--q:07-086--></li>
+    <li><span class="tag p">PYQ</span> 80 L, 90% acid; 8 L (1/10) nikaal kar paani → 90 × 9/10 → <mark>81%</mark> <small>CHSL · 12 Nov 2025</small><!--q:07-102--></li>
+    <li><span class="tag p">PYQ</span> 120 L doodh : paani 3 : 2 (72 + 48); 24 L (1/5) nikaal kar doodh → 57.6 + 24 : 38.4 → <mark>17 : 8</mark> <small>CPO · 09 Dec 2025</small><!--q:07-105--></li>
+    <li><span class="tag p">PYQ</span> 100 L soup puree : paani 3 : 2; 20 L (1/5) nikaal kar puree → 48 + 20 : 32 → <mark>17 : 8</mark> <small>MTS · 06 Feb 2025</small><!--q:07-128--></li>
+    <li><span class="tag p">PYQ</span> 50 L alcohol : paani 3 : 2; 10 L (1/5) nikaal kar paani → 24 : 16 + 10 → <mark>12 : 13</mark> <small>MTS · 12 Feb 2025</small><!--q:07-136--></li>
+    <li><span class="tag p">PYQ</span> 560 L doodh : paani 4 : 3; 140 L nikaala (bhara nahi) → doodh 320 × 3/4 → <mark>240 L</mark> <small>CHSL · 18 Nov 2025</small><!--q:07-065--></li>
+    <li><span class="tag p">PYQ</span> Doodh : paani 4 : 1; kuch nikaal kar paani → 2 : 3 → <b>jo sirf ghata</b>: doodh 80% → 40%, aadha bacha → <mark>50%</mark> <small>CHSL · 29 Nov 2025</small><!--q:07-098--></li>
+    <li><span class="tag p">PYQ</span> 90 L petrol : kerosene 4 : 5; kuch nikaal kar petrol → 7 : 5 → <b>jo sirf ghata</b>: kerosene 50 → 37.5, 3/4 bacha → 90/4 → <mark>22.5 L</mark> <small>SP-XIV · 29 Jul 2025</small><!--q:07-148--></li>
+    <li><span class="tag p">PYQ</span> Paint safed : neela 3 : 5 (8 L); kitna nikaal kar safed bharein ki 1 : 1 ho → <b>jo sirf ghata</b>: neela 5 → 4, 4/5 bacha → 8/5 → <mark>1.6 L</mark> <small>DP HCM · 07 Jan 2026</small><!--q:07-119--></li>
+    <li><span class="tag p">PYQ</span> A : B = 13 : 12; 50 L nikaal kar B bhara → 7 : 8 → <b>A ka hissa</b>: 13/25 → 7/15, bacha 35/39 → 50 = 4/39 kul → kul 487.5 → B = 12/25 × 487.5 → <mark>234 L</mark> <small>CHSL · 17 Nov 2025</small><!--q:07-061--></li>
+    <li><span class="tag p">PYQ</span> Juice : paani 3 : 1; 70 L nikaala, 20 L paani daala → 30% paani → <b>juice unchhua (bachi maatra R)</b>: 0.75R = 0.7(R + 20) → R = 280 → <mark>350 L</mark> <small>CHSL · 24 Nov 2025</small><!--q:07-078--></li>
+    <li><span class="tag p">PYQ</span> 100 L acid : paani 4 : 1; 20 L nikaal kar paani, phir 20 L nikaal kar pure acid → 80 → 64 → 64 × 4/5 = 51.2 + 20 → <mark>71.2%</mark> <small>CGL · 24 Sep 2025</small><!--q:07-043--></li>
+    <li><span class="tag p">PYQ</span> 145 L juice, 30% paani (43.5 + 101.5); 22 L becha (123 bacha: 36.9 + 86.1); dono x daale → 1 : 2 → <b>farq nahi badalta</b>: farq 49.2 = 1 hissa → paani 49.2 → x = 49.2 − 36.9 → <mark>12.3 L</mark> <small>CHSL · 15 Nov 2025</small><!--q:07-059--></li>
+  </ul>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · Baar-baar nikaalo aur paani bharo (10 Qs)</h3>
+  <p><b>Samjho:</b> method 7 ki seedhi. Bacha = shuru × (1 − f)<sup>n</sup>. f ko pehle saaf fraction banao: 8/64 = 1/8, 12/60 = 1/5.</p>
+  <div class="box"><span class="k">Worked · 64 L spirit, 8 L nikaal kar paani, 3 baar. Spirit? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small><!--q:07-005--></span>
+    <b>Method:</b> (7/8)³ · <i>~10 sec</i><br>
+    64 × 343/512 = 343/8 = <mark>42.88 L</mark> (picture wala hi).
+  </div>
+  <div class="box"><span class="k">Worked (ulta) · Wine ke cask se 3 L nikaal kar paani, 3 baar. Wine : paani = 8 : 19. Cask? <span class="tag p">PYQ</span> <small>CHSL · 19 Nov 2025</small><!--q:07-071--></span>
+    <b>Method:</b> cube pehchano · <i>~10 sec</i><br>
+    Wine = 8/27 = (2/3)³. Toh har baar 2/3 bacha, 1/3 nikla.<br>
+    3 L = 1/3 cask → cask = <mark>9 L</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 100 L syrup, 10 L do baar → <b>(9/10)²</b> = 81/100 → <mark>81 : 19</mark> <small>CGL · 15 Sep 2025</small><!--q:07-021--></li>
+    <li><span class="tag p">PYQ</span> 40 L doodh, 4 L do baar → <b>(9/10)²</b> → <mark>81 : 19</mark> <small>CHSL · 29 Nov 2025</small><!--q:07-095--></li>
+    <li><span class="tag p">PYQ</span> 50 L doodh, 5 L do baar → <b>(9/10)²</b>: 50 × 0.81 → <mark>40.5 L</mark> <small>CHSL · 13 Nov 2025</small><!--q:07-052--></li>
+    <li><span class="tag p">PYQ ×2</span> 60 L doodh, 12 L teen baar → <b>(4/5)³</b>: 60 × 64/125 → <mark>30.72 L</mark> <small>CHSL Tier-2; DP HCM · 10 Jan 2026</small><!--q:07-103--><!--q:07-116--></li>
+    <li><span class="tag p">PYQ</span> 80 L doodh : paani 3 : 1 (doodh 60), 16 L do baar → <b>(4/5)²</b>: 60 × 16/25 → <mark>38.4 L</mark> <small>MTS · 20 Feb 2025</small><!--q:07-141--></li>
+    <li><span class="tag p">PYQ</span> 60 L acid : paani 7 : 3 (acid 42), 20% do baar → <b>(4/5)²</b>: 42 × 16/25 = 26.88 of 60 → <mark>44.8%</mark> <small>CGL · 26 Sep 2025</small><!--q:07-046--></li>
+    <li><span class="tag p">PYQ</span> 30 L doodh, 6 L chaar baar → <b>(4/5)⁴</b>: 30 × 256/625 = 12.288 → sabse paas <mark>12 74/255 L</mark> (options photo se) <small>CGL · 25 Sep 2025</small><!--q:07-045--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CGL 25 Sep 2025 (30 L, 4 baar): sahi jawab 12.288 L hai (= 12 72/250). Options 255 ke hisse mein hain, isliye koi bilkul barabar nahi. 12 74/255 ≈ 12.290 sabse paas hai, wahi key hai. Sawaal mein bhi "approximately" likha hai.</div>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · Teen cheezon ka mix: nikaalo, kuch daalo (3 Qs)</h3>
+  <p><b>Samjho:</b> nikaalne ke baad bacha mix (R) usi ratio mein hai. Jo cheez nahi daali, wo R ke ratio se hi hai. Farq wali sharat se R nikaalo, phir nikaala hua jod do.</p>
+  <div class="box"><span class="k">Worked · P : Q : R = 3 : 5 : 2. 30 L nikaala, phir 12 L P aur 8 L Q daala. Ab Q, P se 20 L zyada. Shuru mein? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small><!--q:07-016--></span>
+    <b>Method:</b> bache mix ka farq · <i>~15 sec</i><br>
+    Bache mix mein Q − P = 2 hisse of 10 = R/5. Daalne ke baad farq = R/5 + 8 − 12 = R/5 − 4 = 20.<br>
+    R/5 = 24 → R = 120 → shuru = 120 + 30 = <mark>150 L</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> A : B : C = 7 : 8 : 5; 40 L nikaala, 15 L A + 5 L C daala; B, A se 25 zyada → <b>farq</b>: R/20 − 15 = 25 → R = 800 → <mark>840 L</mark> <small>CGL · 14 Sep 2025</small><!--q:07-019--></li>
+    <li><span class="tag p">PYQ</span> Orange : apple : guava = 5 : 7 : 4; 24 L nikaala, 10 L orange + 6 L guava; apple, orange se 14 zyada → <b>farq</b>: 2R/16 − 10 = 14 → R = 192 → <mark>216 L</mark> <small>CGL · 15 Sep 2025</small><!--q:07-025--></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Profit wale sawaal mein SP par alligation lagana</td><td>Pehle CP = SP × 100/(100 + munafa). Phir cross.</td></tr>
+    <tr><td>Cross mein ratio ulta likhna</td><td>Sasta ke neeche "mehnga − mix". Mean jiske paas, uska hissa bada.</td></tr>
+    <tr><td>Paani daala, aur doodh ko bhi badla hua maan liya</td><td>Jo nahi daala, wo wahi hai. Uska number dono ratio mein barabar karo.</td></tr>
+    <tr><td>Nikaalne ke baad naya ratio maan lena</td><td>Nikaalne se ratio nahi badalta. Sirf bharne se badalta hai.</td></tr>
+    <tr><td>Baar-baar replacement ko "3 × nikaala" se ghatana</td><td>(1 − f)<sup>n</sup> se guna. 3 baar 8 L nikaalne se 24 L spirit nahi jaata.</td></tr>
+    <tr><td>Doodh-paani munafa ko kul mix par nikaalna</td><td>Munafa% = paani ÷ doodh × 100, mix ÷ nahi.</td></tr>
+    <tr><td>"Paani : doodh" pucha, "doodh : paani" likh diya</td><td>Options mein dono hote hain (1 : 4 aur 4 : 1). Aakhri line padho.</td></tr>
+    <tr><td>Teen cheezon mein cross lagane ki koshish</td><td>Kul paisa method: mix × kul hisse − jo pata hai.</td></tr>
+    <tr><td>"3 ka ₹15" ko seedha ₹15 maan lena</td><td>Pehle 1 ka bhaav: 15 ÷ 3 = 5.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Formula / value sheet (yaad karo)</span>
+    Mean = sasta + (farq × mehnge ka hissa) · Cross: sasta : mehnga = (mehnga − mix) : (mix − sasta)<br>
+    Paani = 0%, pure = 100% · CP = SP × 100/(100 + p): 10% → 10/11, 20% → 5/6, 25% → 4/5, 16⅔% → 6/7<br>
+    Doodh mein paani: paani : doodh = munafa% : 100<br>
+    Baar-baar replacement: bacha = shuru × (1 − x/V)<sup>n</sup> · (9/10)² = 81/100 · (4/5)³ = 64/125 · (7/8)³ = 343/512 · (2/3)³ = 8/27<br>
+    <span class="tag x">CGL+</span> Teen ya zyada cheezon ka mean bhi "base + extra" se: sabse saste ko base lo, har ek ka extra × uski maatra jodo, kul maatra se bhaag do. <span class="tag x">CGL+</span> Mean wahi rakhna ho aur ek cheez ki jagah doosri daalni ho, toh dono ka "mean se farq" barabar hona chahiye.
+  </div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 153 sawaal, saare yahan. 6 sawaal bank mein do baar hain (34% fat, 40 kg alloy, 2 : 1 cheeni, 35% alcohol, 13 : 7 acid, 30.72 L doodh). Unhe ek line mein "PYQ ×2" se likha hai. 5 sawaal ke number scan mein ude the (10.2% return, 7/17, 16⅔% munafa, 5 : 3 → 2 : 3, 12 74/255). Ye page ki photo se padh kar hal kiye. Paint wale sawaal mein kul 8 L maana hai (3 + 5 hisse), jaisa key se milta hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>20 L mein doodh : paani 3 : 1. Kitna paani daalein ki 3 : 2 ho?</summary><p>Doodh 15 wahi. Paani 5 → 10. Toh 5 L.</p></details>
+    <details><summary>100 L doodh, 20 L nikaal kar paani, 2 baar. Doodh?</summary><p>(4/5)² = 16/25. 100 × 16/25 = 64 L.</p></details>
+    <details><summary>Doodh wala 1 L paani har 9 L doodh mein milata hai, CP par bechta hai. Munafa?</summary><p>1/9 = 11.11%.</p></details>
+    <details><summary>40 L, 25% namak. Kitna paani udaayein ki 50% ho?</summary><p>Namak 10 L, 50% ke liye kul 20 L. Toh 20 L udaao.</p></details>
+    <details><summary>₹40 aur ₹60 ki cheeni mila kar ₹55 mein becha, 10% munafa. Ratio?</summary><p>CP = 55 × 10/11 = 50. Cross: 40 ke neeche 10, 60 ke neeche 10 → 1 : 1.</p></details>
+  </div>
+</section>
+
+
+<!-- ===================== MATHS · PROBLEMS ON TRAINS ===================== -->
+<section class="chap" id="mtr-trains">
+  <div class="eyebrow">Maths · 85 questions</div>
+  <h2>Problems on Trains: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, SP-XIV, MTS, Delhi Police, GD) · sabse zyada: platform cross, do train aamne-saamne, km/h ↔ m/s</div>
+
+  <h3>Pehle ek chhoti si kahani: train ki naak aur poonch</h3>
+  <p>Ek train 100 m lambi hai. Platform par ek aadmi khada hai. Train ne aadmi ko "cross" kab kiya?</p>
+  <ul>
+    <li>Jab train ki <b>naak</b> (engine) aadmi tak aayi, crossing shuru hui.</li>
+    <li>Jab train ki <b>poonch</b> (aakhri dabba) aadmi se aage nikli, crossing poori hui.</li>
+    <li>Is beech naak ne kitna chala? Poori train ki lambai: <b>100 m</b>. Aadmi ki apni chaudai zero maan lo.</li>
+  </ul>
+  <p>Ab wahi train 200 m ke platform ko cross kare. Naak platform ke shuru mein, aur poonch platform ke aakhir se bahar. Naak ne chala: 200 (platform) + 100 (khud ki lambai) = <b>300 m</b>.</p>
+  <p>Bas yahi poora chapter hai. Train ke sawaal mein <b>doori = train ki lambai + jo cross kiya uski lambai</b>. Baaki sab wahi purana: doori = speed × time.</p>
+
+  <h3>4 bade idea jinse saare sawaal bante hain</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Idea</th><th>Ek line mein</th></tr>
+    <tr><td class="n">1</td><td>D = S × T</td><td>Teen mein se do do, teesra nikaalo. Units ek jaise karo (m aur m/s, ya km aur km/h).</td></tr>
+    <tr><td class="n">2</td><td>Cross ki doori</td><td>Pole / aadmi / signal = L. Platform / pul = L + P. Doosri train = L<sub>1</sub> + L<sub>2</sub>.</td></tr>
+    <tr><td class="n">3</td><td>Relative speed</td><td>Aamne-saamne: speed <b>jodo</b>. Ek hi disha: speed <b>ghatao</b>.</td></tr>
+    <tr><td class="n">4</td><td>Average speed ≠ speeds ka average</td><td>Kul doori ÷ kul time. Barabar doori par 2ab/(a + b).</td></tr>
+  </table></div>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · km/h ↔ m/s: 18 ka 5</h3>
+  <p><b>Kab use karo:</b> lambai metre mein, time second mein, speed km/h mein. Lagbhag har train sawaal mein.</p>
+  <p><b>Soch aise:</b> 1 km/h = 1000 m ek ghante (3600 s) mein = 1000/3600 = 5/18 m/s. Toh <b>18 km/h = 5 m/s</b>. Bas ye ek jodi yaad rakho, baaki sab iske guna hain.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Conversion cards. 18 km/h = 5 m/s, 36 = 10, 54 = 15, 72 = 20, 90 = 25, 108 = 30, 126 = 35, 144 = 40. Multiply km/h by 5/18 to get m/s, and m/s by 18/5 to get km/h.">
+      <g text-anchor="middle">
+        <rect x="8" y="14" width="80" height="80" rx="8" class="chf"/><rect x="8" y="14" width="80" height="80" rx="8" class="chs"/>
+        <rect x="94" y="14" width="80" height="80" rx="8" class="chf"/>
+        <rect x="180" y="14" width="80" height="80" rx="8" class="chf"/><rect x="180" y="14" width="80" height="80" rx="8" class="chs"/>
+        <rect x="266" y="14" width="80" height="80" rx="8" class="chf"/><rect x="266" y="14" width="80" height="80" rx="8" class="chs"/>
+        <rect x="352" y="14" width="80" height="80" rx="8" class="chf"/>
+        <rect x="438" y="14" width="80" height="80" rx="8" class="chf"/>
+        <rect x="524" y="14" width="80" height="80" rx="8" class="chf"/>
+        <rect x="610" y="14" width="80" height="80" rx="8" class="chf"/>
+        <text x="48" y="44" class="lbl">18 km/h</text><text x="48" y="74" class="lbl" style="fill:var(--ch)">5 m/s</text>
+        <text x="134" y="44" class="lbl">36</text><text x="134" y="74" class="lbl" style="fill:var(--ch)">10</text>
+        <text x="220" y="44" class="lbl">54</text><text x="220" y="74" class="lbl" style="fill:var(--ch)">15</text>
+        <text x="306" y="44" class="lbl">72</text><text x="306" y="74" class="lbl" style="fill:var(--ch)">20</text>
+        <text x="392" y="44" class="lbl">90</text><text x="392" y="74" class="lbl" style="fill:var(--ch)">25</text>
+        <text x="478" y="44" class="lbl">108</text><text x="478" y="74" class="lbl" style="fill:var(--ch)">30</text>
+        <text x="564" y="44" class="lbl">126</text><text x="564" y="74" class="lbl" style="fill:var(--ch)">35</text>
+        <text x="650" y="44" class="lbl">144</text><text x="650" y="74" class="lbl" style="fill:var(--ch)">40</text>
+        <text x="350" y="122" class="lbl">km/h → m/s: × 5/18 (18 se bhaag, 5 se guna)</text>
+        <text x="350" y="146" class="sm">m/s → km/h: × 18/5 · 60 km/h = 50/3 m/s · 45 km/h = 12.5 m/s · 10 km/h = 25/9 m/s</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Upar km/h, neeche m/s. Outline wale (18, 54, 72) 2025 ke papers mein sabse zyada aaye. Har card pichhle se 18 aur 5 aage.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 200 m train pole ko 20 s mein cross karti hai. Speed km/h? · <i>~5 sec</i></span>
+    200 ÷ 20 = 10 m/s. Card se 10 m/s = <b>36 km/h</b>.
+  </div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · "Kya cross kiya?" se doori</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Top: a train of length L passing a pole; the front moves a distance L. Bottom: the same train passing a platform of length P; the front moves L plus P from the start of the platform until the rear leaves the far end.">
+      <defs>
+        <marker id="mtr-cr-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <text x="10" y="22" class="lbl">1 · Pole / khada aadmi</text>
+      <line x1="300" y1="34" x2="300" y2="100" style="stroke:var(--fg);stroke-width:3"/>
+      <text x="300" y="116" text-anchor="middle" class="sm">pole</text>
+      <rect x="160" y="60" width="140" height="26" rx="5" class="paper" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="230" y="78" text-anchor="middle" class="sm">shuru: naak pole par</text>
+      <rect x="300" y="60" width="140" height="26" rx="5" class="chf"/><rect x="300" y="60" width="140" height="26" rx="5" class="chs"/>
+      <text x="370" y="78" text-anchor="middle" class="sm">ant: poonch pole par</text>
+      <line x1="300" y1="48" x2="438" y2="48" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-cr-arr)"/>
+      <text x="470" y="52" class="lbl" style="fill:var(--ch)">naak chali = L</text>
+      <text x="470" y="72" class="sm">time = L ÷ speed</text>
+      <line x1="10" y1="140" x2="690" y2="140" class="ln" stroke-dasharray="3 4"/>
+      <text x="10" y="164" class="lbl">2 · Platform / pul (lambai P)</text>
+      <rect x="160" y="222" width="280" height="14" class="chf"/>
+      <text x="300" y="254" text-anchor="middle" class="sm">platform P</text>
+      <rect x="20" y="194" width="140" height="26" rx="5" class="paper" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="90" y="212" text-anchor="middle" class="sm">shuru: naak yahan</text>
+      <rect x="440" y="194" width="140" height="26" rx="5" class="chf"/><rect x="440" y="194" width="140" height="26" rx="5" class="chs"/>
+      <text x="510" y="212" text-anchor="middle" class="sm">ant: poonch bahar</text>
+      <line x1="160" y1="182" x2="578" y2="182" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-cr-arr)"/>
+      <text x="370" y="176" text-anchor="middle" class="lbl" style="fill:var(--ch)">naak chali = P + L</text>
+      <text x="350" y="282" text-anchor="middle" class="sm">time = (L + P) ÷ speed · train ki apni lambai hamesha judti hai</text>
+    </svg>
+    </div>
+    <figcaption>Naak ko dekho, poori train ko nahi. Naak ne jitna chala, wahi doori hai. Pole ki chaudai 0, platform ki P.</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Train ne kya cross kiya</th><th>Doori</th><th>Speed</th></tr>
+    <tr><td>Pole, signal, khada aadmi, post</td><td>L</td><td>train ki speed</td></tr>
+    <tr><td>Platform, pul, tunnel</td><td>L + P</td><td>train ki speed</td></tr>
+    <tr><td>Chalta aadmi</td><td>L</td><td>relative (jodo ya ghatao)</td></tr>
+    <tr><td>Doosri train</td><td>L<sub>1</sub> + L<sub>2</sub></td><td>relative (jodo ya ghatao)</td></tr>
+  </table></div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Pole aur platform dono diye: "extra time = extra lambai"</h3>
+  <p><b>Kab use karo:</b> "pole 12 s mein, platform 20 s mein". Speed ya lambai kuch bhi nahi diya.</p>
+  <p><b>Soch aise:</b> 12 s mein train ne apni lambai L chali. Platform par 8 s <b>zyada</b> lage. Wo 8 s sirf platform ki lambai chalne mein gaye. Toh platform = 8 s ki doori. Isse speed nikli, phir L.</p>
+  <div class="box"><span class="k">Demo · Aadmi ko 12 s, 150 m platform ko 20 s. Train ki lambai? · <i>~8 sec</i></span>
+    Extra 8 s = 150 m → speed 150/8 = 18.75 m/s.<br>
+    L = 12 s ki doori. Ya seedha ratio se: L : 150 = 12 : 8 → L = <b>225 m</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> Speed nikaalni hi nahi. <b>L : P = pole ka time : extra time</b>. 18 s pole, 33 s pul (300 m) → L : 300 = 18 : 15 → L = 360.</div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Relative speed (do train, ya train aur aadmi)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Opposite direction: train A at 54 km/h and train B at 36 km/h approach each other, relative speed 90 km/h = 25 m/s, distance 120 + 180 = 300 m, time 12 s. Same direction: 25 and 75 km/h, relative 50 km/h, distance 120 + 130 = 250 m, time 18 s.">
+      <defs>
+        <marker id="mtr-rs-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <text x="10" y="22" class="lbl">Aamne-saamne (opposite): speed JODO</text>
+      <rect x="40" y="38" width="160" height="28" rx="5" class="chf"/><rect x="40" y="38" width="160" height="28" rx="5" class="chs"/>
+      <text x="120" y="57" text-anchor="middle" class="sm">A · 120 m · 54 km/h</text>
+      <line x1="204" y1="52" x2="270" y2="52" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-rs-arr)"/>
+      <rect x="420" y="38" width="240" height="28" rx="5" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="540" y="57" text-anchor="middle" class="sm">B · 180 m · 36 km/h</text>
+      <line x1="416" y1="52" x2="350" y2="52" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-rs-arr)"/>
+      <text x="350" y="92" text-anchor="middle" class="lbl">rel speed 54 + 36 = 90 km/h = 25 m/s · doori 120 + 180 = 300 m</text>
+      <text x="350" y="112" text-anchor="middle" class="lbl" style="fill:var(--ch)">time = 300 ÷ 25 = 12 s</text>
+      <line x1="10" y1="132" x2="690" y2="132" class="ln" stroke-dasharray="3 4"/>
+      <text x="10" y="156" class="lbl">Ek hi disha (same): speed GHATAO</text>
+      <rect x="40" y="172" width="160" height="28" rx="5" class="chf"/><rect x="40" y="172" width="160" height="28" rx="5" class="chs"/>
+      <text x="120" y="191" text-anchor="middle" class="sm">tez · 120 m · 75 km/h</text>
+      <line x1="204" y1="186" x2="270" y2="186" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-rs-arr)"/>
+      <rect x="300" y="172" width="173" height="28" rx="5" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="386" y="191" text-anchor="middle" class="sm">dheemi · 130 m · 25 km/h</text>
+      <line x1="477" y1="186" x2="510" y2="186" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-rs-arr)"/>
+      <text x="350" y="226" text-anchor="middle" class="lbl">rel speed 75 − 25 = 50 km/h = 125/9 m/s · doori 120 + 130 = 250 m</text>
+      <text x="350" y="248" text-anchor="middle" class="lbl" style="fill:var(--ch)">time = 250 × 9/125 = 18 s</text>
+    </svg>
+    </div>
+    <figcaption>Soch aise: ek train ko khada maan lo. Doosri train ab "relative speed" se chal rahi hai, aur use poori L<sub>1</sub> + L<sub>2</sub> doori paar karni hai.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> Dono train ki speed barabar aur aamne-saamne: har ek ki speed = (L<sub>1</sub> + L<sub>2</sub>) ÷ time ÷ 2. 165 + 165 = 330 m, 15 s → 22 → har ek 11 m/s.</div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Do station se chali, kab milengi?</h3>
+  <p><b>Soch aise:</b> agar ek train pehle chali, toh pehle uski "head start" doori ghatao. Uske baad dono saath chal rahi hain, toh bachi doori ÷ (speed jodo).</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Timeline. Station A to B is 540 km. Train from A leaves at 6 AM at 60 km/h and covers 120 km by 8 AM. Train from B leaves at 8 AM at 90 km/h. Remaining 420 km closes at 150 km/h in 2.8 hours = 2 hours 48 minutes, so they meet at 10:48 AM.">
+      <line x1="60" y1="90" x2="640" y2="90" class="ln" style="stroke-width:3"/>
+      <circle cx="60" cy="90" r="7" style="fill:var(--ch)"/><circle cx="640" cy="90" r="7" style="fill:var(--ch)"/>
+      <text x="60" y="122" text-anchor="middle" class="lbl">A</text><text x="640" y="122" text-anchor="middle" class="lbl">B</text>
+      <text x="350" y="24" text-anchor="middle" class="sm">kul 540 km (scale par)</text>
+      <rect x="60" y="72" width="129" height="10" class="chf"/><rect x="60" y="72" width="129" height="10" class="chs"/>
+      <text x="124" y="62" text-anchor="middle" class="sm">6 → 8 AM: 120 km</text>
+      <line x1="189" y1="60" x2="189" y2="140" class="ln" stroke-dasharray="3 3"/>
+      <rect x="189" y="98" width="451" height="10" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="414" y="138" text-anchor="middle" class="lbl">8 AM par bachi doori 420 km</text>
+      <text x="414" y="158" text-anchor="middle" class="sm">dono saath: 60 + 90 = 150 km/h</text>
+      <line x1="369" y1="66" x2="369" y2="114" style="stroke:var(--ch);stroke-width:3"/>
+      <text x="369" y="58" text-anchor="middle" class="lbl" style="fill:var(--ch)">milan (288 km)</text>
+      <text x="350" y="192" text-anchor="middle" class="lbl">420 ÷ 150 = 2.8 h = 2 h 48 min → 8 AM + 2:48 = 10:48 AM</text>
+      <text x="350" y="212" text-anchor="middle" class="sm">milan A se 120 + 60 × 2.8 = 288 km par (picture mein gehri line)</text>
+    </svg>
+    </div>
+    <figcaption>Do kadam: pehle head start ghatao, phir bachi doori ko jodi hui speed se bhaag do. 0.8 ghanta = 48 minute (0.1 h = 6 min).</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Average speed (barabar doori par)</h3>
+  <p><b>Soch aise:</b> 100 km 50 par (2 ghante) aur 100 km 25 par (4 ghante). Kul 200 km, 6 ghante → 33.3. Seedha (50 + 25)/2 = 37.5 <b>galat</b> hai, kyunki dheemi speed par zyada time laga.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Time bars drawn to scale. 100 km at 50 km/h takes 2 hours; 100 km at 25 km/h takes 4 hours. Total 200 km in 6 hours gives 33.3 km/h, not 37.5.">
+      <text x="10" y="40" class="lbl">100 km @ 50</text>
+      <rect x="150" y="22" width="160" height="30" class="chf"/><rect x="150" y="22" width="160" height="30" class="chs"/>
+      <text x="230" y="42" text-anchor="middle" class="lbl">2 ghante</text>
+      <text x="10" y="90" class="lbl">100 km @ 25</text>
+      <rect x="150" y="72" width="320" height="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="310" y="92" text-anchor="middle" class="lbl">4 ghante</text>
+      <line x1="150" y1="116" x2="630" y2="116" class="ln"/>
+      <g class="sm" text-anchor="middle"><text x="150" y="132">0</text><text x="230" y="132">1</text><text x="310" y="132">2</text><text x="390" y="132">3</text><text x="470" y="132">4</text><text x="550" y="132">5</text><text x="630" y="132">6 h</text></g>
+      <text x="350" y="164" text-anchor="middle" class="lbl" style="fill:var(--ch)">avg = 200 ÷ 6 = 33.3 km/h = 2 × 50 × 25 ÷ 75</text>
+      <text x="350" y="186" text-anchor="middle" class="sm">dheemi wali speed par time zyada beeta, isliye avg 33.3 dheemi ki taraf jhuka</text>
+    </svg>
+    </div>
+    <figcaption>Barabar doori: avg = 2ab/(a + b). Teen barabar hisse: 3 ÷ (1/a + 1/b + 1/c).</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Speed badli, time badla (ratio ulta)</h3>
+  <p><b>Kab use karo:</b> "speed 20 km/h kam ki toh 4 ki jagah 5 ghante". Ya "80 par 1 ghanta pehle, 60 par 1 ghanta der".</p>
+  <p><b>Soch aise:</b> doori same ho toh <b>speed aur time ulte ratio mein</b>. Time 4 : 5 hua → speed 5 : 4 thi. 1 hissa = 20 km/h → asli speed 5 × 20 = 100.</p>
+  <div class="box"><span class="k">Demo · 80 km/h par 1 ghanta jaldi, 60 par 1 ghanta der. Doori? · <i>~10 sec</i></span>
+    Speed 80 : 60 = 4 : 3 → time 3 : 4. Farq 1 hissa = 2 ghante (jaldi se der tak).<br>
+    60 wala time = 4 × 2 = 8 h → doori = 60 × 8 = <b>480 km</b>.
+  </div>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · Option se pakdo</h3>
+  <ul>
+    <li><b>Platform wale sawaal mein</b> lambai option ko check karo: (L + P) ÷ time = speed ka card (10, 15, 20, 25 m/s) banna chahiye.</li>
+    <li><b>Opposite mein</b> time hamesha same-direction se kam hota hai. Kam time wala option opposite ka hai.</li>
+    <li><b>Average speed</b> hamesha dono speed ke beech, aur seedhe average se thoda kam. 50 aur 25 → 37.5 se kam → 33.33.</li>
+  </ul>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    Upar wale hi: CGL, CHSL, CPO, SP-XIV, MTS, DP Const, DP HCM, GD. Saal 2025 (DP HCM aur GD 2026).
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Seedha D = S × T aur units (11 Qs)</h3>
+  <div class="box"><span class="k">Worked · Train 110 km/h. 100 second mein kitni doori? <span class="tag p">PYQ</span> <small>CGL · 21 Sep 2025</small><!--q:10-002--></span>
+    <b>Method:</b> 5/18 · <i>~10 sec</i><br>
+    110 × 5/18 = 550/18 = 30.56 m/s. × 100 = <mark>3055.56 m</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 120 km safar. 2 h 40 min ke baad chali hui doori = bachi doori ka 7/8. Speed m/s mein? <span class="tag p">PYQ</span> <small>CHSL · 19 Nov 2025</small><!--q:10-010--></span>
+    <b>Method:</b> ratio parts · <i>~20 sec</i><br>
+    Chali : bachi = 7 : 8 → chali = 7/15 × 120 = 56 km. Time 8/3 h → 56 × 3/8 = 21 km/h.<br>
+    21 × 5/18 = 35/6 = <mark>5.83 m/s</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Mumbai 6 AM se Kolhapur 2:30 PM, 60 km/h → <b>D = S × T</b>: 8.5 h × 60 → <mark>510 km</mark> <small>CGL · 23 Sep 2025</small><!--q:10-003--></li>
+    <li><span class="tag p">PYQ</span> 216 km 3 h mein, m/s? → 72 km/h → <b>card</b> → <mark>20 m/s</mark> <small>CGL · 24 Sep 2025</small><!--q:10-004--></li>
+    <li><span class="tag p">PYQ</span> 60 km 1.5 h mein → <b>S = D ÷ T</b> → <mark>40 km/h</mark> <small>CHSL · 30 Nov 2025</small><!--q:10-017--></li>
+    <li><span class="tag p">PYQ</span> 120 km 2 h mein, 5 h mein? → <b>unitary</b>: 60 × 5 → <mark>300 km</mark> <small>DP Const · 22 Dec 2025</small><!--q:10-022--></li>
+    <li><span class="tag p">PYQ</span> 80 km/h 2 h + 90 km/h 3 h → 160 + 270 → <mark>430 km</mark> <small>DP Const · 29 Dec 2025</small><!--q:10-027--></li>
+    <li><span class="tag p">PYQ</span> 36 km/h par 0.7 km → <b>card</b> 10 m/s → 700 ÷ 10 → <mark>70 s</mark> <small>MTS · 19 Feb 2025</small><!--q:10-072--></li>
+    <li><span class="tag p">PYQ</span> Speed 5 : 7; tez wali 210 km 3 h mein (70) → dheemi 50 → 150 ÷ 50 → <mark>3 h</mark> <small>MTS · 06 Feb 2025</small><!--q:10-068--></li>
+    <li><span class="tag p">PYQ</span> Train 240 km/4 h = 60; car 25% zyada = 75; bike car se 40% kam = 45; 150 km ka farq → 150/45 − 150/75 = 3⅓ − 2 → <mark>80 min</mark> <small>CHSL · 30 Nov 2025</small><!--q:10-019--></li>
+    <li><span class="tag p">PYQ</span> 100 km 50 par (2 h), agle 60 km 40% kam speed (30) par (2 h) → <mark>4 h</mark> <small>CHSL · 18 Nov 2025</small><!--q:10-009--></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Average speed aur speed badalne se time (5 Qs)</h3>
+  <div class="box"><span class="k">Worked · 3 barabar doori, speed 4 : 5 : 6. Average : sabse kam speed? <span class="tag p">PYQ</span> <small>CGL · 26 Sep 2025</small><!--q:10-005--></span>
+    <b>Method:</b> doori maan lo (LCM) · <i>~20 sec</i><br>
+    Har hissa 60 maan lo. Time: 15 + 12 + 10 = 37. Avg = 180/37.<br>
+    180/37 : 4 = 180 : 148 = <mark>45 : 37</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 100 km 50 par, 100 km 25 par → <b>2ab/(a + b)</b>: 2 × 50 × 25 ÷ 75 → <mark>33.33 km/h</mark> <small>CGL · 26 Sep 2025</small><!--q:10-006--></li>
+    <li><span class="tag p">PYQ</span> 1/3 doori 30, 1/3 60, 1/3 90 → <b>har hissa 180 km maan lo</b> (30, 60, 90 ka LCM): time 6 + 3 + 2 = 11 h, doori 540 → 540/11 → <mark>49</mark> (49.09) <small>DP HCM · 08 Jan 2026</small><!--q:10-042--></li>
+    <li><span class="tag p">PYQ</span> 80 par 1 h jaldi, 60 par 1 h der → <b>ratio ulta</b>: time 3 : 4, farq 2 h → <mark>480 km</mark> <small>CHSL · 19 Nov 2025</small><!--q:10-011--></li>
+    <li><span class="tag p">PYQ</span> 4 h mein doori; speed 20 km/h kam karo toh 5 h → <b>ratio ulta</b>: speed 5 : 4, 1 hissa 20 → <mark>100 km/h</mark> (20 photo se) <small>GD · 19 May 2026</small><!--q:10-061--></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Pole, signal ya khade aadmi ko cross (12 Qs)</h3>
+  <div class="box"><span class="k">Worked · 450 m train, 20 km/h. Khade aadmi ko kitne minute mein? <span class="tag p">PYQ</span> <small>GD · 05 May 2026</small><!--q:10-045--></span>
+    <b>Method:</b> doori = L, 5/18 · <i>~12 sec</i><br>
+    20 km/h = 50/9 m/s. Time = 450 × 9/50 = 81 s = 81/60 min = <mark>27/20 min</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ ×2</span> 200 m, pole 20 s → 10 m/s → <b>card</b> → <mark>36 km/h</mark> <small>DP Const · 22 Dec 2025; SP-XIV · 28 Jul 2025</small><!--q:10-023--><!--q:10-083--></li>
+    <li><span class="tag p">PYQ</span> 100 m, pole 10 s → 10 m/s → <mark>36 km/h</mark> <small>DP Const · 29 Dec 2025</small><!--q:10-025--></li>
+    <li><span class="tag p">PYQ</span> 200 m, pole 20 s, km/h → <mark>36</mark> <small>DP Const · 26 Dec 2025</small><!--q:10-030--></li>
+    <li><span class="tag p">PYQ</span> 180 m, aadmi 12 s → 15 m/s → <b>card</b> → <mark>54 km/h</mark> <small>DP Const · 29 Dec 2025</small><!--q:10-026--></li>
+    <li><span class="tag p">PYQ</span> 150 m, pole 18 s → 25/3 m/s × 18/5 → <mark>30 km/h</mark> <small>DP Const · 26 Dec 2025</small><!--q:10-031--></li>
+    <li><span class="tag p">PYQ</span> 45 km/h, pole 12 s → 12.5 × 12 → <mark>150 m</mark> <small>DP Const · 24 Dec 2025</small><!--q:10-034--></li>
+    <li><span class="tag p">PYQ</span> 60 km/h, aadmi 12 s → 50/3 × 12 → <mark>200 m</mark> <small>DP Const · 24 Dec 2025</small><!--q:10-035--></li>
+    <li><span class="tag p">PYQ</span> 72 km/h, post 15 s → 20 × 15 → <mark>300 m</mark> <small>DP Const · 23 Dec 2025</small><!--q:10-037--></li>
+    <li><span class="tag p">PYQ</span> 500 m, 40 km/h, aadmi; minute? → 40 km/h = 100/9 → 45 s → <mark>3/4 min</mark> <small>GD · 05 May 2026</small><!--q:10-046--></li>
+    <li><span class="tag p">PYQ</span> 250 m, 10 km/h, aadmi; minute? → 25/9 m/s → 90 s → <mark>3/2 min</mark> (speed photo se) <small>GD · 08 May 2026</small><!--q:10-055--></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> "Minute mein" pucha ho toh pehle second nikaalo, phir 60 se bhaag. 81 s = 27/20 min. Option fraction mein hote hain.</div>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Platform ya pul cross (16 Qs)</h3>
+  <div class="box"><span class="k">Worked · 90 km/h, 180 m platform 30 s mein. Train ki lambai? <span class="tag p">PYQ</span> <small>DP Const · 19 Dec 2025</small><!--q:10-039--></span>
+    <b>Method:</b> L + P = S × T · <i>~8 sec</i><br>
+    90 km/h = 25 m/s. 25 × 30 = 750 = L + 180.<br>
+    L = <mark>570 m</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 90 km/h, platform 54 s mein, platform = 2 × train. Train? <span class="tag p">PYQ</span> <small>GD · 29 Apr 2026</small><!--q:10-063--></span>
+    <b>Method:</b> L + 2L = 3L · <i>~8 sec</i><br>
+    25 × 54 = 1350 = 3L → L = <mark>450 m</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ ×2</span> 150 m train, 350 m platform, 40 s → 500/40 = 12.5 m/s → <mark>45 km/h</mark> <small>CHSL · 30 Nov 2025; DP Const · 24 Dec 2025</small><!--q:10-018--><!--q:10-032--></li>
+    <li><span class="tag p">PYQ</span> 54 km/h, 200 m platform, 20 s → 15 × 20 = 300 → <mark>100 m</mark> <small>DP Const · 22 Dec 2025</small><!--q:10-024--></li>
+    <li><span class="tag p">PYQ</span> 100 m, 200 m platform, 15 s → 20 m/s → <mark>72 km/h</mark> <small>DP Const · 27 Dec 2025</small><!--q:10-029--></li>
+    <li><span class="tag p">PYQ</span> 360 m, 240 m platform, 36 s → 600/36 = 50/3 m/s → <mark>60 km/h</mark> <small>DP Const · 24 Dec 2025</small><!--q:10-036--></li>
+    <li><span class="tag p">PYQ</span> 150 m, 350 m platform, 30 s → 50/3 m/s → <mark>60 km/h</mark> <small>DP Const · 20 Dec 2025</small><!--q:10-038--></li>
+    <li><span class="tag p">PYQ</span> 120 m, 240 m platform, 54 km/h → 360 ÷ 15 → <mark>24 s</mark> <small>DP Const · 30 Dec 2025</small><!--q:10-040--></li>
+    <li><span class="tag p">PYQ</span> 180 m, 54 km/h, 30 s → 450 − 180 → platform <mark>270 m</mark> <small>DP HCM · 08 Jan 2026</small><!--q:10-043--></li>
+    <li><span class="tag p">PYQ</span> 15 m/s, 500 m pul, 65 s → 975 − 500 → <mark>475 m</mark> <small>GD · 04 May 2026</small><!--q:10-044--></li>
+    <li><span class="tag p">PYQ</span> 54 km/h, platform = 2 × train, 18 s → 15 × 18 = 270 = 3L → <mark>90 m</mark> (speed photo se) <small>GD · 06 May 2026</small><!--q:10-047--></li>
+    <li><span class="tag p">PYQ</span> 126 km/h, 250 m pul, 50 s → 35 × 50 = 1750 − 250 → <mark>1500 m</mark> <small>SP-XIV · 29 Jul 2025</small><!--q:10-080--></li>
+    <li><span class="tag p">PYQ</span> 72 km/h, 300 m platform, 25 s → 500 − 300 → <mark>200 m</mark> <small>SP-XIV · 25 Jul 2025</small><!--q:10-082--></li>
+    <li><span class="tag p">PYQ</span> 200 m, 72 km/h, 100 m platform → 300 ÷ 20 → <mark>15 s</mark> <small>SP-XIV · 28 Jul 2025</small><!--q:10-084--></li>
+    <li><span class="tag p">PYQ</span> 100 m, 36 km/h, 200 m platform → 300 ÷ 10 → <mark>30 s</mark> <small>MTS · 20 Feb 2025</small><!--q:10-074--></li>
+  </ul>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Pole aur platform dono, ya do alag pul (11 Qs)</h3>
+  <div class="box"><span class="k">Worked · Pole 12 s, 550 m platform 22 s. Lambai aur speed? <span class="tag p">PYQ</span> <small>GD · 18 May 2026</small><!--q:10-060--></span>
+    <b>Method:</b> extra time = extra lambai · <i>~8 sec</i><br>
+    Extra 10 s = 550 m → <b>55 m/s</b>. L = 55 × 12 = 660 → <mark>660 m, 55 m/s</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 150 m train, 250 m pul 8 s mein. 500 m pul kitne s mein? <span class="tag p">PYQ</span> <small>GD · 30 Apr 2026</small><!--q:10-064--></span>
+    <b>Method:</b> speed se · <i>~8 sec</i><br>
+    400 m 8 s mein → 50 m/s. Naya: 150 + 500 = 650 ÷ 50 = <mark>13 s</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Aadmi 12 s, 150 m platform 20 s → <b>L : P = 12 : 8</b> → <mark>225 m</mark> <small>CHSL · 13 Nov 2025</small><!--q:10-007--></li>
+    <li><span class="tag p">PYQ</span> 180-m platform 20 s, aadmi 12 s → <b>L : 180 = 12 : 8</b> → <mark>270 m</mark> <small>SP-XIV · 29 Jul 2025</small><!--q:10-076--></li>
+    <li><span class="tag p">PYQ</span> Pole 18 s, 300 m pul 33 s → <b>L : 300 = 18 : 15</b> → <mark>360 m</mark> <small>SP-XIV · 28 Jul 2025</small><!--q:10-079--></li>
+    <li><span class="tag p">PYQ</span> 180 m train, platform 45 s, aadmi 30 s → <b>P : 180 = 15 : 30</b> → <mark>90 m</mark> <small>CPO · 12 Dec 2025</small><!--q:10-021--></li>
+    <li><span class="tag p">PYQ</span> 180 m train, platform 36 s, pole 12 s → <b>P : 180 = 24 : 12</b> → <mark>360 m</mark> <small>MTS · 05 Feb 2025</small><!--q:10-067--></li>
+    <li><span class="tag p">PYQ</span> Aadmi 5 s, platform 12 s; L : (L + y)? → <b>time hi doori ka ratio</b> → <mark>5 : 12</mark> <small>GD · 07 May 2026</small><!--q:10-052--></li>
+    <li><span class="tag p">PYQ</span> Aadmi 4 s, platform 12 s; L : (L + y)? → <mark>1 : 3</mark> <small>GD · 09 May 2026</small><!--q:10-058--></li>
+    <li><span class="tag p">PYQ</span> 200 m train, 300 m pul 10 s; 450 m pul? → 50 m/s → 650 ÷ 50 → <mark>13 s</mark> <small>MTS · 19 Feb 2025</small><!--q:10-073--></li>
+    <li><span class="tag p">PYQ</span> 240 m, pole 24 s (10 m/s); 360 m platform? → 600 ÷ 10 → <mark>60 s</mark> <small>SP-XIV · 31 Jul 2025</small><!--q:10-085--></li>
+  </ul>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · Aamne-saamne: do train, ya train aur chalta aadmi (19 Qs)</h3>
+  <div class="box"><span class="k">Worked · P pole ko 8 s mein, P : Q lambai 2 : 3, P 54 km/h. Q, P ko opposite mein 15 s mein cross karti hai. Q ki speed? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small><!--q:10-008--></span>
+    <b>Method:</b> relative speed · <i>~20 sec</i><br>
+    P = 15 m/s × 8 = 120 m → Q = 180 m. Kul 300 ÷ 15 = 20 m/s jodi hui speed.<br>
+    Q = 20 − 15 = 5 m/s = <mark>18 km/h</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 400 m train, opposite chalte aadmi ko 8 s mein. Train ki speed aadmi ki 4 guna. Train km/h? <span class="tag p">PYQ</span> <small>GD · 07 May 2026</small><!--q:10-051--></span>
+    <b>Method:</b> parts mein relative speed · <i>~12 sec</i><br>
+    Aadmi 1 hissa, train 4 → jodi 5 hisse = 400/8 = 50 m/s → 1 hissa 10.<br>
+    Train = 40 m/s = <mark>144 km/h</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 120 m aur 180 m, opposite, 6 s; pehli 54 → 300/6 = 50 m/s = 180 km/h → 180 − 54 → <mark>126 km/h</mark> <small>CHSL Tier-2</small><!--q:10-020--></li>
+    <li><span class="tag p">PYQ</span> 120 m aur 180 m, 54 aur 36 km/h, opposite → 90 km/h = 25 m/s → 300 ÷ 25 → <mark>12 s</mark> <small>DP Const · 27 Dec 2025</small><!--q:10-028--></li>
+    <li><span class="tag p">PYQ</span> 120 m aur 180 m, opposite, 12 s; rel speed → 25 m/s → <mark>90 km/h</mark> <small>DP Const · 26 Dec 2025</small><!--q:10-041--></li>
+    <li><span class="tag p">PYQ</span> Dono 165 m, same speed, opposite, 15 s → 22 ÷ 2 → <mark>11 m/s</mark> <small>GD · 06 May 2026</small><!--q:10-048--></li>
+    <li><span class="tag p">PYQ</span> Dono 304 m, same speed, 16 s → 38 ÷ 2 → <mark>19 m/s</mark> <small>GD · 30 Apr 2026</small><!--q:10-065--></li>
+    <li><span class="tag p">PYQ</span> 250 m aur 350 m, same speed, opposite, 60 s → 10 ÷ 2 = 5 m/s → <mark>18 km/h</mark> <small>GD · 07 May 2026</small><!--q:10-049--></li>
+    <li><span class="tag p">PYQ</span> 400 m aur 800 m, opposite, 80 s; kul speed → 1200 ÷ 80 → <mark>15 m/s</mark> <small>GD · 07 May 2026</small><!--q:10-050--></li>
+    <li><span class="tag p">PYQ</span> 500 m aur 200 m, opposite, 35 s; kul speed → 700 ÷ 35 → <mark>20 m/s</mark> <small>GD · 08 May 2026</small><!--q:10-054--></li>
+    <li><span class="tag p">PYQ</span> Kul lambai 600 m, kul speed 40 m/s → 600 ÷ 40 → <mark>15 s</mark> (speed photo se) <small>GD · 08 May 2026</small><!--q:10-056--></li>
+    <li><span class="tag p">PYQ</span> Kul lambai 800 m, kul speed 40 m/s → <mark>20 s</mark> (speed photo se) <small>GD · 09 May 2026</small><!--q:10-057--></li>
+    <li><span class="tag p">PYQ</span> 300 m aur 500 m, opposite, 10 s; A 20 m/s → 80 − 20 → <mark>60 m/s</mark> (A ki speed photo se) <small>GD · 18 May 2026</small><!--q:10-059--></li>
+    <li><span class="tag p">PYQ</span> 200 m aur 400 m, opposite, 30 s; A 15 m/s → 20 − 15 → <mark>5 m/s</mark> <small>MTS · 18 Feb 2025</small><!--q:10-071--></li>
+    <li><span class="tag p">PYQ</span> 150 m aur 100 m, opposite, 12 s; pehli 60 km/h → 250/12 m/s = 75 km/h → 75 − 60 → <mark>15 km/h</mark> <small>SP-XIV · 24 Jul 2025</small><!--q:10-078--></li>
+    <li><span class="tag p">PYQ</span> Dono 750 m, 45 aur 55 km/h, opposite → 100 km/h = 250/9 m/s → 1500 × 9/250 → <mark>54 s</mark> <small>SP-XIV · 30 Jul 2025</small><!--q:10-081--></li>
+    <li><span class="tag p">PYQ</span> 1.2 km aur 0.8 km, 60 aur 90 km/h → 2 km ÷ 150 km/h = 1/75 h → <mark>48 s</mark> <small>SP-XIV · 31 Jul 2025</small><!--q:10-086--></li>
+    <li><span class="tag p">PYQ</span> 200 m train, aadmi 10 s (20 m/s); usi lambai ki doosri opposite 8 s → 400/8 = 50 → 50 − 20 = 30 m/s → <mark>108 km/h</mark> <small>MTS · 04 Feb 2025</small><!--q:10-066--></li>
+    <li><span class="tag p">PYQ</span> 800 m train, opposite chalta aadmi 8 s, train = 4 × aadmi → 100 m/s = 5 hisse → train 80 m/s → <mark>288 km/h</mark> <small>GD · 08 May 2026</small><!--q:10-053--></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> Lambai km mein aur speed km/h mein ho (1.2 km, 0.8 km, 150 km/h), toh m/s mat banao. 2/150 h × 3600 = 48 s.</div>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Ek hi disha: overtake (6 Qs)</h3>
+  <div class="box"><span class="k">Worked · A (300 m, 72 km/h) B (200 m) ko 36 s mein overtake karti hai. B ki speed? <span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small><!--q:10-014--></span>
+    <b>Method:</b> relative speed (ghatao) · <i>~15 sec</i><br>
+    Rel = 500/36 = 125/9 m/s = 125/9 × 18/5 = 50 km/h.<br>
+    B = 72 − 50 = <mark>22 km/h</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 300 m aur 200 m, same disha, 20 s; tez 108 km/h → rel 25 m/s = 90 km/h → 108 − 90 → <mark>18 km/h</mark> <small>DP Const · 24 Dec 2025</small><!--q:10-033--></li>
+    <li><span class="tag p">PYQ</span> 25 aur 75 km/h, 120 m aur 130 m → rel 50 km/h → picture wala → <mark>18 s</mark> (speeds photo se) <small>GD · 28 Apr 2026</small><!--q:10-062--></li>
+    <li><span class="tag p">PYQ</span> P 65, Q 50 m/s, same disha, 50 s → 15 × 50 → kul lambai <mark>750 m</mark> <small>MTS · 06 Feb 2025</small><!--q:10-069--></li>
+    <li><span class="tag p">PYQ</span> P 40, Q 30 m/s, same disha, 60 s → 10 × 60 → <mark>600 m</mark> <small>MTS · 17 Feb 2025</small><!--q:10-070--></li>
+    <li><span class="tag p">PYQ</span> Train same disha mein 2 m/s chalte aadmi ko 36 s, platform (1.5 L) 48 s; 60 m tractor opposite 6 m/s → <b>do equation</b>: L = 36(v − 2), 2.5L = 48v → v = 30/7, L = 576/7 ≈ 82.3 → (82.3 + 60) ÷ (30/7 + 6) = 142.3 ÷ 10.29 → <mark>14 s</mark> (approx) <small>CHSL · 26 Nov 2025</small><!--q:10-012--></li>
+  </ul>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · Do station, kab ya kahan milenge (5 Qs)</h3>
+  <div class="box"><span class="k">Worked · A se 6 AM, 60 km/h; B se 8 AM, 90 km/h. 540 km. Kab milengi? <span class="tag p">PYQ ×2</span> <small>CGL · 14 Sep 2025; CHSL · 26 Nov 2025</small><!--q:10-001--><!--q:10-013--></span>
+    <b>Method:</b> head start + jodi speed · <i>~15 sec</i><br>
+    6 se 8: 120 km. Bacha 420 ÷ 150 = 2.8 h = 2 h 48 min. 8 AM + 2:48 = <mark>10:48 AM</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> P se 9 AM 60 km/h; Q se 11 AM 75 km/h; 585 km → 9 se 11: 120 km; 465 ÷ 135 = 3.44 h = 3 h 26 min → <mark>2:26 PM</mark> <small>SP-XIV · 31 Jul 2025</small><!--q:10-077--></li>
+    <li><span class="tag p">PYQ</span> Aamne-saamne, 4 h mein mile, A, B se 20% tez, 528 km → <b>parts</b>: B 5, A 6 → 11 hisse × 4 = 528 → 1 hissa 12 → <mark>60 km/h</mark> <small>CHSL · 27 Nov 2025</small><!--q:10-015--></li>
+    <li><span class="tag p">PYQ</span> 250 km door; same disha 25 h mein mile, aamne-saamne 5 h mein → <b>jod aur ghata</b>: jod 50, farq 10 → dheemi (50 − 10)/2 → <mark>20 km/h</mark> <small>SP-XIV · 02 Aug 2025</small><!--q:10-075--></li>
+  </ul>
+  <p><span class="tag x">CGL+</span> Milne ke baad pehli train ko manzil tak 9 h aur doosri ko 4 h lage, toh S<sub>1</sub> : S<sub>2</sub> = √t<sub>2</sub> : √t<sub>1</sub> = √4 : √9 = 2 : 3. Jise zyada time laga, wo dheemi.</p>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Platform par sirf platform ki lambai lena</td><td>Doori = L + P. Train ki apni lambai hamesha judti hai.</td></tr>
+    <tr><td>km/h aur metre mila kar bhaag dena</td><td>Pehle 5/18 se m/s banao. Ya km aur km/h dono rakho.</td></tr>
+    <tr><td>Same disha mein speed jod dena</td><td>Same disha = ghatao. Aamne-saamne = jodo.</td></tr>
+    <tr><td>Do train cross mein sirf ek ki lambai</td><td>L<sub>1</sub> + L<sub>2</sub>. Dono ki poori lambai.</td></tr>
+    <tr><td>Average speed = (a + b)/2</td><td>Barabar doori par 2ab/(a + b). Kul doori ÷ kul time.</td></tr>
+    <tr><td>Meeting time mein head start bhool jaana</td><td>Pehle wali train ne jitna chala, pehle ghatao. Phir jodi speed.</td></tr>
+    <tr><td>"Minute mein" pucha, second likh diya</td><td>81 s = 27/20 min. Options fraction mein hote hain.</td></tr>
+    <tr><td>Speed "4 guna" ko 4 hisse jodi speed maan lena</td><td>Opposite mein jodi = 4 + 1 = 5 hisse.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Formula / value sheet (yaad karo)</span>
+    1 km/h = 5/18 m/s · 18 → 5, 36 → 10, 54 → 15, 72 → 20, 90 → 25, 108 → 30, 126 → 35, 144 → 40<br>
+    Pole / aadmi: T = L/S · Platform: T = (L + P)/S · Do train: T = (L<sub>1</sub> + L<sub>2</sub>)/(S<sub>1</sub> ± S<sub>2</sub>)<br>
+    Pole t<sub>1</sub>, platform t<sub>2</sub>: L : P = t<sub>1</sub> : (t<sub>2</sub> − t<sub>1</sub>)<br>
+    Barabar doori avg: 2ab/(a + b) · teen barabar: 3abc/(ab + bc + ca)<br>
+    Jaldi / der: D = S<sub>1</sub>S<sub>2</sub>/(S<sub>1</sub> − S<sub>2</sub>) × (kul time ka farq) · 80 aur 60, farq 2 h → 4800/20 × 2 = 480<br>
+    <span class="tag x">CGL+</span> Milne ke baad t<sub>1</sub>, t<sub>2</sub>: S<sub>1</sub> : S<sub>2</sub> = √t<sub>2</sub> : √t<sub>1</sub>
+  </div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 85 sawaal, saare yahan. Teen sawaal do-do baar hain (6 AM / 8 AM wala, 200 m pole 20 s, 150 m train 350 m platform 40 s), "PYQ ×2" se likhe. 10 sawaal mein speed ya Hindi text scan mein uda tha (54 km/h, 10 km/h, 40 m/s, 20 m/s, 25 aur 75 km/h, 20 km/h, 5 s / 12 s wala). Ye page ki photo se padh kar hal kiye.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>108 km/h kitne m/s?</summary><p>108 ÷ 18 = 6, × 5 = 30 m/s.</p></details>
+    <details><summary>300 m train, 200 m platform, 25 s. Speed km/h?</summary><p>500/25 = 20 m/s = 72 km/h.</p></details>
+    <details><summary>Pole 10 s, 200 m platform 18 s. Train ki lambai?</summary><p>L : 200 = 10 : 8 → L = 250 m.</p></details>
+    <details><summary>100 m aur 150 m ki train, 40 aur 50 km/h, same disha. Time?</summary><p>Rel 10 km/h = 25/9 m/s. 250 × 9/25 = 90 s.</p></details>
+    <details><summary>Jaate 60, aate 40 km/h. Average?</summary><p>2 × 60 × 40 ÷ 100 = 48 km/h.</p></details>
+  </div>
+</section>
+
+
+<!-- ===================== MATHS · BOAT AND STREAM ===================== -->
+<section class="chap" id="mbs-boat">
+  <div class="eyebrow">Maths · 16 questions</div>
+  <h2>Boat &amp; Stream: do speed, jod aur ghata</h2>
+  <div class="meta">2025–26 SSC PYQs (MTS, Delhi Police, GD, SP-XIV) · sabse zyada: downstream-upstream se boat aur dhaara ki speed</div>
+
+  <h3>Pehle ek chhoti si kahani: nadi mein naav</h3>
+  <p>Ek naav shaant paani (jheel) mein 10 km/h chalti hai. Ab use nadi mein utaaro jahan paani 2 km/h se beh raha hai.</p>
+  <ul>
+    <li><b>Dhaara ke saath (downstream):</b> naav apne 10 bhi chal rahi hai, aur paani use 2 aage dhakel raha hai. Kul <b>12 km/h</b>.</li>
+    <li><b>Dhaara ke ulte (upstream):</b> naav 10 aage, paani 2 peeche kheench raha hai. Kul <b>8 km/h</b>.</li>
+  </ul>
+  <p>Ab ulta socho. Tumhe sirf 12 aur 8 pata hai. Naav ki asli speed? Theek beech mein: (12 + 8)/2 = <b>10</b>. Dhaara? Aadha farq: (12 − 8)/2 = <b>2</b>. Bas, yahi poora chapter hai.</p>
+
+  <div class="box"><span class="k">Ab naam rakh dete hain</span>
+    Shaant paani mein naav ki speed = <b>b</b>. Dhaara (stream) ki speed = <b>s</b>.<br>
+    Downstream <b>D = b + s</b>. Upstream <b>U = b − s</b>.<br>
+    Ulta: <b>b = (D + U)/2</b>, <b>s = (D − U)/2</b>.
+  </div>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Boat in still water 10 km/h, stream 2 km/h. Downstream the stream arrow points the same way as the boat: 10 + 2 = 12. Upstream the stream pushes against the boat: 10 - 2 = 8.">
+      <defs>
+        <marker id="mbs-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ch)"/></marker>
+        <marker id="mbs-arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <text x="10" y="24" class="lbl">Downstream (dhaara ke saath)</text>
+      <rect x="10" y="40" width="680" height="64" rx="8" class="chf"/>
+      <path d="M150,62 L250,62 L235,82 L165,82 Z" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <line x1="256" y1="70" x2="456" y2="70" style="stroke:var(--ch);stroke-width:3" marker-end="url(#mbs-arr)"/>
+      <text x="356" y="62" text-anchor="middle" class="lbl">naav 10</text>
+      <line x1="456" y1="92" x2="496" y2="92" style="stroke:var(--muted);stroke-width:3" marker-end="url(#mbs-arr2)"/>
+      <text x="506" y="96" class="sm">dhaara 2</text>
+      <text x="580" y="78" class="lbl" style="fill:var(--ch)">10 + 2 = 12</text>
+      <text x="10" y="138" class="lbl">Upstream (dhaara ke ulte)</text>
+      <rect x="10" y="154" width="680" height="64" rx="8" class="chf"/>
+      <path d="M150,176 L250,176 L235,196 L165,196 Z" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <line x1="256" y1="184" x2="456" y2="184" style="stroke:var(--ch);stroke-width:3" marker-end="url(#mbs-arr)"/>
+      <text x="356" y="176" text-anchor="middle" class="lbl">naav 10</text>
+      <line x1="456" y1="206" x2="416" y2="206" style="stroke:var(--muted);stroke-width:3" marker-end="url(#mbs-arr2)"/>
+      <text x="476" y="210" class="sm">dhaara 2 (peeche)</text>
+      <text x="580" y="192" class="lbl" style="fill:var(--ch)">10 − 2 = 8</text>
+      <text x="350" y="242" text-anchor="middle" class="sm">scale: 20 px = 1 km/h · naav ka teer dono baar 10, sirf dhaara ki disha badli</text>
+    </svg>
+    </div>
+    <figcaption>Naav ki apni taakat wahi rehti hai. Dhaara kabhi dhakelti hai, kabhi rokti hai. Isliye D aur U mein farq = 2 × dhaara.</figcaption>
+  </figure>
+
+  <h3>3 bade idea</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Idea</th><th>Ek line mein</th></tr>
+    <tr><td class="n">1</td><td>b beech mein</td><td>Naav ki speed = D aur U ka average.</td></tr>
+    <tr><td class="n">2</td><td>s aadha farq</td><td>Dhaara = (D − U)/2. Pura farq nahi, aadha.</td></tr>
+    <tr><td class="n">3</td><td>Pehle speed, phir formula</td><td>"24 km 3 ghante mein" → pehle 24 ÷ 3 = 8 km/h banao.</td></tr>
+  </table></div>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Number line: U, b, D ek seedhi line par</h3>
+  <p><b>Kab use karo:</b> D aur U diye (ya unse banaye), b ya s pucha.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Number line with U = 10 at the left, b = 15 in the middle and D = 20 at the right. Each gap is s = 5. U to D is 2s = 10.">
+      <line x1="80" y1="80" x2="620" y2="80" class="ln" style="stroke-width:3"/>
+      <circle cx="140" cy="80" r="8" class="paper" stroke="var(--ch)" stroke-width="3"/>
+      <circle cx="350" cy="80" r="8" style="fill:var(--ch)"/>
+      <circle cx="560" cy="80" r="8" class="paper" stroke="var(--ch)" stroke-width="3"/>
+      <text x="140" y="56" text-anchor="middle" class="lbl">U = 10</text>
+      <text x="350" y="56" text-anchor="middle" class="lbl" style="fill:var(--ch)">b = 15</text>
+      <text x="560" y="56" text-anchor="middle" class="lbl">D = 20</text>
+      <g class="ln"><line x1="148" y1="104" x2="342" y2="104"/><line x1="358" y1="104" x2="552" y2="104"/></g>
+      <text x="245" y="122" text-anchor="middle" class="lbl">s = 5</text>
+      <text x="455" y="122" text-anchor="middle" class="lbl">s = 5</text>
+      <text x="350" y="158" text-anchor="middle" class="sm">b = beech ka number = (10 + 20)/2 · s = ek gap = (20 − 10)/2</text>
+    </svg>
+    </div>
+    <figcaption>U aur D ke theek beech b baitha hai. Har taraf ka gap = s. Isliye U se D tak = 2s.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 24 km downstream 3 h, 18 km upstream 6 h. b? · <i>~8 sec</i></span>
+    D = 8, U = 3. b = (8 + 3)/2 = <b>5.5 km/h</b>. (s = 2.5.)
+  </div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Ratio diya: jod aur farq</h3>
+  <p><b>Kab use karo:</b> "D : U = 9 : 4, toh b : s?"</p>
+  <p><b>Soch aise:</b> D = 9 hisse, U = 4 hisse. b = (9 + 4)/2, s = (9 − 4)/2. Dono mein "/2" hai, toh ratio mein kat jaata hai. <b>b : s = (D + U) : (D − U)</b>.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 190" role="img" aria-label="D is 9 blocks, U is 4 blocks. Adding gives 13 = 2b; subtracting gives 5 = 2s. So b to s = 13 to 5.">
+      <text x="10" y="40" class="lbl">D = 9</text>
+      <g>
+        <rect x="80" y="22" width="40" height="28" class="chf"/><rect x="122" y="22" width="40" height="28" class="chf"/><rect x="164" y="22" width="40" height="28" class="chf"/><rect x="206" y="22" width="40" height="28" class="chf"/><rect x="248" y="22" width="40" height="28" class="chf"/><rect x="290" y="22" width="40" height="28" class="chf"/><rect x="332" y="22" width="40" height="28" class="chf"/><rect x="374" y="22" width="40" height="28" class="chf"/><rect x="416" y="22" width="40" height="28" class="chf"/>
+      </g>
+      <text x="10" y="90" class="lbl">U = 4</text>
+      <g>
+        <rect x="80" y="72" width="40" height="28" class="paper" stroke="var(--ch)" stroke-width="2"/><rect x="122" y="72" width="40" height="28" class="paper" stroke="var(--ch)" stroke-width="2"/><rect x="164" y="72" width="40" height="28" class="paper" stroke="var(--ch)" stroke-width="2"/><rect x="206" y="72" width="40" height="28" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      </g>
+      <rect x="248" y="72" width="208" height="28" style="fill:var(--ch);opacity:.25"/>
+      <text x="352" y="91" text-anchor="middle" class="lbl">farq 5 = 2s</text>
+      <text x="480" y="40" class="sm">D + U = 13 = 2b</text>
+      <text x="480" y="91" class="sm">D − U = 5 = 2s</text>
+      <text x="350" y="150" text-anchor="middle" class="lbl" style="fill:var(--ch)">b : s = 13 : 5</text>
+      <text x="350" y="174" text-anchor="middle" class="sm">"/2" dono taraf hai, ratio mein kat jaata hai</text>
+    </svg>
+    </div>
+    <figcaption>Jod = 2b, farq = 2s. Ratio pucha ho toh seedha jod : farq likh do.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Aana-jaana ka kul time</h3>
+  <p><b>Kab use karo:</b> "90 km upstream jaakar wapas aaya, kul time?"</p>
+  <p><b>Soch aise:</b> jaate aur aate doori same, speed alag. Dono time alag nikaal kar jodo. Upstream dheema hai, wahi zyada time khaata hai.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 180" role="img" aria-label="Boat 9 km/h, stream 6 km/h. 90 km upstream at 3 km/h takes 30 hours; 90 km downstream at 15 km/h takes 6 hours. Total 36 hours. Bars drawn to scale.">
+      <text x="10" y="40" class="lbl">Upstream 9 − 6 = 3</text>
+      <rect x="180" y="22" width="450" height="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="405" y="42" text-anchor="middle" class="lbl">90 ÷ 3 = 30 h</text>
+      <text x="10" y="92" class="lbl">Downstream 9 + 6 = 15</text>
+      <rect x="180" y="74" width="90" height="30" class="chf"/><rect x="180" y="74" width="90" height="30" class="chs"/>
+      <text x="290" y="94" class="lbl">90 ÷ 15 = 6 h</text>
+      <line x1="180" y1="118" x2="630" y2="118" class="ln"/>
+      <g class="sm" text-anchor="middle"><text x="180" y="134">0</text><text x="330" y="134">10</text><text x="480" y="134">20</text><text x="630" y="134">30 h</text></g>
+      <text x="350" y="166" text-anchor="middle" class="lbl" style="fill:var(--ch)">kul = 30 + 6 = 36 h · bars scale par (15 px = 1 h)</text>
+    </svg>
+    </div>
+    <figcaption>Dhaara naav ke paas ho (6 aur 9), toh upstream bahut dheema ho jaata hai. Sab time wahin jaata hai.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> Option check: kul time kam se kam "upstream wala time" toh hoga hi. 30 h se kam koi option ho, kaat do.</div>
+
+  <!-- TYPES -->
+  <h3>Type 1 · D aur U (ya doori-time) diye, b ya s nikaalo (9 Qs)</h3>
+  <div class="box"><span class="k">Worked · 24 km downstream 3 h, wapas upstream 4 h. b aur s? <span class="tag p">PYQ</span> <small>DP Const · 22 Dec 2025</small><!--q:13-001--></span>
+    <b>Method:</b> number line · <i>~8 sec</i><br>
+    D = 8, U = 6. b = 7, s = 1 → <mark>7 km/h, 1 km/h</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · D : U = 9 : 4. b : s? <span class="tag p">PYQ</span> <small>MTS · 18 Feb 2025</small><!--q:13-015--></span>
+    <b>Method:</b> jod : farq · <i>~4 sec</i><br>
+    (9 + 4) : (9 − 4) = <mark>13 : 5</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> D 20, U 10 → <b>beech</b> → <mark>15 km/h</mark> <small>DP Const · 27 Dec 2025</small><!--q:13-002--></li>
+    <li><span class="tag p">PYQ</span> 24 km D 3 h (8), 18 km U 6 h (3) → <b>beech</b> → <mark>5.5 km/h</mark> <small>DP Const · 24 Dec 2025</small><!--q:13-003--></li>
+    <li><span class="tag p">PYQ</span> 24 km D 3 h (8), 12 km U 3 h (4) → <b>beech</b> → <mark>6 km/h</mark> <small>DP Const · 23 Dec 2025</small><!--q:13-004--></li>
+    <li><span class="tag p">PYQ</span> 80 km U 8 h (10), D 4 h (20) → <b>beech</b> → <mark>15</mark> <small>GD · 04 May 2026</small><!--q:13-007--></li>
+    <li><span class="tag p">PYQ</span> 36 km D 6 h (6), U 12 h (3) → <b>beech</b> → <mark>4.5 km/h</mark> <small>SP-XIV · 26 Jul 2025</small><!--q:13-016--></li>
+    <li><span class="tag p">PYQ</span> U 15, D 25; b − s? → b 20, s 5 → <mark>15</mark> (speeds photo se). Shortcut: b − s = U khud = 15. <small>GD · 28 Apr 2026</small><!--q:13-008--></li>
+    <li><span class="tag p">PYQ</span> 16 km D 2 h (8), U 4 h (4); dhaara? → <b>aadha farq</b>: (8 − 4)/2 → <mark>2 km/h</mark> (key mein 3 hai, note dekho) <small>DP Const · 30 Dec 2025</small><!--q:13-005--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP Const 30 Dec 2025 (16 km, 2 h aur 4 h): D = 8, U = 4. Dhaara = (8 − 4)/2 = <b>2 km/h</b>, naav = 6. Book ki key 3 km/h kehti hai, jo galat hai: s = 3 lo toh U = 3 aur D = 9 chahiye, par 16/2 = 8 hai, 9 nahi. Sahi jawab 2 km/h (option A).</div>
+
+  <h3>Type 2 · b aur s diye, D, U ya time nikaalo (7 Qs)</h3>
+  <div class="box"><span class="k">Worked · b = 9, s = 6. 90 km upstream jaakar wapas. Kul time? <span class="tag p">PYQ</span> <small>MTS · 16 Feb 2025</small><!--q:13-010--></span>
+    <b>Method:</b> aana-jaana · <i>~8 sec</i><br>
+    U = 3 → 30 h. D = 15 → 6 h. Kul <mark>36 h</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> b = 24, U = 16; s? → <b>b − U</b> → <mark>8</mark> (Hindi sawaal, photo se) <small>GD · 04 May 2026</small><!--q:13-006--></li>
+    <li><span class="tag p">PYQ</span> b = 25, U = 19; s? → <b>b − U</b> → <mark>6</mark> <small>MTS · 17 Feb 2025</small><!--q:13-012--></li>
+    <li><span class="tag p">PYQ</span> Shaant paani mein 72 km 8 h mein (b = 9), s = 6; D? → 9 + 6 → <mark>15</mark> <small>MTS · 16 Feb 2025</small><!--q:13-009--></li>
+    <li><span class="tag p">PYQ</span> b = 24, s = 13; U, D → 24 − 13, 24 + 13 → <mark>11, 37</mark> <small>MTS · 17 Feb 2025</small><!--q:13-011--></li>
+    <li><span class="tag p">PYQ</span> b = 18, s = 7; U, D → <mark>11, 25</mark> <small>MTS · 18 Feb 2025</small><!--q:13-013--></li>
+    <li><span class="tag p">PYQ</span> b = 18, s = 15; U → <mark>3</mark> <small>MTS · 18 Feb 2025</small><!--q:13-014--></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Dhaara = D − U (pura farq)</td><td>s = (D − U)/2. Aadha farq.</td></tr>
+    <tr><td>Doori aur time ko seedha speed maan lena</td><td>Pehle doori ÷ time = speed. 24 km, 3 h → 8.</td></tr>
+    <tr><td>"Shaant paani mein 72 km 8 h" ko downstream maan lena</td><td>Shaant paani = b. Downstream = b + s.</td></tr>
+    <tr><td>Aana-jaana ka avg speed = b</td><td>Kul doori ÷ kul time. Ye hamesha b se kam hota hai.</td></tr>
+    <tr><td>Ratio sawaal mein b : s = D : U</td><td>b : s = (D + U) : (D − U).</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Formula sheet (yaad karo)</span>
+    D = b + s · U = b − s · b = (D + U)/2 · s = (D − U)/2 · b : s = (D + U) : (D − U)<br>
+    <span class="tag x">CGL+</span> Aana-jaana (same doori d) ka kul time = d/(b + s) + d/(b − s) = 2db/(b² − s²).<br>
+    <span class="tag x">CGL+</span> Upstream mein time downstream ka k guna ho, toh b : s = (k + 1) : (k − 1). Jaise 2 guna → 3 : 1.
+  </div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 16 sawaal, saare yahan. 2 sawaal (Hindi wala aur 15/25 km/h wala) page ki photo se padhe. Ek key galat (DP Const 30 Dec 2025), upar note hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>D = 14, U = 8. b aur s?</summary><p>b = 11, s = 3.</p></details>
+    <details><summary>D : U = 5 : 3. b : s?</summary><p>8 : 2 = 4 : 1.</p></details>
+    <details><summary>b = 10, s = 2. 24 km jaakar wapas. Kul time?</summary><p>24/12 + 24/8 = 2 + 3 = 5 h.</p></details>
+    <details><summary>Upstream ka time downstream ka 3 guna. b : s?</summary><p>D : U = 3 : 1 → b : s = 4 : 2 = 2 : 1.</p></details>
+  </div>
+</section>
+
+
+<!-- ===================== MATHS · PIPE AND CISTERN ===================== -->
+<section class="chap" id="mpc2-pipe">
+  <div class="eyebrow">Maths · 31 questions</div>
+  <h2>Pipe &amp; Cistern: tank ko "litre" maan lo</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, SP-XIV, MTS, GD) · sabse zyada: bharne + khaali karne wale pipe ek saath, aur "itne hisse mein kitna time"</div>
+
+  <h3>Pehle ek chhoti si kahani: 12 litre ki balti</h3>
+  <p>Ek balti 12 litre ki hai. Nal A use 4 minute mein bharta hai. Nal B 6 minute mein.</p>
+  <ul>
+    <li>A har minute 12 ÷ 4 = <b>3 litre</b> daalta hai.</li>
+    <li>B har minute 12 ÷ 6 = <b>2 litre</b>.</li>
+    <li>Dono saath: 3 + 2 = <b>5 litre</b> har minute. 12 litre bharne mein 12 ÷ 5 = <b>2.4 minute</b>.</li>
+  </ul>
+  <p>Dhyaan do: humne balti 12 litre ki kyun li? Kyunki 12, 4 aur 6 dono se kat jaata hai (LCM). Sawaal mein balti ka size diya hi nahi hota. Toh <b>tank = LCM litre maan lo</b>, aur saara fraction gayab.</p>
+  <p>Aur agar ek chhed (leak) ho jo 12 minute mein khaali karta hai? Wo har minute 1 litre <b>nikaalta</b> hai. Bas use minus likho: 3 + 2 − 1 = 4 litre/minute → 3 minute.</p>
+
+  <h3>4 bade idea</h3>
+  <div class="tbl"><table>
+    <tr><th>#</th><th>Idea</th><th>Ek line mein</th></tr>
+    <tr><td class="n">1</td><td>Time ko rate banao</td><td>"10 minute mein bharta hai" = har minute tank ka 1/10.</td></tr>
+    <tr><td class="n">2</td><td>Tank = LCM</td><td>Saare time ka LCM = tank ke litre. Rate poore number ban jaate hain.</td></tr>
+    <tr><td class="n">3</td><td>Khaali karne wala = minus</td><td>Inlet jodo, outlet ghatao. Net rate se bhaag do.</td></tr>
+    <tr><td class="n">4</td><td>Hissa ∝ time</td><td>1/5 tank 36 min mein → poora 5 × 36. Unitary method.</td></tr>
+  </table></div>
+  <p>Time and Work wala hi chapter hai. Aadmi ki jagah pipe, kaam ki jagah tank. Neeche 5 tareeke.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · LCM = tank (efficiency method)</h3>
+  <p><b>Kab use karo:</b> do ya zyada pipe ka time diya, saath mein time pucha.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Tank of 48 units, the LCM of 16 and 24. Pipe A fills in 16 minutes so 3 units per minute. Pipe B fills in 24 minutes so 2 units per minute. Together 5 units per minute.">
+      <rect x="40" y="30" width="160" height="200" class="paper" stroke="var(--fg)" stroke-width="2"/>
+      <rect x="40" y="105" width="160" height="125" class="chf"/>
+      <g class="ln" stroke-dasharray="2 4">
+        <line x1="40" y1="80" x2="200" y2="80"/><line x1="40" y1="130" x2="200" y2="130"/><line x1="40" y1="180" x2="200" y2="180"/>
+      </g>
+      <text x="120" y="60" text-anchor="middle" class="lbl">Tank = 48</text>
+      <text x="120" y="76" text-anchor="middle" class="sm">LCM(16, 24)</text>
+      <text x="120" y="250" text-anchor="middle" class="sm">"48 litre" maan liya</text>
+      <rect x="260" y="40" width="200" height="56" rx="8" class="chf"/><rect x="260" y="40" width="200" height="56" rx="8" class="chs"/>
+      <text x="360" y="64" text-anchor="middle" class="lbl">Pipe A: 16 min</text>
+      <text x="360" y="84" text-anchor="middle" class="sm">48 ÷ 16 = 3 / min</text>
+      <rect x="260" y="112" width="200" height="56" rx="8" class="chf"/><rect x="260" y="112" width="200" height="56" rx="8" class="chs"/>
+      <text x="360" y="136" text-anchor="middle" class="lbl">Pipe B: 24 min</text>
+      <text x="360" y="156" text-anchor="middle" class="sm">48 ÷ 24 = 2 / min</text>
+      <g class="ln"><line x1="258" y1="68" x2="204" y2="90"/><line x1="258" y1="140" x2="204" y2="120"/></g>
+      <rect x="500" y="76" width="180" height="56" rx="8" style="fill:var(--ch)"/>
+      <text x="590" y="100" text-anchor="middle" class="lbl" style="fill:var(--paper)">Saath: 5 / min</text>
+      <text x="590" y="120" text-anchor="middle" class="lbl" style="fill:var(--paper)">48 ÷ 5 = 9.6 min</text>
+      <text x="470" y="200" class="sm">rate = tank ÷ time</text>
+      <text x="470" y="220" class="sm">time = tank ÷ rate</text>
+    </svg>
+    </div>
+    <figcaption>Tank ka size tum chuno: LCM. Phir har pipe ki "speed" litre per minute mein. Koi fraction nahi.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · A 20 min, B 30 min, saath? · <i>~6 sec</i></span>
+    LCM 60. A = 3, B = 2 → 5/min. 60 ÷ 5 = <b>12 min</b>.
+  </div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Inlet jodo, outlet ghatao</h3>
+  <p><b>Kab use karo:</b> "leak", "drain", "empty" wala pipe bhi khula hai.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Pipes filling in 6 and 8 hours and a leak emptying in 12 hours. LCM 24. Rates +4, +3 and -2 per hour. Net 5 per hour, so 24 divided by 5 = 4.8 hours = 4 hours 48 minutes.">
+      <line x1="300" y1="20" x2="300" y2="180" class="ln" style="stroke-width:2"/>
+      <text x="300" y="196" text-anchor="middle" class="sm">0</text>
+      <text x="10" y="44" class="lbl">Pipe 1 (6 h)</text>
+      <rect x="300" y="28" width="160" height="26" class="chf"/><rect x="300" y="28" width="160" height="26" class="chs"/>
+      <text x="470" y="46" class="lbl">+4</text>
+      <text x="10" y="84" class="lbl">Pipe 2 (8 h)</text>
+      <rect x="300" y="68" width="120" height="26" class="chf"/><rect x="300" y="68" width="120" height="26" class="chs"/>
+      <text x="430" y="86" class="lbl">+3</text>
+      <text x="10" y="124" class="lbl">Leak (12 h)</text>
+      <rect x="220" y="108" width="80" height="26" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="210" y="126" text-anchor="end" class="lbl">−2</text>
+      <text x="10" y="164" class="lbl" style="fill:var(--ch)">Net</text>
+      <rect x="300" y="148" width="200" height="26" style="fill:var(--ch)"/>
+      <text x="510" y="166" class="lbl" style="fill:var(--ch)">+5 / h</text>
+      <text x="350" y="222" text-anchor="middle" class="lbl">Tank 24 (LCM) ÷ 5 = 4.8 h = 4 h 48 min</text>
+    </svg>
+    </div>
+    <figcaption>Bharne wale right (+), khaali karne wala left (−). Net = jo bacha. Scale: 40 px = 1 litre/ghanta.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> Net minus aaye toh tank khaali ho raha hai. "Aadha bhara tank" ya "1/4 bhara tank" diya ho toh sirf utna hi khaali karna hai: (bhara hissa) ÷ (net khaali rate).</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Beech mein kuch badla: tukdon mein chalo</h3>
+  <p><b>Kab use karo:</b> "4 minute baad A ka rate dugna", "3 ghante baad A band", "aadha bharne ke baad 7 nal aur khole".</p>
+  <p><b>Soch aise:</b> timeline banao. Pehle tukde mein kitna bhara, wo ghatao. Bache hisse ko naye rate se bhaag do.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Timeline for tank 48. Minutes 0 to 4: A and B at 3 + 2 = 5 per minute fill 20. After 4 minutes A doubles to 6 and B halves to 1, so 7 per minute. Remaining 28 takes 4 more minutes.">
+      <rect x="60" y="50" width="580" height="50" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <rect x="60" y="50" width="242" height="50" class="chf"/><rect x="60" y="50" width="242" height="50" class="chs"/>
+      <rect x="302" y="50" width="338" height="50" style="fill:var(--ch);opacity:.35"/>
+      <text x="181" y="80" text-anchor="middle" class="lbl">20 bhara</text>
+      <text x="471" y="80" text-anchor="middle" class="lbl">28 bacha</text>
+      <text x="350" y="36" text-anchor="middle" class="sm">tank = 48 (LCM 16, 24) · scale par</text>
+      <text x="181" y="124" text-anchor="middle" class="lbl">0 → 4 min</text>
+      <text x="181" y="142" text-anchor="middle" class="sm">A 3 + B 2 = 5/min × 4</text>
+      <text x="471" y="124" text-anchor="middle" class="lbl">agle ? min</text>
+      <text x="471" y="142" text-anchor="middle" class="sm">A dugna 6 + B aadha 1 = 7/min</text>
+      <line x1="302" y1="44" x2="302" y2="106" style="stroke:var(--fg);stroke-width:2"/>
+      <text x="350" y="186" text-anchor="middle" class="lbl" style="fill:var(--ch)">28 ÷ 7 = 4 min aur</text>
+      <text x="350" y="208" text-anchor="middle" class="sm">CGL 17 Sep 2025 ka sawaal · rate badla toh sirf "per minute" number badlo, tank wahi</text>
+    </svg>
+    </div>
+    <figcaption>Do tukde, do rate. Tank ka LCM wahi rehta hai, sirf har tukde ka rate naya.</figcaption>
+  </figure>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · AB, BC, CA diye: jodo aur aadha karo</h3>
+  <p><b>Kab use karo:</b> "A aur B 12 min, B aur C 15 min, C aur A 20 min".</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Tank 60 units. A plus B = 5, B plus C = 4, C plus A = 3 per minute. Adding the three pairs counts every pipe twice: 12 = 2 times (A + B + C), so A + B + C = 6. Then C = 6 - 5 = 1, A = 6 - 4 = 2, B = 6 - 3 = 3.">
+      <text x="10" y="24" class="sm">Tank = LCM(12, 15, 20) = 60</text>
+      <g>
+        <rect x="20" y="40" width="190" height="44" rx="8" class="chf"/><rect x="20" y="40" width="190" height="44" rx="8" class="chs"/>
+        <rect x="255" y="40" width="190" height="44" rx="8" class="chf"/><rect x="255" y="40" width="190" height="44" rx="8" class="chs"/>
+        <rect x="490" y="40" width="190" height="44" rx="8" class="chf"/><rect x="490" y="40" width="190" height="44" rx="8" class="chs"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="115" y="67">A + B = 60/12 = 5</text><text x="350" y="67">B + C = 60/15 = 4</text><text x="585" y="67">C + A = 60/20 = 3</text></g>
+      <g class="ln"><line x1="115" y1="86" x2="330" y2="118"/><line x1="350" y1="86" x2="350" y2="118"/><line x1="585" y1="86" x2="370" y2="118"/></g>
+      <rect x="200" y="120" width="300" height="40" rx="8" style="fill:var(--ch)"/>
+      <text x="350" y="146" text-anchor="middle" class="lbl" style="fill:var(--paper)">5 + 4 + 3 = 12 = 2 × (A + B + C)</text>
+      <text x="350" y="184" text-anchor="middle" class="lbl">A + B + C = 6 → C = 6 − 5 = 1 · A = 6 − 4 = 2 · B = 6 − 3 = 3</text>
+      <text x="350" y="208" text-anchor="middle" class="sm">har pipe do jodi mein aata hai, isliye jod = dugna</text>
+    </svg>
+    </div>
+    <figcaption>Teeno jodi jodo, aadha karo: teeno ka rate. Phir jo pipe chahiye, uske bina wali jodi ghata do.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> Teeno saath ka time diya ho (A + B + C = 9 min) toh jodne ki zaroorat nahi. Seedha ghatao: B = (A + B + C) − (C + A).</div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Hissa aur time (unitary)</h3>
+  <p><b>Kab use karo:</b> "1/5 tank 36 min mein khaali, poora kitne mein?" ya "20 ghante mein khaali, 5 ghante mein kitna?"</p>
+  <p><b>Soch aise:</b> ek hi pipe hai toh hissa aur time seedhe ratio mein. Poora = hissa ka ulta × time. 1/5 → 5 × 36 = 180. 3/8 → 8/3 × 15 = 40.</p>
+  <div class="box"><span class="k">Demo · Tank 3/5 bhara hai, 20 L daalne par 7/10. Poora tank? · <i>~6 sec</i></span>
+    7/10 − 3/5 = 7/10 − 6/10 = 1/10 = 20 L → tank = <b>200 L</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> Pumps ya nal "zyada khole" toh <b>pump-ghante</b> gino. 8 pump × 15 h = 120 pump-ghante ka tank. Bilkul Time and Work ka man-days.</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL, CHSL, CPO, SP-XIV, MTS (2025) aur GD (2026). Upar ki tarah.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Ek pipe: hissa, time aur litre (15 Qs)</h3>
+  <div class="box"><span class="k">Worked · Ek nal tank 14 h mein bharta hai. Aadha bharne ke baad 7 aur waise hi nal khole. Kul time? <span class="tag p">PYQ</span> <small>CGL · 21 Sep 2025</small><!--q:12-005--></span>
+    <b>Method:</b> hissa ∝ time, nal ka guna · <i>~12 sec</i><br>
+    Aadha = 7 h. Ab 8 nal → baaki aadha 7/8 h = 52.5 min.<br>
+    Kul = <mark>7 h 52 min 30 s</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Aadmi har 3 min mein 4 L, aurat har 4 min mein 3 L. 100 L kitne min mein? <span class="tag p">PYQ</span> <small>CGL · 20 Sep 2025</small><!--q:12-004--></span>
+    <b>Method:</b> LCM time · <i>~10 sec</i><br>
+    12 min mein: aadmi 16 L, aurat 9 L → 25 L. 100 L = 4 × 25 → 4 × 12 = <mark>48 min</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 3/5 bhara, 20 L daalo toh 7/10 → <b>farq 1/10 = 20</b> → <mark>200 L</mark> (fractions photo se) <small>CHSL · 12 Nov 2025</small><!--q:12-007--></li>
+    <li><span class="tag p">PYQ</span> 4.5 min mein 2¼ L; 5.625 L kitne min? → 0.5 L/min → 5.625 ÷ 0.5 → <mark>11.25 min</mark> (2¼ photo se) <small>CPO · 09 Dec 2025</small><!--q:12-014--></li>
+    <li><span class="tag p">PYQ</span> 3/8 tank 15 min mein; poora → 15 × 8/3 → <mark>40 min</mark> (3/8 photo se) <small>CPO · 12 Dec 2025</small><!--q:12-015--></li>
+    <li><span class="tag p">PYQ</span> 100 min mein bharta; 80% kitne second? → 80 min × 60 → <mark>4800 s</mark> <small>GD · 05 May 2026</small><!--q:12-016--></li>
+    <li><span class="tag p">PYQ</span> 1/5 tank 36 min mein khaali; poora → 5 × 36 → <mark>180 min</mark> (1/5 photo se) <small>GD · 06 May 2026</small><!--q:12-017--></li>
+    <li><span class="tag p">PYQ</span> 20 h mein khaali; 5 h mein kitna → 5/20 → <mark>1/4</mark> (options photo se) <small>GD · 06 May 2026</small><!--q:12-018--></li>
+    <li><span class="tag p">PYQ</span> 36 h mein khaali; 6 h mein → 6/36 → <mark>1/6</mark> (options photo se) <small>GD · 18 May 2026</small><!--q:12-022--></li>
+    <li><span class="tag p">PYQ</span> 1/4 tank 8 min; 1/2 tank → dugna → <mark>16 min</mark> <small>GD · 07 May 2026</small><!--q:12-019--></li>
+    <li><span class="tag p">PYQ</span> 1/3 tank 45 min; poora → 3 × 45 → <mark>135 min</mark> <small>GD · 08 May 2026</small><!--q:12-020--></li>
+    <li><span class="tag p">PYQ</span> 48 min mein khaali; "… part" kitne min (fraction scan mein ud gaya; key 8 min = 1/6 tank se milti hai) → 48 ÷ 6 → <mark>8 min</mark> <small>GD · 09 May 2026</small><!--q:12-021--></li>
+    <li><span class="tag p">PYQ</span> 36 min mein khaali; 1/4 tank → 36 ÷ 4 → <mark>9 min</mark> <small>GD · 25 May 2026</small><!--q:12-024--></li>
+    <li><span class="tag p">PYQ</span> 27.5 L tank, 3/8 beh gaya; bacha → 27.5 × 5/8 → <mark>17.1875 L</mark> <small>SP-XIV · 28 Jul 2025</small><!--q:12-031--></li>
+    <li><span class="tag p">PYQ</span> 3600 L tanker, 3/4 paani istemaal; bacha → 3600 ÷ 4 → <mark>900 L</mark> <small>SP-XIV · 29 Aug 2025</small><!--q:12-029--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Sawaal ki bhasha</span>SP-XIV 29 Aug 2025 (tanker): "four-fifth of its capacity" wala hissa sawaal mein galti se chhapa lagta hai. Usse koi option nahi banta. Key ka 900 L seedha "3600 ka 3/4 use hua, 1/4 bacha" se aata hai. Wahi lagao.</div>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Saare pipe ek saath, kuch bharte kuch khaali karte (7 Qs)</h3>
+  <div class="box"><span class="k">Worked · A 12 h, B 15 h bharte; C 10 h mein khaali. Teeno saath? <span class="tag p">PYQ</span> <small>SP-XIV · 25 Jul 2025</small><!--q:12-027--></span>
+    <b>Method:</b> LCM + minus · <i>~8 sec</i><br>
+    LCM 60: A 5, B 4, C −6 → net 3/h. 60 ÷ 3 = <mark>20 h</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Ek pipe 14 h mein bharta, doosra 8 h mein khaali. Tank 1/4 bhara hai. Dono khole, kab khaali? <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small><!--q:12-008--></span>
+    <b>Method:</b> net khaali rate · <i>~12 sec</i><br>
+    LCM 56: bhare +4, khaali −7 → net −3/h. Bhara hissa 56/4 = 14.<br>
+    14 ÷ 3 = 4⅔ h = <mark>4 h 40 min</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> A 20, B 30 bharte; C 60 khaali → <b>LCM 60</b>: 3 + 2 − 1 = 4 → <mark>15 min</mark> <small>CGL · 17 Sep 2025</small><!--q:12-002--></li>
+    <li><span class="tag p">PYQ</span> 6 min, 4 min bharte; 3 min khaali → <b>LCM 12</b>: 2 + 3 − 4 = 1 → <mark>12 min</mark> <small>CGL · 24 Sep 2025</small><!--q:12-006--></li>
+    <li><span class="tag p">PYQ</span> 2⅔ h bharta, 4 h khaali → <b>LCM 8</b>: 8 ÷ (8/3) = 3, 8 ÷ 4 = 2 → net 1 → <mark>8 h</mark> <small>CPO · 09 Dec 2025</small><!--q:12-013--></li>
+    <li><span class="tag p">PYQ</span> 6 h, 8 h bharte; leak 12 h → <b>LCM 24</b>: 4 + 3 − 2 = 5 → 4.8 h → <mark>4 h 48 min</mark> <small>MTS · 17 Feb 2025</small><!--q:12-026--></li>
+    <li><span class="tag p">PYQ</span> A 10 h, B 20 h; C 25 h khaali → <b>LCM 100</b>: 10 + 5 − 4 = 11 → 100/11 → <mark>9.09 h</mark> <small>SP-XIV · 29 Aug 2025</small><!--q:12-028--></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Beech mein rate badla, pipe band hua ya pump jude (5 Qs)</h3>
+  <div class="box"><span class="k">Worked · A 16 min, B 24 min. 4 min baad A ka rate dugna, B ka aadha. Aur kitne min? <span class="tag p">PYQ</span> <small>CGL · 17 Sep 2025</small><!--q:12-001--></span>
+    <b>Method:</b> timeline (picture wala) · <i>~15 sec</i><br>
+    LCM 48: 5/min × 4 = 20. Bacha 28. Naya 6 + 1 = 7 → <mark>4 min</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> A 18, B 24; 6 min baad A aadha, B dugna → <b>LCM 72</b>: (4 + 3) × 6 = 42, bacha 30; naya 2 + 6 = 8 → 3.75 min → <mark>3 min 45 s</mark> <small>CGL · 19 Sep 2025</small><!--q:12-003--></li>
+    <li><span class="tag p">PYQ</span> A 18 h, B 24 h; 3 h baad A band → <b>LCM 72</b>: 7 × 3 = 21, bacha 51 ÷ 3 → <mark>17 h</mark> <small>SP-XIV · 31 Jul 2025</small><!--q:12-030--></li>
+    <li><span class="tag p">PYQ</span> P1 5 h, P2 10 h; P3 20 h khaali; 1 h baad P3 khula → <b>LCM 20</b>: 4 + 2 = 6 pehle ghante; bacha 14 ÷ (6 − 1) = 2.8 → kul 3.8 = <mark>19/5 h</mark> <small>MTS · 06 Feb 2025</small><!--q:12-025--></li>
+    <li><span class="tag p">PYQ</span> 8 pump 15 h; 5 h baad 4 aur jude → <b>pump-ghante</b>: tank 120; 40 hue, 80 ÷ 12 = 6.67 → kul <mark>11.67 h</mark> <small>GD · 25 May 2026</small><!--q:12-023--></li>
+  </ul>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Jodi mein time diye (AB, BC, CA) (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · AB 12, BC 15, CA 20 min. Pehle sirf C khula, L min baad A aur B bhi khule, phir 5 min mein bhar gaya. L? <span class="tag p">PYQ</span> <small>CHSL · 29 Nov 2025</small><!--q:12-011--></span>
+    <b>Method:</b> jodi jodo, aadha · <i>~20 sec</i><br>
+    LCM 60: 5 + 4 + 3 = 12 → teeno = 6, C = 6 − 5 = 1.<br>
+    Aakhri 5 min teeno: 30. Baaki 30 sirf C ne (1/min) → L = <mark>30</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> AB 16, BC 20, CA 24; wahi kahaani, 4 min → <b>LCM 240</b>: 15 + 12 + 10 = 37 → teeno 18.5, C = 3.5; aakhri 4 min = 74; C ne 166 → L = 166/3.5 → <mark>332/7</mark> <small>CHSL · 25 Nov 2025</small><!--q:12-010--></li>
+    <li><span class="tag p">PYQ</span> ABC 9, BC 12, CA 18; B? → <b>LCM 36</b>: 4, 3, 2 → B = 4 − 2 = 2 → <mark>18 min</mark> <small>CHSL · 25 Nov 2025</small><!--q:12-009--></li>
+    <li><span class="tag p">PYQ</span> ABC 20, BC 30, CA 24; B? → <b>LCM 120</b>: 6, 4, 5 → B = 6 − 5 = 1 → <mark>120 min</mark> <small>CHSL · 29 Nov 2025</small><!--q:12-012--></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Time jod dena (A 20 + B 30 = 50 min)</td><td>Rate jodo, time nahi. Saath mein hamesha sabse tez pipe se bhi kam time.</td></tr>
+    <tr><td>Leak ko bhi plus kar dena</td><td>Khaali karne wala = minus.</td></tr>
+    <tr><td>Rate badalne ke baad pura tank naye rate se</td><td>Pehle tukde ka bhara hissa ghatao, sirf bacha hissa.</td></tr>
+    <tr><td>"Aur kitne minute" pucha, kul time likh diya</td><td>Aakhri line padho: "more minutes" = sirf baad wala tukda.</td></tr>
+    <tr><td>Jodi (AB + BC + CA) ka jod hi teeno ka rate maan lena</td><td>Jod = 2 × (A + B + C). Aadha karo.</td></tr>
+    <tr><td>Tank pehle se aadha bhara, phir bhi poora tank lena</td><td>Sirf utna hissa jitna bachaa ya bhara hai.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Formula / value sheet (yaad karo)</span>
+    Rate = tank ÷ time · Tank = sab time ka LCM · Saath ka time = tank ÷ (inlet jod − outlet jod)<br>
+    Do pipe a aur b (bharte): saath = ab/(a + b) · ek bhare a, ek khaali b (b &gt; a): ab/(b − a)<br>
+    AB + BC + CA = 2(A + B + C) · Hissa ∝ time (ek hi pipe) · Pump × ghante = tank<br>
+    <span class="tag x">CGL+</span> Teen pipe a, b, c saath (sab bharte) = abc/(ab + bc + ca). Jaise 6, 4 aur 12 → 288/(24 + 48 + 72) = 2 h.
+  </div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 31 sawaal, saare yahan. 6 sawaal ke number scan mein ude the (3/5 aur 7/10, 2¼ L, 3/8, 1/5, aur do "kitna hissa" ke options); ye page ki photo se padhe. Ek sawaal (GD 9 May 2026, 48 min) ka fraction photo mein bhi nahi tha; key ke 8 min se 1/6 tank maana hai. Tanker wale sawaal ki bhasha gadbad hai, note upar hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>A 10 min, B 15 min. Saath?</summary><p>LCM 30: 3 + 2 = 5 → 6 min.</p></details>
+    <details><summary>Bharne wala 6 h, khaali karne wala 9 h. Saath?</summary><p>LCM 18: 3 − 2 = 1 → 18 h.</p></details>
+    <details><summary>AB 10, BC 12, CA 15 min. Teeno saath?</summary><p>LCM 60: 6 + 5 + 4 = 15 → teeno 7.5/min → 8 min.</p></details>
+    <details><summary>2/7 tank 10 min mein. Poora?</summary><p>10 × 7/2 = 35 min.</p></details>
+  </div>
+</section>

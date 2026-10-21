@@ -1,0 +1,995 @@
+<!-- ===================== MATHS · PROFIT & LOSS (part 1: basics + speed methods) ===================== -->
+<section class="chap" id="mpl-basics">
+  <div class="eyebrow">Maths · 241 questions</div>
+  <h2>Profit &amp; Loss: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, SP-XIV, MTS, Delhi Police, GD 2026) · sabse zyada: seedha CP / SP / %, ratio wale, "₹x zyada mein bechta toh", articles wale, same SP par ±%</div>
+
+  <h3>Pehle ek chhoti si kahani: ₹100 ka pen</h3>
+  <p>Ek dukaandaar ne pen <b>₹100</b> mein khareeda. Usne wo pen <b>₹120</b> mein bech diya.</p>
+  <ul>
+    <li>Jo diya, wo hai <b>CP</b> (cost price, khareed ki keemat) = ₹100.</li>
+    <li>Jo mila, wo hai <b>SP</b> (selling price, bikri ki keemat) = ₹120.</li>
+    <li>Bacha ₹20. Ye <b>profit</b> hai. SP &gt; CP toh profit, SP &lt; CP toh loss.</li>
+  </ul>
+  <p>Ab socho, ₹20 ka profit bada hai ya chhota? Ye depend karta hai ki kitne paise lagaye the. ₹100 lagakar ₹20 bache, matlab har ₹100 par ₹20. Isliye profit <b>20%</b>.</p>
+  <p>Agar wahi pen ₹90 mein bechta, toh ₹10 ka nuksaan. ₹100 par ₹10 = <b>10% loss</b>.</p>
+  <div class="box"><span class="k">Teen baatein, jinse saara chapter nikalta hai</span>
+    <b>1. Profit % aur loss % hamesha CP par.</b> Profit % = profit ÷ CP × 100. Jab tak sawaal khud "on selling price" na bole.<br>
+    <b>2. CP = 100 maan lo.</b> 20% profit → SP = 120. 15% loss → SP = 85. Ab koi formula nahi chahiye.<br>
+    <b>3. Percentage = fraction.</b> 20% = 1/5. Matlab profit, CP ka 1/5 hai. CP = 5 hisse, profit = 1 hissa, SP = 6 hisse. Yaani <b>CP : SP = 5 : 6</b>.
+  </div>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Parts picture. Profit 20 percent: CP is 5 blocks, SP is 6 blocks, the sixth block is profit, so CP to SP is 5 to 6. Loss 25 percent: CP is 4 blocks, SP is 3 blocks, the missing fourth block is loss, so CP to SP is 4 to 3.">
+      <text x="12" y="22" class="lbl" style="fill:var(--ch)">Profit 20% = 1/5</text>
+      <text x="12" y="62" class="lbl">CP</text>
+      <g>
+        <rect x="150" y="42" width="60" height="32" rx="4" class="chf"/><rect x="214" y="42" width="60" height="32" rx="4" class="chf"/><rect x="278" y="42" width="60" height="32" rx="4" class="chf"/><rect x="342" y="42" width="60" height="32" rx="4" class="chf"/><rect x="406" y="42" width="60" height="32" rx="4" class="chf"/>
+      </g>
+      <text x="12" y="104" class="lbl">SP</text>
+      <g>
+        <rect x="150" y="84" width="60" height="32" rx="4" class="chf"/><rect x="214" y="84" width="60" height="32" rx="4" class="chf"/><rect x="278" y="84" width="60" height="32" rx="4" class="chf"/><rect x="342" y="84" width="60" height="32" rx="4" class="chf"/><rect x="406" y="84" width="60" height="32" rx="4" class="chf"/>
+        <rect x="470" y="84" width="60" height="32" rx="4" style="fill:var(--ch)"/>
+      </g>
+      <text x="500" y="105" text-anchor="middle" class="lbl" style="fill:var(--paper)">profit</text>
+      <text x="545" y="62" class="lbl">CP : SP = 5 : 6</text>
+      <text x="545" y="104" class="sm">profit = 1 hissa</text>
+      <line x1="12" y1="138" x2="688" y2="138" class="ln" stroke-dasharray="3 4"/>
+      <text x="12" y="164" class="lbl" style="fill:var(--ch)">Loss 25% = 1/4</text>
+      <text x="12" y="204" class="lbl">CP</text>
+      <g>
+        <rect x="150" y="184" width="60" height="32" rx="4" class="chf"/><rect x="214" y="184" width="60" height="32" rx="4" class="chf"/><rect x="278" y="184" width="60" height="32" rx="4" class="chf"/><rect x="342" y="184" width="60" height="32" rx="4" class="chf"/>
+      </g>
+      <text x="12" y="246" class="lbl">SP</text>
+      <g>
+        <rect x="150" y="226" width="60" height="32" rx="4" class="chf"/><rect x="214" y="226" width="60" height="32" rx="4" class="chf"/><rect x="278" y="226" width="60" height="32" rx="4" class="chf"/>
+        <rect x="342" y="226" width="60" height="32" rx="4" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      </g>
+      <text x="372" y="247" text-anchor="middle" class="sm">loss</text>
+      <text x="545" y="204" class="lbl">CP : SP = 4 : 3</text>
+      <text x="545" y="246" class="sm">loss = 1 hissa</text>
+    </svg>
+    </div>
+    <figcaption>% ko hisson mein dekho. Profit mein SP ek hissa lamba, loss mein ek hissa chhota. Hisse = denominator.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Ab naam rakh dete hain</span>
+    Profit = SP − CP. Loss = CP − SP. Profit % = (profit ÷ CP) × 100.<br>
+    SP = CP × (100 + p)/100. CP = SP × 100/(100 + p). Loss mein + ki jagah −.<br>
+    Ye formulas wahi "CP = 100 maan lo" wali baat hain. Ratta mat maaro, kahani yaad rakho.
+  </div>
+  <p>Paper mein ek sawaal ke liye lagbhag <b>36 second</b> milte hain. Wahan koi lamba bhaag nahi karega. Neeche 9 tareeke hain jo rough mein, jaldi chalte hain.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · % ko fraction banao, CP : SP ratio likho</h3>
+  <p><b>Kab use karo:</b> jab % saaf fraction ban jaye: 10, 12½, 16⅔, 20, 25, 33⅓, 40, 50%. SSC ke aadhe se zyada sawaal isi se 5–10 second mein nikalte hain.</p>
+  <p><b>Soch aise:</b> 25% = 1/4. CP 4 hisse, profit 1 hissa, SP 5 hisse. Toh profit mein CP : SP = 4 : 5. Loss mein CP : SP = 4 : 3. Ab SP diya ho ya CP, bas ek hissa ki value nikaalo.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 232" role="img" aria-label="Twelve cards. Each card shows a percent, its fraction, CP to SP ratio for that profit and CP to SP ratio for that loss. 5 percent 1/20, 20:21, 20:19. 10 percent 1/10, 10:11, 10:9. 12.5 percent 1/8, 8:9, 8:7. 15 percent 3/20, 20:23, 20:17. 16 and two-thirds percent 1/6, 6:7, 6:5. 20 percent 1/5, 5:6, 5:4. 25 percent 1/4, 4:5, 4:3. 30 percent 3/10, 10:13, 10:7. 33 and a third percent 1/3, 3:4, 3:2. 40 percent 2/5, 5:7, 5:3. 50 percent 1/2, 2:3, 2:1. 60 percent 3/5, 5:8, 5:2.">
+      <g>
+        <rect x="6" y="6" width="110" height="94" rx="6" class="chf"/><rect x="122" y="6" width="110" height="94" rx="6" class="chf"/><rect x="238" y="6" width="110" height="94" rx="6" class="chf"/><rect x="354" y="6" width="110" height="94" rx="6" class="chf"/><rect x="470" y="6" width="110" height="94" rx="6" class="chf"/><rect x="586" y="6" width="110" height="94" rx="6" class="chf"/>
+        <rect x="6" y="108" width="110" height="94" rx="6" class="chf"/><rect x="122" y="108" width="110" height="94" rx="6" class="chf"/><rect x="238" y="108" width="110" height="94" rx="6" class="chf"/><rect x="354" y="108" width="110" height="94" rx="6" class="chf"/><rect x="470" y="108" width="110" height="94" rx="6" class="chf"/><rect x="586" y="108" width="110" height="94" rx="6" class="chf"/>
+        <rect x="122" y="6" width="110" height="94" rx="6" class="chs"/><rect x="586" y="6" width="110" height="94" rx="6" class="chs"/><rect x="6" y="108" width="110" height="94" rx="6" class="chs"/><rect x="354" y="108" width="110" height="94" rx="6" class="chs"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="61" y="28" class="lbl">5%</text><text x="61" y="48" class="lbl" style="fill:var(--ch)">1/20</text><text x="61" y="70" class="sm">profit 20 : 21</text><text x="61" y="88" class="sm">loss 20 : 19</text>
+        <text x="177" y="28" class="lbl">10%</text><text x="177" y="48" class="lbl" style="fill:var(--ch)">1/10</text><text x="177" y="70" class="sm">profit 10 : 11</text><text x="177" y="88" class="sm">loss 10 : 9</text>
+        <text x="293" y="28" class="lbl">12½%</text><text x="293" y="48" class="lbl" style="fill:var(--ch)">1/8</text><text x="293" y="70" class="sm">profit 8 : 9</text><text x="293" y="88" class="sm">loss 8 : 7</text>
+        <text x="409" y="28" class="lbl">15%</text><text x="409" y="48" class="lbl" style="fill:var(--ch)">3/20</text><text x="409" y="70" class="sm">profit 20 : 23</text><text x="409" y="88" class="sm">loss 20 : 17</text>
+        <text x="525" y="28" class="lbl">16⅔%</text><text x="525" y="48" class="lbl" style="fill:var(--ch)">1/6</text><text x="525" y="70" class="sm">profit 6 : 7</text><text x="525" y="88" class="sm">loss 6 : 5</text>
+        <text x="641" y="28" class="lbl">20%</text><text x="641" y="48" class="lbl" style="fill:var(--ch)">1/5</text><text x="641" y="70" class="sm">profit 5 : 6</text><text x="641" y="88" class="sm">loss 5 : 4</text>
+        <text x="61" y="130" class="lbl">25%</text><text x="61" y="150" class="lbl" style="fill:var(--ch)">1/4</text><text x="61" y="172" class="sm">profit 4 : 5</text><text x="61" y="190" class="sm">loss 4 : 3</text>
+        <text x="177" y="130" class="lbl">30%</text><text x="177" y="150" class="lbl" style="fill:var(--ch)">3/10</text><text x="177" y="172" class="sm">profit 10 : 13</text><text x="177" y="190" class="sm">loss 10 : 7</text>
+        <text x="293" y="130" class="lbl">33⅓%</text><text x="293" y="150" class="lbl" style="fill:var(--ch)">1/3</text><text x="293" y="172" class="sm">profit 3 : 4</text><text x="293" y="190" class="sm">loss 3 : 2</text>
+        <text x="409" y="130" class="lbl">40%</text><text x="409" y="150" class="lbl" style="fill:var(--ch)">2/5</text><text x="409" y="172" class="sm">profit 5 : 7</text><text x="409" y="190" class="sm">loss 5 : 3</text>
+        <text x="525" y="130" class="lbl">50%</text><text x="525" y="150" class="lbl" style="fill:var(--ch)">1/2</text><text x="525" y="172" class="sm">profit 2 : 3</text><text x="525" y="190" class="sm">loss 2 : 1</text>
+        <text x="641" y="130" class="lbl">60%</text><text x="641" y="150" class="lbl" style="fill:var(--ch)">3/5</text><text x="641" y="172" class="sm">profit 5 : 8</text><text x="641" y="190" class="sm">loss 5 : 2</text>
+        <text x="350" y="224" class="sm">har card: % → fraction → CP : SP (profit mein) → CP : SP (loss mein)</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>12 rates, 12 ratios. Outline wale (10%, 20%, 25%, 40%) is bank mein sabse zyada aaye. Ye card zubaani yaad karo.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · ₹720 mein becha, 20% profit. CP? · <i>~5 sec</i></span>
+    20% = 1/5 → CP : SP = 5 : 6. SP = 6 hisse = 720 → 1 hissa = 120.<br>
+    CP = 5 hisse = <b>₹600</b>.
+  </div>
+  <div class="box"><span class="k">Demo · ₹750 mein becha, 25% loss. CP? · <i>~5 sec</i></span>
+    25% = 1/4 → loss mein CP : SP = 4 : 3. 3 hisse = 750 → 1 hissa = 250.<br>
+    CP = 4 hisse = <b>₹1,000</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "Neeche wala CP, upar-neeche ka jod SP." 1/5 profit → 5 : (5 + 1) = 5 : 6. 1/5 loss → 5 : (5 − 1) = 5 : 4.</div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Pehle 1% nikaalo (ganda % ho toh)</h3>
+  <p><b>Kab use karo:</b> jab % saaf fraction na bane: 8%, 12%, 15%, 18%, 28%.</p>
+  <p><b>Soch aise:</b> 1% = number ÷ 100, bas do digit khiska do. 2500 ka 1% = 25. Phir 12% = 25 × 12 = 300. 10% aur 5% toh aur bhi aasaan hain: 10% = ek digit khiskao, 5% = uska aadha.</p>
+  <div class="box"><span class="k">Demo · CP ₹2,500, 12% profit. SP? · <i>~6 sec</i></span>
+    1% = 25 → 12% = 300. SP = 2,500 + 300 = <b>₹2,800</b>.
+  </div>
+  <div class="box"><span class="k">Demo · CP − SP = ₹420, loss 16%. CP? · <i>~8 sec</i></span>
+    Farq hi loss hai. 16% = 420 → 4% = 105 → 100% = 105 × 25 = <b>₹2,625</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "% = ₹" wala sawaal aaye (profit ₹81 aur profit 18%), toh seedha bolo: 18% → 81, toh 2% → 9, toh 100% → 450. Har baar chhote % tak aao, phir 100% tak.</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Gap method ("₹x zyada mein bechta toh")</h3>
+  <p><b>Kab use karo:</b> "10% loss par becha. ₹45 zyada mein bechta toh 5% profit hota. CP?" Ye type is bank mein 14 baar aaya.</p>
+  <p><b>Soch aise:</b> CP wahi hai, sirf SP badla. −10% se +5% tak ka safar = 15% ka gap. Ye 15% hi wo ₹45 hai. Bas.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Number line of percent of CP. SP one at 90 percent (10 percent loss), CP at 100 percent, SP two at 105 percent (5 percent profit). The gap from 90 to 105 is 15 percent and equals Rs 45, so 1 percent is Rs 3 and CP is Rs 300.">
+      <defs>
+        <marker id="mpl-basics-gap-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <line x1="40" y1="100" x2="660" y2="100" class="ln"/>
+      <g class="ln">
+        <line x1="60" y1="94" x2="60" y2="106"/><line x1="172" y1="94" x2="172" y2="106"/><line x1="284" y1="94" x2="284" y2="106"/><line x1="396" y1="94" x2="396" y2="106"/><line x1="508" y1="94" x2="508" y2="106"/><line x1="620" y1="94" x2="620" y2="106"/>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="60" y="124">85%</text><text x="172" y="124">90%</text><text x="284" y="124">95%</text><text x="396" y="124">100%</text><text x="508" y="124">105%</text><text x="620" y="124">110%</text>
+      </g>
+      <circle cx="172" cy="100" r="7" style="fill:var(--ch)"/>
+      <circle cx="396" cy="100" r="7" class="paper" stroke="var(--muted)" stroke-width="2"/>
+      <circle cx="508" cy="100" r="7" style="fill:var(--ch)"/>
+      <g text-anchor="middle">
+        <text x="172" y="80" class="lbl">SP₁ (10% loss)</text>
+        <text x="396" y="80" class="lbl">CP</text>
+        <text x="508" y="80" class="lbl">SP₂ (5% profit)</text>
+      </g>
+      <line x1="176" y1="40" x2="504" y2="40" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mpl-basics-gap-arr)"/>
+      <text x="340" y="30" text-anchor="middle" class="lbl" style="fill:var(--ch)">gap = 15% of CP = ₹45</text>
+      <text x="350" y="160" text-anchor="middle" class="lbl">15% = 45 → 1% = 3 → CP = 100% = ₹300</text>
+      <text x="350" y="186" text-anchor="middle" class="sm">loss se profit: % jodo (10 + 5) · dono profit: % ghatao (40 − 25) · dono loss: % ghatao</text>
+    </svg>
+    </div>
+    <figcaption>Sab kuch CP ke % mein. Do SP ke beech ka % gap = do SP ke beech ka ₹ gap.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 25% profit; ₹60 zyada mein bechta toh 40%. CP? · <i>~5 sec</i></span>
+    Dono profit, toh gap = 40 − 25 = 15%. 15% = 60 → 5% = 20 → CP = <b>₹400</b>.
+  </div>
+  <p><b>Jab CP bhi badle</b> ("10% kam mein khareedta aur ₹18 kam mein bechta"): CP = 100 maan lo. Purana SP aur naya SP dono "hisson" mein likho. Unka farq = diye hue ₹. Type 9 mein poora dikhaya hai.</p>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Do SP, ek CP (barabar ya "k guna" profit-loss)</h3>
+  <p><b>Kab use karo:</b> "₹1,100 par jitna profit, ₹900 par utna hi loss" ya "₹2,000 par profit, ₹1,200 par loss ka 19 guna".</p>
+  <p><b>Soch aise:</b> CP dono SP ke beech mein khada hai. Profit = upar wale SP tak ki doori. Loss = neeche wale SP tak ki doori. Barabar ho toh CP theek beech mein. 19 guna ho toh gap ko 1 + 19 = 20 hisson mein kaato; CP neeche se 1 hissa upar.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Two number lines. Top: SP 900 and SP 1100 with CP 1000 exactly in the middle, profit 100 equals loss 100. Bottom: SP 1200 and SP 2000 with CP 1240, one part of 40 above 1200; the gap of 800 is cut into 20 parts, loss is 1 part and profit is 19 parts.">
+      <text x="12" y="22" class="lbl" style="fill:var(--ch)">Profit = loss</text>
+      <line x1="100" y1="64" x2="600" y2="64" class="ln"/>
+      <circle cx="100" cy="64" r="6" style="fill:var(--ch)"/><circle cx="600" cy="64" r="6" style="fill:var(--ch)"/>
+      <circle cx="350" cy="64" r="7" class="paper" stroke="var(--muted)" stroke-width="2"/>
+      <g text-anchor="middle">
+        <text x="100" y="48" class="lbl">SP ₹900</text><text x="350" y="48" class="lbl">CP = ₹1,000</text><text x="600" y="48" class="lbl">SP ₹1,100</text>
+        <text x="225" y="86" class="sm">loss 100</text><text x="475" y="86" class="sm">profit 100</text>
+      </g>
+      <text x="350" y="108" text-anchor="middle" class="sm">CP = (900 + 1100) ÷ 2 = beech ka number</text>
+      <line x1="12" y1="122" x2="688" y2="122" class="ln" stroke-dasharray="3 4"/>
+      <text x="12" y="144" class="lbl" style="fill:var(--ch)">Profit = 19 × loss</text>
+      <line x1="100" y1="184" x2="600" y2="184" class="ln"/>
+      <g class="ln">
+        <line x1="125" y1="178" x2="125" y2="190"/><line x1="150" y1="178" x2="150" y2="190"/><line x1="175" y1="178" x2="175" y2="190"/><line x1="200" y1="178" x2="200" y2="190"/><line x1="225" y1="178" x2="225" y2="190"/><line x1="250" y1="178" x2="250" y2="190"/><line x1="275" y1="178" x2="275" y2="190"/><line x1="300" y1="178" x2="300" y2="190"/><line x1="325" y1="178" x2="325" y2="190"/><line x1="350" y1="178" x2="350" y2="190"/><line x1="375" y1="178" x2="375" y2="190"/><line x1="400" y1="178" x2="400" y2="190"/><line x1="425" y1="178" x2="425" y2="190"/><line x1="450" y1="178" x2="450" y2="190"/><line x1="475" y1="178" x2="475" y2="190"/><line x1="500" y1="178" x2="500" y2="190"/><line x1="525" y1="178" x2="525" y2="190"/><line x1="550" y1="178" x2="550" y2="190"/><line x1="575" y1="178" x2="575" y2="190"/>
+      </g>
+      <circle cx="100" cy="184" r="6" style="fill:var(--ch)"/><circle cx="600" cy="184" r="6" style="fill:var(--ch)"/>
+      <circle cx="125" cy="184" r="7" class="paper" stroke="var(--muted)" stroke-width="2"/>
+      <g text-anchor="middle">
+        <text x="100" y="168" class="lbl">₹1,200</text><text x="600" y="168" class="lbl">₹2,000</text>
+        <text x="190" y="168" class="lbl" style="fill:var(--ch)">CP = ₹1,240</text>
+        <text x="112" y="208" class="sm">1</text><text x="362" y="208" class="sm">19 hisse = profit 760</text>
+      </g>
+      <text x="350" y="226" text-anchor="middle" class="sm">gap 800 ÷ (1 + 19) = 40 · CP = 1,200 + 40 · profit % = 760 ÷ 1,240 = 61.29%</text>
+    </svg>
+    </div>
+    <figcaption>CP hamesha do SP ke beech. Profit-loss ka ratio batata hai ki kitna beech mein.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> "k guna" mein CP = chhota SP + gap ÷ (k + 1). 9 guna, SP 1,200 aur 1,000 → gap 200 ÷ 10 = 20 → CP = 1,020.</div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Articles wale sawaal (n becha, x ka CP/SP kamaya)</h3>
+  <p><b>Kab use karo:</b> "5 kursi bech kar 2 kursi ka CP kamaya", "15 bech kar 3 ka SP kamaya", "15 ka SP = 20 ka CP".</p>
+  <p><b>Soch aise:</b> profit hamesha <b>CP par</b> nikaalna hai. Toh jo bhi diya ho, use "itne articles ka CP" mein badlo.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Top: 5 chairs sold, gain equals CP of 2 chairs. SP of 5 chairs equals CP of 7 chairs, so profit is 2 over 5 equals 40 percent. Bottom: 15 kg sold, gain equals SP of 3 kg. CP of 15 equals SP of 12, so profit is 3 over 12 equals 25 percent.">
+      <text x="12" y="22" class="lbl" style="fill:var(--ch)">Gain = CP of 2, 5 beche</text>
+      <text x="12" y="56" class="lbl">SP of 5</text>
+      <g>
+        <rect x="140" y="38" width="94" height="30" rx="4" class="chf"/><rect x="238" y="38" width="94" height="30" rx="4" class="chf"/><rect x="336" y="38" width="94" height="30" rx="4" class="chf"/><rect x="434" y="38" width="94" height="30" rx="4" class="chf"/><rect x="532" y="38" width="94" height="30" rx="4" class="chf"/>
+        <rect x="140" y="38" width="486" height="30" rx="4" class="chs"/>
+      </g>
+      <text x="12" y="94" class="lbl">CP of 7</text>
+      <g>
+        <rect x="140" y="76" width="66" height="30" rx="4" class="chf"/><rect x="210" y="76" width="66" height="30" rx="4" class="chf"/><rect x="280" y="76" width="66" height="30" rx="4" class="chf"/><rect x="350" y="76" width="66" height="30" rx="4" class="chf"/><rect x="420" y="76" width="66" height="30" rx="4" class="chf"/>
+        <rect x="490" y="76" width="66" height="30" rx="4" style="fill:var(--ch)"/><rect x="560" y="76" width="66" height="30" rx="4" style="fill:var(--ch)"/>
+      </g>
+      <text x="558" y="96" text-anchor="middle" class="lbl" style="fill:var(--paper)">gain</text>
+      <text x="350" y="126" text-anchor="middle" class="sm">5 ka CP lagaya, 2 ka CP upar se aaya → profit = 2/5 = 40%</text>
+      <line x1="12" y1="140" x2="688" y2="140" class="ln" stroke-dasharray="3 4"/>
+      <text x="12" y="162" class="lbl" style="fill:var(--ch)">Gain = SP of 3, 15 beche</text>
+      <text x="12" y="194" class="lbl">SP of 15</text>
+      <g>
+        <rect x="140" y="178" width="28" height="26" rx="3" class="chf"/><rect x="172" y="178" width="28" height="26" rx="3" class="chf"/><rect x="204" y="178" width="28" height="26" rx="3" class="chf"/><rect x="236" y="178" width="28" height="26" rx="3" class="chf"/><rect x="268" y="178" width="28" height="26" rx="3" class="chf"/><rect x="300" y="178" width="28" height="26" rx="3" class="chf"/><rect x="332" y="178" width="28" height="26" rx="3" class="chf"/><rect x="364" y="178" width="28" height="26" rx="3" class="chf"/><rect x="396" y="178" width="28" height="26" rx="3" class="chf"/><rect x="428" y="178" width="28" height="26" rx="3" class="chf"/><rect x="460" y="178" width="28" height="26" rx="3" class="chf"/><rect x="492" y="178" width="28" height="26" rx="3" class="chf"/>
+        <rect x="524" y="178" width="28" height="26" rx="3" style="fill:var(--ch)"/><rect x="556" y="178" width="28" height="26" rx="3" style="fill:var(--ch)"/><rect x="588" y="178" width="28" height="26" rx="3" style="fill:var(--ch)"/>
+      </g>
+      <line x1="140" y1="212" x2="520" y2="212" class="ln"/>
+      <text x="330" y="228" text-anchor="middle" class="sm">ye 12 = CP of 15 (lagaya hua paisa)</text>
+      <text x="570" y="228" text-anchor="middle" class="sm">3 = gain</text>
+      <text x="350" y="252" text-anchor="middle" class="lbl">profit = 3/12 = 25% (3/15 = 20% nahi!)</text>
+    </svg>
+    </div>
+    <figcaption>"CP of x" mila toh x/n. "SP of x" mila toh pehle CP mein badlo: x/(n − x).</figcaption>
+  </figure>
+  <div class="tbl"><table>
+    <tr><th>Sawaal mein likha hai</th><th>Profit / loss %</th><th>Example</th></tr>
+    <tr><td>n beche, gain = CP of x</td><td>x/n</td><td>17 beche, gain 3 ka CP → 3/17 = 17.65%</td></tr>
+    <tr><td>n beche, gain = SP of x</td><td>x/(n − x)</td><td>12 beche, gain 4 ka SP → 4/8 = 50%</td></tr>
+    <tr><td>n beche, loss = CP of x</td><td>x/n (loss)</td><td>10 beche, loss 4 ka CP → 40%</td></tr>
+    <tr><td>n beche, loss = SP of x</td><td>x/(n + x) (loss)</td><td>12 beche, loss 3 ka SP → 3/15 = 20%</td></tr>
+    <tr><td>SP of a = CP of b</td><td>(b − a)/a</td><td>SP 15 = CP 20 → 5/15 = 33.33%</td></tr>
+    <tr><td>a ka CP = ₹k aur b ka SP = ₹k</td><td>wahi: SP of b = CP of a</td><td>CP 20 = SP 25 = ₹260 → (20 − 25)/25 = 20% loss</td></tr>
+  </table></div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Ratio guna karo (chain, jhootha baat, "10 ke daam mein 8")</h3>
+  <p><b>Kab use karo:</b> jab ek ke baad ek do-teen % lagen. A ne B ko 20% par becha, B ne C ko 10% loss par. Ya dukaandaar jhootha baat use kare aur upar se % bhi le.</p>
+  <p><b>Soch aise:</b> har % ko CP : SP ratio banao, phir saare ratio guna kar do. Do % ho toh <b>a + b + ab/100</b> bhi chalta hai.</p>
+  <div class="box"><span class="k">Demo · A → B 20% profit, B → C 10% loss, C → D 5% profit. D ne ₹1,134 diye. Pehla CP? · <i>~12 sec</i></span>
+    5 : 6, 10 : 9, 20 : 21. Guna: 5 × 10 × 20 = 1000 aur 6 × 9 × 21 = 1134.<br>
+    1134 hisse = 1,134 → 1 hissa = 1 → CP = <b>₹1,000</b>.
+  </div>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="False weight. Customer pays for 1000 grams but gets 950 grams. The 50 grams not given is the gain on goods costing 950, so gain is 50 over 950 equals 1 over 19 equals 5.26 percent. Second example: 900 gram weight with 10 percent profit gives CP to SP 9 to 11, gain 22.22 percent.">
+      <text x="12" y="24" class="lbl" style="fill:var(--ch)">Jhootha baat: 1 kg bolta hai, 950 g deta hai</text>
+      <text x="12" y="62" class="lbl">Paisa liya</text>
+      <rect x="150" y="44" width="500" height="30" rx="4" class="chf"/><rect x="150" y="44" width="500" height="30" rx="4" class="chs"/>
+      <text x="400" y="64" text-anchor="middle" class="lbl">1000 g ka</text>
+      <text x="12" y="104" class="lbl">Maal diya</text>
+      <rect x="150" y="86" width="475" height="30" rx="4" class="chf"/>
+      <rect x="625" y="86" width="25" height="30" rx="2" style="fill:var(--ch)"/>
+      <text x="388" y="106" text-anchor="middle" class="lbl">950 g (yahi uska CP)</text>
+      <text x="637" y="134" text-anchor="middle" class="sm">50 g</text>
+      <text x="350" y="156" text-anchor="middle" class="lbl">gain = 50 ÷ 950 = 1/19 = 5.26% (50 ÷ 1000 nahi!)</text>
+      <line x1="12" y1="172" x2="688" y2="172" class="ln" stroke-dasharray="3 4"/>
+      <text x="12" y="198" class="lbl">Upar se 10% profit bhi?</text>
+      <text x="12" y="222" class="sm">baat 900 : 1000 = 9 : 10 · profit 10 : 11 · guna → CP : SP = 9 × 10 : 10 × 11 = 9 : 11 → gain 2/9 = 22.22%</text>
+    </svg>
+    </div>
+    <figcaption>Jhootha baat mein CP = jo maal diya. SP = jitne ka paisa liya. Gain hamesha diye hue maal par.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> "10 ke daam mein 8 nahi, 8 ke daam mein 10" yaani 10 cheez ka CP = 8 ka MP. Toh CP 8, SP 10 (MP par). Discount ho toh SP ko us % se ghatao: 2% off → 9.8. Profit = 1.8/8 = 22.5%.</div>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Same SP, ek par +x% ek par −x%</h3>
+  <p><b>Kab use karo:</b> "Do cheezein ₹500–500 mein becheen. Ek par 25% profit, doosri par 25% loss."</p>
+  <p><b>Soch aise:</b> lagta hai hisaab barabar. Par nahi. Loss wali cheez ka CP bada tha (SP 500 = CP ka 75%). Profit wali ka CP chhota tha (SP 500 = CP ka 125%). Bade CP par 25% zyada ₹ hote hain. Isliye hamesha <b>loss</b>, aur wo loss = <b>x²/100 %</b>.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Two items each sold at Rs 500. Item A: CP 400, profit 100. Item B: CP 666.67, loss 166.67. Bars are drawn to scale. Net loss is 66.67 on total CP 1066.67 which is 6.25 percent, equal to 25 squared over 100.">
+      <text x="12" y="24" class="lbl">Cheez A (+25%)</text>
+      <text x="12" y="54" class="sm">CP</text>
+      <rect x="60" y="40" width="240" height="22" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="310" y="56" class="sm">₹400</text>
+      <text x="12" y="84" class="sm">SP</text>
+      <rect x="60" y="70" width="240" height="22" class="chf"/><rect x="300" y="70" width="60" height="22" style="fill:var(--ch)"/>
+      <text x="370" y="86" class="sm">₹500 (+100)</text>
+      <text x="12" y="126" class="lbl">Cheez B (−25%)</text>
+      <text x="12" y="156" class="sm">CP</text>
+      <rect x="60" y="142" width="400" height="22" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="470" y="158" class="sm">₹666.67</text>
+      <text x="12" y="186" class="sm">SP</text>
+      <rect x="60" y="172" width="300" height="22" class="chf"/>
+      <rect x="360" y="172" width="100" height="22" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="470" y="188" class="sm">₹500 (−166.67)</text>
+      <text x="350" y="226" text-anchor="middle" class="lbl">net = +100 − 166.67 = −66.67 · kul CP 1,066.67 → loss 6.25%</text>
+      <text x="350" y="250" text-anchor="middle" class="sm">shortcut: loss % = x²/100 = 25 × 25 ÷ 100 = 6.25% · bars scale par (₹100 = 60 px)</text>
+    </svg>
+    </div>
+    <figcaption>Gehra tukda = profit, dashed tukda = loss. Loss wala tukda hamesha bada, kyunki uska CP bada.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · ₹960–960 mein do cheezein, ±20%. Kul? · <i>~3 sec</i></span>
+    Loss % = 20 × 20 ÷ 100 = <b>4% loss</b>. ₹ mein chahiye toh: CP = 960 × 5/6 + 960 × 5/4 = 800 + 1,200 = 2,000 → loss 80.
+  </div>
+  <p><b>Dhyaan:</b> ye rule tabhi jab dono % barabar hon <b>aur</b> dono SP barabar. 15% aur 10% ho toh har cheez ka CP alag nikaalo.</p>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · Alligation cross (mixture aur "kuch hissa x% par")</h3>
+  <p><b>Kab use karo:</b> do daam ka maal mila diya, ya maal ka ek hissa ek % par aur baaki doosre % par becha, aur kul % pucha ya diya hai.</p>
+  <p><b>Soch aise:</b> kul % hamesha dono % ke beech aata hai. Jis % ke paas kul % hai, uska hissa bada. Cross se hisse seedhe nikalte hain: <b>doori ulti</b> likho.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Two alligation crosses. Left: 20 percent and 30 percent, overall 28 percent. Differences 30 minus 28 equals 2 and 28 minus 20 equals 8, ratio 1 to 4, so out of 240 TVs, 48 at 20 percent. Right: plus 10 percent and minus 5 percent, overall plus 2 percent. Differences 7 and 8, so investment in profit item is 7 of 15 parts of 5000 equals 2333.33.">
+      <text x="175" y="20" text-anchor="middle" class="lbl" style="fill:var(--ch)">240 TV · kul 28% gain</text>
+      <rect x="40" y="34" width="90" height="34" rx="6" class="chf"/><rect x="220" y="34" width="90" height="34" rx="6" class="chf"/>
+      <rect x="130" y="96" width="90" height="34" rx="6" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <rect x="40" y="158" width="90" height="34" rx="6" class="chf"/><rect x="220" y="158" width="90" height="34" rx="6" class="chf"/>
+      <g class="ln"><line x1="120" y1="68" x2="230" y2="158"/><line x1="230" y1="68" x2="120" y2="158"/></g>
+      <g text-anchor="middle" class="lbl">
+        <text x="85" y="56">20%</text><text x="265" y="56">30%</text><text x="175" y="118">28%</text>
+        <text x="85" y="180">30 − 28 = 2</text><text x="265" y="180">28 − 20 = 8</text>
+      </g>
+      <text x="175" y="214" text-anchor="middle" class="sm">20% wale : 30% wale = 2 : 8 = 1 : 4</text>
+      <text x="175" y="234" text-anchor="middle" class="lbl">20% wale = 240 × 1/5 = 48</text>
+      <line x1="350" y1="20" x2="350" y2="236" class="ln" stroke-dasharray="3 4"/>
+      <text x="525" y="20" text-anchor="middle" class="lbl" style="fill:var(--ch)">₹5,000 · kul ₹100 profit = 2%</text>
+      <rect x="390" y="34" width="90" height="34" rx="6" class="chf"/><rect x="570" y="34" width="90" height="34" rx="6" class="chf"/>
+      <rect x="480" y="96" width="90" height="34" rx="6" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <rect x="390" y="158" width="90" height="34" rx="6" class="chf"/><rect x="570" y="158" width="90" height="34" rx="6" class="chf"/>
+      <g class="ln"><line x1="470" y1="68" x2="580" y2="158"/><line x1="580" y1="68" x2="470" y2="158"/></g>
+      <g text-anchor="middle" class="lbl">
+        <text x="435" y="56">+10%</text><text x="615" y="56">−5%</text><text x="525" y="118">+2%</text>
+        <text x="435" y="180">2 − (−5) = 7</text><text x="615" y="180">10 − 2 = 8</text>
+      </g>
+      <text x="525" y="214" text-anchor="middle" class="sm">profit wala : loss wala = 7 : 8</text>
+      <text x="525" y="234" text-anchor="middle" class="lbl">profit wala = 5,000 × 7/15 = 2,333.33</text>
+    </svg>
+    </div>
+    <figcaption>Cross: upar do %, beech mein kul %, neeche tirchhi doori. Neeche ka left number = upar ke left wale ka hissa.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 60 pen 20% profit par, 40 pen 10% loss par. Kul? · <i>~6 sec</i></span>
+    Hisson ka average: (60 × 20 − 40 × 10) ÷ 100 = (1,200 − 400) ÷ 100 = <b>8% profit</b>.<br>
+    Ye tabhi seedha chalta hai jab har pen ka CP barabar ho (yahan ₹10).
+  </div>
+
+  <!-- ========== METHOD 9 ========== -->
+  <h3>Speed method 9 · Choti chaabiyan (profit on SP, dono badle, option check)</h3>
+  <ul>
+    <li><b>Profit SP par diya:</b> SP = 100 maan lo. 25% on SP → profit 25, CP 75 → CP par 25/75 = <b>33.33%</b>. Rule: p/(100 − p). Loss on SP: p/(100 + p). 30% → 30/130 = 23.08%.</li>
+    <li><b>CP aur SP dono same % se badle ya ghate:</b> ratio wahi rehta hai, toh profit % bhi <b>wahi</b>. 30% profit, dono +40% → abhi bhi 30%.</li>
+    <li><b>"x% of CP = y% of SP":</b> CP : SP = <b>y : x</b> (ulta). 30% CP = 25% SP → CP : SP = 25 : 30 = 5 : 6 → 20% profit.</li>
+    <li><b>Option check:</b> CP nikaalna ho aur sawaal ulta-pulta ho, toh option ko seedha daal kar dekho. Ek option 10 second mein check hota hai.</li>
+    <li><b>Andaaza:</b> profit % hamesha (profit ÷ CP) hai, toh agar SP par divide kiya to answer chhota aayega. 50/1000 = 5% aata hai par asli 50/950 = 5.26%. "Thoda zyada" wala option.</li>
+  </ul>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing a method. Check in order: sell for Rs x more or less, two selling prices with equal or k times profit and loss, articles, same SP with plus and minus x percent, mixture or parts, chain or false weight, otherwise direct. Each yes leads to its method.">
+      <defs>
+        <marker id="mpl-basics-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya diya hai?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mpl-basics-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">"₹x zyada / kam mein bechta toh"?</text>
+        <text x="180" y="141">Do SP, barabar ya "k guna" P/L?</text>
+        <text x="180" y="197">"n becha, x ka CP/SP kamaya"?</text>
+        <text x="180" y="253">Do cheez same SP, +x% aur −x%?</text>
+        <text x="180" y="309">Mixture, ya hissa x% par, baaki y%?</text>
+        <text x="180" y="365">Chain, jhootha baat, "10 ke daam 8"?</text>
+        <text x="180" y="421">Seedha CP / SP / % / ratio?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mpl-basics-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mpl-basics-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mpl-basics-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mpl-basics-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mpl-basics-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mpl-basics-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mpl-basics-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mpl-basics-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mpl-basics-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mpl-basics-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mpl-basics-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mpl-basics-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mpl-basics-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Gap method</text>
+        <text x="410" y="132">CP = do SP ke beech</text>
+        <text x="410" y="188">Articles rule</text>
+        <text x="410" y="244">Loss = x²/100 %</text>
+        <text x="410" y="300">Alligation / hisson ka average</text>
+        <text x="410" y="356">Ratio guna karo</text>
+        <text x="410" y="412">Fraction ratio + 1% method</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">% ka gap = ₹ ka gap</text>
+        <text x="410" y="149">gap ÷ (k + 1), chhote SP se upar</text>
+        <text x="410" y="205">CP of x → x/n · SP of x → x/(n − x)</text>
+        <text x="410" y="261">₹ chahiye toh dono CP alag nikaalo</text>
+        <text x="410" y="317">doori ulti likho</text>
+        <text x="410" y="373">5 : 6 × 10 : 9 … ya a + b + ab/100</text>
+        <text x="410" y="429">20% = 5 : 6 · ganda % → pehle 1%</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow ek baar rough mein chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet (yaad karna hai)</span>
+    Profit % = P/CP × 100 · SP = CP × (100 ± p)/100 · CP = SP × 100/(100 ± p)<br>
+    Do SP par barabar P/L → CP = (SP₁ + SP₂)/2 · P = k × L → CP = chhota SP + gap/(k + 1)<br>
+    Same SP, ±x% → loss x²/100 % · Profit on SP p% → on CP p/(100 − p) %<br>
+    Jhootha baat → gain = (asli − jhootha)/jhootha × 100 · "x% of CP = y% of SP" → CP : SP = y : x<br>
+    <span class="tag x">CGL+</span> Marked price aur discount: SP = MP × (100 − d)/100. MP par x% badhaya aur y% discount → kul (x − y − xy/100)%. Ye "Discount" chapter mein poora hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>40% profit par CP : SP kya hoga?</summary><p>40% = 2/5. CP 5, profit 2, SP 7. Toh 5 : 7.</p></details>
+    <details><summary>₹2,300 mein becha, ₹200 ka loss. Loss %?</summary><p>CP = SP + loss = 2,500. 200/2,500 = 8%.</p></details>
+    <details><summary>10% loss par becha; ₹90 zyada mein 8% profit hota. CP?</summary><p>Gap = 10 + 8 = 18%. 18% = 90 → 1% = 5 → CP = ₹500.</p></details>
+    <details><summary>20 beche, gain = 5 ka SP. Profit %?</summary><p>SP of 20 = CP of 15 (kyunki 5 ka SP gain hai). 5/15 = 33.33%.</p></details>
+    <details><summary>Do cheezein ₹600–600 mein, ek par 10% profit, ek par 10% loss. Kul?</summary><p>10 × 10 ÷ 100 = 1% loss. Hamesha loss.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · PROFIT & LOSS (part 2: types 1–8) ===================== -->
+<section class="chap" id="mpl-types-a">
+  <div class="eyebrow">Maths · PYQ types 1–8 · 123 Qs</div>
+  <h2>Profit &amp; Loss: seedhe sawaal (Type 1–8), topper ki rough ke saath</h2>
+  <div class="meta">CP / SP / % ke seedhe sawaal, ₹ mein profit, ratio, "% of CP = % of SP", profit on SP, ek SP se doosra SP · har sawaal ke aage method likha hai</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 · CHSL = CHSL 2025 Tier 1 · CPO = CPO 2025 · SP-XIV = Selection Post Phase XIV 2025 · MTS = MTS 2025 (Feb) · DP Const / DP AWO / DP HCM = Delhi Police (Dec 2025 – Jan 2026) · GD = GD Constable 2026. Saari dates shift ki dates hain.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · CP aur SP diye, % nikaalo (22 Qs)</h3>
+  <p><b>Samjho:</b> farq nikaalo, phir dekho farq CP ka kaunsa fraction hai. 1/5 = 20%, 1/4 = 25%, 1/10 = 10%. Bhaag karne ki zaroorat hi nahi padti.</p>
+  <div class="box"><span class="k">Worked · ₹45 ka pen ₹60 mein becha. Profit %? <span class="tag p">PYQ</span> <small>CHSL · 25 Nov 2025</small><!-- q:58 --></span>
+    <b>Method:</b> fraction · <i>~4 sec</i><br>
+    Farq = 15. 15/45 = 1/3 → <mark>33.33%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹600 ka pankha ₹450 mein becha. Loss %? <span class="tag p">PYQ</span> <small>DP Const · 20 Dec 2025</small><!-- q:122 --></span>
+    <b>Method:</b> fraction · <i>~4 sec</i><br>
+    Farq = 150. 150/600 = 1/4 → <mark>25% loss</mark>.
+  </div>
+  <ul>
+    <li>100 → 120 → <b>fraction</b> 20/100 → <mark>20%</mark> <span class="tag p">PYQ</span> <small>CHSL · 21 Nov 2025</small><!-- q:52 --></li>
+    <li>250 → 300 → <b>fraction</b> 50/250 = 1/5 → <mark>20%</mark> <span class="tag p">PYQ</span> <small>CHSL · 21 Nov 2025</small><!-- q:53 --></li>
+    <li>CP 125, profit 25 → <b>fraction</b> 1/5 → <mark>20%</mark> <span class="tag p">PYQ</span> <small>CHSL · 28 Nov 2025</small><!-- q:66 --></li>
+    <li>150 → 135 → <b>fraction</b> 15/150 = 1/10 → <mark>10% loss</mark> <span class="tag p">PYQ ×2</span> <small>CPO · 11 Dec 2025; SP-XIV · 26 Jul 2025</small><!-- q:82,231 --></li>
+    <li>500 → 600 → <b>fraction</b> 1/5 → <mark>20%</mark> <span class="tag p">PYQ</span> <small>CPO · 12 Dec 2025</small><!-- q:84 --></li>
+    <li>1,200 → 1,320 → <b>fraction</b> 120/1,200 = 1/10 → <mark>10%</mark> <span class="tag p">PYQ ×2</span> <small>CPO · 12 Dec 2025; DP Const · 19 Dec 2025</small><!-- q:88,114 --></li>
+    <li>CP 600, profit 120 → <b>fraction</b> 1/5 → <mark>20%</mark> <span class="tag p">PYQ</span> <small>DP Const · 31 Dec 2025</small><!-- q:92 --></li>
+    <li>400 → 440 → <b>fraction</b> 1/10 → <mark>10%</mark> <span class="tag p">PYQ</span> <small>DP Const · 29 Dec 2025</small><!-- q:94 --></li>
+    <li>1,200 → 1,440 → <b>fraction</b> 240/1,200 = 1/5 → <mark>20%</mark> <span class="tag p">PYQ</span> <small>DP Const · 30 Dec 2025</small><!-- q:96 --></li>
+    <li>200 → 250 → <b>fraction</b> 1/4 → <mark>25%</mark> <span class="tag p">PYQ</span> <small>DP Const · 27 Dec 2025</small><!-- q:100 --></li>
+    <li>400 → 320 → <b>fraction</b> 80/400 = 1/5 → <mark>20% loss</mark> <span class="tag p">PYQ</span> <small>DP Const · 23 Dec 2025</small><!-- q:108 --></li>
+    <li>CP 350, profit 70 → <b>fraction</b> 1/5 → <mark>0.2</mark> (= 20%; option decimal mein tha) <span class="tag p">PYQ</span> <small>DP Const · 20 Dec 2025</small><!-- q:110 --></li>
+    <li>1,600 → 1,520 → <b>fraction</b> 80/1,600 = 1/20 → <mark>5% loss</mark> <span class="tag p">PYQ</span> <small>DP Const · 30 Dec 2025</small><!-- q:118 --></li>
+    <li>400 → 480 → <b>fraction</b> 1/5 → <mark>20%</mark> <span class="tag p">PYQ</span> <small>DP Const · 31 Dec 2025</small><!-- q:123 --></li>
+    <li>CP 800, SP 1,000 → <b>fraction</b> 200/800 = 1/4 → <mark>25%</mark> <span class="tag p">PYQ</span> <small>GD · 4 May 2026</small><!-- q:127 --></li>
+    <li>CP 5,000, SP 4,000 → <b>fraction</b> 1/5 → <mark>20% loss</mark> <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small><!-- q:140 --></li>
+    <li>CP 500, SP 550 → <b>fraction</b> 1/10 → <mark>10%</mark> <span class="tag p">PYQ</span> <small>GD · 30 Apr 2026</small><!-- q:174 --></li>
+    <li>600 → 540 → <b>fraction</b> 60/600 → <mark>10% loss</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 26 Jul 2025</small><!-- q:232 --></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> GD wale sawaal mein SP pehle likha hota hai ("SP and CP are 1000 and 800"). Ulta mat padhna. Farq hamesha CP se divide.</div>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · CP aur % diye, SP ya profit nikaalo (26 Qs)</h3>
+  <p><b>Samjho:</b> % ko ₹ mein badlo (fraction ya 1% se), phir CP mein jodo ya ghatao. Profit ki value puchi ho toh jodna bhi nahi.</p>
+  <div class="box"><span class="k">Worked · ₹450 ka saamaan 15% profit par. SP? <span class="tag p">PYQ</span> <small>DP Const · 26 Dec 2025</small><!-- q:103 --></span>
+    <b>Method:</b> 10% + 5% · <i>~6 sec</i><br>
+    10% = 45, 5% = 22.5 → 15% = 67.5. SP = 517.5 → <mark>≈ ₹518</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · CP ₹6,800, profit 30%. SP? <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small><!-- q:148 --></span>
+    <b>Method:</b> 10% × 3 · <i>~5 sec</i><br>
+    10% = 680 → 30% = 2,040. SP = 6,800 + 2,040 = <mark>₹8,840</mark>.
+  </div>
+  <ul>
+    <li>1,500 par 8% loss → <b>1% method</b>: 15 × 8 = 120 → <mark>₹1,380</mark> <span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small><!-- q:44 --></li>
+    <li>250 par 20% profit → <b>fraction</b> 1/5 = 50 → <mark>₹300</mark> <span class="tag p">PYQ ×2</span> <small>CHSL · 29 Nov 2025; DP Const · 19 Dec 2025</small><!-- q:70,113 --></li>
+    <li>200 par 10% loss → <b>10%</b> = 20 → <mark>₹180</mark> <span class="tag p">PYQ</span> <small>CHSL · 30 Nov 2025</small><!-- q:72 --></li>
+    <li>500 par 20% profit → <b>fraction</b> = 100 → <mark>₹600</mark> <span class="tag p">PYQ ×2</span> <small>CHSL · 30 Nov 2025; DP Const · 30 Dec 2025</small><!-- q:74,119 --></li>
+    <li>2,500 par 12% → <b>1% method</b>: 25 × 12 = 300 → <mark>₹2,800</mark> <span class="tag p">PYQ</span> <small>CPO · 11 Dec 2025</small><!-- q:83 --></li>
+    <li>240 par 25% → <b>fraction</b> 1/4 = 60 → <mark>₹300</mark> <span class="tag p">PYQ ×2</span> <small>CPO · 12 Dec 2025; DP Const · 22 Dec 2025</small><!-- q:87,109 --></li>
+    <li>800 par 25% → <b>fraction</b> = 200 → <mark>₹1,000</mark> <span class="tag p">PYQ</span> <small>DP Const · 27 Dec 2025</small><!-- q:99 --></li>
+    <li>1,200 par 15% loss → <b>10% + 5%</b>: 120 + 60 = 180 → <mark>₹1,020</mark> <span class="tag p">PYQ</span> <small>DP Const · 27 Dec 2025</small><!-- q:101 --></li>
+    <li>1,200 par 20% loss → <b>fraction</b> = 240 → <mark>₹960</mark> <span class="tag p">PYQ</span> <small>DP Const · 24 Dec 2025</small><!-- q:107 --></li>
+    <li>960 par 25% → <b>fraction</b> = 240 → <mark>₹1,200</mark> <span class="tag p">PYQ</span> <small>DP Const · 2 Jan 2026</small><!-- q:115 --></li>
+    <li>500 par 15% loss → <b>10% + 5%</b>: 50 + 25 = 75 → <mark>₹425</mark> <span class="tag p">PYQ</span> <small>DP Const · 30 Dec 2025</small><!-- q:120 --></li>
+    <li>640 par 25% → <b>fraction</b> = 160 → <mark>₹800</mark> <span class="tag p">PYQ</span> <small>DP Const · 31 Dec 2025</small><!-- q:125 --></li>
+    <li>400 par 25% → <b>fraction</b> = 100 → <mark>₹500</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 24 Jul 2025</small><!-- q:229 --></li>
+    <li>8,000 par 10% loss → <b>10%</b> = 800 → <mark>₹7,200</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 25 Jul 2025</small><!-- q:233 --></li>
+    <li>400 par 12½% → <b>fraction</b> 1/8 = 50 → <mark>₹450</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 28 Jul 2025</small><!-- q:234 --></li>
+    <li>800 par 15% → <b>10% + 5%</b>: 80 + 40 = 120 → <mark>₹920</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 28 Jul 2025</small><!-- q:235 --></li>
+    <li>160 par 15% loss → <b>10% + 5%</b>: 16 + 8 = 24 → <mark>₹136</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 29 Jul 2025</small><!-- q:237 --></li>
+    <li>300 kg × ₹20 = 6,000; 5% profit → <b>10% ka aadha</b> = 300; SP/kg = 20 + 1 → <mark>₹300, ₹21</mark> <span class="tag p">PYQ</span> <small>MTS · 16 Feb 2025</small><!-- q:187 --></li>
+    <li>CP 500, 25%; profit kitna? → <b>fraction</b> 1/4 → <mark>₹125</mark> <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small><!-- q:146 --></li>
+    <li>CP 480, 10%; profit kitna? → <b>10%</b> → <mark>₹48</mark> <span class="tag p">PYQ</span> <small>GD · 28 Apr 2026</small><!-- q:167 --></li>
+    <li>CP 400, 30%; profit kitna? → <b>10% × 3</b> → <mark>₹120</mark> <span class="tag p">PYQ</span> <small>MTS · 6 Feb 2025</small><!-- q:181 --></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · SP aur % diye, CP nikaalo (20 Qs)</h3>
+  <p><b>Samjho:</b> yahan galti sabse zyada hoti hai. SP ka 20% ghata do, toh CP nahi aata. Kyunki 20% CP ka tha, SP ka nahi. Ratio card use karo: SP = jod wale hisse.</p>
+  <div class="box"><span class="k">Worked · ₹1,350 mein becha, 12½% profit. CP? <span class="tag p">PYQ</span> <small>DP Const · 27 Dec 2025</small><!-- q:98 --></span>
+    <b>Method:</b> ratio 8 : 9 · <i>~5 sec</i><br>
+    12½% = 1/8 → CP : SP = 8 : 9. 9 hisse = 1,350 → 1 hissa = 150 → CP = <mark>₹1,200</mark>.<br>
+    (1,350 ka 12½% ghatao toh 1,181.25 aata. Galat.)
+  </div>
+  <div class="box"><span class="k">Worked · ₹1,260 mein becha, 5% loss. CP? <span class="tag p">PYQ</span> <small>DP Const · 31 Dec 2025</small><!-- q:124 --></span>
+    <b>Method:</b> ratio 20 : 19 · <i>~10 sec</i><br>
+    5% = 1/20 → loss mein 20 : 19. 19 hisse = 1,260 → 1 hissa ≈ 66.3 → CP ≈ 66.3 × 20 ≈ <mark>₹1,326</mark>.
+  </div>
+  <ul>
+    <li>SP 80, 20% loss → <b>ratio 5 : 4</b>: 4 hisse = 80 → <mark>₹100</mark> <span class="tag p">PYQ</span> <small>CHSL · 28 Nov 2025</small><!-- q:67 --></li>
+    <li>SP 96, 20% loss → <b>ratio 5 : 4</b>: 1 hissa 24 → <mark>₹120</mark> <span class="tag p">PYQ</span> <small>CHSL · 29 Nov 2025</small><!-- q:68 --></li>
+    <li>SP 720, 20% loss → <b>ratio 5 : 4</b>: 1 hissa 180 → <mark>₹900</mark> <span class="tag p">PYQ</span> <small>DP Const · 22 Dec 2025</small><!-- q:93 --></li>
+    <li>SP 720, 20% gain → <b>ratio 5 : 6</b>: 1 hissa 120 → <mark>₹600</mark> <span class="tag p">PYQ</span> <small>DP Const · 29 Dec 2025</small><!-- q:95 --></li>
+    <li>SP 990, 10% loss → <b>ratio 10 : 9</b>: 1 hissa 110 → <mark>₹1,100</mark> <span class="tag p">PYQ</span> <small>DP Const · 30 Dec 2025</small><!-- q:97 --></li>
+    <li>SP 240, 20% gain → <b>ratio 5 : 6</b>: 1 hissa 40 → <mark>₹200</mark> <span class="tag p">PYQ</span> <small>DP Const · 26 Dec 2025</small><!-- q:102 --></li>
+    <li>SP 750, 25% loss → <b>ratio 4 : 3</b>: 1 hissa 250 → <mark>₹1,000</mark> <span class="tag p">PYQ</span> <small>DP Const · 24 Dec 2025</small><!-- q:104 --></li>
+    <li>SP 600, 20% → <b>ratio 5 : 6</b>: 1 hissa 100 → <mark>₹500</mark> <span class="tag p">PYQ</span> <small>DP Const · 24 Dec 2025</small><!-- q:105 --></li>
+    <li>SP 880, 12% loss → <b>88% = 880</b> → 1% = 10 → <mark>₹1,000</mark> <span class="tag p">PYQ</span> <small>DP Const · 23 Dec 2025</small><!-- q:106 --></li>
+    <li>SP 920, 15% → <b>ratio 20 : 23</b>: 23 hisse = 920 → 1 hissa 40 → <mark>₹800</mark> <span class="tag p">PYQ</span> <small>DP Const · 23 Dec 2025</small><!-- q:112 --></li>
+    <li>SP 1,250, 25% → <b>ratio 4 : 5</b>: 1 hissa 250 → <mark>₹1,000</mark> <span class="tag p">PYQ</span> <small>DP Const · 2 Jan 2026</small><!-- q:116 --></li>
+    <li>SP 540, 10% loss → <b>ratio 10 : 9</b>: 1 hissa 60 → <mark>₹600</mark> <span class="tag p">PYQ</span> <small>DP Const · 26 Dec 2025</small><!-- q:121 --></li>
+    <li>SP 7,540, 30% → <b>ratio 10 : 13</b>: 1 hissa 580 → <mark>₹5,800</mark> <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small><!-- q:142 --></li>
+    <li>SP 2,400, 20% → <b>ratio 5 : 6</b>: 1 hissa 400 → <mark>₹2,000</mark> <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small><!-- q:152 --></li>
+    <li>SP 5,625, 25% → <b>ratio 4 : 5</b>: 1 hissa 1,125 → <mark>₹4,500</mark> <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small><!-- q:154 --></li>
+    <li>SP 306, 40% loss → <b>ratio 5 : 3</b>: 1 hissa 102 → <mark>₹510</mark> <span class="tag p">PYQ</span> <small>MTS · 20 Feb 2025</small><!-- q:201 --></li>
+    <li>SP 520, 4% → <b>ratio 25 : 26</b>: 1 hissa 20 → <mark>₹500</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 29 Aug 2025</small><!-- q:217 --></li>
+    <li>SP 750, 25% → <b>ratio 4 : 5</b>: 1 hissa 150 → <mark>₹600</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 30 Jul 2025</small><!-- q:238 --></li>
+  </ul>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Profit / loss ₹ mein diya (17 Qs)</h3>
+  <p><b>Samjho:</b> "CP aur SP ka farq ₹520" ka matlab hi hai profit ya loss = ₹520. Toh "% = ₹" wala seedha kaam: 20% = 520. Dhyaan do, aakhir mein CP pucha hai ya SP.</p>
+  <div class="box"><span class="k">Worked · CP − SP = ₹720, loss 30%. SP? <span class="tag p">PYQ</span> <small>GD · 6 May 2026</small><!-- q:136 --></span>
+    <b>Method:</b> % = ₹ · <i>~6 sec</i><br>
+    30% = 720 → 10% = 240 → CP = 2,400. SP = 2,400 − 720 = <mark>₹1,680</mark>. (2,400 option mein nahi, par jaldi mein wahi likh doge.)
+  </div>
+  <div class="box"><span class="k">Worked · SP ₹3,500, loss ₹500. Loss %? <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small><!-- q:157 --></span>
+    <b>Method:</b> pehle CP · <i>~5 sec</i><br>
+    CP = SP + loss = 4,000. 500/4,000 = 1/8 → <mark>12.5%</mark>. (500/3,500 karoge toh 14.3% aayega: galat.)
+  </div>
+  <ul>
+    <li>Loss 125 = 5% → <b>% = ₹</b>: 1% = 25 → <mark>₹2,500</mark> <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small><!-- q:6 --></li>
+    <li>SP 135, loss 15 → <b>CP = SP + loss</b> → <mark>₹150</mark> <span class="tag p">PYQ</span> <small>CHSL · 29 Nov 2025</small><!-- q:69 --></li>
+    <li>Farq 520, loss 20% → <b>% = ₹</b>: 10% = 260 → <mark>₹2,600</mark> <span class="tag p">PYQ</span> <small>GD · 4 May 2026</small><!-- q:129 --></li>
+    <li>Farq 420, loss 16% → <b>4% = 105</b> → × 25 → <mark>₹2,625</mark> <span class="tag p">PYQ</span> <small>GD · 4 May 2026</small><!-- q:130 --></li>
+    <li>Farq 252, profit 9% → <b>1% = 28</b> → <mark>₹2,800</mark> <span class="tag p">PYQ</span> <small>GD · 5 May 2026</small><!-- q:132 --></li>
+    <li>Loss 98 = 28%; SP? → <b>1% = 3.5</b> → CP 350 → 350 − 98 → <mark>₹252</mark> <span class="tag p">PYQ</span> <small>GD · 6 May 2026</small><!-- q:138 --></li>
+    <li>Farq 120, profit 30%; SP? → <b>10% = 40</b> → CP 400 → <mark>₹520</mark> <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small><!-- q:143 --></li>
+    <li>Profit 50 = 20% → <b>fraction</b> 1/5 → <mark>₹250</mark> <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small><!-- q:150 --></li>
+    <li>Farq 385, profit 7% → <b>1% = 55</b> → <mark>₹5,500</mark> <span class="tag p">PYQ</span> <small>GD · 18 May 2026</small><!-- q:158 --></li>
+    <li>SP 2,300, loss 200 → <b>CP 2,500</b> → 200/2,500 → <mark>8%</mark> <span class="tag p">PYQ</span> <small>GD · 18 May 2026</small><!-- q:159 --></li>
+    <li>SP 4,200, profit 200 → <b>CP 4,000</b> → 1/20 → <mark>5%</mark> <span class="tag p">PYQ</span> <small>GD · 18 May 2026</small><!-- q:163 --></li>
+    <li>SP 4,400, profit 400 → <b>CP 4,000</b> → 1/10 → <mark>10%</mark> <span class="tag p">PYQ</span> <small>GD · 19 May 2026</small><!-- q:166 --></li>
+    <li>Loss 120 = 40% → <b>10% = 30</b> → <mark>₹300</mark> <span class="tag p">PYQ</span> <small>MTS · 16 Feb 2025</small><!-- q:188 --></li>
+    <li>Profit 81 = 18% → <b>2% = 9</b> → <mark>₹450</mark> <span class="tag p">PYQ</span> <small>MTS · 18 Feb 2025</small><!-- q:193 --></li>
+    <li>Profit 180 = 40%; SP? → <b>10% = 45</b> → CP 450 → <mark>₹630</mark> <span class="tag p">PYQ</span> <small>MTS · 18 Feb 2025</small><!-- q:196 --></li>
+  </ul>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Ratio wale (CP : SP, profit : CP) (18 Qs)</h3>
+  <p><b>Samjho:</b> teen cheezein hain: CP, SP, profit. Koi ek ratio diya ho, teesra number <b>jod ya ghatao</b> se aata hai. SP = CP + P. Loss mein SP = CP − L.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Ratio triangle. Profit to CP is 2 to 7, so SP is 9 and SP to profit is 9 to 2. CP to SP 4 to 3 means loss is 1 part; loss Rs 182 gives CP 4 times 182 equals 728.">
+      <rect x="20" y="20" width="310" height="120" rx="8" class="chf"/>
+      <rect x="370" y="20" width="310" height="120" rx="8" class="chf"/>
+      <g text-anchor="middle">
+        <text x="175" y="44" class="lbl">P : CP = 2 : 7</text>
+        <rect x="45" y="58" width="196" height="26" rx="3" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="241" y="58" width="56" height="26" rx="3" style="fill:var(--ch)"/>
+        <text x="143" y="76" class="sm">CP 7</text><text x="269" y="76" class="lbl" style="fill:var(--paper)">P 2</text>
+        <text x="175" y="106" class="sm">poori patti = SP = 7 + 2 = 9</text>
+        <text x="175" y="128" class="lbl" style="fill:var(--ch)">SP : P = 9 : 2</text>
+        <text x="525" y="44" class="lbl">CP : SP = 4 : 3, loss ₹182</text>
+        <rect x="395" y="58" width="195" height="26" rx="3" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="590" y="58" width="65" height="26" rx="3" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+        <text x="492" y="76" class="sm">SP 3</text><text x="622" y="76" class="sm">L 1</text>
+        <text x="525" y="106" class="sm">poori patti = CP 4 · loss = 1 hissa = 182</text>
+        <text x="525" y="128" class="lbl" style="fill:var(--ch)">CP = 4 × 182 = 728</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Patti ko hisson mein kaato. Jo hissa ₹ mein diya, usse baaki sab nikal jaata hai.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · P : CP = 2 : 7. SP : P? <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small><!-- q:10 --></span>
+    <b>Method:</b> patti jodo · <i>~3 sec</i><br>
+    SP = 7 + 2 = 9 → SP : P = <mark>9 : 2</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · CP : SP = 4 : 3, loss ₹182. CP? <span class="tag p">PYQ</span> <small>MTS · 19 Feb 2025</small><!-- q:197 --></span>
+    <b>Method:</b> 1 hissa · <i>~4 sec</i><br>
+    Loss = 4 − 3 = 1 hissa = 182 → CP = 4 × 182 = <mark>₹728</mark>.
+  </div>
+  <ul>
+    <li>L : CP = 1 : 10 → SP = 9 → SP : CP → <b>patti ghatao</b> → <mark>9 : 10</mark> <span class="tag p">PYQ</span> <small>CGL · 16 Sep 2025</small><!-- q:14 --></li>
+    <li>SP = 90% of MP, CP = 80% of MP → <b>CP : SP = 8 : 9</b> → 1/8 → <mark>12.5%</mark> <span class="tag p">PYQ</span> <small>CGL · 25 Sep 2025</small><!-- q:28 --></li>
+    <li>P : CP = 3 : 8 → <b>patti jodo</b> SP 11 → SP : CP = <mark>11 : 8</mark> <span class="tag p">PYQ</span> <small>CHSL · 12 Nov 2025</small><!-- q:30 --></li>
+    <li>MP = 7/5 CP, SP = 6/7 MP → <b>CP 5 → MP 7 → SP 6</b> → 1/5 → <mark>20%</mark> <span class="tag p">PYQ</span> <small>GD · 5 May 2026</small><!-- q:131 --></li>
+    <li>CP : SP = 3 : 5 → P = 2 → P : CP = <mark>2 : 3</mark> <span class="tag p">PYQ</span> <small>GD · 5 May 2026</small><!-- q:133 --></li>
+    <li>CP : SP = 5 : 2, loss 300 → <b>3 hisse = 300</b> → CP 5 × 100 → <mark>₹500</mark> <span class="tag p">PYQ</span> <small>GD · 6 May 2026</small><!-- q:134 --></li>
+    <li>CP : SP = 10 : 13 → P = 3 → P : CP = <mark>3 : 10</mark> <span class="tag p">PYQ</span> <small>GD · 6 May 2026</small><!-- q:135 --></li>
+    <li>50% profit → <b>1/2 → 2 : 3</b> → SP : CP = <mark>3 : 2</mark> <span class="tag p">PYQ</span> <small>GD · 6 May 2026</small><!-- q:137 --></li>
+    <li>CP : SP = 2 : 5, profit 900 → <b>3 hisse = 900</b> → CP 2 × 300 → <mark>₹600</mark> <span class="tag p">PYQ</span> <small>GD · 18 May 2026</small><!-- q:160 --></li>
+    <li>CP : SP = 2 : 5, profit 210 → <b>3 hisse = 210</b> → SP 5 × 70 → <mark>₹350</mark> <span class="tag p">PYQ</span> <small>GD · 18 May 2026</small><!-- q:162 --></li>
+    <li>40% loss → <b>2/5 → CP 5, SP 3</b> → SP : CP = <mark>3 : 5</mark> <span class="tag p">PYQ</span> <small>MTS · 17 Feb 2025</small><!-- q:191 --></li>
+    <li>25% loss → <b>1/4 → CP 4, SP 3</b> → <mark>3 : 4</mark> <span class="tag p">PYQ</span> <small>MTS · 19 Feb 2025</small><!-- q:200 --></li>
+    <li>SP : CP = 9 : 11 → <b>loss 2/11</b> → <mark>18.18%</mark> <span class="tag p">PYQ</span> <small>MTS · 20 Feb 2025</small><!-- q:203 --></li>
+    <li>Profit = cost ka 39% → <b>seedha</b>, profit % CP par hi hota hai → <mark>39%</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 31 Jul 2025</small><!-- q:221 --></li>
+    <li>SP = CP ka 60% → <b>100 − 60</b> → <mark>40% loss</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 1 Aug 2025</small><!-- q:223 --></li>
+    <li>CP = SP ka 80% → <b>CP 4, SP 5</b> → 1/4 → <mark>25%</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 30 Jul 2025</small><!-- q:239 --></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> 18.18% = 2/11, 9.09% = 1/11, 14.28% = 1/7, 11.11% = 1/9, 8.33% = 1/12, 6.25% = 1/16. Ye "ajeeb" % dikhe toh samjho fraction wala ratio hai.</div>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · "x% of CP = y% of SP", "5 × SP = 4 × CP" (6 Qs)</h3>
+  <p><b>Samjho:</b> 30% of CP = 25% of SP. Jiska % chhota, wo cheez badi. Toh CP : SP = 25 : 30 (ulta likho) = 5 : 6.</p>
+  <div class="box"><span class="k">Worked · CP ka 30% = SP ka 25%. Profit %? <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small><!-- q:147 --></span>
+    <b>Method:</b> ulta ratio · <i>~5 sec</i><br>
+    CP : SP = 25 : 30 = 5 : 6 → 1/5 → <mark>20%</mark>.
+  </div>
+  <ul>
+    <li>20% CP = 25% SP → <b>ulta</b> 25 : 20 = 5 : 4 → <mark>20% loss</mark> <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small><!-- q:149 --></li>
+    <li>40% CP = 30% SP → <b>ulta</b> 30 : 40 = 3 : 4 → 1/3 → <mark>33.33%</mark> <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small><!-- q:153 --></li>
+    <li>5 × SP = 4 × CP → <b>ulta</b> CP : SP = 5 : 4 → <mark>20% loss</mark> <span class="tag p">PYQ</span> <small>GD · 19 May 2026</small><!-- q:164 --></li>
+    <li>40% CP = 50% SP → <b>ulta</b> 50 : 40 = 5 : 4 → <mark>20% loss</mark> <span class="tag p">PYQ</span> <small>GD · 29 Apr 2026</small><!-- q:170 --></li>
+    <li>10% CP = 15% SP → <b>ulta</b> 15 : 10 = 3 : 2 → 1/3 → <mark>33.3% loss</mark> <span class="tag p">PYQ</span> <small>MTS · 18 Feb 2025</small><!-- q:194 --></li>
+  </ul>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Profit / loss SP par diya (8 Qs)</h3>
+  <p><b>Samjho:</b> SP = 100 maan lo. "SP par 30% profit" → profit 30, toh CP 70. Ab profit ko CP se divide karo. Loss SP par → CP = 100 + loss.</p>
+  <div class="box"><span class="k">Worked · SP par 30% profit. CP par? <span class="tag p">PYQ</span> <small>GD · 29 Apr 2026</small><!-- q:171 --></span>
+    <b>Method:</b> SP = 100 · <i>~6 sec</i><br>
+    P 30, CP 70 → 30/70 = 3/7 → <mark>42.86%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · SP par 30% loss. CP par? <span class="tag p">PYQ</span> <small>GD · 30 Apr 2026</small><!-- q:175 --></span>
+    <b>Method:</b> SP = 100 · <i>~6 sec</i><br>
+    L 30, CP 130 → 30/130 = 3/13 → <mark>23.08%</mark>.
+  </div>
+  <ul>
+    <li>SP ka 25% profit → <b>SP 100</b>: 25/75 → <mark>33.33%</mark> <span class="tag p">PYQ ×2</span> <small>CHSL · 27 Nov 2025; GD · 7 May 2026</small><!-- q:63,145 --></li>
+    <li>SP par 30% → profit : CP = <b>30 : 70</b> → <mark>3 : 7</mark> <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small><!-- q:155 --></li>
+    <li>SP par 20% → profit : CP = <b>20 : 80</b> → <mark>1 : 4</mark> <span class="tag p">PYQ</span> <small>GD · 18 May 2026</small><!-- q:161 --></li>
+    <li>SP par 25% loss → <b>CP 125</b>: 25/125 → <mark>20%</mark> <span class="tag p">PYQ</span> <small>GD · 28 Apr 2026</small><!-- q:168 --></li>
+    <li>SP par 20% → <b>SP 100</b>: 20/80 → <mark>25%</mark> <span class="tag p">PYQ</span> <small>MTS · 19 Feb 2025</small><!-- q:199 --></li>
+  </ul>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · Ek SP aur % diya, naye % ka SP nikaalo (6 Qs)</h3>
+  <p><b>Samjho:</b> CP = 100 maan lo. Purana SP = (100 ± a) hisse. Naya SP = (100 ± b) hisse. Bas 1 hissa (= CP ka 1%) nikaalo.</p>
+  <div class="box"><span class="k">Worked · ₹12,000 mein 20% loss. 20% profit ke liye SP? <span class="tag p">PYQ</span> <small>CHSL · 19 Nov 2025</small><!-- q:46 --></span>
+    <b>Method:</b> hisse 80 → 120 · <i>~5 sec</i><br>
+    80 hisse = 12,000 → 120 hisse = 12,000 × 120/80 = 12,000 × 3/2 = <mark>₹18,000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹1,200 mein 40% loss. 10% gain ke liye? <span class="tag p">PYQ</span> <small>MTS · 5 Feb 2025</small><!-- q:179 --></span>
+    <b>Method:</b> hisse 60 → 110 · <i>~5 sec</i><br>
+    60 hisse = 1,200 → 1 hissa = 20 → 110 × 20 = <mark>₹2,200</mark>.
+  </div>
+  <ul>
+    <li>1,800 par 10% loss → 15% gain → <b>90 → 115</b>: 1 hissa 20 → <mark>₹2,300</mark> <span class="tag p">PYQ</span> <small>CHSL · 13 Nov 2025</small><!-- q:33 --></li>
+    <li>4,200 par 5% → 15% → <b>105 → 115</b>: 1 hissa 40 → <mark>₹4,600</mark> <span class="tag p">PYQ</span> <small>CHSL · 19 Nov 2025</small><!-- q:43 --></li>
+    <li>3,30,000 par 10% → 25% → <b>110 → 125</b>: 1 hissa 3,000 → <mark>₹3,75,000</mark> <span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small><!-- q:50 --></li>
+    <li>85,000 par 15% loss → 15% gain → <b>85 → 115</b>: 1 hissa 1,000 → <mark>₹1,15,000</mark> <span class="tag p">PYQ</span> <small>DP HCM · 12 Jan 2026</small><!-- q:126 --></li>
+  </ul>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>₹1,800 mein becha, 12½% profit. CP?</summary><p>8 : 9 → 9 hisse = 1,800 → 1 hissa 200 → CP = ₹1,600.</p></details>
+    <details><summary>CP aur SP ka farq ₹150, profit 15%. SP?</summary><p>15% = 150 → CP 1,000 → SP = ₹1,150.</p></details>
+    <details><summary>CP ka 60% = SP ka 50%. Profit %?</summary><p>Ulta: CP : SP = 50 : 60 = 5 : 6 → 20%.</p></details>
+    <details><summary>SP par 20% loss. CP par loss %?</summary><p>SP 100, loss 20, CP 120 → 20/120 = 16.67%.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · PROFIT & LOSS (part 3: types 9–19) ===================== -->
+<section class="chap" id="mpl-types-b">
+  <div class="eyebrow">Maths · PYQ types 9–19 · 118 Qs</div>
+  <h2>Profit &amp; Loss: twist wale sawaal (Type 9–19)</h2>
+  <div class="meta">Gap method, do SP, articles, "n for ₹x", kharab maal, same SP ±%, alligation, mixture, kharche, jhootha baat, chain · bank mein 241 sawaal, sab yahan hain</div>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · "₹x zyada / kam mein bechta toh" (gap method) (14 Qs)</h3>
+  <div class="box"><span class="k">Worked · 10% loss; ₹45 zyada mein 5% gain hota. CP? <span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small><!-- q:61 --></span>
+    <b>Method:</b> gap · <i>~5 sec</i><br>
+    Loss se profit → gap = 10 + 5 = 15%. 15% = 45 → 1% = 3 → <mark>₹300</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 15% profit; 10% kam mein khareedta aur ₹18 kam mein bechta toh 25% profit. CP? <span class="tag p">PYQ</span> <small>CHSL · 13 Nov 2025</small><!-- q:31 --></span>
+    <b>Method:</b> CP = 100 + gap · <i>~20 sec</i><br>
+    Purana: CP 100, SP 115.<br>
+    Naya: CP 90, SP = 90 ka 125% = 90 + 22.5 = 112.5.<br>
+    SP mein farq = 115 − 112.5 = 2.5 hisse = 18 → 1 hissa = 7.2 → CP = 100 × 7.2 = <mark>₹720</mark>.
+  </div>
+  <ul>
+    <li>25% → 40% (₹60 zyada) → <b>gap 15%</b> = 60 → <mark>₹400</mark> <span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small><!-- q:60 --></li>
+    <li>10% loss → 8% gain (₹0.60/kg zyada) → <b>gap 18%</b> = 0.60 → 1% = 1/30 → <mark>₹3.33</mark> <span class="tag p">PYQ</span> <small>CHSL · 30 Nov 2025</small><!-- q:71 --></li>
+    <li>15% gain → 5% loss (₹150 kam) → <b>gap 20%</b> = 150 → <mark>₹750</mark> <span class="tag p">PYQ</span> <small>CPO · 12 Dec 2025</small><!-- q:85 --></li>
+    <li>25% loss → 10% profit (₹60 zyada) → <b>gap 35%</b> = 60 → 60 × 100/35 → <mark>≈ ₹171.4</mark> <span class="tag p">PYQ</span> <small>DP Const · 3 Jan 2026</small><!-- q:117 --></li>
+    <li>15% loss → 20% profit (₹450 zyada) → <b>gap 35%</b> = 450 → 450 × 20/7 → <mark>₹1,285.71</mark> <span class="tag p">PYQ</span> <small>MTS · 17 Feb 2025</small><!-- q:192 --></li>
+    <li>70% → 83% (₹338 zyada) → <b>gap 13%</b> = 338 → 1% = 26 → <mark>₹2,600</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 2 Aug 2025</small><!-- q:213 --></li>
+    <li>25% loss → 15% gain (₹3.5/kg) → <b>gap 40%</b> = 3.5 → 10% = 0.875 → <mark>₹8.75</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 29 Aug 2025</small><!-- q:218 --></li>
+    <li>20% loss → 5% gain (₹400) → <b>gap 25%</b> = 400 → <mark>₹1,600</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 1 Aug 2025</small><!-- q:225 --></li>
+    <li>12% loss → 6% gain (₹630) → <b>gap 18%</b> = 630 → 1% = 35 → <mark>₹3,500</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 1 Aug 2025</small><!-- q:226 --></li>
+    <li>16% profit → 12% loss (₹105 kam); ₹350 mein bechein toh? → <b>gap 28%</b> = 105 → CP 375 → 25/375 = 1/15 → <mark>6⅔% (loss)</mark> <span class="tag p">PYQ</span> <small>MTS · 17 Feb 2025</small><!-- q:190 --></li>
+    <li>20% profit; CP +50, SP +30 → profit 10%. CP? → <b>option check</b>: 250 → SP 300 → naya 300, 330 → 30/300 = 10% ✔ → <mark>₹250</mark> <span class="tag p">PYQ</span> <small>CPO · 10 Dec 2025</small><!-- q:81 --></li>
+    <li>10% profit; CP 20% kam aur SP ₹50 zyada → 40%. CP? → <b>CP = 100</b>: purana SP 110, naya CP 80 → naya SP 112 → 2 hisse = 50 → <mark>₹2,500</mark> <span class="tag p">PYQ</span> <small>MTS · 17 Feb 2025</small><!-- q:189 --></li>
+  </ul>
+  <div class="box"><span class="k">Dhyaan · MTS 17 Feb 2025 (₹350 wala)</span>
+    Options mein sirf "6⅔%" likha hai, profit ya loss nahi. CP 375 hai aur ₹350 kam hai, toh ye <b>loss</b> hai. Answer 6⅔% hi hai.
+  </div>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · Do SP par barabar, ya "k guna" profit-loss (8 Qs)</h3>
+  <div class="box"><span class="k">Worked · ₹2,200 par profit = ₹1,800 par loss. ₹2,050 par? <span class="tag p">PYQ ×2</span> <small>CGL · 12 Sep 2025; SP-XIV · 30 Jul 2025</small><!-- q:3,211 --></span>
+    <b>Method:</b> beech ka number · <i>~6 sec</i><br>
+    CP = (2,200 + 1,800)/2 = 2,000. 2,050 par profit 50 → 50/2,000 = <mark>2.5% profit</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹2,000 par profit = 19 × (₹1,200 par loss). ₹2,000 par profit %? <span class="tag p">PYQ</span> <small>GD · 4 May 2026</small><!-- q:128 --></span>
+    <b>Method:</b> gap ÷ (k + 1) · <i>~15 sec</i><br>
+    Gap = 800 → 800 ÷ 20 = 40 → CP = 1,200 + 40 = 1,240.<br>
+    Profit = 760 → 760/1,240 ≈ 0.613 → <mark>61.29%</mark>.
+  </div>
+  <ul>
+    <li>₹840 par profit = ₹760 par loss; ₹900 par? → <b>beech</b> CP 800 → 100/800 → <mark>12.5%</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 2 Aug 2025</small><!-- q:205 --></li>
+    <li>₹1,100 par profit = ₹900 par loss; ₹850 par? → <b>beech</b> CP 1,000 → <mark>15% loss</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 31 Jul 2025</small><!-- q:212 --></li>
+    <li>₹1,200 par profit = 9 × (₹1,000 par loss); 20% profit ka SP? → <b>gap 200 ÷ 10</b> = 20 → CP 1,020 → + 204 → <mark>₹1,224</mark> <span class="tag p">PYQ</span> <small>GD · 6 May 2026</small><!-- q:139 --></li>
+    <li>₹1,600 par profit = 19 × (₹1,200 par loss); 30% ka SP? → <b>gap 400 ÷ 20</b> = 20 → CP 1,220 → + 366 → <mark>₹1,586</mark> <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small><!-- q:141 --></li>
+    <li>₹1,100 par profit = 29 × (₹800 par loss); 10% ka SP? → <b>gap 300 ÷ 30</b> = 10 → CP 810 → + 81 → <mark>₹891</mark> <span class="tag p">PYQ</span> <small>MTS · 20 Feb 2025</small><!-- q:202 --></li>
+  </ul>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · Articles ka khel (17 Qs)</h3>
+  <p><b>Samjho:</b> table (speed method 5) dekho. Sab kuch "kitne articles ka CP" mein badlo, phir profit ÷ CP.</p>
+  <div class="box"><span class="k">Worked · 5 kursi ₹1,200 mein, gain = 2 kursi ka CP. Profit %? <span class="tag p">PYQ</span> <small>SP-XIV · 24 Jul 2025</small><!-- q:206 --></span>
+    <b>Method:</b> CP of x → x/n · <i>~3 sec</i><br>
+    2/5 → <mark>40%</mark>. (₹1,200 ki zaroorat hi nahi.)
+  </div>
+  <div class="box"><span class="k">Worked · 12 pen ₹480 mein, loss = 3 pen ka SP. 1 pen ka CP? <span class="tag p">PYQ</span> <small>CHSL · 14 Nov 2025</small><!-- q:36 --></span>
+    <b>Method:</b> SP se CP · <i>~10 sec</i><br>
+    1 pen ka SP = 40. Loss = 3 × 40 = 120. 12 ka CP = 480 + 120 = 600 → 1 ka CP = <mark>₹50</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 20 ka CP ₹260, 25 ka SP ₹260. Profit/loss %? <span class="tag p">PYQ</span> <small>GD · 29 Apr 2026</small><!-- q:173 --></span>
+    <b>Method:</b> SP of a = CP of b · <i>~6 sec</i><br>
+    25 ka SP = 20 ka CP. Toh 25 bech kar sirf 20 ka paisa mila → loss 5 on 25 → <mark>20% loss</mark>.
+  </div>
+  <ul>
+    <li>10 pen, loss = 4 ka CP → <b>x/n</b> 4/10 → <mark>40%</mark> <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small><!-- q:8 --></li>
+    <li>15 kg, gain = 5 kg ka CP → <b>x/n</b> 5/15 → <mark>33.33%</mark> <span class="tag p">PYQ</span> <small>CGL · 17 Sep 2025</small><!-- q:16 --></li>
+    <li>15 beche, gain = 3 ka SP → <b>x/(n − x)</b> 3/12 → <mark>25%</mark> <span class="tag p">PYQ ×2</span> <small>CHSL · 19 Nov 2025; CHSL · 24 Nov 2025</small><!-- q:47,56 --></li>
+    <li>17 beche, gain = 3 ka CP → <b>x/n</b> 3/17 → <mark>17.65%</mark> <span class="tag p">PYQ</span> <small>CHSL · 27 Nov 2025</small><!-- q:64 --></li>
+    <li>SP of 15 = CP of 20 → <b>(b − a)/a</b> 5/15 → <mark>33.33% profit</mark> <span class="tag p">PYQ</span> <small>CHSL · 30 Nov 2025</small><!-- q:73 --></li>
+    <li>12 beche, gain = 4 ka SP → <b>x/(n − x)</b> 4/8 → <mark>50%</mark> <span class="tag p">PYQ</span> <small>MTS · 13 Feb 2025</small><!-- q:185 --></li>
+    <li>SP of 12 = CP of 27 → <b>(b − a)/a</b> 15/12 → <mark>125%</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 25 Jul 2025</small><!-- q:216 --></li>
+    <li>CP of 12 = SP of 8 → <b>(b − a)/a</b> 4/8 → <mark>50%</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 1 Aug 2025</small><!-- q:227 --></li>
+    <li>15 ka CP = 20 ka SP = ₹182; (P/L of 1) : (CP of 1)? → <b>CP : SP = 20 : 15 = 4 : 3</b> → loss 1 : CP 4 → <mark>1 : 4</mark> <span class="tag p">PYQ</span> <small>GD · 19 May 2026</small><!-- q:165 --></li>
+    <li>25 ka CP = 30 ka SP = ₹197; (P/L of 1) : (SP of 1)? → <b>CP : SP = 6 : 5</b> → loss 1 : SP 5 → <mark>1 : 5</mark> <span class="tag p">PYQ</span> <small>GD · 25 May 2026</small><!-- q:169 --></li>
+    <li>30 ka CP = 40 ka SP = ₹260 → <b>loss 10 on 40</b> → <mark>25% loss</mark> <span class="tag p">PYQ</span> <small>GD · 30 Apr 2026</small><!-- q:177 --></li>
+    <li>300 ka CP ₹150 (1 ka ½), 8 ka SP ₹5 (1 ka ⅝) → <b>CP : SP = 4 : 5</b> → <mark>25%</mark> <span class="tag p">PYQ</span> <small>MTS · 19 Feb 2025</small><!-- q:198 --></li>
+    <li>1,600 ka CP ₹300 (1 ka 3/16), 10 ka SP ₹3 (1 ka 3/10) → <b>CP : SP = 10 : 16</b> → 6/10 → <mark>60%</mark> <span class="tag p">PYQ</span> <small>MTS · 20 Feb 2025</small><!-- q:204 --></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> "a ka CP = ₹k, b ka SP = ₹k" mein ₹k bekaar hai (₹182, ₹197, ₹260). Sirf a aur b dekho: CP : SP (ek ka) = b : a.</div>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · "n for ₹x" rate, dozen (7 Qs)</h3>
+  <p><b>Samjho:</b> khareed aur bikri dono ko <b>same ginti</b> par le aao (LCM). Phir seedha CP aur SP compare.</p>
+  <div class="box"><span class="k">Worked · 10 seb ₹120 mein khareede, 8 seb ₹100 mein beche. Profit %? <span class="tag p">PYQ</span> <small>CHSL · 12 Nov 2025</small><!-- q:76 --></span>
+    <b>Method:</b> LCM ginti · <i>~10 sec</i><br>
+    40 seb: CP = 4 × 120 = 480, SP = 5 × 100 = 500. Profit 20/480 = 1/24 → <mark>4.17% profit</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹8 ke 5 khareede, ₹9 ke 4 beche. Profit %? <span class="tag p">PYQ</span> <small>SP-XIV · 1 Aug 2025</small><!-- q:228 --></span>
+    <b>Method:</b> LCM 20 · <i>~10 sec</i><br>
+    20 articles: CP = 4 × 8 = 32, SP = 5 × 9 = 45. 13/32 × 100 = 1300/32 = <mark>325/8 %</mark> (= 40.625%).
+  </div>
+  <ul>
+    <li>9 seb ₹9.60, 11 seb ₹12 → <b>LCM 99</b>: CP 11 × 9.6 = 105.6, SP 9 × 12 = 108 → 2.4/105.6 = 1/44 → <mark>2 3/11 %</mark> <span class="tag p">PYQ</span> <small>MTS · 18 Feb 2025</small><!-- q:195 --></li>
+    <li>120 pen 4 for ₹5 (= 150) + 120 pen 2 for ₹3 (= 180); 240 pen 3 for ₹8 (= 640) → <b>kul CP 330</b> → 310/330 → <mark>93.93%</mark> <span class="tag p">PYQ</span> <small>MTS · 16 Feb 2025</small><!-- q:186 --></li>
+    <li>₹1,200 dozen (= 100 ek), bikri 110, kul profit 360 → <b>10 per piece</b> → 360 ÷ 10 → <mark>36</mark> <span class="tag p">PYQ</span> <small>CHSL · 21 Nov 2025</small><!-- q:51 --></li>
+    <li>₹475 dozen, bikri ₹66 ek → <b>ek dozen ka SP</b> = 792 → 317/475 → <mark>66.73%</mark> <span class="tag p">PYQ</span> <small>MTS · 9 Feb 2025</small><!-- q:182 --></li>
+    <li>₹3,600 dozen (= 300 ek), bikri 350 → <b>fraction</b> 50/300 → <mark>16.67% profit</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 31 Jul 2025</small><!-- q:240 --></li>
+  </ul>
+
+  <!-- TYPE 13 -->
+  <h3>Type 13 · Kitne bechne padenge, kharab maal (7 Qs)</h3>
+  <p><b>Samjho:</b> do kadam. (1) Ek piece ka CP nikaalo. (2) Naye % se ek piece ka SP banao, phir kul rakam ÷ ek piece ka SP. Kharab maal mein: poori laagat par profit chahiye, par bikri sirf bache hue maal se.</p>
+  <div class="box"><span class="k">Worked · 15 khilone ₹3,000 mein, 25% profit. ₹2,816 mein kitne bechein ki 10% profit ho? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small><!-- q:4 --></span>
+    <b>Method:</b> ratio 4 : 5, phir 10 : 11 · <i>~15 sec</i><br>
+    Ek ka SP = 200 = 5 hisse → CP = 160. 10% profit → 176.<br>
+    2,816 ÷ 176 = <mark>16</mark>. (176 × 16 = 2,816 ✔)
+  </div>
+  <div class="box"><span class="k">Worked · 200 phool ₹800 mein, 20 murjha gaye. 30% profit ke liye ek phool? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small><!-- q:9 --></span>
+    <b>Method:</b> kul target ÷ bache · <i>~8 sec</i><br>
+    Target = 800 + 30% = 1,040. Bache 180 → 1,040/180 = 5.78 → <mark>₹5.78</mark>.
+  </div>
+  <ul>
+    <li>36 bag ₹3,600 (20% loss); ₹3,200 mein kitne, 60% profit ke liye? → <b>ratio 5 : 4</b>: SP 100 → CP 125 → +60% = 200 → <mark>16</mark> <span class="tag p">PYQ</span> <small>MTS · 11 Feb 2025</small><!-- q:183 --></li>
+    <li>50 kursi ₹10,000 (15% loss); ₹9,000 mein, 10% profit? → <b>CP</b> = 200/0.85 ≈ 235.3 → ×1.1 ≈ 258.8 → 9,000 ÷ 258.8 ≈ 34.8 → <mark>35</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 29 Aug 2025</small><!-- q:209 --></li>
+    <li>50 L doodh ₹2,000, 5 L kharab, 20% profit → <b>target</b> 2,400 ÷ 45 → <mark>₹53.33</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 25 Jul 2025</small><!-- q:207 --></li>
+    <li>100 cake ₹3,000, 10 kharab, 15% profit → <b>target</b> 3,450 ÷ 90 → <mark>₹38.33</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 29 Jul 2025</small><!-- q:210 --></li>
+    <li>150 speaker × 400 = 60,000; 120 bech kar 40% ka plan; bik gaye 135 → <b>daam</b> = 84,000 ÷ 120 = 700 → 135 × 700 = 94,500 → 34,500/60,000 → <mark>57.5%</mark> <span class="tag p">PYQ</span> <small>CGL · 23 Sep 2025</small><!-- q:24 --></li>
+  </ul>
+
+  <!-- TYPE 14 -->
+  <h3>Type 14 · Same SP, ek par +x% ek par −x% (8 Qs)</h3>
+  <div class="box"><span class="k">Worked · ₹200–200 ki do cheezein, ±25%. Loss %? <span class="tag p">PYQ</span> <small>CHSL · 19 Nov 2025</small><!-- q:48 --></span>
+    <b>Method:</b> x²/100 · <i>~3 sec</i><br>
+    25 × 25 ÷ 100 = <mark>6.25%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · ₹5,000–5,000, ±20%. Loss ₹ mein? <span class="tag p">PYQ</span> <small>DP Const · 20 Dec 2025</small><!-- q:111 --></span>
+    <b>Method:</b> ratio 5 : 6 aur 5 : 4 · <i>~12 sec</i><br>
+    CP₁ = 5,000 × 5/6 = 4,166.67. CP₂ = 5,000 × 5/4 = 6,250. Kul CP = 10,416.67, kul SP 10,000.<br>
+    Loss = <mark>₹416.67</mark>. (Check: 10,416.67 ka 4% = 416.67 ✔)
+  </div>
+  <ul>
+    <li>₹500–500, ±25%; net ₹? → <b>CP</b> 400 + 666.67 → <mark>₹66.67 loss</mark> <span class="tag p">PYQ</span> <small>CGL · 25 Sep 2025</small><!-- q:27 --></li>
+    <li>₹960–960 / ₹500–500, ±20% → <b>x²/100</b> → <mark>4% loss</mark> <span class="tag p">PYQ ×2</span> <small>CHSL · 17 Nov 2025; CHSL · 20 Nov 2025</small><!-- q:42,45 --></li>
+    <li>Same SP, ±10% → <b>x²/100</b> → <mark>1% loss</mark> <span class="tag p">PYQ</span> <small>MTS · 4 Feb 2025</small><!-- q:178 --></li>
+    <li>₹4,000–4,000, ±25% → <b>x²/100</b> → <mark>6.25% loss</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 29 Aug 2025</small><!-- q:236 --></li>
+    <li>₹3,450–3,450, +15% aur −10% (alag %!) → <b>ratio 20 : 23 aur 10 : 9</b>: CP 3,000 + 3,833.33 = 6,833.33; SP 6,900 → 66.67/6,833.33 → <mark>0.98% profit</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 29 Jul 2025</small><!-- q:220 --></li>
+  </ul>
+
+  <!-- TYPE 15 -->
+  <h3>Type 15 · Hisson mein bikri, alligation (14 Qs)</h3>
+  <p><b>Samjho:</b> agar har hisse ka <b>CP</b> pata ho, toh kul % = CP ke hisaab se average (speed method 8). Agar <b>SP</b> ka ratio diya ho, toh pehle har hisse ka CP nikaalo, phir jodo.</p>
+  <div class="box"><span class="k">Worked · ¾ seb 20% profit par, baaki 10% loss par. Kul ₹90 profit. Kul CP? <span class="tag p">PYQ</span> <small>CHSL · 30 Nov 2025</small><!-- q:75 --></span>
+    <b>Method:</b> hisson ka average · <i>~8 sec</i><br>
+    ¾ × 20 − ¼ × 10 = 15 − 2.5 = 12.5% = 1/8. CP ka 1/8 = 90 → CP = <mark>₹720</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 240 TV, kuch 20% par, baaki 30% par, kul 28%. 20% wale? <span class="tag p">PYQ</span> <small>SP-XIV · 1 Aug 2025</small><!-- q:224 --></span>
+    <b>Method:</b> alligation cross · <i>~6 sec</i><br>
+    30 − 28 = 2, 28 − 20 = 8 → 1 : 4 → 240 × 1/5 = <mark>48</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · SP ratio 4 : 5 : 6; A par 10% loss, B par 50% profit, C par na profit na loss. Kul? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small><!-- q:5 --></span>
+    <b>Method:</b> SP ko saaf number banao · <i>~20 sec</i><br>
+    SP = 36, 45, 54 (9 se guna, taaki CP poore aayein). CP: 36 × 10/9 = 40, 45 × 2/3 = 30, 54.<br>
+    Kul CP 124, SP 135 → 11/124 ≈ <mark>8.88% profit</mark> (11/124 = 8.87…).
+  </div>
+  <ul>
+    <li>100 pen ₹10; 60 par 20%, 40 par −10% → <b>average</b> (1,200 − 400)/100 → <mark>8% profit</mark> <span class="tag p">PYQ ×2</span> <small>CGL · 24 Sep 2025; CPO · 9 Dec 2025</small><!-- q:26,77 --></li>
+    <li>25 cooker; 15 par 20%, 10 par −10% → <b>average</b> (300 − 100)/25 → <mark>8% profit</mark> <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small><!-- q:38 --></li>
+    <li>3 pankhe; 2 par 15%, 1 par −10% → <b>average</b> (30 − 10)/3 → <mark>6.67% profit</mark> <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small><!-- q:41 --></li>
+    <li>₹5,000; ek par 10%, doosre par −5%, net ₹100 (= 2%) → <b>alligation</b> 7 : 8 → <mark>₹2,333.33</mark> <span class="tag p">PYQ</span> <small>CGL · 21 Sep 2025</small><!-- q:22 --></li>
+    <li>10% profit aur 20% loss, na profit na loss → <b>10 × x = 20 × y</b> → <mark>CP = 2 : 1</mark> <span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small><!-- q:49 --></li>
+    <li>Pehle par 25%, doosre par −10%; pehle ka CP 60% zyada; kul ₹225 → <b>doosra = x</b>: 0.25 × 1.6x − 0.1x = 0.3x = 225 → x = 750 → <mark>₹1,200 aur ₹750</mark> <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small><!-- q:37 --></li>
+    <li>SP 5 : 6 : 7; +20%, −10%, +30% → <b>SP × 234</b> (6, 9, 13 ka LCM): SP 1,170 + 1,404 + 1,638 = 4,212; CP 975 + 1,560 + 1,260 = 3,795 → 417/3,795 → <mark>10.98% profit</mark> <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small><!-- q:7 --></li>
+    <li>SP 3 : 4 : 5; +25%, +10%, −20% → <b>CP = SP × 4/5, 10/11, 5/4</b>: 2.4 + 3.64 + 6.25 = 12.29 vs 12 → 0.29/12.29 → <mark>2.33% loss</mark> <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small><!-- q:12 --></li>
+    <li>120 novel ₹145 avg; baaki 20 par 30% profit; ek ka SP? → <b>10% + 20%</b> sirf 145 par: 145 + 43.5 → <mark>₹188.50</mark> (pehle 100 ki jaankari bekaar) <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small><!-- q:54 --></li>
+    <li>120 calculator (50 × 625.50, 70 × 712.80) + 6% storage; bikri % sirf khareed par → <b>kul CP</b> 81,171 × 1.06 = 86,041.26; <b>kul SP</b> 28,773 + 5,629.50 + 55,883.52 = 90,286.02 → 4,244.76/86,041.26 → <mark>4.93% profit</mark> <span class="tag p">PYQ</span> <small>CHSL · 25 Nov 2025</small><!-- q:57 --></li>
+  </ul>
+  <div class="trick"><b>Trick:</b> SP ratio wale sawaal mein SP ko aise number se guna karo ki har "CP = SP × 100/(100 ± p)" poora aaye. Phir koi decimal nahi.</div>
+
+  <!-- TYPE 16 -->
+  <h3>Type 16 · Mixture (chawal, daal, tel) (9 Qs)</h3>
+  <p><b>Samjho:</b> mixture ka CP = dono ka weighted average. Ratio 3 : 1 hai toh (3 × pehla + 1 × doosra) ÷ 4. Phir SP se compare.</p>
+  <div class="box"><span class="k">Worked · ₹80 aur ₹100 wali daal 3 : 1 mein; ₹91.80 mein bechi. %? <span class="tag p">PYQ</span> <small>CGL · 17 Sep 2025</small><!-- q:15 --></span>
+    <b>Method:</b> weighted average · <i>~8 sec</i><br>
+    CP = (240 + 100)/4 = 85. 85 ka 8% = 6.80 → 85 + 6.80 = 91.80 → <mark>8% gain</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 40 L ₹50 aur 60 L ₹60 mila diye; 20 L ₹70 mein beche. Profit? <span class="tag p">PYQ</span> <small>CGL · 20 Sep 2025</small><!-- q:20 --></span>
+    <b>Method:</b> average, phir sirf 20 L · <i>~8 sec</i><br>
+    Average = (40 × 50 + 60 × 60)/100 = (2,000 + 3,600)/100 = 56. Har litre par 70 − 56 = 14 → 20 × 14 = <mark>₹280 profit</mark>.
+  </div>
+  <ul>
+    <li>50 kg × 40 + 20 kg × 55, sab ₹48 → <b>kul CP</b> 2,000 + 1,100 = 3,100; SP 70 × 48 = 3,360 → <mark>₹260 profit</mark> <span class="tag p">PYQ</span> <small>CGL · 16 Sep 2025</small><!-- q:13 --></li>
+    <li>₹40 aur ₹60, 2 : 3; ₹57.20 → <b>average</b> (80 + 180)/5 = 52 → 52 + 5.2 → <mark>10% gain</mark> <span class="tag p">PYQ</span> <small>CGL · 19 Sep 2025</small><!-- q:19 --></li>
+    <li>50 kg × 50 + 30 kg × 60, sab ₹55 → <b>kul CP</b> 2,500 + 1,800 = 4,300; SP 4,400 → <mark>₹100 profit</mark> <span class="tag p">PYQ ×2</span> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small><!-- q:32,34 --></li>
+    <li>Barabar maatra; pehli ₹40 par 25% profit, doosri ₹30 par 25% loss; mix ₹36 → <b>CP</b> 32 aur 40 → average 36 → <mark>0% (na gain na loss)</mark> <span class="tag p">PYQ</span> <small>CHSL · 14 Nov 2025</small><!-- q:35 --></li>
+    <li>300 kg, ₹18 wala = 2 × ₹24 wala; ₹27 mein, profit 2,100 → <b>2x + x = 300</b> → x = 100 (check: 200 × 9 + 100 × 3 = 2,100 ✔) → <mark>100 kg</mark> <span class="tag p">PYQ</span> <small>CHSL · 28 Nov 2025</small><!-- q:65 --></li>
+    <li>30 pen × 12 + 20 pen × 15, sab ₹18 → <b>kul CP</b> 360 + 300 = 660; SP 900 → <mark>₹240</mark> <span class="tag p">PYQ</span> <small>CPO · 12 Dec 2025</small><!-- q:86 --></li>
+  </ul>
+
+  <!-- TYPE 17 -->
+  <h3>Type 17 · Extra kharche, kul CP vs kul SP (16 Qs)</h3>
+  <p><b>Samjho:</b> transport, repair, packing, advertising sab <b>CP mein judte hain</b>. Phir kul profit ÷ kul CP. Agar sawaal bole "X% profit par becha", toh wo % aam taur par sirf khareed ki keemat par hota hai.</p>
+  <div class="box"><span class="k">Worked · Purani car ₹15,000, repair ₹2,500, bechi ₹19,250. Profit %? <span class="tag p">PYQ</span> <small>SP-XIV · 1 Aug 2025</small><!-- q:222 --></span>
+    <b>Method:</b> kul CP + fraction · <i>~6 sec</i><br>
+    CP = 17,500. Profit = 1,750 = 1/10 → <mark>10%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 100 phone × 12,000; transport 30,000, ad 20,000; 10 kharab 50% loss par, baaki 25% profit par. Net? <span class="tag p">PYQ</span> <small>CPO · 9 Dec 2025</small><!-- q:79 --></span>
+    <b>Method:</b> kul CP vs kul SP · <i>~20 sec</i><br>
+    Kul CP = 12,00,000 + 50,000 = 12,50,000.<br>
+    SP = 10 × 6,000 + 90 × 15,000 = 60,000 + 13,50,000 = 14,10,000 → <mark>₹1,60,000 profit</mark>.
+  </div>
+  <ul>
+    <li>Commission: shirt 500 × 2% = 10, tie 150 × 12% = 18 → <b>roz</b> 3 × 10 + 4 × 18 = 102 → × 30 → <mark>₹3,060</mark> <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small><!-- q:1 --></li>
+    <li>50,000 + 5,000 + 3,000 = 58,000; bikri 63,000 → <b>5,000/58,000</b> → <mark>8.62% profit</mark> <span class="tag p">PYQ</span> <small>CGL · 20 Sep 2025</small><!-- q:21 --></li>
+    <li>3 ghadi 4,500; bikri 1,800 + 1,700 + 1,600 = 5,100 → <mark>₹600 profit</mark> <span class="tag p">PYQ</span> <small>CGL · 22 Sep 2025</small><!-- q:23 --></li>
+    <li>8 shirt 4,000; 6 beche 3,900, 2 phenk di → <b>kul</b> 3,900 − 4,000 → <mark>₹100 loss</mark> <span class="tag p">PYQ</span> <small>CGL · 25 Sep 2025</small><!-- q:29 --></li>
+    <li>200 × 120 + 1,800 = 25,800; bikri 15,000 + 13,000 = 28,000 → 2,200/25,800 → <mark>8.53%</mark> <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small><!-- q:39 --></li>
+    <li>Prism 10 × 10 × 25 = 2,500 cm³; profit 0.20/cm³ × 12 → <b>2,500 × 0.2 × 12</b> → <mark>₹6,000</mark> <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small><!-- q:40 --></li>
+    <li>Kitaab: 20 × 200 × 25 = 1,00,000 + 1,600 + 2,000 + 1,000 = 1,04,600; bikri 20 × 7,500 = 1,50,000 → <mark>₹45,400</mark> <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small><!-- q:55 --></li>
+    <li>Painting ₹6,600 mein 10% profit (restoration 600 ke baad) → <b>ratio 10 : 11</b>: kul CP 6,000 → − 600 → <mark>₹5,400</mark> <span class="tag p">PYQ</span> <small>CPO · 9 Dec 2025</small><!-- q:78 --></li>
+    <li>Event ka kharcha 10,000, ticket 200 → <b>break even</b> 10,000 ÷ 200 → <mark>50</mark> <span class="tag p">PYQ</span> <small>DP AWO · 16 Jan 2026</small><!-- q:89 --></li>
+    <li>Table 5,000 + 2,000; bikri 9,000 → <b>2,000/7,000</b> = 2/7 → <mark>28.57%</mark> <span class="tag p">PYQ</span> <small>DP AWO · 20 Jan 2026</small><!-- q:90 --></li>
+    <li>Mug 250 + beans 280 = 530; bikri 600 → <b>70/530</b> → <mark>13.2%</mark> <span class="tag p">PYQ</span> <small>DP AWO · 21 Jan 2026</small><!-- q:91 --></li>
+    <li>150 phone × 8,000; 15 kharab CP ke 50% par, 135 par 10% → <b>ek-ek ka ₹</b>: −15 × 4,000 + 135 × 800 = −60,000 + 1,08,000 → <mark>₹48,000 profit</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 25 Jul 2025</small><!-- q:215 --></li>
+    <li>80 pen 2,400; 60 × 40 + 20 × 25 = 2,900 → <b>500/2,400</b> → <mark>0.2083</mark> (= 20.83%) <span class="tag p">PYQ</span> <small>SP-XIV · 24 Jul 2025</small><!-- q:230 --></li>
+    <li>100 santare × 8 = 800; 80 × 10 + 20 × 6 = 920 → <b>120/800</b> → <mark>15% profit</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 31 Jul 2025</small><!-- q:241 --></li>
+  </ul>
+
+  <!-- TYPE 18 -->
+  <h3>Type 18 · Jhootha baat, "x ke daam mein y", marked price (9 Qs)</h3>
+  <div class="box"><span class="k">Worked · CP par bechne ka daava, par 950 g ka baat. Profit %? <span class="tag p">PYQ</span> <small>CHSL · 27 Nov 2025</small><!-- q:62 --></span>
+    <b>Method:</b> (asli − jhootha)/jhootha · <i>~5 sec</i><br>
+    50/950 = 1/19 → <mark>5.26%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 10% profit ka daava, aur 1 kg ki jagah 900 g. Asli profit? <span class="tag p">PYQ</span> <small>SP-XIV · 28 Jul 2025</small><!-- q:208 --></span>
+    <b>Method:</b> ratio guna · <i>~6 sec</i><br>
+    Baat 9 : 10, profit 10 : 11 → CP : SP = 9 : 11 → 2/9 → <mark>22.22%</mark>.
+  </div>
+  <ul>
+    <li>5% loss par, aur baat 20% kam (800 g) → <b>ratio</b> 4 : 5 aur 20 : 19 → 80 : 95 → 15/80 → <mark>18.75%</mark> <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small><!-- q:2 --></li>
+    <li>10% loss ka daava, 750 g ka baat → <b>ratio</b> 3 : 4 aur 10 : 9 → 30 : 36 → 6/30 → <mark>20% profit</mark> (key mein 16.67% hai; note dekho) <span class="tag p">PYQ</span> <small>MTS · 5 Feb 2025</small><!-- q:180 --></li>
+    <li>10 dabbe 8 ke daam mein, 2% discount → <b>CP 8, SP 9.8</b> → 1.8/8 → <mark>22.5%</mark> <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small><!-- q:11 --></li>
+    <li>7 shirt 6 ke daam, 4% discount → <b>CP 6, SP 6.72</b> → 0.72/6 → <mark>12%</mark> <span class="tag p">PYQ</span> <small>CGL · 17 Sep 2025</small><!-- q:17 --></li>
+    <li>5 novel 4 ke daam, 5% discount → <b>CP 4, SP 4.75</b> → 0.75/4 → <mark>18.75%</mark> <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small><!-- q:18 --></li>
+    <li>Kitaab ₹180, MP ₹225, "4 lo 1 free" → <b>5 kitaab ka SP</b> = 4 × 225 = 900 = 5 × 180 → <mark>0%</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 24 Jul 2025</small><!-- q:214 --></li>
+    <li>Laptop 40,000; MP 25% upar = 50,000; 10% off = 45,000; shipping 500 → <b>CP 40,500</b> → 4,500/40,500 = 1/9 → <mark>11.11%</mark> <span class="tag p">PYQ</span> <small>SP-XIV · 29 Jul 2025</small><!-- q:219 --></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>MTS 5 Feb 2025 (750 g, 10% loss): dukaandaar 1 kg ke daam ka 90% leta hai aur 750 g deta hai. CP : SP = 75 : 90 = 5 : 6 → asli gain <b>20%</b>, jo option B hai. Key ka 16.67% galat lagta hai (wo shayad 1/6 ko SP par le kar aaya). Exam mein 20% lagao, par pehle option dekho.</div>
+
+  <!-- TYPE 19 -->
+  <h3>Type 19 · Chain bikri, aur CP-SP dono badle (9 Qs)</h3>
+  <div class="box"><span class="k">Worked · Trader → A 20% profit, A → B 10% loss, B → C 5% profit. C ne ₹1,134 diye. Trader ka CP? <span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small><!-- q:59 --></span>
+    <b>Method:</b> ratio guna · <i>~10 sec</i><br>
+    5 : 6 × 10 : 9 × 20 : 21 → 1000 : 1134. 1134 hisse = 1,134 → <mark>₹1,000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · SP 25% badha, profit 20% se 30% hua. CP kitna % badha? <span class="tag p">PYQ ×2</span> <small>CGL · 23 Sep 2025; CPO · 9 Dec 2025</small><!-- q:25,80 --></span>
+    <b>Method:</b> 100 maan lo · <i>~15 sec</i><br>
+    Purana CP 100 → SP 120. Naya SP = 120 + 30 = 150 = naye CP ka 130%.<br>
+    Naya CP = 150 × 10/13 = 115.38 → <mark>15.38%</mark> badha.
+  </div>
+  <ul>
+    <li>Sanjay → Harshit 11%, Harshit → Anil 12%, Anil ne 12,432 diye → <b>a + b + ab/100</b> = 11 + 12 + 1.32 = 24.32% → 12,432 = 124.32% → <mark>₹10,000</mark> <span class="tag p">PYQ</span> <small>MTS · 12 Feb 2025</small><!-- q:184 --></li>
+    <li>30% profit; CP aur SP dono +40% → <b>ratio wahi</b> → <mark>30%</mark> <span class="tag p">PYQ</span> <small>GD · 7 May 2026</small><!-- q:144 --></li>
+    <li>10% loss; dono +20% → <b>ratio wahi</b> → <mark>10%</mark> <span class="tag p">PYQ</span> <small>GD · 9 May 2026</small><!-- q:156 --></li>
+    <li>10% profit; dono −20% → <b>ratio wahi</b> → <mark>10%</mark> <span class="tag p">PYQ</span> <small>GD · 29 Apr 2026</small><!-- q:172 --></li>
+    <li>30% profit; dono −40% → <b>ratio wahi</b> → <mark>30%</mark> <span class="tag p">PYQ</span> <small>GD · 30 Apr 2026</small><!-- q:176 --></li>
+    <li>60% profit; CP +30%, SP +y%, naya profit 40% → <b>100 maan lo</b>: CP 130, SP 130 × 1.4 = 182; purana SP 160 → 22/160 → <mark>13.75%</mark> <span class="tag p">PYQ</span> <small>GD · 8 May 2026</small><!-- q:151 --></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>SP diya, % ghata/jod kar CP nikaala (1,350 − 12½%)</td><td>% CP par hai. Ratio lo: 8 : 9 → 9 hisse = SP.</td></tr>
+    <tr><td>Loss % ko SP se divide kiya (500/3,500)</td><td>Pehle CP = SP + loss, phir loss ÷ CP.</td></tr>
+    <tr><td>"Gain = SP of 3" ko 3/15 likha</td><td>SP of 15 = CP of 12. Toh 3/12 = 25%.</td></tr>
+    <tr><td>Same SP, ±25% → "na profit na loss"</td><td>Hamesha loss = x²/100 = 6.25%.</td></tr>
+    <tr><td>Jhootha baat: 50/1000 = 5%</td><td>Gain diye hue maal par: 50/950 = 5.26%.</td></tr>
+    <tr><td>Gap method mein loss se profit par % ghata diye (25 − 10)</td><td>Ek taraf loss, ek taraf profit → % <b>jodo</b> (25 + 10 = 35).</td></tr>
+    <tr><td>Kharab maal: profit sirf bache hue maal ki laagat par</td><td>Profit poori laagat par chahiye. Bikri bache hue maal se.</td></tr>
+    <tr><td>Transport / repair bhool gaye</td><td>Sab kharche CP mein jodo.</td></tr>
+    <tr><td>CP pucha tha, SP likh diya (GD ke "difference" wale)</td><td>Aakhri line dobara padho: CP ya SP?</td></tr>
+    <tr><td>"x% of CP = y% of SP" mein CP : SP = x : y likha</td><td>Ulta: CP : SP = y : x.</td></tr>
+    <tr><td>Option 0.2 ya 0.2083 dekh kar ghabraaye</td><td>0.2 = 20%. Kuch options decimal mein likhe hote hain.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 241 sawaal, <b>sab 241 yahan</b>, koi nahi chhoda. 15 sawaalon mein number scan mein ude the; unki page-photo dekh kar number wapas bhare (jaise ₹960 par 25%, ₹1,250 par 25%, ₹60 zyada wala, ₹840/₹760 wala). Kuch sawaal bank mein do baar aaye (alag exam ya alag din); unhe ek hi line mein ×2 ke saath likha hai. Sirf ek key galat lagi: MTS 5 Feb 2025 (750 g wala), upar note hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>12% loss par becha; ₹90 zyada mein 6% gain hota. CP?</summary><p>Gap 18% = 90 → 1% = 5 → CP = ₹500.</p></details>
+    <details><summary>₹1,500 par profit = 4 × (₹1,000 par loss). CP?</summary><p>Gap 500 ÷ 5 = 100 → CP = 1,000 + 100 = ₹1,100.</p></details>
+    <details><summary>₹6 ke 4 khareede, ₹8 ke 5 beche. Profit %?</summary><p>20 articles: CP 5 × 6 = 30, SP 4 × 8 = 32 → 2/30 = 6.67%.</p></details>
+    <details><summary>900 g ka baat aur CP par bikri ka daava. Gain?</summary><p>100/900 = 1/9 = 11.11%.</p></details>
+    <details><summary>Kharche ke saath: ₹8,000 + ₹500 transport, ₹9,350 mein becha. Profit %?</summary><p>CP 8,500, profit 850 = 1/10 → 10%.</p></details>
+  </div>
+</section>

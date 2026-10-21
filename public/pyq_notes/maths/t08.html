@@ -1,0 +1,900 @@
+<!-- ===================== MATHS · DISCOUNT (part 1: basics + speed methods) ===================== -->
+<section class="chap" id="mdi-basics">
+  <div class="eyebrow">Maths · 258 questions</div>
+  <h2>Discount: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, MTS, Selection Post XIV, Delhi Police, GD 2026) · sabse zyada: seedha SP, successive discount, markup + discount se profit, "MP kitna tha"</div>
+
+  <h3>Pehle ek chhoti si kahani: dukaan ki teen keemat</h3>
+  <p>Ek dukaandaar ne shirt ₹100 mein khareedi. Ye uski <b>khareed</b> hai. Isko <b>CP</b> (cost price) bolte hain.</p>
+  <p>Ab wo shirt par tag lagata hai: ₹140. Ye tag wala daam hai. Isko <b>MP</b> (marked price, list price, printed price, tag price) bolte hain. Sab ek hi cheez hai.</p>
+  <p>Customer aaya. Dukaandaar bola, "20% chhoot de deta hoon." 140 ka 20% = 28. Customer ne diye 140 − 28 = <b>₹112</b>. Ye asli bikri hai. Isko <b>SP</b> (selling price) bolte hain.</p>
+  <ul>
+    <li>Jo 28 kam kiye, wo <b>discount</b> hai. Discount hamesha <b>MP par</b> lagta hai.</li>
+    <li>Dukaandaar ko mila 112, laga tha 100. Toh 12 ka faayda. Profit hamesha <b>CP par</b> ginte hain: 12%.</li>
+    <li>MP ko CP se 40% upar rakha, ise <b>markup</b> kehte hain. Markup bhi <b>CP par</b> ginte hain.</li>
+  </ul>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Three bars to scale. CP is 100. MP is 140, which is 40 above CP. SP is 112, which is MP minus 28 discount. SP minus CP is 12 profit.">
+      <text x="12" y="52" class="lbl">CP = 100</text><text x="12" y="68" class="sm">khareed</text>
+      <rect x="130" y="34" width="300" height="38" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="280" y="58" text-anchor="middle" class="lbl">100</text>
+      <text x="12" y="122" class="lbl">MP = 140</text><text x="12" y="138" class="sm">tag wala daam</text>
+      <rect x="130" y="104" width="300" height="38" class="chf"/><rect x="130" y="104" width="420" height="38" class="chs"/>
+      <rect x="430" y="104" width="120" height="38" style="fill:var(--ch)"/>
+      <text x="280" y="128" text-anchor="middle" class="lbl">100</text>
+      <text x="490" y="128" text-anchor="middle" class="lbl" style="fill:var(--paper)">+40</text>
+      <text x="560" y="120" class="sm">markup = CP ka 40%</text>
+      <text x="12" y="192" class="lbl">SP = 112</text><text x="12" y="208" class="sm">asli bikri</text>
+      <rect x="130" y="174" width="336" height="38" class="chf"/><rect x="130" y="174" width="336" height="38" class="chs"/>
+      <rect x="466" y="174" width="84" height="38" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="280" y="198" text-anchor="middle" class="lbl">100</text>
+      <text x="448" y="198" text-anchor="middle" class="lbl">+12</text>
+      <text x="508" y="198" text-anchor="middle" class="sm">−28</text>
+      <text x="560" y="190" class="sm">discount 28</text>
+      <text x="560" y="206" class="sm">= MP ka 20%</text>
+      <line x1="430" y1="24" x2="430" y2="226" class="ln" stroke-dasharray="3 4"/>
+      <text x="430" y="18" text-anchor="middle" class="sm">CP ki line</text>
+      <text x="350" y="250" text-anchor="middle" class="lbl">profit = 112 − 100 = 12 → CP ka 12%</text>
+    </svg>
+    </div>
+    <figcaption>Teen bars, scale par. Markup CP se upar jaata hai, discount MP se neeche aata hai. Jo CP ki line ke upar bacha, wahi profit.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Poora chapter in 3 baaton se banta hai</span>
+    1. <b>Discount MP par</b>, profit aur markup <b>CP par</b>. Galti yahin hoti hai.<br>
+    2. <b>% = fraction.</b> 20% chhoot = 1/5 kata = 4/5 bacha. Har sawaal "bacha hua hissa" se chalta hai.<br>
+    3. <b>SP beech ki kadi hai.</b> Ek taraf SP = MP ka (100 − d)%, doosri taraf SP = CP ka (100 + p)%. Dono ko barabar rakho, sawaal khatam.
+  </div>
+  <p>Paper mein ek sawaal ke liye lagbhag <b>36 second</b> milte hain. Neeche 8 tareeke hain jo haath se, rough mein, jaldi chalte hain.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · "Bacha hua %" se guna (seedha SP)</h3>
+  <p><b>Kab use karo:</b> MP aur ek discount diya, SP pucha. Bank ke 258 mein se lagbhag 40 sawaal bas yahi hain.</p>
+  <p><b>Soch aise:</b> 20% chhoot ka matlab, 100 mein se 80 dena hai. Toh pehle kaato mat, seedha <b>bacha hua</b> lo. SP = MP × 80%.</p>
+  <div class="tbl"><table>
+    <tr><th>Discount</th><th>Bacha (fraction)</th><th>Discount</th><th>Bacha (fraction)</th></tr>
+    <tr><td class="n">5%</td><td>19/20</td><td class="n">20%</td><td>4/5</td></tr>
+    <tr><td class="n">10%</td><td>9/10</td><td class="n">25%</td><td>3/4</td></tr>
+    <tr><td class="n">12%</td><td>22/25</td><td class="n">30%</td><td>7/10</td></tr>
+    <tr><td class="n">12½%</td><td>7/8</td><td class="n">33⅓%</td><td>2/3</td></tr>
+    <tr><td class="n">15%</td><td>17/20</td><td class="n">40%</td><td>3/5</td></tr>
+    <tr><td class="n">16⅔%</td><td>5/6</td><td class="n">50%</td><td>1/2</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · ₹4,800 par 12% chhoot. Kitna diya? · <i>~6 sec</i></span>
+    Bacha 88%. 4,800 ka 1% = 48. 48 × 88 = 48 × 90 − 48 × 2 = 4,320 − 96 = <b>₹4,224</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "1% nikaalo, phir bacha % se guna." 3,500 par 15% → 35 × 85 = 2,975. Chhoot ka paisa pucha ho toh 35 × 15 = 525. Dono ka jod MP hona chahiye: check bhi ho gaya.</div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Ulta chalo: SP se MP</h3>
+  <p><b>Kab use karo:</b> "15% chhoot ke baad ₹7,650 mein bika. MP?"</p>
+  <p><b>Soch aise:</b> 7,650 kis cheez ka 85% hai? Toh 85% = 7,650. 1% = 90. 100% = <b>9,000</b>. Bas.</p>
+  <div class="box"><span class="k">Demo · 16% chhoot ke baad ₹1,680. MP? · <i>~6 sec</i></span>
+    84% = 1,680 → 1% = 20 → MP = <b>₹2,000</b>.<br>
+    25% chhoot hoti toh? 75% × 20 = <b>₹1,500</b>. MP nikaalne ki zaroorat hi nahi: 1% wala 20 seedha 75 se guna.
+  </div>
+  <div class="trick"><b>Trick:</b> Do alag discount ka <b>farq</b> diya ho (12% vs 5% par ₹504 ka farq), toh wo farq MP ka 7% hai. 7% = 504 → 1% = 72 → MP = 7,200. CP ka koi kaam nahi.</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Successive discount: a + b − ab/100</h3>
+  <p><b>Kab use karo:</b> "20% aur phir 10%" ya "do lagataar chhoot". Single equivalent, final SP, ya chhoot ki rakam.</p>
+  <p><b>Soch aise:</b> ₹100 ki cheez. Pehle 20% kata, 80 bache. Ab doosri chhoot <b>80 par</b> lagti hai, 100 par nahi. 80 ka 10% = 8. Toh kul kata 20 + 8 = <b>28</b>, 30 nahi.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Successive discounts of 20 and 10 percent on 100. First bar 100. Second bar 80 after cutting 20. Third bar 72 after cutting 8, which is 10 percent of 80. Total cut is 28, not 30.">
+      <text x="12" y="48" class="lbl">MP</text><text x="12" y="64" class="sm">shuru</text>
+      <rect x="150" y="30" width="400" height="38" class="chf"/><rect x="150" y="30" width="400" height="38" class="chs"/>
+      <text x="350" y="54" text-anchor="middle" class="lbl">100</text>
+      <text x="12" y="118" class="lbl">20% ke baad</text><text x="12" y="134" class="sm">100 ka 20% = 20 kata</text>
+      <rect x="150" y="100" width="320" height="38" class="chf"/><rect x="150" y="100" width="320" height="38" class="chs"/>
+      <rect x="470" y="100" width="80" height="38" class="paper" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="310" y="124" text-anchor="middle" class="lbl">80</text><text x="510" y="124" text-anchor="middle" class="sm">−20</text>
+      <text x="12" y="188" class="lbl">10% ke baad</text><text x="12" y="204" class="sm">80 ka 10% = 8 kata</text>
+      <rect x="150" y="170" width="288" height="38" class="chf"/><rect x="150" y="170" width="288" height="38" class="chs"/>
+      <rect x="438" y="170" width="32" height="38" style="fill:var(--ch)"/>
+      <rect x="470" y="170" width="80" height="38" class="paper" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="294" y="194" text-anchor="middle" class="lbl">72</text><text x="454" y="194" text-anchor="middle" class="sm" style="fill:var(--paper)">8</text><text x="510" y="194" text-anchor="middle" class="sm">20</text>
+      <text x="566" y="54" class="sm">₹100</text>
+      <text x="566" y="124" class="sm">₹80</text>
+      <text x="566" y="194" class="lbl" style="fill:var(--ch)">₹72</text>
+      <text x="350" y="238" text-anchor="middle" class="lbl">kul chhoot = 20 + 8 = 28% = 20 + 10 − (20 × 10)/100</text>
+    </svg>
+    </div>
+    <figcaption>Doosri chhoot chhote daam par lagti hai, isliye seedha jod (30%) se kam padti hai. Gehra tukda = 8, jo "20 ka bhi 10%" bacha liya gaya.</figcaption>
+  </figure>
+  <div class="box"><span class="k">5 second wala formula: a + b − ab/100</span>
+    25% aur 10%: 25 + 10 − 2.5 = <b>32.5%</b>. 30% aur 20%: 50 − 6 = <b>44%</b>. 10% aur 10%: 20 − 1 = <b>19%</b>.<br>
+    Teen chhoot? Pehle do ko jodo, phir teesri ko. 20, 10, 5: 28 phir 28 + 5 − 1.4 = <b>31.6%</b>.
+  </div>
+  <div class="tbl"><table>
+    <tr><th>Do chhoot</th><th>Ek jaisi chhoot</th><th>₹100 par SP</th></tr>
+    <tr><td class="n">10 + 10</td><td>19%</td><td>81</td></tr>
+    <tr><td class="n">20 + 10</td><td>28%</td><td>72</td></tr>
+    <tr><td class="n">25 + 10</td><td>32.5%</td><td>67.5</td></tr>
+    <tr><td class="n">15 + 10</td><td>23.5%</td><td>76.5</td></tr>
+    <tr><td class="n">30 + 10</td><td>37%</td><td>63</td></tr>
+    <tr><td class="n">30 + 20</td><td>44%</td><td>56</td></tr>
+    <tr><td class="n">25 + 15</td><td>36.25%</td><td>63.75</td></tr>
+    <tr><td class="n">10 + 5</td><td>14.5%</td><td>85.5</td></tr>
+  </table></div>
+  <div class="trick"><b>Trick:</b> Order se farq nahi padta. 20 phir 10 = 10 phir 20 = 28%. Aur SP chahiye toh fraction chain lagao: 2,500 × 4/5 × 9/10 = 1,800.</div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Markup aur discount: m − d − md/100</h3>
+  <p><b>Kab use karo:</b> "CP se 40% upar mark kiya, 20% chhoot di. Profit %?"</p>
+  <p><b>Soch aise:</b> wahi successive wala formula. Markup ek "+" badhat hai, discount ek "−" badhat. Toh 40 aur −20: 40 − 20 + (40 × −20)/100 = 40 − 20 − 8 = <b>12%</b>.</p>
+  <div class="box"><span class="k">Demo · 63% upar, 23% chhoot. Profit? · <i>~12 sec</i></span>
+    63 − 23 − (63 × 23)/100 = 40 − 14.49 = <b>25.51%</b>.
+  </div>
+  <div class="box"><span class="k">"CP = 100 maan lo" (sabse bharosemand)</span>
+    100% markup, phir 30% aur 20% chhoot: 100 → 200 → 140 → <b>112</b>. Profit 12%.<br>
+    Ab koi bhi rakam ulti nikaalni ho ("profit ₹300 hai, CP?"), toh 12 parts = 300 → 1 part = 25 → CP = 100 parts.
+  </div>
+  <div class="tbl"><table>
+    <tr><th>Markup</th><th>Discount</th><th>Profit</th><th>Rough</th></tr>
+    <tr><td class="n">20%</td><td>10%</td><td>8%</td><td>20 − 10 − 2</td></tr>
+    <tr><td class="n">25%</td><td>10%</td><td>12.5%</td><td>25 − 10 − 2.5</td></tr>
+    <tr><td class="n">40%</td><td>20%</td><td>12%</td><td>40 − 20 − 8</td></tr>
+    <tr><td class="n">50%</td><td>20%</td><td>20%</td><td>50 − 20 − 10</td></tr>
+    <tr><td class="n">60%</td><td>25%</td><td>20%</td><td>60 − 25 − 15</td></tr>
+    <tr><td class="n">40%</td><td>25%</td><td>5%</td><td>40 − 25 − 10</td></tr>
+    <tr><td class="n">25%</td><td>20%</td><td>0</td><td>no profit no loss</td></tr>
+  </table></div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · MP : CP = (100 + p) : (100 − d)</h3>
+  <p><b>Kab use karo:</b> discount % aur profit % dono diye. MP, CP ya markup % pucha.</p>
+  <p><b>Soch aise:</b> SP ek hi hai. MP ka 80% = SP, aur CP ka 110% = SP. Toh MP × 80 = CP × 110. Jo zyada guna ho raha hai, wo chhota hai. Isliye MP : CP = 110 : 80. Ulta number ulti taraf.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Balance picture. MP times (100 minus d) equals SP equals CP times (100 plus p). Example d = 20, p = 10 gives MP to CP = 110 to 80 = 11 to 8, so markup is 37.5 percent.">
+      <rect x="20" y="20" width="250" height="56" rx="8" class="chf"/><rect x="20" y="20" width="250" height="56" rx="8" class="chs"/>
+      <text x="145" y="44" text-anchor="middle" class="lbl">MP ka (100 − d)%</text>
+      <text x="145" y="64" text-anchor="middle" class="sm">discount ke baad</text>
+      <rect x="290" y="28" width="120" height="40" rx="20" style="fill:var(--ch)"/>
+      <text x="350" y="53" text-anchor="middle" class="lbl" style="fill:var(--paper)">= SP =</text>
+      <rect x="430" y="20" width="250" height="56" rx="8" class="chf"/><rect x="430" y="20" width="250" height="56" rx="8" class="chs"/>
+      <text x="555" y="44" text-anchor="middle" class="lbl">CP ka (100 + p)%</text>
+      <text x="555" y="64" text-anchor="middle" class="sm">profit ke baad</text>
+      <text x="350" y="106" text-anchor="middle" class="lbl">Example: d = 20%, p = 10%</text>
+      <text x="350" y="130" text-anchor="middle" class="lbl">MP × 80 = CP × 110</text>
+      <line x1="200" y1="146" x2="500" y2="146" class="ln"/>
+      <text x="350" y="170" text-anchor="middle" class="lbl" style="fill:var(--ch)">MP : CP = 110 : 80 = 11 : 8</text>
+      <text x="350" y="190" text-anchor="middle" class="sm">markup = 3/8 = 37.5% · cross: 80 MP ke neeche, 110 MP ke saamne</text>
+      <g text-anchor="middle">
+        <rect x="20" y="204" width="210" height="46" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <text x="125" y="223" class="sm">d 12%, p 10%</text><text x="125" y="241" class="lbl">MP : CP = 110 : 88 = 5 : 4</text>
+        <rect x="245" y="204" width="210" height="46" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <text x="350" y="223" class="sm">d 25%, p 20%</text><text x="350" y="241" class="lbl">MP : CP = 120 : 75 = 8 : 5</text>
+        <rect x="470" y="204" width="210" height="46" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <text x="575" y="223" class="sm">d 40%, p 50%</text><text x="575" y="241" class="lbl">MP : CP = 150 : 60 = 5 : 2</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>SP beech mein hai. Dono taraf ke % ulte ratio mein jaate hain. Neeche ke teen card bank ke asli sawaalon se hain.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · CP ₹800, profit 10%, chhoot 12%. MP? · <i>~8 sec</i></span>
+    MP : CP = 110 : 88 = 5 : 4. CP = 4 parts = 800 → MP = 5 parts = <b>₹1,000</b>.
+  </div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · D, SP, MP ke parts</h3>
+  <p><b>Kab use karo:</b> "discount MP ka 2/17 hai", "SP discount se 120% zyada hai", "MP discount ka 140% hai" jaise sawaal.</p>
+  <p><b>Soch aise:</b> hamesha <b>MP = D + SP</b>. Bas jo diya hai use parts mein likho, teesra jod ya ghata kar nikaalo.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="MP drawn as 17 equal blocks. 15 blocks are SP and 2 blocks are discount. Discount to SP is 2 to 15.">
+      <text x="350" y="22" text-anchor="middle" class="lbl">Discount = MP ka 2/17 → MP = 17 parts</text>
+      <g>
+        <rect x="27" y="40" width="34" height="44" class="chf"/><rect x="65" y="40" width="34" height="44" class="chf"/><rect x="103" y="40" width="34" height="44" class="chf"/><rect x="141" y="40" width="34" height="44" class="chf"/><rect x="179" y="40" width="34" height="44" class="chf"/>
+        <rect x="217" y="40" width="34" height="44" class="chf"/><rect x="255" y="40" width="34" height="44" class="chf"/><rect x="293" y="40" width="34" height="44" class="chf"/><rect x="331" y="40" width="34" height="44" class="chf"/><rect x="369" y="40" width="34" height="44" class="chf"/>
+        <rect x="407" y="40" width="34" height="44" class="chf"/><rect x="445" y="40" width="34" height="44" class="chf"/><rect x="483" y="40" width="34" height="44" class="chf"/><rect x="521" y="40" width="34" height="44" class="chf"/><rect x="559" y="40" width="34" height="44" class="chf"/>
+        <rect x="597" y="40" width="34" height="44" style="fill:var(--ch)"/><rect x="635" y="40" width="34" height="44" style="fill:var(--ch)"/>
+      </g>
+      <line x1="27" y1="100" x2="593" y2="100" class="ln"/>
+      <line x1="27" y1="94" x2="27" y2="106" class="ln"/><line x1="593" y1="94" x2="593" y2="106" class="ln"/>
+      <text x="310" y="122" text-anchor="middle" class="lbl">SP = 15 parts</text>
+      <line x1="597" y1="100" x2="669" y2="100" class="chs"/>
+      <text x="633" y="122" text-anchor="middle" class="lbl" style="fill:var(--ch)">D = 2</text>
+      <text x="350" y="156" text-anchor="middle" class="lbl">D : SP = 2 : 15 · D : MP = 2 : 17 · SP : MP = 15 : 17</text>
+      <text x="350" y="182" text-anchor="middle" class="sm">"SP, D se 120% zyada" → D = 100, SP = 220, MP = 320 · "MP, D ka 140%" → D = 100, MP = 140, SP = 40</text>
+    </svg>
+    </div>
+    <figcaption>MP ek patti hai. Usmein se D kata, SP bacha. Koi bhi do diye toh teesra jod-ghata se.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> "X% <b>of</b>" aur "X% <b>more than</b>" alag hain. MP, D ka 140% → MP = 140. MP, D se 140% zyada → MP = 240. Pehle yahi padho.</div>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Offers: buy x get y, flat ₹ off, GST</h3>
+  <p><b>Soch aise:</b> dukaandaar kitni cheezein de raha hai, aur kitni ka paisa le raha hai. Free wali cheez hi discount hai.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Three offers drawn as items. Buy 3 get 1 free: 1 of 4 free, 25 percent. Buy 2 get 1 free: 1 of 3 free, 33.33 percent. Buy 4, 5th at half: half of 1 item out of 5, 10 percent.">
+      <text x="12" y="38" class="lbl">Buy 3 get 1</text>
+      <rect x="150" y="16" width="56" height="36" rx="5" class="chf"/><rect x="214" y="16" width="56" height="36" rx="5" class="chf"/><rect x="278" y="16" width="56" height="36" rx="5" class="chf"/>
+      <rect x="342" y="16" width="56" height="36" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="370" y="39" text-anchor="middle" class="sm">FREE</text>
+      <text x="420" y="32" class="lbl">1 of 4 free → 1/4 = 25%</text>
+      <text x="420" y="48" class="sm">pay 3, lo 4</text>
+      <text x="12" y="108" class="lbl">Buy 2 get 1</text><text x="12" y="124" class="sm">(3 ka daam 2)</text>
+      <rect x="150" y="88" width="56" height="36" rx="5" class="chf"/><rect x="214" y="88" width="56" height="36" rx="5" class="chf"/>
+      <rect x="278" y="88" width="56" height="36" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="306" y="111" text-anchor="middle" class="sm">FREE</text>
+      <text x="420" y="104" class="lbl">1 of 3 free → 1/3 = 33.33%</text>
+      <text x="420" y="120" class="sm">har shirt ka asli daam = 2/3</text>
+      <text x="12" y="180" class="lbl">Buy 4, 5th</text><text x="12" y="196" class="sm">50% off</text>
+      <rect x="150" y="160" width="40" height="36" rx="5" class="chf"/><rect x="196" y="160" width="40" height="36" rx="5" class="chf"/><rect x="242" y="160" width="40" height="36" rx="5" class="chf"/><rect x="288" y="160" width="40" height="36" rx="5" class="chf"/>
+      <rect x="334" y="160" width="40" height="36" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 4"/>
+      <rect x="334" y="160" width="20" height="36" class="chf"/>
+      <text x="420" y="176" class="lbl">½ item of 5 → 0.5/5 = 10%</text>
+      <text x="420" y="192" class="sm">aadha hi free hai, poora nahi</text>
+      <text x="350" y="222" text-anchor="middle" class="sm">discount % = free hissa ÷ kul cheezein (jo li gayi)</text>
+    </svg>
+    </div>
+    <figcaption>Free wala dabba = discount. Denominator mein kul cheezein aati hain (free bhi), sirf paid wali nahi.</figcaption>
+  </figure>
+  <ul>
+    <li><b>Flat ₹ off:</b> % = off ÷ MP. ₹150 off on ₹1,200 = 1/8 = 12.5%.</li>
+    <li><b>GST / VAT / tax:</b> chhoot ke baad wale daam par lagta hai. ₹2,000, 20% off, 18% GST → 1,600 × 1.18 = 1,888.</li>
+    <li><b>Cashback / extra ₹ off:</b> % wali chhoot ke baad seedha ghatao. Shart ("₹15,000 se upar ho toh") hamesha chhoot ke baad wale bill par check karo.</li>
+  </ul>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · Option se pakdo</h3>
+  <ul>
+    <li><b>SP &lt; MP hamesha.</b> MP pucha hai toh SP se chhota option kaat do. SP pucha hai toh MP se bada kaat do.</li>
+    <li><b>Successive chhoot &lt; seedha jod.</b> 20 + 10 ka jawab 30% se thoda kam (28%). 30% wala option jaal hai.</li>
+    <li><b>Last digit:</b> 1,500 × 0.9 × 0.95 = 1,282.5. Options mein 1,283 hi .5 ke paas hai.</li>
+    <li><b>Andaaza:</b> 14,490 = 1.53 × CP. 1.53 × 9,500 = 14,535, thoda zyada. Toh CP 9,500 se thoda kam → 9,471.</li>
+  </ul>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing a discount method. Check in order: only MP and one discount, MP and SP given, SP given and MP asked, two or three discounts, markup and discount, discount and profit both, D SP MP relation, offer schemes. Each yes leads to its method.">
+      <defs>
+        <marker id="mdi-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya diya, kya pucha?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <g>
+        <rect x="20" y="52" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="102" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="152" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="202" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="252" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="302" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="352" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="402" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="76">Buy x get y / free / GST / ₹ off?</text>
+        <text x="180" y="126">Do ya teen chhoot lagataar?</text>
+        <text x="180" y="176">D, SP, MP ka aapas ka relation?</text>
+        <text x="180" y="226">Markup % aur discount % diye?</text>
+        <text x="180" y="276">Discount % aur profit % dono diye?</text>
+        <text x="180" y="326">SP diya, MP pucha?</text>
+        <text x="180" y="376">MP aur SP diye, chhoot % pucha?</text>
+        <text x="180" y="426">Sirf MP aur ek chhoot?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="40" x2="180" y2="49" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="90" x2="180" y2="99" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="140" x2="180" y2="149" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="190" x2="180" y2="199" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="240" x2="180" y2="249" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="290" x2="180" y2="299" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="340" x2="180" y2="349" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="390" x2="180" y2="399" marker-end="url(#mdi-fc-arr)"/>
+      </g>
+      <g class="ln">
+        <line x1="340" y1="71" x2="396" y2="71" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="121" x2="396" y2="121" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="171" x2="396" y2="171" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="221" x2="396" y2="221" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="271" x2="396" y2="271" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="321" x2="396" y2="321" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="371" x2="396" y2="371" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="421" x2="396" y2="421" marker-end="url(#mdi-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="65">haan</text><text x="368" y="115">haan</text><text x="368" y="165">haan</text><text x="368" y="215">haan</text><text x="368" y="265">haan</text><text x="368" y="315">haan</text><text x="368" y="365">haan</text><text x="368" y="415">haan</text></g>
+      <g>
+        <rect x="400" y="52" width="290" height="38" rx="6" class="chf"/><rect x="400" y="52" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="102" width="290" height="38" rx="6" class="chf"/><rect x="400" y="102" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="152" width="290" height="38" rx="6" class="chf"/><rect x="400" y="152" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="202" width="290" height="38" rx="6" class="chf"/><rect x="400" y="202" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="252" width="290" height="38" rx="6" class="chf"/><rect x="400" y="252" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="302" width="290" height="38" rx="6" class="chf"/><rect x="400" y="302" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="352" width="290" height="38" rx="6" class="chf"/><rect x="400" y="352" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="402" width="290" height="38" rx="6" class="chf"/><rect x="400" y="402" width="290" height="38" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="68">Free hissa ÷ kul cheezein</text>
+        <text x="410" y="118">a + b − ab/100</text>
+        <text x="410" y="168">Parts: MP = D + SP</text>
+        <text x="410" y="218">m − d − md/100 · CP = 100</text>
+        <text x="410" y="268">MP : CP = (100 + p) : (100 − d)</text>
+        <text x="410" y="318">SP = bacha %, 1% nikaalo</text>
+        <text x="410" y="368">Kata ÷ MP</text>
+        <text x="410" y="418">1% × bacha %</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="84">GST chhoot ke baad · shart bill par</text>
+        <text x="410" y="134">ya fraction chain: × 4/5 × 9/10</text>
+        <text x="410" y="184">"of" vs "more than" dhyaan se</text>
+        <text x="410" y="234">rakam di ho toh parts se ulta</text>
+        <text x="410" y="284">ulta number ulti taraf</text>
+        <text x="410" y="334">84% = 1,680 → 1% = 20</text>
+        <text x="410" y="384">240/1,600 = 15%</text>
+        <text x="410" y="434">4,800 par 12% → 48 × 88</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Upar se neeche padho. Mushkil wale (offer, successive, ratio) upar hain, taaki galti se seedha formula na lag jaaye.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet (yaad karo)</span>
+    SP = MP × (100 − d)/100 · Discount % = (MP − SP)/MP × 100<br>
+    Do chhoot: a + b − ab/100 · Markup + chhoot: profit = m − d − md/100<br>
+    MP/CP = (100 + p)/(100 − d) · Bina nuksaan max chhoot = m/(100 + m) × 100 (25% markup → 20%)<br>
+    Buy x get y free → chhoot = y/(x + y) · MP = D + SP (hamesha)<br>
+    <span class="tag x">CGL+</span> Teen barabar chhoot 10% → 27.1% (19 + 10 − 1.9). Do barabar chhoot x% → 2x − x²/100.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>₹2,400 par 25% aur 10% chhoot. SP?</summary><p>25 + 10 − 2.5 = 32.5% chhoot → 67.5% bacha → 24 × 67.5 = ₹1,620.</p></details>
+    <details><summary>40% markup, 25% chhoot. Profit %?</summary><p>40 − 25 − 10 = 5%.</p></details>
+    <details><summary>Chhoot 20%, profit 10%. MP, CP se kitna % upar?</summary><p>MP : CP = 110 : 80 = 11 : 8 → 3/8 = 37.5%.</p></details>
+    <details><summary>Buy 3 get 1 free. Chhoot %?</summary><p>4 mein 1 free → 1/4 = 25%.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · DISCOUNT (part 2: types 1–6) ===================== -->
+<section class="chap" id="mdi-types-a">
+  <div class="eyebrow">Maths · PYQ types 1–6</div>
+  <h2>Discount: seedhe sawaal, ulta MP, successive aur offers</h2>
+  <div class="meta">141 sawaal · seedha SP / chhoot %, SP se MP, successive chhoot, gayab chhoot, offers aur GST · har sawaal ke aage uska method</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 · CHSL = CHSL 2025 Tier 1 (Tier-2 alag likha) · CPO = CPO 2025 · MTS = MTS 2025 · SP-XIV = Selection Post Phase XIV 2025 · DP Const = Delhi Police Constable · DP HCM = Delhi Police Head Constable (Ministerial) · GD = GD Constable 2026. Saari dates shift ki dates hain.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Seedha SP ya chhoot ki rakam, ek chhoot (38 Qs)</h3>
+  <p><b>Samjho:</b> 1% nikaalo, bacha % se guna karo. Chhoot ki rakam chahiye toh chhoot % se guna. Bas.</p>
+  <div class="box"><span class="k">Worked · Handbag ₹4,800, 12% chhoot. Kitna diya? <span class="tag p">PYQ</span> <small>DP Const · 23 Dec 2025</small></span><!--q:161-->
+    <b>Method:</b> 1% × bacha % · <i>~6 sec</i><br>
+    1% = 48. Bacha 88%. 48 × 88 = 4,320 − 96 = <mark>₹4,224</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Dress ₹3,500, chhoot 10% se 15% hui. Extra chhoot? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span><!--q:9-->
+    <b>Method:</b> sirf farq ka % · <i>~4 sec</i><br>
+    Farq 5%. 3,500 ka 1% = 35 → 35 × 5 = <mark>₹175</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Kiska SP sabse zyada? (8,000 par 25%, 6,000 par 25%, 5,000 par 30%, 8,000 par 30%) <span class="tag p">PYQ</span> <small>GD · 5 May 2026</small></span><!--q:195-->
+    <b>Method:</b> option se pakdo · <i>~5 sec</i><br>
+    Sabse bada MP aur sabse chhoti chhoot ek saath: 8,000 par 25% → 8,000 × 3/4 = <mark>₹6,000 (MP 8,000, 25%)</mark>. Baaki: 4,500, 3,500, 5,600.
+  </div>
+  <ul>
+    <li><!--q:30--><span class="tag p">PYQ</span> Laptop 40,000 − 4,000; mouse 1,500 par 20% → <b>bacha %</b>: 36,000 + 1,200 → <mark>₹37,200</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:52--><span class="tag p">PYQ</span> 5,000 par 18% → <b>1% × bacha</b>: 50 × 82 → <mark>₹4,100</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><!--q:78--><span class="tag p">PYQ</span> 2,050 par 26% → <b>1% × bacha</b>: 20.5 × 74 = 1,517 → <mark>₹1,517</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><!--q:81--><span class="tag p">PYQ</span> 2,050 par 26%, bachat? → <b>1% × chhoot</b>: 20.5 × 26 → <mark>₹533</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><!--q:91--><span class="tag p">PYQ</span> 15,000 par 10% → <b>× 9/10</b> → <mark>₹13,500</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--q:92--><span class="tag p">PYQ</span> 1,200 par 25% → <b>× 3/4</b> → <mark>₹900</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--q:93--><span class="tag p">PYQ</span> 8,000 par 15% → <b>1% × bacha</b>: 80 × 85 → <mark>₹6,800</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--q:96--><span class="tag p">PYQ</span> 5,200 par 50% → <b>aadha</b> → <mark>₹2,600</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:97--><span class="tag p">PYQ</span> 2,000 par 10%, chhoot? → <b>ek digit khiskao</b> → <mark>₹200</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:101--><span class="tag p">PYQ</span> 2,000 par 5% → <b>× 19/20</b> → <mark>₹1,900</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><!--q:104--><span class="tag p">PYQ</span> 800 par 25% → <b>× 3/4</b> → <mark>₹600</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><!--q:105--><span class="tag p">PYQ</span> 1,200 par 15%, chhoot? → <b>1% × chhoot</b>: 12 × 15 → <mark>₹180</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><!--q:107--><span class="tag p">PYQ</span> 5,000 par 20% → <b>× 4/5</b> → <mark>₹4,000</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--q:121--><span class="tag p">PYQ</span> 750 par 12% → <b>1% × bacha</b>: 7.5 × 88 → <mark>₹660</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><!--q:128--><span class="tag p">PYQ</span> 2,500 par 20% → <b>× 4/5</b> → <mark>₹2,000</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--q:141--><span class="tag p">PYQ</span> Notebook 50, flat ₹5 off → <b>seedha ghatao</b> → <mark>₹45</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><!--q:142--><span class="tag p">PYQ</span> 900 par 30% → <b>× 7/10</b> → <mark>₹630</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><!--q:143--><span class="tag p">PYQ</span> 1,000 par 20% → <b>× 4/5</b> → <mark>₹800</mark> <small>DP Const · 22 Dec 2025</small></li>
+    <li><!--q:144--><span class="tag p">PYQ</span> 400 par 5% → <b>× 19/20</b> → <mark>₹380</mark> <small>DP Const · 29 Dec 2025</small></li>
+    <li><!--q:147--><span class="tag p">PYQ</span> 400 par 10% → <b>× 9/10</b> → <mark>₹360</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><!--q:148--><span class="tag p">PYQ</span> 240 par 25% → <b>× 3/4</b> → <mark>₹180</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><!--q:149--><span class="tag p">PYQ</span> Dictionary 300 par 10% → <b>× 9/10</b> → <mark>₹270</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><!--q:159--><span class="tag p">PYQ</span> Watch 1,500 par 25% → <b>× 3/4</b> → <mark>₹1,125</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><!--q:162--><span class="tag p">PYQ</span> 750 par 10% → <b>× 9/10</b> → <mark>₹675</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><!--q:164--><span class="tag p">PYQ</span> 1,500 par 12% → <b>1% × bacha</b>: 15 × 88 → <mark>₹1,320</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><!--q:165--><span class="tag p">PYQ</span> Jacket 3,500 par 15% → <b>1% × bacha</b>: 35 × 85 → <mark>₹2,975</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><!--q:167--><span class="tag p">PYQ</span> Shirt $2,000 par 10% → <b>× 9/10</b> → <mark>1,800 dollars</mark> <small>DP Const · 22 Dec 2025</small></li>
+    <li><!--q:174--><span class="tag p">PYQ</span> 800 par 20% → <b>× 4/5</b> → <mark>₹640</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><!--q:188--><span class="tag p">PYQ</span> Smartwatch 6,000 par 25% → <b>× 3/4</b> → <mark>₹4,500</mark> <small>DP HCM · 7 Jan 2026</small></li>
+    <li><!--q:189--><span class="tag p">PYQ</span> Kurta 1,600 par 15% (number scan se padha) → <b>1% × bacha</b>: 16 × 85 → <mark>₹1,360</mark> <small>DP HCM · 7 Jan 2026</small></li>
+    <li><!--q:233--><span class="tag p">PYQ</span> Toy car 2,700 par 40% → <b>× 3/5</b> → <mark>₹1,620</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><!--q:242--><span class="tag p">PYQ</span> Mixer 400 par 20% → <b>× 4/5</b> → <mark>₹320</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><!--q:252--><span class="tag p">PYQ</span> 500 par 20% → <b>× 4/5</b> → <mark>₹400</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><!--q:255--><span class="tag p">PYQ</span> 1,200 par 20% → <b>× 4/5</b> → <mark>₹960</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><!--q:257--><span class="tag p">PYQ</span> T-shirt 60 par 15% → <b>× 17/20</b>: 3 × 17 → <mark>₹51</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · MP aur SP diye → chhoot % (22 Qs)</h3>
+  <p><b>Samjho:</b> kata kitna? Phir kata ÷ MP. Fraction ko pehchano: 1/8 = 12.5%, 1/6 = 16.67%, 3/20 = 15%.</p>
+  <div class="box"><span class="k">Worked · Microwave MP 8,000, sale mein 6,200 <span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small></span><!--q:113-->
+    <b>Method:</b> kata ÷ MP · <i>~6 sec</i><br>
+    Kata = 1,800. 1,800/8,000 = 18/80 = 9/40 = <mark>22.5%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 12 kitaab, har ek ₹360, sab ₹3,600 mein. Chhoot %? <span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small></span><!--q:65-->
+    <b>Method:</b> pehle kul MP, phir kata ÷ MP · <i>~8 sec</i><br>
+    MP = 12 × 360 = 4,320. Kata 720. 720/4,320 = 1/6 = <mark>16.67%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Kismein chhoot % sabse zyada? (1,000/1,200 · 1,200/1,500 · 1,500/2,300 · 1,600/2,200) <span class="tag p">PYQ</span> <small>GD · 29 Apr 2026</small></span><!--q:209-->
+    <b>Method:</b> SP/MP ka fraction, sabse chhota = sabse badi chhoot · <i>~15 sec</i><br>
+    5/6 (83%), 4/5 (80%), 15/23 (65%), 8/11 (73%). Sabse chhota 15/23 → <mark>SP 1,500, MP 2,300</mark> (34.8% chhoot).
+  </div>
+  <ul>
+    <li><!--q:56--><span class="tag p">PYQ</span> 1,200 par ₹150 off → <b>kata ÷ MP</b>: 1/8 → <mark>12.5%</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:83--><span class="tag p">PYQ</span> 1,600 → 1,360 → <b>kata ÷ MP</b>: 240/1,600 → <mark>15%</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><!--q:99--><span class="tag p">PYQ</span> 20,000 → 14,000 → <b>kata ÷ MP</b>: 6/20 → <mark>30%</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:103--><span class="tag p">PYQ</span> 1,500 → 1,200 → <b>kata ÷ MP</b>: 1/5 → <mark>20%</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><!--q:150--><span class="tag p">PYQ</span> 1,200 → 960 → <b>kata ÷ MP</b>: 240/1,200 → <mark>20%</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><!--q:151--><span class="tag p">PYQ</span> 500 par ₹50 off ("costing" likha, par ye MP hai) → <b>kata ÷ MP</b> → <mark>10%</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><!--q:154--><span class="tag p">PYQ</span> 1,000 → 850 → <b>kata ÷ MP</b> → <mark>15%</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><!--q:155--><span class="tag p">PYQ</span> Calculator 400 → 360 → <b>kata ÷ MP</b>: 40/400 → <mark>10%</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><!--q:156--><span class="tag p">PYQ</span> 3,500 → 3,150 → <b>kata ÷ MP</b>: 350/3,500 → <mark>10%</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><!--q:158--><span class="tag p">PYQ</span> Cloth 600 → 540 → <b>kata ÷ MP</b> → <mark>10%</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><!--q:170--><span class="tag p">PYQ</span> 500 → 400 → <b>kata ÷ MP</b> → <mark>0.2 (= 20%)</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><!--q:172--><span class="tag p">PYQ</span> 600 par ₹120 off → <b>kata ÷ MP</b> → <mark>20%</mark> <small>DP Const · 2 Jan 2026</small></li>
+    <li><!--q:183--><span class="tag p">PYQ</span> Sofa 78,000 → 65,000 → <b>kata ÷ MP</b>: 13/78 = 1/6 → <mark>16.67%</mark> <small>DP HCM · 9 Jan 2026</small></li>
+    <li><!--q:197--><span class="tag p">PYQ</span> Kismein 20% chhoot? → <b>SP/MP = 4/5 dhoondo</b>: 2,000/2,500 → <mark>SP 2,000, MP 2,500</mark> <small>GD · 5 May 2026</small></li>
+    <li><!--q:219--><span class="tag p">PYQ</span> Scooty 1,25,000 → 70,000 → <b>kata ÷ MP</b>: 55/125 = 11/25 → <mark>44%</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><!--q:246--><span class="tag p">PYQ</span> Cycle 4,500 → 3,600 → <b>kata ÷ MP</b>: 900/4,500 → <mark>20%</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><!--q:248--><span class="tag p">PYQ</span> 1,500 → 1,200 → <b>kata ÷ MP</b> → <mark>20%</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><!--q:253--><span class="tag p">PYQ</span> 800 → 680 → <b>kata ÷ MP</b>: 120/800 → <mark>15%</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><!--q:258--><span class="tag p">PYQ</span> TV 18,000 → 15,300 → <b>kata ÷ MP</b>: 2,700/18,000 → <mark>15%</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · SP diya → MP nikaalo (19 Qs)</h3>
+  <p><b>Samjho:</b> SP = MP ka bacha %. Toh bacha % = SP. 1% nikaalo, 100 se guna. Kabhi SP par chhoot jod kar MP mat banao (7,650 + 15% galat hai).</p>
+  <div class="box"><span class="k">Worked · Computer 15% chhoot ke baad ₹7,650. MP? <span class="tag p">PYQ</span> <small>CGL · 23 Sep 2025</small></span><!--q:41-->
+    <b>Method:</b> SP = bacha % · <i>~6 sec</i><br>
+    85% = 7,650 → 1% = 90 → MP = <mark>₹9,000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 25% chhoot par SP ₹7,200. Chhoot 30% ho toh SP? <span class="tag p">PYQ</span> <small>CHSL · 18 Nov 2025</small></span><!--q:82-->
+    <b>Method:</b> 1% seedha, MP chhodo · <i>~6 sec</i><br>
+    75% = 7,200 → 1% = 96 → 70% = 96 × 70 = <mark>₹6,720</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 12% chhoot ki jagah 5% deta toh ₹504 zyada profit. CP 3,000. MP? <span class="tag p">PYQ</span> <small>CHSL · 18 Nov 2025</small></span><!--q:75-->
+    <b>Method:</b> chhoot ka farq = MP ka % · <i>~6 sec</i><br>
+    12 − 5 = 7% of MP = 504 → 1% = 72 → MP = <mark>₹7,200</mark>. CP 3,000 bas dhyaan bhatkane ke liye hai.
+  </div>
+  <ul>
+    <li><!--q:68--><span class="tag p">PYQ</span> Vase SP 1,800, chhoot 4% → <b>96% = 1,800</b> → 1% = 18.75 → <mark>₹1,875</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--q:79--><span class="tag p">PYQ</span> Microwave 25% off par 7,500 → <b>75% = 7,500</b> → <mark>₹10,000</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><!--q:80--><span class="tag p">PYQ</span> Watch 20% off par 840 → <b>80% = 840</b> → <mark>₹1,050</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><!--q:85--><span class="tag p">PYQ</span> 16% off par 1,680 → <b>84% = 1,680</b> → 1% = 20 → <mark>₹2,000</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><!--q:88--><span class="tag p">PYQ</span> 16% off par 1,680; 25% off hoti toh? → <b>1% = 20</b> → 75 × 20 → <mark>₹1,500</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><!--q:110--><span class="tag p">PYQ</span> 15% off par 765 → <b>85% = 765</b> → 1% = 9 → <mark>₹900</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--q:119--><span class="tag p">PYQ</span> 25% off par 600 → <b>75% = 600</b> → <mark>₹800</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><!--q:125--><span class="tag p">PYQ</span> Shirt 16% off par 840 → <b>84% = 840</b> → <mark>₹1,000</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><!--q:127--><span class="tag p">PYQ</span> 8% off par 920 → <b>92% = 920</b> → <mark>₹1,000</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--q:218--><span class="tag p">PYQ</span> Zameen 45% rebate par 2,20,000 → <b>55% = 2,20,000</b> → 1% = 4,000 → <mark>₹4,00,000</mark> <small>MTS · 5 Feb 2025</small></li>
+    <li><!--q:221--><span class="tag p">PYQ</span> Book 20% off par 840 → <b>80% = 840</b> → <mark>₹1,050</mark> <small>MTS · 6 Feb 2025</small></li>
+    <li><!--q:240--><span class="tag p">PYQ</span> Watch 15% off par 2,040 → <b>85% = 2,040</b> → 1% = 24 → <mark>₹2,400</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><!--q:196--><span class="tag p">PYQ</span> Kiska MP 4,000? → <b>SP ÷ bacha</b>: 3,000 ÷ 3/4 = 4,000 → <mark>SP 3,000, chhoot 25%</mark> <small>GD · 5 May 2026</small></li>
+    <li><!--q:191--><span class="tag p">PYQ</span> Kiska MP 4,500? → <b>SP ÷ bacha</b>: 3,600 ÷ 4/5 = 4,500 → <mark>SP 3,600, chhoot 20%</mark> <small>GD · 4 May 2026</small></li>
+    <li><!--q:208--><span class="tag p">PYQ</span> 25% aur 18% chhoot ke SP mein ₹70 farq → <b>farq = MP ka 7%</b> → 1% = 10 → <mark>₹1,000</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><!--q:217--><span class="tag p">PYQ</span> Bed: 65% ki jagah 62% chhoot par ₹6,000 zyada → <b>farq = MP ka 3%</b> → 1% = 2,000 → <mark>₹2,00,000</mark> <small>MTS · 5 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Successive chhoot: final SP ya ek jaisi chhoot (33 Qs)</h3>
+  <p><b>Samjho:</b> % pucha ho toh a + b − ab/100. SP pucha ho toh fraction chain ya pehle kul % nikaalo, phir bacha % se guna.</p>
+  <div class="box"><span class="k">Worked · ₹1,500 par 5%, 10%, 20% teen chhoot <span class="tag p">PYQ</span> <small>CHSL · 25 Nov 2025</small></span><!--q:109-->
+    <b>Method:</b> fraction chain · <i>~12 sec</i><br>
+    1,500 × 4/5 = 1,200 → × 9/10 = 1,080 → × 19/20 = 54 × 19 = <mark>₹1,026</mark>.<br>
+    (Sabse aasaan chhoot pehle lagao. Order se jawab nahi badalta.)
+  </div>
+  <div class="box"><span class="k">Worked · 9%, 14%, 7% ki ek jaisi chhoot <span class="tag p">PYQ</span> <small>DP Const · 22 Dec 2025</small></span><!--q:168-->
+    <b>Method:</b> a + b − ab/100 do baar · <i>~20 sec</i><br>
+    9 aur 14: 23 − 1.26 = 21.74. Phir 7: 28.74 − (21.74 × 7)/100 ≈ 28.74 − 1.52 = <mark>27.22%</mark>.<br>
+    Option check: seedha jod 30% hota. Thoda kam chahiye → 27.22.
+  </div>
+  <div class="box"><span class="k">Worked · ₹500 par 30% aur 20%. Kul chhoot ki rakam? <span class="tag p">PYQ</span> <small>GD · 30 Apr 2026</small></span><!--q:213-->
+    <b>Method:</b> a + b − ab/100 · <i>~6 sec</i><br>
+    30 + 20 − 6 = 44%. 500 ka 44% = <mark>₹220</mark>. (Key ₹210 bolti hai: neeche note dekho.)
+  </div>
+  <div class="box"><span class="k">⚠ Answer-key note</span>GD 30 Apr 2026 (₹500, 30% aur 20%): bacha = 500 × 7/10 × 4/5 = 280, toh chhoot = 500 − 280 = <b>₹220</b>. Key mein ₹210 hai, jo galat hai. ₹220 option mein maujood hai, wahi lagao.</div>
+  <ul>
+    <li><!--q:31--><span class="tag p">PYQ</span> 600 par 10% aur 20% → <b>chain</b>: 540 → 432 → <mark>₹432</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:54--><span class="tag p">PYQ</span> 1,000 par 20% aur 10% → <b>28% off</b> → <mark>₹720</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:73--><span class="tag p">PYQ</span> 2,500 par 20%, phir 10% → <b>chain</b>: 2,000 → 1,800 → <mark>₹1,800</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><!--q:74--><span class="tag p">PYQ</span> 40,000 par 10% aur 20% → <b>28% off</b>: 400 × 72 → <mark>₹28,800</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><!--q:86--><span class="tag p">PYQ</span> 1,200 par 20% aur 10% → <b>28% off</b>: 12 × 72 → <mark>₹864</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><!--q:116--><span class="tag p">PYQ</span> 1,200 par 10% aur 20% → <b>28% off</b> → <mark>₹864</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--q:131--><span class="tag p">PYQ</span> 2,400 par 25% aur 10% → <b>chain</b>: 1,800 → 1,620 → <mark>₹1,620</mark> <small>CHSL Tier-2</small></li>
+    <li><!--q:146--><span class="tag p">PYQ</span> Pen 100 par 5% aur 5% → <b>5 + 5 − 0.25 = 9.75%</b> → <mark>₹90.25</mark> <small>DP Const · 29 Dec 2025</small></li>
+    <li><!--q:157--><span class="tag p">PYQ</span> 2,000 par 20% aur 10% → <b>28% off</b> → <mark>₹1,440</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><!--q:173--><span class="tag p">PYQ</span> 200 par 20% aur 20% (number scan se padhe) → <b>20 + 20 − 4 = 36%</b> → 2 × 64 → <mark>₹128</mark> <small>DP Const · 3 Jan 2026</small></li>
+    <li><!--q:175--><span class="tag p">PYQ</span> 1,500 par 10% aur 5% → <b>chain</b>: 1,350 → 1,282.5 → <mark>₹1,283</mark> <small>DP Const · 30 Dec 2025</small></li>
+    <li><!--q:176--><span class="tag p">PYQ</span> 2,000 par 10% aur 20% → <b>28% off</b> → <mark>₹1,440</mark> <small>DP Const · 26 Dec 2025</small></li>
+    <li><!--q:227--><span class="tag p">PYQ</span> TV 80,000 par 25% aur 15% → <b>chain</b>: 60,000 → × 17/20 → <mark>₹51,000</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><!--q:237--><span class="tag p">PYQ</span> Shirt 600 par 10% aur 5% → <b>chain</b>: 540 → 513 → <mark>₹513</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><!--q:238--><span class="tag p">PYQ</span> Mobile 10,000 par 20% aur 10%, kul chhoot? → <b>28%</b> → <mark>₹2,800</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><!--q:87--><span class="tag p">PYQ</span> 25% aur 10% → <b>a + b − ab/100</b>: 35 − 2.5 → <mark>32.5%</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><!--q:90--><span class="tag p">PYQ</span> 20% aur 10% → <b>a + b − ab/100</b>: 30 − 2 → <mark>28%</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--q:120--><span class="tag p">PYQ</span> 15% aur 10% → <b>a + b − ab/100</b>: 25 − 1.5 → <mark>23.5%</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><!--q:126--><span class="tag p">PYQ</span> 20%, 10%, 5% → <b>do baar</b>: 28, phir 33 − 1.4 → <mark>31.6%</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--q:153--><span class="tag p">PYQ</span> 30% aur 10% → <b>a + b − ab/100</b>: 40 − 3 → <mark>37%</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><!--q:160--><span class="tag p">PYQ</span> 20% aur 10% → <b>a + b − ab/100</b> → <mark>28%</mark> <small>DP Const · 23 Dec 2025</small></li>
+    <li><!--q:171--><span class="tag p">PYQ</span> 25% aur 15% → <b>a + b − ab/100</b>: 40 − 3.75 → <mark>36.25%</mark> <small>DP Const · 19 Dec 2025</small></li>
+    <li><!--q:178--><span class="tag p">PYQ</span> 10% aur 10% → <b>a + b − ab/100</b>: 20 − 1 → <mark>19%</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><!--q:185--><span class="tag p">PYQ</span> Coat 12,000 par 12% aur 18% → <b>a + b − ab/100</b>: 30 − 2.16 → <mark>27.84%</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><!--q:214--><span class="tag p">PYQ</span> 10% aur 30% → <b>a + b − ab/100</b>: 40 − 3 → <mark>37%</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><!--q:236--><span class="tag p">PYQ</span> 18% aur 42% → <b>a + b − ab/100</b>: 60 − 7.56 → <mark>52.44%</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><!--q:244--><span class="tag p">PYQ</span> 12% aur 8% → <b>a + b − ab/100</b>: 20 − 0.96 → <mark>19.04%</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><!--q:250--><span class="tag p">PYQ</span> 10% aur 5% → <b>a + b − ab/100</b>: 15 − 0.5 → <mark>14.5%</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><!--q:199--><span class="tag p">PYQ</span> 30% aur 20%, MP : SP? → <b>bacha chain</b>: 7/10 × 4/5 = 14/25 → <mark>25 : 14</mark> <small>GD · 7 May 2026</small></li>
+    <li><!--q:204--><span class="tag p">PYQ</span> 10% aur 20%, MP : SP? → <b>bacha chain</b>: 9/10 × 4/5 = 18/25 → <mark>25 : 18</mark> <small>GD · 18 May 2026</small></li>
+  </ul>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Successive mein ek chhoot gayab, ya MP peeche se (11 Qs)</h3>
+  <p><b>Samjho:</b> jo chhoot pata hai, use pehle laga do. Jo daam bacha, <b>us par</b> doosri chhoot ka % nikaalo. MP ke 100 par nahi.</p>
+  <div class="box"><span class="k">Worked · Vase MP 550, pehli chhoot 20%, diya 350. Doosri chhoot? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small></span><!--q:69-->
+    <b>Method:</b> beech ka daam · <i>~10 sec</i><br>
+    550 × 4/5 = 440. Ab 440 se 350: kata 90. 90/440 = 9/44 ≈ <mark>20.45%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Ek 25% chhoot = 20% aur x%. x? <span class="tag p">PYQ</span> <small>CHSL · 29 Nov 2025</small></span><!--q:122-->
+    <b>Method:</b> bacha ka ratio · <i>~8 sec</i><br>
+    Bacha: 3/4 = 4/5 × (doosra bacha). Doosra bacha = 3/4 × 5/4 = 15/16. Toh x = 1/16 = <mark>6.25%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Car 20% aur 25% chhoot ke baad ₹5,40,000. MP? <span class="tag p">PYQ</span> <small>DP HCM · 12 Jan 2026</small></span><!--q:180-->
+    <b>Method:</b> bacha chain, ulta · <i>~6 sec</i><br>
+    Bacha = 4/5 × 3/4 = 3/5. 3/5 MP = 5,40,000 → MP = <mark>₹9,00,000</mark>.
+  </div>
+  <ul>
+    <li><!--q:17--><span class="tag p">PYQ</span> TV 20,000, pehli 15%, SP 15,300 → <b>beech ka daam</b> 17,000 → 1,700/17,000 → <mark>10%</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><!--q:23--><span class="tag p">PYQ</span> Oven 12,000, doosri 20%, SP 8,400 → <b>ulta</b>: 8,400 ÷ 4/5 = 10,500 → 1,500/12,000 → <mark>12.5%</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><!--q:28--><span class="tag p">PYQ</span> Shoes 800, pehli 10%, SP 612 → <b>beech ka daam</b> 720 → 108/720 → <mark>15%</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--q:60--><span class="tag p">PYQ</span> TV 10,000, pehli 10%, SP 8,100 → <b>beech ka daam</b> 9,000 → 900/9,000 → <mark>10%</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><!--q:194--><span class="tag p">PYQ</span> 3,000, pehli 10%, SP 1,890 → <b>beech ka daam</b> 2,700 → 810/2,700 → <mark>30</mark> <small>GD · 4 May 2026</small></li>
+    <li><!--q:229--><span class="tag p">PYQ</span> Jacket 2,000, pehli 15%, final 1,360 → <b>beech ka daam</b> 1,700 → 340/1,700 → <mark>20%</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><!--q:249--><span class="tag p">PYQ</span> Sofa 5,000, pehli 10%, SP 4,250 → <b>beech ka daam</b> 4,500 → 250/4,500 = 1/18 → <mark>5.56%</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><!--q:84--><span class="tag p">PYQ</span> Bag 20% aur 10% ke baad 864 → <b>72% = 864</b> → 1% = 12 → <mark>₹1,200</mark> <small>CHSL · 19 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · Offers: free cheez, flat ₹ off, GST, cashback (18 Qs)</h3>
+  <p><b>Samjho:</b> paisa kitni cheezon ka liya, cheezein kitni di. Tax hamesha chhoot ke baad. Shart wali chhoot ("₹15,000 se upar") chhoot ke baad wale bill par.</p>
+  <div class="box"><span class="k">Worked · 4 kitaab lo, 5vi par 50% off. Kul par chhoot %? <span class="tag p">PYQ</span> <small>CGL · 25 Sep 2025</small></span><!--q:51-->
+    <b>Method:</b> free hissa ÷ kul · <i>~6 sec</i><br>
+    5 kitaab mein sirf aadhi kitaab free. 0.5/5 = <mark>10%</mark>. (Daam ₹480 ka koi kaam nahi.)
+  </div>
+  <div class="box"><span class="k">Worked · 800 licence, kharch ₹40,00,000. 50 free; baaki par ₹6,000 ka 15% off, aur har 9 par 1 free <span class="tag p">PYQ</span> <small>CGL · 20 Sep 2025</small></span><!--q:35-->
+    <b>Method:</b> paid cheezein gino · <i>~25 sec</i><br>
+    800 − 50 = 750. Har 10 mein 9 paid → 675 paid. Ek ka daam 6,000 × 85% = 5,100.<br>
+    Kamai = 675 × 5,100 = 34,42,500. Nuksaan = 5,57,500 → 5,57,500/40,00,000 ≈ <mark>13.94% loss</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 12.5% aur 20% chhoot, phir 18% tax; diya ₹927. Asli daam? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small></span><!--q:71-->
+    <b>Method:</b> chain ulta · <i>~20 sec</i><br>
+    × 7/8 × 4/5 = × 7/10. Phir × 1.18 → 0.826. Daam = 927 ÷ 0.826.<br>
+    0.826 × 1,100 = 908.6, bacha 18.4 → 18.4 ÷ 0.826 ≈ 22.3 → <mark>₹1,122.28</mark>.
+  </div>
+  <ul>
+    <li><!--q:36--><span class="tag p">PYQ</span> 5,000 cake, kharch 2,50,000; 500 free; 75 par 20% off; 9 par 1 free → <b>paid gino</b>: 4,500 ka 9/10 = 4,050 × 60 = 2,43,000 → 7,000 kam → <mark>2.8% loss</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><!--q:42--><span class="tag p">PYQ</span> 25,000 par 30% off, phir bill 15,000 se upar toh ₹1,000 aur → <b>shart chhoot ke baad</b>: 17,500 → 16,500 → <mark>₹16,500</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:43--><span class="tag p">PYQ</span> "3 shirt 2 ke daam mein" → <b>free ÷ kul</b>: 1/3 → <mark>33.33%</mark> (sawaal "loss" bolta hai, asal mein ye chhoot % hai) <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:44--><span class="tag p">PYQ</span> 20,000 par 10% aur 5% → <b>chain</b>: 18,000 → 17,100 → <mark>₹17,100</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:48--><span class="tag p">PYQ</span> 2 shirt × 1,200, teesri free → <b>kul ÷ cheezein</b>: 2,400/3 → <mark>₹800</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:49--><span class="tag p">PYQ</span> 2,000 par 20% off, phir 18% GST → <b>tax baad mein</b>: 1,600 × 1.18 → <mark>₹1,888</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:50--><span class="tag p">PYQ</span> 1,200 par flat ₹150 off → <b>off ÷ MP</b>: 1/8 → <mark>12.5%</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:58--><span class="tag p">PYQ</span> 1,600 par 25% off, phir 5% VAT → <b>tax baad mein</b>: 1,200 × 1.05 → <mark>₹1,260</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:67--><span class="tag p">PYQ</span> Oven 10,000 par 25%, cash par 2% aur → <b>chain</b>: 7,500 × 98% → <mark>₹7,350</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--q:129--><span class="tag p">PYQ</span> Buy 3 get 1 free → <b>free ÷ kul</b>: 1/4 → <mark>25%</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--q:135--><span class="tag p">PYQ</span> Laptop 60,000 par 20%, phir ₹2,000 cashback → <b>% pehle, ₹ baad</b>: 48,000 − 2,000 → <mark>₹46,000</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><!--q:139--><span class="tag p">PYQ</span> 960 par ₹144 off, phir 18% GST → <b>tax baad mein</b>: 816 × 1.18 = 816 + 146.88 → <mark>₹962.88</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><!--q:140--><span class="tag p">PYQ</span> 3,000 par ₹500 off → <b>off ÷ MP</b>: 1/6 → <mark>16.67%</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><!--q:184--><span class="tag p">PYQ</span> 2 screen guard × 400, bill par 5% → <b>× 19/20</b>: 800 → <mark>₹760</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><!--q:239--><span class="tag p">PYQ</span> 15,000 par 25%, cash par 5% aur → <b>chain</b>: 11,250 × 19/20 → <mark>₹10,687.50</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+  </ul>
+  <p><span class="tag x">CGL+</span> Buy 5 get 2 free → 2/7 ≈ 28.57%. Aur agar dukaandaar "20% off" ki jagah "buy 4 get 1" de, toh dono barabar: 1/5 = 20%.</p>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>20% chhoot ke baad ₹960. MP?</summary><p>80% = 960 → 1% = 12 → ₹1,200.</p></details>
+    <details><summary>₹1,000 par 10% aur 10% chhoot. SP?</summary><p>19% chhoot → ₹810.</p></details>
+    <details><summary>MP ₹2,000, pehli chhoot 10%, SP ₹1,530. Doosri?</summary><p>Beech ka daam 1,800. 270/1,800 = 15%.</p></details>
+    <details><summary>Buy 4 get 1 free. Chhoot %?</summary><p>5 mein 1 free → 20%.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · DISCOUNT (part 3: types 7–13) ===================== -->
+<section class="chap" id="mdi-types-b">
+  <div class="eyebrow">Maths · PYQ types 7–13</div>
+  <h2>Discount + profit: markup, CP, MP, chain aur ratio wale sawaal</h2>
+  <div class="meta">117 sawaal · markup + chhoot se profit, CP peeche se, MP : CP, "chhoot na hoti toh", wholesaler-retailer chain, D : SP : MP · bank ka poora hisaab neeche</div>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Markup aur chhoot diye → profit % ya profit (28 Qs)</h3>
+  <p><b>Samjho:</b> do % hain toh m − d − md/100. Teen % hain (markup + do chhoot) toh CP = 100 maan kar chain chalao.</p>
+  <div class="box"><span class="k">Worked · 40% upar mark, 15% chhoot. Profit %? <span class="tag p">PYQ</span> <small>CHSL · 14 Nov 2025</small></span><!--q:64-->
+    <b>Method:</b> m − d − md/100 · <i>~5 sec</i><br>
+    40 − 15 − (40 × 15)/100 = 25 − 6 = <mark>19%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 100% upar mark, phir 30% aur 20% chhoot <span class="tag p">PYQ</span> <small>CHSL · 22 Nov 2025</small></span><!--q:98-->
+    <b>Method:</b> CP = 100 · <i>~8 sec</i><br>
+    100 → 200 → × 7/10 = 140 → × 4/5 = 112. Profit <mark>12%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · CP 3,500, 35% markup, phir 20% aur 10% chhoot <span class="tag p">PYQ</span> <small>MTS · 5 Feb 2025</small></span><!--q:220-->
+    <b>Method:</b> CP = 100 · <i>~10 sec</i><br>
+    Chhoot 20 + 10 − 2 = 28% → bacha 72%. 100 → 135 → 135 × 72% = 97.2. Toh <mark>2.8% loss</mark>. (Rakam ₹3,500 ka kaam nahi.)
+  </div>
+  <ul>
+    <li><!--q:2--><span class="tag p">PYQ</span> 25% upar, 10% off → <b>m − d − md/100</b>: 25 − 10 − 2.5 → <mark>12.5%</mark> <small>CGL · 12 Sep 2025</small></li>
+    <li><!--q:66--><span class="tag p">PYQ</span> Clock 10,000, 40% upar, 10% off → <b>m − d − md/100</b>: 40 − 10 − 4 → <mark>26%</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><!--q:70--><span class="tag p">PYQ</span> 32% upar, 16% cash off → <b>m − d − md/100</b>: 16 − 5.12 → <mark>10.88%</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--q:89--><span class="tag p">PYQ</span> Cupboard MP 3,200 (CP se 25% upar), 10% off → <b>m − d − md/100</b>: 25 − 10 − 2.5 → <mark>12.5%</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--q:111--><span class="tag p">PYQ</span> 25% upar, phir 10% aur 5% → <b>CP = 100</b>: 125 → 112.5 → 106.875 → <mark>+6.875%</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--q:133--><span class="tag p">PYQ</span> 50% upar, 10% aur 10% → <b>CP = 100</b>: 150 × 81% = 121.5 → <mark>21.5%</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><!--q:137--><span class="tag p">PYQ</span> CP 500, 60% upar, 25% off → <b>m − d − md/100</b>: 60 − 25 − 15 → <mark>20%</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><!--q:145--><span class="tag p">PYQ</span> 40% upar, 20% off → <b>m − d − md/100</b>: 40 − 20 − 8 → <mark>12%</mark> <small>DP Const · 29 Dec 2025</small></li>
+    <li><!--q:152--><span class="tag p">PYQ</span> 50% upar, 20% off → <b>m − d − md/100</b>: 50 − 20 − 10 → <mark>20%</mark> <small>DP Const · 27 Dec 2025</small></li>
+    <li><!--q:163--><span class="tag p">PYQ</span> 40% upar, 20% off → <b>m − d − md/100</b> → <mark>12%</mark> <small>DP Const · 24 Dec 2025</small></li>
+    <li><!--q:166--><span class="tag p">PYQ</span> 20% upar, 10% off → <b>m − d − md/100</b>: 20 − 10 − 2 → <mark>8%</mark> <small>DP Const · 22 Dec 2025</small></li>
+    <li><!--q:169--><span class="tag p">PYQ</span> CP 800, MP 1,000, 10% off → <b>SP vs CP</b>: 900 − 800 = 100 → 1/8 → <mark>0.125 (= 12.5%)</mark> <small>DP Const · 20 Dec 2025</small></li>
+    <li><!--q:179--><span class="tag p">PYQ</span> 60% upar, 25% off → <b>m − d − md/100</b>: 60 − 25 − 15 → <mark>20%</mark> <small>DP Const · 31 Dec 2025</small></li>
+    <li><!--q:182--><span class="tag p">PYQ</span> Jacket CP 5,000, 60% upar, 25% off → <b>m − d − md/100</b> → SP 6,000 → <mark>20%</mark> <small>DP HCM · 10 Jan 2026</small></li>
+    <li><!--q:190--><span class="tag p">PYQ</span> 80% upar, 40% off → <b>m − d − md/100</b>: 80 − 40 − 32 → <mark>8%</mark> <small>GD · 4 May 2026</small></li>
+    <li><!--q:223--><span class="tag p">PYQ</span> 63% upar, 23% off → <b>m − d − md/100</b>: 40 − 14.49 → <mark>25.51% profit</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><!--q:228--><span class="tag p">PYQ</span> CP 450, 20% upar, 10% off → <b>m − d − md/100</b> → <mark>8%</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><!--q:232--><span class="tag p">PYQ</span> 60% upar, 35% off → <b>m − d − md/100</b>: 60 − 35 − 21 → <mark>4% profit</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><!--q:226--><span class="tag p">PYQ</span> Watch CP 8,000, 50% upar, 20% off → <b>20% profit</b>: 8,000 ka 20% → <mark>Profit ₹1,600</mark> <small>MTS · 18 Feb 2025</small></li>
+    <li><!--q:224--><span class="tag p">PYQ</span> Mobile CP 12,000, 30% upar, 10% aur 5% → <b>chain</b>: 15,600 → 14,040 → 13,338 → <mark>SP ₹13,338, profit ₹1,338</mark> <small>MTS · 16 Feb 2025</small></li>
+    <li><!--q:77--><span class="tag p">PYQ</span> CP 500, 20% upar, 10% off, SP? → <b>chain</b>: 600 → 540 → <mark>₹540</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><!--q:177--><span class="tag p">PYQ</span> CP 500, 40% upar, 25% off, SP? → <b>chain</b>: 700 → 525 → <mark>₹525</mark> <small>DP Const · 20 Dec 2025</small></li>
+    <li><!--q:134--><span class="tag p">PYQ</span> MP 1,000, 15% aur 10% off, CP 700 → <b>chain</b>: 850 → 765 → 65/700 → <mark>9.29% profit</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><!--q:25--><span class="tag p">PYQ</span> CP 500, MP 600, 20% off → <b>SP vs CP</b>: 480 → 20 kam → <mark>4% loss</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><!--q:207--><span class="tag p">PYQ</span> MP 1,000, 30% off, CP 520 → <b>SP − CP</b>: 700 − 520 → <mark>₹180</mark> <small>GD · 28 Apr 2026</small></li>
+  </ul>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · Profit ki rakam ya SP diya → CP (aur extra ₹ chhoot wale) (16 Qs)</h3>
+  <p><b>Samjho:</b> CP = 100 parts maano. Markup aur chhoot se SP kitne parts bana, nikaalo. Diya hua rupaya kitne parts ke barabar hai, us se 1 part. Extra ₹ chhoot ho toh "parts ka farq = wahi ₹".</p>
+  <div class="box"><span class="k">Worked · 20% upar, 15% off, profit ₹300. CP? <span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span><!--q:10-->
+    <b>Method:</b> CP = 100 parts · <i>~8 sec</i><br>
+    20 − 15 − 3 = 2% profit. 2 parts = 300 → 1 part = 150 → CP = <mark>₹15,000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 60% upar, 25% off, phir ₹150 cash off; profit 14%. CP? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span><!--q:3-->
+    <b>Method:</b> parts ka farq · <i>~12 sec</i><br>
+    CP 100 → MP 160 → 25% off = 120. Asli SP = 114 (14% profit). Toh 120 − 114 = <b>6 parts = ₹150</b>.<br>
+    1 part = 25 → CP = <mark>₹2,500</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 50% upar, 20% off, phir y% aur; SP 4,320, profit 8%. CP aur y? <span class="tag p">PYQ</span> <small>CGL · 15 Sep 2025</small></span><!--q:16-->
+    <b>Method:</b> CP = 100 + beech ka daam · <i>~15 sec</i><br>
+    108 parts = 4,320 → 1 part = 40 → CP = 4,000. MP 6,000 → 20% off = 4,800 → 4,320. Kata 480/4,800 = 10%.<br>
+    <mark>CP = ₹4,000, y = 10%</mark>.
+  </div>
+  <ul>
+    <li><!--q:11--><span class="tag p">PYQ</span> 25% upar, 10% aur 20% off, loss ₹400; MP? → <b>CP = 100</b>: 125 → 112.5 → 90 → 10 parts = 400 → CP 4,000 → MP 125 parts → <mark>₹5,000</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><!--q:15--><span class="tag p">PYQ</span> 50% upar, 10% aur 20% off, profit ₹80; SP? → <b>CP = 100</b>: 150 → 135 → 108 → 8 parts = 80 → SP 108 × 10 → <mark>₹1,080</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><!--q:29--><span class="tag p">PYQ</span> 60% upar, 25% aur 10% off, profit ₹160; CP? → <b>CP = 100</b>: 160 → 120 → 108 → 8 parts = 160 → <mark>₹2,000</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--q:33--><span class="tag p">PYQ</span> 40% upar, 20% off, SP 560 → <b>CP = 100</b>: SP 112 parts = 560 → <mark>₹500</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:53--><span class="tag p">PYQ</span> 60% upar, 25% aur 10% off, SP 2,430 → <b>CP = 100</b>: 108 parts = 2,430 → 1 part = 22.5 → <mark>₹2,250</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><!--q:55--><span class="tag p">PYQ</span> 40% upar, 25% off, gain ₹75 → <b>m − d − md/100</b>: 40 − 25 − 10 = 5 parts = 75 → <mark>₹1,500</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:225--><span class="tag p">PYQ</span> 30% upar, 15% aur 10% off, SP 11,934 → <b>CP = 100</b>: 130 × 85% × 90% = 99.45 parts → 11,934 ÷ 0.9945 → <mark>₹12,000</mark> <small>MTS · 17 Feb 2025</small></li>
+    <li><!--q:254--><span class="tag p">PYQ</span> 50% upar, 20% off, diya 720 → <b>CP = 100</b>: 120 parts = 720 → <mark>₹600</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><!--q:24--><span class="tag p">PYQ</span> 80% upar, 30% off, ₹250 loyalty off, profit 12% → <b>parts ka farq</b>: 180 × 7/10 = 126; 126 − 112 = 14 parts = 250 → 100 parts → <mark>₹1,785.71</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><!--q:38--><span class="tag p">PYQ</span> 60% upar, 25% off, ₹300 cashback, profit 10% → <b>parts ka farq</b>: 120 − 110 = 10 parts = 300 → <mark>₹3,000</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><!--q:61,63--><span class="tag p">PYQ ×2</span> Necklace 30% upar, ₹150 cash off, SP 1,800, profit 20% → <b>SP = 120% CP</b>: 1,800 ÷ 6/5 → <mark>₹1,500</mark> (check: MP 1,950 = 130% ✔) <small>CHSL · 13 Nov 2025; 14 Nov 2025</small></li>
+    <li><!--q:136--><span class="tag p">PYQ</span> Jacket 60% upar, flat ₹1,800 off, profit 20% → <b>parts ka farq</b>: 160 − 120 = 40 parts = 1,800 → 1 part = 45 → <mark>₹4,500</mark> <small>CPO · 11 Dec 2025</small></li>
+  </ul>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · Chhoot % aur profit % diye → MP ya CP (25 Qs)</h3>
+  <p><b>Samjho:</b> SP dono taraf ka pul hai. Jo diya hai (MP ya CP), us se SP banao. Phir SP se doosri taraf jao. Ya seedha MP : CP = (100 + p) : (100 − d).</p>
+  <div class="box"><span class="k">Worked · MP 800, 12% off, phir bhi 8% gain. CP (approx)? <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span><!--q:6-->
+    <b>Method:</b> SP pul · <i>~10 sec</i><br>
+    SP = 8 × 88 = 704. CP = 704 ÷ 1.08. 1.08 × 650 = 702, bacha 2 → ~2 → <mark>₹652</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 34% off, 10% gain, CP 6,000. MP? <span class="tag p">PYQ</span> <small>DP HCM · 12 Jan 2026</small></span><!--q:181-->
+    <b>Method:</b> MP : CP = (100 + p) : (100 − d) · <i>~8 sec</i><br>
+    MP : CP = 110 : 66 = 5 : 3. CP = 3 parts = 6,000 → MP = 5 parts = <mark>₹10,000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · MP 720, chhoot ₹144, profit ₹36. CP? <span class="tag p">PYQ</span> <small>CGL · 26 Sep 2025</small></span><!--q:57-->
+    <b>Method:</b> seedha ghatao · <i>~4 sec</i><br>
+    SP = 720 − 144 = 576. CP = 576 − 36 = <mark>₹540</mark>.
+  </div>
+  <ul>
+    <li><!--q:21--><span class="tag p">PYQ</span> MP 150, 10% off, 25% profit → <b>SP pul</b>: 135 ÷ 5/4 → <mark>₹108</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><!--q:26--><span class="tag p">PYQ</span> Watch MP 800, 15% off, 20% profit → <b>SP pul</b>: 680 ÷ 6/5 → <mark>₹566.67</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--q:40--><span class="tag p">PYQ</span> CP 720, 40% off, 20% profit → <b>SP pul</b>: 864 = 60% MP → <mark>₹1,440</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:45--><span class="tag p">PYQ</span> SP 120 (25% off), profit 20% → <b>SP ÷ 6/5</b> → <mark>₹100</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:100--><span class="tag p">PYQ</span> CP 800, profit 10%, off 12% → <b>MP : CP = 110 : 88 = 5 : 4</b> → <mark>₹1,000</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:108--><span class="tag p">PYQ</span> Profit ₹68 = 10%, off 15%; list price? → <b>CP 680 → SP 748 = 85%</b> → 1% = 8.8 → <mark>₹880</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--q:115--><span class="tag p">PYQ</span> CP 500, off 10%, gain 8% → <b>SP pul</b>: 540 = 90% → <mark>₹600</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><!--q:123--><span class="tag p">PYQ</span> SP 1,500, off 20% (profit 25% extra) → <b>80% = 1,500</b> → <mark>₹1,875</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><!--q:130--><span class="tag p">PYQ</span> Fan MP 5,000, off 20%, profit 25% → <b>SP pul</b>: 4,000 ÷ 5/4 → <mark>₹3,200</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><!--q:132--><span class="tag p">PYQ</span> Mobile SP 12,600 (10% off), profit 20% → <b>SP ÷ 6/5</b> → <mark>₹10,500</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><!--q:138--><span class="tag p">PYQ</span> CP 2,100, off 30%, profit 5% → <b>MP : CP = 105 : 70 = 3 : 2</b> → 1,050 × 3 → <mark>₹3,150</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><!--q:186--><span class="tag p">PYQ</span> Cycle MP 15,000, off 10%, profit 20% → <b>SP pul</b>: 13,500 ÷ 6/5 → <mark>₹11,250</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><!--q:187--><span class="tag p">PYQ</span> CP 5,000, 25% profit chahiye (20% off dene ke baad); SP? → <b>CP × 5/4</b> → <mark>₹6,250</mark> <small>DP HCM · 7 Jan 2026</small></li>
+    <li><!--q:205--><span class="tag p">PYQ</span> CP 1,000, off 40%, profit 50% → <b>MP : CP = 150 : 60 = 5 : 2</b> → <mark>₹2,500</mark> <small>GD · 28 Apr 2026</small></li>
+    <li><!--q:231--><span class="tag p">PYQ</span> CP 1,500, off 25%, gain 60% → <b>MP : CP = 160 : 75 = 32 : 15</b> → 100 × 32 → <mark>₹3,200</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><!--q:235--><span class="tag p">PYQ</span> CP 7,680, gain 40%, off 20% → <b>MP : CP = 140 : 80 = 7 : 4</b> → 1,920 × 7 → <mark>₹13,440</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><!--q:241--><span class="tag p">PYQ</span> Fan MP 3,500, off 10%, profit 20% → <b>SP pul</b>: 3,150 ÷ 6/5 → <mark>₹2,625</mark> <small>SP-XIV · 1 Aug 2025</small></li>
+    <li><!--q:243--><span class="tag p">PYQ</span> MP 1,200, off 10%, profit 8% → <b>SP pul</b>: 1,080 ÷ 1.08 → <mark>₹1,000</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><!--q:245--><span class="tag p">PYQ</span> CP 1,200, off 25%, profit 20% → <b>MP : CP = 120 : 75 = 8 : 5</b> → 240 × 8 → <mark>₹1,920</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><!--q:247--><span class="tag p">PYQ</span> Dress MP 2,000, off 15%, profit 10% → <b>SP pul</b>: 1,700 ÷ 1.1 → <mark>₹1,545.45</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><!--q:251--><span class="tag p">PYQ</span> MP 5,000, 20% aur 10% off, profit 12% → <b>SP pul</b>: 3,600 ÷ 1.12 → <mark>₹3,214.29</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><!--q:215--><span class="tag p">PYQ</span> SP 420 (30% off); bina chhoot 50% profit → <b>MP pehle</b>: 70% = 420 → MP 600 = 150% CP → <mark>₹400</mark> <small>GD · 30 Apr 2026</small></li>
+  </ul>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · Chhoot % ya markup % nikaalo (8 Qs)</h3>
+  <p><b>Samjho:</b> CP = 100. MP = 100 + markup. SP = 100 + profit. Chhoot % = (MP − SP)/MP. Dhyaan: chhoot MP par hai, toh neeche MP aayega, 100 nahi.</p>
+  <div class="box"><span class="k">Worked · 20% chhoot, phir bhi 10% profit. MP, CP se kitna upar? <span class="tag p">PYQ</span> <small>CGL · 24 Sep 2025</small></span><!--q:47-->
+    <b>Method:</b> MP : CP = (100 + p) : (100 − d) · <i>~6 sec</i><br>
+    110 : 80 = 11 : 8. 8 par 3 zyada → 3/8 = <mark>37.5%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 30% upar mark, profit 17%. Chhoot %? <span class="tag p">PYQ</span> <small>CGL · 16 Sep 2025</small></span><!--q:18-->
+    <b>Method:</b> CP = 100 · <i>~6 sec</i><br>
+    MP 130, SP 117. Kata 13. 13/130 = <mark>10%</mark>. (13% galat: 13 ko 100 se baanta, MP se nahi.)
+  </div>
+  <div class="box"><span class="k">Worked · 25% upar mark. Bina nuksaan zyada se zyada chhoot? <span class="tag p">PYQ</span> <small>GD · 29 Apr 2026</small></span><!--q:211-->
+    <b>Method:</b> SP = CP tak gira sakte ho · <i>~5 sec</i><br>
+    MP 125 → SP 100. Kata 25/125 = <mark>20%</mark>.
+  </div>
+  <ul>
+    <li><!--q:32--><span class="tag p">PYQ</span> 20% upar, profit 8% → <b>CP = 100</b>: 120 → 108 → 12/120 → <mark>10%</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:95--><span class="tag p">PYQ</span> CP 14,000, MP 16,000, gain 8% → <b>SP 15,120</b> → 880/16,000 → <mark>5.5%</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:192--><span class="tag p">PYQ</span> 25% upar, profit 18% → <b>CP = 100</b>: 125 → 118 → 7/125 → <mark>5.6%</mark> <small>GD · 4 May 2026</small></li>
+    <li><!--q:210--><span class="tag p">PYQ</span> MP 5,000, CP 3,000, profit 25% → <b>SP 3,750</b> → 1,250/5,000 → <mark>25%</mark> <small>GD · 29 Apr 2026</small></li>
+    <li><!--q:222--><span class="tag p">PYQ</span> 35% upar, 20% off, phir y%; kul profit 8% → <b>CP = 100</b>: 135 × 4/5 = 108 → 8% pehle hi ho gaya → <mark>0%</mark> <small>MTS · 6 Feb 2025</small></li>
+  </ul>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · "Chhoot na hoti toh" ya "alag chhoot hoti toh" (8 Qs)</h3>
+  <p><b>Samjho:</b> CP badalta nahi. Sirf SP badalta hai. Toh pehle CP pakdo, phir naya SP banao. Shortcut: naya SP = purana SP × (naya bacha)/(purana bacha).</p>
+  <div class="box"><span class="k">Worked · MP 750, 12% off, 10% gain. Bina chhoot gain? <span class="tag p">PYQ</span> <small>SP-XIV · 31 Jul 2025</small></span><!--q:234-->
+    <b>Method:</b> CP pakdo · <i>~8 sec</i><br>
+    SP = 7.5 × 88 = 660 = 110% CP → CP = 600. Bina chhoot SP = 750 → 150/600 = <mark>25%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · MP ke 80% par bechne se 4% loss. 95% par bechta toh? <span class="tag p">PYQ</span> <small>CHSL · 22 Nov 2025</small></span><!--q:94-->
+    <b>Method:</b> ratio · <i>~8 sec</i><br>
+    80% MP = 96% CP → 1% MP = 1.2% CP. Toh 95% MP = 95 × 1.2 = 114% CP → <mark>14%</mark> profit.
+  </div>
+  <ul>
+    <li><!--q:20--><span class="tag p">PYQ</span> 15% off, profit 20% = ₹450; 25% off par SP? → <b>CP 2,250, SP 2,700</b> → 2,700 × 75/85 → <mark>₹2,382.35</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><!--q:27--><span class="tag p">PYQ</span> 20% off, profit 10% = ₹300; 30% off par SP? → <b>CP 3,000, SP 3,300</b> → 3,300 × 70/80 → <mark>₹2,887.50</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--q:59--><span class="tag p">PYQ</span> 2 kitaab 10% off par 540, profit 20%; bina chhoot profit? → <b>MP 600, CP 450</b> → <mark>₹150</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><!--q:62--><span class="tag p">PYQ</span> 4 shirt 15% off par 2,040, profit 20%; poore daam par profit? → <b>MP 2,400, CP 1,700</b> → <mark>₹700</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><!--q:198--><span class="tag p">PYQ</span> 15% off par 30% profit; bina chhoot? → <b>ratio</b>: 130/85 = 26/17 = 1.5294 → <mark>52.94%</mark> <small>GD · 6 May 2026</small></li>
+    <li><!--q:230--><span class="tag p">PYQ</span> 10% off par 20% gain; bina chhoot? → <b>ratio</b>: 120/90 = 4/3 → <mark>33.33%</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+  </ul>
+  <p><span class="tag x">CGL+</span> General rule: d% chhoot par p% profit → bina chhoot profit = (100 + p)/(100 − d) − 1. 20% off, 20% profit → 120/80 = 1.5 → 50%.</p>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · Chain (wholesaler → retailer → customer), naya MP, aur "chhoot par khareedo, upar becho" (20 Qs)</h3>
+  <p><b>Samjho:</b> har kadam ek guna hai. Saare guna ek line mein likho, fraction kaato, ek hi number bachega. Wahi parts.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Chain of multipliers. Factory cost 100, times 3 over 2 gives wholesaler marked price 150, times 4 over 5 gives retailer cost 120, times 7 over 5 gives printed price 168, times 9 over 10 gives customer price 151.2. 151.2 parts equal 18,144 so 1 part is 120 and cost is 12,000.">
+      <defs>
+        <marker id="mdi-ch-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <g>
+        <rect x="15" y="50" width="110" height="60" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="155" y="50" width="110" height="60" rx="8" class="chf"/><rect x="155" y="50" width="110" height="60" rx="8" class="chs"/>
+        <rect x="295" y="50" width="110" height="60" rx="8" class="chf"/><rect x="295" y="50" width="110" height="60" rx="8" class="chs"/>
+        <rect x="435" y="50" width="110" height="60" rx="8" class="chf"/><rect x="435" y="50" width="110" height="60" rx="8" class="chs"/>
+        <rect x="575" y="50" width="110" height="60" rx="8" style="fill:var(--ch)"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="70" y="76" class="lbl">100</text><text x="70" y="96" class="sm">factory CP</text>
+        <text x="210" y="76" class="lbl">150</text><text x="210" y="96" class="sm">wholesale MP</text>
+        <text x="350" y="76" class="lbl">120</text><text x="350" y="96" class="sm">retailer ka CP</text>
+        <text x="490" y="76" class="lbl">168</text><text x="490" y="96" class="sm">printed price</text>
+        <text x="630" y="76" class="lbl" style="fill:var(--paper)">151.2</text><text x="630" y="96" class="sm" style="fill:var(--paper)">customer</text>
+        <text x="140" y="40" class="sm">+50%</text><text x="280" y="40" class="sm">−20%</text><text x="420" y="40" class="sm">+40%</text><text x="560" y="40" class="sm">−10%</text>
+        <text x="140" y="130" class="lbl" style="fill:var(--ch)">× 3/2</text><text x="280" y="130" class="lbl" style="fill:var(--ch)">× 4/5</text><text x="420" y="130" class="lbl" style="fill:var(--ch)">× 7/5</text><text x="560" y="130" class="lbl" style="fill:var(--ch)">× 9/10</text>
+      </g>
+      <g class="ln">
+        <line x1="125" y1="80" x2="151" y2="80" marker-end="url(#mdi-ch-arr)"/>
+        <line x1="265" y1="80" x2="291" y2="80" marker-end="url(#mdi-ch-arr)"/>
+        <line x1="405" y1="80" x2="431" y2="80" marker-end="url(#mdi-ch-arr)"/>
+        <line x1="545" y1="80" x2="571" y2="80" marker-end="url(#mdi-ch-arr)"/>
+      </g>
+      <text x="350" y="166" text-anchor="middle" class="lbl">151.2 parts = ₹18,144 → 1 part = 120 → C = 100 parts = ₹12,000</text>
+      <text x="350" y="190" text-anchor="middle" class="sm">ek line mein: 3/2 × 4/5 × 7/5 × 9/10 = 756/500 = 1.512</text>
+    </svg>
+    </div>
+    <figcaption>CGL 13 Sep 2025 ka sawaal ek patti par. Har teer ek guna hai. Markup = 1 se bada guna, chhoot = 1 se chhota.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Worked · Factory C, wholesaler 50% upar, 20% trade off; retailer 40% upar, 10% off; customer ne diye ₹18,144 <span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span><!--q:4-->
+    <b>Method:</b> guna ki chain · <i>~20 sec</i><br>
+    C × 3/2 × 4/5 × 7/5 × 9/10 = 1.512C. 18,144 ÷ 1.512: 1.512 × 12,000 = 18,144 ✔ → <mark>₹12,000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Phone ₹P par becha, 20% profit. Ab MP = 1.5P, 10% off. Profit %? <span class="tag p">PYQ ×2</span> <small>CGL · 12 Sep 2025; 16 Sep 2025</small></span><!--q:1,19-->
+    <b>Method:</b> CP ko P ke parts mein likho · <i>~12 sec</i><br>
+    CP = P × 5/6. Naya SP = 1.5P × 9/10 = 1.35P. SP/CP = 1.35 × 6/5 = 1.62 → <mark>62%</mark> (ek paper mein option "0.62" likha hai).
+  </div>
+  <div class="box"><span class="k">Worked · 30% chhoot par khareeda, MP se 10% upar becha. Profit %? <span class="tag p">PYQ</span> <small>SP-XIV · 30 Jul 2025</small></span><!--q:256-->
+    <b>Method:</b> MP = 100 · <i>~6 sec</i><br>
+    Khareed 70, bikri 110. 40/70 = 4/7 = <mark>57.14%</mark>.
+  </div>
+  <ul>
+    <li><!--q:8--><span class="tag p">PYQ</span> Oven: 60% upar, 15% off; retailer 25% upar, 10% off; customer 14,490 → <b>chain</b>: 8/5 × 17/20 × 5/4 × 9/10 = 1.53 → 1.53 × 9,500 = 14,535 (thoda zyada) → <mark>₹9,471</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><!--q:7--><span class="tag p">PYQ</span> Dining set: 25% off + 10% fee; showroom ₹4,500 zyada par becha = 30% → <b>chain</b>: showroom CP = 15,000 = MP × 3/4 × 11/10 = 0.825 MP → <mark>₹18,181.82</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><!--q:13--><span class="tag p">PYQ</span> Novel: 30% off + 5% shipping; ₹1,620 = 40% → <b>chain</b>: CP 4,050 = 0.735 × cover → <mark>₹5,510.20</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><!--q:22--><span class="tag p">PYQ</span> Licence: 20% off + 15% fee; ₹7,800 = 25% → <b>chain</b>: CP 31,200 = 0.92 × MP → <mark>₹33,913.04</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><!--q:37--><span class="tag p">PYQ</span> Chai: wholesaler 20% profit; retailer 50% upar, 20% off; customer 480 → <b>chain</b>: 6/5 × 3/2 × 4/5 = 1.44 → 480 ÷ 1.44 → <mark>₹333.33</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><!--q:46--><span class="tag p">PYQ</span> 100 clock: 80% upar, 25% trade off; retailer ne kul 48,000 diye → <b>chain</b>: ek clock 480 = 9/5 × 3/4 = 1.35 C → <mark>₹355.56</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:5--><span class="tag p">PYQ</span> ₹Y par becha, 10% loss → CP = 10Y/9; naya MP 0.8Y, 5% off → SP 0.76Y → <b>SP/CP</b> = 0.76 × 0.9 = 0.684 → <mark>31.59%</mark> loss (asal 31.6%) <small>CGL · 13 Sep 2025</small></li>
+    <li><!--q:12,34--><span class="tag p">PYQ ×2</span> ₹Z par 25% profit → CP 0.8Z; naya MP 1.6Z, 20% off → SP 1.28Z → <b>SP/CP</b> = 1.6 → <mark>60%</mark> <small>CGL · 14 Sep 2025; 20 Sep 2025</small></li>
+    <li><!--q:14--><span class="tag p">PYQ</span> ₹A par 5% loss → CP = A/0.95; naya MP 1.2A, 10% off → 1.08A → <b>SP/CP</b> = 1.08 × 0.95 = 1.026 → <mark>2.6% profit</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><!--q:112--><span class="tag p">PYQ</span> Sale mein CP par 17.5% upar, 20% off → <b>CP = 100</b>: 117.5 × 4/5 = 94 → <mark>6% loss</mark> (₹A wala hissa bekaar hai) <small>CHSL · 26 Nov 2025</small></li>
+    <li><!--q:39--><span class="tag p">PYQ</span> Cycle 20% off par li, ₹400 repair, 4,800 par becha, 25% gain → <b>ulta</b>: kul CP 3,840 → khareed 3,440 = 80% MP → <mark>₹4,300</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><!--q:200--><span class="tag p">PYQ</span> MP X, 20% off par Y, Z = Y se 20% zyada; Z : X? → <b>chain</b>: 4/5 × 6/5 = 24/25 → <mark>24 : 25</mark> <small>GD · 7 May 2026</small></li>
+    <li><!--q:201--><span class="tag p">PYQ</span> 25% off par khareeda, X se 30% upar becha → <b>MP = 100</b>: 75 → 130 → 55/75 → <mark>73.33%</mark> <small>GD · 8 May 2026</small></li>
+    <li><!--q:202--><span class="tag p">PYQ</span> 40% off par Y, Z = Y se 30% zyada; Z : X? → <b>chain</b>: 3/5 × 13/10 = 39/50 → <mark>39 : 50</mark> <small>GD · 9 May 2026</small></li>
+    <li><!--q:203--><span class="tag p">PYQ</span> 40% off par khareeda, X se 10% upar becha → <b>MP = 100</b>: 60 → 110 → 50/60 → <mark>83.33%</mark> <small>GD · 9 May 2026</small></li>
+  </ul>
+
+  <!-- TYPE 13 -->
+  <h3>Type 13 · D, SP, MP ka ratio, aur do cheezon ki milli chhoot (12 Qs)</h3>
+  <p><b>Samjho:</b> MP = D + SP. Diye hue rishte ko parts mein likho. "of" = utna hi, "more than" = 100 jod do. CP chahiye toh profit/loss se SP ko CP mein badlo.</p>
+  <div class="box"><span class="k">Worked · Chhoot = MP ka 2/17. D : SP? <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small></span><!--q:102-->
+    <b>Method:</b> parts · <i>~4 sec</i><br>
+    MP 17, D 2 → SP 15. D : SP = <mark>2 : 15</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · SP, chhoot se 120% zyada. SP, MP ka kitna %? <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small></span><!--q:106-->
+    <b>Method:</b> parts ("more than") · <i>~8 sec</i><br>
+    D = 100 → SP = 220 → MP = 320. 220/320 = 11/16 = <mark>68.75%</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 20% profit; chhoot = SP ka 9/11. MP : CP? <span class="tag p">PYQ</span> <small>GD · 4 May 2026</small></span><!--q:193-->
+    <b>Method:</b> parts + CP badlo · <i>~15 sec</i><br>
+    SP 11, D 9 → MP 20. CP = 11 ÷ 6/5 = 55/6. MP : CP = 20 : 55/6 = 120 : 55 = <mark>24 : 11</mark>.
+  </div>
+  <ul>
+    <li><!--q:114--><span class="tag p">PYQ</span> MP = D ka 140%; MP, SP ka kitna %? → <b>parts</b>: D 100, MP 140, SP 40 → 140/40 → <mark>350%</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><!--q:117--><span class="tag p">PYQ</span> MP = D ka 150%; MP, SP ka kitna %? → <b>parts</b>: D 100, MP 150, SP 50 → <mark>300%</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--q:118--><span class="tag p">PYQ</span> MP, D se 140% zyada; SP, MP ka kitna %? → <b>parts</b>: D 100, MP 240, SP 140 → 7/12 → <mark>58.33%</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--q:124--><span class="tag p">PYQ</span> SP = D ka 140%; MP, D ka kitna %? → <b>parts</b>: D 100, SP 140, MP 240 → <mark>240%</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><!--q:206--><span class="tag p">PYQ</span> 25% loss; chhoot = SP ka 5/9 (fraction scan se padha) → <b>parts</b>: SP 9, D 5, MP 14; CP = 9 ÷ 3/4 = 12 → MP = 14/12 → <mark>(7/6) of CP</mark> <small>GD · 28 Apr 2026</small></li>
+    <li><!--q:212--><span class="tag p">PYQ</span> 30% loss; chhoot = SP ka 7/10 (fraction bank se gayab; key se 7/10 hi baithta hai) → <b>parts</b>: SP 70, D 49, MP 119; CP = 100 → 100/119 → <mark>84.03%</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><!--q:216--><span class="tag p">PYQ</span> 10% profit; chhoot = SP ka 3/11 (fraction bank se gayab; key se 3/11 baithta hai) → <b>parts</b>: SP 11, D 3, MP 14; CP = 10 → 4/14 → <mark>28.57%</mark> <small>GD · 30 Apr 2026</small></li>
+    <li><!--q:76--><span class="tag p">PYQ</span> Pen : pencil MP = 5 : 6; pen par 18%, kul 12%; pencil par? → <b>parts</b>: kul chhoot 12% of 11 = 1.32; pen 18% of 5 = 0.9 → pencil 0.42/6 → <mark>7%</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><!--q:72--><span class="tag p">PYQ</span> Daam 25% badha, phir 20% off, final 48,000 → <b>chain</b>: 5/4 × 4/5 = 1 → <mark>₹48,000</mark> (wahi daam) <small>CHSL · 17 Nov 2025</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Chhoot % ko CP se baantna (13/100)</td><td>Chhoot hamesha MP par: 13/130 = 10%.</td></tr>
+    <tr><td>20% aur 10% = 30%</td><td>a + b − ab/100 = 28%. Doosri chhoot chhote daam par lagti hai.</td></tr>
+    <tr><td>40% upar, 20% off → 20% profit</td><td>40 − 20 − 8 = 12%. Chhoot bade MP par lagti hai.</td></tr>
+    <tr><td>SP par chhoot jod kar MP banana (7,650 + 15%)</td><td>85% = 7,650 → 1% = 90 → 9,000.</td></tr>
+    <tr><td>Successive mein doosri chhoot MP par ginna</td><td>Beech wale daam par: 440 se 350 → 90/440.</td></tr>
+    <tr><td>"MP, D ka 140%" ko "140% zyada" padhna</td><td>"of" → MP 140. "more than" → MP 240.</td></tr>
+    <tr><td>Buy 3 get 1: 1/3 = 33%</td><td>Free ÷ kul cheezein = 1/4 = 25%.</td></tr>
+    <tr><td>GST pehle lagana, chhoot baad mein</td><td>Chhoot pehle, tax chhoot ke baad wale daam par.</td></tr>
+    <tr><td>Extra ₹ off ko % mein milaana</td><td>CP = 100 parts lo; % wale SP aur asli SP ka farq = wahi ₹.</td></tr>
+    <tr><td>CP diya hai toh use karna hi hai</td><td>12% vs 5% wale sawaal mein CP bekaar hai. Farq = MP ka 7%.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul <b>258</b> sawaal, <b>258 yahan</b>, koi nahi chhoda. 3 jode do baar aaye (alag papers, same sawaal), unhe ek line mein ×2 ke saath likha hai. 8 sawaalon ke number scan mein the: unhe page crop se padha (173, 189, 206 ke number crop se mile; baaki 5 ka English text theek tha). 2 sawaalon (GD 30 Apr 2026, dono "chhoot = SP ka ... part") mein fraction bank se gayab hai aur crop bhi nahi hai; fraction key se ulta nikaala (7/10 aur 3/11). Har ek upar mark hai.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>50% upar, phir 20% aur 10% chhoot. Profit %?</summary><p>100 → 150 → 120 → 108. Profit 8%.</p></details>
+    <details><summary>Chhoot 25%, profit 20%, CP ₹1,500. MP?</summary><p>MP : CP = 120 : 75 = 8 : 5 → 300 × 8 = ₹2,400.</p></details>
+    <details><summary>MP ke 90% par 8% profit. MP par bechta toh?</summary><p>90% MP = 108% CP → 100% MP = 120% CP → 20%.</p></details>
+    <details><summary>Chhoot = SP ka 1/4. Chhoot MP ka kitna %?</summary><p>SP 4, D 1, MP 5 → 1/5 = 20%.</p></details>
+    <details><summary>40% upar mark, 10% chhoot, phir ₹200 cash off. Phir bhi 10% profit. CP?</summary><p>CP 100 → 140 → 126. Asli SP 110. 16 parts = 200 → 1 part = 12.5 → CP = ₹1,250.</p></details>
+  </div>
+</section>

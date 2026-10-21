@@ -1,0 +1,1313 @@
+<!-- ===================== MATHS · TRIGONOMETRY (part 1: basics + speed methods) ===================== -->
+<section class="chap" id="mtg-basics">
+  <div class="eyebrow">Maths · 277 questions</div>
+  <h2>Trigonometry: shuru se, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, Selection Post XIV, Delhi Police) · sabse zyada: ek ratio se baaki ratio, "jod = 90°" wale sawaal, radian, aur sec + tan / sin + cos / tan + cot ki jodi</div>
+
+  <h3>Pehle ek chhoti si kahani: deewar aur seedhi</h3>
+  <p>Ek seedhi deewar se tiki hai. Seedhi ki lambai 5 m hai. Uska paanv deewar se 4 m door hai. Toh seedhi deewar par 3 m ki oonchai tak pahunchti hai. (3² + 4² = 5².)</p>
+  <ul>
+    <li>Ab seedhi 10 m ki le lo, wahi jhukaav rakho. Paanv 8 m door, oonchai 6 m. Har bhuja dugni ho gayi.</li>
+    <li>Par <b>oonchai ÷ seedhi</b> dekho: 3/5, aur 6/10. Dono baar 0.6. Bhujaen badlin, <b>ratio nahi badla</b>.</li>
+    <li>Ratio tab badalta hai jab jhukaav, yaani <b>angle</b>, badalta hai. Toh har angle ka apna ek fixed ratio hai.</li>
+  </ul>
+  <p>Bas yahi trigonometry hai: <b>right triangle mein angle aur bhujaon ke ratio ka rishta</b>. Inhi ratios ke naam sin, cos, tan hain.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Right triangle drawn to scale with base 4, perpendicular 3 and hypotenuse 5. Angle theta at the base. Six ratios listed: sin = P/H = 3/5, cos = B/H = 4/5, tan = P/B = 3/4, and their reciprocals cosec 5/3, sec 5/4, cot 4/3.">
+      <polygon points="60,260 340,260 340,50" class="chf"/>
+      <polygon points="60,260 340,260 340,50" class="chs" style="fill:none"/>
+      <rect x="322" y="242" width="18" height="18" class="ln" style="fill:none"/>
+      <path d="M100,260 A40,40 0 0,0 92,236" class="chs" style="fill:none"/>
+      <text x="108" y="250" class="lbl" style="fill:var(--ch)">θ</text>
+      <text x="200" y="282" text-anchor="middle" class="lbl">B = 4 (aadhaar / base)</text>
+      <text x="350" y="150" class="lbl">P = 3</text>
+      <text x="350" y="168" class="sm">(θ ke saamne)</text>
+      <text x="168" y="138" text-anchor="end" class="lbl">H = 5</text>
+      <text x="168" y="156" text-anchor="end" class="sm">(karn, sabse lambi)</text>
+      <line x1="440" y1="20" x2="440" y2="290" class="ln"/>
+      <g class="lbl">
+        <text x="460" y="42">sin θ = P/H = 3/5</text>
+        <text x="460" y="68">cos θ = B/H = 4/5</text>
+        <text x="460" y="94">tan θ = P/B = 3/4</text>
+      </g>
+      <text x="460" y="126" class="sm">ulte (reciprocal):</text>
+      <g class="lbl" style="fill:var(--ch)">
+        <text x="460" y="150">cosec θ = H/P = 5/3</text>
+        <text x="460" y="176">sec θ = H/B = 5/4</text>
+        <text x="460" y="202">cot θ = B/P = 4/3</text>
+      </g>
+      <text x="460" y="240" class="sm">Pandit Badri Prasad</text>
+      <text x="460" y="256" class="sm">Har Har Bole</text>
+      <text x="460" y="280" class="sm">→ sin = P/H, cos = B/H, tan = P/B</text>
+    </svg>
+    </div>
+    <figcaption>3-4-5 ki seedhi, scale par. P hamesha angle ke saamne wali bhuja hai, H sabse lambi. Upar ke teen yaad karo; neeche ke teen bas unke ulte hain.</figcaption>
+  </figure>
+
+  <h3>Teen basic ideas, jinse saare sawaal bante hain</h3>
+  <ul>
+    <li><b>Idea 1 · Ratio = bhuja ÷ bhuja.</b> Koi bhi ek ratio mila (jaise sin = 3/5) toh triangle ki do bhujaen mil gayin. Teesri Pythagoras se. Phir koi bhi ratio padh lo.</li>
+    <li><b>Idea 2 · Pythagoras ko ratio mein likho.</b> P² + B² = H². Poore ko H² se bhaag do: <b>sin² + cos² = 1</b>. B² se bhaag do: <b>tan² + 1 = sec²</b>. P² se bhaag do: <b>cot² + 1 = cosec²</b>. Teeno ek hi baat hain.</li>
+    <li><b>Idea 3 · Doosra kona.</b> Right triangle ke baaki do angle mil kar 90° hote hain. Doosre kone (90° − θ) se dekho toh P aur B aapas mein badal jaate hain. Isliye <b>sin θ = cos(90° − θ)</b>, tan θ = cot(90° − θ), sec θ = cosec(90° − θ).</li>
+  </ul>
+  <div class="box"><span class="k">Ab naam rakh dete hain</span>
+    sin, cos, tan = <b>mool ratio</b>. cosec, sec, cot = unke <b>ulte</b> (cosec = 1/sin, sec = 1/cos, cot = 1/tan). <br>
+    sin–cos, tan–cot, sec–cosec = <b>co-ratio jodiyan</b> (90° wala rishta). <br>
+    Angle degree mein bhi naapte hain aur radian mein bhi: <b>π radian = 180°</b>.
+  </div>
+  <p>Ab asli baat. Paper mein ek sawaal ko lagbhag <b>36 second</b> milte hain. Trig mein formula se lambi algebra karne ka time nahi hai. Neeche 9 tareeke hain. Har PYQ inhi mein se kisi se 5–20 second mein nikalta hai.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Value table, 30 second mein khud banao</h3>
+  <p><b>Kab use karo:</b> jab 0°, 30°, 45°, 60°, 90° ki value chahiye, ya ratio dekh kar angle pehchanna ho (sec = 2 matlab 60°).</p>
+  <p><b>Soch aise:</b> ginti likho 0, 1, 2, 3, 4. Har ek ka √ lo aur 2 se bhaag do. Ye sin ki line hai. Cos ki line wahi hai, ulti. Tan = sin ÷ cos.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Value table for 0, 30, 45, 60 and 90 degrees. Count 0 to 4, square root over 2 gives sin: 0, 1/2, 1/root2, root3/2, 1. Cos is the same row reversed. Tan is 0, 1/root3, 1, root3, not defined.">
+      <g text-anchor="middle" class="lbl">
+        <text x="185" y="28">0°</text><text x="295" y="28">30°</text><text x="405" y="28">45°</text><text x="515" y="28">60°</text><text x="625" y="28">90°</text>
+      </g>
+      <text x="14" y="66" class="sm">ginti likho</text>
+      <g text-anchor="middle" class="sm"><text x="185" y="66">0</text><text x="295" y="66">1</text><text x="405" y="66">2</text><text x="515" y="66">3</text><text x="625" y="66">4</text></g>
+      <line x1="130" y1="78" x2="680" y2="78" class="ln"/>
+      <text x="14" y="112" class="lbl">sin</text><text x="14" y="128" class="sm">√ginti ÷ 2</text>
+      <g>
+        <rect x="134" y="88" width="102" height="48" rx="6" class="chf"/><rect x="244" y="88" width="102" height="48" rx="6" class="chf"/><rect x="354" y="88" width="102" height="48" rx="6" class="chf"/><rect x="464" y="88" width="102" height="48" rx="6" class="chf"/><rect x="574" y="88" width="102" height="48" rx="6" class="chf"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="185" y="104" class="sm">√0/2</text><text x="295" y="104" class="sm">√1/2</text><text x="405" y="104" class="sm">√2/2</text><text x="515" y="104" class="sm">√3/2</text><text x="625" y="104" class="sm">√4/2</text>
+        <text x="185" y="126" class="lbl">0</text><text x="295" y="126" class="lbl">1/2</text><text x="405" y="126" class="lbl">1/√2</text><text x="515" y="126" class="lbl">√3/2</text><text x="625" y="126" class="lbl">1</text>
+      </g>
+      <text x="14" y="168" class="lbl">cos</text><text x="14" y="184" class="sm">sin ulta</text>
+      <g>
+        <rect x="134" y="148" width="102" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.2"/><rect x="244" y="148" width="102" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.2"/><rect x="354" y="148" width="102" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.2"/><rect x="464" y="148" width="102" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.2"/><rect x="574" y="148" width="102" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="185" y="176">1</text><text x="295" y="176">√3/2</text><text x="405" y="176">1/√2</text><text x="515" y="176">1/2</text><text x="625" y="176">0</text></g>
+      <text x="14" y="222" class="lbl">tan</text><text x="14" y="238" class="sm">sin ÷ cos</text>
+      <g>
+        <rect x="134" y="202" width="102" height="44" rx="6" class="chf"/><rect x="244" y="202" width="102" height="44" rx="6" class="chf"/><rect x="354" y="202" width="102" height="44" rx="6" class="chf"/><rect x="464" y="202" width="102" height="44" rx="6" class="chf"/><rect x="574" y="202" width="102" height="44" rx="6" class="chf"/>
+      </g>
+      <g text-anchor="middle" class="lbl" style="fill:var(--ch)"><text x="185" y="230">0</text><text x="295" y="230">1/√3</text><text x="405" y="230">1</text><text x="515" y="230">√3</text><text x="625" y="230">not defined</text></g>
+      <text x="405" y="264" text-anchor="middle" class="sm">cosec, sec, cot = upar wali lines ke ulte · sin badhta hai, cos ghatta hai (0° se 90° tak)</text>
+    </svg>
+    </div>
+    <figcaption>Poori table sirf "0 1 2 3 4, √ karo, 2 se bhaag" se bani. Cos ko ulta padho. Ye table rough sheet par shuru mein hi likh lo.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · sin 30° + cos 60° + tan 45° · <i>~5 sec</i></span>
+    Table se: 1/2 + 1/2 + 1 = <b>2</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> ratio dekh kar angle pehchano. 2, √3, 1/√3, 1/2, √3/2 jaise number dikhe toh angle 30° ya 60° hai. 1, √2, 1/√2 dikhe toh 45°. sec θ = 2 → cos θ = 1/2 → <b>θ = 60°</b>. Angle mil gaya toh baaki sab table se.</div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · Do "set-square" triangle (30-60-90 aur 45-45-90)</h3>
+  <p><b>Kab use karo:</b> jab table bhool jao, aur Height &amp; Distance ke har sawaal mein.</p>
+  <p><b>Soch aise:</b> barabar bhujaon wala triangle (har kona 60°) beech se kaato. Aadha triangle 30-60-90 hai. Bhujaen <b>1 : √3 : 2</b>. Square ko diagonal se kaato. Aadha triangle 45-45-90 hai. Bhujaen <b>1 : 1 : √2</b>.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Two set-square triangles drawn to scale. Left: 30-60-90 triangle with sides 1, root 3, and 2. Middle: 45-45-90 triangle with sides 1, 1 and root 2. Right: rules for each angle.">
+      <polygon points="40,230 213,230 213,130" class="chf"/>
+      <polygon points="40,230 213,230 213,130" class="chs" style="fill:none"/>
+      <rect x="199" y="216" width="14" height="14" class="ln" style="fill:none"/>
+      <text x="80" y="224" class="sm" style="fill:var(--ch)">30°</text>
+      <text x="192" y="152" class="sm" style="fill:var(--ch)">60°</text>
+      <text x="223" y="185" class="lbl">1</text>
+      <text x="126" y="252" text-anchor="middle" class="lbl">√3</text>
+      <text x="116" y="168" text-anchor="end" class="lbl">2</text>
+      <text x="126" y="30" text-anchor="middle" class="lbl">30-60-90</text>
+      <text x="126" y="48" text-anchor="middle" class="sm">chhoti : badi : karn</text>
+      <text x="126" y="64" text-anchor="middle" class="sm">= 1 : √3 : 2</text>
+      <polygon points="290,230 390,230 390,130" class="chf"/>
+      <polygon points="290,230 390,230 390,130" class="chs" style="fill:none"/>
+      <rect x="376" y="216" width="14" height="14" class="ln" style="fill:none"/>
+      <text x="314" y="224" class="sm" style="fill:var(--ch)">45°</text>
+      <text x="369" y="158" class="sm" style="fill:var(--ch)">45°</text>
+      <text x="400" y="185" class="lbl">1</text>
+      <text x="340" y="252" text-anchor="middle" class="lbl">1</text>
+      <text x="330" y="168" text-anchor="end" class="lbl">√2</text>
+      <text x="340" y="30" text-anchor="middle" class="lbl">45-45-90</text>
+      <text x="340" y="48" text-anchor="middle" class="sm">= 1 : 1 : √2</text>
+      <line x1="450" y1="20" x2="450" y2="250" class="ln"/>
+      <text x="466" y="40" class="lbl">Angle se oonchai (h) aur doori (d):</text>
+      <text x="466" y="72" class="lbl" style="fill:var(--ch)">30° → d = h × √3</text>
+      <text x="466" y="90" class="sm">karn = 2h</text>
+      <text x="466" y="122" class="lbl" style="fill:var(--ch)">45° → d = h</text>
+      <text x="466" y="140" class="sm">karn = h × √2</text>
+      <text x="466" y="172" class="lbl" style="fill:var(--ch)">60° → h = d × √3</text>
+      <text x="466" y="190" class="sm">karn = 2d</text>
+      <text x="466" y="230" class="sm">√3 ≈ 1.732 · √2 ≈ 1.414</text>
+    </svg>
+    </div>
+    <figcaption>Dono triangle scale par. 30° ke saamne sabse chhoti bhuja (1), 60° ke saamne √3, 90° ke saamne karn (2).</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · tan 60° nikaalo, bina table · <i>~3 sec</i></span>
+    60° ke saamne √3, bagal mein 1. tan = saamne ÷ bagal = <b>√3</b>.
+  </div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Ek ratio diya? Triangle banao (triplet se)</h3>
+  <p><b>Kab use karo:</b> "sin A = 5/13, tan A batao" type sawaal. 2025 mein sabse zyada yahi aaya.</p>
+  <p><b>Soch aise:</b> sin = P/H = 5/13. Toh P = 5, H = 13. Teesri bhuja? 5-12-13 yaad hai, toh B = 12. Ab tan = P/B = <b>5/12</b>. Koi formula nahi. Bas ek chhota triangle rough mein.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Six Pythagorean triplet cards: 3-4-5, 5-12-13, 7-24-25, 8-15-17, 9-40-41, 20-21-29, with how often each came in the 2025 papers.">
+      <g>
+        <rect x="6" y="14" width="108" height="96" rx="8" class="chf"/><rect x="6" y="14" width="108" height="96" rx="8" class="chs" style="fill:none"/>
+        <rect x="122" y="14" width="108" height="96" rx="8" class="chf"/><rect x="122" y="14" width="108" height="96" rx="8" class="chs" style="fill:none"/>
+        <rect x="238" y="14" width="108" height="96" rx="8" class="chf"/><rect x="238" y="14" width="108" height="96" rx="8" class="chs" style="fill:none"/>
+        <rect x="354" y="14" width="108" height="96" rx="8" class="chf"/>
+        <rect x="470" y="14" width="108" height="96" rx="8" class="chf"/>
+        <rect x="586" y="14" width="108" height="96" rx="8" class="chf"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="60" y="52" class="lbl" style="fill:var(--ch)">3 · 4 · 5</text><text x="60" y="74" class="sm">0.6 aur 0.8 bhi</text><text x="60" y="94" class="sm">sabse zyada</text>
+        <text x="176" y="52" class="lbl" style="fill:var(--ch)">5 · 12 · 13</text><text x="176" y="74" class="sm">5/13, 12/13</text><text x="176" y="94" class="sm">doosre number par</text>
+        <text x="292" y="52" class="lbl" style="fill:var(--ch)">7 · 24 · 25</text><text x="292" y="74" class="sm">7/25, 24/25</text><text x="292" y="94" class="sm">CHSL ka pyaara</text>
+        <text x="408" y="52" class="lbl" style="fill:var(--ch)">8 · 15 · 17</text><text x="408" y="74" class="sm">8/17, 15/17</text>
+        <text x="524" y="52" class="lbl" style="fill:var(--ch)">9 · 40 · 41</text><text x="524" y="74" class="sm">40/41 (seedhi)</text>
+        <text x="640" y="52" class="lbl" style="fill:var(--ch)">20 · 21 · 29</text><text x="640" y="74" class="sm">CGL+</text>
+      </g>
+      <text x="350" y="140" text-anchor="middle" class="sm">Guna bhi chalega: 6-8-10, 9-12-15, 10-24-26, 15-20-25 … sab 3-4-5 ya 5-12-13 ke hi multiple hain</text>
+      <text x="350" y="160" text-anchor="middle" class="sm">Triplet na mile toh Pythagoras: sin = 1/√10 → P = 1, H = √10 → B = √(10 − 1) = 3</text>
+    </svg>
+    </div>
+    <figcaption>Outline wale teen triplet 2025 ke trig sawaalon mein 70 se zyada baar aaye. Inko table jaisa yaad karo.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · sec A = 25/7. sin A + cot A? · <i>~10 sec</i></span>
+    sec = H/B → H = 25, B = 7 → P = 24 (7-24-25).<br>
+    sin = 24/25, cot = B/P = 7/24. Jodo: <b>24/25 + 7/24</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> decimal ko fraction bana do: 0.6 = 3/5, 0.8 = 4/5, 0.28 = 7/25, 0.96 = 24/25. Phir triplet. Aur "2x/(1 + x²)" dikhe toh ye bhi triplet hai: <b>2x, 1 − x², 1 + x²</b> (x = 2 lo: 4, 3, 5).</div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Co-ratio: "jod = 90°"</h3>
+  <p><b>Kab use karo:</b> sin ek taraf, cos doosri taraf (ya tan–cot, sec–cosec). Jaise sin(3x + 10°) = cos(2x − 5°).</p>
+  <p><b>Soch aise:</b> sin θ = cos(90° − θ). Toh agar sin A = cos B, toh A aur B mil kar 90° hain. Bracket ke andar jo hai, use seedha jodo aur 90 ke barabar rakho.</p>
+  <div class="tbl"><table>
+    <tr><th>Jodi</th><th>Agar ye barabar hain…</th><th>…toh</th></tr>
+    <tr><td class="n">sin – cos</td><td>sin A = cos B</td><td>A + B = 90°</td></tr>
+    <tr><td class="n">tan – cot</td><td>tan A = cot B</td><td>A + B = 90°, aur tan A × tan B = 1</td></tr>
+    <tr><td class="n">sec – cosec</td><td>sec A = cosec B</td><td>A + B = 90°</td></tr>
+    <tr><td class="n">same ratio</td><td>sin(90° − x) = cos 2x, yaani cos x = cos 2x</td><td>andar wale barabar: x = 2x</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · sin(2x + 20°) = cos(x + 10°). x? · <i>~5 sec</i></span>
+    Jodo: 2x + 20 + x + 10 = 90 → 3x = 60 → <b>x = 20°</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> lambi list jaise tan 5° tan 10° … tan 85° dikhe toh jodiyan banao: tan 5° × tan 85° = tan 5° × cot 5° = 1. Saari jodiyan 1, beech mein tan 45° = 1. Answer <b>1</b>.</div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Quadrant ka sign (ASTC)</h3>
+  <p><b>Kab use karo:</b> "A 2nd quadrant mein hai" ya "θ 3rd quadrant mein". Value triangle se hi aati hai, bas sign (+/−) quadrant se lagta hai.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Quadrant diagram. First quadrant 0 to 90: all ratios positive. Second 90 to 180: only sin and cosec positive. Third 180 to 270: only tan and cot positive. Fourth 270 to 360: only cos and sec positive. Mnemonic Add Sugar To Coffee.">
+      <defs>
+        <marker id="mtg-q-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="352" y="22" width="300" height="126" rx="8" class="chf"/>
+      <rect x="48" y="22" width="300" height="126" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <rect x="48" y="152" width="300" height="126" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <rect x="352" y="152" width="300" height="126" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <line x1="30" y1="150" x2="670" y2="150" class="ln" marker-end="url(#mtg-q-arr)"/>
+      <line x1="350" y1="292" x2="350" y2="10" class="ln" marker-end="url(#mtg-q-arr)"/>
+      <g text-anchor="middle">
+        <text x="502" y="52" class="lbl">Q1 · 0° se 90°</text>
+        <text x="502" y="82" class="lbl" style="fill:var(--ch)">A = All (sab +)</text>
+        <text x="502" y="108" class="sm">sin 3/5 → cos 4/5, tan 3/4</text>
+        <text x="198" y="52" class="lbl">Q2 · 90° se 180°</text>
+        <text x="198" y="82" class="lbl" style="fill:var(--ch)">S = sin, cosec +</text>
+        <text x="198" y="108" class="sm">sin 3/5 → cos −4/5, tan −3/4</text>
+        <text x="198" y="190" class="lbl">Q3 · 180° se 270°</text>
+        <text x="198" y="220" class="lbl" style="fill:var(--ch)">T = tan, cot +</text>
+        <text x="198" y="246" class="sm">tan 5/12 → sin −5/13, cos −12/13</text>
+        <text x="502" y="190" class="lbl">Q4 · 270° se 360°</text>
+        <text x="502" y="220" class="lbl" style="fill:var(--ch)">C = cos, sec +</text>
+        <text x="502" y="246" class="sm">cos 4/5 → sin −3/5</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>"Add Sugar To Coffee": Q1 mein All, Q2 mein Sin, Q3 mein Tan, Q4 mein Cos positive. Baaki sab negative.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · cos θ = −12/13, θ 3rd quadrant mein. tan θ? · <i>~6 sec</i></span>
+    Triangle 5-12-13 → tan ka size 5/12. Q3 mein tan plus. → <b>+5/12</b>.
+  </div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Radian: π ki jagah 180 likho</h3>
+  <p><b>Kab use karo:</b> degree ↔ radian, "circle ka kitna %". 2025 mein 25 sawaal sirf isi par the.</p>
+  <p><b>Soch aise:</b> poora circle = 360° = 2π. Toh <b>π = 180°</b>. Radian mein π dikhe toh bas 180 rakh do: 5π/4 = 5 × 180/4 = 5 × 45 = 225°. Ulta (degree → radian) karna ho toh degree ko 180 se bhaag do aur π laga do.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Half circle protractor with common angles marked in degrees and radians: 0, 30 = pi/6, 45 = pi/4, 60 = pi/3, 90 = pi/2, 120 = 2pi/3, 135 = 3pi/4, 150 = 5pi/6, 180 = pi.">
+      <path d="M150,250 A200,200 0 0,1 550,250" class="chs" style="fill:none"/>
+      <line x1="140" y1="250" x2="560" y2="250" class="ln"/>
+      <g class="ln">
+        <line x1="350" y1="250" x2="523.2" y2="150"/><line x1="350" y1="250" x2="491.4" y2="108.6"/><line x1="350" y1="250" x2="450" y2="76.8"/>
+        <line x1="350" y1="250" x2="350" y2="50"/><line x1="350" y1="250" x2="250" y2="76.8"/><line x1="350" y1="250" x2="208.6" y2="108.6"/><line x1="350" y1="250" x2="176.8" y2="150"/>
+      </g>
+      <g style="fill:var(--ch)">
+        <circle cx="550" cy="250" r="4"/><circle cx="523.2" cy="150" r="4"/><circle cx="491.4" cy="108.6" r="4"/><circle cx="450" cy="76.8" r="4"/><circle cx="350" cy="50" r="4"/><circle cx="250" cy="76.8" r="4"/><circle cx="208.6" cy="108.6" r="4"/><circle cx="176.8" cy="150" r="4"/><circle cx="150" cy="250" r="4"/>
+      </g>
+      <g class="lbl">
+        <text x="562" y="246">0° · 0</text>
+        <text x="538" y="146">30° · π/6</text>
+        <text x="505" y="100">45° · π/4</text>
+        <text x="462" y="64">60° · π/3</text>
+        <text x="350" y="36" text-anchor="middle">90° · π/2</text>
+        <text x="238" y="64" text-anchor="end">120° · 2π/3</text>
+        <text x="195" y="100" text-anchor="end">135° · 3π/4</text>
+        <text x="162" y="146" text-anchor="end">150° · 5π/6</text>
+        <text x="138" y="246" text-anchor="end">180° · π</text>
+      </g>
+      <text x="350" y="276" text-anchor="middle" class="sm">π = 180° · 1 radian ≈ 57.3° · degree → radian: ÷ 180, phir × π</text>
+      <text x="350" y="294" text-anchor="middle" class="sm">poora circle 360° = 2π · "kitna %" = angle ÷ 2π × 100</text>
+    </svg>
+    </div>
+    <figcaption>Aadha circle = π = 180°. Har tukda π/6 = 30°, π/4 = 45° wali ginti se bana hai.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 7π/6 ko degree, aur 2 radian ko degree · <i>~5 sec</i></span>
+    7π/6 = 7 × 180/6 = 7 × 30 = <b>210°</b>.<br>
+    2 rad (π nahi likha) = 2 × 57.3 = <b>114.6°</b>. Yahan "1 rad ≈ 57.3°" lagta hai.
+  </div>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Teen jodiyan (identity ko ulta chalao)</h3>
+  <p><b>Kab use karo:</b> jab ek ratio nahi, balki do ka <b>jod</b> diya ho: sec + tan = 5, sin + cos = 5/4, tan + cot = 5.</p>
+  <div class="tbl"><table>
+    <tr><th>Diya hai</th><th>Soch</th><th>Turant milta hai</th></tr>
+    <tr><td class="n">sec + tan = k</td><td>sec² − tan² = 1, yaani (sec + tan)(sec − tan) = 1</td><td>sec − tan = 1/k · sec = (k + 1/k)/2 · tan = (k − 1/k)/2</td></tr>
+    <tr><td class="n">cosec + cot = k</td><td>wahi baat: cosec² − cot² = 1</td><td>cosec − cot = 1/k · cosec = (k + 1/k)/2</td></tr>
+    <tr><td class="n">sin + cos = k</td><td>square karo: 1 + 2 sin cos = k²</td><td>sin 2A = 2 sin cos = k² − 1 · (sin − cos)² = 2 − k²</td></tr>
+    <tr><td class="n">sin⁴ + cos⁴</td><td>(s² + c²)² − 2s²c²</td><td>= 1 − 2s²c² · sin⁶ + cos⁶ = 1 − 3s²c²</td></tr>
+    <tr><td class="n">tan + cot = k</td><td>tan × cot = 1</td><td>tan² + cot² = k² − 2 · tan³ + cot³ = k³ − 3k · sin cos = 1/k</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Demo · sec A + tan A = 3. sec A aur tan A? · <i>~8 sec</i></span>
+    sec − tan = 1/3. Jodo aur aadha karo: sec = (3 + 1/3)/2 = <b>5/3</b>. Ghatao aur aadha: tan = (3 − 1/3)/2 = <b>4/3</b>. (3-4-5 hi nikla.)
+  </div>
+  <div class="trick"><b>Trick:</b> sin + cos = √2 ya tan + cot = 2 dikhe toh seedha <b>θ = 45°</b>. Ye sirf 45° par hi hota hai. Phir sab kuch table se.</div>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · "Angle maan lo" (θ = 45°, 30°, 60°)</h3>
+  <p><b>Kab use karo:</b> "simplify karo" ya options mein poore expression (sin x, sec²x, 1 − tan²x…). Jo identity har angle par sach hai, wo 45° par bhi sach hogi.</p>
+  <p><b>Soch aise:</b> θ = 45° rakho. Sawaal ka number nikaalo. Phir har option mein 45° daalo. Jo option wahi number de, wahi answer. Do option same aa jaayein toh 60° se dobara jaancho.</p>
+  <div class="box"><span class="k">Demo · sec²θ + cosec²θ = ? (a) sec²θ·cosec²θ (b) 1 (c) tan θ + cot θ (d) 2 · <i>~10 sec</i></span>
+    45° lo: sec² = 2, cosec² = 2 → sawaal = 4.<br>
+    (a) 2 × 2 = 4 ✔ (b) 1 ✗ (c) 1 + 1 = 2 ✗ (d) 2 ✗ → <b>(a)</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> 90° ya 0° tabhi lo jab koi tan/sec/cot "not defined" na ho jaaye. 45° sabse safe hai, kyunki sin = cos aur tan = cot = 1.</div>
+
+  <!-- ========== METHOD 9 ========== -->
+  <h3>Speed method 9 · a sin + b cos ki jodi → a² + b²</h3>
+  <p><b>Kab use karo:</b> x = a cos A + b sin A aur y = a sin A − b cos A, aur x² + y² pucha.</p>
+  <p><b>Soch aise:</b> square karke jodne par beech ke "2ab sin cos" wale tukde ek plus, ek minus aate hain. Kat jaate hain. Bachta hai a²(sin² + cos²) + b²(sin² + cos²) = <b>a² + b²</b>.</p>
+  <div class="box"><span class="k">Demo · x = 5 sin A + 12 cos A, y = 5 cos A − 12 sin A. x² + y²? · <i>~3 sec</i></span>
+    25 + 144 = <b>169</b>. Angle kuch bhi ho.
+  </div>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 500" role="img" aria-label="Flowchart for trigonometry questions. Check in order: radian, standard angle value, sin equals cos with brackets, one ratio given, sec plus tan given, sin plus cos given, tan plus cot given, simplify with expression options. Each yes leads to its method.">
+      <defs>
+        <marker id="mtg-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal mein kya diya hai?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mtg-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="452" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">π ya "radian" likha hai?</text>
+        <text x="180" y="141">0/30/45/60/90 ki seedhi value?</text>
+        <text x="180" y="197">sin = cos (bracket ke saath)?</text>
+        <text x="180" y="253">Sirf ek ratio diya (3/5, 5/12…)?</text>
+        <text x="180" y="309">sec + tan ya cosec + cot = k?</text>
+        <text x="180" y="365">sin + cos = k (ya sin − cos)?</text>
+        <text x="180" y="421">tan + cot = k?</text>
+        <text x="180" y="477">Simplify, options mein expression?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="436" x2="180" y2="449" marker-end="url(#mtg-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text><text x="188" y="447">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="472" x2="396" y2="472" marker-end="url(#mtg-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text><text x="368" y="466">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="452" width="290" height="40" rx="6" class="chf"/><rect x="400" y="452" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">π = 180 rakho</text>
+        <text x="410" y="132">Value table (√0/2 … √4/2)</text>
+        <text x="410" y="188">Bracket jodo = 90°</text>
+        <text x="410" y="244">Triangle + triplet (+ sign)</text>
+        <text x="410" y="300">Jodi: guna = 1</text>
+        <text x="410" y="356">Square karo</text>
+        <text x="410" y="412">k² − 2, k³ − 3k</text>
+        <text x="410" y="468">Angle maan lo: 45° / 60°</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">bina π ho toh × 57.3</text>
+        <text x="410" y="149">sec = 2 → 60° · tan = 1 → 45°</text>
+        <text x="410" y="205">tan x = cot(3x − 30) → 4x = 120</text>
+        <text x="410" y="261">3-4-5 · 5-12-13 · 7-24-25 · 8-15-17</text>
+        <text x="410" y="317">sec − tan = 1/k</text>
+        <text x="410" y="373">sin 2A = k² − 1 · √2 → 45°</text>
+        <text x="410" y="429">sin cos = 1/k · 2 → 45°</text>
+        <text x="410" y="485">jo option same number de</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow ek baar rough mein chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet to memorise</span>
+    <b>Values:</b> sin 0, 30, 45, 60, 90 = √0/2, √1/2, √2/2, √3/2, √4/2 · cos ulta · tan = 0, 1/√3, 1, √3, not defined.<br>
+    <b>Identities:</b> sin² + cos² = 1 · 1 + tan² = sec² · 1 + cot² = cosec² · tan × cot = 1.<br>
+    <b>Co-ratio:</b> sin(90° − θ) = cos θ · tan(90° − θ) = cot θ · sec(90° − θ) = cosec θ.<br>
+    <b>Jod-ghata:</b> sin(A ± B) = sin A cos B ± cos A sin B · cos(A ± B) = cos A cos B ∓ sin A sin B · tan(A + B) = (tan A + tan B)/(1 − tan A tan B).<br>
+    <b>Double:</b> sin 2A = 2 sin A cos A = 2t/(1 + t²) · cos 2A = cos² − sin² = 1 − 2 sin² = 2 cos² − 1 = (1 − t²)/(1 + t²) · tan 2A = 2t/(1 − t²). (t = tan A)<br>
+    <b>Triple:</b> tan 3A = (3t − t³)/(1 − 3t²) · sin 3A = 3 sin A − 4 sin³A · cos 3A = 4 cos³A − 3 cos A. <span class="tag x">CGL+</span><br>
+    <b>Half:</b> sin²(A/2) = (1 − cos A)/2 · cos²(A/2) = (1 + cos A)/2.<br>
+    <b>15° aur 75°:</b> sin 15° = cos 75° = (√3 − 1)/2√2 · sin 75° = cos 15° = (√3 + 1)/2√2 · tan 15° = 2 − √3 · tan 75° = 2 + √3.<br>
+    <b>Radian:</b> π = 180° · 1 rad ≈ 57.3°.<br>
+    <span class="tag x">CGL+</span> sin 18° = (√5 − 1)/4 · cos 36° = (√5 + 1)/4 · sin θ sin(60° − θ) sin(60° + θ) = ¼ sin 3θ.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>cos 60° ko "√ginti ÷ 2" se kaise likhoge?</summary><p>cos ki line ulti hai: 60° par ginti 1 → √1/2 = 1/2.</p></details>
+    <details><summary>cosec A = 17/8. cos A?</summary><p>H = 17, P = 8 → B = 15 (8-15-17). cos A = 15/17.</p></details>
+    <details><summary>tan(2x − 10°) = cot(x + 40°). x?</summary><p>Jod = 90: 3x + 30 = 90 → x = 20°.</p></details>
+    <details><summary>cosec θ + cot θ = 4. cosec θ?</summary><p>cosec − cot = 1/4 → cosec = (4 + 1/4)/2 = 17/8.</p></details>
+    <details><summary>4π/5 radian ko degree mein badlo.</summary><p>4 × 180/5 = 144°.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · TRIGONOMETRY (part 2: types 1-6) ===================== -->
+<section class="chap" id="mtg-types-a">
+  <div class="eyebrow">Maths · PYQ types (1–6)</div>
+  <h2>Trigonometry: Type 1–6, topper ki rough ke saath</h2>
+  <div class="meta">Bank mein 277 sawaal · 276 yahan · 1 chhoda (expression chhapa hi nahi) · har sawaal ke aage uska method likha hai</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 · CHSL = CHSL 2025 Tier 1 · CPO = CPO 2025 · SP-XIV = Selection Post Phase XIV 2025 (Graduate / 12th) · DP HCM, DP AWO/TPO = Delhi Police (Jan 2026). Tier-2 alag likha hai. Saari dates shift ki dates hain. Kai sawaal bank mein do baar hain (13 Nov ke sawaal 14 Nov mein dobara); unhe ek jagah ×2 likha hai.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · Degree ↔ radian (23 Qs)</h3>
+  <div class="box"><span class="k">Worked · 5π/4 radian kitne degree? <!--q:t0--><span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> π = 180 rakho · <i>~3 sec</i><br>
+    5π/4 = 5 × 180/4 = 5 × 45 = <mark>225°</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 2.5 radian kitne degree? <!--q:t9--><span class="tag p">PYQ</span> <small>CGL · 14 Sep 2025</small></span>
+    <b>Method:</b> 1 rad ≈ 57.3° · <i>~10 sec</i><br>
+    Yahan π nahi likha. Toh 2.5 × 57.3 = 114.6 + 28.65 = 143.25 → <mark>143.24°</mark> (options mein sabse paas).<br>
+    Option check: 2.5 rad, 2 rad (114°) aur 3 rad (172°) ke beech hai. 130° aur 200° kat gaye.
+  </div>
+  <div class="box"><span class="k">Worked · 2 radian poore circle ka kitna % hai? <!--q:t82--><span class="tag p">PYQ</span> <small>CGL · 25 Sep 2025</small></span>
+    <b>Method:</b> poora circle = 2π · <i>~8 sec</i><br>
+    2 ÷ 2π = 1/π = 7/22 ≈ 0.318 → <mark>31.83%</mark>.
+  </div>
+  <ul>
+    <li><!--q:t3--><span class="tag p">PYQ</span> 150° radian mein → <b>× π/180</b>: 150/180 = 5/6 → <mark>5π/6</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><!--q:t162,t211--><span class="tag p">PYQ ×2</span> 150° radian mein (dobara) → <b>× π/180</b> → <mark>5π/6</mark> <small>CHSL · 26 Nov 2025; CPO · 12 Dec 2025</small></li>
+    <li><!--q:t58--><span class="tag p">PYQ</span> 0.5 rad → <b>1 rad ≈ 57.3°</b>: aadha → <mark>28.65°</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:t67--><span class="tag p">PYQ</span> 2π/3 rad → <b>π = 180 rakho</b>: 360/3 → <mark>120°</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:t70--><span class="tag p">PYQ</span> 3π/4 rad → <b>π = 180</b>: 3 × 45 → <mark>135°</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:t74--><span class="tag p">PYQ</span> π/2 poore circle ka kitna % → <b>2π = 100%</b>: π/2 ÷ 2π = 1/4 → <mark>25%</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><!--q:t77--><span class="tag p">PYQ</span> 3 rad → <b>3 × 57.3</b> → <mark>171.89°</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><!--q:t85--><span class="tag p">PYQ</span> 1.5 rad → <b>1.5 × 57.3</b> = 57.3 + 28.65 → <mark>85.94°</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:t89--><span class="tag p">PYQ</span> 270° → <b>× π/180</b>: 270/180 = 3/2 → <mark>3π/2</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:t92--><span class="tag p">PYQ</span> 3° → <b>× π/180</b>: 3/180 = 1/60 → <mark>π/60</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:t142--><span class="tag p">PYQ</span> −5π/3 rad → <b>π = 180</b>: 5 × 60, minus rakho → <mark>−300°</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><!--q:t170--><span class="tag p">PYQ</span> 7π/4 rad → <b>π = 180</b>: 7 × 45 → <mark>315°</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--q:t204--><span class="tag p">PYQ</span> 25π/4 rad → <b>π = 180</b>: 25 × 45 → <mark>1125°</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><!--q:t205--><span class="tag p">PYQ</span> 5π rad = x° → <b>π = 180</b>: 5 × 180 → <mark>900°</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><!--q:t208--><span class="tag p">PYQ</span> 240° → <b>× π/180</b>: 240/180 = 4/3 → <mark>4π/3</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><!--q:t209--><span class="tag p">PYQ</span> 540° → <b>× π/180</b>: 540/180 = 3 → <mark>3π</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><!--q:t210--><span class="tag p">PYQ</span> 60° → <b>× π/180</b> → <mark>π/3</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><!--q:t226--><span class="tag p">PYQ</span> 5 rad, π = 22/7 lekar → <b>× 180/π</b>: 5 × 180 × 7/22 = 6300/22 → <mark>286.3°</mark> (57.3 lagao toh 286.5, sabse paas wahi) <small>DP AWO/TPO · 20 Jan 2026</small></li>
+    <li><!--q:t233--><span class="tag p">PYQ</span> Quadrantal angle kaunsa (π/6, π/3, π/4, π/2)? → <b>axis par pada angle</b> (0°, 90°, 180°…) → <mark>π/2</mark> <small>DP HCM · 12 Jan 2026</small></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Value table aur "angle pehchano" (26 Qs)</h3>
+  <p><b>Samjho:</b> ratio dekho → angle pehchano → table se baaki sab. sec = 2, cot = √3, tan = 1/√3 jaise number dikhte hi angle mil jaata hai.</p>
+  <div class="box"><span class="k">Worked · sin 45° cos 45° + tan 60° sec 30° + cosec 30° cot 45° <!--q:t141--><span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small></span>
+    <b>Method:</b> value table · <i>~10 sec</i><br>
+    (1/√2)(1/√2) = 1/2 · √3 × 2/√3 = 2 · 2 × 1 = 2.<br>
+    Jod = 1/2 + 2 + 2 = <mark>9/2</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · cot A = √3. (1 + sin A)(1 + cos A)? <!--q:t29--><span class="tag p">PYQ</span> <small>CGL · 19 Sep 2025</small></span>
+    <b>Method:</b> angle pehchano · <i>~10 sec</i><br>
+    cot = √3 → A = 30°. (1 + 1/2)(1 + √3/2) = (3/2)(2 + √3)/2 = <mark>(6 + 3√3)/4</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 2 sin²A + 2√2 cos A − 3 = 0. tan A? <!--q:t121--><span class="tag p">PYQ</span> <small>CHSL · 15 Nov 2025</small></span>
+    <b>Method:</b> sin² = 1 − cos², phir perfect square · <i>~15 sec</i><br>
+    2 − 2cos² + 2√2 cos − 3 = 0 → 2cos² − 2√2 cos + 1 = 0 → (√2 cos − 1)² = 0.<br>
+    cos A = 1/√2 → A = 45° → tan A = <mark>1</mark>. (Jaldi: options 1, √2, 1/√2, 0 mein A = 45° daal kar dekho: 2 × ½ + 2√2 × 1/√2 − 3 = 1 + 2 − 3 = 0 ✔)
+  </div>
+  <ul>
+    <li><!--q:t221--><span class="tag p">PYQ</span> sin A ka reciprocal → <b>ulta jodi</b>: sin ↔ cosec → <mark>cosec A</mark> <small>DP AWO/TPO · 16 Jan 2026</small></li>
+    <li><!--q:t43--><span class="tag p">PYQ</span> sin²90° + cos²60° → <b>value table</b>: 1 + 1/4 → <mark>5/4</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><!--q:t64--><span class="tag p">PYQ</span> cosec²60° − cot²60° → <b>identity</b> (har angle par 1) → <mark>1</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:t149--><span class="tag p">PYQ</span> tan 45° · cot 45° → <b>tan × cot = 1</b> → <mark>1</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:t215--><span class="tag p">PYQ</span> tan 60° − cot 30° → <b>value table</b>: √3 − √3 → <mark>0</mark> <small>DP AWO/TPO · 20 Jan 2026</small></li>
+    <li><!--q:t181--><span class="tag p">PYQ</span> tan 30° + cot 60° → <b>value table</b>: 1/√3 + 1/√3 → <mark>2/√3</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--q:t34--><span class="tag p">PYQ</span> sin θ = cos θ, θ? → <b>tan θ = 1</b> → <mark>45°</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><!--q:t249--><span class="tag p">PYQ</span> tan θ = 1, θ? → <b>value table</b> → <mark>45°</mark> <small>DP HCM · 7 Jan 2026</small></li>
+    <li><!--q:t247--><span class="tag p">PYQ</span> cot A = 1, tan A? → <b>ulta</b> → <mark>1</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><!--q:t150--><span class="tag p">PYQ</span> tan θ = 1, cos²θ? → <b>angle pehchano</b>: 45° → (1/√2)² → <mark>1/2</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:t175--><span class="tag p">PYQ</span> tan θ = 1, sin θ + cos θ → <b>45°</b>: 1/√2 + 1/√2 → <mark>√2</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><!--q:t151--><span class="tag p">PYQ</span> tan A = 1/√3, sin A aur cos A → <b>30°</b> → <mark>1/2, √3/2</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:t161--><span class="tag p">PYQ</span> sec θ = 2, tan θ → <b>60°</b> → <mark>√3</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><!--q:t172--><span class="tag p">PYQ</span> sec θ = 2, sin θ → <b>60°</b> → <mark>√3/2</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--q:t1--><span class="tag p">PYQ</span> tan(90° − A) = √3, sin A → <b>cot A = √3 → A = 30°</b> → <mark>1/2</mark> <small>CGL · 12 Sep 2025</small></li>
+    <li><!--q:t107,t113--><span class="tag p">PYQ ×2</span> Right Δ, tan A = 1/√3: 2 sin A cos A → <b>A = 30°</b>: 2 × 1/2 × √3/2 → <mark>√3/2</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></li>
+    <li><!--q:t192--><span class="tag p">PYQ</span> Right Δ, tan A = 1: 2 sin A cos A → <b>45°</b>: 2 × 1/2 → <mark>1</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><!--q:t206--><span class="tag p">PYQ</span> cot A = 1: sin²A − cos²A → <b>45°</b>: 1/2 − 1/2 → <mark>0</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><!--q:t139--><span class="tag p">PYQ</span> sec²θ = 4: sin²θ + cosec(90° − θ) → <b>θ = 60°</b>: 3/4 + sec 60° = 3/4 + 2 → <mark>11/4</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><!--q:t123--><span class="tag p">PYQ</span> 2 sin q · cos(90° − q) = 1/2: sin 2q + cos 2q → <b>2 sin²q = 1/2 → q = 30°</b>: sin 60° + cos 60° → <mark>(√3 + 1)/2</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><!--q:t126--><span class="tag p">PYQ</span> 2 sin q · cos(90° − q) = 1/2: cot²2q + cos²3q → <b>q = 30°</b>: cot²60° + cos²90° = 1/3 + 0 → <mark>1/3</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--q:t120--><span class="tag p">PYQ</span> 4 cos A + 3 sec A = 4√3, A? → <b>option daalo</b>: 30° → 4 × √3/2 + 3 × 2/√3 = 2√3 + 2√3 ✔ → <mark>30°</mark> <small>CHSL · 15 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Co-ratio: "jod = 90°" (47 Qs)</h3>
+  <p><b>Samjho:</b> sin ek taraf, cos doosri taraf (ya tan–cot, sec–cosec) → bracket ke andar ke dono angle jodo = 90°. Ek hi ratio dono taraf ho (cos x = cos 2x) → andar wale barabar.</p>
+  <div class="box"><span class="k">Worked · cos(2x + 15°) = sin(x − 5°). x? <!--q:t8--><span class="tag p">PYQ</span> <small>CGL · 14 Oct 2025</small></span>
+    <b>Method:</b> jod = 90° · <i>~6 sec</i><br>
+    2x + 15 + x − 5 = 90 → 3x = 80 → x = 26.67 → <mark>26.67°</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · sin A = cos B, cos A = sin C, A + B + C = 90°. A? <!--q:t44--><span class="tag p">PYQ</span> <small>CGL · 21 Sep 2025</small></span>
+    <b>Method:</b> do baar jod = 90° · <i>~15 sec</i><br>
+    A + B = 90 aur A + C = 90 → B = C = 90 − A.<br>
+    A + 2(90 − A) = 90 → 180 − A = 90 → A = <mark>90°</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · tan 5° tan 10° tan 15° tan 20° ÷ (cot 70° cot 75° cot 80° cot 85°) <!--q:t219--><span class="tag p">PYQ</span> <small>DP AWO/TPO · 16 Jan 2026</small></span>
+    <b>Method:</b> co-ratio · <i>~5 sec</i><br>
+    cot 70° = tan 20°, cot 75° = tan 15°, cot 80° = tan 10°, cot 85° = tan 5°. Neeche bhi wahi chaar tan.<br>
+    Answer = <mark>1</mark>.
+  </div>
+  <ul>
+    <li><!--q:t56--><span class="tag p">PYQ</span> Har acute A ke liye sach kya? → <b>co-ratio</b> → <mark>sin A = cos(90° − A)</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:t78,t270--><span class="tag p">PYQ ×2</span> sin A = cos B, dono acute → <b>jod = 90°</b> → <mark>A + B = 90°</mark> <small>CGL · 25 Sep 2025; SP-XIV · 29 Aug 2025</small></li>
+    <li><!--q:t227--><span class="tag p">PYQ</span> sin A = cos B, A + B? → <b>jod = 90°</b> → <mark>90°</mark> <small>DP AWO/TPO · 20 Jan 2026</small></li>
+    <li><!--q:t177--><span class="tag p">PYQ</span> tan A = cot B, rishta? → <b>jod = 90°</b> → <mark>A + B = 90°</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><!--q:t268--><span class="tag p">PYQ</span> sec A = cosec B, dono acute → <b>jod = 90°</b> → <mark>90°</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><!--q:t90--><span class="tag p">PYQ</span> sin x = cos y aur cos x = sin y → <b>jod = 90°</b> → <mark>90°</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:t143--><span class="tag p">PYQ</span> sec θ = cosec 42° → <b>90 − 42</b> → <mark>48°</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--q:t216--><span class="tag p">PYQ</span> cos 20° = ? → <b>co-ratio</b>: cos 20° = sin 70° → <mark>sin 70°</mark> <small>DP AWO/TPO · 20 Jan 2026</small></li>
+    <li><!--q:t222--><span class="tag p">PYQ</span> sin 30° = ? → <b>co-ratio</b> → <mark>cos 60°</mark> <small>DP AWO/TPO · 16 Jan 2026</small></li>
+    <li><!--q:t238--><span class="tag p">PYQ</span> sin A = 3/5: cos(90° − A) → <b>co-ratio</b> → <mark>sin A</mark> <small>DP HCM · 10 Jan 2026</small></li>
+    <li><!--q:t236--><span class="tag p">PYQ</span> tan θ = 1: cot(90° − θ) → <b>co-ratio = tan θ</b> → <mark>1</mark> <small>DP HCM · 12 Jan 2026</small></li>
+    <li><!--q:t273--><span class="tag p">PYQ</span> tan(90° − θ) = 3/4: cot θ → <b>dono ek hi cheez</b> → <mark>3/4</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><!--q:t41--><span class="tag p">PYQ</span> sin A = 4/5: cot(90° − A) → <b>= tan A</b>, 3-4-5 → <mark>4/3</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><!--q:t198--><span class="tag p">PYQ</span> sec A = 13/12: sin(90° − A) → <b>= cos A</b> → <mark>12/13</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><!--q:t199--><span class="tag p">PYQ</span> tan x = 2: cot(90° − x) + tan(90° − x) → <b>= tan x + cot x</b>: 2 + 1/2 → <mark>5/2</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><!--q:t267--><span class="tag p">PYQ</span> sin(90° − A) = 3/5: tan A → <b>cos A = 3/5</b>, 3-4-5 → <mark>4/3</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><!--q:t5--><span class="tag p">PYQ</span> A, B complementary, sin A = 3/5: tan B → <b>tan B = cot A</b> = 4/3 → <mark>4/3</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><!--q:t68--><span class="tag p">PYQ</span> A + B = 90°, tan A = 2: tan A × tan B → <b>tan B = cot A</b> → <mark>1</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:t93--><span class="tag p">PYQ</span> A + B = 90°, sin A = 5/13: cos B → <b>cos B = sin A</b> → <mark>5/13</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:t91--><span class="tag p">PYQ</span> Δ ABC, C = 90°, sin A = 5/13: cos B → <b>cos B = sin A</b> → sahi 5/13 (key: <mark>12/13</mark>, note dekho) <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:t137--><span class="tag p">PYQ</span> sin θ = 0.6: sin²θ + cos²(90° − θ) → <b>cos(90° − θ) = sin θ</b>: 2 × 0.36 → <mark>0.72</mark> <small>CHSL · 20 Nov 2025</small></li>
+    <li><!--q:t153--><span class="tag p">PYQ</span> cos²θ − sin²(90° − θ) → <b>sin(90° − θ) = cos θ</b> → <mark>0</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><!--q:t95--><span class="tag p">PYQ</span> (3/2)(cos 39°/sin 51°) − √(sin²39° + sin²51°) → <b>sin 51° = cos 39°</b>: 3/2 − 1 → <mark>1/2</mark> <small>CGL Tier-2</small></li>
+    <li><!--q:t122--><span class="tag p">PYQ</span> tan²20°/cosec²70° + cot²20°/sec²70° + 2 tan 15° tan 45° tan 75° → <b>co-ratio</b>: sin²20 + cos²20 + 2 × 1 → <mark>3</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><!--q:t213--><span class="tag p">PYQ</span> cot(tan⁻¹a + cot⁻¹a) → <b>tan⁻¹a + cot⁻¹a = 90°</b>: cot 90° → <mark>0</mark> <small>DP AWO/TPO · 21 Jan 2026</small></li>
+    <li><!--q:t234--><span class="tag p">PYQ</span> Do complementary angles ka farq 52° → <b>jod 90, farq 52</b>: (90 + 52)/2 = 71 → <mark>71°, 19°</mark> <small>DP HCM · 12 Jan 2026</small></li>
+    <li><!--q:t4--><span class="tag p">PYQ</span> sin(90° − x) = cos 2x → <b>cos x = cos 2x</b>: x = 2x → <mark>0°</mark> <small>CGL · 13 Sep 2025</small></li>
+    <li><!--q:t272--><span class="tag p">PYQ</span> sin(90° − x) = cos(2x − 30°) → <b>cos x = cos(2x − 30)</b>: x = 2x − 30 → <mark>30°</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><!--q:t10--><span class="tag p">PYQ</span> tan A = cot(2A − 30°) → <b>bracket jodo = 90</b>: 3A − 30 = 90 → <mark>40°</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><!--q:t36--><span class="tag p">PYQ</span> sin(3x + 10°) = cos(2x − 5°) → <b>jod = 90</b>: 5x + 5 = 90 → <mark>17°</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><!--q:t51--><span class="tag p">PYQ</span> sin x = cos(5x − 60°) → <b>jod = 90</b>: 6x = 150 → <mark>25°</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><!--q:t59--><span class="tag p">PYQ</span> sin x = cos(x + 20°) → <b>jod = 90</b>: 2x = 70 → <mark>35°</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:t62--><span class="tag p">PYQ</span> sin x = cos(2x − 10°) → <b>jod = 90</b>: 3x = 100 → <mark>33.33°</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:t71--><span class="tag p">PYQ</span> sin x = cos(3x − 30°) → <b>jod = 90</b>: 4x = 120 → <mark>30°</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:t75--><span class="tag p">PYQ</span> tan x = cot(3x − 30°) → <b>jod = 90</b>: 4x = 120 → <mark>30°</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><!--q:t86--><span class="tag p">PYQ</span> sin x = cos(3x − 20°) → <b>jod = 90</b>: 4x = 110 → <mark>27.5°</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:t159--><span class="tag p">PYQ</span> sin(2x + 50)° = cos(2y − 50)°: tan(x + y) → <b>jod = 90</b>: 2x + 2y = 90 → x + y = 45° → <mark>1</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><!--q:t180--><span class="tag p">PYQ</span> sin 2x = cos(x + 30°) → <b>jod = 90</b>: 3x = 60 → <mark>20°</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><!--q:t187--><span class="tag p">PYQ</span> tan(x + 10°) = cot(3x − 20°) → <b>jod = 90</b>: 4x = 100 → <mark>25°</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--q:t200--><span class="tag p">PYQ</span> tan x = cot(2x − 15°) → <b>jod = 90</b>: 3x = 105 → <mark>35°</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><!--q:t203--><span class="tag p">PYQ</span> sin x = cos(2x + 15°) → <b>jod = 90</b>: 3x = 75 → <mark>25°</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><!--q:t239--><span class="tag p">PYQ</span> sin(3x − 10°) = cos(x + 20°) → <b>jod = 90</b>: 4x = 80 → <mark>20°</mark> <small>DP HCM · 10 Jan 2026</small></li>
+    <li><!--q:t241--><span class="tag p">PYQ</span> sin θ = cos 2θ, radian mein → <b>jod = 90</b>: 3θ = 90 → θ = 30° → <mark>π/6</mark> <small>DP HCM · 9 Jan 2026</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CGL 26 Sep 2025 (Δ ABC, C = 90°, sin A = 5/13, cos B = ?): A + B = 90°, toh cos B = sin A = <b>5/13</b>. Ye option mein hai hi nahi (12/13, 2/13, 7/13, 9/13). Key ka 12/13 asal mein cos A hai. Exam mein aisa aaye toh pehle dekho ki right angle kahan hai.</div>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Ek ratio diya → baaki ratio (triangle method) (47 Qs)</h3>
+  <p><b>Samjho:</b> diye ratio se do bhujaen likho, triplet se teesri. Phir jo pucha, padh lo. Quadrant diya ho toh last mein sign lagao (Add Sugar To Coffee). "sin 3A = 3/5" mein 3A ko ek hi angle maano, kuch tod-phod nahi.</p>
+  <div class="box"><span class="k">Worked · sec A = 13/5, A acute. sin A? <!--q:t2--><span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small></span>
+    <b>Method:</b> triangle 5-12-13 · <i>~5 sec</i><br>
+    sec = H/B → H = 13, B = 5 → P = 12. sin = P/H = <mark>12/13</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Δ mein AB = 7, BC = 24, AC = 25. tan C + sin C + 2 cot A? <!--q:t136--><span class="tag p">PYQ</span> <small>CHSL · 18 Nov 2025</small></span>
+    <b>Method:</b> 7-24-25 → right angle B par · <i>~20 sec</i><br>
+    C ke saamne AB = 7, bagal mein BC = 24: tan C = 7/24, sin C = 7/25. A ke liye bagal AB = 7, saamne BC = 24: cot A = 7/24.<br>
+    7/24 + 14/24 = 21/24 = 0.875. Plus 7/25 = 0.28 → <mark>1.155</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · sin θ = 8/17, θ 2nd quadrant mein. cos θ? <!--q:t81--><span class="tag p">PYQ</span> <small>CGL · 25 Sep 2025</small></span>
+    <b>Method:</b> triangle + sign · <i>~6 sec</i><br>
+    8-15-17 → cos ka size 15/17. Q2 mein sirf sin plus, cos minus → <mark>−15/17</mark>.
+  </div>
+  <ul>
+    <li><!--q:t7--><span class="tag p">PYQ</span> tan θ = 5/12: sec θ → <b>5-12-13</b>: H/B → <mark>13/12</mark> <small>CGL · 14 Oct 2025</small></li>
+    <li><!--q:t12--><span class="tag p">PYQ</span> sin θ = 12/13: tan θ → <b>5-12-13</b>: P/B → <mark>12/5</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><!--q:t32--><span class="tag p">PYQ</span> cot A = 7/24: cosec A → <b>7-24-25</b>: H/P → <mark>25/24</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><!--q:t37--><span class="tag p">PYQ</span> sin A = 3/5: cos A → <b>3-4-5</b> → <mark>4/5</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><!--q:t167,t246--><span class="tag p">PYQ ×2</span> sin x = 3/5: cos x → <b>3-4-5</b> → <mark>4/5</mark> <small>CHSL · 27 Nov 2025; DP HCM · 8 Jan 2026</small></li>
+    <li><!--q:t183,t217--><span class="tag p">PYQ ×2</span> sin θ = 0.6: cos θ → <b>0.6 = 3/5, 3-4-5</b> → <mark>0.8</mark> <small>CHSL · 30 Nov 2025; DP AWO/TPO · 16 Jan 2026</small></li>
+    <li><!--q:t40--><span class="tag p">PYQ</span> sin A = 0.6, cos A = 0.8: tan A → <b>P/B</b>: 6/8 → <mark>0.75</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><!--q:t54--><span class="tag p">PYQ</span> sin A = 0.6: tan A → <b>3-4-5</b>: 3/4 → <mark>0.75</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:t53--><span class="tag p">PYQ</span> sin x = 1/√10: sec x → <b>triangle 1-3-√10</b>: H/B = √10/3 → <mark>√10/3</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><!--q:t63--><span class="tag p">PYQ</span> tan A = 3/4: sin A → <b>3-4-5</b> → <mark>3/5</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:t94,t235--><span class="tag p">PYQ ×2</span> tan A = 3/4: sin A → <b>3-4-5</b> → <mark>3/5</mark> <small>CGL · 26 Sep 2025; DP HCM · 12 Jan 2026</small></li>
+    <li><!--q:t66--><span class="tag p">PYQ</span> sec A = 13/12: sin A → <b>5-12-13</b> → <mark>5/13</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:t76--><span class="tag p">PYQ</span> cot A = 3: sin A → <b>triangle 1-3-√10</b>: 1/√10 → <mark>√10/10</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><!--q:t106,t112--><span class="tag p">PYQ ×2</span> sin A = 5/13: tan A → <b>5-12-13</b> → <mark>5/12</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></li>
+    <li><!--q:t117--><span class="tag p">PYQ</span> tan A = 2 (aur sin² + cos² = 1): sin A, cos A → <b>triangle 1-2-√5</b> → <mark>2/√5, 1/√5</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><!--q:t160--><span class="tag p">PYQ</span> 3 sin θ − 4 cos θ = 0: tan θ → <b>sin/cos = 4/3</b> → <mark>4/3</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><!--q:t169--><span class="tag p">PYQ</span> tan θ = 12/5: sin θ → <b>5-12-13</b> → <mark>12/13</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--q:t185--><span class="tag p">PYQ</span> cot θ = 5/12: cosec θ → <b>5-12-13</b>: H/P = 13/12 → <mark>13/12</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--q:t191--><span class="tag p">PYQ</span> sin θ = 7/25: cos²θ → <b>7-24-25</b>: (24/25)² → <mark>576/625</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><!--q:t196--><span class="tag p">PYQ</span> tan θ = 3/4: sec θ → <b>3-4-5</b>: 5/4 → <mark>5/4</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><!--q:t212--><span class="tag p">PYQ</span> cos θ = 3/5: tan θ → <b>3-4-5</b>: 4/3 → <mark>4/3</mark> <small>CPO · 12 Dec 2025</small></li>
+    <li><!--q:t255--><span class="tag p">PYQ</span> cos A = 12/13: tan A → <b>5-12-13</b> → <mark>5/12</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><!--q:t218--><span class="tag p">PYQ</span> cos X = 2/3: tan X → <b>triangle 2-√5-3</b>: √5/2 → sahi √5/2 (key: <mark>√(5/2)</mark>, note dekho) <small>DP AWO/TPO · 16 Jan 2026</small></li>
+    <li><!--q:t102--><span class="tag p">PYQ</span> sin 3A = 3/5: cos 3A → <b>3A ko ek angle maano</b>, 3-4-5 → <mark>4/5</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><!--q:t174--><span class="tag p">PYQ</span> sin 3A = 3/5: cos 3A, tan 3A → <b>3-4-5</b> → <mark>4/5, 3/4</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--q:t116--><span class="tag p">PYQ</span> sin 2A = 3/5: cos 2A → <b>2A = ek angle</b>, 3-4-5 → <mark>4/5</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><!--q:t131--><span class="tag p">PYQ</span> Δ, B = 90°, AB = 12, AC = 13: sin A + cos A → <b>5-12-13</b>: BC = 5 → 5/13 + 12/13 → <mark>17/13</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--q:t188--><span class="tag p">PYQ</span> B = 90°, AC = 5, BC = 3: sin A → <b>samne wali / karn</b> → <mark>3/5</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--q:t193--><span class="tag p">PYQ</span> Seedhi 13 m, paanv deewar se 5 m: sin θ (zameen se) → <b>5-12-13</b>: deewar par 12 → <mark>12/13</mark> <small>CHSL Tier-2</small></li>
+    <li><!--q:t146--><span class="tag p">PYQ</span> Missile Δ: height 7, karn 25: tan θ → <b>7-24-25</b> → <mark>7/24</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--q:t223--><span class="tag p">PYQ</span> B = 90°, AB = 5√5, AC = 13√5: cosec C : cot C → <b>√5 kaat do → 5-12-13</b>; C ke saamne AB = 5 → 13/5 : 12/5 → <mark>13 : 12</mark> <small>DP AWO/TPO · 20 Jan 2026</small></li>
+    <li><!--q:t242--><span class="tag p">PYQ</span> A(0,0), B(10,0), C(0,8): angle BCA → <b>tan C = AB/AC = 10/8 = 1.25</b>; tan 45° = 1, tan 60° = 1.73 → beech mein, 1.25 ke paas → <mark>51.3°</mark> <small>DP HCM · 9 Jan 2026</small></li>
+    <li><!--q:t15--><span class="tag p">PYQ</span> sin A = 3/5, 2nd quadrant: (sin A + cos A)² → <b>3-4-5 + sign</b>: cos = −4/5 → (−1/5)² → <mark>1/25</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><!--q:t47--><span class="tag p">PYQ</span> sin A = 5/13, 2nd quadrant: sin A × sec A → <b>= tan A</b>, Q2 mein minus → <mark>−5/12</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><!--q:t57--><span class="tag p">PYQ</span> sin A = 4/5, 2nd quadrant: (1 + tan A)(1 − tan A) → <b>tan = −4/3</b>: 1 − 16/9 → <mark>−7/9</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:t61--><span class="tag p">PYQ</span> sin A = 3/5, 2nd quadrant: tan A → <b>3-4-5 + sign</b> → <mark>−3/4</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:t118--><span class="tag p">PYQ</span> tan θ = 5/12, 3rd quadrant: sin θ → <b>5-12-13</b>, Q3 mein sin minus → <mark>−5/13</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><!--q:t176--><span class="tag p">PYQ</span> sin x = 3/5, 2nd quadrant: cos x → <b>3-4-5 + sign</b> → <mark>−4/5</mark> <small>CHSL · 28 Nov 2025</small></li>
+    <li><!--q:t201--><span class="tag p">PYQ</span> sin θ = 7/25, 2nd quadrant: tan θ → <b>7-24-25 + sign</b> → <mark>−7/24</mark> <small>CPO · 10 Dec 2025</small></li>
+    <li><!--q:t269--><span class="tag p">PYQ</span> sin θ = 5/13, 2nd quadrant: sin θ + cos θ → <b>5-12-13 + sign</b>: 5/13 − 12/13 → <mark>−7/13</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP AWO/TPO 16 Jan 2026 (cos X = 2/3, tan X?): H = 3, B = 2 → P = √5. tan X = <b>√5/2</b> (option C). Key option B "√(5/2)" deta hai, jo 1.58 hai, √5/2 = 1.12 nahi. Sahi answer √5/2.</div>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Ek ratio diya → poora expression (21 Qs)</h3>
+  <p><b>Samjho:</b> pehle expression ko chhota karo (1 + tan² = sec², tan × cot(90° − A) = tan²A), phir triangle se value daalo. Seedhe daaloge toh bhi chalega, bas fraction lamba ho jaata hai.</p>
+  <div class="box"><span class="k">Worked · sin x = 3/5, x acute. (1 + tan x)/(1 − tan x)? <!--q:t26--><span class="tag p">PYQ</span> <small>CGL · 19 Sep 2025</small></span>
+    <b>Method:</b> 3-4-5 · <i>~8 sec</i><br>
+    tan = 3/4. Upar 7/4, neeche 1/4 → <mark>7</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · cos x = 12/13. [(1 + sin x)² + (1 − sin x)²]/cos²x? <!--q:t130--><span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small></span>
+    <b>Method:</b> pehle chhota karo · <i>~15 sec</i><br>
+    (1 + s)² + (1 − s)² = 2 + 2s². sin = 5/13 → 2 + 50/169 = 388/169.<br>
+    ÷ 144/169 → 388/144 = <mark>97/36</mark>.
+  </div>
+  <ul>
+    <li><!--q:t13--><span class="tag p">PYQ</span> tan A = 2: tan A + cot A → <b>cot = ulta</b>: 2 + 1/2 → <mark>5/2</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><!--q:t21--><span class="tag p">PYQ</span> cot A = 2: sin A − cos A → <b>triangle 1-2-√5</b>: 1/√5 − 2/√5 → <mark>−1/√5</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--q:t42--><span class="tag p">PYQ</span> sin A = 1/√10: tan A + sec A → <b>1-3-√10</b>: 1/3 + √10/3 → <mark>(1 + √10)/3</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><!--q:t79--><span class="tag p">PYQ</span> sin A = 3/5: sin²A + cos²A − 2 sin A cos A → <b>= (sin − cos)²</b>: (3/5 − 4/5)² → <mark>1/25</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><!--q:t83--><span class="tag p">PYQ</span> sin A = 3/5: tan A × cot(90° − A) → <b>= tan²A</b>: (3/4)² → <mark>9/16</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><!--q:t84--><span class="tag p">PYQ</span> 3 cot A = 4: 3 sin A − 4 cos A → <b>3-4-5</b>: 9/5 − 16/5 → <mark>−7/5</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:t135--><span class="tag p">PYQ</span> cot θ = 3/4: (1 + sin θ)/cos θ + (1 − sin θ)/cos θ → <b>pehle jodo</b>: 2/cos θ = 2 × 5/3 → <mark>10/3</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><!--q:t155--><span class="tag p">PYQ</span> sin x = 5/13: (1 + cos x)/(1 − cos x) → <b>5-12-13</b>: (25/13)/(1/13) → <mark>25</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--q:t157--><span class="tag p">PYQ</span> cos A = 5/13: tan A − sin A → <b>5-12-13</b>: 12/5 − 12/13 → <mark>96/65</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--q:t165--><span class="tag p">PYQ</span> sin θ = 2/3: cos²θ − sin²θ → <b>cos² = 1 − sin²</b>: 5/9 − 4/9 → <mark>1/9</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><!--q:t168--><span class="tag p">PYQ</span> tan θ = 4/3: cos²θ − sin²θ → <b>3-4-5</b>: 9/25 − 16/25 → <mark>−7/25</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--q:t182--><span class="tag p">PYQ</span> sin x = 3/5: 2 tan x + sec x → <b>3-4-5</b>: 6/4 + 5/4 → <mark>11/4</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--q:t194,t266--><span class="tag p">PYQ ×2</span> sin θ = 3/5: cos θ + tan θ → <b>3-4-5</b>: 4/5 + 3/4 = 16/20 + 15/20 → <mark>31/20</mark> <small>CHSL Tier-2; SP-XIV · 25 Jul 2025</small></li>
+    <li><!--q:t186--><span class="tag p">PYQ</span> cos A = 4/5: (1 + tan²A)/(1 + cot²A) → <b>= sec²/cosec² = tan²A</b>: (3/4)² → <mark>9/16</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--q:t195--><span class="tag p">PYQ</span> sin²θ = 3/5: (1 − cos²θ)/(1 + tan²θ) → <b>= sin²θ · cos²θ</b>: 3/5 × 2/5 → <mark>6/25</mark> <small>CHSL Tier-2</small></li>
+    <li><!--q:t256--><span class="tag p">PYQ</span> sin θ = 5/13: 1 + cot²θ → <b>= cosec²θ</b>: (13/5)² → <mark>169/25</mark> (bank mein ² chhoot gaya) <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><!--q:t259--><span class="tag p">PYQ</span> cot θ = 3/4: 1 + tan²θ → <b>= sec²θ</b>: (5/3)² → <mark>25/9</mark> (bank mein ² chhoot gaya) <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><!--q:t38--><span class="tag p">PYQ</span> sin A = 5/13: sin⁴A + cos⁴A → <b>1 − 2s²c²</b>: s·c = 60/169 → 1 − 7200/28561 → <mark>21361/28561</mark> <small>CGL · 20 Sep 2025</small></li>
+  </ul>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · "x / m, n / p ke terms mein" (12 Qs)</h3>
+  <p><b>Samjho:</b> number ki jagah letter hai, tareeka wahi. Triangle mein P, B, H letters se likho. Shak ho toh x = 2 (ya m = 3, n = 5) rakh kar option jaancho.</p>
+  <div class="box"><span class="k">Worked · cot A = x + 1/x. cosec²A? <!--q:t17,t19,t45--><span class="tag p">PYQ ×3</span> <small>CGL · 17 Sep 2025; CGL · 18 Sep 2025; CGL · 21 Sep 2025</small></span>
+    <b>Method:</b> 1 + cot² = cosec² · <i>~8 sec</i><br>
+    (x + 1/x)² = x² + 2 + 1/x². Plus 1 → <mark>x² + 1/x² + 3</mark>.<br>
+    Ye sawaal teen baar aaya. Options mein +1, +2, +3, +4 hote hain. "+2 square se, +1 identity se" yaad rakho.
+  </div>
+  <div class="box"><span class="k">Worked · sin A = 2x/(1 + x²). cos A? <!--q:t23--><span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small></span>
+    <b>Method:</b> triplet 2x, 1 − x², 1 + x² · <i>~8 sec</i><br>
+    (1 + x²)² − (2x)² = (1 − x²)². Toh B = 1 − x² → cos A = <mark>(1 − x²)/(1 + x²)</mark>.<br>
+    Check: x = 2 → sin = 4/5, cos = −3/5 … size 3/5 ✔.
+  </div>
+  <div class="box"><span class="k">Worked · cos θ = (m² − n²)/(m² + n²). tan θ? <!--q:t202--><span class="tag p">PYQ</span> <small>CPO · 10 Dec 2025</small></span>
+    <b>Method:</b> triplet m² − n², 2mn, m² + n² · <i>~8 sec</i><br>
+    Teesri bhuja 2mn. tan = P/B = <mark>2mn/(m² − n²)</mark>. (m = 2, n = 1: cos 3/5 → tan 4/3 ✔)
+  </div>
+  <ul>
+    <li><!--q:t31--><span class="tag p">PYQ</span> sin A = x: cos²A → <b>s² + c² = 1</b> → <mark>1 − x²</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:t60--><span class="tag p">PYQ</span> sin A = x: tan A → <b>triangle P = x, H = 1, B = √(1 − x²)</b> → <mark>x/√(1 − x²)</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:t65--><span class="tag p">PYQ</span> cos(90° − θ) = x: cos θ → <b>sin θ = x</b> → <mark>√(1 − x²)</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:t48--><span class="tag p">PYQ</span> sin A = m/n: cos A → <b>B = √(n² − m²)</b> → <mark>√(n² − m²)/n</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><!--q:t16--><span class="tag p">PYQ</span> sin A = m/n: 1 + tan²A → <b>= sec²A = H²/B²</b> → <mark>n²/(n² − m²)</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><!--q:t88--><span class="tag p">PYQ</span> sin A = 2x/(1 + x²): tan A → <b>same triplet</b>: P/B → <mark>2x/(1 − x²)</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:t97--><span class="tag p">PYQ</span> sin θ/x = cos θ/y: sin θ − cos θ → <b>tan θ = x/y</b>, H = √(x² + y²) → <mark>(x − y)/√(x² + y²)</mark> <small>CGL Tier-2</small></li>
+  </ul>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>3π/5 radian kitne degree?</summary><p>3 × 180/5 = 108°.</p></details>
+    <details><summary>tan A = 8/15, A 3rd quadrant mein. cos A?</summary><p>8-15-17. Q3 mein cos minus → −15/17.</p></details>
+    <details><summary>sin(x + 15°) = cos(2x − 30°). x?</summary><p>3x − 15 = 90 → x = 35°.</p></details>
+    <details><summary>tan A = 4/3: (1 + tan²A)/(1 + cot²A)?</summary><p>sec²/cosec² = tan²A = 16/9.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · TRIGONOMETRY (part 3: types 7-13) ===================== -->
+<section class="chap" id="mtg-types-b">
+  <div class="eyebrow">Maths · PYQ types (7–13)</div>
+  <h2>Trigonometry: Type 7–13 · identities, jodiyan aur formula wale</h2>
+  <div class="meta">Simplify, sec + tan, sin + cos, tan + cot, a sin + b cos, sin(A + B) aur allied angles · sab 36 second ke andar</div>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Identity se simplify karo (33 Qs)</h3>
+  <p><b>Samjho:</b> do raaste. (1) Sab kuch sin aur cos mein likho, kaato. (2) Options mein expression hon toh <b>angle maan lo</b>: 45° (ya 60°) daalo, jo option match kare wahi.</p>
+  <div class="box"><span class="k">Worked · (tan²θ − sin²θ)/(2 + tan²θ + cot²θ) <!--q:t96--><span class="tag p">PYQ</span> <small>CGL Tier-2</small></span>
+    <b>Method:</b> angle maan lo, θ = 45° · <i>~12 sec</i><br>
+    Upar: 1 − 1/2 = 1/2. Neeche: 2 + 1 + 1 = 4. Sawaal = 1/8.<br>
+    Options: sec⁶ = 8 ✗, sin⁶ = (1/√2)⁶ = 1/8 ✔, cos² = 1/2 ✗, sin² = 1/2 ✗ → <mark>sin⁶θ</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · (tan θ + sec θ − 1)/(1 + sin θ) = ? <!--q:t230--><span class="tag p">PYQ</span> <small>DP AWO/TPO · 21 Jan 2026</small></span>
+    <b>Method:</b> angle maan lo, θ = 60° (45° par roots ganda hota) · <i>~20 sec</i><br>
+    tan 60 = 1.73, sec = 2, sin = 0.87. Sawaal = 2.73/1.87 ≈ 1.46.<br>
+    Option D: (1.73 − 2 + 1)/0.5 = 0.73/0.5 ≈ 1.46 ✔. Baaki (B ≈ 5.5, C ≈ 0.49) nahi milte → <mark>(tan θ − sec θ + 1)/cos θ</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · sin²A − cos²A = 1/4. cos²A? <!--q:t6--><span class="tag p">PYQ</span> <small>CGL · 13 Sep 2025</small></span>
+    <b>Method:</b> sin² = 1 − cos² · <i>~6 sec</i><br>
+    1 − 2cos² = 1/4 → 2cos² = 3/4 → <mark>3/8</mark>.
+  </div>
+  <ul>
+    <li><!--q:t18--><span class="tag p">PYQ</span> sin²A − cos²A = 1/2: cos²A → <b>1 − 2cos² = 1/2</b> → <mark>1/4</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--q:t276--><span class="tag p">PYQ</span> 4 sin²θ + 3 cos²θ = 13/4: sin²θ → <b>3(sin² + cos²) + sin² </b>: 3 + sin² = 13/4 → <mark>1/4</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><!--q:t11--><span class="tag p">PYQ</span> sin A + cos A = √2 sin A: tan A → <b>cos A = (√2 − 1) sin A</b>: tan = 1/(√2 − 1) → <mark>√2 + 1</mark> <small>CGL · 14 Sep 2025</small></li>
+    <li><!--q:t80--><span class="tag p">PYQ</span> cosec A − sin A = 2: sin A → <b>s ka quadratic</b>: 1 − s² = 2s → s = −1 + √2 → <mark>√2 − 1</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><!--q:t125--><span class="tag p">PYQ</span> sin x + sin²x = 1: cos²x + cos⁴x → <b>sin x = cos²x</b>: = sin x + sin²x → <mark>1</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--q:t129--><span class="tag p">PYQ</span> sin A = 3/5: sec²A − tan²A → <b>identity</b> → <mark>1</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--q:t258--><span class="tag p">PYQ</span> sin A = 5/13: (1 + tan²A)/sec²A → <b>1 + tan² = sec²</b> → <mark>1</mark> (sawaal crop se padha) <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><!--q:t98--><span class="tag p">PYQ</span> sin²x + cos²x + tan²x → <b>1 + tan² = sec²</b> → <mark>sec²x</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><!--q:t99--><span class="tag p">PYQ</span> sin⁴x − cos⁴x → <b>a² − b²</b>: (s² + c²)(s² − c²) → <mark>sin²x − cos²x</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><!--q:t224--><span class="tag p">PYQ</span> sec⁴θ − tan⁴θ → <b>a² − b²</b>: (sec² − tan²)(sec² + tan²) → <mark>sec²θ + tan²θ</mark> <small>DP AWO/TPO · 20 Jan 2026</small></li>
+    <li><!--q:t225--><span class="tag p">PYQ</span> cosec²θ − cot²θ → <b>= 1</b>; option D (cosec − cot)(1 + cos)/sin = (1 − cos)(1 + cos)/sin² = 1 → <mark>(cosec θ − cot θ)(1 + cos θ)/sin θ</mark> <small>DP AWO/TPO · 20 Jan 2026</small></li>
+    <li><!--q:t262--><span class="tag p">PYQ</span> sin⁴θ + cos⁴θ → <b>(s² + c²)² − 2s²c²</b> → <mark>1 − 2 sin²θ cos²θ</mark> (crop se padha) <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><!--q:t152--><span class="tag p">PYQ</span> (sin x + cos x)² → <b>(a + b)²</b> → <mark>1 + 2 sin x cos x</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:t184--><span class="tag p">PYQ</span> (1 − sin x)(1 + sin x) → <b>1 − sin²</b> → <mark>cos²x</mark> <small>CHSL · 30 Nov 2025</small></li>
+    <li><!--q:t164--><span class="tag p">PYQ</span> (1 − cos²x)/sin x → <b>sin²/sin</b> → <mark>sin x</mark> <small>CHSL · 26 Nov 2025</small></li>
+    <li><!--q:t166--><span class="tag p">PYQ</span> tan x/sec x → <b>(s/c) × c</b> → <mark>sin x</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--q:t148--><span class="tag p">PYQ</span> (cos x · cosec x)/cot x → <b>cos/sin = cot</b>: cot/cot → <mark>1</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:t173--><span class="tag p">PYQ</span> tan θ sin θ + cos θ → <b>s²/c + c = 1/c</b> → <mark>sec θ</mark> <small>CHSL · 27 Nov 2025</small></li>
+    <li><!--q:t108--><span class="tag p">PYQ</span> sin x cot x + cos x tan x → <b>cot = c/s</b>: c + s → <mark>sin x + cos x</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><!--q:t115--><span class="tag p">PYQ</span> (cos²x − sin²x)/(1 − sin²x) → <b>neeche cos²</b>: 1 − tan² → <mark>1 − tan²x</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><!--q:t101--><span class="tag p">PYQ</span> (sec x − tan x)/(sec x + tan x) → <b>c se guna</b>: (1 − s)/(1 + s) → <mark>(1 − sin x)/(1 + sin x)</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><!--q:t190--><span class="tag p">PYQ</span> (1 + tan²)/(1 + cot²) × (sec − tan)/(sec + tan) → <b>tan² × (1 − s)/(1 + s)</b> → <mark>tan²x(1 − sin x)/(1 + sin x)</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><!--q:t109--><span class="tag p">PYQ</span> cos x/(1 + sin x) + sin x/(1 + cos x) → <b>LCM</b>: (c + c² + s + s²)/(…) → <mark>(cos x + sin x + 1)/((1 + sin x)(1 + cos x))</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><!--q:t105,t111--><span class="tag p">PYQ ×2</span> (sin x + cos x)²/(1 + sin x cos x) → <b>upar 1 + 2sc</b> → <mark>(1 + 2 sin x cos x)/(1 + sin x cos x)</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></li>
+    <li><!--q:t147--><span class="tag p">PYQ</span> cos x/(1 − sin x) + cos x/(1 + sin x) = 4: tan x + cosec x → <b>jod = 2c/c² = 2 sec</b> → sec = 2 → 60°: √3 + 2/√3 → <mark>5√3/3</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:t228--><span class="tag p">PYQ</span> ½[sin x/(1 + cos x) + (1 + cos x)/sin x] → <b>maan lo 90°</b>: ½[1 + 1] = 1; sirf 1/sin x = 1 → <mark>1/sin x</mark> <small>DP AWO/TPO · 20 Jan 2026</small></li>
+    <li><!--q:t178--><span class="tag p">PYQ</span> [(sin x − 2sin³x)/(2cos³x − cos x)]² + 1 → <b>upar s(1 − 2s²), neeche c(2c² − 1)</b>, dono cos 2x → tan² + 1 → <mark>sec²x</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><!--q:t231--><span class="tag p">PYQ</span> cosec²A + (1 + cot A)(1 − cot A) + [√(1 − sin²A) + √(1 − cos²A)]² − 2 sin A cos A → <b>tukde</b>: (cosec² − cot²) + 1 + (c + s)² − 2sc = 1 + 1 + 1 → <mark>3</mark> <small>DP AWO/TPO · 21 Jan 2026</small></li>
+    <li><!--q:t214--><span class="tag p">PYQ</span> (tan x − sin x)/sin³x → <b>maan lo 60°</b>: LHS = 4/3, D = 2/√3 → sahi = sec x/(1 + cos x) (key: <mark>4 csc 2x sin²(x/2)</mark>, note dekho) <small>DP AWO/TPO · 21 Jan 2026</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP AWO/TPO 21 Jan 2026, (tan x − sin x)/sin³x: x = 60° rakho. Sawaal = (1.732 − 0.866)/0.6495 = <b>4/3</b>. Key ka option D, 4 csc 2x sin²(x/2), deta hai 4 × (2/√3) × 1/4 = 2/√3 ≈ 1.15. Match nahi. Sahi roop sec x/(1 + cos x) hai (60° par 2/1.5 = 4/3 ✔). B aur C bhi galat hain. Option A sawaal ko hi dobara likhta hai, isliye wahi "sach" hai.</div>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · sec + tan aur cosec + cot ki jodi (12 Qs)</h3>
+  <p><b>Samjho:</b> (sec + tan)(sec − tan) = 1. Toh ek mila toh doosra uska ulta. Phir jodo/ghatao aur aadha karo.</p>
+  <div class="box"><span class="k">Worked · tan A + sec A = 5. tan A? <!--q:t73--><span class="tag p">PYQ</span> <small>CGL · 25 Sep 2025</small></span>
+    <b>Method:</b> jodi · <i>~8 sec</i><br>
+    sec − tan = 1/5. Ghatao aur aadha: tan = (5 − 1/5)/2 = (24/5)/2 = <mark>12/5</mark>. (sec = 13/5: 5-12-13 ✔)
+  </div>
+  <div class="box"><span class="k">Worked · cosec A + cot A = 11/4. sin A? <!--q:t251--><span class="tag p">PYQ</span> <small>DP HCM · 7 Jan 2026</small></span>
+    <b>Method:</b> jodi · <i>~12 sec</i><br>
+    cosec − cot = 4/11. Jodo aur aadha: cosec = (11/4 + 4/11)/2 = (121 + 16)/88 = 137/88.<br>
+    sin = ulta = <mark>88/137</mark>.
+  </div>
+  <ul>
+    <li><!--q:t46--><span class="tag p">PYQ</span> sec A + tan A = 5/2: sec A − tan A → <b>guna = 1</b> → <mark>2/5</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><!--q:t69--><span class="tag p">PYQ</span> sec A − tan A = 1/3: sec A + tan A → <b>guna = 1</b> → <mark>3</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:t127--><span class="tag p">PYQ</span> sec x − tan x = 1/√3 → <b>guna = 1</b>: sec + tan = √3 → sec = 2/√3, tan = 1/√3 (key: <mark>2/3</mark> = sec × tan, note dekho) <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--q:t253--><span class="tag p">PYQ</span> tan A + sec A = 5 (acute): tan A → <b>jodi</b> → <mark>12/5</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><!--q:t87--><span class="tag p">PYQ</span> tan A + sec A = 3: tan A → <b>jodi</b>: (3 − 1/3)/2 → <mark>4/3</mark> <small>CGL · 26 Sep 2025</small></li>
+    <li><!--q:t134--><span class="tag p">PYQ</span> sec θ + tan θ = 5: sec θ → <b>jodi</b>: (5 + 1/5)/2 → <mark>13/5</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><!--q:t132--><span class="tag p">PYQ</span> sec θ + tan θ = 5: sin θ → <b>jodi</b>: sec 13/5, tan 12/5 → sin = tan/sec → <mark>12/13</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--q:t55--><span class="tag p">PYQ</span> sec A + tan A = p: sec A → <b>jodi</b>: (p + 1/p)/2 → <mark>(p² + 1)/2p</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:t257,t271--><span class="tag p">PYQ ×2</span> sec A + tan A = x (ya p): sec A → <b>jodi</b> → <mark>(x² + 1)/2x</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CHSL 17 Nov 2025, Shift 2 (sec x − tan x = 1/√3): jaisa chhapa hai, sec x + tan x = <b>√3</b>, jo option mein nahi. Key ka 2/3 asal mein sec x × tan x hai (sec = 2/√3, tan = 1/√3). Lagta hai sawaal mein "sec x · tan x" pucha gaya tha. Exam mein options na milein toh sec, tan alag nikaal kar dekho kaunsa combination match karta hai.</div>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · sin + cos = k (square karo) (14 Qs)</h3>
+  <p><b>Samjho:</b> (sin + cos)² = 1 + 2 sin cos. Toh 2 sin cos = k² − 1 = sin 2A. Wahan se sin⁴ + cos⁴ = 1 − 2s²c², sin³ + cos³ = (s + c)(1 − sc). k = √2 ho toh angle 45°.</p>
+  <div class="box"><span class="k">Worked · sin A + cos A = 5/4. sin 2A? <!--q:t14--><span class="tag p">PYQ</span> <small>CGL · 17 Sep 2025</small></span>
+    <b>Method:</b> square − 1 · <i>~5 sec</i><br>
+    25/16 − 1 = <mark>9/16</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · sin θ + cos θ = 5/4. sin⁴θ + cos⁴θ? <!--q:t274--><span class="tag p">PYQ</span> <small>SP-XIV · 31 Jul 2025</small></span>
+    <b>Method:</b> square, phir 1 − 2s²c² · <i>~20 sec</i><br>
+    2sc = 9/16 → sc = 9/32 → s²c² = 81/1024.<br>
+    1 − 2 × 81/1024 = 1 − 81/512 = <mark>431/512</mark>. (Bank mein "⁴" chhoot gaya; options se pakka hua.)
+  </div>
+  <div class="box"><span class="k">Worked · sin A − cos A = 1/3. sin 2A? <!--q:t254--><span class="tag p">PYQ</span> <small>SP-XIV · 24 Jul 2025</small></span>
+    <b>Method:</b> 1 − square · <i>~5 sec</i><br>
+    (s − c)² = 1 − 2sc → 1/9 = 1 − sin 2A → sin 2A = <mark>8/9</mark>.
+  </div>
+  <ul>
+    <li><!--q:t27--><span class="tag p">PYQ</span> sin A + cos A = x: sin²A + cos²A + 2 sin A cos A → <b>= (s + c)²</b> → <mark>x²</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:t52--><span class="tag p">PYQ</span> sin A + cos A = √2/2: (s + c)² wala expression → <b>square</b> → <mark>1/2</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><!--q:t72--><span class="tag p">PYQ</span> sin A + cos A = √3/2: (s + c)² wala expression → <b>square</b> → <mark>3/4</mark> <small>CGL · 25 Sep 2025</small></li>
+    <li><!--q:t30--><span class="tag p">PYQ</span> sin x + cos x = √2: sin x − cos x → <b>√2 = sirf 45°</b> → <mark>0</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:t50--><span class="tag p">PYQ</span> sin A + cos A = √2: sin³A + cos³A → <b>45°</b>: 2 × (1/√2)³ → <mark>√2/2</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><!--q:t154--><span class="tag p">PYQ</span> sin θ + cos θ = √2: sin⁴θ + cos⁴θ → <b>45°</b>: 1/4 + 1/4 → <mark>1/2</mark> <small>CHSL · 24 Nov 2025</small></li>
+    <li><!--q:t39--><span class="tag p">PYQ</span> sin A + cos A = 1: sin⁴A + cos⁴A → <b>square</b>: 2sc = 0 → <mark>1</mark> <small>CGL · 21 Sep 2025</small></li>
+    <li><!--q:t28--><span class="tag p">PYQ</span> sin x = cos x: sin⁴x + cos⁴x → <b>45°</b>: 1/4 + 1/4 → <mark>1/2</mark> (crop se padha) <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:t24--><span class="tag p">PYQ</span> tan A + cot A = 2: sin A + cos A → <b>sirf 45° par 2</b> → <mark>√2</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:t156--><span class="tag p">PYQ</span> sin θ + cos θ = √3/2: sin²θ + cos²θ − 2 sin θ cos θ → <b>2sc = 3/4 − 1 = −1/4</b>: 1 + 1/4 → <mark>5/4</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--q:t171--><span class="tag p">PYQ</span> cos A + sin A = 5/4: tan A → <b>2sc = 9/16, (s − c)² = 7/16</b>: s, c = (5 ± √7)/8 → <mark>(5 − √7)/(5 + √7)</mark> <small>CHSL · 27 Nov 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Note</span>CHSL 25 Nov 2025 (sin θ + cos θ = √3/2, θ acute): acute angle ke liye sin + cos hamesha 1 ya usse zyada hota hai, toh √3/2 (0.87) ho hi nahi sakta. Formula phir bhi 5/4 deta hai, aur key bhi 5/4 hai. Exam mein formula chalao, "acute" par mat atko.</div>
+
+  <!-- TYPE 10 -->
+  <h3>Type 10 · tan + cot = k (8 Qs)</h3>
+  <p><b>Samjho:</b> tan × cot = 1. Toh tan² + cot² = k² − 2, tan³ + cot³ = k³ − 3k. Aur tan + cot = 1/(sin cos) = sec · cosec.</p>
+  <div class="box"><span class="k">Worked · tan A + cot A = 5. tan³A + cot³A? <!--q:t163--><span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small></span>
+    <b>Method:</b> k³ − 3k · <i>~5 sec</i><br>
+    125 − 15 = <mark>110</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · tan²θ + cot²θ = 50. sec⁴θ + cosec⁴θ? <!--q:t207--><span class="tag p">PYQ</span> <small>CPO · 11 Dec 2025</small></span>
+    <b>Method:</b> 1 + tan² = sec² · <i>~20 sec</i><br>
+    sec⁴ + cosec⁴ = (1 + t²)² + (1 + c²)² = 2 + 2(t² + c²) + (t⁴ + c⁴).<br>
+    t⁴ + c⁴ = 50² − 2 = 2498. Kul = 2 + 100 + 2498 = <mark>2600</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · tan A + cot A = 4. tan²A + sec²A? <!--q:t22--><span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small></span>
+    <b>Method:</b> tan nikaalo, phir 2tan² + 1 · <i>~20 sec</i><br>
+    t + 1/t = 4 → t² − 4t + 1 = 0 → t = 2 ± √3 (yaani 75° ya 15°).<br>
+    tan² + sec² = 2tan² + 1. t = 2 + √3: t² = 7 + 4√3 → <mark>15 + 8√3</mark>. (2 − √3 lo toh 15 − 8√3 aata, jo option mein nahi.)
+  </div>
+  <ul>
+    <li><!--q:t119--><span class="tag p">PYQ</span> tan x + cot x = 2: sin x cos x → <b>tan + cot = 1/(sc)</b> → <mark>1/2</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><!--q:t140--><span class="tag p">PYQ</span> tan θ + cot θ = 2: tan³θ + cot³θ → <b>dono 1</b> → <mark>2</mark> <small>CHSL · 19 Nov 2025</small></li>
+    <li><!--q:t158--><span class="tag p">PYQ</span> tan θ + cot θ = 5: tan²θ + cot²θ → <b>k² − 2</b> → <mark>23</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--q:t265--><span class="tag p">PYQ</span> tan θ + cot θ = k: tan²θ + cot²θ → <b>k² − 2</b> → <mark>k² − 2</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><!--q:t252--><span class="tag p">PYQ</span> tan θ + cot θ = 5: sec θ cosec θ → <b>tan + cot = sec · cosec</b> → sahi 5 = "None" (key: <mark>1/5</mark>, note dekho) <small>DP HCM · 7 Jan 2026</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP HCM 7 Jan 2026 (tan θ + cot θ = 5, sec θ cosec θ?): tan + cot = sin/cos + cos/sin = 1/(sin cos) = sec · cosec. Toh answer <b>5</b> hai, jo options (−5, 1/5, 2/5, None) mein nahi. Sahi option "None". Key ka 1/5 asal mein sin θ cos θ hai.</div>
+
+  <!-- TYPE 11 -->
+  <h3>Type 11 · a sin + b cos ki jodi → a² + b² (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · x = 7 sin A + 24 cos A, y = 7 cos A − 24 sin A. 3(x² + y²)? <!--q:t128--><span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small></span>
+    <b>Method:</b> a² + b² · <i>~5 sec</i><br>
+    x² + y² = 49 + 576 = 625 (7-24-25 hi hai). 3 × 625 = <mark>1875</mark>.
+  </div>
+  <ul>
+    <li><!--q:t49--><span class="tag p">PYQ</span> sin A = 2/3: (3 sin A − 4 cos A)² + (4 sin A + 3 cos A)² → <b>a² + b²</b>: 9 + 16 → <mark>25</mark> <small>CGL · 22 Sep 2025</small></li>
+    <li><!--q:t179--><span class="tag p">PYQ</span> x = 6 cos A + 8 sin A, y = 6 sin A − 8 cos A: x² + y² → <b>a² + b²</b>: 36 + 64 → <mark>100</mark> <small>CHSL · 29 Nov 2025</small></li>
+    <li><!--q:t124--><span class="tag p">PYQ</span> x = 3 cos A + 4 sin A, y = 3 sin A − 4 cos A: 2(x² + y²) → <b>a² + b²</b>: 2 × 25 → <mark>50</mark> <small>CHSL · 15 Nov 2025</small></li>
+  </ul>
+
+  <!-- TYPE 12 -->
+  <h3>Type 12 · sin(A + B), double angle, half angle (24 Qs)</h3>
+  <p><b>Samjho:</b> sin(A + B) wale mein dono angle ke triangle alag banao, phir formula mein daalo. CHSL mein lagbhag har baar A aur B ek hi triplet ke hote hain (sin A = cos B), toh dono tukde barabar aate hain: bas ek nikaalo aur dugna karo.</p>
+  <div class="box"><span class="k">Worked · sin A = 3/5, cos B = 12/13 (dono acute). sin(A + B)? <!--q:t20--><span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small></span>
+    <b>Method:</b> do triangle + formula · <i>~15 sec</i><br>
+    cos A = 4/5, sin B = 5/13.<br>
+    sin A cos B + cos A sin B = 36/65 + 20/65 = <mark>56/65</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · tan⁻¹(3/4) + tan⁻¹(5/12) = ? <!--q:t248--><span class="tag p">PYQ</span> <small>DP HCM · 8 Jan 2026</small></span>
+    <b>Method:</b> tan(A + B) · <i>~20 sec</i><br>
+    Upar: 3/4 + 5/12 = 14/12 = 7/6. Neeche: 1 − 15/48 = 33/48.<br>
+    (7/6) × (48/33) = 56/33 → <mark>tan⁻¹(56/33)</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · tan 2x = 3/4 (x Q1 mein). tan 6x? <!--q:t275--><span class="tag p">PYQ</span> <small>SP-XIV · 30 Jul 2025</small></span>
+    <b>Method:</b> tan 3θ formula, θ = 2x · <i>~25 sec</i><br>
+    t = 3/4: 3t − t³ = 9/4 − 27/64 = 117/64. 1 − 3t² = 1 − 27/16 = −11/16.<br>
+    tan 6x = (117/64) ÷ (−11/16) = −117/44. Key: <mark>117/44</mark>.
+  </div>
+  <div class="box"><span class="k">⚠ Answer-key note</span>SP-XIV 30 Jul 2025 (tan 2x = 3/4, tan 6x): 2x ≈ 36.9°, toh 6x ≈ 110.6°, jo 2nd quadrant mein hai. Wahan tan minus hota hai. Sahi answer <b>−117/44</b>. Options mein sirf plus wale number hain, toh key ne sign chhod diya. Exam mein 117/44 hi lagao.</div>
+  <ul>
+    <li><!--q:t25--><span class="tag p">PYQ</span> sin 20° cos 10° + cos 20° sin 10° → <b>sin(A + B)</b>: sin 30° → <mark>1/2</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:t133--><span class="tag p">PYQ</span> sin 75° → <b>sin(45 + 30)</b>: (√3 + 1)/2√2 → <mark>(√3 + 1)/2√2</mark> <small>CHSL · 18 Nov 2025</small></li>
+    <li><!--q:t250--><span class="tag p">PYQ</span> cos(π/4 − π/6) = cos 15° → <b>cos(A − B)</b> → <mark>(√3 + 1)/2√2</mark> <small>DP HCM · 7 Jan 2026</small></li>
+    <li><!--q:t229--><span class="tag p">PYQ</span> √2(sin 75° + sin 15°) → <b>sin 75 = cos 15</b>: (√3 + 1)/2√2 + (√3 − 1)/2√2 = √3/√2 → × √2 → <mark>√3</mark> <small>DP AWO/TPO · 21 Jan 2026</small></li>
+    <li><!--q:t260--><span class="tag p">PYQ</span> sin 75° × cos 75° → <b>½ sin 150°</b> = ½ × ½ → <mark>1/4</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><!--q:t100--><span class="tag p">PYQ</span> sin A = 8/17, cos B = 15/17: sin A cos B + cos A sin B → <b>8-15-17</b>: 120/289 + 120/289 → <mark>240/289</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><!--q:t104,t110--><span class="tag p">PYQ ×2</span> sin A = 7/25, cos B = 24/25: sin A cos B + cos A sin B → <b>7-24-25</b>: 168/625 × 2 → <mark>336/625</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small></li>
+    <li><!--q:t114--><span class="tag p">PYQ</span> cos A = 5/13, sin B = 12/13: sin(A + B) → <b>5-12-13</b>: 60/169 + 60/169 → <mark>120/169</mark> <small>CHSL · 14 Nov 2025</small></li>
+    <li><!--q:t189--><span class="tag p">PYQ</span> cos A = 12/13, sin B = 5/13: sin(A + B) → <b>5-12-13</b>: 60/169 × 2 → <mark>120/169</mark> <small>CHSL · 12 Nov 2025</small></li>
+    <li><!--q:t197--><span class="tag p">PYQ</span> sin A = 3/5, cos B = 4/5: sin(A + B) → <b>3-4-5</b>: 12/25 + 12/25 → <mark>24/25</mark> <small>CPO · 9 Dec 2025</small></li>
+    <li><!--q:t244--><span class="tag p">PYQ</span> sin θ = 3/5 (Q1), cos φ = −5/13 (Q3): sin(θ + φ) → <b>sin φ = −12/13</b>: −15/65 − 48/65 → <mark>−63/65</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><!--q:t35--><span class="tag p">PYQ</span> cos 2A kya hai (agar cos 2A = 1 − 2sin²A)? → <b>double angle</b> → <mark>1 − 2 sin²A</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><!--q:t245--><span class="tag p">PYQ</span> cos²A − sin²A → <b>double angle</b> → <mark>cos 2A</mark> <small>DP HCM · 8 Jan 2026</small></li>
+    <li><!--q:t33--><span class="tag p">PYQ</span> sin x = 0.6: sin 2x + cos 2x → <b>2sc, c² − s²</b>: 0.96 + 0.28 → <mark>1.24</mark> <small>CGL · 20 Sep 2025</small></li>
+    <li><!--q:t144--><span class="tag p">PYQ</span> tan θ = 3/4: sin 2θ → <b>2 × 3/5 × 4/5</b> → <mark>24/25</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--q:t103--><span class="tag p">PYQ</span> Right Δ, tan A = 2: 2 sin A cos A → <b>2t/(1 + t²)</b>: 4/5 → <mark>4/5</mark> <small>CHSL · 13 Nov 2025</small></li>
+    <li><!--q:t145--><span class="tag p">PYQ</span> cos 2A = 1/2: sin 2A → <b>2A = 60°</b> → <mark>√3/2</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--q:t261--><span class="tag p">PYQ</span> sin²θ = (1 − cos 2θ)/2: sin⁴θ → <b>square karo</b> → <mark>(1 − cos 2θ)²/4</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><!--q:t263--><span class="tag p">PYQ</span> cos x = −3/5, x Q3 mein: sin(x/2) → <b>sin² (x/2) = (1 − cos x)/2</b> = 4/5; x/2 Q2 mein, plus → <mark>2/√5</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><!--q:t232--><span class="tag p">PYQ</span> cosec x = 5/4, sec x = 5/3: sin[2(x + π/8)] → <b>sin 2x = 24/25, cos 2x = −7/25</b>; sin(2x + 45°) = (24 − 7)/25 × 1/√2 → <mark>17/(25√2)</mark> <small>DP HCM · 12 Jan 2026</small></li>
+  </ul>
+
+  <!-- TYPE 13 -->
+  <h3>Type 13 · Bade angle (allied) aur mile-jule (5 Qs)</h3>
+  <p><b>Samjho:</b> bade angle ko chhota karo. 360° (2π) jitna ghatao, value nahi badalti. 180° + θ ya 180° − θ mein ratio wahi rehta hai, bas quadrant se sign. cos(−θ) = cos θ, sin(−θ) = −sin θ.</p>
+  <div class="box"><span class="k">Worked · sin 186° sin 222° sin 246° sin 258° <!--q:t243--><span class="tag p">PYQ</span> <small>DP HCM · 9 Jan 2026</small></span>
+    <b>Method:</b> 180 ghatao + yaad wala gunanphal · <i>~20 sec</i><br>
+    Sab Q3 mein hain → har ek minus. sin 186 = −sin 6, sin 222 = −sin 42, sin 246 = −sin 66, sin 258 = −sin 78. Chaar minus = plus.<br>
+    sin 6° sin 42° sin 66° sin 78° = <mark>1/16</mark>. <span class="tag x">CGL+</span> Ye jodi yaad rakho (cos 36° cos 72° = 1/4 se banti hai).
+  </div>
+  <div class="box"><span class="k">Worked · cos(−540°) <!--q:t220--><span class="tag p">PYQ</span> <small>DP AWO/TPO · 16 Jan 2026</small></span>
+    <b>Method:</b> minus hatao, 360 ghatao · <i>~5 sec</i><br>
+    cos(−540) = cos 540 = cos(540 − 360) = cos 180 = <mark>−1</mark>.
+  </div>
+  <ul>
+    <li><!--q:t237--><span class="tag p">PYQ</span> sin(13π/6) → <b>2π ghatao</b>: sin(π/6) → <mark>1/2</mark> <small>DP HCM · 12 Jan 2026</small></li>
+    <li><!--q:t240--><span class="tag p">PYQ</span> cos θ = sin(3π/4 − θ), θ acute → <b>cos θ = sin(90 − θ)</b>; sin(135 − θ) = sin(90 + θ) → 2θ = 45° → <mark>π/8</mark> <small>DP HCM · 9 Jan 2026</small></li>
+    <li><!--q:t264--><span class="tag p">PYQ</span> sin(x + y) = 0, cos(x − y) = 1: (cos x + cos y)² + (sin x − sin y)² → <b>= 2 + 2cos(x + y)</b>; x = y = 0 lo → <mark>4</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>cos ki table ko sin jaisa padhna (cos 30° = 1/2)</td><td>cos ki line ulti hai: cos 30° = √3/2, cos 60° = 1/2.</td></tr>
+    <tr><td>Quadrant diya, par sign lagana bhool gaye</td><td>Triangle se size, Add Sugar To Coffee se sign. Q2 mein sirf sin/cosec plus.</td></tr>
+    <tr><td>"sin x = cos(2x − 10)" mein x = 2x − 10 rakh diya</td><td>Alag ratio (sin–cos) ho toh <b>jodo = 90</b>. Ek hi ratio (cos–cos) ho tabhi barabar rakho.</td></tr>
+    <tr><td>Radian mein π na ho phir bhi 180 rakh diya (2 rad = 360°)</td><td>π nahi likha → 1 rad ≈ 57.3°. 2 rad ≈ 114.6°.</td></tr>
+    <tr><td>sec + tan = 5 se sec − tan = −5 ya 5 likhna</td><td>Guna = 1, toh sec − tan = <b>1/5</b>.</td></tr>
+    <tr><td>tan + cot = k se tan² + cot² = k²</td><td>k² − 2. Beech ka 2 × tan × cot = 2 ghatao.</td></tr>
+    <tr><td>cot A = x + 1/x mein cosec² = x² + 1/x² + 1</td><td>Square se +2, identity se +1 → <b>+3</b>.</td></tr>
+    <tr><td>Simplify mein 45° rakha, do option same aaye, ek chun liya</td><td>Tab 60° ya 30° se dobara jaancho.</td></tr>
+    <tr><td>Bank mein ² ya ⁴ chhoot jaata hai (1 + tan θ, sin θ + cos θ)</td><td>Options dekho: 25/9, 431/512 jaise number batate hain ki square ya fourth power tha.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 277 sawaal. <b>1 chhoda</b>: CHSL 20 Nov 2025, Shift 2 ka "Simplify: ." Bank mein expression chhapa hi nahi aur crop bhi nahi hai. Key cosec x + cot x hai, shayad (1 + cos x)/sin x tha. 148 sawaal page ke crop (image) se padhe. Teen sawaalon ka text bank mein toota tha ("2", "sin θ + cos θ", "tan θ + cot θ"); unhe pichhle crop ke neeche dikhte hisse se padha. Teen ke source bhi crop se sudhaare.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>sec θ + tan θ = 7. sec θ − tan θ?</summary><p>1/7.</p></details>
+    <details><summary>sin θ + cos θ = 7/5. sin θ cos θ?</summary><p>49/25 − 1 = 24/25 = 2sc → sc = 12/25.</p></details>
+    <details><summary>tan θ + cot θ = 3. tan²θ + cot²θ?</summary><p>9 − 2 = 7.</p></details>
+    <details><summary>sin 15° kitna?</summary><p>sin(45 − 30) = (√3 − 1)/2√2.</p></details>
+    <details><summary>(1 − cos²θ)(1 + cot²θ) = ?</summary><p>sin²θ × cosec²θ = 1. (45° rakho: ½ × 2 = 1 ✔)</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · HEIGHT AND DISTANCE ===================== -->
+<section class="chap" id="mhd-all">
+  <div class="eyebrow">Maths · 64 questions</div>
+  <h2>Height &amp; Distance: teen triangle, aur saare sawaal khatam</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, SP-XIV, Delhi Police) · sabse zyada: 30°/45°/60° se seedha, do point ek taraf ya dono taraf, aur "angle badla, speed batao"</div>
+
+  <h3>Pehle ek chhoti si kahani: tower ki chhoti dekhna</h3>
+  <p>Tum zameen par khade ho. Saamne ek tower hai. Uski chhoti dekhne ke liye tum aankh upar uthaate ho. Seedhi nazar (horizontal) aur chhoti wali nazar ke beech jo angle bana, wo hai <b>angle of elevation</b> (upar ka angle).</p>
+  <p>Ab tum tower ki chhat par ho aur neeche ek naav dekh rahe ho. Seedhi nazar se neeche jhuke. Wo angle hai <b>angle of depression</b> (neeche ka angle).</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Tower of height h on the left, observer point P on the ground at distance d. Line of sight from P to the top. Angle of elevation at P equals angle of depression at the top, because the dashed horizontal at the top is parallel to the ground.">
+      <rect x="100" y="50" width="40" height="190" class="chf"/><rect x="100" y="50" width="40" height="190" class="chs" style="fill:none"/>
+      <line x1="40" y1="240" x2="640" y2="240" class="ln"/>
+      <line x1="120" y1="50" x2="600" y2="50" class="ln" stroke-dasharray="5 5"/>
+      <line x1="120" y1="50" x2="520" y2="240" class="chs" style="stroke-width:2"/>
+      <circle cx="520" cy="240" r="5" style="fill:var(--ch)"/>
+      <circle cx="120" cy="50" r="5" style="fill:var(--ch)"/>
+      <path d="M470,240 A50,50 0 0,1 474.8,218.5" class="chs" style="fill:none"/>
+      <path d="M170,50 A50,50 0 0,1 165.2,71.5" class="chs" style="fill:none"/>
+      <text x="460" y="232" text-anchor="end" class="lbl" style="fill:var(--ch)">elevation</text>
+      <text x="180" y="78" class="lbl" style="fill:var(--ch)">depression</text>
+      <text x="606" y="54" class="sm">seedhi nazar</text>
+      <text x="530" y="262" class="lbl">P (tum)</text>
+      <text x="86" y="150" text-anchor="end" class="lbl">h</text>
+      <text x="320" y="262" text-anchor="middle" class="lbl">d (zameen par doori)</text>
+      <text x="350" y="130" class="sm">nazar ki line (karn)</text>
+      <text x="350" y="284" text-anchor="middle" class="sm">Upar ki dashed line zameen ke parallel hai → dono angle barabar (alternate angles)</text>
+    </svg>
+    </div>
+    <figcaption>Depression ka angle chhat par banta hai, par wahi angle neeche zameen par bhi hai. Isliye har sawaal mein angle zameen par utaar kar right triangle banao.</figcaption>
+  </figure>
+  <h3>Do basic ideas</h3>
+  <ul>
+    <li><b>Har sawaal ek (ya do) right triangle hai.</b> Khadi bhuja = oonchai h, zameen = doori d, tirchhi = rassi/seedhi/nazar (karn).</li>
+    <li><b>Angle lagbhag hamesha 30°, 45° ya 60°.</b> Toh ratio sirf teen: 1 : √3 : 2 aur 1 : 1 : √2. Trig chapter ka Speed method 2 wala picture yahi hai. Is chapter mein tan sabse kaam ka hai: tan = h/d.</li>
+  </ul>
+  <div class="tbl"><table>
+    <tr><th>Angle</th><th>h aur d</th><th>Karn (rassi / seedhi)</th><th>Yaad aise</th></tr>
+    <tr><td class="n">30°</td><td>d = h√3 (doori badi)</td><td>2h</td><td>chhota angle → door khade ho</td></tr>
+    <tr><td class="n">45°</td><td>d = h</td><td>h√2</td><td>barabar</td></tr>
+    <tr><td class="n">60°</td><td>h = d√3 (oonchai badi)</td><td>2d</td><td>bada angle → paas khade ho</td></tr>
+  </table></div>
+  <p>Paper mein ek sawaal ke ~36 second. Neeche 5 shortcuts hain jo √3 ki algebra ko 1 line bana dete hain.</p>
+
+  <h3>Speed method 1 · Seedha ek triangle</h3>
+  <p><b>Kab use karo:</b> ek angle aur ek bhuja di hai (h, d ya rassi).</p>
+  <div class="box"><span class="k">Demo · Seedhi 30° par, deewar par 6 m tak pahunchi. Seedhi? · <i>~3 sec</i></span>
+    30° par karn = 2h → <b>12 m</b>. Paanv ki doori = 6√3 m.
+  </div>
+  <div class="trick"><b>Trick:</b> √3 wale answer ko 1.732 se, √2 wale ko 1.414 se guna karo jab options decimal mein hon. 50√3 = 86.6, 100/√3 = 57.7, 20√3 = 34.64.</div>
+
+  <h3>Speed method 2 · Ek hi taraf do point (aage chal kar angle badla)</h3>
+  <p><b>Kab use karo:</b> "15 m aage chala, angle 45° se 60° ho gaya", ya "ek hi taraf do naav 30° aur 45° par".</p>
+  <p><b>Soch aise (30° aur 60°):</b> 60° wali doori x maano. Toh h = √3 x. 30° wali doori = h√3 = 3x. Beech ka gap = 3x − x = 2x. Bas.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 296" role="img" aria-label="Tower on the right with height h. Point B at 60 degrees is x from the foot, point A at 30 degrees is 3x from the foot, so the gap AB is 2x and h equals root 3 times x. Rules listed on the left.">
+      <rect x="610" y="90" width="20" height="150" class="chf"/><rect x="610" y="90" width="20" height="150" class="chs" style="fill:none"/>
+      <line x1="340" y1="240" x2="680" y2="240" class="ln"/>
+      <line x1="360.2" y1="240" x2="620" y2="90" class="chs" style="stroke-width:1.8"/>
+      <line x1="533.4" y1="240" x2="620" y2="90" class="chs" style="stroke-width:1.8"/>
+      <circle cx="360.2" cy="240" r="4" style="fill:var(--ch)"/><circle cx="533.4" cy="240" r="4" style="fill:var(--ch)"/>
+      <path d="M400.2,240 A40,40 0 0,0 394.8,220" class="chs" style="fill:none"/>
+      <path d="M563.4,240 A30,30 0 0,0 548.4,214" class="chs" style="fill:none"/>
+      <text x="406" y="234" class="sm" style="fill:var(--ch)">30°</text>
+      <text x="566" y="232" class="sm" style="fill:var(--ch)">60°</text>
+      <text x="356" y="260" text-anchor="middle" class="lbl">A</text><text x="533" y="260" text-anchor="middle" class="lbl">B</text>
+      <text x="447" y="262" text-anchor="middle" class="lbl" style="fill:var(--ch)">gap = 2x</text>
+      <text x="577" y="262" text-anchor="middle" class="lbl">x</text>
+      <text x="636" y="170" class="lbl">h = √3 x</text>
+      <line x1="360.2" y1="272" x2="620" y2="272" class="ln" stroke-dasharray="3 3"/>
+      <text x="490" y="286" text-anchor="middle" class="sm">AF = 3x (BF ka teen guna)</text>
+      <line x1="320" y1="20" x2="320" y2="270" class="ln"/>
+      <g class="lbl">
+        <text x="14" y="40">30° aur 60°, ek taraf:</text>
+        <text x="14" y="66" style="fill:var(--ch)">h = gap × √3/2</text>
+        <text x="14" y="92" style="fill:var(--ch)">AF : BF = 3 : 1</text>
+        <text x="14" y="118" style="fill:var(--ch)">h² = AF × BF</text>
+      </g>
+      <text x="14" y="150" class="lbl">Gap = h × …</text>
+      <g class="sm">
+        <text x="14" y="174">30° → 45°: (√3 − 1) ≈ 0.732</text>
+        <text x="14" y="196">30° → 60°: 2/√3 ≈ 1.155</text>
+        <text x="14" y="218">45° → 60°: (1 − 1/√3) ≈ 0.423</text>
+        <text x="14" y="246">ulta: h = gap ÷ (ye number)</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>30-60 ki jodi sabse saaf hai: gap hamesha 60° wali doori ka dugna. Doosri jodiyon ke liye left wali "gap = h × …" table yaad karo.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · 30° se 60 m aage chalo toh 60°. Tower? · <i>~4 sec</i></span>
+    h = gap × √3/2 = 60 × √3/2 = <b>30√3 m</b>.
+  </div>
+
+  <h3>Speed method 3 · Dono taraf do point</h3>
+  <p><b>Kab use karo:</b> tower/pul/plane ke dono taraf do cheezen, angle 30° aur 45° (ya koi jodi).</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Tower in the middle with height h. Left point at 45 degrees is h away. Right point at 30 degrees is h root 3 away. Total distance between them is h times root 3 plus 1.">
+      <rect x="320" y="90" width="20" height="150" class="chf"/><rect x="320" y="90" width="20" height="150" class="chs" style="fill:none"/>
+      <line x1="150" y1="240" x2="620" y2="240" class="ln"/>
+      <line x1="180" y1="240" x2="330" y2="90" class="chs" style="stroke-width:1.8"/>
+      <line x1="589.8" y1="240" x2="330" y2="90" class="chs" style="stroke-width:1.8"/>
+      <circle cx="180" cy="240" r="4" style="fill:var(--ch)"/><circle cx="589.8" cy="240" r="4" style="fill:var(--ch)"/>
+      <path d="M220,240 A40,40 0 0,0 208.3,211.7" class="chs" style="fill:none"/>
+      <path d="M549.8,240 A40,40 0 0,1 555.2,220" class="chs" style="fill:none"/>
+      <text x="224" y="232" class="sm" style="fill:var(--ch)">45°</text>
+      <text x="544" y="232" text-anchor="end" class="sm" style="fill:var(--ch)">30°</text>
+      <text x="310" y="170" text-anchor="end" class="lbl">h</text>
+      <text x="255" y="262" text-anchor="middle" class="lbl">h</text>
+      <text x="460" y="262" text-anchor="middle" class="lbl">h√3</text>
+      <line x1="180" y1="272" x2="589.8" y2="272" class="ln" stroke-dasharray="3 3"/>
+      <text x="385" y="40" text-anchor="middle" class="lbl" style="fill:var(--ch)">kul doori = h + h√3 = h(√3 + 1)</text>
+      <text x="385" y="62" text-anchor="middle" class="sm">ek hi taraf hote toh farq = h(√3 − 1)</text>
+    </svg>
+    </div>
+    <figcaption>Dono taraf → dooriyan <b>jodo</b>. Ek taraf → dooriyan <b>ghatao</b>. 30° wali doori h√3, 45° wali h, 60° wali h/√3.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · Tower 50 m, dono taraf 30° aur 60°. Doori? · <i>~6 sec</i></span>
+    50√3 + 50/√3 = 50 × (3 + 1)/√3 = <b>200/√3 m</b>.
+  </div>
+
+  <h3>Speed method 4 · Do imaaratein (upar se dono sire)</h3>
+  <p><b>Kab use karo:</b> badi imaarat ki chhat se chhoti imaarat ke upar aur neeche ka depression angle.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Tall building of 90 m on the left, smaller tower to its right. From the top of the tall building, depression 60 degrees to the tower's foot and 30 degrees to the tower's top. Gap at the top is one third of 90, so the tower is 60 m.">
+      <rect x="120" y="40" width="30" height="210" class="chf"/><rect x="120" y="40" width="30" height="210" class="chs" style="fill:none"/>
+      <rect x="271" y="110" width="22" height="140" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <line x1="60" y1="250" x2="440" y2="250" class="ln"/>
+      <line x1="150" y1="40" x2="440" y2="40" class="ln" stroke-dasharray="5 5"/>
+      <line x1="150" y1="40" x2="271" y2="110" class="chs" style="stroke-width:1.8"/>
+      <line x1="150" y1="40" x2="271" y2="250" class="chs" style="stroke-width:1.8"/>
+      <path d="M200,40 A50,50 0 0,1 193.3,65" class="chs" style="fill:none"/>
+      <path d="M182,40 A32,32 0 0,1 166,67.7" class="chs" style="fill:none"/>
+      <text x="206" y="62" class="sm" style="fill:var(--ch)">30°</text>
+      <text x="156" y="92" class="sm" style="fill:var(--ch)">60°</text>
+      <line x1="300" y1="40" x2="300" y2="110" class="ln" stroke-dasharray="3 3"/>
+      <text x="306" y="80" class="lbl" style="fill:var(--ch)">gap = H/3</text>
+      <text x="300" y="186" class="lbl">tower = 2H/3</text>
+      <text x="110" y="150" text-anchor="end" class="lbl">H = 90</text>
+      <text x="210" y="270" text-anchor="middle" class="lbl">d (dono ke beech)</text>
+      <line x1="460" y1="20" x2="460" y2="270" class="ln"/>
+      <g class="lbl">
+        <text x="476" y="44">30° aur 60° ki jodi:</text>
+        <text x="476" y="70" style="fill:var(--ch)">gap = H/3</text>
+        <text x="476" y="96" style="fill:var(--ch)">chhota = 2H/3</text>
+      </g>
+      <g class="sm">
+        <text x="476" y="126">kyunki d = H/√3, aur</text>
+        <text x="476" y="146">gap = d/√3 = H/3</text>
+        <text x="476" y="178">H = 90 → gap 30 → tower 60</text>
+        <text x="476" y="200">H = 240 → gap 80 → pole 160</text>
+        <text x="476" y="232">30° aur 45°: d = H, gap = H/√3</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Neeche wala angle (60°) doori deta hai. Upar wala (30°) sirf upar ka gap. Chhoti imaarat = badi − gap.</figcaption>
+  </figure>
+
+  <h3>Speed method 5 · Angle badla, speed batao</h3>
+  <p><b>Kab use karo:</b> plane, naav, car: "t second mein angle 60° se 30° ho gaya". Oonchai fixed hai, sirf zameen wali doori badli.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Observer O on the ground. Plane at fixed height h moves from position P1, seen at 60 degrees, to P2, seen at 30 degrees. Horizontal distance changes from h over root 3 to h root 3, so the gap is 2h over root 3. Gap table for other angle pairs on the right.">
+      <defs>
+        <marker id="mhd-sp-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <line x1="40" y1="250" x2="400" y2="250" class="ln"/>
+      <line x1="140" y1="100" x2="380" y2="100" class="ln" stroke-dasharray="5 5" marker-end="url(#mhd-sp-arr)"/>
+      <line x1="80" y1="250" x2="166.6" y2="100" class="chs" style="stroke-width:1.8"/>
+      <line x1="80" y1="250" x2="339.8" y2="100" class="chs" style="stroke-width:1.8"/>
+      <circle cx="80" cy="250" r="4" style="fill:var(--ch)"/>
+      <rect x="156.6" y="93" width="20" height="14" rx="4" style="fill:var(--ch)"/>
+      <rect x="329.8" y="93" width="20" height="14" rx="4" style="fill:var(--ch)"/>
+      <path d="M110,250 A30,30 0 0,0 95,224" class="chs" style="fill:none"/>
+      <path d="M130,250 A50,50 0 0,0 123.3,225" class="chs" style="fill:none"/>
+      <text x="103" y="223" class="sm" style="fill:var(--ch)">60°</text>
+      <text x="136" y="240" class="sm" style="fill:var(--ch)">30°</text>
+      <text x="166" y="86" text-anchor="middle" class="lbl">P1</text><text x="340" y="86" text-anchor="middle" class="lbl">P2</text>
+      <text x="253" y="122" text-anchor="middle" class="lbl" style="fill:var(--ch)">gap = 2h/√3</text>
+      <line x1="339.8" y1="107" x2="339.8" y2="250" class="ln" stroke-dasharray="3 3"/>
+      <text x="348" y="180" class="lbl">h</text>
+      <text x="76" y="268" text-anchor="middle" class="lbl">O</text>
+      <line x1="420" y1="20" x2="420" y2="260" class="ln"/>
+      <text x="436" y="40" class="lbl">Gap (h ka kitna):</text>
+      <g class="sm">
+        <text x="436" y="70">60° → 30°: 2/√3 ≈ 1.155 h</text>
+        <text x="436" y="96">45° → 30°: (√3 − 1) ≈ 0.732 h</text>
+        <text x="436" y="122">60° → 45°: (1 − 1/√3) ≈ 0.423 h</text>
+      </g>
+      <text x="436" y="160" class="lbl" style="fill:var(--ch)">speed = gap ÷ time</text>
+      <text x="436" y="190" class="sm">m/s → km/h: × 18/5</text>
+      <text x="436" y="214" class="sm">km per 10 s → km/h: × 360</text>
+    </svg>
+    </div>
+    <figcaption>Plane ki oonchai nahi badalti. Sirf zameen par uski parchhai aage badhti hai. Wahi gap speed deta hai.</figcaption>
+  </figure>
+  <div class="trick"><b>Trick:</b> parchhai wale sawaal (shadow) mein angle bhi nahi chahiye. Ek hi samay, ek hi suraj → <b>oonchai : parchhai</b> sabke liye same. 5 ft ki 4 ft parchhai, toh 20 ft parchhai wala 25 ft.</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 · CHSL = CHSL 2025 Tier 1 · CPO = CPO 2025 · SP-XIV = Selection Post Phase XIV 2025 · DP HCM = Delhi Police Head Constable (Jan 2026).
+  </div>
+
+  <!-- H TYPE 1 -->
+  <h3>Type 1 · Ek angle, ek bhuja: oonchai ya doori (16 Qs)</h3>
+  <div class="box"><span class="k">Worked · Lighthouse 100 m, naav par depression 30°. Doori? <!--q:h34--><span class="tag p">PYQ</span> <small>CPO · 9 Dec 2025</small></span>
+    <b>Method:</b> 30° → d = h√3 · <i>~4 sec</i><br>
+    100√3 = 100 × 1.732 = <mark>173.2 m</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Balloon 100 m upar, elevation 60°. Zameen par doori? <!--q:h36--><span class="tag p">PYQ</span> <small>CPO · 10 Dec 2025</small></span>
+    <b>Method:</b> 60° → d = h/√3 · <i>~5 sec</i><br>
+    100/√3 = 100√3/3 = 173.2/3 = <mark>57.7 m</mark>. (Jaal: 100√3 = 173 bhi option mein hai. 60° matlab paas, toh doori chhoti.)
+  </div>
+  <ul>
+    <li><!--q:h4--><span class="tag p">PYQ</span> Pole 10√3 m, parchhai 10 m: sun ka angle → <b>tan = √3</b> → <mark>60°</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><!--q:h9--><span class="tag p">PYQ</span> Parchhai 40 m, angle 45° → <b>45° = barabar</b> → <mark>40 m</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--q:h12--><span class="tag p">PYQ</span> Tower 20 m, angle 45°: parchhai → <b>barabar</b> → <mark>20 m</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:h37--><span class="tag p">PYQ</span> 120 m door se 45° → <b>barabar</b> → <mark>120 m</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><!--q:h43--><span class="tag p">PYQ</span> 45°, base se 20 m → <b>barabar</b> → <mark>20 m</mark> <small>DP HCM · 7 Jan 2026</small></li>
+    <li><!--q:h57--><span class="tag p">PYQ</span> 45°, base se 60 m → <b>barabar</b> → <mark>60 m</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><!--q:h62--><span class="tag p">PYQ</span> 45°, tower 20 m: doori → <b>barabar</b> → <mark>20 m</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><!--q:h38--><span class="tag p">PYQ</span> 20 m upar se depression 30°: doori → <b>h × √3</b> = 20 × 1.732 → <mark>34.64 m</mark> <small>CPO · 11 Dec 2025</small></li>
+    <li><!--q:h39--><span class="tag p">PYQ</span> Tower 50 m, elevation 30°: doori → <b>h × √3</b> → <mark>50√3 m</mark> <small>DP HCM · 12 Jan 2026</small></li>
+    <li><!--q:h58--><span class="tag p">PYQ</span> Cliff 20 m, depression 60°: doori → <b>h ÷ √3</b> → <mark>20√3/3 m</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><!--q:h53--><span class="tag p">PYQ</span> 25 m door, 60°: building → <b>d × √3</b> = 25 × 1.732 → <mark>43 m</mark> <small>SP-XIV · 2 Aug 2025</small></li>
+    <li><!--q:h55--><span class="tag p">PYQ</span> 50 m door, 30°: tower → <b>d ÷ √3</b> → <mark>50√3/3 m</mark> <small>SP-XIV · 26 Jul 2025</small></li>
+    <li><!--q:h61--><span class="tag p">PYQ</span> 30 m door, 30°: tower → <b>d ÷ √3</b> → <mark>10√3 m</mark> <small>SP-XIV · 31 Jul 2025</small></li>
+    <li><!--q:h42--><span class="tag p">PYQ</span> 50 m door, 30°: building → <b>d ÷ √3</b> = 28.87 m → sahi 50/√3 (key: <mark>25√3 m</mark>, note dekho) <small>DP HCM · 8 Jan 2026</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP HCM 8 Jan 2026 (50 m door se 30°, building?): h = 50 tan 30° = 50/√3 = <b>28.87 m</b>. Options 25√3 (43.3), 50√3, 50, 50√3 mein ye hai hi nahi. Key 25√3 galat hai. Ho sakta hai asli option 50√3/3 tha jo chhapte waqt bigad gaya.</div>
+
+  <!-- H TYPE 1b -->
+  <h3>Type 2 · Rassi, seedhi, patang, toota ped (karn wale) (15 Qs)</h3>
+  <p><b>Samjho:</b> rassi/seedhi/dori hamesha karn hai. 30° par karn = 2 × oonchai. 60° par karn = 2 × zameen wali doori. 45° par karn = oonchai × √2. Angle ki jagah ratio diya ho (sin x = 40/41) toh triplet.</p>
+  <div class="box"><span class="k">Worked · Cliff 35 m, rassi zameen se 30° par. Rassi kam se kam? <!--q:h8--><span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small></span>
+    <b>Method:</b> 30° → karn = 2h · <i>~3 sec</i><br>
+    2 × 35 = <mark>70 m</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 20 m ka ped toota, sira zameen se 30° par laga. Toot kitni oonchai par? <!--q:h40--><span class="tag p">PYQ</span> <small>DP HCM · 12 Jan 2026</small></span>
+    <b>Method:</b> 30-60-90 · <i>~8 sec</i><br>
+    Khada hissa x (30° ke saamne), gira hissa karn = 2x. Dono mil kar poora ped: x + 2x = 20 → x = <mark>20/3 m</mark>.
+  </div>
+  <ul>
+    <li><!--q:h13--><span class="tag p">PYQ</span> Platform 1.5 m, ramp 30° → <b>karn = 2h</b> → <mark>3 m</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:h17--><span class="tag p">PYQ</span> Patang 75 m, dori 30° → <b>karn = 2h</b> → <mark>150 m</mark> <small>CGL · 23 Sep 2025</small></li>
+    <li><!--q:h22--><span class="tag p">PYQ</span> Rassi 16 m, 30°: ghar → <b>h = karn/2</b> → <mark>8 m</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><!--q:h5--><span class="tag p">PYQ</span> Taar 10 m door, 60°: taar → <b>60° par karn = 2 × base</b> → <mark>20 m</mark> <small>CGL · 17 Sep 2025</small></li>
+    <li><!--q:h25--><span class="tag p">PYQ</span> Rassi 20 m, 60°: height aur doori → <b>1 : √3 : 2</b>: 10√3, 10 → <mark>17.32 m aur 10 m</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--q:h63--><span class="tag p">PYQ</span> Patang 75 m, dori 60° → <b>karn = h × 2/√3</b> = 150/√3 → <mark>50√3 m</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><!--q:h30--><span class="tag p">PYQ</span> Patang 60 m, dori 45° → <b>45° par karn = h√2</b> → <mark>60√2 m</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--q:h15--><span class="tag p">PYQ</span> Khidki 8 m, seedhi 45° → <b>h√2</b> = 8 × 1.414 = 11.3 → <mark>11 m</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:h31--><span class="tag p">PYQ</span> Cable 450√3 m, 30°: zameen par doori → <b>base = karn × √3/2</b> = 450 × 3/2 → <mark>675 m</mark> <small>CHSL · 25 Nov 2025</small></li>
+    <li><!--q:h21--><span class="tag p">PYQ</span> Stick 48 cm, 60°: deewar par oonchai → <b>(60° zameen se maano) h = 48 × √3/2</b> → <mark>24√3 cm</mark> (note dekho) <small>CHSL · 15 Nov 2025</small></li>
+    <li><!--q:h24--><span class="tag p">PYQ</span> Seedhi 41 m, sin x = 40/41: paanv ki doori → <b>9-40-41</b> → <mark>9 m</mark> <small>CHSL · 17 Nov 2025</small></li>
+    <li><!--q:h27--><span class="tag p">PYQ</span> Seedhi 13 m, tan θ = 5/12: oonchai → <b>5-12-13</b> → <mark>5 m</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--q:h32--><span class="tag p">PYQ</span> Seedhi 52 m, tan x = 192/80 = 12/5: paanv ki doori → <b>5-12-13 × 4</b> → <mark>20 m</mark> <small>CHSL · 30 Nov 2025</small></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CHSL 15 Nov 2025 (48 cm stick, "60° to a wall"): agar sach mein deewar se 60° ho, toh deewar par oonchai = 48 cos 60° = <b>24 cm</b>, jo option mein nahi. Key 24√3 tab aata hai jab 60° <b>zameen</b> se ho. Exam mein options dekh kar zameen wala angle maan lo.</div>
+
+  <!-- H TYPE 2 -->
+  <h3>Type 3 · Parchhai (shadow) ka ratio (4 Qs)</h3>
+  <div class="box"><span class="k">Worked · 5 ft aadmi ki 4 ft parchhai, ped ki 20 ft. Ped? <!--q:h16--><span class="tag p">PYQ</span> <small>CGL · 20 Sep 2025</small></span>
+    <b>Method:</b> oonchai : parchhai same · <i>~4 sec</i><br>
+    Parchhai 4 se 20 = 5 guna. Oonchai bhi 5 guna: 5 × 5 = <mark>25 ft</mark>.
+  </div>
+  <ul>
+    <li><!--q:h28--><span class="tag p">PYQ</span> 1.5 m stick, 2 m parchhai; ped 6 m → <b>× 3</b> → <mark>4.5 m</mark> <small>CHSL · 21 Nov 2025</small></li>
+    <li><!--q:h29--><span class="tag p">PYQ</span> 2 m aadmi, 1.5 m parchhai; imaarat 15 m → <b>× 10</b> → <mark>20 m</mark> <small>CHSL · 22 Nov 2025</small></li>
+    <li><!--q:h41--><span class="tag p">PYQ</span> 6 m stick, 4 m parchhai; tower 28 m → <b>× 7</b> → <mark>42 m</mark> <small>DP HCM · 8 Jan 2026</small></li>
+  </ul>
+
+  <!-- H TYPE 3 -->
+  <h3>Type 4 · Ek hi taraf do point (11 Qs)</h3>
+  <div class="box"><span class="k">Worked · 30° se 100 m paas aaye, angle 60°. Tower? <!--q:h56--><span class="tag p">PYQ</span> <small>SP-XIV · 26 Jul 2025</small></span>
+    <b>Method:</b> 30-60 gap · <i>~4 sec</i><br>
+    h = gap × √3/2 = 100 × √3/2 = <mark>50√3 m</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Tower 60 m, ek hi taraf do cheezen 30° aur 45° par. Beech ki doori? <!--q:h1--><span class="tag p">PYQ</span> <small>CGL · 14 Oct 2025</small></span>
+    <b>Method:</b> gap = h(√3 − 1) · <i>~6 sec</i><br>
+    60 × 0.732 = <mark>43.92 m</mark>. (Jaal: 60(√3 + 1) wala dono-taraf ka answer hai.)
+  </div>
+  <div class="box"><span class="k">Worked · 45° se 15 m aage chala, angle 60°. Pole? <!--q:h18--><span class="tag p">PYQ</span> <small>CGL · 24 Sep 2025</small></span>
+    <b>Method:</b> gap = h(1 − 1/√3) · <i>~15 sec</i><br>
+    h(√3 − 1)/√3 = 15 → h = 15√3/(√3 − 1). Upar-neeche (√3 + 1) se guna: 15√3(√3 + 1)/2 = <mark>15(3 + √3)/2 m</mark>.
+  </div>
+  <ul>
+    <li><!--q:h47--><span class="tag p">PYQ</span> Cliff 100 m, ek taraf 30° aur 45° (baaki kahani faltu): shuru ki doori → <b>h(√3 − 1)</b> → <mark>73.2 m</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+    <li><!--q:h2--><span class="tag p">PYQ</span> P par 60°, Q (10 m peeche) 30° → <b>30-60 gap: h = gap × √3/2</b> → <mark>5√3 m</mark> <small>CGL · 15 Sep 2025</small></li>
+    <li><!--q:h14--><span class="tag p">PYQ</span> A par 30°, B par 60°: AF : BF → <b>3 : 1 hamesha</b> → <mark>3 : 1</mark> <small>CGL · 19 Sep 2025</small></li>
+    <li><!--q:h60--><span class="tag p">PYQ</span> a aur b door 30° aur 60° (a &gt; b) → <b>h² = a × b</b> → <mark>√(ab)</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><!--q:h7--><span class="tag p">PYQ</span> Pole 25√3 m; 25 m par x°, 75 m par y° → <b>tan x = √3, tan y = 1/√3</b>: 60 + 30 → <mark>90°</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--q:h48--><span class="tag p">PYQ</span> P 40 m door, tan α = 1.5; Q 60 m door: tan β → <b>h = 60</b>: 60/60 → <mark>1</mark> <small>SP-XIV · 28 Jul 2025</small></li>
+    <li><!--q:h49--><span class="tag p">PYQ</span> 45° se 40 m aage 60°: h aur A ki doori → <b>h = 20(3 + √3)</b> ≈ 94.6 → <mark>95 m</mark> (45° par doori bhi 95) <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><!--q:h54--><span class="tag p">PYQ</span> Ek taraf, 100 m doori par 30° aur 45° → <b>h(√3 − 1) = 100</b> → <mark>50(√3 + 1) m</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+  </ul>
+
+  <!-- H TYPE 4 -->
+  <h3>Type 5 · Dono taraf do point (6 Qs)</h3>
+  <div class="box"><span class="k">Worked · Pul se nadi ke dono kinaare 30° aur 45° par. Chaudai 50(√3 + 1) m. Pul ki oonchai? <!--q:h0--><span class="tag p">PYQ</span> <small>CGL · 14 Oct 2025</small></span>
+    <b>Method:</b> kul = h(√3 + 1) · <i>~3 sec</i><br>
+    h(√3 + 1) = 50(√3 + 1) → <mark>50 m</mark>. Bina hisaab, sirf pattern dekh kar.
+  </div>
+  <div class="box"><span class="k">Worked · Cliff ke dono taraf do point, 200 m apart, 30° aur 45°. Cliff? <!--q:h20--><span class="tag p">PYQ</span> <small>CGL · 26 Sep 2025</small></span>
+    <b>Method:</b> kul = h(√3 + 1) · <i>~10 sec</i><br>
+    h = 200/(√3 + 1) = 200(√3 − 1)/2 = <mark>100(√3 − 1) m</mark>.
+  </div>
+  <ul>
+    <li><!--q:h6--><span class="tag p">PYQ</span> Tower 120 m, dono taraf car 30°, 45° → <b>h(√3 + 1)</b> → <mark>120(√3 + 1)</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--q:h10--><span class="tag p">PYQ</span> Plane 300 m, dono taraf naav 45°, 30° → <b>h(√3 + 1)</b> → <mark>300(√3 + 1) m</mark> <small>CGL · 18 Sep 2025</small></li>
+    <li><!--q:h19--><span class="tag p">PYQ</span> Lighthouse 100 m, dono taraf jahaaz 30°, 45° → <b>h(√3 + 1)</b> → <mark>100(√3 + 1) m</mark> <small>CGL · 24 Sep 2025</small></li>
+    <li><!--q:h35--><span class="tag p">PYQ</span> Beech ke point se tower 45°, pole 30°, pole 20 m, doori barabar → <b>d = 20√3</b>, tower = d → <mark>34.64 m</mark> <small>CPO · 10 Dec 2025</small></li>
+  </ul>
+
+  <!-- H TYPE 5 -->
+  <h3>Type 6 · Do imaaratein, statue on pedestal (5 Qs)</h3>
+  <div class="box"><span class="k">Worked · 90 m building se tower ke upar 30°, neeche 60°. Tower? <!--q:h33--><span class="tag p">PYQ</span> <small>CPO · 9 Dec 2025</small></span>
+    <b>Method:</b> 30-60 → gap = H/3 · <i>~4 sec</i><br>
+    Gap = 90/3 = 30 → tower = 90 − 30 = <mark>60 m</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 240 m pahaad se pole ke upar 30°, neeche 60°. (Pole − doori)? <!--q:h26--><span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small></span>
+    <b>Method:</b> 30-60 · <i>~15 sec</i><br>
+    Doori = 240/√3 = 80√3. Gap = 240/3 = 80 → pole = 160.<br>
+    160 − 80√3 = <mark>80(2 − √3)</mark>.
+  </div>
+  <ul>
+    <li><!--q:h3--><span class="tag p">PYQ</span> Tower 50 m se building ke upar 30°, neeche 45° → <b>d = 50</b>; upar ka gap 50/√3 = 28.9 → 50 − 28.9 → <mark>~21 m, 50 m</mark> <small>CGL · 16 Sep 2025</small></li>
+    <li><!--q:h23--><span class="tag p">PYQ</span> Chhota pole 10 m, 50 m door, 30° bade ke upar tak → <b>10 + 50/√3</b> = 10 + 28.87 → <mark>38.87 m</mark> <small>CHSL · 15 Nov 2025</small></li>
+    <li><!--q:h11--><span class="tag p">PYQ</span> Pedestal par 1.6 m statue: 60° aur 45° → <b>h + 1.6 = √3 h</b>: h = 1.6/(√3 − 1) → <mark>0.8(√3 + 1) m</mark> <small>CGL · 18 Sep 2025</small></li>
+  </ul>
+
+  <!-- H TYPE 6 -->
+  <h3>Type 7 · Angle badla → speed ya time (7 Qs)</h3>
+  <div class="box"><span class="k">Worked · Lighthouse 50 m, 10 s mein depression 60° se 30°. Naav ki speed? <!--q:h44--><span class="tag p">PYQ</span> <small>SP-XIV · 2 Aug 2025</small></span>
+    <b>Method:</b> gap = 2h/√3 · <i>~10 sec</i><br>
+    Gap = 100/√3 = 57.7 m. ÷ 10 = <mark>5.8 m/s</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Climber: t = 0 par 30°, t = 7 min par 60°. Pehle 3 min 5 m/min, phir 3 m/min. Cliff? <!--q:h52--><span class="tag p">PYQ</span> <small>SP-XIV · 31 Jul 2025</small></span>
+    <b>Method:</b> same doori par 60° wali oonchai = 30° wali × 3 · <i>~15 sec</i><br>
+    7 min mein chadha = 3 × 5 + 4 × 3 = 27 m. Pehle x, baad mein 3x → 2x = 27 → x = 13.5.<br>
+    Upar = 3 × 13.5 = <mark>40.5 m</mark>. (tan 60 ÷ tan 30 = 3, yahi trick.)
+  </div>
+  <ul>
+    <li><!--q:h59--><span class="tag p">PYQ</span> Plane 1.5 km, 10 s mein 60° se 30° → <b>gap = √3 km</b>, 10 s → × 360 → <mark>360√3 km/h</mark> <small>SP-XIV · 29 Aug 2025</small></li>
+    <li><!--q:h45--><span class="tag p">PYQ</span> Plane 1000 m, 20 s mein 60° se 45° → <b>gap = h(1 − 1/√3)</b> = 422.6 → <mark>21.1 m/s</mark> <small>SP-XIV · 24 Jul 2025</small></li>
+    <li><!--q:h50--><span class="tag p">PYQ</span> Cliff 150 m, 15 s mein 45° se 30° → <b>gap = h × 0.732</b> = 109.8 → <mark>7.3 m/s</mark> <small>SP-XIV · 29 Jul 2025</small></li>
+    <li><!--q:h51--><span class="tag p">PYQ</span> Cliff 100 m, 8 s mein 45° se 30° → <b>gap = 73.2</b> ÷ 8 → <mark>9.2 m/s</mark> <small>SP-XIV · 30 Jul 2025</small></li>
+    <li><!--q:h46--><span class="tag p">PYQ</span> Balloon 2 m/s upar, B 500 m door, 30° se 60° tak → <b>h: 500/√3 se 500√3</b>, gap 1000/√3 = 577.35 → ÷ 2 → <mark>288.675 s</mark> <small>SP-XIV · 25 Jul 2025</small></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>Depression angle ko tower ke paas wala angle maan lena</td><td>Depression = zameen par elevation. Angle ko neeche observer par utaaro.</td></tr>
+    <tr><td>30° par d = h/√3 likh dena</td><td>Chhota angle → door. 30° par d = h√3, 60° par d = h/√3.</td></tr>
+    <tr><td>Ek taraf ke sawaal mein dooriyan jod dena</td><td>Ek taraf → ghatao (√3 − 1). Dono taraf → jodo (√3 + 1).</td></tr>
+    <tr><td>Rassi/seedhi ko zameen wali doori samajhna</td><td>Rassi hamesha karn. 30° → 2h.</td></tr>
+    <tr><td>Toota ped mein karn = 20 rakh dena</td><td>Khada + gira = 20. Karn sirf gira hua hissa hai.</td></tr>
+    <tr><td>Speed mein oonchai se bhaag dena</td><td>Speed = zameen par gap ÷ time. Oonchai fixed hai.</td></tr>
+    <tr><td>Kahani mein phans jaana (5 min baad 60° aur 75°…)</td><td>Pehle dekho kya pucha. SP-XIV 25 Jul 2025 mein sirf shuru ki doori puchi thi: 30° aur 45° hi kaafi.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 64 sawaal, saare yahan. 16 crop (image) se padhe, kyunki unke options mein √ aur fraction toote the.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>Tower 40 m, elevation 60°. Doori?</summary><p>40/√3 = 40√3/3 ≈ 23.1 m.</p></details>
+    <details><summary>Ek hi taraf 30° aur 60°, gap 40 m. Tower?</summary><p>40 × √3/2 = 20√3 m.</p></details>
+    <details><summary>Plane 600 m upar, 60° se 30° in 12 s. Speed?</summary><p>Gap = 1200/√3 = 400√3 ≈ 692.8 m. ÷ 12 ≈ 57.7 m/s.</p></details>
+    <details><summary>Patang 60 m upar, dori 60° par. Dori?</summary><p>60 × 2/√3 = 40√3 m.</p></details>
+  </div>
+</section>

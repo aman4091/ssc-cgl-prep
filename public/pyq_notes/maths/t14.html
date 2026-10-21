@@ -1,0 +1,1211 @@
+<!-- ===================== MATHS · ALGEBRA (part 1: basics + identity sheet + speed methods) ===================== -->
+<section class="chap" id="mal-basics">
+  <div class="eyebrow">Maths · 167 questions</div>
+  <h2>Algebra: shuru se, aur bina lambi expansion ke 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs (CGL, CHSL, CPO, SP-XIV, MTS, Delhi Police, GD 2026) · sabse zyada: x + 1/x, "a + b aur ab diya", surd x = a + √b, teen number wali identity</div>
+
+  <h3>Pehle ek chhoti si kahani: do number, teen sawaal</h3>
+  <p>Maan lo do number hain, 5 aur 2. Inke baare mein teen cheezein bata sakte ho:</p>
+  <ul>
+    <li><b>Jod:</b> 5 + 2 = 7</li>
+    <li><b>Guna:</b> 5 × 2 = 10</li>
+    <li><b>Farq:</b> 5 − 2 = 3</li>
+  </ul>
+  <p>Ab koi poochhe "dono ke square ka jod?" Toh 25 + 4 = 29. Par agar sirf "jod 7 aur guna 10" bataya ho, aur number na bataye hon? Tab bhi 29 nikal aata hai: 7 × 7 = 49, usmein se 2 × 10 = 20 hatao. 49 − 20 = <b>29</b>.</p>
+  <p>Bas yahi algebra hai. Number chhupa diye, unki jagah a aur b likh diya. Par jod, guna, farq ka rishta wahi rehta hai. Isi rishte ko <b>identity</b> kehte hain.</p>
+  <div class="box"><span class="k">Ab naam rakh dete hain</span>
+    <b>Identity</b> = aisa barabar ka nishaan jo <b>har</b> number par sach ho. (a + b)² = a² + 2ab + b² ko 5 aur 2 daal kar check karo: 49 = 25 + 20 + 4. Sach.<br>
+    <b>Equation</b> = sirf kuch numbers par sach. x + 3 = 5 sirf x = 2 par sach hai.<br>
+    Is chapter ke 90% sawaal identity wale hain. Equation wale bahut kam hain, aur unmein bhi options daal kar dekhna sabse tez hai.
+  </div>
+
+  <h3>3 badi baatein (poora chapter inhi se chalta hai)</h3>
+  <ul>
+    <li><b>1. Identity har number par sach hai, toh apna number "maan lo".</b> Options mein x, y, a, b wale expression hain? Apna chhota number daalo (1, 0, 2) aur dekho kaunsa option wahi number deta hai. Koi expansion nahi.</li>
+    <li><b>2. Do number ki duniya sirf jod (s), guna (p), farq (d) hai.</b> Inmein se koi do pata hon, teesra aur baaki sab nikal aata hai.</li>
+    <li><b>3. x + 1/x bhi wahi do-number wali kahani hai.</b> Do number x aur 1/x, jinka guna hamesha 1 hai. Isliye x + 1/x ke sawaal sabse aasaan hain: guna pehle se pata hai.</li>
+  </ul>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Area picture of (a+b) squared. A big square of side a+b is split into a squared, two rectangles ab, and b squared. Text on the right lists the square identities.">
+      <rect x="40" y="30" width="160" height="160" class="chf"/><rect x="40" y="30" width="160" height="160" class="chs"/>
+      <rect x="200" y="30" width="80" height="160" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="40" y="190" width="160" height="80" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="200" y="190" width="80" height="80" style="fill:var(--ch);opacity:.45"/><rect x="200" y="190" width="80" height="80" class="chs"/>
+      <g text-anchor="middle" class="lbl">
+        <text x="120" y="116">a²</text>
+        <text x="240" y="116">ab</text>
+        <text x="120" y="236">ab</text>
+        <text x="240" y="236">b²</text>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="120" y="22">a</text><text x="240" y="22">b</text>
+        <text x="28" y="114">a</text><text x="28" y="234">b</text>
+        <text x="160" y="290">poori bhuja = a + b</text>
+      </g>
+      <text x="320" y="50" class="lbl">(a + b)² = a² + 2ab + b²</text>
+      <text x="320" y="70" class="sm">bada square = ek bada, ek chhota, do patti (ab, ab)</text>
+      <text x="320" y="106" class="lbl">(a − b)² = a² − 2ab + b²</text>
+      <text x="320" y="126" class="sm">wahi tukde, bas pattiyan minus</text>
+      <text x="320" y="162" class="lbl" style="fill:var(--ch)">(a + b)² − (a − b)² = 4ab</text>
+      <text x="320" y="182" class="sm">dono mein farq sirf 4 pattiyon ka</text>
+      <text x="320" y="218" class="lbl">(a + b)² + (a − b)² = 2(a² + b²)</text>
+      <text x="320" y="238" class="sm">pattiyan kat gayin, square do baar bache</text>
+      <text x="320" y="274" class="sm">5 aur 2 se check: 49 − 9 = 40 = 4 × 10 ✔</text>
+    </svg>
+    </div>
+    <figcaption>(a + b)² ko ek bade square ki tarah socho. Pattiyan (ab) hi saara khel hain. Jod aur farq ke square mein farq = 4ab.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet to memorise (sirf yahi chahiye)</span>
+    <b>Do number</b> (s = a + b, p = ab, d = a − b):<br>
+    a² + b² = s² − 2p = d² + 2p · d² = s² − 4p · a² − b² = s × d<br>
+    a³ + b³ = s³ − 3ps · a³ − b³ = d³ + 3pd · a⁴ + a²b² + b⁴ = (a² + b²)² − p²<br>
+    <b>Teen number</b> (S = a + b + c, Q = ab + bc + ca):<br>
+    a² + b² + c² = S² − 2Q · a³ + b³ + c³ − 3abc = S × (a² + b² + c² − Q)<br>
+    a + b + c = 0 ho toh a³ + b³ + c³ = 3abc · (a − b)² + (b − c)² + (c − a)² = 2(a² + b² + c² − Q)<br>
+    <b>Cube khol ke:</b> (a + b)³ = a³ + 3a²b + 3ab² + b³ (1-3-3-1) · a³ + b³ = (a + b)(a² − ab + b²) · a³ − b³ = (a − b)(a² + ab + b²)<br>
+    <b>x + 1/x = k:</b> x² + 1/x² = k² − 2 · x³ + 1/x³ = k³ − 3k · <b>x − 1/x = d:</b> x² + 1/x² = d² + 2 · x³ − 1/x³ = d³ + 3d<br>
+    <span class="tag x">CGL+</span> x positive ho toh x + 1/x ≥ 2 (sabse kam 2, jab x = 1) · a² + b² + c² − ab − bc − ca = ½[(a − b)² + (b − c)² + (c − a)²]<br>
+    <b>Squares 11–30 aur cubes 1–15</b> zubaani: 13² = 169, 17² = 289, 24² = 576, 27² = 729 · 11³ = 1331, 12³ = 1728.
+  </div>
+
+  <p>Paper mein ek sawaal ko lagbhag <b>36 second</b> milte hain. Neeche 8 tareeke hain. Har ek ke saath likha hai kab lagana hai aur kitna time leta hai.</p>
+
+  <!-- ========== METHOD 1 ========== -->
+  <h3>Speed method 1 · Value maan lo (sabse bada hathiyar)</h3>
+  <p><b>Kab use karo:</b> jab options mein x, y, a, b wale expression hon ("simplify karo", "expand karo", "kis ke barabar hai"). Ya jab sawaal mein x + 1/x = 2 ya −2 ho.</p>
+  <p><b>Soch aise:</b> identity har number par sach hai. Toh sabse aasaan number daalo. Sawaal ek number ban jayega, har option bhi ek number ban jayega. Jo match kare, wahi answer.</p>
+  <ul>
+    <li>Pehle <b>1</b> aur <b>0</b> try karo. Agar do option same number dein, toh <b>2</b> daal ke dobara dekho.</li>
+    <li>x + 1/x = 2 → seedha <b>x = 1</b>. x + 1/x = −2 → <b>x = −1</b>. Ab koi bhi power: 1 ya ±1.</li>
+    <li>a + b + c = 0 wale sawaal: a = 1, b = −1, c = 0 maan lo (ya 1, 1, −2).</li>
+    <li>Homogeneous fraction (upar neeche sab terms ki same degree) mein decimals hon: sabko 100 se guna kar do, ratio wahi rahega.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · (x + y)³ − (x − y)³ = ? · <i>~10 sec</i></span>
+    x = 1, y = 1 maan lo: 2³ − 0³ = <b>8</b>.<br>
+    Options: 6xy(x − y) = 0 ✘ · 2y(3x² + y²) = 2 × 4 = <b>8 ✔</b> · 2y(3x² − y²) = 4 ✘ · 2y(x² + y²) = 4 ✘.
+  </div>
+  <div class="box"><span class="k">Demo · x + 1/x = −2. x⁶ + 1/x⁶ − 3(x⁴ + 1/x⁴) + 4(x² + 1/x²) = ? · <i>~8 sec</i></span>
+    x = −1. Har even power = 1, toh har (xⁿ + 1/xⁿ) = 2.<br>
+    2 − 3 × 2 + 4 × 2 = 2 − 6 + 8 = <b>4</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "Option mein letter, toh tum daalo number." Maan-lo wale number aise chuno ki koi option zero ya barabar na ban jaye. x = y = 1 se (x − y) wale sab zero ho jaate hain, wahan x = 2, y = 1 lo.</div>
+
+  <!-- ========== METHOD 2 ========== -->
+  <h3>Speed method 2 · x + 1/x ki seedhi</h3>
+  <p><b>Kab use karo:</b> x + 1/x, x − 1/x, √x + 1/√x, 2x + 2/x, x + 2/x jaisa kuch diya ho aur upar ki power maangi ho.</p>
+  <p><b>Soch aise:</b> x aur 1/x ka guna 1 hai. Toh (x + 1/x)² kholo: x² + 2 + 1/x². Bas beech ka <b>2</b> hatana hai. Cube mein beech ka hissa 3 × (guna) × (jod) = 3k hota hai, wo hatao.</p>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 310" role="img" aria-label="Ladder for x plus 1 over x equal to k. Square step: k squared minus 2. Fourth power: square again minus 2. Cube step: k cubed minus 3k. Sixth power: cube result squared minus 2, or square result cubed minus 3 times square result. Example values for k = 4: 14, 194, 52, 2702. Minus branch: x minus 1 over x equal to d gives x squared plus 1 over x squared equal to d squared plus 2.">
+      <defs>
+        <marker id="mal-lad-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="10" y="100" width="150" height="56" rx="8" style="fill:var(--ch);opacity:.25"/><rect x="10" y="100" width="150" height="56" rx="8" class="chs"/>
+      <text x="85" y="124" text-anchor="middle" class="lbl">x + 1/x = k</text>
+      <text x="85" y="144" text-anchor="middle" class="sm">misaal: k = 4</text>
+      <!-- square branch -->
+      <rect x="230" y="30" width="200" height="56" rx="8" class="chf"/><rect x="230" y="30" width="200" height="56" rx="8" class="chs"/>
+      <text x="330" y="54" text-anchor="middle" class="lbl">x² + 1/x² = k² − 2</text>
+      <text x="330" y="74" text-anchor="middle" class="sm">16 − 2 = 14</text>
+      <rect x="490" y="30" width="200" height="56" rx="8" class="chf"/><rect x="490" y="30" width="200" height="56" rx="8" class="chs"/>
+      <text x="590" y="54" text-anchor="middle" class="lbl">x⁴ + 1/x⁴ = (14)² − 2</text>
+      <text x="590" y="74" text-anchor="middle" class="sm">196 − 2 = 194</text>
+      <!-- cube branch -->
+      <rect x="230" y="170" width="200" height="56" rx="8" class="chf"/><rect x="230" y="170" width="200" height="56" rx="8" class="chs"/>
+      <text x="330" y="194" text-anchor="middle" class="lbl">x³ + 1/x³ = k³ − 3k</text>
+      <text x="330" y="214" text-anchor="middle" class="sm">64 − 12 = 52</text>
+      <rect x="490" y="170" width="200" height="56" rx="8" class="chf"/><rect x="490" y="170" width="200" height="56" rx="8" class="chs"/>
+      <text x="590" y="194" text-anchor="middle" class="lbl">x⁶ + 1/x⁶ = (52)² − 2</text>
+      <text x="590" y="214" text-anchor="middle" class="sm">2704 − 2 = 2702</text>
+      <g class="ln">
+        <line x1="160" y1="118" x2="226" y2="66" marker-end="url(#mal-lad-arr)"/>
+        <line x1="160" y1="140" x2="226" y2="192" marker-end="url(#mal-lad-arr)"/>
+        <line x1="430" y1="58" x2="486" y2="58" marker-end="url(#mal-lad-arr)"/>
+        <line x1="430" y1="198" x2="486" y2="198" marker-end="url(#mal-lad-arr)"/>
+      </g>
+      <g class="sm"><text x="168" y="84">square</text><text x="176" y="186">cube</text><text x="436" y="50">square</text><text x="436" y="190">square</text></g>
+      <!-- minus branch -->
+      <rect x="10" y="250" width="150" height="50" rx="8" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="85" y="280" text-anchor="middle" class="lbl">x − 1/x = d</text>
+      <line x1="160" y1="275" x2="226" y2="275" class="ln" marker-end="url(#mal-lad-arr)"/>
+      <text x="232" y="270" class="lbl">x² + 1/x² = d² + 2</text>
+      <text x="232" y="290" class="sm">(minus ka square: beech ka 2 ab jud jaata hai)</text>
+      <text x="520" y="270" class="lbl">x³ − 1/x³ = d³ + 3d</text>
+      <text x="520" y="290" class="sm">phir square wali seedhi wahi</text>
+    </svg>
+    </div>
+    <figcaption>Seedhi: plus mein "− 2" aur "− 3k", minus mein "+ 2" aur "+ 3d". Har kadam ek hi line ka hai.</figcaption>
+  </figure>
+
+  <p>Ye values zubaani yaad kar lo. Paper mein inhi ka repeat hota hai.</p>
+  <div class="tbl"><table>
+    <tr><th>Diya hai</th><th>x² + 1/x²</th><th>x³ + 1/x³</th><th>x⁴ + 1/x⁴</th><th>x⁶ + 1/x⁶</th></tr>
+    <tr><td class="n">x + 1/x = 3</td><td>7</td><td>18</td><td>47</td><td>322</td></tr>
+    <tr><td class="n">x + 1/x = 4</td><td>14</td><td>52</td><td>194</td><td>2702</td></tr>
+    <tr><td class="n">x + 1/x = 5</td><td>23</td><td>110</td><td>527</td><td>12098</td></tr>
+    <tr><td class="n">x − 1/x = 2</td><td>6</td><td>(x³ − 1/x³ = 14)</td><td>34</td><td>198</td></tr>
+    <tr><td class="n">x − 1/x = 3</td><td>11</td><td>(x³ − 1/x³ = 36)</td><td>119</td><td>1298</td></tr>
+  </table></div>
+  <div class="box"><span class="k">Khaas values (seedha answer) <span class="tag x">CGL+</span></span>
+    x + 1/x = 2 → x = 1 · x + 1/x = −2 → x = −1<br>
+    x + 1/x = 1 → x³ = −1, toh x³ + 1/x³ = −2 · x + 1/x = −1 → x³ = 1, toh x³ + 1/x³ = 2<br>
+    x + 1/x = √2 → x² + 1/x² = 0 (x⁴ = −1) · x + 1/x = √3 → x³ + 1/x³ = 0 (x⁶ = −1)
+  </div>
+  <div class="box"><span class="k">Demo · x + 2/x = 7, x³ + 8/x³ = ? · <i>~10 sec</i></span>
+    Yahan guna x × 2/x = <b>2</b> hai, 1 nahi. Cube mein beech ka hissa = 3 × guna × jod = 3 × 2 × 7 = 42.<br>
+    343 − 42 = <b>301</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> "Plus mein ghatao, minus mein jodo." Square par 2 (ya 2 × guna), cube par 3 × guna × jod. 3x + 2/x = 14 → 9x² + 4/x² = 196 − 2 × 6 = 184, kyunki 3x × 2/x = 6.</div>
+
+  <!-- ========== METHOD 3 ========== -->
+  <h3>Speed method 3 · Do number: s, p, d ka triangle (aur "number hi nikaal lo")</h3>
+  <p><b>Kab use karo:</b> a + b, ab, a − b, a² + b² mein se do diye hon, aur koi aur maanga ho.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Triangle linking sum s, product p and difference d of two numbers. Edges: s squared minus d squared equals 4p. a squared plus b squared equals s squared minus 2p equals d squared plus 2p. Example 5 and 2: s 7, p 10, d 3.">
+      <polygon points="200,40 60,240 340,240" class="chf"/>
+      <polygon points="200,40 60,240 340,240" class="chs"/>
+      <circle cx="200" cy="40" r="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <circle cx="60" cy="240" r="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <circle cx="340" cy="240" r="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <g text-anchor="middle" class="lbl">
+        <text x="200" y="38">s</text><text x="60" y="238">p</text><text x="340" y="238">d</text>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="200" y="54">a + b</text><text x="60" y="254">ab</text><text x="340" y="254">a − b</text>
+      </g>
+      <text x="200" y="160" text-anchor="middle" class="lbl">a² + b²</text>
+      <text x="200" y="178" text-anchor="middle" class="sm">= s² − 2p = d² + 2p</text>
+      <text x="200" y="282" text-anchor="middle" class="sm">s² = d² + 4p</text>
+      <text x="100" y="130" text-anchor="end" class="sm">s² − 2p</text>
+      <text x="300" y="130" class="sm">d² + 4p = s²</text>
+      <text x="390" y="50" class="lbl">5 aur 2 par check</text>
+      <text x="390" y="72" class="sm">s = 7, p = 10, d = 3</text>
+      <text x="390" y="92" class="sm">a² + b² = 49 − 20 = 9 + 20 = 29</text>
+      <text x="390" y="112" class="sm">s² − d² = 49 − 9 = 40 = 4p</text>
+      <text x="390" y="150" class="lbl" style="fill:var(--ch)">Cube bhi yahin se</text>
+      <text x="390" y="172" class="sm">a³ + b³ = s³ − 3ps = 343 − 210 = 133</text>
+      <text x="390" y="192" class="sm">a³ − b³ = d³ + 3pd = 27 + 90 = 117</text>
+      <text x="390" y="230" class="lbl">Aur seedha tareeka:</text>
+      <text x="390" y="252" class="sm">jod 7, guna 10 → kaun se do number? 5, 2</text>
+      <text x="390" y="272" class="sm">phir jo maange, seedha number se nikaalo</text>
+    </svg>
+    </div>
+    <figcaption>Teen kone: jod, guna, farq. Koi do pata hon toh teesra s² = d² + 4p se. Baaki sab inhi se banta hai.</figcaption>
+  </figure>
+  <p><b>"Number hi nikaal lo" wala tareeka:</b> SSC aksar chhote number rakhta hai. Jod 7, guna 12 → 4 aur 3. Jod 11, farq 5 → 8 aur 3. Ek baar number mil gaye toh a⁴ − b⁴ bhi seedha 4096 − 81.</p>
+  <div class="box"><span class="k">Demo · a³ + b³ = 407, a + b = 11, ab = ? · <i>~8 sec</i></span>
+    Number socho: jod 11, cubes ka jod 407. 7³ = 343, 4³ = 64, 343 + 64 = 407 ✔. Toh 7 aur 4.<br>
+    ab = <b>28</b>. (Formula se: 1331 − 33ab = 407 → ab = 28.)
+  </div>
+  <div class="trick"><b>Trick:</b> √a + √b = s aur √a − √b = d diye hon → a + b = (s² + d²) ÷ 2. 12 aur 4 → (144 + 16) ÷ 2 = 80. Kyunki √a, √b khud nikal aate hain: (s + d)/2 aur (s − d)/2.</div>
+
+  <!-- ========== METHOD 4 ========== -->
+  <h3>Speed method 4 · Teen number wali identity</h3>
+  <p><b>Kab use karo:</b> a + b + c, ab + bc + ca, abc, a² + b² + c², a³ + b³ + c³ mein se kuch diya ho.</p>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Map for three numbers. Known S = a+b+c, Q = ab+bc+ca, P = abc. From S and Q get a squared plus b squared plus c squared equal S squared minus 2Q. Then a cubed plus b cubed plus c cubed equal 3P plus S times (sum of squares minus Q). If S is zero, sum of cubes equals 3P.">
+      <defs>
+        <marker id="mal-tri-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="10" y="20" width="160" height="50" rx="8" class="chf"/><rect x="10" y="20" width="160" height="50" rx="8" class="chs"/>
+      <text x="90" y="42" text-anchor="middle" class="lbl">S = a + b + c</text><text x="90" y="60" text-anchor="middle" class="sm">jod</text>
+      <rect x="10" y="100" width="160" height="50" rx="8" class="chf"/><rect x="10" y="100" width="160" height="50" rx="8" class="chs"/>
+      <text x="90" y="122" text-anchor="middle" class="lbl">Q = ab + bc + ca</text><text x="90" y="140" text-anchor="middle" class="sm">jode ke guna</text>
+      <rect x="10" y="180" width="160" height="50" rx="8" class="chf"/><rect x="10" y="180" width="160" height="50" rx="8" class="chs"/>
+      <text x="90" y="202" text-anchor="middle" class="lbl">P = abc</text><text x="90" y="220" text-anchor="middle" class="sm">teeno ka guna</text>
+      <rect x="240" y="55" width="200" height="60" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="340" y="80" text-anchor="middle" class="lbl">a² + b² + c²</text>
+      <text x="340" y="100" text-anchor="middle" class="sm">= S² − 2Q</text>
+      <rect x="490" y="55" width="200" height="60" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="590" y="80" text-anchor="middle" class="lbl">a³ + b³ + c³</text>
+      <text x="590" y="100" text-anchor="middle" class="sm">= 3P + S × (squares − Q)</text>
+      <rect x="490" y="160" width="200" height="60" rx="8" style="fill:var(--ch);opacity:.25"/><rect x="490" y="160" width="200" height="60" rx="8" class="chs"/>
+      <text x="590" y="185" text-anchor="middle" class="lbl">S = 0 ho toh</text>
+      <text x="590" y="205" text-anchor="middle" class="sm">a³ + b³ + c³ = 3abc</text>
+      <g class="ln">
+        <line x1="170" y1="45" x2="236" y2="78" marker-end="url(#mal-tri-arr)"/>
+        <line x1="170" y1="125" x2="236" y2="95" marker-end="url(#mal-tri-arr)"/>
+        <line x1="440" y1="85" x2="486" y2="85" marker-end="url(#mal-tri-arr)"/>
+        <line x1="170" y1="205" x2="486" y2="190" marker-end="url(#mal-tri-arr)"/>
+        <line x1="590" y1="115" x2="590" y2="156" marker-end="url(#mal-tri-arr)"/>
+      </g>
+      <text x="250" y="150" class="sm">Ulta bhi: S² = squares + 2Q</text>
+      <text x="250" y="250" class="sm">(a − b)² + (b − c)² + (c − a)² = 2 × (squares − Q)</text>
+    </svg>
+    </div>
+    <figcaption>Teen number mein bhi wahi kahani: jod (S), jode ke guna (Q), sabka guna (P). Squares S aur Q se, cubes uske baad.</figcaption>
+  </figure>
+  <div class="box"><span class="k">Demo · a + b + c = 15, ab + bc + ca = 48, abc = 16. a³ + b³ + c³? · <i>~15 sec</i></span>
+    Squares = 225 − 96 = 129.<br>
+    Cubes = 3 × 16 + 15 × (129 − 48) = 48 + 15 × 81 = 48 + 1215 = <b>1263</b>.
+  </div>
+  <div class="trick"><b>Trick:</b> Teen terms ka jod zero ho (jaise (x − y) + (y − z) + (z − x)), toh unke cubes ka jod = 3 × unka guna. Ye trick fraction wale sawaal mein upar aur neeche dono jagah lagti hai.</div>
+
+  <!-- ========== METHOD 5 ========== -->
+  <h3>Speed method 5 · Surd ka jodi-dar (conjugate)</h3>
+  <p><b>Kab use karo:</b> x = 2 + √3, a = √7 + √5, y = 3 − √8 jaise sawaal.</p>
+  <ul>
+    <li><b>Jodi-dar:</b> 2 + √3 ka jodi-dar 2 − √3. Dono ka guna = 4 − 3 = <b>1</b>. Toh 1/x = 2 − √3, aur x + 1/x = 4.</li>
+    <li>Guna 1 tabhi aata hai jab (pehla)² − (doosra)² = 1. 3 − √8: 9 − 8 = 1 ✔. 5 + 2√6: 25 − 24 = 1 ✔.</li>
+    <li><b>a = p + √q, b = p − √q</b> → a + b = 2p, ab = p² − q, aur <b>a² + b² = 2(p² + q)</b>. Seedha!</li>
+    <li>x = √5 + 2 diya, x² − 4√5 maanga? x² = 5 + 4 + 4√5 = 9 + 4√5. √ wala hissa kat gaya, bacha <b>9</b>.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · a = 4 + √7, b = 4 − √7. a² + b² = ? · <i>~5 sec</i></span>
+    2 × (16 + 7) = 2 × 23 = <b>46</b>. Bas.
+  </div>
+
+  <!-- ========== METHOD 6 ========== -->
+  <h3>Speed method 6 · Componendo-Dividendo (jod/farq ka ulta)</h3>
+  <p><b>Kab use karo:</b> (√(5 + x) + √(5 − x)) ÷ (√(5 + x) − √(5 − x)) = 3 jaisa fraction, jismein upar jod aur neeche farq ho.</p>
+  <p><b>Soch aise:</b> (A + B)/(A − B) = 3 ho toh A : B = (3 + 1) : (3 − 1) = 4 : 2 = 2 : 1. Kyunki agar A = 2, B = 1, toh (2 + 1)/(2 − 1) = 3 ✔.</p>
+  <div class="box"><span class="k">Demo · (√(5 + x) + √(5 − x)) / (√(5 + x) − √(5 − x)) = 3. x? · <i>~12 sec</i></span>
+    √(5 + x) : √(5 − x) = 4 : 2 = 2 : 1. Square karo: (5 + x) : (5 − x) = 4 : 1.<br>
+    5 + x = 4(5 − x) → 5x = 15 → x = <b>3</b>. (Ya option daalo: x = 3 → √8 aur √2, yaani 2√2 aur √2 → 3√2/√2 = 3 ✔.)
+  </div>
+
+  <!-- ========== METHOD 7 ========== -->
+  <h3>Speed method 7 · Options daal ke dekho (equation wale sawaal)</h3>
+  <p><b>Kab use karo:</b> "x ki value kya hai", "number kaunsa hai", "kaunsa pair" wale sawaal. Hal karne se tez hai option daalna.</p>
+  <ul>
+    <li>√(x + 3) + √(x − 2) = 5: x = 6 → 3 + 2 = 5 ✔. Ek line.</li>
+    <li>"Square mein se do guna number ghatao, 80 aata hai": 10 → 100 − 20 = 80 ✔.</li>
+    <li>Options mein se pehle wo daalo jo √ ko poora square banaye (x + 3 = 9, x − 2 = 4).</li>
+  </ul>
+
+  <!-- ========== METHOD 8 ========== -->
+  <h3>Speed method 8 · Unit digit aur bade number</h3>
+  <ul>
+    <li><b>14² + 87² kis ke barabar?</b> Sirf aakhri digit: 6 + 9 = 15 → <b>5</b>. Jis option ka aakhri digit 5 ho, wahi. (41² + 78²: 1 + 4 = 5 ✔.)</li>
+    <li><b>Bade number dekho toh identity pehchano:</b> 51 × 49 = (50 + 1)(50 − 1) = 2500 − 1. (785³ + 215³)/(785² − 785 × 215 + 215²) = 785 + 215 = 1000.</li>
+    <li>14² + 16² + 24² + 2(14 × 16 + 16 × 24 + 24 × 14) = (14 + 16 + 24)² = 54² = 2916.</li>
+  </ul>
+
+  <!-- ========== FLOWCHART ========== -->
+  <h3>Kaunsa method kab? (ek nazar mein)</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing an algebra method. Check in order: options have letters, x plus 1 over x given, two numbers sum product given, three numbers given, surd value given, plus over minus fraction, solve for x. Each yes leads to its method.">
+      <defs>
+        <marker id="mal-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya diya, kya maanga?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mal-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">Options mein x, y, a, b hain?</text>
+        <text x="180" y="141">x ± 1/x (ya k/x) diya?</text>
+        <text x="180" y="197">Do number: a + b, ab, a − b?</text>
+        <text x="180" y="253">Teen number: a + b + c, ab + bc + ca?</text>
+        <text x="180" y="309">x = p + √q jaisi value?</text>
+        <text x="180" y="365">(A + B)/(A − B) = k wala fraction?</text>
+        <text x="180" y="421">"x kya hai" / "number kya hai"?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mal-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mal-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mal-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mal-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mal-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mal-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mal-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Value maan lo</text>
+        <text x="410" y="132">x + 1/x ki seedhi</text>
+        <text x="410" y="188">s-p-d triangle / number nikaalo</text>
+        <text x="410" y="244">Teen number map</text>
+        <text x="410" y="300">Jodi-dar (conjugate)</text>
+        <text x="410" y="356">Componendo-Dividendo</text>
+        <text x="410" y="412">Options daal ke dekho</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">1, 0, 2 daalo · x + 1/x = ±2 → x = ±1</text>
+        <text x="410" y="149">plus: −2, −3k · minus: +2, +3d</text>
+        <text x="410" y="205">a² + b² = s² − 2p · s² = d² + 4p</text>
+        <text x="410" y="261">squares = S² − 2Q · S = 0 → 3abc</text>
+        <text x="410" y="317">a² + b² = 2(p² + q) · guna 1?</text>
+        <text x="410" y="373">A : B = (k + 1) : (k − 1)</text>
+        <text x="410" y="429">√ ko poora square banane wala pehle</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow rough mein 3 second ka hai. Pehla "haan" milte hi wahi method chalao.</figcaption>
+  </figure>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>x + 1/x = 6. x² + 1/x² aur x³ + 1/x³?</summary><p>36 − 2 = 34. Cube: 216 − 18 = 198.</p></details>
+    <details><summary>a + b = 9, ab = 20. a² + b² aur a − b? 5 second mein.</summary><p>Number hi nikaal lo: 5 aur 4. Squares = 41, farq = 1.</p></details>
+    <details><summary>x = 3 + 2√2. x + 1/x?</summary><p>9 − 8 = 1, toh 1/x = 3 − 2√2. Jod = 6.</p></details>
+    <details><summary>a + b + c = 0 aur abc = 5. a³ + b³ + c³?</summary><p>3abc = 15.</p></details>
+    <details><summary>(A + B)/(A − B) = 5. A : B?</summary><p>(5 + 1) : (5 − 1) = 6 : 4 = 3 : 2.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · ALGEBRA (part 2: types 1–4) ===================== -->
+<section class="chap" id="mal-types-a">
+  <div class="eyebrow">Maths · PYQ types</div>
+  <h2>Algebra: Type 1–4, topper ki rough ke saath</h2>
+  <div class="meta">Bank mein 167 sawaal · 165 yahan (do jagah, part 2 aur 3) · 2 chhode (text kata hua, page crop nahi) · har sawaal ke aage uska method</div>
+
+  <div class="box"><span class="k">Exam ke short naam</span>
+    CGL = CGL 2025 Tier 1 (Tier-2 alag likha hai) · CHSL = CHSL 2025 Tier 1 · CPO = CPO 2025 · SP-XIV = Selection Post Phase XIV 2025 · MTS = MTS 2025 · DP = Delhi Police (AWO/TPO, HCM, Constable; Dec 2025–Jan 2026) · GD = GD Constable 2026. Saari dates shift ki dates hain.
+  </div>
+
+  <!-- TYPE 1 -->
+  <h3>Type 1 · x + 1/x se upar ki power (24 Qs)</h3>
+  <div class="box"><span class="k">Worked · x + 1/x = 4. x⁶ + 1/x⁶ − 3(x⁴ + 1/x⁴) + 4(x² + 1/x²) = ? <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small><!--a11--></span>
+    <b>Method:</b> seedhi · <i>~20 sec</i><br>
+    Square = 16 − 2 = <b>14</b>. Fourth = 196 − 2 = <b>194</b>. Cube = 64 − 12 = 52 → sixth = 2704 − 2 = <b>2702</b>.<br>
+    2702 − 3 × 194 + 4 × 14 = 2702 − 582 + 56 = <mark>2176</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · b − 1/b = 3. b⁶ + 1/b⁶ = ? <span class="tag p">PYQ</span> <small>CHSL · 14 Nov 2025</small><!--a40--></span>
+    <b>Method:</b> seedhi (minus wali) · <i>~12 sec</i><br>
+    Minus: square = 9 + 2 = <b>11</b>. Ab 11 ko "x² + 1/x²" maan ke cube wala niyam: 11³ − 3 × 11 = 1331 − 33 = <mark>1298</mark>.<br>
+    (Ya: b³ − 1/b³ = 27 + 9 = 36 → 36² + 2 = 1298. Minus ke square mein + 2.)
+  </div>
+  <div class="box"><span class="k">Worked · 2x − 1/(2x) = 10/3, x &gt; 1. x² + 1/(16x²) = ? <span class="tag p">PYQ</span> <small>MTS · 12 Feb 2025</small><!--a136--></span>
+    <b>Method:</b> 2x ko hi "x" maano · <i>~15 sec</i><br>
+    t = 2x. t − 1/t = 10/3 → t² + 1/t² = 100/9 + 2 = 118/9. Yaani 4x² + 1/(4x²) = 118/9.<br>
+    Maanga hai x² + 1/(16x²) = ¼ × (4x² + 1/(4x²)) = 118/36 = <mark>59/18</mark>. (118/9 wala option jaal hai.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> x + 1/x = 5 → x² + 1/x² → <b>seedhi</b>: 25 − 2 → <mark>23</mark> <small>CGL · 13 Sep 2025</small><!--a3--></li>
+    <li><span class="tag p">PYQ</span> x + 1/x = 4 → x³ + 1/x³ → <b>seedhi</b>: 64 − 12 → <mark>52</mark> <small>CGL · 14 Sep 2025</small><!--a5--></li>
+    <li><span class="tag p">PYQ</span> x − 1/x = 3 → x⁴ + 1/x⁴ → <b>seedhi (minus)</b>: 9 + 2 = 11 → 121 − 2 → <mark>119</mark> <small>CGL · 15 Sep 2025</small><!--a6--></li>
+    <li><span class="tag p">PYQ</span> √x + 1/√x = 4 → x + 1/x → <b>seedhi</b> (√x hi "x" hai): 16 − 2 → <mark>14</mark> <small>CGL · 18 Sep 2025</small><!--a12--></li>
+    <li><span class="tag p">PYQ</span> x + 2/x = 7 → x³ + 8/x³ → <b>seedhi, guna 2</b>: 343 − 3 × 2 × 7 → <mark>301</mark> <small>CGL · 18 Sep 2025</small><!--a13--></li>
+    <li><span class="tag p">PYQ</span> x + 1/x = −1 → x⁴ + 1/x⁴ + 2x² + 2/x² → <b>seedhi</b>: square = 1 − 2 = −1, fourth = 1 − 2 = −1 → −1 + 2(−1) → <mark>−3</mark> <small>CGL · 19 Sep 2025</small><!--a15--></li>
+    <li><span class="tag p">PYQ</span> x + 1/x = −2 → x⁶ + 1/x⁶ − 3(x⁴ + 1/x⁴) + 4(x² + 1/x²) → <b>value maan lo x = −1</b>: 2 − 6 + 8 → <mark>4</mark> <small>CGL · 19 Sep 2025</small><!--a18--></li>
+    <li><span class="tag p">PYQ</span> x + 1/x = 5 → 2x/(x² − 1) → <b>upar-neeche x se bhaag</b>: 2/(x − 1/x); x − 1/x = √(25 − 4) = √21 → <mark>2√21/21</mark> <small>CGL · 22 Sep 2025</small><!--a24--></li>
+    <li><span class="tag p">PYQ</span> x + 1/x = 2√3 → x³ + 1/x³ → <b>seedhi</b>: (2√3)³ = 24√3, minus 3 × 2√3 = 6√3 → <mark>18√3</mark> <small>CGL Tier-2</small><!--a28--></li>
+    <li><span class="tag p">PYQ</span> a − 1/a = 2 → a⁴ + 1/a⁴ → <b>seedhi (minus)</b>: 4 + 2 = 6 → 36 − 2 → <mark>34</mark> <small>CHSL · 26 Nov 2025</small><!--a64--></li>
+    <li><span class="tag p">PYQ</span> 2x + 2/x = 3 → x² + 1/x² → <b>pehle 2 se bhaag</b>: x + 1/x = 3/2 → 9/4 − 2 → <mark>1/4</mark> <small>CHSL · 28 Nov 2025</small><!--a72--></li>
+    <li><span class="tag p">PYQ</span> x + 1/x = 2 → x⁶ + 1/x⁶ − 3(x³ + 1/x³) + 5(x² + 1/x²) → <b>value maan lo x = 1</b>: 2 − 6 + 10 → <mark>6</mark> <small>CPO · 9 Dec 2025</small><!--a79--></li>
+    <li><span class="tag p">PYQ</span> Number minus uska ulta = 3; square aur ulte ke square ka jod → <b>seedhi (minus)</b>: 9 + 2 → <mark>11</mark> <small>DP · 9 Jan 2026</small><!--a115--></li>
+    <li><span class="tag p">PYQ</span> x + 1/(x + 2) = 6 → (x + 2)³ + 1/(x + 2)³ → <b>t = x + 2</b>: t + 1/t = 8 → 512 − 24 → <mark>488</mark> <small>SP-XIV · 25 Jul 2025</small><!--a142--></li>
+    <li><span class="tag p">PYQ</span> 3x + 2/x − 4 = 10 → 9x² + 4/x² + 24 → <b>seedhi, guna 6</b>: 3x + 2/x = 14 → 196 − 12 = 184 → + 24 → <mark>208</mark> <small>SP-XIV · 29 Aug 2025</small><!--a147--></li>
+    <li><span class="tag p">PYQ</span> x + 1/x = √2 → x⁶ + 1/x⁶ → <b>khaas value</b>: square = 2 − 2 = 0 → sixth = 0³ − 3 × 0 → <mark>0</mark> <small>SP-XIV · 29 Aug 2025</small><!--a148--></li>
+    <li><span class="tag p">PYQ</span> a² + 1/a² = 14 → a⁴ + 1/a⁴ → <b>seedhi</b>: 196 − 2 → <mark>194</mark> <small>SP-XIV · 29 Jul 2025</small><!--a149--></li>
+    <li><span class="tag p">PYQ</span> a + 1/a = 3 → a⁶ + 1/a⁶ → <b>seedhi</b>: square 7 → 7³ − 3 × 7 = 343 − 21 → <mark>322</mark> <small>SP-XIV · 30 Jul 2025</small><!--a150--></li>
+    <li><span class="tag p">PYQ</span> (√a + 1/√a)² = 10 → a² + 1/a² → <b>seedhi</b>: a + 1/a + 2 = 10 → a + 1/a = 8 → 64 − 2 → <mark>62</mark> <small>SP-XIV · 2 Aug 2025</small><!--a152--></li>
+    <li><span class="tag p">PYQ</span> x − 1/x = 3 → x² + 1/x² → <b>seedhi (minus)</b>: 9 + 2 → <mark>11</mark> <small>SP-XIV · 28 Jul 2025</small><!--a159--></li>
+    <li><span class="tag p">PYQ</span> Number + ulta = 15; squares ka jod → <b>seedhi</b>: 225 − 2 = 223 → option "111 × 2 + 1" = <mark>223</mark> <small>SP-XIV · 31 Jul 2025</small><!--a163--></li>
+  </ul>
+
+  <!-- TYPE 2 -->
+  <h3>Type 2 · Do number: jod, guna, farq diye (31 Qs)</h3>
+  <div class="box"><span class="k">Worked · a + b = 7, ab = 10. a² + b² = ? <span class="tag p">PYQ ×2</span> <small>DP · 9 Jan 2026; SP-XIV · 24 Jul 2025</small><!--a117--><!--a154--></span>
+    <b>Method:</b> number nikaalo · <i>~5 sec</i><br>
+    Jod 7, guna 10 → 5 aur 2. 25 + 4 = <mark>29</mark>. (Formula se: 49 − 20.)
+  </div>
+  <div class="box"><span class="k">Worked · x + y = 24, x² + y² = 360. x⁴ + x²y² + y⁴ = ? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small><!--a44--></span>
+    <b>Method:</b> s-p triangle + identity · <i>~20 sec</i><br>
+    2xy = 576 − 360 = 216 → xy = 108.<br>
+    x⁴ + x²y² + y⁴ = (x² + y²)² − (xy)² = 360² − 108² = (360 − 108)(360 + 108) = 252 × 468 = <mark>1,17,936</mark>.<br>
+    Last digit check: 0 − 4 → 6. Sirf ek option 6 par khatam.
+  </div>
+  <div class="box"><span class="k">Worked · (6m − 5n)² = 7, 30mn = 60. (6m + 5n)² + 16mn = ? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small><!--a46--></span>
+    <b>Method:</b> s² = d² + 4p · <i>~12 sec</i><br>
+    Yahan "do number" 6m aur 5n hain. Unka guna = 30mn = 60.<br>
+    (jod)² = (farq)² + 4 × guna = 7 + 240 = 247. mn = 2 → 16mn = 32. Kul = <mark>279</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> a³ + b³ = 407, a + b = 11 → ab → <b>number nikaalo</b>: 7 aur 4 (343 + 64) → <mark>28</mark> <small>CGL · 14 Oct 2025</small><!--a4--></li>
+    <li><span class="tag p">PYQ</span> a³ + b³ = 35, ab = 6 → a + b → <b>number nikaalo</b>: 3 aur 2 (27 + 8) → <mark>5</mark> <small>CGL · 19 Sep 2025</small><!--a17--></li>
+    <li><span class="tag p">PYQ</span> p + q = 12, p² − q² = 72 → p − q → <b>a² − b² = s × d</b>: 72 ÷ 12 → <mark>6</mark> <small>CHSL · 13 Nov 2025</small><!--a31--></li>
+    <li><span class="tag p">PYQ ×2</span> x − y = 8, xy = 5 → x³ − y³ + 8(x + y)² → <b>d³ + 3pd</b> = 512 + 120 = 632; (x + y)² = 64 + 20 = 84 → 632 + 672 → <mark>1304</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small><!--a34--><!--a37--></li>
+    <li><span class="tag p">PYQ</span> m − n = 4, m³ − n³ = 1216 → mn → <b>d³ + 3pd</b>: 64 + 12mn = 1216 → <mark>96</mark> <small>CHSL · 17 Nov 2025</small><!--a43--></li>
+    <li><span class="tag p">PYQ</span> x + y = 6, x² + y² = 20 → x⁴ + x²y² + y⁴ → <b>number nikaalo</b>: 4 aur 2 → 256 + 64 + 16 → <mark>336</mark> <small>CHSL · 17 Nov 2025</small><!--a45--></li>
+    <li><span class="tag p">PYQ</span> (a + b)² = 121, ab = 10 → a² + b² → <b>s² − 2p</b>: 121 − 20 → <mark>101</mark> <small>CHSL · 19 Nov 2025</small><!--a54--></li>
+    <li><span class="tag p">PYQ</span> a + b = 24, a² + b² = 320 → a³ + b³ → <b>number nikaalo</b>: ab = 128 → 16 aur 8 → 4096 + 512 → <mark>4608</mark> <small>CHSL · 20 Nov 2025</small><!--a55--></li>
+    <li><span class="tag p">PYQ</span> x + y = 7, xy = 12 → x² + y² → <b>number nikaalo</b>: 4, 3 → <mark>25</mark> <small>CHSL · 21 Nov 2025</small><!--a58--></li>
+    <li><span class="tag p">PYQ</span> x + y = 12, x − y = 4 → (x³ + y³)/(x + y) → <b>number nikaalo</b>: 8, 4 → x² − xy + y² = 64 − 32 + 16 → <mark>48</mark> <small>CHSL · 21 Nov 2025</small><!--a59--></li>
+    <li><span class="tag p">PYQ</span> x − y = 7, xy = 60 → x² + y² → <b>d² + 2p</b>: 49 + 120 (number 12, 5) → <mark>169</mark> <small>CHSL · 27 Nov 2025</small><!--a67--></li>
+    <li><span class="tag p">PYQ</span> a + b = 3, a − b = 1 → a⁴ − b⁴ → <b>number nikaalo</b>: 2, 1 → 16 − 1 → <mark>15</mark> <small>CHSL · 27 Nov 2025</small><!--a68--></li>
+    <li><span class="tag p">PYQ</span> 4x² + y² = 40, xy = 6 → 2x + y aur 2x − y → <b>do number 2x, y; guna 2xy = 12</b>: (jod)² = 40 + 24 = 64, (farq)² = 40 − 24 = 16 → <mark>8, 4</mark> <small>CHSL · 27 Nov 2025</small><!--a69--></li>
+    <li><span class="tag p">PYQ</span> p + q = 3, p − q = 1 → 2p² + 2q² − 4pq → <b>2(p − q)²</b> → <mark>2</mark> <small>CHSL · 28 Nov 2025</small><!--a70--></li>
+    <li><span class="tag p">PYQ</span> x + y = 11, x − y = 5 → x⁴ − y⁴ → <b>number nikaalo</b>: 8, 3 → 11 × 5 × 73 → <mark>4015</mark> <small>CHSL · 29 Nov 2025</small><!--a73--></li>
+    <li><span class="tag p">PYQ</span> a² + b² = 100, a − b = 4 → ab → <b>d² + 2p</b>: 2ab = 100 − 16 → <mark>42</mark> <small>CPO · 10 Dec 2025</small><!--a84--></li>
+    <li><span class="tag p">PYQ</span> a + b = 7 → a³ + b³ + 21ab → <b>(a + b)³ khol ke</b>: a³ + b³ + 3ab × 7 = 7³ → <mark>343</mark> <small>CPO · 10 Dec 2025</small><!--a87--></li>
+    <li><span class="tag p">PYQ</span> Jod 13, squares ka farq 65 → <b>a² − b² = s × d</b>: farq = 5 → <mark>4 aur 9</mark> <small>CPO · 10 Dec 2025</small><!--a88--></li>
+    <li><span class="tag p">PYQ</span> X + Y = 20, XY = 120 → X² + Y² → <b>s² − 2p</b>: 400 − 240 → <mark>160</mark> <small>CPO · 11 Dec 2025</small><!--a89--></li>
+    <li><span class="tag p">PYQ</span> x² − y² = 255, x + y = 17 → x − y → <b>s × d</b>: 255 ÷ 17 → <mark>15</mark> <small>MTS · 12 Feb 2025</small><!--a137--></li>
+    <li><span class="tag p">PYQ</span> a − b = 5, a² + b² = 73 → ab → <b>d² + 2p</b>: 73 = 25 + 2ab → <mark>24</mark> <small>SP-XIV · 26 Jul 2025</small><!--a155--></li>
+    <li><span class="tag p">PYQ</span> Farq 18, guna 63 → (jod)² → <b>s² = d² + 4p</b>: 324 + 252 → <mark>576</mark> <small>SP-XIV · 25 Jul 2025</small><!--a161--></li>
+    <li><span class="tag p">PYQ</span> √a + √b = 5, √a − √b = 1 → a, b → <b>number nikaalo</b>: √a = 3, √b = 2 → <mark>a = 9, b = 4</mark> <small>CGL · 19 Sep 2025</small><!--a16--></li>
+    <li><span class="tag p">PYQ</span> √a + √b = 12, √a − √b = 4 → a + b → <b>(s² + d²)/2</b>: (144 + 16)/2 → <mark>80</mark> <small>CHSL · 28 Nov 2025</small><!--a71--></li>
+    <li><span class="tag p">PYQ</span> √a + √b = 10, √a − √b = 4 → a + b → <b>(s² + d²)/2</b>: (100 + 16)/2 → <mark>58</mark> <small>CHSL · 29 Nov 2025</small><!--a74--></li>
+    <li><span class="tag p">PYQ</span> Do hisse; squares ka farq = 84 × hisson ka farq → number → <b>a² − b² = (a + b)(a − b)</b>: a + b = 84 → <mark>84</mark> <small>MTS · 16 Feb 2025</small><!--a138--></li>
+  </ul>
+
+  <!-- TYPE 3 -->
+  <h3>Type 3 · Teen number aur a + b + c = 0 (19 Qs)</h3>
+  <div class="box"><span class="k">Worked · [(x + y)³ + (y + z)³ + (z + x)³ − 3(x + y)(y + z)(z + x)] ÷ [x³ + y³ + z³ − 3xyz] = ? <span class="tag p">PYQ</span> <small>CHSL · 12 Nov 2025</small><!--a30--></span>
+    <b>Method:</b> value maan lo · <i>~10 sec</i><br>
+    x = 1, y = 0, z = 0. Upar: (1)³ + 0 + (1)³ − 3 × 1 × 0 × 1 = 2. Neeche: 1 + 0 + 0 − 0 = 1.<br>
+    Answer = <mark>2</mark>. Koi expansion nahi.
+  </div>
+  <div class="box"><span class="k">Worked · Teen numbers ka jod 80, squares ka jod 2,650, guna 13,500. Cubes ka jod? <span class="tag p">PYQ</span> <small>CHSL · 26 Nov 2025</small><!--a63--></span>
+    <b>Method:</b> teen number map · <i>~25 sec</i><br>
+    Q = (6400 − 2650)/2 = 1875.<br>
+    Cubes = 3 × 13,500 + 80 × (2650 − 1875) = 40,500 + 80 × 775 = 40,500 + 62,000 = <mark>1,02,500</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · x² + y² + z² = 2(5x + 6y + 4z) − 77. 2(x + y) − 3z = ? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small><!--a48--></span>
+    <b>Method:</b> squares ka jod zero · <i>~15 sec</i><br>
+    Sab ek taraf: (x² − 10x) + (y² − 12y) + (z² − 8z) + 77 = 0. Aur 25 + 36 + 16 = 77! Toh ye hai (x − 5)² + (y − 6)² + (z − 4)² = 0.<br>
+    Squares ka jod zero → har square zero → x = 5, y = 6, z = 4. 2 × 11 − 12 = <mark>10</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> x + y + z = 0 → (x − y)³ + (y − z)³ + (z − x)³ → <b>teen terms ka jod 0</b> → <mark>3(x − y)(y − z)(z − x)</mark> <small>CGL · 17 Sep 2025</small><!--a8--></li>
+    <li><span class="tag p">PYQ</span> 4x² + y² + 25z² + 4xy − 10yz − 20zx at x = 4, y = 3, z = 2 → <b>poora square pehchano</b>: (2x + y − 5z)² = (8 + 3 − 10)² → <mark>1</mark> <small>CHSL · 13 Nov 2025</small><!--a32--></li>
+    <li><span class="tag p">PYQ ×2</span> a + b + c = 12, ab + bc + ca = 40 → a² + b² + c² → <b>S² − 2Q</b>: 144 − 80 → <mark>64</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small><!--a33--><!--a36--></li>
+    <li><span class="tag p">PYQ</span> x + y + z = 16, Q = 75 → squares → <b>S² − 2Q</b>: 256 − 150 → <mark>106</mark> <small>CHSL · 14 Nov 2025</small><!--a38--></li>
+    <li><span class="tag p">PYQ</span> [(a² − b²)³ + (b² − c²)³ + (c² − a²)³] ÷ [(a − b)³ + (b − c)³ + (c − a)³] → <b>dono taraf jod 0, toh 3 × guna</b>: (a² − b²)…/(a − b)… → <mark>(a + b)(b + c)(c + a)</mark> <small>CHSL · 14 Nov 2025</small><!--a41--></li>
+    <li><span class="tag p">PYQ</span> a² + b² + c² = 240, ab − bc − ca = 64 → (a + b − c)² → <b>khol ke</b>: squares + 2(ab − bc − ca) = 240 + 128 → <mark>368</mark> <small>CHSL · 15 Nov 2025</small><!--a42--></li>
+    <li><span class="tag p">PYQ</span> x + y + z = 0, squares = 32 → xy + yz + zx → <b>S² = squares + 2Q</b>: 0 = 32 + 2Q → <mark>−16</mark> <small>CHSL · 12 Nov 2025</small><!--a76--></li>
+    <li><span class="tag p">PYQ</span> a + b + c = 20, squares = 200 → (a − b)² + (b − c)² + (c − a)² → <b>2(squares − Q)</b>: Q = 100 → 2 × 100 → <mark>200</mark> <small>CPO · 10 Dec 2025</small><!--a85--></li>
+    <li><span class="tag p">PYQ</span> S = 15, Q = 48, abc = 16 → cubes → <b>teen number map</b>: 48 + 15 × 81 → <mark>1263</mark> <small>CPO · 11 Dec 2025</small><!--a91--></li>
+    <li><span class="tag p">PYQ</span> (a − b)(a + b) + (b − c)(b + c) + (c − a)(c + a) → <b>a² − b² + b² − c² + c² − a²</b> → <mark>0</mark> <small>CPO · 12 Dec 2025</small><!--a95--></li>
+    <li><span class="tag p">PYQ</span> 14² + 16² + 24² + 2(14 × 16 + 16 × 24 + 24 × 14) → <b>(a + b + c)²</b>: 54² → <mark>2916</mark> <small>MTS · 11 Feb 2025</small><!--a135--></li>
+    <li><span class="tag p">PYQ</span> p/a + q/b + r/c = 1, a/p + b/q + c/r = 0 → p²/a² + q²/b² + r²/c² → <b>X = p/a…</b>: dusri line se XY + YZ + ZX = 0 → 1² − 0 → <mark>1</mark> <small>SP-XIV · 24 Jul 2025</small><!--a141--></li>
+    <li><span class="tag p">PYQ</span> squares = 20, Q = 10 → (a + b + c)² → <b>squares + 2Q</b>: 20 + 20 → <mark>40</mark> <small>SP-XIV · 26 Jul 2025</small><!--a156--></li>
+    <li><span class="tag p">PYQ</span> (x + y + z)² − (x² + y² + z²) → <b>bachi sirf pattiyan</b> → <mark>2(xy + yz + zx)</mark> <small>SP-XIV · 28 Jul 2025</small><!--a160--></li>
+    <li><span class="tag p">PYQ</span> a + b + c = 0 → a³ + b³ + c³ → <b>seedha niyam</b> (1, 1, −2 se check: 1 + 1 − 8 = −6 = 3 × (−2)) → <mark>3abc</mark> <small>SP-XIV · 29 Jul 2025</small><!--a162--></li>
+  </ul>
+
+  <!-- TYPE 4 -->
+  <h3>Type 4 · Surd value di hai: x = p + √q (17 Qs)</h3>
+  <div class="box"><span class="k">Worked · x = √[(2 + √3)/(2 − √3)]. x² + x − 9 = ? <span class="tag p">PYQ</span> <small>CGL · 12 Sep 2025</small><!--a2--></span>
+    <b>Method:</b> jodi-dar · <i>~15 sec</i><br>
+    (2 + √3)(2 − √3) = 1, toh 1/(2 − √3) = 2 + √3. Andar = (2 + √3)². √ hata → x = 2 + √3.<br>
+    x² = 7 + 4√3. x² + x − 9 = 7 + 4√3 + 2 + √3 − 9 = <mark>5√3</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · x = (√2 + 1)/(√2 − 1), y = (√2 − 1)/(√2 + 1). x² + y² = ? <span class="tag p">PYQ</span> <small>CHSL · 21 Nov 2025</small><!--a60--></span>
+    <b>Method:</b> jodi-dar + s-p · <i>~12 sec</i><br>
+    Neeche ka guna 2 − 1 = 1. Toh x = (√2 + 1)² = 3 + 2√2, y = 3 − 2√2.<br>
+    x + y = 6, xy = 1 → 36 − 2 = <mark>34</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> x = √7 → x + 1/x → <b>ek hi neeche</b>: (7 + 1)/√7 = 8/√7 → <mark>8√7/7</mark> <small>CGL · 12 Sep 2025</small><!--a1--></li>
+    <li><span class="tag p">PYQ</span> x = 2 + √3 → x − 1/x → <b>jodi-dar</b>: 1/x = 2 − √3 → <mark>2√3</mark> <small>CGL · 20 Sep 2025</small><!--a20--></li>
+    <li><span class="tag p">PYQ</span> x = √5 + 2 → x² − 4√5 → <b>√ wala hissa katega</b>: 9 + 4√5 − 4√5 → <mark>9</mark> <small>CGL · 20 Sep 2025</small><!--a22--></li>
+    <li><span class="tag p">PYQ</span> x = √2 + 1 → x² − 2 → 3 + 2√2 − 2 → <mark>1 + 2√2</mark> <small>CGL · 21 Sep 2025</small><!--a23--></li>
+    <li><span class="tag p">PYQ</span> x = √3 → (x + 1)² + (x − 1)² → <b>2(x² + 1)</b> → <mark>8</mark> <small>CGL · 26 Sep 2025</small><!--a26--></li>
+    <li><span class="tag p">PYQ</span> a = √7 + √5, b = √7 − √5 → a² + b² → <b>2(p² + q²)</b>: 2(7 + 5) → <mark>24</mark> <small>CHSL · 17 Nov 2025</small><!--a49--></li>
+    <li><span class="tag p">PYQ</span> x = √10 + √3, y = √10 − √3 → x² + y² → <b>2(10 + 3)</b> → <mark>26</mark> <small>CHSL · 18 Nov 2025</small><!--a50--></li>
+    <li><span class="tag p">PYQ</span> a = √8 + √3, b = √8 − √3 → (a + b)/(a − b) → 2√8/2√3 = √(8/3) → <mark>2√6/3</mark> <small>CHSL · 18 Nov 2025</small><!--a51--></li>
+    <li><span class="tag p">PYQ</span> p = 1 + √3, q = 1 − √3 → p² + q² → <b>2(1 + 3)</b> → <mark>8</mark> <small>CHSL · 20 Nov 2025</small><!--a52--></li>
+    <li><span class="tag p">PYQ</span> y = 3 − √8 → y + 1/y → <b>jodi-dar</b> (9 − 8 = 1): 1/y = 3 + √8 → <mark>6</mark> <small>CHSL · 21 Nov 2025</small><!--a57--></li>
+    <li><span class="tag p">PYQ</span> x = √3 + √2 → x² − 2√6 → 5 + 2√6 − 2√6 → <mark>5</mark> <small>CHSL · 25 Nov 2025</small><!--a62--></li>
+    <li><span class="tag p">PYQ</span> x = (2 + √6)/(2 − √6), y = (2 − √6)/(2 + √6) → x² + y² → <b>xy = 1</b>, x + y = [(2 + √6)² + (2 − √6)²]/(4 − 6) = 20/(−2) = −10 → 100 − 2 → <mark>98</mark> <small>GD · 7 May 2026</small><!--a121--></li>
+    <li><span class="tag p">PYQ</span> a = 4 + √7, b = 4 − √7 → a² + b² → <b>2(16 + 7)</b> → <mark>46</mark> <small>MTS · 9 Feb 2025</small><!--a132--></li>
+    <li><span class="tag p">PYQ</span> (2 + 5√3)² = 79 + K√3 → K → <b>sirf beech wala</b>: 2 × 2 × 5√3 = 20√3 → <mark>20</mark> <small>MTS · 10 Feb 2025</small><!--a133--></li>
+    <li><span class="tag p">PYQ</span> a = 6 + √5, b = 6 − √5 → a² + b² → <b>2(36 + 5)</b> → <mark>82</mark> <small>MTS · 16 Feb 2025</small><!--a139--></li>
+  </ul>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>x − 1/x = 4. x² + 1/x²?</summary><p>16 + 2 = 18.</p></details>
+    <details><summary>x + y = 10, xy = 21. x² + y² aur x − y?</summary><p>Number 7 aur 3. Squares = 58, farq = 4.</p></details>
+    <details><summary>a = 5 + √3, b = 5 − √3. a² + b²?</summary><p>2(25 + 3) = 56.</p></details>
+    <details><summary>a + b + c = 10, squares = 40. ab + bc + ca?</summary><p>(100 − 40)/2 = 30.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · ALGEBRA (part 3: types 5–9 + traps) ===================== -->
+<section class="chap" id="mal-types-b">
+  <div class="eyebrow">Maths · PYQ types</div>
+  <h2>Algebra: Type 5–9, expansion, √, equation aur word problem</h2>
+  <div class="meta">Expansion wale sawaal Delhi Police 2026 mein bahut aaye · √ wale GD 2026 mein · har sawaal ke aage method</div>
+
+  <!-- TYPE 5 -->
+  <h3>Type 5 · Expansion ya identity pehchano (options mein letters) (25 Qs)</h3>
+  <p><b>Samjho:</b> yahan kuch "nikaalna" nahi hai. Bas pehchanna hai. Ya toh identity seedhi yaad ho, ya <b>value maan lo</b> (1, 1 ya 2, 1) aur options check karo.</p>
+  <div class="box"><span class="k">Worked · (x + y)³ − (x − y)³ = ? <span class="tag p">PYQ</span> <small>DP · 20 Jan 2026</small><!--a107--></span>
+    <b>Method:</b> value maan lo · <i>~10 sec</i><br>
+    x = 1, y = 1: 8 − 0 = 8. Options: 6xy(x − y) = 0, 2y(3x² + y²) = 8, 2y(3x² − y²) = 4, 2y(x² + y²) = 4.<br>
+    Sirf ek 8 → <mark>2y(3x² + y²)</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · (3a + 2b)³ ka sahi expansion? <span class="tag p">PYQ</span> <small>DP · 21 Jan 2026</small><!--a98--></span>
+    <b>Method:</b> value maan lo · <i>~10 sec</i><br>
+    a = b = 1: 5³ = 125. Option C: 27 + 54 + 36 + 8 = 125 ✔. Option B: 27 + 27 + 18 + 8 = 80 ✘.<br>
+    → <mark>27a³ + 54a²b + 36ab² + 8b³</mark>. (1-3-3-1: 3 × 9a² × 2b = 54a²b.)
+  </div>
+  <div class="box"><span class="k">Worked · (125x³ − 343y³) ÷ (5x − 7y) = Ax² − By² + Cxy. 2A + B − C? <span class="tag p">PYQ</span> <small>CHSL · 17 Nov 2025</small><!--a47--></span>
+    <b>Method:</b> a³ − b³ = (a − b)(a² + ab + b²) · <i>~15 sec</i><br>
+    a = 5x, b = 7y → 25x² + 35xy + 49y². Ab dhyan: "− By²" = + 49y² → B = −49. A = 25, C = 35.<br>
+    2A + B − C = 50 − 49 − 35 = <mark>−34</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> (3x − 4)² → <b>beech = 2 × 3 × 4 = 24</b> → <mark>9x² − 24x + 16</mark> <small>CHSL · 26 Nov 2025</small><!--a65--></li>
+    <li><span class="tag p">PYQ</span> (a² − b²)² − (2ab)² → <b>value maan lo a = b = 1</b>: 0 − 4 = −4; option 1 − 6 + 1 = −4 → <mark>a⁴ − 6a²b² + b⁴</mark> <small>CHSL · 27 Nov 2025</small><!--a66--></li>
+    <li><span class="tag p">PYQ</span> [(x + y)² + (x − y)²]² → <b>andar = 2(x² + y²)</b>, square → <mark>4x⁴ + 8x²y² + 4y⁴</mark> <small>CHSL · 29 Nov 2025</small><!--a75--></li>
+    <li><span class="tag p">PYQ</span> (3x − 7)² → beech 2 × 3 × 7 = 42 → <mark>9x² − 42x + 49</mark> <small>CPO · 9 Dec 2025</small><!--a78--></li>
+    <li><span class="tag p">PYQ</span> (2x − 3)² → beech 12 → <mark>4x² − 12x + 9</mark> <small>CPO · 9 Dec 2025</small><!--a80--></li>
+    <li><span class="tag p">PYQ</span> (5x − 3)² → beech 2 × 5 × 3 = 30 → <mark>25x² − 30x + 9</mark> <small>CPO · 11 Dec 2025</small><!--a92--></li>
+    <li><span class="tag p">PYQ</span> Rectangle: 4a²b × 5ab³ → <b>number guna, power jod</b> → <mark>20a³b⁴</mark> <small>CPO · 11 Dec 2025</small><!--a90--></li>
+    <li><span class="tag p">PYQ</span> (a + b)² − (a − b)² → <b>4 pattiyan</b> → <mark>4ab</mark> <small>CPO · 12 Dec 2025</small><!--a94--></li>
+    <li><span class="tag p">PYQ</span> 5xy²z × 7xz² → <b>power jod</b> → <mark>35x²y²z³</mark> <small>CPO · 12 Dec 2025</small><!--a96--></li>
+    <li><span class="tag p">PYQ</span> (−6ab) × (11ab²c) → <b>sign pehle</b> → <mark>−66a²b³c</mark> <small>CPO · 12 Dec 2025</small><!--a97--></li>
+    <li><span class="tag p">PYQ</span> (5a − 3b)³ → <b>value maan lo a = b = 1</b>: 2³ = 8; 125 − 225 + 135 − 27 = 8 → <mark>125a³ − 225a²b + 135ab² − 27b³</mark> <small>DP · 21 Jan 2026</small><!--a99--></li>
+    <li><span class="tag p">PYQ</span> (a − b)(a² + ab + b²) → <b>pehchano</b> → <mark>a³ − b³</mark> <small>DP · 20 Jan 2026</small><!--a100--></li>
+    <li><span class="tag p">PYQ</span> (x + y + z)² → <b>3 square + 3 patti × 2</b> → <mark>x² + y² + z² + 2xy + 2yz + 2zx</mark> <small>DP · 20 Jan 2026</small><!--a101--></li>
+    <li><span class="tag p">PYQ</span> (x + 7)(x² − 7x + 49) → <b>a³ + b³</b> → <mark>x³ + 7³</mark> <small>DP · 16 Jan 2026</small><!--a105--></li>
+    <li><span class="tag p">PYQ</span> (a² + b²)² − (2ab)² → <b>A² − B² = (A − B)(A + B)</b> → key <mark>(a² + b² − 2ab)(a² + b² + 2ab)</mark> (note dekho) <small>DP · 16 Jan 2026</small><!--a106--></li>
+    <li><span class="tag p">PYQ</span> p³ + q³ + r³ − 3pqr → <b>teen number identity</b> → <mark>(p + q + r)(p² + q² + r² − pq − qr − rp)</mark> <small>DP · 20 Jan 2026</small><!--a109--></li>
+    <li><span class="tag p">PYQ</span> (x² + y²) + 2xy → <mark>(x + y)²</mark> <small>DP · 21 Jan 2026</small><!--a110--></li>
+    <li><span class="tag p">PYQ</span> (a³ + b³) ÷ (a + b) → <mark>a² − ab + b²</mark> <small>DP · 12 Jan 2026</small><!--a112--></li>
+    <li><span class="tag p">PYQ</span> 7p²q² − (3/2 + 5/3)p²q², p = 1, q = 3 → <b>pehle coefficient</b>: 7 − 19/6 = 23/6; × 9 → <mark>34.5</mark> <small>DP · 9 Jan 2026</small><!--a116--></li>
+    <li><span class="tag p">PYQ</span> Do square, bhuja (x + 3) aur (x − 3) → kul area → <b>pattiyan kat jaati hain</b>: 2x² + 2 × 9 → <mark>2x² + 18</mark> <small>DP · 9 Jan 2026</small><!--a118--></li>
+    <li><span class="tag p">PYQ</span> n(n + 1)(n + 2)(n + 3) + 1 hamesha → <b>value maan lo n = 1</b>: 24 + 1 = 25, n = 2: 120 + 1 = 121 → <mark>perfect square</mark> <small>SP-XIV · 30 Jul 2025</small><!--a164--></li>
+    <li><span class="tag p">PYQ</span> Kaunsa polynomial nahi? → <b>power poori aur positive honi chahiye</b>: √x, x^(1/2), x^(−2) → <mark>√x, x^(1/2), x^(−2)</mark> <small>SP-XIV · 30 Jul 2025</small><!--a165--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP 16 Jan 2026 ((a² + b²)² − (2ab)²): key option A batati hai, jo (a² + b² − 2ab)(a² + b² + 2ab) hai. Par ye (a − b)²(a + b)² = <b>(a² − b²)²</b> bhi hai, jo option B mein likha hai. Dono sahi hain. Exam mein key wala lagao. Value maan lo (a = 2, b = 1) se dono 9 dete hain.</div>
+
+  <!-- TYPE 6 -->
+  <h3>Type 6 · Identity se bade number, aur do-step wale (7 Qs)</h3>
+  <div class="box"><span class="k">Worked · (785³ + 215³) ÷ (785² − 785 × 215 + 215²) = ? <span class="tag p">PYQ</span> <small>CHSL · 20 Nov 2025</small><!--a53--></span>
+    <b>Method:</b> a³ + b³ pehchano · <i>~5 sec</i><br>
+    Neeche wala a² − ab + b² hai. Toh pura = a + b = 785 + 215 = <mark>1000</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 14² + 87² kis ke barabar hai? <span class="tag p">PYQ</span> <small>CHSL · 12 Nov 2025</small><!--a29--></span>
+    <b>Method:</b> unit digit · <i>~8 sec</i><br>
+    6 + 9 = 15 → <b>5</b>. Options: 18² + 47² → 4 + 9 = 3 · 41² + 78² → 1 + 4 = <b>5</b> · 81² + 74² → 1 + 6 = 7 · 17² + 48² → 9 + 4 = 3.<br>
+    → <mark>41² + 78²</mark> (dono 7765).
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> (50 + 1)(50 − 1) → <b>a² − b²</b>: 2500 − 1 → <mark>2499</mark> <small>DP · 16 Jan 2026</small><!--a102--></li>
+    <li><span class="tag p">PYQ</span> 20² − 19² ka sabse tez tareeka → <b>(a − b)(a + b)</b> = 1 × 39 → <mark>a² − b² = (a − b)(a + b)</mark> <small>DP · 20 Jan 2026</small><!--a108--></li>
+    <li><span class="tag p">PYQ</span> (5/a + 5a)(25/a² − 25 + 25a²), a = 3 → <b>(p + q)(p² − pq + q²) = p³ + q³</b>, p = 5/a, q = 5a: 125/27 + 3375 → <mark>91250/27</mark> <small>SP-XIV · 2 Aug 2025</small><!--a140--></li>
+    <li><span class="tag p">PYQ</span> (a² − b² − c² − 2bc)/(a² − b² − 2ab − c²), a = 0.25, b = −0.05, c = 0.5 → <b>sab ko 100 se guna</b> (25, −5, 50): upar 625 − 25 − 2500 + 500 = −1400, neeche 625 − 25 + 250 − 2500 = −1650 → <mark>28/33</mark> <small>SP-XIV · 28 Jul 2025</small><!--a144--></li>
+    <li><span class="tag p">PYQ</span> √[(1 − a²)(1 − b²)] = 3/5, b = 2/5 → (4a² + 4b² + 8ab) + (4a² + 4b² − 8ab) → <b>8ab kat gaya, bacha 8(a² + b²)</b>: 1 − b² = 21/25 → 1 − a² = (9/25) ÷ (21/25) = 3/7 → a² = 4/7 → 8(4/7 + 4/25) = 8 × 128/175 → <mark>1024/175</mark> <small>SP-XIV · 31 Jul 2025</small><!--a151--></li>
+  </ul>
+
+  <!-- TYPE 7 -->
+  <h3>Type 7 · Wargmool (√) aur power wale (19 Qs)</h3>
+  <p><b>Samjho:</b> GD 2026 ke sawaal: √ ki values (1 se 30 tak squares) zubaani ho, aur BODMAS: pehle ÷ aur ×, phir +.</p>
+  <div class="box"><span class="k">Worked · √(x + 3) + √(x − 2) = 5. x = ? <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small><!--a10--></span>
+    <b>Method:</b> options daalo · <i>~8 sec</i><br>
+    x = 6: √9 + √4 = 3 + 2 = 5 ✔ → <mark>6</mark>. (Baaki options mein √ poora nahi banta.)
+  </div>
+  <div class="box"><span class="k">Worked · (√(5 + x) + √(5 − x)) / (√(5 + x) − √(5 − x)) = 3. x = ? <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small><!--a14--></span>
+    <b>Method:</b> Componendo-Dividendo · <i>~12 sec</i><br>
+    √(5 + x) : √(5 − x) = 4 : 2 = 2 : 1 → (5 + x) : (5 − x) = 4 : 1 → 5x = 15 → <mark>3</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · x = √144 + √36 × √49. x² = ? <span class="tag p">PYQ</span> <small>MTS · 6 Feb 2025</small><!--a131--></span>
+    <b>Method:</b> BODMAS · <i>~10 sec</i><br>
+    BODMAS se: 12 + 6 × 7 = 12 + 42 = 54 → x² = 2916. Ye kisi option mein nahi hai.<br>
+    Key <mark>196</mark> deti hai, yaani x = 14 = 12 ÷ 6 × 7. Toh "+" asal mein "÷" chhapna tha (note dekho).
+  </div>
+  <div class="box"><span class="k">⚠ Answer-key note</span>MTS 6 Feb 2025 (x = √144 + √36 × √49): jaisa chhapa hai, x = 54 aur x² = 2916, jo options mein nahi. Key ka 196 tabhi aata hai jab sawaal √144 ÷ √36 × √49 ho (2 × 7 = 14). Exam mein 196 hi lagao.</div>
+  <ul>
+    <li><span class="tag p">PYQ</span> (√(7 + x) + √(7 − x)) / (√(7 + x) − √(7 − x)) = 4 → x → <b>C&amp;D</b>: ratio 5 : 3 → (7 + x)/(7 − x) = 25/9 → 34x = 112 → <mark>56/17</mark> <small>CGL · 20 Sep 2025</small><!--a21--></li>
+    <li><span class="tag p">PYQ</span> x = √196 ÷ √49 + √81 → 2x → <b>BODMAS</b>: 14 ÷ 7 + 9 = 11 → <mark>22</mark> <small>GD · 5 May 2026</small><!--a119--></li>
+    <li><span class="tag p">PYQ</span> √(x + 1) = 5 → x → 25 − 1 → <mark>24</mark> <small>GD · 6 May 2026</small><!--a120--></li>
+    <li><span class="tag p">PYQ</span> x = √100 ÷ √25 + √49 → x² → 10 ÷ 5 + 7 = 9 → <mark>81</mark> <small>GD · 8 May 2026</small><!--a122--></li>
+    <li><span class="tag p">PYQ</span> √20.25 + √(16 + x) = 9.5 → x → <b>√20.25 = 4.5</b> (45² = 2025): √(16 + x) = 5 → <mark>9</mark> <small>GD · 8 May 2026</small><!--a123--></li>
+    <li><span class="tag p">PYQ</span> x = √169 × √81 × √121 → 13 × 9 × 11 = 117 × 11 → <mark>1287</mark> <small>GD · 8 May 2026</small><!--a124--></li>
+    <li><span class="tag p">PYQ</span> x = √81 ÷ √9 + √36 → 2x → 9 ÷ 3 + 6 = 9 → <mark>18</mark> <small>GD · 9 May 2026</small><!--a125--></li>
+    <li><span class="tag p">PYQ</span> x = √289 × √225 + √144 → 2x → 17 × 15 + 12 = 267 → <mark>534</mark> <small>GD · 9 May 2026</small><!--a126--></li>
+    <li><span class="tag p">PYQ</span> x = √(1671 + √(93 + √49)) → <b>andar se bahar</b>: √49 = 7 → √100 = 10 → √1681 → <mark>41</mark> <small>GD · 9 May 2026</small><!--a127--></li>
+    <li><span class="tag p">PYQ</span> √x = 100/√2025 → x → √2025 = 45 → √x = 20/9 → <mark>400/81</mark> <small>GD · 18 May 2026</small><!--a128--></li>
+    <li><span class="tag p">PYQ</span> x = √225 ÷ √25 + √81 → 2x → 15 ÷ 5 + 9 = 12 → <mark>24</mark> <small>GD · 18 May 2026</small><!--a129--></li>
+    <li><span class="tag p">PYQ</span> √x = 11 → x + √x → 121 + 11 → <mark>132</mark> <small>SP-XIV · 24 Jul 2025</small><!--a153--></li>
+    <li><span class="tag p">PYQ</span> √(x² + 10x + 25) + √(x² − 6x + 9) = 10 → <b>poore square + options</b>: |x + 5| + |x − 3|; x = 4 → 9 + 1 = 10 → <mark>4</mark> <small>SP-XIV · 26 Jul 2025</small><!--a157--></li>
+    <li><span class="tag p">PYQ</span> 4^(x + 2) + 7 = 1031 → <b>4 ki powers</b>: 1024 = 4⁵ → x + 2 = 5 → <mark>3</mark> <small>CPO · 10 Dec 2025</small><!--a86--></li>
+    <li><span class="tag p">PYQ</span> Y^x = 121 → (Y − 1)^(x − 2) → <b>121 = 11²</b>: Y = 11, x = 2 → 10⁰ → <mark>1</mark> <small>SP-XIV · 25 Jul 2025</small><!--a143--></li>
+    <li><span class="tag p">PYQ</span> 3ⁿ = 243 → (1)^(n − 1) → <b>1 ki koi bhi power 1</b> → <mark>1</mark> <small>SP-XIV · 28 Jul 2025</small><!--a145--></li>
+  </ul>
+
+  <!-- TYPE 8 -->
+  <h3>Type 8 · Equation: roots, "no solution", remainder (10 Qs)</h3>
+  <p><b>Samjho:</b> do line ki equation a₁x + b₁y = c₁ aur a₂x + b₂y = c₂. Ratio dekho: a₁/a₂ = b₁/b₂ ≠ c₁/c₂ → <b>no solution</b> (parallel). Teeno barabar → anginat solution (coincident). Pehla ratio alag → ek solution. Picture coordinate geometry ke basics mein hai.</p>
+  <div class="box"><span class="k">Worked · 3x − ky + 8 = 0 aur 9x − 18y + 20 = 0 ka koi solution nahi. k? <span class="tag p">PYQ</span> <small>CGL Tier-2</small><!--a27--></span>
+    <b>Method:</b> ratio rule · <i>~8 sec</i><br>
+    3/9 = k/18 → k = <mark>6</mark>. Check c: 8/20 ≠ 1/3 ✔ (warna coincident ho jaati).
+  </div>
+  <div class="box"><span class="k">Worked · Roots ka AM 5, GM 4. Quadratic? <span class="tag p">PYQ</span> <small>DP · 16 Jan 2026</small><!--a104--></span>
+    <b>Method:</b> jod aur guna · <i>~8 sec</i><br>
+    Jod = 2 × 5 = 10, guna = 4² = 16. Equation x² − (jod)x + guna = 0 → <mark>x² − 10x + 16 = 0</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · x/(x + 1) + 1/x = 3. x? <span class="tag p">PYQ</span> <small>CHSL · 13 Nov 2025</small><!--a35--></span>
+    <b>Method:</b> cross guna + roots ka jod · <i>~20 sec</i><br>
+    x² + x + 1 = 3x² + 3x → 2x² + 2x − 1 = 0. Roots ka jod = −2/2 = −1, toh roots (−1 ± kuch)/2 jaise hone chahiye.<br>
+    Discriminant 4 + 8 = 12 → √12 = 2√3 → x = (−2 ± 2√3)/4 = <mark>(−1 + √3)/2</mark> (option mein yahi).
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> a³ − 4a² + 5a − 2 = 0 ke roots ka jod → <b>−(a² ka coeff)/(a³ ka coeff)</b> → <mark>4</mark> <small>CGL · 18 Sep 2025</small><!--a9--></li>
+    <li><span class="tag p">PYQ</span> y = 3x − 4, y = −x + 2 → <b>options daalo</b>: (1.5, 0.5): 4.5 − 4 = 0.5 ✔, −1.5 + 2 = 0.5 ✔ → <mark>(1.5, 0.5)</mark> <small>CGL · 20 Sep 2025</small><!--a19--></li>
+    <li><span class="tag p">PYQ</span> (5x³ + 4x² − 10x + 1) ÷ (2x − 4) ka remainder → <b>remainder theorem, x = 2 daalo</b>: 40 + 16 − 20 + 1 → <mark>37</mark> <small>CHSL · 22 Nov 2025</small><!--a61--></li>
+    <li><span class="tag p">PYQ</span> x² + kx + 16 = 0 ke real aur alag roots → <b>k² &gt; 4 × 16</b>: k &gt; 8 ya k &lt; −8 → <mark>k &gt; 8</mark> <small>CHSL · 12 Nov 2025</small><!--a77--></li>
+    <li><span class="tag p">PYQ</span> 2x + 2y − 5 = 0, 6x + ky + 7 = 0 no solution → <b>ratio rule</b>: 2/6 = 2/k → <mark>6</mark> <small>CPO · 10 Dec 2025</small><!--a82--></li>
+    <li><span class="tag p">PYQ</span> 2x + y = 10, x − y = 2 → <b>jod do</b>: 3x = 12 → x = 4, y = 2 → <mark>(4, 2)</mark> <small>DP · 16 Jan 2026</small><!--a103--></li>
+    <li><span class="tag p">PYQ</span> 2x + 3y = 50, x, y natural, y sabse chhota → <b>y even hona chahiye</b> (50 − 3y even): y = 2 → 2x = 44 → <mark>22</mark> <small>SP-XIV · 29 Aug 2025</small><!--a146--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CHSL 12 Nov 2025 (x² + kx + 16): poora sahi answer "k &gt; 8 ya k &lt; −8" hai. Option "k &lt; −9" bhi hamesha real aur alag roots deta hai, kyunki −9 se chhota har k, −8 se bhi chhota hai. Key "k &gt; 8" hai, wahi lagao.</div>
+
+  <!-- TYPE 9 -->
+  <h3>Type 9 · Word problem (13 Qs)</h3>
+  <div class="box"><span class="k">Worked · 340 sir, 1060 pair. Ghode aur kabootar. Kabootar kitne? <span class="tag p">PYQ</span> <small>SP-XIV · 29 Jul 2025</small><!--a167--></span>
+    <b>Method:</b> sab ko kabootar maan lo · <i>~10 sec</i><br>
+    Sab 340 kabootar hote toh 680 pair. Extra 1060 − 680 = 380 pair. Har ghoda 2 extra pair laata hai → 190 ghode.<br>
+    Kabootar = 340 − 190 = <mark>150</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 9x − 3y = 96 aur 4x : 3y = 20 : 21. 2x² + 3y² = ? <span class="tag p">PYQ</span> <small>MTS · 11 Feb 2025</small><!--a134--></span>
+    <b>Method:</b> ratio se parts · <i>~15 sec</i><br>
+    4x : 3y = 20 : 21 → x = 5k, y = 7k. 9x − 3y = 45k − 21k = 24k = 96 → k = 4 → x = 20, y = 28.<br>
+    2 × 400 + 3 × 784 = 800 + 2352 = <mark>3152</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 6 pen + 2 pencil = ₹180; pencil pen se ₹10 mehngi. Pen? <span class="tag p">PYQ</span> <small>DP · 20 Dec 2025</small><!--a111--></span>
+    <b>Method:</b> sab ko pen maan lo · <i>~10 sec</i><br>
+    8 pen + 2 × 10 = 180 → 8 pen = 160 → pen = ₹20. Ye options mein nahi.<br>
+    Key <mark>₹7.5</mark> tab aata hai jab kul ₹80 ho: 8 pen = 60 → 7.5 (note dekho).
+  </div>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP Constable 20 Dec 2025 (pen-pencil): ₹180 ke saath pen = ₹20 banta hai. Key ka ₹7.5 tabhi sahi hai jab kul ₹80 ho. Sawaal mein number galat chhapa hai. Exam mein 7.5 hi lagao.</div>
+  <ul>
+    <li><span class="tag p">PYQ</span> Square minus do guna number = 80 → <b>options daalo</b>: 100 − 20 → <mark>10</mark> <small>CGL · 22 Sep 2025</small><!--a25--></li>
+    <li><span class="tag p">PYQ</span> Fraction, neeche 5 zyada; dono mein 3 jodo → 2/3 → <b>options daalo</b>: 7/12 → 10/15 = 2/3 ✔ → <mark>7/12</mark> <small>CHSL · 14 Nov 2025</small><!--a39--></li>
+    <li><span class="tag p">PYQ</span> 440 toffee, N bachche, har ek ko N + 2 → <b>do paas ke number ka guna</b>: 20 × 22 → <mark>20</mark> <small>CHSL · 20 Nov 2025</small><!--a56--></li>
+    <li><span class="tag p">PYQ</span> ¾ of number, ½ se 0.6 zyada → <b>¼ = 0.6</b> → <mark>2.4</mark> <small>CPO · 10 Dec 2025</small><!--a83--></li>
+    <li><span class="tag p">PYQ</span> Number ka square − aadhe ka square = 432 → <b>¾n² = 432</b>: n² = 576 → <mark>24</mark> <small>CPO · 11 Dec 2025</small><!--a93--></li>
+    <li><span class="tag p">PYQ</span> Pehle 40 per class; 4 class aur jodi, ab 20 class × 35 → <b>pehle 16 class</b>: 700 − 640 → <mark>60</mark> <small>DP · 12 Jan 2026</small><!--a113--></li>
+    <li><span class="tag p">PYQ</span> 3/5 of x² = 126.15 → x² = 126.15 × 5/3 = 210.25 → <b>14.5² = 210.25</b> → <mark>14.5</mark> <small>DP · 9 Jan 2026</small><!--a114--></li>
+    <li><span class="tag p">PYQ</span> Do lagataar numbers ke squares ka jod 313 → <b>squares yaad</b>: 144 + 169 → <mark>13</mark> <small>MTS · 6 Feb 2025</small><!--a130--></li>
+    <li><span class="tag p">PYQ</span> Number apne √ se 132 zyada, 12 ka multiple → <b>options daalo</b>: 144 − 12 = 132 → <mark>144</mark> <small>SP-XIV · 28 Jul 2025</small><!--a158--></li>
+    <li><span class="tag p">PYQ</span> +6 sahi, −3 galat; 10 sahi, kul 42 → <b>60 − 42 = 18 kata</b> → 18 ÷ 3 → <mark>6</mark> <small>SP-XIV · 1 Aug 2025</small><!--a166--></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>x − 1/x diya, aur square mein bhi "− 2" kiya</td><td>Minus ke square mein <b>+ 2</b>: x² + 1/x² = d² + 2.</td></tr>
+    <tr><td>x + 2/x mein bhi cube par 3k ghataya</td><td>Guna 2 hai, toh 3 × 2 × k ghatao. 343 − 42 = 301.</td></tr>
+    <tr><td>2x − 1/2x wale mein 4x² + 1/4x² ko hi answer maan liya</td><td>Maanga kya hai, dobara padho. x² + 1/(16x²) = uska ¼.</td></tr>
+    <tr><td>"− By²" mein B = 49 likh diya</td><td>Expression mein + 49y² hai, toh −B = 49 → B = −49.</td></tr>
+    <tr><td>Value maan lo mein x = y = 1 liya aur do option barabar aa gaye</td><td>x = 2, y = 1 ya 0 lo. Jab tak ek hi option na bache.</td></tr>
+    <tr><td>√144 + √36 × √49 ko (12 + 6) × 7 kiya</td><td>BODMAS: pehle guna. 12 + 42.</td></tr>
+    <tr><td>a = p + √q, b = p − √q mein a² + b² ke liye dono ko kholna</td><td>Seedha 2(p² + q). √ wale hisse kat jaate hain.</td></tr>
+    <tr><td>Squares ka jod zero ko "x, y, z kuch bhi" samajhna</td><td>Squares kabhi minus nahi. Jod zero → har square zero.</td></tr>
+    <tr><td>"No solution" mein teeno ratio barabar kar diye</td><td>No solution: a aur b ka ratio barabar, c ka alag. Teeno barabar = coincident.</td></tr>
+    <tr><td>a + b + c = 0 mein a³ + b³ + c³ = 0 likh diya</td><td>= 3abc. (1, 1, −2) se check: −6.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 167 sawaal. <b>2 chhode</b>: CGL ka "a + b = 5, ab = 6, (a + b)… − 9ab(a + b)" (powers text mein ud gaye, page crop nahi, key −6875 kisi saaf reading se nahi banti) aur CPO 9 Dec 2025 Shift 2 ka "… is equal to: 0" (poora sawaal hi gayab, sirf options bache). <b>2 sawaal do baar chhape</b> (CHSL 13 Nov wale a² + b² + c² = 64 aur x³ − y³ + 8(x + y)² = 1304, 14 Nov ke naam se bhi): ek baar likhe, PYQ ×2. 90 sawaal page crop se padhe (fraction aur √ wale).
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>(2a − b)³ mein a²b ka coefficient?</summary><p>3 × (2a)² × (−b) = −12a²b. Value maan lo (a = b = 1): 1³ = 1 = 8 − 12 + 6 − 1.</p></details>
+    <details><summary>(997³ + 3³) ÷ (997² − 997 × 3 + 3²)?</summary><p>a³ + b³ pattern → 997 + 3 = 1000.</p></details>
+    <details><summary>2x + 3y = 7 aur 4x + 6y = 9. Kitne solution?</summary><p>2/4 = 3/6 ≠ 7/9 → koi solution nahi (parallel lines).</p></details>
+    <details><summary>√(x + 7) = 4 aur x + √(x + 7)?</summary><p>x = 9, toh 9 + 4 = 13.</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · COORDINATE GEOMETRY (part 1: basics + methods) ===================== -->
+<section class="chap" id="mcg-basics">
+  <div class="eyebrow">Maths · 120 questions</div>
+  <h2>Coordinate Geometry: graph paper ki kahani, aur 36-second wale tareeke</h2>
+  <div class="meta">2025–26 SSC PYQs · sabse zyada: line ka slope, centroid, line ki equation, perpendicular slope, intercept</div>
+
+  <h3>Pehle ek chhoti si kahani: shehar ka naksha</h3>
+  <p>Ek shehar socho jahan sadkein seedhi hain. Ek sadak poorab-paschim (x), ek uttar-dakshin (y). Dono jahan milti hain wo chauraha hai, <b>(0, 0)</b>, yaani origin.</p>
+  <p>Ab tumhara ghar "3 kadam poorab, 2 kadam uttar" hai. Isko likhte hain <b>(3, 2)</b>. Pehla number hamesha x (daayein-baayein), doosra y (upar-neeche). Bas itna hi coordinate hai.</p>
+  <p>Ab do ghar jodne wali seedhi sadak = <b>line</b>. Line ke baare mein SSC sirf teen cheez poochhta hai: kitni <b>dhalaan</b> (slope), kahan x-sadak ko kaatti hai (<b>x-intercept</b>), kahan y-sadak ko (<b>y-intercept</b>).</p>
+
+  <h3>3 badi baatein</h3>
+  <ul>
+    <li><b>1. Slope = upar kitna ÷ aage kitna.</b> (1, 2) se (3, 6): aage 2, upar 4 → slope 4/2 = 2. Neeche jaye toh slope minus.</li>
+    <li><b>2. ax + by = c ka slope = −a/b.</b> Bas pehle do number dekho, sign ulta. 2x + 3y = 6 → −2/3. Intercepts: x-int = c/a, y-int = c/b.</li>
+    <li><b>3. Triangle ke centre ka matlab "average".</b> Centroid = teeno x ka average, teeno y ka average. Baaki centres bhi zyada tar right-angle triangle mein aate hain, jahan sab seedha dikh jaata hai.</li>
+  </ul>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Graph of the line 2x + 3y = 6. It cuts the y axis at (0, 2) and the x axis at (3, 0). A slope triangle shows run 3 and drop 2, so slope is minus 2 over 3. Side panel gives the rules: slope minus a over b, x intercept c over a, y intercept c over b.">
+      <g class="ln" stroke-dasharray="2 4">
+        <line x1="60" y1="40" x2="60" y2="280"/><line x1="140" y1="40" x2="140" y2="280"/><line x1="180" y1="40" x2="180" y2="280"/><line x1="260" y1="40" x2="260" y2="280"/><line x1="300" y1="40" x2="300" y2="280"/>
+        <line x1="40" y1="80" x2="320" y2="80"/><line x1="40" y1="120" x2="320" y2="120"/><line x1="40" y1="200" x2="320" y2="200"/><line x1="40" y1="280" x2="320" y2="280"/>
+      </g>
+      <line x1="40" y1="240" x2="320" y2="240" class="ln" stroke-width="2"/>
+      <line x1="100" y1="30" x2="100" y2="290" class="ln" stroke-width="2"/>
+      <text x="312" y="256" class="sm">x</text><text x="106" y="40" class="sm">y</text>
+      <g class="sm" text-anchor="middle"><text x="140" y="256">1</text><text x="180" y="256">2</text><text x="260" y="256">4</text><text x="300" y="256">5</text></g>
+      <g class="sm" text-anchor="end"><text x="94" y="204">1</text><text x="94" y="124">3</text><text x="94" y="84">4</text></g>
+      <text x="94" y="256" text-anchor="end" class="sm">0</text>
+      <!-- slope triangle -->
+      <line x1="100" y1="160" x2="220" y2="160" class="chs" stroke-dasharray="5 3"/>
+      <line x1="220" y1="160" x2="220" y2="240" class="chs" stroke-dasharray="5 3"/>
+      <text x="160" y="152" text-anchor="middle" class="sm">aage 3</text>
+      <text x="226" y="204" class="sm">neeche 2</text>
+      <!-- the line: x from -1.5 (y=3) to 4.5 (y=-1) -->
+      <line x1="40" y1="120" x2="280" y2="280" style="stroke:var(--ch)" stroke-width="3"/>
+      <circle cx="100" cy="160" r="6" style="fill:var(--ch)"/>
+      <circle cx="220" cy="240" r="6" style="fill:var(--ch)"/>
+      <text x="92" y="182" text-anchor="end" class="lbl">(0, 2)</text>
+      <text x="228" y="234" class="lbl">(3, 0)</text>
+      <text x="230" y="290" class="sm">2x + 3y = 6</text>
+      <!-- side panel -->
+      <rect x="360" y="30" width="330" height="240" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="376" y="58" class="lbl">ax + by = c</text>
+      <text x="376" y="92" class="lbl" style="fill:var(--ch)">slope = −a/b = −2/3</text>
+      <text x="376" y="112" class="sm">aage 3, neeche 2 → −2/3 (graph se bhi)</text>
+      <text x="376" y="146" class="lbl">x-intercept = c/a = 6/2 = 3</text>
+      <text x="376" y="166" class="sm">y = 0 rakho · point (3, 0)</text>
+      <text x="376" y="200" class="lbl">y-intercept = c/b = 6/3 = 2</text>
+      <text x="376" y="220" class="sm">x = 0 rakho · point (0, 2)</text>
+      <text x="376" y="254" class="sm">y = mx + c mein: m = slope, c = y-intercept</text>
+    </svg>
+    </div>
+    <figcaption>2x + 3y = 6 ka graph, scale par. x = 0 rakho toh y-sadak par point, y = 0 rakho toh x-sadak par point. Do point = poori line.</figcaption>
+  </figure>
+
+  <div class="box"><span class="k">Formula / value sheet to memorise</span>
+    <b>Slope</b> do point se = (y₂ − y₁)/(x₂ − x₁) · ax + by = c ka slope = −a/b · y = mx + c ka slope = m<br>
+    <b>Parallel</b>: slope barabar · <b>Perpendicular</b>: m₁ × m₂ = −1 (ulta karo, sign badlo: 2 → −1/2)<br>
+    <b>Line ki equation</b>: point (x₁, y₁) aur slope m → y − y₁ = m(x − x₁) · intercepts a, b → x/a + y/b = 1<br>
+    <b>Distance</b> = √(Δx² + Δy²) · <b>Midpoint</b> = average · <b>Centroid</b> G = teeno ka average<br>
+    <b>Area</b> = ½ |x₁(y₂ − y₃) + x₂(y₃ − y₁) + x₃(y₁ − y₂)|<br>
+    <b>Right-angle triangle</b>: orthocentre = right-angle wala kona · circumcentre = hypotenuse ka midpoint<br>
+    <b>Euler line</b>: H, G, O ek line par, HG : GO = 2 : 1 · median par AG : GD = 2 : 1<br>
+    <b>Pythagorean triplets</b>: 3-4-5, 6-8-10, 5-12-13, 8-15-17 (distance sawaalon mein)<br>
+    <span class="tag x">CGL+</span> <b>Section formula</b>: m : n mein baantne wala point = ((mx₂ + nx₁)/(m + n), (my₂ + ny₁)/(m + n)) · <span class="tag x">CGL+</span> teen point ek line par (collinear) → triangle ka area 0
+  </div>
+
+  <!-- METHOD 1 -->
+  <h3>Speed method 1 · Slope seedha padho</h3>
+  <p><b>Kab use karo:</b> "slope kya hai", "perpendicular line ka slope", "kaunsi line parallel hai".</p>
+  <ul>
+    <li><b>ax + by = c</b> → slope = −a/b. 7x + 4y = 8 → −7/4. 2x − 3y = 6 → −2/−3 = +2/3.</li>
+    <li><b>Perpendicular</b> chahiye? Slope ko ulta karo aur sign badlo: −7/4 → 4/7. Equation mein: a aur b ki jagah badlo, beech ka sign badlo. 4x − 3y → 3x + 4y.</li>
+    <li><b>Parallel</b> chahiye? x aur y wale number same (ya same ratio), sirf c badlega. 3x − 2y = 6 ‖ 3x − 2y = 10.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · 4x − 3y = 17 ke perpendicular line? · <i>~5 sec</i></span>
+    a, b ki jagah badlo, sign badlo: <b>3x + 4y = kuch bhi</b>. Option mein 3x + 4y = 21 → wahi.
+  </div>
+
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Three panels for two lines. Intersecting: different slopes, one solution, a1 over a2 not equal b1 over b2. Parallel: same slope, no solution, a1 over a2 equal b1 over b2 not equal c1 over c2. Coincident: same line, infinite solutions, all three ratios equal. Perpendicular note: slopes multiply to minus one.">
+      <rect x="10" y="10" width="220" height="240" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="240" y="10" width="220" height="240" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="470" y="10" width="220" height="240" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <g text-anchor="middle" class="lbl"><text x="120" y="34">Kaat-ti hain</text><text x="350" y="34">Parallel</text><text x="580" y="34">Coincident</text></g>
+      <!-- panel 1: perpendicular lines, slopes 1 and -1 to show right angle -->
+      <line x1="50" y1="150" x2="190" y2="150" class="ln"/><line x1="120" y1="50" x2="120" y2="170" class="ln"/>
+      <line x1="60" y1="170" x2="180" y2="50" style="stroke:var(--ch)" stroke-width="3"/>
+      <line x1="60" y1="50" x2="180" y2="170" class="chs" stroke-width="3" stroke-dasharray="6 3"/>
+      <circle cx="120" cy="110" r="5" style="fill:var(--ch)"/>
+      <g text-anchor="middle" class="sm"><text x="120" y="192">ek solution</text><text x="120" y="212">a₁/a₂ ≠ b₁/b₂</text><text x="120" y="236">m₁ × m₂ = −1 → 90°</text></g>
+      <!-- panel 2 -->
+      <line x1="280" y1="150" x2="420" y2="150" class="ln"/><line x1="350" y1="50" x2="350" y2="170" class="ln"/>
+      <line x1="290" y1="160" x2="390" y2="60" style="stroke:var(--ch)" stroke-width="3"/>
+      <line x1="320" y1="160" x2="420" y2="60" class="chs" stroke-width="3" stroke-dasharray="6 3"/>
+      <g text-anchor="middle" class="sm"><text x="350" y="192">koi solution nahi</text><text x="350" y="212">a₁/a₂ = b₁/b₂ ≠ c₁/c₂</text><text x="350" y="236">slope same, c alag</text></g>
+      <!-- panel 3 -->
+      <line x1="510" y1="150" x2="650" y2="150" class="ln"/><line x1="580" y1="50" x2="580" y2="170" class="ln"/>
+      <line x1="520" y1="160" x2="640" y2="60" style="stroke:var(--ch)" stroke-width="7" opacity=".35"/>
+      <line x1="520" y1="160" x2="640" y2="60" class="chs" stroke-width="2" stroke-dasharray="6 3"/>
+      <g text-anchor="middle" class="sm"><text x="580" y="192">anginat solution</text><text x="580" y="212">a₁/a₂ = b₁/b₂ = c₁/c₂</text><text x="580" y="236">3x + 2y = 6 aur 6x + 4y = 12</text></g>
+    </svg>
+    </div>
+    <figcaption>Do line ke teen rishte. Ratio rule se bina graph ke pata chal jaata hai. Algebra ke "no solution, k = ?" sawaal bhi yahi hain.</figcaption>
+  </figure>
+
+  <!-- METHOD 2 -->
+  <h3>Speed method 2 · Line ki equation: options mein point daalo</h3>
+  <p><b>Kab use karo:</b> "point (2, 3) se guzarti, slope −1, equation?" Bana ke mat likho. Options mein slope dekho (m), phir point daalo.</p>
+  <div class="box"><span class="k">Demo · (−1, −2) se, slope −3. Equation? · <i>~8 sec</i></span>
+    Sab options mein slope −3 hai. Ab x = −1 daalo: y = 3 + c. y = −2 chahiye → c = <b>−5</b>. → y = −3x − 5.
+  </div>
+  <div class="trick"><b>Trick:</b> "Slope se chhanto, point se pakdo." Pehle wo options kaato jinka slope galat hai. Bache hue mein point daal kar dekho. Do point diye hon toh dono daalo.</div>
+
+  <!-- METHOD 3 -->
+  <h3>Speed method 3 · Triangle ke centre</h3>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 340" role="img" aria-label="Right triangle A(0,0), B(8,0), C(0,6) drawn to scale. Orthocentre H is at A, the right angle. Circumcentre O is the midpoint of hypotenuse BC at (4,3), with the circumcircle of radius 5. Centroid G at (8/3, 2) lies where medians meet. H, G and O lie on one line with HG twice GO.">
+      <circle cx="180" cy="170" r="150" class="ln" fill="none" stroke-dasharray="4 4"/>
+      <polygon points="60,260 300,260 60,80" class="chf"/>
+      <polygon points="60,260 300,260 60,80" class="chs"/>
+      <rect x="60" y="248" width="12" height="12" fill="none" class="chs" style="stroke-width:1.5"/>
+      <!-- medians -->
+      <g class="ln" stroke-dasharray="3 3">
+        <line x1="60" y1="260" x2="180" y2="170"/>
+        <line x1="300" y1="260" x2="60" y2="170"/>
+        <line x1="60" y1="80" x2="180" y2="260"/>
+      </g>
+      <!-- Euler line H-G-O -->
+      <line x1="60" y1="260" x2="180" y2="170" style="stroke:var(--ch)" stroke-width="2.5"/>
+      <circle cx="60" cy="260" r="6" style="fill:var(--ch)"/>
+      <circle cx="140" cy="200" r="6" class="paper" stroke="var(--ch)" stroke-width="3"/>
+      <circle cx="180" cy="170" r="6" style="fill:var(--ch)"/>
+      <text x="34" y="280" class="lbl">A(0, 0) = H</text>
+      <text x="290" y="280" class="lbl">B(8, 0)</text>
+      <text x="16" y="74" class="lbl">C(0, 6)</text>
+      <text x="148" y="216" class="lbl">G</text>
+      <text x="188" y="164" class="lbl">O(4, 3)</text>
+      <!-- legend -->
+      <text x="400" y="40" class="lbl">Right triangle (angle A = 90°)</text>
+      <text x="400" y="74" class="lbl" style="fill:var(--ch)">H (orthocentre) = A = (0, 0)</text>
+      <text x="400" y="94" class="sm">90° wale kone par altitudes milti hain</text>
+      <text x="400" y="128" class="lbl" style="fill:var(--ch)">O (circumcentre) = BC ka midpoint</text>
+      <text x="400" y="148" class="sm">(8 + 0)/2, (0 + 6)/2 = (4, 3) · radius = 5</text>
+      <text x="400" y="182" class="lbl" style="fill:var(--ch)">G (centroid) = average</text>
+      <text x="400" y="202" class="sm">(0 + 8 + 0)/3, (0 + 0 + 6)/3 = (8/3, 2)</text>
+      <text x="400" y="236" class="lbl">H, G, O ek line par</text>
+      <text x="400" y="256" class="sm">HG : GO = 2 : 1 → G = (H + 2O)/3</text>
+      <text x="400" y="276" class="sm">check: (0 + 8)/3 = 8/3, (0 + 6)/3 = 2 ✔</text>
+      <text x="400" y="310" class="sm">dashed: medians · gol: circumcircle</text>
+    </svg>
+    </div>
+    <figcaption>Scale par bana right triangle. Teen centre, ek line par. Right triangle mein H aur O seedha dikh jaate hain, G bas average.</figcaption>
+  </figure>
+  <ul>
+    <li><b>Centroid</b> G = ((x₁ + x₂ + x₃)/3, (y₁ + y₂ + y₃)/3).</li>
+    <li><b>Teesra kona chahiye?</b> R = 3G − P − Q. Centroid (0, 0), do kone (3, 5), (−4, 1) → R = (0 − 3 + 4, 0 − 5 − 1) = (1, −6).</li>
+    <li><b>Median ka midpoint D</b> (BC ka): AG : GD = 2 : 1, toh D = G + (G − A)/2.</li>
+    <li><b>Circumcentre</b> = teeno kono se barabar doori. Right triangle mein hypotenuse ka midpoint.</li>
+    <li><b>Orthocentre</b> = altitudes ka milan. Right triangle mein 90° wala kona.</li>
+    <li><b>Incentre</b> se kisi bhi bhuja ki doori = inradius.</li>
+  </ul>
+  <figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 214" role="img" aria-label="Euler line as a number line. H on the left, G two parts along, O one more part. Formulas: G = (H + 2O)/3, O = (3G − H)/2, H = 3G − 2O. Example H(3,−2), O(0,4) gives G(1,2). Also median: A to G two parts, G to D one part.">
+      <line x1="60" y1="70" x2="600" y2="70" class="ln" stroke-width="2"/>
+      <circle cx="60" cy="70" r="9" style="fill:var(--ch)"/>
+      <circle cx="420" cy="70" r="9" class="paper" stroke="var(--ch)" stroke-width="3"/>
+      <circle cx="600" cy="70" r="9" style="fill:var(--ch)"/>
+      <g class="lbl" text-anchor="middle"><text x="60" y="46">H</text><text x="420" y="46">G</text><text x="600" y="46">O</text></g>
+      <g class="sm" text-anchor="middle"><text x="240" y="92">2 hisse</text><text x="510" y="92">1 hissa</text></g>
+      <g class="sm" text-anchor="middle"><text x="60" y="108">orthocentre</text><text x="420" y="108">centroid</text><text x="600" y="108">circumcentre</text></g>
+      <text x="20" y="146" class="lbl">G = (H + 2O)/3</text>
+      <text x="250" y="146" class="lbl">O = (3G − H)/2</text>
+      <text x="480" y="146" class="lbl">H = 3G − 2O</text>
+      <text x="20" y="178" class="sm">Misaal: H(3, −2), O(0, 4) → G = ((3 + 0)/3, (−2 + 8)/3) = (1, 2)</text>
+      <text x="20" y="200" class="sm">Median par bhi yahi 2 : 1 hai: A se G 2 hisse, G se D (bhuja ka midpoint) 1 hissa</text>
+    </svg>
+    </div>
+    <figcaption>Euler line: centroid hamesha beech mein, orthocentre se do hisse door, circumcentre se ek hissa. Teeno formulas isi picture se.</figcaption>
+  </figure>
+
+  <!-- METHOD 4 -->
+  <h3>Speed method 4 · Doori, area, shape</h3>
+  <ul>
+    <li><b>Doori:</b> Δx aur Δy nikaalo, triplet pehchano. (1, 2) se (4, 6): 3 aur 4 → <b>5</b>. Koi root nahi.</li>
+    <li><b>Area:</b> shoelace formula. Tez banane ke liye ek kone ko (0, 0) par khiskao: sab points se usi kone ko ghatao. Phir area = ½ |x₂y₃ − x₃y₂|.</li>
+    <li><b>Shape:</b> chaaron bhuja barabar + diagonal alag → rhombus. Bhuja barabar + diagonal barabar → square. Do bhuja barabar → isosceles triangle.</li>
+    <li><b>Origin se line ki sabse kam doori</b> (intercepts a, b): ab/√(a² + b²). 3 aur 4 → 12/5 = 2.4.</li>
+  </ul>
+  <div class="box"><span class="k">Demo · A(2, 3), B(7, 1), C(4, 6) ka area · <i>~15 sec</i></span>
+    A ko origin par lao: B → (5, −2), C → (2, 3).<br>
+    Area = ½ |5 × 3 − 2 × (−2)| = ½ |15 + 4| = <b>9.5</b>.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>5x − 2y = 10 ka slope aur x-intercept?</summary><p>Slope = −5/−2 = 5/2. x-intercept = 10/5 = 2.</p></details>
+    <details><summary>Slope 3/4 ke perpendicular ka slope?</summary><p>Ulta karo, sign badlo: −4/3.</p></details>
+    <details><summary>A(0, 0), B(10, 0), C(0, 24). Circumcentre aur circumradius?</summary><p>Right angle A par. O = BC ka midpoint = (5, 12). Radius = 26/2 = 13.</p></details>
+    <details><summary>Centroid (2, 3), do kone (1, 1) aur (4, 2). Teesra?</summary><p>(6 − 1 − 4, 9 − 1 − 2) = (1, 6).</p></details>
+  </div>
+</section>
+
+<!-- ===================== MATHS · COORDINATE GEOMETRY (part 2: types) ===================== -->
+<section class="chap" id="mcg-types">
+  <div class="eyebrow">Maths · PYQ types</div>
+  <h2>Coordinate Geometry: 10 type ke sawaal, topper ki rough ke saath</h2>
+  <div class="meta">Bank mein 120 sawaal · sab 120 yahan · 32 page crop se padhe · har sawaal ke aage method</div>
+
+  <!-- CG TYPE 1 -->
+  <h3>Type 1 · Equation se slope (8 Qs)</h3>
+  <div class="box"><span class="k">Worked · 7x + 4y = 8 ka slope <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small><!--c17--></span>
+    <b>Method:</b> −a/b · <i>~3 sec</i><br>
+    a = 7, b = 4 → <mark>−7/4</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> 2x + 3y = 6 → <b>−a/b</b> → <mark>−2/3</mark> <small>CGL · 17 Sep 2025</small><!--c10--></li>
+    <li><span class="tag p">PYQ</span> x + 3y = 6 → <b>−a/b</b> → <mark>−1/3</mark> <small>CHSL · 19 Nov 2025</small><!--c54--></li>
+    <li><span class="tag p">PYQ</span> 2x − 3y = 6 → <b>−2/−3</b> → <mark>2/3</mark> <small>CHSL · 20 Nov 2025</small><!--c55--></li>
+    <li><span class="tag p">PYQ</span> y = 2x − 1 → <b>m</b> → <mark>2</mark> <small>CHSL · 24 Nov 2025</small><!--c58--></li>
+    <li><span class="tag p">PYQ</span> 2x + 3y = 6 → <b>−a/b</b> → <mark>−2/3</mark> <small>CPO · 9 Dec 2025</small><!--c68--></li>
+    <li><span class="tag p">PYQ</span> 3x + 2y = 6 → <b>−a/b</b> → <mark>−3/2</mark> <small>CPO · 10 Dec 2025</small><!--c74--></li>
+    <li><span class="tag p">PYQ</span> y = 4x − 2 → <b>m</b> → <mark>4</mark> <small>CPO · 11 Dec 2025</small><!--c81--></li>
+  </ul>
+
+  <!-- CG TYPE 2 -->
+  <h3>Type 2 · Do point se slope, ya slope se unknown (10 Qs)</h3>
+  <div class="box"><span class="k">Worked · (x, 2) aur (3, −4) se line, slope 2. x? <span class="tag p">PYQ</span> <small>CHSL · 14 Nov 2025</small><!--c45--></span>
+    <b>Method:</b> upar ÷ aage · <i>~10 sec</i><br>
+    y mein badlaav = −4 − 2 = −6. Slope 2 → x mein badlaav = −6 ÷ 2 = −3. Toh 3 − x = −3 → x = <mark>6</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Line (6, 0) aur (0, −4) par kaatti hai. Slope? <span class="tag p">PYQ</span> <small>CPO · 10 Dec 2025</small><!--c79--></span>
+    <b>Method:</b> intercept se slope = −(y-int)/(x-int) · <i>~5 sec</i><br>
+    −(−4)/6 = <mark>2/3</mark>. (Graph socho: (0, −4) se (6, 0) tak upar 4, aage 6.)
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> (2, 3), (4, 7) → <b>4 ÷ 2</b> → <mark>2</mark> <small>CGL · 17 Sep 2025</small><!--c12--></li>
+    <li><span class="tag p">PYQ</span> (−2, 5), (4, −7) → <b>−12 ÷ 6</b> → <mark>−2</mark> <small>CGL · 21 Sep 2025</small><!--c29--></li>
+    <li><span class="tag p">PYQ</span> (2, 4), (6, 10) → <b>6 ÷ 4</b> → <mark>3/2</mark> <small>CHSL · 13 Nov 2025</small><!--c43--></li>
+    <li><span class="tag p">PYQ</span> (1, 2), (3, 6) → <b>4 ÷ 2</b> → <mark>2</mark> <small>CHSL · 17 Nov 2025</small><!--c49--></li>
+    <li><span class="tag p">PYQ</span> y = mx + c, (2, 5) aur (4, 9) se → <b>4 ÷ 2</b> → <mark>2</mark> <small>CPO · 9 Dec 2025</small><!--c71--></li>
+    <li><span class="tag p">PYQ</span> (2, 3), (4, 7) → <b>4 ÷ 2</b> → <mark>2</mark> <small>DP · 20 Jan 2026</small><!--c94--></li>
+    <li><span class="tag p">PYQ</span> y = mx + 2, (3, 8) se → <b>point daalo</b>: 8 = 3m + 2 → <mark>2</mark> <small>CGL · 18 Sep 2025</small><!--c16--></li>
+    <li><span class="tag p">PYQ</span> y = mx + 1, (2, 5) se → <b>point daalo</b>: 5 = 2m + 1 → <mark>2</mark> <small>CGL · 21 Sep 2025</small><!--c25--></li>
+  </ul>
+
+  <!-- CG TYPE 3 -->
+  <h3>Type 3 · Parallel, perpendicular, coincident (17 Qs)</h3>
+  <div class="box"><span class="k">Worked · 2x − 3y = 6 aur kx + y = 4 perpendicular hain. k? <span class="tag p">PYQ</span> <small>CPO · 9 Dec 2025</small><!--c67--></span>
+    <b>Method:</b> m₁ × m₂ = −1 · <i>~10 sec</i><br>
+    m₁ = 2/3, m₂ = −k. (2/3)(−k) = −1 → k = <b>3/2</b>. Ye options (1/2, 2/3, 2, 1) mein nahi hai.<br>
+    Key <mark>1</mark> deti hai (note dekho).
+  </div>
+  <div class="box"><span class="k">⚠ Answer-key note</span>CPO 9 Dec 2025 (2x − 3y = 6 ⟂ kx + y = 4): sahi k = 3/2 hai. Check: k = 1 par slopes 2/3 aur −1, guna −2/3, −1 nahi. Key ka "1" galat hai aur sahi value kisi option mein nahi. Exam mein aisa aaye toh 3/2 ke sabse paas wala soch-samajh kar chuno, ya chhod do.</div>
+  <div class="box"><span class="k">Worked · 4x + 5y = 20 ke perpendicular kaunsi line? <span class="tag p">PYQ</span> <small>CHSL · 24 Nov 2025</small><!--c59--></span>
+    <b>Method:</b> slope ulta, sign badlo · <i>~8 sec</i><br>
+    Slope = −4/5 → perpendicular slope = 5/4. Options mein y = 5x/4 − 3 → <mark>y = 5x/4 − 3</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> y = x/4 + 7 ka perpendicular slope → <b>ulta, sign badlo</b> → <mark>−4</mark> <small>CGL · 14 Sep 2025</small><!--c6--></li>
+    <li><span class="tag p">PYQ</span> y = −3x + 7 ka perpendicular slope → <mark>1/3</mark> <small>CGL · 15 Sep 2025</small><!--c8--></li>
+    <li><span class="tag p">PYQ ×2</span> 5x − 2y = 10 ka perpendicular slope → slope 5/2 → <mark>−2/5</mark> <small>CHSL · 13 Nov 2025; CHSL · 14 Nov 2025</small><!--c41--><!--c44--></li>
+    <li><span class="tag p">PYQ</span> 7x + 4y = 6 ka perpendicular slope → −7/4 → <mark>4/7</mark> <small>SP-XIV · 25 Jul 2025</small><!--c108--></li>
+    <li><span class="tag p">PYQ</span> Perpendicular lines ke slopes ka guna → <mark>−1</mark> <small>SP-XIV · 29 Aug 2025</small><!--c111--></li>
+    <li><span class="tag p">PYQ</span> y = 2x + 3 aur y = −x/2 − 1 perpendicular? → 2 × (−1/2) = −1 → <mark>Yes</mark> <small>CGL · 22 Sep 2025</small><!--c32--></li>
+    <li><span class="tag p">PYQ</span> 3x + 2y = 5 ke parallel → <b>x, y wale same</b> → <mark>3x + 2y = 7</mark> <small>CGL · 13 Sep 2025</small><!--c2--></li>
+    <li><span class="tag p">PYQ</span> 3x − 2y = 6 ke parallel → <mark>3x − 2y = 10</mark> <small>CHSL · 25 Nov 2025</small><!--c60--></li>
+    <li><span class="tag p">PYQ</span> 6x − 2y = 10 ke parallel nahi → slope 3; y = 4x + 5 ka slope 4 → <mark>y = 4x + 5</mark> <small>CPO · 10 Dec 2025</small><!--c75--></li>
+    <li><span class="tag p">PYQ</span> y = 3x + 5 ke parallel → <mark>y = 3x − 1</mark> <small>DP · 12 Jan 2026</small><!--c99--></li>
+    <li><span class="tag p">PYQ</span> 4x − 3y = 17 ke perpendicular → <b>a, b badlo, sign badlo</b> → <mark>3x + 4y = 21</mark> <small>SP-XIV · 2 Aug 2025</small><!--c116--></li>
+    <li><span class="tag p">PYQ</span> 3x + 2ky = 2 ‖ 3x + 5y = −1 → <b>ratio</b>: 2k = 5 → <mark>5/2</mark> <small>CPO · 10 Dec 2025</small><!--c73--></li>
+    <li><span class="tag p">PYQ</span> 3x + 2y = 6 aur 6x + 4y = 12 → <b>teeno ratio 1/2</b> → <mark>Coincident</mark> <small>DP · 20 Jan 2026</small><!--c95--></li>
+    <li><span class="tag p">PYQ</span> y = 2x + 3 aur y = 2x − 4 → slope same, c alag → <mark>Parallel</mark> <small>DP · 21 Jan 2026</small><!--c97--></li>
+  </ul>
+
+  <!-- CG TYPE 4 -->
+  <h3>Type 4 · Line ki equation banao (20 Qs)</h3>
+  <div class="box"><span class="k">Worked · (1, 3) aur (4, 9) se line, slope-intercept form <span class="tag p">PYQ</span> <small>CHSL · 12 Nov 2025</small><!--c39--></span>
+    <b>Method:</b> slope se chhanto, point se pakdo · <i>~8 sec</i><br>
+    Slope = 6/3 = 2. Sirf y = 2x + 1 ka slope 2 hai. Check (1, 3): 2 + 1 = 3 ✔ → <mark>y = 2x + 1</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · x-intercept 4, y-intercept −2. Standard form? <span class="tag p">PYQ</span> <small>CPO · 10 Dec 2025</small><!--c78--></span>
+    <b>Method:</b> x/a + y/b = 1 · <i>~8 sec</i><br>
+    x/4 + y/(−2) = 1 → 4 se guna: x − 2y = 4 → <mark>x − 2y = 4</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> (0, 3), slope −1 → <b>y = mx + c, c = 3</b> → <mark>y = −x + 3</mark> <small>CGL · 13 Sep 2025</small><!--c3--></li>
+    <li><span class="tag p">PYQ</span> Slope −1, (2, 3) se → <b>point daalo</b>: 3 = −2 + c → <mark>y = −x + 5</mark> <small>CGL · 16 Sep 2025</small><!--c9--></li>
+    <li><span class="tag p">PYQ</span> (−1, −2), slope −3 → <b>point daalo</b>: −2 = 3 + c → <mark>y = −3x − 5</mark> <small>CGL · 19 Sep 2025</small><!--c19--></li>
+    <li><span class="tag p">PYQ</span> (1, 2), (3, 8) → slope 3, c = 2 − 3 → <mark>y = 3x − 1</mark> <small>CGL · 20 Sep 2025</small><!--c22--></li>
+    <li><span class="tag p">PYQ</span> y = 3x − 5 ke parallel, (1, 2) se → c = 2 − 3 → <mark>y = 3x − 1</mark> <small>CHSL · 14 Nov 2025</small><!--c47--></li>
+    <li><span class="tag p">PYQ</span> (0, −2), slope −3 → <mark>y = −3x − 2</mark> <small>CHSL · 15 Nov 2025</small><!--c48--></li>
+    <li><span class="tag p">PYQ</span> Slope −2, (3, 5) → c = 5 + 6 → <mark>y = −2x + 11</mark> <small>CHSL · 18 Nov 2025</small><!--c50--></li>
+    <li><span class="tag p">PYQ</span> (1, 2), (3, 6) → slope 2, c = 0 → <mark>y = 2x</mark> <small>CHSL · 19 Nov 2025</small><!--c51--></li>
+    <li><span class="tag p">PYQ</span> Slope −2, (1, −3) → c = −3 + 2 → <mark>y = −2x − 1</mark> <small>CHSL · 18 Nov 2025</small><!--c52--></li>
+    <li><span class="tag p">PYQ</span> (5, 7), slope −1 → c = 7 + 5 → <mark>y = −x + 12</mark> <small>CHSL · 12 Nov 2025</small><!--c65--></li>
+    <li><span class="tag p">PYQ</span> (0, 0), (5, 10) → slope 2, origin se → <mark>y = 2x</mark> <small>CPO · 9 Dec 2025</small><!--c70--></li>
+    <li><span class="tag p">PYQ</span> (3, 6), (−1, −5) se line ka y-intercept → slope 11/4 → c = 6 − 33/4 → <mark>−9/4</mark> <small>SP-XIV · 30 Jul 2025</small><!--c114--></li>
+    <li><span class="tag p">PYQ</span> y = 4x + 1 ke parallel, (2, −4) se → c = −4 − 8 → <mark>y = 4x − 12</mark> <small>SP-XIV · 31 Jul 2025</small><!--c115--></li>
+    <li><span class="tag p">PYQ</span> (7.5, 3.5), (2.5, 5.5) → <b>options mein point daalo</b>: 4 × 7.5 + 10 × 3.5 = 30 + 35 = 65 ✔, 10 + 55 = 65 ✔ → <mark>4x + 10y = 65</mark> <small>SP-XIV · 29 Aug 2025</small><!--c119--></li>
+    <li><span class="tag p">PYQ</span> (3, −1), slope 4 ka y-intercept → c = −1 − 12 → <mark>−13</mark> <small>CGL · 20 Sep 2025</small><!--c24--></li>
+    <li><span class="tag p">PYQ</span> Slope 3, origin se; 4 unit upar khiskao → <b>sirf c badlega</b> → <mark>y = 3x + 4</mark> <small>DP · 9 Jan 2026</small><!--c102--></li>
+    <li><span class="tag p">PYQ</span> Slope-intercept form kaunsa? → <mark>y = mx + c</mark> <small>SP-XIV · 26 Jul 2025</small><!--c117--></li>
+    <li><span class="tag p">PYQ</span> y = 2x + 5 ka x-axis mein reflection → <b>y ki jagah −y</b>: −y = 2x + 5 → <mark>y = −2x − 5</mark> <small>DP · 16 Jan 2026</small><!--c91--></li>
+  </ul>
+
+  <!-- CG TYPE 5 -->
+  <h3>Type 5 · Perpendicular line ek point se, altitude, perpendicular bisector (8 Qs)</h3>
+  <div class="box"><span class="k">Worked · A(2, 5), B(8, −1) ka perpendicular bisector L. L ka y-intercept? <span class="tag p">PYQ</span> <small>CGL · 17 Sep 2025</small><!--c11--></span>
+    <b>Method:</b> midpoint + ulta slope · <i>~15 sec</i><br>
+    Midpoint = (5, 2). AB ka slope = −6/6 = −1 → L ka slope = 1.<br>
+    y = x + c, (5, 2) daalo: c = −3 → <mark>−3</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · 3x − 5y = 15 ke perpendicular, (3, 2) se <span class="tag p">PYQ</span> <small>CPO · 11 Dec 2025</small><!--c82--></span>
+    <b>Method:</b> ulta slope + point · <i>~10 sec</i><br>
+    Slope 3/5 → perpendicular −5/3. y = −5x/3 + c, (3, 2): 2 = −5 + c → c = 7 → <mark>y = −(5/3)x + 7</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> (2, 8), (6, 4) ka perpendicular bisector → midpoint (4, 6), slope −1 → 1 → c = 2 → <mark>y = x + 2</mark> <small>CGL · 17 Sep 2025</small><!--c13--></li>
+    <li><span class="tag p">PYQ</span> y = 3x + 4 ke perpendicular, (2, 5) se → slope −1/3, c = 5 + 2/3 → <mark>y = −x/3 + 17/3</mark> <small>CHSL · 13 Nov 2025</small><!--c40--></li>
+    <li><span class="tag p">PYQ</span> y = −2x/5 + 3 ke perpendicular, (2, −1) se → slope 5/2, c = −1 − 5 → <mark>y = (5/2)x − 6</mark> <small>CPO · 9 Dec 2025</small><!--c69--></li>
+    <li><span class="tag p">PYQ</span> (1.25, 2.5), (3.25, 4.5) wali line ke perpendicular, (2.25, 3.5) se → slope 1 → −1: x + y = 5.75 → × 4 → <mark>4x + 4y = 23</mark> <small>DP · 9 Jan 2026</small><!--c101--></li>
+    <li><span class="tag p">PYQ</span> y = 2x ke perpendicular, (3, 2) par milti → slope −1/2, c = 2 + 3/2 → <mark>y = −x/2 + 7/2</mark> <small>SP-XIV · 24 Jul 2025</small><!--c106--></li>
+    <li><span class="tag p">PYQ</span> A(1, 5), B(2, 1), C(6, 3): altitude AD ka slope → <b>BC ke perpendicular</b>: BC slope 2/4 = 1/2 → <mark>−2</mark> <small>CGL · 25 Sep 2025</small><!--c35--></li>
+  </ul>
+
+  <!-- CG TYPE 6 -->
+  <h3>Type 6 · Intercepts (12 Qs)</h3>
+  <p><b>Yaad karo:</b> x-intercept ke liye y = 0, y-intercept ke liye x = 0. ax + by = c → x-int c/a, y-int c/b. Option point mein ho toh x-int (a, 0), y-int (0, b) jaisa.</p>
+  <div class="box"><span class="k">Worked · 5x + 11y = 17 ka x-intercept <span class="tag p">PYQ</span> <small>SP-XIV · 30 Jul 2025</small><!--c120--></span>
+    <b>Method:</b> c/a · <i>~5 sec</i><br>
+    17/5 = 3.4. x-intercept x-axis par hai, toh point <mark>(3.4, 0)</mark>. (0, 3.4) wala option jaal hai.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ ×2</span> 4x + 5y = 20 ka y-intercept → <b>c/b</b>: 20/5 → <mark>4</mark> <small>CGL · 14 Oct 2025; CGL · 14 Sep 2025</small><!--c4--><!--c5--></li>
+    <li><span class="tag p">PYQ</span> 5x + 2y = 10 ka x-intercept → 10/5 → <mark>2</mark> <small>CGL · 21 Sep 2025</small><!--c27--></li>
+    <li><span class="tag p">PYQ</span> y = 5x − 10 x-axis ko kahan kaatti → y = 0 → x = 2 → <mark>(2, 0)</mark> <small>CGL · 22 Sep 2025</small><!--c34--></li>
+    <li><span class="tag p">PYQ</span> 2x − 3y = 12 ka x-intercept → 12/2 → <mark>6</mark> <small>CHSL · 25 Nov 2025</small><!--c61--></li>
+    <li><span class="tag p">PYQ</span> 3x + 4y = 12 ka x-intercept → 12/3 → <mark>4</mark> <small>CHSL · 30 Nov 2025</small><!--c62--></li>
+    <li><span class="tag p">PYQ</span> 6x − 2y = 10 ka x-intercept → 10/6 → <mark>5/3</mark> <small>CPO · 11 Dec 2025</small><!--c83--></li>
+    <li><span class="tag p">PYQ</span> 6x − 2y = 10 ka x-intercept → 10/6 → <mark>5/3</mark> <small>SP-XIV · 2 Aug 2025</small><!--c104--></li>
+    <li><span class="tag p">PYQ</span> 4x − 5y = 20 ka x-intercept → 20/4 → <mark>(5, 0)</mark> <small>SP-XIV · 29 Jul 2025</small><!--c112--></li>
+    <li><span class="tag p">PYQ</span> 2x + 3y = 6 y-axis ko kahan kaatti → 6/3 → <mark>(0, 2)</mark> <small>SP-XIV · 28 Jul 2025</small><!--c118--></li>
+    <li><span class="tag p">PYQ</span> Kaunsi line x-axis ko kabhi nahi kaatti → <b>x-axis ke parallel</b> (y = number) → <mark>y = −4</mark> <small>SP-XIV · 28 Jul 2025</small><!--c110--></li>
+  </ul>
+
+  <!-- CG TYPE 7 -->
+  <h3>Type 7 · Point line par hai? Do line kahan milti? (6 Qs)</h3>
+  <div class="box"><span class="k">Worked · (2, 3), (4, 7) wali line par aur kaunsa point? <span class="tag p">PYQ</span> <small>CHSL Tier-2</small><!--c66--></span>
+    <b>Method:</b> wahi kadam aage · <i>~5 sec</i><br>
+    (2, 3) se (4, 7): x + 2, y + 4. Ek kadam aur: (6, 11) → <mark>(6, 11)</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> y = −x + 4 par kaunsa point → <b>daalo</b>: (2, 2): −2 + 4 = 2 ✔ → <mark>(2, 2)</mark> <small>CGL · 12 Sep 2025</small><!--c1--></li>
+    <li><span class="tag p">PYQ</span> y = 4x − 5 par → (1, −1), (0, −5), (2, 3) teeno ✔ → <mark>All the above</mark> <small>CGL · 19 Sep 2025</small><!--c18--></li>
+    <li><span class="tag p">PYQ</span> y = −3x + 7 par → (0, 7), (2, 1), (3, −2) teeno ✔ → <mark>teeno</mark> <small>CGL · 19 Sep 2025</small><!--c21--></li>
+    <li><span class="tag p">PYQ</span> (5, 10) y = 2x − 1 par? → 10 − 1 = 9 ≠ 10 → <mark>No</mark> <small>DP · 21 Jan 2026</small><!--c96--></li>
+    <li><span class="tag p">PYQ</span> y = 2x + 1 aur y = −x + 4 → <b>barabar rakho</b>: 3x = 3 → <mark>(1, 3)</mark> <small>CGL · 15 Sep 2025</small><!--c7--></li>
+  </ul>
+
+  <!-- CG TYPE 8 -->
+  <h3>Type 8 · Centroid (19 Qs)</h3>
+  <div class="box"><span class="k">Worked · G(1, 2), P(3, −1), Q(−2, 4). R? <span class="tag p">PYQ</span> <small>CGL · 19 Sep 2025</small><!--c20--></span>
+    <b>Method:</b> R = 3G − P − Q · <i>~10 sec</i><br>
+    x: 3 − 3 + 2 = 2. y: 6 + 1 − 4 = 3 → <mark>(2, 3)</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Centroid G(4, 5), A(2, 3). BC ka midpoint D? <span class="tag p">PYQ</span> <small>CGL · 18 Sep 2025</small><!--c15--></span>
+    <b>Method:</b> AG : GD = 2 : 1 · <i>~10 sec</i><br>
+    A se G: x + 2, y + 2 (2 hisse). G se D: aadha, x + 1, y + 1 → <mark>(5, 6)</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · A(0, 0), B(6, 0), C on y = x, centroid (5, 3). C? <span class="tag p">PYQ</span> <small>SP-XIV · 25 Jul 2025</small><!--c107--></span>
+    <b>Method:</b> 3G − A − B · <i>~8 sec</i><br>
+    C = (15 − 6, 9 − 0) = (9, 9). y = x par hai ✔ → <mark>(9, 9)</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> (2, 3), (4, 5), (6, 7) → <b>average</b> → <mark>(4, 5)</mark> <small>CHSL · 12 Nov 2025</small><!--c38--></li>
+    <li><span class="tag p">PYQ</span> (1, 1), (5, 5), (1, 9) → (7/3, 15/3) → <mark>(2.33, 5.00)</mark> <small>CHSL · 13 Nov 2025</small><!--c42--></li>
+    <li><span class="tag p">PYQ</span> (1, 2), (5, 2), (3, 8) ka y → 12/3 → <mark>4</mark> <small>CHSL · 21 Nov 2025</small><!--c56--></li>
+    <li><span class="tag p">PYQ</span> (2, 3), (8, 3), (5, 9) → (15/3, 15/3) → <mark>(5, 5)</mark> <small>CHSL · 24 Nov 2025</small><!--c57--></li>
+    <li><span class="tag p">PYQ</span> (0, 0), (4, 0), (2, 6) → <mark>(2, 2)</mark> <small>CHSL · 30 Nov 2025</small><!--c64--></li>
+    <li><span class="tag p">PYQ</span> (0, 0), (6, 0), (0, 8) → (2, 8/3) → <mark>(2, 2.67)</mark> <small>CPO · 10 Dec 2025</small><!--c76--></li>
+    <li><span class="tag p">PYQ</span> (2, 1), (5, 4), (8, 1) → <mark>(5, 2)</mark> <small>CPO · 11 Dec 2025</small><!--c84--></li>
+    <li><span class="tag p">PYQ</span> (0, 0), (4, 0), (0, 3) → (4/3, 1) → <mark>(1.33, 1)</mark> <small>DP · 21 Jan 2026</small><!--c88--></li>
+    <li><span class="tag p">PYQ</span> (0, 0), (6, 0), (3, 6) → <mark>(3, 2)</mark> <small>DP · 16 Jan 2026</small><!--c93--></li>
+    <li><span class="tag p">PYQ</span> (1, 2), (4, 6), (7, 2) → (12/3, 10/3) → <mark>(4, 3.33)</mark> <small>DP · 21 Jan 2026</small><!--c98--></li>
+    <li><span class="tag p">PYQ</span> G(4, 2), Q(5, −1), R(2, 6) → P → <b>3G − Q − R</b>: (12 − 7, 6 − 5) → <mark>(5, 1)</mark> <small>CGL · 21 Sep 2025</small><!--c26--></li>
+    <li><span class="tag p">PYQ</span> G(0, 0), (3, 5), (−4, 1) → teesra → (0 + 1, 0 − 6) → <mark>(1, −6)</mark> <small>CHSL · 19 Nov 2025</small><!--c53--></li>
+    <li><span class="tag p">PYQ</span> G(3, 4), (1, 2), (5, 6) → teesra → (9 − 6, 12 − 8) → <mark>(3, 4)</mark> <small>CPO · 11 Dec 2025</small><!--c80--></li>
+    <li><span class="tag p">PYQ</span> G(5, 5), (2, 3), (4, 7) → teesra → (15 − 6, 15 − 10) → <mark>(9, 5)</mark> <small>CPO · 12 Dec 2025</small><!--c85--></li>
+    <li><span class="tag p">PYQ</span> A(0, 0), B(6, 0), C(2, 6): C se centroid ki doori → G = (8/3, 2); Δ = (2/3, 4) → 4/9 + 16 ≈ 16.44 → <mark>√16.4</mark> <small>CHSL · 30 Nov 2025</small><!--c63--></li>
+    <li><span class="tag p">PYQ</span> Median 9 cm; A se G → <b>2 : 1</b> → 9 ka 2/3 → <mark>6 cm</mark> <small>DP · 21 Jan 2026</small><!--c87--></li>
+  </ul>
+
+  <!-- CG TYPE 9 -->
+  <h3>Type 9 · Circumcentre, orthocentre, incentre, Euler line (11 Qs)</h3>
+  <div class="box"><span class="k">Worked · Park A(2, 3), B(6, 7), C(2, 11). Teeno se barabar doori wala point? <span class="tag p">PYQ</span> <small>DP · 10 Jan 2026</small><!--c100--></span>
+    <b>Method:</b> right angle dhoondo · <i>~15 sec</i><br>
+    AB ka slope = 4/4 = 1, BC ka = 4/(−4) = −1. Guna −1 → B par 90°.<br>
+    Circumcentre = hypotenuse AC ka midpoint = (2, 7) → <mark>(2, 7)</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · Orthocentre (0, 0), centroid (2, 4). Circumcentre? <span class="tag p">PYQ</span> <small>SP-XIV · 30 Jul 2025</small><!--c113--></span>
+    <b>Method:</b> Euler line 2 : 1 · <i>~8 sec</i><br>
+    H se G = (2, 4) = 2 hisse → 1 hissa = (1, 2). O = G + 1 hissa = <mark>(3, 6)</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> P(0, 0), Q(8, 0), R(0, 6) ka circumcentre → <b>hypotenuse ka midpoint</b> → <mark>(4, 3)</mark> <small>CGL · 20 Sep 2025</small><!--c23--></li>
+    <li><span class="tag p">PYQ</span> A(0, 0), B(4, 0), C(0, 3) se barabar doori → (2, 1.5) → <mark>(2, 1.5)</mark> <small>CGL · 21 Sep 2025</small><!--c28--></li>
+    <li><span class="tag p">PYQ</span> A(0, 0), B(6, 0), C(0, 8) ka circumcentre → <mark>(3, 4)</mark> <small>CPO · 9 Dec 2025</small><!--c72--></li>
+    <li><span class="tag p">PYQ</span> A(0, 0), B(8, 0), C(0, 6) ka orthocentre → <b>90° wala kona</b> → <mark>(0, 0)</mark> <small>CHSL · 14 Nov 2025</small><!--c46--></li>
+    <li><span class="tag p">PYQ</span> A(0, 0), B(5, 0), C(0, 10) ka orthocentre → <mark>(0, 0)</mark> <small>CPO · 10 Dec 2025</small><!--c77--></li>
+    <li><span class="tag p">PYQ</span> A(0, 0), B(6, 0), C(0, 8): orthocentre aur circumcentre → (0, 0) aur (3, 4) → key <mark>5,6</mark> (note dekho) <small>DP · 20 Jan 2026</small><!--c90--></li>
+    <li><span class="tag p">PYQ</span> Euler line par (3, 0), (3, 4), (3, 8); centroid → <b>beech wala</b> → <mark>(3, 4)</mark> <small>SP-XIV · 24 Jul 2025</small><!--c105--></li>
+    <li><span class="tag p">PYQ</span> Orthocentre (3, −2), circumcentre (0, 4) → centroid → <b>(H + 2O)/3</b>: (3/3, 6/3) → <mark>(1, 2)</mark> <small>SP-XIV · 28 Jul 2025</small><!--c109--></li>
+    <li><span class="tag p">PYQ</span> Incentre se bhuja AB tak doori 2 → inradius → <mark>2 units</mark> <small>CGL · 26 Sep 2025</small><!--c37--></li>
+  </ul>
+  <div class="box"><span class="k">⚠ Answer-key note</span>DP 20 Jan 2026 (A(0, 0), B(6, 0), C(0, 8)): orthocentre (0, 0) aur circumcentre (3, 4) hai. Option D "3,4" circumcentre se milta hai. Key ka "5,6" kisi bhi centre se nahi banta. Sahi jawab D hona chahiye.<br>SP-XIV 24 Jul 2025 (Euler line): centroid H aur O ke beech 2 : 1 par hota hai. (3, 0), (3, 4), (3, 8) barabar doori par hain, toh 2 : 1 poora nahi baithta. Phir bhi centroid hamesha beech wala hota hai, isliye (3, 4).</div>
+
+  <!-- CG TYPE 10 -->
+  <h3>Type 10 · Doori, midpoint, area, shape (9 Qs)</h3>
+  <div class="box"><span class="k">Worked · (1, 2), (5, 8), (10, 3) ka area <span class="tag p">PYQ</span> <small>CPO · 12 Dec 2025</small><!--c86--></span>
+    <b>Method:</b> ek kona origin par · <i>~15 sec</i><br>
+    (1, 2) ghatao: (4, 6) aur (9, 1). Area = ½ |4 × 1 − 9 × 6| = ½ |4 − 54| = <mark>25</mark>.
+  </div>
+  <div class="box"><span class="k">Worked · P(0, 0), Q(4, 2), R(8, 0), S(4, −2): kaunsa shape? <span class="tag p">PYQ</span> <small>DP · 16 Jan 2026</small><!--c92--></span>
+    <b>Method:</b> bhuja aur diagonal · <i>~15 sec</i><br>
+    Har bhuja: Δ = (4, 2) → √20. Chaaron barabar. Diagonal PR = 8, QS = 4, alag → <mark>Rhombus</mark>.
+  </div>
+  <ul>
+    <li><span class="tag p">PYQ</span> (1, 2) se (4, 6) → <b>3-4-5</b> → <mark>5</mark> <small>CGL · 22 Sep 2025</small><!--c31--></li>
+    <li><span class="tag p">PYQ</span> (3, 4) aur (7, 8) ka midpoint → average → <mark>(5, 6)</mark> <small>CGL · 18 Sep 2025</small><!--c14--></li>
+    <li><span class="tag p">PYQ</span> Origin se A(3, 0)–B(0, 4) segment ki sabse kam doori → <b>ab/√(a² + b²)</b>: 12/5 → <mark>2.4</mark> <small>CGL · 21 Sep 2025</small><!--c30--></li>
+    <li><span class="tag p">PYQ</span> A(2, 3), B(7, 1), C(4, 6) ka area → A ko origin: (5, −2), (2, 3) → ½ |15 + 4| → <mark>9.5</mark> <small>CGL · 22 Sep 2025</small><!--c33--></li>
+    <li><span class="tag p">PYQ</span> PQR (1, 1), (4, 1), (1, 5) aur STU (6, 2), (9, 2), (6, 6) → dono ki bhuja 3, 4, 5 → <mark>Yes, by SSS</mark> <small>CGL · 25 Sep 2025</small><!--c36--></li>
+    <li><span class="tag p">PYQ</span> A(1, 0), B(3, 4), C(7, 4), D(9, 0) cyclic? → <b>x = 5 ke dono taraf barabar</b>: isosceles trapezium, hamesha cyclic → <mark>Cyclic</mark> <small>DP · 20 Jan 2026</small><!--c89--></li>
+    <li><span class="tag p">PYQ</span> A(1, 2), B(4, 6), C(7, 2) → AB: (3, 4) → 5, BC: (3, −4) → 5 → <mark>Isosceles</mark> <small>DP · 9 Jan 2026</small><!--c103--></li>
+  </ul>
+
+  <h3>Common traps</h3>
+  <div class="tbl"><table>
+    <tr><th>Galti</th><th>Sahi tareeka</th></tr>
+    <tr><td>ax + by = c ka slope a/b likh diya</td><td>Slope = <b>−a/b</b>. 2x − 3y = 6 → +2/3 (do minus).</td></tr>
+    <tr><td>Perpendicular mein sirf sign badla (2 → −2)</td><td>Ulta bhi karo: 2 → −1/2.</td></tr>
+    <tr><td>x-intercept ka point (0, 3.4) chuna</td><td>x-intercept x-axis par hai: (3.4, 0). y = 0 rakho.</td></tr>
+    <tr><td>Teesra kona nikaalne mein G × 3 bhool gaye</td><td>R = 3G − P − Q. Sirf ghatane se nahi hota.</td></tr>
+    <tr><td>Right triangle ka circumcentre centroid jaisa average liya</td><td>Circumcentre = hypotenuse ka midpoint (sirf do kone ka average).</td></tr>
+    <tr><td>Orthocentre ko triangle ke andar dhoondha</td><td>Right triangle mein wo 90° wale kone par hi hai.</td></tr>
+    <tr><td>Euler line mein G ko H aur O ke beech mein aadha maana</td><td>HG : GO = 2 : 1. G = (H + 2O)/3.</td></tr>
+    <tr><td>Median 9 → AG = 4.5</td><td>AG = 2/3 × median = 6.</td></tr>
+    <tr><td>Coincident aur parallel mein confuse</td><td>Parallel: c ka ratio alag. Coincident: teeno ratio same (ek hi line).</td></tr>
+    <tr><td>Reflection in x-axis mein x ka sign badla</td><td>x-axis mirror → y ki jagah −y.</td></tr>
+  </table></div>
+
+  <div class="box"><span class="k">Question bank ke baare mein</span>
+    Kul 120 sawaal, <b>sab yahan</b>. 32 sawaal page crop se padhe (fraction aur equation wale). Do sawaal do baar chhape: 4x + 5y = 20 ka y-intercept (CGL 14 Sep; ek copy par "14 Oct" chhapa hai) aur 5x − 2y = 10 ka perpendicular slope (CHSL 13 Nov aur 14 Nov). Dono PYQ ×2.
+  </div>
+
+  <h3>Check yourself</h3>
+  <div class="quiz">
+    <details><summary>3x − 4y = 12 ka slope, x-int, y-int?</summary><p>Slope = 3/4. x-int = 4, y-int = −3.</p></details>
+    <details><summary>A(0, 0), B(6, 0), C(0, 8) ka centroid aur circumcentre?</summary><p>Centroid (2, 8/3). Circumcentre (3, 4), hypotenuse ka midpoint.</p></details>
+    <details><summary>(1, 1) se, 2x + y = 5 ke perpendicular line?</summary><p>Slope −2 → perpendicular 1/2. y = x/2 + 1/2, yaani x − 2y + 1 = 0.</p></details>
+    <details><summary>H(0, 0), O(6, 3). Centroid?</summary><p>(H + 2O)/3 = (12/3, 6/3) = (4, 2).</p></details>
+  </div>
+</section>

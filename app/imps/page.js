@@ -26,6 +26,7 @@ import "../pdfs/pdfs.css";
 const TABS = [
   { k: "fact", label: "🧠 Fact log" },
   { k: "vocab", label: "🔤 Vocab" },
+  { k: "notes", label: "📘 Notes" },
   { k: "ans", label: "📖 Answers" },
   { k: "pyq", label: "📚 PYQ" },
   { k: "pdf", label: "📄 PDFs" },
@@ -110,7 +111,7 @@ function ImpsInner() {
   }, [tick]);
 
   const data = useMemo(() => {
-    if (!ready) return { fact: [], vocab: [], ans: [], pyq: [], pdf: [] };
+    if (!ready) return { fact: [], vocab: [], notes: [], ans: [], pyq: [], pdf: [] };
     const notes = allImpNotes();
     // Fact log / Vocab: seedhe IMP ke pate se — fact / word ki list se NAHI.
     // Pehle list se banta tha: kisi device par word / fact kam hon (ya id alag)
@@ -135,6 +136,8 @@ function ImpsInner() {
     try { factSecs(getFacts()).forEach((s0, i) => factOrder.set(`fact:${s0.key}`, i)); } catch { /* ignore */ }
     const fact = keysOf("fact:", factOrder).map((k) => ({ k }));
     const vocab = keysOf("vocab:").map((k) => ({ k }));
+    // 📘 Notes (app/pyq-notes) — har slide ka ⭐ IMP; book ke naam se group.
+    const notesL = keysOf("pn:").map((k) => ({ k, meta: notes[k]?.meta || {} }));
     const ans = getWrongBook().filter((r) => hasInk({ impUrl: r.impUrl, impStrokes: r.impStrokes }) || docs.has(`${r.id}~imp`));
     const pyq = Object.entries(notes)
       .filter(([k, v]) => k.startsWith("pyq:") && hasInk(v))
@@ -155,7 +158,7 @@ function ImpsInner() {
       .filter((x) => x.id)
       .map((x) => ({ ...x, name: pdfName[x.id] || "PDF" }))
       .sort((a, b) => (a.name || "").localeCompare(b.name || "") || a.p - b.p || a.n - b.n);
-    return { fact, vocab, ans, pyq, pdf };
+    return { fact, vocab, notes: notesL, ans, pyq, pdf };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready, tick, docs]);
 
@@ -182,19 +185,19 @@ function ImpsInner() {
   };
   // Answers / PYQ: pehle subject, PDFs: pehle PDF ka naam (owner) — dabao to
   // sirf uske IMP.
-  const groupOf = (x) => (tab === "pdf" ? x.id : tab === "ans" ? (x.subject || "other") : (x.meta?.sub || "other"));
+  const groupOf = (x) => (tab === "pdf" ? x.id : tab === "ans" ? (x.subject || "other") : tab === "notes" ? (x.meta?.book || "other") : (x.meta?.sub || "other"));
   const groups = useMemo(() => {
-    if (!["ans", "pyq", "pdf"].includes(tab)) return [];
+    if (!["ans", "pyq", "pdf", "notes"].includes(tab)) return [];
     const m = new Map();
     for (const x of list) {
       const g = groupOf(x);
-      if (!m.has(g)) m.set(g, { g, label: tab === "pdf" ? `📄 ${x.name}` : subjOf(g) || "📝 Other", n: 0 });
+      if (!m.has(g)) m.set(g, { g, label: tab === "pdf" ? `📄 ${x.name}` : tab === "notes" ? (x.meta?.bookName || "📘 Notes") : subjOf(g) || "📝 Other", n: 0 });
       m.get(g).n++;
     }
     return [...m.values()];
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [list, tab]);
-  const grouped = ["ans", "pyq", "pdf"].includes(tab);
+  const grouped = ["ans", "pyq", "pdf", "notes"].includes(tab);
   const shown = grouped ? (sel ? list.filter((x) => groupOf(x) === sel) : []) : list;
   return (
     <section className="section pdfs">
@@ -229,7 +232,7 @@ function ImpsInner() {
         ))}
         {grouped && sel ? (
           <div className="imps-pdfhead">
-            <button type="button" className="btn btn--ghost btn--sm" onClick={() => setSel("")}>← {tab === "pdf" ? "Saari PDFs" : "Saare subject"}</button>
+            <button type="button" className="btn btn--ghost btn--sm" onClick={() => setSel("")}>← {tab === "pdf" ? "Saari PDFs" : tab === "notes" ? "Saari books" : "Saare subject"}</button>
             <b>{(groups.find((x) => x.g === sel) || {}).label || ""}</b>
           </div>
         ) : null}
@@ -252,6 +255,14 @@ function ImpsInner() {
             <Lazy><ImpNoteBox k={x.k} /></Lazy>
             {subjOf(x.meta?.sub) ? <span className="imps-subj">{subjOf(x.meta.sub)}</span> : null}
             {x.meta?.href ? <Link href={x.meta.href} className="pdfs-imp__p">PYQ kholo ›</Link> : null}
+          </article>
+        ))}
+        {tab === "notes" && shown.map((x) => (
+          <article key={x.k} className="imps-card">
+            {x.meta?.src ? <span className="imps-sub">{x.meta.src}</span> : null}
+            {x.meta?.title ? <div className="imps-q"><b>{x.meta.title}</b></div> : null}
+            <Lazy><ImpNoteBox k={x.k} /></Lazy>
+            {x.meta?.href ? <Link href={x.meta.href} className="pdfs-imp__p">Notes kholo ›</Link> : null}
           </article>
         ))}
         {tab === "pdf" && shown.map((x) => (
