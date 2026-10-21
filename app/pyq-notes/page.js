@@ -14,9 +14,28 @@
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ImpNoteBox } from "@/components/ImpView";
-import { noteKey, putImpCtx, setImpNoteMeta } from "@/lib/impnotes";
+import { noteKey, putImpCtx, setImpNoteMeta, allImpNoteKeys } from "@/lib/impnotes";
 import { isInkWriter } from "@/lib/inkdevice";
 import "./pn.css";
+
+// Slide ke saare ⭐ IMP — pehla (slide ki chaabi) aur stylus page ke ➕ IMP se
+// bane #2, #3… (app/imp). Khaali wale ImpNoteBox khud chhupa deta hai.
+function ImpSlots({ base, label }) {
+  const [keys, setKeys] = useState([base]);
+  useEffect(() => {
+    const on = () => {
+      const more = allImpNoteKeys()
+        .filter((x) => x.startsWith(`${base}#`) && /^\d+$/.test(x.slice(base.length + 1)))
+        .sort((a, b) => Number(a.slice(base.length + 1)) - Number(b.slice(base.length + 1)));
+      setKeys([base, ...more]);
+    };
+    on();
+    window.addEventListener("cgl:impnotes", on);
+    window.addEventListener("cgl:sync-applied", on);
+    return () => { window.removeEventListener("cgl:impnotes", on); window.removeEventListener("cgl:sync-applied", on); };
+  }, [base]);
+  return keys.map((k, i) => <ImpNoteBox key={k} k={k} label={i ? `${label} ${i + 1}` : label} />);
+}
 
 const BASE = "/pyq_notes";
 const POS = "cgl.pn.pos";
@@ -239,7 +258,7 @@ function NotesInner() {
             </div>
           ) : null}
           <div className="pn-body" dangerouslySetInnerHTML={{ __html: cur.body }} />
-          <ImpNoteBox k={noteKey("pn", `${B.key}.${cur.key}`)} />
+          <ImpSlots base={noteKey("pn", `${B.key}.${cur.key}`)} label="⭐ IMP" />
           {B?.rough ? <ImpNoteBox k={noteKey("pnr", `${B.key}.${cur.key}`)} label="✍️ Rough" /> : null}
         </article>
       ) : null}

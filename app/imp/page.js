@@ -15,7 +15,7 @@ import InkCanvas, { PALETTE, PEN_SIZES } from "@/components/InkCanvas";
 import Markdown from "@/components/Markdown";
 import { openInk, viewInk, saveLocalInk, pushInk, emptyDoc, flushInkQueue } from "@/lib/ink";
 import { inkRecord, inkSetter } from "@/lib/impink";
-import { noteRec, getImpCtx } from "@/lib/impnotes";
+import { noteRec, getImpCtx, putImpCtx, getImpNote, setImpNoteMeta, allImpNoteKeys } from "@/lib/impnotes";
 import { isInkWriter, setInkWriter } from "@/lib/inkdevice";
 import { setSyncPaused } from "@/lib/sync";
 import { storeFlush } from "@/lib/bigstore";
@@ -33,7 +33,22 @@ function ImpInner() {
   useEffect(() => {
     try { const l = JSON.parse(sessionStorage.getItem("imp.list") || "null"); if (l && Array.isArray(l.items)) setList(l); } catch { /* ignore */ }
   }, []);
-  const pos = list ? list.items.findIndex((x) => x.k === k) : -1;
+  // ➕ Ek slide par kai IMP (Notes — owner: "extra imp bhi add kar sakte").
+  // Pehla IMP = slide ki chaabi, baaki usi ke aage #2, #3… (PDF ke ➕ IMP jaisa).
+  const base = k.replace(/#\d+$/, "");
+  const slotN = /#(\d+)$/.test(k) ? Number(k.match(/#(\d+)$/)[1]) : 1;
+  const multi = base.startsWith("pn:");
+  const [slots, setSlots] = useState(1);
+  useEffect(() => {
+    if (!multi) return;
+    let n = slotN;
+    for (const x of allImpNoteKeys()) {
+      const m = x.startsWith(base + "#") ? x.slice(base.length + 1) : null;
+      if (m && /^\d+$/.test(m)) n = Math.max(n, Number(m));
+    }
+    setSlots(n);
+  }, [k, base, slotN, multi]);
+  const pos = list ? list.items.findIndex((x) => x.k === k || x.k === base) : -1;
   useEffect(() => {
     const it = list && pos >= 0 ? list.items[pos] : null;
     setCtx(it ? { title: it.title, points: it.points } : getImpCtx(k));
@@ -151,6 +166,18 @@ function ImpInner() {
     router.replace(`/imp?k=${encodeURIComponent(list.items[i].k)}&back=${encodeURIComponent(back)}`);
   };
 
+  // Isi slide ka doosra IMP — naya khaali kaagaz (ya pehle wala), wapas usi slide par.
+  const goSlot = async (n) => {
+    await flushLocal();
+    flushCloud();
+    const nk = n <= 1 ? base : `${base}#${n}`;
+    const c = ctx || getImpCtx(base);
+    if (c) putImpCtx(nk, c);
+    const m = getImpNote(base)?.meta;
+    if (m && n > 1) setImpNoteMeta(nk, { ...m, title: `${m.title || ""} · IMP ${n}` });
+    router.replace(`/imp?k=${encodeURIComponent(nk)}&back=${encodeURIComponent(back)}`);
+  };
+
   const prevTool = useRef("pen");
   const toggleEraser = () => setTool((t) => { if (t === "eraser") return prevTool.current || "pen"; prevTool.current = t; return "eraser"; });
   const can = writer === true;
@@ -183,6 +210,14 @@ function ImpInner() {
             <button className="btn btn--ghost btn--sm" onClick={() => goTo(pos - 1)} disabled={pos <= 0} title="Pichhli slide ka IMP">‹ Pichhla</button>
             <span className="inkv__pill">{pos + 1}/{list.items.length}</span>
             <button className="btn btn--ghost btn--sm" onClick={() => goTo(pos + 1)} disabled={pos >= list.items.length - 1} title="Agli slide ka IMP">Agla ›</button>
+          </span>
+        ) : null}
+        {multi ? (
+          <span className="inkv__nav">
+            {Array.from({ length: slots }, (_, i) => i + 1).map((n) => (
+              <button key={n} className="btn btn--ghost btn--sm" aria-pressed={n === slotN} onClick={() => n !== slotN && goSlot(n)} title={`Is slide ka IMP ${n}`}>⭐{n}</button>
+            ))}
+            {can ? <button className="btn btn--ghost btn--sm" onClick={() => goSlot(slots + 1)} title="Isi slide par ek aur IMP">➕ IMP</button> : null}
           </span>
         ) : null}
         {can ? <span className="inkv__pill">{state === "saved" ? "💾 saved" : state === "dirty" ? "✍️ …" : "⚠️ offline"}</span> : null}
