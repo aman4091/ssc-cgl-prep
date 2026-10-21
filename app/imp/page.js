@@ -18,6 +18,8 @@ import { inkRecord, inkSetter } from "@/lib/impink";
 import { noteRec, getImpCtx, putImpCtx, getImpNote, setImpNoteMeta, allImpNoteKeys } from "@/lib/impnotes";
 import { isInkWriter, setInkWriter } from "@/lib/inkdevice";
 import { setSyncPaused } from "@/lib/sync";
+import { loadSlide } from "@/lib/pyqnotes";
+import "../pyq-notes/pn.css";
 import { storeFlush } from "@/lib/bigstore";
 
 const LOCAL_MS = 700;
@@ -49,6 +51,20 @@ function ImpInner() {
     setSlots(n);
   }, [k, base, slotN, multi]);
   const pos = list ? list.items.findIndex((x) => x.k === k || x.k === base) : -1;
+  // 📘 Notes ki slide: upar (aur 👻 Trace mein) POORI slide — table, diagram
+  // sab — sirf text ki lines nahi (owner: shabd jude hue aa rahe the).
+  const [slideHtml, setSlideHtml] = useState("");
+  useEffect(() => {
+    setSlideHtml("");
+    const m = base.match(/^pnr?:([^.]+)\.(.+)$/);
+    if (!m) return undefined;
+    let alive = true;
+    let t = "";
+    try { t = new URL(getImpNote(base)?.meta?.href || "", window.location.origin).searchParams.get("t") || ""; } catch { /* ignore */ }
+    if (!t) return undefined;
+    loadSlide(m[1], t, m[2]).then((s) => { if (alive && s) setSlideHtml(s.body); }).catch(() => {});
+    return () => { alive = false; };
+  }, [base]);
   useEffect(() => {
     const it = list && pos >= 0 ? list.items[pos] : null;
     setCtx(it ? { title: it.title, points: it.points } : getImpCtx(k));
@@ -230,7 +246,11 @@ function ImpInner() {
         {ctx ? (
           <div className="inkv__q">
             <h3 style={{ margin: "0 0 8px" }}>{ctx.title}</h3>
-            <ul style={{ margin: 0, paddingLeft: 20 }}>{(ctx.points || []).map((p, i) => <li key={i}><Markdown>{p}</Markdown></li>)}</ul>
+            {slideHtml ? (
+              <div className="pn pn-imp-slide"><div className="pn-body" dangerouslySetInnerHTML={{ __html: slideHtml }} /></div>
+            ) : (
+              <ul style={{ margin: 0, paddingLeft: 20 }}>{(ctx.points || []).map((p, i) => <li key={i}><Markdown>{p}</Markdown></li>)}</ul>
+            )}
           </div>
         ) : null}
         <div className="inkv__ink is-imp">
@@ -240,7 +260,13 @@ function ImpInner() {
             <InkCanvas
               ref={inkRef}
               readOnly={!can}
-              underlay={trace && traceMd ? <div style={{ opacity: traceOp }}><Markdown>{traceMd}</Markdown></div> : null}
+              underlay={trace && traceMd ? (
+                <div style={{ opacity: traceOp }}>
+                  {slideHtml ? (
+                    <div className="pn pn-imp-slide"><h3>{ctx?.title}</h3><div className="pn-body" dangerouslySetInnerHTML={{ __html: slideHtml }} /></div>
+                  ) : <Markdown>{traceMd}</Markdown>}
+                </div>
+              ) : null}
               initialDoc={doc}
               tool={tool}
               colorIdx={colorIdx}

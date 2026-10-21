@@ -80,3 +80,12 @@
 .pn-body .quiz summary { cursor: pointer; font-weight: 600; }
 .pn-body .quiz details p { margin: 8px 0 0; color: var(--text-2); }
 .pn-body .legend, .pn-body .toc { display: none; }
+
+/* Stylus page (app/imp) par upar / 👻 Trace mein dikhti slide. */
+.pn-imp-slide { --ch: var(--pn-c1); --soft: var(--pn-s1); max-width: none; }
+.pn-imp-slide .pn-body { font-size: 0.98rem; }
+/* 👻 Trace kaagaz (hamesha cream) par — gehri syahi, warna halka text dikhta hi nahi. */
+.inkv__ink .pn-imp-slide, .inkv__ink .pn-imp-slide * { color: #1a1a1e !important; border-color: #b9b4a8 !important; background: transparent !important; }
+.inkv__ink .pn-imp-slide svg text { fill: #1a1a1e !important; }
+.inkv__ink .pn-imp-slide svg .chs, .inkv__ink .pn-imp-slide svg .ln { stroke: #1a1a1e !important; }
+.inkv__ink .pn-imp-slide svg .chf, .inkv__ink .pn-imp-slide svg .paper { fill: transparent !important; }

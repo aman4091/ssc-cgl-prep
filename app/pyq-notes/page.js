@@ -16,6 +16,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ImpNoteBox } from "@/components/ImpView";
 import { noteKey, putImpCtx, setImpNoteMeta, allImpNoteKeys } from "@/lib/impnotes";
 import { isInkWriter } from "@/lib/inkdevice";
+import { cutSlides, PN_BASE } from "@/lib/pyqnotes";
 import "./pn.css";
 
 // Slide ke saare ⭐ IMP — pehla (slide ki chaabi) aur stylus page ke ➕ IMP se
@@ -37,46 +38,10 @@ function ImpSlots({ base, label }) {
   return keys.map((k, i) => <ImpNoteBox key={k} k={k} label={i ? `${label} ${i + 1}` : label} />);
 }
 
-const BASE = "/pyq_notes";
+const BASE = PN_BASE;
 const POS = "cgl.pn.pos";
 const loadPos = () => { try { return JSON.parse(localStorage.getItem(POS) || "{}") || {}; } catch { return {}; } };
 const savePos = (v) => { try { localStorage.setItem(POS, JSON.stringify(v)); } catch { /* quota */ } };
-
-// Ek topic ka HTML → slides. Chapter ka kholne wala hissa (sirf eyebrow / meta)
-// akela patla lagta hai — use pehli asli slide ke saath jod dete hain.
-function cut(html) {
-  const doc = new DOMParser().parseFromString(`<div>${html}</div>`, "text/html");
-  const out = [];
-  [...doc.querySelectorAll("section.chap")].forEach((sec, ci) => {
-    const h2 = sec.querySelector("h2");
-    const chap = h2 ? h2.textContent : "";
-    const c = `c${(ci % 3) + 1}`;
-    let n = 0;
-    let cur = { chap, title: chap, c, nodes: [], key: `${sec.id}.0` };
-    for (const el of [...sec.children]) {
-      if (el.tagName === "H3") {
-        const thin = cur.nodes.every((x) => /(^| )(eyebrow|meta)( |$)/.test(x.className || ""));
-        if (cur.nodes.length && !thin) out.push(cur);
-        n += 1;
-        cur = { chap, title: el.textContent, c, nodes: thin ? cur.nodes : [], key: `${sec.id}.${n}` };
-      } else if (el !== h2) cur.nodes.push(el);
-    }
-    if (cur.nodes.length) out.push(cur);
-  });
-  return out.map((s) => {
-    const body = s.nodes.map((x) => x.outerHTML).join("");
-    // Stylus page par upar dikhne wala text (aur 👻 Trace) — slide ki lines.
-    const lines = [];
-    for (const x of s.nodes) {
-      x.querySelectorAll("li, p, tr, .box, .trick, figcaption").forEach((y) => {
-        if (y.closest("li, tr") && y.closest("li, tr") !== y) return;
-        const t = y.textContent.replace(/\s+/g, " ").trim();
-        if (t && lines.length < 40) lines.push(t);
-      });
-    }
-    return { key: s.key, chap: s.chap, title: s.title, c: s.c, body, points: lines };
-  });
-}
 
 function NotesInner() {
   const sp = useSearchParams();
@@ -116,7 +81,7 @@ function NotesInner() {
     setLoading(true);
     fetch(`${BASE}/${B.key}/${topic}.html`).then((r) => r.text()).then((h) => {
       if (!alive) return;
-      const ss = cut(h);
+      const ss = cutSlides(h);
       setSlides(ss);
       const w = want.current;
       const saved = posRef.current[`s:${B.key}:${topic}`] || 0;
@@ -194,7 +159,7 @@ function NotesInner() {
     if (!cur || !B || !T) return;
     const nk = noteKey(kind, `${B.key}.${cur.key}`);
     putImpCtx(nk, { title: cur.title, points: cur.points });
-    if (kind === "pn") {
+    {
       setImpNoteMeta(nk, {
         title: cur.title, src: `${B.name} · ${T.name}`, book: B.key, bookName: `${B.icon} ${B.name}`,
         href: `/pyq-notes?b=${B.key}&t=${T.id}&s=${at}`,
