@@ -17,6 +17,10 @@ import "./looks/menutop.css";
 // ke upar (<html data-tb="1">). Kitaab (data-book) ki file rakhi hai, band hai.
 import "./looks/kitaab.css";
 import "./looks/tbook.css";
+// 🎞️ Notes roop — owner ne PYQ notes wali dark theme poori site par maangi.
+// Testbook (data-tb) band, ab <html data-nt="1">; tbook.css rakhi hai.
+import "./looks/notes.css";
+import { notesFontClass } from "@/lib/notesfont";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
@@ -78,7 +82,7 @@ export default function RootLayout({ children }) {
   return (
     /* Script <html> ka apna attribute badalta hai, isliye server ka HTML aur
        client ka HTML yahan alag honge — ye ISI element par expected hai. */
-    <html lang="en" data-look="13" data-tb="1" data-menu="4" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" data-look="13" data-nt="1" data-menu="4" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -95,7 +99,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body className={`${inter.variable} examskin`}>
+      <body className={`${inter.variable} ${notesFontClass} examskin`}>
         <div className="bg-orbs" aria-hidden="true">
           <span className="orb orb--1" />
           <span className="orb orb--2" />

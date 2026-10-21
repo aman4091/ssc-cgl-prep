@@ -1,0 +1,144 @@
+/* ===================================================================
+   🎞️ NOTES roop — owner ne PYQ notes wali theme poori site par maangi
+   ("poori site pr laga de isko"). Testbook (data-tb) ki jagah, Window (13)
+   ke dhaanche ke UPAR — tbook.css jaisi hi banawat, bas rang aur font notes
+   pages ke: gehra slate tal, teal syahi, Bricolage heading + Literata.
+   Din/raat ka farak nahi — hamesha yahi (owner: din mode nahi chahiye).
+
+   <html data-nt="1"> (app/layout.js). Font variables lib/notesfont se body
+   par lagte hain (--nt-display / --nt-body / --nt-mono).
+   =================================================================== */
+
+html[data-nt="1"],
+html[data-nt="1"] body.examskin,
+html[data-nt="1"] body.examskin:not(.gemskin) {
+  /* globals.css ke token */
+  --bg: #14171d; --card: #1b1f27; --line: #2c323d; --ink: #e7e9ee; --dim: #9aa2b1;
+  --accent2: #7cc3d6; --ok: #6fcf97; --bad: #ff8a7a; --mark: #5a4d12;
+  --bg-0: #14171d; --bg-1: #1b1f27; --bg-2: #20252e;
+  --glass-bg: #1b1f27; --glass-bg-strong: #20252e; --glass-border: #2c323d; --glass-border-strong: #3a414d;
+  --glass-shadow: none;
+  --text-1: #e7e9ee; --text-2: #b4bac6; --text-3: #8a92a3;
+  --accent: #7cc3d6; --on-accent: #14171d; --accent-2: #7cc3d6; --accent-3: #7cc3d6;
+  --accent-grad: linear-gradient(#7cc3d6, #7cc3d6);
+  --head: #e7e9ee; --emph: #ffffff; --mauve: #f08aa0; --warning: #e0a274;
+  --nav-active: #7cc3d6; --nav-hover: rgba(124, 195, 214, 0.1);
+  --ok-wash: #16291f; --bad-wash: #2e1b1a; --accent-wash: #1d2c33; --accent2-wash: #1d2c33; --warn-wash: #2e2614; --mauve-wash: #2f1e26;
+  --font: var(--nt-body, "Literata"), Georgia, "Nirmala UI", "Noto Sans Devanagari", serif;
+
+  /* exam.css / window.css ke --tb-* */
+  --tb-font: var(--font);
+  --A: #7cc3d6; --A2: #9ad3e3; --on-A: #14171d;
+  --panel: #1b1f27; --field: #14171d;
+  --tb-blue: #3a8ea5; --tb-blue-dark: #2f7487; --tb-blue-soft: #1d2c33; --tb-blue-ink: #7cc3d6; --tb-navy: #101319;
+  --tb-q: #e7e9ee;
+  --tb-green: #3fa36b; --tb-green-dark: #348a5a; --tb-green-soft: #16291f; --tb-ok-ink: #8fd9b0;
+  --tb-red: #d9534f; --tb-red-soft: #2e1b1a; --tb-bad-ink: #ff9d8f; --tb-red-ink-soft: #ffe5e5;
+  --tb-orange: #7cc3d6;
+  --tb-yellow: #2e2614; --tb-warn-ink: #f0c060; --tb-warn-ink-2: #e0a840;
+  --tb-amber: #e6a344; --tb-rev: #e6a344; --tb-rev-hover: #f0b35a; --tb-rev-on: #f0b35a;
+  --tb-rev-line: #c07f2c; --tb-rev-ink: #1f1500; --tb-rev-soft: #2e2614;
+  --tb-key-line: #7cc3d6;
+  --tb-skip: #20252e; --tb-skip-ink: #8a92a3;
+  --tb-ink: #e7e9ee; --tb-ink-2: #c5cad3; --tb-dim: #9aa2b1;
+  --tb-line: #2c323d; --tb-line-soft: #232833; --tb-line-hard: #3a414d;
+  --tb-head: #20252e; --tb-page: #1b1f27; --tb-soft: #20252e;
+  --tb-tint: #1d2c33; --tb-bg-2: #14171d; --tb-raised: #20252e;
+  --tb-focus: #7cc3d6; --tb-code: #9cc7f0;
+  --scheme: dark;
+  color-scheme: dark;
+}
+html[data-nt="1"] { background: #14171d; }
+html[data-nt="1"] body.examskin:not(.gemskin) {
+  background: #14171d; color: #e7e9ee;
+  font-family: var(--font);
+}
+html[data-nt="1"] .examskin:not(.gemskin) .bg-orbs { background: #14171d; }
+html[data-nt="1"] .examskin:not(.gemskin) .bg-orbs .orb { display: none; }
+
+/* Khidki hatao — seedha slate panna (Window ka title-bar / gol kone / saaya nahi). */
+@media (min-width: 1024px) {
+  html[data-nt="1"] .examskin:not(.gemskin) .shell {
+    background: #14171d !important; border: 0 !important; border-radius: 0 !important;
+    box-shadow: none !important; max-width: none !important; margin-top: 0 !important;
+    grid-template-rows: 0 auto 1fr !important;
+  }
+  html[data-nt="1"] .examskin:not(.gemskin) .shell::before { content: none !important; display: none !important; }
+  html[data-nt="1"] .examskin:not(.gemskin) .topbar { background: #1b1f27 !important; border-bottom-color: #2c323d !important; }
+}
+
+/* Upar ki fix patti. */
+html[data-nt="1"] .mtp {
+  --mt: #e7e9ee; --md: #9aa2b1; --ma: #7cc3d6; --ml: #2c323d; --mp: #20252e;
+  background: #1b1f27; color: #e7e9ee; border-bottom-color: #2c323d; box-shadow: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+html[data-nt="1"] .mtp .mtp6-i small { color: #9aa2b1; }
+html[data-nt="1"] .mtp .mtp6-i:hover, html[data-nt="1"] .mtp .mtp6-i.is-drop { background: rgba(124, 195, 214, 0.1); }
+html[data-nt="1"] .mtp .mtp6-i.is-on { background: #1d2c33; }
+html[data-nt="1"] .mtp .mtp6-i.is-on small { color: #7cc3d6; }
+html[data-nt="1"] .mtp-pop { background: #1b1f27; color: #e7e9ee; border-color: #2c323d; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+
+/* Sar wale akshar — Bricolage; Window ke safed rang notes ki syahi mein. */
+html[data-nt="1"] .examskin:not(.gemskin) :is(.hero__title, .pyq-row__name, h1, h2, h3) {
+  color: #e7e9ee; font-family: var(--nt-display, "Bricolage Grotesque"), "Segoe UI", system-ui, sans-serif; letter-spacing: -0.01em;
+}
+html[data-nt="1"] .examskin:not(.gemskin) .hero__title { font-weight: 800; }
+html[data-nt="1"] .examskin:not(.gemskin) :is(.btn, .drawer__link, .drawer__grouphd, .home-acc__link, .chip) { font-family: var(--nt-display, "Bricolage Grotesque"), "Segoe UI", sans-serif; }
+html[data-nt="1"] .examskin:not(.gemskin) :is(.drawer__grouphd, .drawer__link, .home-acc__link):hover { color: #7cc3d6; }
+html[data-nt="1"] .examskin:not(.gemskin) .drawer__link.is-active { background: #1d2c33; color: #7cc3d6; }
+html[data-nt="1"] .examskin:not(.gemskin) .home-acc__item:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+html[data-nt="1"] .examskin:not(.gemskin) .home-acc__item.is-open > .home-acc__row { background: #1d2c33; color: #7cc3d6; }
+html[data-nt="1"] .examskin:not(.gemskin) .drawer { background: #101319; border-right-color: #2c323d; }
+html[data-nt="1"] .examskin:not(.gemskin) .pyq-row__ico { filter: none; }
+html[data-nt="1"] .examskin:not(.gemskin) .pyq-row:hover { background: #1d2c33; border-color: #2f5a66; }
+html[data-nt="1"] .examskin:not(.gemskin) ::-webkit-scrollbar-thumb { background: #3a414d; border-color: #14171d; }
+html[data-nt="1"] .examskin:not(.gemskin) .btn--primary { background: #7cc3d6; border-color: #7cc3d6; color: #14171d; }
+html[data-nt="1"] .examskin:not(.gemskin) .btn--ghost { background: #1b1f27; border-color: #2c323d; color: #e7e9ee; }
+html[data-nt="1"] .examskin:not(.gemskin) .btn--ghost:hover { border-color: #7cc3d6; }
+
+/* Dabbe — notes jaise: slate card, patli lakeer, gol kone. */
+html[data-nt="1"] .examskin:not(.gemskin) :is(.placeholder, .glass-card, .qcard, .stat, .home-acc__item, .pyq-row--all, .daily-card) {
+  background: #1b1f27; border-color: #2c323d; box-shadow: none;
+}
+html[data-nt="1"] .examskin:not(.gemskin) .md { color: #e7e9ee; }
+html[data-nt="1"] .examskin:not(.gemskin) mark { background: #5a4d12; color: inherit; }
+html[data-nt="1"] .examskin:not(.gemskin) ::selection { background: #2f5a66; color: #ffffff; }
+html[data-nt="1"] .examskin:not(.gemskin) :is(.sa-panel, .sa-dock) { background: #1b1f27; color: #e7e9ee; border-color: #2c323d; }
+
+/* ─── Slides (Fact log, Notesliner, Vocab — components/OneLinerLayouts SlideRow) ─── */
+html[data-nt="1"] .ol14 { gap: 18px; padding-bottom: 12px; }
+html[data-nt="1"] .ol14-s {
+  --ch: #7cc3d6;
+  border-radius: 24px; border: 1px solid #2c323d; border-top: 5px solid var(--ch);
+  background: #1b1f27; padding: 26px 30px; gap: 12px; min-height: 380px;
+}
+html[data-nt="1"] .ol14-s:nth-child(3n + 2) { --ch: #e0a274; }
+html[data-nt="1"] .ol14-s:nth-child(3n) { --ch: #f08aa0; }
+html[data-nt="1"] .ol14-s.is-warn { --ch: #ff8a7a; border-color: #2c323d; }
+html[data-nt="1"] .ol14-n { font-family: var(--nt-mono, "JetBrains Mono"), ui-monospace, monospace; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ch); }
+html[data-nt="1"] .ol14-s h3 { font-weight: 800; font-size: 1.6rem; line-height: 1.2; color: #e7e9ee; text-wrap: balance; }
+html[data-nt="1"] .ol14-s ul { gap: 10px; padding-left: 20px; }
+html[data-nt="1"] .ol14-s li { font-size: 1.08rem; line-height: 1.65; }
+html[data-nt="1"] .ol14-s li::marker { color: var(--ch); }
+html[data-nt="1"] .olx-meta { color: #9aa2b1; }
+html[data-nt="1"] .ol14-nav { gap: 16px; margin-top: 12px; font-family: var(--nt-display, "Bricolage Grotesque"), sans-serif; color: #9aa2b1; }
+html[data-nt="1"] .ol14-go { width: 44px; height: 44px; font-size: 1.5rem; background: #1b1f27; border-color: #2c323d; color: #e7e9ee; }
+html[data-nt="1"] .ol14-go:hover:not(:disabled) { background: #7cc3d6; border-color: #7cc3d6; color: #14171d; }
+@media (max-width: 600px) {
+  html[data-nt="1"] .ol14-s { padding: 20px 16px; border-radius: 18px; min-height: 300px; }
+  html[data-nt="1"] .ol14-s h3 { font-size: 1.3rem; }
+  html[data-nt="1"] .ol14-s li { font-size: 1rem; }
+}
+
+/* ─── Saare IMP (app/imps) ─── */
+html[data-nt="1"] .pdfs-impgrid { gap: 18px; }
+html[data-nt="1"] .imps-card { --ch: #7cc3d6; border-radius: 20px; border: 1px solid #2c323d; border-top: 5px solid var(--ch); background: #1b1f27; padding: 16px 18px; gap: 8px; }
+html[data-nt="1"] .pdfs-impgrid > :nth-child(3n + 2) { --ch: #e0a274; }
+html[data-nt="1"] .pdfs-impgrid > :nth-child(3n) { --ch: #f08aa0; }
+html[data-nt="1"] .imps-card--only { padding: 0; overflow: hidden; }
+html[data-nt="1"] .imps-sub { font-family: var(--nt-mono, "JetBrains Mono"), monospace; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ch); }
+html[data-nt="1"] .imps-subj { font-family: var(--nt-mono, "JetBrains Mono"), monospace; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ch); border-color: var(--ch); background: transparent; }
+
+/* Home ka "⭐ Saare IMP" — apna peela tal tha, slate par akshar ghul jaate. */
+html[data-nt="1"] .h20-imps { background: #2e2614 !important; border-color: #e6a344 !important; color: #f0c060 !important; }
