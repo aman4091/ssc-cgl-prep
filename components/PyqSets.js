@@ -16,7 +16,8 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { saveQuiz, deleteQuiz } from "@/lib/storage";
 import { ExamModeProvider } from "./ExamMode";
 import PyqQuestionCard from "./PyqQuestionCard";
 import MathQuestionCard from "./MathQuestionCard";
@@ -86,6 +87,7 @@ function NormalSet({ name, qs, sub, rk, need, onBack }) {
 
 export default function PyqSets({ list, sets: given, sub: subIn, subject, resumeKey, title = "PYQ", renderCard, setName = "Set", empty, minTest = 0 }) {
   const path = usePathname() || "";
+  const router = useRouter();
   const sub = subIn || SUBS[subject] || SUBS[subjectOfPath(path)] || "gs";
   const all = useMemo(() => list || [], [list]);
   const rk = resumeKey || `pyq:${path}`;
@@ -175,6 +177,30 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
     setRound((r) => r + 1);
   };
   const back = () => { setOpen(null); setDone(false); setQs([]); setProgs(progsFor(rk)); };
+
+  // ✍️ Stylus test (owner: "sets par upar hi stylus button … tablet mein test
+  // de saku aur vo valid hoga") — poora set stylus wale parde (/wrong/solve)
+  // par, set ki ghadi ke saath. Purane QBoard ka hi raasta: quiz source "set" +
+  // setKey/setIdx — solve page submit par natija ISI set ke naam (settests),
+  // ho gaye / aaj ki ginti, aur galat-chhode Mistake Notebook mein daal deta
+  // hai; set pehle diya ho to wahan wahi natija khulta hai.
+  const canStylus = (chunk) => chunk.length > 0 && !chunk.some((q) => q && q._ans);
+  const openStylus = (i) => {
+    const qs = (sets[i] || []).map(normQ);
+    if (!qs.length) return;
+    const id = `set_${String(rk).replace(/[^A-Za-z0-9]+/g, "_").slice(-60)}_${i}`;
+    try {
+      deleteQuiz(id);
+      saveQuiz({
+        id, title: `${title} · ${setName} ${i + 1}`, subject: sub,
+        setKey: rk, setIdx: kOf(i), source: "set",
+        createdAt: new Date().toISOString(), questions: qs,
+      });
+    } catch { /* quota — phir bhi khol kar dekh lete hain */ }
+    const done = !!getSetResults(rk)[kOf(i)];
+    const backUrl = encodeURIComponent(window.location.pathname + window.location.search);
+    router.push(`/wrong/solve?quiz=${encodeURIComponent(id)}${done ? "" : `&t=${SET_MIN * 60}`}&back=${backUrl}`);
+  };
   // 🏠 Home ki report se "▶" — ?set=<pehchaan> se wahi set seedha khule
   // (diya hua ho to natija, warna test).
   const autoRef = useRef(false);
@@ -340,6 +366,9 @@ export default function PyqSets({ list, sets: given, sub: subIn, subject, resume
               const L = Math.max(1, chunk.length);
               return (
                 <div key={i} className={`setcard${r ? " is-done" : ""}${pg && !r ? " is-paused" : ""}`}>
+                  {canStylus(chunk) && !(!r && chunk.length < minTest) ? (
+                    <button type="button" className="setcard__ink" onClick={() => openStylus(i)} title={r ? "Stylus par natija / dobara pen se" : "Stylus se test — tablet par, ghadi ke saath"}>✍️ Stylus</button>
+                  ) : null}
                   <button type="button" className="setcard__open" onClick={() => (!r && chunk.length < minTest ? setView(i) : start(i, r ? "result" : pg ? "resume" : "test"))}>
                     <span className="setcard__n">{setName} {i + 1}{r ? " ✓" : ""}</span>
                     <span className="setcard__meta">{given ? `${chunk.length} questions` : `Q ${a + 1}–${a + chunk.length} · ${chunk.length} questions`}</span>

@@ -97,7 +97,9 @@ function quizRecords(quizId, quiz) {
       },
       // Sawaal ki tasveer wahi raasta leti hai jo wrong-book ki images leti
       // hain — useImageUrls URL ko waise hi aage bhej deta hai.
-      images: q.qImg ? [{ url: q.qImg }] : [],
+      // Answers ke set se aaye sawaal apni wrong-book tasveerein (url / id)
+      // seedhe `_images` mein laate hain.
+      images: Array.isArray(q._images) && q._images.length ? q._images : q.qImg ? [{ url: q.qImg }] : [],
       solImg: q.solImg || "",
       // Asli question object — Mistake Notebook aur stats ko THEEK wahi
       // pehchaan chahiye jo screen wala test bhejta hai (lib/imgq), warna ek
@@ -495,7 +497,7 @@ function SolveInner() {
         if (r?._quiz && r.id) { try { await dropLocalInk(r.id); } catch { /* ignore */ } }
       }
     }
-    if (back && (qMeta?.source === "set" || !showResultRef.current)) { router.push(back); return; }
+    if (back && (qMeta?.source === "set" || qMeta?.source === "aset" || !showResultRef.current)) { router.push(back); return; }
     // Aakhri sahara: jo aam page aakhri baar khula tha (lib/backto).
     // Pehle yahan seedha /answers tha — quiz kahin se bhi shuru karo, ant
     // mein Answers par hi patak deta tha.
@@ -598,6 +600,26 @@ function SolveInner() {
     setResultRows(rows);
     setShowResult(true);
     setSubmitted(true);
+
+    // ✍️ Answers ke set ka stylus test (components/AnswersSets — quiz source
+    // "aset"): sawaal pehle se Mistake Notebook ke hain, isliye notebook mein
+    // kuch naya NAHI — bas natija usi set ke naam (settests), jaise screen wala
+    // test darj karta hai. Set card par marks / Result wahi se aate hain.
+    if (qMeta?.source === "aset") {
+      try {
+        if (qMeta.setKey) {
+          const rt = rows.filter((x) => x.ok).length;
+          const ans = rows.filter((x) => !x.skipped).length;
+          saveSetResult(qMeta.setKey, qMeta.setIdx, {
+            right: rt, wrong: ans - rt, skipped: rows.length - ans, total: rows.length,
+            sec: examStart > 0 ? Math.max(0, examStart - examLeft) : 0,
+            picks: Object.fromEntries(rows.filter((x) => !x.skipped).map((x) => [x.i, x.p])),
+          });
+        }
+        deleteQuiz(quizId); localStorage.removeItem(picksKey);
+      } catch { /* natija dikhna chahiye, darj na bhi ho */ }
+      return;
+    }
 
     try {
       // Pehchaan ASLI question se banti hai (aur tasveer wale bank mein uske

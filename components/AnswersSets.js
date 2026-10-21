@@ -16,6 +16,9 @@
 // gaya neeche" wali chhantayi yahan nahi, warna set ke sawaal badalte rehte.
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { saveQuiz, deleteQuiz } from "@/lib/storage";
+import { imagesOf } from "@/lib/wrongbook";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getSetResults, saveSetResult, moveResult, markResult, accuracyOf, marksOf, maxMarks, fmtMarks } from "@/lib/settests";
 import TestPage, { clock } from "./TestPage";
@@ -62,6 +65,34 @@ export default function AnswersSets({ ctx }) {
   // sawaal judein to purane set ka natija galat set par na chipke.
   const sigs = useMemo(() => Array.from({ length: setCount }, (_, i) => `s${hashStr(all.slice(i * SET_SIZE, i * SET_SIZE + SET_SIZE).map((r) => r.id).join("|"))}`), [all, setCount]);
   const kOf = (i) => sigs[i];
+  const router = useRouter();
+  // ✍️ Stylus test (owner) — poora set stylus wale parde (/wrong/solve) par,
+  // ghadi ke saath. Quiz source "aset": solve page natija isi set ke naam
+  // darj karta hai (notebook mein naya kuch nahi — sawaal pehle se wahin hain).
+  const openStylus = (i) => {
+    const rs = all.slice(i * SET_SIZE, i * SET_SIZE + SET_SIZE);
+    if (!rs.length) return;
+    const id = `aset_${String(rkey).replace(/[^A-Za-z0-9]+/g, "_").slice(-50)}_${i}`;
+    try {
+      deleteQuiz(id);
+      saveQuiz({
+        id, title: `Answers · Set ${i + 1}`, subject: rs[0]?.subject || "math",
+        setKey: rkey, setIdx: kOf(i), source: "aset",
+        createdAt: new Date().toISOString(),
+        questions: rs.map((r) => {
+          const k = keyOf(r);
+          return {
+            question: r.q?.question || "", options: optsOf(r),
+            answer: k >= 0 ? k : 0, solution: r.answer || "",
+            _images: imagesOf(r), id: r.id,
+          };
+        }),
+      });
+    } catch { /* quota — phir bhi khol kar dekh lete hain */ }
+    const done = !!getSetResults(rkey)[kOf(i)];
+    const backUrl = encodeURIComponent(window.location.pathname + window.location.search);
+    router.push(`/wrong/solve?quiz=${encodeURIComponent(id)}${done ? "" : `&t=${SET_MIN * 60}`}&back=${backUrl}`);
+  };
   const [results, setResults] = useState({});
   const [progs, setProgs] = useState({});
   // Natije padh liye? Tab tak Home ka ?set= set na khole (warna khaali
@@ -277,6 +308,7 @@ export default function AnswersSets({ ctx }) {
               const L = Math.max(1, chunk.length);
               return (
                 <div key={i} className={`setcard${r ? " is-done" : ""}${pg && !r ? " is-paused" : ""}`}>
+                  <button type="button" className="setcard__ink" onClick={() => openStylus(i)} title={r ? "Stylus par natija / dobara pen se" : "Stylus se test — tablet par, ghadi ke saath"}>✍️ Stylus</button>
                   <button type="button" className="setcard__open" onClick={() => open(i, r ? "result" : pg ? "resume" : "test")}>
                     <span className="setcard__n">Set {i + 1}{r ? " ✓" : ""}</span>
                     <span className="setcard__meta">Q {a + 1}–{a + chunk.length} · {chunk.length} questions</span>

@@ -4322,3 +4322,14 @@ body.exam-on .hresume { display: none; }
 .imp-box--slide { margin-top: 6px; }
 .ol14-imp { align-self: flex-end; padding: 4px 12px; border: 1px solid #f2b705; border-radius: 999px; background: #fff4cc; color: #7a5a00; font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
 .ol14-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+
+/* ✍️ Set card par upar-daayen "Stylus" — poora set stylus wale parde par test
+   (components/PyqSets openStylus). */
+.setcard { position: relative; }
+.setcard__ink {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  padding: 5px 11px; border-radius: 999px; border: 1px solid var(--accent);
+  background: var(--accent-wash, transparent); color: var(--accent);
+  font: inherit; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+}
+.setcard__ink:hover { background: var(--accent); color: var(--on-accent, #fff); }
