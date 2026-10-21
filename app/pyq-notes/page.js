@@ -54,7 +54,17 @@ function NotesInner() {
   const [loading, setLoading] = useState(false);
   const [writer, setWriter] = useState(false);
   const posRef = useRef({});
-  const want = useRef(null);   // ?b=&t=&s= se aaye (Saare IMP ka "Notes kholo")
+  const want = useRef(null);
+  const loadedFor = useRef("");
+  // Naya topic / book chuna → hamesha pehli slide se (owner).
+  const openTopic = (bk, t) => {
+    want.current = { b: bk, t, s: 0 };
+    loadedFor.current = "";
+    setSlides([]);
+    setAt(0);
+    setBook(bk);
+    setTopic(t);
+  };   // ?b=&t=&s= se aaye (Saare IMP ka "Notes kholo")
 
   useEffect(() => { setWriter(isInkWriter()); }, []);
   useEffect(() => {
@@ -83,6 +93,7 @@ function NotesInner() {
       if (!alive) return;
       const ss = cutSlides(h);
       setSlides(ss);
+      loadedFor.current = `${B.key}:${topic}`;
       const w = want.current;
       const saved = posRef.current[`s:${B.key}:${topic}`] || 0;
       const start = w && w.b === B.key && w.t === topic && w.s != null ? w.s : saved;
@@ -95,7 +106,9 @@ function NotesInner() {
 
   // Jagah yaad — book, topic aur har topic ki slide.
   useEffect(() => {
-    if (!B || !topic || !slides.length) return;
+    // Sirf tab jab slides ISI topic ki hon — warna topic badalte hi purane
+    // topic ki slide (jaise 6) naye topic ke naam se likh jaati thi (owner).
+    if (!B || !topic || !slides.length || loadedFor.current !== `${B.key}:${topic}`) return;
     const p = posRef.current;
     p.book = B.key; p[`t:${B.key}`] = topic; p[`s:${B.key}:${topic}`] = at;
     savePos(p);
@@ -182,7 +195,7 @@ function NotesInner() {
         <div className="pn-books" role="tablist">
           {idx.books.map((x) => (
             <button key={x.key} type="button" role="tab" aria-selected={x.key === book}
-              onClick={() => { setBook(x.key); setTopic(posRef.current[`t:${x.key}`] || x.topics[0].id); }}>
+              onClick={() => openTopic(x.key, posRef.current[`t:${x.key}`] || x.topics[0].id)}>
               {x.icon} {x.name}
             </button>
           ))}
@@ -190,7 +203,7 @@ function NotesInner() {
         {B ? (
           <div className="pn-sel">
             <label>Topic
-              <select value={topic} onChange={(e) => setTopic(e.target.value)}>
+              <select value={topic} onChange={(e) => openTopic(B.key, e.target.value)}>
                 {B.topics.map((x, i) => <option key={x.id} value={x.id}>{i + 1}. {x.name}</option>)}
               </select>
             </label>
