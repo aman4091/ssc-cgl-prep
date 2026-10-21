@@ -137,16 +137,31 @@ function NotesInner() {
     const r = card.current?.getBoundingClientRect();
     if (r && r.top < 0) window.scrollTo({ top: window.scrollY + r.top - 70 });
   }, [at]);
+  // Screen touch se aage / peeche (owner) — ungli YA stylus, dono: pointer
+  // events (stylus touch event deta hi nahi, isliye pehle wala swipe pen se
+  // nahi chalta tha).
+  //   • swipe: baayen kheencho → agli, daayen → pichhli
+  //   • tap: card ka daayan tihaai → agli, baayan tihaai → pichhli
+  // Button / link / table / diagram / quiz par tap ho to apna kaam karne do.
   const touch = useRef(null);
-  const onTs = (e) => {
-    if (e.target.closest(".tbl, .sv, details")) { touch.current = null; return; }
-    touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  const SKIP = "a, button, summary, details, select, input, .tbl, .sv, .imp-box";
+  const onPd = (e) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    touch.current = e.target.closest(SKIP) ? null : { x: e.clientX, y: e.clientY, t: Date.now() };
   };
-  const onTe = (e) => {
+  const onPu = (e) => {
     const t0 = touch.current; touch.current = null;
     if (!t0) return;
-    const dx = e.changedTouches[0].clientX - t0.x, dy = e.changedTouches[0].clientY - t0.y;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) go(dx < 0 ? 1 : -1);
+    const dx = e.clientX - t0.x, dy = e.clientY - t0.y;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) { go(dx < 0 ? 1 : -1); return; }
+    // Chhota sa tap (hila nahi, jaldi chhoda, kuch select nahi kiya).
+    if (Math.abs(dx) > 10 || Math.abs(dy) > 10 || Date.now() - t0.t > 450) return;
+    if (String(window.getSelection?.() || "").trim()) return;
+    const r = card.current?.getBoundingClientRect();
+    if (!r) return;
+    const f = (e.clientX - r.left) / r.width;
+    if (f > 0.67) go(1);
+    else if (f < 0.33) go(-1);
   };
 
   const cur = slides[at];
@@ -211,7 +226,7 @@ function NotesInner() {
       <div className="pn-prog"><i style={{ width: slides.length ? `${((at + 1) / slides.length) * 100}%` : 0 }} /></div>
       {loading ? <p className="hint">Notes khul rahe hain…</p> : null}
       {!loading && cur ? (
-        <article ref={card} className={`pn-card ${cur.c}`} onTouchStart={onTs} onTouchEnd={onTe}>
+        <article ref={card} className={`pn-card ${cur.c}`} onPointerDown={onPd} onPointerUp={onPu} onPointerCancel={() => { touch.current = null; }}>
           <div className="pn-top">
             <b>{cur.chap}</b>
             <span>{at + 1} / {slides.length}</span>
@@ -234,7 +249,7 @@ function NotesInner() {
         <span>{slides.length ? `${at + 1} / ${slides.length}` : ""}</span>
         <button type="button" className="pn-go" onClick={() => go(1)} disabled={at >= slides.length - 1} aria-label="Agli slide">›</button>
       </div>
-      <p className="hint pn-hint">Swipe karo ya ← → keys.</p>
+      <p className="hint pn-hint">Card ke daayen hisse par tap / baayen kheencho → agli · baayen hisse par tap / daayen kheencho → pichhli · ← → keys</p>
     </section>
   );
 }
