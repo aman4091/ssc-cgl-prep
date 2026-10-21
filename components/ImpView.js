@@ -150,7 +150,7 @@ export function ImpNoteBox({ k, label = "⭐ IMP" }) {
   if (!doc || isEmptyDoc(doc)) return null;
   return (
     <div className="imp-box imp-box--slide">
-      <b className="imp-box__h">⭐ IMP</b>
+      <b className="imp-box__h">{label}</b>
       <InkStatic doc={doc} />
     </div>
   );

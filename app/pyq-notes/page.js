@@ -181,7 +181,8 @@ function NotesInner() {
     // ‹ › stylus page par — poore topic ki slides (sessionStorage).
     try {
       sessionStorage.setItem("imp.list", JSON.stringify({
-        kind, items: slides.map((x) => ({ k: noteKey(kind, `${B.key}.${x.key}`), title: x.title, points: x.points })),
+        kind, book: B.key, bookName: `${B.icon} ${B.name}`, src: `${B.name} · ${T.name}`, t: T.id,
+        items: slides.map((x, i) => ({ k: noteKey(kind, `${B.key}.${x.key}`), title: x.title, points: x.points, s: i })),
       }));
     } catch { /* bahut badi list — tab bas ek slide */ }
     router.push(`/imp?k=${encodeURIComponent(nk)}&back=${encodeURIComponent(`/pyq-notes?b=${B.key}&t=${T.id}&s=${at}`)}`);

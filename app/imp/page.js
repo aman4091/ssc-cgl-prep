@@ -18,7 +18,7 @@ import { inkRecord, inkSetter } from "@/lib/impink";
 import { noteRec, getImpCtx, putImpCtx, getImpNote, setImpNoteMeta, allImpNoteKeys } from "@/lib/impnotes";
 import { isInkWriter, setInkWriter } from "@/lib/inkdevice";
 import { setSyncPaused } from "@/lib/sync";
-import { loadSlide } from "@/lib/pyqnotes";
+import { loadSlide, findSlide } from "@/lib/pyqnotes";
 import "../pyq-notes/pn.css";
 import { storeFlush } from "@/lib/bigstore";
 
@@ -40,6 +40,9 @@ function ImpInner() {
   const base = k.replace(/#\d+$/, "");
   const slotN = /#(\d+)$/.test(k) ? Number(k.match(/#(\d+)$/)[1]) : 1;
   const multi = base.startsWith("pn:");
+  // ✍️ Maths ka Rough (kind "pnr") — IMP se alag: na ⭐ naam, na ➕ IMP.
+  const rough = base.startsWith("pnr:");
+  const head = rough ? "✍️ Rough" : "⭐ IMP";
   const [slots, setSlots] = useState(1);
   useEffect(() => {
     if (!multi) return;
@@ -61,10 +64,15 @@ function ImpInner() {
     let alive = true;
     let t = "";
     try { t = new URL(getImpNote(base)?.meta?.href || "", window.location.origin).searchParams.get("t") || ""; } catch { /* ignore */ }
-    if (!t) return undefined;
-    loadSlide(m[1], t, m[2]).then((s) => { if (alive && s) setSlideHtml(s.body); }).catch(() => {});
+    // ‹ › se aayi slide / purana IMP — topic list se, warna poori book mein dhoondo.
+    if (!t && list?.book === m[1] && list.items.some((x) => x.k === base)) t = list.t || "";
+    (async () => {
+      let s = t ? await loadSlide(m[1], t, m[2]).catch(() => null) : null;
+      if (!s) s = (await findSlide(m[1], m[2]).catch(() => null))?.slide || null;
+      if (alive && s) setSlideHtml(s.body);
+    })();
     return () => { alive = false; };
-  }, [base]);
+  }, [base, list]);
   useEffect(() => {
     const it = list && pos >= 0 ? list.items[pos] : null;
     setCtx(it ? { title: it.title, points: it.points } : getImpCtx(k));
@@ -152,13 +160,21 @@ function ImpInner() {
     if (!canRef.current || !liveDoc.current || !k) return;
     try { await pushInk(noteRec(k), liveDoc.current, inkSetter); } catch { /* device par pada hai — InkHeal baad mein */ }
   }, [k]);
+  // ‹ › se aayi slide par pehli baar likha — Saare IMP mein book / link ke saath dikhe.
+  const metaFor = () => {
+    if (!list?.book || getImpNote(base)?.meta) return;
+    const it = list.items.find((x) => x.k === base);
+    if (!it) return;
+    setImpNoteMeta(base, { title: it.title, src: list.src || "", book: list.book, bookName: list.bookName || "", href: `/pyq-notes?b=${list.book}&t=${list.t}&s=${it.s ?? 0}` });
+  };
   const onChange = useCallback((next) => {
     if (!canRef.current) return;
+    if (/^pnr?:/.test(base)) metaFor();
     liveDoc.current = next;
     setState("dirty");
     clearTimeout(localT.current);
     localT.current = setTimeout(() => { flushLocal(); }, LOCAL_MS);
-  }, [flushLocal]);
+  }, [flushLocal, base, list]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     const onHide = () => { if (document.visibilityState === "hidden") { flushLocal(); flushCloud(); } };
     document.addEventListener("visibilitychange", onHide);
@@ -190,7 +206,7 @@ function ImpInner() {
     const c = ctx || getImpCtx(base);
     if (c) putImpCtx(nk, c);
     const m = getImpNote(base)?.meta;
-    if (m && n > 1) setImpNoteMeta(nk, { ...m, title: `${m.title || ""} · IMP ${n}` });
+    if (m && n > 1) setImpNoteMeta(nk, { ...m, title: `${(m.title || "").replace(/ · IMP \d+$/, "")} · IMP ${n}` });
     router.replace(`/imp?k=${encodeURIComponent(nk)}&back=${encodeURIComponent(back)}`);
   };
 
@@ -219,13 +235,13 @@ function ImpInner() {
     <div className="inkv">
       <div className="inkv__top">
         <button className="btn btn--ghost btn--sm" onClick={exit} title="Wapas slide par">←</button>
-        <span className="inkv__title">⭐ IMP · {ctx?.title || ""}</span>
+        <span className="inkv__title">{head} · {ctx?.title || ""}</span>
         <span style={{ marginLeft: "auto" }} />
         {list && pos >= 0 ? (
           <span className="inkv__nav">
-            <button className="btn btn--ghost btn--sm" onClick={() => goTo(pos - 1)} disabled={pos <= 0} title="Pichhli slide ka IMP">‹ Pichhla</button>
+            <button className="btn btn--ghost btn--sm" onClick={() => goTo(pos - 1)} disabled={pos <= 0} title={`Pichhli slide ka ${head}`}>‹ Pichhla</button>
             <span className="inkv__pill">{pos + 1}/{list.items.length}</span>
-            <button className="btn btn--ghost btn--sm" onClick={() => goTo(pos + 1)} disabled={pos >= list.items.length - 1} title="Agli slide ka IMP">Agla ›</button>
+            <button className="btn btn--ghost btn--sm" onClick={() => goTo(pos + 1)} disabled={pos >= list.items.length - 1} title={`Agli slide ka ${head}`}>Agla ›</button>
           </span>
         ) : null}
         {multi ? (
@@ -299,7 +315,7 @@ function ImpInner() {
             <span className="inkv__sep" />
             <button className="btn btn--ghost btn--sm" onClick={() => inkRef.current?.undo()} title="Undo">↩</button>
             <button className="btn btn--ghost btn--sm" onClick={() => inkRef.current?.redo()} title="Redo">↪</button>
-            <button className="btn btn--ghost btn--sm" onClick={() => { if (confirm("Poora IMP mita du?")) inkRef.current?.clear(); }} title="Sab mitao">🗑️</button>
+            <button className="btn btn--ghost btn--sm" onClick={() => { if (confirm(`Poora ${rough ? "Rough" : "IMP"} mita du?`)) inkRef.current?.clear(); }} title="Sab mitao">🗑️</button>
             <button className="btn btn--ghost btn--sm" onClick={() => inkRef.current?.grow()} title="Aur jagah jodo">➕ jagah</button>
           </>
         ) : writer === false ? (
