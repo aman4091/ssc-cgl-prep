@@ -142,3 +142,56 @@ html[data-nt="1"] .imps-subj { font-family: var(--nt-mono, "JetBrains Mono"), mo
 
 /* Home ka "⭐ Saare IMP" — apna peela tal tha, slate par akshar ghul jaate. */
 html[data-nt="1"] .h20-imps { background: #2e2614 !important; border-color: #e6a344 !important; color: #f0c060 !important; }
+
+/* ─── PYQ ke Sets + Test ka parda — components/answers-play.css (.tbx) aur
+   components/testpage.css (.tbt) mein Testbook ke safed rang seedhe likhe hain;
+   yahan unhi ko notes ke slate mein. Andar ke card site ke tokens par pehle hi
+   theek hain, isliye sirf ye seedhe rang. Sawaal / option ki scan images ulti
+   (safed kaagaz → gehra, kaala akshar → halka; owner: "image bhi white aari"). */
+html[data-nt="1"] .tbx { background: #14171d; color: #e7e9ee; }
+html[data-nt="1"] .tbx-head { background: #1b1f27; color: #e7e9ee; border-bottom: 1px solid #2c323d; }
+html[data-nt="1"] .tbx-today { background: #20252e; border-color: #2c323d; }
+html[data-nt="1"] .tbx-sec, html[data-nt="1"] .tbx-foot { background: #1b1f27; border-color: #2c323d; }
+html[data-nt="1"] .tbx-sec > span, html[data-nt="1"] .tbx-qh > b, html[data-nt="1"] .tbx-user b, html[data-nt="1"] .tbx-legend, html[data-nt="1"] .tbx-sechd { color: #e7e9ee; border-color: #2c323d; }
+html[data-nt="1"] .tbx-qh { border-color: #2c323d; }
+html[data-nt="1"] .tbx-q .ansp__card, html[data-nt="1"] .tbx-opt { color: #e7e9ee; }
+html[data-nt="1"] .tbx-opt:hover { background: #20252e; }
+html[data-nt="1"] .tbx-opt.is-pick, html[data-nt="1"] .tbx-opt.is-mine { background: #1d2c33; border-color: #3a8ea5; }
+html[data-nt="1"] .tbx-opt.is-key { background: #16291f; border-color: #3fa36b; }
+html[data-nt="1"] .tbx-opt.is-bad { background: #2e1b1a; border-color: #d9534f; }
+html[data-nt="1"] .tbx-tab, html[data-nt="1"] .tbx .tbx-tab.is-on, html[data-nt="1"] .tbx b.tbx-tab { background: #1d2c33; color: #7cc3d6; border-color: #3a8ea5; }
+html[data-nt="1"] .tbx button.tbx-tab:not(.is-on) { background: #1b1f27; color: #9aa2b1; }
+html[data-nt="1"] .tbx .tbx-btn { background: #20252e; border-color: #3a414d; color: #e7e9ee; }
+html[data-nt="1"] .tbx .tbx-btn:hover:not(:disabled) { background: #2a303b; }
+html[data-nt="1"] .tbx .tbx-btn:disabled { background: #1b1f27; border-color: #2c323d; color: #5d6574; }
+html[data-nt="1"] .tbx-side { background: #1b1f27; border-color: #2c323d; }
+html[data-nt="1"] .tbx-sechd { background: #20252e; }
+html[data-nt="1"] .tbx-legend, html[data-nt="1"] .tbx-sidefoot { border-color: #2c323d; }
+html[data-nt="1"] .tbx-legend i, html[data-nt="1"] .tbx .tbx-grid button { background: #20252e; border-color: #3a414d; color: #e7e9ee; }
+html[data-nt="1"] .tbx .tbx-grid button.is-cur { background: #1d2c33; border-color: #7cc3d6; color: #e7e9ee; }
+html[data-nt="1"] .tbx-sim .sim, html[data-nt="1"] .tbx-self { background: #2e2614; border-color: #5a4a22; color: #e7e9ee; }
+html[data-nt="1"] .tbx .tbx-self button { background: #20252e; border-color: #3a414d; color: #e7e9ee; }
+
+html[data-nt="1"] .tbt { background: #14171d; color: #e7e9ee; font-family: var(--font); }
+html[data-nt="1"] .tbt-head { background: #1b1f27; border-bottom: 1px solid #2c323d; box-shadow: none; }
+html[data-nt="1"] .tbt-you, html[data-nt="1"] .tbx-empty { color: #9aa2b1; }
+html[data-nt="1"] .tbt-you b, html[data-nt="1"] .tbt-qno, html[data-nt="1"] .tbt-total, html[data-nt="1"] .tbt-sec b, html[data-nt="1"] .tbt-ask h3 { color: #e7e9ee; }
+html[data-nt="1"] .tbt-qbox, html[data-nt="1"] .tbt-qbox .qcard__stem, html[data-nt="1"] .tbt-opt > span:last-child { color: #e7e9ee; border-color: #2c323d; }
+html[data-nt="1"] .tbt-opts, html[data-nt="1"] .tbt-opt, html[data-nt="1"] .tbt-opt > span:first-child, html[data-nt="1"] .tbt-side { border-color: #2c323d; }
+html[data-nt="1"] .tbt-qbox .qcard__opt { background: #1b1f27; color: #e7e9ee; border-color: #2c323d; }
+html[data-nt="1"] .tbt-qbox .qcard__opt > :not(b) { border-color: #2c323d; }
+html[data-nt="1"] .tbt-qbox .qcard__opt > b { background: #14171d; border-color: #8a92a3; }
+html[data-nt="1"] .tbt-qbox .qcard__opt:hover { background: #20252e; }
+html[data-nt="1"] .tbt-opt.is-key > span:last-child, html[data-nt="1"] .tbt.is-done .tbt-qbox .qcard__opt.is-right { background: #16291f; color: #8fd9b0; }
+html[data-nt="1"] .tbt-opt.is-bad > span:last-child, html[data-nt="1"] .tbt.is-done .tbt-qbox .qcard__opt.is-wrong { background: #2e1b1a; color: #ff9d8f; }
+html[data-nt="1"] .tbt-opt.is-mine > span:last-child { background: #1d2c33; }
+html[data-nt="1"] .tbt-ana th { background: #20252e; color: #e7e9ee; border-color: #3a414d; }
+html[data-nt="1"] .tbt-ana td { color: #9cc7f0; border-color: #3a414d; }
+html[data-nt="1"] .tbt-pop__box, html[data-nt="1"] .tbt .tbt-ask__acts button:not(.is-yes) { background: #1b1f27; color: #e7e9ee; }
+html[data-nt="1"] .tbt-sim { background: #1b1f27; border-color: #2c323d; }
+html[data-nt="1"] .tbt-sim .sim-q { background: #20252e; }
+html[data-nt="1"] .tbt .tbx-self button { background: #20252e; border-color: #3a414d; color: #e7e9ee; }
+
+/* Sawaal / option / hal ki scan images — safed kaagaz ulta karke gehra. */
+html[data-nt="1"] :is(.tbx, .tbt, .qcard, .ansp__card) img:not(.no-invert),
+html[data-nt="1"] .tbt-ansimg, html[data-nt="1"] .tbt-ansbig { filter: invert(0.88) hue-rotate(180deg); background: transparent; }
