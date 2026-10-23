@@ -1,25 +1,26 @@
 "use client";
 
 // 📘 Notes — PYQ Notes 2025-26, GS Hot 22, Maths, English Grammar aur Vocab
-// (claude.ai par bane notes, owner ne site par maange). Har book → topic →
-// slides, Fact log jaisa: ek card, ‹ › / swipe / ← →. HTML public/pyq_notes
-// mein hai (book/tNN.html + index.json); har <section class="chap"> har <h3>
-// par kat kar slide banta hai.
+// (claude.ai par bane notes). Desktop wale "SSC Notes" jaisa hi roop (owner:
+// "same as it is, slide hata de"): baayen topic ki list (phone par drawer),
+// ek baar mein ek topic poora — upar chapter ke chips, neeche ‹ › pager.
+// HTML public/pyq_notes mein hai (book/tNN.html + index.json).
 //
-// ⭐ IMP ✍️ — Fact log wala hi stylus page (/imp), kind "pn" — Saare IMP ke
-// "📘 Notes" tab mein dikhta hai. Maths mein saath mein ✍️ Rough (owner:
-// "imp ke saath normal bhi") — kind "pnr", likha hua slide ke neeche dikhta
-// hai par Saare IMP mein nahi jaata. Likhna sirf tablet par (lib/inkdevice).
+// ⭐ IMP ✍️ — har <h3> hisse ke saath (chaabi wahi jo pehle slide ki thi,
+// lib/pyqnotes cutSlides — purane IMP apni jagah). Stylus page /imp, kind "pn",
+// Saare IMP ke "📘 Notes" tab mein. Maths mein saath mein ✍️ Rough (kind
+// "pnr") — usi hisse ke neeche, Saare IMP mein nahi. Likhna sirf tablet par.
 
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ImpNoteBox } from "@/components/ImpView";
 import { noteKey, putImpCtx, setImpNoteMeta, allImpNoteKeys } from "@/lib/impnotes";
 import { isInkWriter } from "@/lib/inkdevice";
 import { cutSlides, PN_BASE } from "@/lib/pyqnotes";
 import "./pn.css";
+import "./notes-lib.css";
 
-// Slide ke saare ⭐ IMP — pehla (slide ki chaabi) aur stylus page ke ➕ IMP se
+// Hisse ke saare ⭐ IMP — pehla (hisse ki chaabi) aur stylus page ke ➕ IMP se
 // bane #2, #3… (app/imp). Khaali wale ImpNoteBox khud chhupa deta hai.
 function ImpSlots({ base, label }) {
   const [keys, setKeys] = useState([base]);
@@ -42,6 +43,7 @@ const BASE = PN_BASE;
 const POS = "cgl.pn.pos";
 const loadPos = () => { try { return JSON.parse(localStorage.getItem(POS) || "{}") || {}; } catch { return {}; } };
 const savePos = (v) => { try { localStorage.setItem(POS, JSON.stringify(v)); } catch { /* quota */ } };
+const blockId = (key) => `pn-${key.replace(/\./g, "-")}`;
 
 function NotesInner() {
   const sp = useSearchParams();
@@ -50,21 +52,13 @@ function NotesInner() {
   const [book, setBook] = useState("");
   const [topic, setTopic] = useState("");
   const [slides, setSlides] = useState([]);
-  const [at, setAt] = useState(0);
   const [loading, setLoading] = useState(false);
   const [writer, setWriter] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [q, setQ] = useState("");
   const posRef = useRef({});
+  // ?b=&t=&s= (Saare IMP / stylus page se wapas) — us hisse tak scroll.
   const want = useRef(null);
-  const loadedFor = useRef("");
-  // Naya topic / book chuna → hamesha pehli slide se (owner).
-  const openTopic = (bk, t) => {
-    want.current = { b: bk, t, s: 0 };
-    loadedFor.current = "";
-    setSlides([]);
-    setAt(0);
-    setBook(bk);
-    setTopic(t);
-  };   // ?b=&t=&s= se aaye (Saare IMP ka "Notes kholo")
 
   useEffect(() => { setWriter(isInkWriter()); }, []);
   useEffect(() => {
@@ -83,7 +77,16 @@ function NotesInner() {
   }, []);
 
   const B = useMemo(() => idx?.books.find((x) => x.key === book) || null, [idx, book]);
-  const T = useMemo(() => B?.topics.find((x) => x.id === topic) || null, [B, topic]);
+  const ti = B ? B.topics.findIndex((x) => x.id === topic) : -1;
+  const T = ti >= 0 ? B.topics[ti] : null;
+
+  const openTopic = (bk, t) => {
+    want.current = null;
+    setBook(bk);
+    setTopic(t);
+    setOpen(false);
+    window.scrollTo({ top: 0 });
+  };
 
   useEffect(() => {
     if (!B || !topic) return undefined;
@@ -93,162 +96,142 @@ function NotesInner() {
       if (!alive) return;
       const ss = cutSlides(h);
       setSlides(ss);
-      loadedFor.current = `${B.key}:${topic}`;
-      const w = want.current;
-      const saved = posRef.current[`s:${B.key}:${topic}`] || 0;
-      const start = w && w.b === B.key && w.t === topic && w.s != null ? w.s : saved;
-      want.current = null;
-      setAt(Math.max(0, Math.min(start, ss.length - 1)));
       setLoading(false);
+      const p = posRef.current;
+      p.book = B.key; p[`t:${B.key}`] = topic;
+      savePos(p);
+      const w = want.current;
+      want.current = null;
+      if (w && w.b === B.key && w.t === topic && w.s != null && ss[w.s]) {
+        setTimeout(() => document.getElementById(blockId(ss[w.s].key))?.scrollIntoView({ block: "start" }), 60);
+      }
     }).catch(() => { if (alive) { setSlides([]); setLoading(false); } });
     return () => { alive = false; };
   }, [B, topic]);
 
-  // Jagah yaad — book, topic aur har topic ki slide.
-  useEffect(() => {
-    // Sirf tab jab slides ISI topic ki hon — warna topic badalte hi purane
-    // topic ki slide (jaise 6) naye topic ke naam se likh jaati thi (owner).
-    if (!B || !topic || !slides.length || loadedFor.current !== `${B.key}:${topic}`) return;
-    const p = posRef.current;
-    p.book = B.key; p[`t:${B.key}`] = topic; p[`s:${B.key}:${topic}`] = at;
-    savePos(p);
-  }, [B, topic, at, slides.length]);
-
-  const go = useCallback((d) => {
-    setAt((a) => {
-      const n = a + d;
-      return n < 0 || n >= slides.length ? a : n;
+  // Topic ke chapter (section) — har ek ke hisse saath mein.
+  const secs = useMemo(() => {
+    const out = [];
+    slides.forEach((s, i) => {
+      const last = out[out.length - 1];
+      if (last && last.id === s.sec) last.items.push({ s, i });
+      else out.push({ id: s.sec, chap: s.chap, h2: s.h2, c: s.c, items: [{ s, i }] });
     });
-  }, [slides.length]);
-  useEffect(() => {
-    const k = (e) => {
-      if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable) return;
-      if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
-      if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
-    };
-    window.addEventListener("keydown", k);
-    return () => window.removeEventListener("keydown", k);
-  }, [go]);
-  const card = useRef(null);
-  useEffect(() => {
-    const r = card.current?.getBoundingClientRect();
-    if (r && r.top < 0) window.scrollTo({ top: window.scrollY + r.top - 70 });
-  }, [at]);
-  // Screen touch se aage / peeche (owner) — ungli YA stylus, dono: pointer
-  // events (stylus touch event deta hi nahi, isliye pehle wala swipe pen se
-  // nahi chalta tha).
-  //   • swipe: baayen kheencho → agli, daayen → pichhli
-  //   • tap: card ka daayan tihaai → agli, baayan tihaai → pichhli
-  // Button / link / table / diagram / quiz par tap ho to apna kaam karne do.
-  const touch = useRef(null);
-  const SKIP = "a, button, summary, details, select, input, .tbl, .sv, .imp-box";
-  const onPd = (e) => {
-    if (e.pointerType === "mouse" && e.button !== 0) return;
-    touch.current = e.target.closest(SKIP) ? null : { x: e.clientX, y: e.clientY, t: Date.now() };
-  };
-  const onPu = (e) => {
-    const t0 = touch.current; touch.current = null;
-    if (!t0) return;
-    const dx = e.clientX - t0.x, dy = e.clientY - t0.y;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) { go(dx < 0 ? 1 : -1); return; }
-    // Chhota sa tap (hila nahi, jaldi chhoda, kuch select nahi kiya).
-    if (Math.abs(dx) > 10 || Math.abs(dy) > 10 || Date.now() - t0.t > 450) return;
-    if (String(window.getSelection?.() || "").trim()) return;
-    const r = card.current?.getBoundingClientRect();
-    if (!r) return;
-    const f = (e.clientX - r.left) / r.width;
-    if (f > 0.67) go(1);
-    else if (f < 0.33) go(-1);
-  };
-
-  const cur = slides[at];
-  const chapters = useMemo(() => {
-    const seen = new Set();
-    return slides.map((s, i) => ({ s, i })).filter(({ s }) => (seen.has(s.chap) ? false : (seen.add(s.chap), true)));
+    return out;
   }, [slides]);
-  const chapAt = chapters.reduce((a, c) => (c.i <= at ? c.i : a), 0);
 
-  const openNote = (kind) => {
-    if (!cur || !B || !T) return;
-    const nk = noteKey(kind, `${B.key}.${cur.key}`);
-    putImpCtx(nk, { title: cur.title, points: cur.points });
-    {
-      setImpNoteMeta(nk, {
-        title: cur.title, src: `${B.name} · ${T.name}`, book: B.key, bookName: `${B.icon} ${B.name}`,
-        href: `/pyq-notes?b=${B.key}&t=${T.id}&s=${at}`,
-      });
-    }
-    // ‹ › stylus page par — poore topic ki slides (sessionStorage).
+  const openNote = (kind, s, i) => {
+    if (!B || !T) return;
+    const nk = noteKey(kind, `${B.key}.${s.key}`);
+    const href = `/pyq-notes?b=${B.key}&t=${T.id}&s=${i}`;
+    putImpCtx(nk, { title: s.title, points: s.points });
+    setImpNoteMeta(nk, { title: s.title, src: `${B.name} · ${T.name}`, book: B.key, bookName: `${B.icon} ${B.name}`, href });
+    // ‹ › stylus page par — poore topic ke hisse (sessionStorage).
     try {
       sessionStorage.setItem("imp.list", JSON.stringify({
         kind, book: B.key, bookName: `${B.icon} ${B.name}`, src: `${B.name} · ${T.name}`, t: T.id,
-        items: slides.map((x, i) => ({ k: noteKey(kind, `${B.key}.${x.key}`), title: x.title, points: x.points, s: i })),
+        items: slides.map((x, j) => ({ k: noteKey(kind, `${B.key}.${x.key}`), title: x.title, points: x.points, s: j })),
       }));
-    } catch { /* bahut badi list — tab bas ek slide */ }
-    router.push(`/imp?k=${encodeURIComponent(nk)}&back=${encodeURIComponent(`/pyq-notes?b=${B.key}&t=${T.id}&s=${at}`)}`);
+    } catch { /* bahut badi list — tab bas ek hissa */ }
+    router.push(`/imp?k=${encodeURIComponent(nk)}&back=${encodeURIComponent(href)}`);
   };
 
   if (!idx) return <div className="placeholder">Loading…</div>;
+  const ql = q.trim().toLowerCase();
+  const prevT = B && ti > 0 ? B.topics[ti - 1] : null;
+  const nextT = B && ti >= 0 && ti < B.topics.length - 1 ? B.topics[ti + 1] : null;
   return (
-    <section className="section pn">
-      <header className="pn-head">
-        <h1>📘 Notes</h1>
-        <div className="pn-books" role="tablist">
-          {idx.books.map((x) => (
-            <button key={x.key} type="button" role="tab" aria-selected={x.key === book}
-              onClick={() => openTopic(x.key, posRef.current[`t:${x.key}`] || x.topics[0].id)}>
-              {x.icon} {x.name}
+    <div className="ntl-wrap">
+    <div className={`ntl${open ? " open" : ""}`}>
+      <aside className="ntl-side" aria-label="Topics">
+        <div className="ntl-brand">
+          <div className="eb">SSC Notes</div>
+          <h1>{B ? `${B.icon} ${B.name}` : "📘 Notes"}</h1>
+          <div className="ntl-books">
+            {idx.books.map((x) => (
+              <button key={x.key} type="button" aria-pressed={x.key === book} title={x.name}
+                onClick={() => openTopic(x.key, posRef.current[`t:${x.key}`] || x.topics[0].id)}>
+                {x.icon} {x.name.replace(/ Notes.*$/, "")}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="ntl-find">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-4-4" /></svg>
+          <input type="search" placeholder="Topic dhoondo" aria-label="Topic dhoondo" value={q} onChange={(e) => setQ(e.target.value)} />
+        </div>
+        <ul className="ntl-list">
+          {(B?.topics || []).map((x, i) => (ql && !x.name.toLowerCase().includes(ql) ? null : (
+            <li key={x.id}>
+              <button type="button" aria-current={x.id === topic} onClick={() => openTopic(B.key, x.id)}>
+                <span className="no">{i + 1}</span><span className="nm">{x.name}</span>
+              </button>
+            </li>
+          )))}
+        </ul>
+        <div className="ntl-legend">
+          <span><span className="tag p">PYQ</span>exam mein aaya</span>
+          <span><span className="tag x">CGL+</span>juda fact</span>
+          <span><mark>highlight</mark>&nbsp; answer</span>
+        </div>
+      </aside>
+      <div className="ntl-scrim" onClick={() => setOpen(false)} />
+      <main className="ntl-main">
+        <div className="ntl-col">
+          <div className="ntl-top">
+            <button className="ntl-menu" type="button" aria-label="Topics kholo" onClick={() => setOpen(true)}>
+              <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
             </button>
-          ))}
-        </div>
-        {B ? (
-          <div className="pn-sel">
-            <label>Topic
-              <select value={topic} onChange={(e) => openTopic(B.key, e.target.value)}>
-                {B.topics.map((x, i) => <option key={x.id} value={x.id}>{i + 1}. {x.name}</option>)}
-              </select>
-            </label>
-            <label>Chapter
-              <select value={chapAt} onChange={(e) => setAt(+e.target.value)}>
-                {chapters.map(({ s, i }) => <option key={i} value={i}>{s.chap}</option>)}
-              </select>
-            </label>
-          </div>
-        ) : null}
-        <div className="pn-legend">
-          <span><span className="tag p">PYQ</span> exam mein aaya</span>
-          <span><span className="tag x">CGL+</span> juda fact</span>
-          <span><mark>highlight</mark> = answer</span>
-        </div>
-      </header>
-      <div className="pn-prog"><i style={{ width: slides.length ? `${((at + 1) / slides.length) * 100}%` : 0 }} /></div>
-      {loading ? <p className="hint">Notes khul rahe hain…</p> : null}
-      {!loading && cur ? (
-        <article ref={card} className={`pn-card ${cur.c}`} onPointerDown={onPd} onPointerUp={onPu} onPointerCancel={() => { touch.current = null; }}>
-          <div className="pn-top">
-            <b>{cur.chap}</b>
-            <span>{at + 1} / {slides.length}</span>
-          </div>
-          <h2 className="pn-title">{cur.title}</h2>
-          {writer ? (
-            <div className="pn-acts">
-              <button type="button" className="btn btn--sm pn-imp" onClick={() => openNote("pn")} title="Stylus se IMP likho">⭐ IMP ✍️</button>
-              {B?.rough ? <button type="button" className="btn btn--sm btn--ghost" onClick={() => openNote("pnr")} title="Stylus se rough / hal likho">✍️ Rough</button> : null}
+            <div className="ntl-crumb"><small>{T ? `Topic ${ti + 1} of ${B.topics.length}` : ""}</small><span>{T?.name || ""}</span></div>
+            <div className="ntl-step">
+              <button type="button" aria-label="Pichhla topic" disabled={!prevT} onClick={() => prevT && openTopic(B.key, prevT.id)}>‹</button>
+              <button type="button" aria-label="Agla topic" disabled={!nextT} onClick={() => nextT && openTopic(B.key, nextT.id)}>›</button>
             </div>
-          ) : null}
-          <div className="pn-body" dangerouslySetInnerHTML={{ __html: cur.body }} />
-          <ImpSlots base={noteKey("pn", `${B.key}.${cur.key}`)} label="⭐ IMP" />
-          {B?.rough ? <ImpNoteBox k={noteKey("pnr", `${B.key}.${cur.key}`)} label="✍️ Rough" /> : null}
-        </article>
-      ) : null}
-      {!loading && !cur ? <p className="hint">Is topic mein abhi koi slide nahi.</p> : null}
-      <div className="pn-nav">
-        <button type="button" className="pn-go" onClick={() => go(-1)} disabled={at <= 0} aria-label="Pichhli slide">‹</button>
-        <span>{slides.length ? `${at + 1} / ${slides.length}` : ""}</span>
-        <button type="button" className="pn-go" onClick={() => go(1)} disabled={at >= slides.length - 1} aria-label="Agli slide">›</button>
-      </div>
-      <p className="hint pn-hint">Card ke daayen hisse par tap / baayen kheencho → agli · baayen hisse par tap / daayen kheencho → pichhli · ← → keys</p>
-    </section>
+          </div>
+          <div className="ntl-head">
+            <div className="k">{T ? `Topic ${ti + 1}` : ""}</div>
+            <h2>{T?.name || ""}</h2>
+            {secs.length > 1 ? (
+              <nav className="ntl-chips">
+                {secs.map((x) => <a key={x.id} href={`#${x.id}`} onClick={(e) => { e.preventDefault(); document.getElementById(x.id)?.scrollIntoView({ behavior: "smooth" }); }}>{x.chap}</a>)}
+              </nav>
+            ) : null}
+          </div>
+          {loading ? <p className="hint">Notes khul rahe hain…</p> : null}
+          <div className="ntl-view">
+            {!loading && secs.map((x) => (
+              <section key={x.id} id={x.id} className={`chap ${x.c}`}>
+                <div dangerouslySetInnerHTML={{ __html: x.h2 }} />
+                {x.items.map(({ s, i }) => {
+                  const acts = writer ? (
+                    <span className="ntl-acts">
+                      <button type="button" className="ntl-imp" onClick={() => openNote("pn", s, i)} title="Stylus se IMP likho">⭐ IMP ✍️</button>
+                      {B?.rough ? <button type="button" className="ntl-rough" onClick={() => openNote("pnr", s, i)} title="Stylus se rough / hal likho">✍️ Rough</button> : null}
+                    </span>
+                  ) : null;
+                  return (
+                    <div key={s.key} id={blockId(s.key)} className="ntl-blk">
+                      {s.pre ? <div dangerouslySetInnerHTML={{ __html: s.pre }} /> : null}
+                      {s.h3 ? (
+                        <div className="ntl-h3"><div dangerouslySetInnerHTML={{ __html: s.h3 }} />{acts}</div>
+                      ) : acts ? <div className="ntl-h3 ntl-h3--bare">{acts}</div> : null}
+                      <div dangerouslySetInnerHTML={{ __html: s.rest }} />
+                      <ImpSlots base={noteKey("pn", `${B.key}.${s.key}`)} label="⭐ IMP" />
+                      {B?.rough ? <ImpNoteBox k={noteKey("pnr", `${B.key}.${s.key}`)} label="✍️ Rough" /> : null}
+                    </div>
+                  );
+                })}
+              </section>
+            ))}
+          </div>
+          <div className="ntl-pager">
+            {prevT ? <button type="button" onClick={() => openTopic(B.key, prevT.id)}><small>Pichhla</small><b>{prevT.name}</b></button> : <span />}
+            {nextT ? <button type="button" onClick={() => openTopic(B.key, nextT.id)}><small>Agla</small><b>{nextT.name}</b></button> : null}
+          </div>
+        </div>
+      </main>
+    </div>
+    </div>
   );
 }
 
