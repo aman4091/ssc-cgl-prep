@@ -17,6 +17,7 @@ import { ImpNoteBox } from "@/components/ImpView";
 import { noteKey, putImpCtx, setImpNoteMeta, allImpNoteKeys } from "@/lib/impnotes";
 import { isInkWriter } from "@/lib/inkdevice";
 import { cutSlides, PN_BASE } from "@/lib/pyqnotes";
+import { mountStudy } from "@/lib/studyaddon";
 import "./pn.css";
 import "./notes-lib.css";
 
@@ -37,6 +38,35 @@ function ImpSlots({ base, label }) {
     return () => { window.removeEventListener("cgl:impnotes", on); window.removeEventListener("cgl:sync-applied", on); };
   }, [base]);
   return keys.map((k, i) => <ImpNoteBox key={k} k={k} label={i ? `${label} ${i + 1}` : label} />);
+}
+
+// 🃏 Notes / Flashcards / Quiz — neeche beech mein dock (desktop notes jaisa).
+// Book ke saare topic pehli baar Flashcards / Quiz dabane par hi aate hain.
+function StudyDock({ B }) {
+  const dock = useRef(null), panel = useRef(null), inner = useRef(null);
+  const stop = useRef(null);
+  const [busy, setBusy] = useState(false);
+  useEffect(() => () => { stop.current?.stop(); stop.current = null; }, [B]);
+  const start = async (e) => {
+    const m = e.target.closest("button[data-m]")?.dataset.m;
+    if (!m || m === "notes" || stop.current || busy) return;
+    setBusy(true);
+    const sources = (await Promise.all(B.topics.map((t) => fetch(`${BASE}/${B.key}/${t.id}.html`)
+      .then((r) => (r.ok ? r.text() : "")).then((html) => ({ g: t.name, html })).catch(() => ({ g: t.name, html: "" }))))).filter((x) => x.html);
+    setBusy(false);
+    stop.current = mountStudy({ dock: dock.current, panel: panel.current, inner: inner.current }, sources, B.key);
+    stop.current.open(m);
+  };
+  return (
+    <>
+      <div className="nst-dock" ref={dock} role="group" aria-label="Padhne ka tarika" onClick={start}>
+        <button type="button" data-m="notes" aria-pressed="true">Notes</button>
+        <button type="button" data-m="cards" aria-pressed="false" disabled={busy}>{busy ? "…" : "Flashcards"}</button>
+        <button type="button" data-m="quiz" aria-pressed="false" disabled={busy}>Quiz</button>
+      </div>
+      <div className="nst-panel" ref={panel} hidden><div className="nst-in" ref={inner} /></div>
+    </>
+  );
 }
 
 const BASE = PN_BASE;
@@ -230,6 +260,7 @@ function NotesInner() {
           </div>
         </div>
       </main>
+      {B ? <StudyDock key={B.key} B={B} /> : null}
     </div>
     </div>
   );
