@@ -119,7 +119,7 @@ function NotesInner() {
       const B = j.books.find((x) => x.key === bk) || j.books[0];
       setBook(B.key);
       setTopic(want.current?.t || p[`t:${B.key}`] || B.topics[0].id);
-      if (!want.current && p.view === "rules") setView("rules");
+      if (!want.current && (p.view === "rules" || p.view === "pyq")) setView(p.view);
     }).catch(() => setIdx({ books: [] }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -206,16 +206,60 @@ function NotesInner() {
     return out;
   }, [slides]);
   const isRules = rules.some((r) => /^Rule\s*\d/i.test(r.s.title));
+  // 🎯 Sirf PYQ (owner: "saare pyq, faltu ka kuch nahi, topic wise") — har
+  // hisse se sirf PYQ tag wali cheezein: lines, dabbe, aur table ki PYQ rows
+  // (header ke saath). English ke rule (heading par "Q ×N") — uski bank wali table.
+  const pyqs = useMemo(() => {
+    if (typeof window === "undefined") return [];
+    const out = [];
+    const isP = (x) => !!x.querySelector?.(".tag.p") || x.matches?.(".tag.p");
+    slides.forEach((s, i) => {
+      const d = new DOMParser().parseFromString(`<div>${s.h3}</div><div>${s.rest}</div>`, "text/html").body;
+      const h3 = d.firstElementChild, rest = d.lastElementChild;
+      const headP = isP(h3);
+      const pick = [];
+      let n = 0;
+      [...rest.children].forEach((x) => {
+        const tables = x.tagName === "TABLE" ? [x] : [...x.querySelectorAll("table")];
+        if (tables.length && (x.tagName === "TABLE" || x.matches(".tbl"))) {
+          tables.forEach((tb) => {
+            const rows = [...tb.querySelectorAll("tr")];
+            const head = rows.filter((r) => r.querySelector("th"));
+            const hit = headP ? rows.filter((r) => !r.querySelector("th")) : rows.filter((r) => isP(r));
+            if (!hit.length) return;
+            const t2 = tb.cloneNode(false);
+            [...head, ...hit].forEach((r) => t2.appendChild(r.cloneNode(true)));
+            const w = document.createElement("div"); w.className = "tbl"; w.appendChild(t2);
+            pick.push(w); n += hit.length;
+          });
+          return;
+        }
+        if (/^(UL|OL)$/.test(x.tagName)) {
+          const lis = [...x.children].filter(isP);
+          if (lis.length) { const u = x.cloneNode(false); lis.forEach((li) => u.appendChild(li.cloneNode(true))); pick.push(u); n += lis.length; }
+          return;
+        }
+        // "How to read" jaise samjhane wale dabbe mein PYQ tag sirf namoona hai.
+        if (x.tagName !== "DETAILS" && isP(x) && !/^(how to read|exam ke short)/i.test(x.querySelector(".k")?.textContent.trim() || "")) { pick.push(x); n += 1; }
+      });
+      if (!pick.length) return;
+      out.push({ s, i, n, html: pick.map((x) => x.outerHTML).join("") });
+    });
+    return out;
+  }, [slides]);
+  const pyqN = pyqs.reduce((a, r) => a + r.n, 0);
+  const showRules = view === "rules" && rules.length > 0;
+  const showPyq = view === "pyq" && pyqs.length > 0;
+  const listView = showRules || showPyq;
   const ruleSecs = useMemo(() => {
     const out = [];
-    rules.forEach((r) => {
+    (view === "pyq" ? pyqs : rules).forEach((r) => {
       const last = out[out.length - 1];
       if (last && last.id === r.s.sec) last.items.push(r);
       else out.push({ id: r.s.sec, chap: r.s.chap, c: r.s.c, items: [r] });
     });
     return out;
-  }, [rules]);
-  const showRules = view === "rules" && rules.length > 0;
+  }, [rules, pyqs, view]);
   const pickView = (v) => {
     setView(v);
     const p = posRef.current; p.view = v; savePos(p);
@@ -297,20 +341,21 @@ function NotesInner() {
           <div className="ntl-head">
             <div className="k">{T ? `Topic ${ti + 1}` : ""}</div>
             <h2>{T?.name || ""}</h2>
-            {rules.length ? (
+            {rules.length || pyqs.length ? (
               <div className="ntl-views" role="tablist" aria-label="Kya dikhe">
-                <button type="button" role="tab" aria-selected={!showRules} onClick={() => pickView("notes")}>📖 Poore notes</button>
-                <button type="button" role="tab" aria-selected={showRules} onClick={() => pickView("rules")}>📋 {isRules ? "Sirf Rules" : "Revision"} <b>{rules.length}</b></button>
+                <button type="button" role="tab" aria-selected={!listView} onClick={() => pickView("notes")}>📖 Poore notes</button>
+                {rules.length ? <button type="button" role="tab" aria-selected={showRules} onClick={() => pickView("rules")}>📋 {isRules ? "Sirf Rules" : "Revision"} <b>{rules.length}</b></button> : null}
+                {pyqs.length ? <button type="button" role="tab" aria-selected={showPyq} onClick={() => pickView("pyq")}>🎯 Sirf PYQ <b>{pyqN}</b></button> : null}
               </div>
             ) : null}
-            {!showRules && secs.length > 1 ? (
+            {!listView && secs.length > 1 ? (
               <nav className="ntl-chips">
                 {secs.map((x) => <a key={x.id} href={`#${x.id}`} onClick={(e) => { e.preventDefault(); document.getElementById(x.id)?.scrollIntoView({ behavior: "smooth" }); }}>{x.chap}</a>)}
               </nav>
             ) : null}
           </div>
           {loading ? <p className="hint">Notes khul rahe hain…</p> : null}
-          {!loading && showRules ? (
+          {!loading && listView ? (
             <div className="ntl-view ntl-rules">
               {ruleSecs.map((x) => (
                 <section key={x.id} className={`chap ${x.c}`}>
@@ -330,8 +375,8 @@ function NotesInner() {
               ))}
             </div>
           ) : null}
-          <div className="ntl-view" hidden={showRules}>
-            {!loading && !showRules && secs.map((x) => (
+          <div className="ntl-view" hidden={listView}>
+            {!loading && !listView && secs.map((x) => (
               <section key={x.id} id={x.id} className={`chap ${x.c}`}>
                 <div dangerouslySetInnerHTML={{ __html: x.h2 }} />
                 {x.items.map(({ s, i }) => {
