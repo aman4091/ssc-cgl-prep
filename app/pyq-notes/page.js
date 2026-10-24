@@ -168,21 +168,44 @@ function NotesInner() {
     return out;
   }, [slides]);
 
-  // Har "Rule N · …" heading: uski "Rule:" wali line, pehla ✗ → ✓ example aur Trick.
+  // 📋 Revision (owner: "sab subject ke liye") — har heading ke neeche ki khaas
+  // cheezein: English mein "Rule:" line + pehla ✗ → ✓ example; Maths mein
+  // "Kab use karo / Soch aise / Yaad karo"; sab mein Trick,
+  // fact wale dabbe (Demo / Worked jaise hal kiye sawaal nahi) aur highlight
+  // (<mark>) wali lines. Tables, diagram, Check yourself bahar — woh notes mein.
   const rules = useMemo(() => {
     if (typeof window === "undefined") return [];
     const out = [];
+    const SKIPK = /^(demo|worked|how to read|exam ke short|ab naam)/i;
     slides.forEach((s, i) => {
-      if (!s.h3 || !/^Rule\s*\d/i.test(s.title)) return;
-      const d = new DOMParser().parseFromString(`<div>${s.rest}</div>`, "text/html").body;
-      const ps = [...d.querySelectorAll(":scope > div > p")];
-      const rule = ps.find((x) => /^Rule\s*:/i.test(x.textContent.trim()));
-      const ex = ps.find((x) => /^✗/.test(x.textContent.trim()));
-      const trick = d.querySelector(".trick");
-      out.push({ s, i, html: [rule, ex, trick].filter(Boolean).map((x) => x.outerHTML).join("") });
+      if (!s.h3 || /^check yourself/i.test(s.title)) return;
+      const d = new DOMParser().parseFromString(`<div>${s.rest}</div>`, "text/html").body.firstElementChild;
+      const kids = [...d.children];
+      const pick = [];
+      const rule = kids.find((x) => x.tagName === "P" && /^Rule\s*:/i.test(x.textContent.trim()));
+      if (rule) {
+        pick.push(rule);
+        const ex = kids.find((x) => x.tagName === "P" && /^✗/.test(x.textContent.trim()));
+        if (ex) pick.push(ex);
+      }
+      kids.forEach((x) => {
+        if (pick.includes(x)) return;
+        if (x.matches(".trick")) pick.push(x);
+        else if (x.matches(".box") && !SKIPK.test(x.querySelector(".k")?.textContent.trim() || "")) pick.push(x);
+        else if (x.tagName === "P" && (x.querySelector("mark") || /^(Kab use karo|Soch aise|Yaad karo)/i.test(x.textContent.trim()))) pick.push(x);
+        else if (/^(UL|OL)$/.test(x.tagName)) {
+          const lis = [...x.children].filter((li) => li.querySelector("mark"));
+          if (lis.length) { const u = x.cloneNode(false); lis.forEach((li) => u.appendChild(li.cloneNode(true))); pick.push(u); }
+        }
+      });
+      if (!pick.length) return;
+      // Asli kram mein (notes jaisa)
+      pick.sort((a, b) => kids.indexOf(a) - kids.indexOf(b));
+      out.push({ s, i, html: pick.map((x) => x.outerHTML).join("") });
     });
     return out;
   }, [slides]);
+  const isRules = rules.some((r) => /^Rule\s*\d/i.test(r.s.title));
   const ruleSecs = useMemo(() => {
     const out = [];
     rules.forEach((r) => {
@@ -277,7 +300,7 @@ function NotesInner() {
             {rules.length ? (
               <div className="ntl-views" role="tablist" aria-label="Kya dikhe">
                 <button type="button" role="tab" aria-selected={!showRules} onClick={() => pickView("notes")}>📖 Poore notes</button>
-                <button type="button" role="tab" aria-selected={showRules} onClick={() => pickView("rules")}>📋 Sirf Rules <b>{rules.length}</b></button>
+                <button type="button" role="tab" aria-selected={showRules} onClick={() => pickView("rules")}>📋 {isRules ? "Sirf Rules" : "Revision"} <b>{rules.length}</b></button>
               </div>
             ) : null}
             {!showRules && secs.length > 1 ? (
