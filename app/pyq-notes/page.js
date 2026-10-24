@@ -247,7 +247,8 @@ function NotesInner() {
                       ) : acts ? <div className="ntl-h3 ntl-h3--bare">{acts}</div> : null}
                       <div dangerouslySetInnerHTML={{ __html: s.rest }} />
                       <ImpSlots base={noteKey("pn", `${B.key}.${s.key}`)} label="⭐ IMP" />
-                      {B?.rough ? <ImpNoteBox k={noteKey("pnr", `${B.key}.${s.key}`)} label="✍️ Rough" /> : null}
+                      {/* ✍️ Rough sirf tablet (likhne wale device) par — desktop / phone par nahi (owner). */}
+                      {B?.rough && writer ? <ImpNoteBox k={noteKey("pnr", `${B.key}.${s.key}`)} label="✍️ Rough" /> : null}
                     </div>
                   );
                 })}
