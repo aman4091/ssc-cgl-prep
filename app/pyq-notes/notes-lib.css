@@ -196,3 +196,5 @@
 @media (prefers-reduced-motion:reduce){.nst-bar i{transition:none}}
 .nst-py{cursor:pointer;font:inherit;font-size:.85rem;color:var(--pyq)}
 .nst-py[aria-pressed="true"]{background:var(--pyq);color:var(--bg);border-color:var(--pyq)}
+.nst-sels{display:flex;flex-wrap:wrap;gap:10px;min-width:0;max-width:100%}
+.nst-sels .nst-sel{flex:1 1 220px}
