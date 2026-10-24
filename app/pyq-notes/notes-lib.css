@@ -198,3 +198,5 @@
 .nst-py[aria-pressed="true"]{background:var(--pyq);color:var(--bg);border-color:var(--pyq)}
 .nst-sels{display:flex;flex-wrap:wrap;gap:10px;min-width:0;max-width:100%}
 .nst-sels .nst-sel{flex:1 1 220px}
+.nst-dock .nst-fs{padding:8px 12px;font-size:1rem;border-left:1px solid var(--line);border-radius:0 999px 999px 0}
+.nst-dock .nst-fs[aria-pressed="true"]{background:transparent;color:var(--ink)}

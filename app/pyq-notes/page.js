@@ -47,6 +47,20 @@ function StudyDock({ B }) {
   const stop = useRef(null);
   const [busy, setBusy] = useState(false);
   useEffect(() => () => { stop.current?.stop(); stop.current = null; }, [B]);
+  // ⛶ Poori screen (owner) — Flashcards / Quiz bina site ke menu ke.
+  const [fs, setFs] = useState(false);
+  useEffect(() => {
+    const on = () => setFs(!!document.fullscreenElement);
+    on();
+    document.addEventListener("fullscreenchange", on);
+    return () => document.removeEventListener("fullscreenchange", on);
+  }, []);
+  const toggleFs = () => {
+    try {
+      if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+      else document.documentElement.requestFullscreen?.().catch(() => {});
+    } catch { /* ignore */ }
+  };
   const start = async (e) => {
     const m = e.target.closest("button[data-m]")?.dataset.m;
     if (!m || m === "notes" || stop.current || busy) return;
@@ -63,6 +77,7 @@ function StudyDock({ B }) {
         <button type="button" data-m="notes" aria-pressed="true">Notes</button>
         <button type="button" data-m="cards" aria-pressed="false" disabled={busy}>{busy ? "…" : "Flashcards"}</button>
         <button type="button" data-m="quiz" aria-pressed="false" disabled={busy}>Quiz</button>
+        <button type="button" className="nst-fs" onClick={toggleFs} aria-pressed={fs} title={fs ? "Poori screen band" : "Poori screen"} aria-label={fs ? "Poori screen band" : "Poori screen"}>{fs ? "⤡" : "⛶"}</button>
       </div>
       <div className="nst-panel" ref={panel} hidden><div className="nst-in" ref={inner} /></div>
     </>
