@@ -200,3 +200,16 @@
 .nst-sels .nst-sel{flex:1 1 220px}
 .nst-dock .nst-fs{padding:8px 12px;font-size:1rem;border-left:1px solid var(--line);border-radius:0 999px 999px 0}
 .nst-dock .nst-fs[aria-pressed="true"]{background:transparent;color:var(--ink)}
+
+/* 📋 English Grammar — Sirf Rules (revision) */
+.ntl-views { display: inline-flex; gap: 4px; margin-top: 14px; padding: 4px; border-radius: 999px; background: var(--paper); border: 1px solid var(--line); }
+.ntl-views button { border: 0; background: transparent; color: var(--muted); font: 600 .88rem var(--display); padding: 7px 14px; border-radius: 999px; cursor: pointer; }
+.ntl-views button b { font: 500 .78rem var(--mono); opacity: .8; }
+.ntl-views button[aria-selected="true"] { background: var(--ink); color: #0f1220; }
+.ntl-rlist { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 12px; }
+.ntl-rule { margin: 0; padding: 12px 14px 4px; border-radius: 12px; background: color-mix(in srgb, var(--soft) 55%, transparent); border: 1px solid color-mix(in srgb, var(--ch) 18%, transparent); }
+.ntl-rhead { display: flex; align-items: flex-start; gap: 10px; }
+.ntl-rhead > div { flex: 1; min-width: 0; }
+.ntl-rules .ntl-rule h3 { margin: 0 0 8px; font-size: 1.02rem; }
+.ntl-rgo { flex: none; font: 600 .75rem var(--display); color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; cursor: pointer; }
+.ntl-rule .trick { margin: 8px 0 10px; }

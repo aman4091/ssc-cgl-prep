@@ -101,6 +101,8 @@ function NotesInner() {
   const [writer, setWriter] = useState(false);
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
+  // 📋 English Grammar: "Sirf Rules" — har chapter ke rules alag, revision ke liye (owner).
+  const [view, setView] = useState("notes");
   const posRef = useRef({});
   // ?b=&t=&s= (Saare IMP / stylus page se wapas) — us hisse tak scroll.
   const want = useRef(null);
@@ -117,6 +119,7 @@ function NotesInner() {
       const B = j.books.find((x) => x.key === bk) || j.books[0];
       setBook(B.key);
       setTopic(want.current?.t || p[`t:${B.key}`] || B.topics[0].id);
+      if (!want.current && p.view === "rules") setView("rules");
     }).catch(() => setIdx({ books: [] }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -164,6 +167,41 @@ function NotesInner() {
     });
     return out;
   }, [slides]);
+
+  // Har "Rule N · …" heading: uski "Rule:" wali line, pehla ✗ → ✓ example aur Trick.
+  const rules = useMemo(() => {
+    if (typeof window === "undefined") return [];
+    const out = [];
+    slides.forEach((s, i) => {
+      if (!s.h3 || !/^Rule\s*\d/i.test(s.title)) return;
+      const d = new DOMParser().parseFromString(`<div>${s.rest}</div>`, "text/html").body;
+      const ps = [...d.querySelectorAll(":scope > div > p")];
+      const rule = ps.find((x) => /^Rule\s*:/i.test(x.textContent.trim()));
+      const ex = ps.find((x) => /^✗/.test(x.textContent.trim()));
+      const trick = d.querySelector(".trick");
+      out.push({ s, i, html: [rule, ex, trick].filter(Boolean).map((x) => x.outerHTML).join("") });
+    });
+    return out;
+  }, [slides]);
+  const ruleSecs = useMemo(() => {
+    const out = [];
+    rules.forEach((r) => {
+      const last = out[out.length - 1];
+      if (last && last.id === r.s.sec) last.items.push(r);
+      else out.push({ id: r.s.sec, chap: r.s.chap, c: r.s.c, items: [r] });
+    });
+    return out;
+  }, [rules]);
+  const showRules = view === "rules" && rules.length > 0;
+  const pickView = (v) => {
+    setView(v);
+    const p = posRef.current; p.view = v; savePos(p);
+  };
+  // Rule se poore notes mein usi jagah.
+  const toNotes = (i) => {
+    pickView("notes");
+    setTimeout(() => document.getElementById(blockId(slides[i].key))?.scrollIntoView({ block: "start" }), 60);
+  };
 
   const openNote = (kind, s, i) => {
     if (!B || !T) return;
@@ -236,15 +274,41 @@ function NotesInner() {
           <div className="ntl-head">
             <div className="k">{T ? `Topic ${ti + 1}` : ""}</div>
             <h2>{T?.name || ""}</h2>
-            {secs.length > 1 ? (
+            {rules.length ? (
+              <div className="ntl-views" role="tablist" aria-label="Kya dikhe">
+                <button type="button" role="tab" aria-selected={!showRules} onClick={() => pickView("notes")}>📖 Poore notes</button>
+                <button type="button" role="tab" aria-selected={showRules} onClick={() => pickView("rules")}>📋 Sirf Rules <b>{rules.length}</b></button>
+              </div>
+            ) : null}
+            {!showRules && secs.length > 1 ? (
               <nav className="ntl-chips">
                 {secs.map((x) => <a key={x.id} href={`#${x.id}`} onClick={(e) => { e.preventDefault(); document.getElementById(x.id)?.scrollIntoView({ behavior: "smooth" }); }}>{x.chap}</a>)}
               </nav>
             ) : null}
           </div>
           {loading ? <p className="hint">Notes khul rahe hain…</p> : null}
-          <div className="ntl-view">
-            {!loading && secs.map((x) => (
+          {!loading && showRules ? (
+            <div className="ntl-view ntl-rules">
+              {ruleSecs.map((x) => (
+                <section key={x.id} className={`chap ${x.c}`}>
+                  <h2>{x.chap}</h2>
+                  <ol className="ntl-rlist">
+                    {x.items.map((r) => (
+                      <li key={r.s.key} className="ntl-rule">
+                        <div className="ntl-rhead">
+                          <div dangerouslySetInnerHTML={{ __html: r.s.h3 }} />
+                          <button type="button" className="ntl-rgo" onClick={() => toNotes(r.i)} title="Notes mein poora rule, table ke saath">Notes ›</button>
+                        </div>
+                        <div dangerouslySetInnerHTML={{ __html: r.html }} />
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              ))}
+            </div>
+          ) : null}
+          <div className="ntl-view" hidden={showRules}>
+            {!loading && !showRules && secs.map((x) => (
               <section key={x.id} id={x.id} className={`chap ${x.c}`}>
                 <div dangerouslySetInnerHTML={{ __html: x.h2 }} />
                 {x.items.map(({ s, i }) => {
