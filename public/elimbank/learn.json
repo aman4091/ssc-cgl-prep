@@ -1,0 +1,1405 @@
+{
+"trap": [
+{
+"id": "ssc-m-20-001",
+"chap": "geometry",
+"q": "Two triangles are similar with sides in the ratio 3:5. What is the ratio of their areas?",
+"o": [
+"3:5",
+"5:3",
+"9:25",
+"25:9"
+],
+"a": 2,
+"src": "CGL, 12 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "Area = side². Toh answer mein SQUARE wale number hone chahiye. 3 : 5 aur 5 : 3 seedhe sides ka ratio hai — bina square kiye wala trap.",
+"cut": [
+0,
+1
+]
+},
+{
+"s": "Pehla triangle chhota (3) → uska area bhi chhota → pehla number chhota hoga. 25 : 9 ulta hai.",
+"cut": [
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-20-010",
+"chap": "geometry",
+"q": "In similar triangles, the ratio of corresponding altitudes is 2:5. What is the ratio of their areas?",
+"o": [
+"2:5",
+"4:25",
+"2:25",
+"5:2"
+],
+"a": 1,
+"src": "CGL, 14 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "Area mein square aata hai → 2 : 5 aur 5 : 2 (bina square) kaato.",
+"cut": [
+0,
+3
+]
+},
+{
+"s": "2 : 25 mein ek ko square kiya, ek ko nahi — aadha trap. Dono square: 4 : 25.",
+"cut": [
+2
+]
+}
+]
+},
+{
+"id": "ssc-m-01-013",
+"chap": "percentage",
+"q": "If 15% of a is equal to 25% of b, then find the ratio a : b.",
+"o": [
+"3 : 5",
+"5 : 3",
+"4 : 5",
+"5 : 4"
+],
+"a": 1,
+"src": "CGL, 16 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "Niyam: jiska % CHHOTA, wo number khud BADA (15% of a = 25% of b → a bada). Toh a : b mein pehla bada → 3 : 5 aur 4 : 5 kaato.",
+"cut": [
+0,
+2
+]
+},
+{
+"s": "Ratio = % ulte: 25 : 15 = 5 : 3. 5 : 4 kahin se nahi banta.",
+"cut": [
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-01-017",
+"chap": "percentage",
+"q": "If 30% of m is equal to 18% of n, what is the ratio m: n?",
+"o": [
+"5 : 3",
+"2 : 3",
+"3 : 5",
+"3 : 2"
+],
+"a": 2,
+"src": "CGL, 18 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "m ka % (30) bada → m CHHOTA → m : n mein pehla chhota. 5 : 3 aur 3 : 2 kaato.",
+"cut": [
+0,
+3
+]
+},
+{
+"s": "Ratio = % ulte: 18 : 30 = 3 : 5. 2 : 3 nahi banta.",
+"cut": [
+1
+]
+}
+]
+},
+{
+"id": "ssc-m-22-108",
+"chap": "mensuration-3d",
+"q": "The volumes of two right circular cylinders have a ratio of 2:3. If the radii of these cylinders are in the ratio of 1:2, what is the ratio of their heights?",
+"o": [
+"1:3",
+"3:4",
+"4:3",
+"8:3"
+],
+"a": 3,
+"src": "CGL, 26 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "Doosre ka radius dugna → uska base 4 guna bada → pehla cylinder bahut LAMBA hoga → height ratio mein pehla number bada. 1 : 3 aur 3 : 4 kaato.",
+"cut": [
+0,
+1
+]
+},
+{
+"s": "Trap: radius ka seedha ratio lagana (2/1 : 3/2 = 4 : 3). Sahi: r² se — 2/1 : 3/4 = 8 : 3.",
+"cut": [
+2
+]
+}
+]
+},
+{
+"id": "ssc-m-07-006",
+"chap": "mixture-and-alligation",
+"q": "A juice vendor mixes water with pure orange juice. If he sells the mixture at the cost price of pure orange juice and makes a profit of 20%, what is the ratio of water to pure orange juice in the mixture, respectively?",
+"o": [
+"1 : 4",
+"1 : 5",
+"4 : 1",
+"5 : 1"
+],
+"a": 1,
+"src": "CGL, 13 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "Paani mila kar sirf 20% profit — paani thoda hi hoga, juice se kam. 4 : 1 aur 5 : 1 (paani zyada) kaato.",
+"cut": [
+2,
+3
+]
+},
+{
+"s": "20% = 1/5 → har 5 juice par 1 paani → 1 : 5. 1 : 4 = 25% profit wala trap.",
+"cut": [
+0
+]
+}
+]
+}
+],
+"bound": [
+{
+"id": "ssc-m-04-021",
+"chap": "discount",
+"q": "An item is marked at Rs150. A customer gets a 10% discount on it. If the seller still makes a profit of 25%, what is the cost price of the item?",
+"o": [
+"Rs108",
+"Rs209",
+"Rs306",
+"Rs456"
+],
+"a": 0,
+"src": "CGL, 16 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "CP < SP < MP. SP = 150 − 10% = 135. CP 135 se kam hona hi chahiye → 209, 306, 456 sab bahar. Hisaab ki zaroorat hi nahi.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-04-018",
+"chap": "discount",
+"q": "A manufacturer marked a product 30% above its cost price. He provided a discount to a customer, which resulted in him making a profit of 17%. What was the rate of discount given by the manufacturer?",
+"o": [
+"24%",
+"50%",
+"60%",
+"10%"
+],
+"a": 3,
+"src": "CGL, 16 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "MP sirf 30% upar hai. Profit tabhi bachega jab discount 30/130 ≈ 23% se kam ho. 24%, 50%, 60% par loss ho jaata → bahar.",
+"cut": [
+0,
+1,
+2
+]
+}
+]
+},
+{
+"id": "ssc-m-03-013",
+"chap": "profit-and-loss",
+"q": "A grocer purchased 50 kg of rice at Rs40 per kg and 20 kg of another variety of rice at Rs55 per kg. He mixed the two varieties and sold the entire mixture at Rs48 per kg. Find his total profit or loss in this transaction.",
+"o": [
+"Loss of Rs260",
+"Loss of Rs240",
+"Profit of Rs260",
+"Loss of Rs290"
+],
+"a": 2,
+"src": "CGL, 16 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "Mix ka CP = (2,000 + 1,100) ÷ 70 ≈ 44, beche 48 mein → PROFIT. Teeno 'loss' wale bahar.",
+"cut": [
+0,
+1,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-03-003",
+"chap": "profit-and-loss",
+"q": "The profit made on an item sold for Rs2200 is equal to the loss incurred when it is sold for Rs1800. What will be the profit or loss percentage if the item is sold for Rs2050?",
+"o": [
+"Profit of 2.25%",
+"Loss of 3.5%",
+"Profit of 2.5%",
+"Loss of 4.25%"
+],
+"a": 2,
+"src": "CGL, 12 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "Jis bhaav par profit = loss, CP theek beech mein: (2,200 + 1,800)/2 = 2,000. 2,050 usse zyada → PROFIT. Dono loss kaato.",
+"cut": [
+1,
+3
+]
+},
+{
+"s": "Profit 50 on 2,000 = 2.5%. 2.25 galat.",
+"cut": [
+0
+]
+}
+]
+},
+{
+"id": "ssc-m-03-027",
+"chap": "profit-and-loss",
+"q": "A shopkeeper sells two shirts at Rs. 500 each. On one, he gains 25%, and on the other, he loses 25%. What is his net gain or loss?",
+"o": [
+"Rs. 31.25 loss",
+"Rs. 31.25 gain",
+"Rs. 66.67 gain",
+"Rs. 66.67 loss"
+],
+"a": 3,
+"src": "CGL, 25 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "Do cheezein SAME SP par, ek par x% gain ek par x% loss → HAMESHA loss. Dono 'gain' kaato.",
+"cut": [
+1,
+2
+]
+},
+{
+"s": "Loss % = (25)²/100 = 6.25% of CP. CP 1,000 se zyada (400 + 666) → loss 62 se upar. 31.25 kaato.",
+"cut": [
+0
+]
+}
+]
+},
+{
+"id": "ssc-m-07-033",
+"chap": "mixture-and-alligation",
+"q": "A chemist prepares 60 liters of antiseptic solution by mixing two liquids 'A' and 'B' in the ratio 2:3. If the cost of 'A' is Rs. 45/liter and 'B' is Rs. 30/liter, what is the average cost per liter of the final solution?",
+"o": [
+"Rs. 36",
+"Rs. 38",
+"Rs. 37",
+"Rs. 39"
+],
+"a": 0,
+"src": "CGL, 21 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "Mix ka bhaav dono ke beech (30 aur 45). B (30 wala) zyada hissa (3) → beech (37.5) se NEECHE. 38 aur 39 kaato.",
+"cut": [
+1,
+3
+]
+},
+{
+"s": "30 + 15 × 2/5 = 36. 37 nahi.",
+"cut": [
+2
+]
+}
+]
+},
+{
+"id": "ssc-m-18-081",
+"chap": "trigonometry",
+"q": "If cosecA-sinA = 2, then find the value of sinA.",
+"o": [
+"-1 + √2",
+"3 + √2",
+"√3 + 2",
+"No real value"
+],
+"a": 0,
+"src": "CGL, 25 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "sin A hamesha −1 aur 1 ke beech. 3 + √2 aur √3 + 2 dono 1 se bade → bahar.",
+"cut": [
+1,
+2
+]
+},
+{
+"s": "Bacha: −1 + √2 ≈ 0.414. Check: 1/0.414 − 0.414 ≈ 2.414 − 0.414 = 2 ✓ → 'No real value' galat.",
+"cut": [
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-11-037",
+"chap": "time-and-work",
+"q": "A, B, and C together can complete a task in 6 days. If A alone takes 12 days and B alone takes 18 days, how long will C alone take?",
+"o": [
+"19 days",
+"30 days",
+"12 days",
+"36 days"
+],
+"a": 3,
+"src": "CGL, 26 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "A + B akele ~7.2 din mein. C ke aane se sirf 7.2 → 6 hua → C bahut DHEEMA hai. 12 din (A jitna tez) hota toh 6 se kaafi kam aata → kaato.",
+"cut": [
+2
+]
+},
+{
+"s": "Kaam = LCM (12, 18, 6) = 36. Din ka answer 36 ka factor/multiple-friendly hota hai: 19 aur 30 se 36 nahi katta.",
+"cut": [
+0,
+1
+]
+}
+]
+}
+],
+"unit": [
+{
+"id": "ssc-m-03-001",
+"chap": "profit-and-loss",
+"q": "A vendor sells shirts at Rs500 each, earning a 2% commission, and ties at Rs150 each, with a 12% commission. If he sells 3 shirts and 4 ties per day, what will be his total commission earned in 30 days?",
+"o": [
+"Rs2850",
+"Rs3000",
+"Rs3060",
+"Rs3200"
+],
+"a": 2,
+"src": "CGL, 12 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "Ek din: 3 × 500 × 2% = 30, 4 × 150 × 12% = 72 → 102. × 30 → aakhri do ank '…60'. Sirf 3,060 '60' par khatam.",
+"cut": [
+0,
+1,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-04-049",
+"chap": "discount",
+"q": "A seller gives a 20% discount and charges 18% GST on the discounted price. On a Rs. 2000 item, how much is payable?",
+"o": [
+"Rs. 1888",
+"Rs. 1892",
+"Rs. 1896",
+"Rs. 1900"
+],
+"a": 0,
+"src": "CGL, 24 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "2,000 − 20% = 1,600. GST = 1,600 × 0.18 = 288 → total '…88' par khatam. Baaki teen nahi.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-14-011",
+"chap": "number-system",
+"q": "What is the smallest number that must be added to 2378 to make it a perfect square?",
+"o": [
+"23",
+"24",
+"25",
+"26"
+],
+"a": 0,
+"src": "CGL, 21 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "2,378 + option ka aakhri ank: +23 → …1, +24 → …2, +25 → …3, +26 → …4. Perfect square kabhi 2 ya 3 par khatam nahi hota → 24, 25 kaato.",
+"cut": [
+1,
+2
+]
+},
+{
+"s": "49² = 2,401 → 2,378 + 23. (2,404 square nahi.)",
+"cut": [
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-22-064",
+"chap": "mensuration-3d",
+"q": "Three metallic spheres with radii 3 cm, 4 cm, and 5 cm respectively are melted together and recast into a single solid sphere. What is the radius of the new sphere?",
+"o": [
+"12 cm",
+"9 cm",
+"6 cm",
+"7 cm"
+],
+"a": 2,
+"src": "CGL, 20 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "Naya radius 3 + 4 + 5 = 12 se kam hoga (volume judta hai, radius nahi) → 12 kaato.",
+"cut": [
+0
+]
+},
+{
+"s": "r³ = 3³ + 4³ + 5³ → aakhri ank 7 + 4 + 5 = 16 → '6'. Cube '6' par sirf 6 ka khatam (216). 9³ → …9, 7³ → …3 → kaato.",
+"cut": [
+1,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-11-032",
+"chap": "time-and-work",
+"q": "If 10 men or 15 women can complete a work in 170 days, how long will 20 men and 20 women take for completing the same work?",
+"o": [
+"52 days",
+"50 days",
+"51 days",
+"53 days"
+],
+"a": 2,
+"src": "CGL, 23 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "1 man = 1.5 woman → 20 men + 20 women = 50 women. Kaam = 15 × 170 = 2,550 woman-din → din = 2,550 ÷ 50. Answer × 50 = 2,550: aakhri ank '50' sirf ODD number se → 52, 50 kaato.",
+"cut": [
+0,
+1
+]
+},
+{
+"s": "53 × 50 = 2,650 ✗, 51 × 50 = 2,550 ✓.",
+"cut": [
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-16-042",
+"chap": "simplification-and-approximation",
+"q": "19³ + 20³ - 39³ + 118 is equal to:",
+"o": [
+"-44342",
+"-6789",
+"0",
+"1"
+],
+"a": 0,
+"src": "CGL, 17 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "39³ (≈ 59,000) akela 19³ + 20³ (≈ 15,000) se bahut bada → answer bada NEGATIVE. 0 aur 1 bahar.",
+"cut": [
+2,
+3
+]
+},
+{
+"s": "Size ~ 59,000 − 15,000 ≈ 44,000 → −6,789 bahut chhota. (Pakka: a + b + c = 0 → a³ + b³ + c³ = 3abc.)",
+"cut": [
+1
+]
+}
+]
+}
+],
+"div": [
+{
+"id": "ssc-m-02-056",
+"chap": "ratio-and-proportion",
+"q": "A basket contains apples and oranges in the ratio 4:3. After removing 8 apples and adding 6 oranges, the new ratio becomes 1:1. How many fruits were there originally?",
+"o": [
+"87",
+"70",
+"63",
+"98"
+],
+"a": 3,
+"src": "CGL, 20 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "Apple : orange = 4 : 3 → kul fruit 7 ka guna. 87 ÷ 7 nahi → bahar.",
+"cut": [
+0
+]
+},
+{
+"s": "Option daalo: 98 → 56 apple, 42 orange → 48 : 48 ✓. 70 → 32 : 36 ✗, 63 → 28 : 33 ✗.",
+"cut": [
+1,
+2
+]
+}
+]
+},
+{
+"id": "ssc-m-02-005",
+"chap": "ratio-and-proportion",
+"q": "The ratio of boys to girls in a school is 7:5. If 20 more girls join the school, the new ratio of boys to girls becomes 7:6. What is the total number of students in the school initially?",
+"o": [
+"200",
+"240",
+"300",
+"360"
+],
+"a": 1,
+"src": "CGL, 12 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "Boys : girls = 7 : 5 → kul 12 ka guna. 200 ÷ 12 nahi → bahar.",
+"cut": [
+0
+]
+},
+{
+"s": "240 daalo: 140 : 100 → 20 girls aur → 140 : 120 = 7 : 6 ✓. Mil gaya.",
+"cut": [
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-22-055",
+"chap": "mensuration-3d",
+"q": "The sides of a rectangular prism are in the ratio 4:5:6. If the volume of the prism is 960 cm³ what is the length of its longest side?",
+"o": [
+"12 cm",
+"10 cm",
+"8 cm",
+"16 cm"
+],
+"a": 0,
+"src": "CGL, 19 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "Sides 4k, 5k, 6k → sabse lambi 6 ka guna. Options mein 6 ka guna sirf 12. Check: 8 × 10 × 12 = 960 ✓.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-02-036",
+"chap": "ratio-and-proportion",
+"q": "If A : B = 7 : 5, B : C = 2 : 3, and C : D = 4 : 5, find the ratio A : D.",
+"o": [
+"14 : 25",
+"28 : 25",
+"56 : 75",
+"75 : 56"
+],
+"a": 2,
+"src": "CGL, 15 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "A : D = (7 × 2 × 4) : (5 × 3 × 5) — D wala hissa 75 banta hai. 14 : 25 aur 28 : 25 mein 75 nahi.",
+"cut": [
+0,
+1
+]
+},
+{
+"s": "A ka hissa 56 < 75 → pehla chhota → 75 : 56 ulta trap.",
+"cut": [
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-07-029",
+"chap": "mixture-and-alligation",
+"q": "A barrel contains a mixture of alcohol and water in the ratio 7:4 respectively. If 12 litres of water are added to it, the ratio of alcohol to water becomes 7:6. Find the initial total quantity of the mixture in the barrel.",
+"o": [
+"33 litres",
+"44 litres",
+"55 litres",
+"66 litres"
+],
+"a": 3,
+"src": "CGL, 17 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "Paani 4 hisse → 6 hisse (alcohol same 7). 2 hisse = 12 L → 1 hissa = 6 → kul 11 × 6 = 66. Sab options 11 ke guna, isliye hisse wala tareeka hi chalega.",
+"cut": [
+0,
+1,
+2
+]
+}
+]
+}
+],
+"value": [
+{
+"id": "ssc-m-02-038",
+"chap": "ratio-and-proportion",
+"q": "If a:b=5:3, then find (6a+2b):(6a-2b).",
+"o": [
+"3:2",
+"2:3",
+"5:3",
+"3:5"
+],
+"a": 0,
+"src": "CGL, 15 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "(6a + 2b) hamesha (6a − 2b) se bada → ratio > 1 → pehla number bada. 2 : 3 aur 3 : 5 kaato.",
+"cut": [
+1,
+3
+]
+},
+{
+"s": "a = 5, b = 3 daalo: 36 : 24 = 3 : 2.",
+"cut": [
+2
+]
+}
+]
+},
+{
+"id": "ssc-m-02-046",
+"chap": "ratio-and-proportion",
+"q": "If p:q=4:1, find (5p+3q):(5p-3q).",
+"o": [
+"23 : 17",
+"17 : 23",
+"7 : 17",
+"17 : 7"
+],
+"a": 0,
+"src": "CGL, 16 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "Plus wala minus wale se bada → pehla number bada. 17 : 23 aur 7 : 17 kaato.",
+"cut": [
+1,
+2
+]
+},
+{
+"s": "p = 4, q = 1: 23 : 17.",
+"cut": [
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-02-062",
+"chap": "ratio-and-proportion",
+"q": "If x:y = 2:5, then what is (2x + 3y):(x + y)?",
+"o": [
+"19:7",
+"7:19",
+"16:7",
+"7:16"
+],
+"a": 0,
+"src": "CGL, 22 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "2x + 3y > x + y → pehla bada. 7 : 19 aur 7 : 16 kaato.",
+"cut": [
+1,
+3
+]
+},
+{
+"s": "x = 2, y = 5: 19 : 7.",
+"cut": [
+2
+]
+}
+]
+},
+{
+"id": "ssc-m-18-028",
+"chap": "trigonometry",
+"q": "If sinA + cosA = x, then find the value of sin²A + cos²A + 2sinAcosA.",
+"o": [
+"x",
+"x²",
+"1",
+"x+1"
+],
+"a": 1,
+"src": "CGL, 19 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "A = 45° maan lo: x = sin + cos = √2. Expression = 1 + 2 × ½ = 2. Options mein daalo: x = 1.41, x² = 2 ✓, 1, x + 1 = 2.41.",
+"cut": [
+0,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-18-032",
+"chap": "trigonometry",
+"q": "If sinA = x, then what is cos²A in terms of x?",
+"o": [
+"1 - x²",
+"2 - x²",
+"3 - x²",
+"1 - 2x²"
+],
+"a": 0,
+"src": "CGL, 19 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "A = 90° maan lo: x = sin 90 = 1, cos² 90 = 0. Sirf 1 − x² = 0 deta hai.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-17-012",
+"chap": "algebra",
+"q": "Given, √x + 1 ÷ √x = 4, find x + 1 ÷ x.",
+"o": [
+"15",
+"14",
+"16",
+"17"
+],
+"a": 1,
+"src": "CGL, 18 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "(√x + 1/√x)² = x + 1/x + 2 → 16 − 2 = 14. 16 trap (−2 bhool gaye).",
+"cut": [
+0,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-18-060",
+"chap": "trigonometry",
+"q": "If sin x = cos(x + 20°), then what is the value of x?",
+"o": [
+"35°",
+"25°",
+"18°",
+"20°"
+],
+"a": 0,
+"src": "CGL, 23 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "Niyam: sin P = cos Q → P + Q = 90°. x + x + 20 = 90 → x = 35. Option daal kar bhi: sin 35 = cos 55 ✓.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-18-037",
+"chap": "trigonometry",
+"q": "If sin(3x + 10°) = cos(2x - 5°), find x.",
+"o": [
+"27°",
+"30°",
+"25°",
+"17°"
+],
+"a": 3,
+"src": "CGL, 20 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "sin P = cos Q → P + Q = 90: 3x + 10 + 2x − 5 = 90 → 5x = 85 → 17.",
+"cut": [
+0,
+1,
+2
+]
+}
+]
+},
+{
+"id": "ssc-m-18-011",
+"chap": "trigonometry",
+"q": "If tan A = cot(2A - 30°), then what is the value of A?",
+"o": [
+"30°",
+"25°",
+"18°",
+"40°"
+],
+"a": 3,
+"src": "CGL, 14 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "tan A = cot B → A + B = 90: A + 2A − 30 = 90 → A = 40.",
+"cut": [
+0,
+1,
+2
+]
+}
+]
+}
+],
+"form": [
+{
+"id": "ssc-m-19-018",
+"chap": "height-and-distance",
+"q": "A kite is soaring at an altitude of 75 meters above the ground, with its string temporarily secured to a point on the ground. The angle of elevation of the string relative to the ground is 30 degrees. Given that the string remains taut, what is the length of the string?",
+"o": [
+"75 m",
+"75√3 m",
+"150 m",
+"150√3 m"
+],
+"a": 2,
+"src": "CGL, 23 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "Dori (hypotenuse) unchai (75) se lambi → 75 bahar.",
+"cut": [
+0
+]
+},
+{
+"s": "30° par sin = 1/2 — √3 aata hi nahi (height aur dori ke beech). √3 wale kaato → 150.",
+"cut": [
+1,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-19-006",
+"chap": "height-and-distance",
+"q": "A taut wire supports a vertical pole. The wire is fixed to the ground 10 meters away from the base of the pole and makes an angle of 60° with the ground. What is the length of the wire?",
+"o": [
+"10 m",
+"10√3 m",
+"20 m",
+"20/√3 m"
+],
+"a": 2,
+"src": "CGL, 17 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "Taar (hypotenuse) 10 m se lamba → 10 bahar.",
+"cut": [
+0
+]
+},
+{
+"s": "Zameen se 60° aur base diya → cos 60 = 1/2 → taar = 2 × base = 20. √3 wala answer nahi banta.",
+"cut": [
+1,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-19-020",
+"chap": "height-and-distance",
+"q": "Two ships positioned on opposite sides of a lighthouse observe the angles of elevation to the top of the lighthouse, which are 30° and 45° respectively. Given that the height of the lighthouse is 100 meters, determine the distance between the two ships.",
+"o": [
+"100(√3 - 1) m",
+"100√3 m",
+"100( + 1) m",
+"100(√3 + 1) m"
+],
+"a": 3,
+"src": "CGL, 24 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "Opposite sides → doori JODO: 100√3 (30° wala) + 100 (45° wala). (√3 − 1) same side wala trap; sirf 100√3 adhoora.",
+"cut": [
+0,
+1,
+2
+]
+}
+]
+},
+{
+"id": "ssc-m-20-049",
+"chap": "geometry",
+"q": "When two tangents, PA and PB, are drawn to a circle from a point P outside the circle, and the angle between them is 90°, what is the distance from P to the center (O) of the circle, if the radius is 5 cm?",
+"o": [
+"5 cm",
+"5√2 cm",
+"10 cm",
+"5√3 cm"
+],
+"a": 1,
+"src": "CGL, 17 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "Tangents ke beech 90° → OAPB square (radius = tangent = 5) → OP = diagonal = 5√2. √2 = square/45° ka nishaan.",
+"cut": [
+0,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-20-136",
+"chap": "geometry",
+"q": "A circle with a radius of 10 cm, and a chord makes a 60° angle at the center. What is the length of that chord?",
+"o": [
+"5 cm",
+"10 cm",
+"10√3 cm",
+"10√2 cm"
+],
+"a": 1,
+"src": "CGL, 25 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "Centre par 60° + do radius → equilateral triangle → chord = radius = 10. √3 / √2 wale trap.",
+"cut": [
+0,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-21-056",
+"chap": "mensuration-2d",
+"q": "A triangle has sides 8 cm and 10 cm, and the angle between them is 120°. What is its area?",
+"o": [
+"40 cm²",
+"20√3 cm²",
+"40√3 cm²",
+"20 cm²"
+],
+"a": 1,
+"src": "CGL, 21 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "120° → sin 120 = √3/2 → answer mein √3 ZAROOR. 40 aur 20 bahar.",
+"cut": [
+0,
+3
+]
+},
+{
+"s": "½ × 8 × 10 = 40 → × √3/2 = 20√3. 40√3 mein ½ bhool gaye.",
+"cut": [
+2
+]
+}
+]
+},
+{
+"id": "ssc-m-19-013",
+"chap": "height-and-distance",
+"q": "A tower is 20 meters tall. What is the length of the shadow cast by the tower when the sun's elevation is 45°?",
+"o": [
+"10m",
+"20m",
+"20√3 m",
+"10√3 m"
+],
+"a": 1,
+"src": "CGL, 19 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "45° → unchai = parchhai. 20 m tower → 20 m. √3 sirf 30/60 par.",
+"cut": [
+0,
+2,
+3
+]
+}
+]
+}
+],
+"special": [
+{
+"id": "ssc-m-20-083",
+"chap": "geometry",
+"q": "In △ ABC, a median AD is drawn to side BC. What is the ratio of the area of △ ABD to the area of △ ACD?",
+"o": [
+"1:1",
+"1:2",
+"2:1",
+"1:3"
+],
+"a": 0,
+"src": "CGL, 21 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "Median base ko aadha karta hai, height dono ki same → area barabar → 1 : 1.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-20-035",
+"chap": "geometry",
+"q": "In an equilateral triangle with side length 'a', what is the ratio of the circumradius to the inradius?",
+"o": [
+"2:1",
+"3:1",
+"4:1",
+"1:2"
+],
+"a": 0,
+"src": "CGL, 17 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "Equilateral mein centroid = circumcentre = incentre, median 2 : 1 mein katta → R = 2r. R hamesha r se bada → 1 : 2 ulta.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-21-046",
+"chap": "mensuration-2d",
+"q": "What is the ratio of the area of a regular hexagon to that of an equilateral triangle of the same side length?",
+"o": [
+"6:1",
+"3:1",
+"√3 : 1",
+"1:6"
+],
+"a": 0,
+"src": "CGL, 19 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "Regular hexagon = 6 equilateral triangles (same side) → 6 : 1. 1 : 6 ulta.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-22-043",
+"chap": "mensuration-3d",
+"q": "Two identical solid hemispheres, each with a radius of 21 cm, are melted and recast into a single sphere. What is the radius of the new sphere formed?",
+"o": [
+"18 cm",
+"21 cm",
+"24 cm",
+"27 cm"
+],
+"a": 1,
+"src": "CGL, 18 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "Do hemisphere = ek poora sphere usi radius ka → radius wahi 21. Koi hisaab nahi.",
+"cut": [
+0,
+2,
+3
+]
+}
+]
+}
+],
+"range": [
+{
+"id": "ssc-m-22-006",
+"chap": "mensuration-3d",
+"q": "A solid cylinder radius 5 cm is drilled by four cylindrical holes each radius 1 cm length equal to the full height. Volume removed is approximately what percent?",
+"o": [
+"16 %",
+"20 %",
+"32 %",
+"48 %"
+],
+"a": 0,
+"src": "CGL, 13 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "π aur height dono kat jaate: hata = 4 × 1², poora = 5² = 25 → 4/25 = 16%.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-06-016",
+"chap": "compound-interest-ci",
+"q": "A certain amount increases to five times its initial value after 10 years of compounding interest. How many years will it take for it to grow to twenty-five times its original amount?",
+"o": [
+"22",
+"20",
+"19",
+"18"
+],
+"a": 1,
+"src": "CGL, 20 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "10 saal mein 5 guna → 25 = 5 × 5 → do baar 10 saal = 20.",
+"cut": [
+0,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-06-029",
+"chap": "compound-interest-ci",
+"q": "A certain sum amounts to Rs. 1,600 in two years and to Rs. 2,000 in three years at compound interest when compounded annually. Find the rate of interest.",
+"o": [
+"21%",
+"19%",
+"25%",
+"20%"
+],
+"a": 2,
+"src": "CGL, 25 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "Ek saal mein 1,600 → 2,000: badhat 400/1,600 = 25%. Isi ko dar kehte hain.",
+"cut": [
+0,
+1,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-21-003",
+"chap": "mensuration-2d",
+"q": "A circular disc's radius is decreased by 10%. What is the percentage decrease in its area?",
+"o": [
+"10%",
+"19%",
+"18%",
+"15%"
+],
+"a": 1,
+"src": "CGL, 12 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "Area ∝ r². 0.9² = 0.81 → 19% ghata. 10% trap (radius wala % seedha).",
+"cut": [
+0,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-22-029",
+"chap": "mensuration-3d",
+"q": "Two solid hemispheres of radii 6 cm and 8 cm respectively are melted and recast into a single hemisphere. What is the approximate radius of the new hemisphere formed?",
+"o": [
+"9cm",
+"10cm",
+"12cm",
+"11cm"
+],
+"a": 0,
+"src": "CGL, 16 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "r³ = 6³ + 8³ = 216 + 512 = 728 ≈ 729 = 9³. 10³ = 1,000 bahut bada → 10, 11, 12 bahar.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-21-001",
+"chap": "mensuration-2d",
+"q": "A circular park having a radius of 14 m. If a 1.5 m wide path is built around it, what is the approximate area of the path?",
+"o": [
+"139 m²",
+"135 m²",
+"142 m²",
+"150 m²"
+],
+"a": 0,
+"src": "CGL, 12 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "Patla raasta ≈ ghera × chaudai = 2 × 22/7 × 14 × 1.5 = 132, bahari kinara thoda aur (≈ 7) → ≈ 139. 150 bahut, 135 kam.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+}
+],
+"plug": [
+{
+"id": "ssc-m-09-011",
+"chap": "time-speed-and-distance",
+"q": "A student walks from his home to school at a speed of 4 km/h and reaches 15 minutes late. If he increases his speed to 6 km/h, he reaches 5 minutes early. What is the distance (in km) from his home to school?",
+"o": [
+"4 km",
+"6 km",
+"8 km",
+"10 km"
+],
+"a": 0,
+"src": "CGL, 15 Sep 2025, Shift 3",
+"steps": [
+{
+"s": "4 km daalo: 4 km/h → 60 min, 6 km/h → 40 min → farq 20 min = 15 late + 5 early ✓. Equation ki zaroorat nahi.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-02-063",
+"chap": "ratio-and-proportion",
+"q": "Two numbers are in the ratio 5:7. If 9 is added to each, the new ratio becomes 8:11. What are the original numbers?",
+"o": [
+"135 and 189",
+"150 and 210",
+"120 and 168",
+"180 and 252"
+],
+"a": 0,
+"src": "CGL, 24 Sep 2025, Shift 1",
+"steps": [
+{
+"s": "Sab options 5 : 7 mein hain — isliye +9 karke check: 144 : 198 = 8 : 11 ✓ (÷ 18).",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-09-033",
+"chap": "time-speed-and-distance",
+"q": "Sahil travelled a certain distance by bike at the rate of 25 kmph. And walked back at the rate of 4 kmph. If the whole journey took 5 hours 48 minutes, what was the distance?",
+"o": [
+"25 km",
+"22 km",
+"20 km",
+"18 km"
+],
+"a": 2,
+"src": "CGL, 26 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "20 daalo: 20/25 = 0.8 h, 20/4 = 5 h → 5.8 h = 5 h 48 min ✓.",
+"cut": [
+0,
+1,
+3
+]
+}
+]
+},
+{
+"id": "ssc-m-05-015",
+"chap": "simple-interest-si",
+"q": "Reena borrowed Rs. 1200 at simple interest for a number of years equal to the rate of interest. At the end of the loan term, she paid Rs. 432 in interest. What was the interest rate?",
+"o": [
+"6%",
+"7%",
+"8%",
+"9%"
+],
+"a": 0,
+"src": "CGL, 18 Sep 2025, Shift 2",
+"steps": [
+{
+"s": "SI = P × R × T/100, R = T → 1,200 × R²/100 = 432 → R² = 36 → 6. Option daal: 12 × 36 = 432 ✓.",
+"cut": [
+1,
+2,
+3
+]
+}
+]
+}
+]
+}

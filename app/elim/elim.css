@@ -73,3 +73,20 @@
 .elm-chtips summary { cursor: pointer; font-weight: 600; }
 .elm-chtips ul { margin: 8px 0 0; padding-left: 1.2em; }
 @media (max-width: 600px) { .elm-card { padding: 16px 14px; } .elm-why { padding-left: 6px; } }
+
+/* 📚 Tareeke seekho — tareeka chuno, PYQ par step by step */
+.elm-tchips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.elm-tchips button { border: 1px solid var(--line); background: var(--card); color: var(--text-2); border-radius: 999px; padding: 6px 12px; font: 600 .88rem var(--nt-display, inherit); cursor: pointer; }
+.elm-tchips button b { font: 500 .75rem var(--nt-mono, monospace); opacity: .7; }
+.elm-tchips button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent, #0f1220); }
+.elm-trick--big { margin-bottom: 12px; }
+.elm-trick--big h2 { margin: 0 0 8px; font-family: var(--nt-display, inherit); color: var(--accent); }
+.elm-trick--big p { font-size: .98rem; }
+.elm-static { cursor: default; }
+.elm-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.elm-steps li { border-left: 3px solid var(--accent); background: var(--bg, #0f1220); border-radius: 0 10px 10px 0; padding: 8px 12px; }
+.elm-steps li b { font: 600 .8rem var(--nt-mono, monospace); color: var(--accent); }
+.elm-steps li p { margin: 4px 0 0; }
+.elm-steps .elm-left { border-left-color: #7fd19c; }
+.elm-steps .elm-left b { color: #7fd19c; font-size: .95rem; font-family: var(--nt-display, inherit); }
+.elm-play .elm-stats { margin-bottom: 12px; }
