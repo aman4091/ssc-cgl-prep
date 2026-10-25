@@ -16,6 +16,7 @@
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { TRICKS, trickOf } from "@/lib/elim";
 import "./elim.css";
+import Tukka from "./Tukka";
 
 const KEY = "elim.v1";
 const loadSt = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch { return {}; } };
@@ -125,10 +126,11 @@ function ElimInner() {
         <div className="elm-tabs" role="tablist">
           <button type="button" role="tab" aria-selected={tab === "learn"} onClick={() => setTab("learn")}>📚 Tareeke seekho</button>
           <button type="button" role="tab" aria-selected={tab === "play"} onClick={() => setTab("play")}>🎯 Khud kaato</button>
+          <button type="button" role="tab" aria-selected={tab === "tukka"} onClick={() => setTab("tukka")}>🎲 Tukka</button>
         </div>
       </header>
 
-      {!data ? <p className="hint">Aa raha hai…</p> : tab === "learn" ? (
+      {tab === "tukka" ? <Tukka /> : !data ? <p className="hint">Aa raha hai…</p> : tab === "learn" ? (
         <div className="elm-learn">
           <div className="elm-tchips">
             {keys.map((t) => (

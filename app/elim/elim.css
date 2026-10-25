@@ -90,3 +90,10 @@
 .elm-steps .elm-left { border-left-color: #7fd19c; }
 .elm-steps .elm-left b { color: #7fd19c; font-size: .95rem; font-family: var(--nt-display, inherit); }
 .elm-play .elm-stats { margin-bottom: 12px; }
+
+/* 🎲 Tukka */
+.elm-rules { margin: 0 0 8px; padding-left: 1.3em; display: grid; gap: 6px; }
+.elm-rules span { color: var(--text-3); font-size: .88rem; }
+.elm-tukka .elm-stats { margin: 12px 0; }
+.elm-hidden { color: var(--text-3); letter-spacing: .3em; }
+.elm-badge { margin-left: auto; font: 600 .7rem var(--nt-mono, monospace); color: #f0c060; border: 1px solid #f0c060; border-radius: 999px; padding: 1px 8px; }
