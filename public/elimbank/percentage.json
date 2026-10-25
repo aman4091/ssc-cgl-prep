@@ -1,0 +1,514 @@
+{
+"ssc-m-01-001": {
+"t": [
+"range",
+"unit"
+],
+"elim": "Badhat = petrol ka 5% → 82 ka 5% = 4.1 per litre. Litre = 3045/15 = 203. 200 × 4.1 = 820, upar 3 × 4.1 ≈ 12 → 832. 820 trap (203 ki jagah 200).",
+"fast": "3045 ÷ 15 = 203 L; 203 × 4.1 = 832.3 → 832.",
+"cut": {
+"0": "200 litre maan kar bana — 3 litre chhoot gaye.",
+"2": "Bahut zyada — 203 × 4.1 ≈ 832 hi.",
+"3": "Gol karke bhi 850 nahi banta."
+}
+},
+"ssc-m-01-003": {
+"t": [
+"plug"
+],
+"elim": "Option daalo: males 15,000 → females 10,000. −5% = −750, +10% = +1,000 → +250 ✓ (25,250).",
+"fast": "0.1F − 0.05M = 250 aur M + F = 25,000 → option se 15,000 seedha.",
+"cut": {
+"0": "12,500 → −625 + 1,250 = +625 ✗.",
+"1": "14,000 → −700 + 1,100 = +400 ✗.",
+"3": "16,500 → −825 + 850 = +25 ✗."
+}
+},
+"ssc-m-01-004": {
+"t": [
+"div",
+"plug"
+],
+"elim": "Valid = 11,400 / 0.6 = 19,000 → cast = 19,000 / 0.95 = 20,000 → eligible = 20,000 / 0.8 = 25,000. 20,000 trap (80% wala step chhoda).",
+"fast": "11,400 ÷ 0.6 ÷ 0.95 ÷ 0.8 = 25,000.",
+"cut": {
+"0": "Trap: ye 'votes cast' hai, eligible nahi.",
+"1": "0.8 se bhaag dene par 25,000 hi aata.",
+"3": "Zyada — koi step 27,500 nahi deta."
+}
+},
+"ssc-m-01-005": {
+"t": [
+"bound"
+],
+"elim": "0.005 kL = 5 L = 5,000 mL. Bhara 3,500 = 70% → khaali 30%.",
+"fast": "1,500 / 5,000 = 30%.",
+"cut": {
+"0": "25% = 1,250 mL khaali hota.",
+"2": "Trap: 35 = 3,500 ka andaaza, % nahi.",
+"3": "40% = 2,000 mL khaali hota."
+}
+},
+"ssc-m-01-006": {
+"t": [
+"plug"
+],
+"elim": "Blue = 100 − 25 − 35 = 40% = 40 balls → total 100.",
+"fast": "40 ÷ 0.4 = 100.",
+"cut": {
+"1": "160 ka 40% = 64.",
+"2": "200 ka 40% = 80.",
+"3": "240 ka 40% = 96."
+}
+},
+"ssc-m-01-007": {
+"t": [
+"direct"
+],
+"elim": "Student: 100 × 15 = 1,500; chaperone: 10 × 25 = 250 → 1,750.",
+"fast": "1,500 + 250 = 1,750.",
+"cut": {
+"1": "Sirf 2,000 tab jab chaperone bhi 25 × 10 ko 500 maano.",
+"2": "Bina wajah zyada.",
+"3": "Sab ko 25 diya (110 × 25 ≈ 2,750) jaisa galat raasta."
+}
+},
+"ssc-m-01-008": {
+"t": [
+"plug"
+],
+"elim": "45% − 30% = 15% = 0.9 → number = 6. Option daalo: 6 ka 15% = 0.9 ✓.",
+"fast": "0.9 ÷ 0.15 = 6.",
+"cut": {
+"1": "7 × 0.15 = 1.05.",
+"2": "8 × 0.15 = 1.2.",
+"3": "9 × 0.15 = 1.35."
+}
+},
+"ssc-m-01-010": {
+"t": [
+"direct"
+],
+"elim": "Sahi = 14 + 25 + 15 = 54; pass ke liye 60% of 120 = 72 → 18 aur.",
+"fast": "72 − 54 = 18.",
+"cut": {
+"0": "Bahut kam.",
+"1": "Section ka % galat jodne par.",
+"3": "Trap: 20 = GK ke sawaal."
+}
+},
+"ssc-m-01-011": {
+"t": [
+"direct"
+],
+"elim": "1% of 200 = 2 → 2.5% = 5.",
+"fast": "2.5 × 2 = 5.",
+"cut": {
+"1": "2% ka answer.",
+"2": "1.5% ka answer.",
+"3": "0.5% ka answer."
+}
+},
+"ssc-m-01-012": {
+"t": [
+"div",
+"plug"
+],
+"elim": "3/4 − 2/3 = 1/12 → 15 × 12 = 180. Number 12 se katna chahiye (3/4 aur 2/3 dono) — 150 aur 210 bahar.",
+"fast": "15 × 12 = 180.",
+"cut": {
+"0": "120 → 90 − 80 = 10 ✗.",
+"1": "150 ka 3/4 poora number nahi.",
+"3": "210 ka 3/4 poora number nahi."
+}
+},
+"ssc-m-01-013": {
+"t": [
+"trap"
+],
+"elim": "15a = 25b → jiska % chhota, wo number bada → a bada → 5 : 3. 3 : 5 ulta trap.",
+"fast": "a : b = 25 : 15 = 5 : 3.",
+"cut": {
+"0": "Ulta — % ka ratio seedha likh diya.",
+"2": "Galat sankhya.",
+"3": "Galat sankhya."
+}
+},
+"ssc-m-01-014": {
+"t": [
+"trap",
+"plug"
+],
+"elim": "2(P + Q) = 5(P − Q) → 7Q = 3P → P : Q = 7 : 3. P > Q hona chahiye (P − Q positive) → 3 : 7 aur 2 : 5 bahar.",
+"fast": "P/Q = (5 + 2)/(5 − 2) = 7/3.",
+"cut": {
+"0": "P < Q ho toh P − Q negative — bahar.",
+"2": "P < Q — bahar.",
+"3": "5 : 2 daalo: 20% of 7 = 1.4, 50% of 3 = 1.5 ✗."
+}
+},
+"ssc-m-01-015": {
+"t": [
+"value"
+],
+"elim": "C = 100 → B = 120 → A = 150 → A : C = 3 : 2.",
+"fast": "1.25 × 1.2 = 1.5.",
+"cut": {
+"1": "Ulta trap.",
+"2": "Sirf pehli badhat (25%).",
+"3": "Sirf doosri badhat (20%)."
+}
+},
+"ssc-m-01-016": {
+"t": [
+"trap",
+"plug"
+],
+"elim": "(P + Q) = 3(P − Q) → 2P = 4Q → 2 : 1. P > Q zaroori → 1 : 2, 1 : 3 bahar.",
+"fast": "P/Q = (3 + 1)/(3 − 1) = 2.",
+"cut": {
+"0": "P < Q — bahar.",
+"2": "P < Q — bahar.",
+"3": "3 : 1 daalo: 25% of 4 = 1, 75% of 2 = 1.5 ✗."
+}
+},
+"ssc-m-01-017": {
+"t": [
+"trap"
+],
+"elim": "30m = 18n → m chhota (uska % bada) → m : n = 18 : 30 = 3 : 5. 5 : 3 ulta trap.",
+"fast": "m : n = 18 : 30 = 3 : 5.",
+"cut": {
+"0": "Ulta trap.",
+"1": "Galat simplify.",
+"3": "Galat."
+}
+},
+"ssc-m-01-019": {
+"t": [
+"trap"
+],
+"elim": "Sabse chhota % (10%) wala sabse bada → C sabse bada. Sirf (a) aur (c) mein C bada; A < B (25% > 20%) → 4 : 5 : 10.",
+"fast": "A : B : C = 1/25 : 1/20 : 1/10 = 4 : 5 : 10.",
+"cut": {
+"1": "Ulta trap.",
+"2": "A > B ho gaya — galat.",
+"3": "Bina hisaab ka."
+}
+},
+"ssc-m-01-020": {
+"t": [
+"trap"
+],
+"elim": "12.5% = 1/8, 50% = 1/2 → p/8 = q/2 → p = 4q → 4 : 1. 1 : 4 ulta.",
+"fast": "p : q = 50 : 12.5 = 4 : 1.",
+"cut": {
+"0": "Ulta trap.",
+"2": "Galat.",
+"3": "Galat."
+}
+},
+"ssc-m-01-021": {
+"t": [
+"unit"
+],
+"elim": "72 × 1.2 = 86.4. Unit/decimal: 72 × 0.2 = 14.4 → .4 sab mein, pehle ank se: 72 + 14.4 = 86.4.",
+"fast": "72 + 14.4 = 86.4.",
+"cut": {
+"0": "Galat jod.",
+"1": "Galat jod.",
+"2": "Galat jod."
+}
+},
+"ssc-m-01-022": {
+"t": [
+"div",
+"plug"
+],
+"elim": "Salary S: bacha 0.8S → investment 0.32S → baaki 0.48S; travel 5/12 → 0.2S = 6,000 → 30,000.",
+"fast": "Travel = 0.8 × 0.6 × 5/12 = 0.2 → 6,000 / 0.2 = 30,000.",
+"cut": {
+"0": "28,000 × 0.2 = 5,600.",
+"2": "32,000 × 0.2 = 6,400.",
+"3": "35,000 × 0.2 = 7,000."
+}
+},
+"ssc-m-01-023": {
+"t": [
+"value"
+],
+"elim": "Income 100, kharch 80, bachat 20. Income 125, kharch 80 → bachat 45 → (45 − 20)/20 = 125%.",
+"fast": "25 / 20 = 125%.",
+"cut": {
+"1": "Galat.",
+"2": "Galat.",
+"3": "Galat."
+}
+},
+"ssc-m-01-024": {
+"t": [
+"value",
+"trap"
+],
+"elim": "Pehla 10 → doosra 15 → teesra 12 → 10 : 12 = 5 : 6.",
+"fast": "1 : 1.5 × 0.8 = 1 : 1.2 = 5 : 6.",
+"cut": {
+"1": "Pehla : doosra (10 : 15).",
+"2": "Ulta trap jaisa.",
+"3": "Galat."
+}
+},
+"ssc-m-01-025": {
+"t": [
+"value"
+],
+"elim": "Number 100: galat 125, sahi 80 → 45/80 = 56.25%. 45% trap (100 par baanta).",
+"fast": "125/80 = 1.5625.",
+"cut": {
+"1": "Galat.",
+"2": "Trap: 45 ko 100 par baanta, sahi (80) par nahi.",
+"3": "Galat."
+}
+},
+"ssc-m-01-026": {
+"t": [
+"range"
+],
+"elim": "58,320 / 1.1664 = 50,000. Approx bhi poochha — 50,000 gol number.",
+"fast": "1.08² = 1.1664 → 50,000.",
+"cut": {
+"1": "Kam.",
+"2": "Kam.",
+"3": "Kam."
+}
+},
+"ssc-m-01-027": {
+"t": [
+"plug"
+],
+"elim": "10% = 120 → 1,200.",
+"fast": "120 × 10.",
+"cut": {
+"0": "10% = 100.",
+"1": "10% = 110.",
+"3": "10% = 140."
+}
+},
+"ssc-m-01-028": {
+"t": [
+"unit",
+"range"
+],
+"elim": "10,000 × 0.9 × 0.8 × 0.7 = 5,040. Unit-ish: 9 × 8 × 7 = 504 → 5,040.",
+"fast": "9 × 8 × 7 = 504.",
+"cut": {
+"1": "Trap: 10 + 20 + 30 = 60% ghata kar 4,000 ke paas bhi nahi — 5,600 galat.",
+"2": "Galat.",
+"3": "Galat."
+}
+},
+"ssc-m-01-029": {
+"t": [
+"direct"
+],
+"elim": "100 − 60 − 15 = 25%.",
+"fast": "25%.",
+"cut": {
+"0": "Sirf savings ghatane par 40 — galat.",
+"2": "Galat.",
+"3": "Galat."
+}
+},
+"ssc-m-01-030": {
+"t": [
+"value"
+],
+"elim": "B = 100, A = 140. B naya 120, A naya 1.25 × 120 = 150 → badhat 10/140 = 7.14%.",
+"fast": "10 / 140 = 1/14 = 7.14%.",
+"cut": {
+"0": "Bahut kam.",
+"2": "Galat.",
+"3": "Galat."
+}
+},
+"ssc-m-01-031": {
+"t": [
+"bound"
+],
+"elim": "Ghataana hamesha 30% se kam (bade base par) → 30.26% bahar. 30/130 = 23.08%.",
+"fast": "30 / 130 = 23.08%.",
+"cut": {
+"1": "Galat.",
+"2": "Bound: 30% se zyada ho hi nahi sakta.",
+"3": "Galat."
+}
+},
+"ssc-m-01-032": {
+"t": [
+"bound"
+],
+"elim": "Barabar max marks → seedha average = 70%.",
+"fast": "(80 + 60)/2 = 70.",
+"cut": {
+"1": "Galat.",
+"2": "Galat.",
+"3": "Galat."
+}
+},
+"ssc-m-01-033": {
+"t": [
+"plug"
+],
+"elim": "x²/100 = 10 → x² = 1,000 → x ≈ 31.6 (31.6² ≈ 1,000).",
+"fast": "√1000 ≈ 31.6.",
+"cut": {
+"1": "33.6² ≈ 1,129.",
+"2": "30.6² ≈ 936.",
+"3": "39.6² ≈ 1,568."
+}
+},
+"ssc-m-01-034": {
+"t": [
+"plug"
+],
+"elim": "x²/100 = 10 → x² = 1,000 → x ≈ 31.6.",
+"fast": "√1000 ≈ 31.6.",
+"cut": {
+"1": "33.6² ≈ 1,129.",
+"2": "30.6² ≈ 936.",
+"3": "39.6² ≈ 1,568."
+}
+},
+"ssc-m-01-035": {
+"t": [
+"plug"
+],
+"elim": "Blue = 50% = 80 → total 160.",
+"fast": "80 × 2 = 160.",
+"cut": {
+"0": "100 ka 50% = 50.",
+"2": "200 ka 50% = 100.",
+"3": "240 ka 50% = 120."
+}
+},
+"ssc-m-01-036": {
+"t": [
+"direct"
+],
+"elim": "Attempt 150 × 0.8 = 120; baaki 50 × 0.1 = 5 → 125. 120 trap (grace bhool gaye).",
+"fast": "120 + 5 = 125.",
+"cut": {
+"0": "Galat.",
+"1": "Galat.",
+"2": "Trap: grace wale 5 chhoot gaye."
+}
+},
+"ssc-m-01-037": {
+"t": [
+"value"
+],
+"elim": "Income 100, kharch 75, bachat 25. Naya: kharch 90, income 110 → bachat 20 → 20% ghata.",
+"fast": "5 / 25 = 20% decrease.",
+"cut": {
+"0": "Galat.",
+"1": "Galat.",
+"2": "Galat."
+}
+},
+"ssc-m-01-038": {
+"t": [
+"value"
+],
+"elim": "B = 100, A = 140 → B 120, A 150 → 10/140 = 7.14%.",
+"fast": "1/14 = 7.14%.",
+"cut": {
+"0": "Galat.",
+"2": "Galat.",
+"3": "Galat."
+}
+},
+"ssc-m-01-039": {
+"t": [
+"value"
+],
+"elim": "Income 100, kharch 70, bachat 30 → 110, 73.5 → 36.5 → 6.5/30 = 21.67%.",
+"fast": "6.5 / 30 = 21.67%.",
+"cut": {
+"1": "Galat.",
+"2": "Galat.",
+"3": "Galat."
+}
+},
+"ssc-m-01-040": {
+"t": [
+"value"
+],
+"elim": "1.25 × 0.8 = 1 → × 1.1 = 1.1 → 10% gain.",
+"fast": "Pehle do kat gaye, bacha 10%.",
+"cut": {
+"1": "Galat.",
+"2": "Galat.",
+"3": "Galat."
+}
+},
+"ssc-m-01-041": {
+"t": [
+"value"
+],
+"elim": "Sahi 450, galat 550 → 100/450 = 22.22%. 20% trap (500 par baanta).",
+"fast": "100 / 450 = 2/9 = 22.22%.",
+"cut": {
+"0": "Galat.",
+"2": "Galat.",
+"3": "Galat."
+}
+},
+"ssc-m-01-042": {
+"t": [
+"plug"
+],
+"elim": "10% = 120 → 1,200.",
+"fast": "120 × 10.",
+"cut": {
+"0": "10% = 100.",
+"1": "10% = 110.",
+"3": "10% = 140."
+}
+},
+"ssc-m-01-043": {
+"t": [
+"plug"
+],
+"elim": "200 ka 20% = 40 → 40 se 5 kg → naya bhaav 8 → purana 8/0.8 = 10.",
+"fast": "Naya = 40/5 = 8 → purana = 10.",
+"cut": {
+"0": "Galat.",
+"2": "Galat.",
+"3": "Galat."
+}
+},
+"ssc-m-01-044": {
+"t": [
+"range"
+],
+"elim": "26,000/16,000 = 1.625 → √1.625 ≈ 1.275 → 27.5%. 37.47% trap (seedha 62.5 ka aadha nahi, aur bahut zyada).",
+"fast": "1.275² ≈ 1.625.",
+"cut": {
+"0": "1.2647² ≈ 1.6.",
+"1": "Bahut zyada.",
+"2": "1.2847² ≈ 1.65."
+}
+},
+"ssc-m-01-045": {
+"t": [
+"direct"
+],
+"elim": "Bachat 25% = 9,000 → 36,000.",
+"fast": "9,000 × 4.",
+"cut": {
+"0": "Galat.",
+"1": "Galat.",
+"2": "30,000 ka 25% = 7,500."
+}
+}
+}
