@@ -13,7 +13,7 @@
 // Decks: public/elimbank/tukka-<subject>.json (slim). Hisaab elim.v1 (device).
 
 import { useEffect, useState } from "react";
-import { tukka, tukkaGS, tukkaEN, TUKKA_RULES, GS_RULES, EN_RULES, optNum, lastLine } from "@/lib/elim";
+import { tukka, tukkaGS, tukkaEN, TUKKA_RULES, GS_RULES, EN_RULES, CHAPTER_TIPS, optNum, lastLine } from "@/lib/elim";
 
 const KEY = "elim.v1";
 const loadSt = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch { return {}; } };
@@ -35,6 +35,10 @@ export default function Tukka() {
   const [stage, setStage] = useState(1);
   const [pick, setPick] = useState(null);
   const [st, setSt] = useState({});
+  // 📐 Maths: chapter chuno — us chapter ki disha (CHAPTER_TIPS) aakhri line ke saath.
+  const [chap, setChap] = useState("");
+  const [chaps, setChaps] = useState([]);
+  useEffect(() => { fetch("/sscmaths2025/index.json").then((r) => r.json()).then((j) => setChaps((j.chapters || []).filter((c) => CHAPTER_TIPS[c.slug]))).catch(() => {}); }, []);
   const S = SUBJ[subj];
 
   useEffect(() => { setSt(loadSt().tk || {}); }, []);
@@ -46,8 +50,11 @@ export default function Tukka() {
     }).catch(() => setDecks((x) => ({ ...x, [subj]: [] })));
   }, [subj]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const deck = decks[subj];
-  const q = deck?.[at[subj]];
+  const deckAll = decks[subj];
+  const deck = subj === "maths" && chap && deckAll ? deckAll.filter((x) => x.c === chap) : deckAll;
+  const q = deck?.[at[subj] % (deck?.length || 1)];
+  const disha = subj === "maths" && q ? CHAPTER_TIPS[q.c] || [] : [];
+  const chapLabel = (c) => chaps.find((x) => x.slug === c)?.label || c;
   const r1 = q ? S.run(q.o) : null;                       // sirf options
   const r2 = q ? S.run2(q.o, q.q) : null;                 // sawaal ke saath (niyam ka poora faisla)
   const rNow = stage === 1 ? r1 : r2;
@@ -65,7 +72,7 @@ export default function Tukka() {
     if (stage === 1) { c.n1++; if (i === q.a) c.ok1++; } else { c.n2++; if (i === q.a) c.ok2++; }
     saveSt(s); setSt({ ...t });
   };
-  const next = () => { setPick(null); setStage(1); setAt((a) => ({ ...a, [subj]: (a[subj] + 1) % deck.length })); };
+  const next = () => { setPick(null); setStage(1); setAt((a) => ({ ...a, [subj]: a[subj] + 1 })); };
   const pct = (a, b) => (b ? Math.round((a / b) * 100) : 0);
   const c = st[subj] || {};
 
@@ -82,6 +89,14 @@ export default function Tukka() {
         <p className="elm-keys">{S.blurb} CGL mein galat par −0.5, sahi par +2 → khaali chhodne se tukka hamesha behtar.</p>
       </article>
 
+      {subj === "maths" && chaps.length ? (
+        <label className="elm-chap">Chapter
+          <select value={chap} onChange={(e) => { setChap(e.target.value); setPick(null); setStage(1); setAt((a) => ({ ...a, maths: 0 })); }}>
+            <option value="">🔀 Saare chapter</option>
+            {chaps.map((c) => <option key={c.slug} value={c.slug}>{c.label}</option>)}
+          </select>
+        </label>
+      ) : null}
       <div className="elm-stats">
         <span>Sirf options se <b>{pct(c.ok1, c.n1)}%</b> <small>({c.n1 || 0})</small></span>
         <span>{S.q2} dekh ke <b>{pct(c.ok2, c.n2)}%</b> <small>({c.n2 || 0})</small></span>
@@ -93,7 +108,7 @@ export default function Tukka() {
         <article className="elm-card">
           <div className="elm-top">
             <span className="elm-src">{pick != null ? q.src : stage === 1 ? "Sawaal chhupa hai — sirf options" : `Sirf ${S.q2} — hal mat karo, disha dekho`}</span>
-            <span className="elm-pos">{at[subj] + 1} / {deck.length}</span>
+            <span className="elm-pos">{(at[subj] % deck.length) + 1} / {deck.length}</span>
           </div>
           {pick != null ? <p className="elm-q">{q.q}</p>
             : stage === 2 ? <p className="elm-q">{subj === "maths" ? lastLine(q.q) : q.q}</p>
@@ -122,8 +137,14 @@ export default function Tukka() {
               <span className="elm-keys">ya seedha ek option par tap — sirf options se tukka</span>
             </div>
           ) : null}
+          {stage === 2 && disha.length ? (
+            <div className="elm-disha">
+              <b>📐 {chapLabel(q.c)} — basics se disha</b>
+              <ul>{disha.map((t, i) => <li key={i}>{t}</li>)}</ul>
+            </div>
+          ) : null}
           {pick == null && stage === 2 ? (
-            <p className="elm-keys">{subj === "maths" ? "Jo number diya hai, answer usse bada hoga ya chhota? Bas itna soch kar bache hue mein se ek." : "Sawaal ka koi shabd kis option mein dohraya hai? Nahi toh lamba wala."}</p>
+            <p className="elm-keys">{subj === "maths" ? "Disha andhe kaat se UPAR hai: basics kahe answer bada hoga toh kaata hua bada option wapas le lo (tap chalta hai). Hisaab nahi — sirf bada / chhota / beech." : "Sawaal ka koi shabd kis option mein dohraya hai? Nahi toh lamba wala."}</p>
           ) : null}
           {pick != null ? (
             <div className={`elm-res ${pick === q.a ? "ok" : "no"}`}>

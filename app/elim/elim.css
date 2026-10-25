@@ -98,3 +98,8 @@
 .elm-hidden { color: var(--text-3); letter-spacing: .3em; }
 .elm-badge { margin-left: auto; font: 600 .7rem var(--nt-mono, monospace); color: #f0c060; border: 1px solid #f0c060; border-radius: 999px; padding: 1px 8px; }
 .elm-stats small { font-weight: 400; opacity: .7; }
+.elm-chap { display: grid; gap: 4px; margin: 10px 0 0; font: 500 .7rem var(--nt-mono, monospace); text-transform: uppercase; letter-spacing: .08em; color: var(--text-3); max-width: 360px; }
+.elm-chap select { font: 600 .95rem var(--nt-display, inherit); color: var(--text-1); background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 8px 10px; }
+.elm-disha { border-left: 3px solid #7fd19c; background: rgba(127, 209, 156, .07); border-radius: 0 10px 10px 0; padding: 8px 12px; }
+.elm-disha b { font-family: var(--nt-display, inherit); color: #7fd19c; }
+.elm-disha ul { margin: 6px 0 0; padding-left: 1.2em; display: grid; gap: 4px; font-size: .95rem; }
