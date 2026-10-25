@@ -20,7 +20,7 @@ import "./looks/tbook.css";
 // 🎞️ Notes roop — owner ne PYQ notes wali dark theme poori site par maangi.
 // Testbook (data-tb) band, ab <html data-nt="1">; tbook.css rakhi hai.
 import "./looks/notes.css";
-import { notesFontClass } from "@/lib/notesfont";
+import { notesFontClass, NOTES_FONT_HREF } from "@/lib/notesfont";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CurrentAffairsRush from "@/components/CurrentAffairsRush";
@@ -98,6 +98,9 @@ export default function RootLayout({ children }) {
               "document.head.prepend(m)}catch(e){}",
           }}
         />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link rel="stylesheet" href={NOTES_FONT_HREF} />
       </head>
       <body className={`${inter.variable} ${notesFontClass} examskin`}>
         <div className="bg-orbs" aria-hidden="true">

@@ -195,3 +195,6 @@ html[data-nt="1"] .tbt .tbx-self button { background: #20252e; border-color: #3a
 /* Sawaal / option / hal ki scan images — safed kaagaz ulta karke gehra. */
 html[data-nt="1"] :is(.tbx, .tbt, .qcard, .ansp__card) img:not(.no-invert),
 html[data-nt="1"] .tbt-ansimg, html[data-nt="1"] .tbt-ansbig { filter: invert(0.88) hue-rotate(180deg); background: transparent; }
+
+/* Notes theme ke font (lib/notesfont — Google Fonts link app/layout.js mein) */
+.nt-fonts { --nt-display: "Bricolage Grotesque"; --nt-body: "Literata"; --nt-mono: "JetBrains Mono"; }
