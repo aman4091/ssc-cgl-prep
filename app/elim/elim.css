@@ -97,3 +97,4 @@
 .elm-tukka .elm-stats { margin: 12px 0; }
 .elm-hidden { color: var(--text-3); letter-spacing: .3em; }
 .elm-badge { margin-left: auto; font: 600 .7rem var(--nt-mono, monospace); color: #f0c060; border: 1px solid #f0c060; border-radius: 999px; padding: 1px 8px; }
+.elm-stats small { font-weight: 400; opacity: .7; }
