@@ -7,7 +7,7 @@
 // hain — public/sscmaths2025.
 
 import { useEffect, useState } from "react";
-import { tukka, TUKKA_RULES } from "@/lib/elim";
+import { tukka, TUKKA_RULES, optNum } from "@/lib/elim";
 
 const KEY = "elim.v1";
 const loadSt = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch { return {}; } };
@@ -15,6 +15,11 @@ const saveSt = (v) => { try { localStorage.setItem(KEY, JSON.stringify(v)); } ca
 const shuffle = (a) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const L = "ABCD";
 const ruleOf = (k) => TUKKA_RULES.find((r) => r.k === k);
+const avgOf = (opts) => {
+  const n = opts.map(optNum).filter((x) => x != null);
+  const a = n.reduce((s, x) => s + x, 0) / (n.length || 1);
+  return Math.round(a * 100) / 100;
+};
 
 export default function Tukka() {
   const [deck, setDeck] = useState(null);
@@ -68,7 +73,7 @@ export default function Tukka() {
         <ol className="elm-rules">
           {TUKKA_RULES.map((r) => <li key={r.k}><b>{r.t}</b> <span>({r.p})</span></li>)}
         </ol>
-        <p className="elm-keys">2025 ke 4,457 PYQ par naapa: milakar ~30% sahi (andha tukka 25%). Pakka answer nahi — par CGL mein galat par sirf −0.5, sahi par +2 → khaali chhodne se tukka hamesha behtar.</p>
+        <p className="elm-keys">Asli kaam step 1–3 ka hai — bade-chhote kaat kar bache do mein answer 56–61% baar. Step 4 bas jaldi faisla (lagbhag 50-50). 2025 ke 4,457 PYQ par milakar ~30% sahi (andha tukka 25%). Pakka answer nahi — par CGL mein galat par sirf −0.5, sahi par +2 → khaali chhodne se tukka hamesha behtar.</p>
       </article>
 
       <div className="elm-stats">
@@ -97,7 +102,7 @@ export default function Tukka() {
                   <span className="l">{L[i]}</span><span className="t">{o}</span>
                   {pick != null && i === q.r.pick ? <span className="elm-badge">niyam</span> : null}
                 </button>
-                {pick != null && cutBy[i] ? <div className="elm-why">✂️ {cutBy[i] === "mid" ? "Bacha tha, par sabke paas nahi" : ruleOf(cutBy[i])?.t.replace(/ kaato$/, "")}</div> : null}
+                {pick != null && cutBy[i] ? <div className="elm-why">✂️ {cutBy[i] === "mid" ? "Bacha tha, par average se door" : ruleOf(cutBy[i])?.t.replace(/ kaato$/, "")}</div> : null}
               </li>
             );
           })}
@@ -115,7 +120,7 @@ export default function Tukka() {
               {q.r.steps.map((s, i) => (
                 <li key={i}>
                   <b>Step {i + 1}</b>
-                  <p>{s.k === "mid" ? `Bache do (${[q.r.pick, ...s.cut].sort().map((x) => L[x]).join(", ")}) mein jo baaki teeno ke sabse paas → ${L[q.r.pick]}` : `${ruleOf(s.k)?.t} → ${s.cut.map((x) => L[x]).join(", ")}`}</p>
+                  <p>{s.k === "mid" ? `Bache do (${[q.r.pick, ...s.cut].sort().map((x) => L[x]).join(", ")}) — chaaro ka average ≈ ${avgOf(q.options)} → uske paas ${L[q.r.pick]}` : `${ruleOf(s.k)?.t} → ${s.cut.map((x) => L[x]).join(", ")}`}</p>
                 </li>
               ))}
             </ol>
