@@ -119,7 +119,8 @@ def main():
       for p in parts: p["m"] = round(p["m"])
       out.append({"id": f"{sk}{bi + 1}", "tier": b[0]["tier"], "min": round(sum(x["m"] for x in b)), "pyq": sum(x["p"] for x in b), "parts": parts})
     res["subjects"].append({"key": sk, "name": sname, "batches": out})
-  missing = [(b["key"], t["id"]) for b in IDX["books"] for t in b["topics"] if (b["key"], t["id"]) not in seen]
+  # 🖼️ Saare Diagrams (build-diagrams.py) = baaki books ke hi chitra, alag batch nahi.
+  missing = [(b["key"], t["id"]) for b in IDX["books"] if b["key"] != "diagrams" for t in b["topics"] if (b["key"], t["id"]) not in seen]
   if missing: sys.exit(f"Ye topic kisi subject mein nahi: {missing}")
   (ROOT / "revision.json").write_text(json.dumps(res, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
   for s in res["subjects"]:
