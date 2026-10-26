@@ -13,7 +13,7 @@
 // Decks: public/elimbank/tukka-<subject>.json (slim). Hisaab elim.v1 (device).
 
 import { useEffect, useState } from "react";
-import { tukka, tukkaGS, tukkaEN, TUKKA_RULES, GS_RULES, EN_RULES, CHAPTER_TIPS, optNum, lastLine } from "@/lib/elim";
+import { tukka, tukkaGS, tukkaEN, TUKKA_RULES, GS_RULES, EN_RULES, CHAPTER_TIPS, optNum } from "@/lib/elim";
 
 const KEY = "elim.v1";
 const loadSt = () => { try { return JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch { return {}; } };
@@ -46,7 +46,10 @@ export default function Tukka() {
   useEffect(() => {
     if (decks[subj]) return;
     fetch(`/elimbank/${S.file}.json`).then((r) => r.json()).then((d) => {
-      const cgl = shuffle(d.filter((q) => /CGL/.test(q.src))), rest = shuffle(d.filter((q) => !/CGL/.test(q.src)));
+      // Maths: sirf wahi sawaal jahan niyam lag sake (chaaro options number) —
+      // warna "Niyam ne chuna )" jaisa khaali aata tha (owner).
+      const ok = subj === "maths" ? d.filter((q) => tukka(q.o).pick != null) : d;
+      const cgl = shuffle(ok.filter((q) => /CGL/.test(q.src))), rest = shuffle(ok.filter((q) => !/CGL/.test(q.src)));
       setDecks((x) => ({ ...x, [subj]: [...cgl, ...rest] }));
     }).catch(() => setDecks((x) => ({ ...x, [subj]: [] })));
   }, [subj]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -110,8 +113,8 @@ export default function Tukka() {
         <p className="elm-sets">📋 Pichhle set (50 mein se): {c.sets.slice(-10).map((x, i) => <b key={i}>{x.marks}</b>)}</p>
       ) : null}
       <div className="elm-stats">
-        <span>Sirf options se <b>{pct(c.ok1, c.n1)}%</b> <small>({c.n1 || 0})</small></span>
-        <span>{S.q2} dekh ke <b>{pct(c.ok2, c.n2)}%</b> <small>({c.n2 || 0})</small></span>
+        <span>Bina madad <b>{pct(c.ok1, c.n1)}%</b> <small>({c.n1 || 0})</small></span>
+        <span>Niyam/disha dekh ke <b>{pct(c.ok2, c.n2)}%</b> <small>({c.n2 || 0})</small></span>
         <span>Niyam <b>{pct(c.rok, c.n)}%</b></span>
         <span>Andha <b>25%</b></span>
       </div>
@@ -119,14 +122,12 @@ export default function Tukka() {
       {!deck ? <p className="hint">Sawaal aa rahe hain…</p> : !q ? <p className="hint">Koi sawaal nahi mila.</p> : (
         <article className="elm-card">
           <div className="elm-top">
-            <span className="elm-src">{pick != null ? q.src : stage === 1 ? "Sawaal chhupa hai — sirf options" : `Sirf ${S.q2} — hal mat karo, disha dekho`}</span>
+            <span className="elm-src">{pick != null ? q.src : stage === 1 ? "Hal mat karo — options dekh kar tukka" : "Niyam ke kaat + disha — ab chuno"}</span>
             <span className="elm-marks" title="Is set ke marks (+2 sahi, −0.5 galat)">
               <b>{marksOf(c.set?.ok || 0, (c.set?.n || 0) - (c.set?.ok || 0))}</b><small>/50 · {c.set?.n || 0}/25</small>
             </span>
           </div>
-          {pick != null ? <p className="elm-q">{q.q}</p>
-            : stage === 2 ? <p className="elm-q">{subj === "maths" ? lastLine(q.q) : q.q}</p>
-              : <p className="elm-q elm-hidden">? ? ?</p>}
+          <p className="elm-q">{q.q}</p>
           <ol className="elm-opts">
             {q.o.map((o, i) => {
               const cl = ["elm-opt"];
@@ -147,8 +148,8 @@ export default function Tukka() {
           </ol>
           {pick == null && stage === 1 ? (
             <div className="elm-acts">
-              <button type="button" className="btn elm-next" onClick={() => setStage(2)}>👁 Kaat liya → {S.q2} dikhao</button>
-              <span className="elm-keys">ya seedha ek option par tap — sirf options se tukka</span>
+              <button type="button" className="btn elm-next" onClick={() => setStage(2)}>👁 Niyam ke kaat{subj === "maths" ? " + chapter disha" : ""} dikhao</button>
+              <span className="elm-keys">ya seedha ek option par tap — bina madad ke tukka</span>
             </div>
           ) : null}
           {stage === 2 && disha.length ? (
@@ -164,8 +165,10 @@ export default function Tukka() {
             <div className={`elm-res ${pick === q.a ? "ok" : "no"}`}>
               <h3>{pick === q.a ? "✓ Tukka laga" : `✗ Sahi tha ${L[q.a]}) ${q.o[q.a]}`}</h3>
               <p className="elm-cutres">
-                Niyam ne chuna <b>{L[r2.pick]}) {q.o[r2.pick]}</b> — {r2.pick === q.a ? <b className="good">sahi nikla ✓</b> : <b className="bad">is baar chuka</b>}
-                {pick === r2.pick ? " · tumne bhi wahi." : " · tumne alag chuna."}
+                {r2.pick == null ? "Yahan niyam nahi lagta (options number nahi) — andha tukka tha." : (<>
+                  Niyam ne chuna <b>{L[r2.pick]}) {q.o[r2.pick]}</b> — {r2.pick === q.a ? <b className="good">sahi nikla ✓</b> : <b className="bad">is baar chuka</b>}
+                  {pick === r2.pick ? " · tumne bhi wahi." : " · tumne alag chuna."}
+                </>)}
               </p>
               <ol className="elm-steps">
                 {r2.steps.map((s, i) => (
