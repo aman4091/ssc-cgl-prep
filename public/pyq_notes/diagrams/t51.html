@@ -1,0 +1,356 @@
+<section class="chap" id="m3a-basics"><div class="eyebrow">Maths · 256 questions (bank ka pehla hissa)</div><h2>Mensuration 3D: thos cheezein, unka volume aur surface, aur 36-second wale tareeke</h2><h3>Pehle ek chhoti si kahani: cheeni ke cube</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Four round solids with labels: cylinder with radius r and height h, cone with radius r, height h and slant height l, sphere with radius r, hemisphere with radius r. Formulas for volume and surface area are written under each.">
+      <g text-anchor="middle" class="lbl"><text x="90" y="26">Cylinder</text><text x="265" y="26">Cone</text><text x="440" y="26">Sphere</text><text x="610" y="26">Hemisphere</text></g>
+      <!-- cylinder -->
+      <path d="M35,60 L35,190 A55,14 0 0 0 145,190 L145,60 Z" class="chf"/>
+      <path d="M35,60 L35,190 A55,14 0 0 0 145,190 L145,60" class="chs"/>
+      <path d="M35,190 A55,14 0 0 1 145,190" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <ellipse cx="90" cy="60" rx="55" ry="14" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <line x1="90" y1="60" x2="145" y2="60" class="ln"/>
+      <circle cx="90" cy="60" r="2.5" style="fill:var(--ch)"/>
+      <text x="117" y="54" text-anchor="middle" class="lbl">r</text>
+      <text x="156" y="130" class="lbl">h</text>
+      <!-- cone -->
+      <path d="M205,190 L265,50 L325,190 A60,15 0 0 1 205,190 Z" class="chf"/>
+      <path d="M205,190 L265,50 L325,190 A60,15 0 0 1 205,190" class="chs" fill="none"/>
+      <path d="M205,190 A60,15 0 0 1 325,190" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <line x1="265" y1="50" x2="265" y2="190" class="ln" stroke-dasharray="4 3"/>
+      <line x1="265" y1="190" x2="325" y2="190" class="ln"/>
+      <path d="M265,180 L275,180 L275,190" class="ln" fill="none"/>
+      <text x="258" y="130" text-anchor="end" class="lbl">h</text>
+      <text x="295" y="206" text-anchor="middle" class="lbl">r</text>
+      <text x="304" y="112" class="lbl" style="fill:var(--ch)">l</text>
+      <!-- sphere -->
+      <circle cx="440" cy="120" r="68" class="chf"/><circle cx="440" cy="120" r="68" class="chs"/>
+      <path d="M372,120 A68,17 0 0 1 508,120" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <path d="M372,120 A68,17 0 0 0 508,120" class="ln" fill="none"/>
+      <line x1="440" y1="120" x2="508" y2="120" class="ln"/>
+      <circle cx="440" cy="120" r="2.5" style="fill:var(--ch)"/>
+      <text x="474" y="113" text-anchor="middle" class="lbl">r</text>
+      <!-- hemisphere -->
+      <path d="M542,175 A68,68 0 0 1 678,175 A68,17 0 0 1 542,175 Z" class="chf"/>
+      <path d="M542,175 A68,68 0 0 1 678,175 A68,17 0 0 1 542,175" class="chs" fill="none"/>
+      <path d="M542,175 A68,17 0 0 1 678,175" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <line x1="610" y1="175" x2="678" y2="175" class="ln"/>
+      <circle cx="610" cy="175" r="2.5" style="fill:var(--ch)"/>
+      <text x="644" y="168" text-anchor="middle" class="lbl">r</text>
+      <!-- formulas -->
+      <g text-anchor="middle">
+        <text x="90" y="230" class="lbl">V = πr²h</text>
+        <text x="90" y="248" class="sm">CSA = 2πrh</text>
+        <text x="90" y="264" class="sm">TSA = 2πr(r + h)</text>
+        <text x="265" y="230" class="lbl">V = ⅓πr²h</text>
+        <text x="265" y="248" class="sm">CSA = πrl</text>
+        <text x="265" y="264" class="sm">TSA = πr(r + l)</text>
+        <text x="265" y="280" class="sm" style="fill:var(--ch)">l² = r² + h²</text>
+        <text x="440" y="230" class="lbl">V = (4/3)πr³</text>
+        <text x="440" y="248" class="sm">SA = 4πr²</text>
+        <text x="610" y="230" class="lbl">V = (2/3)πr³</text>
+        <text x="610" y="248" class="sm">CSA = 2πr²</text>
+        <text x="610" y="264" class="sm">TSA = 3πr²</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Gol solids. Dashed line = peeche chhupa hissa. Cone mein h, r aur l ek right triangle banate hain, isliye l² = r² + h².</figcaption>
+  </figure><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 320" role="img" aria-label="Three flat-faced solids. A cuboid with length l, breadth b, height h and space diagonal d. A triangular prism with base area B and length h. A square pyramid with height h, base side a and slant height l, where h, half of a and l form a right triangle.">
+      <g text-anchor="middle" class="lbl"><text x="130" y="40">Cuboid</text><text x="350" y="40">Prism</text><text x="565" y="40">Pyramid</text></g>
+      <!-- cuboid -->
+      <polygon points="30,110 180,110 230,75 80,75" class="chf"/>
+      <polygon points="180,110 230,75 230,175 180,210" class="chf"/>
+      <rect x="30" y="110" width="150" height="100" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <polygon points="30,110 180,110 230,75 80,75" class="chs" fill="none"/>
+      <polygon points="180,110 230,75 230,175 180,210" class="chs" fill="none"/>
+      <g class="ln" stroke-dasharray="4 3"><line x1="30" y1="210" x2="80" y2="175"/><line x1="80" y1="175" x2="230" y2="175"/><line x1="80" y1="175" x2="80" y2="75"/></g>
+      <line x1="30" y1="210" x2="230" y2="75" stroke="var(--ch)" stroke-width="2" stroke-dasharray="6 3"/>
+      <text x="105" y="228" text-anchor="middle" class="lbl">l</text>
+      <text x="20" y="165" text-anchor="middle" class="lbl">h</text>
+      <text x="216" y="206" class="lbl">b</text>
+      <text x="120" y="160" class="lbl" style="fill:var(--ch)">d</text>
+      <!-- prism -->
+      <g class="ln" stroke-dasharray="4 3"><line x1="270" y1="210" x2="320" y2="175"/><line x1="320" y1="175" x2="430" y2="175"/><line x1="320" y1="175" x2="360" y2="95"/></g>
+      <polygon points="310,130 380,210 430,175 360,95" class="chf"/>
+      <polygon points="310,130 380,210 430,175 360,95" class="chs" fill="none"/>
+      <polygon points="270,210 380,210 310,130" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="320" y="196" text-anchor="middle" class="sm">base B</text>
+      <text x="414" y="210" class="lbl">h</text>
+      <!-- pyramid -->
+      <polygon points="480,210 600,210 650,175 565,70" class="chf"/>
+      <g class="ln" stroke-dasharray="4 3"><line x1="565" y1="70" x2="530" y2="175"/><line x1="480" y1="210" x2="530" y2="175"/><line x1="530" y1="175" x2="650" y2="175"/></g>
+      <polygon points="480,210 600,210 650,175 565,70" class="chs" fill="none"/>
+      <line x1="600" y1="210" x2="565" y2="70" class="chs"/>
+      <line x1="565" y1="70" x2="565" y2="192.5" class="ln" stroke-dasharray="4 3"/>
+      <line x1="565" y1="192.5" x2="540" y2="210" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <line x1="565" y1="70" x2="540" y2="210" stroke="var(--ch)" stroke-width="2.5"/>
+      <text x="571" y="150" class="lbl">h</text>
+      <text x="536" y="140" text-anchor="end" class="lbl" style="fill:var(--ch)">l</text>
+      <text x="540" y="226" text-anchor="middle" class="lbl">a</text>
+      <!-- formulas -->
+      <g text-anchor="middle">
+        <text x="130" y="252" class="lbl">V = l × b × h</text>
+        <text x="130" y="270" class="sm">TSA = 2(lb + bh + hl)</text>
+        <text x="130" y="286" class="sm" style="fill:var(--ch)">d = √(l² + b² + h²)</text>
+        <text x="130" y="302" class="sm">Cube: a³ · 6a² · d = a√3</text>
+        <text x="350" y="252" class="lbl">V = B × h</text>
+        <text x="350" y="270" class="sm">LSA = base perimeter × h</text>
+        <text x="350" y="286" class="sm">TSA = LSA + 2B</text>
+        <text x="565" y="252" class="lbl">V = ⅓ × B × h</text>
+        <text x="565" y="270" class="sm">LSA = ½ × perimeter × l</text>
+        <text x="565" y="286" class="sm" style="fill:var(--ch)">l² = h² + (a/2)²</text>
+        <text x="565" y="302" class="sm">TSA = LSA + B</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Flat deewaron wale solids. Pyramid mein gehri line = slant height (l): chotti se base ki side ke beech tak. h, a/2 aur l ka right triangle hamesha yaad rakho.</figcaption>
+  </figure><h3>Speed method 1 · 3 : 1 : 2 ka parivaar (cylinder, cone, sphere)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Cylinder, cone and sphere of the same radius r and height 2r. Their volumes are 2 pi r cubed, two-thirds pi r cubed and four-thirds pi r cubed, in the ratio 3 to 1 to 2. Bars drawn to scale: cylinder 3 parts, sphere 2 parts, cone 1 part, hemisphere 1 part.">
+      <!-- cylinder -->
+      <path d="M30,50 L30,150 A50,12 0 0 0 130,150 L130,50 Z" class="chf"/>
+      <path d="M30,50 L30,150 A50,12 0 0 0 130,150 L130,50" class="chs" fill="none"/>
+      <path d="M30,150 A50,12 0 0 1 130,150" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <ellipse cx="80" cy="50" rx="50" ry="12" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <!-- cone -->
+      <path d="M160,150 L210,50 L260,150 A50,12 0 0 1 160,150 Z" class="chf"/>
+      <path d="M160,150 L210,50 L260,150 A50,12 0 0 1 160,150" class="chs" fill="none"/>
+      <path d="M160,150 A50,12 0 0 1 260,150" class="ln" stroke-dasharray="4 3" fill="none"/>
+      <!-- sphere -->
+      <circle cx="340" cy="100" r="50" class="chf"/><circle cx="340" cy="100" r="50" class="chs"/>
+      <path d="M290,100 A50,12 0 0 0 390,100" class="ln" fill="none"/>
+      <g text-anchor="middle">
+        <text x="80" y="185" class="lbl">Cylinder</text><text x="80" y="203" class="sm">πr² × 2r = 2πr³</text>
+        <text x="210" y="185" class="lbl">Cone</text><text x="210" y="203" class="sm">⅓πr² × 2r</text>
+        <text x="340" y="185" class="lbl">Sphere</text><text x="340" y="203" class="sm">(4/3)πr³</text>
+      </g>
+      <text x="80" y="230" text-anchor="middle" class="lbl" style="fill:var(--ch)">3 hisse</text>
+      <text x="210" y="230" text-anchor="middle" class="lbl" style="fill:var(--ch)">1 hissa</text>
+      <text x="340" y="230" text-anchor="middle" class="lbl" style="fill:var(--ch)">2 hisse</text>
+      <!-- bars -->
+      <line x1="460" y1="30" x2="460" y2="210" class="ln"/>
+      <text x="455" y="56" text-anchor="end" class="sm">cyl</text>
+      <rect x="460" y="40" width="210" height="26" class="chf"/><rect x="460" y="40" width="210" height="26" class="chs"/>
+      <text x="455" y="101" text-anchor="end" class="sm">sphere</text>
+      <rect x="460" y="85" width="140" height="26" class="chf"/><rect x="460" y="85" width="140" height="26" class="chs"/>
+      <text x="455" y="146" text-anchor="end" class="sm">cone</text>
+      <rect x="460" y="130" width="70" height="26" class="chf"/><rect x="460" y="130" width="70" height="26" class="chs"/>
+      <text x="455" y="191" text-anchor="end" class="sm">hemi</text>
+      <rect x="460" y="175" width="70" height="26" style="fill:var(--ch)"/>
+      <g class="lbl"><text x="678" y="58">3</text><text x="608" y="103">2</text><text x="538" y="148">1</text><text x="538" y="193">1</text></g>
+      <text x="350" y="262" text-anchor="middle" class="sm">Sab ka radius r, cylinder aur cone ki oonchai 2r · bars scale par · hemisphere = cone (h = 2r)</text>
+    </svg>
+    </div>
+    <figcaption>Archimedes wala rishta. Ek baar ye tasveer dimaag mein baith gayi toh "cylinder mein sphere, khaali jagah kitni" jaise sawaal 5 second ke hain: khaali = 3 − 2 = 1 hissa = sphere ka aadha.</figcaption>
+  </figure><h3>Speed method 2 · Lambai k guna → area k² guna → volume k³ guna</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="A unit cube next to a cube of side 2 made of 8 unit cubes. Side doubles, each face has 4 squares, volume is 8 cubes. Table on the right: side times 1.1 gives area 1.21 and volume 1.331; 1.2 gives 1.44 and 1.728; 1.3 gives 1.69 and 2.197; 2 gives 4 and 8; one half gives one quarter and one eighth.">
+      <!-- small cube -->
+      <polygon points="60,140 100,140 120,125 80,125" class="chf"/><polygon points="100,140 120,125 120,165 100,180" class="chf"/>
+      <rect x="60" y="140" width="40" height="40" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <polygon points="60,140 100,140 120,125 80,125" class="chs" fill="none"/><polygon points="100,140 120,125 120,165 100,180" class="chs" fill="none"/>
+      <text x="80" y="200" text-anchor="middle" class="sm">side 1</text>
+      <text x="80" y="216" text-anchor="middle" class="sm">V = 1</text>
+      <!-- big cube -->
+      <polygon points="180,100 260,100 300,70 220,70" class="chf"/><polygon points="260,100 300,70 300,150 260,180" class="chf"/>
+      <rect x="180" y="100" width="80" height="80" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <polygon points="180,100 260,100 300,70 220,70" class="chs" fill="none"/><polygon points="260,100 300,70 300,150 260,180" class="chs" fill="none"/>
+      <g class="ln"><line x1="220" y1="100" x2="220" y2="180"/><line x1="180" y1="140" x2="260" y2="140"/>
+        <line x1="220" y1="100" x2="260" y2="70"/><line x1="200" y1="85" x2="280" y2="85"/>
+        <line x1="260" y1="140" x2="300" y2="110"/><line x1="280" y1="85" x2="280" y2="165"/></g>
+      <text x="220" y="200" text-anchor="middle" class="sm">side 2 · face = 4 squares</text>
+      <text x="220" y="216" text-anchor="middle" class="lbl" style="fill:var(--ch)">V = 8 cubes</text>
+      <!-- table -->
+      <g class="lbl"><text x="370" y="30">side ×</text><text x="470" y="30">area ×</text><text x="580" y="30">volume ×</text></g>
+      <line x1="365" y1="38" x2="690" y2="38" class="ln"/>
+      <g class="sm">
+        <text x="370" y="60">1.1 (+10%)</text><text x="470" y="60">1.21 (+21%)</text><text x="580" y="60">1.331 (+33.1%)</text>
+        <text x="370" y="85">1.2 (+20%)</text><text x="470" y="85">1.44 (+44%)</text><text x="580" y="85">1.728 (+72.8%)</text>
+        <text x="370" y="110">1.3 (+30%)</text><text x="470" y="110">1.69 (+69%)</text><text x="580" y="110">2.197 (+119.7%)</text>
+        <text x="370" y="135">2</text><text x="470" y="135">4 (+300%)</text><text x="580" y="135">8 (+700%)</text>
+        <text x="370" y="160">½</text><text x="470" y="160">¼ (−75%)</text><text x="580" y="160">⅛ (−87.5%)</text>
+        <text x="370" y="185">0.8 (−20%)</text><text x="470" y="185">0.64 (−36%)</text><text x="580" y="185">0.512 (−48.8%)</text>
+      </g>
+      <text x="530" y="214" text-anchor="middle" class="sm">Ye niyam har solid par chalta hai: sphere, cone, cube, sab</text>
+    </svg>
+    </div>
+    <figcaption>Side 2 guna: face par 4, andar 8. Daayen wali table ratta maar lo. Ulta bhi padho: area +44% → side +20% → volume +72.8%.</figcaption>
+  </figure><h3>Speed method 4 · Paani ka uthna = solid ka volume ÷ bartan ka base</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Side view of a tank. Water was at the dashed level. A ball is dropped and sinks. The water rises by delta h. The thin slab of water between the old and new level has exactly the volume of the ball.">
+      <rect x="60" y="120" width="240" height="100" class="chf"/>
+      <rect x="60" y="120" width="240" height="30" style="fill:var(--ch);opacity:.45"/>
+      <path d="M60,30 L60,220 L300,220 L300,30" class="chs" fill="none"/>
+      <line x1="60" y1="150" x2="300" y2="150" class="ln" stroke-dasharray="5 4"/>
+      <circle cx="180" cy="190" r="28" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="180" y="195" text-anchor="middle" class="sm">ball</text>
+      <path d="M312,120 L320,120 L320,150 L312,150" class="ln" fill="none"/>
+      <text x="326" y="140" class="lbl" style="fill:var(--ch)">Δh</text>
+      <text x="40" y="154" text-anchor="end" class="sm">pehle</text>
+      <text x="40" y="124" text-anchor="end" class="sm">baad</text>
+      <text x="180" y="240" text-anchor="middle" class="sm">base area = A (cylinder mein πR²)</text>
+      <g class="lbl"><text x="380" y="60">Ball ka volume = gehri patti</text></g>
+      <g class="sm">
+        <text x="380" y="85">patti = base area × Δh</text>
+        <text x="380" y="110">toh Δh = V(solid) ÷ A</text>
+        <text x="380" y="140">Cylinder: Δh = V ÷ πR²  (π kat jaata hai)</text>
+        <text x="380" y="165">Ulta: A = V ÷ Δh  → bartan ka radius</text>
+        <text x="380" y="190">Bartan pehle se bhara ho: bahar gira paani = V(solid)</text>
+        <text x="380" y="215">Bartan ki oonchai aksar sirf bhatkaane ke liye hoti hai</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Paani ki jo nayi patti bani, wahi ball ki jagah hai. Isliye "kitna paani hata" = ball ka volume, bartan kuch bhi ho.</figcaption>
+  </figure><h3>Speed method 6 · Cone ko kaata: 1 : 8 : 27 ki seedhi</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Side view of a cone of height 3 units cut by two planes at heights 1 and 2 from the vertex. The three pieces have volumes 1, 7 and 19 parts. Cumulative cones from the top are 1, 8 and 27 parts, which are 1 cubed, 2 cubed and 3 cubed.">
+      <polygon points="180,30 140,110 220,110" class="chf"/>
+      <polygon points="140,110 220,110 260,190 100,190" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+      <polygon points="100,190 260,190 300,270 60,270" class="chf"/>
+      <polygon points="180,30 300,270 60,270" class="chs" fill="none"/>
+      <line x1="140" y1="110" x2="220" y2="110" class="chs"/>
+      <line x1="100" y1="190" x2="260" y2="190" class="chs"/>
+      <g text-anchor="middle" class="lbl"><text x="180" y="95">1</text><text x="180" y="160">7</text><text x="180" y="240">19</text></g>
+      <g class="ln"><line x1="30" y1="30" x2="30" y2="270"/><line x1="25" y1="30" x2="35" y2="30"/><line x1="25" y1="110" x2="35" y2="110"/><line x1="25" y1="190" x2="35" y2="190"/><line x1="25" y1="270" x2="35" y2="270"/></g>
+      <g class="sm" text-anchor="end"><text x="22" y="74">h</text><text x="22" y="154">h</text><text x="22" y="234">h</text></g>
+      <g class="sm"><text x="232" y="114">upar se 1/3</text><text x="272" y="194">upar se 2/3</text></g>
+      <text x="420" y="40" class="lbl">Upar se ginti (kul cone)</text>
+      <g class="sm">
+        <text x="420" y="64">1/3 tak: 1 = 1³</text>
+        <text x="420" y="84">2/3 tak: 1 + 7 = 8 = 2³</text>
+        <text x="420" y="104">poora: 1 + 7 + 19 = 27 = 3³</text>
+      </g>
+      <text x="420" y="140" class="lbl">Yaad rakho</text>
+      <g class="sm">
+        <text x="420" y="164">beech se kata (½): cone : frustum = 1 : 7</text>
+        <text x="420" y="184">upar se ⅓ par kata: 1 : 26</text>
+        <text x="420" y="204">do cut (⅓, ⅔): 1 : 7 : 19</text>
+        <text x="420" y="224">upar ka hissa 1/8 volume → height ½</text>
+        <text x="420" y="244">radius bhi usi ratio mein kat-ta hai</text>
+      </g>
+      <text x="420" y="272" class="lbl" style="fill:var(--ch)">height ratio k → volume k³</text>
+    </svg>
+    </div>
+    <figcaption>Cone ko barabar oonchai ke 3 hisson mein kaato: upar se 1, 7, 19. Ye seedhe cubes ke farq hain: 8 − 1 = 7, 27 − 8 = 19.</figcaption>
+  </figure><h3>Kaunsa method kab? (ek nazar mein)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing a method. Check in order: melted and recast, water level rise, percentage change, cone cut parallel to base, one solid inside another, slant height or diagonal needed, prism or pyramid. Each yes leads to its method.">
+      <defs>
+        <marker id="m3a-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya pucha hai?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#m3a-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">"Melted and recast" / kitne bane?</text>
+        <text x="180" y="141">Kuch dooba, paani utha / gira?</text>
+        <text x="180" y="197">r, h, side % mein badla?</text>
+        <text x="180" y="253">Cone base ke parallel kata?</text>
+        <text x="180" y="309">Ek solid doosre ke andar fit?</text>
+        <text x="180" y="365">Slant height / diagonal chahiye?</text>
+        <text x="180" y="421">Prism ya pyramid?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#m3a-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#m3a-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#m3a-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Volume barabar (method 3)</text>
+        <text x="410" y="132">Δh = V ÷ base (method 4)</text>
+        <text x="410" y="188">k, k², k³ (method 2)</text>
+        <text x="410" y="244">1 : 8 : 27 seedhi (method 6)</text>
+        <text x="410" y="300">Kaun kisko chhoota? (method 8)</text>
+        <text x="410" y="356">Triplet (method 5)</text>
+        <text x="410" y="412">B × h, ⅓Bh, P × h (method 7)</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">π, 4/3 kaato · n = (R/r)³ · hemi ×2</text>
+        <text x="410" y="149">bhare bartan se gira = V(solid)</text>
+        <text x="410" y="205">r² × h mein a + b + ab/100</text>
+        <text x="410" y="261">chotti se naapo · ½ → 1 : 7</text>
+        <text x="410" y="317">r = a/2 · a√3 = 2R · sabse chhoti side</text>
+        <text x="410" y="373">3-4-5 · 5-12-13 · 7-24-25 · 8-15-17</text>
+        <text x="410" y="429">AP tah: ginti × (pehli + aakhri) ÷ 2</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Upar se neeche chalo. Kuch na mile toh seedha formula sheet: "equal volume" wale sawaal method 1 (3 : 1 : 2) se.</figcaption>
+  </figure></section>
+<section class="chap" id="m3a-types2"><div class="eyebrow">Maths · PYQ types 7–14</div><h2>Mensuration 3D: pighlana, paani uthna, andar fit, frustum, cuboid, prism, pyramid</h2><h3>Type 9 · Ek solid doosre ke andar (inscribed) (12 Qs)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Four cross-sections. Sphere in cube: circle inside a square, r equals a over 2. Cube in sphere: plane through the space diagonal gives a rectangle a by a root 2 with diagonal a root 3 equal to 2R. Cylinder in sphere: rectangle 2r by h inside a circle, h squared plus 2r squared equals D squared. Sphere in cone: incircle of the triangle with base 14 and slant sides 25, radius 5.25.">
+      <!-- panel 1 -->
+      <rect x="27" y="45" width="120" height="120" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <circle cx="87" cy="105" r="60" class="chf"/><circle cx="87" cy="105" r="60" class="chs"/>
+      <line x1="87" y1="105" x2="147" y2="105" class="ln"/>
+      <text x="117" y="99" text-anchor="middle" class="lbl">r</text>
+      <text x="87" y="182" text-anchor="middle" class="sm">side a</text>
+      <text x="87" y="26" text-anchor="middle" class="lbl">Sphere cube mein</text>
+      <text x="87" y="205" text-anchor="middle" class="lbl" style="fill:var(--ch)">r = a/2</text>
+      <!-- panel 2 -->
+      <circle cx="262" cy="105" r="65" class="chf"/><circle cx="262" cy="105" r="65" class="chs"/>
+      <rect x="224.5" y="52" width="75" height="106" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <line x1="224.5" y1="158" x2="299.5" y2="52" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 3"/>
+      <text x="262" y="174" text-anchor="middle" class="sm">a</text>
+      <text x="218" y="109" text-anchor="end" class="sm">a√2</text>
+      <text x="262" y="26" text-anchor="middle" class="lbl">Cube sphere mein</text>
+      <text x="262" y="205" text-anchor="middle" class="lbl" style="fill:var(--ch)">a√3 = 2R</text>
+      <text x="262" y="222" text-anchor="middle" class="sm">(diagonal wala kata hua hissa)</text>
+      <!-- panel 3 -->
+      <circle cx="437" cy="105" r="65" class="chf"/><circle cx="437" cy="105" r="65" class="chs"/>
+      <rect x="398" y="53" width="78" height="104" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <line x1="398" y1="157" x2="476" y2="53" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 3"/>
+      <text x="437" y="172" text-anchor="middle" class="sm">2r</text>
+      <text x="482" y="109" class="sm">h</text>
+      <text x="430" y="100" text-anchor="end" class="lbl" style="fill:var(--ch)">D</text>
+      <text x="437" y="26" text-anchor="middle" class="lbl">Cylinder sphere mein</text>
+      <text x="437" y="205" text-anchor="middle" class="lbl" style="fill:var(--ch)">h² + (2r)² = D²</text>
+      <!-- panel 4: cone 14 base, 24 high, scale 5 -->
+      <polygon points="612,45 577,165 647,165" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <circle cx="612" cy="138.75" r="26.25" class="chf"/><circle cx="612" cy="138.75" r="26.25" class="chs"/>
+      <line x1="612" y1="45" x2="612" y2="165" class="ln" stroke-dasharray="3 3"/>
+      <text x="612" y="180" text-anchor="middle" class="sm">14</text>
+      <text x="657" y="110" class="sm">25</text>
+      <text x="585" y="100" text-anchor="end" class="sm">h 24</text>
+      <text x="612" y="26" text-anchor="middle" class="lbl">Sphere cone mein</text>
+      <text x="612" y="205" text-anchor="middle" class="lbl" style="fill:var(--ch)">r = area ÷ s</text>
+      <text x="612" y="222" text-anchor="middle" class="sm">168 ÷ 32 = 5.25</text>
+    </svg>
+    </div>
+    <figcaption>Har solid ko beech se kaato. Chaaron tasveerein naap ke hisaab se bani hain (panel 4: cone r 7, h 24, scale par).</figcaption>
+  </figure></section>
+<p class="dg-src"><a href="/pyq-notes?b=maths&amp;t=t19">🧮 Poore notes mein ye topic kholo ›</a></p>

@@ -1,0 +1,788 @@
+<section class="chap" id="msi-basics"><div class="eyebrow">Maths · 181 questions</div><h2>Simple Interest: shuru se, aur 36-second wale tareeke</h2><h3>Pehle ek chhoti si kahani: ₹1000 ka udhaar</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Rs 1000 at 10 percent simple interest for 5 years. Each year adds the same block of 100. Amounts 1100, 1200, 1300, 1400, 1500 lie on a straight line.">
+      <rect x="80" y="10" width="14" height="12" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <text x="100" y="20" class="sm">mool ₹1000 (P)</text>
+      <rect x="250" y="10" width="14" height="12" class="chf"/><rect x="250" y="10" width="14" height="12" class="chs" style="stroke-width:1"/>
+      <text x="270" y="20" class="sm">har saal ka interest = 100 (hamesha same)</text>
+      <line x1="60" y1="260" x2="640" y2="260" class="ln"/>
+      <!-- base P bars: 1000 = 150px -->
+      <g>
+        <rect x="80" y="110" width="70" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="190" y="110" width="70" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="300" y="110" width="70" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="410" y="110" width="70" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="520" y="110" width="70" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      </g>
+      <g class="sm" text-anchor="middle"><text x="115" y="190">1000</text><text x="225" y="190">1000</text><text x="335" y="190">1000</text><text x="445" y="190">1000</text><text x="555" y="190">1000</text></g>
+      <!-- interest blocks: 100 = 15px -->
+      <g>
+        <rect x="80" y="95" width="70" height="15" class="chf"/><rect x="80" y="95" width="70" height="15" class="chs"/>
+        <rect x="190" y="95" width="70" height="15" class="chf"/><rect x="190" y="95" width="70" height="15" class="chs"/>
+        <rect x="190" y="80" width="70" height="15" class="chf"/><rect x="190" y="80" width="70" height="15" class="chs"/>
+        <rect x="300" y="95" width="70" height="15" class="chf"/><rect x="300" y="95" width="70" height="15" class="chs"/>
+        <rect x="300" y="80" width="70" height="15" class="chf"/><rect x="300" y="80" width="70" height="15" class="chs"/>
+        <rect x="300" y="65" width="70" height="15" class="chf"/><rect x="300" y="65" width="70" height="15" class="chs"/>
+        <rect x="410" y="95" width="70" height="15" class="chf"/><rect x="410" y="95" width="70" height="15" class="chs"/>
+        <rect x="410" y="80" width="70" height="15" class="chf"/><rect x="410" y="80" width="70" height="15" class="chs"/>
+        <rect x="410" y="65" width="70" height="15" class="chf"/><rect x="410" y="65" width="70" height="15" class="chs"/>
+        <rect x="410" y="50" width="70" height="15" class="chf"/><rect x="410" y="50" width="70" height="15" class="chs"/>
+        <rect x="520" y="95" width="70" height="15" class="chf"/><rect x="520" y="95" width="70" height="15" class="chs"/>
+        <rect x="520" y="80" width="70" height="15" class="chf"/><rect x="520" y="80" width="70" height="15" class="chs"/>
+        <rect x="520" y="65" width="70" height="15" class="chf"/><rect x="520" y="65" width="70" height="15" class="chs"/>
+        <rect x="520" y="50" width="70" height="15" class="chf"/><rect x="520" y="50" width="70" height="15" class="chs"/>
+        <rect x="520" y="35" width="70" height="15" class="chf"/><rect x="520" y="35" width="70" height="15" class="chs"/>
+      </g>
+      <line x1="115" y1="95" x2="555" y2="35" style="stroke:var(--ch)" stroke-width="2" stroke-dasharray="6 4"/>
+      <g text-anchor="middle" class="lbl">
+        <text x="115" y="88">1100</text><text x="225" y="73">1200</text><text x="335" y="58">1300</text><text x="445" y="43">1400</text><text x="600" y="30">1500</text>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="115" y="280">Saal 1</text><text x="225" y="280">Saal 2</text><text x="335" y="280">Saal 3</text><text x="445" y="280">Saal 4</text><text x="555" y="280">Saal 5</text>
+      </g>
+      <text x="350" y="297" text-anchor="middle" class="sm">tops ek seedhi line par hain · 5 saal mein interest = 5 × 100 = 500 = P ka 50%</text>
+    </svg>
+    </div>
+    <figcaption>₹1000 par 10% SI, scale par. Har saal bas ek naya 100 ka block judta hai. Amount seedhi line mein badhta hai.</figcaption>
+  </figure><h3>Speed method 1 · "Kul %" banao, phir 1% nikaalo</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="A 10 by 10 grid of 100 small squares stands for the principal. 8 squares are shaded for year 1, 8 for year 2 and 8 for year 3, so 24 squares equal 24 percent of P. With P 5000, one square is 50 and SI is 1200.">
+      <text x="130" y="28" text-anchor="middle" class="lbl">P = 100 dabbe (har dabba 1%)</text>
+<rect x="40" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="58" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="76" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="94" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="112" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="130" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="148" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="166" y="40" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/><rect x="184" y="40" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="202" y="40" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/>
+<rect x="40" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="58" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="76" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="94" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="112" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="130" y="58" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/><rect x="148" y="58" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="166" y="58" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="184" y="58" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="202" y="58" width="16" height="16" rx="2" style="fill:var(--ch)"/>
+<rect x="40" y="76" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="58" y="76" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="76" y="76" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="94" y="76" width="16" height="16" rx="2" style="fill:var(--ch)"/><rect x="112" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="76" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="94" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="112" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="130" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="148" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="166" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="184" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+<rect x="40" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="58" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="76" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="94" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="112" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="130" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="148" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="166" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="184" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/><rect x="202" y="202" width="16" height="16" rx="2" class="paper" stroke="var(--muted)" stroke-width=".6"/>
+      <text x="130" y="240" text-anchor="middle" class="sm">8% × 3 saal = 24 dabbe</text>
+      <rect x="270" y="50" width="16" height="16" rx="2" class="chf" stroke="var(--ch)" stroke-width=".6"/>
+      <text x="294" y="63" class="sm">saal 1 ke 8 dabbe (8%)</text>
+      <rect x="270" y="76" width="16" height="16" rx="2" style="fill:var(--ch);opacity:.5"/>
+      <text x="294" y="89" class="sm">saal 2 ke 8 dabbe (8%)</text>
+      <rect x="270" y="102" width="16" height="16" rx="2" style="fill:var(--ch)"/>
+      <text x="294" y="115" class="sm">saal 3 ke 8 dabbe (8%)</text>
+      <line x1="262" y1="138" x2="680" y2="138" class="ln"/>
+      <text x="270" y="162" class="lbl">P = ₹5,000 → 1 dabba = 5,000 ÷ 100 = ₹50</text>
+      <text x="270" y="186" class="lbl">SI = 24 dabbe = 24 × 50 = ₹1,200</text>
+      <text x="270" y="210" class="lbl" style="fill:var(--ch)">Amount = 124 dabbe = 124 × 50 = ₹6,200</text>
+      <text x="270" y="234" class="sm">koi formula nahi: bas "kul %" × "1% ki keemat"</text>
+    </svg>
+    </div>
+    <figcaption>P = 100 dabbe. R × T jitne dabbe = SI. Amount = 100 + R × T dabbe.</figcaption>
+  </figure><h3>Speed method 4 · Do amount diye: farq hi SI hai</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Number line of years 0, 2 and 4. Amount 6600 at year 2 and 7200 at year 4. The rise of 600 over 2 years is 300 per year. Going back 2 years from 6600 gives P equal to 6000. Rate is 300 over 6000, which is 5 percent.">
+      <defs>
+        <marker id="msi-amt-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ch)"/></marker>
+        <marker id="msi-amt-arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <line x1="60" y1="140" x2="650" y2="140" class="ln" stroke-width="2"/>
+      <g class="ln" stroke-width="2"><line x1="90" y1="132" x2="90" y2="148"/><line x1="350" y1="132" x2="350" y2="148"/><line x1="610" y1="132" x2="610" y2="148"/></g>
+      <g text-anchor="middle" class="sm"><text x="90" y="166">saal 0</text><text x="350" y="166">saal 2</text><text x="610" y="166">saal 4</text></g>
+      <rect x="40" y="176" width="100" height="30" rx="6" class="chf"/><rect x="40" y="176" width="100" height="30" rx="6" class="chs"/>
+      <text x="90" y="196" text-anchor="middle" class="lbl">P = 6,000</text>
+      <rect x="300" y="176" width="100" height="30" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="350" y="196" text-anchor="middle" class="lbl">6,600</text>
+      <rect x="560" y="176" width="100" height="30" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="610" y="196" text-anchor="middle" class="lbl">7,200</text>
+      <path d="M355,128 Q480,50 605,128" fill="none" class="ln" stroke-width="2" marker-end="url(#msi-amt-arr2)"/>
+      <text x="480" y="66" text-anchor="middle" class="lbl">+600 = 2 saal ka SI</text>
+      <text x="480" y="84" text-anchor="middle" class="sm">→ 1 saal = 300</text>
+      <path d="M345,128 Q220,50 95,128" fill="none" style="stroke:var(--ch)" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#msi-amt-arr)"/>
+      <text x="220" y="66" text-anchor="middle" class="lbl" style="fill:var(--ch)">−600 (wahi 2 saal)</text>
+      <text x="220" y="84" text-anchor="middle" class="sm">6,600 − 600 = 6,000</text>
+      <text x="350" y="24" text-anchor="middle" class="lbl">Rate = 1 saal ka SI ÷ P = 300 ÷ 6,000 = 5%</text>
+    </svg>
+    </div>
+    <figcaption>Aage ka farq = SI. Utna hi peeche chalo, P mil jaata hai. CGL 23 Sep 2025 ka sawaal yahi tha.</figcaption>
+  </figure><h3>Speed method 5 · "x guna" = (x − 1) P ka interest</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Money doubles in 8 years under simple interest. Each 8 years adds one more P. 2 times at 8 years, 3 times at 16, 4 times at 24, 5 times at 32 years.">
+      <rect x="40" y="40" width="110" height="40" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="95" y="65" text-anchor="middle" class="lbl">P (apna)</text>
+      <rect x="150" y="40" width="120" height="40" class="chf"/><rect x="150" y="40" width="120" height="40" class="chs"/>
+      <rect x="270" y="40" width="120" height="40" class="chf"/><rect x="270" y="40" width="120" height="40" class="chs"/>
+      <rect x="390" y="40" width="120" height="40" class="chf"/><rect x="390" y="40" width="120" height="40" class="chs"/>
+      <rect x="510" y="40" width="120" height="40" class="chf"/><rect x="510" y="40" width="120" height="40" class="chs"/>
+      <g text-anchor="middle" class="lbl"><text x="210" y="65">+1P</text><text x="330" y="65">+1P</text><text x="450" y="65">+1P</text><text x="570" y="65">+1P</text></g>
+      <g text-anchor="middle" class="sm"><text x="210" y="30">8 saal</text><text x="330" y="30">8 saal</text><text x="450" y="30">8 saal</text><text x="570" y="30">8 saal</text></g>
+      <g class="ln"><line x1="270" y1="84" x2="270" y2="104"/><line x1="390" y1="84" x2="390" y2="104"/><line x1="510" y1="84" x2="510" y2="104"/><line x1="630" y1="84" x2="630" y2="104"/></g>
+      <g text-anchor="middle" class="lbl"><text x="270" y="122">2 guna</text><text x="390" y="122">3 guna</text><text x="510" y="122">4 guna</text><text x="630" y="122">5 guna</text></g>
+      <g text-anchor="middle" class="sm"><text x="270" y="140">8 saal</text><text x="390" y="140">16 saal</text><text x="510" y="140">24 saal</text><text x="630" y="140">32 saal</text></g>
+      <text x="350" y="176" text-anchor="middle" class="lbl" style="fill:var(--ch)">x guna → interest = (x − 1) P → saal = (x − 1) × 8</text>
+      <text x="350" y="200" text-anchor="middle" class="sm">rate = 100% ÷ 8 = 12.5% · CI ki tarah "power" nahi, SI mein seedha jod hai</text>
+    </svg>
+    </div>
+    <figcaption>Har 8 saal mein ek naya P judta hai. 5 guna = 4 naye P = 4 × 8 = 32 saal.</figcaption>
+  </figure><h3>Speed method 6 · Do hisse, do rate: alligation ka cross</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Alligation cross. Rates 7 percent and 12 percent at top, average 9 percent in the middle. Differences 12 minus 9 equals 3 under 7 percent, and 9 minus 7 equals 2 under 12 percent. So the money splits 3 to 2: 6000 at 7 percent and 4000 at 12 percent.">
+      <rect x="110" y="20" width="120" height="44" rx="8" class="chf"/><rect x="110" y="20" width="120" height="44" rx="8" class="chs"/>
+      <text x="170" y="47" text-anchor="middle" class="lbl">7%</text>
+      <rect x="470" y="20" width="120" height="44" rx="8" class="chf"/><rect x="470" y="20" width="120" height="44" rx="8" class="chs"/>
+      <text x="530" y="47" text-anchor="middle" class="lbl">12%</text>
+      <rect x="280" y="104" width="140" height="48" rx="24" style="fill:var(--ch)"/>
+      <text x="350" y="126" text-anchor="middle" class="lbl" style="fill:var(--paper)">average 9%</text>
+      <text x="350" y="143" text-anchor="middle" class="sm" style="fill:var(--paper)">900 ÷ 10,000</text>
+      <g class="ln" stroke-width="2"><line x1="210" y1="66" x2="490" y2="194"/><line x1="490" y1="66" x2="210" y2="194"/></g>
+      <rect x="110" y="196" width="120" height="44" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="170" y="216" text-anchor="middle" class="lbl">12 − 9 = 3</text>
+      <text x="170" y="232" text-anchor="middle" class="sm">7% wala hissa</text>
+      <rect x="470" y="196" width="120" height="44" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="530" y="216" text-anchor="middle" class="lbl">9 − 7 = 2</text>
+      <text x="530" y="232" text-anchor="middle" class="sm">12% wala hissa</text>
+      <text x="350" y="262" text-anchor="middle" class="lbl" style="fill:var(--ch)">3 : 2 → ₹6,000 at 7% aur ₹4,000 at 12%</text>
+    </svg>
+    </div>
+    <figcaption>Cross mein farq ulta baithta hai: 12 wala farq 7 ke neeche, 7 wala farq 12 ke neeche.</figcaption>
+  </figure><h3>Kaunsa method kab? (ek nazar mein)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for SI. Check in order: months or dates, two amounts, x times, two or three parts at different rates, equal interest, rate changed or difference of SI, otherwise plain P R T. Each yes leads to its method.">
+      <defs>
+        <marker id="msi-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya diya, kya pucha?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#msi-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">Mahine / tareekh / 2½ saal?</text>
+        <text x="180" y="141">Do alag saal ke do amount?</text>
+        <text x="180" y="197">"Dugna", "x guna", "240% of itself"?</text>
+        <text x="180" y="253">Rakam 2–3 hisson mein, alag rate?</text>
+        <text x="180" y="309">Sabse barabar interest mila?</text>
+        <text x="180" y="365">Rate badla / do SI ka farq?</text>
+        <text x="180" y="421">Baaki: P, R, T mein se do diye</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#msi-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#msi-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#msi-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#msi-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#msi-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#msi-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#msi-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#msi-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Mahine ÷ 12 (method 3)</text>
+        <text x="410" y="132">Farq = SI, peeche chalo (method 4)</text>
+        <text x="410" y="188">Interest = (x − 1)P (method 5)</text>
+        <text x="410" y="244">Alligation / sab ek rate (method 6)</text>
+        <text x="410" y="300">Rakam ∝ 1/rate (method 7)</text>
+        <text x="410" y="356">Sirf badla hua % lagao</text>
+        <text x="410" y="412">Kul % + 1% (methods 1, 2)</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">6m = ½ · 4m = ⅓ · 18m = 3/2</text>
+        <text x="410" y="149">1 saal ka SI = farq ÷ saalon ka gap</text>
+        <text x="410" y="205">dugna in T saal → rate = 100/T</text>
+        <text x="410" y="261">farq ulta baithta hai</text>
+        <text x="410" y="317">4%, 5%, 10% → 5 : 4 : 2</text>
+        <text x="410" y="373">2% zyada × 5 saal = P ka 10%</text>
+        <text x="410" y="429">8% × 3 = 24% → 1% × 24</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Pehle ye 7 sawaal mann mein poocho. Jahan "haan" mila, wahi method chalao.</figcaption>
+  </figure><h3>Type 2 · Mahine, tareekh aur aadha saal (10 Qs)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="A strip of 12 months. From 1 April to 1 September covers April, May, June, July and August: 5 months, which is 5 by 12 of a year. Below, common month fractions: 3 months one quarter, 4 months one third, 6 months one half, 8 months two thirds, 9 months three quarters, 18 months three halves.">
+      <g>
+        <rect x="20" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="74" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="128" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="182" y="30" width="54" height="40" class="chf"/><rect x="182" y="30" width="54" height="40" class="chs"/>
+        <rect x="236" y="30" width="54" height="40" class="chf"/><rect x="236" y="30" width="54" height="40" class="chs"/>
+        <rect x="290" y="30" width="54" height="40" class="chf"/><rect x="290" y="30" width="54" height="40" class="chs"/>
+        <rect x="344" y="30" width="54" height="40" class="chf"/><rect x="344" y="30" width="54" height="40" class="chs"/>
+        <rect x="398" y="30" width="54" height="40" class="chf"/><rect x="398" y="30" width="54" height="40" class="chs"/>
+        <rect x="452" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="506" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="560" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="614" y="30" width="54" height="40" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="47" y="55">Jan</text><text x="101" y="55">Feb</text><text x="155" y="55">Mar</text><text x="209" y="55">Apr</text><text x="263" y="55">May</text><text x="317" y="55">Jun</text><text x="371" y="55">Jul</text><text x="425" y="55">Aug</text><text x="479" y="55">Sep</text><text x="533" y="55">Oct</text><text x="587" y="55">Nov</text><text x="641" y="55">Dec</text>
+      </g>
+      <g class="ln" stroke-width="2"><line x1="182" y1="22" x2="182" y2="78"/><line x1="452" y1="22" x2="452" y2="78"/></g>
+      <text x="182" y="16" text-anchor="middle" class="sm">1 Apr</text>
+      <text x="452" y="16" text-anchor="middle" class="sm">1 Sep</text>
+      <text x="317" y="96" text-anchor="middle" class="lbl" style="fill:var(--ch)">5 mahine = 5/12 saal</text>
+      <g>
+        <rect x="20" y="124" width="100" height="50" rx="6" class="chf"/>
+        <rect x="132" y="124" width="100" height="50" rx="6" class="chf"/>
+        <rect x="244" y="124" width="100" height="50" rx="6" class="chf"/><rect x="244" y="124" width="100" height="50" rx="6" class="chs"/>
+        <rect x="356" y="124" width="100" height="50" rx="6" class="chf"/>
+        <rect x="468" y="124" width="100" height="50" rx="6" class="chf"/>
+        <rect x="580" y="124" width="100" height="50" rx="6" class="chf"/><rect x="580" y="124" width="100" height="50" rx="6" class="chs"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="70" y="145" class="lbl">3 mahine</text><text x="70" y="164" class="sm">= ¼ saal</text>
+        <text x="182" y="145" class="lbl">4 mahine</text><text x="182" y="164" class="sm">= ⅓ saal</text>
+        <text x="294" y="145" class="lbl">6 mahine</text><text x="294" y="164" class="sm">= ½ saal</text>
+        <text x="406" y="145" class="lbl">8 mahine</text><text x="406" y="164" class="sm">= ⅔ saal</text>
+        <text x="518" y="145" class="lbl">9 mahine</text><text x="518" y="164" class="sm">= ¾ saal</text>
+        <text x="630" y="145" class="lbl">18 mahine</text><text x="630" y="164" class="sm">= 3/2 saal</text>
+      </g>
+      <text x="350" y="194" text-anchor="middle" class="sm">din same ho (1 se 1, 15 se 15) toh sirf mahine gino · outline wale 2025 mein sabse zyada</text>
+    </svg>
+    </div>
+    <figcaption>Tareekh se mahine, mahine se saal ka hissa. Phir kul % = rate × hissa.</figcaption>
+  </figure></section>
+<section class="chap" id="msi-types"><div class="eyebrow">Maths · PYQ types</div><h2>Simple Interest: baaki 9 type, topper ki rough ke saath</h2><h3>Type 11 · Teen hisse, ratio wale (11 Qs)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Ratio bars for Scheme O equal to 180 percent of M and 250 percent of N. Taking O as 90 units gives M 50 units and N 36 units. Interest: M at 10 percent is 5 units, N at 12 percent is 4.32 units, O at 15 percent is 13.5 units. Total 22.82 units equals 2282, so one unit is 100 and N is 3600.">
+      <text x="20" y="22" class="lbl">O = 180% of M = 250% of N → O ko 90 maan lo (9 aur 25 ka bhi saaf hissa)</text>
+      <text x="20" y="62" class="lbl">M</text><text x="20" y="78" class="sm">10%</text>
+      <rect x="70" y="46" width="250" height="34" class="chf"/><rect x="70" y="46" width="250" height="34" class="chs"/>
+      <text x="195" y="68" text-anchor="middle" class="lbl">50 units (90 ÷ 1.8)</text>
+      <text x="336" y="68" class="sm">interest 10% → 5</text>
+      <text x="20" y="112" class="lbl">N</text><text x="20" y="128" class="sm">12%</text>
+      <rect x="70" y="96" width="180" height="34" class="chf"/><rect x="70" y="96" width="180" height="34" class="chs"/>
+      <text x="160" y="118" text-anchor="middle" class="lbl">36 units (90 ÷ 2.5)</text>
+      <text x="266" y="118" class="sm">interest 12% → 4.32</text>
+      <text x="20" y="162" class="lbl">O</text><text x="20" y="178" class="sm">15%</text>
+      <rect x="70" y="146" width="450" height="34" style="fill:var(--ch);opacity:.45"/><rect x="70" y="146" width="450" height="34" class="chs"/>
+      <text x="295" y="168" text-anchor="middle" class="lbl">90 units</text>
+      <text x="536" y="168" class="sm">interest 15% → 13.5</text>
+      <line x1="20" y1="198" x2="680" y2="198" class="ln"/>
+      <text x="350" y="220" text-anchor="middle" class="lbl">5 + 4.32 + 13.5 = 22.82 units = ₹2,282 → 1 unit = ₹100</text>
+      <text x="350" y="242" text-anchor="middle" class="lbl" style="fill:var(--ch)">N = 36 units = ₹3,600</text>
+    </svg>
+    </div>
+    <figcaption>Bars scale par (1 unit = 5 px). Pehle ratio, phir har bar ka interest, phir jod. CGL 15 Sep 2025.</figcaption>
+  </figure></section>
+<section class="chap" id="mpg-series"><div class="eyebrow">Maths · 40 questions</div><h2>Progression: AP, GP aur series ka jod, bina lambe formula ke</h2><h3>Speed method 1 · Jod = ginti × average (Gauss ki jodi)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Bars of height 1 to 8 with an upside-down copy of 8 to 1 on top. Every column becomes 9 tall, making an 8 by 9 rectangle of 72. The sum 1 to 8 is half of it, 36.">
+      <g>
+        <rect x="60" y="184" width="40" height="16" class="chf"/><rect x="60" y="184" width="40" height="16" class="chs"/>
+        <rect x="108" y="168" width="40" height="32" class="chf"/><rect x="108" y="168" width="40" height="32" class="chs"/>
+        <rect x="156" y="152" width="40" height="48" class="chf"/><rect x="156" y="152" width="40" height="48" class="chs"/>
+        <rect x="204" y="136" width="40" height="64" class="chf"/><rect x="204" y="136" width="40" height="64" class="chs"/>
+        <rect x="252" y="120" width="40" height="80" class="chf"/><rect x="252" y="120" width="40" height="80" class="chs"/>
+        <rect x="300" y="104" width="40" height="96" class="chf"/><rect x="300" y="104" width="40" height="96" class="chs"/>
+        <rect x="348" y="88" width="40" height="112" class="chf"/><rect x="348" y="88" width="40" height="112" class="chs"/>
+        <rect x="396" y="72" width="40" height="128" class="chf"/><rect x="396" y="72" width="40" height="128" class="chs"/>
+      </g>
+      <g class="paper" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="4 3">
+        <rect x="60" y="56" width="40" height="128"/>
+        <rect x="108" y="56" width="40" height="112"/>
+        <rect x="156" y="56" width="40" height="96"/>
+        <rect x="204" y="56" width="40" height="80"/>
+        <rect x="252" y="56" width="40" height="64"/>
+        <rect x="300" y="56" width="40" height="48"/>
+        <rect x="348" y="56" width="40" height="32"/>
+        <rect x="396" y="56" width="40" height="16"/>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="80" y="216">1</text><text x="128" y="216">2</text><text x="176" y="216">3</text><text x="224" y="216">4</text><text x="272" y="216">5</text><text x="320" y="216">6</text><text x="368" y="216">7</text><text x="416" y="216">8</text>
+        <text x="80" y="50">8</text><text x="128" y="50">7</text><text x="176" y="50">6</text><text x="224" y="50">5</text><text x="272" y="50">4</text><text x="320" y="50">3</text><text x="368" y="50">2</text><text x="416" y="50">1</text>
+      </g>
+      <text x="248" y="24" text-anchor="middle" class="sm">dashed = ulta likha hua (8, 7, …, 1)</text>
+      <text x="248" y="238" text-anchor="middle" class="sm">bhara hua = 1, 2, …, 8</text>
+      <text x="460" y="80" class="lbl">har column = 1 + 8 = 9</text>
+      <text x="460" y="104" class="lbl">8 column × 9 = 72</text>
+      <text x="460" y="128" class="sm">ye do baar ka jod hai</text>
+      <text x="460" y="160" class="lbl" style="fill:var(--ch)">jod = 72 ÷ 2 = 36</text>
+      <text x="460" y="190" class="sm">yaani ginti × (pehla + aakhri) ÷ 2</text>
+      <text x="460" y="208" class="sm">= 8 × 4.5</text>
+    </svg>
+    </div>
+    <figcaption>Ulta likh kar jodo, har jodi barabar. Isliye AP ka jod = ginti × average.</figcaption>
+  </figure><h3>Speed method 2 · Odd numbers ka jod = square</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="A 5 by 5 square of tiles split into L-shaped layers of 1, 3, 5, 7 and 9 tiles. So the first 5 odd numbers add up to 5 squared, 25.">
+<rect x="40" y="160" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="70" y="160" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="100" y="160" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="130" y="160" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="160" y="160" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/>
+<rect x="40" y="130" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="70" y="130" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="100" y="130" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="130" y="130" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="160" y="130" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/>
+<rect x="40" y="100" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="70" y="100" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="100" y="100" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="130" y="100" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="160" y="100" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/>
+<rect x="40" y="70" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="70" y="70" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="100" y="70" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="130" y="70" width="28" height="28" rx="3" style="fill:var(--ch);opacity:.55"/><rect x="160" y="70" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/>
+<rect x="40" y="40" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="70" y="40" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="100" y="40" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="130" y="40" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/><rect x="160" y="40" width="28" height="28" rx="3" class="chf" stroke="var(--ch)" stroke-width="1"/>
+      <text x="114" y="212" text-anchor="middle" class="sm">L-shape: 1, 3, 5, 7, 9 tile</text>
+      <text x="230" y="60" class="lbl">1 + 3 + 5 + 7 + 9 = 25 = 5 × 5</text>
+      <text x="230" y="84" class="sm">har nayi L pichhle square ko ek size bada karti hai</text>
+      <text x="230" y="118" class="lbl">Pehle n odd ka jod = n²</text>
+      <text x="230" y="140" class="sm">toh unka average = n² ÷ n = n (SP-XIV 26 Jul 2025)</text>
+      <text x="230" y="174" class="lbl" style="fill:var(--ch)">1 + 2 + … + 41 + … + 2 + 1 = 41² = 1,681</text>
+      <text x="230" y="196" class="sm">pahaad = (n − 1) tak ka jod do baar + n = n(n − 1) + n = n²</text>
+    </svg>
+    </div>
+    <figcaption>Odd numbers L-shape mein judte hain aur hamesha square banate hain.</figcaption>
+  </figure><h3>Speed method 4 · GP: kadam gino, guna karo</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Top row AP: 5, 8, 11, 14, adding 3 each step. Bottom row GP: 5, 15, 45, 135, multiplying by 3 each step. The fourth term is 5 times 3 cubed equals 135.">
+      <defs>
+        <marker id="mpg-gp-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <text x="20" y="56" class="lbl">AP</text><text x="20" y="72" class="sm">+3 har baar</text>
+      <g>
+        <rect x="130" y="36" width="90" height="40" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="270" y="36" width="90" height="40" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="410" y="36" width="90" height="40" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="550" y="36" width="90" height="40" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="175" y="61">5</text><text x="315" y="61">8</text><text x="455" y="61">11</text><text x="595" y="61">14</text></g>
+      <g class="ln"><line x1="222" y1="56" x2="266" y2="56" marker-end="url(#mpg-gp-arr)"/><line x1="362" y1="56" x2="406" y2="56" marker-end="url(#mpg-gp-arr)"/><line x1="502" y1="56" x2="546" y2="56" marker-end="url(#mpg-gp-arr)"/></g>
+      <g text-anchor="middle" class="sm"><text x="245" y="30">+3</text><text x="385" y="30">+3</text><text x="525" y="30">+3</text></g>
+      <text x="20" y="136" class="lbl">GP</text><text x="20" y="152" class="sm">×3 har baar</text>
+      <g>
+        <rect x="130" y="116" width="90" height="40" rx="8" class="chf"/><rect x="130" y="116" width="90" height="40" rx="8" class="chs"/>
+        <rect x="270" y="116" width="90" height="40" rx="8" class="chf"/><rect x="270" y="116" width="90" height="40" rx="8" class="chs"/>
+        <rect x="410" y="116" width="90" height="40" rx="8" class="chf"/><rect x="410" y="116" width="90" height="40" rx="8" class="chs"/>
+        <rect x="550" y="116" width="90" height="40" rx="8" style="fill:var(--ch)"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="175" y="141">5</text><text x="315" y="141">15</text><text x="455" y="141">45</text><text x="595" y="141" style="fill:var(--paper)">135</text></g>
+      <g class="ln"><line x1="222" y1="136" x2="266" y2="136" marker-end="url(#mpg-gp-arr)"/><line x1="362" y1="136" x2="406" y2="136" marker-end="url(#mpg-gp-arr)"/><line x1="502" y1="136" x2="546" y2="136" marker-end="url(#mpg-gp-arr)"/></g>
+      <g text-anchor="middle" class="sm"><text x="245" y="110">×3</text><text x="385" y="110">×3</text><text x="525" y="110">×3</text></g>
+      <g text-anchor="middle" class="sm"><text x="175" y="176">ghanta 1</text><text x="315" y="176">ghanta 2</text><text x="455" y="176">ghanta 3</text><text x="595" y="176">ghanta 4</text></g>
+      <text x="350" y="206" text-anchor="middle" class="lbl">4th term = 5 × 3 × 3 × 3 = 5 × 3³ = 135 (3 kadam, 3 guna)</text>
+    </svg>
+    </div>
+    <figcaption>AP mein kadam par jodo, GP mein kadam par guna karo. DP AWO 20 Jan 2026 ka viral video sawaal.</figcaption>
+  </figure><h3>Speed method 5 · Fraction series: todo aur kaato (telescoping)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="Each fraction 1 over n times n plus 1 splits into 1 over n minus 1 over n plus 1. Writing them one under another, every middle term cancels with the next row. Only 1 and minus 1 over 10 remain, so the sum to 1 over 90 is 9 over 10.">
+      <g class="lbl">
+        <text x="30" y="40">1/2 = 1/(1·2)</text>
+        <text x="30" y="72">1/6 = 1/(2·3)</text>
+        <text x="30" y="104">1/12 = 1/(3·4)</text>
+        <text x="30" y="136">⋮</text>
+        <text x="30" y="168">1/90 = 1/(9·10)</text>
+      </g>
+      <g class="lbl" text-anchor="middle">
+        <text x="220" y="40">=</text><text x="220" y="72">=</text><text x="220" y="104">=</text><text x="220" y="168">=</text>
+        <text x="265" y="40" style="fill:var(--ch)">1</text><text x="310" y="40">−</text><text x="355" y="40" style="fill:var(--muted)">1/2</text>
+        <text x="265" y="72" style="fill:var(--muted)">1/2</text><text x="310" y="72">−</text><text x="355" y="72" style="fill:var(--muted)">1/3</text>
+        <text x="265" y="104" style="fill:var(--muted)">1/3</text><text x="310" y="104">−</text><text x="355" y="104" style="fill:var(--muted)">1/4</text>
+        <text x="265" y="168" style="fill:var(--muted)">1/9</text><text x="310" y="168">−</text><text x="355" y="168" style="fill:var(--ch)">1/10</text>
+      </g>
+      <g class="ln" stroke-dasharray="4 3">
+        <line x1="345" y1="46" x2="275" y2="62"/>
+        <line x1="345" y1="78" x2="275" y2="94"/>
+        <line x1="345" y1="110" x2="275" y2="126"/>
+      </g>
+      <g class="ln"><line x1="340" y1="36" x2="370" y2="36"/><line x1="250" y1="68" x2="280" y2="68"/><line x1="340" y1="68" x2="370" y2="68"/><line x1="250" y1="100" x2="280" y2="100"/><line x1="340" y1="100" x2="370" y2="100"/><line x1="250" y1="164" x2="280" y2="164"/></g>
+      <text x="200" y="212" class="lbl" style="fill:var(--ch)">jod = 1 − 1/10 = 9/10</text>
+      <rect x="420" y="24" width="260" height="160" rx="8" class="chf"/>
+      <text x="436" y="50" class="lbl">Do niyam</text>
+      <text x="436" y="76" class="sm">gap 1: 1/(n(n+1)) = 1/n − 1/(n+1)</text>
+      <text x="436" y="100" class="sm">gap 2: 1/(n(n+2)) = ½ (1/n − 1/(n+2))</text>
+      <text x="436" y="130" class="lbl">1/(1·3) + 1/(3·5) + … + 1/(7·9)</text>
+      <text x="436" y="152" class="sm">= ½ (1 − 1/9) = ½ × 8/9 = 4/9</text>
+      <text x="436" y="174" class="sm">jod = (gap ka ulta) × (pehla − aakhri)</text>
+    </svg>
+    </div>
+    <figcaption>Har tukda agle ka aadha kaat deta hai. Sirf pehla aur aakhri bachte hain.</figcaption>
+  </figure></section>
+<section class="chap" id="mst-stats"><div class="eyebrow">Maths · 16 questions</div><h2>Statistics: mean, median, mode aur "faila" kitna hai</h2><h3>Speed method 2 · Mean, median, mode ka rishta</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="A right-skewed histogram with a long tail to the right. Mode sits at the peak, median a little to the right, mean further right, pulled by the tail. Rule: mode equals 3 median minus 2 mean.">
+      <line x1="40" y1="200" x2="470" y2="200" class="ln"/>
+      <g>
+        <rect x="60" y="146" width="50" height="54" class="chf"/><rect x="60" y="146" width="50" height="54" class="chs"/>
+        <rect x="110" y="74" width="50" height="126" class="chf"/><rect x="110" y="74" width="50" height="126" class="chs"/>
+        <rect x="160" y="38" width="50" height="162" class="chf"/><rect x="160" y="38" width="50" height="162" class="chs"/>
+        <rect x="210" y="74" width="50" height="126" class="chf"/><rect x="210" y="74" width="50" height="126" class="chs"/>
+        <rect x="260" y="110" width="50" height="90" class="chf"/><rect x="260" y="110" width="50" height="90" class="chs"/>
+        <rect x="310" y="146" width="50" height="54" class="chf"/><rect x="310" y="146" width="50" height="54" class="chs"/>
+        <rect x="360" y="164" width="50" height="36" class="chf"/><rect x="360" y="164" width="50" height="36" class="chs"/>
+        <rect x="410" y="182" width="50" height="18" class="chf"/><rect x="410" y="182" width="50" height="18" class="chs"/>
+      </g>
+      <line x1="185" y1="24" x2="185" y2="210" style="stroke:var(--ch)" stroke-width="2.5"/>
+      <line x1="226" y1="24" x2="226" y2="210" class="ln" stroke-width="2" stroke-dasharray="5 4"/>
+      <line x1="262" y1="24" x2="262" y2="210" style="stroke:var(--ch)" stroke-width="2" stroke-dasharray="2 3"/>
+      <g text-anchor="middle" class="lbl"><text x="172" y="226">Mode</text><text x="226" y="242">Median</text><text x="275" y="226">Mean</text></g>
+      <text x="400" y="140" text-anchor="middle" class="sm">lambi poonch →</text>
+      <text x="490" y="50" class="lbl">Poonch right mein ho toh:</text>
+      <text x="490" y="70" class="sm">Mode &lt; Median &lt; Mean</text>
+      <text x="490" y="104" class="lbl" style="fill:var(--ch)">Mode = 3 Median − 2 Mean</text>
+      <text x="490" y="124" class="sm">(Karl Pearson ka empirical rishta)</text>
+      <text x="490" y="158" class="lbl">Median hamesha beech mein</text>
+      <text x="490" y="178" class="sm">Mean poonch ki taraf khinchta hai</text>
+      <text x="490" y="210" class="sm">symmetric ho toh teeno barabar</text>
+    </svg>
+    </div>
+    <figcaption>Ek taraf jhuka hua dher. Bade numbers mean ko apni taraf kheench lete hain, mode chhoti pahaadi ke upar rehta hai.</figcaption>
+  </figure><h3>Speed method 3 · SD ke do niyam (formula nahi lagana)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="Three rows of dots on a number line. Original 2, 4, 6 spread 4. After adding 5: 7, 9, 11, spread still 4. After multiplying by 2: 4, 8, 12, spread 8, double.">
+      <line x1="60" y1="214" x2="660" y2="214" class="ln"/>
+      <g class="sm" text-anchor="middle">
+        <text x="60" y="230">0</text><text x="140" y="230">2</text><text x="220" y="230">4</text><text x="300" y="230">6</text><text x="380" y="230">8</text><text x="460" y="230">10</text><text x="540" y="230">12</text><text x="620" y="230">14</text>
+      </g>
+      <text x="12" y="54" class="lbl">asli</text>
+      <circle cx="140" cy="50" r="9" class="chf"/><circle cx="140" cy="50" r="9" class="chs"/>
+      <circle cx="220" cy="50" r="9" class="chf"/><circle cx="220" cy="50" r="9" class="chs"/>
+      <circle cx="300" cy="50" r="9" class="chf"/><circle cx="300" cy="50" r="9" class="chs"/>
+      <line x1="140" y1="70" x2="300" y2="70" class="ln" stroke-width="2"/>
+      <text x="220" y="86" text-anchor="middle" class="sm">faila 4</text>
+      <text x="12" y="120" class="lbl">+5</text>
+      <circle cx="340" cy="116" r="9" class="chf"/><circle cx="340" cy="116" r="9" class="chs"/>
+      <circle cx="420" cy="116" r="9" class="chf"/><circle cx="420" cy="116" r="9" class="chs"/>
+      <circle cx="500" cy="116" r="9" class="chf"/><circle cx="500" cy="116" r="9" class="chs"/>
+      <line x1="340" y1="136" x2="500" y2="136" class="ln" stroke-width="2"/>
+      <text x="420" y="152" text-anchor="middle" class="sm">faila 4 (same) → SD nahi badla</text>
+      <text x="12" y="186" class="lbl">×2</text>
+      <circle cx="220" cy="182" r="9" style="fill:var(--ch)"/>
+      <circle cx="380" cy="182" r="9" style="fill:var(--ch)"/>
+      <circle cx="540" cy="182" r="9" style="fill:var(--ch)"/>
+      <line x1="220" y1="198" x2="540" y2="198" style="stroke:var(--ch)" stroke-width="2"/>
+      <text x="600" y="186" class="sm">faila 8</text>
+      <text x="600" y="202" class="sm">→ SD × 2</text>
+    </svg>
+    </div>
+    <figcaption>Sab ko khiskao (+, −): dher hilta hai, faila wahi. Sab ko guna karo (×): faila bhi utne guna.</figcaption>
+  </figure><h3>Speed method 4 · Quartile: (n + 1)/4 waali jagah</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Eleven sorted values 3 to 22 on a number line. Q1 is the 3rd value, 6. Median is the 6th value, 12. Q3 is the 9th value, 18. The box from 6 to 18 shows the interquartile range 12.">
+      <line x1="60" y1="190" x2="660" y2="190" class="ln"/>
+      <g class="sm" text-anchor="middle">
+        <text x="60" y="206">0</text><text x="160" y="206">4</text><text x="260" y="206">8</text><text x="360" y="206">12</text><text x="460" y="206">16</text><text x="560" y="206">20</text><text x="660" y="206">24</text>
+      </g>
+      <g style="fill:var(--muted)">
+        <circle cx="135" cy="60" r="6"/><circle cx="185" cy="60" r="6"/><circle cx="260" cy="60" r="6"/><circle cx="310" cy="60" r="6"/><circle cx="410" cy="60" r="6"/><circle cx="460" cy="60" r="6"/><circle cx="560" cy="60" r="6"/><circle cx="610" cy="60" r="6"/>
+      </g>
+      <circle cx="210" cy="60" r="8" style="fill:var(--ch)"/><circle cx="360" cy="60" r="8" style="fill:var(--ch)"/><circle cx="510" cy="60" r="8" style="fill:var(--ch)"/>
+      <g class="sm" text-anchor="middle">
+        <text x="135" y="42">3</text><text x="185" y="42">5</text><text x="210" y="42">6</text><text x="260" y="42">8</text><text x="310" y="42">10</text><text x="360" y="42">12</text><text x="410" y="42">14</text><text x="460" y="42">16</text><text x="510" y="42">18</text><text x="560" y="42">20</text><text x="610" y="42">22</text>
+      </g>
+      <text x="350" y="20" text-anchor="middle" class="sm">11 number, already line mein</text>
+      <line x1="135" y1="120" x2="210" y2="120" class="ln" stroke-width="2"/>
+      <line x1="510" y1="120" x2="610" y2="120" class="ln" stroke-width="2"/>
+      <rect x="210" y="100" width="300" height="40" class="chf"/><rect x="210" y="100" width="300" height="40" class="chs"/>
+      <line x1="360" y1="100" x2="360" y2="140" style="stroke:var(--ch)" stroke-width="3"/>
+      <text x="210" y="160" text-anchor="middle" class="lbl">Q1 = 6</text><text x="210" y="176" text-anchor="middle" class="sm">(11 + 1)/4 = 3rd</text>
+      <text x="360" y="160" text-anchor="middle" class="lbl">Median 12</text><text x="360" y="176" text-anchor="middle" class="sm">6th</text>
+      <text x="510" y="160" text-anchor="middle" class="lbl">Q3 = 18</text><text x="510" y="176" text-anchor="middle" class="sm">3 × 12/4 = 9th</text>
+      <text x="360" y="92" text-anchor="middle" class="lbl" style="fill:var(--ch)">IQR = 18 − 6 = 12 · QD = 6</text>
+    </svg>
+    </div>
+    <figcaption>Box ke andar beech ke aadhe number. Box ki lambaai = IQR. Aadha box = quartile deviation.</figcaption>
+  </figure><h3>Speed method 5 · Grouped data ka median: "kitna aage" socho</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Cumulative frequency bars for marks classes 0-10 to 40-50: 5, 13, 19, 25, 30. Half of 30 is 15, which falls in class 20-30 where 13 students are already counted and 6 are inside. 2 of those 6 are needed, so median is 20 plus 2 by 6 of 10, about 23.33.">
+      <line x1="70" y1="200" x2="600" y2="200" class="ln"/>
+      <g>
+        <rect x="80" y="175" width="100" height="25" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="180" y="135" width="100" height="65" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="280" y="105" width="100" height="95" class="chf"/><rect x="280" y="105" width="100" height="95" class="chs"/>
+        <rect x="380" y="75" width="100" height="125" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+        <rect x="480" y="50" width="100" height="150" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="130" y="170">5</text><text x="230" y="130">13</text><text x="330" y="100">19</text><text x="430" y="70">25</text><text x="530" y="45">30</text></g>
+      <g text-anchor="middle" class="sm"><text x="130" y="216">0–10</text><text x="230" y="216">10–20</text><text x="330" y="216">20–30</text><text x="430" y="216">30–40</text><text x="530" y="216">40–50</text></g>
+      <line x1="70" y1="125" x2="600" y2="125" style="stroke:var(--ch)" stroke-width="1.5" stroke-dasharray="6 4"/>
+      <text x="606" y="129" class="sm">N/2 = 15</text>
+      <text x="90" y="30" class="lbl">cumulative (ab tak kitne bachche)</text>
+      <text x="90" y="52" class="sm">15th bachcha 20–30 mein: 13 pehle, 6 andar</text>
+      <text x="90" y="72" class="sm">chahiye 15 − 13 = 2 → 2/6 class aage</text>
+      <text x="350" y="242" text-anchor="middle" class="lbl" style="fill:var(--ch)">Median = 20 + (2/6) × 10 = 23.33</text>
+    </svg>
+    </div>
+    <figcaption>Cumulative bars scale par. Aadhe bachche (N/2) kis class mein aate hain, us class mein utna hi aage chalo.</figcaption>
+  </figure></section>
+<section class="chap" id="mpn-pnc"><div class="eyebrow">Maths · 15 questions</div><h2>Permutation &amp; Combination: dabbe bharo, phir gino</h2><h3>Pehle ek chhoti si kahani: 3 kursi, 10 bachche</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Decision chart. Are the items identical? Then divide by factorials of repeats. Does order matter, like posts, digits or seats? Then permutation, fill boxes and multiply. Only choosing a group, like committee, team or triangle? Then combination, nCr.">
+      <defs>
+        <marker id="mpn-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="20" width="250" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="145" y="47" text-anchor="middle" class="lbl">Kuch cheezein same (identical)?</text>
+      <rect x="20" y="92" width="250" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="145" y="119" text-anchor="middle" class="lbl">Order maayne rakhta hai?</text>
+      <rect x="20" y="164" width="250" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="145" y="191" text-anchor="middle" class="lbl">Sirf group chunna hai</text>
+      <g class="ln">
+        <line x1="145" y1="64" x2="145" y2="89" marker-end="url(#mpn-fc-arr)"/>
+        <line x1="145" y1="136" x2="145" y2="161" marker-end="url(#mpn-fc-arr)"/>
+        <line x1="270" y1="42" x2="326" y2="42" marker-end="url(#mpn-fc-arr)"/>
+        <line x1="270" y1="114" x2="326" y2="114" marker-end="url(#mpn-fc-arr)"/>
+        <line x1="270" y1="186" x2="326" y2="186" marker-end="url(#mpn-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="153" y="82">nahi</text><text x="153" y="154">nahi</text><text x="285" y="36">haan</text><text x="285" y="108">haan</text></g>
+      <rect x="330" y="20" width="350" height="44" rx="6" class="chf"/><rect x="330" y="20" width="350" height="44" rx="6" class="chs"/>
+      <text x="340" y="38" class="lbl">n! ÷ (a! b! c!)</text>
+      <text x="340" y="56" class="sm">BANANA = 6!/(3! 2!) · 4 red, 3 blue, 2 green plates</text>
+      <rect x="330" y="92" width="350" height="44" rx="6" class="chf"/><rect x="330" y="92" width="350" height="44" rx="6" class="chs"/>
+      <text x="340" y="110" class="lbl">Permutation: dabbe bharo, guna karo</text>
+      <text x="340" y="128" class="sm">posts, number banana, word banana, line mein bithana</text>
+      <rect x="330" y="164" width="350" height="44" rx="6" style="fill:var(--ch);opacity:.35"/><rect x="330" y="164" width="350" height="44" rx="6" class="chs"/>
+      <text x="340" y="182" class="lbl">Combination: nCr</text>
+      <text x="340" y="200" class="sm">committee, team, balls nikaalna, triangle banana</text>
+    </svg>
+    </div>
+    <figcaption>Har sawaal par ye do sawaal pehle poocho. Galat chunaav = galat answer, chahe guna sahi ho.</figcaption>
+  </figure><h3>Speed method 1 · Dabbe bharo: jiski shart hai, use pehle bharo</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Four boxes for a 4-digit even number from digits 1 to 6 with repetition. The units box must be 2, 4 or 6, so 3 ways. Other boxes 6 ways each. Total 6 times 6 times 6 times 3 equals 648.">
+      <g>
+        <rect x="80" y="50" width="100" height="70" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="200" y="50" width="100" height="70" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="320" y="50" width="100" height="70" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="440" y="50" width="100" height="70" rx="8" style="fill:var(--ch)"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="130" y="92" class="lbl">6</text><text x="250" y="92" class="lbl">6</text><text x="370" y="92" class="lbl">6</text><text x="490" y="92" class="lbl" style="fill:var(--paper)">3</text>
+        <text x="130" y="40" class="sm">hazaar</text><text x="250" y="40" class="sm">sau</text><text x="370" y="40" class="sm">dahai</text><text x="490" y="40" class="sm">ikai (shart!)</text>
+        <text x="190" y="92" class="lbl">×</text><text x="310" y="92" class="lbl">×</text><text x="430" y="92" class="lbl">×</text>
+        <text x="490" y="140" class="sm">2, 4 ya 6</text>
+        <text x="250" y="140" class="sm">repetition allowed → har baar 6</text>
+      </g>
+      <text x="560" y="92" class="lbl" style="fill:var(--ch)">= 648</text>
+      <text x="350" y="182" text-anchor="middle" class="sm">pehle shart wala dabba (ikai) bharo, phir baaki · bina repetition ke har agla dabba 1 kam</text>
+    </svg>
+    </div>
+    <figcaption>{1, …, 6} se 4-digit even number, repetition ke saath. DP AWO 21 Jan 2026.</figcaption>
+  </figure><h3>Speed method 2 · "Saath rahein" = gathri, "alag rahein" = khaali jagah</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Five boys B seated first in 5 factorial ways make 6 gaps, including both ends. The 3 girls go into 3 of the 6 gaps in 6 times 5 times 4 equals 120 ways. Total 120 times 120 equals 14400.">
+      <g>
+        <rect x="95" y="50" width="56" height="50" rx="8" class="chf"/><rect x="95" y="50" width="56" height="50" rx="8" class="chs"/>
+        <rect x="201" y="50" width="56" height="50" rx="8" class="chf"/><rect x="201" y="50" width="56" height="50" rx="8" class="chs"/>
+        <rect x="307" y="50" width="56" height="50" rx="8" class="chf"/><rect x="307" y="50" width="56" height="50" rx="8" class="chs"/>
+        <rect x="413" y="50" width="56" height="50" rx="8" class="chf"/><rect x="413" y="50" width="56" height="50" rx="8" class="chs"/>
+        <rect x="519" y="50" width="56" height="50" rx="8" class="chf"/><rect x="519" y="50" width="56" height="50" rx="8" class="chs"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="123" y="80">B</text><text x="229" y="80">B</text><text x="335" y="80">B</text><text x="441" y="80">B</text><text x="547" y="80">B</text></g>
+      <g class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3">
+        <rect x="52" y="58" width="34" height="34" rx="6"/>
+        <rect x="160" y="58" width="34" height="34" rx="6"/>
+        <rect x="266" y="58" width="34" height="34" rx="6"/>
+        <rect x="372" y="58" width="34" height="34" rx="6"/>
+        <rect x="478" y="58" width="34" height="34" rx="6"/>
+        <rect x="584" y="58" width="34" height="34" rx="6"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="69" y="80">1</text><text x="177" y="80">2</text><text x="283" y="80">3</text><text x="389" y="80">4</text><text x="495" y="80">5</text><text x="601" y="80">6</text></g>
+      <text x="335" y="34" text-anchor="middle" class="sm">pehle 5 ladke: 5! = 120 tareeke</text>
+      <text x="335" y="126" text-anchor="middle" class="sm">dashed = 6 khaali jagah (dono kinare bhi)</text>
+      <text x="335" y="156" text-anchor="middle" class="lbl">3 ladkiyan 6 jagah mein: 6 × 5 × 4 = 120</text>
+      <text x="335" y="186" text-anchor="middle" class="lbl" style="fill:var(--ch)">Kul = 120 × 120 = 14,400</text>
+    </svg>
+    </div>
+    <figcaption>Ladkiyan kabhi saath nahi baith sakti, kyunki har khaali jagah mein bas ek. DP AWO 21 Jan 2026.</figcaption>
+  </figure><h3>Speed method 4 · Committee: "kam se kam" = case todo</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="A regular hexagon with vertices 1 to 6. One triangle joins vertices 1, 3 and 5. Any 3 of the 6 vertices make a triangle, so the count is 6 choose 3 equals 20.">
+      <polygon points="240,120 195,198 105,198 60,120 105,42 195,42" class="paper" stroke="var(--muted)" stroke-width="2"/>
+      <polygon points="240,120 105,198 105,42" class="chf"/>
+      <polygon points="240,120 105,198 105,42" class="chs"/>
+      <g style="fill:var(--ch)"><circle cx="240" cy="120" r="5"/><circle cx="195" cy="198" r="5"/><circle cx="105" cy="198" r="5"/><circle cx="60" cy="120" r="5"/><circle cx="105" cy="42" r="5"/><circle cx="195" cy="42" r="5"/></g>
+      <g class="sm"><text x="250" y="124">1</text><text x="200" y="216">2</text><text x="92" y="216">3</text><text x="44" y="124">4</text><text x="92" y="34">5</text><text x="200" y="34">6</text></g>
+      <text x="300" y="60" class="lbl">Koi bhi 3 kone chuno → ek triangle</text>
+      <text x="300" y="82" class="sm">(hexagon ke 3 kone kabhi ek line mein nahi)</text>
+      <text x="300" y="116" class="lbl" style="fill:var(--ch)">6C3 = (6 × 5 × 4) ÷ (3 × 2 × 1) = 20</text>
+      <text x="300" y="150" class="lbl">10 point, koi 3 ek line mein nahi</text>
+      <text x="300" y="172" class="sm">10C3 = 720 ÷ 6 = 120 triangle</text>
+      <text x="300" y="206" class="sm">triangle mein order nahi (1-3-5 = 5-3-1), isliye C</text>
+    </svg>
+    </div>
+    <figcaption>Triangle ginti = 3 kone chunna. Hexagon accurate (regular) bana hai; chuna hua triangle 1-3-5.</figcaption>
+  </figure></section>
+<section class="chap" id="mpb-prob"><div class="eyebrow">Maths · 9 questions</div><h2>Probability: "kitne mein se kitne" ka khel</h2><h3>Speed method 1 · Venn ke dabbe se gino</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Venn diagram for numbers 1 to 120. Multiples of 6: 20. Multiples of 8: 15. Both, which are multiples of 24: 5. Only 6: 15, only 8: 10. Divisible by 6 or 8 but not 24: 15 plus 10 equals 25.">
+      <rect x="20" y="20" width="420" height="210" rx="10" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <text x="34" y="42" class="sm">1 se 120</text>
+      <circle cx="175" cy="128" r="85" class="chf"/><circle cx="175" cy="128" r="85" class="chs"/>
+      <circle cx="285" cy="128" r="85" class="chf"/><circle cx="285" cy="128" r="85" class="chs"/>
+      <path d="M230,63 A85,85 0 0,1 230,193 A85,85 0 0,1 230,63 Z" style="fill:var(--ch);opacity:.6"/>
+      <text x="140" y="124" text-anchor="middle" class="lbl">15</text><text x="140" y="142" text-anchor="middle" class="sm">sirf 6</text>
+      <text x="230" y="124" text-anchor="middle" class="lbl">5</text><text x="230" y="142" text-anchor="middle" class="sm">24 ke</text>
+      <text x="322" y="124" text-anchor="middle" class="lbl">10</text><text x="322" y="142" text-anchor="middle" class="sm">sirf 8</text>
+      <text x="120" y="38" class="lbl">6 ke: 120/6 = 20</text>
+      <text x="290" y="38" class="lbl">8 ke: 15</text>
+      <text x="460" y="70" class="lbl">Dono (6 aur 8):</text>
+      <text x="460" y="90" class="sm">LCM 24 → 120/24 = 5</text>
+      <text x="460" y="124" class="lbl">6 ya 8, par 24 nahi:</text>
+      <text x="460" y="144" class="sm">sirf 6 + sirf 8 = 15 + 10</text>
+      <text x="460" y="178" class="lbl" style="fill:var(--ch)">= 25 → 25/120</text>
+      <text x="460" y="204" class="sm">(gehra beech = kaatna hai)</text>
+    </svg>
+    </div>
+    <figcaption>Do ghere, beech ka hissa dono mein. "Ya" = poora milaa hua area, beech ek hi baar.</figcaption>
+  </figure><h3>Speed method 2 · Tree banao (machine aur defect wale)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="Probability tree. Machine M1 with 0.6 then defective 0.03 gives 0.018. Machine M2 with 0.4 then defective 0.05 gives 0.020. Total defective 0.038. Given defective, chance it came from M1 is 18 over 38, about 0.47.">
+      <circle cx="60" cy="120" r="10" style="fill:var(--ch)"/>
+      <g class="ln" stroke-width="2"><line x1="70" y1="114" x2="200" y2="60"/><line x1="70" y1="126" x2="200" y2="180"/></g>
+      <text x="120" y="76" class="sm">0.6</text><text x="120" y="176" class="sm">0.4</text>
+      <rect x="200" y="42" width="80" height="36" rx="6" class="chf"/><rect x="200" y="42" width="80" height="36" rx="6" class="chs"/>
+      <text x="240" y="65" text-anchor="middle" class="lbl">M1</text>
+      <rect x="200" y="162" width="80" height="36" rx="6" class="chf"/><rect x="200" y="162" width="80" height="36" rx="6" class="chs"/>
+      <text x="240" y="185" text-anchor="middle" class="lbl">M2</text>
+      <g class="ln" stroke-width="2"><line x1="280" y1="56" x2="380" y2="34"/><line x1="280" y1="66" x2="380" y2="90"/><line x1="280" y1="176" x2="380" y2="154"/><line x1="280" y1="186" x2="380" y2="210"/></g>
+      <text x="318" y="36" class="sm">0.03</text><text x="318" y="96" class="sm">0.97</text><text x="318" y="156" class="sm">0.05</text><text x="318" y="216" class="sm">0.95</text>
+      <text x="388" y="38" class="lbl" style="fill:var(--ch)">kharab → 0.6 × 0.03 = 0.018</text>
+      <text x="388" y="94" class="sm">theek</text>
+      <text x="388" y="158" class="lbl" style="fill:var(--ch)">kharab → 0.4 × 0.05 = 0.020</text>
+      <text x="388" y="214" class="sm">theek</text>
+      <text x="388" y="118" class="lbl">Kul kharab = 0.038</text>
+      <text x="388" y="136" class="sm">M1 se, agar kharab mila: 18/38 ≈ 0.47</text>
+    </svg>
+    </div>
+    <figcaption>Shaakh par guna. "Kharab kitna?" = kharab wale raaston ka jod. "Kharab mila, M1 ka hai?" = M1 wala raasta ÷ kul kharab (Bayes).</figcaption>
+  </figure><h3>Speed method 3 · Area wali probability</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Unit square from 0 to 1. A quarter circle of radius one half at the origin, and the diagonal X equals Y. The shaded part is inside the quarter circle and below the diagonal, an eighth of a circle of radius one half, area pi over 32.">
+      <rect x="60" y="20" width="240" height="240" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <path d="M60,260 L180,260 A120,120 0 0,0 60,140 Z" class="chf"/>
+      <path d="M60,260 L180,260 A120,120 0 0,0 144.85,175.15 Z" style="fill:var(--ch);opacity:.75"/>
+      <path d="M180,260 A120,120 0 0,0 60,140" fill="none" class="chs"/>
+      <line x1="60" y1="260" x2="300" y2="20" class="ln" stroke-width="1.5" stroke-dasharray="6 4"/>
+      <g class="sm"><text x="52" y="278" text-anchor="middle">0</text><text x="180" y="278" text-anchor="middle">½</text><text x="300" y="278" text-anchor="middle">1</text><text x="44" y="144" text-anchor="middle">½</text><text x="44" y="24" text-anchor="middle">1</text></g>
+      <text x="236" y="70" class="sm">X = Y</text>
+      <text x="340" y="50" class="lbl">Kul area = 1 × 1 = 1</text>
+      <text x="340" y="80" class="lbl">Origin se doori ≤ ½</text>
+      <text x="340" y="98" class="sm">→ radius ½ ka quarter circle = π(½)²/4 = π/16</text>
+      <text x="340" y="132" class="lbl">X &gt; Y → diagonal ke neeche</text>
+      <text x="340" y="150" class="sm">→ quarter ka aadha = π/32</text>
+      <text x="340" y="190" class="lbl" style="fill:var(--ch)">Probability = (π/32) ÷ 1 = π/32</text>
+    </svg>
+    </div>
+    <figcaption>Gehra tukda = dono shartein. Square ka area 1 hai, toh area hi probability hai. SP-XIV 30 Jul 2025.</figcaption>
+  </figure><h3>Speed method 4 · Darwaze wala sawaal (switch karo)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Five doors. Your door has chance 1 over 5. The other four together have 4 over 5. The host opens 3 of them showing goats, so the whole 4 over 5 moves to the one remaining closed door.">
+      <rect x="40" y="40" width="70" height="100" rx="6" class="chf"/><rect x="40" y="40" width="70" height="100" rx="6" class="chs"/>
+      <text x="75" y="95" text-anchor="middle" class="lbl">1/5</text>
+      <text x="75" y="160" text-anchor="middle" class="sm">tumhara</text>
+      <rect x="170" y="30" width="420" height="120" rx="10" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="6 4"/>
+      <rect x="190" y="40" width="70" height="100" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="290" y="40" width="70" height="100" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="390" y="40" width="70" height="100" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="490" y="40" width="70" height="100" rx="6" style="fill:var(--ch)"/>
+      <g text-anchor="middle" class="sm"><text x="225" y="95">bakri</text><text x="325" y="95">bakri</text><text x="425" y="95">bakri</text></g>
+      <text x="525" y="95" text-anchor="middle" class="lbl" style="fill:var(--paper)">4/5</text>
+      <text x="380" y="22" text-anchor="middle" class="sm">baaki 4 darwaze milkar = 4/5</text>
+      <text x="325" y="160" text-anchor="middle" class="sm">host ne 3 khole (usse pata tha)</text>
+      <text x="350" y="190" text-anchor="middle" class="lbl">Switch karo → jeet ka chance 4/5</text>
+    </svg>
+    </div>
+    <figcaption>Host jaanta hai car kahan hai, isliye wo hamesha bakri hi kholta hai. Baaki 4 ka poora chance bache hue ek darwaze par aa jaata hai.</figcaption>
+  </figure></section>
+<section class="chap" id="mdt-di"><div class="eyebrow">Maths · 9 questions</div><h2>Data Interpretation: table padho, kam se kam hisaab karo</h2><h3>Speed method 1 · Base se farq (average bina bade jod ke)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Worker C wages 220, 230, 215, 225 drawn to scale from a baseline of 200. A base line at 220 shows differences 0, plus 10, minus 5, plus 5, total plus 10, divided by 4 is plus 2.5, so the average is 222.5.">
+      <line x1="80" y1="220" x2="520" y2="220" class="ln"/>
+      <text x="74" y="224" text-anchor="end" class="sm">200</text>
+      <g>
+        <rect x="110" y="140" width="70" height="80" class="chf"/><rect x="110" y="140" width="70" height="80" class="chs"/>
+        <rect x="210" y="100" width="70" height="120" class="chf"/><rect x="210" y="100" width="70" height="120" class="chs"/>
+        <rect x="310" y="160" width="70" height="60" class="chf"/><rect x="310" y="160" width="70" height="60" class="chs"/>
+        <rect x="410" y="120" width="70" height="100" class="chf"/><rect x="410" y="120" width="70" height="100" class="chs"/>
+      </g>
+      <line x1="80" y1="140" x2="520" y2="140" class="ln" stroke-dasharray="4 4"/>
+      <text x="74" y="144" text-anchor="end" class="sm">220</text>
+      <line x1="80" y1="130" x2="520" y2="130" style="stroke:var(--ch)" stroke-width="2"/>
+      <text x="526" y="134" class="lbl" style="fill:var(--ch)">222.5 = average</text>
+      <g text-anchor="middle" class="lbl"><text x="145" y="132">220</text><text x="245" y="92">230</text><text x="345" y="152">215</text><text x="445" y="112">225</text></g>
+      <g text-anchor="middle" class="sm"><text x="145" y="238">Day 1</text><text x="245" y="238">Day 2</text><text x="345" y="238">Day 3</text><text x="445" y="238">Day 4</text></g>
+      <g text-anchor="middle" class="sm"><text x="145" y="190">0</text><text x="245" y="190">+10</text><text x="345" y="190">−5</text><text x="445" y="190">+5</text></g>
+      <text x="300" y="30" text-anchor="middle" class="lbl">Base 220 maano: farq 0 + 10 − 5 + 5 = +10</text>
+      <text x="300" y="52" text-anchor="middle" class="sm">+10 ÷ 4 = +2.5 → average = 220 + 2.5 = 222.5</text>
+      <text x="300" y="256" text-anchor="middle" class="sm">bars 200 se shuru, scale par (1 rupaya = 4 px)</text>
+    </svg>
+    </div>
+    <figcaption>Worker C ki 4 din ki kamaai. Upar-neeche ke tukde ek doosre ko kaat dete hain; bacha hua farq ÷ ginti hi base se upar ka hissa. CGL 13 Sep 2025.</figcaption>
+  </figure><h3>Speed method 2 · "Dono" wali table = Venn</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Venn diagram for 120 students. Football only 45, both 25, basketball only 35, neither 15. Football total 70, basketball total 60, ratio 7 to 6.">
+      <rect x="20" y="16" width="420" height="200" rx="10" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <text x="34" y="38" class="sm">120 students</text>
+      <circle cx="175" cy="118" r="80" class="chf"/><circle cx="175" cy="118" r="80" class="chs"/>
+      <circle cx="285" cy="118" r="80" class="chf"/><circle cx="285" cy="118" r="80" class="chs"/>
+      <text x="140" y="122" text-anchor="middle" class="lbl">45</text>
+      <text x="230" y="122" text-anchor="middle" class="lbl">25</text>
+      <text x="322" y="122" text-anchor="middle" class="lbl">35</text>
+      <text x="140" y="140" text-anchor="middle" class="sm">sirf F</text><text x="230" y="140" text-anchor="middle" class="sm">dono</text><text x="322" y="140" text-anchor="middle" class="sm">sirf B</text>
+      <text x="400" y="204" text-anchor="middle" class="sm">koi nahi 15</text>
+      <text x="460" y="70" class="lbl">Football = 45 + 25 = 70</text>
+      <text x="460" y="100" class="lbl">Basketball = 35 + 25 = 60</text>
+      <text x="460" y="138" class="lbl" style="fill:var(--ch)">70 : 60 = 7 : 6</text>
+      <text x="460" y="166" class="sm">check: 45 + 25 + 35 + 15 = 120 ✔</text>
+    </svg>
+    </div>
+    <figcaption>"Dono" wala hissa dono gheron mein ginna hai. CGL 13 Sep 2025.</figcaption>
+  </figure><h3>Speed method 3 · Do column ki tulna: bas farq dekho</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Stacked bars of students shorter than 1.65 metres. Section A: 5, 9 and 11, total 25. Section B: 4, 8 and 13, total 25. Equal, so ratio 1 to 1.">
+      <text x="20" y="64" class="lbl">Section A</text>
+      <rect x="120" y="44" width="50" height="34" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <rect x="170" y="44" width="90" height="34" class="chf"/><rect x="170" y="44" width="90" height="34" class="chs"/>
+      <rect x="260" y="44" width="110" height="34" style="fill:var(--ch);opacity:.5"/>
+      <g text-anchor="middle" class="lbl"><text x="145" y="66">5</text><text x="215" y="66">9</text><text x="315" y="66">11</text></g>
+      <text x="386" y="66" class="lbl">= 25</text>
+      <text x="20" y="134" class="lbl">Section B</text>
+      <rect x="120" y="114" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <rect x="160" y="114" width="80" height="34" class="chf"/><rect x="160" y="114" width="80" height="34" class="chs"/>
+      <rect x="240" y="114" width="130" height="34" style="fill:var(--ch);opacity:.5"/>
+      <g text-anchor="middle" class="lbl"><text x="140" y="136">4</text><text x="200" y="136">8</text><text x="305" y="136">13</text></g>
+      <text x="386" y="136" class="lbl">= 25</text>
+      <g class="sm"><text x="120" y="34">1.55 m</text><text x="185" y="34">1.60 m</text><text x="285" y="34">1.62 m</text></g>
+      <text x="460" y="80" class="lbl">Farq row-wise:</text>
+      <text x="460" y="100" class="sm">A − B = +1, +1, −2 → 0</text>
+      <text x="460" y="134" class="lbl" style="fill:var(--ch)">Ratio = 1 : 1</text>
+      <text x="350" y="190" text-anchor="middle" class="sm">1.65 se kam = 1.55, 1.60, 1.62 wali rows (1.65 khud nahi) · bars scale par (1 student = 10 px)</text>
+    </svg>
+    </div>
+    <figcaption>"Less than 1.65" mein 1.65 wali row shaamil nahi. CGL 14 Sep 2025.</figcaption>
+  </figure><h3>Type 3 · Kul percentage (1 Q)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="Marks over both semesters against maximum, drawn to scale. English 85 of 100, Maths 150 of 200, Science 75 of 100, History 120 of 200. Total 430 of 600, about 71.7 percent.">
+      <g class="lbl"><text x="20" y="50">English</text><text x="20" y="96">Maths</text><text x="20" y="142">Science</text><text x="20" y="188">History</text></g>
+      <g class="paper" stroke="var(--muted)" stroke-width="1.2">
+        <rect x="120" y="32" width="150" height="26"/>
+        <rect x="120" y="78" width="300" height="26"/>
+        <rect x="120" y="124" width="150" height="26"/>
+        <rect x="120" y="170" width="300" height="26"/>
+      </g>
+      <g>
+        <rect x="120" y="32" width="127.5" height="26" class="chf"/><rect x="120" y="32" width="127.5" height="26" class="chs"/>
+        <rect x="120" y="78" width="225" height="26" class="chf"/><rect x="120" y="78" width="225" height="26" class="chs"/>
+        <rect x="120" y="124" width="112.5" height="26" class="chf"/><rect x="120" y="124" width="112.5" height="26" class="chs"/>
+        <rect x="120" y="170" width="180" height="26" class="chf"/><rect x="120" y="170" width="180" height="26" class="chs"/>
+      </g>
+      <g class="sm"><text x="280" y="50">85 / 100</text><text x="430" y="96">150 / 200</text><text x="280" y="142">75 / 100</text><text x="430" y="188">120 / 200</text></g>
+      <text x="120" y="22" class="sm">bhara hua = mile (dono semester) · khaali dabba = maximum · 1 mark = 1.5 px</text>
+      <text x="520" y="96" class="lbl">Mile = 430</text>
+      <text x="520" y="120" class="lbl">Kul = 600</text>
+      <text x="520" y="150" class="lbl" style="fill:var(--ch)">≈ 71.7% → 72%</text>
+      <text x="350" y="228" text-anchor="middle" class="sm">600 ka 70% = 420 · bache 10 = 600 ka 1.67% · toh 71.67%</text>
+    </svg>
+    </div>
+    <figcaption>Har subject ka max alag hai, isliye pehle sab mile jodo aur sab max jodo, phir ek baar %. SP-XIV 29 Aug 2025.</figcaption>
+  </figure></section>
+<p class="dg-src"><a href="/pyq-notes?b=maths&amp;t=t09">🧮 Poore notes mein ye topic kholo ›</a></p>

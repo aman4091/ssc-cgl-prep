@@ -1,0 +1,413 @@
+<section class="chap" id="mtg-basics"><div class="eyebrow">Maths · 277 questions</div><h2>Trigonometry: shuru se, aur 36-second wale tareeke</h2><h3>Pehle ek chhoti si kahani: deewar aur seedhi</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Right triangle drawn to scale with base 4, perpendicular 3 and hypotenuse 5. Angle theta at the base. Six ratios listed: sin = P/H = 3/5, cos = B/H = 4/5, tan = P/B = 3/4, and their reciprocals cosec 5/3, sec 5/4, cot 4/3.">
+      <polygon points="60,260 340,260 340,50" class="chf"/>
+      <polygon points="60,260 340,260 340,50" class="chs" style="fill:none"/>
+      <rect x="322" y="242" width="18" height="18" class="ln" style="fill:none"/>
+      <path d="M100,260 A40,40 0 0,0 92,236" class="chs" style="fill:none"/>
+      <text x="108" y="250" class="lbl" style="fill:var(--ch)">θ</text>
+      <text x="200" y="282" text-anchor="middle" class="lbl">B = 4 (aadhaar / base)</text>
+      <text x="350" y="150" class="lbl">P = 3</text>
+      <text x="350" y="168" class="sm">(θ ke saamne)</text>
+      <text x="168" y="138" text-anchor="end" class="lbl">H = 5</text>
+      <text x="168" y="156" text-anchor="end" class="sm">(karn, sabse lambi)</text>
+      <line x1="440" y1="20" x2="440" y2="290" class="ln"/>
+      <g class="lbl">
+        <text x="460" y="42">sin θ = P/H = 3/5</text>
+        <text x="460" y="68">cos θ = B/H = 4/5</text>
+        <text x="460" y="94">tan θ = P/B = 3/4</text>
+      </g>
+      <text x="460" y="126" class="sm">ulte (reciprocal):</text>
+      <g class="lbl" style="fill:var(--ch)">
+        <text x="460" y="150">cosec θ = H/P = 5/3</text>
+        <text x="460" y="176">sec θ = H/B = 5/4</text>
+        <text x="460" y="202">cot θ = B/P = 4/3</text>
+      </g>
+      <text x="460" y="240" class="sm">Pandit Badri Prasad</text>
+      <text x="460" y="256" class="sm">Har Har Bole</text>
+      <text x="460" y="280" class="sm">→ sin = P/H, cos = B/H, tan = P/B</text>
+    </svg>
+    </div>
+    <figcaption>3-4-5 ki seedhi, scale par. P hamesha angle ke saamne wali bhuja hai, H sabse lambi. Upar ke teen yaad karo; neeche ke teen bas unke ulte hain.</figcaption>
+  </figure><h3>Speed method 1 · Value table, 30 second mein khud banao</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Value table for 0, 30, 45, 60 and 90 degrees. Count 0 to 4, square root over 2 gives sin: 0, 1/2, 1/root2, root3/2, 1. Cos is the same row reversed. Tan is 0, 1/root3, 1, root3, not defined.">
+      <g text-anchor="middle" class="lbl">
+        <text x="185" y="28">0°</text><text x="295" y="28">30°</text><text x="405" y="28">45°</text><text x="515" y="28">60°</text><text x="625" y="28">90°</text>
+      </g>
+      <text x="14" y="66" class="sm">ginti likho</text>
+      <g text-anchor="middle" class="sm"><text x="185" y="66">0</text><text x="295" y="66">1</text><text x="405" y="66">2</text><text x="515" y="66">3</text><text x="625" y="66">4</text></g>
+      <line x1="130" y1="78" x2="680" y2="78" class="ln"/>
+      <text x="14" y="112" class="lbl">sin</text><text x="14" y="128" class="sm">√ginti ÷ 2</text>
+      <g>
+        <rect x="134" y="88" width="102" height="48" rx="6" class="chf"/><rect x="244" y="88" width="102" height="48" rx="6" class="chf"/><rect x="354" y="88" width="102" height="48" rx="6" class="chf"/><rect x="464" y="88" width="102" height="48" rx="6" class="chf"/><rect x="574" y="88" width="102" height="48" rx="6" class="chf"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="185" y="104" class="sm">√0/2</text><text x="295" y="104" class="sm">√1/2</text><text x="405" y="104" class="sm">√2/2</text><text x="515" y="104" class="sm">√3/2</text><text x="625" y="104" class="sm">√4/2</text>
+        <text x="185" y="126" class="lbl">0</text><text x="295" y="126" class="lbl">1/2</text><text x="405" y="126" class="lbl">1/√2</text><text x="515" y="126" class="lbl">√3/2</text><text x="625" y="126" class="lbl">1</text>
+      </g>
+      <text x="14" y="168" class="lbl">cos</text><text x="14" y="184" class="sm">sin ulta</text>
+      <g>
+        <rect x="134" y="148" width="102" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.2"/><rect x="244" y="148" width="102" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.2"/><rect x="354" y="148" width="102" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.2"/><rect x="464" y="148" width="102" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.2"/><rect x="574" y="148" width="102" height="44" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="185" y="176">1</text><text x="295" y="176">√3/2</text><text x="405" y="176">1/√2</text><text x="515" y="176">1/2</text><text x="625" y="176">0</text></g>
+      <text x="14" y="222" class="lbl">tan</text><text x="14" y="238" class="sm">sin ÷ cos</text>
+      <g>
+        <rect x="134" y="202" width="102" height="44" rx="6" class="chf"/><rect x="244" y="202" width="102" height="44" rx="6" class="chf"/><rect x="354" y="202" width="102" height="44" rx="6" class="chf"/><rect x="464" y="202" width="102" height="44" rx="6" class="chf"/><rect x="574" y="202" width="102" height="44" rx="6" class="chf"/>
+      </g>
+      <g text-anchor="middle" class="lbl" style="fill:var(--ch)"><text x="185" y="230">0</text><text x="295" y="230">1/√3</text><text x="405" y="230">1</text><text x="515" y="230">√3</text><text x="625" y="230">not defined</text></g>
+      <text x="405" y="264" text-anchor="middle" class="sm">cosec, sec, cot = upar wali lines ke ulte · sin badhta hai, cos ghatta hai (0° se 90° tak)</text>
+    </svg>
+    </div>
+    <figcaption>Poori table sirf "0 1 2 3 4, √ karo, 2 se bhaag" se bani. Cos ko ulta padho. Ye table rough sheet par shuru mein hi likh lo.</figcaption>
+  </figure><h3>Speed method 2 · Do "set-square" triangle (30-60-90 aur 45-45-90)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Two set-square triangles drawn to scale. Left: 30-60-90 triangle with sides 1, root 3, and 2. Middle: 45-45-90 triangle with sides 1, 1 and root 2. Right: rules for each angle.">
+      <polygon points="40,230 213,230 213,130" class="chf"/>
+      <polygon points="40,230 213,230 213,130" class="chs" style="fill:none"/>
+      <rect x="199" y="216" width="14" height="14" class="ln" style="fill:none"/>
+      <text x="80" y="224" class="sm" style="fill:var(--ch)">30°</text>
+      <text x="192" y="152" class="sm" style="fill:var(--ch)">60°</text>
+      <text x="223" y="185" class="lbl">1</text>
+      <text x="126" y="252" text-anchor="middle" class="lbl">√3</text>
+      <text x="116" y="168" text-anchor="end" class="lbl">2</text>
+      <text x="126" y="30" text-anchor="middle" class="lbl">30-60-90</text>
+      <text x="126" y="48" text-anchor="middle" class="sm">chhoti : badi : karn</text>
+      <text x="126" y="64" text-anchor="middle" class="sm">= 1 : √3 : 2</text>
+      <polygon points="290,230 390,230 390,130" class="chf"/>
+      <polygon points="290,230 390,230 390,130" class="chs" style="fill:none"/>
+      <rect x="376" y="216" width="14" height="14" class="ln" style="fill:none"/>
+      <text x="314" y="224" class="sm" style="fill:var(--ch)">45°</text>
+      <text x="369" y="158" class="sm" style="fill:var(--ch)">45°</text>
+      <text x="400" y="185" class="lbl">1</text>
+      <text x="340" y="252" text-anchor="middle" class="lbl">1</text>
+      <text x="330" y="168" text-anchor="end" class="lbl">√2</text>
+      <text x="340" y="30" text-anchor="middle" class="lbl">45-45-90</text>
+      <text x="340" y="48" text-anchor="middle" class="sm">= 1 : 1 : √2</text>
+      <line x1="450" y1="20" x2="450" y2="250" class="ln"/>
+      <text x="466" y="40" class="lbl">Angle se oonchai (h) aur doori (d):</text>
+      <text x="466" y="72" class="lbl" style="fill:var(--ch)">30° → d = h × √3</text>
+      <text x="466" y="90" class="sm">karn = 2h</text>
+      <text x="466" y="122" class="lbl" style="fill:var(--ch)">45° → d = h</text>
+      <text x="466" y="140" class="sm">karn = h × √2</text>
+      <text x="466" y="172" class="lbl" style="fill:var(--ch)">60° → h = d × √3</text>
+      <text x="466" y="190" class="sm">karn = 2d</text>
+      <text x="466" y="230" class="sm">√3 ≈ 1.732 · √2 ≈ 1.414</text>
+    </svg>
+    </div>
+    <figcaption>Dono triangle scale par. 30° ke saamne sabse chhoti bhuja (1), 60° ke saamne √3, 90° ke saamne karn (2).</figcaption>
+  </figure><h3>Speed method 3 · Ek ratio diya? Triangle banao (triplet se)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Six Pythagorean triplet cards: 3-4-5, 5-12-13, 7-24-25, 8-15-17, 9-40-41, 20-21-29, with how often each came in the 2025 papers.">
+      <g>
+        <rect x="6" y="14" width="108" height="96" rx="8" class="chf"/><rect x="6" y="14" width="108" height="96" rx="8" class="chs" style="fill:none"/>
+        <rect x="122" y="14" width="108" height="96" rx="8" class="chf"/><rect x="122" y="14" width="108" height="96" rx="8" class="chs" style="fill:none"/>
+        <rect x="238" y="14" width="108" height="96" rx="8" class="chf"/><rect x="238" y="14" width="108" height="96" rx="8" class="chs" style="fill:none"/>
+        <rect x="354" y="14" width="108" height="96" rx="8" class="chf"/>
+        <rect x="470" y="14" width="108" height="96" rx="8" class="chf"/>
+        <rect x="586" y="14" width="108" height="96" rx="8" class="chf"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="60" y="52" class="lbl" style="fill:var(--ch)">3 · 4 · 5</text><text x="60" y="74" class="sm">0.6 aur 0.8 bhi</text><text x="60" y="94" class="sm">sabse zyada</text>
+        <text x="176" y="52" class="lbl" style="fill:var(--ch)">5 · 12 · 13</text><text x="176" y="74" class="sm">5/13, 12/13</text><text x="176" y="94" class="sm">doosre number par</text>
+        <text x="292" y="52" class="lbl" style="fill:var(--ch)">7 · 24 · 25</text><text x="292" y="74" class="sm">7/25, 24/25</text><text x="292" y="94" class="sm">CHSL ka pyaara</text>
+        <text x="408" y="52" class="lbl" style="fill:var(--ch)">8 · 15 · 17</text><text x="408" y="74" class="sm">8/17, 15/17</text>
+        <text x="524" y="52" class="lbl" style="fill:var(--ch)">9 · 40 · 41</text><text x="524" y="74" class="sm">40/41 (seedhi)</text>
+        <text x="640" y="52" class="lbl" style="fill:var(--ch)">20 · 21 · 29</text><text x="640" y="74" class="sm">CGL+</text>
+      </g>
+      <text x="350" y="140" text-anchor="middle" class="sm">Guna bhi chalega: 6-8-10, 9-12-15, 10-24-26, 15-20-25 … sab 3-4-5 ya 5-12-13 ke hi multiple hain</text>
+      <text x="350" y="160" text-anchor="middle" class="sm">Triplet na mile toh Pythagoras: sin = 1/√10 → P = 1, H = √10 → B = √(10 − 1) = 3</text>
+    </svg>
+    </div>
+    <figcaption>Outline wale teen triplet 2025 ke trig sawaalon mein 70 se zyada baar aaye. Inko table jaisa yaad karo.</figcaption>
+  </figure><h3>Speed method 5 · Quadrant ka sign (ASTC)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Quadrant diagram. First quadrant 0 to 90: all ratios positive. Second 90 to 180: only sin and cosec positive. Third 180 to 270: only tan and cot positive. Fourth 270 to 360: only cos and sec positive. Mnemonic Add Sugar To Coffee.">
+      <defs>
+        <marker id="mtg-q-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="352" y="22" width="300" height="126" rx="8" class="chf"/>
+      <rect x="48" y="22" width="300" height="126" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <rect x="48" y="152" width="300" height="126" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <rect x="352" y="152" width="300" height="126" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <line x1="30" y1="150" x2="670" y2="150" class="ln" marker-end="url(#mtg-q-arr)"/>
+      <line x1="350" y1="292" x2="350" y2="10" class="ln" marker-end="url(#mtg-q-arr)"/>
+      <g text-anchor="middle">
+        <text x="502" y="52" class="lbl">Q1 · 0° se 90°</text>
+        <text x="502" y="82" class="lbl" style="fill:var(--ch)">A = All (sab +)</text>
+        <text x="502" y="108" class="sm">sin 3/5 → cos 4/5, tan 3/4</text>
+        <text x="198" y="52" class="lbl">Q2 · 90° se 180°</text>
+        <text x="198" y="82" class="lbl" style="fill:var(--ch)">S = sin, cosec +</text>
+        <text x="198" y="108" class="sm">sin 3/5 → cos −4/5, tan −3/4</text>
+        <text x="198" y="190" class="lbl">Q3 · 180° se 270°</text>
+        <text x="198" y="220" class="lbl" style="fill:var(--ch)">T = tan, cot +</text>
+        <text x="198" y="246" class="sm">tan 5/12 → sin −5/13, cos −12/13</text>
+        <text x="502" y="190" class="lbl">Q4 · 270° se 360°</text>
+        <text x="502" y="220" class="lbl" style="fill:var(--ch)">C = cos, sec +</text>
+        <text x="502" y="246" class="sm">cos 4/5 → sin −3/5</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>"Add Sugar To Coffee": Q1 mein All, Q2 mein Sin, Q3 mein Tan, Q4 mein Cos positive. Baaki sab negative.</figcaption>
+  </figure><h3>Speed method 6 · Radian: π ki jagah 180 likho</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Half circle protractor with common angles marked in degrees and radians: 0, 30 = pi/6, 45 = pi/4, 60 = pi/3, 90 = pi/2, 120 = 2pi/3, 135 = 3pi/4, 150 = 5pi/6, 180 = pi.">
+      <path d="M150,250 A200,200 0 0,1 550,250" class="chs" style="fill:none"/>
+      <line x1="140" y1="250" x2="560" y2="250" class="ln"/>
+      <g class="ln">
+        <line x1="350" y1="250" x2="523.2" y2="150"/><line x1="350" y1="250" x2="491.4" y2="108.6"/><line x1="350" y1="250" x2="450" y2="76.8"/>
+        <line x1="350" y1="250" x2="350" y2="50"/><line x1="350" y1="250" x2="250" y2="76.8"/><line x1="350" y1="250" x2="208.6" y2="108.6"/><line x1="350" y1="250" x2="176.8" y2="150"/>
+      </g>
+      <g style="fill:var(--ch)">
+        <circle cx="550" cy="250" r="4"/><circle cx="523.2" cy="150" r="4"/><circle cx="491.4" cy="108.6" r="4"/><circle cx="450" cy="76.8" r="4"/><circle cx="350" cy="50" r="4"/><circle cx="250" cy="76.8" r="4"/><circle cx="208.6" cy="108.6" r="4"/><circle cx="176.8" cy="150" r="4"/><circle cx="150" cy="250" r="4"/>
+      </g>
+      <g class="lbl">
+        <text x="562" y="246">0° · 0</text>
+        <text x="538" y="146">30° · π/6</text>
+        <text x="505" y="100">45° · π/4</text>
+        <text x="462" y="64">60° · π/3</text>
+        <text x="350" y="36" text-anchor="middle">90° · π/2</text>
+        <text x="238" y="64" text-anchor="end">120° · 2π/3</text>
+        <text x="195" y="100" text-anchor="end">135° · 3π/4</text>
+        <text x="162" y="146" text-anchor="end">150° · 5π/6</text>
+        <text x="138" y="246" text-anchor="end">180° · π</text>
+      </g>
+      <text x="350" y="276" text-anchor="middle" class="sm">π = 180° · 1 radian ≈ 57.3° · degree → radian: ÷ 180, phir × π</text>
+      <text x="350" y="294" text-anchor="middle" class="sm">poora circle 360° = 2π · "kitna %" = angle ÷ 2π × 100</text>
+    </svg>
+    </div>
+    <figcaption>Aadha circle = π = 180°. Har tukda π/6 = 30°, π/4 = 45° wali ginti se bana hai.</figcaption>
+  </figure><h3>Kaunsa method kab? (ek nazar mein)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 500" role="img" aria-label="Flowchart for trigonometry questions. Check in order: radian, standard angle value, sin equals cos with brackets, one ratio given, sec plus tan given, sin plus cos given, tan plus cot given, simplify with expression options. Each yes leads to its method.">
+      <defs>
+        <marker id="mtg-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal mein kya diya hai?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mtg-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="452" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">π ya "radian" likha hai?</text>
+        <text x="180" y="141">0/30/45/60/90 ki seedhi value?</text>
+        <text x="180" y="197">sin = cos (bracket ke saath)?</text>
+        <text x="180" y="253">Sirf ek ratio diya (3/5, 5/12…)?</text>
+        <text x="180" y="309">sec + tan ya cosec + cot = k?</text>
+        <text x="180" y="365">sin + cos = k (ya sin − cos)?</text>
+        <text x="180" y="421">tan + cot = k?</text>
+        <text x="180" y="477">Simplify, options mein expression?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="180" y1="436" x2="180" y2="449" marker-end="url(#mtg-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text><text x="188" y="447">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mtg-fc-arr)"/>
+        <line x1="340" y1="472" x2="396" y2="472" marker-end="url(#mtg-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text><text x="368" y="466">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+        <rect x="400" y="452" width="290" height="40" rx="6" class="chf"/><rect x="400" y="452" width="290" height="40" rx="6" class="chs" style="fill:none"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">π = 180 rakho</text>
+        <text x="410" y="132">Value table (√0/2 … √4/2)</text>
+        <text x="410" y="188">Bracket jodo = 90°</text>
+        <text x="410" y="244">Triangle + triplet (+ sign)</text>
+        <text x="410" y="300">Jodi: guna = 1</text>
+        <text x="410" y="356">Square karo</text>
+        <text x="410" y="412">k² − 2, k³ − 3k</text>
+        <text x="410" y="468">Angle maan lo: 45° / 60°</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">bina π ho toh × 57.3</text>
+        <text x="410" y="149">sec = 2 → 60° · tan = 1 → 45°</text>
+        <text x="410" y="205">tan x = cot(3x − 30) → 4x = 120</text>
+        <text x="410" y="261">3-4-5 · 5-12-13 · 7-24-25 · 8-15-17</text>
+        <text x="410" y="317">sec − tan = 1/k</text>
+        <text x="410" y="373">sin 2A = k² − 1 · √2 → 45°</text>
+        <text x="410" y="429">sin cos = 1/k · 2 → 45°</text>
+        <text x="410" y="485">jo option same number de</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow ek baar rough mein chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure></section>
+<section class="chap" id="mhd-all"><div class="eyebrow">Maths · 64 questions</div><h2>Height &amp; Distance: teen triangle, aur saare sawaal khatam</h2><h3>Pehle ek chhoti si kahani: tower ki chhoti dekhna</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Tower of height h on the left, observer point P on the ground at distance d. Line of sight from P to the top. Angle of elevation at P equals angle of depression at the top, because the dashed horizontal at the top is parallel to the ground.">
+      <rect x="100" y="50" width="40" height="190" class="chf"/><rect x="100" y="50" width="40" height="190" class="chs" style="fill:none"/>
+      <line x1="40" y1="240" x2="640" y2="240" class="ln"/>
+      <line x1="120" y1="50" x2="600" y2="50" class="ln" stroke-dasharray="5 5"/>
+      <line x1="120" y1="50" x2="520" y2="240" class="chs" style="stroke-width:2"/>
+      <circle cx="520" cy="240" r="5" style="fill:var(--ch)"/>
+      <circle cx="120" cy="50" r="5" style="fill:var(--ch)"/>
+      <path d="M470,240 A50,50 0 0,1 474.8,218.5" class="chs" style="fill:none"/>
+      <path d="M170,50 A50,50 0 0,1 165.2,71.5" class="chs" style="fill:none"/>
+      <text x="460" y="232" text-anchor="end" class="lbl" style="fill:var(--ch)">elevation</text>
+      <text x="180" y="78" class="lbl" style="fill:var(--ch)">depression</text>
+      <text x="606" y="54" class="sm">seedhi nazar</text>
+      <text x="530" y="262" class="lbl">P (tum)</text>
+      <text x="86" y="150" text-anchor="end" class="lbl">h</text>
+      <text x="320" y="262" text-anchor="middle" class="lbl">d (zameen par doori)</text>
+      <text x="350" y="130" class="sm">nazar ki line (karn)</text>
+      <text x="350" y="284" text-anchor="middle" class="sm">Upar ki dashed line zameen ke parallel hai → dono angle barabar (alternate angles)</text>
+    </svg>
+    </div>
+    <figcaption>Depression ka angle chhat par banta hai, par wahi angle neeche zameen par bhi hai. Isliye har sawaal mein angle zameen par utaar kar right triangle banao.</figcaption>
+  </figure><h3>Speed method 2 · Ek hi taraf do point (aage chal kar angle badla)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 296" role="img" aria-label="Tower on the right with height h. Point B at 60 degrees is x from the foot, point A at 30 degrees is 3x from the foot, so the gap AB is 2x and h equals root 3 times x. Rules listed on the left.">
+      <rect x="610" y="90" width="20" height="150" class="chf"/><rect x="610" y="90" width="20" height="150" class="chs" style="fill:none"/>
+      <line x1="340" y1="240" x2="680" y2="240" class="ln"/>
+      <line x1="360.2" y1="240" x2="620" y2="90" class="chs" style="stroke-width:1.8"/>
+      <line x1="533.4" y1="240" x2="620" y2="90" class="chs" style="stroke-width:1.8"/>
+      <circle cx="360.2" cy="240" r="4" style="fill:var(--ch)"/><circle cx="533.4" cy="240" r="4" style="fill:var(--ch)"/>
+      <path d="M400.2,240 A40,40 0 0,0 394.8,220" class="chs" style="fill:none"/>
+      <path d="M563.4,240 A30,30 0 0,0 548.4,214" class="chs" style="fill:none"/>
+      <text x="406" y="234" class="sm" style="fill:var(--ch)">30°</text>
+      <text x="566" y="232" class="sm" style="fill:var(--ch)">60°</text>
+      <text x="356" y="260" text-anchor="middle" class="lbl">A</text><text x="533" y="260" text-anchor="middle" class="lbl">B</text>
+      <text x="447" y="262" text-anchor="middle" class="lbl" style="fill:var(--ch)">gap = 2x</text>
+      <text x="577" y="262" text-anchor="middle" class="lbl">x</text>
+      <text x="636" y="170" class="lbl">h = √3 x</text>
+      <line x1="360.2" y1="272" x2="620" y2="272" class="ln" stroke-dasharray="3 3"/>
+      <text x="490" y="286" text-anchor="middle" class="sm">AF = 3x (BF ka teen guna)</text>
+      <line x1="320" y1="20" x2="320" y2="270" class="ln"/>
+      <g class="lbl">
+        <text x="14" y="40">30° aur 60°, ek taraf:</text>
+        <text x="14" y="66" style="fill:var(--ch)">h = gap × √3/2</text>
+        <text x="14" y="92" style="fill:var(--ch)">AF : BF = 3 : 1</text>
+        <text x="14" y="118" style="fill:var(--ch)">h² = AF × BF</text>
+      </g>
+      <text x="14" y="150" class="lbl">Gap = h × …</text>
+      <g class="sm">
+        <text x="14" y="174">30° → 45°: (√3 − 1) ≈ 0.732</text>
+        <text x="14" y="196">30° → 60°: 2/√3 ≈ 1.155</text>
+        <text x="14" y="218">45° → 60°: (1 − 1/√3) ≈ 0.423</text>
+        <text x="14" y="246">ulta: h = gap ÷ (ye number)</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>30-60 ki jodi sabse saaf hai: gap hamesha 60° wali doori ka dugna. Doosri jodiyon ke liye left wali "gap = h × …" table yaad karo.</figcaption>
+  </figure><h3>Speed method 3 · Dono taraf do point</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Tower in the middle with height h. Left point at 45 degrees is h away. Right point at 30 degrees is h root 3 away. Total distance between them is h times root 3 plus 1.">
+      <rect x="320" y="90" width="20" height="150" class="chf"/><rect x="320" y="90" width="20" height="150" class="chs" style="fill:none"/>
+      <line x1="150" y1="240" x2="620" y2="240" class="ln"/>
+      <line x1="180" y1="240" x2="330" y2="90" class="chs" style="stroke-width:1.8"/>
+      <line x1="589.8" y1="240" x2="330" y2="90" class="chs" style="stroke-width:1.8"/>
+      <circle cx="180" cy="240" r="4" style="fill:var(--ch)"/><circle cx="589.8" cy="240" r="4" style="fill:var(--ch)"/>
+      <path d="M220,240 A40,40 0 0,0 208.3,211.7" class="chs" style="fill:none"/>
+      <path d="M549.8,240 A40,40 0 0,1 555.2,220" class="chs" style="fill:none"/>
+      <text x="224" y="232" class="sm" style="fill:var(--ch)">45°</text>
+      <text x="544" y="232" text-anchor="end" class="sm" style="fill:var(--ch)">30°</text>
+      <text x="310" y="170" text-anchor="end" class="lbl">h</text>
+      <text x="255" y="262" text-anchor="middle" class="lbl">h</text>
+      <text x="460" y="262" text-anchor="middle" class="lbl">h√3</text>
+      <line x1="180" y1="272" x2="589.8" y2="272" class="ln" stroke-dasharray="3 3"/>
+      <text x="385" y="40" text-anchor="middle" class="lbl" style="fill:var(--ch)">kul doori = h + h√3 = h(√3 + 1)</text>
+      <text x="385" y="62" text-anchor="middle" class="sm">ek hi taraf hote toh farq = h(√3 − 1)</text>
+    </svg>
+    </div>
+    <figcaption>Dono taraf → dooriyan <b>jodo</b>. Ek taraf → dooriyan <b>ghatao</b>. 30° wali doori h√3, 45° wali h, 60° wali h/√3.</figcaption>
+  </figure><h3>Speed method 4 · Do imaaratein (upar se dono sire)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Tall building of 90 m on the left, smaller tower to its right. From the top of the tall building, depression 60 degrees to the tower's foot and 30 degrees to the tower's top. Gap at the top is one third of 90, so the tower is 60 m.">
+      <rect x="120" y="40" width="30" height="210" class="chf"/><rect x="120" y="40" width="30" height="210" class="chs" style="fill:none"/>
+      <rect x="271" y="110" width="22" height="140" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <line x1="60" y1="250" x2="440" y2="250" class="ln"/>
+      <line x1="150" y1="40" x2="440" y2="40" class="ln" stroke-dasharray="5 5"/>
+      <line x1="150" y1="40" x2="271" y2="110" class="chs" style="stroke-width:1.8"/>
+      <line x1="150" y1="40" x2="271" y2="250" class="chs" style="stroke-width:1.8"/>
+      <path d="M200,40 A50,50 0 0,1 193.3,65" class="chs" style="fill:none"/>
+      <path d="M182,40 A32,32 0 0,1 166,67.7" class="chs" style="fill:none"/>
+      <text x="206" y="62" class="sm" style="fill:var(--ch)">30°</text>
+      <text x="156" y="92" class="sm" style="fill:var(--ch)">60°</text>
+      <line x1="300" y1="40" x2="300" y2="110" class="ln" stroke-dasharray="3 3"/>
+      <text x="306" y="80" class="lbl" style="fill:var(--ch)">gap = H/3</text>
+      <text x="300" y="186" class="lbl">tower = 2H/3</text>
+      <text x="110" y="150" text-anchor="end" class="lbl">H = 90</text>
+      <text x="210" y="270" text-anchor="middle" class="lbl">d (dono ke beech)</text>
+      <line x1="460" y1="20" x2="460" y2="270" class="ln"/>
+      <g class="lbl">
+        <text x="476" y="44">30° aur 60° ki jodi:</text>
+        <text x="476" y="70" style="fill:var(--ch)">gap = H/3</text>
+        <text x="476" y="96" style="fill:var(--ch)">chhota = 2H/3</text>
+      </g>
+      <g class="sm">
+        <text x="476" y="126">kyunki d = H/√3, aur</text>
+        <text x="476" y="146">gap = d/√3 = H/3</text>
+        <text x="476" y="178">H = 90 → gap 30 → tower 60</text>
+        <text x="476" y="200">H = 240 → gap 80 → pole 160</text>
+        <text x="476" y="232">30° aur 45°: d = H, gap = H/√3</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Neeche wala angle (60°) doori deta hai. Upar wala (30°) sirf upar ka gap. Chhoti imaarat = badi − gap.</figcaption>
+  </figure><h3>Speed method 5 · Angle badla, speed batao</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Observer O on the ground. Plane at fixed height h moves from position P1, seen at 60 degrees, to P2, seen at 30 degrees. Horizontal distance changes from h over root 3 to h root 3, so the gap is 2h over root 3. Gap table for other angle pairs on the right.">
+      <defs>
+        <marker id="mhd-sp-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <line x1="40" y1="250" x2="400" y2="250" class="ln"/>
+      <line x1="140" y1="100" x2="380" y2="100" class="ln" stroke-dasharray="5 5" marker-end="url(#mhd-sp-arr)"/>
+      <line x1="80" y1="250" x2="166.6" y2="100" class="chs" style="stroke-width:1.8"/>
+      <line x1="80" y1="250" x2="339.8" y2="100" class="chs" style="stroke-width:1.8"/>
+      <circle cx="80" cy="250" r="4" style="fill:var(--ch)"/>
+      <rect x="156.6" y="93" width="20" height="14" rx="4" style="fill:var(--ch)"/>
+      <rect x="329.8" y="93" width="20" height="14" rx="4" style="fill:var(--ch)"/>
+      <path d="M110,250 A30,30 0 0,0 95,224" class="chs" style="fill:none"/>
+      <path d="M130,250 A50,50 0 0,0 123.3,225" class="chs" style="fill:none"/>
+      <text x="103" y="223" class="sm" style="fill:var(--ch)">60°</text>
+      <text x="136" y="240" class="sm" style="fill:var(--ch)">30°</text>
+      <text x="166" y="86" text-anchor="middle" class="lbl">P1</text><text x="340" y="86" text-anchor="middle" class="lbl">P2</text>
+      <text x="253" y="122" text-anchor="middle" class="lbl" style="fill:var(--ch)">gap = 2h/√3</text>
+      <line x1="339.8" y1="107" x2="339.8" y2="250" class="ln" stroke-dasharray="3 3"/>
+      <text x="348" y="180" class="lbl">h</text>
+      <text x="76" y="268" text-anchor="middle" class="lbl">O</text>
+      <line x1="420" y1="20" x2="420" y2="260" class="ln"/>
+      <text x="436" y="40" class="lbl">Gap (h ka kitna):</text>
+      <g class="sm">
+        <text x="436" y="70">60° → 30°: 2/√3 ≈ 1.155 h</text>
+        <text x="436" y="96">45° → 30°: (√3 − 1) ≈ 0.732 h</text>
+        <text x="436" y="122">60° → 45°: (1 − 1/√3) ≈ 0.423 h</text>
+      </g>
+      <text x="436" y="160" class="lbl" style="fill:var(--ch)">speed = gap ÷ time</text>
+      <text x="436" y="190" class="sm">m/s → km/h: × 18/5</text>
+      <text x="436" y="214" class="sm">km per 10 s → km/h: × 360</text>
+    </svg>
+    </div>
+    <figcaption>Plane ki oonchai nahi badalti. Sirf zameen par uski parchhai aage badhti hai. Wahi gap speed deta hai.</figcaption>
+  </figure></section>
+<p class="dg-src"><a href="/pyq-notes?b=maths&amp;t=t15">🧮 Poore notes mein ye topic kholo ›</a></p>

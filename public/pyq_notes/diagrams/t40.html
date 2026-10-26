@@ -1,0 +1,239 @@
+<section class="chap" id="mdi-basics"><div class="eyebrow">Maths · 258 questions</div><h2>Discount: shuru se, aur 36-second wale tareeke</h2><h3>Pehle ek chhoti si kahani: dukaan ki teen keemat</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Three bars to scale. CP is 100. MP is 140, which is 40 above CP. SP is 112, which is MP minus 28 discount. SP minus CP is 12 profit.">
+      <text x="12" y="52" class="lbl">CP = 100</text><text x="12" y="68" class="sm">khareed</text>
+      <rect x="130" y="34" width="300" height="38" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="280" y="58" text-anchor="middle" class="lbl">100</text>
+      <text x="12" y="122" class="lbl">MP = 140</text><text x="12" y="138" class="sm">tag wala daam</text>
+      <rect x="130" y="104" width="300" height="38" class="chf"/><rect x="130" y="104" width="420" height="38" class="chs"/>
+      <rect x="430" y="104" width="120" height="38" style="fill:var(--ch)"/>
+      <text x="280" y="128" text-anchor="middle" class="lbl">100</text>
+      <text x="490" y="128" text-anchor="middle" class="lbl" style="fill:var(--paper)">+40</text>
+      <text x="560" y="120" class="sm">markup = CP ka 40%</text>
+      <text x="12" y="192" class="lbl">SP = 112</text><text x="12" y="208" class="sm">asli bikri</text>
+      <rect x="130" y="174" width="336" height="38" class="chf"/><rect x="130" y="174" width="336" height="38" class="chs"/>
+      <rect x="466" y="174" width="84" height="38" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="280" y="198" text-anchor="middle" class="lbl">100</text>
+      <text x="448" y="198" text-anchor="middle" class="lbl">+12</text>
+      <text x="508" y="198" text-anchor="middle" class="sm">−28</text>
+      <text x="560" y="190" class="sm">discount 28</text>
+      <text x="560" y="206" class="sm">= MP ka 20%</text>
+      <line x1="430" y1="24" x2="430" y2="226" class="ln" stroke-dasharray="3 4"/>
+      <text x="430" y="18" text-anchor="middle" class="sm">CP ki line</text>
+      <text x="350" y="250" text-anchor="middle" class="lbl">profit = 112 − 100 = 12 → CP ka 12%</text>
+    </svg>
+    </div>
+    <figcaption>Teen bars, scale par. Markup CP se upar jaata hai, discount MP se neeche aata hai. Jo CP ki line ke upar bacha, wahi profit.</figcaption>
+  </figure><h3>Speed method 3 · Successive discount: a + b − ab/100</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Successive discounts of 20 and 10 percent on 100. First bar 100. Second bar 80 after cutting 20. Third bar 72 after cutting 8, which is 10 percent of 80. Total cut is 28, not 30.">
+      <text x="12" y="48" class="lbl">MP</text><text x="12" y="64" class="sm">shuru</text>
+      <rect x="150" y="30" width="400" height="38" class="chf"/><rect x="150" y="30" width="400" height="38" class="chs"/>
+      <text x="350" y="54" text-anchor="middle" class="lbl">100</text>
+      <text x="12" y="118" class="lbl">20% ke baad</text><text x="12" y="134" class="sm">100 ka 20% = 20 kata</text>
+      <rect x="150" y="100" width="320" height="38" class="chf"/><rect x="150" y="100" width="320" height="38" class="chs"/>
+      <rect x="470" y="100" width="80" height="38" class="paper" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="310" y="124" text-anchor="middle" class="lbl">80</text><text x="510" y="124" text-anchor="middle" class="sm">−20</text>
+      <text x="12" y="188" class="lbl">10% ke baad</text><text x="12" y="204" class="sm">80 ka 10% = 8 kata</text>
+      <rect x="150" y="170" width="288" height="38" class="chf"/><rect x="150" y="170" width="288" height="38" class="chs"/>
+      <rect x="438" y="170" width="32" height="38" style="fill:var(--ch)"/>
+      <rect x="470" y="170" width="80" height="38" class="paper" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="294" y="194" text-anchor="middle" class="lbl">72</text><text x="454" y="194" text-anchor="middle" class="sm" style="fill:var(--paper)">8</text><text x="510" y="194" text-anchor="middle" class="sm">20</text>
+      <text x="566" y="54" class="sm">₹100</text>
+      <text x="566" y="124" class="sm">₹80</text>
+      <text x="566" y="194" class="lbl" style="fill:var(--ch)">₹72</text>
+      <text x="350" y="238" text-anchor="middle" class="lbl">kul chhoot = 20 + 8 = 28% = 20 + 10 − (20 × 10)/100</text>
+    </svg>
+    </div>
+    <figcaption>Doosri chhoot chhote daam par lagti hai, isliye seedha jod (30%) se kam padti hai. Gehra tukda = 8, jo "20 ka bhi 10%" bacha liya gaya.</figcaption>
+  </figure><h3>Speed method 5 · MP : CP = (100 + p) : (100 − d)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Balance picture. MP times (100 minus d) equals SP equals CP times (100 plus p). Example d = 20, p = 10 gives MP to CP = 110 to 80 = 11 to 8, so markup is 37.5 percent.">
+      <rect x="20" y="20" width="250" height="56" rx="8" class="chf"/><rect x="20" y="20" width="250" height="56" rx="8" class="chs"/>
+      <text x="145" y="44" text-anchor="middle" class="lbl">MP ka (100 − d)%</text>
+      <text x="145" y="64" text-anchor="middle" class="sm">discount ke baad</text>
+      <rect x="290" y="28" width="120" height="40" rx="20" style="fill:var(--ch)"/>
+      <text x="350" y="53" text-anchor="middle" class="lbl" style="fill:var(--paper)">= SP =</text>
+      <rect x="430" y="20" width="250" height="56" rx="8" class="chf"/><rect x="430" y="20" width="250" height="56" rx="8" class="chs"/>
+      <text x="555" y="44" text-anchor="middle" class="lbl">CP ka (100 + p)%</text>
+      <text x="555" y="64" text-anchor="middle" class="sm">profit ke baad</text>
+      <text x="350" y="106" text-anchor="middle" class="lbl">Example: d = 20%, p = 10%</text>
+      <text x="350" y="130" text-anchor="middle" class="lbl">MP × 80 = CP × 110</text>
+      <line x1="200" y1="146" x2="500" y2="146" class="ln"/>
+      <text x="350" y="170" text-anchor="middle" class="lbl" style="fill:var(--ch)">MP : CP = 110 : 80 = 11 : 8</text>
+      <text x="350" y="190" text-anchor="middle" class="sm">markup = 3/8 = 37.5% · cross: 80 MP ke neeche, 110 MP ke saamne</text>
+      <g text-anchor="middle">
+        <rect x="20" y="204" width="210" height="46" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <text x="125" y="223" class="sm">d 12%, p 10%</text><text x="125" y="241" class="lbl">MP : CP = 110 : 88 = 5 : 4</text>
+        <rect x="245" y="204" width="210" height="46" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <text x="350" y="223" class="sm">d 25%, p 20%</text><text x="350" y="241" class="lbl">MP : CP = 120 : 75 = 8 : 5</text>
+        <rect x="470" y="204" width="210" height="46" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <text x="575" y="223" class="sm">d 40%, p 50%</text><text x="575" y="241" class="lbl">MP : CP = 150 : 60 = 5 : 2</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>SP beech mein hai. Dono taraf ke % ulte ratio mein jaate hain. Neeche ke teen card bank ke asli sawaalon se hain.</figcaption>
+  </figure><h3>Speed method 6 · D, SP, MP ke parts</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="MP drawn as 17 equal blocks. 15 blocks are SP and 2 blocks are discount. Discount to SP is 2 to 15.">
+      <text x="350" y="22" text-anchor="middle" class="lbl">Discount = MP ka 2/17 → MP = 17 parts</text>
+      <g>
+        <rect x="27" y="40" width="34" height="44" class="chf"/><rect x="65" y="40" width="34" height="44" class="chf"/><rect x="103" y="40" width="34" height="44" class="chf"/><rect x="141" y="40" width="34" height="44" class="chf"/><rect x="179" y="40" width="34" height="44" class="chf"/>
+        <rect x="217" y="40" width="34" height="44" class="chf"/><rect x="255" y="40" width="34" height="44" class="chf"/><rect x="293" y="40" width="34" height="44" class="chf"/><rect x="331" y="40" width="34" height="44" class="chf"/><rect x="369" y="40" width="34" height="44" class="chf"/>
+        <rect x="407" y="40" width="34" height="44" class="chf"/><rect x="445" y="40" width="34" height="44" class="chf"/><rect x="483" y="40" width="34" height="44" class="chf"/><rect x="521" y="40" width="34" height="44" class="chf"/><rect x="559" y="40" width="34" height="44" class="chf"/>
+        <rect x="597" y="40" width="34" height="44" style="fill:var(--ch)"/><rect x="635" y="40" width="34" height="44" style="fill:var(--ch)"/>
+      </g>
+      <line x1="27" y1="100" x2="593" y2="100" class="ln"/>
+      <line x1="27" y1="94" x2="27" y2="106" class="ln"/><line x1="593" y1="94" x2="593" y2="106" class="ln"/>
+      <text x="310" y="122" text-anchor="middle" class="lbl">SP = 15 parts</text>
+      <line x1="597" y1="100" x2="669" y2="100" class="chs"/>
+      <text x="633" y="122" text-anchor="middle" class="lbl" style="fill:var(--ch)">D = 2</text>
+      <text x="350" y="156" text-anchor="middle" class="lbl">D : SP = 2 : 15 · D : MP = 2 : 17 · SP : MP = 15 : 17</text>
+      <text x="350" y="182" text-anchor="middle" class="sm">"SP, D se 120% zyada" → D = 100, SP = 220, MP = 320 · "MP, D ka 140%" → D = 100, MP = 140, SP = 40</text>
+    </svg>
+    </div>
+    <figcaption>MP ek patti hai. Usmein se D kata, SP bacha. Koi bhi do diye toh teesra jod-ghata se.</figcaption>
+  </figure><h3>Speed method 7 · Offers: buy x get y, flat ₹ off, GST</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Three offers drawn as items. Buy 3 get 1 free: 1 of 4 free, 25 percent. Buy 2 get 1 free: 1 of 3 free, 33.33 percent. Buy 4, 5th at half: half of 1 item out of 5, 10 percent.">
+      <text x="12" y="38" class="lbl">Buy 3 get 1</text>
+      <rect x="150" y="16" width="56" height="36" rx="5" class="chf"/><rect x="214" y="16" width="56" height="36" rx="5" class="chf"/><rect x="278" y="16" width="56" height="36" rx="5" class="chf"/>
+      <rect x="342" y="16" width="56" height="36" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="370" y="39" text-anchor="middle" class="sm">FREE</text>
+      <text x="420" y="32" class="lbl">1 of 4 free → 1/4 = 25%</text>
+      <text x="420" y="48" class="sm">pay 3, lo 4</text>
+      <text x="12" y="108" class="lbl">Buy 2 get 1</text><text x="12" y="124" class="sm">(3 ka daam 2)</text>
+      <rect x="150" y="88" width="56" height="36" rx="5" class="chf"/><rect x="214" y="88" width="56" height="36" rx="5" class="chf"/>
+      <rect x="278" y="88" width="56" height="36" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 4"/>
+      <text x="306" y="111" text-anchor="middle" class="sm">FREE</text>
+      <text x="420" y="104" class="lbl">1 of 3 free → 1/3 = 33.33%</text>
+      <text x="420" y="120" class="sm">har shirt ka asli daam = 2/3</text>
+      <text x="12" y="180" class="lbl">Buy 4, 5th</text><text x="12" y="196" class="sm">50% off</text>
+      <rect x="150" y="160" width="40" height="36" rx="5" class="chf"/><rect x="196" y="160" width="40" height="36" rx="5" class="chf"/><rect x="242" y="160" width="40" height="36" rx="5" class="chf"/><rect x="288" y="160" width="40" height="36" rx="5" class="chf"/>
+      <rect x="334" y="160" width="40" height="36" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 4"/>
+      <rect x="334" y="160" width="20" height="36" class="chf"/>
+      <text x="420" y="176" class="lbl">½ item of 5 → 0.5/5 = 10%</text>
+      <text x="420" y="192" class="sm">aadha hi free hai, poora nahi</text>
+      <text x="350" y="222" text-anchor="middle" class="sm">discount % = free hissa ÷ kul cheezein (jo li gayi)</text>
+    </svg>
+    </div>
+    <figcaption>Free wala dabba = discount. Denominator mein kul cheezein aati hain (free bhi), sirf paid wali nahi.</figcaption>
+  </figure><h3>Kaunsa method kab? (ek nazar mein)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing a discount method. Check in order: only MP and one discount, MP and SP given, SP given and MP asked, two or three discounts, markup and discount, discount and profit both, D SP MP relation, offer schemes. Each yes leads to its method.">
+      <defs>
+        <marker id="mdi-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya diya, kya pucha?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <g>
+        <rect x="20" y="52" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="102" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="152" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="202" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="252" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="302" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="352" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="402" width="320" height="38" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="76">Buy x get y / free / GST / ₹ off?</text>
+        <text x="180" y="126">Do ya teen chhoot lagataar?</text>
+        <text x="180" y="176">D, SP, MP ka aapas ka relation?</text>
+        <text x="180" y="226">Markup % aur discount % diye?</text>
+        <text x="180" y="276">Discount % aur profit % dono diye?</text>
+        <text x="180" y="326">SP diya, MP pucha?</text>
+        <text x="180" y="376">MP aur SP diye, chhoot % pucha?</text>
+        <text x="180" y="426">Sirf MP aur ek chhoot?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="40" x2="180" y2="49" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="90" x2="180" y2="99" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="140" x2="180" y2="149" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="190" x2="180" y2="199" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="240" x2="180" y2="249" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="290" x2="180" y2="299" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="340" x2="180" y2="349" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="180" y1="390" x2="180" y2="399" marker-end="url(#mdi-fc-arr)"/>
+      </g>
+      <g class="ln">
+        <line x1="340" y1="71" x2="396" y2="71" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="121" x2="396" y2="121" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="171" x2="396" y2="171" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="221" x2="396" y2="221" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="271" x2="396" y2="271" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="321" x2="396" y2="321" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="371" x2="396" y2="371" marker-end="url(#mdi-fc-arr)"/>
+        <line x1="340" y1="421" x2="396" y2="421" marker-end="url(#mdi-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="65">haan</text><text x="368" y="115">haan</text><text x="368" y="165">haan</text><text x="368" y="215">haan</text><text x="368" y="265">haan</text><text x="368" y="315">haan</text><text x="368" y="365">haan</text><text x="368" y="415">haan</text></g>
+      <g>
+        <rect x="400" y="52" width="290" height="38" rx="6" class="chf"/><rect x="400" y="52" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="102" width="290" height="38" rx="6" class="chf"/><rect x="400" y="102" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="152" width="290" height="38" rx="6" class="chf"/><rect x="400" y="152" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="202" width="290" height="38" rx="6" class="chf"/><rect x="400" y="202" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="252" width="290" height="38" rx="6" class="chf"/><rect x="400" y="252" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="302" width="290" height="38" rx="6" class="chf"/><rect x="400" y="302" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="352" width="290" height="38" rx="6" class="chf"/><rect x="400" y="352" width="290" height="38" rx="6" class="chs"/>
+        <rect x="400" y="402" width="290" height="38" rx="6" class="chf"/><rect x="400" y="402" width="290" height="38" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="68">Free hissa ÷ kul cheezein</text>
+        <text x="410" y="118">a + b − ab/100</text>
+        <text x="410" y="168">Parts: MP = D + SP</text>
+        <text x="410" y="218">m − d − md/100 · CP = 100</text>
+        <text x="410" y="268">MP : CP = (100 + p) : (100 − d)</text>
+        <text x="410" y="318">SP = bacha %, 1% nikaalo</text>
+        <text x="410" y="368">Kata ÷ MP</text>
+        <text x="410" y="418">1% × bacha %</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="84">GST chhoot ke baad · shart bill par</text>
+        <text x="410" y="134">ya fraction chain: × 4/5 × 9/10</text>
+        <text x="410" y="184">"of" vs "more than" dhyaan se</text>
+        <text x="410" y="234">rakam di ho toh parts se ulta</text>
+        <text x="410" y="284">ulta number ulti taraf</text>
+        <text x="410" y="334">84% = 1,680 → 1% = 20</text>
+        <text x="410" y="384">240/1,600 = 15%</text>
+        <text x="410" y="434">4,800 par 12% → 48 × 88</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Upar se neeche padho. Mushkil wale (offer, successive, ratio) upar hain, taaki galti se seedha formula na lag jaaye.</figcaption>
+  </figure></section>
+<section class="chap" id="mdi-types-b"><div class="eyebrow">Maths · PYQ types 7–13</div><h2>Discount + profit: markup, CP, MP, chain aur ratio wale sawaal</h2><h3>Type 12 · Chain (wholesaler → retailer → customer), naya MP, aur "chhoot par khareedo, upar becho" (20 Qs)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Chain of multipliers. Factory cost 100, times 3 over 2 gives wholesaler marked price 150, times 4 over 5 gives retailer cost 120, times 7 over 5 gives printed price 168, times 9 over 10 gives customer price 151.2. 151.2 parts equal 18,144 so 1 part is 120 and cost is 12,000.">
+      <defs>
+        <marker id="mdi-ch-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <g>
+        <rect x="15" y="50" width="110" height="60" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="155" y="50" width="110" height="60" rx="8" class="chf"/><rect x="155" y="50" width="110" height="60" rx="8" class="chs"/>
+        <rect x="295" y="50" width="110" height="60" rx="8" class="chf"/><rect x="295" y="50" width="110" height="60" rx="8" class="chs"/>
+        <rect x="435" y="50" width="110" height="60" rx="8" class="chf"/><rect x="435" y="50" width="110" height="60" rx="8" class="chs"/>
+        <rect x="575" y="50" width="110" height="60" rx="8" style="fill:var(--ch)"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="70" y="76" class="lbl">100</text><text x="70" y="96" class="sm">factory CP</text>
+        <text x="210" y="76" class="lbl">150</text><text x="210" y="96" class="sm">wholesale MP</text>
+        <text x="350" y="76" class="lbl">120</text><text x="350" y="96" class="sm">retailer ka CP</text>
+        <text x="490" y="76" class="lbl">168</text><text x="490" y="96" class="sm">printed price</text>
+        <text x="630" y="76" class="lbl" style="fill:var(--paper)">151.2</text><text x="630" y="96" class="sm" style="fill:var(--paper)">customer</text>
+        <text x="140" y="40" class="sm">+50%</text><text x="280" y="40" class="sm">−20%</text><text x="420" y="40" class="sm">+40%</text><text x="560" y="40" class="sm">−10%</text>
+        <text x="140" y="130" class="lbl" style="fill:var(--ch)">× 3/2</text><text x="280" y="130" class="lbl" style="fill:var(--ch)">× 4/5</text><text x="420" y="130" class="lbl" style="fill:var(--ch)">× 7/5</text><text x="560" y="130" class="lbl" style="fill:var(--ch)">× 9/10</text>
+      </g>
+      <g class="ln">
+        <line x1="125" y1="80" x2="151" y2="80" marker-end="url(#mdi-ch-arr)"/>
+        <line x1="265" y1="80" x2="291" y2="80" marker-end="url(#mdi-ch-arr)"/>
+        <line x1="405" y1="80" x2="431" y2="80" marker-end="url(#mdi-ch-arr)"/>
+        <line x1="545" y1="80" x2="571" y2="80" marker-end="url(#mdi-ch-arr)"/>
+      </g>
+      <text x="350" y="166" text-anchor="middle" class="lbl">151.2 parts = ₹18,144 → 1 part = 120 → C = 100 parts = ₹12,000</text>
+      <text x="350" y="190" text-anchor="middle" class="sm">ek line mein: 3/2 × 4/5 × 7/5 × 9/10 = 756/500 = 1.512</text>
+    </svg>
+    </div>
+    <figcaption>CGL 13 Sep 2025 ka sawaal ek patti par. Har teer ek guna hai. Markup = 1 se bada guna, chhoot = 1 se chhota.</figcaption>
+  </figure></section>
+<p class="dg-src"><a href="/pyq-notes?b=maths&amp;t=t08">🧮 Poore notes mein ye topic kholo ›</a></p>

@@ -1,0 +1,694 @@
+<section class="chap" id="ph-motion"><div class="eyebrow">Physics · 9 questions</div><h2>Motion</h2><h3>Velocity–time graphs</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Three velocity-time graphs: uniform velocity flat line, uniform acceleration rising line, uniform retardation falling line">
+      <defs>
+        <marker id="ph-motion-ax" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <!-- panel 1 -->
+      <path d="M40 200 V50" class="ln" marker-end="url(#ph-motion-ax)"/><path d="M40 200 H210" class="ln" marker-end="url(#ph-motion-ax)"/>
+      <rect x="40" y="110" width="150" height="90" class="chf"/>
+      <line x1="40" y1="110" x2="190" y2="110" class="chs"/>
+      <text x="125" y="30" text-anchor="middle" class="lbl">Uniform velocity</text>
+      <text x="125" y="100" text-anchor="middle" class="sm">flat line: a = 0</text>
+      <!-- panel 2 -->
+      <path d="M270 200 V50" class="ln" marker-end="url(#ph-motion-ax)"/><path d="M270 200 H440" class="ln" marker-end="url(#ph-motion-ax)"/>
+      <path d="M270 200 L420 70 L420 200 Z" class="chf"/>
+      <line x1="270" y1="200" x2="420" y2="70" class="chs"/>
+      <text x="355" y="30" text-anchor="middle" class="lbl">Uniform acceleration</text>
+      <text x="320" y="110" text-anchor="end" class="sm">slope = a</text>
+      <!-- panel 3 -->
+      <path d="M500 200 V50" class="ln" marker-end="url(#ph-motion-ax)"/><path d="M500 200 H670" class="ln" marker-end="url(#ph-motion-ax)"/>
+      <path d="M500 70 L650 200 L500 200 Z" class="chf"/>
+      <line x1="500" y1="70" x2="650" y2="200" class="chs"/>
+      <text x="585" y="30" text-anchor="middle" class="lbl">Uniform retardation</text>
+      <text x="590" y="110" class="sm">slope negative</text>
+      <!-- axis labels -->
+      <g class="sm">
+        <text x="30" y="56" text-anchor="end">v</text><text x="210" y="218" text-anchor="end">t</text>
+        <text x="260" y="56" text-anchor="end">v</text><text x="440" y="218" text-anchor="end">t</text>
+        <text x="490" y="56" text-anchor="end">v</text><text x="670" y="218" text-anchor="end">t</text>
+      </g>
+      <text x="350" y="248" text-anchor="middle" class="sm">Shaded area under a v–t graph = displacement · slope of a v–t graph = acceleration</text>
+    </svg>
+    </div>
+    <figcaption>Read a v–t graph: <b>slope → acceleration</b>, <b>area → displacement</b>. On a distance–time graph, slope → speed. <span class="tag x">CGL+</span></figcaption>
+  </figure><h3>Circular motion and rotation</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Uniform circular motion: velocity along tangent, acceleration towards centre; rotating disc where all points share the same angular velocity">
+      <defs>
+        <marker id="ph-motion-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+        <marker id="ph-motion-am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <!-- circle path -->
+      <circle cx="180" cy="135" r="90" class="ln" stroke-dasharray="4 4"/>
+      <circle cx="180" cy="135" r="4" style="fill:var(--muted)"/>
+      <text x="180" y="156" text-anchor="middle" class="sm">centre</text>
+      <!-- stone at top -->
+      <circle cx="180" cy="45" r="8" style="fill:var(--ch)"/>
+      <path d="M190 45 H270" class="chs" marker-end="url(#ph-motion-ar)"/>
+      <text x="276" y="40" class="sm">v (tangent)</text>
+      <path d="M180 55 V105" class="ln" marker-end="url(#ph-motion-am)"/>
+      <text x="186" y="88" class="sm">a → centre</text>
+      <!-- stone at right -->
+      <circle cx="270" cy="135" r="8" style="fill:var(--ch)"/>
+      <path d="M270 125 V60" class="chs" marker-end="url(#ph-motion-ar)"/>
+      <path d="M260 135 H215" class="ln" marker-end="url(#ph-motion-am)"/>
+      <text x="180" y="248" text-anchor="middle" class="lbl">Speed same, direction changes</text>
+      <!-- disc -->
+      <circle cx="530" cy="130" r="95" class="chf"/><circle cx="530" cy="130" r="95" class="chs"/>
+      <circle cx="530" cy="130" r="4" style="fill:var(--fg)"/>
+      <line x1="530" y1="130" x2="625" y2="130" class="ln"/>
+      <circle cx="577" cy="130" r="6" style="fill:var(--ch)"/>
+      <circle cx="625" cy="130" r="6" style="fill:var(--ch)"/>
+      <path d="M577 122 V95" class="chs" marker-end="url(#ph-motion-ar)"/>
+      <path d="M625 122 V68" class="chs" marker-end="url(#ph-motion-ar)"/>
+      <text x="560" y="150" class="sm">r → v</text>
+      <text x="610" y="150" class="sm">2r → 2v</text>
+      <text x="530" y="248" text-anchor="middle" class="lbl">Rigid body: same ω for all points</text>
+      <text x="530" y="22" text-anchor="middle" class="sm">v = ω r (linear speed grows with r)</text>
+    </svg>
+    </div>
+    <figcaption>Left: a stone on a string. Right: a spinning disc — every point turns through the same angle in the same time.</figcaption>
+  </figure></section>
+<section class="chap" id="ph-force"><div class="eyebrow">Physics · 23 questions</div><h2>Force &amp; Laws of Motion</h2><h3>Newton's three laws on one card each</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Three cards for Newton's laws: inertia, F equals ma, action equals reaction, with examples">
+      <rect x="10" y="10" width="216" height="230" rx="10" class="chf"/>
+      <rect x="242" y="10" width="216" height="230" rx="10" class="chf"/>
+      <rect x="474" y="10" width="216" height="230" rx="10" class="chf"/>
+      <g text-anchor="middle">
+        <text x="118" y="38" class="lbl chtext" style="fill:var(--ch)">1st LAW · Inertia</text>
+        <text x="118" y="60" class="sm">A body stays at rest or in</text>
+        <text x="118" y="75" class="sm">uniform straight-line motion</text>
+        <text x="118" y="90" class="sm">unless an unbalanced force acts</text>
+        <text x="350" y="38" class="lbl chtext" style="fill:var(--ch)">2nd LAW · F = ma</text>
+        <text x="350" y="60" class="sm">Force = rate of change</text>
+        <text x="350" y="75" class="sm">of momentum</text>
+        <text x="350" y="90" class="sm">F = Δp / Δt</text>
+        <text x="582" y="38" class="lbl chtext" style="fill:var(--ch)">3rd LAW · Action-Reaction</text>
+        <text x="582" y="60" class="sm">Every action has an equal</text>
+        <text x="582" y="75" class="sm">and opposite reaction,</text>
+        <text x="582" y="90" class="sm">acting on TWO different bodies</text>
+      </g>
+      <!-- icons -->
+      <!-- bus with person leaning -->
+      <g class="chs">
+        <rect x="68" y="110" width="100" height="44" rx="6"/>
+        <circle cx="90" cy="160" r="7"/><circle cx="146" cy="160" r="7"/>
+        <line x1="120" y1="148" x2="132" y2="122"/><circle cx="135" cy="118" r="5"/>
+      </g>
+      <text x="118" y="190" text-anchor="middle" class="sm">bus brakes → you jerk forward</text>
+      <text x="118" y="206" text-anchor="middle" class="sm">dusting a carpet · heavy box</text>
+      <text x="118" y="222" text-anchor="middle" class="sm">hard to start AND to stop</text>
+      <!-- hands catching ball -->
+      <g class="chs">
+        <circle cx="320" cy="132" r="10"/>
+        <path d="M345 118 q20 14 0 28"/>
+        <line x1="360" y1="132" x2="395" y2="132"/><path d="M388 126 l8 6 l-8 6"/>
+      </g>
+      <text x="350" y="190" text-anchor="middle" class="sm">cricketer pulls hands back:</text>
+      <text x="350" y="206" text-anchor="middle" class="sm">more time → less force</text>
+      <text x="350" y="222" text-anchor="middle" class="sm">(also sand pit in high jump)</text>
+      <!-- rocket -->
+      <g class="chs">
+        <path d="M582 108 l14 18 v28 h-28 v-28 z"/>
+        <line x1="572" y1="160" x2="566" y2="176"/><line x1="582" y1="160" x2="582" y2="178"/><line x1="592" y1="160" x2="598" y2="176"/>
+      </g>
+      <text x="582" y="190" text-anchor="middle" class="sm">gas pushed down → rocket up</text>
+      <text x="582" y="206" text-anchor="middle" class="sm">gun recoil · swimming</text>
+      <text x="582" y="222" text-anchor="middle" class="sm">walking (push ground back)</text>
+    </svg>
+    </div>
+    <figcaption>1st law defines force, 2nd law measures it, 3rd law says forces come in pairs.</figcaption>
+  </figure><h3>Free-body diagram: a box being pushed</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Free body diagram of a box on a floor: applied force right, friction left, weight down, normal force up">
+      <defs>
+        <marker id="ph-force-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <line x1="60" y1="190" x2="460" y2="190" class="ln"/>
+      <g class="ln" stroke-dasharray="2 4"><line x1="60" y1="198" x2="460" y2="198"/></g>
+      <rect x="200" y="110" width="120" height="80" rx="4" class="chf"/><rect x="200" y="110" width="120" height="80" rx="4" class="chs"/>
+      <circle cx="260" cy="150" r="4" style="fill:var(--fg)"/>
+      <path d="M264 150 H400" class="chs" marker-end="url(#ph-force-ar)"/>
+      <text x="408" y="154" class="lbl">F (push)</text>
+      <path d="M200 186 H100" class="chs" marker-end="url(#ph-force-ar)"/>
+      <text x="96" y="176" text-anchor="end" class="lbl">f (friction)</text>
+      <path d="M260 154 V235" class="chs" marker-end="url(#ph-force-ar)"/>
+      <text x="268" y="236" class="lbl">W = mg</text>
+      <path d="M260 146 V30" class="chs" marker-end="url(#ph-force-ar)"/>
+      <text x="268" y="34" class="lbl">N (normal)</text>
+      <!-- right notes -->
+      <rect x="480" y="30" width="210" height="190" rx="8" class="paper"/><rect x="480" y="30" width="210" height="190" rx="8" class="chs"/>
+      <text x="585" y="56" text-anchor="middle" class="lbl">Read it</text>
+      <text x="494" y="82" class="sm">N = W → no up/down motion</text>
+      <text x="494" y="104" class="sm">F = f → balanced:</text>
+      <text x="494" y="120" class="sm">  no change in motion</text>
+      <text x="494" y="142" class="sm">F > f → unbalanced:</text>
+      <text x="494" y="158" class="sm">  box accelerates</text>
+      <text x="494" y="180" class="sm">Friction always opposes</text>
+      <text x="494" y="196" class="sm">the motion (or its start)</text>
+    </svg>
+    </div>
+    <figcaption>Draw each force as an arrow from the body. Only the <b>unbalanced</b> (net) force changes motion.</figcaption>
+  </figure><h3>Thrust and pressure</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Same brick lying flat on a large face gives low pressure, standing on a small face gives high pressure">
+      <line x1="30" y1="160" x2="670" y2="160" class="ln"/>
+      <!-- brick flat -->
+      <rect x="70" y="120" width="200" height="40" rx="3" class="chf"/><rect x="70" y="120" width="200" height="40" rx="3" class="chs"/>
+      <text x="170" y="145" text-anchor="middle" class="sm">same weight</text>
+      <text x="170" y="185" text-anchor="middle" class="lbl">Large area → LOW pressure</text>
+      <text x="170" y="202" text-anchor="middle" class="sm">wide school-bag straps, sleepers under rails</text>
+      <!-- brick standing -->
+      <rect x="470" y="40" width="40" height="120" rx="3" class="chf"/><rect x="470" y="40" width="40" height="120" rx="3" class="chs"/>
+      <text x="520" y="100" class="sm">same weight</text>
+      <text x="490" y="185" text-anchor="middle" class="lbl">Small area → HIGH pressure</text>
+      <text x="490" y="202" text-anchor="middle" class="sm">sharp knife, nail tip, pin</text>
+      <text x="350" y="40" text-anchor="middle" class="lbl chtext" style="fill:var(--ch)">P = F / A</text>
+      <text x="350" y="60" text-anchor="middle" class="sm">force (thrust) ÷ area</text>
+    </svg>
+    </div>
+    <figcaption>Force stays the same; only the area touching the ground changes.</figcaption>
+  </figure></section>
+<section class="chap" id="ph-gravity"><div class="eyebrow">Physics · 23 questions</div><h2>Gravitation, Work, Energy &amp; Power</h2><h3>Satellites</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Earth with a low orbit and a geostationary orbit at about 36,000 km, with key facts">
+      <circle cx="135" cy="135" r="118" class="ln" stroke-dasharray="5 4"/>
+      <circle cx="135" cy="135" r="64" class="ln" stroke-dasharray="2 3"/>
+      <circle cx="135" cy="135" r="42" class="chf"/><circle cx="135" cy="135" r="42" class="chs"/>
+      <line x1="93" y1="135" x2="177" y2="135" class="ln"/>
+      <text x="135" y="131" text-anchor="middle" class="lbl">Earth</text>
+      <text x="135" y="151" text-anchor="middle" class="sm">equator</text>
+      <rect x="248" y="129" width="12" height="12" style="fill:var(--ch)"/>
+      <circle cx="199" cy="135" r="5" style="fill:var(--ch)"/>
+      <text x="135" y="14" text-anchor="middle" class="sm">GEO ~36,000 km</text>
+      <text x="135" y="88" text-anchor="middle" class="sm">LEO</text>
+      <!-- cards -->
+      <rect x="290" y="14" width="400" height="118" rx="8" class="chf"/>
+      <text x="304" y="38" class="lbl chtext" style="fill:var(--ch)">Geostationary orbit</text>
+      <text x="304" y="60" class="sm">• ~36,000 km above the equator, 0° inclination</text>
+      <text x="304" y="78" class="sm">• period 24 h, moves west → east like Earth</text>
+      <text x="304" y="96" class="sm">• looks fixed in the sky → TV, communication, weather</text>
+      <text x="304" y="114" class="sm">• dish antennas need not move</text>
+      <rect x="290" y="142" width="400" height="118" rx="8" class="paper"/><rect x="290" y="142" width="400" height="118" rx="8" class="chs"/>
+      <text x="304" y="166" class="lbl">Low / polar / Sun-synchronous orbit</text>
+      <text x="304" y="188" class="sm">• a few hundred km up; polar orbit passes over both poles</text>
+      <text x="304" y="206" class="sm">• used for remote sensing, mapping, spy imaging</text>
+      <text x="304" y="224" class="sm">• orbital speed near Earth ≈ 7.9 km/s</text>
+      <text x="304" y="242" class="sm">• escape velocity from Earth = 11.2 km/s</text>
+    </svg>
+    </div>
+    <figcaption>Not to scale. Square = geostationary satellite, dot = low-orbit satellite.</figcaption>
+  </figure><h3>Free fall: PE turns into KE</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="A falling ball at three heights with bars showing potential energy falling and kinetic energy rising, total constant">
+      <line x1="70" y1="225" x2="130" y2="225" class="ln"/>
+      <line x1="100" y1="40" x2="100" y2="215" class="ln" stroke-dasharray="3 4"/>
+      <circle cx="100" cy="45" r="11" class="chf"/><circle cx="100" cy="45" r="11" class="chs"/>
+      <circle cx="100" cy="130" r="11" class="chf"/><circle cx="100" cy="130" r="11" class="chs"/>
+      <circle cx="100" cy="212" r="11" class="chf"/><circle cx="100" cy="212" r="11" class="chs"/>
+      <text x="140" y="49" class="sm">top (h)</text><text x="140" y="134" class="sm">half way</text><text x="140" y="216" class="sm">ground</text>
+      <!-- bars: PE soft fill, KE ink fill. full = 300 px -->
+      <rect x="250" y="32" width="300" height="26" class="chf"/><rect x="250" y="32" width="300" height="26" class="chs"/>
+      <text x="400" y="50" text-anchor="middle" class="sm">PE 100%</text>
+      <rect x="250" y="117" width="150" height="26" class="chf"/>
+      <rect x="400" y="117" width="150" height="26" style="fill:var(--ch)" opacity=".55"/>
+      <rect x="250" y="117" width="300" height="26" class="chs"/>
+      <text x="325" y="135" text-anchor="middle" class="sm">PE 50%</text><text x="475" y="135" text-anchor="middle" class="sm">KE 50%</text>
+      <rect x="250" y="199" width="300" height="26" style="fill:var(--ch)" opacity=".55"/><rect x="250" y="199" width="300" height="26" class="chs"/>
+      <text x="400" y="217" text-anchor="middle" class="sm">KE 100%</text>
+      <text x="570" y="50" class="sm">KE = 0</text>
+      <text x="570" y="217" class="sm">PE = 0</text>
+      <text x="400" y="88" text-anchor="middle" class="lbl">Total PE + KE stays the same</text>
+      <text x="400" y="176" text-anchor="middle" class="sm">(air resistance ignored)</text>
+    </svg>
+    </div>
+    <figcaption>Bars drawn to scale. Light part = potential energy, dark part = kinetic energy.</figcaption>
+  </figure><h3>Fluids: buoyancy and Bernoulli</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Fluid in a pipe that narrows: in the narrow part speed is higher and pressure lower, shown by a shorter liquid column">
+      <defs>
+        <marker id="ph-gravity-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <path d="M40 100 H250 L330 130 H450 L530 100 H660 V200 H530 L450 170 H330 L250 200 H40 Z" class="chf"/>
+      <path d="M40 100 H250 L330 130 H450 L530 100 H660" class="chs"/>
+      <path d="M40 200 H250 L330 170 H450 L530 200 H660" class="chs"/>
+      <!-- gauge tubes -->
+      <rect x="140" y="40" width="20" height="60" class="chf"/>
+      <line x1="140" y1="20" x2="140" y2="100" class="ln"/><line x1="160" y1="20" x2="160" y2="100" class="ln"/>
+      <line x1="136" y1="40" x2="164" y2="40" class="chs"/>
+      <rect x="380" y="100" width="20" height="30" class="chf"/>
+      <line x1="380" y1="20" x2="380" y2="130" class="ln"/><line x1="400" y1="20" x2="400" y2="130" class="ln"/>
+      <line x1="376" y1="100" x2="404" y2="100" class="chs"/>
+      <!-- flow arrows -->
+      <path d="M110 150 H170" class="chs" marker-end="url(#ph-gravity-ar)"/>
+      <path d="M345 150 H445" class="chs" marker-end="url(#ph-gravity-ar)"/>
+      <text x="170" y="34" class="sm">tall column</text>
+      <text x="410" y="96" class="sm">short column</text>
+      <text x="145" y="228" text-anchor="middle" class="lbl">Wide: slow, HIGH pressure</text>
+      <text x="390" y="228" text-anchor="middle" class="lbl">Narrow: fast, LOW pressure</text>
+      <text x="595" y="228" text-anchor="middle" class="sm">A₁v₁ = A₂v₂</text>
+    </svg>
+    </div>
+    <figcaption>Continuity: less area → more speed. Bernoulli: more speed → less pressure.</figcaption>
+  </figure></section>
+<section class="chap" id="ph-heat"><div class="eyebrow">Physics · 7 questions</div><h2>Heat, Gases &amp; Measurement</h2><h3>Latent heat: why steam burns more</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Heating curve of water, to scale: short melting plateau at 0 degrees, rise to 100, very long boiling plateau at 100 degrees">
+      <defs>
+        <marker id="ph-heat-ax" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <path d="M70 240 V24" class="ln" marker-end="url(#ph-heat-ax)"/>
+      <path d="M70 240 H680" class="ln" marker-end="url(#ph-heat-ax)"/>
+      <line x1="70" y1="203" x2="660" y2="203" class="ln" stroke-dasharray="2 5"/>
+      <line x1="70" y1="67" x2="660" y2="67" class="ln" stroke-dasharray="2 5"/>
+      <text x="62" y="207" text-anchor="end" class="sm">0 °C</text>
+      <text x="62" y="71" text-anchor="end" class="sm">100 °C</text>
+      <text x="62" y="30" text-anchor="end" class="sm">T</text>
+      <path d="M80 230 L88 203 L148 203 L224 67 L633 67 L641 40" style="fill:none;stroke:var(--ch);stroke-width:3"/>
+      <text x="118" y="222" text-anchor="middle" class="sm">melting</text>
+      <text x="118" y="236" text-anchor="middle" class="sm">≈ 334 J/g</text>
+      <text x="196" y="150" class="sm">water warms</text>
+      <text x="196" y="164" class="sm">≈ 420 J/g</text>
+      <text x="428" y="56" text-anchor="middle" class="lbl">boiling: latent heat of vaporisation ≈ 2260 J/g</text>
+      <text x="428" y="92" text-anchor="middle" class="sm">temperature stays 100 °C while all this heat goes in</text>
+      <text x="650" y="36" class="sm">steam</text>
+      <text x="680" y="258" text-anchor="end" class="sm">heat added per gram →  (drawn to scale)</text>
+    </svg>
+    </div>
+    <figcaption>Turning 1 g of water at 100 °C into steam takes about 5 times the heat needed to warm it from 0 to 100 °C.</figcaption>
+  </figure><h3>Ideal gas and thermodynamics</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Heat engine takes heat from hot source, gives work and rejects heat to cold sink; refrigerator uses work to move heat from cold to hot">
+      <defs>
+        <marker id="ph-heat-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <!-- engine -->
+      <rect x="60" y="14" width="200" height="40" rx="6" class="chf"/><text x="160" y="39" text-anchor="middle" class="lbl">Hot source T₁</text>
+      <circle cx="160" cy="130" r="34" class="paper"/><circle cx="160" cy="130" r="34" class="chs"/><text x="160" y="135" text-anchor="middle" class="lbl">Engine</text>
+      <rect x="60" y="206" width="200" height="40" rx="6" class="chf"/><text x="160" y="231" text-anchor="middle" class="lbl">Cold sink T₂</text>
+      <path d="M160 56 V94" class="chs" marker-end="url(#ph-heat-ar)"/><text x="168" y="80" class="sm">Q₁ in</text>
+      <path d="M160 166 V204" class="chs" marker-end="url(#ph-heat-ar)"/><text x="168" y="190" class="sm">Q₂ out</text>
+      <path d="M196 130 H270" class="chs" marker-end="url(#ph-heat-ar)"/><text x="232" y="122" text-anchor="middle" class="sm">work W</text>
+      <!-- fridge -->
+      <rect x="440" y="14" width="200" height="40" rx="6" class="chf"/><text x="540" y="39" text-anchor="middle" class="lbl">Hot room</text>
+      <circle cx="540" cy="130" r="34" class="paper"/><circle cx="540" cy="130" r="34" class="chs"/><text x="540" y="135" text-anchor="middle" class="lbl">Fridge</text>
+      <rect x="440" y="206" width="200" height="40" rx="6" class="chf"/><text x="540" y="231" text-anchor="middle" class="lbl">Cold inside</text>
+      <path d="M540 204 V166" class="chs" marker-end="url(#ph-heat-ar)"/><text x="548" y="190" class="sm">heat taken</text>
+      <path d="M540 94 V56" class="chs" marker-end="url(#ph-heat-ar)"/><text x="548" y="80" class="sm">heat given</text>
+      <path d="M420 130 H504" class="chs" marker-end="url(#ph-heat-ar)"/><text x="450" y="122" text-anchor="middle" class="sm">work in</text>
+      <text x="350" y="140" text-anchor="middle" class="sm">reverse</text>
+      <text x="350" y="156" text-anchor="middle" class="sm">→</text>
+    </svg>
+    </div>
+    <figcaption>Ideal (Carnot) efficiency η = 1 − T₂/T₁ (kelvin). A fridge moves heat "uphill" only because work is supplied.</figcaption>
+  </figure></section>
+<section class="chap" id="ph-sound"><div class="eyebrow">Physics · 10 questions</div><h2>Sound</h2><h3>The sound wave, labelled</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 265" role="img" aria-label="Longitudinal sound wave: particles crowd at compressions and spread at rarefactions; pressure graph below shows wavelength and amplitude">
+      <path d="M72.0 34 V84 M77.8 34 V84 M83.2 34 V84 M88.1 34 V84 M92.7 34 V84 M97.1 34 V84 M101.1 34 V84 M105.0 34 V84 M108.8 34 V84 M112.5 34 V84 M116.3 34 V84 M120.2 34 V84 M124.4 34 V84 M128.8 34 V84 M133.5 34 V84 M138.6 34 V84 M144.1 34 V84 M150.0 34 V84 M156.4 34 V84 M163.1 34 V84 M170.3 34 V84 M177.8 34 V84 M185.6 34 V84 M193.6 34 V84 M201.8 34 V84 M210.0 34 V84 M218.2 34 V84 M226.4 34 V84 M234.4 34 V84 M242.2 34 V84 M249.7 34 V84 M256.9 34 V84 M263.6 34 V84 M270.0 34 V84 M275.9 34 V84 M281.4 34 V84 M286.5 34 V84 M291.2 34 V84 M295.6 34 V84 M299.8 34 V84 M303.7 34 V84 M307.5 34 V84 M311.2 34 V84 M315.0 34 V84 M318.9 34 V84 M322.9 34 V84 M327.3 34 V84 M331.9 34 V84 M336.8 34 V84 M342.2 34 V84 M348.0 34 V84 M354.2 34 V84 M360.8 34 V84 M367.9 34 V84 M375.3 34 V84 M382.9 34 V84 M390.9 34 V84 M399.0 34 V84 M407.2 34 V84 M415.5 34 V84 M423.7 34 V84 M431.8 34 V84 M439.6 34 V84 M447.2 34 V84 M454.5 34 V84 M461.4 34 V84 M467.9 34 V84 M474.0 34 V84 M479.6 34 V84 M484.9 34 V84 M489.7 34 V84 M494.2 34 V84 M498.4 34 V84 M502.4 34 V84 M506.2 34 V84 M510.0 34 V84 M513.8 34 V84 M517.6 34 V84 M521.6 34 V84 M525.8 34 V84 M530.3 34 V84 M535.1 34 V84 M540.4 34 V84 M546.0 34 V84 M552.1 34 V84 M558.6 34 V84 M565.5 34 V84 M572.8 34 V84 M580.4 34 V84 M588.2 34 V84 M596.3 34 V84 M604.5 34 V84 M612.8 34 V84 M621.0 34 V84 M629.1 34 V84 M637.1 34 V84 M644.7 34 V84 M652.1 34 V84 M659.2 34 V84" class="chs" style="stroke-width:1.4"/>
+      <g text-anchor="middle" class="sm">
+        <text x="110" y="24">C</text><text x="210" y="24">R</text><text x="310" y="24">C</text><text x="410" y="24">R</text><text x="510" y="24">C</text><text x="610" y="24">R</text>
+      </g>
+      <line x1="60" y1="170" x2="660" y2="170" class="ln" stroke-dasharray="3 4"/>
+      <path d="M60 170.0 L65 162.2 L70 154.5 L75 147.3 L80 140.6 L85 134.6 L90 129.5 L95 125.4 L100 122.4 L105 120.6 L110 120.0 L115 120.6 L120 122.4 L125 125.4 L130 129.5 L135 134.6 L140 140.6 L145 147.3 L150 154.5 L155 162.2 L160 170.0 L165 177.8 L170 185.5 L175 192.7 L180 199.4 L185 205.4 L190 210.5 L195 214.6 L200 217.6 L205 219.4 L210 220.0 L215 219.4 L220 217.6 L225 214.6 L230 210.5 L235 205.4 L240 199.4 L245 192.7 L250 185.5 L255 177.8 L260 170.0 L265 162.2 L270 154.5 L275 147.3 L280 140.6 L285 134.6 L290 129.5 L295 125.4 L300 122.4 L305 120.6 L310 120.0 L315 120.6 L320 122.4 L325 125.4 L330 129.5 L335 134.6 L340 140.6 L345 147.3 L350 154.5 L355 162.2 L360 170.0 L365 177.8 L370 185.5 L375 192.7 L380 199.4 L385 205.4 L390 210.5 L395 214.6 L400 217.6 L405 219.4 L410 220.0 L415 219.4 L420 217.6 L425 214.6 L430 210.5 L435 205.4 L440 199.4 L445 192.7 L450 185.5 L455 177.8 L460 170.0 L465 162.2 L470 154.5 L475 147.3 L480 140.6 L485 134.6 L490 129.5 L495 125.4 L500 122.4 L505 120.6 L510 120.0 L515 120.6 L520 122.4 L525 125.4 L530 129.5 L535 134.6 L540 140.6 L545 147.3 L550 154.5 L555 162.2 L560 170.0 L565 177.8 L570 185.5 L575 192.7 L580 199.4 L585 205.4 L590 210.5 L595 214.6 L600 217.6 L605 219.4 L610 220.0 L615 219.4 L620 217.6 L625 214.6 L630 210.5 L635 205.4 L640 199.4 L645 192.7 L650 185.5 L655 177.8 L660 170.0" style="fill:none;stroke:var(--ch);stroke-width:2.5"/>
+      <!-- wavelength -->
+      <line x1="110" y1="104" x2="310" y2="104" class="ln"/>
+      <line x1="110" y1="98" x2="110" y2="110" class="ln"/><line x1="310" y1="98" x2="310" y2="110" class="ln"/>
+      <text x="210" y="100" text-anchor="middle" class="lbl">wavelength λ</text>
+      <!-- amplitude -->
+      <line x1="520" y1="120" x2="520" y2="170" class="ln"/>
+      <line x1="514" y1="120" x2="526" y2="120" class="ln"/>
+      <text x="530" y="150" class="lbl">amplitude A</text>
+      <text x="350" y="245" text-anchor="middle" class="sm">C = compression (particles crowd, pressure high) · R = rarefaction (particles spread, pressure low)</text>
+      <text x="350" y="260" text-anchor="middle" class="sm">Sound in air is longitudinal: particles move back and forth along the direction of travel</text>
+    </svg>
+    </div>
+    <figcaption>Distance from one compression to the next = one wavelength. Height of the pressure graph = amplitude.</figcaption>
+  </figure><h3>v = f λ and changing medium</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Bar chart of speed of sound: air 343, water 1480, steel 5960 metres per second, to scale">
+      <g class="lbl"><text x="110" y="40" text-anchor="end">Air</text><text x="110" y="90" text-anchor="end">Water</text><text x="110" y="140" text-anchor="end">Steel</text></g>
+      <rect x="120" y="22" width="29" height="26" style="fill:var(--ch)" opacity=".55"/>
+      <rect x="120" y="72" width="124" height="26" style="fill:var(--ch)" opacity=".55"/>
+      <rect x="120" y="122" width="500" height="26" style="fill:var(--ch)" opacity=".55"/>
+      <text x="157" y="40" class="sm">≈ 343 m/s (20 °C)</text>
+      <text x="252" y="90" class="sm">≈ 1480 m/s</text>
+      <text x="612" y="140" text-anchor="end" class="sm">≈ 5960 m/s</text>
+      <line x1="120" y1="14" x2="120" y2="156" class="ln"/>
+    </svg>
+    </div>
+    <figcaption>To scale. Order: <b>solid &gt; liquid &gt; gas</b>; no sound at all in a vacuum. <span class="tag x">CGL+</span></figcaption>
+  </figure><h3>Doppler effect</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Moving source: wavefronts bunch up ahead giving higher pitch and spread out behind giving lower pitch">
+      <defs>
+        <marker id="ph-sound-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <circle cx="200" cy="150" r="140" class="ln"/>
+      <circle cx="225" cy="150" r="105" class="ln"/>
+      <circle cx="250" cy="150" r="70" class="ln"/>
+      <circle cx="275" cy="150" r="35" class="ln"/>
+      <circle cx="300" cy="150" r="9" style="fill:var(--ch)"/>
+      <path d="M312 150 H372" class="chs" marker-end="url(#ph-sound-ar)"/>
+      <text x="300" y="178" text-anchor="middle" class="sm">siren moving →</text>
+      <!-- listener ahead -->
+      <circle cx="430" cy="150" r="10" class="chf"/><circle cx="430" cy="150" r="10" class="chs"/>
+      <text x="450" y="140" class="lbl">Ahead: waves bunched</text>
+      <text x="450" y="158" class="sm">shorter λ → higher frequency</text>
+      <text x="450" y="174" class="sm">→ HIGHER pitch (approaching)</text>
+      <!-- listener behind -->
+      <circle cx="30" cy="150" r="10" class="chf"/><circle cx="30" cy="150" r="10" class="chs"/>
+      <text x="8" y="40" class="lbl">Behind:</text>
+      <text x="8" y="56" class="sm">waves spread</text>
+      <text x="8" y="72" class="sm">→ LOWER pitch</text>
+      <text x="560" y="250" text-anchor="middle" class="sm">No relative motion → no change</text>
+    </svg>
+    </div>
+    <figcaption>Each circle was sent out when the source was at that circle's centre. The source moves right, so circles crowd on the right.</figcaption>
+  </figure></section>
+<section class="chap" id="ph-light"><div class="eyebrow">Physics · 13 questions</div><h2>Light &amp; the Human Eye</h2><h3>Reflection: spherical mirrors</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Concave mirror ray diagram: object at centre of curvature forms a real, inverted, same-size image at the centre of curvature">
+      <defs>
+        <marker id="ph-light-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+        <marker id="ph-light-am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <line x1="40" y1="150" x2="600" y2="150" class="ln"/>
+      <path d="M533 40 A240 240 0 0 1 533 260" style="fill:none;stroke:var(--fg);stroke-width:3"/>
+      <!-- points -->
+      <circle cx="320" cy="150" r="3.5" style="fill:var(--fg)"/><text x="306" y="168" text-anchor="end" class="lbl">C</text>
+      <circle cx="438" cy="150" r="3.5" style="fill:var(--fg)"/><text x="438" y="168" text-anchor="middle" class="lbl">F</text>
+      <text x="572" y="168" class="lbl">P</text>
+      <!-- object and image -->
+      <path d="M320 150 V94" class="chs" style="stroke-width:3" marker-end="url(#ph-light-ar)"/>
+      <path d="M320 150 V206" class="chs" style="stroke-width:3" stroke-dasharray="6 3" marker-end="url(#ph-light-ar)"/>
+      <text x="300" y="98" text-anchor="end" class="sm">object at C</text>
+      <text x="300" y="214" text-anchor="end" class="sm">image at C: real,</text>
+      <text x="300" y="228" text-anchor="end" class="sm">inverted, same size</text>
+      <!-- rays -->
+      <path d="M322 90 H552 L322 209" class="ln" style="stroke-width:1.6"/>
+      <path d="M322 90 L552 209 H322" class="ln" style="stroke-width:1.6"/>
+      <path d="M400 90 H430" class="ln" marker-end="url(#ph-light-am)"/>
+      <path d="M470 209 H440" class="ln" marker-end="url(#ph-light-am)"/>
+      <text x="390" y="30" text-anchor="middle" class="sm">Ray 1: parallel to axis → reflects through F</text>
+      <text x="390" y="46" text-anchor="middle" class="sm">Ray 2: through F → reflects parallel to axis</text>
+      <text x="40" y="262" class="sm">f = R / 2 · two rays are enough to locate any image</text>
+    </svg>
+    </div>
+    <figcaption>Object at C of a concave mirror. Where the two reflected rays meet, the image forms.</figcaption>
+  </figure><h3>Refraction and total internal reflection</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Three cases of light going from water to air: below critical angle it refracts, at critical angle it grazes, above it totally reflects">
+      <defs>
+        <marker id="ph-light-tr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <rect x="10" y="130" width="680" height="95" class="chf"/>
+      <line x1="10" y1="130" x2="690" y2="130" class="ln"/>
+      <text x="16" y="22" class="sm">air (rarer)</text><text x="16" y="218" class="sm">water (denser)</text>
+      <!-- normals -->
+      <line x1="115" y1="40" x2="115" y2="222" class="ln" stroke-dasharray="3 4"/>
+      <line x1="345" y1="40" x2="345" y2="222" class="ln" stroke-dasharray="3 4"/>
+      <line x1="575" y1="40" x2="575" y2="222" class="ln" stroke-dasharray="3 4"/>
+      <!-- panel 1 -->
+      <path d="M69 210 L113 133" class="chs" marker-end="url(#ph-light-tr)"/>
+      <path d="M115 130 L183 54" class="chs" marker-end="url(#ph-light-tr)"/>
+      <!-- panel 2 -->
+      <path d="M254 210 L342 133" class="chs" marker-end="url(#ph-light-tr)"/>
+      <path d="M345 128 L448 128" class="chs" marker-end="url(#ph-light-tr)"/>
+      <!-- panel 3 -->
+      <path d="M468 180 L572 132" class="chs" marker-end="url(#ph-light-tr)"/>
+      <path d="M577 131 L680 178" class="chs" marker-end="url(#ph-light-tr)"/>
+      <g text-anchor="middle">
+        <text x="115" y="246" class="lbl">i &lt; c</text><text x="115" y="262" class="sm">refracts, bends away from normal</text>
+        <text x="345" y="246" class="lbl">i = c</text><text x="345" y="262" class="sm">grazes the surface (r = 90°)</text>
+        <text x="575" y="246" class="lbl">i &gt; c</text><text x="575" y="262" class="sm">total internal reflection</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Critical angle of water ≈ 49°, of glass ≈ 42°, of diamond ≈ 24°.</figcaption>
+  </figure><h3>Eclipses</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Solar eclipse: Sun, Moon, Earth in a line at new moon. Lunar eclipse: Sun, Earth, Moon in a line at full moon">
+      <text x="10" y="22" class="lbl chtext" style="fill:var(--ch)">Solar eclipse · New Moon</text>
+      <circle cx="80" cy="75" r="36" class="chf"/><circle cx="80" cy="75" r="36" class="chs"/><text x="80" y="80" text-anchor="middle" class="lbl">Sun</text>
+      <polygon points="340,66 340,84 534,79 534,71" style="fill:var(--muted)" opacity=".35"/>
+      <circle cx="335" cy="75" r="10" style="fill:var(--fg)"/><text x="335" y="110" text-anchor="middle" class="sm">Moon (in middle)</text>
+      <circle cx="565" cy="75" r="32" class="paper"/><circle cx="565" cy="75" r="32" class="chs"/><text x="565" y="122" text-anchor="middle" class="sm">Earth — Moon's shadow falls here</text>
+      <line x1="118" y1="75" x2="322" y2="75" class="ln" stroke-dasharray="3 4"/>
+      <text x="10" y="152" class="lbl chtext" style="fill:var(--ch)">Lunar eclipse · Full Moon</text>
+      <circle cx="80" cy="205" r="36" class="chf"/><circle cx="80" cy="205" r="36" class="chs"/><text x="80" y="210" text-anchor="middle" class="lbl">Sun</text>
+      <polygon points="335,175 335,235 600,220 600,190" style="fill:var(--muted)" opacity=".35"/>
+      <circle cx="335" cy="205" r="30" class="paper"/><circle cx="335" cy="205" r="30" class="chs"/><text x="335" y="210" text-anchor="middle" class="sm">Earth</text>
+      <circle cx="565" cy="205" r="10" style="fill:var(--fg)"/><text x="565" y="244" text-anchor="middle" class="sm">Moon inside Earth's shadow</text>
+      <line x1="118" y1="205" x2="303" y2="205" class="ln" stroke-dasharray="3 4"/>
+    </svg>
+    </div>
+    <figcaption>Not to scale. Whatever is in the <b>middle</b> casts the shadow.</figcaption>
+  </figure><h3>The human eye</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 340" role="img" aria-label="Myopia: image forms in front of retina, corrected by concave lens. Hypermetropia: image forms behind retina, corrected by convex lens">
+      <text x="10" y="24" class="lbl chtext" style="fill:var(--ch)">Myopia (near-sightedness): far things blurred</text>
+      <!-- eye 1 defect -->
+      <circle cx="190" cy="100" r="45" class="chf"/><circle cx="190" cy="100" r="45" class="chs"/>
+      <ellipse cx="152" cy="100" rx="6" ry="20" class="paper"/><ellipse cx="152" cy="100" rx="6" ry="20" class="ln"/>
+      <path d="M40 80 H150 L210 100 L235 108 M40 120 H150 L210 100 L235 92" class="ln" style="stroke-width:1.6"/>
+      <circle cx="210" cy="100" r="4" style="fill:var(--ch)"/>
+      <text x="190" y="165" text-anchor="middle" class="sm">image forms IN FRONT of retina</text>
+      <!-- eye 2 corrected -->
+      <circle cx="540" cy="100" r="45" class="chf"/><circle cx="540" cy="100" r="45" class="chs"/>
+      <ellipse cx="502" cy="100" rx="6" ry="20" class="paper"/><ellipse cx="502" cy="100" rx="6" ry="20" class="ln"/>
+      <path d="M444 70 Q450 100 444 130 L456 130 Q450 100 456 70 Z" class="paper"/><path d="M444 70 Q450 100 444 130 L456 130 Q450 100 456 70 Z" class="chs"/>
+      <path d="M370 80 H450 L500 74 L585 100 M370 120 H450 L500 126 L585 100" class="ln" style="stroke-width:1.6"/>
+      <circle cx="585" cy="100" r="4" style="fill:var(--ch)"/>
+      <text x="520" y="165" text-anchor="middle" class="sm">concave lens (negative power) → focus on retina</text>
+      <text x="335" y="104" text-anchor="middle" class="lbl">fix →</text>
+
+      <text x="10" y="196" class="lbl chtext" style="fill:var(--ch)">Hypermetropia (far-sightedness): near things blurred</text>
+      <!-- eye 3 defect -->
+      <circle cx="190" cy="265" r="45" class="chf"/><circle cx="190" cy="265" r="45" class="chs"/>
+      <ellipse cx="152" cy="265" rx="6" ry="20" class="paper"/><ellipse cx="152" cy="265" rx="6" ry="20" class="ln"/>
+      <path d="M40 245 H150 L235 260 M40 285 H150 L235 270" class="ln" style="stroke-width:1.6"/>
+      <path d="M235 260 L265 265 M235 270 L265 265" class="ln" stroke-dasharray="3 3"/>
+      <circle cx="265" cy="265" r="4" style="fill:var(--ch)"/>
+      <text x="190" y="330" text-anchor="middle" class="sm">image would form BEHIND retina</text>
+      <!-- eye 4 corrected -->
+      <circle cx="540" cy="265" r="45" class="chf"/><circle cx="540" cy="265" r="45" class="chs"/>
+      <ellipse cx="502" cy="265" rx="6" ry="20" class="paper"/><ellipse cx="502" cy="265" rx="6" ry="20" class="ln"/>
+      <path d="M450 235 Q462 265 450 295 Q438 265 450 235 Z" class="paper"/><path d="M450 235 Q462 265 450 295 Q438 265 450 235 Z" class="chs"/>
+      <path d="M370 245 H450 L500 252 L585 265 M370 285 H450 L500 278 L585 265" class="ln" style="stroke-width:1.6"/>
+      <circle cx="585" cy="265" r="4" style="fill:var(--ch)"/>
+      <text x="520" y="330" text-anchor="middle" class="sm">convex lens (positive power) → focus on retina</text>
+      <text x="335" y="269" text-anchor="middle" class="lbl">fix →</text>
+    </svg>
+    </div>
+    <figcaption>The back of each circle is the retina. Dot = where the rays meet. The lens on the left of the corrected eye is the spectacle lens.</figcaption>
+  </figure></section>
+<section class="chap" id="ph-elec"><div class="eyebrow">Physics · 13 questions</div><h2>Electricity &amp; Magnetism</h2><h3>Series vs parallel</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 280" role="img" aria-label="Series circuit with two resistors in one loop and parallel circuit with two resistors on separate branches">
+      <g class="chs">
+        <!-- series loop -->
+        <path d="M40 104 V50 H90 M150 50 H200 M260 50 H310 V190 H40 V122"/>
+        <rect x="90" y="40" width="60" height="20" rx="3"/>
+        <rect x="200" y="40" width="60" height="20" rx="3"/>
+        <!-- parallel -->
+        <path d="M390 104 V40 H460 V150 M460 70 H510 M570 70 H620 M460 150 H510 M570 150 H620 M620 70 V190 H390 V122"/>
+        <rect x="510" y="60" width="60" height="20" rx="3"/>
+        <rect x="510" y="140" width="60" height="20" rx="3"/>
+      </g>
+      <!-- batteries -->
+      <g style="stroke:var(--fg);stroke-width:3">
+        <line x1="26" y1="104" x2="54" y2="104"/><line x1="33" y1="122" x2="47" y2="122"/>
+        <line x1="376" y1="104" x2="404" y2="104"/><line x1="383" y1="122" x2="397" y2="122"/>
+      </g>
+      <g class="lbl" text-anchor="middle">
+        <text x="120" y="32">R₁</text><text x="230" y="32">R₂</text>
+        <text x="540" y="54">R₁</text><text x="540" y="134">R₂</text>
+      </g>
+      <text x="175" y="125" text-anchor="middle" class="lbl chtext" style="fill:var(--ch)">SERIES</text>
+      <text x="540" y="112" text-anchor="middle" class="lbl chtext" style="fill:var(--ch)">PARALLEL</text>
+      <g class="sm">
+        <text x="40" y="216">• same current through each</text>
+        <text x="40" y="232">• R = R₁ + R₂ (total goes up)</text>
+        <text x="40" y="248">• one bulb fails → all go off</text>
+        <text x="40" y="264">• decorative lights, fuse with circuit</text>
+        <text x="390" y="216">• same voltage across each</text>
+        <text x="390" y="232">• 1/R = 1/R₁ + 1/R₂ (total goes down)</text>
+        <text x="390" y="248">• smaller R → bigger current (I = V/R)</text>
+        <text x="390" y="264">• house wiring is parallel</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Long plate of the battery = positive terminal. Ammeter goes in series, voltmeter in parallel. <span class="tag x">CGL+</span></figcaption>
+  </figure><h3>Electromagnetic induction</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Coil seen edge-on in a magnetic field: plane perpendicular to field gives maximum flux and zero EMF; plane parallel to field gives zero flux and maximum EMF">
+      <defs>
+        <marker id="ph-elec-am" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <g class="ln" marker-end="url(#ph-elec-am)">
+        <path d="M30 50 H320"/><path d="M30 85 H320"/><path d="M30 120 H320"/><path d="M30 155 H320"/>
+        <path d="M380 50 H670"/><path d="M380 85 H670"/><path d="M380 120 H670"/><path d="M380 155 H670"/>
+      </g>
+      <text x="175" y="30" text-anchor="middle" class="sm">magnetic field B →</text>
+      <text x="525" y="30" text-anchor="middle" class="sm">magnetic field B →</text>
+      <line x1="175" y1="58" x2="175" y2="148" style="stroke:var(--ch);stroke-width:7;stroke-linecap:round"/>
+      <line x1="470" y1="102" x2="580" y2="102" style="stroke:var(--ch);stroke-width:7;stroke-linecap:round"/>
+      <text x="175" y="184" text-anchor="middle" class="lbl">Plane ⟂ field: flux MAX</text>
+      <text x="175" y="202" text-anchor="middle" class="sm">rate of change 0 → EMF = 0</text>
+      <text x="525" y="184" text-anchor="middle" class="lbl">Plane ∥ field: flux ZERO</text>
+      <text x="525" y="202" text-anchor="middle" class="sm">flux changing fastest → EMF MAX</text>
+    </svg>
+    </div>
+    <figcaption>The thick bar is the coil seen from its edge. As it spins, it passes through both positions every half turn — that is why a generator gives AC.</figcaption>
+  </figure><h3>Transformer and other devices</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Transformer: soft iron core with primary coil of few turns and secondary coil of more turns">
+      <path d="M220 30 H480 V200 H220 Z M260 70 V160 H440 V70 Z" class="chf" fill-rule="evenodd"/>
+      <path d="M220 30 H480 V200 H220 Z" class="chs"/><path d="M260 70 H440 V160 H260 Z" class="chs"/>
+      <g style="fill:none;stroke:var(--fg);stroke-width:2">
+        <ellipse cx="240" cy="85" rx="32" ry="6"/><ellipse cx="240" cy="103" rx="32" ry="6"/><ellipse cx="240" cy="121" rx="32" ry="6"/><ellipse cx="240" cy="139" rx="32" ry="6"/>
+        <ellipse cx="460" cy="62" rx="32" ry="5"/><ellipse cx="460" cy="76" rx="32" ry="5"/><ellipse cx="460" cy="90" rx="32" ry="5"/><ellipse cx="460" cy="104" rx="32" ry="5"/><ellipse cx="460" cy="118" rx="32" ry="5"/><ellipse cx="460" cy="132" rx="32" ry="5"/><ellipse cx="460" cy="146" rx="32" ry="5"/><ellipse cx="460" cy="160" rx="32" ry="5"/>
+      </g>
+      <text x="190" y="100" text-anchor="end" class="lbl">Primary</text>
+      <text x="190" y="118" text-anchor="end" class="sm">fewer turns, AC in</text>
+      <text x="510" y="100" class="lbl">Secondary</text>
+      <text x="510" y="118" class="sm">more turns, AC out</text>
+      <text x="350" y="122" text-anchor="middle" class="sm">soft iron core</text>
+      <text x="350" y="216" text-anchor="middle" class="sm">Vs / Vp = Ns / Np · this one is step-UP (more secondary turns) · frequency does not change</text>
+    </svg>
+    </div>
+    <figcaption>No wire joins the two coils — the changing flux in the core links them (mutual induction).</figcaption>
+  </figure></section>
+<section class="chap" id="ph-modern"><div class="eyebrow">Physics · 15 questions</div><h2>Atoms, Nuclei &amp; Space</h2><h3>Rutherford's gold-foil experiment</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="Alpha particles fired at gold atoms: most pass straight, a few deflect slightly, very few bounce back from the nucleus">
+      <defs>
+        <marker id="ph-modern-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <g class="ln" stroke-dasharray="3 4">
+        <circle cx="300" cy="60" r="34"/><circle cx="300" cy="128" r="34"/><circle cx="300" cy="196" r="34"/>
+      </g>
+      <circle cx="300" cy="60" r="3.5" style="fill:var(--fg)"/><circle cx="300" cy="128" r="3.5" style="fill:var(--fg)"/><circle cx="300" cy="196" r="3.5" style="fill:var(--fg)"/>
+      <text x="300" y="20" text-anchor="middle" class="sm">gold atoms (mostly empty)</text>
+      <rect x="20" y="104" width="50" height="48" rx="4" class="chf"/><text x="45" y="132" text-anchor="middle" class="lbl">α</text>
+      <g class="chs" style="stroke-width:1.6" marker-end="url(#ph-modern-ar)">
+        <path d="M70 45 H440"/>
+        <path d="M70 94 H440"/>
+        <path d="M70 162 H440"/>
+        <path d="M70 216 H440"/>
+        <path d="M70 116 H285 Q310 112 440 82"/>
+        <path d="M70 128 H290 Q296 136 90 152"/>
+      </g>
+      <g class="sm">
+        <text x="452" y="49">most go straight</text>
+        <text x="452" y="65">→ atom is mostly empty</text>
+        <text x="452" y="86">a few bend slightly</text>
+        <text x="452" y="102">→ positive charge inside</text>
+        <text x="452" y="166">~1 in 20,000 bounce back</text>
+        <text x="452" y="182">→ all + charge and mass in a</text>
+        <text x="452" y="198">tiny dense NUCLEUS</text>
+      </g>
+      <text x="96" y="176" class="sm">rebound</text>
+    </svg>
+    </div>
+    <figcaption>Thin gold foil was used. The bounce-back of a tiny fraction was the surprise.</figcaption>
+  </figure><h3>Bohr model: energy levels</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Hydrogen energy levels drawn to scale: minus 13.6, minus 3.4, minus 1.51, minus 0.85 electronvolt, gaps shrinking upward; electron dropping down emits a photon">
+      <defs>
+        <marker id="ph-modern-dn" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <g style="stroke:var(--fg);stroke-width:2">
+        <line x1="200" y1="240" x2="500" y2="240"/>
+        <line x1="200" y1="90" x2="500" y2="90"/>
+        <line x1="200" y1="62" x2="500" y2="62"/>
+        <line x1="200" y1="52.5" x2="500" y2="52.5"/>
+      </g>
+      <line x1="200" y1="40" x2="500" y2="40" class="ln" stroke-dasharray="4 4"/>
+      <g class="sm" text-anchor="end">
+        <text x="192" y="244">n = 1 · −13.6 eV</text>
+        <text x="192" y="94">n = 2 · −3.4 eV</text>
+        <text x="192" y="66">n = 3 · −1.51 eV</text>
+      </g>
+      <g class="sm">
+        <text x="508" y="56">n = 4 · −0.85 eV</text>
+        <text x="508" y="42">n = ∞ · 0 (free)</text>
+      </g>
+      <path d="M290 64 V86" class="chs" marker-end="url(#ph-modern-dn)"/>
+      <path d="M380 92 V236" class="chs" marker-end="url(#ph-modern-dn)"/>
+      <path d="M296 76 q6 -6 12 0 t12 0 t12 0" class="chs" style="stroke-width:1.5"/>
+      <path d="M386 160 q6 -6 12 0 t12 0 t12 0" class="chs" style="stroke-width:1.5"/>
+      <text x="426" y="164" class="sm">photon out: 10.2 eV</text>
+      <text x="284" y="80" text-anchor="end" class="sm">photon 1.89 eV</text>
+      <text x="560" y="150" class="lbl">Gaps shrink</text>
+      <text x="560" y="168" class="sm">1→2: 10.2 eV</text>
+      <text x="560" y="184" class="sm">2→3: 1.89 eV</text>
+      <text x="560" y="200" class="sm">3→4: 0.66 eV</text>
+      <text x="350" y="264" text-anchor="middle" class="sm">E = −13.6 / n² eV (hydrogen) · drawn to scale</text>
+    </svg>
+    </div>
+    <figcaption>Falling down a level = photon given out. Jumping up = photon absorbed.</figcaption>
+  </figure><h3>Electromagnetic spectrum</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Electromagnetic spectrum from radio waves to gamma rays: wavelength decreases, frequency and energy increase">
+      <defs>
+        <marker id="ph-modern-ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <g class="chf">
+        <rect x="8" y="20" width="92" height="60" rx="6"/><rect x="106" y="20" width="92" height="60" rx="6"/><rect x="204" y="20" width="92" height="60" rx="6"/>
+        <rect x="302" y="20" width="92" height="60" rx="6"/><rect x="400" y="20" width="92" height="60" rx="6"/><rect x="498" y="20" width="92" height="60" rx="6"/>
+      </g>
+      <rect x="596" y="20" width="96" height="60" rx="6" style="fill:var(--ch)" opacity=".45"/>
+      <g text-anchor="middle">
+        <text x="54" y="46" class="lbl">Radio</text><text x="54" y="66" class="sm">radio, TV</text>
+        <text x="152" y="46" class="lbl">Microwave</text><text x="152" y="66" class="sm">oven, radar</text>
+        <text x="250" y="46" class="lbl">Infrared</text><text x="250" y="66" class="sm">remote, heat</text>
+        <text x="348" y="46" class="lbl">Visible</text><text x="348" y="66" class="sm">VIBGYOR</text>
+        <text x="446" y="46" class="lbl">Ultraviolet</text><text x="446" y="66" class="sm">sterilising</text>
+        <text x="544" y="46" class="lbl">X-rays</text><text x="544" y="66" class="sm">bone images</text>
+        <text x="644" y="46" class="lbl">Gamma</text><text x="644" y="66" class="sm">cancer therapy</text>
+      </g>
+      <path d="M20 110 H680" class="chs" marker-end="url(#ph-modern-ar2)"/>
+      <text x="350" y="134" text-anchor="middle" class="lbl">frequency &amp; energy increase →</text>
+      <text x="350" y="156" text-anchor="middle" class="sm">wavelength decreases → (all travel at 3 × 10⁸ m/s in vacuum)</text>
+    </svg>
+    </div>
+    <figcaption>Trick order: "<b>R</b>am <b>M</b>arried <b>I</b>ndian <b>V</b>illage <b>U</b>gly <b>X</b> <b>G</b>irl".</figcaption>
+  </figure><h3>Universe: Big Bang, stars, galaxies</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Life cycle of stars: nebula, protostar, main sequence; Sun-like stars become red giant then white dwarf; massive stars become red supergiant, supernova, then neutron star or black hole">
+      <defs>
+        <marker id="ph-modern-fl" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <g class="chf">
+        <rect x="8" y="95" width="92" height="40" rx="8"/><rect x="118" y="95" width="100" height="40" rx="8"/><rect x="236" y="95" width="120" height="40" rx="8"/>
+        <rect x="390" y="25" width="110" height="40" rx="8"/><rect x="520" y="25" width="170" height="40" rx="8"/>
+        <rect x="380" y="165" width="122" height="40" rx="8"/><rect x="514" y="165" width="84" height="40" rx="8"/><rect x="608" y="165" width="84" height="40" rx="8"/>
+      </g>
+      <rect x="236" y="95" width="120" height="40" rx="8" class="chs"/>
+      <rect x="520" y="25" width="170" height="40" rx="8" class="chs"/>
+      <g text-anchor="middle">
+        <text x="54" y="120" class="lbl">Nebula</text>
+        <text x="168" y="120" class="lbl">Protostar</text>
+        <text x="296" y="114" class="lbl">Main sequence</text><text x="296" y="128" class="sm">H → He fusion</text>
+        <text x="445" y="50" class="lbl">Red giant</text>
+        <text x="605" y="44" class="lbl">White dwarf</text><text x="605" y="58" class="sm">(sheds planetary nebula)</text>
+        <text x="441" y="190" class="lbl">Red supergiant</text>
+        <text x="556" y="190" class="lbl">Supernova</text>
+        <text x="650" y="182" class="sm">Neutron star</text><text x="650" y="198" class="sm">or Black hole</text>
+      </g>
+      <g class="ln" marker-end="url(#ph-modern-fl)">
+        <path d="M100 115 H116"/><path d="M218 115 H234"/>
+        <path d="M356 105 L388 55"/><path d="M500 45 H518"/>
+        <path d="M356 125 L378 175"/><path d="M502 185 H512"/><path d="M598 185 H606"/>
+      </g>
+      <text x="380" y="92" class="sm chtext" style="fill:var(--ch)">Sun-like star</text>
+      <text x="380" y="150" class="sm chtext" style="fill:var(--ch)">much heavier star</text>
+    </svg>
+    </div>
+    <figcaption>Outlined boxes = the path of our Sun. 2025 asked this order: Main Sequence → Red Giant → White Dwarf.</figcaption>
+  </figure></section>
+<p class="dg-src"><a href="/pyq-notes?b=pyq&amp;t=t10">🎯 Poore notes mein ye topic kholo ›</a></p>

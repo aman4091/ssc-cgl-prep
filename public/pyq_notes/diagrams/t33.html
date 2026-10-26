@@ -1,0 +1,333 @@
+<section class="chap" id="mns-basics"><div class="eyebrow">Maths · 217 questions (3 hisson mein)</div><h2>Number System: numbers ka parivaar, decimal aur surd</h2><h3>Pehle ek kahani: numbers kaise bade hote gaye</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 360" role="img" aria-label="Nested boxes of number families. Complex contains Real. Real contains Rational and Irrational side by side. Rational contains Integers, which contain Whole numbers, which contain Natural numbers.">
+      <rect x="10" y="10" width="680" height="340" rx="10" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="24" y="32" class="lbl">Complex (C)</text><text x="130" y="32" class="sm">√−7, 2 + 3i · ye real nahi</text>
+      <rect x="30" y="44" width="640" height="290" rx="8" class="chf"/>
+      <text x="42" y="64" class="lbl">Real (R)</text><text x="112" y="64" class="sm">number line ka har point</text>
+      <rect x="46" y="76" width="420" height="212" rx="8" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+      <text x="58" y="96" class="lbl">Rational (Q) = p/q, q ≠ 0</text>
+      <rect x="62" y="108" width="300" height="166" rx="8" class="chf"/><rect x="62" y="108" width="300" height="166" rx="8" class="chs"/>
+      <text x="74" y="128" class="lbl">Integers (Z)</text><text x="170" y="128" class="sm">+ −1, −2, −3 …</text>
+      <rect x="78" y="140" width="200" height="120" rx="8" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+      <text x="90" y="160" class="lbl">Whole (W)</text><text x="168" y="160" class="sm">+ 0</text>
+      <rect x="94" y="172" width="168" height="74" rx="8" style="fill:var(--ch);opacity:.25"/>
+      <text x="106" y="196" class="lbl">Natural (N)</text>
+      <text x="106" y="216" class="sm">1, 2, 3, … (ginti)</text>
+      <text x="106" y="234" class="sm">sabse chhota = 1</text>
+      <g class="sm"><text x="378" y="150">1/2</text><text x="378" y="172">−3/4</text><text x="378" y="194">0.875</text><text x="378" y="216">0.333…</text><text x="378" y="238">1.4363…</text></g>
+      <rect x="482" y="76" width="172" height="212" rx="8" class="paper" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="5 3"/>
+      <text x="494" y="98" class="lbl">Irrational</text>
+      <g class="sm"><text x="494" y="124">√2, √3, √7, √51</text><text x="494" y="146">π, 2 + √3, √27</text><text x="494" y="176">decimal: na khatam,</text><text x="494" y="194">na repeat</text><text x="494" y="224">p/q nahi bana sakte</text></g>
+      <text x="350" y="312" text-anchor="middle" class="lbl">Q ∪ Irrational = R · Q ∩ Irrational = khaali (empty)</text>
+    </svg>
+    </div>
+    <figcaption>Har dabba apne andar ke saare dabbe rakhta hai: N ⊂ W ⊂ Z ⊂ Q ⊂ R ⊂ C. Irrational, Q ke bagal mein hai, andar nahi.</figcaption>
+  </figure><h3>Speed method 2 · Terminating ya recurring? Neeche ka number dekho</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Decision flow for decimals. Reduce the fraction to lowest terms. If the denominator has only 2s and 5s, the decimal terminates, like 7/20 = 0.35. Otherwise it recurs, like 11/30 = 0.3666. Irrational numbers neither end nor repeat.">
+      <defs>
+        <marker id="mns-basics-dec-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="14" y="24" width="200" height="56" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="114" y="48" text-anchor="middle" class="lbl">Fraction ko chhota karo</text>
+      <text x="114" y="68" text-anchor="middle" class="sm">(lowest form: 6/30 → 1/5)</text>
+      <line x1="216" y1="52" x2="252" y2="52" class="ln" marker-end="url(#mns-basics-dec-arr)"/>
+      <rect x="256" y="24" width="216" height="56" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="364" y="48" text-anchor="middle" class="lbl">Neeche sirf 2 aur 5 hain?</text>
+      <text x="364" y="68" text-anchor="middle" class="sm">(q = 2ᵃ × 5ᵇ)</text>
+      <line x1="474" y1="52" x2="510" y2="52" class="ln" marker-end="url(#mns-basics-dec-arr)"/>
+      <text x="492" y="44" text-anchor="middle" class="sm">haan</text>
+      <rect x="514" y="24" width="172" height="56" rx="8" class="chf"/><rect x="514" y="24" width="172" height="56" rx="8" class="chs"/>
+      <text x="600" y="48" text-anchor="middle" class="lbl">Terminating</text>
+      <text x="600" y="68" text-anchor="middle" class="sm">7/20 = 0.35 · 3/8 = 0.375</text>
+      <line x1="364" y1="82" x2="364" y2="118" class="ln" marker-end="url(#mns-basics-dec-arr)"/>
+      <text x="374" y="104" class="sm">nahi (3, 7, 9, 11… bhi hai)</text>
+      <rect x="256" y="122" width="216" height="56" rx="8" class="chf"/><rect x="256" y="122" width="216" height="56" rx="8" class="chs"/>
+      <text x="364" y="146" text-anchor="middle" class="lbl">Recurring (repeat)</text>
+      <text x="364" y="166" text-anchor="middle" class="sm">11/30 = 0.3666… · 1/17</text>
+      <rect x="14" y="200" width="320" height="56" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="26" y="222" class="lbl">Pure recurring: 0.333…, 0.123123…</text>
+      <text x="26" y="242" class="sm">point ke turant baad se repeat</text>
+      <rect x="350" y="200" width="336" height="56" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="362" y="222" class="lbl">Mixed recurring: 1.43636…</text>
+      <text x="362" y="242" class="sm">pehle 4 (repeat nahi), phir 36 repeat</text>
+      <text x="14" y="130" class="sm">Terminating + recurring</text>
+      <text x="14" y="148" class="sm">dono = RATIONAL</text>
+      <text x="14" y="174" class="sm">Na khatam na repeat = irrational</text>
+    </svg>
+    </div>
+    <figcaption>Fraction dekhte hi neeche ka number todo. Sirf 2 aur 5 mile toh decimal khatam hoga. Koi aur prime mila toh repeat hoga.</figcaption>
+  </figure></section>
+<section class="chap" id="mns-squares"><div class="eyebrow">Maths · Number System · hissa 2</div><h2>Perfect squares: pehchaan, sabse paas wala square, aur ginti</h2><h3>Pehle ek kahani: square matlab chaukor</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Left: a 5 by 5 grid of dots. The inner 4 by 4 is light (16), the outer L-shaped border of 9 dots is dark. Right: number line from 16 to 25. The 8 numbers 17 to 24 between them are non-squares.">
+      <g>
+        <circle cx="40" cy="40" r="11" class="chf"/><circle cx="76" cy="40" r="11" class="chf"/><circle cx="112" cy="40" r="11" class="chf"/><circle cx="148" cy="40" r="11" class="chf"/>
+        <circle cx="40" cy="76" r="11" class="chf"/><circle cx="76" cy="76" r="11" class="chf"/><circle cx="112" cy="76" r="11" class="chf"/><circle cx="148" cy="76" r="11" class="chf"/>
+        <circle cx="40" cy="112" r="11" class="chf"/><circle cx="76" cy="112" r="11" class="chf"/><circle cx="112" cy="112" r="11" class="chf"/><circle cx="148" cy="112" r="11" class="chf"/>
+        <circle cx="40" cy="148" r="11" class="chf"/><circle cx="76" cy="148" r="11" class="chf"/><circle cx="112" cy="148" r="11" class="chf"/><circle cx="148" cy="148" r="11" class="chf"/>
+      </g>
+      <g class="chs">
+        <circle cx="40" cy="40" r="11"/><circle cx="76" cy="40" r="11"/><circle cx="112" cy="40" r="11"/><circle cx="148" cy="40" r="11"/>
+        <circle cx="40" cy="76" r="11"/><circle cx="76" cy="76" r="11"/><circle cx="112" cy="76" r="11"/><circle cx="148" cy="76" r="11"/>
+        <circle cx="40" cy="112" r="11"/><circle cx="76" cy="112" r="11"/><circle cx="112" cy="112" r="11"/><circle cx="148" cy="112" r="11"/>
+        <circle cx="40" cy="148" r="11"/><circle cx="76" cy="148" r="11"/><circle cx="112" cy="148" r="11"/><circle cx="148" cy="148" r="11"/>
+      </g>
+      <g style="fill:var(--ch)">
+        <circle cx="184" cy="40" r="11"/><circle cx="184" cy="76" r="11"/><circle cx="184" cy="112" r="11"/><circle cx="184" cy="148" r="11"/>
+        <circle cx="40" cy="184" r="11"/><circle cx="76" cy="184" r="11"/><circle cx="112" cy="184" r="11"/><circle cx="148" cy="184" r="11"/>
+        <circle cx="184" cy="184" r="11"/>
+      </g>
+      <text x="22" y="222" class="lbl">4² = 16 (halke)</text>
+      <text x="22" y="242" class="lbl" style="fill:var(--ch)">naye = 4 + 4 + 1 = 9 (gehre)</text>
+      <text x="22" y="262" class="sm">4² + 9 = 25 = 5²</text>
+      <line x1="236" y1="20" x2="236" y2="250" class="ln"/>
+      <text x="470" y="40" text-anchor="middle" class="lbl">Number line par: 16 se 25 tak</text>
+      <line x1="262" y1="130" x2="684" y2="130" class="ln"/>
+      <circle cx="275" cy="130" r="9" style="fill:var(--ch)"/>
+      <g class="paper" stroke="var(--muted)" stroke-width="1.5">
+        <circle cx="319" cy="130" r="6"/><circle cx="363" cy="130" r="6"/><circle cx="407" cy="130" r="6"/><circle cx="451" cy="130" r="6"/>
+        <circle cx="495" cy="130" r="6"/><circle cx="539" cy="130" r="6"/><circle cx="583" cy="130" r="6"/><circle cx="627" cy="130" r="6"/>
+      </g>
+      <circle cx="671" cy="130" r="9" style="fill:var(--ch)"/>
+      <g text-anchor="middle" class="sm">
+        <text x="275" y="160" class="lbl">16</text><text x="319" y="160">17</text><text x="363" y="160">18</text><text x="407" y="160">19</text><text x="451" y="160">20</text>
+        <text x="495" y="160">21</text><text x="539" y="160">22</text><text x="583" y="160">23</text><text x="627" y="160">24</text><text x="671" y="160" class="lbl">25</text>
+        <text x="275" y="110">4²</text><text x="671" y="110">5²</text>
+      </g>
+      <path d="M312,180 L312,190 L634,190 L634,180" class="ln" fill="none"/>
+      <text x="473" y="212" text-anchor="middle" class="lbl" style="fill:var(--ch)">beech mein 8 = 2 × 4 non-square</text>
+      <text x="473" y="236" text-anchor="middle" class="sm">n² aur (n+1)² ke beech hamesha 2n numbers · 50² aur 51² ke beech 100</text>
+    </svg>
+    </div>
+    <figcaption>Ek square se agle square tak 2n + 1 kadam. Beech ke 2n numbers mein se koi square nahi.</figcaption>
+  </figure><h3>Speed method 1 · Last digit se kaato (2 second)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Last digit of n and last digit of n squared: 0 to 0, 1 to 1, 2 to 4, 3 to 9, 4 to 6, 5 to 5, 6 to 6, 7 to 9, 8 to 4, 9 to 1. Squares never end in 2, 3, 7 or 8.">
+      <defs>
+        <marker id="mns-squares-ud-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <text x="10" y="18" class="sm">n ka last digit</text>
+      <g>
+        <rect x="10" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="78" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="146" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="214" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="282" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="350" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="418" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="486" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="554" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="622" y="26" width="62" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="41" y="51">0</text><text x="109" y="51">1</text><text x="177" y="51">2</text><text x="245" y="51">3</text><text x="313" y="51">4</text><text x="381" y="51">5</text><text x="449" y="51">6</text><text x="517" y="51">7</text><text x="585" y="51">8</text><text x="653" y="51">9</text>
+      </g>
+      <g class="ln">
+        <line x1="41" y1="68" x2="41" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="109" y1="68" x2="109" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="177" y1="68" x2="177" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="245" y1="68" x2="245" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="313" y1="68" x2="313" y2="94" marker-end="url(#mns-squares-ud-arr)"/>
+        <line x1="381" y1="68" x2="381" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="449" y1="68" x2="449" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="517" y1="68" x2="517" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="585" y1="68" x2="585" y2="94" marker-end="url(#mns-squares-ud-arr)"/><line x1="653" y1="68" x2="653" y2="94" marker-end="url(#mns-squares-ud-arr)"/>
+      </g>
+      <g>
+        <rect x="10" y="98" width="62" height="40" rx="6" class="chf"/><rect x="78" y="98" width="62" height="40" rx="6" class="chf"/><rect x="146" y="98" width="62" height="40" rx="6" class="chf"/><rect x="214" y="98" width="62" height="40" rx="6" class="chf"/><rect x="282" y="98" width="62" height="40" rx="6" class="chf"/>
+        <rect x="350" y="98" width="62" height="40" rx="6" class="chf"/><rect x="418" y="98" width="62" height="40" rx="6" class="chf"/><rect x="486" y="98" width="62" height="40" rx="6" class="chf"/><rect x="554" y="98" width="62" height="40" rx="6" class="chf"/><rect x="622" y="98" width="62" height="40" rx="6" class="chf"/>
+      </g>
+      <g text-anchor="middle" class="lbl" style="fill:var(--ch)">
+        <text x="41" y="123">0</text><text x="109" y="123">1</text><text x="177" y="123">4</text><text x="245" y="123">9</text><text x="313" y="123">6</text><text x="381" y="123">5</text><text x="449" y="123">6</text><text x="517" y="123">9</text><text x="585" y="123">4</text><text x="653" y="123">1</text>
+      </g>
+      <text x="10" y="156" class="sm">n² ka last digit · jodiyan: 1 aur 9 → 1 · 2 aur 8 → 4 · 3 aur 7 → 9 · 4 aur 6 → 6 · 5 → 5 · 0 → 0</text>
+      <text x="350" y="188" text-anchor="middle" class="lbl">Neeche ki line mein 2, 3, 7, 8 kahin nahi. Toh inpar khatam hone wala number kabhi square nahi.</text>
+    </svg>
+    </div>
+    <figcaption>Upar number ka last digit, neeche uske square ka last digit. Jodiyan 10 ka jod banati hain: 1 + 9, 2 + 8, 3 + 7, 4 + 6.</figcaption>
+  </figure></section>
+<section class="chap" id="mns-divis"><div class="eyebrow">Maths · Number System · hissa 3</div><h2>Divisibility, remainder, lagataar numbers, prime aur unit digit</h2><h3>Speed method 1 · Divisibility ke 8 card</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Eight cards of divisibility rules. 2: last digit even. 3: digit sum divisible by 3. 4: last two digits. 5: last digit 0 or 5. 6: both 2 and 3. 8: last three digits. 9: digit sum divisible by 9. 11: alternate sum difference is 0 or a multiple of 11.">
+      <g>
+        <rect x="10" y="10" width="166" height="110" rx="8" class="chf"/><rect x="184" y="10" width="166" height="110" rx="8" class="chf"/><rect x="358" y="10" width="166" height="110" rx="8" class="chf"/><rect x="532" y="10" width="166" height="110" rx="8" class="chf"/>
+        <rect x="10" y="130" width="166" height="110" rx="8" class="chf"/><rect x="184" y="130" width="166" height="110" rx="8" class="chf"/><rect x="358" y="130" width="166" height="110" rx="8" class="chf"/><rect x="532" y="130" width="166" height="110" rx="8" class="chf"/>
+      </g>
+      <g class="chs"><rect x="358" y="10" width="166" height="110" rx="8"/><rect x="358" y="130" width="166" height="110" rx="8"/><rect x="532" y="130" width="166" height="110" rx="8"/><rect x="184" y="10" width="166" height="110" rx="8"/></g>
+      <g class="lbl" style="fill:var(--ch)">
+        <text x="22" y="36">÷ 2</text><text x="196" y="36">÷ 3</text><text x="370" y="36">÷ 4</text><text x="544" y="36">÷ 5</text>
+        <text x="22" y="156">÷ 6</text><text x="196" y="156">÷ 8</text><text x="370" y="156">÷ 9</text><text x="544" y="156">÷ 11</text>
+      </g>
+      <g class="sm">
+        <text x="22" y="60">last digit even</text><text x="22" y="76">(0, 2, 4, 6, 8)</text>
+        <text x="196" y="60">digits ka jod</text><text x="196" y="76">3 se kate</text>
+        <text x="370" y="60">last 2 digit</text><text x="370" y="76">4 se kate</text>
+        <text x="544" y="60">last digit</text><text x="544" y="76">0 ya 5</text>
+        <text x="22" y="180">2 bhi aur 3 bhi</text><text x="22" y="196">(even + jod 3 se)</text>
+        <text x="196" y="180">last 3 digit</text><text x="196" y="196">8 se kate</text>
+        <text x="370" y="180">digits ka jod</text><text x="370" y="196">9 se kate</text>
+        <text x="544" y="180">alternate digits ka</text><text x="544" y="196">jod − jod = 0, 11, 22…</text>
+      </g>
+      <g class="lbl">
+        <text x="22" y="106">5678 ✔</text><text x="196" y="106">5448 → 21 ✔</text><text x="370" y="106">4732 → 32 ✔</text><text x="544" y="106">4505 ✔</text>
+        <text x="22" y="226">7342 → jod 16 ✘</text><text x="196" y="226">2736 → 736 ✔</text><text x="370" y="226">4842 → 18 ✔</text><text x="544" y="226">5126 → 7 − 7 ✔</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Outline wale card (3, 4, 8, 9, 11) 2025–26 ke papers mein sabse zyada aaye. 10 = 2 × 5, isliye 2 aur 5 sirf last digit dekhte hain.</figcaption>
+  </figure><h3>Speed method 2 · 11 ka rule, chitra mein</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 210" role="img" aria-label="Digits of 95P9 in boxes with signs from the right: 9 plus, P minus, 5 plus, 9 minus. Plus sum 14, minus sum P plus 9. Difference 5 minus P must be 0, so P equals 5.">
+      <g>
+        <rect x="120" y="40" width="70" height="60" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="200" y="40" width="70" height="60" rx="8" class="chf"/><rect x="200" y="40" width="70" height="60" rx="8" class="chs"/>
+        <rect x="280" y="40" width="70" height="60" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="360" y="40" width="70" height="60" rx="8" class="chf"/><rect x="360" y="40" width="70" height="60" rx="8" class="chs"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="155" y="77">9</text><text x="235" y="77">5</text><text x="315" y="77" style="fill:var(--ch)">P</text><text x="395" y="77">9</text>
+        <text x="155" y="30">−</text><text x="235" y="30" style="fill:var(--ch)">+</text><text x="315" y="30">−</text><text x="395" y="30" style="fill:var(--ch)">+</text>
+      </g>
+      <text x="440" y="30" class="sm">← right se shuru</text>
+      <text x="460" y="66" class="lbl" style="fill:var(--ch)">Plus: 9 + 5 = 14</text>
+      <text x="460" y="88" class="lbl">Minus: P + 9</text>
+      <text x="350" y="140" text-anchor="middle" class="lbl">14 − (P + 9) = 5 − P → isko 0 karna hai → P = 5</text>
+      <text x="350" y="166" text-anchor="middle" class="sm">Check: 9559 → (9 + 5) − (5 + 9) = 0 ✔</text>
+      <text x="350" y="194" text-anchor="middle" class="sm">Remainder ke liye bhi yahi: 5837 → (7 + 8) − (3 + 5) = 7 → 5837 ÷ 11 ka remainder 7</text>
+    </svg>
+    </div>
+    <figcaption>Gehre dabbe = plus wali jagah (1st, 3rd… right se). Halke = minus wali. Farq 0 = divisible.</figcaption>
+  </figure><h3>Speed method 7 · Unit digit: sirf aakhri digit ka khel</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Unit digit cycles. 2: 2,4,8,6. 3: 3,9,7,1. 7: 7,9,3,1. 8: 8,4,2,6. 4: 4,6. 9: 9,1. 0,1,5,6 stay the same. Example: 7 to the power 103, 103 divided by 4 leaves 3, so the third in the cycle, 3.">
+      <g text-anchor="middle" class="lbl">
+        <text x="190" y="22">power 1</text><text x="280" y="22">power 2</text><text x="370" y="22">power 3</text><text x="460" y="22">power 4</text>
+      </g>
+      <text x="550" y="22" class="sm">phir dobara</text>
+      <g class="lbl"><text x="20" y="54">2 ka chakkar</text><text x="20" y="96">3 ka chakkar</text><text x="20" y="138">7 ka chakkar</text><text x="20" y="180">8 ka chakkar</text></g>
+      <g>
+        <rect x="160" y="34" width="60" height="30" rx="6" class="chf"/><rect x="250" y="34" width="60" height="30" rx="6" class="chf"/><rect x="340" y="34" width="60" height="30" rx="6" class="chf"/><rect x="430" y="34" width="60" height="30" rx="6" class="chf"/>
+        <rect x="160" y="76" width="60" height="30" rx="6" class="chf"/><rect x="250" y="76" width="60" height="30" rx="6" class="chf"/><rect x="340" y="76" width="60" height="30" rx="6" class="chf"/><rect x="430" y="76" width="60" height="30" rx="6" class="chf"/>
+        <rect x="160" y="118" width="60" height="30" rx="6" class="chf"/><rect x="250" y="118" width="60" height="30" rx="6" class="chf"/><rect x="340" y="118" width="60" height="30" rx="6" style="fill:var(--ch)"/><rect x="430" y="118" width="60" height="30" rx="6" class="chf"/>
+        <rect x="160" y="160" width="60" height="30" rx="6" class="chf"/><rect x="250" y="160" width="60" height="30" rx="6" class="chf"/><rect x="340" y="160" width="60" height="30" rx="6" class="chf"/><rect x="430" y="160" width="60" height="30" rx="6" class="chf"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="190" y="54">2</text><text x="280" y="54">4</text><text x="370" y="54">8</text><text x="460" y="54">6</text>
+        <text x="190" y="96">3</text><text x="280" y="96">9</text><text x="370" y="96">7</text><text x="460" y="96">1</text>
+        <text x="190" y="138">7</text><text x="280" y="138">9</text><text x="370" y="138" style="fill:var(--paper)">3</text><text x="460" y="138">1</text>
+        <text x="190" y="180">8</text><text x="280" y="180">4</text><text x="370" y="180">2</text><text x="460" y="180">6</text>
+      </g>
+      <g class="sm"><text x="510" y="54">↺ 4 ka chakkar</text><text x="510" y="96">↺ 4 ka chakkar</text><text x="510" y="138">↺ 4 ka chakkar</text><text x="510" y="180">↺ 4 ka chakkar</text></g>
+      <text x="20" y="216" class="sm">4 aur 9: 2 ka chakkar (4, 6 · 9, 1) · 0, 1, 5, 6: hamesha wahi digit</text>
+      <text x="20" y="244" class="lbl" style="fill:var(--ch)">7¹⁰³: 103 ÷ 4 → remainder 3 → teesra dabba → unit digit 3</text>
+    </svg>
+    </div>
+    <figcaption>Power ko 4 se bhaag do. Remainder 1, 2, 3 → wahi dabba. Remainder 0 → chautha dabba.</figcaption>
+  </figure></section>
+<section class="chap" id="mlh-basics"><div class="eyebrow">Maths · 98 questions</div><h2>LCM aur HCF: shuru se, aur 36-second wale tareeke</h2><h3>Speed method 1 · Prime factor ka gol-gol chitra</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Venn diagram of prime factors. 36 = 2 times 2 times 3 times 3. 48 = 2 times 2 times 2 times 2 times 3. Common part 2, 2, 3 gives HCF 12. Left only 3, right only 2, 2. LCM = 12 times 3 times 4 = 144.">
+      <circle cx="250" cy="140" r="115" class="chf"/><circle cx="250" cy="140" r="115" class="chs"/>
+      <circle cx="400" cy="140" r="115" class="chf"/><circle cx="400" cy="140" r="115" class="chs"/>
+      <text x="180" y="20" text-anchor="middle" class="lbl">36 = 2² × 3²</text>
+      <text x="470" y="20" text-anchor="middle" class="lbl">48 = 2⁴ × 3</text>
+      <text x="200" y="145" text-anchor="middle" class="lbl">3</text>
+      <text x="200" y="170" text-anchor="middle" class="sm">sirf 36 mein</text>
+      <text x="325" y="120" text-anchor="middle" class="lbl" style="fill:var(--ch)">2, 2, 3</text>
+      <text x="325" y="145" text-anchor="middle" class="sm">dono mein</text>
+      <text x="325" y="170" text-anchor="middle" class="lbl" style="fill:var(--ch)">HCF = 12</text>
+      <text x="455" y="145" text-anchor="middle" class="lbl">2, 2</text>
+      <text x="455" y="170" text-anchor="middle" class="sm">sirf 48 mein</text>
+      <text x="350" y="282" text-anchor="middle" class="lbl">LCM = poora chitra = 3 × (2 × 2 × 3) × (2 × 2) = 3 × 12 × 4 = 144</text>
+      <text x="560" y="90" class="sm">Check:</text>
+      <text x="560" y="110" class="sm">HCF × LCM</text>
+      <text x="560" y="130" class="sm">= 12 × 144 = 1728</text>
+      <text x="560" y="150" class="sm">= 36 × 48 ✔</text>
+    </svg>
+    </div>
+    <figcaption>Beech ka hissa = HCF (har prime ki chhoti power). Poora chitra = LCM (har prime ki badi power).</figcaption>
+  </figure><h3>Speed method 6 · Remainder wale: LCM ke aage ya peeche</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Number line from 0 to 125 for divisors 12, 15 and 20, whose LCM is 60. Multiples 60 and 120 are marked. 64 and 124 are 4 ahead: same remainder 4. 53 and 113 are 7 behind: remainders 5, 8, 13 where divisor minus remainder is always 7.">
+      <defs>
+        <marker id="mlh-basics-rem-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <text x="350" y="20" text-anchor="middle" class="lbl">Bhaajak 12, 15, 20 · LCM = 60</text>
+      <line x1="40" y1="110" x2="660" y2="110" class="ln" marker-end="url(#mlh-basics-rem-arr)"/>
+      <line x1="40" y1="96" x2="40" y2="124" class="ln"/>
+      <rect x="324" y="90" width="8" height="40" style="fill:var(--ch)"/>
+      <rect x="612" y="90" width="8" height="40" style="fill:var(--ch)"/>
+      <g text-anchor="middle" class="lbl"><text x="40" y="148">0</text><text x="328" y="148" style="fill:var(--ch)">60</text><text x="616" y="148" style="fill:var(--ch)">120</text></g>
+      <circle cx="294" cy="110" r="7" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <circle cx="582" cy="110" r="7" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <circle cx="347" cy="110" r="7" class="chf"/><circle cx="347" cy="110" r="7" class="chs"/>
+      <circle cx="635" cy="110" r="7" class="chf"/><circle cx="635" cy="110" r="7" class="chs"/>
+      <g text-anchor="middle" class="sm"><text x="282" y="80">53</text><text x="570" y="80">113</text><text x="360" y="80">64</text><text x="648" y="80">124</text></g>
+      <rect x="40" y="166" width="300" height="54" rx="8" class="paper" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="5 3"/>
+      <text x="52" y="188" class="lbl">Peeche: LCM − d</text>
+      <text x="52" y="208" class="sm">remainders 5, 8, 13 → 12−5 = 15−8 = 20−13 = 7</text>
+      <rect x="360" y="166" width="300" height="54" rx="8" class="chf"/><rect x="360" y="166" width="300" height="54" rx="8" class="chs"/>
+      <text x="372" y="188" class="lbl">Aage: LCM + r</text>
+      <text x="372" y="208" class="sm">har baar remainder 4 → 60 + 4 = 64, 124…</text>
+    </svg>
+    </div>
+    <figcaption>Number line scale par hai. Dark patti = LCM ke multiple. Khaali gola = LCM − 7. Bhara gola = LCM + 4.</figcaption>
+  </figure><h3>Speed method 9 · Word problem: HCF ya LCM? Shabd se pehchano</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Two columns of clue words. HCF: largest piece, cut, tiles, distribute equally, maximum students or boxes, rows of same trees, groups. LCM: when together again, bells, traffic lights, running laps, least number divisible by all, remainder questions.">
+      <rect x="250" y="10" width="200" height="44" rx="22" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="350" y="37" text-anchor="middle" class="lbl">Sawaal ke shabd padho</text>
+      <line x1="300" y1="54" x2="190" y2="76" class="ln"/><line x1="400" y1="54" x2="510" y2="76" class="ln"/>
+      <rect x="20" y="78" width="320" height="200" rx="10" class="chf"/><rect x="20" y="78" width="320" height="200" rx="10" class="chs"/>
+      <rect x="360" y="78" width="320" height="200" rx="10" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="180" y="104" text-anchor="middle" class="lbl" style="fill:var(--ch)">HCF · "bada tukda, barabar baanto"</text>
+      <text x="520" y="104" text-anchor="middle" class="lbl" style="fill:var(--ch)">LCM · "phir kab milenge"</text>
+      <g class="sm">
+        <text x="36" y="132">• largest / greatest / longest size</text>
+        <text x="36" y="154">• rassi, pipe, rod ko barabar kaatna</text>
+        <text x="36" y="176">• sabse bade square tiles (phir gino)</text>
+        <text x="36" y="198">• maximum students / boxes / boys</text>
+        <text x="36" y="220">• har line mein same tree, groups</text>
+        <text x="36" y="242">• same remainder dene wala bada number</text>
+        <text x="36" y="264" class="lbl">Answer chhota hota hai (≤ chhota number)</text>
+        <text x="376" y="132">• ghantiyan, traffic light, saath mein</text>
+        <text x="376" y="154">• gol track par phir starting point</text>
+        <text x="376" y="176">• least number divisible by sab</text>
+        <text x="376" y="198">• remainder wala sabse chhota number</text>
+        <text x="376" y="220">• kitni baar saath bajti hain</text>
+        <text x="376" y="242">• sabse chhota square jo sab se kate</text>
+        <text x="376" y="264" class="lbl">Answer bada hota hai (≥ bada number)</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Do sawaal: "tukda / baantna?" → HCF. "Milan / saath?" → LCM. Answer ka size bhi check karo.</figcaption>
+  </figure><h3>Do picture-sawaal jo har saal aate hain</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 320" role="img" aria-label="A 720 by 540 centimetre floor drawn to scale, divided into 180 centimetre square tiles: 4 across and 3 down, 12 tiles in all.">
+      <rect x="40" y="30" width="360" height="270" class="chf"/>
+      <g class="chs">
+        <rect x="40" y="30" width="360" height="270"/>
+        <line x1="130" y1="30" x2="130" y2="300"/><line x1="220" y1="30" x2="220" y2="300"/><line x1="310" y1="30" x2="310" y2="300"/>
+        <line x1="40" y1="120" x2="400" y2="120"/><line x1="40" y1="210" x2="400" y2="210"/>
+      </g>
+      <text x="220" y="20" text-anchor="middle" class="lbl">720 cm</text>
+      <text x="30" y="170" text-anchor="middle" class="lbl" transform="rotate(-90 30 170)">540 cm</text>
+      <text x="85" y="80" text-anchor="middle" class="sm">180 × 180</text>
+      <g text-anchor="middle" class="lbl" style="fill:var(--ch)"><text x="85" y="100">1</text><text x="175" y="80">2</text><text x="265" y="80">3</text><text x="355" y="80">4</text><text x="85" y="170">5</text><text x="355" y="260">12</text></g>
+      <text x="420" y="60" class="lbl">Tile ka side = HCF(540, 720)</text>
+      <text x="420" y="82" class="sm">720 − 540 = 180 → 540 = 3 × 180 ✔</text>
+      <text x="420" y="104" class="lbl" style="fill:var(--ch)">side = 180 cm</text>
+      <text x="420" y="144" class="lbl">Tiles kitne?</text>
+      <text x="420" y="166" class="sm">lambai mein 720 ÷ 180 = 4</text>
+      <text x="420" y="188" class="sm">chaudai mein 540 ÷ 180 = 3</text>
+      <text x="420" y="210" class="lbl" style="fill:var(--ch)">4 × 3 = 12 tiles</text>
+      <text x="420" y="250" class="sm">Chhota tile (90 cm) lo toh 8 × 6 = 48.</text>
+      <text x="420" y="270" class="sm">Sabse bada tile = sabse kam tiles.</text>
+    </svg>
+    </div>
+    <figcaption>540 × 720 cm ka farsh, scale par. Sabse bada square tile HCF hai. Ginti = (lambai ÷ HCF) × (chaudai ÷ HCF).</figcaption>
+  </figure><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Timeline from 0 to 360 seconds, to scale. Bell A rings every 18 seconds, bell B every 24 seconds, bell C every 30 seconds. Their ticks line up again only at 360 seconds, which is 6 minutes.">
+      <g class="lbl"><text x="10" y="54">18 s</text><text x="10" y="104">24 s</text><text x="10" y="154">30 s</text></g>
+      <line x1="58.5" y1="50" x2="683" y2="50" style="stroke:var(--ch)" stroke-width="16" stroke-dasharray="3 28"/>
+      <line x1="58.5" y1="100" x2="683" y2="100" style="stroke:var(--ch)" stroke-width="16" stroke-dasharray="3 38.333"/>
+      <line x1="58.5" y1="150" x2="683" y2="150" style="stroke:var(--ch)" stroke-width="16" stroke-dasharray="3 48.667"/>
+      <line x1="60" y1="185" x2="680" y2="185" class="ln"/>
+      <g class="ln"><line x1="60" y1="180" x2="60" y2="190"/><line x1="163.3" y1="180" x2="163.3" y2="190"/><line x1="266.7" y1="180" x2="266.7" y2="190"/><line x1="370" y1="180" x2="370" y2="190"/><line x1="473.3" y1="180" x2="473.3" y2="190"/><line x1="576.7" y1="180" x2="576.7" y2="190"/><line x1="680" y1="180" x2="680" y2="190"/></g>
+      <g text-anchor="middle" class="sm"><text x="60" y="204">0</text><text x="163.3" y="204">60</text><text x="266.7" y="204">120</text><text x="370" y="204">180</text><text x="473.3" y="204">240</text><text x="576.7" y="204">300</text><text x="680" y="204">360 s</text></g>
+      <rect x="672" y="30" width="16" height="138" rx="4" class="paper" stroke="var(--ch)" stroke-width="2" style="fill-opacity:0"/>
+      <text x="660" y="22" text-anchor="end" class="lbl" style="fill:var(--ch)">LCM = 360 s = 6 min: teeno saath</text>
+      <text x="350" y="236" text-anchor="middle" class="sm">Har patti = ek ghanti bajna · beech mein do-do kabhi kabhi milti hain (72 s par 18 aur 24), teeno sirf 360 par</text>
+    </svg>
+    </div>
+    <figcaption>Ghantiyan 18, 24, 30 second par. Timeline scale par hai. Teeno pattiyan pehli baar 360 second par ek line mein aati hain.</figcaption>
+  </figure></section>
+<p class="dg-src"><a href="/pyq-notes?b=maths&amp;t=t01">🧮 Poore notes mein ye topic kholo ›</a></p>

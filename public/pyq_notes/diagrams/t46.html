@@ -1,0 +1,336 @@
+<section class="chap" id="mal-basics"><div class="eyebrow">Maths · 167 questions</div><h2>Algebra: shuru se, aur bina lambi expansion ke 36-second wale tareeke</h2><h3>3 badi baatein (poora chapter inhi se chalta hai)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Area picture of (a+b) squared. A big square of side a+b is split into a squared, two rectangles ab, and b squared. Text on the right lists the square identities.">
+      <rect x="40" y="30" width="160" height="160" class="chf"/><rect x="40" y="30" width="160" height="160" class="chs"/>
+      <rect x="200" y="30" width="80" height="160" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="40" y="190" width="160" height="80" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="200" y="190" width="80" height="80" style="fill:var(--ch);opacity:.45"/><rect x="200" y="190" width="80" height="80" class="chs"/>
+      <g text-anchor="middle" class="lbl">
+        <text x="120" y="116">a²</text>
+        <text x="240" y="116">ab</text>
+        <text x="120" y="236">ab</text>
+        <text x="240" y="236">b²</text>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="120" y="22">a</text><text x="240" y="22">b</text>
+        <text x="28" y="114">a</text><text x="28" y="234">b</text>
+        <text x="160" y="290">poori bhuja = a + b</text>
+      </g>
+      <text x="320" y="50" class="lbl">(a + b)² = a² + 2ab + b²</text>
+      <text x="320" y="70" class="sm">bada square = ek bada, ek chhota, do patti (ab, ab)</text>
+      <text x="320" y="106" class="lbl">(a − b)² = a² − 2ab + b²</text>
+      <text x="320" y="126" class="sm">wahi tukde, bas pattiyan minus</text>
+      <text x="320" y="162" class="lbl" style="fill:var(--ch)">(a + b)² − (a − b)² = 4ab</text>
+      <text x="320" y="182" class="sm">dono mein farq sirf 4 pattiyon ka</text>
+      <text x="320" y="218" class="lbl">(a + b)² + (a − b)² = 2(a² + b²)</text>
+      <text x="320" y="238" class="sm">pattiyan kat gayin, square do baar bache</text>
+      <text x="320" y="274" class="sm">5 aur 2 se check: 49 − 9 = 40 = 4 × 10 ✔</text>
+    </svg>
+    </div>
+    <figcaption>(a + b)² ko ek bade square ki tarah socho. Pattiyan (ab) hi saara khel hain. Jod aur farq ke square mein farq = 4ab.</figcaption>
+  </figure><h3>Speed method 2 · x + 1/x ki seedhi</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 310" role="img" aria-label="Ladder for x plus 1 over x equal to k. Square step: k squared minus 2. Fourth power: square again minus 2. Cube step: k cubed minus 3k. Sixth power: cube result squared minus 2, or square result cubed minus 3 times square result. Example values for k = 4: 14, 194, 52, 2702. Minus branch: x minus 1 over x equal to d gives x squared plus 1 over x squared equal to d squared plus 2.">
+      <defs>
+        <marker id="mal-lad-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="10" y="100" width="150" height="56" rx="8" style="fill:var(--ch);opacity:.25"/><rect x="10" y="100" width="150" height="56" rx="8" class="chs"/>
+      <text x="85" y="124" text-anchor="middle" class="lbl">x + 1/x = k</text>
+      <text x="85" y="144" text-anchor="middle" class="sm">misaal: k = 4</text>
+      <!-- square branch -->
+      <rect x="230" y="30" width="200" height="56" rx="8" class="chf"/><rect x="230" y="30" width="200" height="56" rx="8" class="chs"/>
+      <text x="330" y="54" text-anchor="middle" class="lbl">x² + 1/x² = k² − 2</text>
+      <text x="330" y="74" text-anchor="middle" class="sm">16 − 2 = 14</text>
+      <rect x="490" y="30" width="200" height="56" rx="8" class="chf"/><rect x="490" y="30" width="200" height="56" rx="8" class="chs"/>
+      <text x="590" y="54" text-anchor="middle" class="lbl">x⁴ + 1/x⁴ = (14)² − 2</text>
+      <text x="590" y="74" text-anchor="middle" class="sm">196 − 2 = 194</text>
+      <!-- cube branch -->
+      <rect x="230" y="170" width="200" height="56" rx="8" class="chf"/><rect x="230" y="170" width="200" height="56" rx="8" class="chs"/>
+      <text x="330" y="194" text-anchor="middle" class="lbl">x³ + 1/x³ = k³ − 3k</text>
+      <text x="330" y="214" text-anchor="middle" class="sm">64 − 12 = 52</text>
+      <rect x="490" y="170" width="200" height="56" rx="8" class="chf"/><rect x="490" y="170" width="200" height="56" rx="8" class="chs"/>
+      <text x="590" y="194" text-anchor="middle" class="lbl">x⁶ + 1/x⁶ = (52)² − 2</text>
+      <text x="590" y="214" text-anchor="middle" class="sm">2704 − 2 = 2702</text>
+      <g class="ln">
+        <line x1="160" y1="118" x2="226" y2="66" marker-end="url(#mal-lad-arr)"/>
+        <line x1="160" y1="140" x2="226" y2="192" marker-end="url(#mal-lad-arr)"/>
+        <line x1="430" y1="58" x2="486" y2="58" marker-end="url(#mal-lad-arr)"/>
+        <line x1="430" y1="198" x2="486" y2="198" marker-end="url(#mal-lad-arr)"/>
+      </g>
+      <g class="sm"><text x="168" y="84">square</text><text x="176" y="186">cube</text><text x="436" y="50">square</text><text x="436" y="190">square</text></g>
+      <!-- minus branch -->
+      <rect x="10" y="250" width="150" height="50" rx="8" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="85" y="280" text-anchor="middle" class="lbl">x − 1/x = d</text>
+      <line x1="160" y1="275" x2="226" y2="275" class="ln" marker-end="url(#mal-lad-arr)"/>
+      <text x="232" y="270" class="lbl">x² + 1/x² = d² + 2</text>
+      <text x="232" y="290" class="sm">(minus ka square: beech ka 2 ab jud jaata hai)</text>
+      <text x="520" y="270" class="lbl">x³ − 1/x³ = d³ + 3d</text>
+      <text x="520" y="290" class="sm">phir square wali seedhi wahi</text>
+    </svg>
+    </div>
+    <figcaption>Seedhi: plus mein "− 2" aur "− 3k", minus mein "+ 2" aur "+ 3d". Har kadam ek hi line ka hai.</figcaption>
+  </figure><h3>Speed method 3 · Do number: s, p, d ka triangle (aur "number hi nikaal lo")</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Triangle linking sum s, product p and difference d of two numbers. Edges: s squared minus d squared equals 4p. a squared plus b squared equals s squared minus 2p equals d squared plus 2p. Example 5 and 2: s 7, p 10, d 3.">
+      <polygon points="200,40 60,240 340,240" class="chf"/>
+      <polygon points="200,40 60,240 340,240" class="chs"/>
+      <circle cx="200" cy="40" r="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <circle cx="60" cy="240" r="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <circle cx="340" cy="240" r="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <g text-anchor="middle" class="lbl">
+        <text x="200" y="38">s</text><text x="60" y="238">p</text><text x="340" y="238">d</text>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="200" y="54">a + b</text><text x="60" y="254">ab</text><text x="340" y="254">a − b</text>
+      </g>
+      <text x="200" y="160" text-anchor="middle" class="lbl">a² + b²</text>
+      <text x="200" y="178" text-anchor="middle" class="sm">= s² − 2p = d² + 2p</text>
+      <text x="200" y="282" text-anchor="middle" class="sm">s² = d² + 4p</text>
+      <text x="100" y="130" text-anchor="end" class="sm">s² − 2p</text>
+      <text x="300" y="130" class="sm">d² + 4p = s²</text>
+      <text x="390" y="50" class="lbl">5 aur 2 par check</text>
+      <text x="390" y="72" class="sm">s = 7, p = 10, d = 3</text>
+      <text x="390" y="92" class="sm">a² + b² = 49 − 20 = 9 + 20 = 29</text>
+      <text x="390" y="112" class="sm">s² − d² = 49 − 9 = 40 = 4p</text>
+      <text x="390" y="150" class="lbl" style="fill:var(--ch)">Cube bhi yahin se</text>
+      <text x="390" y="172" class="sm">a³ + b³ = s³ − 3ps = 343 − 210 = 133</text>
+      <text x="390" y="192" class="sm">a³ − b³ = d³ + 3pd = 27 + 90 = 117</text>
+      <text x="390" y="230" class="lbl">Aur seedha tareeka:</text>
+      <text x="390" y="252" class="sm">jod 7, guna 10 → kaun se do number? 5, 2</text>
+      <text x="390" y="272" class="sm">phir jo maange, seedha number se nikaalo</text>
+    </svg>
+    </div>
+    <figcaption>Teen kone: jod, guna, farq. Koi do pata hon toh teesra s² = d² + 4p se. Baaki sab inhi se banta hai.</figcaption>
+  </figure><h3>Speed method 4 · Teen number wali identity</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Map for three numbers. Known S = a+b+c, Q = ab+bc+ca, P = abc. From S and Q get a squared plus b squared plus c squared equal S squared minus 2Q. Then a cubed plus b cubed plus c cubed equal 3P plus S times (sum of squares minus Q). If S is zero, sum of cubes equals 3P.">
+      <defs>
+        <marker id="mal-tri-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="10" y="20" width="160" height="50" rx="8" class="chf"/><rect x="10" y="20" width="160" height="50" rx="8" class="chs"/>
+      <text x="90" y="42" text-anchor="middle" class="lbl">S = a + b + c</text><text x="90" y="60" text-anchor="middle" class="sm">jod</text>
+      <rect x="10" y="100" width="160" height="50" rx="8" class="chf"/><rect x="10" y="100" width="160" height="50" rx="8" class="chs"/>
+      <text x="90" y="122" text-anchor="middle" class="lbl">Q = ab + bc + ca</text><text x="90" y="140" text-anchor="middle" class="sm">jode ke guna</text>
+      <rect x="10" y="180" width="160" height="50" rx="8" class="chf"/><rect x="10" y="180" width="160" height="50" rx="8" class="chs"/>
+      <text x="90" y="202" text-anchor="middle" class="lbl">P = abc</text><text x="90" y="220" text-anchor="middle" class="sm">teeno ka guna</text>
+      <rect x="240" y="55" width="200" height="60" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="340" y="80" text-anchor="middle" class="lbl">a² + b² + c²</text>
+      <text x="340" y="100" text-anchor="middle" class="sm">= S² − 2Q</text>
+      <rect x="490" y="55" width="200" height="60" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="590" y="80" text-anchor="middle" class="lbl">a³ + b³ + c³</text>
+      <text x="590" y="100" text-anchor="middle" class="sm">= 3P + S × (squares − Q)</text>
+      <rect x="490" y="160" width="200" height="60" rx="8" style="fill:var(--ch);opacity:.25"/><rect x="490" y="160" width="200" height="60" rx="8" class="chs"/>
+      <text x="590" y="185" text-anchor="middle" class="lbl">S = 0 ho toh</text>
+      <text x="590" y="205" text-anchor="middle" class="sm">a³ + b³ + c³ = 3abc</text>
+      <g class="ln">
+        <line x1="170" y1="45" x2="236" y2="78" marker-end="url(#mal-tri-arr)"/>
+        <line x1="170" y1="125" x2="236" y2="95" marker-end="url(#mal-tri-arr)"/>
+        <line x1="440" y1="85" x2="486" y2="85" marker-end="url(#mal-tri-arr)"/>
+        <line x1="170" y1="205" x2="486" y2="190" marker-end="url(#mal-tri-arr)"/>
+        <line x1="590" y1="115" x2="590" y2="156" marker-end="url(#mal-tri-arr)"/>
+      </g>
+      <text x="250" y="150" class="sm">Ulta bhi: S² = squares + 2Q</text>
+      <text x="250" y="250" class="sm">(a − b)² + (b − c)² + (c − a)² = 2 × (squares − Q)</text>
+    </svg>
+    </div>
+    <figcaption>Teen number mein bhi wahi kahani: jod (S), jode ke guna (Q), sabka guna (P). Squares S aur Q se, cubes uske baad.</figcaption>
+  </figure><h3>Kaunsa method kab? (ek nazar mein)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing an algebra method. Check in order: options have letters, x plus 1 over x given, two numbers sum product given, three numbers given, surd value given, plus over minus fraction, solve for x. Each yes leads to its method.">
+      <defs>
+        <marker id="mal-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya diya, kya maanga?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mal-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">Options mein x, y, a, b hain?</text>
+        <text x="180" y="141">x ± 1/x (ya k/x) diya?</text>
+        <text x="180" y="197">Do number: a + b, ab, a − b?</text>
+        <text x="180" y="253">Teen number: a + b + c, ab + bc + ca?</text>
+        <text x="180" y="309">x = p + √q jaisi value?</text>
+        <text x="180" y="365">(A + B)/(A − B) = k wala fraction?</text>
+        <text x="180" y="421">"x kya hai" / "number kya hai"?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mal-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mal-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mal-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mal-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mal-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mal-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mal-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mal-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Value maan lo</text>
+        <text x="410" y="132">x + 1/x ki seedhi</text>
+        <text x="410" y="188">s-p-d triangle / number nikaalo</text>
+        <text x="410" y="244">Teen number map</text>
+        <text x="410" y="300">Jodi-dar (conjugate)</text>
+        <text x="410" y="356">Componendo-Dividendo</text>
+        <text x="410" y="412">Options daal ke dekho</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">1, 0, 2 daalo · x + 1/x = ±2 → x = ±1</text>
+        <text x="410" y="149">plus: −2, −3k · minus: +2, +3d</text>
+        <text x="410" y="205">a² + b² = s² − 2p · s² = d² + 4p</text>
+        <text x="410" y="261">squares = S² − 2Q · S = 0 → 3abc</text>
+        <text x="410" y="317">a² + b² = 2(p² + q) · guna 1?</text>
+        <text x="410" y="373">A : B = (k + 1) : (k − 1)</text>
+        <text x="410" y="429">√ ko poora square banane wala pehle</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow rough mein 3 second ka hai. Pehla "haan" milte hi wahi method chalao.</figcaption>
+  </figure></section>
+<section class="chap" id="mcg-basics"><div class="eyebrow">Maths · 120 questions</div><h2>Coordinate Geometry: graph paper ki kahani, aur 36-second wale tareeke</h2><h3>3 badi baatein</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Graph of the line 2x + 3y = 6. It cuts the y axis at (0, 2) and the x axis at (3, 0). A slope triangle shows run 3 and drop 2, so slope is minus 2 over 3. Side panel gives the rules: slope minus a over b, x intercept c over a, y intercept c over b.">
+      <g class="ln" stroke-dasharray="2 4">
+        <line x1="60" y1="40" x2="60" y2="280"/><line x1="140" y1="40" x2="140" y2="280"/><line x1="180" y1="40" x2="180" y2="280"/><line x1="260" y1="40" x2="260" y2="280"/><line x1="300" y1="40" x2="300" y2="280"/>
+        <line x1="40" y1="80" x2="320" y2="80"/><line x1="40" y1="120" x2="320" y2="120"/><line x1="40" y1="200" x2="320" y2="200"/><line x1="40" y1="280" x2="320" y2="280"/>
+      </g>
+      <line x1="40" y1="240" x2="320" y2="240" class="ln" stroke-width="2"/>
+      <line x1="100" y1="30" x2="100" y2="290" class="ln" stroke-width="2"/>
+      <text x="312" y="256" class="sm">x</text><text x="106" y="40" class="sm">y</text>
+      <g class="sm" text-anchor="middle"><text x="140" y="256">1</text><text x="180" y="256">2</text><text x="260" y="256">4</text><text x="300" y="256">5</text></g>
+      <g class="sm" text-anchor="end"><text x="94" y="204">1</text><text x="94" y="124">3</text><text x="94" y="84">4</text></g>
+      <text x="94" y="256" text-anchor="end" class="sm">0</text>
+      <!-- slope triangle -->
+      <line x1="100" y1="160" x2="220" y2="160" class="chs" stroke-dasharray="5 3"/>
+      <line x1="220" y1="160" x2="220" y2="240" class="chs" stroke-dasharray="5 3"/>
+      <text x="160" y="152" text-anchor="middle" class="sm">aage 3</text>
+      <text x="226" y="204" class="sm">neeche 2</text>
+      <!-- the line: x from -1.5 (y=3) to 4.5 (y=-1) -->
+      <line x1="40" y1="120" x2="280" y2="280" style="stroke:var(--ch)" stroke-width="3"/>
+      <circle cx="100" cy="160" r="6" style="fill:var(--ch)"/>
+      <circle cx="220" cy="240" r="6" style="fill:var(--ch)"/>
+      <text x="92" y="182" text-anchor="end" class="lbl">(0, 2)</text>
+      <text x="228" y="234" class="lbl">(3, 0)</text>
+      <text x="230" y="290" class="sm">2x + 3y = 6</text>
+      <!-- side panel -->
+      <rect x="360" y="30" width="330" height="240" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="376" y="58" class="lbl">ax + by = c</text>
+      <text x="376" y="92" class="lbl" style="fill:var(--ch)">slope = −a/b = −2/3</text>
+      <text x="376" y="112" class="sm">aage 3, neeche 2 → −2/3 (graph se bhi)</text>
+      <text x="376" y="146" class="lbl">x-intercept = c/a = 6/2 = 3</text>
+      <text x="376" y="166" class="sm">y = 0 rakho · point (3, 0)</text>
+      <text x="376" y="200" class="lbl">y-intercept = c/b = 6/3 = 2</text>
+      <text x="376" y="220" class="sm">x = 0 rakho · point (0, 2)</text>
+      <text x="376" y="254" class="sm">y = mx + c mein: m = slope, c = y-intercept</text>
+    </svg>
+    </div>
+    <figcaption>2x + 3y = 6 ka graph, scale par. x = 0 rakho toh y-sadak par point, y = 0 rakho toh x-sadak par point. Do point = poori line.</figcaption>
+  </figure><h3>Speed method 1 · Slope seedha padho</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Three panels for two lines. Intersecting: different slopes, one solution, a1 over a2 not equal b1 over b2. Parallel: same slope, no solution, a1 over a2 equal b1 over b2 not equal c1 over c2. Coincident: same line, infinite solutions, all three ratios equal. Perpendicular note: slopes multiply to minus one.">
+      <rect x="10" y="10" width="220" height="240" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="240" y="10" width="220" height="240" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="470" y="10" width="220" height="240" rx="8" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <g text-anchor="middle" class="lbl"><text x="120" y="34">Kaat-ti hain</text><text x="350" y="34">Parallel</text><text x="580" y="34">Coincident</text></g>
+      <!-- panel 1: perpendicular lines, slopes 1 and -1 to show right angle -->
+      <line x1="50" y1="150" x2="190" y2="150" class="ln"/><line x1="120" y1="50" x2="120" y2="170" class="ln"/>
+      <line x1="60" y1="170" x2="180" y2="50" style="stroke:var(--ch)" stroke-width="3"/>
+      <line x1="60" y1="50" x2="180" y2="170" class="chs" stroke-width="3" stroke-dasharray="6 3"/>
+      <circle cx="120" cy="110" r="5" style="fill:var(--ch)"/>
+      <g text-anchor="middle" class="sm"><text x="120" y="192">ek solution</text><text x="120" y="212">a₁/a₂ ≠ b₁/b₂</text><text x="120" y="236">m₁ × m₂ = −1 → 90°</text></g>
+      <!-- panel 2 -->
+      <line x1="280" y1="150" x2="420" y2="150" class="ln"/><line x1="350" y1="50" x2="350" y2="170" class="ln"/>
+      <line x1="290" y1="160" x2="390" y2="60" style="stroke:var(--ch)" stroke-width="3"/>
+      <line x1="320" y1="160" x2="420" y2="60" class="chs" stroke-width="3" stroke-dasharray="6 3"/>
+      <g text-anchor="middle" class="sm"><text x="350" y="192">koi solution nahi</text><text x="350" y="212">a₁/a₂ = b₁/b₂ ≠ c₁/c₂</text><text x="350" y="236">slope same, c alag</text></g>
+      <!-- panel 3 -->
+      <line x1="510" y1="150" x2="650" y2="150" class="ln"/><line x1="580" y1="50" x2="580" y2="170" class="ln"/>
+      <line x1="520" y1="160" x2="640" y2="60" style="stroke:var(--ch)" stroke-width="7" opacity=".35"/>
+      <line x1="520" y1="160" x2="640" y2="60" class="chs" stroke-width="2" stroke-dasharray="6 3"/>
+      <g text-anchor="middle" class="sm"><text x="580" y="192">anginat solution</text><text x="580" y="212">a₁/a₂ = b₁/b₂ = c₁/c₂</text><text x="580" y="236">3x + 2y = 6 aur 6x + 4y = 12</text></g>
+    </svg>
+    </div>
+    <figcaption>Do line ke teen rishte. Ratio rule se bina graph ke pata chal jaata hai. Algebra ke "no solution, k = ?" sawaal bhi yahi hain.</figcaption>
+  </figure><h3>Speed method 3 · Triangle ke centre</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 340" role="img" aria-label="Right triangle A(0,0), B(8,0), C(0,6) drawn to scale. Orthocentre H is at A, the right angle. Circumcentre O is the midpoint of hypotenuse BC at (4,3), with the circumcircle of radius 5. Centroid G at (8/3, 2) lies where medians meet. H, G and O lie on one line with HG twice GO.">
+      <circle cx="180" cy="170" r="150" class="ln" fill="none" stroke-dasharray="4 4"/>
+      <polygon points="60,260 300,260 60,80" class="chf"/>
+      <polygon points="60,260 300,260 60,80" class="chs"/>
+      <rect x="60" y="248" width="12" height="12" fill="none" class="chs" style="stroke-width:1.5"/>
+      <!-- medians -->
+      <g class="ln" stroke-dasharray="3 3">
+        <line x1="60" y1="260" x2="180" y2="170"/>
+        <line x1="300" y1="260" x2="60" y2="170"/>
+        <line x1="60" y1="80" x2="180" y2="260"/>
+      </g>
+      <!-- Euler line H-G-O -->
+      <line x1="60" y1="260" x2="180" y2="170" style="stroke:var(--ch)" stroke-width="2.5"/>
+      <circle cx="60" cy="260" r="6" style="fill:var(--ch)"/>
+      <circle cx="140" cy="200" r="6" class="paper" stroke="var(--ch)" stroke-width="3"/>
+      <circle cx="180" cy="170" r="6" style="fill:var(--ch)"/>
+      <text x="34" y="280" class="lbl">A(0, 0) = H</text>
+      <text x="290" y="280" class="lbl">B(8, 0)</text>
+      <text x="16" y="74" class="lbl">C(0, 6)</text>
+      <text x="148" y="216" class="lbl">G</text>
+      <text x="188" y="164" class="lbl">O(4, 3)</text>
+      <!-- legend -->
+      <text x="400" y="40" class="lbl">Right triangle (angle A = 90°)</text>
+      <text x="400" y="74" class="lbl" style="fill:var(--ch)">H (orthocentre) = A = (0, 0)</text>
+      <text x="400" y="94" class="sm">90° wale kone par altitudes milti hain</text>
+      <text x="400" y="128" class="lbl" style="fill:var(--ch)">O (circumcentre) = BC ka midpoint</text>
+      <text x="400" y="148" class="sm">(8 + 0)/2, (0 + 6)/2 = (4, 3) · radius = 5</text>
+      <text x="400" y="182" class="lbl" style="fill:var(--ch)">G (centroid) = average</text>
+      <text x="400" y="202" class="sm">(0 + 8 + 0)/3, (0 + 0 + 6)/3 = (8/3, 2)</text>
+      <text x="400" y="236" class="lbl">H, G, O ek line par</text>
+      <text x="400" y="256" class="sm">HG : GO = 2 : 1 → G = (H + 2O)/3</text>
+      <text x="400" y="276" class="sm">check: (0 + 8)/3 = 8/3, (0 + 6)/3 = 2 ✔</text>
+      <text x="400" y="310" class="sm">dashed: medians · gol: circumcircle</text>
+    </svg>
+    </div>
+    <figcaption>Scale par bana right triangle. Teen centre, ek line par. Right triangle mein H aur O seedha dikh jaate hain, G bas average.</figcaption>
+  </figure><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 214" role="img" aria-label="Euler line as a number line. H on the left, G two parts along, O one more part. Formulas: G = (H + 2O)/3, O = (3G − H)/2, H = 3G − 2O. Example H(3,−2), O(0,4) gives G(1,2). Also median: A to G two parts, G to D one part.">
+      <line x1="60" y1="70" x2="600" y2="70" class="ln" stroke-width="2"/>
+      <circle cx="60" cy="70" r="9" style="fill:var(--ch)"/>
+      <circle cx="420" cy="70" r="9" class="paper" stroke="var(--ch)" stroke-width="3"/>
+      <circle cx="600" cy="70" r="9" style="fill:var(--ch)"/>
+      <g class="lbl" text-anchor="middle"><text x="60" y="46">H</text><text x="420" y="46">G</text><text x="600" y="46">O</text></g>
+      <g class="sm" text-anchor="middle"><text x="240" y="92">2 hisse</text><text x="510" y="92">1 hissa</text></g>
+      <g class="sm" text-anchor="middle"><text x="60" y="108">orthocentre</text><text x="420" y="108">centroid</text><text x="600" y="108">circumcentre</text></g>
+      <text x="20" y="146" class="lbl">G = (H + 2O)/3</text>
+      <text x="250" y="146" class="lbl">O = (3G − H)/2</text>
+      <text x="480" y="146" class="lbl">H = 3G − 2O</text>
+      <text x="20" y="178" class="sm">Misaal: H(3, −2), O(0, 4) → G = ((3 + 0)/3, (−2 + 8)/3) = (1, 2)</text>
+      <text x="20" y="200" class="sm">Median par bhi yahi 2 : 1 hai: A se G 2 hisse, G se D (bhuja ka midpoint) 1 hissa</text>
+    </svg>
+    </div>
+    <figcaption>Euler line: centroid hamesha beech mein, orthocentre se do hisse door, circumcentre se ek hissa. Teeno formulas isi picture se.</figcaption>
+  </figure></section>
+<p class="dg-src"><a href="/pyq-notes?b=maths&amp;t=t14">🧮 Poore notes mein ye topic kholo ›</a></p>

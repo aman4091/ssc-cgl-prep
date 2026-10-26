@@ -1,0 +1,482 @@
+<section class="chap" id="mmx-basics"><div class="eyebrow">Maths · 153 questions</div><h2>Mixture &amp; Alligation: shuru se, aur 36-second wale tareeke</h2><h3>Speed method 1 · Mean price: "sabse saste se kitna upar"</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Number line from 40 to 60 rupees. 3 kg at 40 and 2 kg at 60 give a mean of 48. The distance from 40 to 48 is 8 and from 48 to 60 is 12. Distances 8 to 12 are in ratio 2 to 3, the reverse of the quantities 3 to 2.">
+      <line x1="100" y1="120" x2="600" y2="120" class="ln" style="stroke-width:3"/>
+      <g class="ln"><line x1="100" y1="110" x2="100" y2="130"/><line x1="600" y1="110" x2="600" y2="130"/></g>
+      <line x1="300" y1="100" x2="300" y2="140" style="stroke:var(--ch);stroke-width:3"/>
+      <text x="100" y="152" text-anchor="middle" class="lbl">₹40</text>
+      <text x="600" y="152" text-anchor="middle" class="lbl">₹60</text>
+      <text x="300" y="92" text-anchor="middle" class="lbl" style="fill:var(--ch)">mean ₹48</text>
+      <!-- weights -->
+      <rect x="40" y="30" width="120" height="50" rx="6" class="chf"/><rect x="40" y="30" width="120" height="50" rx="6" class="chs"/>
+      <text x="100" y="60" text-anchor="middle" class="lbl">3 kg sasta</text>
+      <rect x="560" y="44" width="80" height="36" rx="6" class="chf"/><rect x="560" y="44" width="80" height="36" rx="6" class="chs"/>
+      <text x="600" y="67" text-anchor="middle" class="lbl">2 kg</text>
+      <line x1="100" y1="80" x2="100" y2="110" class="ln"/><line x1="600" y1="80" x2="600" y2="110" class="ln"/>
+      <!-- distances -->
+      <g class="ln"><line x1="104" y1="176" x2="296" y2="176"/><line x1="304" y1="176" x2="596" y2="176"/></g>
+      <text x="200" y="196" text-anchor="middle" class="lbl">doori 8</text>
+      <text x="450" y="196" text-anchor="middle" class="lbl">doori 12</text>
+      <text x="350" y="228" text-anchor="middle" class="sm">doori 8 : 12 = 2 : 3 · maal 3 : 2 · yaani doori ka ulta = maal ka ratio</text>
+    </svg>
+    </div>
+    <figcaption>Taraazu jaisa socho. Bhaari taraf (3 kg) mean paas khisakta hai. Doori aur maal hamesha ulte ratio mein.</figcaption>
+  </figure><h3>Speed method 2 · Alligation cross (mean diya, ratio nikaalo)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Alligation cross. Cheaper 16 at top left, dearer 21 at top right, mean 18 in the middle. Crossing lines give 21 minus 18 = 3 under the cheaper and 18 minus 16 = 2 under the dearer. Ratio cheaper to dearer = 3 to 2.">
+      <rect x="110" y="16" width="150" height="48" rx="8" class="chf"/><rect x="110" y="16" width="150" height="48" rx="8" class="chs"/>
+      <rect x="440" y="16" width="150" height="48" rx="8" class="chf"/><rect x="440" y="16" width="150" height="48" rx="8" class="chs"/>
+      <text x="185" y="38" text-anchor="middle" class="lbl">Sasta</text><text x="185" y="56" text-anchor="middle" class="lbl">₹16</text>
+      <text x="515" y="38" text-anchor="middle" class="lbl">Mehnga</text><text x="515" y="56" text-anchor="middle" class="lbl">₹21</text>
+      <circle cx="350" cy="130" r="34" style="fill:var(--ch)"/>
+      <text x="350" y="126" text-anchor="middle" class="lbl" style="fill:var(--paper)">Mix</text>
+      <text x="350" y="143" text-anchor="middle" class="lbl" style="fill:var(--paper)">₹18</text>
+      <g class="ln" style="stroke-width:2">
+        <line x1="240" y1="66" x2="322" y2="110"/><line x1="378" y1="150" x2="470" y2="196"/>
+        <line x1="460" y1="66" x2="378" y2="110"/><line x1="322" y1="150" x2="230" y2="196"/>
+      </g>
+      <rect x="110" y="196" width="150" height="48" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <rect x="440" y="196" width="150" height="48" rx="8" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="185" y="218" text-anchor="middle" class="sm">21 − 18</text><text x="185" y="236" text-anchor="middle" class="lbl">3 hissa sasta</text>
+      <text x="515" y="218" text-anchor="middle" class="sm">18 − 16</text><text x="515" y="236" text-anchor="middle" class="lbl">2 hissa mehnga</text>
+      <text x="350" y="264" text-anchor="middle" class="lbl" style="fill:var(--ch)">Sasta : Mehnga = 3 : 2</text>
+    </svg>
+    </div>
+    <figcaption>Cross ka niyam: neeche likho "mehnga − mix" sasta ke neeche, aur "mix − sasta" mehnge ke neeche. Hamesha bada − chhota.</figcaption>
+  </figure><h3>Speed method 6 · Jo nahi chheda, use pakdo (paani ya doodh daala)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Alcohol 7 parts stays the same. Water goes from 4 parts to 6 parts after adding 12 litres. The 2 new parts equal 12 litres, so one part is 6 litres and the original mixture is 11 parts = 66 litres.">
+      <text x="10" y="44" class="lbl">Pehle 7 : 4</text>
+      <text x="10" y="134" class="lbl">Baad 7 : 6</text>
+      <g>
+        <rect x="130" y="24" width="40" height="34" class="chf"/><rect x="172" y="24" width="40" height="34" class="chf"/><rect x="214" y="24" width="40" height="34" class="chf"/><rect x="256" y="24" width="40" height="34" class="chf"/><rect x="298" y="24" width="40" height="34" class="chf"/><rect x="340" y="24" width="40" height="34" class="chf"/><rect x="382" y="24" width="40" height="34" class="chf"/>
+        <rect x="430" y="24" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="472" y="24" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="514" y="24" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="556" y="24" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g>
+        <rect x="130" y="114" width="40" height="34" class="chf"/><rect x="172" y="114" width="40" height="34" class="chf"/><rect x="214" y="114" width="40" height="34" class="chf"/><rect x="256" y="114" width="40" height="34" class="chf"/><rect x="298" y="114" width="40" height="34" class="chf"/><rect x="340" y="114" width="40" height="34" class="chf"/><rect x="382" y="114" width="40" height="34" class="chf"/>
+        <rect x="430" y="114" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="472" y="114" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="514" y="114" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/><rect x="556" y="114" width="40" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="598" y="114" width="40" height="34" style="fill:var(--ch)"/><rect x="640" y="114" width="40" height="34" style="fill:var(--ch)"/>
+      </g>
+      <text x="276" y="80" text-anchor="middle" class="sm">alcohol: 7 hisse (badla hi nahi)</text>
+      <text x="513" y="80" text-anchor="middle" class="sm">paani: 4 hisse</text>
+      <text x="639" y="170" text-anchor="middle" class="lbl" style="fill:var(--ch)">naye 2 hisse</text>
+      <text x="639" y="188" text-anchor="middle" class="lbl" style="fill:var(--ch)">= 12 L</text>
+      <text x="350" y="222" text-anchor="middle" class="lbl">1 hissa = 6 L → shuru ka mix = 7 + 4 = 11 hisse = 66 L</text>
+      <text x="350" y="242" text-anchor="middle" class="sm">CGL 17 Sep 2025 ka sawaal, bina equation ke</text>
+    </svg>
+    </div>
+    <figcaption>Gehre dabbe = jo daala gaya. Baaki sab wahi ka wahi. Isliye "jo nahi chheda" usko pehle barabar karo.</figcaption>
+  </figure><h3>Speed method 7 · Nikaalo aur bharo (replacement)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="64 litres of spirit, 8 litres removed and replaced with water three times. Spirit left: 64, 56, 49, 42.875 litres. Each step keeps 7 out of 8 of the spirit. Bars drawn to scale.">
+      <text x="10" y="20" class="sm">64 L spirit · har baar 8 L nikaalo (1/8), paani bharo · bacha spirit = 7/8 har baar</text>
+      <g>
+        <rect x="120" y="40" width="512" height="34" class="chf"/><rect x="120" y="40" width="512" height="34" class="chs"/>
+        <rect x="120" y="88" width="448" height="34" class="chf"/><rect x="120" y="88" width="448" height="34" class="chs"/>
+        <rect x="568" y="88" width="64" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="120" y="136" width="392" height="34" class="chf"/><rect x="120" y="136" width="392" height="34" class="chs"/>
+        <rect x="512" y="136" width="120" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="120" y="184" width="343" height="34" class="chf"/><rect x="120" y="184" width="343" height="34" class="chs"/>
+        <rect x="463" y="184" width="169" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g class="lbl"><text x="10" y="62">Shuru</text><text x="10" y="110">1 baar</text><text x="10" y="158">2 baar</text><text x="10" y="206">3 baar</text></g>
+      <g text-anchor="middle" class="lbl">
+        <text x="376" y="62">64 L spirit</text>
+        <text x="344" y="110">56</text>
+        <text x="316" y="158">49</text>
+        <text x="291" y="206" style="fill:var(--ch)">42.875</text>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="600" y="110">paani 8</text><text x="572" y="158">paani 15</text><text x="547" y="206">paani 21.125</text></g>
+      <text x="660" y="110" class="sm">×7/8</text><text x="660" y="158" class="sm">×7/8</text><text x="660" y="206" class="sm">×7/8</text>
+      <text x="350" y="242" text-anchor="middle" class="sm">64 × 7/8 × 7/8 × 7/8 = 64 × 343/512 = 343/8 = 42.875 · bars scale par</text>
+    </svg>
+    </div>
+    <figcaption>Har baar spirit ka 1/8 hi niklta hai, isliye girawat chhoti hoti jaati hai: 8, phir 7, phir 6.125. Ye CI ke "ghatne wale rate" jaisa hai.</figcaption>
+  </figure><h3>Kaunsa method kab? (ek nazar mein)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 400" role="img" aria-label="Flowchart for mixture questions. Check in order: profit or loss given, ratio given and mean asked, mean given and ratio asked, one thing added, some removed and refilled once, removed and refilled many times, three things. Each yes points to a method.">
+      <defs>
+        <marker id="mmx-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="30" rx="15" class="chf"/>
+      <text x="180" y="28" text-anchor="middle" class="lbl">Sawaal padho: kya pucha hai?</text>
+      <text x="400" y="28" class="sm">pehla "haan" = tumhara method</text>
+      <g>
+        <rect x="20" y="50" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="100" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="150" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="200" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="250" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="300" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="350" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="75">"Becha, munafa / nuksaan" likha hai?</text>
+        <text x="180" y="125">Ratio diya, mix ka price / % pucha?</text>
+        <text x="180" y="175">Mix ka price diya, ratio / maatra pucha?</text>
+        <text x="180" y="225">Sirf ek cheez daali (paani / doodh)?</text>
+        <text x="180" y="275">Ek baar nikaala aur bhara?</text>
+        <text x="180" y="325">Wahi kaam 2, 3, 4 baar?</text>
+        <text x="180" y="375">3 cheezein / teen bartan?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="90" x2="180" y2="98" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="180" y1="140" x2="180" y2="148" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="180" y1="190" x2="180" y2="198" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="180" y1="240" x2="180" y2="248" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="180" y1="290" x2="180" y2="298" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="180" y1="340" x2="180" y2="348" marker-end="url(#mmx-fc-arr)"/>
+      </g>
+      <g class="ln">
+        <line x1="340" y1="70" x2="396" y2="70" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="120" x2="396" y2="120" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="170" x2="396" y2="170" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="220" x2="396" y2="220" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="270" x2="396" y2="270" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="320" x2="396" y2="320" marker-end="url(#mmx-fc-arr)"/>
+        <line x1="340" y1="370" x2="396" y2="370" marker-end="url(#mmx-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="64">haan</text><text x="368" y="114">haan</text><text x="368" y="164">haan</text><text x="368" y="214">haan</text><text x="368" y="264">haan</text><text x="368" y="314">haan</text><text x="368" y="364">haan</text></g>
+      <g>
+        <rect x="400" y="50" width="290" height="40" rx="6" class="chf"/><rect x="400" y="50" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="100" width="290" height="40" rx="6" class="chf"/><rect x="400" y="100" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="150" width="290" height="40" rx="6" class="chf"/><rect x="400" y="150" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="200" width="290" height="40" rx="6" class="chf"/><rect x="400" y="200" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="250" width="290" height="40" rx="6" class="chf"/><rect x="400" y="250" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="300" width="290" height="40" rx="6" class="chf"/><rect x="400" y="300" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="350" width="290" height="40" rx="6" class="chf"/><rect x="400" y="350" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="66">SP → CP pehle (method 3)</text>
+        <text x="410" y="116">Base + farq × hissa (method 1)</text>
+        <text x="410" y="166">Alligation cross (method 2)</text>
+        <text x="410" y="216">Unchhui cheez pakdo (method 6)</text>
+        <text x="410" y="266">Har cheez × (1 − f), phir jodo</text>
+        <text x="410" y="316">(1 − f)^n ki seedhi (method 7)</text>
+        <text x="410" y="366">Kul paisa / kul maatra (method 4, 5)</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="83">phir cross ya mean, CP par</text>
+        <text x="410" y="133">ratio wala ho toh pehle % banao</text>
+        <text x="410" y="183">paani = 0%, pure = 100%</text>
+        <text x="410" y="233">dono ratio mein uska number barabar karo</text>
+        <text x="410" y="283">ratio wahi rehta hai jab tak bharo nahi</text>
+        <text x="410" y="333">1/5 → 4/5 → 16/25 → 64/125</text>
+        <text x="410" y="383">denominators ka LCM le kar litre maano</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ek baar ye flow rough mein chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure></section>
+<section class="chap" id="mmx-types"><div class="eyebrow">Maths · PYQ types</div><h2>Mixture &amp; Alligation: paani milao, nikaalo-bharo, aur munafa</h2><h3>Type 10 · Ek baar nikaalo aur bharo (27 Qs)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="60 litres of milk and water 7 to 3: milk 42, water 18. Remove 12 litres, which is one fifth: milk 33.6, water 14.4, ratio still 7 to 3. Add 12 litres milk: milk 45.6, water 14.4, ratio 19 to 6. Bars drawn to scale, 8 pixels per litre.">
+      <g class="lbl"><text x="10" y="44">Shuru</text><text x="10" y="114">1/5 nikaala</text><text x="10" y="184">12 L doodh</text></g>
+      <rect x="130" y="22" width="336" height="34" class="chf"/><rect x="130" y="22" width="336" height="34" class="chs"/>
+      <rect x="466" y="22" width="144" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="298" y="44" text-anchor="middle" class="lbl">doodh 42</text><text x="538" y="44" text-anchor="middle" class="lbl">paani 18</text>
+      <rect x="130" y="92" width="269" height="34" class="chf"/><rect x="130" y="92" width="269" height="34" class="chs"/>
+      <rect x="399" y="92" width="115" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="514" y="92" width="96" height="34" class="paper" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"/>
+      <text x="264" y="114" text-anchor="middle" class="lbl">33.6</text><text x="456" y="114" text-anchor="middle" class="lbl">14.4</text>
+      <text x="562" y="114" text-anchor="middle" class="sm">khaali 12</text>
+      <text x="620" y="114" class="sm">7 : 3 hi</text>
+      <rect x="130" y="162" width="269" height="34" class="chf"/><rect x="130" y="162" width="269" height="34" class="chs"/>
+      <rect x="399" y="162" width="96" height="34" style="fill:var(--ch)"/>
+      <rect x="495" y="162" width="115" height="34" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="264" y="184" text-anchor="middle" class="lbl">33.6</text>
+      <text x="447" y="184" text-anchor="middle" class="lbl" style="fill:var(--paper)">+12</text>
+      <text x="552" y="184" text-anchor="middle" class="lbl">14.4</text>
+      <text x="620" y="184" class="lbl" style="fill:var(--ch)">19 : 6</text>
+      <text x="350" y="222" text-anchor="middle" class="sm">doodh 45.6 : paani 14.4 = 456 : 144 = 19 : 6 · scale: 8 px = 1 L</text>
+    </svg>
+    </div>
+    <figcaption>Beech wali line dekho: nikaalne ke baad bhi 7 : 3 hi hai. Ratio sirf aakhri kadam (bharne) se badla.</figcaption>
+  </figure></section>
+<section class="chap" id="mtr-trains"><div class="eyebrow">Maths · 85 questions</div><h2>Problems on Trains: shuru se, aur 36-second wale tareeke</h2><h3>Speed method 1 · km/h ↔ m/s: 18 ka 5</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Conversion cards. 18 km/h = 5 m/s, 36 = 10, 54 = 15, 72 = 20, 90 = 25, 108 = 30, 126 = 35, 144 = 40. Multiply km/h by 5/18 to get m/s, and m/s by 18/5 to get km/h.">
+      <g text-anchor="middle">
+        <rect x="8" y="14" width="80" height="80" rx="8" class="chf"/><rect x="8" y="14" width="80" height="80" rx="8" class="chs"/>
+        <rect x="94" y="14" width="80" height="80" rx="8" class="chf"/>
+        <rect x="180" y="14" width="80" height="80" rx="8" class="chf"/><rect x="180" y="14" width="80" height="80" rx="8" class="chs"/>
+        <rect x="266" y="14" width="80" height="80" rx="8" class="chf"/><rect x="266" y="14" width="80" height="80" rx="8" class="chs"/>
+        <rect x="352" y="14" width="80" height="80" rx="8" class="chf"/>
+        <rect x="438" y="14" width="80" height="80" rx="8" class="chf"/>
+        <rect x="524" y="14" width="80" height="80" rx="8" class="chf"/>
+        <rect x="610" y="14" width="80" height="80" rx="8" class="chf"/>
+        <text x="48" y="44" class="lbl">18 km/h</text><text x="48" y="74" class="lbl" style="fill:var(--ch)">5 m/s</text>
+        <text x="134" y="44" class="lbl">36</text><text x="134" y="74" class="lbl" style="fill:var(--ch)">10</text>
+        <text x="220" y="44" class="lbl">54</text><text x="220" y="74" class="lbl" style="fill:var(--ch)">15</text>
+        <text x="306" y="44" class="lbl">72</text><text x="306" y="74" class="lbl" style="fill:var(--ch)">20</text>
+        <text x="392" y="44" class="lbl">90</text><text x="392" y="74" class="lbl" style="fill:var(--ch)">25</text>
+        <text x="478" y="44" class="lbl">108</text><text x="478" y="74" class="lbl" style="fill:var(--ch)">30</text>
+        <text x="564" y="44" class="lbl">126</text><text x="564" y="74" class="lbl" style="fill:var(--ch)">35</text>
+        <text x="650" y="44" class="lbl">144</text><text x="650" y="74" class="lbl" style="fill:var(--ch)">40</text>
+        <text x="350" y="122" class="lbl">km/h → m/s: × 5/18 (18 se bhaag, 5 se guna)</text>
+        <text x="350" y="146" class="sm">m/s → km/h: × 18/5 · 60 km/h = 50/3 m/s · 45 km/h = 12.5 m/s · 10 km/h = 25/9 m/s</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Upar km/h, neeche m/s. Outline wale (18, 54, 72) 2025 ke papers mein sabse zyada aaye. Har card pichhle se 18 aur 5 aage.</figcaption>
+  </figure><h3>Speed method 2 · "Kya cross kiya?" se doori</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Top: a train of length L passing a pole; the front moves a distance L. Bottom: the same train passing a platform of length P; the front moves L plus P from the start of the platform until the rear leaves the far end.">
+      <defs>
+        <marker id="mtr-cr-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <text x="10" y="22" class="lbl">1 · Pole / khada aadmi</text>
+      <line x1="300" y1="34" x2="300" y2="100" style="stroke:var(--fg);stroke-width:3"/>
+      <text x="300" y="116" text-anchor="middle" class="sm">pole</text>
+      <rect x="160" y="60" width="140" height="26" rx="5" class="paper" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="230" y="78" text-anchor="middle" class="sm">shuru: naak pole par</text>
+      <rect x="300" y="60" width="140" height="26" rx="5" class="chf"/><rect x="300" y="60" width="140" height="26" rx="5" class="chs"/>
+      <text x="370" y="78" text-anchor="middle" class="sm">ant: poonch pole par</text>
+      <line x1="300" y1="48" x2="438" y2="48" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-cr-arr)"/>
+      <text x="470" y="52" class="lbl" style="fill:var(--ch)">naak chali = L</text>
+      <text x="470" y="72" class="sm">time = L ÷ speed</text>
+      <line x1="10" y1="140" x2="690" y2="140" class="ln" stroke-dasharray="3 4"/>
+      <text x="10" y="164" class="lbl">2 · Platform / pul (lambai P)</text>
+      <rect x="160" y="222" width="280" height="14" class="chf"/>
+      <text x="300" y="254" text-anchor="middle" class="sm">platform P</text>
+      <rect x="20" y="194" width="140" height="26" rx="5" class="paper" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="90" y="212" text-anchor="middle" class="sm">shuru: naak yahan</text>
+      <rect x="440" y="194" width="140" height="26" rx="5" class="chf"/><rect x="440" y="194" width="140" height="26" rx="5" class="chs"/>
+      <text x="510" y="212" text-anchor="middle" class="sm">ant: poonch bahar</text>
+      <line x1="160" y1="182" x2="578" y2="182" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-cr-arr)"/>
+      <text x="370" y="176" text-anchor="middle" class="lbl" style="fill:var(--ch)">naak chali = P + L</text>
+      <text x="350" y="282" text-anchor="middle" class="sm">time = (L + P) ÷ speed · train ki apni lambai hamesha judti hai</text>
+    </svg>
+    </div>
+    <figcaption>Naak ko dekho, poori train ko nahi. Naak ne jitna chala, wahi doori hai. Pole ki chaudai 0, platform ki P.</figcaption>
+  </figure><h3>Speed method 4 · Relative speed (do train, ya train aur aadmi)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Opposite direction: train A at 54 km/h and train B at 36 km/h approach each other, relative speed 90 km/h = 25 m/s, distance 120 + 180 = 300 m, time 12 s. Same direction: 25 and 75 km/h, relative 50 km/h, distance 120 + 130 = 250 m, time 18 s.">
+      <defs>
+        <marker id="mtr-rs-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ch)"/></marker>
+      </defs>
+      <text x="10" y="22" class="lbl">Aamne-saamne (opposite): speed JODO</text>
+      <rect x="40" y="38" width="160" height="28" rx="5" class="chf"/><rect x="40" y="38" width="160" height="28" rx="5" class="chs"/>
+      <text x="120" y="57" text-anchor="middle" class="sm">A · 120 m · 54 km/h</text>
+      <line x1="204" y1="52" x2="270" y2="52" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-rs-arr)"/>
+      <rect x="420" y="38" width="240" height="28" rx="5" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="540" y="57" text-anchor="middle" class="sm">B · 180 m · 36 km/h</text>
+      <line x1="416" y1="52" x2="350" y2="52" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-rs-arr)"/>
+      <text x="350" y="92" text-anchor="middle" class="lbl">rel speed 54 + 36 = 90 km/h = 25 m/s · doori 120 + 180 = 300 m</text>
+      <text x="350" y="112" text-anchor="middle" class="lbl" style="fill:var(--ch)">time = 300 ÷ 25 = 12 s</text>
+      <line x1="10" y1="132" x2="690" y2="132" class="ln" stroke-dasharray="3 4"/>
+      <text x="10" y="156" class="lbl">Ek hi disha (same): speed GHATAO</text>
+      <rect x="40" y="172" width="160" height="28" rx="5" class="chf"/><rect x="40" y="172" width="160" height="28" rx="5" class="chs"/>
+      <text x="120" y="191" text-anchor="middle" class="sm">tez · 120 m · 75 km/h</text>
+      <line x1="204" y1="186" x2="270" y2="186" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-rs-arr)"/>
+      <rect x="300" y="172" width="173" height="28" rx="5" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="386" y="191" text-anchor="middle" class="sm">dheemi · 130 m · 25 km/h</text>
+      <line x1="477" y1="186" x2="510" y2="186" style="stroke:var(--ch);stroke-width:2" marker-end="url(#mtr-rs-arr)"/>
+      <text x="350" y="226" text-anchor="middle" class="lbl">rel speed 75 − 25 = 50 km/h = 125/9 m/s · doori 120 + 130 = 250 m</text>
+      <text x="350" y="248" text-anchor="middle" class="lbl" style="fill:var(--ch)">time = 250 × 9/125 = 18 s</text>
+    </svg>
+    </div>
+    <figcaption>Soch aise: ek train ko khada maan lo. Doosri train ab "relative speed" se chal rahi hai, aur use poori L<sub>1</sub> + L<sub>2</sub> doori paar karni hai.</figcaption>
+  </figure><h3>Speed method 5 · Do station se chali, kab milengi?</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Timeline. Station A to B is 540 km. Train from A leaves at 6 AM at 60 km/h and covers 120 km by 8 AM. Train from B leaves at 8 AM at 90 km/h. Remaining 420 km closes at 150 km/h in 2.8 hours = 2 hours 48 minutes, so they meet at 10:48 AM.">
+      <line x1="60" y1="90" x2="640" y2="90" class="ln" style="stroke-width:3"/>
+      <circle cx="60" cy="90" r="7" style="fill:var(--ch)"/><circle cx="640" cy="90" r="7" style="fill:var(--ch)"/>
+      <text x="60" y="122" text-anchor="middle" class="lbl">A</text><text x="640" y="122" text-anchor="middle" class="lbl">B</text>
+      <text x="350" y="24" text-anchor="middle" class="sm">kul 540 km (scale par)</text>
+      <rect x="60" y="72" width="129" height="10" class="chf"/><rect x="60" y="72" width="129" height="10" class="chs"/>
+      <text x="124" y="62" text-anchor="middle" class="sm">6 → 8 AM: 120 km</text>
+      <line x1="189" y1="60" x2="189" y2="140" class="ln" stroke-dasharray="3 3"/>
+      <rect x="189" y="98" width="451" height="10" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="414" y="138" text-anchor="middle" class="lbl">8 AM par bachi doori 420 km</text>
+      <text x="414" y="158" text-anchor="middle" class="sm">dono saath: 60 + 90 = 150 km/h</text>
+      <line x1="369" y1="66" x2="369" y2="114" style="stroke:var(--ch);stroke-width:3"/>
+      <text x="369" y="58" text-anchor="middle" class="lbl" style="fill:var(--ch)">milan (288 km)</text>
+      <text x="350" y="192" text-anchor="middle" class="lbl">420 ÷ 150 = 2.8 h = 2 h 48 min → 8 AM + 2:48 = 10:48 AM</text>
+      <text x="350" y="212" text-anchor="middle" class="sm">milan A se 120 + 60 × 2.8 = 288 km par (picture mein gehri line)</text>
+    </svg>
+    </div>
+    <figcaption>Do kadam: pehle head start ghatao, phir bachi doori ko jodi hui speed se bhaag do. 0.8 ghanta = 48 minute (0.1 h = 6 min).</figcaption>
+  </figure><h3>Speed method 6 · Average speed (barabar doori par)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Time bars drawn to scale. 100 km at 50 km/h takes 2 hours; 100 km at 25 km/h takes 4 hours. Total 200 km in 6 hours gives 33.3 km/h, not 37.5.">
+      <text x="10" y="40" class="lbl">100 km @ 50</text>
+      <rect x="150" y="22" width="160" height="30" class="chf"/><rect x="150" y="22" width="160" height="30" class="chs"/>
+      <text x="230" y="42" text-anchor="middle" class="lbl">2 ghante</text>
+      <text x="10" y="90" class="lbl">100 km @ 25</text>
+      <rect x="150" y="72" width="320" height="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="310" y="92" text-anchor="middle" class="lbl">4 ghante</text>
+      <line x1="150" y1="116" x2="630" y2="116" class="ln"/>
+      <g class="sm" text-anchor="middle"><text x="150" y="132">0</text><text x="230" y="132">1</text><text x="310" y="132">2</text><text x="390" y="132">3</text><text x="470" y="132">4</text><text x="550" y="132">5</text><text x="630" y="132">6 h</text></g>
+      <text x="350" y="164" text-anchor="middle" class="lbl" style="fill:var(--ch)">avg = 200 ÷ 6 = 33.3 km/h = 2 × 50 × 25 ÷ 75</text>
+      <text x="350" y="186" text-anchor="middle" class="sm">dheemi wali speed par time zyada beeta, isliye avg 33.3 dheemi ki taraf jhuka</text>
+    </svg>
+    </div>
+    <figcaption>Barabar doori: avg = 2ab/(a + b). Teen barabar hisse: 3 ÷ (1/a + 1/b + 1/c).</figcaption>
+  </figure></section>
+<section class="chap" id="mbs-boat"><div class="eyebrow">Maths · 16 questions</div><h2>Boat &amp; Stream: do speed, jod aur ghata</h2><h3>Pehle ek chhoti si kahani: nadi mein naav</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Boat in still water 10 km/h, stream 2 km/h. Downstream the stream arrow points the same way as the boat: 10 + 2 = 12. Upstream the stream pushes against the boat: 10 - 2 = 8.">
+      <defs>
+        <marker id="mbs-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--ch)"/></marker>
+        <marker id="mbs-arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <text x="10" y="24" class="lbl">Downstream (dhaara ke saath)</text>
+      <rect x="10" y="40" width="680" height="64" rx="8" class="chf"/>
+      <path d="M150,62 L250,62 L235,82 L165,82 Z" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <line x1="256" y1="70" x2="456" y2="70" style="stroke:var(--ch);stroke-width:3" marker-end="url(#mbs-arr)"/>
+      <text x="356" y="62" text-anchor="middle" class="lbl">naav 10</text>
+      <line x1="456" y1="92" x2="496" y2="92" style="stroke:var(--muted);stroke-width:3" marker-end="url(#mbs-arr2)"/>
+      <text x="506" y="96" class="sm">dhaara 2</text>
+      <text x="580" y="78" class="lbl" style="fill:var(--ch)">10 + 2 = 12</text>
+      <text x="10" y="138" class="lbl">Upstream (dhaara ke ulte)</text>
+      <rect x="10" y="154" width="680" height="64" rx="8" class="chf"/>
+      <path d="M150,176 L250,176 L235,196 L165,196 Z" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <line x1="256" y1="184" x2="456" y2="184" style="stroke:var(--ch);stroke-width:3" marker-end="url(#mbs-arr)"/>
+      <text x="356" y="176" text-anchor="middle" class="lbl">naav 10</text>
+      <line x1="456" y1="206" x2="416" y2="206" style="stroke:var(--muted);stroke-width:3" marker-end="url(#mbs-arr2)"/>
+      <text x="476" y="210" class="sm">dhaara 2 (peeche)</text>
+      <text x="580" y="192" class="lbl" style="fill:var(--ch)">10 − 2 = 8</text>
+      <text x="350" y="242" text-anchor="middle" class="sm">scale: 20 px = 1 km/h · naav ka teer dono baar 10, sirf dhaara ki disha badli</text>
+    </svg>
+    </div>
+    <figcaption>Naav ki apni taakat wahi rehti hai. Dhaara kabhi dhakelti hai, kabhi rokti hai. Isliye D aur U mein farq = 2 × dhaara.</figcaption>
+  </figure><h3>Speed method 1 · Number line: U, b, D ek seedhi line par</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 170" role="img" aria-label="Number line with U = 10 at the left, b = 15 in the middle and D = 20 at the right. Each gap is s = 5. U to D is 2s = 10.">
+      <line x1="80" y1="80" x2="620" y2="80" class="ln" style="stroke-width:3"/>
+      <circle cx="140" cy="80" r="8" class="paper" stroke="var(--ch)" stroke-width="3"/>
+      <circle cx="350" cy="80" r="8" style="fill:var(--ch)"/>
+      <circle cx="560" cy="80" r="8" class="paper" stroke="var(--ch)" stroke-width="3"/>
+      <text x="140" y="56" text-anchor="middle" class="lbl">U = 10</text>
+      <text x="350" y="56" text-anchor="middle" class="lbl" style="fill:var(--ch)">b = 15</text>
+      <text x="560" y="56" text-anchor="middle" class="lbl">D = 20</text>
+      <g class="ln"><line x1="148" y1="104" x2="342" y2="104"/><line x1="358" y1="104" x2="552" y2="104"/></g>
+      <text x="245" y="122" text-anchor="middle" class="lbl">s = 5</text>
+      <text x="455" y="122" text-anchor="middle" class="lbl">s = 5</text>
+      <text x="350" y="158" text-anchor="middle" class="sm">b = beech ka number = (10 + 20)/2 · s = ek gap = (20 − 10)/2</text>
+    </svg>
+    </div>
+    <figcaption>U aur D ke theek beech b baitha hai. Har taraf ka gap = s. Isliye U se D tak = 2s.</figcaption>
+  </figure><h3>Speed method 2 · Ratio diya: jod aur farq</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 190" role="img" aria-label="D is 9 blocks, U is 4 blocks. Adding gives 13 = 2b; subtracting gives 5 = 2s. So b to s = 13 to 5.">
+      <text x="10" y="40" class="lbl">D = 9</text>
+      <g>
+        <rect x="80" y="22" width="40" height="28" class="chf"/><rect x="122" y="22" width="40" height="28" class="chf"/><rect x="164" y="22" width="40" height="28" class="chf"/><rect x="206" y="22" width="40" height="28" class="chf"/><rect x="248" y="22" width="40" height="28" class="chf"/><rect x="290" y="22" width="40" height="28" class="chf"/><rect x="332" y="22" width="40" height="28" class="chf"/><rect x="374" y="22" width="40" height="28" class="chf"/><rect x="416" y="22" width="40" height="28" class="chf"/>
+      </g>
+      <text x="10" y="90" class="lbl">U = 4</text>
+      <g>
+        <rect x="80" y="72" width="40" height="28" class="paper" stroke="var(--ch)" stroke-width="2"/><rect x="122" y="72" width="40" height="28" class="paper" stroke="var(--ch)" stroke-width="2"/><rect x="164" y="72" width="40" height="28" class="paper" stroke="var(--ch)" stroke-width="2"/><rect x="206" y="72" width="40" height="28" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      </g>
+      <rect x="248" y="72" width="208" height="28" style="fill:var(--ch);opacity:.25"/>
+      <text x="352" y="91" text-anchor="middle" class="lbl">farq 5 = 2s</text>
+      <text x="480" y="40" class="sm">D + U = 13 = 2b</text>
+      <text x="480" y="91" class="sm">D − U = 5 = 2s</text>
+      <text x="350" y="150" text-anchor="middle" class="lbl" style="fill:var(--ch)">b : s = 13 : 5</text>
+      <text x="350" y="174" text-anchor="middle" class="sm">"/2" dono taraf hai, ratio mein kat jaata hai</text>
+    </svg>
+    </div>
+    <figcaption>Jod = 2b, farq = 2s. Ratio pucha ho toh seedha jod : farq likh do.</figcaption>
+  </figure><h3>Speed method 3 · Aana-jaana ka kul time</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 180" role="img" aria-label="Boat 9 km/h, stream 6 km/h. 90 km upstream at 3 km/h takes 30 hours; 90 km downstream at 15 km/h takes 6 hours. Total 36 hours. Bars drawn to scale.">
+      <text x="10" y="40" class="lbl">Upstream 9 − 6 = 3</text>
+      <rect x="180" y="22" width="450" height="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="405" y="42" text-anchor="middle" class="lbl">90 ÷ 3 = 30 h</text>
+      <text x="10" y="92" class="lbl">Downstream 9 + 6 = 15</text>
+      <rect x="180" y="74" width="90" height="30" class="chf"/><rect x="180" y="74" width="90" height="30" class="chs"/>
+      <text x="290" y="94" class="lbl">90 ÷ 15 = 6 h</text>
+      <line x1="180" y1="118" x2="630" y2="118" class="ln"/>
+      <g class="sm" text-anchor="middle"><text x="180" y="134">0</text><text x="330" y="134">10</text><text x="480" y="134">20</text><text x="630" y="134">30 h</text></g>
+      <text x="350" y="166" text-anchor="middle" class="lbl" style="fill:var(--ch)">kul = 30 + 6 = 36 h · bars scale par (15 px = 1 h)</text>
+    </svg>
+    </div>
+    <figcaption>Dhaara naav ke paas ho (6 aur 9), toh upstream bahut dheema ho jaata hai. Sab time wahin jaata hai.</figcaption>
+  </figure></section>
+<section class="chap" id="mpc2-pipe"><div class="eyebrow">Maths · 31 questions</div><h2>Pipe &amp; Cistern: tank ko "litre" maan lo</h2><h3>Speed method 1 · LCM = tank (efficiency method)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Tank of 48 units, the LCM of 16 and 24. Pipe A fills in 16 minutes so 3 units per minute. Pipe B fills in 24 minutes so 2 units per minute. Together 5 units per minute.">
+      <rect x="40" y="30" width="160" height="200" class="paper" stroke="var(--fg)" stroke-width="2"/>
+      <rect x="40" y="105" width="160" height="125" class="chf"/>
+      <g class="ln" stroke-dasharray="2 4">
+        <line x1="40" y1="80" x2="200" y2="80"/><line x1="40" y1="130" x2="200" y2="130"/><line x1="40" y1="180" x2="200" y2="180"/>
+      </g>
+      <text x="120" y="60" text-anchor="middle" class="lbl">Tank = 48</text>
+      <text x="120" y="76" text-anchor="middle" class="sm">LCM(16, 24)</text>
+      <text x="120" y="250" text-anchor="middle" class="sm">"48 litre" maan liya</text>
+      <rect x="260" y="40" width="200" height="56" rx="8" class="chf"/><rect x="260" y="40" width="200" height="56" rx="8" class="chs"/>
+      <text x="360" y="64" text-anchor="middle" class="lbl">Pipe A: 16 min</text>
+      <text x="360" y="84" text-anchor="middle" class="sm">48 ÷ 16 = 3 / min</text>
+      <rect x="260" y="112" width="200" height="56" rx="8" class="chf"/><rect x="260" y="112" width="200" height="56" rx="8" class="chs"/>
+      <text x="360" y="136" text-anchor="middle" class="lbl">Pipe B: 24 min</text>
+      <text x="360" y="156" text-anchor="middle" class="sm">48 ÷ 24 = 2 / min</text>
+      <g class="ln"><line x1="258" y1="68" x2="204" y2="90"/><line x1="258" y1="140" x2="204" y2="120"/></g>
+      <rect x="500" y="76" width="180" height="56" rx="8" style="fill:var(--ch)"/>
+      <text x="590" y="100" text-anchor="middle" class="lbl" style="fill:var(--paper)">Saath: 5 / min</text>
+      <text x="590" y="120" text-anchor="middle" class="lbl" style="fill:var(--paper)">48 ÷ 5 = 9.6 min</text>
+      <text x="470" y="200" class="sm">rate = tank ÷ time</text>
+      <text x="470" y="220" class="sm">time = tank ÷ rate</text>
+    </svg>
+    </div>
+    <figcaption>Tank ka size tum chuno: LCM. Phir har pipe ki "speed" litre per minute mein. Koi fraction nahi.</figcaption>
+  </figure><h3>Speed method 2 · Inlet jodo, outlet ghatao</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Pipes filling in 6 and 8 hours and a leak emptying in 12 hours. LCM 24. Rates +4, +3 and -2 per hour. Net 5 per hour, so 24 divided by 5 = 4.8 hours = 4 hours 48 minutes.">
+      <line x1="300" y1="20" x2="300" y2="180" class="ln" style="stroke-width:2"/>
+      <text x="300" y="196" text-anchor="middle" class="sm">0</text>
+      <text x="10" y="44" class="lbl">Pipe 1 (6 h)</text>
+      <rect x="300" y="28" width="160" height="26" class="chf"/><rect x="300" y="28" width="160" height="26" class="chs"/>
+      <text x="470" y="46" class="lbl">+4</text>
+      <text x="10" y="84" class="lbl">Pipe 2 (8 h)</text>
+      <rect x="300" y="68" width="120" height="26" class="chf"/><rect x="300" y="68" width="120" height="26" class="chs"/>
+      <text x="430" y="86" class="lbl">+3</text>
+      <text x="10" y="124" class="lbl">Leak (12 h)</text>
+      <rect x="220" y="108" width="80" height="26" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="210" y="126" text-anchor="end" class="lbl">−2</text>
+      <text x="10" y="164" class="lbl" style="fill:var(--ch)">Net</text>
+      <rect x="300" y="148" width="200" height="26" style="fill:var(--ch)"/>
+      <text x="510" y="166" class="lbl" style="fill:var(--ch)">+5 / h</text>
+      <text x="350" y="222" text-anchor="middle" class="lbl">Tank 24 (LCM) ÷ 5 = 4.8 h = 4 h 48 min</text>
+    </svg>
+    </div>
+    <figcaption>Bharne wale right (+), khaali karne wala left (−). Net = jo bacha. Scale: 40 px = 1 litre/ghanta.</figcaption>
+  </figure><h3>Speed method 3 · Beech mein kuch badla: tukdon mein chalo</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Timeline for tank 48. Minutes 0 to 4: A and B at 3 + 2 = 5 per minute fill 20. After 4 minutes A doubles to 6 and B halves to 1, so 7 per minute. Remaining 28 takes 4 more minutes.">
+      <rect x="60" y="50" width="580" height="50" class="paper" stroke="var(--fg)" stroke-width="1.5"/>
+      <rect x="60" y="50" width="242" height="50" class="chf"/><rect x="60" y="50" width="242" height="50" class="chs"/>
+      <rect x="302" y="50" width="338" height="50" style="fill:var(--ch);opacity:.35"/>
+      <text x="181" y="80" text-anchor="middle" class="lbl">20 bhara</text>
+      <text x="471" y="80" text-anchor="middle" class="lbl">28 bacha</text>
+      <text x="350" y="36" text-anchor="middle" class="sm">tank = 48 (LCM 16, 24) · scale par</text>
+      <text x="181" y="124" text-anchor="middle" class="lbl">0 → 4 min</text>
+      <text x="181" y="142" text-anchor="middle" class="sm">A 3 + B 2 = 5/min × 4</text>
+      <text x="471" y="124" text-anchor="middle" class="lbl">agle ? min</text>
+      <text x="471" y="142" text-anchor="middle" class="sm">A dugna 6 + B aadha 1 = 7/min</text>
+      <line x1="302" y1="44" x2="302" y2="106" style="stroke:var(--fg);stroke-width:2"/>
+      <text x="350" y="186" text-anchor="middle" class="lbl" style="fill:var(--ch)">28 ÷ 7 = 4 min aur</text>
+      <text x="350" y="208" text-anchor="middle" class="sm">CGL 17 Sep 2025 ka sawaal · rate badla toh sirf "per minute" number badlo, tank wahi</text>
+    </svg>
+    </div>
+    <figcaption>Do tukde, do rate. Tank ka LCM wahi rehta hai, sirf har tukde ka rate naya.</figcaption>
+  </figure><h3>Speed method 4 · AB, BC, CA diye: jodo aur aadha karo</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Tank 60 units. A plus B = 5, B plus C = 4, C plus A = 3 per minute. Adding the three pairs counts every pipe twice: 12 = 2 times (A + B + C), so A + B + C = 6. Then C = 6 - 5 = 1, A = 6 - 4 = 2, B = 6 - 3 = 3.">
+      <text x="10" y="24" class="sm">Tank = LCM(12, 15, 20) = 60</text>
+      <g>
+        <rect x="20" y="40" width="190" height="44" rx="8" class="chf"/><rect x="20" y="40" width="190" height="44" rx="8" class="chs"/>
+        <rect x="255" y="40" width="190" height="44" rx="8" class="chf"/><rect x="255" y="40" width="190" height="44" rx="8" class="chs"/>
+        <rect x="490" y="40" width="190" height="44" rx="8" class="chf"/><rect x="490" y="40" width="190" height="44" rx="8" class="chs"/>
+      </g>
+      <g text-anchor="middle" class="lbl"><text x="115" y="67">A + B = 60/12 = 5</text><text x="350" y="67">B + C = 60/15 = 4</text><text x="585" y="67">C + A = 60/20 = 3</text></g>
+      <g class="ln"><line x1="115" y1="86" x2="330" y2="118"/><line x1="350" y1="86" x2="350" y2="118"/><line x1="585" y1="86" x2="370" y2="118"/></g>
+      <rect x="200" y="120" width="300" height="40" rx="8" style="fill:var(--ch)"/>
+      <text x="350" y="146" text-anchor="middle" class="lbl" style="fill:var(--paper)">5 + 4 + 3 = 12 = 2 × (A + B + C)</text>
+      <text x="350" y="184" text-anchor="middle" class="lbl">A + B + C = 6 → C = 6 − 5 = 1 · A = 6 − 4 = 2 · B = 6 − 3 = 3</text>
+      <text x="350" y="208" text-anchor="middle" class="sm">har pipe do jodi mein aata hai, isliye jod = dugna</text>
+    </svg>
+    </div>
+    <figcaption>Teeno jodi jodo, aadha karo: teeno ka rate. Phir jo pipe chahiye, uske bina wali jodi ghata do.</figcaption>
+  </figure></section>
+<p class="dg-src"><a href="/pyq-notes?b=maths&amp;t=t11">🧮 Poore notes mein ye topic kholo ›</a></p>

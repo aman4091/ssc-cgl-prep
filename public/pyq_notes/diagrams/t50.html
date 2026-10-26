@@ -1,0 +1,413 @@
+<section class="chap" id="mm2-basics"><div class="eyebrow">Maths · 420 questions</div><h2>Mensuration 2D: shuru se, aur 36-second wale tareeke</h2><h3>Pehle ek chhota sa kamra: 4 m × 3 m</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Every area comes from the rectangle. A 4 by 3 rectangle has 12 unit squares. A triangle is half of a rectangle. A parallelogram becomes a rectangle when a corner triangle is cut and moved. A rhombus is half of the rectangle drawn on its diagonals.">
+      <!-- panel 1: rectangle grid -->
+      <rect x="44" y="40" width="120" height="90" class="chf"/><rect x="44" y="40" width="120" height="90" class="chs"/>
+      <g class="ln">
+        <line x1="74" y1="40" x2="74" y2="130"/><line x1="104" y1="40" x2="104" y2="130"/><line x1="134" y1="40" x2="134" y2="130"/>
+        <line x1="44" y1="70" x2="164" y2="70"/><line x1="44" y1="100" x2="164" y2="100"/>
+      </g>
+      <text x="104" y="30" text-anchor="middle" class="sm">l = 4</text>
+      <text x="38" y="90" text-anchor="end" class="sm">b = 3</text>
+      <!-- panel 2: triangle = half -->
+      <rect x="205" y="40" width="120" height="90" class="paper" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <polygon points="205,130 325,130 325,40" class="chf"/><polygon points="205,130 325,130 325,40" class="chs"/>
+      <text x="265" y="148" text-anchor="middle" class="sm">base b</text>
+      <text x="333" y="90" class="sm">h</text>
+      <!-- panel 3: parallelogram cut and move -->
+      <polygon points="420,130 490,130 520,40 420,40" class="chf"/>
+      <polygon points="390,130 490,130 520,40 420,40" class="chs"/>
+      <polygon points="390,130 420,130 420,40" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+      <polygon points="490,130 520,130 520,40" class="chf"/><polygon points="490,130 520,130 520,40" class="chs" stroke-dasharray="4 3"/>
+      <line x1="420" y1="40" x2="420" y2="130" class="ln" stroke-dasharray="3 3"/>
+      <text x="455" y="148" text-anchor="middle" class="sm">base b</text>
+      <text x="426" y="90" class="sm">h</text>
+      <!-- panel 4: rhombus = half rectangle -->
+      <rect x="555" y="40" width="120" height="90" class="paper" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <polygon points="615,40 675,85 615,130 555,85" class="chf"/><polygon points="615,40 675,85 615,130 555,85" class="chs"/>
+      <g class="ln" stroke-dasharray="3 3"><line x1="555" y1="85" x2="675" y2="85"/><line x1="615" y1="40" x2="615" y2="130"/></g>
+      <text x="615" y="148" text-anchor="middle" class="sm">d₁ (lamba) · d₂ (khada)</text>
+      <!-- captions -->
+      <g text-anchor="middle">
+        <text x="104" y="176" class="lbl">Rectangle</text><text x="104" y="194" class="sm">4 × 3 = 12 khaane = l × b</text>
+        <text x="265" y="176" class="lbl">Triangle = aadha</text><text x="265" y="194" class="sm">½ × b × h</text>
+        <text x="455" y="176" class="lbl">Parallelogram</text><text x="455" y="194" class="sm">kona kaato, saamne chipkao = b × h</text>
+        <text x="615" y="176" class="lbl">Rhombus = aadha</text><text x="615" y="194" class="sm">½ × d₁ × d₂</text>
+      </g>
+      <text x="350" y="232" text-anchor="middle" class="sm">Trapezium: do ulte trapezium jodo → parallelogram ban jaata hai → ½ × (a + b) × h, yaani "average base × height"</text>
+    </svg>
+    </div>
+    <figcaption>Har area rectangle se nikalta hai. Triangle aadha, parallelogram kaat-chipka kar poora, rhombus apne diagonals wale rectangle ka aadha.</figcaption>
+  </figure><h3>Formula sheet, figure ke saath (ek baar dhyaan se dekho)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Four triangles. Right triangle with legs a and b and hypotenuse c: area half a b, c squared equals a squared plus b squared. Equilateral triangle side a: height root 3 over 2 a, area root 3 over 4 a squared. Isosceles triangle with equal sides a and base b: height equals root of a squared minus b squared over 4. Any triangle with sides a, b, c: Heron's formula with s equal to half the perimeter.">
+      <!-- right triangle -->
+      <polygon points="30,170 30,60 150,170" class="chf"/><polygon points="30,170 30,60 150,170" class="chs"/>
+      <path d="M30,158 L42,158 L42,170" class="ln" fill="none"/>
+      <text x="18" y="120" text-anchor="end" class="lbl">b</text>
+      <text x="90" y="188" text-anchor="middle" class="lbl">a</text>
+      <text x="100" y="108" class="lbl">c</text>
+      <!-- equilateral -->
+      <polygon points="195,170 325,170 260,57" class="chf"/><polygon points="195,170 325,170 260,57" class="chs"/>
+      <line x1="260" y1="57" x2="260" y2="170" class="ln" stroke-dasharray="4 3"/>
+      <text x="214" y="110" text-anchor="end" class="lbl">a</text>
+      <text x="306" y="110" class="lbl">a</text>
+      <text x="266" y="130" class="sm">h</text>
+      <text x="260" y="188" text-anchor="middle" class="lbl">a</text>
+      <!-- isosceles -->
+      <polygon points="370,170 490,170 430,50" class="chf"/><polygon points="370,170 490,170 430,50" class="chs"/>
+      <line x1="430" y1="50" x2="430" y2="170" class="ln" stroke-dasharray="4 3"/>
+      <text x="392" y="108" text-anchor="end" class="lbl">a</text>
+      <text x="468" y="108" class="lbl">a</text>
+      <text x="436" y="130" class="sm">h</text>
+      <text x="430" y="188" text-anchor="middle" class="lbl">b</text>
+      <!-- scalene -->
+      <polygon points="535,170 690,170 580,70" class="chf"/><polygon points="535,170 690,170 580,70" class="chs"/>
+      <text x="548" y="118" text-anchor="end" class="lbl">c</text>
+      <text x="642" y="114" class="lbl">b</text>
+      <text x="612" y="188" text-anchor="middle" class="lbl">a</text>
+      <g text-anchor="middle">
+        <text x="90" y="212" class="lbl">Right Δ</text>
+        <text x="90" y="230" class="sm">A = ½ × a × b</text>
+        <text x="90" y="246" class="sm">c² = a² + b²</text>
+        <text x="260" y="212" class="lbl">Equilateral</text>
+        <text x="260" y="230" class="sm">h = (√3/2) a</text>
+        <text x="260" y="246" class="sm">A = (√3/4) a² ≈ 0.433 a²</text>
+        <text x="430" y="212" class="lbl">Isosceles</text>
+        <text x="430" y="230" class="sm">h = √(a² − b²/4)</text>
+        <text x="430" y="246" class="sm">A = ½ × b × h</text>
+        <text x="612" y="212" class="lbl">Koi bhi Δ (Heron)</text>
+        <text x="612" y="230" class="sm">s = (a + b + c)/2</text>
+        <text x="612" y="246" class="sm">A = √[s(s−a)(s−b)(s−c)]</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Do side aur unke beech ka kon (θ) diya ho, toh A = ½ × a × b × sin θ. 30° ya 150° par sin = ½, 60° ya 120° par √3/2, 45° par 1/√2.</figcaption>
+  </figure><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Five quadrilaterals. Square: area a squared equals d squared over 2, diagonal a root 2. Rectangle: area l times b, diagonal squared equals l squared plus b squared. Rhombus: area half d1 d2, side squared equals half d1 squared plus half d2 squared. Parallelogram: area base times height, equals a b sin theta. Trapezium: area half of sum of parallel sides times height.">
+      <!-- square -->
+      <rect x="20" y="40" width="100" height="100" class="chf"/><rect x="20" y="40" width="100" height="100" class="chs"/>
+      <line x1="20" y1="140" x2="120" y2="40" class="ln" stroke-dasharray="4 3"/>
+      <text x="70" y="156" text-anchor="middle" class="sm">a</text><text x="74" y="84" class="sm">d</text>
+      <!-- rectangle -->
+      <rect x="150" y="55" width="120" height="75" class="chf"/><rect x="150" y="55" width="120" height="75" class="chs"/>
+      <line x1="150" y1="130" x2="270" y2="55" class="ln" stroke-dasharray="4 3"/>
+      <text x="210" y="146" text-anchor="middle" class="sm">l</text><text x="276" y="96" class="sm">b</text><text x="214" y="88" class="sm">d</text>
+      <!-- rhombus -->
+      <polygon points="300,92 350,52 400,92 350,132" class="chf"/><polygon points="300,92 350,52 400,92 350,132" class="chs"/>
+      <g class="ln" stroke-dasharray="3 3"><line x1="300" y1="92" x2="400" y2="92"/><line x1="350" y1="52" x2="350" y2="132"/></g>
+      <path d="M350,84 L358,84 L358,92" class="ln" fill="none"/>
+      <text x="380" y="72" class="sm">a</text><text x="322" y="106" class="sm">d₁</text><text x="354" y="122" class="sm">d₂</text>
+      <!-- parallelogram -->
+      <polygon points="430,132 530,132 560,52 460,52" class="chf"/><polygon points="430,132 530,132 560,52 460,52" class="chs"/>
+      <line x1="460" y1="52" x2="460" y2="132" class="ln" stroke-dasharray="3 3"/>
+      <text x="480" y="148" text-anchor="middle" class="sm">b</text><text x="465" y="98" class="sm">h</text><text x="434" y="96" class="sm">a</text>
+      <!-- trapezium -->
+      <polygon points="575,132 690,132 660,52 605,52" class="chf"/><polygon points="575,132 690,132 660,52 605,52" class="chs"/>
+      <line x1="605" y1="52" x2="605" y2="132" class="ln" stroke-dasharray="3 3"/>
+      <text x="632" y="46" text-anchor="middle" class="sm">a</text><text x="632" y="148" text-anchor="middle" class="sm">b</text><text x="610" y="98" class="sm">h</text>
+      <g text-anchor="middle">
+        <text x="70" y="176" class="lbl">Square</text><text x="70" y="194" class="sm">A = a² = d²/2</text><text x="70" y="210" class="sm">d = a√2</text>
+        <text x="210" y="176" class="lbl">Rectangle</text><text x="210" y="194" class="sm">A = l × b</text><text x="210" y="210" class="sm">d² = l² + b²</text>
+        <text x="350" y="176" class="lbl">Rhombus</text><text x="350" y="194" class="sm">A = ½ d₁ d₂</text><text x="350" y="210" class="sm">a² = (d₁/2)² + (d₂/2)²</text>
+        <text x="495" y="176" class="lbl">Parallelogram</text><text x="495" y="194" class="sm">A = b × h</text><text x="495" y="210" class="sm">= a × b × sin θ</text>
+        <text x="632" y="176" class="lbl">Trapezium</text><text x="632" y="194" class="sm">A = ½(a + b) × h</text><text x="632" y="210" class="sm">average × height</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Rhombus ke diagonals ek doosre ko 90° par aadha karte hain. Isliye aadhe diagonal aur side mil kar right triangle banate hain.</figcaption>
+  </figure><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 240" role="img" aria-label="Circle family. Circle: area pi r squared, circumference 2 pi r. Semicircle: area half pi r squared, perimeter pi r plus 2 r. Sector with angle theta: area theta over 360 of pi r squared, arc theta over 360 of 2 pi r. Segment: sector minus triangle, triangle equals half r squared sin theta. Ring: pi times R squared minus r squared equals pi times R plus r times R minus r.">
+      <!-- circle -->
+      <circle cx="70" cy="90" r="50" class="chf"/><circle cx="70" cy="90" r="50" class="chs"/>
+      <line x1="70" y1="90" x2="120" y2="90" class="ln"/><circle cx="70" cy="90" r="2.5" style="fill:var(--muted)"/>
+      <text x="92" y="84" class="sm">r</text>
+      <!-- semicircle -->
+      <path d="M160,110 A50,50 0 0 1 260,110 Z" class="chf"/><path d="M160,110 A50,50 0 0 1 260,110 Z" class="chs"/>
+      <line x1="210" y1="110" x2="260" y2="110" class="ln"/><text x="230" y="104" class="sm">r</text>
+      <!-- sector 60 deg -->
+      <circle cx="350" cy="90" r="50" class="ln" fill="none" stroke-dasharray="3 3"/>
+      <path d="M350,90 L400,90 A50,50 0 0 0 375,46.7 Z" class="chf"/><path d="M350,90 L400,90 A50,50 0 0 0 375,46.7 Z" class="chs"/>
+      <text x="364" y="84" class="sm">θ</text><text x="372" y="104" class="sm">r</text>
+      <!-- segment 90 deg -->
+      <circle cx="490" cy="90" r="50" class="ln" fill="none" stroke-dasharray="3 3"/>
+      <path d="M454.6,54.6 A50,50 0 0 1 525.4,54.6 Z" class="chf"/><path d="M454.6,54.6 A50,50 0 0 1 525.4,54.6 Z" class="chs"/>
+      <g class="ln"><line x1="490" y1="90" x2="454.6" y2="54.6"/><line x1="490" y1="90" x2="525.4" y2="54.6"/></g>
+      <text x="485" y="80" class="sm">θ</text>
+      <!-- ring -->
+      <circle cx="630" cy="90" r="50" class="chf"/><circle cx="630" cy="90" r="50" class="chs"/>
+      <circle cx="630" cy="90" r="30" class="paper" stroke="var(--ch)" stroke-width="1.5"/>
+      <line x1="630" y1="90" x2="660" y2="90" class="ln"/><line x1="630" y1="90" x2="630" y2="40" class="ln"/>
+      <text x="642" y="104" class="sm">r</text><text x="634" y="56" class="sm">R</text>
+      <g text-anchor="middle">
+        <text x="70" y="170" class="lbl">Circle</text><text x="70" y="188" class="sm">A = πr²</text><text x="70" y="204" class="sm">C = 2πr = πd</text>
+        <text x="210" y="170" class="lbl">Semicircle</text><text x="210" y="188" class="sm">A = πr²/2</text><text x="210" y="204" class="sm">P = πr + 2r</text>
+        <text x="350" y="170" class="lbl">Sector</text><text x="350" y="188" class="sm">A = (θ/360) × πr²</text><text x="350" y="204" class="sm">arc = (θ/360) × 2πr</text>
+        <text x="490" y="170" class="lbl">Segment</text><text x="490" y="188" class="sm">= sector − triangle</text><text x="490" y="204" class="sm">triangle = ½ r² sin θ</text>
+        <text x="630" y="170" class="lbl">Ring / path</text><text x="630" y="188" class="sm">A = π(R² − r²)</text><text x="630" y="204" class="sm">= π(R + r)(R − r)</text>
+      </g>
+      <text x="350" y="232" text-anchor="middle" class="sm">Radian mein: arc = r θ, sector = ½ r² θ · π rad = 180° · 1 rad ≈ 57.3°</text>
+    </svg>
+    </div>
+    <figcaption>Sector ka matlab "pizza ka slice". 90° = ¼ pizza, 60° = ⅙, 120° = ⅓. Area aur arc dono usi fraction se katte hain.</figcaption>
+  </figure><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="A regular hexagon of side a split into six equilateral triangles; the circle through its corners has radius a. A circle inside a square of side a has radius a over 2. A square inside a circle has diagonal equal to the diameter 2r, so its area is 2 r squared.">
+      <!-- hexagon -->
+      <circle cx="120" cy="120" r="70" class="ln" fill="none" stroke-dasharray="3 3"/>
+      <polygon points="120,120 190,120 155,59.4" class="chf"/>
+      <polygon points="120,120 85,59.4 50,120" class="chf"/>
+      <polygon points="120,120 85,180.6 155,180.6" class="chf"/>
+      <polygon points="190,120 155,59.4 85,59.4 50,120 85,180.6 155,180.6" class="chs"/>
+      <g class="ln">
+        <line x1="120" y1="120" x2="190" y2="120"/><line x1="120" y1="120" x2="155" y2="59.4"/><line x1="120" y1="120" x2="85" y2="59.4"/>
+        <line x1="120" y1="120" x2="50" y2="120"/><line x1="120" y1="120" x2="85" y2="180.6"/><line x1="120" y1="120" x2="155" y2="180.6"/>
+      </g>
+      <text x="178" y="88" class="sm">a</text><text x="150" y="134" class="sm">r = a</text>
+      <!-- circle in square -->
+      <rect x="280" y="60" width="120" height="120" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <circle cx="340" cy="120" r="60" class="chf"/><circle cx="340" cy="120" r="60" class="chs"/>
+      <line x1="340" y1="120" x2="400" y2="120" class="ln"/><text x="360" y="114" class="sm">r</text>
+      <text x="340" y="196" text-anchor="middle" class="sm">a</text>
+      <!-- square in circle -->
+      <circle cx="560" cy="120" r="70" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="510.5" y="70.5" width="99" height="99" class="chf"/><rect x="510.5" y="70.5" width="99" height="99" class="chs"/>
+      <line x1="510.5" y1="169.5" x2="609.5" y2="70.5" class="ln" stroke-dasharray="4 3"/>
+      <text x="518" y="90" class="sm">d = 2r</text>
+      <g text-anchor="middle">
+        <text x="120" y="222" class="lbl">Hexagon = 6 equilateral Δ</text>
+        <text x="120" y="240" class="sm">A = 6 × (√3/4)a² ≈ 2.6 a²</text>
+        <text x="340" y="222" class="lbl">Circle square ke andar</text>
+        <text x="340" y="240" class="sm">r = a/2 · bacha = a² − πr²</text>
+        <text x="560" y="222" class="lbl">Square circle ke andar</text>
+        <text x="560" y="240" class="sm">diagonal = 2r → A = d²/2 = 2r²</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Hexagon ke kone se jo circle guzarta hai, uska radius = hexagon ki side. Equilateral triangle mein: andar wala circle r = a/(2√3), bahar wala R = a/√3. <span class="tag x">CGL+</span></figcaption>
+  </figure><h3>Speed method 1 · π = 22/7, toh radius 7 ka multiple hoga</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Lookup cards. With pi 22 over 7: r 7 gives C 44 and A 154; r 14 gives 88 and 616; r 21 gives 132 and 1386; r 28 gives 176 and 2464; r 35 gives 220 and 3850; r 42 gives 264 and 5544. With pi 3.14: r 5 gives 31.4 and 78.5; r 10 gives 62.8 and 314; r 20 gives 125.6 and 1256. Also r 3.5 gives 22 and 38.5, r 0.7 gives 4.4 and 1.54.">
+      <g>
+        <rect x="8" y="10" width="108" height="70" rx="6" class="chf"/><rect x="8" y="10" width="108" height="70" rx="6" class="chs"/>
+        <rect x="122" y="10" width="108" height="70" rx="6" class="chf"/><rect x="122" y="10" width="108" height="70" rx="6" class="chs"/>
+        <rect x="236" y="10" width="108" height="70" rx="6" class="chf"/>
+        <rect x="350" y="10" width="108" height="70" rx="6" class="chf"/>
+        <rect x="464" y="10" width="108" height="70" rx="6" class="chf"/>
+        <rect x="578" y="10" width="108" height="70" rx="6" class="chf"/><rect x="578" y="10" width="108" height="70" rx="6" class="chs"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="62" y="32" class="lbl">r = 7</text><text x="62" y="52" class="sm">C = 44</text><text x="62" y="70" class="lbl" style="fill:var(--ch)">A = 154</text>
+        <text x="176" y="32" class="lbl">r = 14</text><text x="176" y="52" class="sm">C = 88</text><text x="176" y="70" class="lbl" style="fill:var(--ch)">A = 616</text>
+        <text x="290" y="32" class="lbl">r = 21</text><text x="290" y="52" class="sm">C = 132</text><text x="290" y="70" class="lbl" style="fill:var(--ch)">A = 1386</text>
+        <text x="404" y="32" class="lbl">r = 28</text><text x="404" y="52" class="sm">C = 176</text><text x="404" y="70" class="lbl" style="fill:var(--ch)">A = 2464</text>
+        <text x="518" y="32" class="lbl">r = 35</text><text x="518" y="52" class="sm">C = 220</text><text x="518" y="70" class="lbl" style="fill:var(--ch)">A = 3850</text>
+        <text x="632" y="32" class="lbl">r = 42</text><text x="632" y="52" class="sm">C = 264</text><text x="632" y="70" class="lbl" style="fill:var(--ch)">A = 5544</text>
+      </g>
+      <g>
+        <rect x="8" y="100" width="108" height="70" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="122" y="100" width="108" height="70" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="236" y="100" width="108" height="70" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="350" y="100" width="108" height="70" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="464" y="100" width="108" height="70" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="578" y="100" width="108" height="70" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle">
+        <text x="62" y="122" class="lbl">r = 5 (3.14)</text><text x="62" y="142" class="sm">C = 31.4</text><text x="62" y="160" class="lbl">A = 78.5</text>
+        <text x="176" y="122" class="lbl">r = 10 (3.14)</text><text x="176" y="142" class="sm">C = 62.8</text><text x="176" y="160" class="lbl">A = 314</text>
+        <text x="290" y="122" class="lbl">r = 20 (3.14)</text><text x="290" y="142" class="sm">C = 125.6</text><text x="290" y="160" class="lbl">A = 1256</text>
+        <text x="404" y="122" class="lbl">r = 3.5</text><text x="404" y="142" class="sm">C = 22</text><text x="404" y="160" class="lbl">A = 38.5</text>
+        <text x="518" y="122" class="lbl">r = 0.7</text><text x="518" y="142" class="sm">C = 4.4</text><text x="518" y="160" class="lbl">A = 1.54</text>
+        <text x="632" y="122" class="lbl">r = 12 (3.14)</text><text x="632" y="142" class="sm">C = 75.36</text><text x="632" y="160" class="lbl">A = 452.16</text>
+      </g>
+      <text x="350" y="192" text-anchor="middle" class="sm">upar 22/7 wale (outline = paper mein sabse zyada) · neeche 3.14 aur chhote radius</text>
+    </svg>
+    </div>
+    <figcaption>Ulta bhi padho: area 616 dikha toh r = 14, bina hisaab. 5544 dikha toh r = 42. 1256 dikha toh r = 20.</figcaption>
+  </figure><h3>Speed method 2 · Triplet pehchano, square-root mat lagao</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="The same right triangle in four places. Rectangle 12 by 9 with diagonal 15. Rhombus with diagonals 16 and 12: half diagonals 8 and 6, side 10. Circle radius 13 with a chord 24 at distance 5 from centre: half chord 12. Isosceles triangle with sides 13, 13 and base 10: half base 5, height 12.">
+      <!-- rectangle 12 x 9 -->
+      <rect x="27" y="50" width="120" height="90" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <polygon points="27,140 147,140 147,50" class="chf"/><polygon points="27,140 147,140 147,50" class="chs"/>
+      <text x="87" y="156" text-anchor="middle" class="sm">12</text><text x="153" y="100" class="sm">9</text><text x="78" y="88" class="lbl" style="fill:var(--ch)">15</text>
+      <!-- rhombus 16, 12 -->
+      <polygon points="206,95 262,53 318,95 262,137" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <polygon points="262,95 318,95 262,53" class="chf"/><polygon points="262,95 318,95 262,53" class="chs"/>
+      <g class="ln" stroke-dasharray="3 3"><line x1="206" y1="95" x2="262" y2="95"/><line x1="262" y1="95" x2="262" y2="137"/></g>
+      <text x="290" y="110" text-anchor="middle" class="sm">8</text><text x="252" y="78" class="sm">6</text><text x="294" y="68" class="lbl" style="fill:var(--ch)">10</text>
+      <!-- chord in circle r 13 -->
+      <circle cx="437" cy="95" r="65" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <line x1="377" y1="120" x2="497" y2="120" class="ln"/>
+      <polygon points="437,95 437,120 497,120" class="chf"/><polygon points="437,95 437,120 497,120" class="chs"/>
+      <circle cx="437" cy="95" r="2.5" style="fill:var(--muted)"/>
+      <text x="472" y="100" class="lbl" style="fill:var(--ch)">13</text><text x="426" y="112" class="sm">5</text><text x="467" y="136" class="sm">12</text>
+      <!-- isosceles 13 13 10 -->
+      <polygon points="577,145 647,145 612,61" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <polygon points="612,61 612,145 647,145" class="chf"/><polygon points="612,61 612,145 647,145" class="chs"/>
+      <text x="636" y="98" class="lbl" style="fill:var(--ch)">13</text><text x="629" y="160" text-anchor="middle" class="sm">5</text><text x="600" y="110" class="sm">12</text>
+      <g text-anchor="middle">
+        <text x="87" y="184" class="lbl">Rectangle</text><text x="87" y="202" class="sm">l, b, diagonal · 3-4-5 × 3</text>
+        <text x="262" y="184" class="lbl">Rhombus</text><text x="262" y="202" class="sm">aadhe diagonal + side · 6-8-10</text>
+        <text x="437" y="184" class="lbl">Chord</text><text x="437" y="202" class="sm">doori, aadhi chord, r · 5-12-13</text>
+        <text x="612" y="184" class="lbl">Isosceles</text><text x="612" y="202" class="sm">aadha base, h, side · 5-12-13</text>
+      </g>
+      <text x="350" y="236" text-anchor="middle" class="sm">Yaad rakho: 3-4-5 · 5-12-13 · 8-15-17 · 7-24-25 · 20-21-29 · 9-40-41 · 12-35-37 · 11-60-61 (aur inke guna)</text>
+    </svg>
+    </div>
+    <figcaption>Ek hi right triangle, chaar kapdon mein. Gehra hissa = wo triangle jismein triplet lagta hai.</figcaption>
+  </figure><h3>Speed method 4 · Square-law: ratio aur % change</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Square of side 10 grows to side 12. Old area 100. Two strips of 20 each and a corner of 4 are added. New area 144, which is 44 percent more.">
+      <rect x="40" y="60" width="100" height="100" class="chf"/><rect x="40" y="60" width="100" height="100" class="chs"/>
+      <rect x="140" y="60" width="20" height="100" class="paper" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <rect x="40" y="40" width="100" height="20" class="paper" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <rect x="140" y="40" width="20" height="20" style="fill:var(--ch)"/>
+      <text x="90" y="116" text-anchor="middle" class="lbl">100</text>
+      <text x="90" y="54" text-anchor="middle" class="sm">20</text>
+      <text x="150" y="114" text-anchor="middle" class="sm">20</text>
+      <text x="170" y="54" class="sm">4</text>
+      <text x="90" y="178" text-anchor="middle" class="sm">side 10 → 12</text>
+      <text x="230" y="64" class="lbl">Area 100 → 144</text>
+      <text x="230" y="86" class="sm">badhat = 20 + 20 + 4 = 44%  (a + b + ab/100)</text>
+      <text x="230" y="116" class="lbl">Circle par bhi wahi: r +20% → area +44%</text>
+      <text x="230" y="138" class="sm">circumference sirf +20% (seedha r ke saath, square nahi)</text>
+      <text x="230" y="168" class="lbl">Ulta: area +44% → 1.44 = 1.2² → side +20%</text>
+      <text x="230" y="190" class="sm">area 225% → 2.25 = 1.5² → side +50% · ratio 9 : 16 → side 3 : 4</text>
+    </svg>
+    </div>
+    <figcaption>Do patti + ek kona. Isliye "20% badha" ka area kabhi 40% nahi hota. Kona bhoolna sabse common galti hai.</figcaption>
+  </figure><h3>Speed method 7 · Path aur ring = jod × width</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 230" role="img" aria-label="Rectangular paths. Left: a garden with a path of width w built outside it; path area equals 2 w times l plus b plus 2 w. Right: a park with a path of width w inside along the boundary; path area equals 2 w times l plus b minus 2 w.">
+      <!-- outside path -->
+      <rect x="30" y="20" width="260" height="150" class="chf"/>
+      <rect x="30" y="20" width="260" height="150" class="chs" stroke-dasharray="5 4"/>
+      <rect x="60" y="50" width="200" height="90" class="paper" stroke="var(--muted)" stroke-width="2"/>
+      <text x="160" y="92" text-anchor="middle" class="lbl">garden l × b</text>
+      <text x="160" y="110" text-anchor="middle" class="sm">path iske BAHAR</text>
+      <line x1="260" y1="95" x2="290" y2="95" class="ln"/><text x="268" y="88" class="sm">w</text>
+      <!-- inside path -->
+      <rect x="410" y="20" width="260" height="150" class="chf"/>
+      <rect x="410" y="20" width="260" height="150" fill="none" stroke="var(--muted)" stroke-width="2"/>
+      <rect x="440" y="50" width="200" height="90" class="paper" stroke="var(--ch)" stroke-width="1.5" stroke-dasharray="5 4"/>
+      <text x="540" y="92" text-anchor="middle" class="lbl">park l × b (bahar wala)</text>
+      <text x="540" y="110" text-anchor="middle" class="sm">path iske ANDAR</text>
+      <line x1="640" y1="95" x2="670" y2="95" class="ln"/><text x="648" y="88" class="sm">w</text>
+      <g text-anchor="middle">
+        <text x="160" y="196" class="lbl">Bahar: 2w(l + b + 2w)</text>
+        <text x="540" y="196" class="lbl">Andar: 2w(l + b − 2w)</text>
+        <text x="350" y="222" class="sm">Square (side a): bahar 4w(a + w) · andar 4w(a − w) · Circle: π(R + r) × w</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Gehri patti = path. Bahar wale path mein kone bahar badhte hain (+2w), andar wale mein kone kat jaate hain (−2w).</figcaption>
+  </figure><h3>Kaunsa method kab? (ek nazar mein)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing a method. Check in order: right angle or diagonal or chord, pi 22 over 7, angle given, path or ring, ratio or percent change, sum and area and diagonal together, three sides only. Each yes leads to its method.">
+      <defs>
+        <marker id="mm2-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: shape aur kya pucha?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mm2-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">Path, ring, border, pipe?</text>
+        <text x="180" y="141">Angle diya? (degree ya radian)</text>
+        <text x="180" y="197">Ratio ya % badla? (side, radius)</text>
+        <text x="180" y="253">Jod/farq + area + diagonal ek saath?</text>
+        <text x="180" y="309">Diagonal / side / chord / height?</text>
+        <text x="180" y="365">Circle, π = 22/7 ya 3.14?</text>
+        <text x="180" y="421">Teen sides, koi angle nahi?</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mm2-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mm2-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mm2-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mm2-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mm2-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mm2-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mm2-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mm2-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mm2-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mm2-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mm2-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mm2-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mm2-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Jod × width (method 7)</text>
+        <text x="410" y="132">Fraction of circle (5, 6)</text>
+        <text x="410" y="188">Square-law (method 4)</text>
+        <text x="410" y="244">(l + b)² = d² + 2A (method 3)</text>
+        <text x="410" y="300">Triplet (method 2)</text>
+        <text x="410" y="356">22/7 table (method 1)</text>
+        <text x="410" y="412">Ratio parts + Heron (method 8)</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">π(R + r) × w · 2w(l + b ± 2w)</text>
+        <text x="410" y="149">θ/360 × poora · arc rθ · segment = sector − Δ</text>
+        <text x="410" y="205">area ∝ side² · a + b + ab/100</text>
+        <text x="410" y="261">rhombus: (d₁ + d₂)² = 4a² + 4A</text>
+        <text x="410" y="317">3-4-5 · 5-12-13 · 8-15-17 · 7-24-25</text>
+        <text x="410" y="373">r 7 → 154 · 14 → 616 · 21 → 1386</text>
+        <text x="410" y="429">13-14-15 → 84 · pehle triplet check</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow ek baar rough mein chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure></section>
+<section class="chap" id="mm2-circle"><div class="eyebrow">Maths · PYQ types · Circle</div><h2>Mensuration 2D: circle wale 10 type, topper ki rough ke saath</h2><h3>Type 9 · Chord, radius aur doori (12 Qs)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Bridge arch as a circle segment. Chord 20, height 6 at the middle. Radius r from centre to chord end; vertical distance from centre to chord is r minus 6; half chord 10. So r squared equals 10 squared plus r minus 6 squared, giving r equal to 136 over 12, about 11.33.">
+      <path d="M230,136 A136,136 0 0 1 470,136 Z" class="chf"/><path d="M230,136 A136,136 0 0 1 470,136 Z" class="chs"/>
+      <line x1="350" y1="64" x2="350" y2="136" class="ln" stroke-dasharray="4 3"/>
+      <line x1="350" y1="136" x2="350" y2="200" class="ln"/>
+      <line x1="350" y1="200" x2="470" y2="136" class="ln"/>
+      <circle cx="350" cy="200" r="3" style="fill:var(--muted)"/>
+      <text x="356" y="106" class="lbl">h = 6</text>
+      <text x="356" y="176" class="sm">r − 6</text>
+      <text x="414" y="180" class="lbl" style="fill:var(--ch)">r</text>
+      <text x="410" y="130" text-anchor="middle" class="sm">10</text>
+      <text x="290" y="130" text-anchor="middle" class="sm">10</text>
+      <text x="340" y="212" text-anchor="end" class="sm">centre</text>
+      <g class="sm">
+        <text x="496" y="80">r² = 10² + (r − 6)²</text>
+        <text x="496" y="100">r² = 100 + r² − 12r + 36</text>
+        <text x="496" y="120">12r = 136 → r ≈ 11.33</text>
+      </g>
+      <text x="496" y="150" class="lbl">r = (c²/4 + h²) ÷ 2h</text>
+      <text x="20" y="40" class="lbl">Arch (chord 20, height 6)</text>
+      <text x="20" y="60" class="sm">chord = 24, r = 13 → doori 5</text>
+      <text x="20" y="78" class="sm">chord = r → 60° (equilateral)</text>
+      <text x="20" y="96" class="sm">90° wali chord = r√2</text>
+    </svg>
+    </div>
+    <figcaption>Chord ke beech se centre tak seedhi line: yahi doori hai. Arch mein upar ki unchai h, isliye centre se doori r − h.</figcaption>
+  </figure></section>
+<p class="dg-src"><a href="/pyq-notes?b=maths&amp;t=t18">🧮 Poore notes mein ye topic kholo ›</a></p>

@@ -1,0 +1,198 @@
+<section class="chap" id="mtw-basics"><div class="eyebrow">Maths · 245 questions</div><h2>Time and Work: shuru se, aur 36-second wale tareeke</h2><h3>Pehle ek chhoti si kahani: 60 eentein</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="A wall of 60 units. Ramesh lays 3 units a day, so 20 day-blocks fill it. Suresh lays 2 a day, 30 day-blocks. Together 5 a day, 12 day-blocks. Drawn to scale.">
+      <text x="390" y="20" text-anchor="middle" class="lbl">Kul kaam = 60 units (20 aur 30 ka LCM) · har khana = 1 din ka kaam</text>
+      <!-- scale: 9 px per unit, x 120..660 -->
+      <text x="10" y="62" class="lbl">Ramesh</text><text x="10" y="78" class="sm">3 units/din</text>
+      <rect x="120" y="48" width="540" height="30" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <line x1="120" y1="63" x2="660" y2="63" style="stroke:var(--ch);opacity:.45" stroke-width="30" stroke-dasharray="27 27"/>
+      <text x="664" y="94" text-anchor="end" class="sm">20 khane = 20 din</text>
+      <text x="10" y="132" class="lbl">Suresh</text><text x="10" y="148" class="sm">2 units/din</text>
+      <rect x="120" y="118" width="540" height="30" class="paper" stroke="var(--muted)" stroke-width="1.2"/>
+      <line x1="120" y1="133" x2="660" y2="133" style="stroke:var(--ch);opacity:.45" stroke-width="30" stroke-dasharray="18 18"/>
+      <text x="664" y="164" text-anchor="end" class="sm">30 khane = 30 din</text>
+      <text x="10" y="202" class="lbl">Saath</text><text x="10" y="218" class="sm">3 + 2 = 5/din</text>
+      <rect x="120" y="188" width="540" height="30" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <line x1="120" y1="203" x2="660" y2="203" style="stroke:var(--ch);opacity:.7" stroke-width="30" stroke-dasharray="45 45"/>
+      <text x="664" y="234" text-anchor="end" class="lbl" style="fill:var(--ch)">12 khane = 12 din</text>
+      <text x="350" y="260" text-anchor="middle" class="sm">Bar ki lambai teeno mein same hai (kaam same). Jitna mota khana, utne kam din.</text>
+    </svg>
+    </div>
+    <figcaption>Ek hi deewar, teen tareeke se. Khane ki chaudai = roz ka kaam (efficiency). Khano ki ginti = din.</figcaption>
+  </figure><h3>Speed method 3 · Efficiency ulta time (ratio flip)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 260" role="img" aria-label="Area picture: A works 3 units a day for 20 days, B works 2 units a day for 30 days. Both rectangles have the same area of 60 units, so efficiency ratio 3 to 2 means time ratio 2 to 3.">
+      <line x1="120" y1="230" x2="560" y2="230" class="ln"/>
+      <line x1="120" y1="30" x2="120" y2="230" class="ln"/>
+      <text x="340" y="250" text-anchor="middle" class="sm">din → (12 px = 1 din)</text>
+      <text x="112" y="40" text-anchor="end" class="sm">speed ↑</text>
+      <!-- A: 20 days x 3 units: width 240, height 90 -->
+      <rect x="120" y="40" width="240" height="90" class="chf"/><rect x="120" y="40" width="240" height="90" class="chs"/>
+      <text x="240" y="80" text-anchor="middle" class="lbl">A: 3 roz × 20 din</text>
+      <text x="240" y="100" text-anchor="middle" class="sm">area = 60 units</text>
+      <!-- B: 30 days x 2 units: width 360, height 60 -->
+      <rect x="120" y="160" width="360" height="60" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="5 3"/>
+      <text x="300" y="188" text-anchor="middle" class="lbl">B: 2 roz × 30 din</text>
+      <text x="300" y="206" text-anchor="middle" class="sm">area = 60 units</text>
+      <text x="580" y="70" class="lbl">speed</text><text x="580" y="88" class="lbl" style="fill:var(--ch)">3 : 2</text>
+      <text x="580" y="160" class="lbl">time</text><text x="580" y="178" class="lbl" style="fill:var(--ch)">2 : 3</text>
+      <text x="580" y="204" class="sm">ulta!</text>
+    </svg>
+    </div>
+    <figcaption>Do rectangle, area (kaam) barabar. Jo upar se mota hai (tez), wo chhota chalta hai (kam din).</figcaption>
+  </figure><h3>Speed method 4 · Man-days (aadmi × din × ghante = kaam)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Man-days rectangle. Plan: 12 workers for 20 days, 240 units. Actual: 12 workers for 5 days, 60 units, then 9 workers for 20 more days, 180 units. Total time 25 days.">
+      <!-- scale: 20 px per day (x from 120), 12 px per worker (baseline y=200) -->
+      <line x1="120" y1="200" x2="640" y2="200" class="ln"/>
+      <line x1="120" y1="40" x2="120" y2="200" class="ln"/>
+      <rect x="120" y="56" width="400" height="144" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <text x="470" y="50" text-anchor="middle" class="sm">plan: 12 × 20 = 240</text>
+      <rect x="120" y="56" width="100" height="144" class="chf"/><rect x="120" y="56" width="100" height="144" class="chs"/>
+      <text x="170" y="122" text-anchor="middle" class="lbl">12 × 5</text>
+      <text x="170" y="140" text-anchor="middle" class="lbl">= 60</text>
+      <rect x="220" y="92" width="400" height="108" class="paper" stroke="var(--ch)" stroke-width="2"/>
+      <text x="420" y="142" text-anchor="middle" class="lbl">9 aadmi × ? din = 180 bacha</text>
+      <text x="420" y="162" text-anchor="middle" class="lbl" style="fill:var(--ch)">? = 180 ÷ 9 = 20 din</text>
+      <text x="112" y="60" text-anchor="end" class="sm">12</text>
+      <text x="112" y="96" text-anchor="end" class="sm">9</text>
+      <text x="112" y="204" text-anchor="end" class="sm">0</text>
+      <text x="40" y="130" class="sm">aadmi</text>
+      <g text-anchor="middle" class="sm"><text x="120" y="218">0</text><text x="220" y="218">5</text><text x="520" y="218">20</text><text x="620" y="218">25 din</text></g>
+      <text x="350" y="242" text-anchor="middle" class="sm">3 aadmi gaye: jo patti kati (3 × 15 = 45), wo aage 5 din aur kheench kar poori hui</text>
+    </svg>
+    </div>
+    <figcaption>Area = aadmi × din = kaam. PYQ (CGL 14 Oct 2025): 12 worker 20 din, 5 din baad 3 nikaale → aur 20 din.</figcaption>
+  </figure><h3>Speed method 6 · Jodiyan (A+B, B+C, C+A) → sab jodo, aadha karo</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 270" role="img" aria-label="Pairs picture with A = 2, B = 3, C = 1 units per day on 60 units. A+B = 5, B+C = 4, C+A = 3. Adding the three pairs gives every person twice: 12. Half is 6, which is A+B+C.">
+      <text x="10" y="20" class="sm">A+B 12 din, B+C 15, C+A 20 · LCM 60 · har chhota khana = 1 unit roz (40 px)</text>
+      <!-- A = chf, B = paper dashed, C = solid ch -->
+      <text x="10" y="58" class="lbl">A+B = 5</text>
+      <rect x="120" y="40" width="80" height="30" class="chf"/><rect x="120" y="40" width="80" height="30" class="chs"/>
+      <rect x="200" y="40" width="120" height="30" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="160" y="60" text-anchor="middle" class="lbl">A</text><text x="260" y="60" text-anchor="middle" class="lbl">B</text>
+      <text x="10" y="108" class="lbl">B+C = 4</text>
+      <rect x="120" y="90" width="120" height="30" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="240" y="90" width="40" height="30" style="fill:var(--ch)"/>
+      <text x="180" y="110" text-anchor="middle" class="lbl">B</text><text x="260" y="110" text-anchor="middle" class="lbl" style="fill:var(--paper)">C</text>
+      <text x="10" y="158" class="lbl">C+A = 3</text>
+      <rect x="120" y="140" width="40" height="30" style="fill:var(--ch)"/>
+      <rect x="160" y="140" width="80" height="30" class="chf"/><rect x="160" y="140" width="80" height="30" class="chs"/>
+      <text x="140" y="160" text-anchor="middle" class="lbl" style="fill:var(--paper)">C</text><text x="200" y="160" text-anchor="middle" class="lbl">A</text>
+      <line x1="120" y1="186" x2="620" y2="186" class="ln"/>
+      <text x="10" y="214" class="lbl">Jod = 12</text>
+      <rect x="120" y="196" width="160" height="30" class="chf"/><rect x="120" y="196" width="160" height="30" class="chs"/>
+      <rect x="280" y="196" width="240" height="30" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="520" y="196" width="80" height="30" style="fill:var(--ch)"/>
+      <text x="200" y="216" text-anchor="middle" class="lbl">A A (4)</text><text x="400" y="216" text-anchor="middle" class="lbl">B B (6)</text><text x="560" y="216" text-anchor="middle" class="lbl" style="fill:var(--paper)">C C</text>
+      <text x="350" y="256" text-anchor="middle" class="lbl" style="fill:var(--ch)">har aadmi do baar aaya → 12 ÷ 2 = 6 = A+B+C · A = 6 − 4 = 2 → 30 din</text>
+    </svg>
+    </div>
+    <figcaption>Teen jodiyan jodo toh har aadmi do baar ginta hai. Aadha karo = teeno saath. Phir jo chahiye uski jodi ghata do.</figcaption>
+  </figure><h3>Speed method 7 · Baari-baari aur chakkar (cycle)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 220" role="img" aria-label="Alternate days: P does 3 units, Q does 1 unit, total 15. Day by day: 3, 4, 7, 8, 11, 12, 15. Work finishes on day 7 by P, not after 7.5 days.">
+      <text x="350" y="20" text-anchor="middle" class="lbl">P 5 din, Q 15 din · LCM 15 · P = 3, Q = 1 · baari-baari, P pehle</text>
+      <!-- scale 36 px per unit, x from 80 to 620 -->
+      <rect x="80" y="70" width="540" height="40" fill="none" stroke="var(--muted)" stroke-width="1.2"/>
+      <rect x="80" y="70" width="108" height="40" class="chf"/><rect x="80" y="70" width="108" height="40" class="chs"/>
+      <rect x="188" y="70" width="36" height="40" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="224" y="70" width="108" height="40" class="chf"/><rect x="224" y="70" width="108" height="40" class="chs"/>
+      <rect x="332" y="70" width="36" height="40" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="368" y="70" width="108" height="40" class="chf"/><rect x="368" y="70" width="108" height="40" class="chs"/>
+      <rect x="476" y="70" width="36" height="40" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="512" y="70" width="108" height="40" style="fill:var(--ch)"/>
+      <g text-anchor="middle" class="sm">
+        <text x="134" y="60">din 1</text><text x="206" y="60">2</text><text x="278" y="60">din 3</text><text x="350" y="60">4</text><text x="422" y="60">din 5</text><text x="494" y="60">6</text><text x="566" y="60">din 7</text>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="134" y="95">P +3</text><text x="206" y="95">Q</text><text x="278" y="95">P +3</text><text x="350" y="95">Q</text><text x="422" y="95">P +3</text><text x="494" y="95">Q</text><text x="566" y="95" style="fill:var(--paper)">P +3</text>
+      </g>
+      <g text-anchor="middle" class="sm">
+        <text x="188" y="130">3</text><text x="224" y="130">4</text><text x="332" y="130">7</text><text x="368" y="130">8</text><text x="476" y="130">11</text><text x="512" y="130">12</text><text x="620" y="130">15 ✔</text>
+      </g>
+      <text x="350" y="166" text-anchor="middle" class="sm">jodi (2 din) = 4 units · 3 jodi = 12 (6 din) · bache 3 → din 7 ko P akela poora kar deta hai</text>
+      <text x="350" y="194" text-anchor="middle" class="lbl" style="fill:var(--ch)">Answer 7 din. "15 ÷ 4 × 2 = 7.5" galat hai.</text>
+    </svg>
+    </div>
+    <figcaption>PYQ (CHSL 24 Nov 2025). Chakkar ginte waqt aakhri din kaun aata hai, wo dekho.</figcaption>
+  </figure><h3>Kaunsa method kab? (ek nazar mein)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing a method in time and work. Check in order: men, hours or food; times faster or percent more efficient; pair times; alternate days or cycles; someone leaves or joins; wages; otherwise LCM units.">
+      <defs>
+        <marker id="mtw-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya diya hai?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mtw-fc-arr)"/>
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">Aadmi / auratein / ghante / khana?</text>
+        <text x="180" y="141">"Guna tez", "% zyada", "din kam"?</text>
+        <text x="180" y="197">Jodiyan: A+B, B+C, C+A?</text>
+        <text x="180" y="253">Baari-baari / har n-ve din?</text>
+        <text x="180" y="309">Koi gaya, aaya, ya "baaki" kaam?</text>
+        <text x="180" y="365">Paise / wages / hissa?</text>
+        <text x="180" y="421">Baaki sab: "A x din, B y din"</text>
+      </g>
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mtw-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mtw-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mtw-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Man-days (M × D × H)</text>
+        <text x="410" y="132">Ratio ulta karo</text>
+        <text x="410" y="188">Sab jodo, aadha karo</text>
+        <text x="410" y="244">Chakkar method</text>
+        <text x="410" y="300">Bacha kaam ÷ nayi speed</text>
+        <text x="410" y="356">Kaam ke ratio mein baanto</text>
+        <text x="410" y="412">LCM units</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">aadmi kam → din zyada · ulta ratio</text>
+        <text x="410" y="149">2 guna, saath 12 → kaam 3 × 12 = 36</text>
+        <text x="410" y="205">LCM lo, jodiyon ka jod ÷ 2 = teeno</text>
+        <text x="410" y="261">aakhri din kaun aata hai, dekho</text>
+        <text x="410" y="317">poore time wale ko pehle gino</text>
+        <text x="410" y="373">speed × din = units = paise ka ratio</text>
+        <text x="410" y="429">LCM = kaam, LCM ÷ din = speed</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow ek baar rough mein chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure></section>
+<p class="dg-src"><a href="/pyq-notes?b=maths&amp;t=t13">🧮 Poore notes mein ye topic kholo ›</a></p>

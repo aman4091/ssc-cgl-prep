@@ -408,7 +408,8 @@ function NotesInner() {
           </div>
         </div>
       </main>
-      {B ? <StudyDock key={B.key} B={B} /> : null}
+      {/* 🖼️ Saare Diagrams (scripts/build-diagrams.py) — sirf chitra, Flashcards / Quiz ka kuch nahi. */}
+      {B && B.key !== "diagrams" ? <StudyDock key={B.key} B={B} /> : null}
     </div>
     </div>
   );

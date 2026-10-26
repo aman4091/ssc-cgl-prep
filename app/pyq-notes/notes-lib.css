@@ -213,3 +213,7 @@
 .ntl-rules .ntl-rule h3 { margin: 0 0 8px; font-size: 1.02rem; }
 .ntl-rgo { flex: none; font: 600 .75rem var(--display); color: var(--ink); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; cursor: pointer; }
 .ntl-rule .trick { margin: 8px 0 10px; }
+/* 🖼️ Saare Diagrams — topic ke neeche poore notes ka rasta */
+.ntl-view .dg-src { margin: 26px 0 0; text-align: center; }
+.ntl-view .dg-src a { font: 600 .9rem var(--display); color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; display: inline-block; }
+.ntl-view .dg-src a:hover { border-color: var(--ink); }

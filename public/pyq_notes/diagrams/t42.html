@@ -1,0 +1,291 @@
+<section class="chap" id="mci-basics"><div class="eyebrow">Maths · 100 questions</div><h2>Compound Interest: shuru se, aur 36-second wale tareeke</h2><h3>Pehle ek chhoti si kahani: ₹1000 ka safar</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Rs 1000 at 10 percent: interest earned each year. SI gives 100, 100, 100. CI gives 100, 110, 121. The extra part of CI is interest on interest: 0, 10, 21.">
+      <rect x="80" y="10" width="14" height="12" class="chf"/><rect x="80" y="10" width="14" height="12" class="chs" style="stroke-width:1"/>
+      <text x="100" y="20" class="sm">mool ₹1000 par interest (har saal 100)</text>
+      <rect x="370" y="10" width="14" height="12" style="fill:var(--ch)"/>
+      <text x="390" y="20" class="sm">interest par interest (sirf CI mein)</text>
+      <line x1="60" y1="90" x2="590" y2="90" class="ln" stroke-dasharray="3 4"/>
+      <text x="56" y="94" text-anchor="end" class="sm">100</text>
+      <line x1="60" y1="250" x2="590" y2="250" class="ln"/>
+      <text x="56" y="254" text-anchor="end" class="sm">0</text>
+      <rect x="80" y="90" width="60" height="160" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="150" y="90" width="60" height="160" class="chf"/><rect x="150" y="90" width="60" height="160" class="chs"/>
+      <text x="110" y="82" text-anchor="middle" class="lbl">100</text>
+      <text x="180" y="82" text-anchor="middle" class="lbl">100</text>
+      <rect x="260" y="90" width="60" height="160" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="330" y="90" width="60" height="160" class="chf"/><rect x="330" y="90" width="60" height="160" class="chs"/>
+      <rect x="330" y="74" width="60" height="16" style="fill:var(--ch)"/>
+      <text x="290" y="82" text-anchor="middle" class="lbl">100</text>
+      <text x="360" y="66" text-anchor="middle" class="lbl">110 = 100 + 10</text>
+      <rect x="440" y="90" width="60" height="160" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <rect x="510" y="90" width="60" height="160" class="chf"/><rect x="510" y="90" width="60" height="160" class="chs"/>
+      <rect x="510" y="56" width="60" height="34" style="fill:var(--ch)"/>
+      <text x="470" y="82" text-anchor="middle" class="lbl">100</text>
+      <text x="540" y="48" text-anchor="middle" class="lbl">121 = 100 + 21</text>
+      <g text-anchor="middle" class="sm">
+        <text x="110" y="266">SI</text><text x="180" y="266">CI</text>
+        <text x="290" y="266">SI</text><text x="360" y="266">CI</text>
+        <text x="470" y="266">SI</text><text x="540" y="266">CI</text>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="145" y="288">Saal 1</text><text x="325" y="288">Saal 2</text><text x="505" y="288">Saal 3</text>
+      </g>
+      <text x="604" y="150" class="sm">SI kul = 300</text>
+      <text x="604" y="170" class="sm">CI kul = 331</text>
+      <text x="604" y="194" class="lbl" style="fill:var(--ch)">farq = 31</text>
+    </svg>
+    </div>
+    <figcaption>₹1000 par 10%: har saal ka interest, scale par. Gehre tukde = interest par interest: 0, phir 10, phir 21.</figcaption>
+  </figure><h3>Speed method 1 · Rate ko fraction banao (ratio method)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 290" role="img" aria-label="Ratio ladder. 10 percent: 10 to 11, then 100 to 121, then 1000 to 1331. 20 percent: 5 to 6, 25 to 36, 125 to 216. 12.5 percent: 8 to 9, 64 to 81, 512 to 729. CI parts shown under each.">
+      <defs>
+        <marker id="mci-lad-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <g text-anchor="middle" class="lbl">
+        <text x="225" y="24">1 saal</text><text x="415" y="24">2 saal</text><text x="605" y="24">3 saal</text>
+      </g>
+      <!-- row 10% -->
+      <text x="12" y="62" class="lbl">10% = 1/10</text><text x="12" y="78" class="sm">P : A</text>
+      <rect x="150" y="44" width="150" height="40" rx="6" class="chf"/><rect x="150" y="44" width="150" height="40" rx="6" class="chs"/>
+      <rect x="340" y="44" width="150" height="40" rx="6" class="chf"/><rect x="340" y="44" width="150" height="40" rx="6" class="chs"/>
+      <rect x="530" y="44" width="150" height="40" rx="6" class="chf"/><rect x="530" y="44" width="150" height="40" rx="6" class="chs"/>
+      <g class="ln"><line x1="302" y1="64" x2="336" y2="64" marker-end="url(#mci-lad-arr)"/><line x1="492" y1="64" x2="526" y2="64" marker-end="url(#mci-lad-arr)"/></g>
+      <g text-anchor="middle">
+        <text x="225" y="69" class="lbl">10 : 11</text><text x="415" y="69" class="lbl">100 : 121</text><text x="605" y="69" class="lbl">1000 : 1331</text>
+        <text x="225" y="100" class="sm">CI = 1 part</text><text x="415" y="100" class="sm">CI = 21 parts</text><text x="605" y="100" class="sm">CI = 331 parts</text>
+      </g>
+      <!-- row 20% -->
+      <text x="12" y="142" class="lbl">20% = 1/5</text><text x="12" y="158" class="sm">P : A</text>
+      <rect x="150" y="124" width="150" height="40" rx="6" class="chf"/><rect x="150" y="124" width="150" height="40" rx="6" class="chs"/>
+      <rect x="340" y="124" width="150" height="40" rx="6" class="chf"/><rect x="340" y="124" width="150" height="40" rx="6" class="chs"/>
+      <rect x="530" y="124" width="150" height="40" rx="6" class="chf"/><rect x="530" y="124" width="150" height="40" rx="6" class="chs"/>
+      <g class="ln"><line x1="302" y1="144" x2="336" y2="144" marker-end="url(#mci-lad-arr)"/><line x1="492" y1="144" x2="526" y2="144" marker-end="url(#mci-lad-arr)"/></g>
+      <g text-anchor="middle">
+        <text x="225" y="149" class="lbl">5 : 6</text><text x="415" y="149" class="lbl">25 : 36</text><text x="605" y="149" class="lbl">125 : 216</text>
+        <text x="225" y="180" class="sm">CI = 1 part</text><text x="415" y="180" class="sm">CI = 11 parts</text><text x="605" y="180" class="sm">CI = 91 parts</text>
+      </g>
+      <!-- row 12.5% -->
+      <text x="12" y="222" class="lbl">12½% = 1/8</text><text x="12" y="238" class="sm">P : A</text>
+      <rect x="150" y="204" width="150" height="40" rx="6" class="chf"/><rect x="150" y="204" width="150" height="40" rx="6" class="chs"/>
+      <rect x="340" y="204" width="150" height="40" rx="6" class="chf"/><rect x="340" y="204" width="150" height="40" rx="6" class="chs"/>
+      <rect x="530" y="204" width="150" height="40" rx="6" class="chf"/><rect x="530" y="204" width="150" height="40" rx="6" class="chs"/>
+      <g class="ln"><line x1="302" y1="224" x2="336" y2="224" marker-end="url(#mci-lad-arr)"/><line x1="492" y1="224" x2="526" y2="224" marker-end="url(#mci-lad-arr)"/></g>
+      <g text-anchor="middle">
+        <text x="225" y="229" class="lbl">8 : 9</text><text x="415" y="229" class="lbl">64 : 81</text><text x="605" y="229" class="lbl">512 : 729</text>
+        <text x="225" y="260" class="sm">CI = 1 part</text><text x="415" y="260" class="sm">CI = 17 parts</text><text x="605" y="260" class="sm">CI = 217 parts</text>
+      </g>
+      <text x="350" y="284" text-anchor="middle" class="sm">Har kadam par: left wala left se guna, right wala right se guna (10% mein 10 aur 11 se)</text>
+    </svg>
+    </div>
+    <figcaption>Ratio ki seedhi. CI = right − left. Ye teen seedhiyan zubaani yaad kar lo.</figcaption>
+  </figure><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 200" role="img" aria-label="Sixteen common rates with their fractions and one-year principal to amount ratio">
+      <g text-anchor="middle">
+        <rect x="8" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="94" y="10" width="82" height="72" rx="6" class="chf"/><rect x="94" y="10" width="82" height="72" rx="6" class="chs"/>
+        <rect x="180" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="266" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="352" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="438" y="10" width="82" height="72" rx="6" class="chf"/>
+        <rect x="524" y="10" width="82" height="72" rx="6" class="chf"/><rect x="524" y="10" width="82" height="72" rx="6" class="chs"/>
+        <rect x="610" y="10" width="82" height="72" rx="6" class="chf"/>
+        <text x="49" y="32" class="lbl">4%</text><text x="49" y="52" class="lbl" style="fill:var(--ch)">1/25</text><text x="49" y="70" class="sm">25 : 26</text>
+        <text x="135" y="32" class="lbl">5%</text><text x="135" y="52" class="lbl" style="fill:var(--ch)">1/20</text><text x="135" y="70" class="sm">20 : 21</text>
+        <text x="221" y="32" class="lbl">6¼%</text><text x="221" y="52" class="lbl" style="fill:var(--ch)">1/16</text><text x="221" y="70" class="sm">16 : 17</text>
+        <text x="307" y="32" class="lbl">8%</text><text x="307" y="52" class="lbl" style="fill:var(--ch)">2/25</text><text x="307" y="70" class="sm">25 : 27</text>
+        <text x="393" y="32" class="lbl">8⅓%</text><text x="393" y="52" class="lbl" style="fill:var(--ch)">1/12</text><text x="393" y="70" class="sm">12 : 13</text>
+        <text x="479" y="32" class="lbl">100/11 %</text><text x="479" y="52" class="lbl" style="fill:var(--ch)">1/11</text><text x="479" y="70" class="sm">11 : 12</text>
+        <text x="565" y="32" class="lbl">10%</text><text x="565" y="52" class="lbl" style="fill:var(--ch)">1/10</text><text x="565" y="70" class="sm">10 : 11</text>
+        <text x="651" y="32" class="lbl">100/9 %</text><text x="651" y="52" class="lbl" style="fill:var(--ch)">1/9</text><text x="651" y="70" class="sm">9 : 10</text>
+        <rect x="8" y="92" width="82" height="72" rx="6" class="chf"/>
+        <rect x="94" y="92" width="82" height="72" rx="6" class="chf"/><rect x="94" y="92" width="82" height="72" rx="6" class="chs"/>
+        <rect x="180" y="92" width="82" height="72" rx="6" class="chf"/>
+        <rect x="266" y="92" width="82" height="72" rx="6" class="chf"/>
+        <rect x="352" y="92" width="82" height="72" rx="6" class="chf"/><rect x="352" y="92" width="82" height="72" rx="6" class="chs"/>
+        <rect x="438" y="92" width="82" height="72" rx="6" class="chf"/><rect x="438" y="92" width="82" height="72" rx="6" class="chs"/>
+        <rect x="524" y="92" width="82" height="72" rx="6" class="chf"/><rect x="524" y="92" width="82" height="72" rx="6" class="chs"/>
+        <rect x="610" y="92" width="82" height="72" rx="6" class="chf"/>
+        <text x="49" y="114" class="lbl">12%</text><text x="49" y="134" class="lbl" style="fill:var(--ch)">3/25</text><text x="49" y="152" class="sm">25 : 28</text>
+        <text x="135" y="114" class="lbl">12½%</text><text x="135" y="134" class="lbl" style="fill:var(--ch)">1/8</text><text x="135" y="152" class="sm">8 : 9</text>
+        <text x="221" y="114" class="lbl">100/7 %</text><text x="221" y="134" class="lbl" style="fill:var(--ch)">1/7</text><text x="221" y="152" class="sm">7 : 8</text>
+        <text x="307" y="114" class="lbl">15%</text><text x="307" y="134" class="lbl" style="fill:var(--ch)">3/20</text><text x="307" y="152" class="sm">20 : 23</text>
+        <text x="393" y="114" class="lbl">16⅔%</text><text x="393" y="134" class="lbl" style="fill:var(--ch)">1/6</text><text x="393" y="152" class="sm">6 : 7</text>
+        <text x="479" y="114" class="lbl">20%</text><text x="479" y="134" class="lbl" style="fill:var(--ch)">1/5</text><text x="479" y="152" class="sm">5 : 6</text>
+        <text x="565" y="114" class="lbl">25%</text><text x="565" y="134" class="lbl" style="fill:var(--ch)">1/4</text><text x="565" y="152" class="sm">4 : 5</text>
+        <text x="651" y="114" class="lbl">33⅓%</text><text x="651" y="134" class="lbl" style="fill:var(--ch)">1/3</text><text x="651" y="152" class="sm">3 : 4</text>
+        <text x="350" y="188" class="sm">neeche ki line = 1 saal ka P : A · n saal ke liye dono ko n baar guna karo</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>16 rates, 16 fractions. Outline wale (5%, 10%, 12½%, 16⅔%, 20%, 25%) 2025 ke papers mein sabse zyada aaye.</figcaption>
+  </figure><h3>Speed method 3 · 1-3-3-1 ka ped (3 saal, kisi bhi rate par)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 320" role="img" aria-label="Pascal rows 1-1, 1-2-1, 1-3-3-1, 1-4-6-4-1. For Rs 1000 at 12 percent over 3 years: three pieces of 120, three pieces of 14.4 and one piece of 1.728. CI = 360 + 43.2 + 1.728 = 404.928.">
+      <text x="120" y="26" text-anchor="middle" class="lbl">Pascal ki seedhi</text>
+      <g class="sm"><text x="12" y="64">1 saal</text><text x="12" y="98">2 saal</text><text x="12" y="132">3 saal</text><text x="12" y="166">4 saal</text></g>
+      <g text-anchor="middle" class="lbl">
+        <text x="140" y="64">1   1</text>
+        <text x="140" y="98">1   2   1</text>
+        <text x="140" y="132" style="fill:var(--ch)">1   3   3   1</text>
+        <text x="140" y="166">1   4   6   4   1</text>
+      </g>
+      <text x="120" y="200" text-anchor="middle" class="sm">pehla 1 = P khud</text>
+      <text x="120" y="216" text-anchor="middle" class="sm">baaki = tukdon ki ginti</text>
+      <line x1="232" y1="16" x2="232" y2="240" class="ln"/>
+      <!-- row 1 -->
+      <text x="250" y="34" class="sm">Tukda 1 = 1000 ka 12% = 120 (3 baar)</text>
+      <rect x="250" y="42" width="66" height="32" rx="5" class="chf"/><rect x="250" y="42" width="66" height="32" rx="5" class="chs"/>
+      <rect x="324" y="42" width="66" height="32" rx="5" class="chf"/><rect x="324" y="42" width="66" height="32" rx="5" class="chs"/>
+      <rect x="398" y="42" width="66" height="32" rx="5" class="chf"/><rect x="398" y="42" width="66" height="32" rx="5" class="chs"/>
+      <g text-anchor="middle" class="lbl"><text x="283" y="63">120</text><text x="357" y="63">120</text><text x="431" y="63">120</text></g>
+      <text x="482" y="63" class="lbl">3 × 120 = 360</text>
+      <text x="482" y="80" class="sm">(yahi SI hai)</text>
+      <!-- row 2 -->
+      <text x="250" y="114" class="sm">Tukda 2 = 120 ka 12% = 14.4 (3 baar)</text>
+      <rect x="250" y="122" width="66" height="32" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="324" y="122" width="66" height="32" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <rect x="398" y="122" width="66" height="32" rx="5" class="paper" stroke="var(--ch)" stroke-width="2" stroke-dasharray="4 3"/>
+      <g text-anchor="middle" class="lbl"><text x="283" y="143">14.4</text><text x="357" y="143">14.4</text><text x="431" y="143">14.4</text></g>
+      <text x="482" y="143" class="lbl">3 × 14.4 = 43.2</text>
+      <text x="482" y="160" class="sm">(interest par interest)</text>
+      <!-- row 3 -->
+      <text x="250" y="194" class="sm">Tukda 3 = 14.4 ka 12% = 1.728 (1 baar)</text>
+      <rect x="250" y="202" width="66" height="32" rx="5" style="fill:var(--ch)"/>
+      <text x="283" y="223" text-anchor="middle" class="lbl" style="fill:var(--paper)">1.728</text>
+      <text x="482" y="223" class="lbl">1 × 1.728 = 1.728</text>
+      <!-- totals -->
+      <text x="350" y="272" text-anchor="middle" class="lbl">CI (3 saal) = 360 + 43.2 + 1.728 = 404.928</text>
+      <text x="350" y="296" text-anchor="middle" class="sm">2 saal ho toh: 2 × 120 + 1 × 14.4 = 254.4 · CI − SI (3 saal) = 43.2 + 1.728 = 44.928</text>
+    </svg>
+    </div>
+    <figcaption>Ped ka matlab: har tukda apna 12% ek naya chhota tukda paida karta hai. Har tukda pichhle ka 12% hai, toh har agla tukda bas "12% of pichhla" hai.</figcaption>
+  </figure><h3>Speed method 4 · CI − SI (sabse pasandida sawaal)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 300" role="img" aria-label="Area picture for Rs 10,000 at 10 percent for 2 years. Big square P = 10,000. Two thin strips of 1,000 each are the simple interest. A small corner square of 100 is interest on interest, which is CI minus SI.">
+      <rect x="40" y="30" width="180" height="180" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      <text x="130" y="116" text-anchor="middle" class="lbl">P = 10,000</text>
+      <text x="130" y="134" text-anchor="middle" class="sm">(asal paisa)</text>
+      <rect x="220" y="30" width="18" height="180" class="chf"/><rect x="220" y="30" width="18" height="180" class="chs"/>
+      <rect x="40" y="210" width="180" height="18" class="chf"/><rect x="40" y="210" width="180" height="18" class="chs"/>
+      <rect x="220" y="210" width="18" height="18" style="fill:var(--ch)"/>
+      <text x="140" y="246" text-anchor="middle" class="sm">neeche patti: saal 2, P par 10% = 1,000</text>
+      <g class="ln">
+        <line x1="240" y1="90" x2="296" y2="60"/>
+        <line x1="240" y1="222" x2="296" y2="166"/>
+      </g>
+      <text x="300" y="58" class="lbl">Right patti: saal 1 mein P par 10% = 1,000</text>
+      <text x="300" y="76" class="sm">dono pattiyan mil kar = SI = 2,000</text>
+      <text x="300" y="164" class="lbl" style="fill:var(--ch)">Chhota kona: saal 1 ke 1,000 par 10% = 100</text>
+      <text x="300" y="182" class="sm">yahi "interest par interest" hai · SI mein ye hota hi nahi</text>
+      <text x="300" y="222" class="sm">CI = pattiyan + kona = 2,100</text>
+      <text x="350" y="284" text-anchor="middle" class="lbl">CI − SI = sirf kona = P × (r/100) × (r/100) = 10,000 × 1/10 × 1/10 = 100</text>
+    </svg>
+    </div>
+    <figcaption>Bada square = P. Har patti = P ka r%. Kona = r% ka r%. Kona chhota hai, isliye CI bas thoda sa zyada hota hai SI se.</figcaption>
+  </figure><h3>Speed method 6 · Half-yearly, quarterly, 8-monthly</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 250" role="img" aria-label="Interest on Rs 10,000 at 20 percent for one year: yearly 2000, half-yearly 2100, quarterly 2155.06, monthly 2193.91, drawn to scale">
+      <line x1="200" y1="20" x2="200" y2="215" class="ln"/>
+      <line x1="560" y1="20" x2="560" y2="215" class="ln" stroke-dasharray="3 4"/>
+      <text x="10" y="45" class="lbl">Yearly</text><text x="10" y="61" class="sm">20% × 1 baar</text>
+      <rect x="200" y="32" width="360" height="30" class="chf"/><rect x="200" y="32" width="360" height="30" class="chs"/>
+      <text x="572" y="52" class="lbl">₹2,000</text>
+      <text x="10" y="95" class="lbl">Half-yearly</text><text x="10" y="111" class="sm">10% × 2 baar</text>
+      <rect x="200" y="82" width="378" height="30" class="chf"/><rect x="200" y="82" width="378" height="30" class="chs"/>
+      <text x="590" y="102" class="lbl">₹2,100</text>
+      <text x="10" y="145" class="lbl">Quarterly</text><text x="10" y="161" class="sm">5% × 4 baar</text>
+      <rect x="200" y="132" width="388" height="30" class="chf"/><rect x="200" y="132" width="388" height="30" class="chs"/>
+      <text x="598" y="152" class="lbl">₹2,155.06</text>
+      <text x="10" y="195" class="lbl">Monthly</text><text x="10" y="211" class="sm">1⅔% × 12 baar</text>
+      <rect x="200" y="182" width="395" height="30" class="chf"/><rect x="200" y="182" width="395" height="30" class="chs"/>
+      <text x="605" y="202" class="lbl">₹2,193.91</text>
+      <text x="350" y="240" text-anchor="middle" class="sm">₹10,000 par 20% saalana, 1 saal · bars scale par · dashed line = yearly wala level</text>
+    </svg>
+    </div>
+    <figcaption>Jitni baar jodo, utna zyada interest. Par har baar badhat kam hoti jaati hai. 20% half-yearly = saal ka 21% (10 + 10 + 1). <span class="tag x">CGL+</span></figcaption>
+  </figure><h3>Kaunsa method kab? (ek nazar mein)</h3><figure>
+    <div class="sv">
+    <svg viewBox="0 0 700 450" role="img" aria-label="Flowchart for choosing a method. Read the question, then check in order: half-yearly or quarterly, CI minus SI, x times, clean fraction rate, only 2 years, 3 years with an awkward rate, approx. Each yes leads to its method.">
+      <defs>
+        <marker id="mci-fc-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L8,4 L0,8 z" style="fill:var(--muted)"/></marker>
+      </defs>
+      <rect x="20" y="8" width="320" height="32" rx="16" class="chf"/>
+      <text x="180" y="29" text-anchor="middle" class="lbl">Sawaal padho: kya pucha hai?</text>
+      <text x="400" y="29" class="sm">pehla "haan" = tumhara method</text>
+      <line x1="180" y1="40" x2="180" y2="56" class="ln" marker-end="url(#mci-fc-arr)"/>
+      <!-- decision boxes -->
+      <g>
+        <rect x="20" y="60" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="116" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="172" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="228" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="284" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="340" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+        <rect x="20" y="396" width="320" height="40" rx="6" class="paper" stroke="var(--muted)" stroke-width="1.5"/>
+      </g>
+      <g text-anchor="middle" class="lbl">
+        <text x="180" y="85">Half-yearly / quarterly / 8-monthly?</text>
+        <text x="180" y="141">CI − SI ka farq pucha hai?</text>
+        <text x="180" y="197">"x guna" (2×, 4×, 8×) wala sawaal?</text>
+        <text x="180" y="253">Rate saaf fraction? (10, 20, 12½, 25%…)</text>
+        <text x="180" y="309">Sirf 2 saal, rate kuch bhi?</text>
+        <text x="180" y="365">3 saal, rate 12 / 15 / 6 / 4%?</text>
+        <text x="180" y="421">Number gande ya "approx" likha?</text>
+      </g>
+      <!-- nahi arrows -->
+      <g class="ln">
+        <line x1="180" y1="100" x2="180" y2="113" marker-end="url(#mci-fc-arr)"/>
+        <line x1="180" y1="156" x2="180" y2="169" marker-end="url(#mci-fc-arr)"/>
+        <line x1="180" y1="212" x2="180" y2="225" marker-end="url(#mci-fc-arr)"/>
+        <line x1="180" y1="268" x2="180" y2="281" marker-end="url(#mci-fc-arr)"/>
+        <line x1="180" y1="324" x2="180" y2="337" marker-end="url(#mci-fc-arr)"/>
+        <line x1="180" y1="380" x2="180" y2="393" marker-end="url(#mci-fc-arr)"/>
+      </g>
+      <g class="sm"><text x="188" y="111">nahi</text><text x="188" y="167">nahi</text><text x="188" y="223">nahi</text><text x="188" y="279">nahi</text><text x="188" y="335">nahi</text><text x="188" y="391">nahi</text></g>
+      <!-- haan arrows -->
+      <g class="ln">
+        <line x1="340" y1="80" x2="396" y2="80" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="136" x2="396" y2="136" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="192" x2="396" y2="192" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="248" x2="396" y2="248" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="304" x2="396" y2="304" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="360" x2="396" y2="360" marker-end="url(#mci-fc-arr)"/>
+        <line x1="340" y1="416" x2="396" y2="416" marker-end="url(#mci-fc-arr)"/>
+      </g>
+      <g text-anchor="middle" class="sm"><text x="368" y="74">haan</text><text x="368" y="130">haan</text><text x="368" y="186">haan</text><text x="368" y="242">haan</text><text x="368" y="298">haan</text><text x="368" y="354">haan</text><text x="368" y="410">haan</text></g>
+      <!-- method boxes -->
+      <g>
+        <rect x="400" y="60" width="290" height="40" rx="6" class="chf"/><rect x="400" y="60" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="116" width="290" height="40" rx="6" class="chf"/><rect x="400" y="116" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="172" width="290" height="40" rx="6" class="chf"/><rect x="400" y="172" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="228" width="290" height="40" rx="6" class="chf"/><rect x="400" y="228" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="284" width="290" height="40" rx="6" class="chf"/><rect x="400" y="284" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="340" width="290" height="40" rx="6" class="chf"/><rect x="400" y="340" width="290" height="40" rx="6" class="chs"/>
+        <rect x="400" y="396" width="290" height="40" rx="6" class="chf"/><rect x="400" y="396" width="290" height="40" rx="6" class="chs"/>
+      </g>
+      <g class="lbl">
+        <text x="410" y="76">Rate ÷ 2, time × 2</text>
+        <text x="410" y="132">CI − SI shortcut</text>
+        <text x="410" y="188">Times ka power, saalon ka guna</text>
+        <text x="410" y="244">Ratio method</text>
+        <text x="410" y="300">a + b + ab/100 (table)</text>
+        <text x="410" y="356">1-3-3-1 ka ped</text>
+        <text x="410" y="412">Saaf rate + option check</text>
+      </g>
+      <g class="sm">
+        <text x="410" y="93">quarterly ÷ 4, × 4 · phir neeche wale rows</text>
+        <text x="410" y="149">2 saal: P × (r/100)² · 3 saal: × (3 + r/100)</text>
+        <text x="410" y="205">2× in 5 saal → 8× in 15 saal</text>
+        <text x="410" y="261">10 : 11 · 5 : 6 · 8 : 9 · 6 : 7 · 20 : 21</text>
+        <text x="410" y="317">P ka 1% × (kul %)</text>
+        <text x="410" y="373">3 × tukda1 + 3 × tukda2 + 1 × tukda3</text>
+        <text x="410" y="429">CI &gt; SI · last digit · sabse paas wala</text>
+      </g>
+    </svg>
+    </div>
+    <figcaption>Ye flow ek baar rough mein chalao, 3 second lagte hain. Phir sirf method chalao.</figcaption>
+  </figure></section>
+<p class="dg-src"><a href="/pyq-notes?b=maths&amp;t=t10">🧮 Poore notes mein ye topic kholo ›</a></p>
