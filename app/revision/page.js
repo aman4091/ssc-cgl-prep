@@ -115,6 +115,24 @@ function BatchCard({ s, b, n, done, onOpen, onDone, sub }) {
   );
 }
 
+// Ghadi apne component mein — har second sirf ye badle. Pehle poora Reader
+// har second dobara banta tha aur notes ki table ka side-scroll (owner:
+// "wapas starting mein aa jata hai") 0 par chala jata tha.
+function Clock({ t0, min, onRestart }) {
+  const [now, setNow] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    setNow(Date.now());
+    return () => clearInterval(t);
+  }, []);
+  const el = t0 && now ? Math.max(0, Math.floor((now - t0) / 1000)) : 0;
+  return (
+    <button type="button" className={`rv-clock${el > min * 60 ? " is-over" : ""}`} onClick={onRestart} title="Ghadi dobara 0 se">
+      {String(Math.floor(el / 60)).padStart(2, "0")}:{String(el % 60).padStart(2, "0")}
+    </button>
+  );
+}
+
 function Reader({ data, idx, id, done, onDone, onClose, onOpen }) {
   const flat = useMemo(() => data.subjects.flatMap((s) => s.batches.map((b) => ({ s, b }))), [data]);
   const at = flat.findIndex((x) => x.b.id === id);
@@ -122,7 +140,6 @@ function Reader({ data, idx, id, done, onDone, onClose, onOpen }) {
   const next = flat[at + 1] && flat[at + 1].s === s ? flat[at + 1] : null;
   const [blocks, setBlocks] = useState(null);
   const [t0, setT0] = useState(null);
-  const [now, setNow] = useState(0);
   // ⛶ Poori screen (owner) — sirf notes, site ka menu nahi. Browser ka
   // fullscreen (Android par address bar bhi chhupe) + CSS se fixed parda,
   // kyunki iPhone Safari page ka fullscreen deta hi nahi.
@@ -172,16 +189,37 @@ function Reader({ data, idx, id, done, onDone, onClose, onOpen }) {
     return () => { alive = false; };
   }, [b, id]);
 
-  useEffect(() => {
-    const t = setInterval(() => setNow(Date.now()), 1000);
-    setNow(Date.now());
-    return () => clearInterval(t);
-  }, []);
+  // Notes ka DOM ek baar bane — Reader dobara bane (poori screen, ho gaya) to
+  // bhi table ka side-scroll apni jagah rahe.
+  const notes = useMemo(() => {
+    if (!blocks) return null;
+    const bookName = (k) => { const B = idx?.books.find((x) => x.key === k); return B ? `${B.icon} ${B.name}` : k; };
+    return blocks.map(({ p, secs }) => (
+      <div key={`${p.b}${p.t}${p.s[0][0]}`} className="rv-part">
+        <div className="ntl-head">
+          <div className="k">{bookName(p.b)}</div>
+          <h2>{p.tn}</h2>
+          <a className="rv-full" href={`/pyq-notes?b=${p.b}&t=${p.t}&s=${p.s[0][1]}`}>Notes page par kholo ›</a>
+        </div>
+        <div className="ntl-view">
+          {secs.map((x) => (
+            <section key={x.id} className={`chap ${x.c}`}>
+              <div dangerouslySetInnerHTML={{ __html: x.h2 }} />
+              {x.items.map((sl) => (
+                <div key={sl.key} className="ntl-blk">
+                  {sl.pre ? <div dangerouslySetInnerHTML={{ __html: sl.pre }} /> : null}
+                  {sl.h3 ? <div className="ntl-h3"><div dangerouslySetInnerHTML={{ __html: sl.h3 }} /></div> : null}
+                  <div dangerouslySetInnerHTML={{ __html: sl.rest }} />
+                </div>
+              ))}
+            </section>
+          ))}
+        </div>
+      </div>
+    ));
+  }, [blocks, idx]);
 
   if (!b) return <p className="hint">Ye batch nahi mila.</p>;
-  const el = t0 ? Math.max(0, Math.floor((now - t0) / 1000)) : 0;
-  const over = el > b.min * 60;
-  const bookName = (k) => { const B = idx?.books.find((x) => x.key === k); return B ? `${B.icon} ${B.name}` : k; };
   const restart = () => { const st = load("cgl.rev.start", {}); st[id] = Date.now(); save("cgl.rev.start", st); setT0(st[id]); };
 
   return (
@@ -189,38 +227,14 @@ function Reader({ data, idx, id, done, onDone, onClose, onOpen }) {
       <div className="rv-bar">
         <button type="button" className="rv-back" onClick={() => { setFull(false); onClose(); }}>‹ Batches</button>
         <div className="rv-bar__t"><b>{s.name} · Batch {bno(b)}</b><small>{TIER[b.tier]} · ~{b.min} min</small></div>
-        <button type="button" className={`rv-clock${over ? " is-over" : ""}`} onClick={restart} title="Ghadi dobara 0 se">
-          {String(Math.floor(el / 60)).padStart(2, "0")}:{String(el % 60).padStart(2, "0")}
-        </button>
+        <Clock t0={t0} min={b.min} onRestart={restart} />
         <button type="button" className="rv-fs" onClick={() => setFull(!fs)} aria-pressed={fs} title={fs ? "Poori screen band" : "Poori screen"} aria-label={fs ? "Poori screen band" : "Poori screen"}>{fs ? "⤡" : "⛶"}</button>
       </div>
       <div className="ntl-wrap">
         <div className="ntl rv-ntl">
           <main className="ntl-main">
             <div className="ntl-col">
-              {!blocks ? <p className="hint">Notes khul rahe hain…</p> : blocks.map(({ p, secs }) => (
-                <div key={`${p.b}${p.t}${p.s[0][0]}`} className="rv-part">
-                  <div className="ntl-head">
-                    <div className="k">{bookName(p.b)}</div>
-                    <h2>{p.tn}</h2>
-                    <a className="rv-full" href={`/pyq-notes?b=${p.b}&t=${p.t}&s=${p.s[0][1]}`}>Notes page par kholo ›</a>
-                  </div>
-                  <div className="ntl-view">
-                    {secs.map((x) => (
-                      <section key={x.id} className={`chap ${x.c}`}>
-                        <div dangerouslySetInnerHTML={{ __html: x.h2 }} />
-                        {x.items.map((sl) => (
-                          <div key={sl.key} className="ntl-blk">
-                            {sl.pre ? <div dangerouslySetInnerHTML={{ __html: sl.pre }} /> : null}
-                            {sl.h3 ? <div className="ntl-h3"><div dangerouslySetInnerHTML={{ __html: sl.h3 }} /></div> : null}
-                            <div dangerouslySetInnerHTML={{ __html: sl.rest }} />
-                          </div>
-                        ))}
-                      </section>
-                    ))}
-                  </div>
-                </div>
-              ))}
+              {!blocks ? <p className="hint">Notes khul rahe hain…</p> : notes}
               {blocks ? (
                 <div className="rv-end">
                   <button type="button" className={`rv-done${done ? " is-on" : ""}`} onClick={() => onDone(id, true)}>
