@@ -9,9 +9,13 @@
  */
 // V badalte hi purane caches activate par saaf ho jate hain. Jab bhi is file ka
 // vyavhaar badle ya purana cache shaq ke ghere mein aaye, ise badha dena.
-const V = "v73";
+const V = "v74";
 const SHELL = `cgl-shell-${V}`;
 const BLOBS = `cgl-r2-${V}`;
+// ⏱️ Revision (app/revision) ka "offline" — page khud is cache mein notes ki
+// saari HTML/JSON, /revision aur uske chunks daal deta hai. V se juda nahi,
+// taaki SW badalne par utaare hue notes ud na jayein.
+const NOTES = "cgl-notes-v1";
 
 // addAll ATOMIC hai — ek bhi URL 404 de to poora precache reject ho jata hai aur
 // shell cache khaali reh jata hai (aur .catch() ki wajah se chupchaap). Isliye
@@ -25,7 +29,7 @@ self.addEventListener("install", (e) => {
 self.addEventListener("activate", (e) => {
   e.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter((k) => k !== SHELL && k !== BLOBS).map((k) => caches.delete(k)));
+    await Promise.all(keys.filter((k) => k !== SHELL && k !== BLOBS && k !== NOTES).map((k) => caches.delete(k)));
     await self.clients.claim();
   })());
 });
@@ -54,6 +58,15 @@ async function staleWhileRevalidate(req, cacheName) {
   return hit || (await fresh) || Response.error();
 }
 
+async function notesSWR(req) {
+  const hit = await caches.match(req);
+  const fresh = fetch(req).then(async (res) => {
+    if (res && res.ok) (await caches.open(NOTES)).put(req, res.clone()).catch(() => {});
+    return res;
+  }).catch(() => null);
+  return hit || (await fresh) || Response.error();
+}
+
 async function networkFirst(req) {
   const cache = await caches.open(SHELL);
   try {
@@ -63,7 +76,8 @@ async function networkFirst(req) {
   } catch {
     // Offline aur ye page cache mein nahi — /answers par gira do, wahi app ka
     // ghar hai (pehle /wrong tha, jo ab maujood hi nahi).
-    return (await cache.match(req)) || (await cache.match("/answers")) || Response.error();
+    // ignoreSearch: /revision?batch=gs3 offline — cache mein /revision hai.
+    return (await caches.match(req)) || (await caches.match(req, { ignoreSearch: true })) || (await cache.match("/answers")) || Response.error();
   }
 }
 
@@ -94,15 +108,19 @@ self.addEventListener("fetch", (e) => {
 
   // Next ke hashed chunks — immutable. Yahi wo cheez hai jo app ko bina signal
   // ke khulne deti hai.
-  if (url.pathname.startsWith("/_next/static/")) { e.respondWith(cacheFirst(req, SHELL)); return; }
+  if (url.pathname.startsWith("/_next/static/")) { e.respondWith(caches.match(req).then((hit) => hit || cacheFirst(req, SHELL))); return; }
 
   if (req.mode === "navigate") { e.respondWith(networkFirst(req)); return; }
+
+  // 📘 Notes ki HTML/JSON (public/pyq_notes) — kisi bhi cache mein ho (NOTES
+  // mein revision page ne utaari), wahi do; saath mein network se taaza.
+  if (url.pathname.startsWith("/pyq_notes/")) { e.respondWith(notesSWR(req)); return; }
 
   // JSON = data (question banks, notes index). Kabhi immutable nahi — SWR.
   if (/\.json$/.test(url.pathname)) { e.respondWith(staleWhileRevalidate(req, SHELL)); return; }
 
   if (/\.(?:png|jpe?g|webp|gif|svg|woff2?|css)$/.test(url.pathname)) {
-    e.respondWith(cacheFirst(req, SHELL));
+    e.respondWith(caches.match(req).then((hit) => hit || cacheFirst(req, SHELL)));
   }
 });
 

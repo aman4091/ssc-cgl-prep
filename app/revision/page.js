@@ -9,7 +9,7 @@
 // dikhte hain (lib/pyqnotes cutSlides). Ho gaya → localStorage (cgl.rev.*).
 
 import { Suspense, useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { cutSlides, PN_BASE } from "@/lib/pyqnotes";
 import "../pyq-notes/notes-lib.css";
 import "./revision.css";
@@ -20,6 +20,62 @@ const save = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } cat
 const hm = (m) => (m >= 60 ? `${Math.floor(m / 60)}h ${m % 60 ? `${m % 60}m` : ""}`.trim() : `${m}m`);
 const sname = (s) => s.name.replace(/^\S+\s/, "");
 const bno = (b) => b.id.replace(/^\D+/, "");
+
+// 📴 Offline (owner: "phone par bina internet ke chale") — /revision, uske
+// chunks aur notes ki saari HTML/JSON seedhe "cgl-notes-v1" cache mein (public/sw.js
+// isi se offline jawab deta hai). Batch kholna history.pushState se, taaki
+// offline mein bhi server se kuch na maangna pade.
+const OFF_CACHE = "cgl-notes-v1";
+const OFF_KEY = "cgl.rev.offline";
+function offlineUrls(idx) {
+  const own = typeof performance === "undefined" ? [] : performance.getEntriesByType("resource")
+    .map((e) => new URL(e.name)).filter((u) => u.origin === location.origin && u.pathname.startsWith("/_next/static/")).map((u) => u.pathname);
+  return [...new Set(["/revision", `${PN_BASE}/index.json`, `${PN_BASE}/revision.json`, ...own,
+    ...idx.books.flatMap((b) => b.topics.map((t) => `${PN_BASE}/${b.key}/${t.id}.html`))])];
+}
+
+function OfflineBox({ idx }) {
+  const [st, setSt] = useState({ k: "idle" });
+  const run = async () => {
+    if (!idx || typeof caches === "undefined") { setSt({ k: "na" }); return; }
+    const urls = offlineUrls(idx);
+    setSt({ k: "dl", n: 0, of: urls.length });
+    let ok = 0;
+    try {
+      const c = await caches.open(OFF_CACHE);
+      for (let i = 0; i < urls.length; i += 6) {
+        await Promise.all(urls.slice(i, i + 6).map(async (u) => {
+          try { const r = await fetch(u, { cache: "no-cache" }); if (r.ok) { await c.put(u, r); ok += 1; } } catch { /* agli baar */ }
+        }));
+        setSt({ k: "dl", n: Math.min(i + 6, urls.length), of: urls.length });
+      }
+    } catch { /* cache band */ }
+    const full = ok === urls.length;
+    if (full) save(OFF_KEY, { at: Date.now(), n: ok });
+    setSt({ k: full ? "ok" : "part", n: ok, of: urls.length });
+  };
+  useEffect(() => {
+    if (!idx) return;
+    const was = load(OFF_KEY, null);
+    if (was) setSt({ k: "ok", n: was.n, of: was.n });
+    // Pehli baar (ya 6 ghante baad) online ho to apne aap utaar lo.
+    if (navigator.onLine && (!was || Date.now() - was.at > 6 * 36e5)) run();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx]);
+  const txt = {
+    idle: "📴 Offline taiyaar nahi",
+    na: "📴 Is browser mein offline nahi ho sakta",
+    dl: `⬇️ Offline utar raha hai… ${st.n}/${st.of}`,
+    ok: "✅ Offline taiyaar — bina internet chalega",
+    part: `⚠️ ${st.n}/${st.of} utre — internet par dobara dabao`,
+  }[st.k];
+  return (
+    <div className={`rv-off is-${st.k}`}>
+      <span>{txt}</span>
+      {st.k !== "dl" ? <button type="button" onClick={run}>{st.k === "ok" ? "Taaza karo" : "⬇️ Utaaro"}</button> : null}
+    </div>
+  );
+}
 
 // Aaj ka kram: har tier mein chaaron subject baari-baari (GS, Maths, English,
 // Vocab, GS…), taaki ek subject ke chakkar mein baaki na chhootein.
@@ -163,7 +219,6 @@ function Reader({ data, idx, id, done, onDone, onClose, onOpen }) {
 
 function RevisionInner() {
   const sp = useSearchParams();
-  const router = useRouter();
   const [data, setData] = useState(null);
   const [idx, setIdx] = useState(null);
   const [tab, setTab] = useState("plan");
@@ -187,10 +242,11 @@ function RevisionInner() {
     save("cgl.rev.done", n);
     return n;
   });
-  const openB = (id) => router.push(`/revision?batch=${id}`);
+  const nav = (u) => { window.history.pushState(null, "", u); window.scrollTo({ top: 0 }); };
+  const openB = (id) => nav(`/revision?batch=${id}`);
 
   if (!data) return <div className="placeholder">Loading…</div>;
-  if (open) return <Reader data={data} idx={idx} id={open} done={done.includes(open)} onDone={setDoneId} onOpen={openB} onClose={() => router.push("/revision")} />;
+  if (open) return <Reader data={data} idx={idx} id={open} done={done.includes(open)} onDone={setDoneId} onOpen={openB} onClose={() => nav("/revision")} />;
 
   const all = data.subjects.flatMap((s) => s.batches);
   const leftMin = all.filter((b) => !done.includes(b.id)).reduce((a, b) => a + b.min, 0);
@@ -207,6 +263,7 @@ function RevisionInner() {
         </div>
         <div className="rv-count"><b>{done.length}/{all.length}</b><span>batch ho gaye · {hm(leftMin)} baaki</span></div>
       </header>
+      <OfflineBox idx={idx} />
       <div className="rv-prog" aria-hidden="true"><i style={{ width: `${(done.length / Math.max(1, all.length)) * 100}%` }} /></div>
 
       <nav className="rv-tabs" role="tablist">

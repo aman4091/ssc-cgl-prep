@@ -7,6 +7,10 @@
 .rv-count { text-align: right; font-variant-numeric: tabular-nums; }
 .rv-count b { display: block; font-size: 2rem; line-height: 1; color: var(--accent); }
 .rv-count span { font-size: 0.72rem; font-weight: 700; color: var(--text-3); }
+.rv-off { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 10px 0 0; padding: 8px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); font-size: .85rem; font-weight: 600; }
+.rv-off.is-ok { border-color: var(--accent); }
+.rv-off.is-part { border-color: #e08a1e; }
+.rv-off button { flex: none; font: inherit; font-size: .8rem; font-weight: 700; color: var(--accent); background: none; border: 1px solid var(--accent); border-radius: 8px; padding: 4px 10px; cursor: pointer; }
 .rv-prog { height: 6px; background: var(--line); border-radius: 99px; margin: 10px 0 0; overflow: hidden; }
 .rv-prog i { display: block; height: 100%; background: var(--accent); transition: width .3s; }
 
