@@ -95,7 +95,7 @@ export function InkStatic({ doc }) {
   );
 }
 
-export default function ImpView({ rec }) {
+export default function ImpView({ rec, label = "⭐ IMP" }) {
   // Wrong Set wali copy purani ho sakti hai — asli record se padho.
   const [live, setLive] = useState(() => getWrongById(rec?.id) || rec);
   useEffect(() => {
