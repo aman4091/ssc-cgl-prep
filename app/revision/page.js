@@ -8,7 +8,7 @@
 // 🟢 time bache to. Batch kholo to uske hisse yahin poore notes ki tarah
 // dikhte hain (lib/pyqnotes cutSlides). Ho gaya → localStorage (cgl.rev.*).
 
-import { Suspense, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { cutSlides, PN_BASE } from "@/lib/pyqnotes";
 import "../pyq-notes/notes-lib.css";
@@ -123,6 +123,24 @@ function Reader({ data, idx, id, done, onDone, onClose, onOpen }) {
   const [blocks, setBlocks] = useState(null);
   const [t0, setT0] = useState(null);
   const [now, setNow] = useState(0);
+  // ⛶ Poori screen (owner) — sirf notes, site ka menu nahi. Browser ka
+  // fullscreen (Android par address bar bhi chhupe) + CSS se fixed parda,
+  // kyunki iPhone Safari page ka fullscreen deta hi nahi.
+  const [fs, setFs] = useState(false);
+  const box = useRef(null);
+  const setFull = (on) => {
+    setFs(on);
+    try {
+      if (on && !document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {});
+      if (!on && document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+    } catch { /* ignore */ }
+  };
+  useEffect(() => {
+    const on = () => { if (!document.fullscreenElement) setFs(false); };
+    document.addEventListener("fullscreenchange", on);
+    return () => document.removeEventListener("fullscreenchange", on);
+  }, []);
+  useEffect(() => () => { try { if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {}); } catch { /* ignore */ } }, []);
 
   useEffect(() => {
     if (!b) return undefined;
@@ -150,6 +168,7 @@ function Reader({ data, idx, id, done, onDone, onClose, onOpen }) {
         }));
       });
     window.scrollTo({ top: 0 });
+    if (box.current) box.current.scrollTop = 0;
     return () => { alive = false; };
   }, [b, id]);
 
@@ -166,13 +185,14 @@ function Reader({ data, idx, id, done, onDone, onClose, onOpen }) {
   const restart = () => { const st = load("cgl.rev.start", {}); st[id] = Date.now(); save("cgl.rev.start", st); setT0(st[id]); };
 
   return (
-    <div className="rv-read">
+    <div className={`rv-read${fs ? " is-fs" : ""}`} ref={box}>
       <div className="rv-bar">
-        <button type="button" className="rv-back" onClick={onClose}>‹ Batches</button>
+        <button type="button" className="rv-back" onClick={() => { setFull(false); onClose(); }}>‹ Batches</button>
         <div className="rv-bar__t"><b>{s.name} · Batch {bno(b)}</b><small>{TIER[b.tier]} · ~{b.min} min</small></div>
         <button type="button" className={`rv-clock${over ? " is-over" : ""}`} onClick={restart} title="Ghadi dobara 0 se">
           {String(Math.floor(el / 60)).padStart(2, "0")}:{String(el % 60).padStart(2, "0")}
         </button>
+        <button type="button" className="rv-fs" onClick={() => setFull(!fs)} aria-pressed={fs} title={fs ? "Poori screen band" : "Poori screen"} aria-label={fs ? "Poori screen band" : "Poori screen"}>{fs ? "⤡" : "⛶"}</button>
       </div>
       <div className="ntl-wrap">
         <div className="ntl rv-ntl">
