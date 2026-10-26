@@ -103,3 +103,10 @@
 .elm-disha { border-left: 3px solid #7fd19c; background: rgba(127, 209, 156, .07); border-radius: 0 10px 10px 0; padding: 8px 12px; }
 .elm-disha b { font-family: var(--nt-display, inherit); color: #7fd19c; }
 .elm-disha ul { margin: 6px 0 0; padding-left: 1.2em; display: grid; gap: 4px; font-size: .95rem; }
+.elm-marks { margin-left: auto; font: 500 .75rem var(--nt-mono, monospace); color: var(--text-3); white-space: nowrap; }
+.elm-marks b { font: 800 1.3rem var(--nt-display, inherit); color: #7fd19c; margin-right: 4px; }
+.elm-setdone { border: 1px solid #f0c060; border-radius: 10px; padding: 8px 12px; display: grid; gap: 2px; }
+.elm-setdone b { color: #f0c060; font-family: var(--nt-display, inherit); }
+.elm-setdone span { font-size: .88rem; color: var(--text-2); }
+.elm-sets { margin: 8px 0 0; font-size: .85rem; color: var(--text-3); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.elm-sets b { border: 1px solid var(--line); border-radius: 999px; padding: 1px 8px; color: var(--text-1); font-family: var(--nt-mono, monospace); }

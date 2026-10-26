@@ -26,6 +26,7 @@ const SUBJ = {
   en: { name: "📚 English", rules: EN_RULES, file: "tukka-en", run: (o) => tukkaEN(o), run2: (o) => tukkaEN(o), q2: "sawaal", blurb: "Steno 2026 + 2025 ke 2,315 English PYQ: chain 37%. Jahan options poore vaakya hain, sabse milta-julta option 69% sahi — galat wale sahi ko thoda badal kar banaye jaate hain. \"No error / No improvement\" sirf 3–6%." },
 };
 const ruleOf = (rules, k) => rules.find((r) => r.k === k);
+const marksOf = (ok, wrong) => Math.round((ok * 2 - wrong * 0.5) * 10) / 10;
 const avgOf = (opts) => { const n = opts.map(optNum).filter((x) => x != null); return Math.round((n.reduce((s, x) => s + x, 0) / (n.length || 1)) * 100) / 100; };
 
 export default function Tukka() {
@@ -69,6 +70,14 @@ export default function Tukka() {
     const t = (s.tk = s.tk || {});
     const c = (t[subj] = t[subj] || { n1: 0, ok1: 0, n2: 0, ok2: 0, rok: 0, n: 0 });
     c.n++; if (r2.pick === q.a) c.rok++;
+    // 📋 25 ka set (owner): +2 sahi, −0.5 galat, 50 mein se marks.
+    const S25 = (c.set = c.set || { n: 0, ok: 0 });
+    S25.n++; if (i === q.a) S25.ok++;
+    if (S25.n >= 25) {
+      c.sets = [...(c.sets || []), { ok: S25.ok, wrong: 25 - S25.ok, marks: marksOf(S25.ok, 25 - S25.ok) }].slice(-20);
+      c.set = { n: 0, ok: 0 };
+      c.lastSet = c.sets[c.sets.length - 1];
+    } else c.lastSet = null;
     if (stage === 1) { c.n1++; if (i === q.a) c.ok1++; } else { c.n2++; if (i === q.a) c.ok2++; }
     saveSt(s); setSt({ ...t });
   };
@@ -97,6 +106,9 @@ export default function Tukka() {
           </select>
         </label>
       ) : null}
+      {c.sets?.length ? (
+        <p className="elm-sets">📋 Pichhle set (50 mein se): {c.sets.slice(-10).map((x, i) => <b key={i}>{x.marks}</b>)}</p>
+      ) : null}
       <div className="elm-stats">
         <span>Sirf options se <b>{pct(c.ok1, c.n1)}%</b> <small>({c.n1 || 0})</small></span>
         <span>{S.q2} dekh ke <b>{pct(c.ok2, c.n2)}%</b> <small>({c.n2 || 0})</small></span>
@@ -108,7 +120,9 @@ export default function Tukka() {
         <article className="elm-card">
           <div className="elm-top">
             <span className="elm-src">{pick != null ? q.src : stage === 1 ? "Sawaal chhupa hai — sirf options" : `Sirf ${S.q2} — hal mat karo, disha dekho`}</span>
-            <span className="elm-pos">{(at[subj] % deck.length) + 1} / {deck.length}</span>
+            <span className="elm-marks" title="Is set ke marks (+2 sahi, −0.5 galat)">
+              <b>{marksOf(c.set?.ok || 0, (c.set?.n || 0) - (c.set?.ok || 0))}</b><small>/50 · {c.set?.n || 0}/25</small>
+            </span>
           </div>
           {pick != null ? <p className="elm-q">{q.q}</p>
             : stage === 2 ? <p className="elm-q">{subj === "maths" ? lastLine(q.q) : q.q}</p>
@@ -163,6 +177,12 @@ export default function Tukka() {
                   </li>
                 ))}
               </ol>
+              {c.lastSet ? (
+                <div className="elm-setdone">
+                  <b>📋 Set poora — {c.lastSet.marks} / 50</b>
+                  <span>✓ {c.lastSet.ok} sahi (+{c.lastSet.ok * 2}) · ✗ {c.lastSet.wrong} galat (−{c.lastSet.wrong * 0.5})</span>
+                </div>
+              ) : null}
               <button type="button" className="btn elm-next" onClick={next}>Agla ›</button>
             </div>
           ) : null}
