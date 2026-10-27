@@ -19,3 +19,10 @@
 .rg-timer { font: 600 .95rem var(--nt-mono, monospace); color: var(--text-2); margin-left: 10px; }
 .rg-timer.is-long { color: #ff8a7a; }
 .rg-next { font-weight: 700; padding: 6px 14px; }
+.rg-shot { width: 100%; border-radius: 8px; margin: 6px 0; cursor: zoom-in; background: #000; }
+.rg-shot.is-big { position: fixed; inset: 0; width: 100vw; height: 100vh; object-fit: contain; z-index: 9999; cursor: zoom-out; border-radius: 0; margin: 0; }
+.rg-paste { margin-bottom: 12px; }
+.rg-paste summary { cursor: pointer; color: var(--text-2); }
+.rg-paste textarea { width: 100%; margin: 8px 0; font: .85rem var(--nt-mono, monospace); color: var(--text-1); background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 8px; }
+.rg-paste .btn { margin: 4px 4px 4px 0; }
+.rg-q__top small { font-weight: 400; color: var(--text-3); }

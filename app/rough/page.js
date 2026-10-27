@@ -1,20 +1,20 @@
 "use client";
 
-// ✍️ Rough pad — tablet par mock ke saath (owner: "rough work bhi record ho").
-// PC par Testbook + Test Recorder (D:\over\testrec_app.py) chal raha hai; yahan
-// tablet par har sawaal ka apna kaagaz: ⏭ Agla dabao → naya kaagaz, Q number +
-// time. Baad mein review: har Q ka rough + liya gaya time — PC wale screenshot
-// ke saath milao (Q number same rakho: dono jagah Q1 se shuru).
-//
-// Kaagaz lib/ink ka hi (IndexedDB + cloud), chaabi "rp:<session>.<n>"
-// (lib/impnotes noteRec) — Saare IMP mein nahi aata (wo sirf pn:/fact:/vocab:).
-// Session ka naam / Q ka time usi chaabi ke meta mein (setImpNoteMeta) — sync hota hai.
+// ✍️ Rough pad — tablet par mock ke saath (owner: "rough work bhi record ho",
+// phir: "us time itna sochne ka time nahi hota ki ye dabao"). Isliye:
+//   • ek hi lamba kaagaz, bas likhte jao — koi button nahi. Har stroke ka
+//     time (at) saath mein save hota hai (lib/ink encode/decode).
+//   • review (PC par): Test Recorder (D:\over\testrec_app.py, 127.0.0.1:5030)
+//     ka Q-timeline fetch → rough strokes time se Q-wise kat jaate hain, saath
+//     mein PC ka screenshot + us Q ka time. Tablet par (ya recorder band) →
+//     poora rough, aur chaho to ⏭ ke nishaan (optional) se kat-ta hai.
+// Kaagaz lib/ink (IndexedDB + cloud), chaabi "rp:<session>.pad" — Saare IMP mein nahi.
 
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import InkCanvas, { PALETTE, PEN_SIZES } from "@/components/InkCanvas";
-import { ImpNoteBox } from "@/components/ImpView";
-import { openInk, viewInk, saveLocalInk, pushInk, emptyDoc } from "@/lib/ink";
+import { InkStatic } from "@/components/ImpView";
+import { openInk, viewInk, saveLocalInk, pushInk, emptyDoc, isEmptyDoc } from "@/lib/ink";
 import { inkSetter } from "@/lib/impink";
 import { noteRec, noteKey, setImpNoteMeta, getImpNote, allImpNotes } from "@/lib/impnotes";
 import { isInkWriter } from "@/lib/inkdevice";
@@ -22,21 +22,16 @@ import { setSyncPaused } from "@/lib/sync";
 import "./rough.css";
 
 const LOCAL_MS = 700;
-const K = (sid, n) => noteKey("rp", `${sid}.${n}`);
+const REC = "http://127.0.0.1:5030";
+const K = (sid) => noteKey("rp", `${sid}.pad`);
 const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 
-// Saare rough session — chaabiyon ke meta se (har device par wahi).
 function sessions() {
   const all = allImpNotes();
-  const m = new Map();
-  for (const [k, v] of Object.entries(all)) {
-    if (!k.startsWith("rp:") || !v?.meta?.sid) continue;
-    const s = m.get(v.meta.sid) || { sid: v.meta.sid, name: v.meta.src || v.meta.sid, started: v.meta.start || 0, qs: [] };
-    s.qs.push({ k, n: v.meta.n, start: v.meta.start, end: v.meta.end, dur: v.meta.dur });
-    if (v.meta.start && (!s.started || v.meta.start < s.started)) s.started = v.meta.start;
-    m.set(v.meta.sid, s);
-  }
-  return [...m.values()].map((s) => ({ ...s, qs: s.qs.sort((a, b) => a.n - b.n) })).sort((a, b) => b.started - a.started);
+  return Object.entries(all)
+    .filter(([k, v]) => k.startsWith("rp:") && v?.meta?.sid)
+    .map(([k, v]) => ({ k, ...v.meta }))
+    .sort((a, b) => (b.start || 0) - (a.start || 0));
 }
 
 function Index() {
@@ -54,27 +49,27 @@ function Index() {
     const d = new Date();
     const sid = `${d.toISOString().slice(0, 10)}-${Date.now().toString(36)}`;
     const nm = name.trim() || `Mock ${d.getDate()} ${d.toLocaleString("en", { month: "short" })}`;
-    setImpNoteMeta(K(sid, 1), { title: "Q1", src: nm, book: "rough", sid, n: 1, start: Date.now() });
+    setImpNoteMeta(K(sid), { title: nm, src: nm, book: "rough", sid, start: Date.now(), marks: [] });
     router.push(`/rough?s=${sid}`);
   };
   return (
     <section className="section rg">
       <header className="rg-head">
         <div><div className="rg-eb">Tablet · mock ke saath</div><h1>✍️ Rough pad</h1>
-          <p className="hint">PC par test, yahan har sawaal ka rough. ⏭ Agla = naya kaagaz. Q number PC ke Test Recorder jaisa hi rakho.</p></div>
+          <p className="hint">PC par test + Test Recorder, yahan bas likhte jao — koi button nahi. Review PC par: rough apne aap Q-wise, screenshot ke saath.</p></div>
       </header>
       <div className="rg-new">
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Test ka naam (jaise Mock 28 Oct Maths)" onKeyDown={(e) => e.key === "Enter" && start()} />
-        <button type="button" className="btn btn--primary" onClick={start}>▶ Naya test — Q1 se</button>
+        <button type="button" className="btn btn--primary" onClick={start}>▶ Naya test</button>
       </div>
       {list.map((s) => (
         <article key={s.sid} className="rg-sess">
           <div className="rg-sess__top">
-            <b>{s.name}</b>
-            <span>{s.qs.length} Q · {new Date(s.started).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}</span>
+            <b>{s.title}</b>
+            <span>{new Date(s.start).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}{s.end ? ` · ${fmt((s.end - s.start) / 1000)}` : " · chal raha"}</span>
             <span className="rg-sess__acts">
               <button type="button" className="btn btn--ghost btn--sm" onClick={() => router.push(`/rough?s=${s.sid}&view=1`)}>📋 Review</button>
-              {isInkWriter() ? <button type="button" className="btn btn--ghost btn--sm" onClick={() => router.push(`/rough?s=${s.sid}`)}>✍️ Jaari</button> : null}
+              {isInkWriter() && !s.end ? <button type="button" className="btn btn--ghost btn--sm" onClick={() => router.push(`/rough?s=${s.sid}`)}>✍️ Jaari</button> : null}
             </span>
           </div>
         </article>
@@ -84,52 +79,81 @@ function Index() {
   );
 }
 
+// Strokes ko time ke dabbon (segs: [[s,e],…] epoch s) mein baanto.
+const sliceDoc = (doc, segs) => ({ ...doc, strokes: (doc?.strokes || []).filter((st) => st.at && segs.some(([s, e]) => st.at >= s * 1000 && st.at <= (e || 1e13) * 1000)) });
+
 function Review({ sid }) {
   const router = useRouter();
-  const [s, setS] = useState(null);
+  const meta = getImpNote(K(sid))?.meta || {};
+  const [doc, setDoc] = useState(null);
+  const [rec, setRec] = useState(null);     // PC recorder ka session (export)
+  const [recList, setRecList] = useState(null);
+  const [paste, setPaste] = useState("");
   useEffect(() => {
-    const on = () => setS(sessions().find((x) => x.sid === sid) || null);
-    on();
-    window.addEventListener("cgl:impnotes", on);
-    window.addEventListener("cgl:sync-applied", on);
-    return () => { window.removeEventListener("cgl:impnotes", on); window.removeEventListener("cgl:sync-applied", on); };
+    let alive = true;
+    viewInk(noteRec(K(sid)), { preferLocal: isInkWriter() }).then((d) => { if (alive) setDoc(d || emptyDoc()); }).catch(() => setDoc(emptyDoc()));
+    fetch(`${REC}/api/sessions`).then((r) => r.json()).then((list) => {
+      if (!alive) return;
+      setRecList(list);
+      // Jo session rough ke shuru hone ke 15 min ke andar shuru hua — wahi.
+      const near = list.filter((x) => Math.abs(x.started * 1000 - (meta.start || 0)) < 15 * 60000).sort((a, b) => Math.abs(a.started * 1000 - meta.start) - Math.abs(b.started * 1000 - meta.start));
+      if (near[0]) setRec(near[0]);
+    }).catch(() => { if (alive) setRecList([]); });
+    return () => { alive = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sid]);
-  if (!s) return <section className="section rg"><p className="hint">Session nahi mila.</p></section>;
-  const tot = s.qs.reduce((a, q) => a + (q.dur || 0), 0);
+  const usePaste = () => { try { setRec(JSON.parse(paste)); } catch { alert("JSON samajh nahi aaya"); } };
+  if (!doc) return <section className="section rg"><p className="hint">Khul raha hai…</p></section>;
+  const marks = meta.marks || [];
+  // Q-timeline: PC recorder se, warna tablet ke ⏭ nishaan se
+  const qs = rec ? rec.qs.map((q) => ({ n: q.n, dur: q.dur, segs: q.segs, tag: q.tag, result: q.result, topic: q.topic, img: `${REC}/s/${rec.id}/img/${q.n}` }))
+    : marks.length ? [meta.start, ...marks, meta.end || Date.now()].slice(0, -1).map((t, i, arr) => ({ n: i + 1, dur: (([meta.start, ...marks, meta.end || Date.now()][i + 1]) - t) / 1000, segs: [[t / 1000, [meta.start, ...marks, meta.end || Date.now()][i + 1] / 1000]] }))
+      : [];
   return (
     <section className="section rg">
       <header className="rg-head">
         <div><button type="button" className="btn btn--ghost btn--sm" onClick={() => router.push("/rough")}>← Saare</button>
-          <h1>📋 {s.name}</h1><p className="hint">{s.qs.length} Q · kul {fmt(tot / 1000)} · 90s+ wale laal</p></div>
+          <h1>📋 {meta.title}</h1>
+          <p className="hint">{doc.strokes.length} strokes{meta.end ? ` · ${fmt((meta.end - meta.start) / 1000)}` : ""}{rec ? ` · PC recorder: ${rec.name} (${rec.qs.length} Q)` : recList === null ? " · PC recorder dhoondh raha…" : recList?.length ? " · PC recorder mila par is waqt ka session nahi" : " · PC recorder nahi (tablet par ho, ya app band)"}</p></div>
       </header>
-      <div className="rg-grid">
-        {s.qs.map((q) => (
-          <article key={q.k} className={`rg-q${(q.dur || 0) >= 90000 ? " is-long" : ""}`}>
-            <div className="rg-q__top"><b>Q{q.n}</b><span>{q.dur != null ? fmt(q.dur / 1000) : "…"}</span></div>
-            <ImpNoteBox k={q.k} label={`✍️ Q${q.n}`} />
-          </article>
-        ))}
-      </div>
+      {!rec && recList !== null ? (
+        <details className="rg-paste"><summary>PC recorder ka session chuno / export.json paste karo</summary>
+          {recList?.map((x) => <button key={x.id} type="button" className="btn btn--ghost btn--sm" onClick={() => setRec(x)}>{x.name} · {x.qs.length} Q</button>)}
+          <textarea value={paste} onChange={(e) => setPaste(e.target.value)} placeholder="export.json ka text" rows={4} />
+          <button type="button" className="btn btn--ghost btn--sm" onClick={usePaste}>Lagao</button>
+        </details>
+      ) : null}
+      {qs.length ? (
+        <div className="rg-grid">
+          {qs.map((q) => {
+            const d = sliceDoc(doc, q.segs);
+            return (
+              <article key={q.n} className={`rg-q${(q.dur || 0) >= 90 ? " is-long" : ""}`}>
+                <div className="rg-q__top"><b>Q{q.n} {q.result === "sahi" ? "✓" : q.result === "galat" ? "✗" : ""} <small>{q.topic || ""}{q.tag ? ` · ${q.tag}` : ""}</small></b><span>{q.dur != null ? fmt(q.dur) : "…"}</span></div>
+                {q.img ? <img src={q.img} alt="" className="rg-shot" loading="lazy" onClick={(e) => e.target.classList.toggle("is-big")} /> : null}
+                {isEmptyDoc(d) ? <p className="hint">is Q par rough nahi</p> : <div className="imp-box"><InkStatic doc={d} /></div>}
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        <article className="rg-q"><div className="rg-q__top"><b>Poora rough</b></div>{isEmptyDoc(doc) ? <p className="hint">khaali</p> : <div className="imp-box"><InkStatic doc={doc} /></div>}</article>
+      )}
     </section>
   );
 }
 
 function Pad({ sid }) {
   const router = useRouter();
-  const [n, setN] = useState(() => {
-    const s = sessions().find((x) => x.sid === sid);
-    return s ? Math.max(...s.qs.map((q) => q.n)) : 1;
-  });
-  const last = (() => { const s = sessions().find((x) => x.sid === sid); return s ? Math.max(...s.qs.map((q) => q.n)) : 1; })();
-  const k = K(sid, n);
+  const k = K(sid);
   const meta = getImpNote(k)?.meta || {};
-  const name = meta.src || sid;
   const [doc, setDoc] = useState(null);
   const [loading, setLoading] = useState(true);
   const [tool, setTool] = useState("pen");
   const [colorIdx, setColorIdx] = useState(0);
   const [sizeIdx, setSizeIdx] = useState(1);
   const [sec, setSec] = useState(0);
+  const [marks, setMarks] = useState((meta.marks || []).length);
   const [state, setState] = useState("saved");
   const inkRef = useRef(null);
   const liveDoc = useRef(null);
@@ -145,21 +169,20 @@ function Pad({ sid }) {
   }, []);
   useEffect(() => {
     let alive = true;
-    setLoading(true);
     (async () => {
       const r = noteRec(k);
       const d = writer ? (await openInk(r, { localFirst: true }).catch(() => null))?.doc : await viewInk(r).catch(() => null);
       if (!alive) return;
-      liveDoc.current = d || emptyDoc(1200);
+      liveDoc.current = d || emptyDoc(2400);
       setDoc(liveDoc.current);
       setLoading(false);
     })();
     return () => { alive = false; };
   }, [k, writer]);
   useEffect(() => {
-    const t = setInterval(() => { const m = getImpNote(K(sid, last))?.meta; if (m?.start && !m.end) setSec((Date.now() - m.start) / 1000); }, 500);
+    const t = setInterval(() => { if (meta.start && !meta.end) setSec((Date.now() - meta.start) / 1000); }, 500);
     return () => clearInterval(t);
-  }, [sid, last]);
+  }, [meta.start, meta.end]);
 
   const flushLocal = useCallback(async () => {
     if (!writer || !liveDoc.current) return;
@@ -172,32 +195,30 @@ function Pad({ sid }) {
   }, [k, writer]);
   const onChange = useCallback((next) => {
     if (!writer) return;
+    // Naye stroke par time ki mohar — review isi se Q-wise kaatta hai.
+    const now = Date.now();
+    for (const st of next.strokes || []) if (!st.at) st.at = now;
     liveDoc.current = next; setState("dirty");
     clearTimeout(localT.current);
     localT.current = setTimeout(() => flushLocal(), LOCAL_MS);
   }, [writer, flushLocal]);
   useEffect(() => () => { clearTimeout(localT.current); flushLocal(); flushCloud(); }, [flushLocal, flushCloud]);
 
-  const goTo = async (m) => { await flushLocal(); flushCloud(); setN(m); };
-  const next = async () => {
-    await flushLocal(); flushCloud();
-    const now = Date.now();
-    const cur = getImpNote(K(sid, last))?.meta || {};
-    if (cur.start && !cur.end) setImpNoteMeta(K(sid, last), { ...cur, end: now, dur: now - cur.start });
-    setImpNoteMeta(K(sid, last + 1), { title: `Q${last + 1}`, src: name, book: "rough", sid, n: last + 1, start: now });
-    setN(last + 1);
+  // Optional ⏭ nishaan — sirf tab jab PC recorder na ho.
+  const mark = () => {
+    const m = getImpNote(k)?.meta || meta;
+    setImpNoteMeta(k, { ...m, marks: [...(m.marks || []), Date.now()] });
+    setMarks((x) => x + 1);
   };
   const end = async () => {
     await flushLocal(); flushCloud();
-    const now = Date.now();
-    const cur = getImpNote(K(sid, last))?.meta || {};
-    if (cur.start && !cur.end) setImpNoteMeta(K(sid, last), { ...cur, end: now, dur: now - cur.start });
+    const m = getImpNote(k)?.meta || meta;
+    setImpNoteMeta(k, { ...m, end: Date.now() });
     try { if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {}); } catch { /* ignore */ }
     router.push(`/rough?s=${sid}&view=1`);
   };
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === " " && e.ctrlKey) { e.preventDefault(); next(); }
       if (e.key === "PageDown") { e.preventDefault(); if (!e.repeat) setTool((t) => (t === "eraser" ? "pen" : "eraser")); }
       if (e.key === "PageUp") { e.preventDefault(); inkRef.current?.undo(); }
     };
@@ -209,14 +230,10 @@ function Pad({ sid }) {
     <div className="inkv rg-pad">
       <div className="inkv__top">
         <button className="btn btn--ghost btn--sm" onClick={end} title="Test khatam — review">⏹ End</button>
-        <span className="inkv__title">✍️ {name} · <b className="rg-qn">Q{n}</b>{n !== last ? <small> (purana — timer Q{last} par)</small> : null}</span>
-        <span className={`rg-timer${sec >= 90 ? " is-long" : ""}`}>⏱ {fmt(sec)}</span>
+        <span className="inkv__title">✍️ {meta.title || sid}</span>
+        <span className="rg-timer">⏱ {fmt(sec)}</span>
         <span style={{ marginLeft: "auto" }} />
-        <span className="inkv__nav">
-          <button className="btn btn--ghost btn--sm" onClick={() => goTo(n - 1)} disabled={n <= 1}>‹</button>
-          <button className="btn btn--ghost btn--sm" onClick={() => goTo(n + 1)} disabled={n >= last}>›</button>
-          <button className="btn btn--primary rg-next" onClick={next} title="Ctrl+Space">⏭ Agla sawaal</button>
-        </span>
+        <button className="btn btn--ghost btn--sm" onClick={mark} title="Optional: naya sawaal ka nishaan (PC recorder ho to zaroorat nahi)">⏭ nishaan {marks ? `(${marks})` : ""}</button>
         {writer ? <span className="inkv__pill">{state === "saved" ? "💾" : state === "dirty" ? "✍️" : "⚠️"}</span> : null}
       </div>
       <div className="inkv__body">
@@ -239,7 +256,6 @@ function Pad({ sid }) {
             <span className="inkv__sep" />
             <button className="btn btn--ghost btn--sm" onClick={() => inkRef.current?.undo()}>↩</button>
             <button className="btn btn--ghost btn--sm" onClick={() => inkRef.current?.redo()}>↪</button>
-            <button className="btn btn--ghost btn--sm" onClick={() => { if (confirm("Ye kaagaz saaf?")) inkRef.current?.clear(); }}>🗑️</button>
             <button className="btn btn--ghost btn--sm" onClick={() => inkRef.current?.grow()}>➕ jagah</button>
           </>
         ) : <span className="inkv__ro">👁 Sirf dekhna — likhna tablet par</span>}
