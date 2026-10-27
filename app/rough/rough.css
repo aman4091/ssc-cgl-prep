@@ -1,0 +1,21 @@
+/* ✍️ Rough pad (app/rough) — mock ke saath tablet par har sawaal ka kaagaz. */
+.rg { max-width: 900px; margin: 0 auto; }
+.rg-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.rg-eb { font: 500 .7rem var(--nt-mono, monospace); letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+.rg-head h1 { margin: 4px 0; font-family: var(--nt-display, inherit); font-weight: 800; }
+.rg-new { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 18px; }
+.rg-new input { flex: 1 1 260px; font: inherit; color: var(--text-1); background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.rg-sess { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; margin-bottom: 10px; }
+.rg-sess__top { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.rg-sess__top span { color: var(--text-3); font-size: .9rem; }
+.rg-sess__acts { margin-left: auto; display: flex; gap: 6px; }
+.rg-grid { display: grid; gap: 12px; }
+.rg-q { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; }
+.rg-q.is-long { border-color: #ff8a7a; }
+.rg-q__top { display: flex; justify-content: space-between; font: 600 .95rem var(--nt-display, inherit); }
+.rg-q.is-long .rg-q__top span { color: #ff8a7a; }
+.rg-q .imp-box { margin: 6px 0 0; }
+.rg-pad .rg-qn { font-size: 1.1em; }
+.rg-timer { font: 600 .95rem var(--nt-mono, monospace); color: var(--text-2); margin-left: 10px; }
+.rg-timer.is-long { color: #ff8a7a; }
+.rg-next { font-weight: 700; padding: 6px 14px; }
